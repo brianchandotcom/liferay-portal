@@ -1,0 +1,990 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_BAN",
+			"label": {
+				"en_US": "C2M0 Forum Ban"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumBan",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Ban User ID"
+					},
+					"name": "banUserId",
+					"required": true
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Bans"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "externalReferenceCode"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_CATEGORY",
+			"label": {
+				"en_US": "C2M0 Forum Category"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumCategory",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "categoryDescription",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": true,
+					"name": "categoryName",
+					"required": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Display Style"
+					},
+					"name": "displayStyle",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Friendly URL"
+					},
+					"name": "friendlyURL",
+					"required": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_CATEGORY_TO_C2M0_FORUM_MESSAGES",
+					"label": {
+						"en_US": "C2M0 Forum Category to C2M0 Forum Messages"
+					},
+					"name": "c2m0FrmCatToC2M0FrmMsgs",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_CATEGORY",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_MESSAGE",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_CATEGORY_TO_C2M0_FORUM_SUBCATEGORIES",
+					"label": {
+						"en_US": "C2M0 Forum Category to C2M0 Forum Subcategories"
+					},
+					"name": "c2m0FrmCatToC2M0FrmSubCats",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_CATEGORY",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_CATEGORY",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_CATEGORY_TO_C2M0_FORUM_THREADS",
+					"label": {
+						"en_US": "C2M0 Forum Category to C2M0 Forum Threads"
+					},
+					"name": "c2m0FrmCatToC2M0FrmThrs",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_CATEGORY",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_THREAD",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Categories"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "categoryName"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_MESSAGE",
+			"label": {
+				"en_US": "C2M0 Forum Message"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumMessage",
+			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Allow Pingbacks"
+					},
+					"name": "allowPingbacks",
+					"required": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Anonymous"
+					},
+					"name": "anonymous",
+					"required": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Answer"
+					},
+					"name": "answer",
+					"required": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Body"
+					},
+					"name": "body",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Class Name ID"
+					},
+					"name": "classNameId",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Class PK"
+					},
+					"name": "classPK",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Format"
+					},
+					"name": "format",
+					"required": false
+				},
+				{
+					"businessType": "Text",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Author Name"
+					},
+					"name": "notificationAuthorName",
+					"required": false
+				},
+				{
+					"businessType": "LongText",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Body Excerpt"
+					},
+					"name": "notificationBodyExcerpt",
+					"required": false
+				},
+				{
+					"businessType": "Text",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Mention Recipient Ids"
+					},
+					"name": "notificationMentionRecipientIds",
+					"required": false
+				},
+				{
+					"businessType": "Text",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Reply Recipient Ids"
+					},
+					"name": "notificationReplyRecipientIds",
+					"required": false
+				},
+				{
+					"businessType": "Text",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Topic Title"
+					},
+					"name": "notificationTopicTitle",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Parent Message ID"
+					},
+					"name": "parentMessageId",
+					"required": false
+				},
+				{
+					"DBType": "BigDecimal",
+					"businessType": "PrecisionDecimal",
+					"label": {
+						"en_US": "Priority"
+					},
+					"name": "priority",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Root Message ID"
+					},
+					"name": "rootMessageId",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Subject"
+					},
+					"localized": true,
+					"name": "subject",
+					"required": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Tree Path"
+					},
+					"name": "treePath",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "URL Subject"
+					},
+					"name": "urlSubject",
+					"required": false
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Vote Score"
+					},
+					"name": "voteScore",
+					"required": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_MESSAGE_TO_C2M0_FORUM_MESSAGE_ATTACHMENTS",
+					"label": {
+						"en_US": "C2M0 Forum Message to C2M0 Forum Message Attachments"
+					},
+					"name": "c2m0FrmMsgToC2M0FrmMsgAtts",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_MESSAGE",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_MESSAGE_ATTACHMENT",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_MESSAGE_TO_C2M0_FORUM_VOTES",
+					"label": {
+						"en_US": "C2M0 Forum Message to C2M0 Forum Votes"
+					},
+					"name": "c2m0FrmMsgToC2M0FrmVotes",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_MESSAGE",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_VOTE",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Messages"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "subject"
+		},
+		{
+			"active": true,
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"externalReferenceCode": "C2M0_FORUM_MESSAGE_ATTACHMENT",
+			"label": {
+				"en_US": "C2M0 Forum Message Attachment"
+			},
+			"name": "C2M0ForumMessageAttachment",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"indexed": false,
+					"label": {
+						"en_US": "File"
+					},
+					"localized": false,
+					"name": "file",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "*"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputerToDocumentsAndMedia"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 10
+						},
+						{
+							"name": "showFilesInLibrary",
+							"value": false
+						}
+					],
+					"required": true,
+					"type": "Long"
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Message Attachments"
+			},
+			"scope": "site"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_NOTIFICATION",
+			"label": {
+				"en_US": "C2M0 Forum Notification"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumNotification",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Author Name"
+					},
+					"name": "authorName",
+					"required": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"label": {
+						"en_US": "Body Excerpt"
+					},
+					"name": "bodyExcerpt",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Notification Kind"
+					},
+					"name": "notificationKind",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "URL"
+					},
+					"name": "notificationUrl",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Recipient Email Address"
+					},
+					"name": "recipientEmailAddress",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Recipient User ID"
+					},
+					"name": "recipientUserId",
+					"required": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Topic Title"
+					},
+					"name": "topicTitle",
+					"required": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Notifications"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "notificationSubject"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_SUBSCRIPTION",
+			"label": {
+				"en_US": "C2M0 Forum Subscription"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumSubscription",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Subscriber User ID"
+					},
+					"name": "subscriberUserId",
+					"required": true
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Subscriptions"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "externalReferenceCode"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_SUSPICIOUS_ACTIVITY",
+			"label": {
+				"en_US": "C2M0 Forum Suspicious Activity"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumSuspiciousActivity",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Message ID"
+					},
+					"name": "messageId",
+					"required": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"label": {
+						"en_US": "Reason"
+					},
+					"name": "reason",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Message ID"
+					},
+					"name": "suspiciousMessageId",
+					"required": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Validated"
+					},
+					"name": "validated",
+					"required": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Suspicious Activities"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "externalReferenceCode"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_THREAD",
+			"label": {
+				"en_US": "C2M0 Forum Thread"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumThread",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Category ID"
+					},
+					"name": "categoryId",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Last Post By User ID"
+					},
+					"name": "lastPostByUserId",
+					"required": false
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"label": {
+						"en_US": "Last Post Date"
+					},
+					"name": "lastPostDate",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "messageTitle",
+					"required": false
+				},
+				{
+					"DBType": "BigDecimal",
+					"businessType": "PrecisionDecimal",
+					"label": {
+						"en_US": "Priority"
+					},
+					"name": "priority",
+					"required": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Question"
+					},
+					"name": "question",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Root Message ID"
+					},
+					"name": "rootMessageId",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Root Message User ID"
+					},
+					"name": "rootMessageUserId",
+					"required": false
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "View Count"
+					},
+					"name": "viewCount",
+					"required": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_MESSAGES",
+					"label": {
+						"en_US": "C2M0 Forum Thread to C2M0 Forum Messages"
+					},
+					"name": "c2m0FrmThrToC2M0FrmMsgs",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_MESSAGE",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_SUBSCRIPTIONS",
+					"label": {
+						"en_US": "C2M0 Forum Thread to C2M0 Forum Subscriptions"
+					},
+					"name": "c2m0FrmThrToC2M0FrmSubs",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_SUBSCRIPTION",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_SUSPICIOUS_ACTIVITIES",
+					"label": {
+						"en_US": "C2M0 Forum Thread to C2M0 Forum Suspicious Activities"
+					},
+					"name": "c2m0FrmThrToC2M0FrmSusActs",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_SUSPICIOUS_ACTIVITY",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_THREAD_FLAGS",
+					"label": {
+						"en_US": "C2M0 Forum Thread to C2M0 Forum Thread Flags"
+					},
+					"name": "c2m0FrmThrToC2M0FrmThrFlags",
+					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
+					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_THREAD_FLAG",
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Threads"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "messageTitle"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_THREAD_FLAG",
+			"label": {
+				"en_US": "C2M0 Forum Thread Flag"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumThreadFlag",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"label": {
+						"en_US": "Message ID"
+					},
+					"name": "flagMessageId",
+					"required": true
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Thread Flags"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "externalReferenceCode"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_USER",
+			"label": {
+				"en_US": "C2M0 Forum User"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumUser",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "First Name"
+					},
+					"name": "firstName",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "Forum User Id"
+					},
+					"name": "forumUserId",
+					"required": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "Last Name"
+					},
+					"name": "lastName",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "Screen Name"
+					},
+					"name": "screenName",
+					"required": true
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Users"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "screenName"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableFormContainer": true,
+			"enableFriendlyURLCustomization": false,
+			"enableIndexSearch": true,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"enableObjectEntrySchedule": false,
+			"enableObjectEntrySubscription": false,
+			"enableObjectEntryVersioning": false,
+			"externalReferenceCode": "C2M0_FORUM_VOTE",
+			"label": {
+				"en_US": "C2M0 Forum Vote"
+			},
+			"modifiable": true,
+			"name": "C2M0ForumVote",
+			"objectFields": [
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Vote Value"
+					},
+					"name": "voteValue",
+					"required": true
+				}
+			],
+			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "C2M0 Forum Votes"
+			},
+			"portlet": false,
+			"scope": "site",
+			"system": false,
+			"titleObjectFieldName": "externalReferenceCode"
+		}
+	]
+}

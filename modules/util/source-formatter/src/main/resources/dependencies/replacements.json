@@ -5660,11 +5660,11 @@
 				"to": "FileAvailabilityUtil.isAvailable(getServletContext(), ${page})"
 			},
 			{
-				"from": "servletContext = ServletContextUtil.getServletContext()",
+				"from": "regex:servletContext = ServletContextUtil.getServletContext\\(\\)",
 				"to": "setServletContext(ServletContextUtil.getServletContext())"
 			},
 			{
-				"from": "setAttributes(request)",
+				"from": "regex:setAttributes\\(request\\)",
 				"to": "setAttributes(getRequest())"
 			}
 		]

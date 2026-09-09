@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -20,6 +21,30 @@ import java.util.Map;
  * @author Brian I. Kim
  */
 public class SitemapURLProviderUtil {
+
+	protected static Map<Locale, String> getAlternateFriendlyURLs(
+		Map<Locale, String> alternateSiteURLs, List<String> languageIds) {
+
+		Map<Locale, String> alternateFriendlyURLs = new HashMap<>();
+
+		if (languageIds == null) {
+			return alternateFriendlyURLs;
+		}
+
+		for (String languageId : languageIds) {
+			String alternateSiteURL = alternateSiteURLs.get(
+				LocaleUtil.fromLanguageId(languageId));
+
+			if (alternateSiteURL == null) {
+				continue;
+			}
+
+			alternateFriendlyURLs.put(
+				LocaleUtil.fromLanguageId(languageId), alternateSiteURL);
+		}
+
+		return alternateFriendlyURLs;
+	}
 
 	protected static Map<Locale, String> getAlternateFriendlyURLs(
 		Map<Locale, String> alternateSiteURLs, long friendlyURLEntryId,

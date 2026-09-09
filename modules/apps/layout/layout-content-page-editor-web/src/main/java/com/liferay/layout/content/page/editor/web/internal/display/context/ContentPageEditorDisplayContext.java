@@ -7,6 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorCriterion;
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorReturnType;
+import com.liferay.design.library.util.DesignLibraryUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
@@ -1088,7 +1089,7 @@ public class ContentPageEditorDisplayContext {
 			).setBackURL(
 				ParamUtil.getString(
 					portal.getOriginalServletRequest(httpServletRequest),
-					"p_l_back_url", themeDisplay.getURLCurrent())
+					"p_l_back_url", _getBackURL())
 			).buildString(),
 			"p_l_mode", Constants.EDIT);
 	}
@@ -1389,6 +1390,17 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return availableViewportSizesMap;
+	}
+
+	private String _getBackURL() {
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (DesignLibraryUtil.isDesignLibraryScope(scopeGroup)) {
+			return DesignLibraryUtil.getDesignLibraryResourcesURL(
+				scopeGroup, httpServletRequest);
+		}
+
+		return themeDisplay.getURLCurrent();
 	}
 
 	private String _getCollectionSelectorURL() {
@@ -1979,7 +1991,7 @@ public class ContentPageEditorDisplayContext {
 			_redirect = portal.escapeRedirect(
 				ParamUtil.getString(
 					portal.getOriginalServletRequest(httpServletRequest),
-					"p_l_back_url", themeDisplay.getURLCurrent()));
+					"p_l_back_url", _getBackURL()));
 		}
 
 		return _redirect;
@@ -1991,7 +2003,7 @@ public class ContentPageEditorDisplayContext {
 		).setBackURL(
 			ParamUtil.getString(
 				portal.getOriginalServletRequest(httpServletRequest),
-				"p_l_back_url", themeDisplay.getURLCurrent())
+				"p_l_back_url", _getBackURL())
 		).setParameter(
 			"backURLTitle",
 			ParamUtil.getString(

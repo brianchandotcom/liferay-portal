@@ -481,6 +481,28 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		return newContent;
 	}
 
+	private List<JavaTerm> _extractInnerJavaTerms(List<JavaTerm> javaTerms) {
+		List<JavaTerm> extractedJavaTerms = new ArrayList<>();
+
+		for (JavaTerm childJavaTerm : javaTerms) {
+			if (childJavaTerm.isJavaClass()) {
+				JavaClass childJavaClass = (JavaClass)childJavaTerm;
+
+				List<JavaTerm> innerChildJavaTerms =
+					childJavaClass.getChildJavaTerms();
+
+				extractedJavaTerms.addAll(
+					_extractInnerJavaTerms(innerChildJavaTerms));
+
+				continue;
+			}
+
+			extractedJavaTerms.add(childJavaTerm);
+		}
+
+		return extractedJavaTerms;
+	}
+
 	private int _findMatchingClosingBrace(String content, int index) {
 		int count = 0;
 
@@ -509,7 +531,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		String newContent = content;
 
-		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
+
+		for (JavaTerm childJavaTerm : _extractInnerJavaTerms(childJavaTerms)) {
 			String javaContent = null;
 
 			if (childJavaTerm.isJavaMethod()) {

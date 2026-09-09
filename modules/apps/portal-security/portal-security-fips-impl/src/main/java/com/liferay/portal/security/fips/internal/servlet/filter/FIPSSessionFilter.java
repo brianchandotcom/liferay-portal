@@ -39,13 +39,20 @@ import org.osgi.service.component.annotations.Reference;
 public class FIPSSessionFilter extends BasePortalFilter {
 
 	@Override
+	public boolean isFilterEnabled() {
+		if (super.isFilterEnabled() && PropsValues.FIPS_ENABLED) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (!PropsValues.FIPS_ENABLED ||
-			(CompanyThreadLocal.getCompanyId() == 0)) {
-
+		if (CompanyThreadLocal.getCompanyId() == 0) {
 			return false;
 		}
 

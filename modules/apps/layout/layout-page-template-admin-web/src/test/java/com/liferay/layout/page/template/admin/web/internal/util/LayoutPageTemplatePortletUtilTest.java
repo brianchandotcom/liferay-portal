@@ -5,14 +5,19 @@
 
 package com.liferay.layout.page.template.admin.web.internal.util;
 
+import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,21 +37,45 @@ public class LayoutPageTemplatePortletUtilTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() {
+		_setUpPortalUtil();
+	}
+
 	@After
 	public void tearDown() {
 		_layoutPageTemplateCollectionLocalServiceUtilMockedStatic.close();
 	}
 
 	@Test
-	@TestInfo("LPD-104842")
+	@TestInfo({"LPD-104842", "LPD-104843"})
 	public void testFetchLayoutPageTemplateCollection() {
-		_testFetchLayoutPageTemplateCollection();
-		_testFetchLayoutPageTemplateCollectionWithExternalReferenceCode();
+		_testFetchLayoutPageTemplateCollection(StringPool.BLANK);
+		_testFetchLayoutPageTemplateCollection(_PORTLET_NAMESPACE);
+		_testFetchLayoutPageTemplateCollectionWithExternalReferenceCode(
+			StringPool.BLANK);
+		_testFetchLayoutPageTemplateCollectionWithExternalReferenceCode(
+			_PORTLET_NAMESPACE);
 		_testFetchLayoutPageTemplateCollectionWithOtherGroupId();
 		_testFetchLayoutPageTemplateCollectionWithoutParameters();
 	}
 
-	private void _testFetchLayoutPageTemplateCollection() {
+	private void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(Mockito.mock(Portal.class));
+
+		Mockito.when(
+			portalUtil.getPortletNamespace(
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES)
+		).thenReturn(
+			_PORTLET_NAMESPACE
+		);
+	}
+
+	private void _testFetchLayoutPageTemplateCollection(
+		String portletNamespace) {
+
 		long groupId = RandomTestUtil.randomLong();
 		long layoutPageTemplateCollectionId = RandomTestUtil.randomLong();
 
@@ -54,7 +83,7 @@ public class LayoutPageTemplatePortletUtilTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setParameter(
-			"layoutPageTemplateCollectionId",
+			portletNamespace + "layoutPageTemplateCollectionId",
 			String.valueOf(layoutPageTemplateCollectionId));
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -81,7 +110,10 @@ public class LayoutPageTemplatePortletUtilTest {
 				mockHttpServletRequest, groupId));
 	}
 
-	private void _testFetchLayoutPageTemplateCollectionWithExternalReferenceCode() {
+	private void
+		_testFetchLayoutPageTemplateCollectionWithExternalReferenceCode(
+			String portletNamespace) {
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 		long groupId = RandomTestUtil.randomLong();
 
@@ -89,7 +121,8 @@ public class LayoutPageTemplatePortletUtilTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setParameter(
-			"layoutPageTemplateCollectionExternalReferenceCode",
+			portletNamespace +
+				"layoutPageTemplateCollectionExternalReferenceCode",
 			externalReferenceCode);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -148,6 +181,9 @@ public class LayoutPageTemplatePortletUtilTest {
 			LayoutPageTemplatePortletUtil.fetchLayoutPageTemplateCollection(
 				new MockHttpServletRequest(), RandomTestUtil.randomLong()));
 	}
+
+	private static final String _PORTLET_NAMESPACE =
+		RandomTestUtil.randomString();
 
 	private final MockedStatic<LayoutPageTemplateCollectionLocalServiceUtil>
 		_layoutPageTemplateCollectionLocalServiceUtilMockedStatic =

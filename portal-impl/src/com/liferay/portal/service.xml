@@ -3267,6 +3267,7 @@
 		<exception>AddressSubtype</exception>
 		<exception>AddressZip</exception>
 		<exception>AvailableLocale</exception>
+		<exception>CompanyKeyResolution</exception>
 		<exception>CompanyMaxUsers</exception>
 		<exception>CompanyMx</exception>
 		<exception>CompanyName</exception>

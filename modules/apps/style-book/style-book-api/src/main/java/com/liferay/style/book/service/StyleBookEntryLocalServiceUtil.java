@@ -65,6 +65,22 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().addStyleBookEntry(styleBookEntry);
 	}
 
+	public static StyleBookEntry addStyleBookEntryFrontendToken(
+			long styleBookEntryId, String cssVariableMappingValue,
+			String editorType, String frontendTokenCategoryName,
+			String frontendTokenDescription, String frontendTokenLabel,
+			String frontendTokenName, String frontendTokenSetDescription,
+			String frontendTokenSetLabel, String frontendTokenSetName,
+			String value)
+		throws PortalException {
+
+		return getService().addStyleBookEntryFrontendToken(
+			styleBookEntryId, cssVariableMappingValue, editorType,
+			frontendTokenCategoryName, frontendTokenDescription,
+			frontendTokenLabel, frontendTokenName, frontendTokenSetDescription,
+			frontendTokenSetLabel, frontendTokenSetName, value);
+	}
+
 	public static StyleBookEntry checkout(
 			StyleBookEntry publishedStyleBookEntry, int version)
 		throws PortalException {
@@ -644,4 +660,4 @@ public class StyleBookEntryLocalServiceUtil {
 			StyleBookEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:675583099
+// LIFERAY-SERVICE-BUILDER-HASH:1892023295

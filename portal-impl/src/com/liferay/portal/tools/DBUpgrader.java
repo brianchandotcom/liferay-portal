@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
+import com.liferay.portal.kernel.encryptor.CompanyKeyUtil;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -660,7 +661,8 @@ public class DBUpgrader {
 
 					preparedStatement.setString(
 						1,
-						EncryptorUtil.serializeKey(
+						CompanyKeyUtil.serializeKey(
+							company.getCompanyId(),
 							EncryptorUtil.generateKey()));
 					preparedStatement.setLong(2, company.getCompanyId());
 

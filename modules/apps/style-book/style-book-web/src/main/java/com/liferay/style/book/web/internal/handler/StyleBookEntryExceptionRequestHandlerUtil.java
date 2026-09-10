@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.exception.DuplicateStyleBookEntryFrontendTokenException;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryNameException;
 import com.liferay.style.book.exception.StyleBookEntryFrontendTokensValuesException;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
@@ -36,7 +37,17 @@ public class StyleBookEntryExceptionRequestHandlerUtil {
 		String errorMessage = LanguageUtil.get(
 			themeDisplay.getRequest(), "an-unexpected-error-occurred");
 
-		if (portalException instanceof DuplicateStyleBookEntryNameException) {
+		if (portalException instanceof
+				DuplicateStyleBookEntryFrontendTokenException) {
+
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"a-custom-token-with-this-label-already-exists.-please-enter-" +
+					"a-different-label");
+		}
+		else if (portalException instanceof
+					DuplicateStyleBookEntryNameException) {
+
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"a-style-book-with-this-name-already-exists.-please-enter-a-" +

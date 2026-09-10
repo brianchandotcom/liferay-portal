@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryFrontendTokenException;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
@@ -139,6 +141,78 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		return publishDraft(styleBookEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public StyleBookEntry addStyleBookEntryFrontendToken(
+			long styleBookEntryId, String cssVariableMappingValue,
+			String editorType, String frontendTokenCategoryName,
+			String frontendTokenDescription, String frontendTokenLabel,
+			String frontendTokenName, String frontendTokenSetDescription,
+			String frontendTokenSetLabel, String frontendTokenSetName,
+			String value)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry = getStyleBookEntry(styleBookEntryId);
+
+		String frontendTokenDefinitionJSON =
+			styleBookEntry.getFrontendTokenDefinition();
+
+		JSONObject frontendTokenDefinitionJSONObject =
+			FrontendTokenDefinitionUtil.parseFrontendTokenDefinitionJSONObject(
+				frontendTokenDefinitionJSON);
+
+		if (frontendTokenDefinitionJSONObject == null) {
+			if (!Validator.isBlank(frontendTokenDefinitionJSON)) {
+				throw new StyleBookEntryFrontendTokenDefinitionException(
+					"Unable to parse frontend token definition");
+			}
+
+			frontendTokenDefinitionJSONObject = _jsonFactory.createJSONObject();
+		}
+
+		JSONObject frontendTokenJSONObject =
+			FrontendTokenDefinitionUtil.createFrontendTokenJSONObject(
+				cssVariableMappingValue, frontendTokenDescription, editorType,
+				frontendTokenLabel, frontendTokenName);
+
+		JSONObject frontendTokenSetJSONObject =
+			FrontendTokenDefinitionUtil.createFrontendTokenSetJSONObject(
+				frontendTokenSetDescription, frontendTokenJSONObject,
+				frontendTokenSetLabel, frontendTokenSetName);
+
+		JSONObject overrideFrontendTokenDefinitionJSONObject =
+			FrontendTokenDefinitionUtil.createFrontendTokenDefinitionJSONObject(
+				frontendTokenSetJSONObject, frontendTokenCategoryName);
+
+		frontendTokenDefinitionJSONObject =
+			FrontendTokenDefinitionUtil.mergeFrontendTokenDefinitionJSONObject(
+				frontendTokenDefinitionJSONObject,
+				overrideFrontendTokenDefinitionJSONObject);
+
+		styleBookEntry = updateFrontendTokenDefinition(
+			styleBookEntryId, frontendTokenDefinitionJSONObject.toString());
+
+		JSONObject frontendTokensValuesJSONObject =
+			_jsonFactory.createJSONObject(
+				styleBookEntry.getFrontendTokensValues());
+
+		frontendTokensValuesJSONObject.put(
+			StringBundler.concat(
+				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+				StringPool.COLON, frontendTokenName),
+			JSONUtil.put(
+				"cssVariableMapping", cssVariableMappingValue
+			).put(
+				"tokenDefinitionId",
+				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID
+			).put(
+				"value", value
+			));
+
+		return updateFrontendTokensValues(
+			styleBookEntryId, frontendTokensValuesJSONObject.toString());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

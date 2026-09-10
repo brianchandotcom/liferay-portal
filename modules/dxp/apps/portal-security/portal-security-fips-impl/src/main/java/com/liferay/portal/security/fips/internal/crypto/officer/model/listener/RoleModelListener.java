@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.fips.constants.FIPSConstants;
@@ -33,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Manuele Castro
  */
-@Component(service = ModelListener.class)
+@Component(enabled = false, service = ModelListener.class)
 public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
@@ -42,9 +41,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			Object associationClassPK)
 		throws ModelListenerException {
 
-		if (!PropsValues.FIPS_ENABLED ||
-			!Objects.equals(User.class.getName(), associationClassName)) {
-
+		if (!Objects.equals(User.class.getName(), associationClassName)) {
 			return;
 		}
 
@@ -76,9 +73,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			Object associationClassPK)
 		throws ModelListenerException {
 
-		if (!PropsValues.FIPS_ENABLED ||
-			!Objects.equals(User.class.getName(), associationClassName)) {
-
+		if (!Objects.equals(User.class.getName(), associationClassName)) {
 			return;
 		}
 
@@ -100,7 +95,6 @@ public class RoleModelListener extends BaseModelListener<Role> {
 	@Override
 	public void onBeforeRemove(Role role) throws ModelListenerException {
 		if (PortalInstances.isCurrentCompanyInDeletionProcess() ||
-			!PropsValues.FIPS_ENABLED ||
 			!StringUtil.equals(RoleConstants.CRYPTO_OFFICER, role.getName())) {
 
 			return;

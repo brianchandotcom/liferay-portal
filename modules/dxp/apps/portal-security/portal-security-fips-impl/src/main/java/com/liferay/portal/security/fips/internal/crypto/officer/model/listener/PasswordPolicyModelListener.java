@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.exception.RequiredPasswordPolicyException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PasswordPolicy;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.fips.constants.FIPSConstants;
 import com.liferay.portal.util.PortalInstances;
@@ -20,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Manuele Castro
  */
-@Component(service = ModelListener.class)
+@Component(enabled = false, service = ModelListener.class)
 public class PasswordPolicyModelListener
 	extends BaseModelListener<PasswordPolicy> {
 
@@ -29,7 +28,6 @@ public class PasswordPolicyModelListener
 		throws ModelListenerException {
 
 		if (PortalInstances.isCurrentCompanyInDeletionProcess() ||
-			!PropsValues.FIPS_ENABLED ||
 			!StringUtil.equals(
 				FIPSConstants.PASSWORD_POLICY_NAME_CRYPTO_OFFICER,
 				passwordPolicy.getName())) {

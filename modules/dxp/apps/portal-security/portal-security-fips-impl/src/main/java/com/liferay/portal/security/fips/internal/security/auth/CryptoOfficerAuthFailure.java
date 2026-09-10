@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Manuele Castro
  */
 @Component(
+	enabled = false,
 	property = {"key=auth.failure", "service.ranking:Integer=-100"},
 	service = AuthFailure.class
 )

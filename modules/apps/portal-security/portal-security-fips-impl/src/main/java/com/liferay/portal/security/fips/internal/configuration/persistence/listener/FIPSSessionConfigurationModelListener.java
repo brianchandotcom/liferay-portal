@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.security.fips.configuration.FIPSSessionConfiguration;
 import com.liferay.portal.security.fips.constants.FIPSConstants;
 import com.liferay.portal.security.fips.util.FIPSUtil;
@@ -27,6 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Manuele Castro
  */
 @Component(
+	enabled = false,
 	property = {
 		"model.class.name=com.liferay.portal.security.fips.configuration.FIPSSessionConfiguration",
 		"model.class.name=com.liferay.portal.security.fips.configuration.FIPSSessionConfiguration.scoped"
@@ -39,10 +39,6 @@ public class FIPSSessionConfigurationModelListener
 	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
-
-		if (!PropsValues.FIPS_ENABLED) {
-			return;
-		}
 
 		_checkCryptoOfficerRole(properties);
 		_validate(

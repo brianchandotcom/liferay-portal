@@ -7,7 +7,6 @@ package com.liferay.portal.security.fips.internal.security.auth.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
@@ -19,7 +18,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -61,10 +59,9 @@ public class CryptoOfficerAuthFailureTest {
 	@Test
 	public void testOnFailureByEmailAddress() throws Exception {
 		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"FIPS_ENABLED", true)) {
+				FIPSTestUtil.enableFIPSModeWithSafeCloseable()) {
 
-			_portalInstanceLifecycleListener.portalInstanceRegistered(_company);
+			FIPSTestUtil.portalInstanceRegistered(_company);
 
 			_testOnFailureByEmailAddress();
 			_testOnFailureByEmailAddressWhenLockedOut();
@@ -75,10 +72,9 @@ public class CryptoOfficerAuthFailureTest {
 	@Test
 	public void testOnFailureByScreenName() throws Exception {
 		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"FIPS_ENABLED", true)) {
+				FIPSTestUtil.enableFIPSModeWithSafeCloseable()) {
 
-			_portalInstanceLifecycleListener.portalInstanceRegistered(_company);
+			FIPSTestUtil.portalInstanceRegistered(_company);
 
 			User user = _addCryptoOfficerUser();
 
@@ -99,10 +95,9 @@ public class CryptoOfficerAuthFailureTest {
 	@Test
 	public void testOnFailureByUserId() throws Exception {
 		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"FIPS_ENABLED", true)) {
+				FIPSTestUtil.enableFIPSModeWithSafeCloseable()) {
 
-			_portalInstanceLifecycleListener.portalInstanceRegistered(_company);
+			FIPSTestUtil.portalInstanceRegistered(_company);
 
 			User user = _addCryptoOfficerUser();
 
@@ -238,11 +233,6 @@ public class CryptoOfficerAuthFailureTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject(
-		filter = "component.name=com.liferay.portal.security.fips.internal.instance.lifecycle.FIPSPortalInstanceLifecycleListener"
-	)
-	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

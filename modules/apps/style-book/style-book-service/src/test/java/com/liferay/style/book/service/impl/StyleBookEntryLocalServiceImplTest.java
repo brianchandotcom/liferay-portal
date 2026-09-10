@@ -8,6 +8,7 @@ package com.liferay.style.book.service.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -27,6 +28,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,11 +47,18 @@ public class StyleBookEntryLocalServiceImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
 		ReflectionTestUtil.setFieldValue(
 			_styleBookEntryLocalService, "_jsonFactory", new JSONFactoryImpl());
+	}
+
+	@Test
+	public void testAddStyleBookEntryFrontendToken() throws Exception {
+		_testAddStyleBookEntryFrontendTokenWithDuplicateName();
+		_testAddStyleBookEntryFrontendTokenWithExistingUnrelatedValue();
+		_testAddStyleBookEntryFrontendTokenWithMalformedFrontendTokenDefinition();
 	}
 
 	@Test
@@ -93,6 +102,20 @@ public class StyleBookEntryLocalServiceImplTest {
 				RandomTestUtil.randomString());
 		_testUpdateFrontendTokensValuesWithInvalidJSON();
 		_testUpdateFrontendTokensValuesWithSameValue();
+	}
+
+	private void _assertAddStyleBookEntryFrontendTokenFailure(
+		Class<? extends Throwable> exceptionClass, String message,
+		long styleBookEntryId) {
+
+		AssertUtils.assertFailure(
+			exceptionClass, message,
+			() -> _styleBookEntryLocalService.addStyleBookEntryFrontendToken(
+				styleBookEntryId, RandomTestUtil.randomString(), "Default",
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				RandomTestUtil.randomString(), _PRIMARY_COLOR_TOKEN_NAME,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 	}
 
 	private String _getFrontendTokenDefinition(
@@ -192,6 +215,122 @@ public class StyleBookEntryLocalServiceImplTest {
 		);
 
 		return styleBookEntry;
+	}
+
+	private void _testAddStyleBookEntryFrontendTokenWithDuplicateName()
+		throws Exception {
+
+		long styleBookEntryId = RandomTestUtil.randomLong();
+
+		StyleBookEntry styleBookEntry = _mockStyleBookEntry(styleBookEntryId);
+
+		String frontendTokenDefinition = _getFrontendTokenDefinition(
+			_getFrontendTokenSetJSONObject(
+				RandomTestUtil.randomString(),
+				_getFrontendTokenJSONObject(
+					RandomTestUtil.randomString(), _PRIMARY_COLOR_TOKEN_NAME)));
+
+		Mockito.when(
+			styleBookEntry.getFrontendTokenDefinition()
+		).thenReturn(
+			frontendTokenDefinition
+		);
+
+		_assertAddStyleBookEntryFrontendTokenFailure(
+			DuplicateStyleBookEntryFrontendTokenException.class,
+			"Frontend token \"" + _PRIMARY_COLOR_TOKEN_NAME +
+				"\" is defined more than once",
+			styleBookEntryId);
+	}
+
+	private void _testAddStyleBookEntryFrontendTokenWithExistingUnrelatedValue()
+		throws Exception {
+
+		long styleBookEntryId = RandomTestUtil.randomLong();
+
+		StyleBookEntry styleBookEntry = _mockStyleBookEntry(styleBookEntryId);
+
+		Mockito.when(
+			styleBookEntry.getFrontendTokenDefinition()
+		).thenReturn(
+			"{}"
+		);
+
+		String unrelatedName = RandomTestUtil.randomString();
+		String unrelatedValue = RandomTestUtil.randomString();
+
+		Mockito.when(
+			styleBookEntry.getFrontendTokensValues()
+		).thenReturn(
+			JSONUtil.put(
+				unrelatedName, JSONUtil.put("value", unrelatedValue)
+			).toString()
+		);
+
+		Mockito.when(
+			_styleBookEntryPersistence.update(styleBookEntry)
+		).thenReturn(
+			styleBookEntry
+		);
+
+		String value = RandomTestUtil.randomString();
+
+		_styleBookEntryLocalService.addStyleBookEntryFrontendToken(
+			styleBookEntryId, RandomTestUtil.randomString(), "Default",
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomString(), _PRIMARY_COLOR_TOKEN_NAME,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), value);
+
+		Mockito.verify(
+			styleBookEntry
+		).setFrontendTokenDefinition(
+			Mockito.anyString()
+		);
+
+		ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(
+			String.class);
+
+		Mockito.verify(
+			styleBookEntry
+		).setFrontendTokensValues(
+			argumentCaptor.capture()
+		);
+
+		JSONObject frontendTokensValuesJSONObject =
+			JSONFactoryUtil.createJSONObject(argumentCaptor.getValue());
+
+		Assert.assertEquals(
+			unrelatedValue,
+			frontendTokensValuesJSONObject.getJSONObject(
+				unrelatedName
+			).getString(
+				"value"
+			));
+
+		JSONObject frontendTokenValueJSONObject =
+			frontendTokensValuesJSONObject.getJSONObject("custom:primaryColor");
+
+		Assert.assertEquals(
+			value, frontendTokenValueJSONObject.getString("value"));
+	}
+
+	private void _testAddStyleBookEntryFrontendTokenWithMalformedFrontendTokenDefinition()
+		throws Exception {
+
+		long styleBookEntryId = RandomTestUtil.randomLong();
+
+		StyleBookEntry styleBookEntry = _mockStyleBookEntry(styleBookEntryId);
+
+		Mockito.when(
+			styleBookEntry.getFrontendTokenDefinition()
+		).thenReturn(
+			"{invalid"
+		);
+
+		_assertAddStyleBookEntryFrontendTokenFailure(
+			StyleBookEntryFrontendTokenDefinitionException.class,
+			"Unable to parse frontend token definition", styleBookEntryId);
 	}
 
 	private void
@@ -387,6 +526,8 @@ public class StyleBookEntryLocalServiceImplTest {
 			frontendTokensValues
 		);
 	}
+
+	private static final String _PRIMARY_COLOR_TOKEN_NAME = "primaryColor";
 
 	@InjectMocks
 	private StyleBookEntryLocalService _styleBookEntryLocalService =

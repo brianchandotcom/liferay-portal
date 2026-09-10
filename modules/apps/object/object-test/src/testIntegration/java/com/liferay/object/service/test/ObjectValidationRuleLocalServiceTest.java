@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -816,6 +817,9 @@ public class ObjectValidationRuleLocalServiceTest {
 
 	@Test
 	public void testGetErrorLabel() throws Exception {
+
+		// Authenticated user
+
 		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
 			StringPool.BLANK, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
 			HashMapBuilder.put(
@@ -839,39 +843,37 @@ public class ObjectValidationRuleLocalServiceTest {
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			user.getUserId(), _objectDefinition.getObjectDefinitionId());
 
-		try {
-			_objectEntryLocalService.addObjectEntry(
-				0, user.getUserId(), _objectDefinition.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null,
-				HashMapBuilder.<String, Serializable>put(
-					"textObjectField", RandomTestUtil.randomString()
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+		_testGetErrorLabel(
+			objectValidationRule, LocaleUtil.BRAZIL, user.getUserId());
 
-			Assert.fail();
+		// Guest user
+
+		User guestUser = _userLocalService.getGuestUser(
+			TestPropsValues.getCompanyId());
+
+		Locale themeDisplayLocale = LocaleUtil.BRAZIL;
+
+		if (Objects.equals(guestUser.getLocale(), themeDisplayLocale)) {
+			themeDisplayLocale = LocaleUtil.US;
 		}
-		catch (ModelListenerException modelListenerException) {
-			ObjectValidationRuleEngineException
-				objectValidationRuleEngineException =
-					(ObjectValidationRuleEngineException)
-						modelListenerException.getCause();
 
-			List<ObjectValidationRuleResult> objectValidationRuleResults =
-				objectValidationRuleEngineException.
-					getObjectValidationRuleResults();
+		Locale originalThemeDisplayLocale =
+			LocaleThreadLocal.getThemeDisplayLocale();
 
-			Assert.assertEquals(
-				objectValidationRuleResults.toString(), 1,
-				objectValidationRuleResults.size());
+		LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
 
-			ObjectValidationRuleResult objectValidationRuleResult =
-				objectValidationRuleResults.get(0);
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(guestUser));
 
-			Assert.assertEquals(
-				objectValidationRule.getErrorLabel(user.getLanguageId()),
-				objectValidationRuleResult.getErrorMessage());
+			PrincipalThreadLocal.setName(guestUser.getUserId());
+
+			_testGetErrorLabel(
+				objectValidationRule, themeDisplayLocale,
+				guestUser.getUserId());
+		}
+		finally {
+			LocaleThreadLocal.setThemeDisplayLocale(originalThemeDisplayLocale);
 		}
 	}
 
@@ -1281,6 +1283,47 @@ public class ObjectValidationRuleLocalServiceTest {
 		Assert.assertNull(
 			_objectValidationRuleLocalService.fetchObjectValidationRule(
 				objectValidationRuleId));
+	}
+
+	private void _testGetErrorLabel(
+			ObjectValidationRule objectValidationRule, Locale locale,
+			long userId)
+		throws Exception {
+
+		try {
+			_objectEntryLocalService.addObjectEntry(
+				0, userId, _objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectField", RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+					(ObjectValidationRuleEngineException)
+						modelListenerException.getCause();
+
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
+
+			Assert.assertEquals(
+				objectValidationRuleResults.toString(), 1,
+				objectValidationRuleResults.size());
+
+			ObjectValidationRuleResult objectValidationRuleResult =
+				objectValidationRuleResults.get(0);
+
+			Assert.assertEquals(
+				objectValidationRule.getErrorLabel(locale),
+				objectValidationRuleResult.getErrorMessage());
+		}
 	}
 
 	private static final String _VALID_DDM_SCRIPT =

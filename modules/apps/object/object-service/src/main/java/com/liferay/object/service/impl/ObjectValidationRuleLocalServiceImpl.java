@@ -703,7 +703,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			User user = _userLocalService.fetchUser(userId);
 
-			if (user != null) {
+			if ((user != null) && !user.isGuestUser()) {
 				locale = user.getLocale();
 			}
 

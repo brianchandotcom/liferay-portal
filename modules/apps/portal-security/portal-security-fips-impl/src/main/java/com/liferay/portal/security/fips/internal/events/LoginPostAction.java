@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.security.fips.configuration.FIPSSessionConfiguration;
 import com.liferay.portal.security.fips.constants.FIPSConstants;
@@ -26,7 +25,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Manuele Castro
  */
-@Component(property = "key=login.events.post", service = LifecycleAction.class)
+@Component(
+	enabled = false, property = "key=login.events.post",
+	service = LifecycleAction.class
+)
 public class LoginPostAction extends Action {
 
 	@Override
@@ -34,10 +36,6 @@ public class LoginPostAction extends Action {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws ActionException {
-
-		if (!PropsValues.FIPS_ENABLED) {
-			return;
-		}
 
 		try {
 			FIPSSessionConfiguration fipsSessionConfiguration =

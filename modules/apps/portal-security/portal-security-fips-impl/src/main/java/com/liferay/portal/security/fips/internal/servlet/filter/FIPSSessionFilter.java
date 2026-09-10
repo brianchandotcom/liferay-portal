@@ -9,7 +9,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.fips.configuration.FIPSSessionConfiguration;
@@ -30,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Manuele Castro
  */
 @Component(
+	enabled = false,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=FIPS Session Lifetime Filter", "url-pattern=/*"
@@ -37,15 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Filter.class
 )
 public class FIPSSessionFilter extends BasePortalFilter {
-
-	@Override
-	public boolean isFilterEnabled() {
-		if (super.isFilterEnabled() && PropsValues.FIPS_ENABLED) {
-			return true;
-		}
-
-		return false;
-	}
 
 	@Override
 	public boolean isFilterEnabled(

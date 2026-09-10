@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.security.fips.constants.FIPSConstants;
 import com.liferay.portal.security.fips.constants.FIPSPortletKeys;
 
@@ -32,16 +31,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Manuele Castro
  */
-@Component(service = PortalInstanceLifecycleListener.class)
+@Component(enabled = false, service = PortalInstanceLifecycleListener.class)
 public class FIPSPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (!PropsValues.FIPS_ENABLED) {
-			return;
-		}
-
 		long companyId = company.getCompanyId();
 
 		User user = _userLocalService.addDefaultServiceAccountUser(companyId);

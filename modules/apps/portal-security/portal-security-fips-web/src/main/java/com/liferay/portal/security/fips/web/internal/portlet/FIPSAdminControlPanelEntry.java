@@ -19,6 +19,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Manuele Castro
  */
 @Component(
+	enabled = false,
 	property = "jakarta.portlet.name=" + FIPSPortletKeys.FIPS_ADMIN,
 	service = ControlPanelEntry.class
 )

@@ -17,7 +17,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
-import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.item.selector.ItemSelector;
@@ -70,6 +69,7 @@ import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.StyleBookUtil;
+import com.liferay.style.book.web.internal.util.StyleBookEntryFrontendTokenDefinitionUtil;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderResponse;
@@ -80,7 +80,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -129,7 +128,10 @@ public class EditStyleBookEntryDisplayContext {
 			).buildString()
 		).put(
 			"frontendTokenDefinitions",
-			_getFrontendTokenDefinitionsJSONObjects()
+			StyleBookEntryFrontendTokenDefinitionUtil.
+				getFrontendTokenDefinitionsJSONArray(
+					_frontendTokenDefinitionRegistry, _themeDisplay.getLocale(),
+					_styleBookEntry)
 		).put(
 			"frontendTokensValues",
 			() -> {
@@ -333,53 +335,6 @@ public class EditStyleBookEntryDisplayContext {
 				getFragmentCollectionContributors();
 
 		return fragmentCollectionsCount + fragmentCollectionContributors.size();
-	}
-
-	private List<JSONObject> _getFrontendTokenDefinitionsJSONObjects()
-		throws Exception {
-
-		List<FrontendTokenDefinition> frontendTokenDefinitions = ListUtil.sort(
-			ListUtil.filter(
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
-					_themeDisplay.getCompanyId()),
-				frontendTokenDefinition ->
-					Objects.equals(
-						frontendTokenDefinition.getThemeId(),
-						_styleBookEntry.getThemeId()) ||
-					Objects.equals(
-						frontendTokenDefinition.getThemeType(),
-						FrontendTokenDefinitionConstants.THEME_TYPE_GLOBAL)),
-			(frontendTokenDefinition1, frontendTokenDefinition2) ->
-				Integer.compare(
-					frontendTokenDefinition2.getPriority(),
-					frontendTokenDefinition1.getPriority()));
-
-		return TransformUtil.transform(
-			frontendTokenDefinitions,
-			frontendTokenDefinition -> {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				JSONObject frontendTokenDefinitionJSONObject =
-					frontendTokenDefinition.getJSONObject(
-						_themeDisplay.getLocale());
-
-				for (String key : frontendTokenDefinitionJSONObject.keySet()) {
-					jsonObject.put(
-						key, frontendTokenDefinitionJSONObject.get(key));
-				}
-
-				jsonObject.put(
-					"id", frontendTokenDefinition.getThemeId()
-				).put(
-					"name",
-					frontendTokenDefinition.getThemeName(
-						_themeDisplay.getLocale())
-				).put(
-					"priority", frontendTokenDefinition.getPriority()
-				);
-
-				return jsonObject;
-			});
 	}
 
 	private String _getName(Group entryGroup, Layout layout) {

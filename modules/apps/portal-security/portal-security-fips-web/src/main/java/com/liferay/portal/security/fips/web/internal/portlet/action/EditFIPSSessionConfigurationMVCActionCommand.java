@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Manuele Castro
  */
 @Component(
+	enabled = false,
 	property = {
 		"jakarta.portlet.name=" + FIPSPortletKeys.FIPS_ADMIN,
 		"mvc.command.name=/fips_admin/edit_fips_session_configuration"

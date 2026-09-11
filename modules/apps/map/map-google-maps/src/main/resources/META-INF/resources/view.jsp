@@ -44,7 +44,9 @@ name = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse) + nam
 				'://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady';
 
 			<c:if test="<%= Validator.isNotNull(googleMapsDisplayContext.getGoogleMapsAPIKey()) %>">
-				apiURL += '&key=' + '<%= googleMapsDisplayContext.getGoogleMapsAPIKey() %>';
+				apiURL +=
+					'&key=' +
+					'<%= googleMapsDisplayContext.getPlaintextGoogleMapsAPIKey() %>';
 			</c:if>
 
 			var script = document.createElement('script');

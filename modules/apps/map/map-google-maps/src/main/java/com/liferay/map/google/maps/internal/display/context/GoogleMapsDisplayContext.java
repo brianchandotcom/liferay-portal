@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.key.secret.SecretResolverUtil;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -68,6 +69,21 @@ public class GoogleMapsDisplayContext {
 		return _googleMapsAPIKey;
 	}
 
+	public String getPlaintextGoogleMapsAPIKey() {
+		if (_plaintextGoogleMapsAPIKey != null) {
+			return _plaintextGoogleMapsAPIKey;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		_plaintextGoogleMapsAPIKey = SecretResolverUtil.resolve(
+			themeDisplay.getCompanyId(), getGoogleMapsAPIKey());
+
+		return _plaintextGoogleMapsAPIKey;
+	}
+
 	private Group _getGroup() {
 		Group group = (Group)_httpServletRequest.getAttribute("site.liveGroup");
 
@@ -91,5 +107,6 @@ public class GoogleMapsDisplayContext {
 	private String _configurationPrefix;
 	private String _googleMapsAPIKey;
 	private final HttpServletRequest _httpServletRequest;
+	private String _plaintextGoogleMapsAPIKey;
 
 }

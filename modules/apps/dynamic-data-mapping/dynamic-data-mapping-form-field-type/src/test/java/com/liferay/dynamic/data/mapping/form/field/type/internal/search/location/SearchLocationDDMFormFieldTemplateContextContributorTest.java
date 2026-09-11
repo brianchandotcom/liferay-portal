@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.key.secret.SecretResolver;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.portlet.PortletPreferences;
@@ -66,6 +67,7 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 		_setUpJSONFactoryUtil();
 		_setUpLanguage();
 		_setUpResourceBundleUtil();
+		_setUpSecretResolver();
 	}
 
 	@Test
@@ -212,6 +214,12 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
+	}
+
+	private static void _setUpSecretResolver() {
+		ReflectionTestUtil.setFieldValue(
+			_searchLocationDDMFormFieldTemplateContextContributor,
+			"_secretResolver", (SecretResolver)(companyId, value) -> value);
 	}
 
 	private DDMFormFieldRenderingContext _createDDMFormFieldRenderingContext() {

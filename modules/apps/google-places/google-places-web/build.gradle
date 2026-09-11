@@ -8,8 +8,10 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:google-places:google-places-api")
+	compileOnly project(":apps:portal-security:portal-security-key-api")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:site:site-api")
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 }

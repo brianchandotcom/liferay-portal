@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.key.secret.SecretResolverUtil;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.WindowState;
@@ -205,6 +206,9 @@ public class IFrameDisplayContext {
 		if (Validator.isNull(_password)) {
 			return StringPool.BLANK;
 		}
+
+		_password = SecretResolverUtil.resolve(
+			_themeDisplay.getCompanyId(), _password);
 
 		String passwordField =
 			_iFramePortletInstanceConfiguration.passwordField();

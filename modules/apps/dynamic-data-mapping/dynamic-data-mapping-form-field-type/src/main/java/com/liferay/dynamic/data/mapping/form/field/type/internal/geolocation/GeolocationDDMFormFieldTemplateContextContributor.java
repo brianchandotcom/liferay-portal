@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.key.secret.SecretResolver;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -80,16 +81,21 @@ public class GeolocationDDMFormFieldTemplateContextContributor
 	private String _getGoogleMapsAPIKey(
 		Group group, ThemeDisplay themeDisplay) {
 
-		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
+		long companyId = themeDisplay.getCompanyId();
 
-		if (group == null) {
-			return companyPortletPreferences.getValue("googleMapsAPIKey", null);
+		PortletPreferences companyPortletPreferences =
+			PrefsPropsUtil.getPreferences(companyId);
+
+		String googleMapsAPIKey = companyPortletPreferences.getValue(
+			"googleMapsAPIKey", null);
+
+		if (group != null) {
+			googleMapsAPIKey = GetterUtil.getString(
+				group.getTypeSettingsProperty("googleMapsAPIKey"),
+				googleMapsAPIKey);
 		}
 
-		return GetterUtil.getString(
-			group.getTypeSettingsProperty("googleMapsAPIKey"),
-			companyPortletPreferences.getValue("googleMapsAPIKey", null));
+		return _secretResolver.resolve(companyId, googleMapsAPIKey);
 	}
 
 	private Group _getGroup(
@@ -112,5 +118,8 @@ public class GeolocationDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 }

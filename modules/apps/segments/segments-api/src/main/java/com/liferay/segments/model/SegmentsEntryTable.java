@@ -63,6 +63,8 @@ public class SegmentsEntryTable extends BaseTable<SegmentsEntryTable> {
 		"criteria", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<SegmentsEntryTable, String> source = createColumn(
 		"source", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SegmentsEntryTable, String> type = createColumn(
+		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SegmentsEntryTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,
@@ -73,4 +75,4 @@ public class SegmentsEntryTable extends BaseTable<SegmentsEntryTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1655363898
+// LIFERAY-SERVICE-BUILDER-HASH:-402008697

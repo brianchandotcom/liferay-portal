@@ -91,6 +91,14 @@ public interface SegmentsEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public SegmentsEntry addSegmentsEntry(
+			String externalReferenceCode, String segmentsEntryKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			boolean active, String criteria, String source, String type,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void addSegmentsEntryClassPKs(
 			long segmentsEntryId, long[] classPKs,
 			ServiceContext serviceContext)
@@ -302,6 +310,11 @@ public interface SegmentsEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntry> getSegmentsEntries(
+		long groupId, String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntries(
 		long[] groupIds, boolean active, String[] sources);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -315,7 +328,27 @@ public interface SegmentsEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntry> getSegmentsEntriesBySource(
+		long companyId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntriesBySource(
 		String source, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntriesBySource(
+		String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntriesBySource(
+		String source, String[] types, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntriesByType(
+		String type, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator);
 
 	/**
@@ -357,6 +390,10 @@ public interface SegmentsEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsEntriesCount(long groupId, String[] sources);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntriesCount(
+		long groupId, String[] sources, String type);
 
 	/**
 	 * Returns the segments entry with the primary key.
@@ -419,6 +456,14 @@ public interface SegmentsEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public SegmentsEntry updateSegmentsEntry(
+			String externalReferenceCode, long segmentsEntryId,
+			String segmentsEntryKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active, String criteria,
+			String type, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Override
 	@Transactional(enabled = false)
 	public CTPersistence<SegmentsEntry> getCTPersistence();
@@ -435,4 +480,4 @@ public interface SegmentsEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-15771358
+// LIFERAY-SERVICE-BUILDER-HASH:-324141271

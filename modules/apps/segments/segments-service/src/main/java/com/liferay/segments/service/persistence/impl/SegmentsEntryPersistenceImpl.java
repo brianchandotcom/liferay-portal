@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -103,7 +104,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -250,7 +251,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -340,7 +341,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where segmentsEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param segmentsEntryId the segments entry ID
@@ -401,7 +402,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where segmentsEntryId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param segmentsEntryIds the segments entry IDs
@@ -467,7 +468,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -526,7 +527,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -549,7 +550,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
@@ -574,7 +575,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where groupId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
@@ -663,7 +664,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where active = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
@@ -746,7 +747,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where source = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param source the source
@@ -822,6 +823,126 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {source});
 	}
 
+	private CollectionPersistenceFinder<SegmentsEntry, NoSuchEntryException>
+		_collectionPersistenceFinderByType;
+
+	/**
+	 * Returns an ordered range of all the segments entries where type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByType(
+		String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByType.find(
+			finderCache, new Object[] {new String[] {type}}, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where type = &#63;.
+	 *
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findByType_First(
+			String type, OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		return _collectionPersistenceFinderByType.findFirst(
+			finderCache, new Object[] {new String[] {type}}, orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where type = &#63;.
+	 *
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchByType_First(
+		String type, OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByType.fetchFirst(
+			finderCache, new Object[] {new String[] {type}}, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param types the types
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByType(
+		String[] types, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByType.find(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(types)}, start,
+			end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the segments entries where type = &#63; from the database.
+	 *
+	 * @param type the type
+	 */
+	@Override
+	public void removeByType(String type) {
+		_collectionPersistenceFinderByType.remove(
+			finderCache, new Object[] {new String[] {type}});
+	}
+
+	/**
+	 * Returns the number of segments entries where type = &#63;.
+	 *
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByType(String type) {
+		return _collectionPersistenceFinderByType.count(
+			finderCache, new Object[] {new String[] {type}});
+	}
+
+	/**
+	 * Returns the number of segments entries where type = any &#63;.
+	 *
+	 * @param types the types
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByType(String[] types) {
+		return _collectionPersistenceFinderByType.count(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(types)});
+	}
+
 	private UniquePersistenceFinder<SegmentsEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByG_S;
 
@@ -894,7 +1015,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where groupId = &#63; and active = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -958,7 +1079,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries that the user has permissions to view where groupId = &#63; and active = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -982,7 +1103,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and active = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
@@ -1008,7 +1129,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where groupId = &#63; and active = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
@@ -1106,7 +1227,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1173,7 +1294,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries that the user has permissions to view where groupId = &#63; and source = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1198,7 +1319,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
@@ -1225,7 +1346,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
@@ -1333,7 +1454,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where companyId = &#63; and source = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1397,7 +1518,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where companyId = &#63; and source = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1459,6 +1580,395 @@ public class SegmentsEntryPersistenceImpl
 			new Object[] {companyId, ArrayUtil.sortedUnique(sources)});
 	}
 
+	private CollectionPersistenceFinder<SegmentsEntry, NoSuchEntryException>
+		_collectionPersistenceFinderBySRC_T;
+
+	/**
+	 * Returns an ordered range of all the segments entries where source = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_T(
+		String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderBySRC_T.find(
+			finderCache,
+			new Object[] {new String[] {source}, new String[] {type}}, start,
+			end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where source = &#63; and type = &#63;.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findBySRC_T_First(
+			String source, String type,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		return _collectionPersistenceFinderBySRC_T.findFirst(
+			finderCache,
+			new Object[] {new String[] {source}, new String[] {type}},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where source = &#63; and type = &#63;.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchBySRC_T_First(
+		String source, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderBySRC_T.fetchFirst(
+			finderCache,
+			new Object[] {new String[] {source}, new String[] {type}},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where source = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sources the sources
+	 * @param types the types
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_T(
+		String[] sources, String[] types, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderBySRC_T.find(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(sources), ArrayUtil.sortedUnique(types)
+			},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the segments entries where source = &#63; and type = &#63; from the database.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 */
+	@Override
+	public void removeBySRC_T(String source, String type) {
+		_collectionPersistenceFinderBySRC_T.remove(
+			finderCache,
+			new Object[] {new String[] {source}, new String[] {type}});
+	}
+
+	/**
+	 * Returns the number of segments entries where source = &#63; and type = &#63;.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countBySRC_T(String source, String type) {
+		return _collectionPersistenceFinderBySRC_T.count(
+			finderCache,
+			new Object[] {new String[] {source}, new String[] {type}});
+	}
+
+	/**
+	 * Returns the number of segments entries where source = any &#63; and type = any &#63;.
+	 *
+	 * @param sources the sources
+	 * @param types the types
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countBySRC_T(String[] sources, String[] types) {
+		return _collectionPersistenceFinderBySRC_T.count(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(sources), ArrayUtil.sortedUnique(types)
+			});
+	}
+
+	private CollectionPersistenceFinder<SegmentsEntry, NoSuchEntryException>
+		_collectionPersistenceFinderBySRC_NotT;
+
+	/**
+	 * Returns all the segments entries where source = &#63; and type &ne; &#63;.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @return the matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_NotT(String source, String type) {
+		return findBySRC_NotT(
+			source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries where source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_NotT(
+		String source, String type, int start, int end) {
+
+		return findBySRC_NotT(source, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_NotT(
+		String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return findBySRC_NotT(
+			source, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_NotT(
+		String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderBySRC_NotT.find(
+			finderCache, new Object[] {new String[] {source}, type}, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where source = &#63; and type &ne; &#63;.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findBySRC_NotT_First(
+			String source, String type,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		return _collectionPersistenceFinderBySRC_NotT.findFirst(
+			finderCache, new Object[] {new String[] {source}, type},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where source = &#63; and type &ne; &#63;.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchBySRC_NotT_First(
+		String source, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderBySRC_NotT.fetchFirst(
+			finderCache, new Object[] {new String[] {source}, type},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the segments entries where source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sources the sources
+	 * @param type the type
+	 * @return the matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_NotT(String[] sources, String type) {
+		return findBySRC_NotT(
+			sources, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries where source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_NotT(
+		String[] sources, String type, int start, int end) {
+
+		return findBySRC_NotT(sources, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_NotT(
+		String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return findBySRC_NotT(
+			sources, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where source = &#63; and type &ne; &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findBySRC_NotT(
+		String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderBySRC_NotT.find(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(sources), type},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the segments entries where source = &#63; and type &ne; &#63; from the database.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 */
+	@Override
+	public void removeBySRC_NotT(String source, String type) {
+		_collectionPersistenceFinderBySRC_NotT.remove(
+			finderCache, new Object[] {new String[] {source}, type});
+	}
+
+	/**
+	 * Returns the number of segments entries where source = &#63; and type &ne; &#63;.
+	 *
+	 * @param source the source
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countBySRC_NotT(String source, String type) {
+		return _collectionPersistenceFinderBySRC_NotT.count(
+			finderCache, new Object[] {new String[] {source}, type});
+	}
+
+	/**
+	 * Returns the number of segments entries where source = any &#63; and type &ne; &#63;.
+	 *
+	 * @param sources the sources
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countBySRC_NotT(String[] sources, String type) {
+		return _collectionPersistenceFinderBySRC_NotT.count(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(sources), type});
+	}
+
 	private FilterCollectionPersistenceFinder
 		<SegmentsEntry, NoSuchEntryException>
 			_collectionPersistenceFinderByG_A_SRC;
@@ -1467,7 +1977,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where groupId = &#63; and active = &#63; and source = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1537,7 +2047,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries that the user has permissions to view where groupId = &#63; and active = &#63; and source = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1563,7 +2073,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and active = &#63; and source = any &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
@@ -1591,7 +2101,7 @@ public class SegmentsEntryPersistenceImpl
 	 * Returns an ordered range of all the segments entries where groupId = &#63; and active = &#63; and source = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
@@ -1705,6 +2215,1152 @@ public class SegmentsEntryPersistenceImpl
 			groupIds);
 	}
 
+	private FilterCollectionPersistenceFinder
+		<SegmentsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByG_SRC_T;
+
+	/**
+	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_T(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByG_SRC_T.find(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, new String[] {source}, new String[] {type}
+			},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where groupId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findByG_SRC_T_First(
+			long groupId, String source, String type,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		return _collectionPersistenceFinderByG_SRC_T.findFirst(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, new String[] {source}, new String[] {type}
+			},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where groupId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchByG_SRC_T_First(
+		long groupId, String source, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByG_SRC_T.fetchFirst(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, new String[] {source}, new String[] {type}
+			},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries that the user has permissions to view where groupId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public List<SegmentsEntry> filterFindByG_SRC_T(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByG_SRC_T.filterFind(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, new String[] {source}, new String[] {type}
+			},
+			start, end, orderByComparator, groupId);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param types the types
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public List<SegmentsEntry> filterFindByG_SRC_T(
+		long[] groupIds, String[] sources, String[] types, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		groupIds = ArrayUtil.sortedUnique(groupIds);
+
+		return _collectionPersistenceFinderByG_SRC_T.filterFind(
+			finderCache,
+			new Object[] {
+				groupIds, ArrayUtil.sortedUnique(sources),
+				ArrayUtil.sortedUnique(types)
+			},
+			start, end, orderByComparator, groupIds);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param types the types
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_T(
+		long[] groupIds, String[] sources, String[] types, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByG_SRC_T.find(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds),
+				ArrayUtil.sortedUnique(sources), ArrayUtil.sortedUnique(types)
+			},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the segments entries where groupId = &#63; and source = &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 */
+	@Override
+	public void removeByG_SRC_T(long groupId, String source, String type) {
+		_collectionPersistenceFinderByG_SRC_T.remove(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, new String[] {source}, new String[] {type}
+			});
+	}
+
+	/**
+	 * Returns the number of segments entries where groupId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByG_SRC_T(long groupId, String source, String type) {
+		return _collectionPersistenceFinderByG_SRC_T.count(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, new String[] {source}, new String[] {type}
+			});
+	}
+
+	/**
+	 * Returns the number of segments entries where groupId = any &#63; and source = any &#63; and type = any &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param types the types
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByG_SRC_T(
+		long[] groupIds, String[] sources, String[] types) {
+
+		return _collectionPersistenceFinderByG_SRC_T.count(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds),
+				ArrayUtil.sortedUnique(sources), ArrayUtil.sortedUnique(types)
+			});
+	}
+
+	/**
+	 * Returns the number of segments entries that the user has permission to view where groupId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the number of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_SRC_T(long groupId, String source, String type) {
+		return _collectionPersistenceFinderByG_SRC_T.filterCount(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, new String[] {source}, new String[] {type}
+			},
+			groupId);
+	}
+
+	/**
+	 * Returns the number of segments entries that the user has permission to view where groupId = any &#63; and source = any &#63; and type = any &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param types the types
+	 * @return the number of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_SRC_T(
+		long[] groupIds, String[] sources, String[] types) {
+
+		groupIds = ArrayUtil.sortedUnique(groupIds);
+
+		return _collectionPersistenceFinderByG_SRC_T.filterCount(
+			finderCache,
+			new Object[] {
+				groupIds, ArrayUtil.sortedUnique(sources),
+				ArrayUtil.sortedUnique(types)
+			},
+			groupIds);
+	}
+
+	private FilterCollectionPersistenceFinder
+		<SegmentsEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByG_SRC_NotT;
+
+	/**
+	 * Returns all the segments entries where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_NotT(
+		long groupId, String source, String type) {
+
+		return findByG_SRC_NotT(
+			groupId, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_NotT(
+		long groupId, String source, String type, int start, int end) {
+
+		return findByG_SRC_NotT(groupId, source, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_NotT(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return findByG_SRC_NotT(
+			groupId, source, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_NotT(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByG_SRC_NotT.find(
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}, type},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findByG_SRC_NotT_First(
+			long groupId, String source, String type,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		return _collectionPersistenceFinderByG_SRC_NotT.findFirst(
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}, type},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchByG_SRC_NotT_First(
+		long groupId, String source, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByG_SRC_NotT.fetchFirst(
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}, type},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the segments entries that the user has permission to view where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the matching segments entries that the user has permission to view
+	 */
+	@Override
+	public List<SegmentsEntry> filterFindByG_SRC_NotT(
+		long groupId, String source, String type) {
+
+		return filterFindByG_SRC_NotT(
+			groupId, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries that the user has permission to view where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public List<SegmentsEntry> filterFindByG_SRC_NotT(
+		long groupId, String source, String type, int start, int end) {
+
+		return filterFindByG_SRC_NotT(groupId, source, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries that the user has permissions to view where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public List<SegmentsEntry> filterFindByG_SRC_NotT(
+		long groupId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByG_SRC_NotT.filterFind(
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}, type},
+			start, end, orderByComparator, groupId);
+	}
+
+	/**
+	 * Returns all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @return the matching segments entries that the user has permission to view
+	 */
+	@Override
+	public List<SegmentsEntry> filterFindByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type) {
+
+		return filterFindByG_SRC_NotT(
+			groupIds, sources, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public List<SegmentsEntry> filterFindByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type, int start, int end) {
+
+		return filterFindByG_SRC_NotT(
+			groupIds, sources, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public List<SegmentsEntry> filterFindByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		groupIds = ArrayUtil.sortedUnique(groupIds);
+
+		return _collectionPersistenceFinderByG_SRC_NotT.filterFind(
+			finderCache,
+			new Object[] {groupIds, ArrayUtil.sortedUnique(sources), type},
+			start, end, orderByComparator, groupIds);
+	}
+
+	/**
+	 * Returns all the segments entries where groupId = any &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @return the matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type) {
+
+		return findByG_SRC_NotT(
+			groupIds, sources, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries where groupId = any &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type, int start, int end) {
+
+		return findByG_SRC_NotT(groupIds, sources, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where groupId = any &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return findByG_SRC_NotT(
+			groupIds, sources, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where groupId = &#63; and source = &#63; and type &ne; &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByG_SRC_NotT.find(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds),
+				ArrayUtil.sortedUnique(sources), type
+			},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the segments entries where groupId = &#63; and source = &#63; and type &ne; &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 */
+	@Override
+	public void removeByG_SRC_NotT(long groupId, String source, String type) {
+		_collectionPersistenceFinderByG_SRC_NotT.remove(
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}, type});
+	}
+
+	/**
+	 * Returns the number of segments entries where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByG_SRC_NotT(long groupId, String source, String type) {
+		return _collectionPersistenceFinderByG_SRC_NotT.count(
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}, type});
+	}
+
+	/**
+	 * Returns the number of segments entries where groupId = any &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type) {
+
+		return _collectionPersistenceFinderByG_SRC_NotT.count(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds),
+				ArrayUtil.sortedUnique(sources), type
+			});
+	}
+
+	/**
+	 * Returns the number of segments entries that the user has permission to view where groupId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the number of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_SRC_NotT(
+		long groupId, String source, String type) {
+
+		return _collectionPersistenceFinderByG_SRC_NotT.filterCount(
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}, type},
+			groupId);
+	}
+
+	/**
+	 * Returns the number of segments entries that the user has permission to view where groupId = any &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param sources the sources
+	 * @param type the type
+	 * @return the number of matching segments entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_SRC_NotT(
+		long[] groupIds, String[] sources, String type) {
+
+		groupIds = ArrayUtil.sortedUnique(groupIds);
+
+		return _collectionPersistenceFinderByG_SRC_NotT.filterCount(
+			finderCache,
+			new Object[] {groupIds, ArrayUtil.sortedUnique(sources), type},
+			groupIds);
+	}
+
+	private CollectionPersistenceFinder<SegmentsEntry, NoSuchEntryException>
+		_collectionPersistenceFinderByC_SRC_T;
+
+	/**
+	 * Returns an ordered range of all the segments entries where companyId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_T(
+		long companyId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByC_SRC_T.find(
+			finderCache,
+			new Object[] {
+				companyId, new String[] {source}, new String[] {type}
+			},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where companyId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findByC_SRC_T_First(
+			long companyId, String source, String type,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		return _collectionPersistenceFinderByC_SRC_T.findFirst(
+			finderCache,
+			new Object[] {
+				companyId, new String[] {source}, new String[] {type}
+			},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where companyId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchByC_SRC_T_First(
+		long companyId, String source, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByC_SRC_T.fetchFirst(
+			finderCache,
+			new Object[] {
+				companyId, new String[] {source}, new String[] {type}
+			},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where companyId = &#63; and source = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sources the sources
+	 * @param types the types
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_T(
+		long companyId, String[] sources, String[] types, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByC_SRC_T.find(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(sources),
+				ArrayUtil.sortedUnique(types)
+			},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the segments entries where companyId = &#63; and source = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 */
+	@Override
+	public void removeByC_SRC_T(long companyId, String source, String type) {
+		_collectionPersistenceFinderByC_SRC_T.remove(
+			finderCache,
+			new Object[] {
+				companyId, new String[] {source}, new String[] {type}
+			});
+	}
+
+	/**
+	 * Returns the number of segments entries where companyId = &#63; and source = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByC_SRC_T(long companyId, String source, String type) {
+		return _collectionPersistenceFinderByC_SRC_T.count(
+			finderCache,
+			new Object[] {
+				companyId, new String[] {source}, new String[] {type}
+			});
+	}
+
+	/**
+	 * Returns the number of segments entries where companyId = &#63; and source = any &#63; and type = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sources the sources
+	 * @param types the types
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByC_SRC_T(
+		long companyId, String[] sources, String[] types) {
+
+		return _collectionPersistenceFinderByC_SRC_T.count(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(sources),
+				ArrayUtil.sortedUnique(types)
+			});
+	}
+
+	private CollectionPersistenceFinder<SegmentsEntry, NoSuchEntryException>
+		_collectionPersistenceFinderByC_SRC_NotT;
+
+	/**
+	 * Returns all the segments entries where companyId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_NotT(
+		long companyId, String source, String type) {
+
+		return findByC_SRC_NotT(
+			companyId, source, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries where companyId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_NotT(
+		long companyId, String source, String type, int start, int end) {
+
+		return findByC_SRC_NotT(companyId, source, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where companyId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_NotT(
+		long companyId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return findByC_SRC_NotT(
+			companyId, source, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where companyId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_NotT(
+		long companyId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByC_SRC_NotT.find(
+			finderCache, new Object[] {companyId, new String[] {source}, type},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where companyId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry
+	 * @throws NoSuchEntryException if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry findByC_SRC_NotT_First(
+			long companyId, String source, String type,
+			OrderByComparator<SegmentsEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		return _collectionPersistenceFinderByC_SRC_NotT.findFirst(
+			finderCache, new Object[] {companyId, new String[] {source}, type},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first segments entry in the ordered set where companyId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	 */
+	@Override
+	public SegmentsEntry fetchByC_SRC_NotT_First(
+		long companyId, String source, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByC_SRC_NotT.fetchFirst(
+			finderCache, new Object[] {companyId, new String[] {source}, type},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the segments entries where companyId = &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sources the sources
+	 * @param type the type
+	 * @return the matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_NotT(
+		long companyId, String[] sources, String type) {
+
+		return findByC_SRC_NotT(
+			companyId, sources, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the segments entries where companyId = &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @return the range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_NotT(
+		long companyId, String[] sources, String type, int start, int end) {
+
+		return findByC_SRC_NotT(companyId, sources, type, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where companyId = &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_NotT(
+		long companyId, String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return findByC_SRC_NotT(
+			companyId, sources, type, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entries where companyId = &#63; and source = &#63; and type &ne; &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sources the sources
+	 * @param type the type
+	 * @param start the lower bound of the range of segments entries
+	 * @param end the upper bound of the range of segments entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments entries
+	 */
+	@Override
+	public List<SegmentsEntry> findByC_SRC_NotT(
+		long companyId, String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByC_SRC_NotT.find(
+			finderCache,
+			new Object[] {companyId, ArrayUtil.sortedUnique(sources), type},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the segments entries where companyId = &#63; and source = &#63; and type &ne; &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 */
+	@Override
+	public void removeByC_SRC_NotT(long companyId, String source, String type) {
+		_collectionPersistenceFinderByC_SRC_NotT.remove(
+			finderCache, new Object[] {companyId, new String[] {source}, type});
+	}
+
+	/**
+	 * Returns the number of segments entries where companyId = &#63; and source = &#63; and type &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param source the source
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByC_SRC_NotT(long companyId, String source, String type) {
+		return _collectionPersistenceFinderByC_SRC_NotT.count(
+			finderCache, new Object[] {companyId, new String[] {source}, type});
+	}
+
+	/**
+	 * Returns the number of segments entries where companyId = &#63; and source = any &#63; and type &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sources the sources
+	 * @param type the type
+	 * @return the number of matching segments entries
+	 */
+	@Override
+	public int countByC_SRC_NotT(
+		long companyId, String[] sources, String type) {
+
+		return _collectionPersistenceFinderByC_SRC_NotT.count(
+			finderCache,
+			new Object[] {companyId, ArrayUtil.sortedUnique(sources), type});
+	}
+
 	private UniquePersistenceFinder<SegmentsEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByERC_G;
 
@@ -1777,6 +3433,7 @@ public class SegmentsEntryPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("active", "active_");
+		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -2117,6 +3774,7 @@ public class SegmentsEntryPersistenceImpl
 		ctMergeColumnNames.add("active_");
 		ctMergeColumnNames.add("criteria");
 		ctMergeColumnNames.add("source");
+		ctMergeColumnNames.add("type_");
 		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
@@ -2321,6 +3979,30 @@ public class SegmentsEntryPersistenceImpl
 					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
 					true, true, SegmentsEntry::getSource));
 
+		_collectionPersistenceFinderByType = new CollectionPersistenceFinder<>(
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, false, null),
+			_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+			SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
+			new ArrayableFinderColumn<>(
+				"segmentsEntry.", "type", "type_", FinderColumn.Type.STRING,
+				"=", false, true, true, SegmentsEntry::getType));
+
 		_uniquePersistenceFinderByG_S = new UniquePersistenceFinder<>(
 			this,
 			createUniqueFinderPath(
@@ -2428,6 +4110,62 @@ public class SegmentsEntryPersistenceImpl
 				"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
 				false, true, true, SegmentsEntry::getSource));
 
+		_collectionPersistenceFinderBySRC_T = new CollectionPersistenceFinder<>(
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySRC_T",
+				new String[] {
+					String.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"source", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySRC_T",
+				new String[] {String.class.getName(), String.class.getName()},
+				new String[] {"source", "type_"}, 0, 3, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countBySRC_T",
+				new String[] {String.class.getName(), String.class.getName()},
+				new String[] {"source", "type_"}, 0, 3, false, null),
+			_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+			SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
+			new ArrayableFinderColumn<>(
+				"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
+				false, true, true, SegmentsEntry::getSource),
+			new ArrayableFinderColumn<>(
+				"segmentsEntry.", "type", "type_", FinderColumn.Type.STRING,
+				"=", false, true, true, SegmentsEntry::getType));
+
+		_collectionPersistenceFinderBySRC_NotT =
+			new CollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySRC_NotT",
+					new String[] {
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"source", "type_"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countBySRC_NotT",
+					new String[] {
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {"source", "type_"}, false),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"", null,
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
+					false, true, true, SegmentsEntry::getSource),
+				new FinderColumn<>(
+					"segmentsEntry.", "type", "type_", FinderColumn.Type.STRING,
+					"!=", true, true, SegmentsEntry::getType));
+
 		_collectionPersistenceFinderByG_A_SRC =
 			new FilterCollectionPersistenceFinder<>(
 				this,
@@ -2469,6 +4207,154 @@ public class SegmentsEntryPersistenceImpl
 				new ArrayableFinderColumn<>(
 					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
 					false, true, true, SegmentsEntry::getSource));
+
+		_collectionPersistenceFinderByG_SRC_T =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SRC_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "source", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_SRC_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "source", "type_"}, 0, 6, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_SRC_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "source", "type_"}, 0, 6, false,
+					null),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"", null,
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=",
+					false, true, true, SegmentsEntry::getGroupId),
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
+					false, true, true, SegmentsEntry::getSource),
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "type", "type_", FinderColumn.Type.STRING,
+					"=", false, true, true, SegmentsEntry::getType));
+
+		_collectionPersistenceFinderByG_SRC_NotT =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SRC_NotT",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "source", "type_"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_SRC_NotT",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "source", "type_"}, false),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"", null,
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=",
+					false, true, true, SegmentsEntry::getGroupId),
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
+					false, true, true, SegmentsEntry::getSource),
+				new FinderColumn<>(
+					"segmentsEntry.", "type", "type_", FinderColumn.Type.STRING,
+					"!=", true, true, SegmentsEntry::getType));
+
+		_collectionPersistenceFinderByC_SRC_T =
+			new CollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_SRC_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "source", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_SRC_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "source", "type_"}, 0, 6, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_SRC_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "source", "type_"}, 0, 6, false,
+					null),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"", null,
+				new FinderColumn<>(
+					"segmentsEntry.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, SegmentsEntry::getCompanyId),
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
+					false, true, true, SegmentsEntry::getSource),
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "type", "type_", FinderColumn.Type.STRING,
+					"=", false, true, true, SegmentsEntry::getType));
+
+		_collectionPersistenceFinderByC_SRC_NotT =
+			new CollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_SRC_NotT",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "source", "type_"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_SRC_NotT",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "source", "type_"}, false),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"", null,
+				new FinderColumn<>(
+					"segmentsEntry.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, SegmentsEntry::getCompanyId),
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
+					false, true, true, SegmentsEntry::getSource),
+				new FinderColumn<>(
+					"segmentsEntry.", "type", "type_", FinderColumn.Type.STRING,
+					"!=", true, true, SegmentsEntry::getType));
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this,
@@ -2545,7 +4431,7 @@ public class SegmentsEntryPersistenceImpl
 		"SELECT COUNT(segmentsEntry) FROM SegmentsEntry segmentsEntry WHERE ";
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "active"});
+		new String[] {"uuid", "active", "type"});
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -2553,4 +4439,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:634004374
+// LIFERAY-SERVICE-BUILDER-HASH:401460242

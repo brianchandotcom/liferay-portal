@@ -65,6 +65,19 @@ public class SegmentsEntryLocalServiceUtil {
 			active, criteria, source, serviceContext);
 	}
 
+	public static SegmentsEntry addSegmentsEntry(
+			String externalReferenceCode, String segmentsEntryKey,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			String criteria, String source, String type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSegmentsEntry(
+			externalReferenceCode, segmentsEntryKey, nameMap, descriptionMap,
+			active, criteria, source, type, serviceContext);
+	}
+
 	public static void addSegmentsEntryClassPKs(
 			long segmentsEntryId, long[] classPKs,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -343,6 +356,14 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static List<SegmentsEntry> getSegmentsEntries(
+		long groupId, String[] sources, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return getService().getSegmentsEntries(
+			groupId, sources, type, start, end, orderByComparator);
+	}
+
+	public static List<SegmentsEntry> getSegmentsEntries(
 		long[] groupIds, boolean active, String[] sources) {
 
 		return getService().getSegmentsEntries(groupIds, active, sources);
@@ -363,11 +384,43 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static List<SegmentsEntry> getSegmentsEntriesBySource(
+		long companyId, String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return getService().getSegmentsEntriesBySource(
+			companyId, source, type, start, end, orderByComparator);
+	}
+
+	public static List<SegmentsEntry> getSegmentsEntriesBySource(
 		String source, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getService().getSegmentsEntriesBySource(
 			source, start, end, orderByComparator);
+	}
+
+	public static List<SegmentsEntry> getSegmentsEntriesBySource(
+		String source, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return getService().getSegmentsEntriesBySource(
+			source, type, start, end, orderByComparator);
+	}
+
+	public static List<SegmentsEntry> getSegmentsEntriesBySource(
+		String source, String[] types, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return getService().getSegmentsEntriesBySource(
+			source, types, start, end, orderByComparator);
+	}
+
+	public static List<SegmentsEntry> getSegmentsEntriesByType(
+		String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return getService().getSegmentsEntriesByType(
+			type, start, end, orderByComparator);
 	}
 
 	/**
@@ -417,6 +470,12 @@ public class SegmentsEntryLocalServiceUtil {
 
 	public static int getSegmentsEntriesCount(long groupId, String[] sources) {
 		return getService().getSegmentsEntriesCount(groupId, sources);
+	}
+
+	public static int getSegmentsEntriesCount(
+		long groupId, String[] sources, String type) {
+
+		return getService().getSegmentsEntriesCount(groupId, sources, type);
 	}
 
 	/**
@@ -503,6 +562,19 @@ public class SegmentsEntryLocalServiceUtil {
 			descriptionMap, active, criteria, serviceContext);
 	}
 
+	public static SegmentsEntry updateSegmentsEntry(
+			String externalReferenceCode, long segmentsEntryId,
+			String segmentsEntryKey, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			String criteria, String type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateSegmentsEntry(
+			externalReferenceCode, segmentsEntryId, segmentsEntryKey, nameMap,
+			descriptionMap, active, criteria, type, serviceContext);
+	}
+
 	public static SegmentsEntryLocalService getService() {
 		return _serviceSnapshot.get();
 	}
@@ -513,4 +585,4 @@ public class SegmentsEntryLocalServiceUtil {
 			SegmentsEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1799444270
+// LIFERAY-SERVICE-BUILDER-HASH:-2003050890

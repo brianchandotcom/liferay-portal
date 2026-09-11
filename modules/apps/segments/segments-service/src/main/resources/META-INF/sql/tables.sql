@@ -33,6 +33,7 @@ create table SegmentsEntry (
 	active_ BOOLEAN,
 	criteria TEXT null,
 	source VARCHAR(75) null,
+	type_ VARCHAR(75) null,
 	lastPublishDate DATE null,
 	primary key (segmentsEntryId, ctCollectionId)
 );

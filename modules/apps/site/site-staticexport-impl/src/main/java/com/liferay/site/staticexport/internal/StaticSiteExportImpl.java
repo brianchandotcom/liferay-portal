@@ -7,6 +7,7 @@ package com.liferay.site.staticexport.internal;
 
 import com.liferay.site.staticexport.StaticSiteExport;
 import com.liferay.site.staticexport.StaticSiteExportLayout;
+import com.liferay.site.staticexport.StaticSiteExportResource;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,9 +18,11 @@ import java.util.List;
 public class StaticSiteExportImpl implements StaticSiteExport {
 
 	public StaticSiteExportImpl(
-		List<StaticSiteExportLayout> staticSiteExportLayouts) {
+		List<StaticSiteExportLayout> staticSiteExportLayouts,
+		List<StaticSiteExportResource> staticSiteExportResources) {
 
 		_staticSiteExportLayouts = staticSiteExportLayouts;
+		_staticSiteExportResources = staticSiteExportResources;
 	}
 
 	@Override
@@ -27,6 +30,12 @@ public class StaticSiteExportImpl implements StaticSiteExport {
 		return Collections.unmodifiableList(_staticSiteExportLayouts);
 	}
 
+	@Override
+	public List<StaticSiteExportResource> getStaticSiteExportResources() {
+		return Collections.unmodifiableList(_staticSiteExportResources);
+	}
+
 	private final List<StaticSiteExportLayout> _staticSiteExportLayouts;
+	private final List<StaticSiteExportResource> _staticSiteExportResources;
 
 }

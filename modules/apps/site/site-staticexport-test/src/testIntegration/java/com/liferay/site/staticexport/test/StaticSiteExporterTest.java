@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -20,6 +21,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.staticexport.StaticSiteExport;
 import com.liferay.site.staticexport.StaticSiteExportLayout;
+import com.liferay.site.staticexport.StaticSiteExportResource;
 import com.liferay.site.staticexport.StaticSiteExporter;
 
 import java.util.List;
@@ -80,6 +82,30 @@ public class StaticSiteExporterTest {
 		Assert.assertThat(
 			staticSiteExportLayout.getHTML(),
 			CoreMatchers.containsString(layout.getName(LocaleUtil.US)));
+
+		List<StaticSiteExportResource> staticSiteExportResources =
+			staticSiteExport.getStaticSiteExportResources();
+
+		Assert.assertFalse(staticSiteExportResources.isEmpty());
+
+		boolean stylesheet = false;
+
+		for (StaticSiteExportResource staticSiteExportResource :
+				staticSiteExportResources) {
+
+			String url = staticSiteExportResource.getURL();
+
+			Assert.assertTrue(url, url.startsWith(StringPool.SLASH));
+			Assert.assertTrue(
+				url,
+				ArrayUtil.isNotEmpty(staticSiteExportResource.getContent()));
+
+			if (url.contains(".css")) {
+				stylesheet = true;
+			}
+		}
+
+		Assert.assertTrue(staticSiteExportResources.toString(), stylesheet);
 	}
 
 	@Test

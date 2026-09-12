@@ -5,18 +5,16 @@
 
 package com.liferay.site.staticexport;
 
-import java.util.List;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Víctor Galán
  */
 @ProviderType
-public interface StaticSiteExport {
+public interface StaticSiteExportResource {
 
-	public List<StaticSiteExportLayout> getStaticSiteExportLayouts();
+	public byte[] getContent();
 
-	public List<StaticSiteExportResource> getStaticSiteExportResources();
+	public String getURL();
 
 }

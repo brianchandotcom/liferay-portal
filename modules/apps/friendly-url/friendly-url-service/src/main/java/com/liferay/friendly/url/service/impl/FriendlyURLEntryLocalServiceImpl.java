@@ -71,12 +71,25 @@ public class FriendlyURLEntryLocalServiceImpl
 	public FriendlyURLEntry addFriendlyURLEntry(
 			long groupId, long classNameId, long parentClassPK, long classPK,
 			String defaultLanguageId, Map<String, String> urlTitleMap,
-			ServiceContext serviceContext)
+			boolean newModel, ServiceContext serviceContext)
 		throws PortalException {
 
 		validate(groupId, classNameId, parentClassPK, classPK, urlTitleMap);
 
 		_validateAssetCategories(urlTitleMap, serviceContext);
+
+		if (newModel) {
+			FriendlyURLEntryMapping friendlyURLEntryMapping =
+				_friendlyURLEntryMappingPersistence.create(
+					counterLocalService.increment());
+
+			friendlyURLEntryMapping.setClassNameId(classNameId);
+			friendlyURLEntryMapping.setClassPK(classPK);
+
+			return _addFriendlyURLEntry(
+				groupId, classNameId, parentClassPK, classPK, defaultLanguageId,
+				urlTitleMap, friendlyURLEntryMapping, serviceContext);
+		}
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
 			_friendlyURLEntryMappingPersistence.fetchByC_C(
@@ -108,41 +121,22 @@ public class FriendlyURLEntryLocalServiceImpl
 			return friendlyURLEntry;
 		}
 
-		Group group = _groupLocalService.getGroup(groupId);
+		return _addFriendlyURLEntry(
+			groupId, classNameId, parentClassPK, classPK, defaultLanguageId,
+			_merge(urlTitleMap, existingUrlTitleMap), friendlyURLEntryMapping,
+			serviceContext);
+	}
 
-		long friendlyURLEntryId = counterLocalService.increment();
+	@Override
+	public FriendlyURLEntry addFriendlyURLEntry(
+			long groupId, long classNameId, long parentClassPK, long classPK,
+			String defaultLanguageId, Map<String, String> urlTitleMap,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-		friendlyURLEntry = friendlyURLEntryPersistence.create(
-			friendlyURLEntryId);
-
-		friendlyURLEntry.setUuid(serviceContext.getUuid());
-		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
-		friendlyURLEntry.setGroupId(groupId);
-		friendlyURLEntry.setCompanyId(group.getCompanyId());
-		friendlyURLEntry.setClassNameId(classNameId);
-		friendlyURLEntry.setParentClassPK(parentClassPK);
-		friendlyURLEntry.setClassPK(classPK);
-
-		if ((BatchEngineThreadLocal.isBatchImportInProcess() &&
-			 _isBatchPortletDataHandler(classNameId, group.getCompanyId())) ||
-			!ExportImportThreadLocal.isImportInProcess()) {
-
-			friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
-
-			_friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
-		}
-
-		friendlyURLEntry = friendlyURLEntryPersistence.update(friendlyURLEntry);
-
-		_updateFriendlyURLEntryLocalizations(
-			friendlyURLEntry, classNameId, parentClassPK, true,
-			_merge(urlTitleMap, existingUrlTitleMap));
-
-		// Asset
-
-		_updateAssetEntry(friendlyURLEntry, serviceContext);
-
-		return friendlyURLEntry;
+		return addFriendlyURLEntry(
+			groupId, classNameId, parentClassPK, classPK, defaultLanguageId,
+			urlTitleMap, false, serviceContext);
 	}
 
 	@Override
@@ -521,6 +515,19 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasMainFriendlyURLEntry(long classNameId, long classPK) {
+		FriendlyURLEntryMapping friendlyURLEntryMapping =
+			_friendlyURLEntryMappingPersistence.fetchByC_C(
+				classNameId, classPK);
+
+		if (friendlyURLEntryMapping == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void setMainFriendlyURLEntry(FriendlyURLEntry friendlyURLEntry) {
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
 			_friendlyURLEntryMappingPersistence.fetchByC_C(
@@ -738,6 +745,49 @@ public class FriendlyURLEntryLocalServiceImpl
 			FriendlyURLEntryConstants.
 				FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 			0, LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), urlTitle);
+	}
+
+	private FriendlyURLEntry _addFriendlyURLEntry(
+			long groupId, long classNameId, long parentClassPK, long classPK,
+			String defaultLanguageId, Map<String, String> urlTitleMap,
+			FriendlyURLEntryMapping friendlyURLEntryMapping,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		long friendlyURLEntryId = counterLocalService.increment();
+
+		FriendlyURLEntry friendlyURLEntry = friendlyURLEntryPersistence.create(
+			friendlyURLEntryId);
+
+		friendlyURLEntry.setUuid(serviceContext.getUuid());
+		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
+		friendlyURLEntry.setGroupId(groupId);
+		friendlyURLEntry.setCompanyId(group.getCompanyId());
+		friendlyURLEntry.setClassNameId(classNameId);
+		friendlyURLEntry.setParentClassPK(parentClassPK);
+		friendlyURLEntry.setClassPK(classPK);
+
+		if ((BatchEngineThreadLocal.isBatchImportInProcess() &&
+			 _isBatchPortletDataHandler(classNameId, group.getCompanyId())) ||
+			!ExportImportThreadLocal.isImportInProcess()) {
+
+			friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
+
+			_friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
+		}
+
+		friendlyURLEntry = friendlyURLEntryPersistence.update(friendlyURLEntry);
+
+		_updateFriendlyURLEntryLocalizations(
+			friendlyURLEntry, classNameId, parentClassPK, true, urlTitleMap);
+
+		// Asset
+
+		_updateAssetEntry(friendlyURLEntry, serviceContext);
+
+		return friendlyURLEntry;
 	}
 
 	private boolean _containsAllURLTitles(

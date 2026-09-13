@@ -54,6 +54,19 @@ public class FriendlyURLEntryLocalServiceWrapper
 	public FriendlyURLEntry addFriendlyURLEntry(
 			long groupId, long classNameId, long parentClassPK, long classPK,
 			String defaultLanguageId, java.util.Map<String, String> urlTitleMap,
+			boolean newModel,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _friendlyURLEntryLocalService.addFriendlyURLEntry(
+			groupId, classNameId, parentClassPK, classPK, defaultLanguageId,
+			urlTitleMap, newModel, serviceContext);
+	}
+
+	@Override
+	public FriendlyURLEntry addFriendlyURLEntry(
+			long groupId, long classNameId, long parentClassPK, long classPK,
+			String defaultLanguageId, java.util.Map<String, String> urlTitleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -642,6 +655,12 @@ public class FriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasMainFriendlyURLEntry(long classNameId, long classPK) {
+		return _friendlyURLEntryLocalService.hasMainFriendlyURLEntry(
+			classNameId, classPK);
+	}
+
+	@Override
 	public void setMainFriendlyURLEntry(FriendlyURLEntry friendlyURLEntry) {
 		_friendlyURLEntryLocalService.setMainFriendlyURLEntry(friendlyURLEntry);
 	}
@@ -849,4 +868,4 @@ public class FriendlyURLEntryLocalServiceWrapper
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1715614355
+// LIFERAY-SERVICE-BUILDER-HASH:311769961

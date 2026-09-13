@@ -83,6 +83,12 @@ public interface FriendlyURLEntryLocalService
 	public FriendlyURLEntry addFriendlyURLEntry(
 			long groupId, long classNameId, long parentClassPK, long classPK,
 			String defaultLanguageId, Map<String, String> urlTitleMap,
+			boolean newModel, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FriendlyURLEntry addFriendlyURLEntry(
+			long groupId, long classNameId, long parentClassPK, long classPK,
+			String defaultLanguageId, Map<String, String> urlTitleMap,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -431,6 +437,9 @@ public interface FriendlyURLEntryLocalService
 		long groupId, long classNameId, long parentClassPK, long classPK,
 		Map<Locale, String> titleMap);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasMainFriendlyURLEntry(long classNameId, long classPK);
+
 	public void setMainFriendlyURLEntry(FriendlyURLEntry friendlyURLEntry);
 
 	/**
@@ -530,4 +539,4 @@ public interface FriendlyURLEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-550593190
+// LIFERAY-SERVICE-BUILDER-HASH:822434815

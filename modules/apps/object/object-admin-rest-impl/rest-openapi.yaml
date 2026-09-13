@@ -82,6 +82,10 @@ components:
                     type: string
                 defaultLanguageId:
                     type: string
+                description:
+                    additionalProperties:
+                        type: string
+                    type: object
                 enableCategorization:
                     type: boolean
                 enableComments:
@@ -221,6 +225,10 @@ components:
                 defaultValue:
                     deprecated: true
                     type: string
+                description:
+                    additionalProperties:
+                        type: string
+                    type: object
                 externalReferenceCode:
                     type: string
                 id:
@@ -464,6 +472,10 @@ components:
                 deletionType:
                     enum: [cascade, disassociate, prevent]
                     type: string
+                description:
+                    additionalProperties:
+                        type: string
+                    type: object
                 edge:
                     type: boolean
                 externalReferenceCode:

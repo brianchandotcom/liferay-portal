@@ -131,6 +131,8 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				ObjectFieldUtil.getDBType(
 					objectField.getDBTypeAsString(),
 					objectField.getTypeAsString()),
+				LocalizedMapUtil.populateLocalizedMap(
+					objectField.getDescription()),
 				GetterUtil.getBoolean(objectField.getIndexed()),
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
@@ -177,6 +179,8 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				ObjectFieldUtil.getDBType(
 					objectField.getDBTypeAsString(),
 					objectField.getTypeAsString()),
+				LocalizedMapUtil.populateLocalizedMap(
+					objectField.getDescription()),
 				GetterUtil.getBoolean(objectField.getIndexed()),
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),

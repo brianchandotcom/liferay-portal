@@ -14,6 +14,7 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.internal.util.ObjectDescriptionUtil;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -163,7 +164,9 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 					objectField.getName(),
 					new PropertyDefinition(
 						SetUtil.fromArray(ListEntry.class, String.class), null,
-						ListEntry.class.getSimpleName(), null,
+						ListEntry.class.getSimpleName(),
+						ObjectDescriptionUtil.getDescription(
+							objectDefinition, objectField),
 						objectField.getName(),
 						objectFieldBusinessType.getPropertyType(),
 						new DefaultPropertyValidator(),
@@ -173,7 +176,9 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 				extendedPropertyDefinitions.put(
 					objectField.getName(),
 					new PropertyDefinition(
-						null, objectField.getName(),
+						ObjectDescriptionUtil.getDescription(
+							objectDefinition, objectField),
+						objectField.getName(),
 						objectFieldBusinessType.getPropertyType(),
 						objectField.isRequired()));
 			}
@@ -191,7 +196,9 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 				extendedPropertyDefinitions.put(
 					objectRelationshipERCObjectFieldName,
 					new PropertyDefinition(
-						null, objectRelationshipERCObjectFieldName,
+						ObjectDescriptionUtil.getDescription(
+							objectDefinition, objectField),
+						objectRelationshipERCObjectFieldName,
 						PropertyDefinition.PropertyType.TEXT,
 						objectField.isRequired()));
 			}
@@ -204,7 +211,9 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 				objectField.getI18nObjectFieldName(),
 				new PropertyDefinition(
 					Collections.singleton(Map.class), null, Map.class.getName(),
-					null, objectField.getI18nObjectFieldName(),
+					ObjectDescriptionUtil.getDescription(
+						objectDefinition, objectField),
+					objectField.getI18nObjectFieldName(),
 					PropertyDefinition.PropertyType.SINGLE_ELEMENT,
 					new DefaultPropertyValidator(), objectField.isRequired()));
 		}

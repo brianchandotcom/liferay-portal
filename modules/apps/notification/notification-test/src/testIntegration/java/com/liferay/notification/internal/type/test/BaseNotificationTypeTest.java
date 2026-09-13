@@ -293,8 +293,8 @@ public class BaseNotificationTypeTest {
 	public void setUp() throws Exception {
 		childObjectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
-				null, user1.getUserId(), 0, null, true, false, true, false,
-				true, false, false, false, false, null,
+				null, user1.getUserId(), 0, null, null, true, false, true,
+				false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -450,8 +450,8 @@ public class BaseNotificationTypeTest {
 
 		parentObjectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
-				null, user1.getUserId(), 0, null, true, false, true, false,
-				true, false, false, false, false, null,
+				null, user1.getUserId(), 0, null, null, true, false, true,
+				false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"ParentObjectDefinition", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -546,7 +546,7 @@ public class BaseNotificationTypeTest {
 				null, TestPropsValues.getUserId(),
 				parentObjectDefinition.getObjectDefinitionId(),
 				childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"oneToManyObjectRelationship", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);

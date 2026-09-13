@@ -169,7 +169,7 @@ public class ObjectDefinitionGraphQLTest {
 			null, TestPropsValues.getUserId(),
 			_parentObjectDefinition.getObjectDefinitionId(),
 			childObjectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, null, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			_RELATIONSHIP_NAME, false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -1244,8 +1244,9 @@ public class ObjectDefinitionGraphQLTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, true, false, true,
-				false, true, enableObjectEntryDraft, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0, null, null, true, false,
+				true, false, true, enableObjectEntryDraft, false, false, false,
+				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

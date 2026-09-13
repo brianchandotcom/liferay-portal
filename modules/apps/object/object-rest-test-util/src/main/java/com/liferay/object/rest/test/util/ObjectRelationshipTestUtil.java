@@ -49,7 +49,7 @@ public class ObjectRelationshipTestUtil {
 		return ObjectRelationshipLocalServiceUtil.addObjectRelationship(
 			null, userId, objectDefinition.getObjectDefinitionId(),
 			relatedObjectDefinition.getObjectDefinitionId(), 0, deletionType,
-			false,
+			null, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, false, type, null);
 	}
@@ -75,7 +75,8 @@ public class ObjectRelationshipTestUtil {
 		throws Exception {
 
 		return ObjectRelationshipLocalServiceUtil.updateObjectRelationship(
-			null, objectRelationshipId, 0, deletionType, false, null, null);
+			null, objectRelationshipId, 0, deletionType, null, false, null,
+			null);
 	}
 
 }

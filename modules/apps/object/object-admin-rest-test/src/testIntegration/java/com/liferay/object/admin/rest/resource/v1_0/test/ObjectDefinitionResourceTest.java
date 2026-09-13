@@ -872,7 +872,7 @@ public class ObjectDefinitionResourceTest
 				serviceBuilderAccountEntryObjectDefinition.
 					getObjectDefinitionId(),
 				postObjectDefinition.getId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"a" + RandomTestUtil.randomString(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
@@ -2028,7 +2028,9 @@ public class ObjectDefinitionResourceTest
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"dateCreated", "dateModified", "label", "userId"};
+		return new String[] {
+			"dateCreated", "dateModified", "description", "label", "userId"
+		};
 	}
 
 	@Override

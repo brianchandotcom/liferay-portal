@@ -194,7 +194,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinition(objectDefinitionId: ___){accountEntryRestricted, accountEntryRestrictedObjectFieldName, actions, active, className, creator, dateCreated, dateModified, defaultLanguageId, enableCategorization, enableComments, enableFormContainer, enableFriendlyURLCustomization, enableIndexSearch, enableLocalization, enableObjectEntryDraft, enableObjectEntryHistory, enableObjectEntrySchedule, enableObjectEntrySubscription, enableObjectEntryVersioning, externalReferenceCode, friendlyURLSeparator, id, label, modifiable, name, objectActions, objectDefinitionSettings, objectFields, objectFolderExternalReferenceCode, objectLayouts, objectRelationships, objectValidationRules, objectViews, panelAppOrder, panelCategoryKey, parameterRequired, permissions, pluralLabel, portlet, restContextPath, rootObjectDefinitionExternalReferenceCode, scope, status, storageType, system, titleObjectFieldName, workflowDefinitionLinks}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinition(objectDefinitionId: ___){accountEntryRestricted, accountEntryRestrictedObjectFieldName, actions, active, className, creator, dateCreated, dateModified, defaultLanguageId, description, enableCategorization, enableComments, enableFormContainer, enableFriendlyURLCustomization, enableIndexSearch, enableLocalization, enableObjectEntryDraft, enableObjectEntryHistory, enableObjectEntrySchedule, enableObjectEntrySubscription, enableObjectEntryVersioning, externalReferenceCode, friendlyURLSeparator, id, label, modifiable, name, objectActions, objectDefinitionSettings, objectFields, objectFolderExternalReferenceCode, objectLayouts, objectRelationships, objectValidationRules, objectViews, panelAppOrder, panelCategoryKey, parameterRequired, permissions, pluralLabel, portlet, restContextPath, rootObjectDefinitionExternalReferenceCode, scope, status, storageType, system, titleObjectFieldName, workflowDefinitionLinks}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectDefinition objectDefinition(
@@ -212,7 +212,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCode(externalReferenceCode: ___){accountEntryRestricted, accountEntryRestrictedObjectFieldName, actions, active, className, creator, dateCreated, dateModified, defaultLanguageId, enableCategorization, enableComments, enableFormContainer, enableFriendlyURLCustomization, enableIndexSearch, enableLocalization, enableObjectEntryDraft, enableObjectEntryHistory, enableObjectEntrySchedule, enableObjectEntrySubscription, enableObjectEntryVersioning, externalReferenceCode, friendlyURLSeparator, id, label, modifiable, name, objectActions, objectDefinitionSettings, objectFields, objectFolderExternalReferenceCode, objectLayouts, objectRelationships, objectValidationRules, objectViews, panelAppOrder, panelCategoryKey, parameterRequired, permissions, pluralLabel, portlet, restContextPath, rootObjectDefinitionExternalReferenceCode, scope, status, storageType, system, titleObjectFieldName, workflowDefinitionLinks}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCode(externalReferenceCode: ___){accountEntryRestricted, accountEntryRestrictedObjectFieldName, actions, active, className, creator, dateCreated, dateModified, defaultLanguageId, description, enableCategorization, enableComments, enableFormContainer, enableFriendlyURLCustomization, enableIndexSearch, enableLocalization, enableObjectEntryDraft, enableObjectEntryHistory, enableObjectEntrySchedule, enableObjectEntrySubscription, enableObjectEntryVersioning, externalReferenceCode, friendlyURLSeparator, id, label, modifiable, name, objectActions, objectDefinitionSettings, objectFields, objectFolderExternalReferenceCode, objectLayouts, objectRelationships, objectValidationRules, objectViews, panelAppOrder, panelCategoryKey, parameterRequired, permissions, pluralLabel, portlet, restContextPath, rootObjectDefinitionExternalReferenceCode, scope, status, storageType, system, titleObjectFieldName, workflowDefinitionLinks}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectDefinition objectDefinitionByExternalReferenceCode(
@@ -316,7 +316,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectField(objectFieldId: ___){DBType, actions, businessType, defaultValue, externalReferenceCode, id, indexed, indexedAsKeyword, indexedLanguageId, label, listTypeDefinitionExternalReferenceCode, listTypeDefinitionId, localized, name, objectDefinitionExternalReferenceCode1, objectFieldSettings, objectRelationshipExternalReferenceCode, readOnly, readOnlyConditionExpression, relationshipType, required, state, system, type, unique}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectField(objectFieldId: ___){DBType, actions, businessType, defaultValue, description, externalReferenceCode, id, indexed, indexedAsKeyword, indexedLanguageId, label, listTypeDefinitionExternalReferenceCode, listTypeDefinitionId, localized, name, objectDefinitionExternalReferenceCode1, objectFieldSettings, objectRelationshipExternalReferenceCode, readOnly, readOnlyConditionExpression, relationshipType, required, state, system, type, unique}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectField objectField(
@@ -517,7 +517,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectRelationship(objectRelationshipId: ___){actions, deletionType, edge, externalReferenceCode, id, label, name, objectDefinitionExternalReferenceCode1, objectDefinitionExternalReferenceCode2, objectDefinitionId1, objectDefinitionId2, objectDefinitionModifiable2, objectDefinitionName2, objectDefinitionScope2, objectDefinitionSystem2, objectField, parameterObjectFieldId, parameterObjectFieldName, reverse, system, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectRelationship(objectRelationshipId: ___){actions, deletionType, description, edge, externalReferenceCode, id, label, name, objectDefinitionExternalReferenceCode1, objectDefinitionExternalReferenceCode2, objectDefinitionId1, objectDefinitionId2, objectDefinitionModifiable2, objectDefinitionName2, objectDefinitionScope2, objectDefinitionSystem2, objectField, parameterObjectFieldId, parameterObjectFieldName, reverse, system, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectRelationship objectRelationship(
@@ -1511,4 +1511,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1439491208
+// LIFERAY-REST-BUILDER-HASH:-1248095826

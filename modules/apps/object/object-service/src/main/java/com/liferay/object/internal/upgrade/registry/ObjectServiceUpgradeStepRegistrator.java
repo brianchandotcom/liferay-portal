@@ -779,6 +779,15 @@ public class ObjectServiceUpgradeStepRegistrator
 					"' where panelCategoryKey in ('",
 					StringUtil.merge(_REMOVED_PANEL_CATEGORY_KEYS, "', '"),
 					"')")));
+
+		registry.register(
+			"13.7.0", "13.8.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectDefinition", "description STRING null"),
+			UpgradeProcessFactory.addColumns(
+				"ObjectField", "description STRING null"),
+			UpgradeProcessFactory.addColumns(
+				"ObjectRelationship", "description STRING null"));
 	}
 
 	private static final String[] _REMOVED_PANEL_CATEGORY_KEYS = {

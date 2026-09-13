@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -70,7 +71,7 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(name), false, name, null, null,
 			false, false, Collections.emptyList());
 
@@ -136,6 +137,8 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 					"JSONObject/body", "JSONObject/properties"),
 				false)
 		);
+
+		_testGetToolSetToolSetNameToolWithObjectFieldDescription();
 	}
 
 	@Override
@@ -235,12 +238,56 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 		_objectFieldLocalService.addCustomObjectField(
 			null, userId, 0, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(objectFieldName), false,
 			objectFieldName, null, null, false, false, Collections.emptyList());
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, objectDefinition.getObjectDefinitionId());
+	}
+
+	private void _testGetToolSetToolSetNameToolWithObjectFieldDescription()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				"A" + RandomTestUtil.randomString(8),
+				TestPropsValues.getUserId());
+		String objectFieldName = "a" + RandomTestUtil.randomString(8);
+
+		_objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING,
+			HashMapBuilder.put(
+				LocaleUtil.US, "This is the description for the object field."
+			).build(),
+			false, false, null,
+			LocalizedMapUtil.getLocalizedMap(objectFieldName), false,
+			objectFieldName, null, null, false, false, Collections.emptyList());
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				objectFieldName,
+				JSONUtil.put(
+					"description",
+					"This is the description for the object field."
+				).put(
+					"type", "string"
+				)
+			).toString(),
+			JSONUtil.getValueAsString(
+				JSONFactoryUtil.createJSONObject(
+					String.valueOf(_getTool(objectDefinition))),
+				"JSONObject/inputSchema", "JSONObject/properties",
+				"JSONObject/body", "JSONObject/properties"),
+			false);
 	}
 
 	@Inject

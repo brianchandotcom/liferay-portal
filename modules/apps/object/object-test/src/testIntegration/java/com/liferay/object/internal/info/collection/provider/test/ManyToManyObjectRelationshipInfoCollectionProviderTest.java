@@ -90,7 +90,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 		throws Exception {
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			null, TestPropsValues.getUserId(), 0, null, true, false, true,
+			null, TestPropsValues.getUserId(), 0, null, null, true, false, true,
 			false, true, false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -172,7 +172,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 				null, TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId(),
 				_objectDefinition1.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);

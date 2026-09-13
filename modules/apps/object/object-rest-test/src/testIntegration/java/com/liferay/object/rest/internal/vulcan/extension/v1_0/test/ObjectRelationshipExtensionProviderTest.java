@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -99,7 +100,7 @@ public class ObjectRelationshipExtensionProviderTest {
 				null, _user.getUserId(),
 				_objectDefinition.getObjectDefinitionId(),
 				userSystemObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
@@ -153,6 +154,26 @@ public class ObjectRelationshipExtensionProviderTest {
 		Assert.assertEquals(
 			PropertyDefinition.PropertyType.MULTIPLE_ELEMENT,
 			propertyDefinition.getPropertyType());
+		Assert.assertNull(propertyDefinition.getPropertyDescription());
+
+		String description = RandomTestUtil.randomString();
+
+		_objectRelationship.setDescriptionMap(
+			Collections.singletonMap(LocaleUtil.US, description));
+
+		_objectRelationship =
+			ObjectRelationshipLocalServiceUtil.updateObjectRelationship(
+				_objectRelationship);
+
+		extendedPropertyDefinitions =
+			_extensionProvider.getExtendedPropertyDefinitions(
+				TestPropsValues.getCompanyId(), UserAccount.class.getName());
+
+		propertyDefinition = extendedPropertyDefinitions.get(
+			_objectRelationship.getName());
+
+		Assert.assertEquals(
+			description, propertyDefinition.getPropertyDescription());
 	}
 
 	@Test
@@ -195,8 +216,8 @@ public class ObjectRelationshipExtensionProviderTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, true, false, true,
-				false, true, false, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0, null, null, true, false,
+				true, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -245,7 +266,7 @@ public class ObjectRelationshipExtensionProviderTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
 				cpDefinitionObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);

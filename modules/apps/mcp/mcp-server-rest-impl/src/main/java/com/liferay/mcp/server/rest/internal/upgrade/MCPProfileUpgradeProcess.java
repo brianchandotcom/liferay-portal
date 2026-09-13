@@ -277,7 +277,7 @@ public class MCPProfileUpgradeProcess extends UpgradeProcess {
 				listTypeDefinition.getListTypeDefinitionId(),
 				objectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null, null,
-				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+				ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
 				Collections.singletonMap(LocaleUtil.US, "Status"), false,
 				"profileStatus", ObjectFieldConstants.READ_ONLY_FALSE, null,
 				true, false,
@@ -390,8 +390,8 @@ public class MCPProfileUpgradeProcess extends UpgradeProcess {
 							EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROFILE_TOOL,
 						userId, objectFolder.getObjectFolderId(),
 						"com.liferay.object.model.ObjectDefinition#T4L8", null,
-						true, false, true, false, false, false, false, false,
-						false, false, null,
+						null, true, false, true, false, false, false, false,
+						false, false, false, null,
 						Collections.singletonMap(
 							LocaleUtil.US, "MCP Server Profile Tool"),
 						true, "MCPServerProfileTool", null,
@@ -482,7 +482,7 @@ public class MCPProfileUpgradeProcess extends UpgradeProcess {
 				mcpServerProfileObjectDefinition.getUserId(),
 				mcpServerProfileObjectDefinition.getObjectDefinitionId(),
 				mcpServerProfileToolObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, null, false,
 				Collections.singletonMap(
 					LocaleUtil.US,
 					"MCP Server Profile to MCP Server Profile Tools"),

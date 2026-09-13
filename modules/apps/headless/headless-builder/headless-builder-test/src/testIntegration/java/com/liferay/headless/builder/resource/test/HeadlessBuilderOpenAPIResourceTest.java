@@ -315,7 +315,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			null, TestPropsValues.getUserId(),
 			_objectDefinition1.getObjectDefinitionId(),
 			_objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, null, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			relationshipName, false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -345,7 +345,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			aggregationObjectField.getListTypeDefinitionId(),
 			aggregationObjectField.getObjectDefinitionId(),
 			aggregationObjectField.getBusinessType(),
-			aggregationObjectField.getDBType(),
+			aggregationObjectField.getDBType(), null,
 			aggregationObjectField.isIndexed(),
 			aggregationObjectField.isIndexedAsKeyword(),
 			aggregationObjectField.getIndexedLanguageId(),
@@ -984,8 +984,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, true, false, true,
-				false, true, false, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0, null, null, true, false,
+				true, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

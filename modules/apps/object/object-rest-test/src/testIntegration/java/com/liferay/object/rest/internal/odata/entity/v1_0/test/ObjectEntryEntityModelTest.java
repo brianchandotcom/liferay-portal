@@ -189,7 +189,7 @@ public class ObjectEntryEntityModelTest {
 				null, TestPropsValues.getUserId(),
 				relatedObjectDefinition.getObjectDefinitionId(),
 				objectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false, type, null);
 
@@ -364,8 +364,8 @@ public class ObjectEntryEntityModelTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, true, false, true,
-				false, true, false, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0, null, null, true, false,
+				true, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(objectDefinitionName),
 				objectDefinitionName, null, null,
 				LocalizedMapUtil.getLocalizedMap(objectDefinitionName), true,

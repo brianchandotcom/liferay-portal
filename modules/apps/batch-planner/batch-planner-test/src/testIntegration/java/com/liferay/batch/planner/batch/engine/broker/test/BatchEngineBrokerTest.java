@@ -560,7 +560,7 @@ public class BatchEngineBrokerTest {
 			objectField.getExternalReferenceCode(), TestPropsValues.getUserId(),
 			objectField.getListTypeDefinitionId(),
 			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
-			objectField.getDBType(), objectField.isIndexed(),
+			objectField.getDBType(), null, objectField.isIndexed(),
 			objectField.isIndexedAsKeyword(),
 			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
 			objectField.isLocalized(), objectField.getName(),
@@ -1251,8 +1251,8 @@ public class BatchEngineBrokerTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, user.getUserId(), 0, null, true, false, true, false, true,
-				false, false, false, false, null,
+				null, user.getUserId(), 0, null, null, true, false, true, false,
+				true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1405,7 +1405,7 @@ public class BatchEngineBrokerTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
 				objectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"a" + RandomTestUtil.randomString(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
@@ -1490,7 +1490,7 @@ public class BatchEngineBrokerTest {
 			null, TestPropsValues.getUserId(),
 			_objectDefinition1.getObjectDefinitionId(),
 			_objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, null, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"a" + RandomTestUtil.randomString(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);

@@ -426,8 +426,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		ObjectDefinition scopeSiteObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, true, false, true,
-				false, true, false, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0, null, null, true, false,
+				true, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"C" + RandomTestUtil.randomString(), null,
 				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT,
@@ -631,8 +631,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		_objectDefinition3 =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, true, false, true,
-				false, true, false, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0, null, null, true, false,
+				true, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -645,7 +645,7 @@ public class ObjectRelatedModelsProviderTest {
 			null, TestPropsValues.getUserId(), 0,
 			_objectDefinition3.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", null, null,
 			false, false, Collections.emptyList());
 
@@ -670,7 +670,7 @@ public class ObjectRelatedModelsProviderTest {
 				null, TestPropsValues.getUserId(),
 				_objectDefinition3.getObjectDefinitionId(),
 				_objectDefinition1.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
@@ -749,7 +749,7 @@ public class ObjectRelatedModelsProviderTest {
 				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0, deletionType,
-				false,
+				null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false, relationshipType, null);
 

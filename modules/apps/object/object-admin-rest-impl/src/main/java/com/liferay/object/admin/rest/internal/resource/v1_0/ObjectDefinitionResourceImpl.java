@@ -1633,6 +1633,7 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectField.getListTypeDefinitionId(),
 				objectDefinitionId, serviceBuilderObjectField.getBusinessType(),
 				null, dbTableName, serviceBuilderObjectField.getDBType(),
+				serviceBuilderObjectField.getDescriptionMap(),
 				serviceBuilderObjectField.isIndexed(),
 				serviceBuilderObjectField.isIndexedAsKeyword(),
 				serviceBuilderObjectField.getIndexedLanguageId(),

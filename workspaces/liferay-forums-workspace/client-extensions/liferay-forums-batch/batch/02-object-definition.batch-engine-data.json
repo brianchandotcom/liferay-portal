@@ -81,7 +81,7 @@
 					"businessType": "RichText",
 					"externalReferenceCode": "CATEGORY_DESCRIPTION",
 					"label": {
-						"en_US": "Description"
+						"en_US": "Category Description"
 					},
 					"name": "categoryDescription",
 					"required": false
@@ -94,7 +94,7 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Name"
+						"en_US": "Category Name"
 					},
 					"localized": true,
 					"name": "categoryName",
@@ -287,7 +287,7 @@
 					"externalReferenceCode": "NOTIFICATION_MENTION_RECIPIENT_IDS",
 					"indexed": false,
 					"label": {
-						"en_US": "Notification Mention Recipient Ids"
+						"en_US": "Notification Mention Recipient IDs"
 					},
 					"name": "notificationMentionRecipientIds",
 					"required": false
@@ -297,7 +297,7 @@
 					"externalReferenceCode": "NOTIFICATION_REPLY_RECIPIENT_IDS",
 					"indexed": false,
 					"label": {
-						"en_US": "Notification Reply Recipient Ids"
+						"en_US": "Notification Reply Recipient IDs"
 					},
 					"name": "notificationReplyRecipientIds",
 					"required": false
@@ -529,7 +529,7 @@
 					"businessType": "Text",
 					"externalReferenceCode": "NOTIFICATION_URL",
 					"label": {
-						"en_US": "URL"
+						"en_US": "Notification URL"
 					},
 					"name": "notificationUrl",
 					"required": false
@@ -667,7 +667,7 @@
 					"businessType": "LongInteger",
 					"externalReferenceCode": "SUSPICIOUS_MESSAGE_ID",
 					"label": {
-						"en_US": "Message ID"
+						"en_US": "Suspicious Message ID"
 					},
 					"name": "suspiciousMessageId",
 					"required": false
@@ -754,7 +754,7 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Title"
+						"en_US": "Message Title"
 					},
 					"localized": true,
 					"name": "messageTitle",
@@ -895,7 +895,7 @@
 					"businessType": "LongInteger",
 					"externalReferenceCode": "FLAG_MESSAGE_ID",
 					"label": {
-						"en_US": "Message ID"
+						"en_US": "Flag Message ID"
 					},
 					"name": "flagMessageId",
 					"required": true
@@ -953,7 +953,7 @@
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"label": {
-						"en_US": "Forum User Id"
+						"en_US": "Forum User ID"
 					},
 					"name": "forumUserId",
 					"required": true

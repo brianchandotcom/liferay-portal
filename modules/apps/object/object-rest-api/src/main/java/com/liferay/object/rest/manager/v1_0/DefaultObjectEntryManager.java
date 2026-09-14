@@ -275,6 +275,13 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry updateObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			ObjectEntry objectEntry, String scopeKey)
+		throws Exception;
+
 	public ObjectEntry updateRelatedObjectEntry(
 			DTOConverterContext dtoConverterContext, ObjectEntry objectEntry,
 			long objectEntryId, ObjectRelationship objectRelationship,

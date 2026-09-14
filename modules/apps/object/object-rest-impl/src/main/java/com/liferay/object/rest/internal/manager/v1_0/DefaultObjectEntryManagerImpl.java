@@ -1465,6 +1465,39 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public ObjectEntry updateObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			ObjectEntry objectEntry, String scopeKey)
+		throws Exception {
+
+		_checkObjectEntryStatus(serviceBuilderObjectEntry);
+
+		validateReadOnlyObjectFields(
+			objectDefinition, serviceBuilderObjectEntry, objectEntry);
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
+
+		serviceContext.setCompanyId(serviceBuilderObjectEntry.getCompanyId());
+
+		return _toUpdatedObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry, false,
+			_objectEntryService.updateObjectEntry(
+				serviceBuilderObjectEntry.getObjectEntryId(),
+				_getObjectEntryFolderId(
+					objectDefinition.getCompanyId(),
+					getGroupId(objectDefinition, scopeKey), objectEntry,
+					objectDefinition, serviceContext),
+				_toObjectValues(
+					0L, dtoConverterContext.getLocale(), objectDefinition,
+					objectEntry, scopeKey, serviceContext),
+				serviceContext),
+			scopeKey, serviceContext);
+	}
+
+	@Override
+	public ObjectEntry updateObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry, String scopeKey)

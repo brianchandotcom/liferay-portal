@@ -26,11 +26,8 @@ public class ToolResourceImpl extends BaseToolResourceImpl {
 
 	@Override
 	public Tool getToolSetToolSetNameTool(String toolSetName, String toolName) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-63311")) {
-
-			throw new UnsupportedOperationException();
-		}
+		FeatureFlagManagerUtil.checkEnabled(
+			contextCompany.getCompanyId(), "LPD-63311");
 
 		return ToolSetUtil.getTool(
 			contextHttpServletRequest, toolName, toolSetName);
@@ -41,11 +38,8 @@ public class ToolResourceImpl extends BaseToolResourceImpl {
 			String toolSetName, String toolName, Object object)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-63311")) {
-
-			throw new UnsupportedOperationException();
-		}
+		FeatureFlagManagerUtil.checkEnabled(
+			contextCompany.getCompanyId(), "LPD-63311");
 
 		return ToolSetUtil.invokeTool(
 			null, contextHttpServletRequest, object, toolName, toolSetName);

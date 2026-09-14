@@ -170,6 +170,8 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 					"JSONObject/body", "JSONObject/properties"),
 				false)
 		);
+
+		_testGetToolSetToolSetNameToolWithObjectFieldDescription();
 	}
 
 	@Override
@@ -276,6 +278,52 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, objectDefinition.getObjectDefinitionId());
 	}
+
+	private void _testGetToolSetToolSetNameToolWithObjectFieldDescription()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(),
+				TestPropsValues.getUserId());
+		String objectFieldName = "a" + RandomTestUtil.randomString(8);
+
+		_objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING,
+			HashMapBuilder.put(
+				LocaleUtil.US, _OBJECT_FIELD_DESCRIPTION
+			).build(),
+			false, false, null,
+			LocalizedMapUtil.getLocalizedMap(objectFieldName), false,
+			objectFieldName, null, null, false, false, Collections.emptyList());
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				objectFieldName,
+				JSONUtil.put(
+					"description", _OBJECT_FIELD_DESCRIPTION
+				).put(
+					"type", "string"
+				)
+			).toString(),
+			JSONUtil.getValueAsString(
+				JSONFactoryUtil.createJSONObject(
+					String.valueOf(_getTool(objectDefinition))),
+				"JSONObject/inputSchema", "JSONObject/properties",
+				"JSONObject/body", "JSONObject/properties"),
+			false);
+	}
+
+	private static final String _OBJECT_FIELD_DESCRIPTION =
+		"This is the description for the object field.";
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

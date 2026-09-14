@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.audit;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -41,15 +42,23 @@ public class AuditMessageTest {
 
 		auditRequestThreadLocal.setRequestIdGenerated(true);
 
-		AuditMessage auditMessage = new AuditMessage(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.nextDate(), JSONFactoryUtil.createJSONObject(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		String correlationId = RandomTestUtil.randomString();
 
-		Assert.assertEquals(requestId, auditMessage.getRequestId());
-		Assert.assertTrue(auditMessage.isRequestIdGenerated());
+		try (SafeCloseable safeCloseable =
+				AuditRequestThreadLocal.setCorrelationIdWithSafeCloseable(
+					correlationId)) {
+
+			AuditMessage auditMessage = new AuditMessage(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.nextDate(), JSONFactoryUtil.createJSONObject(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			Assert.assertEquals(correlationId, auditMessage.getCorrelationId());
+			Assert.assertEquals(requestId, auditMessage.getRequestId());
+			Assert.assertTrue(auditMessage.isRequestIdGenerated());
+		}
 
 		AuditRequestThreadLocal.removeAuditThreadLocal();
 	}

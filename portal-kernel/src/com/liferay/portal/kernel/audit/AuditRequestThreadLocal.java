@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.audit;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 
 /**
  * @author Michael C. Han
@@ -24,8 +25,18 @@ public class AuditRequestThreadLocal {
 		return auditRequestThreadLocal;
 	}
 
+	public static String getCorrelationId() {
+		return _correlationId.get();
+	}
+
 	public static void removeAuditThreadLocal() {
 		_auditRequest.remove();
+	}
+
+	public static SafeCloseable setCorrelationIdWithSafeCloseable(
+		String correlationId) {
+
+		return _correlationId.setWithSafeCloseable(correlationId);
 	}
 
 	public String getClientHost() {
@@ -127,6 +138,9 @@ public class AuditRequestThreadLocal {
 	private static final ThreadLocal<AuditRequestThreadLocal> _auditRequest =
 		new CentralizedThreadLocal<>(
 			AuditRequestThreadLocal.class + "._auditRequest");
+	private static final CentralizedThreadLocal<String> _correlationId =
+		new CentralizedThreadLocal<>(
+			AuditRequestThreadLocal.class + "._correlationId");
 
 	private String _clientHost;
 	private String _clientIP;

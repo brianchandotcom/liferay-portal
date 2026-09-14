@@ -531,7 +531,7 @@
 					"label": {
 						"en_US": "Notification URL"
 					},
-					"name": "notificationUrl",
+					"name": "notificationURL",
 					"required": false
 				},
 				{

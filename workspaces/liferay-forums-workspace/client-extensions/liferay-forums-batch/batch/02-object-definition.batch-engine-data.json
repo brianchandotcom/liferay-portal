@@ -35,6 +35,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "BAN_USER_ID",
 					"label": {
 						"en_US": "Ban User ID"
 					},
@@ -78,6 +79,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "RichText",
+					"externalReferenceCode": "CATEGORY_DESCRIPTION",
 					"label": {
 						"en_US": "Description"
 					},
@@ -87,6 +89,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "CATEGORY_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -100,6 +103,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "DISPLAY_STYLE",
 					"label": {
 						"en_US": "Display Style"
 					},
@@ -109,6 +113,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "FRIENDLY_URL",
 					"label": {
 						"en_US": "Friendly URL"
 					},
@@ -187,6 +192,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
+					"externalReferenceCode": "ALLOW_PINGBACKS",
 					"label": {
 						"en_US": "Allow Pingbacks"
 					},
@@ -196,6 +202,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
+					"externalReferenceCode": "ANONYMOUS",
 					"label": {
 						"en_US": "Anonymous"
 					},
@@ -205,6 +212,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
+					"externalReferenceCode": "ANSWER",
 					"label": {
 						"en_US": "Answer"
 					},
@@ -214,6 +222,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "RichText",
+					"externalReferenceCode": "BODY",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -226,6 +235,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "CLASS_NAME_ID",
 					"label": {
 						"en_US": "Class Name ID"
 					},
@@ -235,6 +245,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "CLASS_PK",
 					"label": {
 						"en_US": "Class PK"
 					},
@@ -244,6 +255,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "FORMAT",
 					"label": {
 						"en_US": "Format"
 					},
@@ -252,6 +264,7 @@
 				},
 				{
 					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_AUTHOR_NAME",
 					"indexed": false,
 					"label": {
 						"en_US": "Notification Author Name"
@@ -261,6 +274,7 @@
 				},
 				{
 					"businessType": "LongText",
+					"externalReferenceCode": "NOTIFICATION_BODY_EXCERPT",
 					"indexed": false,
 					"label": {
 						"en_US": "Notification Body Excerpt"
@@ -270,6 +284,7 @@
 				},
 				{
 					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_MENTION_RECIPIENT_IDS",
 					"indexed": false,
 					"label": {
 						"en_US": "Notification Mention Recipient Ids"
@@ -279,6 +294,7 @@
 				},
 				{
 					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_REPLY_RECIPIENT_IDS",
 					"indexed": false,
 					"label": {
 						"en_US": "Notification Reply Recipient Ids"
@@ -288,6 +304,7 @@
 				},
 				{
 					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_TOPIC_TITLE",
 					"indexed": false,
 					"label": {
 						"en_US": "Notification Topic Title"
@@ -298,6 +315,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "PARENT_MESSAGE_ID",
 					"label": {
 						"en_US": "Parent Message ID"
 					},
@@ -307,6 +325,7 @@
 				{
 					"DBType": "BigDecimal",
 					"businessType": "PrecisionDecimal",
+					"externalReferenceCode": "PRIORITY",
 					"label": {
 						"en_US": "Priority"
 					},
@@ -316,6 +335,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "ROOT_MESSAGE_ID",
 					"label": {
 						"en_US": "Root Message ID"
 					},
@@ -325,6 +345,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "SUBJECT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -338,6 +359,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "TREE_PATH",
 					"label": {
 						"en_US": "Tree Path"
 					},
@@ -347,6 +369,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "URL_SUBJECT",
 					"label": {
 						"en_US": "URL Subject"
 					},
@@ -356,6 +379,7 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
+					"externalReferenceCode": "VOTE_SCORE",
 					"label": {
 						"en_US": "Vote Score"
 					},
@@ -413,6 +437,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "Attachment",
+					"externalReferenceCode": "FILE",
 					"indexed": false,
 					"label": {
 						"en_US": "File"
@@ -472,6 +497,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "AUTHOR_NAME",
 					"label": {
 						"en_US": "Author Name"
 					},
@@ -481,6 +507,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
+					"externalReferenceCode": "BODY_EXCERPT",
 					"label": {
 						"en_US": "Body Excerpt"
 					},
@@ -490,6 +517,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_KIND",
 					"label": {
 						"en_US": "Notification Kind"
 					},
@@ -499,6 +527,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_URL",
 					"label": {
 						"en_US": "URL"
 					},
@@ -508,6 +537,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "RECIPIENT_EMAIL_ADDRESS",
 					"label": {
 						"en_US": "Recipient Email Address"
 					},
@@ -517,6 +547,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "RECIPIENT_USER_ID",
 					"label": {
 						"en_US": "Recipient User ID"
 					},
@@ -526,6 +557,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "TOPIC_TITLE",
 					"label": {
 						"en_US": "Topic Title"
 					},
@@ -569,6 +601,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "SUBSCRIBER_USER_ID",
 					"label": {
 						"en_US": "Subscriber User ID"
 					},
@@ -612,6 +645,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "MESSAGE_ID",
 					"label": {
 						"en_US": "Message ID"
 					},
@@ -621,6 +655,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
+					"externalReferenceCode": "REASON",
 					"label": {
 						"en_US": "Reason"
 					},
@@ -630,6 +665,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "SUSPICIOUS_MESSAGE_ID",
 					"label": {
 						"en_US": "Message ID"
 					},
@@ -639,6 +675,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
+					"externalReferenceCode": "VALIDATED",
 					"label": {
 						"en_US": "Validated"
 					},
@@ -682,6 +719,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "CATEGORY_ID",
 					"label": {
 						"en_US": "Category ID"
 					},
@@ -691,6 +729,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "LAST_POST_BY_USER_ID",
 					"label": {
 						"en_US": "Last Post By User ID"
 					},
@@ -700,6 +739,7 @@
 				{
 					"DBType": "Date",
 					"businessType": "Date",
+					"externalReferenceCode": "LAST_POST_DATE",
 					"label": {
 						"en_US": "Last Post Date"
 					},
@@ -709,6 +749,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "MESSAGE_TITLE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -722,6 +763,7 @@
 				{
 					"DBType": "BigDecimal",
 					"businessType": "PrecisionDecimal",
+					"externalReferenceCode": "PRIORITY",
 					"label": {
 						"en_US": "Priority"
 					},
@@ -731,6 +773,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
+					"externalReferenceCode": "QUESTION",
 					"label": {
 						"en_US": "Question"
 					},
@@ -740,6 +783,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "ROOT_MESSAGE_ID",
 					"label": {
 						"en_US": "Root Message ID"
 					},
@@ -749,6 +793,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "ROOT_MESSAGE_USER_ID",
 					"label": {
 						"en_US": "Root Message User ID"
 					},
@@ -758,6 +803,7 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
+					"externalReferenceCode": "VIEW_COUNT",
 					"label": {
 						"en_US": "View Count"
 					},
@@ -847,6 +893,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "FLAG_MESSAGE_ID",
 					"label": {
 						"en_US": "Message ID"
 					},
@@ -890,6 +937,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "FIRST_NAME",
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"label": {
@@ -901,6 +949,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
+					"externalReferenceCode": "FORUM_USER_ID",
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"label": {
@@ -912,6 +961,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "LAST_NAME",
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"label": {
@@ -923,6 +973,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "SCREEN_NAME",
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"label": {
@@ -968,6 +1019,7 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
+					"externalReferenceCode": "VOTE_VALUE",
 					"label": {
 						"en_US": "Vote Value"
 					},

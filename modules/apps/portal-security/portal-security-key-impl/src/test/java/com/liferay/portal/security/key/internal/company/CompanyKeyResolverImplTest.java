@@ -31,6 +31,10 @@ import java.security.Key;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -83,6 +87,47 @@ public class CompanyKeyResolverImplTest {
 		Assert.assertEquals(
 			_KEK_IDENTIFIER, keyManagerConfiguration.companyKEKIdentifier());
 		Assert.assertEquals(1, keyManagerConfiguration.companyKeyCacheTTL());
+
+		ScheduledExecutorService scheduledExecutorService =
+			ReflectionTestUtil.getFieldValue(
+				companyKeyResolverImpl, "_scheduledExecutorService");
+
+		Assert.assertFalse(scheduledExecutorService.isShutdown());
+
+		ScheduledFuture<?> scheduledFuture = ReflectionTestUtil.getFieldValue(
+			companyKeyResolverImpl, "_scheduledFuture");
+
+		Assert.assertNotNull(scheduledFuture);
+
+		companyKeyResolverImpl.activate(
+			HashMapBuilder.<String, Object>put(
+				"companyKEKIdentifier", _KEK_IDENTIFIER
+			).put(
+				"companyKeyCacheTTL", 1
+			).build());
+
+		Assert.assertNotSame(
+			scheduledFuture,
+			ReflectionTestUtil.getFieldValue(
+				companyKeyResolverImpl, "_scheduledFuture"));
+		Assert.assertSame(
+			scheduledExecutorService,
+			ReflectionTestUtil.getFieldValue(
+				companyKeyResolverImpl, "_scheduledExecutorService"));
+		Assert.assertTrue(scheduledFuture.isCancelled());
+
+		companyKeyResolverImpl.activate(
+			HashMapBuilder.<String, Object>put(
+				"companyKEKIdentifier", _KEK_IDENTIFIER
+			).put(
+				"companyKeyCacheTTL", 0
+			).build());
+
+		Assert.assertNull(
+			ReflectionTestUtil.getFieldValue(
+				companyKeyResolverImpl, "_scheduledFuture"));
+
+		companyKeyResolverImpl.deactivate();
 	}
 
 	@Test
@@ -96,10 +141,30 @@ public class CompanyKeyResolverImplTest {
 		Map<Long, CompanyKeyCacheEntry> companyKeyCacheEntries =
 			_getCompanyKeyCacheEntries(companyKeyResolverImpl);
 
+		ScheduledExecutorService scheduledExecutorService =
+			Executors.newSingleThreadScheduledExecutor();
+
+		ReflectionTestUtil.setFieldValue(
+			companyKeyResolverImpl, "_scheduledExecutorService",
+			scheduledExecutorService);
+		ReflectionTestUtil.setFieldValue(
+			companyKeyResolverImpl, "_scheduledFuture",
+			scheduledExecutorService.scheduleWithFixedDelay(
+				() -> {
+				},
+				1, 1, TimeUnit.HOURS));
+
 		companyKeyResolverImpl.deactivate();
 
 		Assert.assertNull(companyKeyCacheEntry.getKeyBytes());
+		Assert.assertNull(
+			ReflectionTestUtil.getFieldValue(
+				companyKeyResolverImpl, "_scheduledExecutorService"));
+		Assert.assertNull(
+			ReflectionTestUtil.getFieldValue(
+				companyKeyResolverImpl, "_scheduledFuture"));
 		Assert.assertTrue(companyKeyCacheEntries.isEmpty());
+		Assert.assertTrue(scheduledExecutorService.isShutdown());
 	}
 
 	@Test

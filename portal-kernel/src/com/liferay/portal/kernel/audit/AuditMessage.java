@@ -76,6 +76,8 @@ public class AuditMessage implements Serializable {
 		_sessionID = auditRequestThreadLocal.getSessionID();
 		_userEmailAddress = auditRequestThreadLocal.getRealUserEmailAddress();
 
+		_correlationId = AuditRequestThreadLocal.getCorrelationId();
+
 		long realUserId = auditRequestThreadLocal.getRealUserId();
 
 		long doAsUserId = 0;

@@ -638,6 +638,41 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="format-js-unit-test-results">
+		<attribute name="portal.dir" />
+		<attribute name="test.dir" />
+
+		<sequential>
+			<local name="test.batch.report.type" />
+
+			<propertycopy from="test.batch.report.type[${test.batch.name}]" name="test.batch.report.type" silent="true" />
+
+			<if>
+				<equals arg1="${test.batch.report.type}" arg2="test-file" />
+				<then>
+					<for param="test.results.file">
+						<path>
+							<fileset
+								dir="@{portal.dir}/@{test.dir}"
+								erroronmissingdir="false"
+								excludes="**/node_modules/**"
+								includes="**/TEST-frontend-js.xml"
+							/>
+						</path>
+						<sequential>
+							<beanshell>
+								<![CDATA[
+									import com.liferay.jenkins.results.parser.test.clazz.file.TestClassFileUtil;
+
+									TestClassFileUtil.formatTestResultsFile(new File("@{portal.dir}"), new File("@{test.results.file}"));
+								]]>
+							</beanshell>
+						</sequential>
+					</for>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
 	<macrodef name="get-console-log-failure-message">
 		<attribute name="console.log" />
 
@@ -1562,6 +1597,42 @@ app.server.type=@{app.server.type}]]></echo>
 			/>
 
 			<delete file="${tstamp}.diff" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="report-js-unit-test-results">
+		<attribute name="failure.count" />
+
+		<element implicit="true" name="test.results.resources" />
+
+		<sequential>
+			<local name="js.unit.test.results.count" />
+
+			<resourcecount property="js.unit.test.results.count">
+				<union>
+					<test.results.resources />
+				</union>
+			</resourcecount>
+
+			<if>
+				<and>
+					<not>
+						<equals arg1="@{failure.count}" arg2="0" />
+					</not>
+					<equals arg1="${js.unit.test.results.count}" arg2="0" />
+				</and>
+				<then>
+					<fail message="@{failure.count} JS unit test tasks failed without writing a test result." />
+				</then>
+				<elseif>
+					<not>
+						<equals arg1="@{failure.count}" arg2="0" />
+					</not>
+					<then>
+						<echo>@{failure.count} JS unit test tasks failed. See the test results.</echo>
+					</then>
+				</elseif>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -8696,6 +8767,8 @@ information. Make sure to commit in all format-javadoc results.
 					</sequential>
 				</for>
 
+				<format-js-unit-test-results portal.dir="${project.dir}" test.dir="modules" />
+
 				<replace
 					dir="modules"
 					includes="**/TEST-frontend-js.xml"
@@ -8710,14 +8783,13 @@ information. Make sure to commit in all format-javadoc results.
 					</replacefilter>
 				</replace>
 
-				<if>
-					<not>
-						<equals arg1="${js.unit.failure.count}" arg2="0" />
-					</not>
-					<then>
-						<fail message="${js.unit.failure.count} JS unit tests failed." />
-					</then>
-				</if>
+				<report-js-unit-test-results failure.count="${js.unit.failure.count}">
+					<fileset
+						dir="modules"
+						excludes="**/node_modules/**"
+						includes="**/TEST-frontend-js*.xml"
+					/>
+				</report-js-unit-test-results>
 			</test-action>
 
 			<test-set-up>
@@ -10905,34 +10977,43 @@ junit.jvm.override.version=21</echo>
 
 				<lstopwatch action="total" name="test.execution.duration" />
 
-				<replace>
+				<format-js-unit-test-results portal.dir="${project.dir}" test.dir="workspaces" />
+
+				<format-js-unit-test-results portal.dir="${liferay.portal.private.dir}" test.dir="workspaces" />
+
+				<for param="test.results.file">
+					<path>
+						<fileset
+							dir="workspaces"
+							erroronmissingdir="false"
+							excludes="**/node_modules/**"
+							includes="**/TEST-frontend-js.xml"
+						/>
+						<fileset
+							dir="${liferay.portal.private.dir}/workspaces"
+							erroronmissingdir="false"
+							excludes="**/node_modules/**"
+							includes="**/TEST-frontend-js.xml"
+						/>
+					</path>
+					<sequential>
+						<split-testsuites-junit-report test.suites.report.filepath="@{test.results.file}" />
+					</sequential>
+				</for>
+
+				<report-js-unit-test-results failure.count="${js.unit.failure.count}">
 					<fileset
 						dir="workspaces"
-						includes="**/TEST-frontend-js.xml"
+						excludes="**/node_modules/**"
+						includes="**/TEST-frontend-js*.xml"
 					/>
 					<fileset
 						dir="${liferay.portal.private.dir}/workspaces"
 						erroronmissingdir="false"
-						includes="**/TEST-frontend-js.xml"
+						excludes="**/node_modules/**"
+						includes="**/TEST-frontend-js*.xml"
 					/>
-					<replacefilter>
-						<replacetoken><![CDATA[<testsuites>]]></replacetoken>
-						<replacevalue><![CDATA[]]></replacevalue>
-					</replacefilter>
-					<replacefilter>
-						<replacetoken><![CDATA[</testsuites>]]></replacetoken>
-						<replacevalue><![CDATA[]]></replacevalue>
-					</replacefilter>
-				</replace>
-
-				<if>
-					<not>
-						<equals arg1="${js.unit.failure.count}" arg2="0" />
-					</not>
-					<then>
-						<fail message="${js.unit.failure.count} JS unit tests failed." />
-					</then>
-				</if>
+				</report-js-unit-test-results>
 			</test-action>
 
 			<test-set-up>

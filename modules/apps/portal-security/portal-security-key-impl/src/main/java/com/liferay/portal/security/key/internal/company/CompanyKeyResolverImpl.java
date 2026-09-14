@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -34,6 +35,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -221,10 +226,52 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 			KeyManagerConfiguration.class, properties);
 
 		_clearCompanyKeyCacheEntries();
+
+		if (_scheduledExecutorService == null) {
+			_scheduledExecutorService =
+				Executors.newSingleThreadScheduledExecutor(
+					new NamedThreadFactory(
+						CompanyKeyResolverImpl.class.getName(),
+						Thread.NORM_PRIORITY,
+						CompanyKeyResolverImpl.class.getClassLoader()));
+		}
+
+		if (_scheduledFuture != null) {
+			_scheduledFuture.cancel(false);
+
+			_scheduledFuture = null;
+		}
+
+		long cacheTTL = _getCacheTTL();
+
+		if (cacheTTL > 0) {
+			_scheduledFuture = _scheduledExecutorService.scheduleWithFixedDelay(
+				() -> {
+					try {
+						_destroyExpiredCompanyKeyCacheEntries();
+					}
+					catch (Exception exception) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to destroy expired key cache entries",
+								exception);
+						}
+					}
+				},
+				cacheTTL, cacheTTL, TimeUnit.MILLISECONDS);
+		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		if (_scheduledExecutorService != null) {
+			_scheduledExecutorService.shutdownNow();
+
+			_scheduledExecutorService = null;
+		}
+
+		_scheduledFuture = null;
+
 		_clearCompanyKeyCacheEntries();
 
 		_keyManagerConfiguration = null;
@@ -397,5 +444,8 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 
 	@Reference
 	private KeyManagerProfileRegistry _keyManagerProfileRegistry;
+
+	private volatile ScheduledExecutorService _scheduledExecutorService;
+	private volatile ScheduledFuture<?> _scheduledFuture;
 
 }

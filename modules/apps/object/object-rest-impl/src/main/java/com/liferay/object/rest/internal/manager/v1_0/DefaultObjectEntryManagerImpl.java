@@ -4011,6 +4011,27 @@ public class DefaultObjectEntryManagerImpl
 		return values;
 	}
 
+	private ObjectEntry _toUpdatedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			boolean partialUpdateNestedObjectEntries,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			String scopeKey, ServiceContext serviceContext)
+		throws Exception {
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_addOrUpdateNestedObjectEntries(
+				dtoConverterContext, objectDefinition, objectEntry,
+				_getObjectRelationships(objectDefinition, objectEntry),
+				partialUpdateNestedObjectEntries,
+				_updateStatus(
+					dtoConverterContext, objectEntry, serviceBuilderObjectEntry,
+					serviceContext),
+				scopeKey),
+			null);
+	}
+
 	private void _updateDuplicateObjectEntryName(
 			ObjectDefinition objectDefinition,
 			ObjectEntryFolder objectEntryFolder, String languageId,
@@ -4143,17 +4164,9 @@ public class DefaultObjectEntryManagerImpl
 				values, serviceContext);
 		}
 
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition,
-			_addOrUpdateNestedObjectEntries(
-				dtoConverterContext, objectDefinition, objectEntry,
-				_getObjectRelationships(objectDefinition, objectEntry),
-				partialUpdate,
-				_updateStatus(
-					dtoConverterContext, objectEntry, serviceBuilderObjectEntry,
-					serviceContext),
-				scopeKey),
-			null);
+		return _toUpdatedObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry, partialUpdate,
+			serviceBuilderObjectEntry, scopeKey, serviceContext);
 	}
 
 	private ObjectEntry _updateObjectEntry(
@@ -4186,28 +4199,20 @@ public class DefaultObjectEntryManagerImpl
 
 		serviceContext.setCompanyId(companyId);
 
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition,
-			_addOrUpdateNestedObjectEntries(
-				dtoConverterContext, objectDefinition, objectEntry,
-				_getObjectRelationships(objectDefinition, objectEntry),
-				partialUpdateNestedObjectEntries,
-				_updateStatus(
-					dtoConverterContext, objectEntry,
-					_objectEntryService.addOrUpdateObjectEntry(
-						externalReferenceCode, groupId,
-						objectDefinition.getObjectDefinitionId(),
-						_getObjectEntryFolderId(
-							objectDefinition.getCompanyId(), groupId,
-							objectEntry, objectDefinition, serviceContext),
-						_toObjectValues(
-							0L, dtoConverterContext.getLocale(),
-							objectDefinition, objectEntry, scopeKey,
-							serviceContext),
-						serviceContext),
-					serviceContext),
-				scopeKey),
-			null);
+		return _toUpdatedObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry,
+			partialUpdateNestedObjectEntries,
+			_objectEntryService.addOrUpdateObjectEntry(
+				externalReferenceCode, groupId,
+				objectDefinition.getObjectDefinitionId(),
+				_getObjectEntryFolderId(
+					objectDefinition.getCompanyId(), groupId, objectEntry,
+					objectDefinition, serviceContext),
+				_toObjectValues(
+					0L, dtoConverterContext.getLocale(), objectDefinition,
+					objectEntry, scopeKey, serviceContext),
+				serviceContext),
+			scopeKey, serviceContext);
 	}
 
 	private ObjectEntry _updateRelatedObjectEntry(

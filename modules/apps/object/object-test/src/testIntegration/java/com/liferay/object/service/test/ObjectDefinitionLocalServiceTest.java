@@ -822,6 +822,30 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testAddCustomObjectDefinitionWithDescription()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				HashMapBuilder.put(
+					LocaleUtil.GERMANY,
+					"Dies ist die Beschreibung der Objektdefinition."
+				).put(
+					LocaleUtil.US,
+					"This is the description of an object definition."
+				).build());
+
+		Assert.assertEquals(
+			"Dies ist die Beschreibung der Objektdefinition.",
+			objectDefinition.getDescription(LocaleUtil.GERMANY));
+		Assert.assertEquals(
+			"This is the description of an object definition.",
+			objectDefinition.getDescription(LocaleUtil.US));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
 	public void testAddCustomObjectDefinitionWithRegisteredPortletId()
 		throws Exception {
 
@@ -4150,6 +4174,55 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_objectFolderLocalService.deleteObjectFolder(objectFolder);
+	}
+
+	@Test
+	public void testUpdateCustomObjectDefinitionWithEmptyDescriptionMap()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				HashMapBuilder.put(
+					LocaleUtil.US,
+					"This is the description of an object definition."
+				).build());
+
+		objectDefinition =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				objectDefinition.getExternalReferenceCode(),
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getAccountEntryRestrictedObjectFieldId(),
+				objectDefinition.getDescriptionObjectFieldId(),
+				objectDefinition.getObjectFolderId(),
+				objectDefinition.getTitleObjectFieldId(),
+				objectDefinition.isAccountEntryRestricted(),
+				objectDefinition.isActive(), objectDefinition.getClassName(),
+				Collections.emptyMap(),
+				objectDefinition.isEnableCategorization(),
+				objectDefinition.isEnableComments(),
+				objectDefinition.isEnableFormContainer(),
+				objectDefinition.isEnableFriendlyURLCustomization(),
+				objectDefinition.isEnableIndexSearch(),
+				objectDefinition.isEnableObjectEntryDraft(),
+				objectDefinition.isEnableObjectEntryHistory(),
+				objectDefinition.isEnableObjectEntrySchedule(),
+				objectDefinition.isEnableObjectEntrySubscription(),
+				objectDefinition.isEnableObjectEntryVersioning(),
+				objectDefinition.getFriendlyURLSeparator(),
+				objectDefinition.getLabelMap(), objectDefinition.getShortName(),
+				objectDefinition.getPanelAppOrder(),
+				objectDefinition.getPanelCategoryKey(),
+				objectDefinition.isPortlet(),
+				objectDefinition.getPluralLabelMap(),
+				objectDefinition.getScope(), objectDefinition.getStatus(),
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.emptyList(), new ServiceContext());
+
+		Assert.assertEquals(
+			"This is the description of an object definition.",
+			objectDefinition.getDescription(LocaleUtil.US));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test

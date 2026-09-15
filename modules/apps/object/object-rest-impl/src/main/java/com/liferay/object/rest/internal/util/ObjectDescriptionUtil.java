@@ -13,20 +13,30 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Nathaly Gomes
  */
-public class ObjectFieldDescriptionUtil {
+public class ObjectDescriptionUtil {
+
+	public static String getDescription(ObjectDefinition objectDefinition) {
+		return _getDescription(
+			objectDefinition.getDescription(
+				objectDefinition.getDefaultLanguageId(), false),
+			objectDefinition.getDescription(LocaleUtil.US, false));
+	}
 
 	public static String getDescription(
 		ObjectDefinition objectDefinition, ObjectField objectField) {
 
-		String englishDescription = objectField.getDescription(
-			LocaleUtil.US, false);
+		return _getDescription(
+			objectField.getDescription(
+				objectDefinition.getDefaultLanguageId(), false),
+			objectField.getDescription(LocaleUtil.US, false));
+	}
+
+	private static String _getDescription(
+		String defaultLanguageDescription, String englishDescription) {
 
 		if (Validator.isNotNull(englishDescription)) {
 			return englishDescription;
 		}
-
-		String defaultLanguageDescription = objectField.getDescription(
-			objectDefinition.getDefaultLanguageId(), false);
 
 		if (Validator.isNotNull(defaultLanguageDescription)) {
 			return defaultLanguageDescription;

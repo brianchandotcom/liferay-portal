@@ -23,7 +23,7 @@ import org.mockito.Mockito;
 /**
  * @author Nathaly Gomes
  */
-public class ObjectFieldDescriptionUtilTest {
+public class ObjectDescriptionUtilTest {
 
 	@ClassRule
 	@Rule
@@ -45,7 +45,7 @@ public class ObjectFieldDescriptionUtilTest {
 		// No description
 
 		Assert.assertNull(
-			ObjectFieldDescriptionUtil.getDescription(
+			ObjectDescriptionUtil.getDescription(
 				_objectDefinition, _objectField));
 
 		Mockito.when(
@@ -61,7 +61,7 @@ public class ObjectFieldDescriptionUtilTest {
 		);
 
 		Assert.assertNull(
-			ObjectFieldDescriptionUtil.getDescription(
+			ObjectDescriptionUtil.getDescription(
 				_objectDefinition, _objectField));
 
 		// With English translation
@@ -82,7 +82,7 @@ public class ObjectFieldDescriptionUtilTest {
 
 		Assert.assertEquals(
 			description,
-			ObjectFieldDescriptionUtil.getDescription(
+			ObjectDescriptionUtil.getDescription(
 				_objectDefinition, _objectField));
 
 		// Without English translation
@@ -101,7 +101,7 @@ public class ObjectFieldDescriptionUtilTest {
 
 		Assert.assertEquals(
 			description,
-			ObjectFieldDescriptionUtil.getDescription(
+			ObjectDescriptionUtil.getDescription(
 				_objectDefinition, _objectField));
 	}
 

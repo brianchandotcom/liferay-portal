@@ -11,7 +11,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
-import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
@@ -183,6 +181,22 @@ public class AssetListFiltersUtilTest {
 				BooleanClauseOccur.MUST,
 				_getCommonFieldFilterJSONObject(
 					"gt", Field.CREATE_DATE, "2026-01-15")));
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_assertTermQuery(
+			"externalReferenceCode", externalReferenceCode,
+			_assertFilterQuery(
+				BooleanClauseOccur.MUST,
+				_getCommonFieldFilterJSONObject(
+					"eq", "externalReferenceCode", externalReferenceCode)));
+		_assertTermQuery(
+			"externalReferenceCode", externalReferenceCode,
+			_assertFilterQuery(
+				BooleanClauseOccur.MUST_NOT,
+				_getCommonFieldFilterJSONObject(
+					"not-eq", "externalReferenceCode", externalReferenceCode)));
+
 		_assertTermRangeQuery(
 			Field.MODIFIED_DATE, true, true, "20260115000000", "20260120235959",
 			_assertFilterQuery(
@@ -228,15 +242,14 @@ public class AssetListFiltersUtilTest {
 
 		String userName = RandomTestUtil.randomString();
 
-		_assertTermQuery(
-			Field.USER_NAME, StringUtil.toLowerCase(userName),
+		_assertMatchQuery(
+			Field.USER_NAME + ".text", userName,
 			_assertFilterQuery(
 				BooleanClauseOccur.MUST,
 				_getCommonFieldFilterJSONObject(
-					"eq", Field.USER_NAME, userName)));
-		_assertWildcardQuery(
-			Field.USER_NAME,
-			StringBundler.concat("*", StringUtil.toLowerCase(userName), "*"),
+					"contains", Field.USER_NAME, userName)));
+		_assertMatchQuery(
+			Field.USER_NAME + ".text", userName,
 			_assertFilterQuery(
 				BooleanClauseOccur.MUST_NOT,
 				_getCommonFieldFilterJSONObject(
@@ -390,6 +403,12 @@ public class AssetListFiltersUtilTest {
 				BooleanClauseOccur.MUST,
 				_getFilterJSONObject("eq", keywordTextFieldName, "Alpha"),
 				keywordTextFieldName));
+		_assertTermQuery(
+			"nestedFieldArray.value_keyword", "alpha",
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST_NOT,
+				_getFilterJSONObject("not-eq", keywordTextFieldName, "Alpha"),
+				keywordTextFieldName));
 
 		String localizedTextFieldName = RandomTestUtil.randomString();
 
@@ -466,27 +485,6 @@ public class AssetListFiltersUtilTest {
 
 		Assert.assertEquals(
 			Arrays.toString(booleanClauses), 0, booleanClauses.length);
-	}
-
-	@Test
-	public void testFilterQueriesWithKeywordTextContainsOperators() {
-		String keywordTextFieldName = RandomTestUtil.randomString();
-
-		_setUpKeywordTextObjectField(keywordTextFieldName);
-
-		_assertWildcardQuery(
-			"nestedFieldArray.value_keyword", "*alpha*",
-			_assertNestedQuery(
-				BooleanClauseOccur.MUST,
-				_getFilterJSONObject("contains", keywordTextFieldName, "Alpha"),
-				keywordTextFieldName));
-		_assertWildcardQuery(
-			"nestedFieldArray.value_keyword", "*alpha*",
-			_assertNestedQuery(
-				BooleanClauseOccur.MUST_NOT,
-				_getFilterJSONObject(
-					"not-contains", keywordTextFieldName, "Alpha"),
-				keywordTextFieldName));
 	}
 
 	@Test
@@ -1275,19 +1273,6 @@ public class AssetListFiltersUtilTest {
 
 		AssertUtils.assertEqualsSorted(
 			expectedTerms, terms.toArray(new String[0]));
-	}
-
-	private void _assertWildcardQuery(
-		String expectedField, String expectedValue, Query query) {
-
-		Assert.assertTrue(query.toString(), query instanceof WildcardQuery);
-
-		WildcardQuery wildcardQuery = (WildcardQuery)query;
-
-		QueryTerm queryTerm = wildcardQuery.getQueryTerm();
-
-		Assert.assertEquals(expectedField, queryTerm.getField());
-		Assert.assertEquals(expectedValue, queryTerm.getValue());
 	}
 
 	private JSONObject _getAssetFilterJSONObject(

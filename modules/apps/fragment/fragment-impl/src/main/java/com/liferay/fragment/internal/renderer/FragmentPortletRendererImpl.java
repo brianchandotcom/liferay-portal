@@ -11,6 +11,7 @@ import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryConstants;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,7 +48,14 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 		if ((themeDisplay != null) &&
 			(fragmentEntryLink.getPlid() != themeDisplay.getPlid())) {
 
-			inheritedFromMaster = true;
+			Layout layout = themeDisplay.getLayout();
+
+			if ((layout != null) &&
+				(fragmentEntryLink.getPlid() ==
+					layout.getMasterLayoutPlid())) {
+
+				inheritedFromMaster = true;
+			}
 		}
 
 		try {

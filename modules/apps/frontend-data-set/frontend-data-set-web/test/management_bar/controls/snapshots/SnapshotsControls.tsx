@@ -32,7 +32,7 @@ const mockFDSContext = {
 	namespace: 'testNamespace_',
 	onSnapshotChange: jest.fn(),
 	portletId: 'testPortlet',
-	updateUserPreferences: jest.fn(() => Promise.resolve()),
+	updateUserConfiguration: jest.fn(() => Promise.resolve()),
 };
 
 const ownedSnapshot = {erc: 'owned-erc', id: 1, label: 'Owned View'};
@@ -77,7 +77,7 @@ describe('SnapshotsControls action gating', () => {
 				snapshotUpdated: false,
 				snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 				sorts: [],
-				userPreferences: null,
+				userConfiguration: null,
 				visibleFieldNames: {},
 			});
 		});
@@ -110,7 +110,7 @@ describe('SnapshotsControls action gating', () => {
 					},
 				],
 				sorts: [],
-				userPreferences: null,
+				userConfiguration: null,
 				visibleFieldNames: {},
 			});
 		});
@@ -128,7 +128,7 @@ describe('SnapshotsControls action gating', () => {
 });
 
 describe('SnapshotsControls initial view', () => {
-	it('sets the active view as the initial view through the preferences', async () => {
+	it('sets the active view as the initial view through the user configuration', async () => {
 		renderSnapshotsControls({
 			activeSnapshotERC: ownedSnapshot.erc,
 			activeView: null,
@@ -137,7 +137,7 @@ describe('SnapshotsControls initial view', () => {
 			snapshotUpdated: false,
 			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 			sorts: [],
-			userPreferences: {initialDataSetSnapshotERC: 'previous-erc'},
+			userConfiguration: {initialDataSetSnapshotERC: 'previous-erc'},
 			visibleFieldNames: {},
 		});
 
@@ -146,9 +146,11 @@ describe('SnapshotsControls initial view', () => {
 		await userEvent.click(await screen.findByText('set-as-initial-view'));
 
 		await waitFor(() =>
-			expect(mockFDSContext.updateUserPreferences).toHaveBeenCalledWith({
-				initialDataSetSnapshotERC: ownedSnapshot.erc,
-			})
+			expect(mockFDSContext.updateUserConfiguration).toHaveBeenCalledWith(
+				{
+					initialDataSetSnapshotERC: ownedSnapshot.erc,
+				}
+			)
 		);
 	});
 
@@ -161,7 +163,7 @@ describe('SnapshotsControls initial view', () => {
 			snapshotUpdated: false,
 			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 			sorts: [],
-			userPreferences: {initialDataSetSnapshotERC: ownedSnapshot.erc},
+			userConfiguration: {initialDataSetSnapshotERC: ownedSnapshot.erc},
 			visibleFieldNames: {},
 		});
 

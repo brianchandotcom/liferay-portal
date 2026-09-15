@@ -26,6 +26,11 @@ const DEFAULT_OPERATORS: FilterOperator[] = [
 	{label: Liferay.Language.get('does-not-contain'), value: 'not-contains'},
 ];
 
+const EQUALITY_OPERATORS: FilterOperator[] = [
+	{label: Liferay.Language.get('equals'), value: 'eq'},
+	{label: Liferay.Language.get('not-equals'), value: 'not-eq'},
+];
+
 export function getCollectionOperators(
 	property: FilterProperty
 ): FilterOperator[] {
@@ -38,6 +43,8 @@ export function getCollectionOperators(
 		case 'integer':
 		case 'numeric':
 			return COMPARISON_OPERATORS;
+		case 'keyword':
+			return EQUALITY_OPERATORS;
 		case 'picklist':
 		case 'text':
 		default:

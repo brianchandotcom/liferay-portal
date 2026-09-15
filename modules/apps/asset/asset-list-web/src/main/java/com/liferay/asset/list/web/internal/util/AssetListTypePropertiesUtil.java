@@ -120,7 +120,7 @@ public class AssetListTypePropertiesUtil {
 				"expiration-date", locale, Field.EXPIRATION_DATE, "date"),
 			_getCommonFieldJSONObject(
 				"external-reference-code", locale, "externalReferenceCode",
-				"text"),
+				"keyword"),
 			_getCommonFieldJSONObject(
 				"modified-date", locale, Field.MODIFIED_DATE, "date"),
 			_getCommonFieldJSONObject(
@@ -141,7 +141,7 @@ public class AssetListTypePropertiesUtil {
 		return JSONUtil.toJSONArray(
 			objectFields,
 			objectField -> {
-				String type = _toType(objectField.getBusinessType());
+				String type = _toType(objectField);
 
 				if (type == null) {
 					return null;
@@ -203,7 +203,9 @@ public class AssetListTypePropertiesUtil {
 		return true;
 	}
 
-	private static String _toType(String businessType) {
+	private static String _toType(ObjectField objectField) {
+		String businessType = objectField.getBusinessType();
+
 		if (businessType == null) {
 			return null;
 		}
@@ -239,6 +241,10 @@ public class AssetListTypePropertiesUtil {
 				ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER) ||
 			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT) ||
 			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+
+			if (objectField.isIndexedAsKeyword()) {
+				return "keyword";
+			}
 
 			return "text";
 		}

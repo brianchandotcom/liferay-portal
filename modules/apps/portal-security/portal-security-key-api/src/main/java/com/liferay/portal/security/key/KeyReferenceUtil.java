@@ -8,10 +8,11 @@ package com.liferay.portal.security.key;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Christopher Kian
+ * @author Pedro Victor Silvestre
  */
 public class KeyReferenceUtil {
 
@@ -26,21 +27,69 @@ public class KeyReferenceUtil {
 		return false;
 	}
 
-	public static KeyReference toKeyReference(String keyReferenceString) {
-		String prefix = _KEY_REFERENCE_PREFIX_SECRET;
-		KeyReference.Type type = KeyReference.Type.SECRET;
-
-		if (keyReferenceString.startsWith(_KEY_REFERENCE_PREFIX_CRYPTO)) {
-			prefix = _KEY_REFERENCE_PREFIX_CRYPTO;
-			type = KeyReference.Type.CRYPTO;
+	public static KeyReference parseKeyReference(String keyReferenceString) {
+		if (keyReferenceString == null) {
+			return null;
 		}
 
-		String[] parts = StringUtil.split(
-			keyReferenceString.substring(
-				prefix.length(), keyReferenceString.length() - 1),
-			CharPool.COLON);
+		String keyReferencePrefix;
+		KeyReference.Type keyReferenceType;
 
-		return new KeyReference(parts[1], parts[0], type);
+		if (keyReferenceString.startsWith(_KEY_REFERENCE_PREFIX_CRYPTO)) {
+			keyReferencePrefix = _KEY_REFERENCE_PREFIX_CRYPTO;
+			keyReferenceType = KeyReference.Type.CRYPTO;
+		}
+		else if (keyReferenceString.startsWith(_KEY_REFERENCE_PREFIX_SECRET)) {
+			keyReferencePrefix = _KEY_REFERENCE_PREFIX_SECRET;
+			keyReferenceType = KeyReference.Type.SECRET;
+		}
+		else {
+			return null;
+		}
+
+		int length = keyReferenceString.length();
+
+		if ((length <= keyReferencePrefix.length()) ||
+			(keyReferenceString.charAt(length - 1) !=
+				CharPool.CLOSE_CURLY_BRACE)) {
+
+			return null;
+		}
+
+		String value = keyReferenceString.substring(
+			keyReferencePrefix.length(), length - 1);
+
+		int index = value.indexOf(CharPool.COLON);
+
+		if (index <= 0) {
+			return null;
+		}
+
+		String providerId = value.substring(0, index);
+
+		if (Validator.isNull(providerId) ||
+			(providerId.indexOf(CharPool.CLOSE_CURLY_BRACE) >= 0)) {
+
+			return null;
+		}
+
+		String identifier = value.substring(index + 1);
+
+		if (Validator.isNull(identifier)) {
+			return null;
+		}
+
+		return new KeyReference(identifier, providerId, keyReferenceType);
+	}
+
+	public static KeyReference toKeyReference(String keyReferenceString) {
+		KeyReference keyReference = parseKeyReference(keyReferenceString);
+
+		if (keyReference == null) {
+			throw new IllegalArgumentException("Invalid key reference");
+		}
+
+		return keyReference;
 	}
 
 	public static String toKeyReferenceString(KeyReference keyReference) {

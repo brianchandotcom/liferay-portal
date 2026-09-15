@@ -25,29 +25,19 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_BAN",
+			"externalReferenceCode": "C2M0_BAN",
 			"label": {
-				"en_US": "C2M0 Forum Ban"
+				"en_US": "C2M0 Ban"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumBan",
+			"name": "C2M0Ban",
 			"objectFields": [
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "BAN_USER_ID",
-					"label": {
-						"en_US": "Ban User ID"
-					},
-					"name": "banUserId",
-					"required": true
-				}
 			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Bans"
+				"en_US": "C2M0 Bans"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -69,36 +59,22 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_CATEGORY",
+			"externalReferenceCode": "C2M0_CATEGORY",
 			"label": {
-				"en_US": "C2M0 Forum Category"
+				"en_US": "C2M0 Category"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumCategory",
+			"name": "C2M0Category",
 			"objectFields": [
 				{
 					"DBType": "Clob",
 					"businessType": "RichText",
-					"externalReferenceCode": "CATEGORY_DESCRIPTION",
+					"externalReferenceCode": "DESCRIPTION",
 					"label": {
 						"en_US": "Description"
 					},
-					"name": "categoryDescription",
+					"name": "description",
 					"required": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "CATEGORY_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Name"
-					},
-					"localized": true,
-					"name": "categoryName",
-					"required": true
 				},
 				{
 					"DBType": "String",
@@ -119,48 +95,62 @@
 					},
 					"name": "friendlyURL",
 					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": true,
+					"name": "name",
+					"required": true
 				}
 			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_CATEGORY_TO_C2M0_FORUM_MESSAGES",
+					"externalReferenceCode": "C2M0_CATEGORY_TO_C2M0_FORUM_MESSAGES",
 					"label": {
-						"en_US": "C2M0 Forum Category to C2M0 Forum Messages"
+						"en_US": "C2M0 Category to C2M0 Messages"
 					},
-					"name": "c2m0FrmCatToC2M0FrmMsgs",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_CATEGORY",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_MESSAGE",
+					"name": "c2m0CategoryToC2M0Messages",
+					"objectDefinitionExternalReferenceCode1": "C2M0_CATEGORY",
+					"objectDefinitionExternalReferenceCode2": "C2M0_MESSAGE",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_CATEGORY_TO_C2M0_FORUM_SUBCATEGORIES",
+					"externalReferenceCode": "C2M0_CATEGORY_TO_C2M0_FORUM_SUBCATEGORIES",
 					"label": {
-						"en_US": "C2M0 Forum Category to C2M0 Forum Subcategories"
+						"en_US": "C2M0 Category to C2M0 Subcategories"
 					},
-					"name": "c2m0FrmCatToC2M0FrmSubCats",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_CATEGORY",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_CATEGORY",
+					"name": "c2m0CategoryToC2M0Subcategories",
+					"objectDefinitionExternalReferenceCode1": "C2M0_CATEGORY",
+					"objectDefinitionExternalReferenceCode2": "C2M0_CATEGORY",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_CATEGORY_TO_C2M0_FORUM_THREADS",
+					"externalReferenceCode": "C2M0_CATEGORY_TO_C2M0_FORUM_THREADS",
 					"label": {
-						"en_US": "C2M0 Forum Category to C2M0 Forum Threads"
+						"en_US": "C2M0 Category to C2M0 Threads"
 					},
-					"name": "c2m0FrmCatToC2M0FrmThrs",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_CATEGORY",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_THREAD",
+					"name": "c2m0CategoryToC2M0Threads",
+					"objectDefinitionExternalReferenceCode1": "C2M0_CATEGORY",
+					"objectDefinitionExternalReferenceCode2": "C2M0_THREAD",
 					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Categories"
+				"en_US": "C2M0 Categories"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -182,12 +172,12 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_MESSAGE",
+			"externalReferenceCode": "C2M0_MESSAGE",
 			"label": {
-				"en_US": "C2M0 Forum Message"
+				"en_US": "C2M0 Message"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumMessage",
+			"name": "C2M0Message",
 			"objectFields": [
 				{
 					"DBType": "Boolean",
@@ -263,66 +253,6 @@
 					"required": false
 				},
 				{
-					"businessType": "Text",
-					"externalReferenceCode": "NOTIFICATION_AUTHOR_NAME",
-					"indexed": false,
-					"label": {
-						"en_US": "Notification Author Name"
-					},
-					"name": "notificationAuthorName",
-					"required": false
-				},
-				{
-					"businessType": "LongText",
-					"externalReferenceCode": "NOTIFICATION_BODY_EXCERPT",
-					"indexed": false,
-					"label": {
-						"en_US": "Notification Body Excerpt"
-					},
-					"name": "notificationBodyExcerpt",
-					"required": false
-				},
-				{
-					"businessType": "Text",
-					"externalReferenceCode": "NOTIFICATION_MENTION_RECIPIENT_IDS",
-					"indexed": false,
-					"label": {
-						"en_US": "Notification Mention Recipient Ids"
-					},
-					"name": "notificationMentionRecipientIds",
-					"required": false
-				},
-				{
-					"businessType": "Text",
-					"externalReferenceCode": "NOTIFICATION_REPLY_RECIPIENT_IDS",
-					"indexed": false,
-					"label": {
-						"en_US": "Notification Reply Recipient Ids"
-					},
-					"name": "notificationReplyRecipientIds",
-					"required": false
-				},
-				{
-					"businessType": "Text",
-					"externalReferenceCode": "NOTIFICATION_TOPIC_TITLE",
-					"indexed": false,
-					"label": {
-						"en_US": "Notification Topic Title"
-					},
-					"name": "notificationTopicTitle",
-					"required": false
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "PARENT_MESSAGE_ID",
-					"label": {
-						"en_US": "Parent Message ID"
-					},
-					"name": "parentMessageId",
-					"required": false
-				},
-				{
 					"DBType": "BigDecimal",
 					"businessType": "PrecisionDecimal",
 					"externalReferenceCode": "PRIORITY",
@@ -330,16 +260,6 @@
 						"en_US": "Priority"
 					},
 					"name": "priority",
-					"required": false
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "ROOT_MESSAGE_ID",
-					"label": {
-						"en_US": "Root Message ID"
-					},
-					"name": "rootMessageId",
 					"required": false
 				},
 				{
@@ -391,31 +311,75 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_MESSAGE_TO_C2M0_FORUM_MESSAGE_ATTACHMENTS",
+					"externalReferenceCode": "C2M0_MESSAGE_TO_C2M0_CHILD_MESSAGES",
 					"label": {
-						"en_US": "C2M0 Forum Message to C2M0 Forum Message Attachments"
+						"en_US": "C2M0 Message to C2M0 Child Messages"
 					},
-					"name": "c2m0FrmMsgToC2M0FrmMsgAtts",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_MESSAGE",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_MESSAGE_ATTACHMENT",
+					"name": "c2m0MessageToC2M0ChildMessages",
+					"objectDefinitionExternalReferenceCode1": "C2M0_MESSAGE",
+					"objectDefinitionExternalReferenceCode2": "C2M0_MESSAGE",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_MESSAGE_TO_C2M0_FORUM_VOTES",
+					"externalReferenceCode": "C2M0_MESSAGE_TO_C2M0_FORUM_MESSAGE_ATTACHMENTS",
 					"label": {
-						"en_US": "C2M0 Forum Message to C2M0 Forum Votes"
+						"en_US": "C2M0 Message to C2M0 Message Attachments"
 					},
-					"name": "c2m0FrmMsgToC2M0FrmVotes",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_MESSAGE",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_VOTE",
+					"name": "c2m0MessageToC2M0MessageAttachments",
+					"objectDefinitionExternalReferenceCode1": "C2M0_MESSAGE",
+					"objectDefinitionExternalReferenceCode2": "C2M0_MESSAGE_ATTACHMENT",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_MESSAGE_TO_C2M0_ROOT_MESSAGE_THREADS",
+					"label": {
+						"en_US": "C2M0 Message to C2M0 Root Message Threads"
+					},
+					"name": "c2m0MessageToC2M0RootMessageThreads",
+					"objectDefinitionExternalReferenceCode1": "C2M0_MESSAGE",
+					"objectDefinitionExternalReferenceCode2": "C2M0_THREAD",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_MESSAGE_TO_C2M0_SUSPICIOUS_ACTIVITIES",
+					"label": {
+						"en_US": "C2M0 Message to C2M0 Suspicious Activities"
+					},
+					"name": "c2m0MessageToC2M0SuspiciousActivities",
+					"objectDefinitionExternalReferenceCode1": "C2M0_MESSAGE",
+					"objectDefinitionExternalReferenceCode2": "C2M0_SUSPICIOUS_ACTIVITY",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_MESSAGE_TO_C2M0_THREAD_FLAGS",
+					"label": {
+						"en_US": "C2M0 Message to C2M0 Thread Flags"
+					},
+					"name": "c2m0MessageToC2M0ThreadFlags",
+					"objectDefinitionExternalReferenceCode1": "C2M0_MESSAGE",
+					"objectDefinitionExternalReferenceCode2": "C2M0_THREAD_FLAG",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_MESSAGE_TO_C2M0_FORUM_VOTES",
+					"label": {
+						"en_US": "C2M0 Message to C2M0 Votes"
+					},
+					"name": "c2m0MessageToC2M0Votes",
+					"objectDefinitionExternalReferenceCode1": "C2M0_MESSAGE",
+					"objectDefinitionExternalReferenceCode2": "C2M0_VOTE",
 					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Messages"
+				"en_US": "C2M0 Messages"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -428,11 +392,11 @@
 			"enableComments": false,
 			"enableIndexSearch": true,
 			"enableLocalization": false,
-			"externalReferenceCode": "C2M0_FORUM_MESSAGE_ATTACHMENT",
+			"externalReferenceCode": "C2M0_MESSAGE_ATTACHMENT",
 			"label": {
-				"en_US": "C2M0 Forum Message Attachment"
+				"en_US": "C2M0 Message Attachment"
 			},
-			"name": "C2M0ForumMessageAttachment",
+			"name": "C2M0MessageAttachment",
 			"objectFields": [
 				{
 					"DBType": "Long",
@@ -468,7 +432,7 @@
 			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Message Attachments"
+				"en_US": "C2M0 Message Attachments"
 			},
 			"scope": "site"
 		},
@@ -487,12 +451,12 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_NOTIFICATION",
+			"externalReferenceCode": "C2M0_NOTIFICATION",
 			"label": {
-				"en_US": "C2M0 Forum Notification"
+				"en_US": "C2M0 Notification"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumNotification",
+			"name": "C2M0Notification",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -517,21 +481,11 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "NOTIFICATION_KIND",
+					"externalReferenceCode": "KIND",
 					"label": {
-						"en_US": "Notification Kind"
+						"en_US": "Kind"
 					},
-					"name": "notificationKind",
-					"required": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "NOTIFICATION_URL",
-					"label": {
-						"en_US": "URL"
-					},
-					"name": "notificationUrl",
+					"name": "kind",
 					"required": false
 				},
 				{
@@ -545,16 +499,6 @@
 					"required": false
 				},
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "RECIPIENT_USER_ID",
-					"label": {
-						"en_US": "Recipient User ID"
-					},
-					"name": "recipientUserId",
-					"required": true
-				},
-				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "TOPIC_TITLE",
@@ -563,13 +507,23 @@
 					},
 					"name": "topicTitle",
 					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "URL",
+					"label": {
+						"en_US": "URL"
+					},
+					"name": "url",
+					"required": false
 				}
 			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Notifications"
+				"en_US": "C2M0 Notifications"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -591,29 +545,19 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_SUBSCRIPTION",
+			"externalReferenceCode": "C2M0_SUBSCRIPTION",
 			"label": {
-				"en_US": "C2M0 Forum Subscription"
+				"en_US": "C2M0 Subscription"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumSubscription",
+			"name": "C2M0Subscription",
 			"objectFields": [
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "SUBSCRIBER_USER_ID",
-					"label": {
-						"en_US": "Subscriber User ID"
-					},
-					"name": "subscriberUserId",
-					"required": true
-				}
 			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Subscriptions"
+				"en_US": "C2M0 Subscriptions"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -635,23 +579,13 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_SUSPICIOUS_ACTIVITY",
+			"externalReferenceCode": "C2M0_SUSPICIOUS_ACTIVITY",
 			"label": {
-				"en_US": "C2M0 Forum Suspicious Activity"
+				"en_US": "C2M0 Suspicious Activity"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumSuspiciousActivity",
+			"name": "C2M0SuspiciousActivity",
 			"objectFields": [
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "MESSAGE_ID",
-					"label": {
-						"en_US": "Message ID"
-					},
-					"name": "messageId",
-					"required": false
-				},
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
@@ -660,16 +594,6 @@
 						"en_US": "Reason"
 					},
 					"name": "reason",
-					"required": false
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "SUSPICIOUS_MESSAGE_ID",
-					"label": {
-						"en_US": "Message ID"
-					},
-					"name": "suspiciousMessageId",
 					"required": false
 				},
 				{
@@ -687,7 +611,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Suspicious Activities"
+				"en_US": "C2M0 Suspicious Activities"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -709,33 +633,13 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_THREAD",
+			"externalReferenceCode": "C2M0_THREAD",
 			"label": {
-				"en_US": "C2M0 Forum Thread"
+				"en_US": "C2M0 Thread"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumThread",
+			"name": "C2M0Thread",
 			"objectFields": [
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "CATEGORY_ID",
-					"label": {
-						"en_US": "Category ID"
-					},
-					"name": "categoryId",
-					"required": false
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "LAST_POST_BY_USER_ID",
-					"label": {
-						"en_US": "Last Post By User ID"
-					},
-					"name": "lastPostByUserId",
-					"required": false
-				},
 				{
 					"DBType": "Date",
 					"businessType": "Date",
@@ -754,7 +658,7 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Title"
+						"en_US": "Message Title"
 					},
 					"localized": true,
 					"name": "messageTitle",
@@ -781,26 +685,6 @@
 					"required": false
 				},
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "ROOT_MESSAGE_ID",
-					"label": {
-						"en_US": "Root Message ID"
-					},
-					"name": "rootMessageId",
-					"required": false
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "ROOT_MESSAGE_USER_ID",
-					"label": {
-						"en_US": "Root Message User ID"
-					},
-					"name": "rootMessageUserId",
-					"required": false
-				},
-				{
 					"DBType": "Integer",
 					"businessType": "Integer",
 					"externalReferenceCode": "VIEW_COUNT",
@@ -815,53 +699,53 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_MESSAGES",
+					"externalReferenceCode": "C2M0_THREAD_TO_C2M0_FORUM_MESSAGES",
 					"label": {
-						"en_US": "C2M0 Forum Thread to C2M0 Forum Messages"
+						"en_US": "C2M0 Thread to C2M0 Messages"
 					},
-					"name": "c2m0FrmThrToC2M0FrmMsgs",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_MESSAGE",
+					"name": "c2m0ThreadToC2M0Messages",
+					"objectDefinitionExternalReferenceCode1": "C2M0_THREAD",
+					"objectDefinitionExternalReferenceCode2": "C2M0_MESSAGE",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_SUBSCRIPTIONS",
+					"externalReferenceCode": "C2M0_THREAD_TO_C2M0_FORUM_SUBSCRIPTIONS",
 					"label": {
-						"en_US": "C2M0 Forum Thread to C2M0 Forum Subscriptions"
+						"en_US": "C2M0 Thread to C2M0 Subscriptions"
 					},
-					"name": "c2m0FrmThrToC2M0FrmSubs",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_SUBSCRIPTION",
+					"name": "c2m0ThreadToC2M0Subscriptions",
+					"objectDefinitionExternalReferenceCode1": "C2M0_THREAD",
+					"objectDefinitionExternalReferenceCode2": "C2M0_SUBSCRIPTION",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_SUSPICIOUS_ACTIVITIES",
+					"externalReferenceCode": "C2M0_THREAD_TO_C2M0_FORUM_SUSPICIOUS_ACTIVITIES",
 					"label": {
-						"en_US": "C2M0 Forum Thread to C2M0 Forum Suspicious Activities"
+						"en_US": "C2M0 Thread to C2M0 Suspicious Activities"
 					},
-					"name": "c2m0FrmThrToC2M0FrmSusActs",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_SUSPICIOUS_ACTIVITY",
+					"name": "c2m0ThreadToC2M0SuspiciousActivities",
+					"objectDefinitionExternalReferenceCode1": "C2M0_THREAD",
+					"objectDefinitionExternalReferenceCode2": "C2M0_SUSPICIOUS_ACTIVITY",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_THREAD_FLAGS",
+					"externalReferenceCode": "C2M0_THREAD_TO_C2M0_FORUM_THREAD_FLAGS",
 					"label": {
-						"en_US": "C2M0 Forum Thread to C2M0 Forum Thread Flags"
+						"en_US": "C2M0 Thread to C2M0 Thread Flags"
 					},
-					"name": "c2m0FrmThrToC2M0FrmThrFlags",
-					"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
-					"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_THREAD_FLAG",
+					"name": "c2m0ThreadToC2M0ThreadFlags",
+					"objectDefinitionExternalReferenceCode1": "C2M0_THREAD",
+					"objectDefinitionExternalReferenceCode2": "C2M0_THREAD_FLAG",
 					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Threads"
+				"en_US": "C2M0 Threads"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -883,29 +767,19 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_THREAD_FLAG",
+			"externalReferenceCode": "C2M0_THREAD_FLAG",
 			"label": {
-				"en_US": "C2M0 Forum Thread Flag"
+				"en_US": "C2M0 Thread Flag"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumThreadFlag",
+			"name": "C2M0ThreadFlag",
 			"objectFields": [
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "FLAG_MESSAGE_ID",
-					"label": {
-						"en_US": "Message ID"
-					},
-					"name": "flagMessageId",
-					"required": true
-				}
 			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Thread Flags"
+				"en_US": "C2M0 Thread Flags"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -927,12 +801,12 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_USER",
+			"externalReferenceCode": "C2M0_USER",
 			"label": {
-				"en_US": "C2M0 Forum User"
+				"en_US": "C2M0 User"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumUser",
+			"name": "C2M0User",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -947,18 +821,6 @@
 					"required": false
 				},
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "FORUM_USER_ID",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"label": {
-						"en_US": "Forum User Id"
-					},
-					"name": "forumUserId",
-					"required": true
-				},
-				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "LAST_NAME",
@@ -969,6 +831,18 @@
 					},
 					"name": "lastName",
 					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "PORTAL_USER_ID",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "Portal User ID"
+					},
+					"name": "portalUserId",
+					"required": true
 				},
 				{
 					"DBType": "String",
@@ -984,10 +858,67 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_USER_TO_C2M0_BANS",
+					"label": {
+						"en_US": "C2M0 User to C2M0 Bans"
+					},
+					"name": "c2m0UserToC2M0Bans",
+					"objectDefinitionExternalReferenceCode1": "C2M0_USER",
+					"objectDefinitionExternalReferenceCode2": "C2M0_BAN",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_USER_TO_C2M0_LAST_POST_THREADS",
+					"label": {
+						"en_US": "C2M0 User to C2M0 Last Post Threads"
+					},
+					"name": "c2m0UserToC2M0LastPostThreads",
+					"objectDefinitionExternalReferenceCode1": "C2M0_USER",
+					"objectDefinitionExternalReferenceCode2": "C2M0_THREAD",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_USER_TO_C2M0_NOTIFICATIONS",
+					"label": {
+						"en_US": "C2M0 User to C2M0 Notifications"
+					},
+					"name": "c2m0UserToC2M0Notifications",
+					"objectDefinitionExternalReferenceCode1": "C2M0_USER",
+					"objectDefinitionExternalReferenceCode2": "C2M0_NOTIFICATION",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_USER_TO_C2M0_ROOT_MESSAGE_THREADS",
+					"label": {
+						"en_US": "C2M0 User to C2M0 Root Message Threads"
+					},
+					"name": "c2m0UserToC2M0RootMessageThreads",
+					"objectDefinitionExternalReferenceCode1": "C2M0_USER",
+					"objectDefinitionExternalReferenceCode2": "C2M0_THREAD",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "C2M0_USER_TO_C2M0_SUBSCRIPTIONS",
+					"label": {
+						"en_US": "C2M0 User to C2M0 Subscriptions"
+					},
+					"name": "c2m0UserToC2M0Subscriptions",
+					"objectDefinitionExternalReferenceCode1": "C2M0_USER",
+					"objectDefinitionExternalReferenceCode2": "C2M0_SUBSCRIPTION",
+					"type": "oneToMany"
+				}
+			],
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Users"
+				"en_US": "C2M0 Users"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -1009,21 +940,21 @@
 			"enableObjectEntrySchedule": false,
 			"enableObjectEntrySubscription": false,
 			"enableObjectEntryVersioning": false,
-			"externalReferenceCode": "C2M0_FORUM_VOTE",
+			"externalReferenceCode": "C2M0_VOTE",
 			"label": {
-				"en_US": "C2M0 Forum Vote"
+				"en_US": "C2M0 Vote"
 			},
 			"modifiable": true,
-			"name": "C2M0ForumVote",
+			"name": "C2M0Vote",
 			"objectFields": [
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "VOTE_VALUE",
+					"externalReferenceCode": "VALUE",
 					"label": {
-						"en_US": "Vote Value"
+						"en_US": "Value"
 					},
-					"name": "voteValue",
+					"name": "value",
 					"required": true
 				}
 			],
@@ -1031,7 +962,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "C2M0 Forum Votes"
+				"en_US": "C2M0 Votes"
 			},
 			"portlet": false,
 			"scope": "site",

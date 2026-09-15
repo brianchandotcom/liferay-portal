@@ -6,7 +6,7 @@
 import {deepClone} from 'frontend-js-web';
 
 import {IView} from '../utils/types';
-import {ISnapshot, ISnapshots} from './ViewsContext';
+import {ISnapshot, ISnapshots, IUserConfiguration} from './ViewsContext';
 import getViewComponent from './getViewComponent';
 
 const mapSnapshots = (
@@ -36,6 +36,7 @@ export enum EViewsActionTypes {
 	UPDATE_SEARCH_PARAM = 'UPDATE_SEARCH_PARAM',
 	UPDATE_SNAPSHOT_UPDATED = 'UPDATE_SNAPSHOT_UPDATED',
 	UPDATE_SORTING = 'UPDATE_SORTING',
+	UPDATE_USER_CONFIGURATION = 'UPDATE_USER_CONFIGURATION',
 	UPDATE_VIEW_COMPONENT = 'UPDATE_VIEW_COMPONENT',
 	UPDATE_VISIBLE_FIELD_NAMES = 'UPDATE_VISIBLE_FIELD_NAMES',
 }
@@ -108,9 +109,11 @@ const viewsActions: TViewsActions = {
 		const {
 			defaultSnapshot,
 			snapshots,
+			userConfiguration,
 		}: {
 			defaultSnapshot: any;
 			snapshots: Array<ISnapshots>;
+			userConfiguration: IUserConfiguration | null;
 		} = state;
 
 		const updatedSnapshots = snapshots.map((group) => ({
@@ -126,6 +129,11 @@ const viewsActions: TViewsActions = {
 			activeSnapshotERC: null,
 			snapshotUpdated: false,
 			snapshots: updatedSnapshots,
+			userConfiguration:
+				userConfiguration?.initialDataSetSnapshotERC ===
+				value.snapshotERC
+					? {...userConfiguration, initialDataSetSnapshotERC: null}
+					: userConfiguration,
 		};
 	},
 	[EViewsActionTypes.NOOP]: (state) => state,
@@ -248,6 +256,10 @@ const viewsActions: TViewsActions = {
 			sorts: value,
 		};
 	},
+	[EViewsActionTypes.UPDATE_USER_CONFIGURATION]: (state, value) => ({
+		...state,
+		userConfiguration: value.userConfiguration,
+	}),
 	[EViewsActionTypes.UPDATE_VIEW_COMPONENT]: (state, value) => {
 		const {activeView, views} = state;
 

@@ -24,6 +24,7 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
+	useLayoutEffect,
 	useMemo,
 	useReducer,
 	useRef,
@@ -94,12 +95,24 @@ import {
 	VisibleFieldNames,
 } from './utils/types';
 import useConfigInURL, {useUpdateConfig} from './utils/useConfigInURL';
-import ViewsContext, {ISnapshot, ISnapshots} from './views/ViewsContext';
+import ViewsContext, {
+	ISnapshot,
+	ISnapshots,
+	IUserConfiguration,
+} from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';
 import viewsReducer, {EViewsActionTypes} from './views/viewsReducer';
 
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
+
+const getSnapshotByERC = (
+	snapshots: Array<ISnapshots> | undefined,
+	erc: string
+): ISnapshot | undefined =>
+	(snapshots ?? [])
+		.flatMap((group: ISnapshots) => group.items)
+		.find((snapshot: ISnapshot) => snapshot.erc === erc);
 
 const FrontendDataSetContent = ({
 	actionParameterName,
@@ -141,6 +154,7 @@ const FrontendDataSetContent = ({
 	overrideEmptyResultView,
 	pagination,
 	portletId,
+	saveDataSetUserConfigurationURL,
 	searchAsYouType = false,
 	searchSuggestionsEnabled = false,
 	selectedItems: externalSelectedItems,
@@ -159,6 +173,7 @@ const FrontendDataSetContent = ({
 	sorts: sortsProp = [],
 	style = 'default',
 	uniformActionsDisplay,
+	userConfiguration = null,
 	views,
 }: IFrontendDataSetProps) => {
 	const {fileDropSettings} = useContext(DnDContext);
@@ -537,6 +552,15 @@ const FrontendDataSetContent = ({
 		];
 	};
 
+	const hasURLState = () =>
+		Boolean(
+			getView() ||
+				getDelta() ||
+				getActiveSorts()?.length ||
+				getFilters()?.length ||
+				getSearchParam()
+		);
+
 	const getInitialViewsState = () => {
 		const defaultSnapshot: any = {
 			modifiedFields: {},
@@ -619,7 +643,7 @@ const FrontendDataSetContent = ({
 			})),
 		}));
 
-		return {
+		const initialViewsState: any = {
 			activeView,
 			defaultSnapshot,
 			groupedFilters,
@@ -629,9 +653,24 @@ const FrontendDataSetContent = ({
 			snapshots: parsedSnapshots,
 			snapshotsEnabled,
 			sorts,
+			userConfiguration: userConfiguration ?? null,
 			views,
 			visibleFieldNames: initialVisibleFieldNames,
 		};
+
+		const initialDataSetSnapshotERC =
+			userConfiguration?.initialDataSetSnapshotERC;
+
+		if (
+			initialDataSetSnapshotERC &&
+			getSnapshotByERC(parsedSnapshots, initialDataSetSnapshotERC) &&
+			hasURLState()
+		) {
+			initialViewsState.activeSnapshotERC = initialDataSetSnapshotERC;
+			initialViewsState.snapshotUpdated = true;
+		}
+
+		return initialViewsState;
 	};
 
 	const [viewsState, viewsDispatch] = useThunk(
@@ -1909,11 +1948,7 @@ const FrontendDataSetContent = ({
 			});
 		}
 		else {
-			const snapshot = deepClone(
-				snapshots
-					.flatMap((group: ISnapshots) => group.items)
-					.find((snapshot: ISnapshot) => snapshot.erc === value)
-			);
+			const snapshot = deepClone(getSnapshotByERC(snapshots, value));
 
 			updateConfigInURL({
 				[EConfigInURLKeys.ACTIVE_FILTERS]:
@@ -1943,6 +1978,77 @@ const FrontendDataSetContent = ({
 			});
 		}
 	};
+
+	const updateUserConfiguration = (configuration: IUserConfiguration) => {
+		if (!saveDataSetUserConfigurationURL) {
+			return Promise.reject(new Error());
+		}
+
+		return fetch(saveDataSetUserConfigurationURL, {
+			body: new URLSearchParams({
+				configuration: JSON.stringify(configuration),
+				fdsName: id,
+			}),
+			method: 'POST',
+		})
+			.then((response) => {
+				if (!response.ok) {
+					return response
+						.json()
+						.then((jsonResponse) =>
+							Promise.reject(new Error(jsonResponse.title))
+						);
+				}
+
+				return response.json();
+			})
+			.then((nextUserConfiguration) => {
+				viewsDispatch({
+					type: EViewsActionTypes.UPDATE_USER_CONFIGURATION,
+					value: {userConfiguration: nextUserConfiguration},
+				});
+			});
+	};
+
+	const handleSnapshotChangeRef = useRef(handleSnapshotChange);
+	const hasURLStateRef = useRef(hasURLState);
+	const initialDataSetSnapshotERCAppliedRef = useRef(false);
+
+	useLayoutEffect(() => {
+		handleSnapshotChangeRef.current = handleSnapshotChange;
+		hasURLStateRef.current = hasURLState;
+	});
+
+	useEffect(() => {
+		const initialDataSetSnapshotERC =
+			userConfiguration?.initialDataSetSnapshotERC;
+
+		if (
+			initialDataSetSnapshotERCAppliedRef.current ||
+			!globalFDSStateInitialized ||
+			!initialDataSetSnapshotERC
+		) {
+			return;
+		}
+
+		initialDataSetSnapshotERCAppliedRef.current = true;
+
+		if (
+			!getSnapshotByERC(
+				viewsState.snapshots,
+				initialDataSetSnapshotERC
+			) ||
+			hasURLStateRef.current()
+		) {
+			return;
+		}
+
+		handleSnapshotChangeRef.current({
+			defaultSnapshot: viewsState.defaultSnapshot,
+			snapshots: viewsState.snapshots,
+			value: initialDataSetSnapshotERC,
+		});
+	}, [globalFDSStateInitialized, userConfiguration, viewsState]);
 
 	function toggleItemInlineEdit(itemKey: any) {
 		setItemsChanges(({[itemKey]: foundItem, ...itemsChanges}) => {
@@ -2209,6 +2315,7 @@ const FrontendDataSetContent = ({
 				openModal,
 				openSidePanel,
 				portletId,
+				saveDataSetUserConfigurationURL,
 				searchAsYouType,
 				searchParam: unfrozenGlobalFDSState.search.query,
 				searchSuggestionsEnabled,
@@ -2231,6 +2338,7 @@ const FrontendDataSetContent = ({
 				updateDataSetItems,
 				updateFilters,
 				updateItem,
+				updateUserConfiguration,
 				updateView,
 				updateVisibleFields,
 			}}

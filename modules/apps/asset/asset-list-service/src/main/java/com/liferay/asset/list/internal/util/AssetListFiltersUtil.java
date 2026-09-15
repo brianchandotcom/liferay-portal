@@ -8,7 +8,6 @@ package com.liferay.asset.list.internal.util;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -21,7 +20,6 @@ import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
-import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -342,14 +340,7 @@ public class AssetListFiltersUtil {
 		}
 
 		if (Objects.equals(field, Field.USER_NAME)) {
-			value = StringUtil.toLowerCase(value);
-		}
-
-		if (operatorName.equals("contains") ||
-			operatorName.equals("not-contains")) {
-
-			return new WildcardQuery(
-				field, StringPool.STAR + value + StringPool.STAR);
+			return new MatchQuery(field + ".text", value);
 		}
 
 		return new TermQuery(field, value);
@@ -587,19 +578,11 @@ public class AssetListFiltersUtil {
 		JSONObject filterJSONObject, ObjectField objectField,
 		String operatorName, String subfield, String value) {
 
-		if (operatorName.equals("contains") ||
-			operatorName.equals("not-contains")) {
+		if ((operatorName.equals("contains") ||
+			 operatorName.equals("not-contains")) &&
+			(objectField.getListTypeDefinitionId() != 0)) {
 
-			if (objectField.getListTypeDefinitionId() != 0) {
-				return _toPicklistQuery(filterJSONObject, subfield);
-			}
-
-			if (subfield.endsWith(".value_keyword")) {
-				return new WildcardQuery(
-					subfield,
-					StringPool.STAR + StringUtil.toLowerCase(value) +
-						StringPool.STAR);
-			}
+			return _toPicklistQuery(filterJSONObject, subfield);
 		}
 
 		if (operatorName.equals("between") || operatorName.equals("ge") ||

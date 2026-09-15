@@ -27,12 +27,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -42,9 +39,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
-import io.modelcontextprotocol.client.transport.HttpClientStreamableHttpTransport;
 import io.modelcontextprotocol.spec.McpError;
 import io.modelcontextprotocol.spec.McpSchema;
 
@@ -271,7 +266,7 @@ public class MCPServerPromptTest {
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), null);
 
-			McpSyncClient mcpSyncClient = _getMcpSyncClient();
+			McpSyncClient mcpSyncClient = MCPServerTestUtil.getMcpSyncClient();
 
 			mcpSyncClient.initialize();
 
@@ -331,7 +326,7 @@ public class MCPServerPromptTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
-			mcpSyncClient = _getMcpSyncClient();
+			mcpSyncClient = MCPServerTestUtil.getMcpSyncClient();
 
 			mcpSyncClient.initialize();
 
@@ -372,24 +367,6 @@ public class MCPServerPromptTest {
 				modelListenerException.getCause() instanceof
 					ObjectValidationRuleEngineException);
 		}
-	}
-
-	private McpSyncClient _getMcpSyncClient() {
-		String userNameAndPassword =
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-		return McpClient.sync(
-			HttpClientStreamableHttpTransport.builder(
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"/o/"
-			).customizeRequest(
-				builder -> builder.header(
-					"Authorization",
-					"Basic " + Base64.encode(userNameAndPassword.getBytes()))
-			).endpoint(
-				"mcp"
-			).build()
-		).build();
 	}
 
 	private McpSchema.Prompt _getPrompt(

@@ -17,11 +17,19 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalServiceUtil;
+
+import io.modelcontextprotocol.client.McpClient;
+import io.modelcontextprotocol.client.McpSyncClient;
+import io.modelcontextprotocol.client.transport.HttpClientStreamableHttpTransport;
 
 import java.io.Serializable;
 
@@ -366,6 +374,34 @@ public class MCPServerTestUtil {
 		}
 
 		return mcpServerProfileDataMaskObjectEntries;
+	}
+
+	public static McpSyncClient getMcpSyncClient() {
+		return getMcpSyncClient(null);
+	}
+
+	public static McpSyncClient getMcpSyncClient(String mcpServerProfileName) {
+		String userNameAndPassword =
+			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
+
+		String endpoint = "mcp";
+
+		if (!Validator.isBlank(mcpServerProfileName)) {
+			endpoint += "/" + mcpServerProfileName;
+		}
+
+		return McpClient.sync(
+			HttpClientStreamableHttpTransport.builder(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/o/"
+			).customizeRequest(
+				builder -> builder.header(
+					"Authorization",
+					"Basic " + Base64.encode(userNameAndPassword.getBytes()))
+			).endpoint(
+				endpoint
+			).build()
+		).build();
 	}
 
 	public static void processBatchEngineUnits() {

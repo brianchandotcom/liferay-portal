@@ -39,6 +39,7 @@ export {PhoneNumberInput} from './components/PhoneNumber/PhoneNumberInput';
 export {
 	COUNTRY_SOURCE,
 	DEFAULT_COUNTRIES,
+	findCountry,
 	getCombinedValue,
 	getDefaultCountry,
 	getFlagSymbol,

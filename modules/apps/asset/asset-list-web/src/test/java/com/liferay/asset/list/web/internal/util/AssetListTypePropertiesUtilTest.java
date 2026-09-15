@@ -92,6 +92,60 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
+	public void testGetTypePropertiesJSONArrayEmitsKeywordTypes() {
+		ObjectField objectField = _mockObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT, "keyword_field");
+
+		Mockito.when(
+			objectField.isIndexedAsKeyword()
+		).thenReturn(
+			true
+		);
+
+		_setUpObjectDefinition(
+			_CLASS_NAME_ID_1, _LABEL_1, Collections.singletonList(objectField));
+
+		JSONArray typePropertiesJSONArray =
+			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
+				new long[] {_CLASS_NAME_ID_1}, new long[] {_CLASS_TYPE_ID_1},
+				_COMPANY_ID, LocaleUtil.US);
+
+		JSONObject groupJSONObject = typePropertiesJSONArray.getJSONObject(0);
+
+		JSONArray itemsJSONArray = groupJSONObject.getJSONArray("items");
+
+		String type = null;
+
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+			String name = itemJSONObject.getString("name");
+
+			if (name.equals("externalReferenceCode")) {
+				type = itemJSONObject.getString("type");
+			}
+		}
+
+		Assert.assertEquals(itemsJSONArray.toString(), "keyword", type);
+
+		groupJSONObject = typePropertiesJSONArray.getJSONObject(1);
+
+		Assert.assertEquals(_LABEL_1, groupJSONObject.getString("label"));
+
+		itemsJSONArray = groupJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			itemsJSONArray.toString(), 1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals("keyword_field", itemJSONObject.getString("name"));
+		Assert.assertEquals(
+			itemJSONObject.toString(), "keyword",
+			itemJSONObject.getString("type"));
+	}
+
+	@Test
 	public void testGetTypePropertiesJSONArrayEmitsOneGroupPerPair() {
 		_setUpObjectDefinition(
 			_CLASS_NAME_ID_1, _LABEL_1,

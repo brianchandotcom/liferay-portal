@@ -1177,7 +1177,7 @@ public class MCPServerServletTest {
 
 		ObjectEntry mcpServerProfileObjectEntry =
 			MCPServerTestUtil.addMCPServerProfileObjectEntry(
-				description, profileName);
+				description, null, profileName);
 
 		String mcpServerProfileExternalReferenceCode =
 			mcpServerProfileObjectEntry.getExternalReferenceCode();

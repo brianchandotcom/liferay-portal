@@ -11,6 +11,7 @@ export type PropertyType =
 	| 'date-time'
 	| 'decimal'
 	| 'integer'
+	| 'keyword'
 	| 'numeric'
 	| 'picklist'
 	| 'text';

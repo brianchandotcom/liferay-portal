@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -31,7 +30,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Petteri Karttunen
  */
-@FeatureFlags(featureFlags = @FeatureFlag("LPD-63311"))
+@FeatureFlag("LPD-63311")
 @RunWith(Arquillian.class)
 public class MCPServerInstructionsTest {
 
@@ -49,22 +48,29 @@ public class MCPServerInstructionsTest {
 
 	@Test
 	public void testMCPServerInstructions() throws Exception {
-		String mcpServerProfileName1 = RandomTestUtil.randomString();
-
-		MCPServerTestUtil.addMCPServerProfileObjectEntry(
-			RandomTestUtil.randomString(), null, mcpServerProfileName1,
-			"mcp-server-profiles getMCPServerProfilesPage");
-
-		String instructions = RandomTestUtil.randomString();
-		String mcpServerProfileName2 = RandomTestUtil.randomString();
-
-		MCPServerTestUtil.addMCPServerProfileObjectEntry(
-			RandomTestUtil.randomString(), instructions, mcpServerProfileName2,
-			"mcp-server-profiles getMCPServerProfilesPage");
-
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
-					_swapMCPServerEnabled()) {
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						"com.liferay.mcp.server.rest.internal.configuration." +
+							"MCPServerConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			String mcpServerProfileName1 = RandomTestUtil.randomString();
+
+			MCPServerTestUtil.addMCPServerProfileObjectEntry(
+				RandomTestUtil.randomString(), null, mcpServerProfileName1,
+				"mcp-server-profiles getMCPServerProfilesPage");
+
+			String instructions = RandomTestUtil.randomString();
+			String mcpServerProfileName2 = RandomTestUtil.randomString();
+
+			MCPServerTestUtil.addMCPServerProfileObjectEntry(
+				RandomTestUtil.randomString(), instructions,
+				mcpServerProfileName2,
+				"mcp-server-profiles getMCPServerProfilesPage");
 
 			Assert.assertEquals(
 				StringPool.BLANK,
@@ -90,18 +96,6 @@ public class MCPServerInstructionsTest {
 		finally {
 			mcpSyncClient.closeGracefully();
 		}
-	}
-
-	private CompanyConfigurationTemporarySwapper _swapMCPServerEnabled()
-		throws Exception {
-
-		return new CompanyConfigurationTemporarySwapper(
-			TestPropsValues.getCompanyId(),
-			"com.liferay.mcp.server.rest.internal.configuration." +
-				"MCPServerConfiguration",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"enabled", true
-			).build());
 	}
 
 }

@@ -6,9 +6,15 @@
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {CountryInfo, getDefaultCountry, getFlagSymbol} from './phoneNumberUtil';
+import {
+	CountryInfo,
+	findCountry,
+	getDefaultCountry,
+	getFlagSymbol,
+} from './phoneNumberUtil';
 
 type CountryCodePickerProps = Omit<
 	React.ComponentProps<typeof Picker>,
@@ -20,19 +26,37 @@ type CountryCodePickerProps = Omit<
 
 const PickerTrigger = React.forwardRef<
 	HTMLDivElement,
-	{selectedCountry: CountryInfo} & React.ComponentProps<typeof ClayButton>
->(({selectedCountry, ...otherProps}, ref) => {
-	const flagSymbol = getFlagSymbol(selectedCountry.a2);
+	{
+		countryA2: string;
+		selectedCountry?: CountryInfo;
+	} & React.ComponentProps<typeof ClayButton>
+>(({countryA2, selectedCountry, ...otherProps}, ref) => {
+	if (selectedCountry) {
+		const flagSymbol = getFlagSymbol(selectedCountry.a2);
+
+		return (
+			<button {...(otherProps as any)} ref={ref}>
+				{flagSymbol && (
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol={flagSymbol} />
+					</span>
+				)}
+
+				<span>{`+${selectedCountry.idd}`}</span>
+			</button>
+		);
+	}
+
+	const unavailableMessage = sub(
+		Liferay.Language.get('x-is-not-available'),
+		countryA2
+	);
 
 	return (
-		<button {...(otherProps as any)} ref={ref}>
-			{flagSymbol && (
-				<span className="inline-item inline-item-before">
-					<ClayIcon symbol={flagSymbol} />
-				</span>
-			)}
+		<button {...(otherProps as any)} ref={ref} title={unavailableMessage}>
+			<span className="text-danger">{countryA2}</span>
 
-			<span>+{selectedCountry.idd}</span>
+			<span className="sr-only">{unavailableMessage}</span>
 		</button>
 	);
 });
@@ -44,19 +68,22 @@ export function CountryCodePicker({
 	selectedKey,
 	...otherProps
 }: CountryCodePickerProps) {
-	const selectedCountry =
-		countries.find((country) => country.a2 === selectedKey) ||
-		getDefaultCountry(countries);
+	const countryA2 = selectedKey ? String(selectedKey) : '';
+
+	const selectedCountry = countryA2
+		? findCountry(countries, countryA2)
+		: getDefaultCountry(countries);
 
 	return (
 		<Picker
 			{...otherProps}
 			aria-label={Liferay.Language.get('country-code')}
 			as={PickerTrigger}
+			countryA2={countryA2}
 			disabled={disabled}
 			items={countries}
 			onSelectionChange={(key) => {
-				const country = countries.find((country) => country.a2 === key);
+				const country = findCountry(countries, String(key));
 
 				if (country) {
 					onSelectionChange(country);
@@ -64,7 +91,7 @@ export function CountryCodePicker({
 			}}
 			searchable
 			selectedCountry={selectedCountry}
-			selectedKey={selectedCountry.a2}
+			selectedKey={selectedCountry?.a2 ?? ''}
 		>
 			{(country: CountryInfo) => {
 				const flagSymbol = getFlagSymbol(country.a2);

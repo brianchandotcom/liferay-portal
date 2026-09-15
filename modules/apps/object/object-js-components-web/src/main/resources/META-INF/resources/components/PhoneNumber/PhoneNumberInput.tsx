@@ -12,6 +12,7 @@ import {
 	COUNTRY_SOURCE,
 	CountryInfo,
 	CountrySource,
+	findCountry,
 	getDefaultCountry,
 	getFlagSymbol,
 	parsePhoneValue,
@@ -19,7 +20,7 @@ import {
 
 interface PhoneNumberInputProps {
 	countries?: CountryInfo[];
-	country?: CountryInfo['a2'];
+	countryA2?: CountryInfo['a2'];
 	countrySource?: CountrySource;
 	disabled?: boolean;
 	id?: string;
@@ -32,7 +33,7 @@ interface PhoneNumberInputProps {
 
 export function PhoneNumberInput({
 	countries = [],
-	country,
+	countryA2,
 	countrySource = COUNTRY_SOURCE.DEFINED_BY_USER,
 	disabled,
 	id,
@@ -43,21 +44,24 @@ export function PhoneNumberInput({
 	value = '',
 }: PhoneNumberInputProps) {
 	const [localNumber, setLocalNumber] = useState('');
-	const [selectedCountry, setSelectedCountry] = useState<CountryInfo>(
-		getDefaultCountry(countries)
-	);
+	const [selectedCountry, setSelectedCountry] = useState<
+		CountryInfo | undefined
+	>(getDefaultCountry(countries));
 
-	const fixedCountry = countries.find((c) => c.a2 === country);
+	const fixedCountry = findCountry(countries, countryA2);
 
 	const fixedFlagSymbol = fixedCountry ? getFlagSymbol(fixedCountry.a2) : '';
 	const fixedPrefix = fixedCountry ? `+${fixedCountry.idd}` : '';
 
-	const handleValueChange = (nextCountry: CountryInfo, number: string) => {
+	const handleValueChange = (
+		nextCountry: CountryInfo | undefined,
+		number: string
+	) => {
 		if (onChange) {
 			const resolvedPrefix =
 				countrySource === COUNTRY_SOURCE.FIXED
 					? fixedPrefix
-					: `+${nextCountry.idd}`;
+					: `+${nextCountry?.idd ?? ''}`;
 
 			const sanitizedNumber = number.replace(/\D/g, '');
 
@@ -89,14 +93,10 @@ export function PhoneNumberInput({
 			}
 		}
 		else {
-			const {countryA2, localNumber: parsedLocalNumber} = parsePhoneValue(
-				value,
-				countries
-			);
+			const {countryA2: parsedCountryA2, localNumber: parsedLocalNumber} =
+				parsePhoneValue(value, countries);
 
-			const country = countries.find(
-				(country) => country.a2 === countryA2
-			);
+			const country = findCountry(countries, parsedCountryA2);
 
 			setSelectedCountry(country || getDefaultCountry(countries));
 			setLocalNumber(parsedLocalNumber);
@@ -120,7 +120,7 @@ export function PhoneNumberInput({
 							</span>
 						)}
 
-						{fixedPrefix}
+						{fixedPrefix || countryA2}
 					</ClayInput.GroupText>
 				) : (
 					<CountryCodePicker

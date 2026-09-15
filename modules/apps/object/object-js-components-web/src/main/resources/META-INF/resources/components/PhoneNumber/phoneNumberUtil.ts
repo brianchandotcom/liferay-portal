@@ -56,7 +56,6 @@ export const DEFAULT_COUNTRIES: CountryInfo[] = [
 
 const FLAG_ICON_MAP: Record<string, string> = {
 	AD: 'ca-ad',
-	AE: 'ar-sa',
 	AR: 'es-ar',
 	AT: 'de-at',
 	AU: 'en-au',
@@ -65,7 +64,6 @@ const FLAG_ICON_MAP: Record<string, string> = {
 	BR: 'pt-br',
 	CA: 'en-ca',
 	CH: 'de-ch',
-	CL: 'es-es',
 	CN: 'zh-cn',
 	CO: 'es-co',
 	CZ: 'cs-cz',
@@ -77,7 +75,6 @@ const FLAG_ICON_MAP: Record<string, string> = {
 	FR: 'fr-fr',
 	GB: 'en-gb',
 	GR: 'el-gr',
-	HK: 'zh-cn',
 	HR: 'hr-hr',
 	HU: 'hu-hu',
 	ID: 'in-id',
@@ -96,8 +93,6 @@ const FLAG_ICON_MAP: Record<string, string> = {
 	MY: 'ms-my',
 	NL: 'nl-nl',
 	NO: 'no-no',
-	NZ: 'en-au',
-	PH: 'en-us',
 	PL: 'pl-pl',
 	PT: 'pt-pt',
 	RO: 'ro-ro',
@@ -105,7 +100,6 @@ const FLAG_ICON_MAP: Record<string, string> = {
 	RU: 'ru-ru',
 	SA: 'ar-sa',
 	SE: 'sv-se',
-	SG: 'en-us',
 	SI: 'sl-si',
 	SK: 'sk-sk',
 	TH: 'th-th',
@@ -114,7 +108,6 @@ const FLAG_ICON_MAP: Record<string, string> = {
 	UA: 'uk-ua',
 	US: 'en-us',
 	VN: 'vi-vn',
-	ZA: 'en-gb',
 };
 
 export const COUNTRY_SOURCE = {
@@ -125,12 +118,32 @@ export const COUNTRY_SOURCE = {
 export type CountrySource =
 	(typeof COUNTRY_SOURCE)[keyof typeof COUNTRY_SOURCE];
 
+/**
+ * Finds a country by its ISO 3166-1 alpha-2 code, ignoring case, so that a
+ * country stored as "br" still resolves to Brazil. Returns `undefined` when
+ * the code is empty or is not one of the countries the field offers.
+ */
+export function findCountry(
+	countries: CountryInfo[],
+	a2?: string
+): CountryInfo | undefined {
+	if (!a2) {
+		return undefined;
+	}
+
+	const upperCaseA2 = a2.toUpperCase();
+
+	return countries.find(
+		(country) => country.a2.toUpperCase() === upperCaseA2
+	);
+}
+
 export function getCombinedValue(
 	countryA2: string,
 	localNumber: string,
 	countries: CountryInfo[] = DEFAULT_COUNTRIES
 ): string {
-	const country = countries.find((c) => c.a2 === countryA2);
+	const country = findCountry(countries, countryA2);
 
 	if (country && localNumber) {
 		return `+${country.idd}${localNumber}`;
@@ -139,14 +152,13 @@ export function getCombinedValue(
 	return localNumber;
 }
 
-export function getDefaultCountry(countries: CountryInfo[]): CountryInfo {
+export function getDefaultCountry(
+	countries: CountryInfo[]
+): CountryInfo | undefined {
 	const defaultLanguageCountryA2 =
 		Liferay.ThemeDisplay.getDefaultLanguageId().split('_')[1] ?? '';
 
-	return (
-		countries.find((country) => country.a2 === defaultLanguageCountryA2) ||
-		countries[0]
-	);
+	return findCountry(countries, defaultLanguageCountryA2) || countries[0];
 }
 
 export function getFlagSymbol(a2: string): string {
@@ -179,17 +191,11 @@ export function parsePhoneValue(
 
 	const parsed = parsePhoneNumber(value);
 
-	if (parsed?.country) {
-		const isSupportedCountry = countries.some(
-			(country) => country.a2 === parsed.country
-		);
-
-		if (isSupportedCountry) {
-			return {
-				countryA2: parsed.country,
-				localNumber: parsed.nationalNumber,
-			};
-		}
+	if (parsed?.country && findCountry(countries, parsed.country)) {
+		return {
+			countryA2: parsed.country,
+			localNumber: parsed.nationalNumber,
+		};
 	}
 
 	// Fallback: the parsed country is not in the backend-provided list (or the

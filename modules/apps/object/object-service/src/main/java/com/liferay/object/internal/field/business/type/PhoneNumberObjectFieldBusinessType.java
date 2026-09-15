@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,7 +37,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,7 +45,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -165,6 +162,11 @@ public class PhoneNumberObjectFieldBusinessType
 				}
 			}
 			else {
+				if (!country.isActive()) {
+					throw new ObjectEntryValuesException.InvalidPhoneNumber(
+						objectField.getName(), value);
+				}
+
 				normalizedValue = _normalize(prefix + value);
 			}
 		}
@@ -221,7 +223,9 @@ public class PhoneNumberObjectFieldBusinessType
 			Country country = _countryLocalService.fetchCountryByA2(
 				objectField.getCompanyId(), StringUtil.toUpperCase(countryA2));
 
-			if ((country == null) || Validator.isNull(country.getIdd())) {
+			if ((country == null) || !country.isActive() ||
+				Validator.isNull(country.getIdd())) {
+
 				throw new ObjectFieldSettingValueException.InvalidValue(
 					objectField.getName(),
 					ObjectFieldSettingConstants.NAME_COUNTRY, countryA2);
@@ -300,23 +304,6 @@ public class PhoneNumberObjectFieldBusinessType
 		}
 	}
 
-	@Activate
-	protected void activate() {
-		Set<String> a2s = new HashSet<>();
-
-		for (String languageId : PropsValues.LOCALES) {
-			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
-
-			String a2 = locale.getCountry();
-
-			if (Validator.isNotNull(a2)) {
-				a2s.add(a2);
-			}
-		}
-
-		_a2s = Collections.unmodifiableSet(a2s);
-	}
-
 	private List<Map<String, String>> _getCountries() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -344,12 +331,6 @@ public class PhoneNumberObjectFieldBusinessType
 		for (Country country :
 				_countryLocalService.getCompanyCountries(companyId, true)) {
 
-			String a2 = country.getA2();
-
-			if (!_a2s.contains(a2)) {
-				continue;
-			}
-
 			String idd = country.getIdd();
 
 			if (Validator.isNull(idd)) {
@@ -358,7 +339,7 @@ public class PhoneNumberObjectFieldBusinessType
 
 			countries.add(
 				HashMapBuilder.put(
-					"a2", a2
+					"a2", country.getA2()
 				).put(
 					"idd", idd
 				).put(
@@ -403,8 +384,6 @@ public class PhoneNumberObjectFieldBusinessType
 
 	private static final Pattern _phoneNumberPattern = Pattern.compile(
 		"^\\+[0-9]{7,15}$");
-
-	private Set<String> _a2s;
 
 	@Reference
 	private CountryLocalService _countryLocalService;

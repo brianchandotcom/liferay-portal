@@ -208,44 +208,18 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public String executeBashCommand(String command) {
-		String sshCommand = JenkinsResultsParserUtil.combine(
-			"ssh ", _SSH_OPTIONS, " ", _SSH_USER_NAME, "@", getName(), " \"",
-			command, "\"");
+		return _executeBashCommand(
+			command, _SSH_COMMAND_TIMEOUT,
+			_getSSHOptions(_SSH_CONNECT_TIMEOUT_SECONDS));
+	}
 
-		Process process = null;
-
-		try {
-			if (_isRunningOnJenkinsMaster()) {
-				process = JenkinsResultsParserUtil.executeBashCommands(
-					new File("."), true, false, _SSH_COMMAND_TIMEOUT, command);
-			}
-			else {
-				process = JenkinsResultsParserUtil.executeBashCommands(
-					new File("."), true, false, _SSH_COMMAND_TIMEOUT,
-					sshCommand);
-			}
-		}
-		catch (IOException | TimeoutException exception) {
-			throw new RuntimeException(
-				"Unable to execute command " + sshCommand, exception);
+	public String executeBashCommand(String command, long timeout) {
+		if (timeout <= 0) {
+			throw new IllegalArgumentException("Invalid timeout: " + timeout);
 		}
 
-		if (process.exitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to execute command ", command, " on ", getName()));
-		}
-
-		try {
-			String output = JenkinsResultsParserUtil.readInputStream(
-				process.getInputStream());
-
-			return output.replace("Finished executing Bash commands.", "");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to read output of command " + sshCommand, ioException);
-		}
+		return _executeBashCommand(
+			command, timeout, _getSSHOptions(timeout / 2000));
 	}
 
 	public List<JenkinsUser.APIToken> getAPITokens(String jenkinsUserName) {
@@ -1642,11 +1616,54 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 	}
 
+	private String _executeBashCommand(
+		String command, long timeout, String sshOptions) {
+
+		String sshCommand = JenkinsResultsParserUtil.combine(
+			"ssh ", sshOptions, " ", _SSH_USER_NAME, "@", getName(), " \"",
+			command, "\"");
+
+		Process process = null;
+
+		try {
+			if (_isRunningOnJenkinsMaster()) {
+				process = JenkinsResultsParserUtil.executeBashCommands(
+					new File("."), true, false, timeout, command);
+			}
+			else {
+				process = JenkinsResultsParserUtil.executeBashCommands(
+					new File("."), true, false, timeout, sshCommand);
+			}
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(
+				"Unable to execute command " + sshCommand, exception);
+		}
+
+		if (process.exitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to execute command ", command, " on ", getName()));
+		}
+
+		try {
+			String output = JenkinsResultsParserUtil.readInputStream(
+				process.getInputStream());
+
+			return output.replace("Finished executing Bash commands.", "");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to read output of command " + sshCommand, ioException);
+		}
+	}
+
 	private void _executeSCPCommand(
 		String sourceFilePath, String targetFilePath) {
 
 		String scpCommand = JenkinsResultsParserUtil.combine(
-			"scp ", _SSH_OPTIONS, " ", sourceFilePath, " ", targetFilePath);
+			"scp ", _getSSHOptions(_SSH_CONNECT_TIMEOUT_SECONDS), " ",
+			sourceFilePath, " ", targetFilePath);
 
 		Process process = null;
 
@@ -1874,6 +1891,16 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return recentBatchSizesTotal;
 	}
 
+	private String _getSSHOptions(long connectTimeoutSeconds) {
+		if (connectTimeoutSeconds <= 0) {
+			return _SSH_OPTIONS_BASE;
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			"-o ConnectTimeout=", String.valueOf(connectTimeoutSeconds), " ",
+			_SSH_OPTIONS_BASE);
+	}
+
 	private int _getUsableNodesCount(String labelExpression) {
 		int usableNodesCount = 0;
 
@@ -2027,8 +2054,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	private static final long _SSH_COMMAND_TIMEOUT = 1000 * 60 * 5;
 
-	private static final String _SSH_OPTIONS =
-		"-o ConnectTimeout=60 -o NumberOfPasswordPrompts=0";
+	private static final long _SSH_CONNECT_TIMEOUT_SECONDS = 60;
+
+	private static final String _SSH_OPTIONS_BASE =
+		"-o NumberOfPasswordPrompts=0";
 
 	private static final String _SSH_USER_NAME = "root";
 

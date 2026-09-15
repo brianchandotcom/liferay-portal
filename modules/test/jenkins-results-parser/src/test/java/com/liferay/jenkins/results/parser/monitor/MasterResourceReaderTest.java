@@ -145,14 +145,29 @@ public class MasterResourceReaderTest
 			MasterResourceReader.getInstance(masterName);
 
 		testSame(
-			masterResourceReader.getMemoryInfo(),
-			masterResourceReader.getMemoryInfo());
+			masterResourceReader.getMemoryInfo(_MILLIS_TIMEOUT),
+			masterResourceReader.getMemoryInfo(_MILLIS_TIMEOUT));
 	}
 
 	@Test
 	public void testGetMemoryInfoWithoutPrometheusScrape() throws Exception {
 		mockUrlReader();
 
+		String memoryInfo = MonitorTestUtil.newMemoryInfo(23791372L, 32249488L);
+
+		setShellCommandOutput("cat /proc/meminfo", mockShell(), memoryInfo);
+
+		String masterName = MonitorTestUtil.newJenkinsMasterName();
+
+		MasterResourceReader masterResourceReader =
+			MasterResourceReader.getInstance(masterName);
+
+		testEquals(
+			memoryInfo, masterResourceReader.getMemoryInfo(_MILLIS_TIMEOUT));
+	}
+
+	@Test
+	public void testGetMemoryInfoWithoutTimeout() throws Exception {
 		String memoryInfo = MonitorTestUtil.newMemoryInfo(23791372L, 32249488L);
 
 		setShellCommandOutput("cat /proc/meminfo", mockShell(), memoryInfo);

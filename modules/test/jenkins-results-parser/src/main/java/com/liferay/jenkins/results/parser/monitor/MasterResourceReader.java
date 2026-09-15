@@ -74,13 +74,23 @@ public class MasterResourceReader {
 	}
 
 	public String getMemoryInfo() {
+		return getMemoryInfo(-1);
+	}
+
+	public String getMemoryInfo(int timeoutMillis) {
 		synchronized (_memoryInfoLock) {
 			if (_memoryInfo == null) {
 				JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
 					_masterName);
 
-				_memoryInfo = jenkinsMaster.executeBashCommand(
-					"cat /proc/meminfo");
+				if (timeoutMillis < 0) {
+					_memoryInfo = jenkinsMaster.executeBashCommand(
+						"cat /proc/meminfo");
+				}
+				else {
+					_memoryInfo = jenkinsMaster.executeBashCommand(
+						"cat /proc/meminfo", timeoutMillis);
+				}
 			}
 
 			return _memoryInfo;

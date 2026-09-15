@@ -206,7 +206,7 @@ public class MCPServerServletTest {
 		throws Exception {
 
 		return MCPServerTestUtil.addMCPServerProfileObjectEntry(
-			RandomTestUtil.randomString(), name, tools);
+			RandomTestUtil.randomString(), null, name, tools);
 	}
 
 	private void _assertInvalidTokenChallenge(
@@ -686,7 +686,7 @@ public class MCPServerServletTest {
 
 		ObjectEntry mcpServerProfileObjectEntry =
 			MCPServerTestUtil.addMCPServerProfileObjectEntry(
-				_TEST_EMAIL_ADDRESS, profileName,
+				_TEST_EMAIL_ADDRESS, null, profileName,
 				"mcp-server-profiles getMCPServerProfilesPage");
 
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(

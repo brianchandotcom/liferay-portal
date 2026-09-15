@@ -6906,7 +6906,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 				await fieldContainer.getByLabel('Country Code').click();
 
 				await page
-					.getByRole('option', {name: /United States/})
+					.getByRole('option', {
+						exact: true,
+						name: '+1 United States',
+					})
 					.dispatchEvent('click');
 
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();

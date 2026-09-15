@@ -1274,7 +1274,10 @@ test.describe('Localized object entries are saved correctly', () => {
 				await userPrefixDropdown.click();
 
 				await page
-					.getByRole('option', {name: /United States/})
+					.getByRole('option', {
+						exact: true,
+						name: '+1 United States',
+					})
 					.locator('..')
 					.click();
 

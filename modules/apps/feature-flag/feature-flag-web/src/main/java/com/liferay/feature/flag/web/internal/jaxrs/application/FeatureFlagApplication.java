@@ -13,6 +13,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -61,6 +64,12 @@ public class FeatureFlagApplication extends Application {
 		@Context HttpServletResponse httpServletResponse,
 		@FormParam("companyId") long companyId,
 		@FormParam("enabled") boolean enabled, @FormParam("key") String key) {
+
+		if (!_hasManageFeatureFlagsPermission(companyId)) {
+			return Response.status(
+				Response.Status.FORBIDDEN
+			).build();
+		}
 
 		_featureFlagsBagProvider.setEnabled(companyId, key, enabled);
 
@@ -155,6 +164,21 @@ public class FeatureFlagApplication extends Application {
 		return featureFlagsBag.getFeatureFlags(
 			maybeDependentFeatureFlag -> ArrayUtil.contains(
 				maybeDependentFeatureFlag.getDependencyKeys(), key));
+	}
+
+	private boolean _hasManageFeatureFlagsPermission(long companyId) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			return false;
+		}
+
+		if (companyId == CompanyConstants.SYSTEM) {
+			return permissionChecker.isOmniadmin();
+		}
+
+		return permissionChecker.isCompanyAdmin(companyId);
 	}
 
 	private Map<String, Object> _toMap(

@@ -11,6 +11,7 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.KeyReferenceUtil;
 
 import java.util.Dictionary;
 
@@ -33,7 +34,7 @@ public class OAuth2InAssertionConfigurationModelListener
 		String jwks = GetterUtil.getString(
 			properties.get("oauth2.in.assertion.signature.json.web.key.set"));
 
-		if (Validator.isNull(jwks)) {
+		if (Validator.isNull(jwks) || KeyReferenceUtil.isKeyReference(jwks)) {
 			return;
 		}
 

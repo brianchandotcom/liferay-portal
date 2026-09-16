@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.security.key.KeyReferenceUtil;
 import com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration;
 
 import java.util.Dictionary;
@@ -36,8 +37,13 @@ public class GoogleCloudTranslatorConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		boolean enabled = GetterUtil.getBoolean(properties.get("enabled"));
+
 		String serviceAccountPrivateKey = GetterUtil.getString(
 			properties.get("serviceAccountPrivateKey"));
+
+		if (KeyReferenceUtil.isKeyReference(serviceAccountPrivateKey)) {
+			return;
+		}
 
 		if (enabled && !_isValid(serviceAccountPrivateKey)) {
 			throw new ConfigurationModelListenerException(

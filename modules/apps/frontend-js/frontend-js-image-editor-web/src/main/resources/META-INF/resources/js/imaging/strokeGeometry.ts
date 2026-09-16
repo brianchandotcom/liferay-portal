@@ -92,11 +92,6 @@ export function pointsToPath(
 	return closed ? `${path} Z` : path;
 }
 
-/**
- * Deterministic pseudo-randomness (mulberry32). The hand-drawn style must
- * wobble the same way on the stage, on the export and on every re-render,
- * so the wobble is a function of a stored seed, never of the clock.
- */
 export function simplifyPoints(points: number[], epsilon: number): number[] {
 	const count = points.length / 2;
 
@@ -157,6 +152,11 @@ export function simplifyPoints(points: number[], epsilon: number): number[] {
 	return kept;
 }
 
+/**
+ * Deterministic pseudo-randomness (mulberry32). The hand-drawn style must
+ * wobble the same way on the stage, on the export and on every re-render,
+ * so the wobble is a function of a stored seed, never of the clock.
+ */
 export function seededRandom(seed: number): () => number {
 	let state = seed >>> 0;
 

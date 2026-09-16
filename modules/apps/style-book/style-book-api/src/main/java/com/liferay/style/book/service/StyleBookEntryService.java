@@ -132,6 +132,15 @@ public interface StyleBookEntryService extends BaseService {
 			long styleBookEntryId, boolean defaultStyleBookEntry)
 		throws PortalException;
 
+	public StyleBookEntry updateFrontendToken(
+			long styleBookEntryId, String cssVariableMappingValue,
+			String editorType, String frontendTokenCategoryName,
+			String frontendTokenDescription, String frontendTokenLabel,
+			String frontendTokenName, String frontendTokenSetDescription,
+			String frontendTokenSetLabel, String frontendTokenSetName,
+			String value, ServiceContext serviceContext)
+		throws PortalException;
+
 	public StyleBookEntry updateFrontendTokenDefinition(
 			long styleBookEntryId, String frontendTokenDefinition,
 			ServiceContext serviceContext)
@@ -163,4 +172,4 @@ public interface StyleBookEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-930720101
+// LIFERAY-SERVICE-BUILDER-HASH:1135679808

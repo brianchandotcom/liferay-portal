@@ -934,6 +934,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE, false, true));
 
 		_testAddCustomObjectFieldReadOnly();
+		_testAddCustomObjectFieldWithDescription();
 	}
 
 	@Test
@@ -1404,6 +1405,8 @@ public class ObjectFieldLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			modifiableSystemObjectDefinition.getObjectDefinitionId());
+
+		_testAddOrUpdateSystemObjectFieldWithUnmodifiableDefinition();
 	}
 
 	@Test
@@ -2982,6 +2985,13 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateObjectField() throws Exception {
+		_testUpdateObjectFieldDescriptionMap(Collections.emptyMap());
+		_testUpdateObjectFieldDescriptionMap(null);
+		_testUpdateObjectFieldWithObjectFieldMetadata();
+	}
+
+	@Test
 	public void testUpdateRequired() throws Exception {
 
 		// Deletion type cascade
@@ -3230,8 +3240,8 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getExternalReferenceCode(), TestPropsValues.getUserId(),
 			objectField.getListTypeDefinitionId(),
 			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
-			objectField.getDBType(), objectField.isIndexed(),
-			objectField.isIndexedAsKeyword(),
+			objectField.getDBType(), objectField.getDescriptionMap(),
+			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
 			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
 			objectField.isLocalized(), objectField.getName(),
 			objectField.getReadOnly(),
@@ -3257,8 +3267,8 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getObjectFieldId(), TestPropsValues.getUserId(),
 			objectField.getListTypeDefinitionId(),
 			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
-			objectField.getDBType(), objectField.isIndexed(),
-			objectField.isIndexedAsKeyword(),
+			objectField.getDBType(), objectField.getDescriptionMap(),
+			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
 			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
 			objectField.isLocalized(), objectField.getName(),
 			objectField.getReadOnly(),
@@ -3278,7 +3288,7 @@ public class ObjectFieldLocalServiceTest {
 		return _objectFieldLocalService.addOrUpdateSystemObjectField(
 			externalReferenceCode, TestPropsValues.getUserId(), 0L,
 			objectDefinitionId, businessType, dbColumnName, dbTableName, dbType,
-			indexed, indexedAsKeyword, "", labelMap, localized, name,
+			null, indexed, indexedAsKeyword, "", labelMap, localized, name,
 			ObjectFieldConstants.READ_ONLY_FALSE, null, required, false,
 			Collections.emptyList());
 	}
@@ -3401,7 +3411,7 @@ public class ObjectFieldLocalServiceTest {
 		return _objectFieldLocalService.addSystemObjectField(
 			null, TestPropsValues.getUserId(), 0L, objectDefinitionId,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT, null, null,
-			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, true, "",
 			LocalizedMapUtil.getLocalizedMap(name), false, name,
 			ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
 			objectFieldSettings);
@@ -3865,6 +3875,34 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 	}
 
+	private void _testAddCustomObjectFieldWithDescription() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		ObjectField objectField = _addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).descriptionMap(
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, _OBJECT_FIELD_DESCRIPTION_ES
+				).put(
+					LocaleUtil.US, _OBJECT_FIELD_DESCRIPTION
+				).build()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).build());
+
+		Assert.assertEquals(
+			_OBJECT_FIELD_DESCRIPTION_ES,
+			objectField.getDescription(LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			_OBJECT_FIELD_DESCRIPTION,
+			objectField.getDescription(LocaleUtil.US));
+	}
+
 	private void _testAddOrUpdateCustomObjectField(
 			ObjectField expectedObjectField)
 		throws Exception {
@@ -3966,6 +4004,107 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
+	private void _testAddOrUpdateSystemObjectFieldWithUnmodifiableDefinition()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
+				null, TestPropsValues.getUserId(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test" + ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				Collections.emptyList());
+
+		String name = StringUtil.randomId();
+
+		ObjectField objectField =
+			_objectFieldLocalService.addOrUpdateSystemObjectField(
+				null, TestPropsValues.getUserId(), 0L,
+				objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, null, null,
+				ObjectFieldConstants.DB_TYPE_STRING,
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				false, false, "", LocalizedMapUtil.getLocalizedMap(name), false,
+				name, ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
+				Collections.emptyList());
+
+		Assert.assertEquals(
+			StringPool.BLANK, objectField.getDescription(LocaleUtil.US));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+	}
+
+	private void _testUpdateObjectFieldDescriptionMap(
+			Map<Locale, String> descriptionMap)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		ObjectField objectField = _addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).descriptionMap(
+				HashMapBuilder.put(
+					LocaleUtil.US, _OBJECT_FIELD_DESCRIPTION
+				).build()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).build());
+
+		objectField = _objectFieldLocalService.updateObjectField(
+			objectField.getExternalReferenceCode(),
+			objectField.getObjectFieldId(), TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			objectField.getBusinessType(), objectField.getDBColumnName(),
+			objectField.getDBTableName(), objectField.getDBType(),
+			descriptionMap, false, false, null, objectField.getLabelMap(),
+			false, objectField.getName(), objectField.getReadOnly(), null,
+			false, false, false, Collections.emptyList());
+
+		Assert.assertEquals(
+			_OBJECT_FIELD_DESCRIPTION,
+			objectField.getDescription(LocaleUtil.US));
+	}
+
+	private void _testUpdateObjectFieldWithObjectFieldMetadata()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), "createDate");
+
+		objectField = _objectFieldLocalService.updateObjectField(
+			objectField.getExternalReferenceCode(),
+			objectField.getObjectFieldId(), TestPropsValues.getUserId(),
+			objectField.getListTypeDefinitionId(),
+			objectDefinition.getObjectDefinitionId(),
+			objectField.getBusinessType(), objectField.getDBColumnName(),
+			objectField.getDBTableName(), objectField.getDBType(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
+			objectField.isRequired(), objectField.isState(), true,
+			objectField.getObjectFieldSettings());
+
+		Assert.assertEquals(
+			StringPool.BLANK, objectField.getDescription(LocaleUtil.US));
+	}
+
 	private ObjectField _updateReadOnlyObjectField(
 			ObjectField objectField, String readOnly,
 			String readOnlyConditionExpression)
@@ -3976,13 +4115,19 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getObjectFieldId(), TestPropsValues.getUserId(),
 			objectField.getListTypeDefinitionId(),
 			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
-			objectField.getDBType(), objectField.isIndexed(),
-			objectField.isIndexedAsKeyword(),
+			objectField.getDBType(), objectField.getDescriptionMap(),
+			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
 			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
 			objectField.isLocalized(), objectField.getName(), readOnly,
 			readOnlyConditionExpression, objectField.isRequired(),
 			objectField.isState(), objectField.getObjectFieldSettings());
 	}
+
+	private static final String _OBJECT_FIELD_DESCRIPTION =
+		"This is the description for the object field.";
+
+	private static final String _OBJECT_FIELD_DESCRIPTION_ES =
+		"Esta es la descripción del campo de objeto.";
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

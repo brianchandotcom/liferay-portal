@@ -345,7 +345,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			aggregationObjectField.getListTypeDefinitionId(),
 			aggregationObjectField.getObjectDefinitionId(),
 			aggregationObjectField.getBusinessType(),
-			aggregationObjectField.getDBType(),
+			aggregationObjectField.getDBType(), null,
 			aggregationObjectField.isIndexed(),
 			aggregationObjectField.isIndexedAsKeyword(),
 			aggregationObjectField.getIndexedLanguageId(),

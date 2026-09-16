@@ -280,6 +280,35 @@ public class WorkflowDefinition implements Cloneable, Serializable {
 
 	protected Node[] nodes;
 
+	public com.liferay.headless.admin.workflow.client.permission.Permission[]
+		getPermissions() {
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.headless.admin.workflow.client.permission.Permission[]
+			permissions) {
+
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.headless.admin.workflow.client.permission.Permission[],
+			 Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected com.liferay.headless.admin.workflow.client.permission.Permission[]
+		permissions;
+
 	public String getScope() {
 		return scope;
 	}
@@ -439,4 +468,4 @@ public class WorkflowDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:677865872
+// LIFERAY-REST-BUILDER-HASH:-1536366703

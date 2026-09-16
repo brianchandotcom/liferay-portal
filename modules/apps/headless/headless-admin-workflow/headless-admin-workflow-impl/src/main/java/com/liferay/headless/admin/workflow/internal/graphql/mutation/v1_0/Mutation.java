@@ -144,6 +144,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteWorkflowDefinitionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.
+					deleteWorkflowDefinitionByExternalReferenceCode(
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean deleteWorkflowDefinitionUndeploy(
 			@GraphQLName("name") String name,
 			@GraphQLName("version") String version)
@@ -279,6 +295,22 @@ public class Mutation {
 			workflowDefinitionResource ->
 				workflowDefinitionResource.putWorkflowDefinitionBatch(
 					callbackURL, object));
+	}
+
+	@GraphQLField
+	public WorkflowDefinition updateWorkflowDefinitionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("workflowDefinition") WorkflowDefinition
+				workflowDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.
+					putWorkflowDefinitionByExternalReferenceCode(
+						externalReferenceCode, workflowDefinition));
 	}
 
 	@GraphQLField
@@ -902,4 +934,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1839914688
+// LIFERAY-REST-BUILDER-HASH:-1307929438

@@ -51,8 +51,7 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 			Layout layout = themeDisplay.getLayout();
 
 			if ((layout != null) &&
-				(fragmentEntryLink.getPlid() ==
-					layout.getMasterLayoutPlid())) {
+				(fragmentEntryLink.getPlid() == layout.getMasterLayoutPlid())) {
 
 				inheritedFromMaster = true;
 			}

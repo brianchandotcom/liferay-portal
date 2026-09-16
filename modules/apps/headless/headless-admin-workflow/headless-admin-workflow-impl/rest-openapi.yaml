@@ -240,6 +240,10 @@ components:
                         $ref: "#/components/schemas/Node"
                     readOnly: true
                     type: array
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 scope:
                     type: string
                 system:

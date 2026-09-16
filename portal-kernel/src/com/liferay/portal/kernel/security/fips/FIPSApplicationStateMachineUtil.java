@@ -44,7 +44,9 @@ public class FIPSApplicationStateMachineUtil {
 			powerOff("Portal");
 		}
 		finally {
-			System.exit(1);
+			Runtime runtime = Runtime.getRuntime();
+
+			runtime.exit(1);
 		}
 	}
 

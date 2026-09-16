@@ -546,8 +546,7 @@ public class ObjectEntryModelListenerTest {
 			1, Collections.singletonList(DepotRolesConstants.PROJECT_MEMBER),
 			cmpProjectObjectEntry.getGroupId(), projectSponsorUser.getUserId());
 
-		// Updating the description without assign members permission keeps
-		// both roles
+		// Updating the description without assign members keeps both roles
 
 		User user = UserTestUtil.addUser();
 
@@ -577,7 +576,7 @@ public class ObjectEntryModelListenerTest {
 			ObjectEntry cmpProjectObjectEntry)
 		throws Exception {
 
-		// A manager may clear their own name
+		// A project manager may clear their own name
 
 		User projectManagerUser = UserTestUtil.addUser(
 			cmpProjectObjectEntry.getGroupId());
@@ -622,7 +621,7 @@ public class ObjectEntryModelListenerTest {
 				projectContributorUser.getUserId(),
 				cmpProjectObjectEntry.getGroupId()));
 
-		// Clearing the manager and sponsor revokes both holders
+		// Clearing the project manager and project sponsor revokes both holders
 
 		cmpProjectObjectEntry = _updateProjectManagerProjectSponsor(
 			cmpProjectObjectEntry, projectManagerUser.getUserId(),
@@ -636,7 +635,7 @@ public class ObjectEntryModelListenerTest {
 		_assertGroupMembershipWithoutUserGroupRoles(
 			cmpProjectObjectEntry, projectSponsorUser);
 
-		// Reassigning as the outgoing manager keeps authority through the save
+		// Reassigning as the outgoing project manager keeps authority on save
 
 		cmpProjectObjectEntry = _updateProjectManagerProjectSponsor(
 			cmpProjectObjectEntry, projectManagerUser.getUserId(),
@@ -649,7 +648,7 @@ public class ObjectEntryModelListenerTest {
 		cmpProjectObjectEntry = _updateProjectManagerProjectSponsor(
 			cmpProjectObjectEntry, 0, 0, TestPropsValues.getUserId());
 
-		// Reassigning the manager and sponsor revokes the previous holders
+		// Reassigning both roles revokes the previous holders
 
 		cmpProjectObjectEntry = _updateProjectManagerProjectSponsor(
 			cmpProjectObjectEntry, projectManagerUser.getUserId(),
@@ -664,7 +663,7 @@ public class ObjectEntryModelListenerTest {
 			ObjectEntry cmpProjectObjectEntry)
 		throws Exception {
 
-		// A manager assigning an administrator is refused
+		// A project manager assigning an administrator is refused
 
 		User projectManagerUser = UserTestUtil.addUser(
 			cmpProjectObjectEntry.getGroupId());
@@ -695,7 +694,7 @@ public class ObjectEntryModelListenerTest {
 					PrincipalException.MustHavePermission);
 		}
 
-		// A manager may assign and revoke an ordinary user
+		// A project manager may assign and revoke an ordinary user
 
 		User user = UserTestUtil.addUser();
 
@@ -724,7 +723,7 @@ public class ObjectEntryModelListenerTest {
 			cmpProjectObjectEntry, projectManagerUser.getUserId(),
 			administratorUser.getUserId(), TestPropsValues.getUserId());
 
-		// Revoking an administrator as a manager is refused
+		// Revoking an administrator as a project manager is refused
 
 		UserTestUtil.setUser(projectManagerUser);
 

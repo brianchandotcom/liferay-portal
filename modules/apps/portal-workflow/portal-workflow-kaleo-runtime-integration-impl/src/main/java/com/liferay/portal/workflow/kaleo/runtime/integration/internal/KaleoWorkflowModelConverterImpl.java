@@ -191,6 +191,8 @@ public class KaleoWorkflowModelConverterImpl
 				kaleoDefinitionVersion.getKaleoDefinition();
 
 			defaultWorkflowDefinition.setActive(kaleoDefinition.isActive());
+			defaultWorkflowDefinition.setExternalReferenceCode(
+				kaleoDefinition.getExternalReferenceCode());
 			defaultWorkflowDefinition.setScope(kaleoDefinition.getScope());
 			defaultWorkflowDefinition.setSystem(kaleoDefinition.isSystem());
 			defaultWorkflowDefinition.setWorkflowDefinitionId(

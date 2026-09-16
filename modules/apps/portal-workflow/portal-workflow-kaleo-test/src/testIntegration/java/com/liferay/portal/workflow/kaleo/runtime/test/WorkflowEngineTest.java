@@ -28,6 +28,9 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.io.InputStream;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,11 +47,11 @@ public class WorkflowEngineTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testDeleteWorkflowDefinition() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
-		WorkflowDefinition workflowDefinition =
+		_workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				FileUtil.getBytes(
 					_getResourceInputStream("valid-workflow-definition.xml")),
@@ -56,32 +59,18 @@ public class WorkflowEngineTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				TestPropsValues.getUserId());
 
-		WorkflowDefinitionLink workflowDefinitionLink =
+		_workflowDefinitionLink =
 			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
 				objectDefinition.getClassName(), 0, 0,
-				workflowDefinition.getName(), 1);
+				_workflowDefinition.getName(), 1);
+	}
 
-		AssertUtils.assertFailure(
-			RequiredWorkflowDefinitionException.class, null,
-			() -> _workflowEngine.deleteWorkflowDefinition(
-				workflowDefinition.getName(), 1,
-				ServiceContextTestUtil.getServiceContext()));
-
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			workflowDefinitionLink);
-
-		AssertUtils.assertFailure(
-			WorkflowException.class,
-			"Cannot delete active workflow definition " +
-				workflowDefinition.getWorkflowDefinitionId(),
-			() -> _workflowEngine.deleteWorkflowDefinition(
-				workflowDefinition.getName(), 1,
-				ServiceContextTestUtil.getServiceContext()));
-
+	@After
+	public void tearDown() throws Exception {
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionLocalService.getKaleoDefinition(
-				workflowDefinition.getName(),
+				_workflowDefinition.getName(),
 				ServiceContextTestUtil.getServiceContext());
 
 		kaleoDefinition.setActive(false);
@@ -89,8 +78,57 @@ public class WorkflowEngineTest {
 		_kaleoDefinitionLocalService.updateKaleoDefinition(kaleoDefinition);
 
 		_workflowEngine.deleteWorkflowDefinition(
-			workflowDefinition.getName(), 1,
+			_workflowDefinition.getName(), 1,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test
+	public void testDeleteWorkflowDefinition() throws Exception {
+		AssertUtils.assertFailure(
+			RequiredWorkflowDefinitionException.class, null,
+			() -> _workflowEngine.deleteWorkflowDefinition(
+				_workflowDefinition.getName(), 1,
+				ServiceContextTestUtil.getServiceContext()));
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			_workflowDefinitionLink);
+
+		AssertUtils.assertFailure(
+			WorkflowException.class,
+			"Cannot delete active workflow definition " +
+				_workflowDefinition.getWorkflowDefinitionId(),
+			() -> _workflowEngine.deleteWorkflowDefinition(
+				_workflowDefinition.getName(), 1,
+				ServiceContextTestUtil.getServiceContext()));
+	}
+
+	@Test
+	public void testDeployWorkflowDefinition() throws Exception {
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				FileUtil.getBytes(
+					_getResourceInputStream("valid-workflow-definition.xml")),
+				TestPropsValues.getCompanyId(),
+				_workflowDefinition.getExternalReferenceCode(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
+
+		Assert.assertEquals(
+			_workflowDefinition.getName(), workflowDefinition.getName());
+		Assert.assertEquals(
+			_workflowDefinition.getVersion() + 1,
+			workflowDefinition.getVersion());
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
+				_workflowDefinitionLink.getWorkflowDefinitionLinkId());
+
+		Assert.assertEquals(
+			workflowDefinition.getVersion(),
+			workflowDefinitionLink.getWorkflowDefinitionVersion());
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
 	}
 
 	private InputStream _getResourceInputStream(String name) {
@@ -104,6 +142,9 @@ public class WorkflowEngineTest {
 
 	@Inject
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	private WorkflowDefinition _workflowDefinition;
+	private WorkflowDefinitionLink _workflowDefinitionLink;
 
 	@Inject
 	private WorkflowDefinitionLinkLocalService

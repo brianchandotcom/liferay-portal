@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.secret.SecretResolverUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.saml.admin.rest.dto.v1_0.Idp;
@@ -260,6 +261,11 @@ public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 		return false;
 	}
 
+	private String _resolve(String value) {
+		return SecretResolverUtil.resolve(
+			CompanyThreadLocal.getCompanyId(), value);
+	}
+
 	private void _setIdpProperties(
 		Idp idp, SamlProviderConfiguration samlProviderConfiguration,
 		UnicodeProperties unicodeProperties) {
@@ -411,7 +417,9 @@ public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 			_authenticateLocalEntityCertificate(
 				GetterUtil.getString(
 					samlProvider.getKeyStoreCredentialPassword(),
-					samlProviderConfiguration.keyStoreCredentialPassword()),
+					_resolve(
+						samlProviderConfiguration.
+							keyStoreCredentialPassword())),
 				LocalEntityManager.CertificateUsage.SIGNING, entityId);
 		}
 

@@ -14,12 +14,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.security.key.secret.SecretResolverUtil;
 
 import java.net.HttpURLConnection;
 
@@ -38,7 +40,7 @@ public class JiraUtil {
 
 		String credentials =
 			patcherConfiguration.jiraEmailAddress() + StringPool.COLON +
-				patcherConfiguration.jiraAPIToken();
+				_resolve(patcherConfiguration.jiraAPIToken());
 
 		options.addHeader(
 			"Authorization", "Basic " + Base64.encode(credentials.getBytes()));
@@ -72,6 +74,11 @@ public class JiraUtil {
 		return StringBundler.concat(
 			patcherConfiguration.jiraAPIURL(), "/issue/", issueKey,
 			"?fields=issuelinks");
+	}
+
+	private static String _resolve(String value) throws Exception {
+		return SecretResolverUtil.resolve(
+			CompanyThreadLocal.getCompanyId(), value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JiraUtil.class);

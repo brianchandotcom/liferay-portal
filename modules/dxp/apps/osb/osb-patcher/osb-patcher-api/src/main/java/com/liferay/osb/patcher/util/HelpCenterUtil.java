@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.secret.SecretResolverUtil;
 
 import java.net.HttpURLConnection;
 
@@ -45,10 +47,13 @@ public class HelpCenterUtil {
 
 		String downloadURL = PatcherBuildUtil.getDownloadURL(patcherBuild);
 
+		String jiraServiceManagementUserToken = SecretResolverUtil.resolve(
+			patcherBuild.getCompanyId(),
+			patcherConfiguration.jiraServiceManagementUserToken());
+
 		String credentials =
 			patcherConfiguration.jiraServiceManagementUserEmailAddress() +
-				StringPool.COLON +
-					patcherConfiguration.jiraServiceManagementUserToken();
+				StringPool.COLON + jiraServiceManagementUserToken;
 
 		Http.Options options = new Http.Options();
 
@@ -138,7 +143,7 @@ public class HelpCenterUtil {
 			"client_id", patcherConfiguration.supportLiferayAPIClientId());
 		options.addPart(
 			"client_secret",
-			patcherConfiguration.supportLiferayAPIClientSecret());
+			_resolve(patcherConfiguration.supportLiferayAPIClientSecret()));
 		options.addPart("grant_type", "client_credentials");
 		options.setLocation(
 			patcherConfiguration.supportLiferayURL() + "/o/oauth2/token");
@@ -227,6 +232,11 @@ public class HelpCenterUtil {
 		}
 
 		return options;
+	}
+
+	private static String _resolve(String value) throws Exception {
+		return SecretResolverUtil.resolve(
+			CompanyThreadLocal.getCompanyId(), value);
 	}
 
 	private static String _sendRequest(Http.Options options) throws Exception {

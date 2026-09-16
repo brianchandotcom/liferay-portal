@@ -8,7 +8,9 @@ package com.liferay.push.notifications.sender.sms.internal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.secret.SecretResolver;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 import com.liferay.push.notifications.exception.PushNotificationsException;
@@ -80,14 +82,16 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties) throws Exception {
 		_smsPushNotificationsSenderConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SMSPushNotificationsSenderConfiguration.class, properties);
 
 		String accountSID =
 			_smsPushNotificationsSenderConfiguration.accountSID();
-		String authToken = _smsPushNotificationsSenderConfiguration.authToken();
+		String authToken = _secretResolver.resolve(
+			CompanyConstants.SYSTEM,
+			_smsPushNotificationsSenderConfiguration.authToken());
 
 		if (Validator.isNull(accountSID) || Validator.isNull(authToken)) {
 			_twilioRestClient = null;
@@ -102,6 +106,9 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 
 	@Reference
 	private MessageBus _messageBus;
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 	private volatile SMSPushNotificationsSenderConfiguration
 		_smsPushNotificationsSenderConfiguration;

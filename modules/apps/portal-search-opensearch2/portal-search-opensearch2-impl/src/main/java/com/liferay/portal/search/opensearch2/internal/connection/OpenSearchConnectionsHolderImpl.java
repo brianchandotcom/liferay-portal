@@ -8,8 +8,10 @@ package com.liferay.portal.search.opensearch2.internal.connection;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration;
+import com.liferay.portal.security.key.secret.SecretResolver;
 
 import java.util.Collection;
 import java.util.Map;
@@ -117,11 +119,11 @@ public class OpenSearchConnectionsHolderImpl
 			).networkHostAddresses(
 				openSearchConnectionConfiguration.networkHostAddresses()
 			).password(
-				openSearchConnectionConfiguration.password()
+				_resolve(openSearchConnectionConfiguration.password())
 			).proxyConfig(
 				createProxyConfig(openSearchConnectionConfiguration)
 			).truststorePassword(
-				openSearchConnectionConfiguration.truststorePassword()
+				_resolve(openSearchConnectionConfiguration.truststorePassword())
 			).truststorePath(
 				openSearchConnectionConfiguration.truststorePath()
 			).truststoreType(
@@ -141,7 +143,7 @@ public class OpenSearchConnectionsHolderImpl
 		).host(
 			openSearchConnectionConfiguration.proxyHost()
 		).password(
-			openSearchConnectionConfiguration.proxyPassword()
+			_resolve(openSearchConnectionConfiguration.proxyPassword())
 		).port(
 			openSearchConnectionConfiguration.proxyPort()
 		).userName(
@@ -164,10 +166,17 @@ public class OpenSearchConnectionsHolderImpl
 	@Reference
 	protected Http http;
 
+	private String _resolve(String value) {
+		return _secretResolver.resolve(CompanyConstants.SYSTEM, value);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenSearchConnectionsHolderImpl.class);
 
 	private final Map<String, OpenSearchConnection> _openSearchConnections =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 }

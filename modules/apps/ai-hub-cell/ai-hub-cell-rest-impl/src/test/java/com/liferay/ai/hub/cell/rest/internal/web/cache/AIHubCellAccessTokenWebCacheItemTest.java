@@ -9,12 +9,17 @@ import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.security.key.secret.SecretResolver;
+import com.liferay.portal.security.key.secret.SecretResolverUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -30,6 +35,7 @@ import java.net.HttpURLConnection;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -44,6 +50,21 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 	@ClassRule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		ReflectionTestUtil.setFieldValue(
+			SecretResolverUtil.class, "_secretResolverSnapshot",
+			new Snapshot<SecretResolver>(
+				SecretResolverUtil.class, SecretResolver.class) {
+
+				@Override
+				public SecretResolver get() {
+					return (companyId, value) -> value;
+				}
+
+			});
+	}
 
 	@Test
 	public void testConvertWhenAccessTokenIsJWT() throws Exception {
@@ -61,7 +82,7 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 
 			AIHubCellAccessTokenWebCacheItem aiHubCellAccessTokenWebCacheItem =
 				new AIHubCellAccessTokenWebCacheItem(
-					_getAIHubCellConfiguration());
+					_getAIHubCellConfiguration(), CompanyConstants.SYSTEM);
 
 			aiHubCellAccessTokenWebCacheItem.convert(StringPool.BLANK);
 
@@ -83,7 +104,7 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 
 			AIHubCellAccessTokenWebCacheItem aiHubCellAccessTokenWebCacheItem =
 				new AIHubCellAccessTokenWebCacheItem(
-					_getAIHubCellConfiguration());
+					_getAIHubCellConfiguration(), CompanyConstants.SYSTEM);
 
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					AIHubCellAccessTokenWebCacheItem.class.getName(),
@@ -106,7 +127,7 @@ public class AIHubCellAccessTokenWebCacheItemTest {
 
 			AIHubCellAccessTokenWebCacheItem aiHubCellAccessTokenWebCacheItem =
 				new AIHubCellAccessTokenWebCacheItem(
-					_getAIHubCellConfiguration());
+					_getAIHubCellConfiguration(), CompanyConstants.SYSTEM);
 
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					AIHubCellAccessTokenWebCacheItem.class.getName(),

@@ -5,10 +5,15 @@
 
 package com.liferay.digital.signature.internal.web.cache;
 
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.security.key.secret.SecretResolver;
+import com.liferay.portal.security.key.secret.SecretResolverUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,6 +27,21 @@ public class DSAccessTokenWebCacheItemTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		ReflectionTestUtil.setFieldValue(
+			SecretResolverUtil.class, "_secretResolverSnapshot",
+			new Snapshot<SecretResolver>(
+				SecretResolverUtil.class, SecretResolver.class) {
+
+				@Override
+				public SecretResolver get() {
+					return (companyId, value) -> value;
+				}
+
+			});
+	}
 
 	@Test
 	public void testGetPEMDoubleEscapedLineBreaks() {
@@ -63,7 +83,8 @@ public class DSAccessTokenWebCacheItemTest {
 	private String _getPEM(String rsaPrivateKey) {
 		DSAccessTokenWebCacheItem dsAccessTokenWebCacheItem =
 			new DSAccessTokenWebCacheItem(
-				"api-username", "sandbox", "integration-key", rsaPrivateKey);
+				"api-username", CompanyConstants.SYSTEM, "sandbox",
+				"integration-key", rsaPrivateKey);
 
 		byte[] rsaPrivateKeyBytes = ReflectionTestUtil.getFieldValue(
 			dsAccessTokenWebCacheItem, "_rsaPrivateKeyBytes");

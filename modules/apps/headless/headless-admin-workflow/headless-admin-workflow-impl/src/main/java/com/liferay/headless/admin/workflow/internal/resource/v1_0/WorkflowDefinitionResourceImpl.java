@@ -5,6 +5,9 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
+import com.liferay.exportimport.constants.ExportImportConstants;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.workflow.dto.v1_0.Node;
 import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
@@ -16,6 +19,7 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResou
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
@@ -39,6 +43,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
@@ -59,11 +64,14 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/workflow-definition.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = WorkflowDefinitionResource.class
 )
 @CTAware
 public class WorkflowDefinitionResourceImpl
-	extends BaseWorkflowDefinitionResourceImpl {
+	extends BaseWorkflowDefinitionResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate
+		<WorkflowDefinition> {
 
 	@Override
 	public void deleteWorkflowDefinition(Long workflowDefinitionId)
@@ -107,6 +115,54 @@ public class WorkflowDefinitionResourceImpl
 		throws Exception {
 
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor<KaleoDefinition> getExportImportDescriptor() {
+		return new ExportImportDescriptor<KaleoDefinition>() {
+
+			@Override
+			public String getKey() {
+				return WorkflowDefinitionResourceImpl.class.getName();
+			}
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "workflow-definitions";
+			}
+
+			@Override
+			public Class<KaleoDefinition> getModelClass() {
+				return KaleoDefinition.class;
+			}
+
+			@Override
+			public String getPortletId() {
+				return WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW;
+			}
+
+			@Override
+			public int getRank() {
+				return 98;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return ExportImportConstants.SECTION_KEY_CONTENT_AND_DATA;
+			}
+
+			@Override
+			public boolean isActive(PortletDataContext portletDataContext) {
+				return FeatureFlagManagerUtil.isEnabled(
+					portletDataContext.getCompanyId(), "LPD-49856");
+			}
+
+		};
 	}
 
 	@Override

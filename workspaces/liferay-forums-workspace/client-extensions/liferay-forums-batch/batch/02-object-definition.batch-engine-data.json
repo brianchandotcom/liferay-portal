@@ -56,6 +56,18 @@
 			},
 			"modifiable": true,
 			"name": "C2M0Ban",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "BAN_USER_ID",
+					"label": {
+						"en_US": "Ban User ID"
+					},
+					"name": "banUserId",
+					"required": true
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,

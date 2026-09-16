@@ -166,8 +166,11 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 				new WorkflowTask() {
 					{
 						completed = false;
-						label = "task1";
+						label = "Task 1";
 						name = "task1";
+						workflowDefinitionName = _workflowDefinition.getName();
+						workflowDefinitionTitle =
+							_workflowDefinition.getTitle();
 					}
 				},
 				new WorkflowTask() {
@@ -175,6 +178,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 						completed = false;
 						label = "task2";
 						name = "task2";
+						workflowDefinitionName = _workflowDefinition.getName();
+						workflowDefinitionTitle =
+							_workflowDefinition.getTitle();
 					}
 				},
 				new WorkflowTask() {
@@ -182,6 +188,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 						completed = false;
 						label = "task3";
 						name = "task3";
+						workflowDefinitionName = _workflowDefinition.getName();
+						workflowDefinitionTitle =
+							_workflowDefinition.getTitle();
 					}
 				}),
 			(List<WorkflowTask>)page.getItems());
@@ -843,8 +852,11 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 				new WorkflowTask() {
 					{
 						completed = false;
-						label = "task1";
+						label = "Task 1";
 						name = "task1";
+						workflowDefinitionName = _workflowDefinition.getName();
+						workflowDefinitionTitle =
+							_workflowDefinition.getTitle();
 					}
 				},
 				new WorkflowTask() {
@@ -852,6 +864,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 						completed = false;
 						label = "task2";
 						name = "task2";
+						workflowDefinitionName = _workflowDefinition.getName();
+						workflowDefinitionTitle =
+							_workflowDefinition.getTitle();
 					}
 				},
 				new WorkflowTask() {
@@ -859,6 +874,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 						completed = true;
 						label = "task3";
 						name = "task3";
+						workflowDefinitionName = _workflowDefinition.getName();
+						workflowDefinitionTitle =
+							_workflowDefinition.getTitle();
 					}
 				}),
 			(List<WorkflowTask>)page.getItems());
@@ -926,7 +944,10 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"completed", "label", "name"};
+		return new String[] {
+			"completed", "label", "name", "workflowDefinitionName",
+			"workflowDefinitionTitle"
+		};
 	}
 
 	@Override

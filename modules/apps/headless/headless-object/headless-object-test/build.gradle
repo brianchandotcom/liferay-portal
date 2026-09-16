@@ -6,6 +6,9 @@ dependencies {
 	testIntegrationImplementation group: "jakarta.annotation", name: "jakarta.annotation-api", version: "2.1.1"
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation project(":apps:depot:depot-api")
+	testIntegrationImplementation project(":apps:export-import:export-import-api")
+	testIntegrationImplementation project(":apps:export-import:export-import-report-api")
+	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:headless:headless-object:headless-object-api")
 	testIntegrationImplementation project(":apps:headless:headless-object:headless-object-client")

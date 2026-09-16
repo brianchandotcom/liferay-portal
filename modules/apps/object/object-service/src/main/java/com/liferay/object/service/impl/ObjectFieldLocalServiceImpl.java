@@ -36,6 +36,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.internal.dao.db.DynamicObjectDefinitionTableSQLUtil;
 import com.liferay.object.internal.field.setting.contributor.DefaultObjectFieldSettingContributor;
 import com.liferay.object.internal.field.setting.contributor.FiltersObjectFieldSettingsContributor;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
@@ -1078,6 +1079,16 @@ public class ObjectFieldLocalServiceImpl
 			}
 
 			_addObjectFieldColumn(dbTableName, objectField);
+
+			if (!objectDefinition.isUnmodifiableSystemObject() &&
+				Objects.equals(
+					dbTableName, objectDefinition.getExtensionDBTableName())) {
+
+				runSQL(
+					DynamicObjectDefinitionTableSQLUtil.
+						getInsertMissingExtensionTableRowsSQL(
+							objectDefinition));
+			}
 
 			Object defaultValue = ObjectFieldSettingUtil.getDefaultValue(
 				null, objectField, null);

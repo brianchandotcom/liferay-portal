@@ -25,6 +25,7 @@ import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdExce
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.exception.ObjectRelationshipSystemException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
+import com.liferay.object.internal.dao.db.DynamicObjectDefinitionTableSQLUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
 import com.liferay.object.model.ObjectDefinition;
@@ -1248,6 +1249,12 @@ public class ObjectRelationshipLocalServiceImpl
 			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
 				dbTableName, objectField.getBusinessType(),
 				objectField.getDBColumnName(), "Long"));
+
+		if (!objectDefinition2.isUnmodifiableSystemObject()) {
+			runSQL(
+				DynamicObjectDefinitionTableSQLUtil.
+					getInsertMissingExtensionTableRowsSQL(objectDefinition2));
+		}
 
 		ObjectDBManagerUtil.createIndexMetadata(
 			_currentConnection.getConnection(

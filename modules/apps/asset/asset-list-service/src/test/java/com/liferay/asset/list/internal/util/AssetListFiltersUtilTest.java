@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -826,37 +827,128 @@ public class AssetListFiltersUtilTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, textFieldName);
 
-		String textFieldValue = RandomTestUtil.randomString();
+		String term1 = RandomTestUtil.randomString();
+		String term2 = RandomTestUtil.randomString();
 
-		Query containsQuery = _assertNestedQuery(
-			BooleanClauseOccur.MUST,
-			_getFilterJSONObject("contains", textFieldName, textFieldValue),
-			textFieldName);
+		_assertMatchQuery(
+			_NESTED_TEXT_FIELD, term1,
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST,
+				_getFilterJSONObject(
+					"contains", textFieldName, term1
+				).put(
+					"quantifier", "all"
+				),
+				textFieldName));
 
-		Assert.assertTrue(
-			containsQuery.toString(), containsQuery instanceof MatchQuery);
+		String textFieldValue = term1 + StringPool.SPACE + term2;
 
-		Query containsWithQuantifierQuery = _assertNestedQuery(
-			BooleanClauseOccur.MUST,
-			_getFilterJSONObject(
-				"contains", textFieldName, textFieldValue
-			).put(
-				"quantifier", "any"
-			),
-			textFieldName);
+		_assertAllTermsQuery(
+			_NESTED_TEXT_FIELD,
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST,
+				_getFilterJSONObject(
+					"contains", textFieldName, textFieldValue
+				).put(
+					"quantifier", "all"
+				),
+				textFieldName),
+			term1, term2);
+		_assertMatchQuery(
+			_NESTED_TEXT_FIELD, textFieldValue,
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST,
+				_getFilterJSONObject(
+					"contains", textFieldName, textFieldValue
+				).put(
+					"quantifier", "any"
+				),
+				textFieldName));
+		_assertAllTermsQuery(
+			_NESTED_TEXT_FIELD,
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST_NOT,
+				_getFilterJSONObject(
+					"not-contains", textFieldName, textFieldValue
+				).put(
+					"quantifier", "all"
+				),
+				textFieldName),
+			term1, term2);
+		_assertMatchQuery(
+			_NESTED_TEXT_FIELD, textFieldValue,
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST_NOT,
+				_getFilterJSONObject(
+					"not-contains", textFieldName, textFieldValue
+				).put(
+					"quantifier", "any"
+				),
+				textFieldName));
+	}
 
-		Assert.assertTrue(
-			containsWithQuantifierQuery.toString(),
-			containsWithQuantifierQuery instanceof MatchQuery);
+	@Test
+	public void testFilterQueriesWithTitleContainsAllOperator() {
+		String term1 = RandomTestUtil.randomString();
+		String term2 = RandomTestUtil.randomString();
 
-		Query notContainsQuery = _assertNestedQuery(
-			BooleanClauseOccur.MUST_NOT,
-			_getFilterJSONObject("not-contains", textFieldName, textFieldValue),
-			textFieldName);
+		String title = term1 + StringPool.SPACE + term2;
 
-		Assert.assertTrue(
-			notContainsQuery.toString(),
-			notContainsQuery instanceof MatchQuery);
+		_assertAllTermsQuery(
+			"localized_title_en_US",
+			_assertCommonFieldQuery(
+				BooleanClauseOccur.MUST,
+				_getCommonFieldFilterJSONObject(
+					"contains", Field.TITLE, title
+				).put(
+					"quantifier", "all"
+				)),
+			term1, term2);
+		_assertMatchQuery(
+			"localized_title_en_US", title,
+			_assertCommonFieldQuery(
+				BooleanClauseOccur.MUST,
+				_getCommonFieldFilterJSONObject(
+					"contains", Field.TITLE, title
+				).put(
+					"quantifier", "any"
+				)));
+	}
+
+	private void _assertAllTermsQuery(
+		String expectedField, Query query, String... expectedTerms) {
+
+		Assert.assertTrue(query.toString(), query instanceof BooleanQuery);
+
+		BooleanQuery booleanQuery = (BooleanQuery)query;
+
+		List<BooleanClause<Query>> booleanClauses = booleanQuery.clauses();
+
+		Assert.assertEquals(
+			booleanClauses.toString(), expectedTerms.length,
+			booleanClauses.size());
+
+		List<String> terms = new ArrayList<>();
+
+		for (BooleanClause<Query> booleanClause : booleanClauses) {
+			Assert.assertEquals(
+				BooleanClauseOccur.MUST, booleanClause.getBooleanClauseOccur());
+
+			Query clauseQuery = booleanClause.getClause();
+
+			Assert.assertTrue(
+				clauseQuery.toString(), clauseQuery instanceof MatchQuery);
+
+			MatchQuery matchQuery = (MatchQuery)clauseQuery;
+
+			Assert.assertEquals(expectedField, matchQuery.getField());
+			Assert.assertNull(matchQuery.getType());
+
+			terms.add(matchQuery.getValue());
+		}
+
+		AssertUtils.assertEqualsSorted(
+			expectedTerms, terms.toArray(new String[0]));
 	}
 
 	private Filter _assertAssetFilter(
@@ -1367,6 +1459,9 @@ public class AssetListFiltersUtilTest {
 	private static final long _CLASS_TYPE_ID = RandomTestUtil.randomLong();
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private static final String _NESTED_TEXT_FIELD =
+		"nestedFieldArray.value_text";
 
 	private static final MockedStatic<ObjectDefinitionLocalServiceUtil>
 		_objectDefinitionLocalServiceUtilMockedStatic = Mockito.mockStatic(

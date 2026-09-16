@@ -149,7 +149,7 @@ public class TaskAssigneeResourceTest extends BaseTaskAssigneeResourceTestCase {
 			null, null, RoleConstants.TYPE_DEPOT,
 			DepotRolesConstants.SUBTYPE_PROJECT, null);
 
-		User user = _addUser(_depotEntry.getGroupId(), "John", "Doe");
+		User user = _addUser("John", _depotEntry.getGroupId(), "Doe");
 
 		Page<TaskAssignee> page = taskAssigneeResource.getTaskAssigneesPage(
 			"Custom", null);
@@ -202,7 +202,7 @@ public class TaskAssigneeResourceTest extends BaseTaskAssigneeResourceTestCase {
 		return new String[] {"externalReferenceCode", "name", "type"};
 	}
 
-	private User _addUser(long groupId, String firstName, String lastName)
+	private User _addUser(String firstName, long groupId, String lastName)
 		throws Exception {
 
 		return UserTestUtil.addUser(
@@ -302,6 +302,21 @@ public class TaskAssigneeResourceTest extends BaseTaskAssigneeResourceTestCase {
 			spaceAdministratorUser.getUserId(), groupId,
 			new long[] {assetLibraryAdministratorRole.getRoleId()});
 
+		String lastName = RandomTestUtil.randomString();
+
+		User administratorUser = _addUser(
+			RandomTestUtil.randomString(), groupId, lastName);
+
+		Role administratorRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		_roleLocalService.addUserRoles(
+			administratorUser.getUserId(),
+			new long[] {administratorRole.getRoleId()});
+
+		User assignableUser = _addUser(
+			RandomTestUtil.randomString(), groupId, lastName);
+
 		TaskAssigneeResource spaceAdministratorTaskAssigneeResource =
 			TaskAssigneeResource.builder(
 			).authentication(
@@ -313,21 +328,6 @@ public class TaskAssigneeResourceTest extends BaseTaskAssigneeResourceTestCase {
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
-
-		String lastName = RandomTestUtil.randomString();
-
-		User administratorUser = _addUser(
-			groupId, RandomTestUtil.randomString(), lastName);
-
-		Role administratorRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		_roleLocalService.addUserRoles(
-			administratorUser.getUserId(),
-			new long[] {administratorRole.getRoleId()});
-
-		User assignableUser = _addUser(
-			groupId, RandomTestUtil.randomString(), lastName);
 
 		long[] taskAssigneeIds = _getTaskAssigneeIds(
 			spaceAdministratorTaskAssigneeResource.getTaskAssigneesPage(

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
@@ -170,23 +171,30 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KaleoDefinition kaleoDefinition =
-			_kaleoDefinitionLocalService.fetchKaleoDefinition(
-				name, serviceContext);
+		KaleoDefinition kaleoDefinition = null;
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			kaleoDefinition =
+				_kaleoDefinitionLocalService.
+					fetchKaleoDefinitionByExternalReferenceCode(
+						externalReferenceCode, serviceContext.getCompanyId());
+		}
 
 		if (kaleoDefinition == null) {
-			kaleoDefinition = _kaleoDefinitionService.addKaleoDefinition(
+			kaleoDefinition = _kaleoDefinitionLocalService.fetchKaleoDefinition(
+				name, serviceContext);
+		}
+
+		if (kaleoDefinition == null) {
+			return _kaleoDefinitionService.addKaleoDefinition(
 				externalReferenceCode, name, title, definition.getDescription(),
 				definition.getContent(), scope, system, 1, serviceContext);
 		}
-		else {
-			kaleoDefinition = _kaleoDefinitionService.updateKaleoDefinition(
-				externalReferenceCode, kaleoDefinition.getKaleoDefinitionId(),
-				title, definition.getDescription(), definition.getContent(),
-				system, serviceContext);
-		}
 
-		return kaleoDefinition;
+		return _kaleoDefinitionService.updateKaleoDefinition(
+			externalReferenceCode, kaleoDefinition.getKaleoDefinitionId(),
+			title, definition.getDescription(), definition.getContent(), system,
+			serviceContext);
 	}
 
 	private void _checkPermissions(ServiceContext serviceContext)

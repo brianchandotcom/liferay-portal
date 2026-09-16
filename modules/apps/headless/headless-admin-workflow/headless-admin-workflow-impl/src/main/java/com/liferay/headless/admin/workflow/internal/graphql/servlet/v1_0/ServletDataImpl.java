@@ -126,6 +126,11 @@ public class ServletDataImpl implements ServletData {
 							WorkflowDefinitionResourceImpl.class,
 							"deleteWorkflowDefinitionBatch"));
 					put(
+						"mutation#deleteWorkflowDefinitionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WorkflowDefinitionResourceImpl.class,
+							"deleteWorkflowDefinitionByExternalReferenceCode"));
+					put(
 						"mutation#deleteWorkflowDefinitionUndeploy",
 						new ObjectValuePair<>(
 							WorkflowDefinitionResourceImpl.class,
@@ -170,6 +175,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WorkflowDefinitionResourceImpl.class,
 							"putWorkflowDefinitionBatch"));
+					put(
+						"mutation#updateWorkflowDefinitionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WorkflowDefinitionResourceImpl.class,
+							"putWorkflowDefinitionByExternalReferenceCode"));
 					put(
 						"mutation#createWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLink",
 						new ObjectValuePair<>(
@@ -316,6 +326,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WorkflowDefinitionResourceImpl.class,
 							"getWorkflowDefinition"));
+					put(
+						"query#workflowDefinitionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WorkflowDefinitionResourceImpl.class,
+							"getWorkflowDefinitionByExternalReferenceCode"));
 					put(
 						"query#workflowDefinitionByName",
 						new ObjectValuePair<>(
@@ -465,6 +480,11 @@ public class ServletDataImpl implements ServletData {
 							WorkflowTaskResourceImpl.class,
 							"getWorkflowTaskHasAssignableUsers"));
 					put(
+						"query#WorkflowDefinition.byExternalReferenceCodeWorkflowDefinitionLinks",
+						new ObjectValuePair<>(
+							WorkflowDefinitionLinkResourceImpl.class,
+							"getWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLinksPage"));
+					put(
 						"query#WorkflowInstance.workflowTasksAssignedToMe",
 						new ObjectValuePair<>(
 							WorkflowTaskResourceImpl.class,
@@ -514,4 +534,4 @@ public class ServletDataImpl implements ServletData {
 		_transitionResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-92986052
+// LIFERAY-REST-BUILDER-HASH:388349189

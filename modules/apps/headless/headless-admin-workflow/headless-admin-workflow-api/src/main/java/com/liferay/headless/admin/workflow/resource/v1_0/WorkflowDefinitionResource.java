@@ -53,10 +53,18 @@ public interface WorkflowDefinitionResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteWorkflowDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public void deleteWorkflowDefinitionUndeploy(String name, String version)
 		throws Exception;
 
 	public WorkflowDefinition getWorkflowDefinition(Long workflowDefinitionId)
+		throws Exception;
+
+	public WorkflowDefinition getWorkflowDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public WorkflowDefinition getWorkflowDefinitionByName(
@@ -100,6 +108,10 @@ public interface WorkflowDefinitionResource {
 
 	public Response putWorkflowDefinitionBatch(
 			String callbackURL, Object object)
+		throws Exception;
+
+	public WorkflowDefinition putWorkflowDefinitionByExternalReferenceCode(
+			String externalReferenceCode, WorkflowDefinition workflowDefinition)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -198,4 +210,4 @@ public interface WorkflowDefinitionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1363050243
+// LIFERAY-REST-BUILDER-HASH:791124709

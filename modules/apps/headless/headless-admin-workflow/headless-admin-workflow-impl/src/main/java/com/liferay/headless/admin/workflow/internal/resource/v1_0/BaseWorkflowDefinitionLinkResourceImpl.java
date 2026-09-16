@@ -435,9 +435,15 @@ public abstract class BaseWorkflowDefinitionLinkResourceImpl
 							(String)parameters.get("workflowDefinitionId")),
 						workflowDefinitionLink);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				workflowDefinitionLinkUnsafeFunction = workflowDefinitionLink ->
+					postWorkflowDefinitionByExternalReferenceCodeWorkflowDefinitionLink(
+						(String)parameters.get("externalReferenceCode"),
+						workflowDefinitionLink);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [workflowDefinitionId]");
+					"One of the following parameters must be specified: [workflowDefinitionId, externalReferenceCode]");
 			}
 		}
 
@@ -1154,4 +1160,4 @@ public abstract class BaseWorkflowDefinitionLinkResourceImpl
 		LogFactoryUtil.getLog(BaseWorkflowDefinitionLinkResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-265602188
+// LIFERAY-REST-BUILDER-HASH:562293211

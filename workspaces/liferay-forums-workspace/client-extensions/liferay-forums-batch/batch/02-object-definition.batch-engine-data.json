@@ -21,6 +21,39 @@
 				"en_US": "C2M0 Attachment"
 			},
 			"name": "C2M0Attachment",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "FILE",
+					"indexed": false,
+					"label": {
+						"en_US": "File"
+					},
+					"localized": false,
+					"name": "file",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "*"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputerToDocumentsAndMedia"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 10
+						},
+						{
+							"name": "showFilesInLibrary",
+							"value": false
+						}
+					],
+					"required": true,
+					"type": "Long"
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"pluralLabel": {
 				"en_US": "C2M0 Attachments"
@@ -56,6 +89,18 @@
 			},
 			"modifiable": true,
 			"name": "C2M0Ban",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "BAN_USER_ID",
+					"label": {
+						"en_US": "Ban User ID"
+					},
+					"name": "banUserId",
+					"required": true
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
@@ -94,6 +139,32 @@
 			},
 			"modifiable": true,
 			"name": "C2M0Category",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "DESCRIPTION",
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": true,
+					"name": "name",
+					"required": true
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
@@ -109,7 +180,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "externalReferenceCode"
+			"titleObjectFieldName": "name"
 		},
 		{
 			"accountEntryRestricted": false,
@@ -132,6 +203,140 @@
 			},
 			"modifiable": true,
 			"name": "C2M0Message",
+			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "ANSWER",
+					"label": {
+						"en_US": "Answer"
+					},
+					"name": "answer",
+					"required": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "BODY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Body"
+					},
+					"name": "body",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "FORMAT",
+					"label": {
+						"en_US": "Format"
+					},
+					"name": "format",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "PARENT_MESSAGE_ID",
+					"label": {
+						"en_US": "Parent Message ID"
+					},
+					"name": "parentMessageId",
+					"required": false
+				},
+				{
+					"DBType": "BigDecimal",
+					"businessType": "PrecisionDecimal",
+					"externalReferenceCode": "PRIORITY",
+					"label": {
+						"en_US": "Priority"
+					},
+					"name": "priority",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SUBJECT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Subject"
+					},
+					"localized": true,
+					"name": "subject",
+					"required": true
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "VOTE_SCORE",
+					"label": {
+						"en_US": "Vote Score"
+					},
+					"name": "voteScore",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_AUTHOR_NAME",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Author Name"
+					},
+					"name": "notificationAuthorName",
+					"required": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "NOTIFICATION_BODY_EXCERPT",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Body Excerpt"
+					},
+					"name": "notificationBodyExcerpt",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_MENTION_RECIPIENT_IDS",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Mention Recipient Ids"
+					},
+					"name": "notificationMentionRecipientIds",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_REPLY_RECIPIENT_IDS",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Reply Recipient Ids"
+					},
+					"name": "notificationReplyRecipientIds",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "NOTIFICATION_TOPIC_TITLE",
+					"indexed": false,
+					"label": {
+						"en_US": "Notification Topic Title"
+					},
+					"name": "notificationTopicTitle",
+					"required": false
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
@@ -147,7 +352,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "externalReferenceCode"
+			"titleObjectFieldName": "subject"
 		},
 		{
 			"accountEntryRestricted": false,
@@ -170,6 +375,18 @@
 			},
 			"modifiable": true,
 			"name": "C2M0Subscription",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "SUBSCRIBER_USER_ID",
+					"label": {
+						"en_US": "Subscriber User ID"
+					},
+					"name": "subscriberUserId",
+					"required": true
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
@@ -208,6 +425,28 @@
 			},
 			"modifiable": true,
 			"name": "C2M0SuspiciousActivity",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "REASON",
+					"label": {
+						"en_US": "Reason"
+					},
+					"name": "reason",
+					"required": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "VALIDATED",
+					"label": {
+						"en_US": "Validated"
+					},
+					"name": "validated",
+					"required": false
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
@@ -246,6 +485,62 @@
 			},
 			"modifiable": true,
 			"name": "C2M0Thread",
+			"objectFields": [
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"externalReferenceCode": "LAST_POST_DATE",
+					"label": {
+						"en_US": "Last Post Date"
+					},
+					"name": "lastPostDate",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MESSAGE_TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Message Title"
+					},
+					"localized": true,
+					"name": "messageTitle",
+					"required": false
+				},
+				{
+					"DBType": "BigDecimal",
+					"businessType": "PrecisionDecimal",
+					"externalReferenceCode": "PRIORITY",
+					"label": {
+						"en_US": "Priority"
+					},
+					"name": "priority",
+					"required": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "QUESTION",
+					"label": {
+						"en_US": "Question"
+					},
+					"name": "question",
+					"required": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "LOCKED",
+					"label": {
+						"en_US": "Locked"
+					},
+					"name": "locked",
+					"required": false
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
@@ -261,7 +556,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "externalReferenceCode"
+			"titleObjectFieldName": "messageTitle"
 		},
 		{
 			"accountEntryRestricted": false,
@@ -284,6 +579,56 @@
 			},
 			"modifiable": true,
 			"name": "C2M0User",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "FIRST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "First Name"
+					},
+					"name": "firstName",
+					"required": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "LAST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "Last Name"
+					},
+					"name": "lastName",
+					"required": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "PORTAL_USER_ID",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "Portal User ID"
+					},
+					"name": "portalUserId",
+					"required": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SCREEN_NAME",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "Screen Name"
+					},
+					"name": "screenName",
+					"required": true
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,
@@ -299,7 +644,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "externalReferenceCode"
+			"titleObjectFieldName": "screenName"
 		},
 		{
 			"accountEntryRestricted": false,
@@ -322,6 +667,18 @@
 			},
 			"modifiable": true,
 			"name": "C2M0Vote",
+			"objectFields": [
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "VALUE",
+					"label": {
+						"en_US": "Value"
+					},
+					"name": "value",
+					"required": true
+				}
+			],
 			"objectFolderExternalReferenceCode": "C2M0_FORUMS",
 			"panelCategoryKey": "",
 			"parameterRequired": false,

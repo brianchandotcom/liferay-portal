@@ -8969,7 +8969,13 @@ public class ObjectEntryLocalServiceImpl
 		_putValueFunctions =
 			HashMapBuilder.<Class<?>, Function<Object, Serializable>>put(
 				BigDecimal.class,
-				value -> BigDecimalUtil.stripTrailingZeros((BigDecimal)value)
+				value -> {
+					if (value == null) {
+						return BigDecimal.ZERO;
+					}
+
+					return BigDecimalUtil.stripTrailingZeros((BigDecimal)value);
+				}
 			).put(
 				Blob.class,
 				value -> {

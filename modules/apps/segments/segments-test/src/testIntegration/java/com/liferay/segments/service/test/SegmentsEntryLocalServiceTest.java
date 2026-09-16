@@ -184,7 +184,8 @@ public class SegmentsEntryLocalServiceTest {
 
 	@Test
 	public void testAddSegmentsEntryWithType() throws Exception {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(null);
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+			SegmentsEntryConstants.TYPE_DEFAULT);
 
 		Assert.assertEquals(
 			SegmentsEntryConstants.TYPE_BATCH, segmentsEntry.getType());
@@ -269,7 +270,8 @@ public class SegmentsEntryLocalServiceTest {
 
 		SegmentsEntry batchSegmentsEntry = _addSegmentsEntry(
 			SegmentsEntryConstants.TYPE_BATCH);
-		SegmentsEntry defaultSegmentsEntry = _addSegmentsEntry(
+		SegmentsEntry defaultSegmentsEntry = _setType(
+			_addSegmentsEntry(SegmentsEntryConstants.TYPE_DEFAULT),
 			SegmentsEntryConstants.TYPE_DEFAULT);
 		SegmentsEntry realTimeSegmentsEntry = _addSegmentsEntry(
 			SegmentsEntryConstants.TYPE_REAL_TIME);
@@ -611,11 +613,11 @@ public class SegmentsEntryLocalServiceTest {
 		_testUpdateSegmentsEntryWithReferredSource();
 	}
 
-	private SegmentsEntry _addSegmentsEntry(String type) throws Exception {
+	private SegmentsEntry _addSegmentsEntry(int type) throws Exception {
 		return _addSegmentsEntry(RandomTestUtil.randomString(), type);
 	}
 
-	private SegmentsEntry _addSegmentsEntry(String name, String type)
+	private SegmentsEntry _addSegmentsEntry(String name, int type)
 		throws Exception {
 
 		return SegmentsTestUtil.addSegmentsEntry(
@@ -637,6 +639,14 @@ public class SegmentsEntryLocalServiceTest {
 		return SegmentsTestUtil.addSegmentsExperiment(
 			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
 			0);
+	}
+
+	private SegmentsEntry _setType(SegmentsEntry segmentsEntry, int type)
+		throws Exception {
+
+		segmentsEntry.setType(type);
+
+		return _segmentsEntryLocalService.updateSegmentsEntry(segmentsEntry);
 	}
 
 	private void _testAddSegmentsEntry() throws Exception {

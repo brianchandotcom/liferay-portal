@@ -130,6 +130,16 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
+		long groupId, String[] sources, int type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return segmentsEntryPersistence.findByG_SRC_T(
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId), sources,
+			new int[] {type}, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
 		long groupId, String[] sources, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
@@ -137,16 +147,6 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 			_portal.getCurrentAndAncestorSiteGroupIds(groupId), sources,
 			SegmentsEntryConstants.TYPE_REAL_TIME, start, end,
 			orderByComparator);
-	}
-
-	@Override
-	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, String[] sources, String type, int start, int end,
-		OrderByComparator<SegmentsEntry> orderByComparator) {
-
-		return segmentsEntryPersistence.findByG_SRC_T(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId), sources,
-			new String[] {type}, start, end, orderByComparator);
 	}
 
 	@Override
@@ -164,11 +164,11 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public int getSegmentsEntriesCount(
-		long groupId, String[] sources, String type) {
+		long groupId, String[] sources, int type) {
 
 		return segmentsEntryPersistence.filterCountByG_SRC_T(
 			_portal.getCurrentAndAncestorSiteGroupIds(groupId), sources,
-			new String[] {type});
+			new int[] {type});
 	}
 
 	@Override

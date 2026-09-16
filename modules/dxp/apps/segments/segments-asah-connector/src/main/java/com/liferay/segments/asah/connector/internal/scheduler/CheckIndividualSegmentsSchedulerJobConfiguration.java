@@ -118,7 +118,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 					individualSegment.getExternalReferenceCode(),
 					individualSegment.getId(), nameMap, Collections.emptyMap(),
 					true, null, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
-					individualSegment.getSegmentType(), serviceContext);
+					_getType(individualSegment), serviceContext);
 
 				return;
 			}
@@ -126,7 +126,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 			_segmentsEntryLocalService.updateSegmentsEntry(
 				individualSegment.getExternalReferenceCode(),
 				segmentsEntry.getSegmentsEntryId(), individualSegment.getId(),
-				nameMap, null, true, null, individualSegment.getSegmentType(),
+				nameMap, null, true, null, _getType(individualSegment),
 				serviceContext);
 		}
 		catch (PortalException portalException) {
@@ -389,6 +389,17 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 		return serviceContext;
 	}
 
+	private int _getType(IndividualSegment individualSegment) {
+		if (Objects.equals(
+				individualSegment.getSegmentType(),
+				IndividualSegment.Type.REAL_TIME.name())) {
+
+			return SegmentsEntryConstants.TYPE_REAL_TIME;
+		}
+
+		return SegmentsEntryConstants.TYPE_BATCH;
+	}
+
 	private Long _getUserId(
 		long companyId, String dataSourceId, Individual individual) {
 
@@ -448,7 +459,7 @@ public class CheckIndividualSegmentsSchedulerJobConfiguration
 
 	private static final int _DELTA = 100;
 
-	private static final String[] _TYPES = {
+	private static final int[] _TYPES = {
 		SegmentsEntryConstants.TYPE_BATCH, SegmentsEntryConstants.TYPE_REAL_TIME
 	};
 

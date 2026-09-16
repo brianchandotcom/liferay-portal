@@ -128,7 +128,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			_kaleoDefinitionLocalService.addKaleoDefinition(
 				externalReferenceCode, name,
 				LocalizationUtil.getXml(new LocalizedValuesMap(title), "title"),
-				description, _read("legal-marketing-workflow-definition.xml"),
+				description, read("legal-marketing-workflow-definition.xml"),
 				GetterUtil.get(scope, WorkflowDefinitionConstants.SCOPE_ALL),
 				system, 1, serviceContext);
 
@@ -286,6 +286,17 @@ public abstract class BaseKaleoLocalServiceTestCase {
 				kaleoDefinition.getCompanyId(), kaleoDefinition.getName());
 	}
 
+	protected String read(String name) throws IOException {
+		ClassLoader classLoader =
+			BaseKaleoLocalServiceTestCase.class.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				"com/liferay/portal/workflow/kaleo/dependencies/" + name)) {
+
+			return StringUtil.read(inputStream);
+		}
+	}
+
 	protected KaleoDefinition updateKaleoDefinition(
 			KaleoDefinition kaleoDefinition)
 		throws IOException, PortalException {
@@ -326,17 +337,6 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(),
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private String _read(String name) throws IOException {
-		ClassLoader classLoader =
-			BaseKaleoLocalServiceTestCase.class.getClassLoader();
-
-		try (InputStream inputStream = classLoader.getResourceAsStream(
-				"com/liferay/portal/workflow/kaleo/dependencies/" + name)) {
-
-			return StringUtil.read(inputStream);
-		}
 	}
 
 	private void _setUpServiceContext() throws Exception {

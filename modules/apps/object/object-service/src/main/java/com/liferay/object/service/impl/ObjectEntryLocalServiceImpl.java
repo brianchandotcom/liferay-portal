@@ -1160,12 +1160,11 @@ public class ObjectEntryLocalServiceImpl
 			)
 		).from(
 			dynamicObjectDefinitionTable
-		).innerJoinON(
+		).leftJoinOn(
 			extensionDynamicObjectDefinitionTable,
-			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
-			)
+			_getExtensionLeftJoinPredicate(
+				dynamicObjectDefinitionTable,
+				extensionDynamicObjectDefinitionTable)
 		).innerJoinON(
 			ObjectEntryTable.INSTANCE,
 			ObjectEntryTable.INSTANCE.objectEntryId.eq(
@@ -1215,6 +1214,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		Expression<?>[] selectExpressions = _getSelectExpressions(
+			extensionDynamicObjectDefinitionTable,
 			extensionDynamicObjectDefinitionTable, primaryKey, null,
 			systemObjectDefinitionManager);
 
@@ -1442,12 +1442,11 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 		).from(
 			dynamicObjectDefinitionTable
-		).innerJoinON(
+		).leftJoinOn(
 			extensionDynamicObjectDefinitionTable,
-			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
-			)
+			_getExtensionLeftJoinPredicate(
+				dynamicObjectDefinitionTable,
+				extensionDynamicObjectDefinitionTable)
 		).innerJoinON(
 			ObjectEntryTable.INSTANCE,
 			ObjectEntryTable.INSTANCE.objectEntryId.eq(
@@ -1838,24 +1837,15 @@ public class ObjectEntryLocalServiceImpl
 		Expression<?>[] extensionSelectExpressions = ArrayUtil.remove(
 			_getSelectExpressions(
 				extensionDynamicObjectDefinitionTable,
-				objectEntry.getObjectEntryId(), null, null),
+				dynamicObjectDefinitionTable, objectEntry.getObjectEntryId(),
+				null, null),
 			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn());
-
-		Predicate innerJoinPredicate = null;
-
-		if (extensionSelectExpressions.length != 0) {
-			innerJoinPredicate =
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
-				).eq(
-					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
-				);
-		}
 
 		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
 		Expression<?>[] selectExpressions = ArrayUtil.append(
 			_getSelectExpressions(
-				dynamicObjectDefinitionTable, objectEntry.getObjectEntryId(),
-				null, null),
+				dynamicObjectDefinitionTable, dynamicObjectDefinitionTable,
+				objectEntry.getObjectEntryId(), null, null),
 			extensionSelectExpressions);
 
 		List<Object[]> rows = _list(
@@ -1863,8 +1853,11 @@ public class ObjectEntryLocalServiceImpl
 				selectExpressions
 			).from(
 				dynamicObjectDefinitionTable
-			).innerJoinON(
-				extensionDynamicObjectDefinitionTable, innerJoinPredicate
+			).leftJoinOn(
+				extensionDynamicObjectDefinitionTable,
+				_getExtensionLeftJoinPredicate(
+					dynamicObjectDefinitionTable,
+					extensionDynamicObjectDefinitionTable)
 			).where(
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
 				).eq(
@@ -4657,6 +4650,24 @@ public class ObjectEntryLocalServiceImpl
 		);
 	}
 
+	private Predicate _getExtensionLeftJoinPredicate(
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable) {
+
+		Collection<Column<DynamicObjectDefinitionTable, ?>> columns =
+			extensionDynamicObjectDefinitionTable.getColumns();
+
+		if (columns.size() > 1) {
+			Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
+				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
+			return primaryKeyColumn.eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+		}
+
+		return null;
+	}
+
 	private DSLQuery _getFetchManyToOneObjectEntryDSLQuery(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 			long groupId, ObjectRelationship objectRelationship,
@@ -4735,7 +4746,7 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
 				true, objectDefinition, indexedObjectFields);
-		Predicate innerJoinPredicate = null;
+		Predicate leftJoinPredicate = null;
 
 		List<Column<DynamicObjectDefinitionTable, ?>> selectColumns =
 			new ArrayList<>(dynamicObjectDefinitionTable.getColumns());
@@ -4744,7 +4755,7 @@ public class ObjectEntryLocalServiceImpl
 			extensionDynamicObjectDefinitionTable.getColumns();
 
 		if (extensionColumns.size() > 1) {
-			innerJoinPredicate =
+			leftJoinPredicate =
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
 				).eq(
 					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
@@ -4768,8 +4779,8 @@ public class ObjectEntryLocalServiceImpl
 			selectColumns.toArray(new Expression<?>[0])
 		).from(
 			dynamicObjectDefinitionTable
-		).innerJoinON(
-			extensionDynamicObjectDefinitionTable, innerJoinPredicate
+		).leftJoinOn(
+			extensionDynamicObjectDefinitionTable, leftJoinPredicate
 		);
 
 		if (objectEntry != null) {
@@ -4808,7 +4819,13 @@ public class ObjectEntryLocalServiceImpl
 			(Long)values.get(objectDefinition.getPKObjectFieldName()), values);
 	}
 
-	private Predicate _getInnerJoinRootObjectDefinitionTablePredicate(
+	private Key _getKey() throws PortalException {
+		return new SecretKeySpec(
+			Base64.decode(PropsValues.OBJECT_ENCRYPTION_KEY),
+			PropsValues.OBJECT_ENCRYPTION_ALGORITHM);
+	}
+
+	private Predicate _getLeftJoinRootObjectDefinitionTablePredicate(
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable) {
 
 		if (dynamicObjectDefinitionTable == null) {
@@ -4819,12 +4836,6 @@ public class ObjectEntryLocalServiceImpl
 		).eq(
 			ObjectEntryTable.INSTANCE.rootObjectEntryId
 		);
-	}
-
-	private Key _getKey() throws PortalException {
-		return new SecretKeySpec(
-			Base64.decode(PropsValues.OBJECT_ENCRYPTION_KEY),
-			PropsValues.OBJECT_ENCRYPTION_ALGORITHM);
 	}
 
 	private Set<Locale> _getLocales(
@@ -4962,12 +4973,11 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryTable.INSTANCE,
 			ObjectEntryTable.INSTANCE.objectEntryId.eq(
 				dynamicObjectDefinitionTablePrimaryKeyColumn)
-		).innerJoinON(
+		).leftJoinOn(
 			extensionDynamicObjectDefinitionTable,
-			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				dynamicObjectDefinitionTablePrimaryKeyColumn
-			)
+			_getExtensionLeftJoinPredicate(
+				dynamicObjectDefinitionTable,
+				extensionDynamicObjectDefinitionTable)
 		).leftJoinOn(
 			dynamicObjectDefinitionLocalizationTable,
 			ObjectEntrySearchUtil.getLeftJoinLocalizationTablePredicate(
@@ -5108,12 +5118,11 @@ public class ObjectEntryLocalServiceImpl
 
 		return fromStep.from(
 			dynamicObjectDefinitionTable
-		).innerJoinON(
+		).leftJoinOn(
 			extensionDynamicObjectDefinitionTable,
-			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
-			)
+			_getExtensionLeftJoinPredicate(
+				dynamicObjectDefinitionTable,
+				extensionDynamicObjectDefinitionTable)
 		).innerJoinON(
 			ObjectEntryTable.INSTANCE,
 			ObjectEntryTable.INSTANCE.objectEntryId.eq(
@@ -5228,18 +5237,17 @@ public class ObjectEntryLocalServiceImpl
 
 		return fromStep.from(
 			dynamicObjectDefinitionTable
-		).innerJoinON(
+		).leftJoinOn(
 			extensionDynamicObjectDefinitionTable,
-			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				primaryKeyColumn
-			)
+			_getExtensionLeftJoinPredicate(
+				dynamicObjectDefinitionTable,
+				extensionDynamicObjectDefinitionTable)
 		).innerJoinON(
 			ObjectEntryTable.INSTANCE,
 			ObjectEntryTable.INSTANCE.objectEntryId.eq(primaryKeyColumn)
-		).innerJoinON(
+		).leftJoinOn(
 			rootDynamicObjectDefinitionTable,
-			_getInnerJoinRootObjectDefinitionTablePredicate(
+			_getLeftJoinRootObjectDefinitionTablePredicate(
 				rootDynamicObjectDefinitionTable)
 		).leftJoinOn(
 			dynamicObjectDefinitionLocalizationTable,
@@ -5701,6 +5709,8 @@ public class ObjectEntryLocalServiceImpl
 
 	private Expression<?>[] _getSelectExpressions(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			DynamicObjectDefinitionTable
+				aggregationDynamicObjectDefinitionTable,
 			long primaryKey, String[] selectedObjectFieldNames,
 			SystemObjectDefinitionManager systemObjectDefinitionManager)
 		throws PortalException {
@@ -5775,8 +5785,8 @@ public class ObjectEntryLocalServiceImpl
 				selectExpressions.add(
 					DSLQueryFactoryUtil.scalarSubDSLQuery(
 						_getAggregationObjectFieldDSLQuery(
-							dynamicObjectDefinitionTable, objectDefinition,
-							objectFieldSettingsValues,
+							aggregationDynamicObjectDefinitionTable,
+							objectDefinition, objectFieldSettingsValues,
 							systemObjectDefinitionManager),
 						DynamicObjectDefinitionTableUtil.getJavaClass(
 							objectField.getDBType()),
@@ -6454,23 +6464,16 @@ public class ObjectEntryLocalServiceImpl
 
 		Expression<?>[] extensionSelectExpressions = ArrayUtil.remove(
 			_getSelectExpressions(
-				extensionDynamicObjectDefinitionTable, 0, null, null),
+				extensionDynamicObjectDefinitionTable,
+				dynamicObjectDefinitionTable, 0, null, null),
 			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn());
-
-		Predicate innerJoinPredicate = null;
-
-		if (extensionSelectExpressions.length != 0) {
-			innerJoinPredicate =
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
-				).eq(
-					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
-				);
-		}
 
 		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
 		Expression<?>[] selectExpressions = ArrayUtil.append(
-			_getSelectExpressions(dynamicObjectDefinitionTable, 0, null, null),
+			_getSelectExpressions(
+				dynamicObjectDefinitionTable, dynamicObjectDefinitionTable, 0,
+				null, null),
 			extensionSelectExpressions);
 
 		Long[] primaryKeys = ListUtil.toArray(
@@ -6499,8 +6502,11 @@ public class ObjectEntryLocalServiceImpl
 					selectExpressions
 				).from(
 					dynamicObjectDefinitionTable
-				).innerJoinON(
-					extensionDynamicObjectDefinitionTable, innerJoinPredicate
+				).leftJoinOn(
+					extensionDynamicObjectDefinitionTable,
+					_getExtensionLeftJoinPredicate(
+						dynamicObjectDefinitionTable,
+						extensionDynamicObjectDefinitionTable)
 				).where(
 					primaryKeyColumn.in(primaryKeysBatch)
 				),

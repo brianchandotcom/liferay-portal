@@ -134,11 +134,13 @@ public abstract class KaleoDefinitionLocalServiceBaseImpl
 	 *
 	 * @param kaleoDefinition the kaleo definition
 	 * @return the kaleo definition that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public KaleoDefinition deleteKaleoDefinition(
-		KaleoDefinition kaleoDefinition) {
+			KaleoDefinition kaleoDefinition)
+		throws PortalException {
 
 		return kaleoDefinitionPersistence.remove(kaleoDefinition);
 	}
@@ -627,4 +629,4 @@ public abstract class KaleoDefinitionLocalServiceBaseImpl
 		KaleoDefinitionLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1763627404
+// LIFERAY-SERVICE-BUILDER-HASH:2146343238

@@ -137,9 +137,11 @@ public class KaleoDefinitionLocalServiceUtil {
 	 *
 	 * @param kaleoDefinition the kaleo definition
 	 * @return the kaleo definition that was removed
+	 * @throws PortalException
 	 */
 	public static KaleoDefinition deleteKaleoDefinition(
-		KaleoDefinition kaleoDefinition) {
+			KaleoDefinition kaleoDefinition)
+		throws PortalException {
 
 		return getService().deleteKaleoDefinition(kaleoDefinition);
 	}
@@ -161,12 +163,12 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().deleteKaleoDefinition(kaleoDefinitionId);
 	}
 
-	public static void deleteKaleoDefinition(
+	public static KaleoDefinition deleteKaleoDefinition(
 			String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		getService().deleteKaleoDefinition(name, serviceContext);
+		return getService().deleteKaleoDefinition(name, serviceContext);
 	}
 
 	/**
@@ -470,6 +472,16 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().getKaleoDefinitionsCount(name, serviceContext);
 	}
 
+	public static KaleoDefinition getOrAddEmptyKaleoDefinition(
+			String externalReferenceCode, String name, String scope,
+			boolean system,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().getOrAddEmptyKaleoDefinition(
+			externalReferenceCode, name, scope, system, serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -559,4 +571,4 @@ public class KaleoDefinitionLocalServiceUtil {
 			KaleoDefinitionLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-333319507
+// LIFERAY-SERVICE-BUILDER-HASH:-481623133

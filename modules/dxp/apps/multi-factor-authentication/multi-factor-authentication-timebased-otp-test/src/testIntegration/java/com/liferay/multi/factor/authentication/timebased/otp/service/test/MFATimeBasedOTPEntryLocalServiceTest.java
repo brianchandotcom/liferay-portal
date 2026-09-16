@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -90,6 +91,29 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 			_KEY_MANAGER_CUSTOM_PROFILE_CONFIGURATION_PID);
 
 		_serviceRegistration.unregister();
+	}
+
+	@Test
+	public void testAddTimeBasedOTPEntryUsesAPortableSecretIdentifier()
+		throws Exception {
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "FIPS_ENABLED", true)) {
+
+			MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
+				_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
+					_user.getUserId(), RandomTestUtil.randomString());
+
+			String secretIdentifier = _getSecretIdentifier(
+				mfaTimeBasedOTPEntry);
+
+			Assert.assertTrue(
+				secretIdentifier,
+				_portableSecretIdentifierPattern.matcher(
+					secretIdentifier
+				).matches());
+		}
 	}
 
 	@Test
@@ -279,6 +303,8 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
+	private static final Pattern _portableSecretIdentifierPattern =
+		Pattern.compile("[\\p{Alnum}\\-/_+=.@]+");
 
 	@Inject
 	private MFATimeBasedOTPEntryLocalService _mfaTimeBasedOTPEntryLocalService;

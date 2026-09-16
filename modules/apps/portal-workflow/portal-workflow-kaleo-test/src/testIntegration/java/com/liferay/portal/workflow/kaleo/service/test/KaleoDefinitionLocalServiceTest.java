@@ -9,6 +9,13 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -50,28 +57,85 @@ public class KaleoDefinitionLocalServiceTest
 		Assert.assertFalse(kaleoDefinition.isActive());
 	}
 
-	@Test(expected = WorkflowException.class)
-	public void testDeleteKaleoDefinition1() throws Exception {
+	@Test
+	public void testDeleteKaleoDefinition() throws Exception {
 		KaleoDefinition kaleoDefinition = addKaleoDefinition(null);
 
-		deleteKaleoDefinition(kaleoDefinition);
-	}
-
-	@Test(expected = NoSuchDefinitionException.class)
-	public void testDeleteKaleoDefinition2() throws Exception {
-		KaleoDefinition kaleoDefinition = addKaleoDefinition(null);
+		AssertUtils.assertFailure(
+			WorkflowException.class,
+			"Cannot delete active workflow definition " +
+				kaleoDefinition.getKaleoDefinitionId(),
+			() -> deleteKaleoDefinition(kaleoDefinition));
 
 		deactivateKaleoDefinition(kaleoDefinition);
 
 		deleteKaleoDefinition(kaleoDefinition);
 
-		_kaleoDefinitionLocalService.getKaleoDefinition(
-			kaleoDefinition.getKaleoDefinitionId());
+		SystemEvent systemEvent = SystemEventLocalServiceUtil.fetchSystemEvent(
+			kaleoDefinition.getGroupId(),
+			ClassNameLocalServiceUtil.getClassNameId(KaleoDefinition.class),
+			kaleoDefinition.getKaleoDefinitionId(),
+			SystemEventConstants.TYPE_DELETE);
+
+		Assert.assertEquals(
+			kaleoDefinition.getExternalReferenceCode(),
+			systemEvent.getClassExternalReferenceCode());
+
+		AssertUtils.assertFailure(
+			NoSuchDefinitionException.class,
+			"No KaleoDefinition exists with the primary key " +
+				kaleoDefinition.getKaleoDefinitionId(),
+			() -> _kaleoDefinitionLocalService.getKaleoDefinition(
+				kaleoDefinition.getKaleoDefinitionId()));
+	}
+
+	@Test
+	public void testGetOrAddEmptyKaleoDefinition() throws Exception {
+
+		// Lazy referencing disabled
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			NoSuchDefinitionException.class,
+			StringBundler.concat(
+				"No KaleoDefinition exists with the key ",
+				"{externalReferenceCode=", externalReferenceCode,
+				", companyId=", TestPropsValues.getCompanyId(), "}"),
+			() -> _kaleoDefinitionLocalService.getOrAddEmptyKaleoDefinition(
+				externalReferenceCode, RandomTestUtil.randomString(),
+				WorkflowDefinitionConstants.SCOPE_ALL, false, serviceContext));
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			KaleoDefinition kaleoDefinition1 =
+				_kaleoDefinitionLocalService.getOrAddEmptyKaleoDefinition(
+					externalReferenceCode, RandomTestUtil.randomString(),
+					WorkflowDefinitionConstants.SCOPE_ALL, false,
+					serviceContext);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, kaleoDefinition1.getStatus());
+
+			KaleoDefinition kaleoDefinition2 =
+				_kaleoDefinitionLocalService.getOrAddEmptyKaleoDefinition(
+					externalReferenceCode, RandomTestUtil.randomString(),
+					WorkflowDefinitionConstants.SCOPE_ALL, false,
+					serviceContext);
+
+			Assert.assertEquals(
+				kaleoDefinition1.getKaleoDefinitionId(),
+				kaleoDefinition2.getKaleoDefinitionId());
+		}
 	}
 
 	@Test
 	public void testUpdateKaleoDefinition() throws Exception {
 		_testUpdateKaleoDefinition();
+		_testUpdateKaleoDefinitionWithEmptyStatus();
 		_testUpdateKaleoDefinitionWithScope();
 		_testUpdateKaleoDefinitionWithSystem();
 	}
@@ -140,6 +204,42 @@ public class KaleoDefinitionLocalServiceTest
 		kaleoDefinition = updateKaleoDefinition(kaleoDefinition);
 
 		Assert.assertEquals(2, kaleoDefinition.getVersion());
+	}
+
+	private void _testUpdateKaleoDefinitionWithEmptyStatus() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			KaleoDefinition kaleoDefinition =
+				_kaleoDefinitionLocalService.getOrAddEmptyKaleoDefinition(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					WorkflowDefinitionConstants.SCOPE_ALL, false,
+					serviceContext);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, kaleoDefinition.getStatus());
+			Assert.assertEquals(1, kaleoDefinition.getVersion());
+
+			kaleoDefinition =
+				_kaleoDefinitionLocalService.updatedKaleoDefinition(
+					kaleoDefinition.getExternalReferenceCode(),
+					kaleoDefinition.getKaleoDefinitionId(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					read("legal-marketing-workflow-definition.xml"), false,
+					serviceContext);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT, kaleoDefinition.getStatus());
+			Assert.assertEquals(1, kaleoDefinition.getVersion());
+
+			kaleoDefinition = updateKaleoDefinition(kaleoDefinition);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT, kaleoDefinition.getStatus());
+			Assert.assertEquals(2, kaleoDefinition.getVersion());
+		}
 	}
 
 	private void _testUpdateKaleoDefinitionWithScope() throws Exception {

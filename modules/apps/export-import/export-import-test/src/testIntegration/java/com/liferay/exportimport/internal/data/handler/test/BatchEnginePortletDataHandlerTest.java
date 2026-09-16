@@ -164,6 +164,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -186,6 +187,13 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.staging.StagingGroupHelper;
 
 import jakarta.portlet.GenericPortlet;
@@ -218,6 +226,7 @@ import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -254,6 +263,17 @@ public class BatchEnginePortletDataHandlerTest {
 			BatchEnginePortletDataHandlerTest.class);
 
 		_bundleContext = bundle.getBundleContext();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (WorkflowDefinition workflowDefinition : _workflowDefinitions) {
+			_deleteWorkflowDefinition(
+				_fetchWorkflowDefinition(
+					workflowDefinition.getExternalReferenceCode()));
+		}
+
+		_workflowDefinitions.clear();
 	}
 
 	@Test
@@ -2828,6 +2848,270 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 	}
 
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-49856"))
+	@Test
+	@TestInfo("LPD-103799")
+	public void testExportImportWorkflowDefinitions() throws Exception {
+		WorkflowDefinition workflowDefinition1 = _addWorkflowDefinition(false);
+		WorkflowDefinition workflowDefinition2 = _addWorkflowDefinition(true);
+		WorkflowDefinition workflowDefinition3 = _fetchWorkflowDefinition(
+			WorkflowDefinitionConstants.
+				EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER);
+
+		WorkflowDefinition workflowDefinition4 = _addWorkflowDefinition(true);
+
+		workflowDefinition4 = _workflowDefinitionManager.saveWorkflowDefinition(
+			_getWorkflowDefinitionBytes(
+				workflowDefinition4.getDescription(),
+				workflowDefinition4.getName()),
+			TestPropsValues.getCompanyId(),
+			workflowDefinition4.getExternalReferenceCode(), 0,
+			workflowDefinition4.getName(),
+			WorkflowDefinitionConstants.SCOPE_ALL, false,
+			workflowDefinition4.getTitle(), TestPropsValues.getUserId());
+
+		WorkflowDefinition workflowDefinition5 = _addWorkflowDefinition(true);
+
+		workflowDefinition5 = _workflowDefinitionManager.updateActive(
+			false, TestPropsValues.getCompanyId(),
+			workflowDefinition5.getName(), TestPropsValues.getUserId(),
+			workflowDefinition5.getVersion());
+
+		File larFile = _exportWorkflowDefinitions();
+
+		_deleteWorkflowDefinition(workflowDefinition2);
+		_deleteWorkflowDefinition(workflowDefinition5);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).withLARFile(
+			larFile
+		).executeImport();
+
+		_assertWorkflowDefinition(2, workflowDefinition1);
+		_assertWorkflowDefinition(1, workflowDefinition2);
+		_assertWorkflowDefinition(
+			workflowDefinition3.getVersion() + 1, workflowDefinition3);
+		_assertWorkflowDefinition(3, workflowDefinition4);
+		_assertWorkflowDefinition(1, workflowDefinition5);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-49856"))
+	@Test
+	@TestInfo("LPD-103799")
+	public void testExportImportWorkflowDefinitionsWithAlwaysCurrentUser()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		WorkflowDefinition workflowDefinition = _addWorkflowDefinition(
+			true, user.getUserId());
+
+		File larFile = _exportWorkflowDefinitions();
+
+		_deleteWorkflowDefinition(workflowDefinition);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).withLARFile(
+			larFile
+		).withUserIdStrategy(
+			UserIdStrategy.ALWAYS_CURRENT_USER_ID
+		).executeImport();
+
+		WorkflowDefinition importedWorkflowDefinition =
+			_fetchWorkflowDefinition(
+				workflowDefinition.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			TestPropsValues.getUserId(),
+			importedWorkflowDefinition.getUserId());
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-49856"))
+	@Test
+	@TestInfo("LPD-103799")
+	public void testExportImportWorkflowDefinitionsWithExistingOriginalCreator()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		WorkflowDefinition workflowDefinition = _addWorkflowDefinition(
+			true, user.getUserId());
+
+		File larFile = _exportWorkflowDefinitions();
+
+		_deleteWorkflowDefinition(workflowDefinition);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).withLARFile(
+			larFile
+		).withUserIdStrategy(
+			UserIdStrategy.CURRENT_USER_ID
+		).executeImport();
+
+		WorkflowDefinition importedWorkflowDefinition =
+			_fetchWorkflowDefinition(
+				workflowDefinition.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			user.getUserId(), importedWorkflowDefinition.getUserId());
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-49856"))
+	@Test
+	@TestInfo("LPD-103799")
+	public void testExportImportWorkflowDefinitionsWithIndividualDeletions()
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition = _addWorkflowDefinition(true);
+
+		File larFile1 = _exportWorkflowDefinitions();
+
+		_deleteWorkflowDefinition(workflowDefinition);
+
+		File larFile2 = new ExportImportExecutor(
+		).withDeletions(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).executeExport();
+
+		new ExportImportExecutor(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).withLARFile(
+			larFile1
+		).executeImport();
+
+		Assert.assertNotNull(
+			_fetchWorkflowDefinition(
+				workflowDefinition.getExternalReferenceCode()));
+
+		new ExportImportExecutor(
+		).withDeletions(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).withLARFile(
+			larFile2
+		).executeImport();
+
+		Assert.assertNull(
+			_fetchWorkflowDefinition(
+				workflowDefinition.getExternalReferenceCode()));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-49856"))
+	@Test
+	@TestInfo("LPD-103799")
+	public void testExportImportWorkflowDefinitionsWithMissingOriginalCreator()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		WorkflowDefinition workflowDefinition = _addWorkflowDefinition(
+			true, user.getUserId());
+
+		File larFile = _exportWorkflowDefinitions();
+
+		_deleteWorkflowDefinition(workflowDefinition);
+
+		_userLocalService.deleteUser(user);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).withLARFile(
+			larFile
+		).withUserIdStrategy(
+			UserIdStrategy.CURRENT_USER_ID
+		).executeImport();
+
+		WorkflowDefinition importedWorkflowDefinition =
+			_fetchWorkflowDefinition(
+				workflowDefinition.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			TestPropsValues.getUserId(),
+			importedWorkflowDefinition.getUserId());
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-49856"))
+	@Test
+	@TestInfo("LPD-103799")
+	public void testExportImportWorkflowDefinitionsWithPermissions()
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition = _addWorkflowDefinition(true);
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.
+				fetchLatestKaleoDefinitionVersion(
+					TestPropsValues.getCompanyId(),
+					workflowDefinition.getName());
+
+		Role userRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(),
+			KaleoDefinitionVersion.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(
+				kaleoDefinitionVersion.getKaleoDefinitionVersionId()),
+			userRole.getRoleId(), new String[] {ActionKeys.VIEW});
+
+		File larFile = new ExportImportExecutor(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).withPermissions(
+		).executeExport();
+
+		_deleteWorkflowDefinition(workflowDefinition);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).withLARFile(
+			larFile
+		).withPermissions(
+		).executeImport();
+
+		kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.
+				fetchLatestKaleoDefinitionVersion(
+					TestPropsValues.getCompanyId(),
+					workflowDefinition.getName());
+
+		AssertUtils.assertEquals(
+			Arrays.asList(RoleConstants.USER, RoleConstants.OWNER),
+			TransformUtil.transform(
+				_resourcePermissionLocalService.getResourcePermissions(
+					TestPropsValues.getCompanyId(),
+					KaleoDefinitionVersion.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(
+						kaleoDefinitionVersion.getKaleoDefinitionVersionId())),
+				resourcePermission -> {
+					Role role = _roleLocalService.fetchRole(
+						resourcePermission.getRoleId());
+
+					return role.getName();
+				}));
+	}
+
 	@Test
 	@TestInfo("LPD-99059")
 	public void testExportSiteObjectEntriesExceedingExportBatchSize()
@@ -3790,6 +4074,45 @@ public class BatchEnginePortletDataHandlerTest {
 		return notificationTemplate;
 	}
 
+	private WorkflowDefinition _addWorkflowDefinition(boolean active)
+		throws Exception {
+
+		return _addWorkflowDefinition(active, TestPropsValues.getUserId());
+	}
+
+	private WorkflowDefinition _addWorkflowDefinition(
+			boolean active, long userId)
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition = null;
+
+		String name = RandomTestUtil.randomString();
+
+		byte[] bytes = _getWorkflowDefinitionBytes(
+			RandomTestUtil.randomString(), name);
+
+		if (active) {
+			workflowDefinition =
+				_workflowDefinitionManager.deployWorkflowDefinition(
+					bytes, TestPropsValues.getCompanyId(),
+					RandomTestUtil.randomString(), 0, name,
+					WorkflowDefinitionConstants.SCOPE_ALL, false,
+					RandomTestUtil.randomString(), userId);
+		}
+		else {
+			workflowDefinition =
+				_workflowDefinitionManager.saveWorkflowDefinition(
+					bytes, TestPropsValues.getCompanyId(),
+					RandomTestUtil.randomString(), 0, name,
+					WorkflowDefinitionConstants.SCOPE_ALL, false,
+					RandomTestUtil.randomString(), userId);
+		}
+
+		_workflowDefinitions.add(workflowDefinition);
+
+		return workflowDefinition;
+	}
+
 	private void _assertComments(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			ObjectEntryComment... objectEntryComments)
@@ -4061,6 +4384,34 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertEquals(userId, importedPLOEntry.getUserId());
 	}
 
+	private void _assertWorkflowDefinition(
+			int version, WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		WorkflowDefinition importedWorkflowDefinition =
+			_fetchWorkflowDefinition(
+				workflowDefinition.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			workflowDefinition.isActive(),
+			importedWorkflowDefinition.isActive());
+		Assert.assertEquals(
+			workflowDefinition.getContent(),
+			importedWorkflowDefinition.getContent());
+		Assert.assertEquals(
+			workflowDefinition.getDescription(),
+			importedWorkflowDefinition.getDescription());
+		Assert.assertEquals(
+			workflowDefinition.getExternalReferenceCode(),
+			importedWorkflowDefinition.getExternalReferenceCode());
+		Assert.assertEquals(
+			workflowDefinition.getName(), importedWorkflowDefinition.getName());
+		Assert.assertEquals(
+			workflowDefinition.getScope(),
+			importedWorkflowDefinition.getScope());
+		Assert.assertEquals(version, importedWorkflowDefinition.getVersion());
+	}
+
 	private void _deleteObjectEntries(ObjectEntry... objectEntries)
 		throws Exception {
 
@@ -4085,6 +4436,23 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
+	private void _deleteWorkflowDefinition(
+			WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		if (workflowDefinition == null) {
+			return;
+		}
+
+		_workflowDefinitionManager.updateActive(
+			false, TestPropsValues.getCompanyId(), workflowDefinition.getName(),
+			TestPropsValues.getUserId(), workflowDefinition.getVersion());
+
+		_workflowDefinitionManager.undeployWorkflowDefinition(
+			TestPropsValues.getCompanyId(), workflowDefinition.getName(),
+			TestPropsValues.getUserId(), workflowDefinition.getVersion());
+	}
+
 	private File _exportLanguageOverrides() throws Exception {
 		return new ExportImportExecutor(
 		).withGroupId(
@@ -4101,6 +4469,14 @@ public class BatchEnginePortletDataHandlerTest {
 		).executeExport();
 	}
 
+	private File _exportWorkflowDefinitions() throws Exception {
+		return new ExportImportExecutor(
+		).withGroupId(
+			_getCompanyGroupId()
+		).withIncludeWorkflowDefinitions(
+		).executeExport();
+	}
+
 	private NotificationTemplate _fetchNotificationTemplate(
 			String externalReferenceCode)
 		throws Exception {
@@ -4108,6 +4484,23 @@ public class BatchEnginePortletDataHandlerTest {
 		return _notificationTemplateLocalService.
 			fetchNotificationTemplateByExternalReferenceCode(
 				externalReferenceCode, TestPropsValues.getCompanyId());
+	}
+
+	private WorkflowDefinition _fetchWorkflowDefinition(
+			String externalReferenceCode)
+		throws Exception {
+
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.
+				fetchKaleoDefinitionByExternalReferenceCode(
+					externalReferenceCode, TestPropsValues.getCompanyId());
+
+		if (kaleoDefinition == null) {
+			return null;
+		}
+
+		return _workflowDefinitionManager.getWorkflowDefinition(
+			kaleoDefinition.getKaleoDefinitionId());
 	}
 
 	private JSONArray _getClassExternalReferenceCodesJSONArray(
@@ -4152,6 +4545,7 @@ public class BatchEnginePortletDataHandlerTest {
 		boolean includeLayoutSetLayoutsPortlet,
 		boolean includeListTypeDefinitions,
 		boolean includeNotificationTemplates, boolean includeObjectDefinitions,
+		boolean includeWorkflowDefinitions,
 		List<ObjectDefinition> objectDefinitions) {
 
 		Map<String, String[]> parameterMap = HashMapBuilder.put(
@@ -4217,6 +4611,16 @@ public class BatchEnginePortletDataHandlerTest {
 				PLOPortletKeys.PORTAL_LANGUAGE_OVERRIDE,
 			() -> {
 				if (includeLanguageOverrides) {
+					return new String[] {Boolean.TRUE.toString()};
+				}
+
+				return null;
+			}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA + "_" +
+				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
+			() -> {
+				if (includeWorkflowDefinitions) {
 					return new String[] {Boolean.TRUE.toString()};
 				}
 
@@ -4400,6 +4804,24 @@ public class BatchEnginePortletDataHandlerTest {
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		return role.getRoleId();
+	}
+
+	private byte[] _getWorkflowDefinitionBytes(String description, String name)
+		throws Exception {
+
+		String content = new String(
+			FileUtil.getBytes(
+				getClass(), "dependencies/workflow-definition.json"));
+
+		content = StringUtil.replace(
+			content,
+			new String[] {
+				"[$WORKFLOW_DEFINITION_DESCRIPTION$]",
+				"[$WORKFLOW_DEFINITION_NAME$]"
+			},
+			new String[] {description, name});
+
+		return content.getBytes();
 	}
 
 	private void _importLanguageOverrides(File larFile, String userIdStrategy)
@@ -5323,6 +5745,13 @@ public class BatchEnginePortletDataHandlerTest {
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Inject
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Inject
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
+
+	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
@@ -5389,6 +5818,12 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@DeleteAfterTestRun
 	private List<User> _users = new ArrayList<>();
+
+	@Inject
+	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	private final List<WorkflowDefinition> _workflowDefinitions =
+		new ArrayList<>();
 
 	private static class TestExportImportVulcanBatchEngineTaskItemDelegate
 		implements EntityModelResource,
@@ -5735,6 +6170,12 @@ public class BatchEnginePortletDataHandlerTest {
 			return this;
 		}
 
+		public ExportImportExecutor withIncludeWorkflowDefinitions() {
+			_includeWorkflowDefinitions = true;
+
+			return this;
+		}
+
 		public ExportImportExecutor withLARFile(File larFile) {
 			_larFile = larFile;
 
@@ -5784,7 +6225,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_deletions, _includeDocumentLibrary, _includeLanguageOverrides,
 				_includeLayoutSetLayouts, _includeListTypeDefinitions,
 				_includeNotificationTemplates, _includeObjectDefinitions,
-				_objectDefinitions);
+				_includeWorkflowDefinitions, _objectDefinitions);
 
 			if (_includeTaxonomies) {
 				parameterMap.put(
@@ -5872,6 +6313,7 @@ public class BatchEnginePortletDataHandlerTest {
 		private boolean _includeNotificationTemplates;
 		private boolean _includeObjectDefinitions;
 		private boolean _includeTaxonomies;
+		private boolean _includeWorkflowDefinitions;
 		private File _larFile;
 		private int _lastHours;
 		private List<Long> _layoutIds = new ArrayList<>();

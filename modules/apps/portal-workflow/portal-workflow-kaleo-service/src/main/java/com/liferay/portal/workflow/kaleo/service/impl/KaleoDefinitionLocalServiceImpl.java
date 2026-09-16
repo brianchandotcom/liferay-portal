@@ -15,12 +15,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
@@ -198,15 +200,14 @@ public class KaleoDefinitionLocalServiceImpl
 		_kaleoTransitionLocalService.deleteCompanyKaleoTransitions(companyId);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public void deleteKaleoDefinition(
-			String name, ServiceContext serviceContext)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public KaleoDefinition deleteKaleoDefinition(
+			KaleoDefinition kaleoDefinition)
 		throws PortalException {
 
 		// Kaleo definition
-
-		KaleoDefinition kaleoDefinition = getKaleoDefinition(
-			name, serviceContext);
 
 		if (kaleoDefinition.isActive()) {
 			throw new WorkflowException(
@@ -214,12 +215,23 @@ public class KaleoDefinitionLocalServiceImpl
 					kaleoDefinition.getKaleoDefinitionId());
 		}
 
-		kaleoDefinitionPersistence.remove(kaleoDefinition);
+		kaleoDefinition = kaleoDefinitionPersistence.remove(kaleoDefinition);
 
 		// Kaleo definition version
 
 		_kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
 			kaleoDefinition);
+
+		return kaleoDefinition;
+	}
+
+	@Override
+	public KaleoDefinition deleteKaleoDefinition(
+			String name, ServiceContext serviceContext)
+		throws PortalException {
+
+		return kaleoDefinitionLocalService.deleteKaleoDefinition(
+			getKaleoDefinition(name, serviceContext));
 	}
 
 	@Override

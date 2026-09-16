@@ -45,9 +45,6 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
-import java.io.Serializable;
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -69,35 +66,6 @@ public class WorkflowDefinitionResourceImpl
 	extends BaseWorkflowDefinitionResourceImpl {
 
 	@Override
-	public void create(
-			Collection<WorkflowDefinition> workflowDefinitions,
-			Map<String, Serializable> parameters)
-		throws Exception {
-
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
-
-		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-			if (contextBatchUnsafeConsumer != null) {
-				contextBatchUnsafeConsumer.accept(
-					workflowDefinitions,
-					workflowDefinition -> postWorkflowDefinitionDeploy(
-						workflowDefinition));
-			}
-			else {
-				for (WorkflowDefinition workflowDefinition :
-						workflowDefinitions) {
-
-					postWorkflowDefinitionDeploy(workflowDefinition);
-				}
-			}
-		}
-		else {
-			super.create(workflowDefinitions, parameters);
-		}
-	}
-
-	@Override
 	public void deleteWorkflowDefinition(Long workflowDefinitionId)
 		throws Exception {
 
@@ -110,6 +78,19 @@ public class WorkflowDefinitionResourceImpl
 
 		deleteWorkflowDefinitionUndeploy(
 			workflowDefinition.getName(), workflowDefinition.getVersion());
+	}
+
+	@Override
+	public void deleteWorkflowDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.
+				getKaleoDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		deleteWorkflowDefinition(kaleoDefinition.getKaleoDefinitionId());
 	}
 
 	@Override
@@ -136,6 +117,19 @@ public class WorkflowDefinitionResourceImpl
 			null,
 			() -> _workflowDefinitionManager.getWorkflowDefinition(
 				workflowDefinitionId));
+	}
+
+	@Override
+	public WorkflowDefinition getWorkflowDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.
+				getKaleoDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return getWorkflowDefinition(kaleoDefinition.getKaleoDefinitionId());
 	}
 
 	@Override
@@ -272,6 +266,21 @@ public class WorkflowDefinitionResourceImpl
 
 		_workflowDefinitionManager.getLatestWorkflowDefinition(
 			contextCompany.getCompanyId(), workflowDefinition.getName());
+
+		return postWorkflowDefinitionDeploy(workflowDefinition);
+	}
+
+	@Override
+	public WorkflowDefinition putWorkflowDefinitionByExternalReferenceCode(
+			String externalReferenceCode, WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		workflowDefinition.setExternalReferenceCode(
+			() -> externalReferenceCode);
+
+		if (!GetterUtil.getBoolean(workflowDefinition.getActive())) {
+			return postWorkflowDefinitionSave(workflowDefinition);
+		}
 
 		return postWorkflowDefinitionDeploy(workflowDefinition);
 	}

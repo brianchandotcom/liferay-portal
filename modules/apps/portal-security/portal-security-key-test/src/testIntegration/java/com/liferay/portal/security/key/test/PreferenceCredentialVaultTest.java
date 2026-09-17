@@ -153,6 +153,51 @@ public class PreferenceCredentialVaultTest {
 	}
 
 	@Test
+	public void testVaultGroupTypeSettingsInheritedFromCompany()
+		throws Exception {
+
+		long companyId = TestPropsValues.getCompanyId();
+		String value = RandomTestUtil.randomString();
+
+		_companyLocalService.updatePreferences(
+			companyId,
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY, value
+			).build());
+
+		String companyValue = PrefsPropsUtil.getString(
+			companyId, GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY);
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getTypeSettingsProperties();
+
+		String typeSettings = typeSettingsUnicodeProperties.toString();
+
+		try {
+			typeSettingsUnicodeProperties.setProperty(
+				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY, companyValue);
+
+			group = _groupLocalService.updateGroup(
+				group.getGroupId(), typeSettingsUnicodeProperties.toString());
+
+			Assert.assertEquals(
+				companyValue,
+				group.getTypeSettingsProperty(
+					GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY));
+
+			Assert.assertEquals(
+				value, _secretResolver.resolve(companyId, companyValue));
+		}
+		finally {
+			_groupLocalService.updateGroup(group.getGroupId(), typeSettings);
+		}
+	}
+
+	@Test
 	public void testVaultIsIdempotent() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 

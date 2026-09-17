@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.secret.SecretVaultUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,9 +33,11 @@ public class GooglePlacesCompanyLocalServiceWrapper
 		if (Validator.isNotNull(googlePlacesAPIKey)) {
 			unicodeProperties.setProperty(
 				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
-				GooglePlacesAPIKeyVaultUtil.vault(
+				SecretVaultUtil.vault(
 					companyId,
-					GooglePlacesAPIKeyVaultUtil.getCompanyIdentifier(companyId),
+					SecretVaultUtil.getIdentifier(
+						GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
+						"company/" + companyId),
 					googlePlacesAPIKey));
 		}
 

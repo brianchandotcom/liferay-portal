@@ -1,6 +1,6 @@
 {{- $storage := $xr.spec.storage | default dict -}}
 
-{{- range $i, $dataPlane := $dataPlanes }}
+{{- range $i, $dataPlane := list "blue" "green" }}
 {{- $storageAccountName := printf "%s%s" $storageAccountBase (trunc 1 $dataPlane) }}
 {{- $isDoclibRestoreTarget := and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
 {{- if $i }}

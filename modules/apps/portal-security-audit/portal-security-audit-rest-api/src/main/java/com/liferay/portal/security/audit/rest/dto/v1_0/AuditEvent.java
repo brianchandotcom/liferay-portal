@@ -632,6 +632,89 @@ public class AuditEvent implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getImpersonated() {
+		if (_impersonatedSupplier != null) {
+			impersonated = _impersonatedSupplier.get();
+
+			_impersonatedSupplier = null;
+		}
+
+		return impersonated;
+	}
+
+	public void setImpersonated(Boolean impersonated) {
+		this.impersonated = impersonated;
+
+		_impersonatedSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setImpersonated(
+		UnsafeSupplier<Boolean, Exception> impersonatedUnsafeSupplier) {
+
+		_impersonatedSupplier = () -> {
+			try {
+				return impersonatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean impersonated;
+
+	@JsonIgnore
+	private Supplier<Boolean> _impersonatedSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Creator getImpersonatedUser() {
+		if (_impersonatedUserSupplier != null) {
+			impersonatedUser = _impersonatedUserSupplier.get();
+
+			_impersonatedUserSupplier = null;
+		}
+
+		return impersonatedUser;
+	}
+
+	public void setImpersonatedUser(Creator impersonatedUser) {
+		this.impersonatedUser = impersonatedUser;
+
+		_impersonatedUserSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setImpersonatedUser(
+		UnsafeSupplier<Creator, Exception> impersonatedUserUnsafeSupplier) {
+
+		_impersonatedUserSupplier = () -> {
+			try {
+				return impersonatedUserUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator impersonatedUser;
+
+	@JsonIgnore
+	private Supplier<Creator> _impersonatedUserSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectName() {
 		if (_objectNameSupplier != null) {
 			objectName = _objectNameSupplier.get();
@@ -1189,6 +1272,30 @@ public class AuditEvent implements Serializable {
 			sb.append(id);
 		}
 
+		Boolean impersonated = getImpersonated();
+
+		if (impersonated != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"impersonated\": ");
+
+			sb.append(impersonated);
+		}
+
+		Creator impersonatedUser = getImpersonatedUser();
+
+		if (impersonatedUser != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"impersonatedUser\": ");
+
+			sb.append(impersonatedUser);
+		}
+
 		String objectName = getObjectName();
 
 		if (objectName != null) {
@@ -1435,4 +1542,4 @@ public class AuditEvent implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1658166726
+// LIFERAY-REST-BUILDER-HASH:-1699830037

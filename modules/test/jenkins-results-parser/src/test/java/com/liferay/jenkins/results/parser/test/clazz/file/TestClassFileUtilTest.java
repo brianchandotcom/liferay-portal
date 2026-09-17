@@ -29,6 +29,64 @@ import org.junit.Test;
 public class TestClassFileUtilTest extends BaseTestClassFileTestCase {
 
 	@Test
+	public void testFormatTestResultsFileClassName() throws Exception {
+		File projectDir = createProjectDir("node-scripts test");
+
+		write(
+			"describe('a', () => {it('b', () => {});});", projectDir,
+			_TEST_DIR_PATH + "/a.js");
+		write(
+			"describe('a', () => {it('b', () => {});});", projectDir,
+			_TEST_DIR_PATH + "/b.js");
+
+		Element testCaseElement = _format(
+			_getTestSuite("a", _getTestCase(_CLASS_NAME + ".b_js", "a b")),
+			projectDir);
+
+		testEquals("a > b", testCaseElement.attributeValue("name"));
+
+		testEquals(
+			_PROJECT_PATH + "/" + _TEST_DIR_PATH + "/b.js",
+			testCaseElement.attributeValue("classname"));
+	}
+
+	@Test
+	public void testFormatTestResultsFileClassNameExtension() throws Exception {
+		File projectDir = createProjectDir("node-scripts test");
+
+		write(
+			"describe('a', () => {it('b', () => {});});", projectDir,
+			_TEST_DIR_PATH + "/a.test.js");
+
+		Element testCaseElement = _format(
+			_getTestSuite("a", _getTestCase(_CLASS_NAME + ".a_test_js", "a b")),
+			projectDir);
+
+		testEquals(
+			_PROJECT_PATH + "/" + _TEST_DIR_PATH + "/a.test.js",
+			testCaseElement.attributeValue("classname"));
+	}
+
+	@Test
+	public void testFormatTestResultsFileClassNameNoMatch() throws Exception {
+		File projectDir = createProjectDir("node-scripts test");
+
+		write("it('b', () => {});", projectDir, _TEST_DIR_PATH + "/a.js");
+
+		String name = RandomTestUtil.randomString();
+
+		Element testCaseElement = _format(
+			_getTestSuite("a", _getTestCase(_CLASS_NAME + ".a_js", name)),
+			projectDir);
+
+		testEquals(
+			_PROJECT_PATH + "/" + _TEST_DIR_PATH + "/a.js",
+			testCaseElement.attributeValue("classname"));
+
+		testEquals(name, testCaseElement.attributeValue("name"));
+	}
+
+	@Test
 	public void testFormatTestResultsFileDuplicateTestName() throws Exception {
 		File projectDir = createProjectDir("node-scripts test");
 

@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.SiteFriendlyURLKeywordRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -108,7 +110,10 @@ public class InviteMemberMVCActionCommandTest {
 			0, TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
-				"name", RandomTestUtil.randomString()
+				"name",
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					SiteFriendlyURLKeywordRandomizerBumper.INSTANCE)
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				accountEntry.getAccountEntryId()
@@ -215,7 +220,10 @@ public class InviteMemberMVCActionCommandTest {
 			0, TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
-				"name", RandomTestUtil.randomString()
+				"name",
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					SiteFriendlyURLKeywordRandomizerBumper.INSTANCE)
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				accountEntry.getAccountEntryId()

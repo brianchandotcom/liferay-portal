@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.SiteFriendlyURLKeywordRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -90,7 +92,10 @@ public class InvitedMemberResourceTest
 			0, user1.getUserId(), objectDefinition.getObjectDefinitionId(), 0,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				"name", RandomTestUtil.randomString()
+				"name",
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					SiteFriendlyURLKeywordRandomizerBumper.INSTANCE)
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				() -> {

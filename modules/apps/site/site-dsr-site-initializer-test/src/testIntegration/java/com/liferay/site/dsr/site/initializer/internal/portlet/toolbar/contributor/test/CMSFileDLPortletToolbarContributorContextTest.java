@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.SiteFriendlyURLKeywordRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -117,7 +119,10 @@ public class CMSFileDLPortletToolbarContributorContextTest {
 			0, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
-				"name", RandomTestUtil.randomString()
+				"name",
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					SiteFriendlyURLKeywordRandomizerBumper.INSTANCE)
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				_accountEntry.getAccountEntryId()

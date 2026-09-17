@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.SiteFriendlyURLKeywordRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -87,7 +89,10 @@ public class RoomResourceTest extends BaseRoomResourceTestCase {
 			_objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
 				"name",
-				StringUtil.toLowerCase("A" + RandomTestUtil.randomString())
+				StringUtil.toLowerCase(
+					RandomTestUtil.randomString(
+						NumericStringRandomizerBumper.INSTANCE,
+						SiteFriendlyURLKeywordRandomizerBumper.INSTANCE))
 			).put(
 				"r_accountToDSRRooms_accountEntryId",
 				_accountEntry.getAccountEntryId()
@@ -115,7 +120,10 @@ public class RoomResourceTest extends BaseRoomResourceTestCase {
 					setFileEntryIds(new Long[] {dlFileEntry1.getFileEntryId()});
 					setName(
 						StringUtil.toLowerCase(
-							"A" + RandomTestUtil.randomString()));
+							RandomTestUtil.randomString(
+								NumericStringRandomizerBumper.INSTANCE,
+								SiteFriendlyURLKeywordRandomizerBumper.
+									INSTANCE)));
 				}
 			});
 
@@ -167,7 +175,10 @@ public class RoomResourceTest extends BaseRoomResourceTestCase {
 					{
 						setName(
 							StringUtil.toLowerCase(
-								"A" + RandomTestUtil.randomString()));
+								RandomTestUtil.randomString(
+									NumericStringRandomizerBumper.INSTANCE,
+									SiteFriendlyURLKeywordRandomizerBumper.
+										INSTANCE)));
 					}
 				});
 
@@ -191,7 +202,10 @@ public class RoomResourceTest extends BaseRoomResourceTestCase {
 				{
 					setName(
 						StringUtil.toLowerCase(
-							"A" + RandomTestUtil.randomString()));
+							RandomTestUtil.randomString(
+								NumericStringRandomizerBumper.INSTANCE,
+								SiteFriendlyURLKeywordRandomizerBumper.
+									INSTANCE)));
 				}
 			});
 

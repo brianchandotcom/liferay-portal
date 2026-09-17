@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.SiteFriendlyURLKeywordRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -89,7 +91,10 @@ public class BackgroundTaskStatusMessageListenerTest {
 				0, TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), 0, null,
 				HashMapBuilder.<String, Serializable>put(
-					"name", "A" + RandomTestUtil.randomString()
+					"name",
+					RandomTestUtil.randomString(
+						NumericStringRandomizerBumper.INSTANCE,
+						SiteFriendlyURLKeywordRandomizerBumper.INSTANCE)
 				).put(
 					"r_accountToDSRRooms_accountEntryId",
 					_accountEntry.getAccountEntryId()

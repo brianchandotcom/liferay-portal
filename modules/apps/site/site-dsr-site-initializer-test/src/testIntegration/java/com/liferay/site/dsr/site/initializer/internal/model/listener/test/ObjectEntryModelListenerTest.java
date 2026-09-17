@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.SiteFriendlyURLKeywordRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -147,7 +149,9 @@ public class ObjectEntryModelListenerTest {
 	@Test
 	public void testOnAfterRemove() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			"A" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				SiteFriendlyURLKeywordRandomizerBumper.INSTANCE));
 
 		Assert.assertNotNull(
 			_groupLocalService.fetchGroup(
@@ -178,7 +182,10 @@ public class ObjectEntryModelListenerTest {
 					"expirationDate",
 					new Date(System.currentTimeMillis() + Time.DAY)
 				).put(
-					"name", "A" + RandomTestUtil.randomString()
+					"name",
+					RandomTestUtil.randomString(
+						NumericStringRandomizerBumper.INSTANCE,
+						SiteFriendlyURLKeywordRandomizerBumper.INSTANCE)
 				).put(
 					"r_accountToDSRRooms_accountEntryId",
 					_accountEntry.getAccountEntryId()
@@ -199,7 +206,9 @@ public class ObjectEntryModelListenerTest {
 	@TestInfo("LPD-102253")
 	public void testOnBeforeUpdate() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			"A" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				SiteFriendlyURLKeywordRandomizerBumper.INSTANCE));
 
 		try {
 			_objectEntryLocalService.partialUpdateObjectEntry(
@@ -290,7 +299,9 @@ public class ObjectEntryModelListenerTest {
 
 	private void _testOnAfterCreate() throws Exception {
 		String name = StringUtil.toLowerCase(
-			"A" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				SiteFriendlyURLKeywordRandomizerBumper.INSTANCE));
 
 		ObjectEntry objectEntry = _addObjectEntry(name);
 
@@ -321,7 +332,9 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertEquals(group.getGroupId(), values.get("siteId"));
 
 		String friendlyURL = StringUtil.toLowerCase(
-			"A" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				SiteFriendlyURLKeywordRandomizerBumper.INSTANCE));
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
@@ -370,7 +383,10 @@ public class ObjectEntryModelListenerTest {
 
 	private void _testOnAfterCreateWithDSRRoomThreadLocal() throws Exception {
 		ObjectEntry sourceObjectEntry = _addObjectEntry(
-			StringUtil.toLowerCase("A" + RandomTestUtil.randomString()));
+			StringUtil.toLowerCase(
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					SiteFriendlyURLKeywordRandomizerBumper.INSTANCE)));
 
 		Group sourceGroup = _groupLocalService.fetchGroup(
 			TestPropsValues.getCompanyId(),
@@ -397,7 +413,10 @@ public class ObjectEntryModelListenerTest {
 
 		try {
 			objectEntry = _addObjectEntry(
-				StringUtil.toLowerCase("A" + RandomTestUtil.randomString()));
+				StringUtil.toLowerCase(
+					RandomTestUtil.randomString(
+						NumericStringRandomizerBumper.INSTANCE,
+						SiteFriendlyURLKeywordRandomizerBumper.INSTANCE)));
 		}
 		finally {
 			DSRRoomThreadLocal.setFileEntryIds(new long[0]);
@@ -453,7 +472,9 @@ public class ObjectEntryModelListenerTest {
 		_userLocalService.addRoleUser(dsrSellerRole.getRoleId(), user);
 
 		String name = StringUtil.toLowerCase(
-			"B" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				SiteFriendlyURLKeywordRandomizerBumper.INSTANCE));
 
 		ObjectEntry objectEntry;
 

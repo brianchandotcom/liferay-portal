@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.SiteFriendlyURLKeywordRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -73,7 +75,9 @@ public class GroupModelListenerTest {
 	@Test
 	public void testOnAfterUpdate() throws Exception {
 		String name = StringUtil.toLowerCase(
-			"A" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				SiteFriendlyURLKeywordRandomizerBumper.INSTANCE));
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
@@ -94,7 +98,10 @@ public class GroupModelListenerTest {
 
 		Assert.assertEquals(name, group.getName(LocaleUtil.getDefault()));
 
-		name = StringUtil.toLowerCase("B" + RandomTestUtil.randomString());
+		name = StringUtil.toLowerCase(
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				SiteFriendlyURLKeywordRandomizerBumper.INSTANCE));
 
 		_groupLocalService.updateGroup(
 			group.getGroupId(), group.getParentGroupId(),

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.google.places.web.internal.service;
+package com.liferay.portal.security.key.secret;
 
-import com.liferay.google.places.constants.GooglePlacesWebKeys;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -13,25 +13,18 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
-import com.liferay.portal.security.key.secret.Secret;
-import com.liferay.portal.security.key.secret.SecretManager;
 import com.liferay.portal.security.key.secret.exception.SecretException;
+
+import java.util.Objects;
 
 /**
  * @author Pedro Victor Silvestre
  */
-public class GooglePlacesAPIKeyVaultUtil {
+public class SecretVaultUtil {
 
-	public static String getCompanyIdentifier(long companyId) {
+	public static String getIdentifier(String key, String scope) {
 		return StringBundler.concat(
-			_IDENTIFIER_PREFIX, "company/", companyId, StringPool.SLASH,
-			GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY);
-	}
-
-	public static String getGroupIdentifier(long groupId) {
-		return StringBundler.concat(
-			_IDENTIFIER_PREFIX, "group/", groupId, StringPool.SLASH,
-			GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY);
+			_IDENTIFIER_PREFIX, scope, StringPool.SLASH, key);
 	}
 
 	public static String vault(long companyId, String identifier, String value)
@@ -75,7 +68,7 @@ public class GooglePlacesAPIKeyVaultUtil {
 		String valueIdentifier = keyReference.getIdentifier();
 
 		if (!valueIdentifier.startsWith(_IDENTIFIER_PREFIX) ||
-			valueIdentifier.equals(identifier)) {
+			Objects.equals(_getKey(identifier), _getKey(valueIdentifier))) {
 
 			return;
 		}
@@ -87,10 +80,19 @@ public class GooglePlacesAPIKeyVaultUtil {
 				"\""));
 	}
 
+	private static String _getKey(String identifier) {
+		int index = identifier.lastIndexOf(CharPool.SLASH);
+
+		if (index < 0) {
+			return identifier;
+		}
+
+		return identifier.substring(index + 1);
+	}
+
 	private static final String _IDENTIFIER_PREFIX = "preference/";
 
 	private static final Snapshot<SecretManager> _secretManagerSnapshot =
-		new Snapshot<>(
-			GooglePlacesAPIKeyVaultUtil.class, SecretManager.class, null, true);
+		new Snapshot<>(SecretVaultUtil.class, SecretManager.class, null, true);
 
 }

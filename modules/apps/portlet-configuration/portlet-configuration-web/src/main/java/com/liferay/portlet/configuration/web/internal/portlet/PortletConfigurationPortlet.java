@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfigWrapper;
@@ -73,11 +72,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.key.KeyReference;
-import com.liferay.portal.security.key.KeyReferenceUtil;
-import com.liferay.portal.security.key.secret.Secret;
-import com.liferay.portal.security.key.secret.SecretManager;
-import com.liferay.portal.security.key.secret.exception.SecretException;
+import com.liferay.portal.security.key.secret.SecretVaultUtil;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys;
@@ -1143,63 +1138,18 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			String value)
 		throws Exception {
 
-		if (!PropsValues.FIPS_ENABLED || Validator.isNull(value)) {
-			return value;
-		}
-
-		String identifier = StringBundler.concat(
-			_IDENTIFIER_PREFIX, "portlet/", themeDisplay.getPlid(),
-			StringPool.SLASH, portletId, StringPool.SLASH, name);
-
-		if (KeyReferenceUtil.isKeyReference(value)) {
-			KeyReference keyReference = KeyReferenceUtil.parseKeyReference(
-				value);
-
-			if (keyReference == null) {
-				throw new SecretException("Unable to parse the key reference");
-			}
-
-			String valueIdentifier = keyReference.getIdentifier();
-
-			if (valueIdentifier.startsWith(_IDENTIFIER_PREFIX) &&
-				!valueIdentifier.equals(identifier)) {
-
-				throw new SecretException(
-					StringBundler.concat(
-						"Identifier \"", identifier,
-						"\" cannot reference a value belonging to \"",
-						valueIdentifier, "\""));
-			}
-
-			return value;
-		}
-
-		SecretManager secretManager = _secretManagerSnapshot.get();
-
-		if (secretManager == null) {
-			throw new IllegalStateException("Secret manager is unavailable");
-		}
-
-		long companyId = themeDisplay.getCompanyId();
-
-		try (Secret secret = new Secret(
-				new KeyReference(
-					identifier, StringPool.STAR, KeyReference.Type.SECRET),
-				value)) {
-
-			return KeyReferenceUtil.toKeyReferenceString(
-				secretManager.putSecret(companyId, secret));
-		}
+		return SecretVaultUtil.vault(
+			themeDisplay.getCompanyId(),
+			SecretVaultUtil.getIdentifier(
+				name,
+				StringBundler.concat(
+					"portlet/", themeDisplay.getPlid(), StringPool.SLASH,
+					portletId)),
+			value);
 	}
-
-	private static final String _IDENTIFIER_PREFIX = "preference/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationPortlet.class);
-
-	private static final Snapshot<SecretManager> _secretManagerSnapshot =
-		new Snapshot<>(
-			PortletConfigurationPortlet.class, SecretManager.class, null, true);
 
 	@Reference
 	private ArchivedSettingsFactory _archivedSettingsFactory;

@@ -5,6 +5,7 @@
 
 package com.liferay.map.google.maps.internal.service;
 
+import com.liferay.map.constants.MapProviderWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
@@ -12,6 +13,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.secret.SecretVaultUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +36,7 @@ public class GoogleMapsGroupLocalServiceWrapper
 			).build();
 
 		String googleMapsAPIKey = typeSettingsUnicodeProperties.getProperty(
-			"googleMapsAPIKey");
+			MapProviderWebKeys.GOOGLE_MAPS_API_KEY);
 
 		if (Validator.isNull(googleMapsAPIKey)) {
 			return super.updateGroup(groupId, typeSettings);
@@ -42,9 +44,10 @@ public class GoogleMapsGroupLocalServiceWrapper
 
 		Group group = getGroup(groupId);
 
-		String vaultedGoogleMapsAPIKey = GoogleMapsAPIKeyVaultUtil.vault(
+		String vaultedGoogleMapsAPIKey = SecretVaultUtil.vault(
 			group.getCompanyId(),
-			GoogleMapsAPIKeyVaultUtil.getGroupIdentifier(groupId),
+			SecretVaultUtil.getIdentifier(
+				MapProviderWebKeys.GOOGLE_MAPS_API_KEY, "group/" + groupId),
 			googleMapsAPIKey);
 
 		if (vaultedGoogleMapsAPIKey.equals(googleMapsAPIKey)) {
@@ -52,7 +55,7 @@ public class GoogleMapsGroupLocalServiceWrapper
 		}
 
 		typeSettingsUnicodeProperties.setProperty(
-			"googleMapsAPIKey", vaultedGoogleMapsAPIKey);
+			MapProviderWebKeys.GOOGLE_MAPS_API_KEY, vaultedGoogleMapsAPIKey);
 
 		return super.updateGroup(
 			groupId, typeSettingsUnicodeProperties.toString());

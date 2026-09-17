@@ -5,11 +5,13 @@
 
 package com.liferay.map.google.maps.internal.service;
 
+import com.liferay.map.constants.MapProviderWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.CompanyLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.secret.SecretVaultUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,14 +28,16 @@ public class GoogleMapsCompanyLocalServiceWrapper
 		throws PortalException {
 
 		String googleMapsAPIKey = unicodeProperties.getProperty(
-			"googleMapsAPIKey");
+			MapProviderWebKeys.GOOGLE_MAPS_API_KEY);
 
 		if (Validator.isNotNull(googleMapsAPIKey)) {
 			unicodeProperties.setProperty(
-				"googleMapsAPIKey",
-				GoogleMapsAPIKeyVaultUtil.vault(
+				MapProviderWebKeys.GOOGLE_MAPS_API_KEY,
+				SecretVaultUtil.vault(
 					companyId,
-					GoogleMapsAPIKeyVaultUtil.getCompanyIdentifier(companyId),
+					SecretVaultUtil.getIdentifier(
+						MapProviderWebKeys.GOOGLE_MAPS_API_KEY,
+						"company/" + companyId),
 					googleMapsAPIKey));
 		}
 

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.secret.SecretVaultUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,9 +44,10 @@ public class GooglePlacesGroupLocalServiceWrapper
 
 		Group group = getGroup(groupId);
 
-		String vaultedGooglePlacesAPIKey = GooglePlacesAPIKeyVaultUtil.vault(
+		String vaultedGooglePlacesAPIKey = SecretVaultUtil.vault(
 			group.getCompanyId(),
-			GooglePlacesAPIKeyVaultUtil.getGroupIdentifier(groupId),
+			SecretVaultUtil.getIdentifier(
+				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY, "group/" + groupId),
 			googlePlacesAPIKey);
 
 		if (vaultedGooglePlacesAPIKey.equals(googlePlacesAPIKey)) {

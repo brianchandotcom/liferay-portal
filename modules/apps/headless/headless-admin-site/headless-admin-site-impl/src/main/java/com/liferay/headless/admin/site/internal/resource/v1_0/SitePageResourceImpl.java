@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -310,9 +311,9 @@ public class SitePageResourceImpl
 
 	@Override
 	protected Page<SitePage> doGetSiteSitePagesPage(
-			String siteExternalReferenceCode, Boolean privateLayout,
-			String search, Aggregation aggregation, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			String siteExternalReferenceCode, Boolean flatten,
+			Boolean privateLayout, String search, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		long groupId = GroupUtil.getGroupId(
@@ -330,6 +331,12 @@ public class SitePageResourceImpl
 				booleanFilter.add(
 					new TermFilter(Field.GROUP_ID, String.valueOf(groupId)),
 					BooleanClauseOccur.MUST);
+
+				if (!GetterUtil.getBoolean(flatten)) {
+					booleanFilter.add(
+						new ExistsFilter("parentLayoutExternalReferenceCode"),
+						BooleanClauseOccur.MUST_NOT);
+				}
 			},
 			filter, Layout.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(

@@ -13,6 +13,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,13 +41,18 @@ public class ProductOptionUtil {
 
 		CPOption cpOption = null;
 
-		if (Validator.isNotNull(optionExternalReferenceCode)) {
+		if (LazyReferencingThreadLocal.isEnabled()) {
 			cpOption = cpOptionService.getOrAddEmptyCPOption(
 				optionExternalReferenceCode);
 		}
 		else {
-			cpOption = cpOptionService.getCPOption(
-				GetterUtil.getLong(productOption.getOptionId()));
+			cpOption = cpOptionService.fetchCPOptionByExternalReferenceCode(
+				optionExternalReferenceCode, serviceContext.getCompanyId());
+
+			if (cpOption == null) {
+				cpOption = cpOptionService.getCPOption(
+					GetterUtil.getLong(productOption.getOptionId()));
+			}
 		}
 
 		CPDefinitionOptionRel cpDefinitionOptionRel = null;

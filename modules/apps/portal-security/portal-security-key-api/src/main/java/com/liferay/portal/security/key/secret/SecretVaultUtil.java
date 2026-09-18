@@ -35,7 +35,7 @@ public class SecretVaultUtil {
 		}
 
 		if (KeyReferenceUtil.isKeyReference(value)) {
-			_checkKeyReference(identifier, value);
+			_validateKeyReference(identifier, value);
 
 			return value;
 		}
@@ -56,7 +56,17 @@ public class SecretVaultUtil {
 		}
 	}
 
-	private static void _checkKeyReference(String identifier, String value)
+	private static String _getKey(String identifier) {
+		int index = identifier.lastIndexOf(CharPool.SLASH);
+
+		if (index < 0) {
+			return identifier;
+		}
+
+		return identifier.substring(index + 1);
+	}
+
+	private static void _validateKeyReference(String identifier, String value)
 		throws SecretException {
 
 		KeyReference keyReference = KeyReferenceUtil.parseKeyReference(value);
@@ -78,16 +88,6 @@ public class SecretVaultUtil {
 				"Identifier \"", identifier,
 				"\" cannot reference a value belonging to \"", valueIdentifier,
 				"\""));
-	}
-
-	private static String _getKey(String identifier) {
-		int index = identifier.lastIndexOf(CharPool.SLASH);
-
-		if (index < 0) {
-			return identifier;
-		}
-
-		return identifier.substring(index + 1);
 	}
 
 	private static final String _IDENTIFIER_PREFIX = "preference/";

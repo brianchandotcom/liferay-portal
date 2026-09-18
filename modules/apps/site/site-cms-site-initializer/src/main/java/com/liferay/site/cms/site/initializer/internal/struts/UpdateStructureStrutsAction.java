@@ -69,8 +69,8 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				_jsonFactory.createJSONArray(
 					ParamUtil.getString(
 						httpServletRequest, "deletedObjectRelationships"));
-			String[] deletedRepeatableGroupsERCs = ParamUtil.getStringValues(
-				httpServletRequest, "deletedRepeatableGroupsERCs");
+			String[] deletedGroupERCs = ParamUtil.getStringValues(
+				httpServletRequest, "deletedGroupERCs");
 			String objectDefinitionJSON = ParamUtil.getString(
 				httpServletRequest, "objectDefinition");
 			JSONArray objectRelationshipsJSONArray =
@@ -84,9 +84,9 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 						"repeatableGroupObjectDefinitions"));
 
 			_updateStructure(
-				deletedObjectRelationshipsJSONArray,
-				deletedRepeatableGroupsERCs, httpServletRequest,
-				objectDefinitionJSON, objectRelationshipsJSONArray,
+				deletedObjectRelationshipsJSONArray, deletedGroupERCs,
+				httpServletRequest, objectDefinitionJSON,
+				objectRelationshipsJSONArray,
 				repeatableGroupObjectDefinitionsJSONArray);
 		}
 		catch (Exception exception) {
@@ -252,9 +252,8 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 
 	private void _updateStructure(
 			JSONArray deletedObjectRelationshipsJSONArray,
-			String[] deletedRepeatableGroupsERCs,
-			HttpServletRequest httpServletRequest, String objectDefinitionJSON,
-			JSONArray objectRelationshipsJSONArray,
+			String[] deletedGroupERCs, HttpServletRequest httpServletRequest,
+			String objectDefinitionJSON, JSONArray objectRelationshipsJSONArray,
 			JSONArray repeatableGroupObjectDefinitionsJSONArray)
 		throws Exception {
 
@@ -266,8 +265,8 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 			objectDefinitionJSON);
 
 		Callable<Void> callable = new UpdateStructureCallable(
-			themeDisplay.getCompanyId(), deletedObjectRelationshipsJSONArray,
-			deletedRepeatableGroupsERCs,
+			themeDisplay.getCompanyId(), deletedGroupERCs,
+			deletedObjectRelationshipsJSONArray,
 			ObjectDefinition.toDTO(objectDefinitionJSON),
 			objectDefinitionJSONObject.getLong("id"),
 			_getObjectRelationships(objectRelationshipsJSONArray),
@@ -370,12 +369,12 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				}
 			}
 
-			if (ArrayUtil.isNotEmpty(_deletedRepeatableGroupsERCs)) {
-				for (String repeatableGroupERC : _deletedRepeatableGroupsERCs) {
+			if (ArrayUtil.isNotEmpty(_deletedGroupERCs)) {
+				for (String groupERC : _deletedGroupERCs) {
 					com.liferay.object.model.ObjectDefinition objectDefinition =
 						_objectDefinitionLocalService.
 							getObjectDefinitionByExternalReferenceCode(
-								repeatableGroupERC, _companyId);
+								groupERC, _companyId);
 
 					_objectDefinitionService.deleteObjectDefinition(
 						objectDefinition.getObjectDefinitionId());
@@ -429,17 +428,17 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		}
 
 		private UpdateStructureCallable(
-			long companyId, JSONArray deletedObjectRelationshipsJSONArray,
-			String[] deletedRepeatableGroupsERCs,
+			long companyId, String[] deletedGroupERCs,
+			JSONArray deletedObjectRelationshipsJSONArray,
 			ObjectDefinition objectDefinition, long objectDefinitionId,
 			List<ObjectRelationship> objectRelationships,
 			List<ObjectDefinition> repeatableGroupObjectDefinitions,
 			User user) {
 
 			_companyId = companyId;
+			_deletedGroupERCs = deletedGroupERCs;
 			_deletedObjectRelationshipsJSONArray =
 				deletedObjectRelationshipsJSONArray;
-			_deletedRepeatableGroupsERCs = deletedRepeatableGroupsERCs;
 			_objectDefinition = objectDefinition;
 			_objectDefinitionId = objectDefinitionId;
 			_objectRelationships = objectRelationships;
@@ -449,8 +448,8 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		}
 
 		private final long _companyId;
+		private final String[] _deletedGroupERCs;
 		private final JSONArray _deletedObjectRelationshipsJSONArray;
-		private final String[] _deletedRepeatableGroupsERCs;
 		private final ObjectDefinition _objectDefinition;
 		private final long _objectDefinitionId;
 		private final List<ObjectRelationship> _objectRelationships;

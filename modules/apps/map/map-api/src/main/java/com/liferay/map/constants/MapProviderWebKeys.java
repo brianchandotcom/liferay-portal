@@ -10,8 +10,6 @@ package com.liferay.map.constants;
  */
 public class MapProviderWebKeys {
 
-	public static final String GOOGLE_MAPS_API_KEY = "googleMapsAPIKey";
-
 	public static final String MAP_PROVIDER_CONFIGURATION_PREFIX =
 		"MAP_PROVIDER_CONFIGURATION_PREFIX";
 

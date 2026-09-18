@@ -12,10 +12,10 @@
 		</field>
 		<field name="accessTokenExpirationDate" type="Date" />
 		<field name="authServerWellKnownURI" type="String">
-			<hint name="max-length">256</hint>
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="clientId" type="String">
-			<hint name="max-length">256</hint>
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="idToken" type="String">
 			<hint-collection name="CLOB" />

@@ -181,6 +181,8 @@ import {config as portalDbInfrastructureUpgradePortal71103Config} from './tests/
 import {config as portalDbInfrastructureUpgradePortal7210Config} from './tests/portal-db-infrastructure/upgrade-portal-7210/config';
 import {config as portalDbInfrastructureUpgradePortal7310Config} from './tests/portal-db-infrastructure/upgrade-portal-7310/config';
 import {config as portalDbInfrastructureUpgradePortal7413Config} from './tests/portal-db-infrastructure/upgrade-portal-7413/config';
+import {config as portalDbInfrastructureUpgradePortletsPermissions621015Config} from './tests/portal-db-infrastructure/upgrade-portlets-permissions-621015/config';
+import {config as portalDbInfrastructureUpgradePortletsPermissions621021Config} from './tests/portal-db-infrastructure/upgrade-portlets-permissions-621021/config';
 import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/main/config';
 import {config as portalImplMainConfig} from './tests/portal-impl/main/config';
 import {config as portalImplPortletConfig} from './tests/portal-impl/portlet/config';
@@ -451,6 +453,8 @@ export default defineConfig({
 		portalDbInfrastructureUpgradePortal7210Config,
 		portalDbInfrastructureUpgradePortal7310Config,
 		portalDbInfrastructureUpgradePortal7413Config,
+		portalDbInfrastructureUpgradePortletsPermissions621015Config,
+		portalDbInfrastructureUpgradePortletsPermissions621021Config,
 		portalDefaultPermissionsWebConfig,
 		portalImplMainConfig,
 		portalImplPortletConfig,

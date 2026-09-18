@@ -278,6 +278,24 @@ public class CommerceDiscountRelServiceImpl
 				commerceDiscountId, title);
 	}
 
+	@Override
+	public CommerceDiscountRel updateCommerceDiscountRel(
+			long commerceDiscountRelId,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException {
+
+		CommerceDiscountRel commerceDiscountRel =
+			commerceDiscountRelPersistence.findByPrimaryKey(
+				commerceDiscountRelId);
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountRel.getCommerceDiscountId(),
+			ActionKeys.UPDATE);
+
+		return commerceDiscountRelLocalService.updateCommerceDiscountRel(
+			commerceDiscountRelId, typeSettingsUnicodeProperties);
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 

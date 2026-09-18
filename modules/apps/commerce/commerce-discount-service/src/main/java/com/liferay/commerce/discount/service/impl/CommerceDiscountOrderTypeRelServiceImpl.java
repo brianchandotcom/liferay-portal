@@ -122,6 +122,25 @@ public class CommerceDiscountOrderTypeRelServiceImpl
 			getCommerceDiscountOrderTypeRelsCount(commerceDiscountId, name);
 	}
 
+	@Override
+	public CommerceDiscountOrderTypeRel updateCommerceDiscountOrderTypeRel(
+			long commerceDiscountOrderTypeRelId, int priority)
+		throws PortalException {
+
+		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel =
+			commerceDiscountOrderTypeRelLocalService.
+				getCommerceDiscountOrderTypeRel(commerceDiscountOrderTypeRelId);
+
+		_commerceDiscountModelResourcePermission.check(
+			getPermissionChecker(),
+			commerceDiscountOrderTypeRel.getCommerceDiscountId(),
+			ActionKeys.UPDATE);
+
+		return commerceDiscountOrderTypeRelLocalService.
+			updateCommerceDiscountOrderTypeRel(
+				commerceDiscountOrderTypeRelId, priority);
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.discount.model.CommerceDiscount)"
 	)

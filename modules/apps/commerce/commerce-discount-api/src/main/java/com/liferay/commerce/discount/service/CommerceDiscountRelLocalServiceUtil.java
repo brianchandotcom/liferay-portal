@@ -447,6 +447,16 @@ public class CommerceDiscountRelLocalServiceUtil {
 		return getService().updateCommerceDiscountRel(commerceDiscountRel);
 	}
 
+	public static CommerceDiscountRel updateCommerceDiscountRel(
+			long commerceDiscountRelId,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties)
+		throws PortalException {
+
+		return getService().updateCommerceDiscountRel(
+			commerceDiscountRelId, typeSettingsUnicodeProperties);
+	}
+
 	public static CommerceDiscountRelLocalService getService() {
 		return _serviceSnapshot.get();
 	}
@@ -457,4 +467,4 @@ public class CommerceDiscountRelLocalServiceUtil {
 			CommerceDiscountRelLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1079605628
+// LIFERAY-SERVICE-BUILDER-HASH:-1798167881

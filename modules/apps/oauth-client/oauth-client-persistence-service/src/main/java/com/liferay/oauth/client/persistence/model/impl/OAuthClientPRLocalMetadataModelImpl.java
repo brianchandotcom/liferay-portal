@@ -96,7 +96,7 @@ public class OAuthClientPRLocalMetadataModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuthClientPRLocalMetadata (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,oAuthClientPRLocalMetadataId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,localWellKnownEnabled BOOLEAN,localWellKnownURI VARCHAR(256) null,metadataJSON TEXT null,protectedResourceURI VARCHAR(256) null)";
+		"create table OAuthClientPRLocalMetadata (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,oAuthClientPRLocalMetadataId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,localWellKnownEnabled BOOLEAN,localWellKnownURI VARCHAR(255) null,metadataJSON TEXT null,protectedResourceURI VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OAuthClientPRLocalMetadata";
@@ -1187,4 +1187,4 @@ public class OAuthClientPRLocalMetadataModelImpl
 	private OAuthClientPRLocalMetadata _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:996639288
+// LIFERAY-SERVICE-BUILDER-HASH:-1451559562

@@ -8,11 +8,11 @@ create table OAuthClientASLocalMetadata (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	issuer VARCHAR(256) null,
+	issuer VARCHAR(255) null,
 	localWellKnownEnabled BOOLEAN,
-	localWellKnownURI VARCHAR(256) null,
+	localWellKnownURI VARCHAR(255) null,
 	metadataJSON TEXT null,
-	oAuthASLocalWellKnownURI VARCHAR(256) null,
+	oAuthASLocalWellKnownURI VARCHAR(255) null,
 	oAuthASMetadataJSON TEXT null
 );
 
@@ -27,8 +27,8 @@ create table OAuthClientEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	authRequestParametersJSON VARCHAR(3999) null,
-	authServerWellKnownURI VARCHAR(256) null,
-	clientId VARCHAR(256) null,
+	authServerWellKnownURI VARCHAR(255) null,
+	clientId VARCHAR(255) null,
 	customClaimsJSON TEXT null,
 	infoJSON TEXT null,
 	matcherField VARCHAR(75) null,
@@ -49,7 +49,7 @@ create table OAuthClientPRLocalMetadata (
 	createDate DATE null,
 	modifiedDate DATE null,
 	localWellKnownEnabled BOOLEAN,
-	localWellKnownURI VARCHAR(256) null,
+	localWellKnownURI VARCHAR(255) null,
 	metadataJSON TEXT null,
-	protectedResourceURI VARCHAR(256) null
+	protectedResourceURI VARCHAR(255) null
 );

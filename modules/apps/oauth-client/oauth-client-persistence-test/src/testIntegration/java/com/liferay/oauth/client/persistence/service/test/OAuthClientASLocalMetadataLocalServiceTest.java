@@ -99,7 +99,7 @@ public class OAuthClientASLocalMetadataLocalServiceTest {
 			OAuthClientASLocalMetadataLocalWellKnownURIException.
 				MustNotExceedMaximumLength.class,
 			"Issuer is too long to generate a local well known URI which is " +
-				"limited to 256 characters",
+				"limited to 255 characters",
 			() ->
 				_oAuthClientASLocalMetadataLocalService.
 					addOAuthClientASLocalMetadata(

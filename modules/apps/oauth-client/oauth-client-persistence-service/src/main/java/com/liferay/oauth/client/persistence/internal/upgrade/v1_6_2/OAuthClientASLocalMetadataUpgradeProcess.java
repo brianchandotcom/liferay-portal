@@ -247,7 +247,7 @@ public class OAuthClientASLocalMetadataUpgradeProcess extends UpgradeProcess {
 	private static final String _OAUTH_AS_LOCAL_WELL_KNOWN_PATH =
 		"/.well-known/oauth-authorization-server";
 
-	private static final int _OAUTH_AS_LOCAL_WELL_KNOWN_URI_MAX_LENGTH = 256;
+	private static final int _OAUTH_AS_LOCAL_WELL_KNOWN_URI_MAX_LENGTH = 255;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuthClientASLocalMetadataUpgradeProcess.class);

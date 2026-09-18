@@ -220,7 +220,7 @@ public class OAuthClientASLocalMetadataUpgradeProcessTest {
 			"its issuer has no scheme or authority");
 		_testUpgradeUnusableIssuer(
 			"https://" + RandomTestUtil.randomString(220) + ".com",
-			"the generated URI is longer than 256 characters");
+			"the generated URI is longer than 255 characters");
 		_testUpgradeUnusableIssuer(null, "its issuer is null");
 	}
 

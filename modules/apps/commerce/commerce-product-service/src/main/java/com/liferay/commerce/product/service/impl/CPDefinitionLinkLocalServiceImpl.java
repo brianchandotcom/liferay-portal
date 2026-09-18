@@ -307,8 +307,8 @@ public class CPDefinitionLinkLocalServiceImpl
 				cpDefinitionLink.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionLink.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpDefinitionLink.getCPDefinitionId());
 
 			cpDefinitionLink = cpDefinitionLinkPersistence.findByC_C_T(
 				newCPDefinition.getCPDefinitionId(),
@@ -492,8 +492,8 @@ public class CPDefinitionLinkLocalServiceImpl
 				cpDefinitionId)) {
 
 			cpDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionId);
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpDefinitionId);
 
 			cpDefinitionId = cpDefinition.getCPDefinitionId();
 		}
@@ -627,7 +627,8 @@ public class CPDefinitionLinkLocalServiceImpl
 			try {
 				CPDefinition newCPDefinition =
 					CPDefinitionLocalServiceCircularDependencyUtil.
-						copyCPDefinition(cpDefinitionLink.getCPDefinitionId());
+						getOrCopyCPDefinition(
+							cpDefinitionLink.getCPDefinitionId());
 
 				cpDefinitionLink = cpDefinitionLinkPersistence.findByC_C_T(
 					newCPDefinition.getCPDefinitionId(),

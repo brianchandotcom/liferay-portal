@@ -145,7 +145,7 @@ public class CPDefinitionVirtualTest {
 						_serviceContext);
 
 			CPDefinition cpDefinition2 =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.getOrCopyCPDefinition(
 					cpDefinitionVirtualSetting.getClassPK());
 
 			Assert.assertNotNull(

@@ -18,15 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public class CPDefinitionLocalServiceCircularDependencyUtil {
 
-	public static CPDefinition copyCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
-		CPDefinitionLocalService cpDefinitionLocalService =
-			_cpDefinitionLocalServiceSnapshot.get();
-
-		return cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
-	}
-
 	public static CPDefinition getCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
@@ -34,6 +25,15 @@ public class CPDefinitionLocalServiceCircularDependencyUtil {
 			_cpDefinitionLocalServiceSnapshot.get();
 
 		return cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+	}
+
+	public static CPDefinition getOrCopyCPDefinition(long cpDefinitionId)
+		throws PortalException {
+
+		CPDefinitionLocalService cpDefinitionLocalService =
+			_cpDefinitionLocalServiceSnapshot.get();
+
+		return cpDefinitionLocalService.getOrCopyCPDefinition(cpDefinitionId);
 	}
 
 	public static boolean isVersionable(long cpDefinitionId) {

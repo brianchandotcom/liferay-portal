@@ -161,8 +161,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 				serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionOptionRel.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(
+						cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = _cpDefinitionOptionRelPersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),
@@ -270,8 +271,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 				serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionOptionRel.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(
+						cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = _cpDefinitionOptionRelPersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),
@@ -340,8 +342,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 				cpDefinitionOptionRel.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionOptionRel.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(
+						cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = _cpDefinitionOptionRelPersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),
@@ -897,8 +900,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 				serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionOptionRel.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(
+						cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = _cpDefinitionOptionRelPersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),

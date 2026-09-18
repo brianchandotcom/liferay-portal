@@ -90,7 +90,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 		CPDefinition cpDefinition = null;
 
 		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
-			cpDefinition = _cpDefinitionLocalService.copyCPDefinition(
+			cpDefinition = _cpDefinitionLocalService.getOrCopyCPDefinition(
 				cpDefinitionId);
 		}
 		else {
@@ -145,7 +145,8 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
 			try {
 				CPDefinition newCPDefinition =
-					_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+					_cpDefinitionLocalService.getOrCopyCPDefinition(
+						cpDefinitionId);
 
 				cpDefinitionId = newCPDefinition.getCPDefinitionId();
 			}
@@ -294,7 +295,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 				cpDefinitionGroupedEntry.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.getOrCopyCPDefinition(
 					cpDefinitionGroupedEntry.getCPDefinitionId());
 
 			cpDefinitionGroupedEntry =

@@ -181,8 +181,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				classPK)) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					classPK);
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(classPK);
 
 			classPK = newCPDefinition.getCPDefinitionId();
 		}
@@ -394,8 +394,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpAttachmentFileEntry.getClassPK())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpAttachmentFileEntry.getClassPK());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpAttachmentFileEntry.getClassPK());
 
 			if (cpAttachmentFileEntry.isCDNEnabled()) {
 				cpAttachmentFileEntry =
@@ -759,8 +759,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				cpAttachmentFileEntry.getClassPK())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpAttachmentFileEntry.getClassPK());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpAttachmentFileEntry.getClassPK());
 
 			if (cdnEnabled) {
 				cpAttachmentFileEntry =

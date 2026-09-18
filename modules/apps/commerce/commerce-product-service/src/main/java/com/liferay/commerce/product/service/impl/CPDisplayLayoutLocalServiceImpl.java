@@ -81,7 +81,7 @@ public class CPDisplayLayoutLocalServiceImpl
 			try {
 				CPDefinition newCPDefinition =
 					CPDefinitionLocalServiceCircularDependencyUtil.
-						copyCPDefinition(classPK);
+						getOrCopyCPDefinition(classPK);
 
 				classPK = newCPDefinition.getCPDefinitionId();
 			}
@@ -128,8 +128,8 @@ public class CPDisplayLayoutLocalServiceImpl
 				CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
 					classPK)) {
 
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					classPK);
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(classPK);
 			}
 		}
 		catch (PortalException portalException) {

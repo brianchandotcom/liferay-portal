@@ -64,8 +64,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 				cpDefinitionId)) {
 
 			cpDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionId);
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpDefinitionId);
 
 			cpDefinitionId = cpDefinition.getCPDefinitionId();
 		}
@@ -141,7 +141,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 			try {
 				CPDefinition newCPDefinition =
 					CPDefinitionLocalServiceCircularDependencyUtil.
-						copyCPDefinition(
+						getOrCopyCPDefinition(
 							cpDefinitionSpecificationOptionValue.
 								getCPDefinitionId());
 
@@ -418,8 +418,10 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 				cpDefinitionSpecificationOptionValue.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionSpecificationOptionValue.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(
+						cpDefinitionSpecificationOptionValue.
+							getCPDefinitionId());
 
 			cpDefinitionSpecificationOptionValue =
 				cpDefinitionSpecificationOptionValuePersistence.findByC_CSOVI(
@@ -468,8 +470,10 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 				cpDefinitionSpecificationOptionValue.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionSpecificationOptionValue.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(
+						cpDefinitionSpecificationOptionValue.
+							getCPDefinitionId());
 
 			cpDefinitionSpecificationOptionValue =
 				cpDefinitionSpecificationOptionValuePersistence.findByC_CSOVI(

@@ -169,8 +169,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionId, serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionId);
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpDefinitionId);
 
 			cpDefinitionId = newCPDefinition.getCPDefinitionId();
 
@@ -270,8 +270,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionId, serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionId);
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpDefinitionId);
 
 			cpDefinitionId = newCPDefinition.getCPDefinitionId();
 
@@ -359,8 +359,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRel.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionOptionRel.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(
+						cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = cpDefinitionOptionRelPersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),
@@ -954,8 +955,9 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				serviceContext.getRequest())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionOptionRel.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(
+						cpDefinitionOptionRel.getCPDefinitionId());
 
 			cpDefinitionOptionRel = cpDefinitionOptionRelPersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),

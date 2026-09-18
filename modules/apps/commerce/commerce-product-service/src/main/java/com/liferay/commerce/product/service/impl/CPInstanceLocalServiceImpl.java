@@ -185,8 +185,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				cpDefinitionId)) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpDefinitionId);
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpDefinitionId);
 
 			cpDefinitionId = newCPDefinition.getCPDefinitionId();
 		}
@@ -541,8 +541,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
-			CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-				cpInstance.getCPDefinitionId());
+			CPDefinitionLocalServiceCircularDependencyUtil.
+				getOrCopyCPDefinition(cpInstance.getCPDefinitionId());
 		}
 
 		// Commerce product instance
@@ -1125,8 +1125,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpInstance.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),
@@ -1282,8 +1282,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpInstance.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),
@@ -1310,8 +1310,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpInstance.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),
@@ -1435,8 +1435,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpInstance.getCPDefinitionId());
+				CPDefinitionLocalServiceCircularDependencyUtil.
+					getOrCopyCPDefinition(cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
 				newCPDefinition.getCPDefinitionId(),

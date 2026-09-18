@@ -231,7 +231,9 @@
 					'</code>, got <code>' +
 					escape(assertion.actual) +
 					'</code>') +
-			(assertion.note ? ' <em>(' + escape(assertion.note) + ')</em>' : '') +
+			(assertion.note
+				? ' <em>(' + escape(assertion.note) + ')</em>'
+				: '') +
 			'</div></li>'
 		);
 	}

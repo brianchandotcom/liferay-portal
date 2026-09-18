@@ -93,6 +93,15 @@ public class CommerceDiscountOrderTypeRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static CommerceDiscountOrderTypeRel
+			updateCommerceDiscountOrderTypeRel(
+				long commerceDiscountOrderTypeRelId, int priority)
+		throws PortalException {
+
+		return getService().updateCommerceDiscountOrderTypeRel(
+			commerceDiscountOrderTypeRelId, priority);
+	}
+
 	public static CommerceDiscountOrderTypeRelService getService() {
 		return _serviceSnapshot.get();
 	}
@@ -103,4 +112,4 @@ public class CommerceDiscountOrderTypeRelServiceUtil {
 			CommerceDiscountOrderTypeRelService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1270904687
+// LIFERAY-SERVICE-BUILDER-HASH:-1086313905

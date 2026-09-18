@@ -355,5 +355,10 @@ public interface CommerceDiscountRelLocalService
 	public CommerceDiscountRel updateCommerceDiscountRel(
 		CommerceDiscountRel commerceDiscountRel);
 
+	public CommerceDiscountRel updateCommerceDiscountRel(
+			long commerceDiscountRelId,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException;
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-363898594
+// LIFERAY-SERVICE-BUILDER-HASH:-295292417

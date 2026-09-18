@@ -107,6 +107,17 @@ public class CommerceDiscountOrderTypeRelServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRel
+			updateCommerceDiscountOrderTypeRel(
+				long commerceDiscountOrderTypeRelId, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountOrderTypeRelService.
+			updateCommerceDiscountOrderTypeRel(
+				commerceDiscountOrderTypeRelId, priority);
+	}
+
+	@Override
 	public CommerceDiscountOrderTypeRelService getWrappedService() {
 		return _commerceDiscountOrderTypeRelService;
 	}
@@ -124,4 +135,4 @@ public class CommerceDiscountOrderTypeRelServiceWrapper
 		_commerceDiscountOrderTypeRelService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1400244712
+// LIFERAY-SERVICE-BUILDER-HASH:911007076

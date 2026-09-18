@@ -81,5 +81,9 @@ public interface CommerceDiscountOrderTypeRelService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public CommerceDiscountOrderTypeRel updateCommerceDiscountOrderTypeRel(
+			long commerceDiscountOrderTypeRelId, int priority)
+		throws PortalException;
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-917468655
+// LIFERAY-SERVICE-BUILDER-HASH:1618486270

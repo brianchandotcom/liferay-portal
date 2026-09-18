@@ -149,6 +149,7 @@ public class JSUnitBatchBuildTestrayCaseResultTest
 		throws Exception {
 
 		JSONObject caseJSONObject = new JSONObject(
+		).put(
 			"className", reportedClassPath
 		).put(
 			"duration", 1

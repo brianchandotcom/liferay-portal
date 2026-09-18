@@ -10,6 +10,7 @@ import com.liferay.oauth.client.persistence.internal.upgrade.v1_4_1.OAuthClientE
 import com.liferay.oauth.client.persistence.internal.upgrade.v1_5_2.OAuthClientASLocalMetadataIssuerUpgradeProcess;
 import com.liferay.oauth.client.persistence.internal.upgrade.v1_6_0.util.OAuthClientPRLocalMetadataTable;
 import com.liferay.oauth.client.persistence.internal.upgrade.v1_6_1.OAuthClientEntryTokenConnectionTimeoutUpgradeProcess;
+import com.liferay.oauth.client.persistence.internal.upgrade.v2_0_0.OAuthClientIndexedColumnSizeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -104,6 +105,9 @@ public class OAuthClientPersistenceServiceUpgradeStepRegistrator
 			"1.6.2", "1.7.0",
 			new com.liferay.oauth.client.persistence.internal.upgrade.v1_7_0.
 				OAuthClientEntryUpgradeProcess());
+
+		registry.register(
+			"1.7.0", "2.0.0", new OAuthClientIndexedColumnSizeUpgradeProcess());
 	}
 
 	@Reference

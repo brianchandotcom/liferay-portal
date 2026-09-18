@@ -368,6 +368,16 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			permissionChecker.getUserId(), groupId, productTypeName);
 	}
 
+	public CPDefinition getOrCopyCPDefinition(
+			long sourceCPDefinitionId, long groupId, int status)
+		throws PortalException {
+
+		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
+
+		return cpDefinitionLocalService.getOrCopyCPDefinition(
+			sourceCPDefinitionId, groupId, status);
+	}
+
 	@Override
 	public Map<Locale, String> getUrlTitleMap(long cpDefinitionId)
 		throws PortalException {

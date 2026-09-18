@@ -122,6 +122,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getBoolean(actionRequest, "saveAsDraft"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+
 				Callable<CPDefinition> cpDefinitionCallable =
 					new CPDefinitionCallable(actionRequest, cpDefinition);
 
@@ -384,7 +385,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		if (saveAsDraft &&
 			(cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE))) {
 
-			return _cpDefinitionService.copyCPDefinition(
+			return _cpDefinitionService.getOrCopyCPDefinition(
 				cpDefinitionId, cpDefinition.getGroupId(),
 				WorkflowConstants.STATUS_DRAFT);
 		}

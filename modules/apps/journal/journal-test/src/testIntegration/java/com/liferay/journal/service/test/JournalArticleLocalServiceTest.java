@@ -31,12 +31,14 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMField;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -118,6 +120,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -2849,6 +2854,53 @@ public class JournalArticleLocalServiceTest {
 			"Predefined Value", field.getValue(unavailableLocale));
 	}
 
+	@Test
+	public void testUpdateStructureWithArticleAddedInSameTransaction()
+		throws Throwable {
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		TransactionConfig transactionConfig = TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+		JournalArticle journalArticle = TransactionInvokerUtil.invoke(
+			transactionConfig,
+			() -> {
+				JournalArticle article =
+					JournalTestUtil.addArticleWithXMLContent(
+						_group.getGroupId(),
+						DDMStructureTestUtil.getSampleStructuredContent(),
+						ddmStructure.getStructureKey(),
+						ddmTemplate.getTemplateKey());
+
+				DDMForm ddmForm = ddmStructure.getDDMForm();
+
+				ddmForm.addDDMFormField(
+					DDMFormTestUtil.createTextDDMFormField(
+						RandomTestUtil.randomString(), false, false, false));
+
+				_ddmStructureLocalService.updateStructure(
+					TestPropsValues.getUserId(), ddmStructure.getStructureId(),
+					ddmForm, ddmStructure.getDDMFormLayout(),
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId()));
+
+				return article;
+			});
+
+		List<DDMField> rootDDMFields = _ddmFieldLocalService.getDDMFields(
+			journalArticle.getId(), StringPool.BLANK);
+
+		Assert.assertEquals(rootDDMFields.toString(), 1, rootDDMFields.size());
+
+		Assert.assertNotNull(journalArticle.getDDMFormValues());
+	}
+
 	private JSONObject _addDocumentLibraryFieldValue(JSONObject valueJSONObject)
 		throws Exception {
 
@@ -3382,6 +3434,9 @@ public class JournalArticleLocalServiceTest {
 
 	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
+	@Inject
+	private DDMFieldLocalService _ddmFieldLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

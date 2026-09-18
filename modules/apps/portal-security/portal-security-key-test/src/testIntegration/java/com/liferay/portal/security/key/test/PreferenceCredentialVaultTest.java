@@ -114,7 +114,6 @@ public class PreferenceCredentialVaultTest {
 
 		Assert.assertEquals(
 			storedValue, GooglePlacesUtil.getGooglePlacesAPIKey(companyId));
-
 		Assert.assertEquals(
 			value, _secretResolver.resolve(companyId, storedValue));
 	}
@@ -122,9 +121,8 @@ public class PreferenceCredentialVaultTest {
 	@Test
 	public void testVaultGroupTypeSettings() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
-		String value = RandomTestUtil.randomString();
-
 		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+		String value = RandomTestUtil.randomString();
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
@@ -157,6 +155,7 @@ public class PreferenceCredentialVaultTest {
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 		String value = RandomTestUtil.randomString();
 
 		_companyLocalService.updatePreferences(
@@ -167,10 +166,8 @@ public class PreferenceCredentialVaultTest {
 				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY, value
 			).build());
 
-		String companyValue = PrefsPropsUtil.getString(
+		String storedValue = PrefsPropsUtil.getString(
 			companyId, GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY);
-
-		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			group.getTypeSettingsProperties();
@@ -179,18 +176,18 @@ public class PreferenceCredentialVaultTest {
 
 		try {
 			typeSettingsUnicodeProperties.setProperty(
-				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY, companyValue);
+				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY, storedValue);
 
 			group = _groupLocalService.updateGroup(
 				group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 			Assert.assertEquals(
-				companyValue,
+				storedValue,
 				group.getTypeSettingsProperty(
 					GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY));
 
 			Assert.assertEquals(
-				value, _secretResolver.resolve(companyId, companyValue));
+				value, _secretResolver.resolve(companyId, storedValue));
 		}
 		finally {
 			_groupLocalService.updateGroup(group.getGroupId(), typeSettings);

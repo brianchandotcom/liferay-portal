@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.key.secret;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -68,9 +69,12 @@ public class SecretVaultUtilTest {
 
 	@Test
 	public void testGetIdentifier() throws Exception {
+		String key = RandomTestUtil.randomString();
+		String scope = "company/" + RandomTestUtil.randomLong();
+
 		Assert.assertEquals(
-			"preference/company/1/googleMapsAPIKey",
-			SecretVaultUtil.getIdentifier("googleMapsAPIKey", "company/1"));
+			StringBundler.concat("preference/", scope, StringPool.SLASH, key),
+			SecretVaultUtil.getIdentifier(key, scope));
 	}
 
 	@Test

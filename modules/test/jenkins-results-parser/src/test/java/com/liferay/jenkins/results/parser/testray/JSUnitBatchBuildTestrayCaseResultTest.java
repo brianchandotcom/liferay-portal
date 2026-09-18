@@ -206,6 +206,7 @@ public class JSUnitBatchBuildTestrayCaseResultTest
 
 	private JSUnitJUnitTestClass _getTestClass(String methodName) {
 		JSONObject methodJSONObject = new JSONObject(
+		).put(
 			"ignored", false
 		).put(
 			"name", methodName

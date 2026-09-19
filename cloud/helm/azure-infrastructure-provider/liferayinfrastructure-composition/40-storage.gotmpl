@@ -1,6 +1,6 @@
 {{- $storage := $xr.spec.storage | default dict -}}
 
-{{- range $i, $dataPlane := $dataPlanes }}
+{{- range $i, $dataPlane := list "blue" "green" }}
 {{- $storageAccountName := printf "%s%s" $storageAccountBase (trunc 1 $dataPlane) }}
 {{- if $i }}
 ---
@@ -20,6 +20,7 @@ spec:
         accountTier: Standard
         allowNestedItemsToBePublic: false
         blobProperties:
+            changeFeedEnabled: true
             containerDeleteRetentionPolicy:
                 days: 7
             deleteRetentionPolicy:
@@ -43,6 +44,7 @@ spec:
     managementPolicies: {{ $managementPolicies }}
     writeConnectionSecretToRef:
         name: liferay-storage-{{ $dataPlane }}-credentials
+{{- if eq $dataPlane $activeDataPlane }}
 ---
 apiVersion: storage.azure.m.upbound.io/v1beta1
 kind: Container
@@ -61,4 +63,5 @@ spec:
             matchLabels:
                 dataPlane: {{ $dataPlane }}
     managementPolicies: {{ $managementPolicies }}
+{{- end }}
 {{- end }}

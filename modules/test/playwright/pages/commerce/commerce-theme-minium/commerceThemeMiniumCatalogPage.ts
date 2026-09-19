@@ -11,6 +11,7 @@ export class CommerceThemeMiniumCatalogPage {
 	readonly accountSelectorButton: Locator;
 	readonly accountSelectorDropdownMenu: Locator;
 	readonly accountSelectorNoAccountsMessage: Locator;
+	readonly accountSelectorOrderId: Locator;
 	readonly accountSelectorOrdersList: Locator;
 	readonly accountSelectorOrderWorkflowStatus: Locator;
 	readonly accountSelectorSearchAccountInput: Locator;
@@ -98,6 +99,8 @@ export class CommerceThemeMiniumCatalogPage {
 				'No accounts were found.',
 				{exact: true}
 			);
+		this.accountSelectorOrderId =
+			this.accountSelectorButton.locator('.order-id');
 		this.accountSelectorOrdersList = page.locator('.orders-list');
 		this.accountSelectorOrderWorkflowStatus =
 			this.accountSelectorButton.locator('.workflow-status');

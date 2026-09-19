@@ -5,6 +5,8 @@
 
 package com.liferay.exportimport.rest.internal.resource.v1_0;
 
+import com.liferay.exportimport.group.ExportedGroup;
+import com.liferay.exportimport.group.ExportedGroupProvider;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -16,11 +18,13 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.rest.dto.v1_0.ImportPreview;
 import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
+import com.liferay.exportimport.rest.dto.v1_0.PreviewSite;
 import com.liferay.exportimport.rest.internal.util.GroupUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.internal.util.PreviewPortletDataHandlerUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ImportPreviewResource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -176,9 +180,16 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 		}
 
 		for (Portlet portlet : portlets) {
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler == null) || portletDataHandler.isHidden()) {
+				continue;
+			}
+
 			PreviewPortletDataHandlerUtil.addPreviewPortletDataHandler(
 				contextCompany.getCompanyId(), locale, manifestSummary, portlet,
-				portlet.getPortletDataHandlerInstance(),
+				portletDataHandler,
 				PortletDataHandler::getImportPortletDataHandlerControls,
 				portletScoped, previewPortletDataHandlersMap);
 		}
@@ -218,8 +229,55 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 						PreviewPortletDataHandlerUtil.
 							toPreviewPortletDataHandlerSections(
 								locale, previewPortletDataHandlersMap));
+				setPreviewSites(() -> _getPreviewSites(fileEntry));
 			}
 		};
+	}
+
+	private PreviewSite[] _getPreviewSites(FileEntry fileEntry)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-85946")) {
+
+			return new PreviewSite[0];
+		}
+
+		List<ExportedGroup> exportedGroups =
+			_exportedGroupProvider.getExportedGroups(fileEntry);
+
+		if (ListUtil.isEmpty(exportedGroups)) {
+			return new PreviewSite[0];
+		}
+
+		PreviewSite[] previewSites = new PreviewSite[exportedGroups.size()];
+
+		for (int i = 0; i < exportedGroups.size(); i++) {
+			ExportedGroup exportedGroup = exportedGroups.get(i);
+
+			previewSites[i] = new PreviewSite() {
+				{
+					setChildSiteCount(exportedGroup::getChildGroupCount);
+					setDescriptiveName(exportedGroup::getDescriptiveName);
+					setExistsInInstance(
+						() -> {
+							Group group =
+								groupLocalService.
+									fetchGroupByExternalReferenceCode(
+										exportedGroup.
+											getExternalReferenceCode(),
+										contextCompany.getCompanyId());
+
+							return group != null;
+						});
+					setExternalReferenceCode(
+						exportedGroup::getExternalReferenceCode);
+					setPath(exportedGroup::getPath);
+				}
+			};
+		}
+
+		return previewSites;
 	}
 
 	private void _validateImportFile(
@@ -255,6 +313,9 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 				deleteExportImportConfiguration(exportImportConfiguration);
 		}
 	}
+
+	@Reference
+	private ExportedGroupProvider _exportedGroupProvider;
 
 	@Reference
 	private ExportImportConfigurationLocalService

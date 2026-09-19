@@ -1,0 +1,284 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.exportimport.internal.util;
+
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Collections;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+/**
+ * @author Petteri Karttunen
+ */
+public class GroupExportImportParameterUtilTest {
+
+	@ClassRule
+	@Rule
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testGetCurrentGroupExternalReferenceCodeWhenBlank() {
+		Assert.assertNull(
+			GroupExportImportParameterUtil.getCurrentGroupExternalReferenceCode(
+				GroupExportImportParameterUtil.getGroupExportParameterMap(
+					StringPool.BLANK, Collections.emptyMap())));
+	}
+
+	@Test
+	public void testGetCurrentGroupExternalReferenceCodeWhenSet() {
+		Assert.assertEquals(
+			"erc1",
+			GroupExportImportParameterUtil.getCurrentGroupExternalReferenceCode(
+				GroupExportImportParameterUtil.getGroupExportParameterMap(
+					"erc1", Collections.emptyMap())));
+	}
+
+	@Test
+	public void testGetGroupExportParameterMapDropsTheSelection() {
+		Map<String, String[]> groupParameterMap =
+			GroupExportImportParameterUtil.getGroupExportParameterMap(
+				"erc1",
+				HashMapBuilder.put(
+					PortletDataHandlerKeys.GROUP_EXTERNAL_REFERENCE_CODES,
+					new String[] {"erc1", "erc2"}
+				).build());
+
+		Assert.assertArrayEquals(
+			new String[0],
+			GroupExportImportParameterUtil.
+				getSelectedGroupExternalReferenceCodes(groupParameterMap));
+		Assert.assertEquals(
+			"erc1",
+			GroupExportImportParameterUtil.getCurrentGroupExternalReferenceCode(
+				groupParameterMap));
+		Assert.assertTrue(
+			GroupExportImportParameterUtil.isGroupScoped(groupParameterMap));
+	}
+
+	@Test
+	public void testGetGroupExportParameterMapKeepsWhatItDoesNotDecide() {
+		Map<String, String[]> groupParameterMap =
+			GroupExportImportParameterUtil.getGroupExportParameterMap(
+				"erc1",
+				HashMapBuilder.put(
+					PortletDataHandlerKeys.COMMENTS,
+					new String[] {Boolean.TRUE.toString()}
+				).put(
+					PortletDataHandlerKeys.RATINGS,
+					new String[] {Boolean.TRUE.toString()}
+				).build());
+
+		Assert.assertTrue(
+			MapUtil.getBoolean(
+				groupParameterMap, PortletDataHandlerKeys.COMMENTS));
+		Assert.assertTrue(
+			MapUtil.getBoolean(
+				groupParameterMap, PortletDataHandlerKeys.RATINGS));
+	}
+
+	@Test
+	public void testGetGroupExportParameterMapLeavesOutOfScopeOff() {
+		Map<String, String[]> groupParameterMap =
+			GroupExportImportParameterUtil.getGroupExportParameterMap(
+				"erc1",
+				HashMapBuilder.put(
+					PortletDataHandlerKeys.DELETIONS,
+					new String[] {Boolean.TRUE.toString()}
+				).put(
+					PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
+					new String[] {Boolean.TRUE.toString()}
+				).put(
+					PortletDataHandlerKeys.PERMISSIONS,
+					new String[] {Boolean.TRUE.toString()}
+				).build());
+
+		Assert.assertFalse(
+			MapUtil.getBoolean(
+				groupParameterMap, PortletDataHandlerKeys.DELETIONS));
+		Assert.assertFalse(
+			MapUtil.getBoolean(
+				groupParameterMap,
+				PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT));
+		Assert.assertFalse(
+			MapUtil.getBoolean(
+				groupParameterMap,
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS));
+		Assert.assertFalse(
+			MapUtil.getBoolean(
+				groupParameterMap, PortletDataHandlerKeys.PERMISSIONS));
+	}
+
+	@Test
+	public void testGetGroupExportParameterMapWithDisabledPortletData() {
+		Map<String, String[]> groupParameterMap =
+			GroupExportImportParameterUtil.getGroupExportParameterMap(
+				"erc1",
+				HashMapBuilder.put(
+					PortletDataHandlerKeys.PORTLET_DATA,
+					new String[] {Boolean.FALSE.toString()}
+				).put(
+					PortletDataHandlerKeys.PORTLET_DATA_ALL,
+					new String[] {Boolean.FALSE.toString()}
+				).put(
+					PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
+					new String[] {Boolean.FALSE.toString()}
+				).build());
+
+		Assert.assertTrue(
+			MapUtil.getBoolean(
+				groupParameterMap, PortletDataHandlerKeys.PORTLET_DATA));
+		Assert.assertTrue(
+			MapUtil.getBoolean(
+				groupParameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL));
+		Assert.assertTrue(
+			MapUtil.getBoolean(
+				groupParameterMap,
+				PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT));
+		Assert.assertTrue(
+			MapUtil.getBoolean(
+				groupParameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS));
+	}
+
+	@Test
+	public void testGetGroupImportParameterMapMirrors() {
+		Map<String, String[]> groupParameterMap =
+			GroupExportImportParameterUtil.getGroupImportParameterMap(
+				"erc1",
+				HashMapBuilder.put(
+					PortletDataHandlerKeys.DATA_STRATEGY,
+					new String[] {
+						PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW
+					}
+				).put(
+					PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
+					new String[] {
+						PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_ADD_AS_NEW
+					}
+				).build());
+
+		Assert.assertEquals(
+			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR,
+			MapUtil.getString(
+				groupParameterMap, PortletDataHandlerKeys.DATA_STRATEGY));
+		Assert.assertEquals(
+			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID,
+			MapUtil.getString(
+				groupParameterMap, PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE));
+	}
+
+	@Test
+	public void testGetGroupImportParameterMapRemovesNothing() {
+		Map<String, String[]> groupParameterMap =
+			GroupExportImportParameterUtil.getGroupImportParameterMap(
+				"erc1",
+				HashMapBuilder.put(
+					PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
+					new String[] {Boolean.TRUE.toString()}
+				).put(
+					PortletDataHandlerKeys.DELETE_PORTLET_DATA,
+					new String[] {Boolean.TRUE.toString()}
+				).build());
+
+		Assert.assertFalse(
+			MapUtil.getBoolean(
+				groupParameterMap,
+				PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS));
+		Assert.assertFalse(
+			MapUtil.getBoolean(
+				groupParameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA));
+	}
+
+	@Test
+	public void testGetSelectedGroupExternalReferenceCodesWhenMissing() {
+		Assert.assertArrayEquals(
+			new String[0],
+			GroupExportImportParameterUtil.
+				getSelectedGroupExternalReferenceCodes(
+					HashMapBuilder.put(
+						PortletDataHandlerKeys.PORTLET_DATA,
+						new String[] {Boolean.TRUE.toString()}
+					).build()));
+	}
+
+	@Test
+	public void testGetSelectedGroupExternalReferenceCodesWhenSet() {
+		Assert.assertArrayEquals(
+			new String[] {"erc1", "erc2"},
+			GroupExportImportParameterUtil.
+				getSelectedGroupExternalReferenceCodes(
+					HashMapBuilder.put(
+						PortletDataHandlerKeys.GROUP_EXTERNAL_REFERENCE_CODES,
+						new String[] {"erc1", "erc2"}
+					).build()));
+	}
+
+	@Test
+	public void testIsGroupExportImportEnabledFollowsTheFeatureFlag() {
+		long companyId = RandomTestUtil.randomLong();
+
+		try (MockedStatic<FeatureFlagManagerUtil>
+				featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+					FeatureFlagManagerUtil.class)) {
+
+			Assert.assertFalse(
+				GroupExportImportParameterUtil.isGroupExportImportEnabled(
+					companyId));
+
+			featureFlagManagerUtilMockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(companyId, "LPD-85946")
+			).thenReturn(
+				true
+			);
+
+			Assert.assertTrue(
+				GroupExportImportParameterUtil.isGroupExportImportEnabled(
+					companyId));
+		}
+	}
+
+	@Test
+	public void testIsGroupScopedWhenCompanyLevel() {
+		Assert.assertFalse(
+			GroupExportImportParameterUtil.isGroupScoped(
+				HashMapBuilder.put(
+					PortletDataHandlerKeys.GROUP_EXTERNAL_REFERENCE_CODES,
+					new String[] {"erc1"}
+				).build()));
+	}
+
+	@Test
+	public void testIsGroupScopedWhenGroupLevel() {
+		PortletDataContext portletDataContext = Mockito.mock(
+			PortletDataContext.class);
+
+		Mockito.when(
+			portletDataContext.getParameterMap()
+		).thenReturn(
+			GroupExportImportParameterUtil.getGroupExportParameterMap(
+				"erc1", Collections.emptyMap())
+		);
+
+		Assert.assertTrue(
+			GroupExportImportParameterUtil.isGroupScoped(portletDataContext));
+	}
+
+}

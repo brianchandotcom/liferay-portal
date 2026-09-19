@@ -9,6 +9,10 @@ import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletImportController;
+import com.liferay.exportimport.group.ExportImportGroupHelper;
+import com.liferay.exportimport.group.ExportedGroupProvider;
+import com.liferay.exportimport.internal.group.GroupImporter;
+import com.liferay.exportimport.internal.util.ManifestXmlFilePathUtil;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
@@ -37,6 +41,7 @@ import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.portlet.element.handler.PortletElementHandler;
 import com.liferay.exportimport.portlet.element.handler.PortletElementHandlerFactory;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.layout.admin.kernel.visibility.LayoutVisibilityManager;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
@@ -56,7 +61,9 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
@@ -145,8 +152,9 @@ public class LayoutImportController implements ImportController {
 
 			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 				validateFile(
-					layoutSet.getCompanyId(), targetGroupId, parameterMap,
-					zipReader);
+					layoutSet.getCompanyId(), targetGroupId,
+					ManifestXmlFilePathUtil.MANIFEST_XML_FILE_PATH,
+					parameterMap, zipReader);
 
 				PortletDataContext portletDataContext = getPortletDataContext(
 					exportImportConfiguration, zipReader);
@@ -275,8 +283,9 @@ public class LayoutImportController implements ImportController {
 
 			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 				validateFile(
-					layoutSet.getCompanyId(), targetGroupId, parameterMap,
-					zipReader);
+					layoutSet.getCompanyId(), targetGroupId,
+					ManifestXmlFilePathUtil.MANIFEST_XML_FILE_PATH,
+					parameterMap, zipReader);
 
 				PortletDataContext portletDataContext = getPortletDataContext(
 					exportImportConfiguration, zipReader);
@@ -460,13 +469,13 @@ public class LayoutImportController implements ImportController {
 	}
 
 	protected void validateFile(
-			long companyId, long groupId, Map<String, String[]> parameterMap,
-			ZipReader zipReader)
+			long companyId, long groupId, String manifestXmlFilePath,
+			Map<String, String[]> parameterMap, ZipReader zipReader)
 		throws Exception {
 
 		// XML
 
-		String xml = zipReader.getEntryAsString("/manifest.xml");
+		String xml = zipReader.getEntryAsString(manifestXmlFilePath);
 
 		if (xml == null) {
 			throw new LARFileException(LARFileException.TYPE_MISSING_MANIFEST);
@@ -776,8 +785,10 @@ public class LayoutImportController implements ImportController {
 		// LAR validation
 
 		validateFile(
-			companyId, portletDataContext.getGroupId(), parameterMap,
-			portletDataContext.getZipReader());
+			companyId, portletDataContext.getGroupId(),
+			ManifestXmlFilePathUtil.getImportManifestXmlFilePath(
+				portletDataContext),
+			parameterMap, portletDataContext.getZipReader());
 
 		// Source and target group id
 
@@ -976,6 +987,14 @@ public class LayoutImportController implements ImportController {
 		if (_log.isInfoEnabled()) {
 			_log.info("Importing layouts takes " + stopWatch.getTime() + " ms");
 		}
+
+		GroupImporter groupImporter = new GroupImporter(
+			_classNameLocalService, _exportedGroupProvider,
+			_exportImportGroupHelper, _exportImportReportEntryLocalService,
+			_groupLocalService, _groupService, _portletDataContextFactory);
+
+		groupImporter.importGroups(
+			portletDataContext, this::_importFile, userId);
 	}
 
 	private void _validateLayoutPrototypes(
@@ -1078,10 +1097,19 @@ public class LayoutImportController implements ImportController {
 		LayoutImportController.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DeletionSystemEventImporter _deletionSystemEventImporter;
+
+	@Reference
+	private ExportedGroupProvider _exportedGroupProvider;
+
+	@Reference
+	private ExportImportGroupHelper _exportImportGroupHelper;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;
@@ -1090,7 +1118,14 @@ public class LayoutImportController implements ImportController {
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
 
 	@Reference
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private Language _language;

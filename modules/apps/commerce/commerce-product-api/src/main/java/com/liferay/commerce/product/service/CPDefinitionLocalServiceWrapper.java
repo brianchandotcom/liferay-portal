@@ -191,13 +191,6 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public CPDefinition copyCPDefinition(long sourceCPDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionLocalService.copyCPDefinition(sourceCPDefinitionId);
-	}
-
-	@Override
 	public CPDefinition copyCPDefinition(
 			long sourceCPDefinitionId, long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -812,6 +805,23 @@ public class CPDefinitionLocalServiceWrapper
 			externalReferenceCode, companyId, userId, groupId, productTypeName);
 	}
 
+	@Override
+	public CPDefinition getOrCopyCPDefinition(long sourceCPDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLocalService.getOrCopyCPDefinition(
+			sourceCPDefinitionId);
+	}
+
+	@Override
+	public CPDefinition getOrCopyCPDefinition(
+			long sourceCPDefinitionId, long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLocalService.getOrCopyCPDefinition(
+			sourceCPDefinitionId, groupId, status);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -1175,4 +1185,4 @@ public class CPDefinitionLocalServiceWrapper
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1666409241
+// LIFERAY-SERVICE-BUILDER-HASH:-1519045096

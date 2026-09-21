@@ -181,6 +181,11 @@ public interface CPDefinitionService extends BaseService {
 			String externalReferenceCode, long groupId, String productTypeName)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinition getOrCopyCPDefinition(
+			long sourceCPDefinitionId, long groupId, int status)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -284,4 +289,4 @@ public interface CPDefinitionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001575465
+// LIFERAY-SERVICE-BUILDER-HASH:981781788

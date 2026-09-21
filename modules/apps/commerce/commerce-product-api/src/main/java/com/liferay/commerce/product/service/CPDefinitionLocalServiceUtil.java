@@ -184,12 +184,6 @@ public class CPDefinitionLocalServiceUtil {
 			userId, cpDefinitionId, groupId, serviceContext);
 	}
 
-	public static CPDefinition copyCPDefinition(long sourceCPDefinitionId)
-		throws PortalException {
-
-		return getService().copyCPDefinition(sourceCPDefinitionId);
-	}
-
 	public static CPDefinition copyCPDefinition(
 			long sourceCPDefinitionId, long groupId, int status)
 		throws PortalException {
@@ -713,6 +707,20 @@ public class CPDefinitionLocalServiceUtil {
 			externalReferenceCode, companyId, userId, groupId, productTypeName);
 	}
 
+	public static CPDefinition getOrCopyCPDefinition(long sourceCPDefinitionId)
+		throws PortalException {
+
+		return getService().getOrCopyCPDefinition(sourceCPDefinitionId);
+	}
+
+	public static CPDefinition getOrCopyCPDefinition(
+			long sourceCPDefinitionId, long groupId, int status)
+		throws PortalException {
+
+		return getService().getOrCopyCPDefinition(
+			sourceCPDefinitionId, groupId, status);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -1011,4 +1019,4 @@ public class CPDefinitionLocalServiceUtil {
 			CPDefinitionLocalServiceUtil.class, CPDefinitionLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-420942032
+// LIFERAY-SERVICE-BUILDER-HASH:-312704679

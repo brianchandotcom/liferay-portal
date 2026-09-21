@@ -162,9 +162,6 @@ public interface CPDefinitionLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public CPDefinition copyCPDefinition(long sourceCPDefinitionId)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition copyCPDefinition(
 			long sourceCPDefinitionId, long groupId, int status)
@@ -533,6 +530,15 @@ public interface CPDefinitionLocalService
 			long groupId, String productTypeName)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinition getOrCopyCPDefinition(long sourceCPDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinition getOrCopyCPDefinition(
+			long sourceCPDefinitionId, long groupId, int status)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -726,4 +732,4 @@ public interface CPDefinitionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:960126460
+// LIFERAY-SERVICE-BUILDER-HASH:-1651361732

@@ -798,8 +798,7 @@ public class CPDefinitionLocalServiceTest {
 				_cpDefinitionLocalService.fetchCPDefinition(
 					cpDefinition.getCPDefinitionId()));
 
-			Assert.assertNull(
-				_cProductLocalService.fetchCProduct(cProductId));
+			Assert.assertNull(_cProductLocalService.fetchCProduct(cProductId));
 		}
 	}
 
@@ -2525,8 +2524,7 @@ public class CPDefinitionLocalServiceTest {
 		Date expirationDate = cpDefinition.getExpirationDate();
 
 		return _cpDefinitionLocalService.updateCPDefinition(
-			cpDefinition.getCPDefinitionId(),
-			cpDefinition.getCPTaxCategoryId(),
+			cpDefinition.getCPDefinitionId(), cpDefinition.getCPTaxCategoryId(),
 			cpDefinition.isAccountGroupFilterEnabled(),
 			cpDefinition.isChannelFilterEnabled(),
 			cpDefinition.getDDMStructureKey(), cpDefinition.getDepth(),

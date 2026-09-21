@@ -122,7 +122,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getBoolean(actionRequest, "saveAsDraft"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-
 				Callable<CPDefinition> cpDefinitionCallable =
 					new CPDefinitionCallable(actionRequest, cpDefinition);
 

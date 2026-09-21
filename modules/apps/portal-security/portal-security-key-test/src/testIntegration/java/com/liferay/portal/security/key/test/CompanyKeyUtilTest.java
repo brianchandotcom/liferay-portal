@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.security.key.internal.company.test;
+package com.liferay.portal.security.key.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.security.key.spi.crypto.CryptoProvider;
+import com.liferay.portal.security.key.test.util.TestCompanyCryptoProvider;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.security.Key;
@@ -42,7 +43,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Christopher Kian
  */
 @RunWith(Arquillian.class)
-public class CompanyKeyResolverImplTest {
+public class CompanyKeyUtilTest {
 
 	@ClassRule
 	@Rule
@@ -53,8 +54,7 @@ public class CompanyKeyResolverImplTest {
 	public void setUp() throws Exception {
 		_testCompanyCryptoProvider = new TestCompanyCryptoProvider();
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			CompanyKeyResolverImplTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(CompanyKeyUtilTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -66,7 +66,8 @@ public class CompanyKeyResolverImplTest {
 
 		_keyManagerCustomProfileConfigurationTemporarySwapper =
 			new ConfigurationTemporarySwapper(
-				_KEY_MANAGER_CUSTOM_PROFILE_CONFIGURATION_PID,
+				"com.liferay.portal.security.key.internal.profile." +
+					"configuration.KeyManagerCustomProfileConfiguration",
 				HashMapDictionaryBuilder.<String, Object>put(
 					"companyKEKProviderId",
 					TestCompanyCryptoProvider.PROVIDER_ID
@@ -181,10 +182,6 @@ public class CompanyKeyResolverImplTest {
 	private static final String _KEY_MANAGER_CONFIGURATION_PID =
 		"com.liferay.portal.security.key.internal.profile.configuration." +
 			"KeyManagerConfiguration";
-
-	private static final String _KEY_MANAGER_CUSTOM_PROFILE_CONFIGURATION_PID =
-		"com.liferay.portal.security.key.internal.profile.configuration." +
-			"KeyManagerCustomProfileConfiguration";
 
 	@DeleteAfterTestRun
 	private Company _company;

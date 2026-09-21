@@ -353,7 +353,9 @@ public class CompanyKeyResolverImplTest {
 
 	private String _serialize(byte[] ciphertext) {
 		WrappedCompanyKey wrappedCompanyKey = new WrappedCompanyKey(
-			ciphertext, _KEK_IDENTIFIER, _KEK_PROVIDER_ID);
+			ciphertext,
+			new KeyReference(
+				_KEK_IDENTIFIER, _KEK_PROVIDER_ID, KeyReference.Type.CRYPTO));
 
 		return wrappedCompanyKey.serialize();
 	}
@@ -571,6 +573,25 @@ public class CompanyKeyResolverImplTest {
 		);
 	}
 
+	private void _testDeserializeKeyWithUnsupportedVersion() throws Exception {
+		WrappedCompanyKey wrappedCompanyKey = new WrappedCompanyKey(
+			_CIPHERTEXT_1,
+			new KeyReference(
+				_KEK_IDENTIFIER, _KEK_PROVIDER_ID, KeyReference.Type.CRYPTO));
+
+		String serializedKey = StringUtil.replaceFirst(
+			wrappedCompanyKey.serialize(),
+			CompanyKeyUtil.WRAPPED_KEY_PREFIX +
+				CompanyKeyUtil.WRAPPED_KEY_VERSION,
+			CompanyKeyUtil.WRAPPED_KEY_PREFIX.concat("v2"));
+
+		Assert.assertTrue(CompanyKeyUtil.isWrappedKey(serializedKey));
+
+		_assertDeserializeKeyFails(
+			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000)),
+			serializedKey);
+	}
+
 	private void _testDeserializeKeyWithoutCache() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
 			_createCompanyKeyResolverImpl(0);
@@ -593,23 +614,6 @@ public class CompanyKeyResolverImplTest {
 			_getCompanyKeyCacheEntries(companyKeyResolverImpl);
 
 		Assert.assertTrue(companyKeyCacheEntries.isEmpty());
-	}
-
-	private void _testDeserializeKeyWithUnsupportedVersion() throws Exception {
-		WrappedCompanyKey wrappedCompanyKey = new WrappedCompanyKey(
-			_CIPHERTEXT_1, _KEK_IDENTIFIER, _KEK_PROVIDER_ID);
-
-		String serializedKey = StringUtil.replaceFirst(
-			wrappedCompanyKey.serialize(),
-			CompanyKeyUtil.WRAPPED_KEY_PREFIX +
-				CompanyKeyUtil.WRAPPED_KEY_VERSION,
-			CompanyKeyUtil.WRAPPED_KEY_PREFIX.concat("v2"));
-
-		Assert.assertTrue(CompanyKeyUtil.isWrappedKey(serializedKey));
-
-		_assertDeserializeKeyFails(
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000)),
-			serializedKey);
 	}
 
 	private void _testIsEnabled() throws Exception {
@@ -744,9 +748,11 @@ public class CompanyKeyResolverImplTest {
 
 		Assert.assertArrayEquals(
 			_CIPHERTEXT_1, wrappedCompanyKey.getCiphertext());
-		Assert.assertEquals(_KEK_IDENTIFIER, wrappedCompanyKey.getIdentifier());
-		Assert.assertEquals(
-			_KEK_PROVIDER_ID, wrappedCompanyKey.getProviderId());
+
+		KeyReference keyReference = wrappedCompanyKey.getKeyReference();
+
+		Assert.assertEquals(_KEK_IDENTIFIER, keyReference.getIdentifier());
+		Assert.assertEquals(_KEK_PROVIDER_ID, keyReference.getProviderId());
 
 		ArgumentCaptor<byte[]> argumentCaptor = ArgumentCaptor.forClass(
 			byte[].class);
@@ -791,28 +797,6 @@ public class CompanyKeyResolverImplTest {
 		_assertSerializeKeyFails(companyKeyResolverImpl);
 	}
 
-	private void _testSerializeKeyWithoutKEKIdentifier() throws Exception {
-		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
-
-		_mockCompanyKEKIdentifier("");
-
-		_assertSerializeKeyFails(companyKeyResolverImpl);
-	}
-
-	private void _testSerializeKeyWithoutKEKProvider() throws Exception {
-		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
-
-		Mockito.when(
-			_keyManagerProfileRegistry.getActiveKeyManagerProfile()
-		).thenReturn(
-			null
-		);
-
-		_assertSerializeKeyFails(companyKeyResolverImpl);
-	}
-
 	private void _testSerializeKeyWithUnregisteredKEKProvider()
 		throws Exception {
 
@@ -840,6 +824,28 @@ public class CompanyKeyResolverImplTest {
 			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
 
 		_mockCompanyKEKProviderId("*");
+
+		_assertSerializeKeyFails(companyKeyResolverImpl);
+	}
+
+	private void _testSerializeKeyWithoutKEKIdentifier() throws Exception {
+		CompanyKeyResolverImpl companyKeyResolverImpl =
+			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+
+		_mockCompanyKEKIdentifier("");
+
+		_assertSerializeKeyFails(companyKeyResolverImpl);
+	}
+
+	private void _testSerializeKeyWithoutKEKProvider() throws Exception {
+		CompanyKeyResolverImpl companyKeyResolverImpl =
+			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+
+		Mockito.when(
+			_keyManagerProfileRegistry.getActiveKeyManagerProfile()
+		).thenReturn(
+			null
+		);
 
 		_assertSerializeKeyFails(companyKeyResolverImpl);
 	}

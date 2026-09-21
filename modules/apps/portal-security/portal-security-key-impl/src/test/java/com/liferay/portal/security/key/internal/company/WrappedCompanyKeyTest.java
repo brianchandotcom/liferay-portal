@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.encryptor.CompanyKeyUtil;
 import com.liferay.portal.kernel.exception.CompanyKeyResolutionException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -28,6 +29,7 @@ public class WrappedCompanyKeyTest {
 
 	@Test
 	public void testConstructor() {
+		_testConstructor(_CIPHERTEXT, null);
 		_testConstructor(
 			_CIPHERTEXT, "alias/ke|k", RandomTestUtil.randomString());
 		_testConstructor(
@@ -50,17 +52,19 @@ public class WrappedCompanyKeyTest {
 		String providerId = RandomTestUtil.randomString();
 
 		WrappedCompanyKey wrappedCompanyKey = new WrappedCompanyKey(
-			_CIPHERTEXT, identifier, providerId);
+			_CIPHERTEXT,
+			new KeyReference(identifier, providerId, KeyReference.Type.CRYPTO));
 
 		WrappedCompanyKey parsedWrappedCompanyKey = WrappedCompanyKey.parse(
 			_COMPANY_ID, wrappedCompanyKey.serialize());
 
 		Assert.assertArrayEquals(
 			_CIPHERTEXT, parsedWrappedCompanyKey.getCiphertext());
-		Assert.assertEquals(
-			identifier, parsedWrappedCompanyKey.getIdentifier());
-		Assert.assertEquals(
-			providerId, parsedWrappedCompanyKey.getProviderId());
+
+		KeyReference keyReference = parsedWrappedCompanyKey.getKeyReference();
+
+		Assert.assertEquals(identifier, keyReference.getIdentifier());
+		Assert.assertEquals(providerId, keyReference.getProviderId());
 
 		_testParse(_VERSION_PREFIX);
 		_testParse(_VERSION_PREFIX + ":alias/kek|Y2lwaGVy}");
@@ -86,7 +90,8 @@ public class WrappedCompanyKeyTest {
 		String providerId = RandomTestUtil.randomString();
 
 		WrappedCompanyKey wrappedCompanyKey = new WrappedCompanyKey(
-			_CIPHERTEXT, identifier, providerId);
+			_CIPHERTEXT,
+			new KeyReference(identifier, providerId, KeyReference.Type.CRYPTO));
 
 		String serializedKey = wrappedCompanyKey.serialize();
 
@@ -97,18 +102,35 @@ public class WrappedCompanyKeyTest {
 
 		Assert.assertArrayEquals(
 			_CIPHERTEXT, parsedWrappedCompanyKey.getCiphertext());
-		Assert.assertEquals(
-			identifier, parsedWrappedCompanyKey.getIdentifier());
-		Assert.assertEquals(
-			providerId, parsedWrappedCompanyKey.getProviderId());
+
+		KeyReference keyReference = parsedWrappedCompanyKey.getKeyReference();
+
+		Assert.assertEquals(identifier, keyReference.getIdentifier());
+		Assert.assertEquals(providerId, keyReference.getProviderId());
+
 		Assert.assertEquals(serializedKey, parsedWrappedCompanyKey.serialize());
+	}
+
+	private void _testConstructor(
+		byte[] ciphertext, KeyReference keyReference) {
+
+		try {
+			new WrappedCompanyKey(ciphertext, keyReference);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+		}
 	}
 
 	private void _testConstructor(
 		byte[] ciphertext, String identifier, String providerId) {
 
 		try {
-			new WrappedCompanyKey(ciphertext, identifier, providerId);
+			new WrappedCompanyKey(
+				ciphertext,
+				new KeyReference(
+					identifier, providerId, KeyReference.Type.CRYPTO));
 
 			Assert.fail();
 		}

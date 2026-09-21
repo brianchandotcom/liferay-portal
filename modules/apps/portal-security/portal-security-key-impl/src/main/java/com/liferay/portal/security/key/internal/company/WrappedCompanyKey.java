@@ -10,7 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.encryptor.CompanyKeyUtil;
 import com.liferay.portal.kernel.exception.CompanyKeyResolutionException;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.key.KeyReference;
 
 import java.util.Arrays;
 import java.util.Base64;
@@ -78,8 +78,10 @@ public class WrappedCompanyKey {
 
 		try {
 			return new WrappedCompanyKey(
-				ciphertext, body.substring(colonIndex + 1, pipeIndex),
-				body.substring(0, colonIndex));
+				ciphertext,
+				new KeyReference(
+					body.substring(colonIndex + 1, pipeIndex),
+					body.substring(0, colonIndex), KeyReference.Type.CRYPTO));
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			throw new CompanyKeyResolutionException(
@@ -88,16 +90,16 @@ public class WrappedCompanyKey {
 		}
 	}
 
-	public WrappedCompanyKey(
-		byte[] ciphertext, String identifier, String providerId) {
-
+	public WrappedCompanyKey(byte[] ciphertext, KeyReference keyReference) {
 		if (ciphertext == null) {
 			throw new IllegalArgumentException("Ciphertext is null");
 		}
 
-		if (Validator.isNull(identifier)) {
-			throw new IllegalArgumentException("Identifier is null");
+		if (keyReference == null) {
+			throw new IllegalArgumentException("Key reference is null");
 		}
+
+		String identifier = keyReference.getIdentifier();
 
 		if ((identifier.indexOf(CharPool.CLOSE_CURLY_BRACE) != -1) ||
 			(identifier.indexOf(CharPool.PIPE) != -1)) {
@@ -106,33 +108,23 @@ public class WrappedCompanyKey {
 				"Identifier contains a reserved character");
 		}
 
-		if (Validator.isNull(providerId)) {
-			throw new IllegalArgumentException("Provider ID is null");
-		}
+		String providerId = keyReference.getProviderId();
 
-		if ((providerId.indexOf(CharPool.CLOSE_CURLY_BRACE) != -1) ||
-			(providerId.indexOf(CharPool.COLON) != -1) ||
-			(providerId.indexOf(CharPool.PIPE) != -1)) {
-
+		if (providerId.indexOf(CharPool.PIPE) != -1) {
 			throw new IllegalArgumentException(
 				"Provider ID contains a reserved character");
 		}
 
 		_ciphertext = Arrays.copyOf(ciphertext, ciphertext.length);
-		_identifier = identifier;
-		_providerId = providerId;
+		_keyReference = keyReference;
 	}
 
 	public byte[] getCiphertext() {
 		return Arrays.copyOf(_ciphertext, _ciphertext.length);
 	}
 
-	public String getIdentifier() {
-		return _identifier;
-	}
-
-	public String getProviderId() {
-		return _providerId;
+	public KeyReference getKeyReference() {
+		return _keyReference;
 	}
 
 	public String serialize() {
@@ -140,13 +132,13 @@ public class WrappedCompanyKey {
 
 		return StringBundler.concat(
 			CompanyKeyUtil.WRAPPED_KEY_PREFIX,
-			CompanyKeyUtil.WRAPPED_KEY_VERSION, StringPool.COLON, _providerId,
-			StringPool.COLON, _identifier, StringPool.PIPE,
+			CompanyKeyUtil.WRAPPED_KEY_VERSION, StringPool.COLON,
+			_keyReference.getProviderId(), StringPool.COLON,
+			_keyReference.getIdentifier(), StringPool.PIPE,
 			encoder.encodeToString(_ciphertext), StringPool.CLOSE_CURLY_BRACE);
 	}
 
 	private final byte[] _ciphertext;
-	private final String _identifier;
-	private final String _providerId;
+	private final KeyReference _keyReference;
 
 }

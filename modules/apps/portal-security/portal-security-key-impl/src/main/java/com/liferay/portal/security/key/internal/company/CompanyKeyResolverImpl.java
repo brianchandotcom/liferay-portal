@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.key.internal.company;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -35,10 +36,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -68,50 +71,32 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		WrappedCompanyKey wrappedCompanyKey = WrappedCompanyKey.parse(
 			companyId, serializedKey);
 
-		synchronized (_getCompanyKeyLock(companyId)) {
+		DefaultNoticeableFuture<Void> noticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		DefaultNoticeableFuture<Void> currentNoticeableFuture =
+			_companyKeyNoticeableFutures.putIfAbsent(
+				companyId, noticeableFuture);
+
+		if (currentNoticeableFuture != null) {
+			_awaitDecrypt(companyId, currentNoticeableFuture);
+
 			key = _getCachedKey(companyId, serializedKey);
 
 			if (key != null) {
 				return key;
 			}
 
-			byte[] keyBytes = null;
+			return _decryptKey(companyId, serializedKey, wrappedCompanyKey);
+		}
 
-			try {
-				CryptoServiceResult<byte[]> cryptoServiceResult =
-					_cryptoManager.decrypt(
-						wrappedCompanyKey.getCiphertext(), companyId,
-						new KeyReference(
-							wrappedCompanyKey.getIdentifier(),
-							wrappedCompanyKey.getProviderId(),
-							KeyReference.Type.CRYPTO));
+		try {
+			return _decryptKey(companyId, serializedKey, wrappedCompanyKey);
+		}
+		finally {
+			_companyKeyNoticeableFutures.remove(companyId, noticeableFuture);
 
-				byte[] decryptedKeyBytes = cryptoServiceResult.getValue();
-
-				if (ArrayUtil.isEmpty(decryptedKeyBytes)) {
-					throw new CompanyKeyResolutionException(
-						StringBundler.concat(
-							"Decrypting the wrapped key returned no key ",
-							"material for company ", companyId));
-				}
-
-				keyBytes = decryptedKeyBytes;
-
-				_putCompanyKeyCacheEntry(companyId, keyBytes, serializedKey);
-
-				return _createKey(keyBytes);
-			}
-			catch (CryptoException cryptoException) {
-				throw new CompanyKeyResolutionException(
-					"Unable to decrypt the wrapped key for company " +
-						companyId,
-					cryptoException);
-			}
-			finally {
-				if (keyBytes != null) {
-					Arrays.fill(keyBytes, (byte)0);
-				}
-			}
+			noticeableFuture.set(null);
 		}
 	}
 
@@ -171,7 +156,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 				"Key has no encoded key material for company " + companyId);
 		}
 
-		byte[] plaintext = Arrays.copyOf(keyBytes, keyBytes.length);
+		byte[] plaintextKeyBytes = Arrays.copyOf(keyBytes, keyBytes.length);
 
 		try {
 			List<String> cryptoProviderIds =
@@ -186,13 +171,13 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 						" is not registered for company ", companyId));
 			}
 
+			KeyReference keyReference = new KeyReference(
+				companyKEKIdentifier, companyKEKProviderId,
+				KeyReference.Type.CRYPTO);
+
 			CryptoServiceResult<byte[]> cryptoServiceResult =
 				_cryptoManager.encrypt(
-					companyId,
-					new KeyReference(
-						companyKEKIdentifier, companyKEKProviderId,
-						KeyReference.Type.CRYPTO),
-					plaintext);
+					companyId, keyReference, plaintextKeyBytes);
 
 			byte[] ciphertext = cryptoServiceResult.getValue();
 
@@ -203,7 +188,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 			}
 
 			WrappedCompanyKey wrappedCompanyKey = new WrappedCompanyKey(
-				ciphertext, companyKEKIdentifier, companyKEKProviderId);
+				ciphertext, keyReference);
 
 			String serializedKey = wrappedCompanyKey.serialize();
 
@@ -218,7 +203,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		}
 		finally {
 			Arrays.fill(keyBytes, (byte)0);
-			Arrays.fill(plaintext, (byte)0);
+			Arrays.fill(plaintextKeyBytes, (byte)0);
 		}
 	}
 
@@ -280,6 +265,32 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		_keyManagerConfiguration = null;
 	}
 
+	private void _awaitDecrypt(
+		long companyId, DefaultNoticeableFuture<Void> noticeableFuture) {
+
+		try {
+			noticeableFuture.get(_AWAIT_DECRYPT_TIMEOUT, TimeUnit.MILLISECONDS);
+		}
+		catch (InterruptedException interruptedException) {
+			Thread currentThread = Thread.currentThread();
+
+			currentThread.interrupt();
+
+			throw new CompanyKeyResolutionException(
+				"Interrupted while waiting for the wrapped key for company " +
+					companyId,
+				interruptedException);
+		}
+		catch (ExecutionException | TimeoutException exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to wait for the wrapped key for company " +
+						companyId,
+					exception);
+			}
+		}
+	}
+
 	private void _clearCompanyKeyCacheEntries() {
 		for (CompanyKeyCacheEntry companyKeyCacheEntry :
 				_companyKeyCacheEntries.values()) {
@@ -294,6 +305,43 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		return new SecretKeySpec(keyBytes, _getKeyAlgorithm());
 	}
 
+	private Key _decryptKey(
+		long companyId, String serializedKey,
+		WrappedCompanyKey wrappedCompanyKey) {
+
+		byte[] keyBytes = null;
+
+		try {
+			CryptoServiceResult<byte[]> cryptoServiceResult =
+				_cryptoManager.decrypt(
+					wrappedCompanyKey.getCiphertext(), companyId,
+					wrappedCompanyKey.getKeyReference());
+
+			keyBytes = cryptoServiceResult.getValue();
+
+			if (ArrayUtil.isEmpty(keyBytes)) {
+				throw new CompanyKeyResolutionException(
+					StringBundler.concat(
+						"Decrypting the wrapped key returned no key material ",
+						"for company ", companyId));
+			}
+
+			_putCompanyKeyCacheEntry(companyId, keyBytes, serializedKey);
+
+			return _createKey(keyBytes);
+		}
+		catch (CryptoException cryptoException) {
+			throw new CompanyKeyResolutionException(
+				"Unable to decrypt the wrapped key for company " + companyId,
+				cryptoException);
+		}
+		finally {
+			if (keyBytes != null) {
+				Arrays.fill(keyBytes, (byte)0);
+			}
+		}
+	}
+
 	private void _destroyExpiredCompanyKeyCacheEntries() {
 		long time = System.currentTimeMillis();
 
@@ -306,6 +354,19 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 					companyKeyCacheEntry.destroy();
 				}
 			});
+	}
+
+	private long _getCacheTTLMillis() {
+		KeyManagerConfiguration keyManagerConfiguration =
+			_keyManagerConfiguration;
+
+		if (keyManagerConfiguration == null) {
+			return 0;
+		}
+
+		long cacheTTLSeconds = keyManagerConfiguration.companyKeyCacheTTL();
+
+		return cacheTTLSeconds * 1000;
 	}
 
 	private Key _getCachedKey(long companyId, String serializedKey) {
@@ -328,19 +389,6 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		finally {
 			Arrays.fill(keyBytes, (byte)0);
 		}
-	}
-
-	private long _getCacheTTLMillis() {
-		KeyManagerConfiguration keyManagerConfiguration =
-			_keyManagerConfiguration;
-
-		if (keyManagerConfiguration == null) {
-			return 0;
-		}
-
-		long cacheTTLSeconds = keyManagerConfiguration.companyKeyCacheTTL();
-
-		return cacheTTLSeconds * 1000;
 	}
 
 	private String _getCompanyKEKIdentifier() {
@@ -391,10 +439,6 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		return companyKeyCacheEntry;
 	}
 
-	private Object _getCompanyKeyLock(long companyId) {
-		return _companyKeyLocks.computeIfAbsent(companyId, key -> new Object());
-	}
-
 	private String _getKeyAlgorithm() {
 		String keyAlgorithm = _keyAlgorithm;
 
@@ -431,13 +475,15 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		}
 	}
 
+	private static final long _AWAIT_DECRYPT_TIMEOUT = 10000;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyKeyResolverImpl.class);
 
 	private final Map<Long, CompanyKeyCacheEntry> _companyKeyCacheEntries =
 		new ConcurrentHashMap<>();
-	private final Map<Long, Object> _companyKeyLocks =
-		new ConcurrentHashMap<>();
+	private final Map<Long, DefaultNoticeableFuture<Void>>
+		_companyKeyNoticeableFutures = new ConcurrentHashMap<>();
 
 	@Reference
 	private CryptoManager _cryptoManager;

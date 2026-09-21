@@ -484,25 +484,22 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	}
 
 	private List<JavaTerm> _extractInnerJavaTerms(List<JavaTerm> javaTerms) {
-		List<JavaTerm> extractedJavaTerms = new ArrayList<>();
+		List<JavaTerm> innerJavaTerms = new ArrayList<>();
 
-		for (JavaTerm childJavaTerm : javaTerms) {
-			if (childJavaTerm.isJavaClass()) {
-				JavaClass childJavaClass = (JavaClass)childJavaTerm;
+		for (JavaTerm javaTerm : javaTerms) {
+			if (javaTerm.isJavaClass()) {
+				JavaClass javaClass = (JavaClass)javaTerm;
 
-				List<JavaTerm> innerChildJavaTerms =
-					childJavaClass.getChildJavaTerms();
-
-				extractedJavaTerms.addAll(
-					_extractInnerJavaTerms(innerChildJavaTerms));
+				innerJavaTerms.addAll(
+					_extractInnerJavaTerms(javaClass.getChildJavaTerms()));
 
 				continue;
 			}
 
-			extractedJavaTerms.add(childJavaTerm);
+			innerJavaTerms.add(javaTerm);
 		}
 
-		return extractedJavaTerms;
+		return innerJavaTerms;
 	}
 
 	private int _findMatchingClosingBrace(String content, int index) {
@@ -535,16 +532,16 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
-		for (JavaTerm childJavaTerm : _extractInnerJavaTerms(childJavaTerms)) {
+		for (JavaTerm innerJavaTerm : _extractInnerJavaTerms(childJavaTerms)) {
 			String javaContent = null;
 
-			if (childJavaTerm.isJavaMethod()) {
-				JavaMethod javaMethod = (JavaMethod)childJavaTerm;
+			if (innerJavaTerm.isJavaMethod()) {
+				JavaMethod javaMethod = (JavaMethod)innerJavaTerm;
 
 				javaContent = javaMethod.getContent();
 			}
-			else if (childJavaTerm.isJavaVariable()) {
-				JavaVariable javaVariable = (JavaVariable)childJavaTerm;
+			else if (innerJavaTerm.isJavaVariable()) {
+				JavaVariable javaVariable = (JavaVariable)innerJavaTerm;
 
 				javaContent = javaVariable.getContent();
 			}

@@ -129,6 +129,40 @@ public class BatchTestClassGroupTestUtil {
 			"modules-compile", portalTestClassJob);
 	}
 
+	public static JSUnitModulesBatchTestClassGroup
+		newJSUnitModulesBatchTestClassGroup(
+			List<File> baseModuleDirs, Properties jobProperties,
+			List<File> jsUnitFiles, File workingDirectory) {
+
+		PortalTestClassJob portalTestClassJob = getPortalTestClassJob(
+			jobProperties, Collections.<File>emptyList(), workingDirectory);
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
+
+		Mockito.doReturn(
+			jsUnitFiles
+		).when(
+			portalGitWorkingDirectory
+		).getJSUnitFiles();
+
+		try {
+			Mockito.doReturn(
+				baseModuleDirs
+			).when(
+				portalGitWorkingDirectory
+			).getModuleDirsList(
+				Mockito.anyList(), Mockito.anyList()
+			);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return new JSUnitModulesBatchTestClassGroup(
+			"js-unit", portalTestClassJob);
+	}
+
 	public static ServiceBuilderModulesBatchTestClassGroup
 		newServiceBuilderModulesBatchTestClassGroup(
 			String... modifiedFilePaths) {
@@ -249,7 +283,8 @@ public class BatchTestClassGroupTestUtil {
 	private static File _writeJobPropertiesFile(Properties jobProperties) {
 		try {
 			File jobPropertiesFile = File.createTempFile(
-				"BatchTestClassGroupTestUtil", ".properties");
+				"BatchTestClassGroupTestUtil", ".properties",
+				new File("build"));
 
 			jobPropertiesFile.deleteOnExit();
 

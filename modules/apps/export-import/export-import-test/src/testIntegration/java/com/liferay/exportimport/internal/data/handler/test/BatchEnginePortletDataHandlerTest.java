@@ -255,10 +255,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_objectFieldValueAttachmentDocsAndMedia =
-			DLTestUtil.randomTextFileBytes();
-		_objectFieldValueAttachmentShowFilesInDocsAndMedia =
-			DLTestUtil.randomTextFileBytes();
 		_objectFieldValueAttachmentUserComputer =
 			DLTestUtil.randomTextFileBytes();
 	}
@@ -3674,11 +3670,10 @@ public class BatchEnginePortletDataHandlerTest {
 			TestPropsValues.getCompanyId());
 
 		DLFileEntry dlFileEntry = _addDLFileEntry(
-			_objectFieldValueAttachmentDocsAndMedia, company.getGroupId());
+			DLTestUtil.randomTextFileBytes(), company.getGroupId());
 
 		FileEntry tempFileEntry1 = _addTempFileEntry(
-			_objectFieldValueAttachmentShowFilesInDocsAndMedia,
-			objectDefinition);
+			DLTestUtil.randomTextFileBytes(), objectDefinition);
 		FileEntry tempFileEntry2 = _addTempFileEntry(
 			_objectFieldValueAttachmentUserComputer, objectDefinition);
 
@@ -5292,8 +5287,6 @@ public class BatchEnginePortletDataHandlerTest {
 				(fileEntry, targetGroup) -> new ObjectValuePair<>(
 					fileEntry.getExternalReferenceCode(),
 					fileEntry.getGroupId());
-	private static byte[] _objectFieldValueAttachmentDocsAndMedia;
-	private static byte[] _objectFieldValueAttachmentShowFilesInDocsAndMedia;
 	private static byte[] _objectFieldValueAttachmentUserComputer;
 
 	@Inject

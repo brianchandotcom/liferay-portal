@@ -15,6 +15,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom';
 
+import {open} from '../../../src/main/resources/META-INF/resources/js/AIAssistantChat/AIAssistant';
 import AIAssistantHost from '../../../src/main/resources/META-INF/resources/js/AIAssistantChat/AIAssistantHost';
 import AIAssistantTriggerButton from '../../../src/main/resources/META-INF/resources/js/AIAssistantChat/AIAssistantTriggerButton';
 import {
@@ -1198,5 +1199,194 @@ describe('AIAssistantHost', () => {
 		);
 		expect(screen.queryByLabelText('space')).toBeNull();
 		expect(screen.getByLabelText('content-type')).toBeInTheDocument();
+	});
+
+	describe('newSession command', () => {
+		it('keeps the conversation open when a later command omits newSession', async () => {
+			const fakeEventSource1 = createFakeEventSource();
+			const fakeEventSource2 = createFakeEventSource();
+
+			mockCreateEventSource
+				.mockResolvedValueOnce(fakeEventSource1 as never)
+				.mockResolvedValueOnce(fakeEventSource2 as never);
+
+			await act(async () => {
+				renderHost();
+			});
+
+			await act(async () => {
+				open({
+					initialMessage: 'first message',
+					instructionDefinitionScope: 'test-scope',
+					triggerId: 'trigger-1',
+				});
+			});
+
+			await act(async () => {
+				fakeEventSource1.emit('Subscribe', 'ref-1');
+			});
+
+			await act(async () => {
+				fakeEventSource1.emit(
+					'Chat Message Sent',
+					JSON.stringify({data: 'First response'})
+				);
+			});
+
+			expect(screen.getByText('First response')).toBeInTheDocument();
+			expect(mockPostChat).toHaveBeenCalledTimes(1);
+
+			await act(async () => {
+				open({
+					initialMessage: 'second message',
+					instructionDefinitionScope: 'test-scope',
+					triggerId: 'trigger-2',
+				});
+			});
+
+			expect(screen.getByText('First response')).toBeInTheDocument();
+			expect(mockCreateEventSource).toHaveBeenCalledTimes(1);
+			expect(mockPostChat).toHaveBeenCalledTimes(1);
+		});
+
+		it('resets the conversation when a later command sets newSession', async () => {
+			const fakeEventSource1 = createFakeEventSource();
+			const fakeEventSource2 = createFakeEventSource();
+
+			mockCreateEventSource
+				.mockResolvedValueOnce(fakeEventSource1 as never)
+				.mockResolvedValueOnce(fakeEventSource2 as never);
+
+			await act(async () => {
+				renderHost();
+			});
+
+			await act(async () => {
+				open({
+					initialMessage: 'first message',
+					instructionDefinitionScope: 'test-scope',
+					triggerId: 'trigger-1',
+				});
+			});
+
+			await act(async () => {
+				fakeEventSource1.emit('Subscribe', 'ref-1');
+			});
+
+			await act(async () => {
+				fakeEventSource1.emit(
+					'Chat Message Sent',
+					JSON.stringify({data: 'First response'})
+				);
+			});
+
+			expect(screen.getByText('First response')).toBeInTheDocument();
+
+			await act(async () => {
+				open({
+					initialMessage: 'second message',
+					instructionDefinitionScope: 'test-scope',
+					newSession: true,
+					triggerId: 'trigger-2',
+				});
+			});
+
+			expect(
+				screen.queryByText('First response')
+			).not.toBeInTheDocument();
+			expect(mockCreateEventSource).toHaveBeenCalledTimes(2);
+			expect(mockPostChat).toHaveBeenCalledTimes(1);
+
+			await act(async () => {
+				fakeEventSource2.emit('Subscribe', 'ref-2');
+			});
+
+			expect(mockPostChat).toHaveBeenCalledTimes(2);
+			expect(mockPostChat).toHaveBeenLastCalledWith(
+				expect.objectContaining({message: 'second message'})
+			);
+		});
+
+		it('starts the new session with only the new command context', async () => {
+			const fakeEventSource1 = createFakeEventSource();
+			const fakeEventSource2 = createFakeEventSource();
+			const fakeEventSource3 = createFakeEventSource();
+
+			mockCreateEventSource
+				.mockResolvedValueOnce(fakeEventSource1 as never)
+				.mockResolvedValueOnce(fakeEventSource2 as never)
+				.mockResolvedValueOnce(fakeEventSource3 as never);
+
+			await act(async () => {
+				renderHost();
+			});
+
+			await act(async () => {
+				open({
+					context: {scope: 'old'},
+					initialMessage: 'first message',
+					instructionDefinitionScope: 'test-scope',
+					triggerId: 'trigger-1',
+				});
+			});
+
+			await act(async () => {
+				fakeEventSource1.emit('Subscribe', 'ref-1');
+			});
+
+			await act(async () => {
+				getLiferayHandler('openAIAssistantChat')?.({
+					context: {live: 'old'},
+					message: 'follow up',
+				});
+			});
+
+			expect(mockPostChat).toHaveBeenLastCalledWith(
+				expect.objectContaining({
+					chatContext: {live: 'old', scope: 'old'},
+				})
+			);
+
+			await act(async () => {
+				open({
+					context: {scope: 'new'},
+					initialMessage: 'second message',
+					instructionDefinitionScope: 'test-scope',
+					newSession: true,
+					triggerId: 'trigger-2',
+				});
+			});
+
+			await act(async () => {
+				fakeEventSource2.emit('Subscribe', 'ref-2');
+			});
+
+			expect(mockPostChat).toHaveBeenLastCalledWith(
+				expect.objectContaining({
+					chatContext: {scope: 'new'},
+					message: 'second message',
+				})
+			);
+
+			await act(async () => {
+				open({
+					initialMessage: 'third message',
+					instructionDefinitionScope: 'test-scope',
+					newSession: true,
+					triggerId: 'trigger-3',
+				});
+			});
+
+			await act(async () => {
+				fakeEventSource3.emit('Subscribe', 'ref-3');
+			});
+
+			expect(mockPostChat).toHaveBeenLastCalledWith(
+				expect.objectContaining({
+					chatContext: {},
+					message: 'third message',
+				})
+			);
+		});
 	});
 });

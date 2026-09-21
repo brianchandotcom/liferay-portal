@@ -18,6 +18,7 @@ export interface AIAssistantOpenCommand {
 	getContext?: () => ChatContext;
 	initialMessage?: string;
 	instructionDefinitionScope: string;
+	newSession?: boolean;
 	onAction?: (outcome: AIAssistantActionOutcome) => void;
 	presentation?: AIAssistantPresentation;
 	pushContainer?: string;

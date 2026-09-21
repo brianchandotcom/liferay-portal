@@ -59,14 +59,21 @@ const AIAssistantHost: React.FC = () => {
 		return element;
 	});
 
+	const [sessionKey, setSessionKey] = useState<number>(0);
+
 	const sidebarId = useId();
 	const anchorRef = useRef<HTMLElement | null>(null);
 	const triggerElementRef = useRef<HTMLElement | null>(null);
+	const sessionActiveRef = useRef<boolean>(false);
 
 	useEffect(() => releaseHost, []);
 
 	useEffect(() => {
 		if (command) {
+			if (command.newSession && sessionActiveRef.current) {
+				setSessionKey((previousSessionKey) => previousSessionKey + 1);
+			}
+			sessionActiveRef.current = true;
 			setLastCommand(command);
 			setExpanded(false);
 		}
@@ -142,6 +149,7 @@ const AIAssistantHost: React.FC = () => {
 		onAction: activeCommand?.onAction,
 		onCloseRequested: handleClose,
 		onOpenRequested: () => setOpenedByEvent(true),
+		sessionKey,
 		triggerRef: anchorRef as React.RefObject<HTMLButtonElement | null>,
 	});
 

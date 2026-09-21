@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -819,8 +820,8 @@ public class AssetListFiltersUtilTest {
 
 		String textFieldValue = term1 + StringPool.SPACE + term2;
 
-		_assertAllTermsQuery(
-			_NESTED_TEXT_FIELD,
+		_assertTermsQuery(
+			BooleanClauseOccur.MUST, _NESTED_TEXT_FIELD,
 			_assertNestedQuery(
 				BooleanClauseOccur.MUST,
 				_getFilterJSONObject(
@@ -830,8 +831,8 @@ public class AssetListFiltersUtilTest {
 				),
 				textFieldName),
 			term1, term2);
-		_assertMatchQuery(
-			_NESTED_TEXT_FIELD, textFieldValue,
+		_assertTermsQuery(
+			BooleanClauseOccur.SHOULD, _NESTED_TEXT_FIELD,
 			_assertNestedQuery(
 				BooleanClauseOccur.MUST,
 				_getFilterJSONObject(
@@ -839,9 +840,10 @@ public class AssetListFiltersUtilTest {
 				).put(
 					"quantifier", "any"
 				),
-				textFieldName));
-		_assertAllTermsQuery(
-			_NESTED_TEXT_FIELD,
+				textFieldName),
+			term1, term2);
+		_assertTermsQuery(
+			BooleanClauseOccur.MUST, _NESTED_TEXT_FIELD,
 			_assertNestedQuery(
 				BooleanClauseOccur.MUST_NOT,
 				_getFilterJSONObject(
@@ -851,8 +853,8 @@ public class AssetListFiltersUtilTest {
 				),
 				textFieldName),
 			term1, term2);
-		_assertMatchQuery(
-			_NESTED_TEXT_FIELD, textFieldValue,
+		_assertTermsQuery(
+			BooleanClauseOccur.SHOULD, _NESTED_TEXT_FIELD,
 			_assertNestedQuery(
 				BooleanClauseOccur.MUST_NOT,
 				_getFilterJSONObject(
@@ -860,7 +862,61 @@ public class AssetListFiltersUtilTest {
 				).put(
 					"quantifier", "any"
 				),
+				textFieldName),
+			term1, term2);
+	}
+
+	@Test
+	public void testFilterQueriesWithTextContainsQuotedPhraseOperators() {
+		String textFieldName = RandomTestUtil.randomString();
+
+		_setUpObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, textFieldName);
+
+		String term1 = RandomTestUtil.randomString();
+		String term2 = RandomTestUtil.randomString();
+		String term3 = RandomTestUtil.randomString();
+
+		String phrase = term1 + StringPool.SPACE + term2;
+
+		String textFieldValue =
+			StringUtil.quote(phrase, CharPool.QUOTE) + StringPool.SPACE + term3;
+
+		_assertMatchQuery(
+			_NESTED_TEXT_FIELD, phrase,
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST,
+				_getFilterJSONObject(
+					"contains", textFieldName,
+					StringUtil.quote(phrase, CharPool.QUOTE)
+				).put(
+					"quantifier", "all"
+				),
 				textFieldName));
+
+		_assertTermsQuery(
+			BooleanClauseOccur.SHOULD, _NESTED_TEXT_FIELD,
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST,
+				_getFilterJSONObject(
+					"contains", textFieldName, textFieldValue
+				).put(
+					"quantifier", "any"
+				),
+				textFieldName),
+			phrase, term3);
+		_assertTermsQuery(
+			BooleanClauseOccur.MUST, _NESTED_TEXT_FIELD,
+			_assertNestedQuery(
+				BooleanClauseOccur.MUST,
+				_getFilterJSONObject(
+					"contains", textFieldName, textFieldValue
+				).put(
+					"quantifier", "all"
+				),
+				textFieldName),
+			phrase, term3);
 	}
 
 	@Test
@@ -870,8 +926,8 @@ public class AssetListFiltersUtilTest {
 
 		String title = term1 + StringPool.SPACE + term2;
 
-		_assertAllTermsQuery(
-			"localized_title_en_US",
+		_assertTermsQuery(
+			BooleanClauseOccur.MUST, "localized_title_en_US",
 			_assertFilterQuery(
 				BooleanClauseOccur.MUST,
 				_getCommonFieldFilterJSONObject(
@@ -880,51 +936,16 @@ public class AssetListFiltersUtilTest {
 					"quantifier", "all"
 				)),
 			term1, term2);
-		_assertMatchQuery(
-			"localized_title_en_US", title,
+		_assertTermsQuery(
+			BooleanClauseOccur.SHOULD, "localized_title_en_US",
 			_assertFilterQuery(
 				BooleanClauseOccur.MUST,
 				_getCommonFieldFilterJSONObject(
 					"contains", Field.TITLE, title
 				).put(
 					"quantifier", "any"
-				)));
-	}
-
-	private void _assertAllTermsQuery(
-		String expectedField, Query query, String... expectedTerms) {
-
-		Assert.assertTrue(query.toString(), query instanceof BooleanQuery);
-
-		BooleanQuery booleanQuery = (BooleanQuery)query;
-
-		List<BooleanClause<Query>> booleanClauses = booleanQuery.clauses();
-
-		Assert.assertEquals(
-			booleanClauses.toString(), expectedTerms.length,
-			booleanClauses.size());
-
-		List<String> terms = new ArrayList<>();
-
-		for (BooleanClause<Query> booleanClause : booleanClauses) {
-			Assert.assertEquals(
-				BooleanClauseOccur.MUST, booleanClause.getBooleanClauseOccur());
-
-			Query clauseQuery = booleanClause.getClause();
-
-			Assert.assertTrue(
-				clauseQuery.toString(), clauseQuery instanceof MatchQuery);
-
-			MatchQuery matchQuery = (MatchQuery)clauseQuery;
-
-			Assert.assertEquals(expectedField, matchQuery.getField());
-			Assert.assertNull(matchQuery.getType());
-
-			terms.add(matchQuery.getValue());
-		}
-
-		AssertUtils.assertEqualsSorted(
-			expectedTerms, terms.toArray(new String[0]));
+				)),
+			term1, term2);
 	}
 
 	private void _assertAssetCategoryIds(
@@ -1089,6 +1110,13 @@ public class AssetListFiltersUtilTest {
 
 		Assert.assertEquals(expectedField, matchQuery.getField());
 		Assert.assertEquals(expectedValue, matchQuery.getValue());
+
+		if (expectedValue.indexOf(CharPool.SPACE) == -1) {
+			Assert.assertNull(matchQuery.getType());
+		}
+		else {
+			Assert.assertEquals(MatchQuery.Type.PHRASE, matchQuery.getType());
+		}
 	}
 
 	private QueryTerm _assertNestedFieldQueryTerm(
@@ -1206,6 +1234,45 @@ public class AssetListFiltersUtilTest {
 			expectedIncludesLower, termRangeQuery.includesLower());
 		Assert.assertEquals(
 			expectedIncludesUpper, termRangeQuery.includesUpper());
+	}
+
+	private void _assertTermsQuery(
+		BooleanClauseOccur expectedBooleanClauseOccur, String expectedField,
+		Query query, String... expectedTerms) {
+
+		Assert.assertTrue(query.toString(), query instanceof BooleanQuery);
+
+		BooleanQuery booleanQuery = (BooleanQuery)query;
+
+		List<BooleanClause<Query>> booleanClauses = booleanQuery.clauses();
+
+		Assert.assertEquals(
+			booleanClauses.toString(), expectedTerms.length,
+			booleanClauses.size());
+
+		List<String> terms = new ArrayList<>();
+
+		for (BooleanClause<Query> booleanClause : booleanClauses) {
+			Assert.assertEquals(
+				expectedBooleanClauseOccur,
+				booleanClause.getBooleanClauseOccur());
+
+			Query clauseQuery = booleanClause.getClause();
+
+			Assert.assertTrue(
+				clauseQuery.toString(), clauseQuery instanceof MatchQuery);
+
+			MatchQuery matchQuery = (MatchQuery)clauseQuery;
+
+			String term = matchQuery.getValue();
+
+			_assertMatchQuery(expectedField, term, clauseQuery);
+
+			terms.add(term);
+		}
+
+		AssertUtils.assertEqualsSorted(
+			expectedTerms, terms.toArray(new String[0]));
 	}
 
 	private void _assertWildcardQuery(

@@ -7,6 +7,7 @@ package com.liferay.site.dsr.site.initializer.internal.instance.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -108,6 +110,28 @@ public class DSRInitialRequestPortalInstanceLifecycleListenerTest {
 		Assert.assertNotNull(
 			_layoutLocalService.fetchLayoutByFriendlyURL(
 				group.getGroupId(), false, "/rooms"));
+
+		List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(
+			group);
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				fragmentEntryLinks,
+				fragmentEntryLink -> Objects.equals(
+					fragmentEntryLink.getRendererKey(), "dsr-view-rooms")));
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLink(
+				fragmentEntryLink);
+		}
+
+		_portalInstanceLifecycleListener.portalInstanceRegistered(company);
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				_getFragmentEntryLinks(group),
+				fragmentEntryLink -> Objects.equals(
+					fragmentEntryLink.getRendererKey(), "dsr-view-rooms")));
 
 		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
 
@@ -191,6 +215,14 @@ public class DSRInitialRequestPortalInstanceLifecycleListenerTest {
 
 				return jsonObject.getString(LocaleUtil.toLanguageId(locale));
 			});
+	}
+
+	private List<FragmentEntryLink> _getFragmentEntryLinks(Group group) {
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			group.getGroupId(), false, "/home");
+
+		return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
+			group.getGroupId(), layout.getPlid());
 	}
 
 	@DeleteAfterTestRun

@@ -210,6 +210,14 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	}
 
 	@Test
+	@TestInfo("LPD-101584")
+	public void testGetActionDropdownItemsWithUsageCount() throws Exception {
+		_assertViewSiteUsagesDropdownItemDisabled(true, 0);
+		_assertViewSiteUsagesDropdownItemDisabled(
+			false, RandomTestUtil.randomInt());
+	}
+
+	@Test
 	public void testGetActionDropdownItemsWithoutManageFragmentEntries()
 		throws Exception {
 
@@ -225,14 +233,6 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentEntryActionDropdownItemsProvider.
 				getActionDropdownItems());
-	}
-
-	@Test
-	@TestInfo("LPD-101584")
-	public void testGetActionDropdownItemsWithUsageCount() throws Exception {
-		_assertViewSiteUsagesDropdownItemDisabled(true, 0);
-		_assertViewSiteUsagesDropdownItemDisabled(
-			false, RandomTestUtil.randomInt());
 	}
 
 	private void _assertViewSiteUsagesDropdownItemDisabled(

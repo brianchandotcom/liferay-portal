@@ -27,6 +27,8 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +41,24 @@ import org.json.JSONObject;
  */
 public class JSUnitModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
+
+	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put(
+			"test_file_exclude_globs",
+			_getTestFileGlobs("test.batch.test.file.excludes"));
+		jsonObject.put(
+			"test_file_include_globs",
+			_getTestFileGlobs("test.batch.test.file.includes"));
+
+		return jsonObject;
+	}
 
 	protected JSUnitModulesBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
@@ -159,6 +179,11 @@ public class JSUnitModulesBatchTestClassGroup
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
+		List<PathMatcher> testFileExcludesPathMatchers =
+			_getTestFilePathMatchers("test.batch.test.file.excludes");
+		List<PathMatcher> testFileIncludesPathMatchers =
+			_getTestFilePathMatchers("test.batch.test.file.includes");
+
 		for (File baseModuleDir : getBaseModuleDirs()) {
 			List<File> moduleTestDirs = _getModulesProjectDirs(baseModuleDir);
 
@@ -189,6 +214,14 @@ public class JSUnitModulesBatchTestClassGroup
 					if (!jsUnitFilePath.startsWith(moduleTestDirPath) ||
 						((testPackage != null) &&
 						 testPackage.isTestClassFileIgnored(jsUnitFile))) {
+
+						continue;
+					}
+
+					if (!JenkinsResultsParserUtil.isFileIncluded(
+							testFileExcludesPathMatchers,
+							testFileIncludesPathMatchers,
+							new File(jsUnitFilePath))) {
 
 						continue;
 					}
@@ -288,6 +321,41 @@ public class JSUnitModulesBatchTestClassGroup
 			});
 
 		return modulesProjectDirs;
+	}
+
+	private List<String> _getTestFileGlobs(String basePropertyName) {
+		String jobPropertyValue = _getTestFileJobPropertyValue(
+			basePropertyName);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(
+			JenkinsResultsParserUtil.getGlobsFromProperty(jobPropertyValue));
+	}
+
+	private String _getTestFileJobPropertyValue(String basePropertyName) {
+		JobProperty jobProperty = getJobProperty(
+			basePropertyName, testSuiteName, batchName);
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return null;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return jobPropertyValue;
+	}
+
+	private List<PathMatcher> _getTestFilePathMatchers(
+		String basePropertyName) {
+
+		return getPathMatchers(
+			_getTestFileJobPropertyValue(basePropertyName),
+			portalGitWorkingDirectory.getWorkingDirectory());
 	}
 
 	private boolean _isTestClassFileReported() {

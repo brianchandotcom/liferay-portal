@@ -24,6 +24,8 @@ spec:
         -   inputs:
                 parameters:
                     -   name: liferay-infrastructure-name
+                    -   default: "null"
+                        name: restore-generation
                     -   name: restore-phase
                     -   default: "null"
                         name: restore-point-in-time
@@ -47,12 +49,15 @@ spec:
                     spec:
                         database:
                             restorePointInTime: {{ "{{" }}inputs.parameters.restore-point-in-time}}
+                        restoreGeneration: {{ "{{" }}inputs.parameters.restore-generation}}
                         restorePhase: {{ "{{" }}inputs.parameters.restore-phase}}
                         targetActiveDataPlane: {{ "{{" }}inputs.parameters.target-active-data-plane}}
                 mergeStrategy: merge
         -   inputs:
                 parameters:
                     -   name: liferay-infrastructure-name
+                    -   default: "null"
+                        name: restore-generation
                     -   name: restore-phase
                     -   default: "null"
                         name: restore-point-in-time
@@ -63,6 +68,8 @@ spec:
                             parameters:
                                 -   name: liferay-infrastructure-name
                                     value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
+                                -   name: restore-generation
+                                    value: "{{ "{{" }}inputs.parameters.restore-generation}}"
                                 -   name: restore-phase
                                     value: "{{ "{{" }}inputs.parameters.restore-phase}}"
                                 -   name: restore-point-in-time
@@ -141,6 +148,9 @@ spec:
                     -   name: resource-group-name
                         valueFrom:
                             path: /tmp/resource-group-name.txt
+                    -   name: restore-generation
+                        valueFrom:
+                            path: /tmp/restore-generation.txt
                     -   name: storage-account-id-active
                         valueFrom:
                             path: /tmp/storage-account-id-active.txt
@@ -272,6 +282,8 @@ spec:
                             parameters:
                                 -   name: liferay-infrastructure-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
+                                -   name: restore-generation
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.restore-generation}}"
                                 -   name: restore-phase
                                     value: provisioning
                                 -   name: restore-point-in-time

@@ -8,8 +8,9 @@
 {{- end }}
 
 {{- range $i, $dataPlane := $dataPlanes }}
-{{- $databaseServerName := printf "%s-%s" $baseName $dataPlane }}
+{{- $databaseServerName := index $databaseServerNames $dataPlane }}
 {{- $isDatabaseRestoreTarget := and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
+{{- $restoreSourceDatabaseServerName := dig ($databaseSpec.restoreSourceDataPlane | default (index $dataPlaneKeys $activeDataPlane)) "databaseServer" "" $dataPlaneNames }}
 {{- if $i }}
 ---
 {{- end }}
@@ -21,6 +22,7 @@ metadata:
     labels:
         {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
+        dataPlaneKey: {{ index $dataPlaneKeys $dataPlane }}
     name: {{ $databaseServerName }}
 spec:
     forProvider:
@@ -69,10 +71,7 @@ spec:
     initProvider:
         createMode: PointInTimeRestore
         pointInTimeRestoreTimeInUtc: {{ $databaseSpec.restorePointInTime }}
-        sourceServerIdSelector:
-            matchControllerRef: true
-            matchLabels:
-                dataPlane: {{ $activeDataPlane }}
+        sourceServerId: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{{ $restoreSourceDatabaseServerName }}
     {{- end }}
     managementPolicies: {{ $managementPolicies }}
 ---

@@ -11,6 +11,7 @@
 {{- $overlayAccess := $xr.spec.overlayAccess | default dict -}}
 {{- $projectId := $xr.spec.projectId -}}
 {{- $region := $xr.spec.region -}}
+{{- $restoreGeneration := $xr.spec.restoreGeneration | default "" -}}
 {{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
 {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
 
@@ -35,6 +36,32 @@
 
 {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 {{- $storageAccountBase := printf "%.15s%s" ($projectIdFull | replace "-" "" | lower) $uidHash -}}
+
+{{- $dataPlaneKeys := dict -}}
+
+{{- range $dataPlane := list "blue" "green" -}}
+    {{- $observedDatabaseServer := dig (printf "database-primary-%s" $dataPlane) "resource" dict $observedResources -}}
+    {{- if and $observedDatabaseServer (not (dig "metadata" "deletionTimestamp" "" $observedDatabaseServer)) -}}
+        {{- $_ := set $dataPlaneKeys $dataPlane (dig "metadata" "labels" "dataPlaneKey" $dataPlane $observedDatabaseServer) -}}
+    {{- else if and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) $restoreGeneration -}}
+        {{- $_ := set $dataPlaneKeys $dataPlane (printf "%s-%s" $dataPlane $restoreGeneration) -}}
+    {{- else -}}
+        {{- $_ := set $dataPlaneKeys $dataPlane $dataPlane -}}
+    {{- end -}}
+{{- end }}
+
+{{- $dataPlaneNames := dict -}}
+
+{{- range $dataPlaneKey := values $dataPlaneKeys -}}
+    {{- $resourceNames := dict "databaseServer" (printf "%s-%s" $baseName $dataPlaneKey) -}}
+    {{- $_ := set $dataPlaneNames $dataPlaneKey $resourceNames -}}
+{{- end }}
+
+{{- $databaseServerNames := dict -}}
+
+{{- range $dataPlane, $dataPlaneKey := $dataPlaneKeys -}}
+    {{- $_ := set $databaseServerNames $dataPlane (index $dataPlaneNames $dataPlaneKey "databaseServer") -}}
+{{- end }}
 
 {{- $cmkIdentityId := printf "/subscriptions/%s/resourceGroups/%s/providers/Microsoft.ManagedIdentity/userAssignedIdentities/%s-cmk" $env.subscriptionId $env.resourceGroupName $baseName -}}
 {{- $keyVaultName := printf "%s-kv" $storageAccountBase -}}

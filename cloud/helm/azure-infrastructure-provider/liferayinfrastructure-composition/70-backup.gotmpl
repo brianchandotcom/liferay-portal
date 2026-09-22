@@ -255,6 +255,46 @@ apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
 metadata:
     annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-release-cron-workflow
+    labels:
+        {{- $tags | toYaml | nindent 8 }}
+    name: {{ $baseName }}-backup-restore-release-cron-workflow
+spec:
+    forProvider:
+        manifest:
+            apiVersion: argoproj.io/v1alpha1
+            kind: CronWorkflow
+            metadata:
+                labels:
+                    {{- $tags | toYaml | nindent 20 }}
+                name: backup-restore-release-cron-workflow
+                namespace: {{ $namespace }}
+            spec:
+                concurrencyPolicy: Forbid
+                schedules:
+                    -   0 * * * *
+                startingDeadlineSeconds: 300
+                workflowSpec:
+                    entrypoint: main
+                    podGC:
+                        strategy: OnWorkflowSuccess
+                    serviceAccountName: backup-restore-service-account
+                    templates:
+                        -   name: main
+                            steps:
+                                -   -   name: release-retained-data-planes
+                                        templateRef:
+                                            clusterScope: true
+                                            name: backup-restore-cluster-workflow-template
+                                            template: release-retained-data-planes
+                    ttlStrategy:
+                        secondsAfterCompletion: 86400
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: kubernetes.m.crossplane.io/v1alpha1
+kind: Object
+metadata:
+    annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-role-binding
     labels:
         {{- $tags | toYaml | nindent 8 }}

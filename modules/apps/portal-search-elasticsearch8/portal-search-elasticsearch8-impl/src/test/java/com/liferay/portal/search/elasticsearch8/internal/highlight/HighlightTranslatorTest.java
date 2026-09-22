@@ -88,6 +88,38 @@ public class HighlightTranslatorTest {
 	}
 
 	@Test
+	public void testDefaultHighlightQueryIsIgnoredWhenHighlightQueryIsSet() {
+		_highlightPrototype._highlightQuery = new StringQuery("title:explicit");
+
+		co.elastic.clients.elasticsearch._types.query_dsl.Query defaultQuery =
+			new co.elastic.clients.elasticsearch._types.query_dsl.Query(
+				ElasticsearchQueryVisitor.INSTANCE.translate(
+					new StringQuery("title:default")));
+
+		co.elastic.clients.elasticsearch._types.query_dsl.Query highlightQuery =
+			_translateHighlightQuery(_highlightPrototype, defaultQuery);
+
+		Assert.assertEquals(
+			"title:explicit",
+			highlightQuery.queryString(
+			).query());
+		Assert.assertNotSame(defaultQuery, highlightQuery);
+	}
+
+	@Test
+	public void testDefaultHighlightQueryIsUsedWhenHighlightQueryIsNull() {
+		co.elastic.clients.elasticsearch._types.query_dsl.Query defaultQuery =
+			new co.elastic.clients.elasticsearch._types.query_dsl.Query(
+				ElasticsearchQueryVisitor.INSTANCE.translate(
+					new StringQuery("title:default")));
+
+		Assert.assertNull(_highlightPrototype._highlightQuery);
+		Assert.assertSame(
+			defaultQuery,
+			_translateHighlightQuery(_highlightPrototype, defaultQuery));
+	}
+
+	@Test
 	public void testFieldConfigs() {
 		List<FieldConfig> fieldConfigs = new ArrayList<>();
 
@@ -106,6 +138,12 @@ public class HighlightTranslatorTest {
 		_highlightPrototype._highlightQuery = new StringQuery("title:test");
 
 		_assertTranslation(_highlightPrototype);
+	}
+
+	@Test
+	public void testHighlightQueryIsNullWhenDefaultHighlightQueryIsNull() {
+		Assert.assertNull(_highlightPrototype._highlightQuery);
+		Assert.assertNull(_translateHighlightQuery(_highlightPrototype, null));
 	}
 
 	@Test
@@ -727,6 +765,17 @@ public class HighlightTranslatorTest {
 		Kind kind = elasticsearchQuery._kind();
 
 		return kind.jsonValue();
+	}
+
+	private co.elastic.clients.elasticsearch._types.query_dsl.Query
+		_translateHighlightQuery(
+			HighlightPrototype highlightPrototype,
+			co.elastic.clients.elasticsearch._types.query_dsl.Query
+				defaultHighlightQuery) {
+
+		return _highlightTranslator.translate(
+			_buildHighlight(highlightPrototype), defaultHighlightQuery
+		).highlightQuery();
 	}
 
 	private HighlightPrototype _highlightPrototype;

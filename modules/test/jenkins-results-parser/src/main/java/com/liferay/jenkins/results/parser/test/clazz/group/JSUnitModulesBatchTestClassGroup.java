@@ -60,6 +60,19 @@ public class JSUnitModulesBatchTestClassGroup
 		return jsonObject;
 	}
 
+	public boolean hasTestFileGlobs() {
+		List<String> testFileExcludeGlobs = _getTestFileGlobs(
+			"test.batch.test.file.excludes");
+		List<String> testFileIncludeGlobs = _getTestFileGlobs(
+			"test.batch.test.file.includes");
+
+		if (testFileExcludeGlobs.isEmpty() && testFileIncludeGlobs.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected JSUnitModulesBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 

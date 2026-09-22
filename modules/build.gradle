@@ -278,6 +278,35 @@ gradle.beforeProject {
 						inputs.file project.rootProject.file("node-scripts.config.js")
 					}
 				}
+
+				if (tasks.findByName("packageRunTest") && project.hasProperty("js.unit.test.file.names")) {
+					tasks.create(name: "runJSUnitTestFileNames", type: Exec) {
+						args node.scriptFile
+
+						if (node.useNpm) {
+							args "run-script"
+						}
+						else {
+							args "run"
+						}
+
+						args "test"
+
+						if (node.useNpm) {
+							args "--"
+						}
+
+						args "--runTestsByPath"
+
+						for (String jsUnitTestFileName : project.property("js.unit.test.file.names").split(",")) {
+							args jsUnitTestFileName
+						}
+
+						dependsOn npmInstall
+						executable new File(node.nodeDir, "bin/node")
+						workingDir projectDir
+					}
+				}
 			}
 
 			pluginManager.withPlugin("com.liferay.osgi.defaults.plugin") {

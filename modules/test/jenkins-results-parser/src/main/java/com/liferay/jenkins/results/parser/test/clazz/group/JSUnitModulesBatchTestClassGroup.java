@@ -197,6 +197,8 @@ public class JSUnitModulesBatchTestClassGroup
 		List<PathMatcher> testFileIncludesPathMatchers =
 			_getTestFilePathMatchers("test.batch.test.file.includes");
 
+		int jsUnitFileCount = 0;
+
 		for (File baseModuleDir : getBaseModuleDirs()) {
 			List<File> moduleTestDirs = _getModulesProjectDirs(baseModuleDir);
 
@@ -230,6 +232,8 @@ public class JSUnitModulesBatchTestClassGroup
 
 						continue;
 					}
+
+					jsUnitFileCount++;
 
 					if (!JenkinsResultsParserUtil.isFileIncluded(
 							testFileExcludesPathMatchers,
@@ -275,6 +279,16 @@ public class JSUnitModulesBatchTestClassGroup
 					addTestClass(testClass);
 				}
 			}
+		}
+
+		if (hasTestFileGlobs() && (jsUnitFileCount > 0) && !hasTestClasses()) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to select any of the ",
+					String.valueOf(jsUnitFileCount), " test files in the ",
+					batchName, " batch. Please check the modules.excludes, ",
+					"modules.includes, test.batch.test.file.excludes and ",
+					"test.batch.test.file.includes properties."));
 		}
 	}
 

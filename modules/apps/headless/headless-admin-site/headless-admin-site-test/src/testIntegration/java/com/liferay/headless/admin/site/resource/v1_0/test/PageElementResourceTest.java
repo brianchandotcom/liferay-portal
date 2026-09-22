@@ -3015,7 +3015,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			formContainerPageElementDefinition);
 
 		ProblemExceptionTestUtil.assertProblemException(
-			"BAD_REQUEST", "A form container reference is required",
+			"BAD_REQUEST",
+			StringBundler.concat(
+				"The form container page element with the external reference ",
+				"code \"", pageElement.getExternalReferenceCode(),
+				"\" requires a form container reference"),
 			() ->
 				pageElementResource.
 					postSitePageSpecificationPageExperiencePageElement(

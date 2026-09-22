@@ -77,7 +77,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			pageSpecificationExternalReferenceCode, groupId);
 
 		SegmentsExperience segmentsExperience = _getSegmentsExperience(
-			groupId, layout, pageExperienceExternalReferenceCode);
+			groupId, pageExperienceExternalReferenceCode, layout.getPlid());
 
 		_segmentsExperienceResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), segmentsExperience,
@@ -132,7 +132,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			pageSpecificationExternalReferenceCode, groupId);
 
 		SegmentsExperience segmentsExperience = _getSegmentsExperience(
-			groupId, layout, pageExperienceExternalReferenceCode);
+			groupId, pageExperienceExternalReferenceCode, layout.getPlid());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -191,7 +191,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			pageSpecificationExternalReferenceCode, groupId);
 
 		SegmentsExperience segmentsExperience = _getSegmentsExperience(
-			groupId, layout, pageExperienceExternalReferenceCode);
+			groupId, pageExperienceExternalReferenceCode, layout.getPlid());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -246,7 +246,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			pageSpecificationExternalReferenceCode, groupId);
 
 		SegmentsExperience segmentsExperience = _getSegmentsExperience(
-			groupId, layout, pageExperienceExternalReferenceCode);
+			groupId, pageExperienceExternalReferenceCode, layout.getPlid());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -290,7 +290,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			pageSpecificationExternalReferenceCode, groupId);
 
 		SegmentsExperience segmentsExperience = _getSegmentsExperience(
-			groupId, layout, pageExperienceExternalReferenceCode);
+			groupId, pageExperienceExternalReferenceCode, layout.getPlid());
 
 		_segmentsExperienceResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), segmentsExperience,
@@ -345,7 +345,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			pageSpecificationExternalReferenceCode, groupId);
 
 		SegmentsExperience segmentsExperience = _getSegmentsExperience(
-			groupId, layout, pageExperienceExternalReferenceCode);
+			groupId, pageExperienceExternalReferenceCode, layout.getPlid());
 
 		_segmentsExperienceResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), segmentsExperience,
@@ -465,8 +465,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 	}
 
 	private SegmentsExperience _getSegmentsExperience(
-			long groupId, Layout layout,
-			String pageExperienceExternalReferenceCode)
+			long groupId, String pageExperienceExternalReferenceCode, long plid)
 		throws Exception {
 
 		SegmentsExperience segmentsExperience =
@@ -479,7 +478,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				"page experience", pageExperienceExternalReferenceCode);
 		}
 
-		if (layout.getPlid() != segmentsExperience.getPlid()) {
+		if (plid != segmentsExperience.getPlid()) {
 			throw new IllegalArgumentException(
 				"The page experience does not belong to this page " +
 					"specification");

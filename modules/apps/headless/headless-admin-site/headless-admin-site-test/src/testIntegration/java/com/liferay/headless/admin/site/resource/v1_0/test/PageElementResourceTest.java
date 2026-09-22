@@ -277,44 +277,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-96206")
 	public void testGetSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 
-		PageElement postPageElement =
-			testPostSitePageSpecificationPageExperiencePageElement_addPageElement(
-				randomPageElement());
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				_layout.getPlid());
-
-		PageElement getPageElement =
-			pageElementResource.
-				getSitePageSpecificationPageExperiencePageElement(
-					testGroup.getExternalReferenceCode(),
-					_draftLayout.getExternalReferenceCode(),
-					segmentsExperience.getExternalReferenceCode(),
-					postPageElement.getExternalReferenceCode());
-
-		assertEquals(postPageElement, getPageElement);
-		assertValid(getPageElement);
-
-		String pageElementExternalReferenceCode = RandomTestUtil.randomString();
-
-		ProblemExceptionTestUtil.assertProblemException(
-			"NOT_FOUND",
-			"No page element with the external reference code \"" +
-				pageElementExternalReferenceCode +
-					"\" exists in this page experience",
-			() ->
-				pageElementResource.
-					getSitePageSpecificationPageExperiencePageElement(
-						testGroup.getExternalReferenceCode(),
-						_draftLayout.getExternalReferenceCode(),
-						segmentsExperience.getExternalReferenceCode(),
-						pageElementExternalReferenceCode));
-
+		_testGetSitePageSpecificationPageExperiencePageElement();
 		_testGetSitePageSpecificationPageExperiencePageElementWithMismatchedPageSpecification();
 		_testGetSitePageSpecificationPageExperiencePageElementWithNonexistentPageExperience();
 		_testGetSitePageSpecificationPageExperiencePageElementWithOrphanedFragmentEntryLink();
@@ -322,6 +289,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-96206")
 	public void testGetSitePageSpecificationPageExperiencePageElementPageElementsPage()
 		throws Exception {
 
@@ -375,7 +343,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo({"LPD-83090", "LPD-85565", "LPD-104316"})
+	@TestInfo({"LPD-83090", "LPD-85565", "LPD-96206", "LPD-104316"})
 	public void testPostSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 
@@ -2308,6 +2276,45 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPosition(position);
 
 		return pageElement;
+	}
+
+	private void _testGetSitePageSpecificationPageExperiencePageElement()
+		throws Exception {
+
+		PageElement postPageElement =
+			testPostSitePageSpecificationPageExperiencePageElement_addPageElement(
+				randomPageElement());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement getPageElement =
+			pageElementResource.
+				getSitePageSpecificationPageExperiencePageElement(
+					testGroup.getExternalReferenceCode(),
+					_draftLayout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(),
+					postPageElement.getExternalReferenceCode());
+
+		assertEquals(postPageElement, getPageElement);
+		assertValid(getPageElement);
+
+		String pageElementExternalReferenceCode = RandomTestUtil.randomString();
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"NOT_FOUND",
+			"No page element with the external reference code \"" +
+				pageElementExternalReferenceCode +
+					"\" exists in this page experience",
+			() ->
+				pageElementResource.
+					getSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElementExternalReferenceCode));
 	}
 
 	private void _testGetSitePageSpecificationPageExperiencePageElementPageElementsPageWithNonexistentPageElement()

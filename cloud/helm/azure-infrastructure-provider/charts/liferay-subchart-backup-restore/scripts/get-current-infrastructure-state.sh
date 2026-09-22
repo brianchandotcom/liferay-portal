@@ -60,10 +60,27 @@ function main {
 		--output jsonpath="{.items[0].metadata.name}" \
 		> /tmp/backup-vault-name.txt
 
+	local data_plane_key_active
+
+	data_plane_key_active=$( \
+		kubectl get flexibleservers.dbforpostgresql.azure.m.upbound.io \
+			--output jsonpath="{.items[0].metadata.labels.dataPlaneKey}" \
+			--selector "dataPlane=${data_plane_active}")
+
+	if [ -z "${data_plane_key_active}" ]
+	then
+		data_plane_key_active=${data_plane_active}
+	fi
+
 	kubectl get flexibleservers.dbforpostgresql.azure.m.upbound.io \
-		--output jsonpath="{.items[0].metadata.name}" \
-		--selector "dataPlane=${data_plane_active}" \
-		> /tmp/database-server-name-active.txt
+		--output json \
+		| jq \
+			--arg data_plane_active "${data_plane_active}" \
+			--arg data_plane_key_active "${data_plane_key_active}" \
+			--argjson retained_data_planes "$(echo "${liferay_infrastructure_json}" | jq --compact-output ".spec.retainedDataPlanes // {}")" \
+			--compact-output \
+			'[.items[] | if .metadata.labels.dataPlane == $data_plane_active then {key: $data_plane_key_active, server: .metadata.name} elif ((.metadata.labels.retainedDataPlane // "") != "") and ((($retained_data_planes[.metadata.labels.retainedDataPlane] // "1970-01-01T00:00:00Z") | fromdateiso8601) > (now + 3600)) then {key: .metadata.labels.retainedDataPlane, server: .metadata.annotations["crossplane.io/external-name"]} else empty end]' \
+		> /tmp/database-candidates.txt
 
 	kubectl get flexibleservers.dbforpostgresql.azure.m.upbound.io \
 		--output jsonpath="{.items[0].spec.forProvider.resourceGroupName}" \

@@ -46,6 +46,9 @@ export default function PublishScheduler({
 	cronExpressionErrorMessage,
 	endDateTimeErrorMessage,
 	onChange,
+	onCronExpressionBlur,
+	onEndDateTimeBlur,
+	onStartDateTimeBlur,
 	startDateTimeErrorMessage,
 	timeZones,
 	value,
@@ -53,6 +56,9 @@ export default function PublishScheduler({
 	cronExpressionErrorMessage?: string;
 	endDateTimeErrorMessage?: string;
 	onChange: (scheduleValues: ScheduleValues) => void;
+	onCronExpressionBlur?: () => void;
+	onEndDateTimeBlur?: () => void;
+	onStartDateTimeBlur?: () => void;
 	startDateTimeErrorMessage?: string;
 	timeZones: TimeZoneOption[];
 	value: ScheduleValues;
@@ -178,12 +184,14 @@ export default function PublishScheduler({
 								id="publishScheduleStartDateTime"
 								label={Liferay.Language.get('start-date')}
 								name="publishScheduleStartDateTime"
+								onBlur={onStartDateTimeBlur}
 								onChange={(startDateTime) =>
 									set({
 										startDateTime: startDateTime as string,
 									})
 								}
 								placeholder={DATE_TIME_PLACEHOLDER}
+								required
 								time
 								value={value.startDateTime}
 								years={{
@@ -265,11 +273,13 @@ export default function PublishScheduler({
 										'cron-expression'
 									)}
 									name="publishScheduleCronExpression"
+									onBlur={onCronExpressionBlur}
 									onChange={(event) =>
 										set({
 											cronExpression: event.target.value,
 										})
 									}
+									required
 									value={value.cronExpression}
 								/>
 							</ClayLayout.Col>
@@ -469,12 +479,14 @@ export default function PublishScheduler({
 								id="publishScheduleEndDateTime"
 								label={Liferay.Language.get('end-date')}
 								name="publishScheduleEndDateTime"
+								onBlur={onEndDateTimeBlur}
 								onChange={(endDateTime) =>
 									set({
 										endDateTime: endDateTime as string,
 									})
 								}
 								placeholder={DATE_TIME_PLACEHOLDER}
+								required={!value.neverEnd}
 								time
 								value={value.endDateTime}
 								years={{

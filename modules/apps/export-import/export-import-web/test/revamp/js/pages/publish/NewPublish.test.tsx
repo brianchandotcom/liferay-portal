@@ -164,13 +164,119 @@ describe('NewPublish', () => {
 			expect(submitButton).toBeDisabled();
 		});
 
-		await user.click(screen.getByRole('textbox', {name: 'start-date'}));
+		expect(
+			screen.queryByText(
+				'please-set-a-start-date-and-time-to-schedule-the-publication'
+			)
+		).not.toBeInTheDocument();
 
+		const startDateField = screen.getByRole('textbox', {
+			name: /start-date/,
+		});
+
+		await user.click(startDateField);
+		await user.tab();
+
+		expect(
+			await screen.findByText(
+				'please-set-a-start-date-and-time-to-schedule-the-publication'
+			)
+		).toBeInTheDocument();
+
+		await user.click(startDateField);
 		await user.paste(FUTURE_DATE_TIME);
 
 		await waitFor(() => {
 			expect(submitButton).toBeEnabled();
 		});
+
+		expect(
+			screen.queryByText(
+				'please-set-a-start-date-and-time-to-schedule-the-publication'
+			)
+		).not.toBeInTheDocument();
+	});
+
+	it('does not show an error while a valid date is still being typed', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		await user.type(
+			screen.getByRole('textbox', {name: /start-date/}),
+			FUTURE_DATE_TIME.slice(0, 4)
+		);
+
+		expect(
+			screen.queryByText('please-enter-a-valid-date')
+		).not.toBeInTheDocument();
+		expect(
+			screen.queryByText(
+				'please-set-a-start-date-and-time-to-schedule-the-publication'
+			)
+		).not.toBeInTheDocument();
+	});
+
+	it('shows the end date error only after the field is touched', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		await user.click(screen.getByRole('textbox', {name: /start-date/}));
+
+		await user.paste(FUTURE_DATE_TIME);
+
+		await user.click(screen.getByRole('checkbox', {name: /never-end/}));
+
+		expect(
+			screen.queryByText('please-enter-a-valid-date')
+		).not.toBeInTheDocument();
+
+		const endDateField = screen.getByRole('textbox', {name: /end-date/});
+
+		await user.click(endDateField);
+		await user.tab();
+
+		expect(
+			await screen.findByText('please-enter-a-valid-date')
+		).toBeInTheDocument();
+	});
+
+	it('marks the schedule fields as required as soon as they appear', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		expect(
+			screen.getByRole('textbox', {name: /start-date/})
+		).toHaveAccessibleName(/mandatory/i);
+
+		await user.click(screen.getByRole('checkbox', {name: /never-end/}));
+
+		expect(
+			screen.getByRole('textbox', {name: /end-date/})
+		).toHaveAccessibleName(/mandatory/i);
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'custom'
+		);
+
+		expect(
+			screen.getByRole('textbox', {name: /cron-expression/})
+		).toHaveAccessibleName(/mandatory/i);
 	});
 
 	it('schedules the publication with the cron fields', async () => {
@@ -182,7 +288,7 @@ describe('NewPublish', () => {
 			screen.getByRole('radio', {name: /schedule-for-later/})
 		);
 
-		await user.click(screen.getByRole('textbox', {name: 'start-date'}));
+		await user.click(screen.getByRole('textbox', {name: /start-date/}));
 
 		await user.paste(FUTURE_DATE_TIME);
 
@@ -220,7 +326,7 @@ describe('NewPublish', () => {
 		expect(
 			screen.getByRole('radio', {name: /schedule-for-later/})
 		).toBeChecked();
-		expect(screen.getByRole('textbox', {name: 'start-date'})).toHaveValue(
+		expect(screen.getByRole('textbox', {name: /start-date/})).toHaveValue(
 			FUTURE_DATE_TIME
 		);
 		expect(
@@ -270,7 +376,7 @@ describe('NewPublish', () => {
 		});
 
 		expect(
-			await screen.findByRole('textbox', {name: 'start-date'})
+			await screen.findByRole('textbox', {name: /start-date/})
 		).toHaveValue('2026-07-01 09:30');
 
 		await screen.findByText('the-publish-time-must-be-in-the-future');
@@ -295,7 +401,7 @@ describe('NewPublish', () => {
 		await screen.findByRole('textbox', {name: /^name/i});
 		await screen.findByText('loaded');
 
-		await user.clear(screen.getByRole('textbox', {name: 'start-date'}));
+		await user.clear(screen.getByRole('textbox', {name: /start-date/}));
 
 		await user.paste(FUTURE_DATE_TIME);
 
@@ -406,7 +512,7 @@ describe('NewPublish', () => {
 			screen.getByRole('radio', {name: /schedule-for-later/})
 		);
 
-		await user.click(screen.getByRole('textbox', {name: 'start-date'}));
+		await user.click(screen.getByRole('textbox', {name: /start-date/}));
 
 		await user.paste(FUTURE_DATE_TIME);
 
@@ -415,7 +521,20 @@ describe('NewPublish', () => {
 			'custom'
 		);
 
-		await screen.findByText('this-field-is-required');
+		expect(
+			screen.queryByText('this-field-is-required')
+		).not.toBeInTheDocument();
+
+		const cronExpressionField = screen.getByRole('textbox', {
+			name: /cron-expression/,
+		});
+
+		await user.click(cronExpressionField);
+		await user.tab();
+
+		expect(
+			await screen.findByText('this-field-is-required')
+		).toBeInTheDocument();
 
 		await waitFor(() => {
 			expect(

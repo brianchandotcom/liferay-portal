@@ -7,8 +7,15 @@ import {useField} from 'formik';
 import React from 'react';
 
 import PublishScheduler from './PublishScheduler';
+import {isCompleteDateTime} from './cron';
 import {ScheduleValues, TimeZoneOption} from './types';
 import {getScheduleValuesErrors} from './utils';
+
+function useTouchedField(name: string) {
+	const [, meta, helpers] = useField<string>(name);
+
+	return [meta, () => helpers.setTouched(true)] as const;
+}
 
 export function FormikFieldPublishScheduler({
 	name,
@@ -19,14 +26,41 @@ export function FormikFieldPublishScheduler({
 }) {
 	const [field, , helpers] = useField<ScheduleValues>(name);
 
+	const [cronExpressionMeta, onCronExpressionBlur] = useTouchedField(
+		`${name}.cronExpression`
+	);
+	const [endDateTimeMeta, onEndDateTimeBlur] = useTouchedField(
+		`${name}.endDateTime`
+	);
+	const [startDateTimeMeta, onStartDateTimeBlur] = useTouchedField(
+		`${name}.startDateTime`
+	);
+
 	const scheduleValuesErrors = getScheduleValuesErrors(field.value);
 
 	return (
 		<PublishScheduler
-			cronExpressionErrorMessage={scheduleValuesErrors.cronExpression}
-			endDateTimeErrorMessage={scheduleValuesErrors.endDateTime}
+			cronExpressionErrorMessage={
+				cronExpressionMeta.touched
+					? scheduleValuesErrors.cronExpression
+					: undefined
+			}
+			endDateTimeErrorMessage={
+				endDateTimeMeta.touched ||
+				isCompleteDateTime(field.value.endDateTime)
+					? scheduleValuesErrors.endDateTime
+					: undefined
+			}
 			onChange={(scheduleValues) => helpers.setValue(scheduleValues)}
-			startDateTimeErrorMessage={scheduleValuesErrors.startDateTime}
+			onCronExpressionBlur={onCronExpressionBlur}
+			onEndDateTimeBlur={onEndDateTimeBlur}
+			onStartDateTimeBlur={onStartDateTimeBlur}
+			startDateTimeErrorMessage={
+				startDateTimeMeta.touched ||
+				isCompleteDateTime(field.value.startDateTime)
+					? scheduleValuesErrors.startDateTime
+					: undefined
+			}
 			timeZones={timeZones}
 			value={field.value}
 		/>

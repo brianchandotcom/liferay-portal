@@ -496,7 +496,7 @@ describe('NewExport', () => {
 
 		await userEvent.click(screen.getByLabelText('from'));
 
-		await userEvent.paste('2026-01-01 08:00');
+		await userEvent.paste('01/01/2026 08:00 AM');
 
 		await userEvent.click(
 			screen.getByRole('button', {name: /show-results/i})

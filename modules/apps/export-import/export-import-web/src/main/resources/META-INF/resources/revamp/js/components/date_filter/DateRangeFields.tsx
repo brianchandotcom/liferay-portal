@@ -7,7 +7,7 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import FieldDatePicker from '../forms/FieldDatePicker';
-import {DATE_FORMAT, EditingState, YEARS_OFFSET} from './types';
+import {EditingState, YEARS_OFFSET} from './types';
 import {getValidation} from './utils';
 
 type Props = {
@@ -23,7 +23,6 @@ const DateRangeFields = ({editing, errors, handleUpdateFilter}: Props) => {
 		<>
 			<ClayLayout.ContentCol>
 				<FieldDatePicker
-					dateFormat={DATE_FORMAT}
 					defaultTime="00:00"
 					errorMessage={errors.startDate}
 					formGroupProps={{className: 'mb-0'}}
@@ -33,7 +32,6 @@ const DateRangeFields = ({editing, errors, handleUpdateFilter}: Props) => {
 					onChange={(value) =>
 						handleUpdateFilter({startDate: value as string})
 					}
-					placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
 					time
 					value={editing.startDate}
 					years={{
@@ -45,7 +43,6 @@ const DateRangeFields = ({editing, errors, handleUpdateFilter}: Props) => {
 
 			<ClayLayout.ContentCol>
 				<FieldDatePicker
-					dateFormat={DATE_FORMAT}
 					defaultTime="23:59"
 					errorMessage={errors.endDate}
 					formGroupProps={{className: 'mb-0'}}
@@ -55,7 +52,6 @@ const DateRangeFields = ({editing, errors, handleUpdateFilter}: Props) => {
 					onChange={(value) =>
 						handleUpdateFilter({endDate: value as string})
 					}
-					placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
 					time
 					value={editing.endDate}
 					years={{

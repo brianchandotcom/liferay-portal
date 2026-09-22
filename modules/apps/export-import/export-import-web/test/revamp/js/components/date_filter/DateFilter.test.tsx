@@ -25,6 +25,12 @@ const PAST_DATE_STRING = PAST_DATE.toISOString().slice(0, 10);
 
 const TODAY = new Date();
 
+function toDisplayDateString(dateString: string) {
+	const [year, month, day] = dateString.split('-');
+
+	return `${month}/${day}/${year}`;
+}
+
 function ControlledDateFilter({
 	appliedValue: initialAppliedValue,
 	lastPublishDate,
@@ -138,6 +144,24 @@ describe('DateFilter', () => {
 		expect(screen.getByLabelText('to[date-time]')).toBeInTheDocument();
 	});
 
+	it('shows the portal locale clock in the date range placeholders', async () => {
+		const {user} = renderDateFilter();
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		expect(screen.getByLabelText('from')).toHaveAttribute(
+			'placeholder',
+			'MM/DD/YYYY HH:MM AM'
+		);
+		expect(screen.getByLabelText('to[date-time]')).toHaveAttribute(
+			'placeholder',
+			'MM/DD/YYYY HH:MM AM'
+		);
+	});
+
 	it('fills the start and end of the day when the date range bounds are picked from the calendar', async () => {
 		const {onApplyFilter, user} = renderDateFilter();
 
@@ -149,13 +173,13 @@ describe('DateFilter', () => {
 		await pickCalendarDay(user, 'from', PAST_DATE);
 
 		expect(screen.getByLabelText('from')).toHaveValue(
-			`${PAST_DATE_STRING} 00:00`
+			`${toDisplayDateString(PAST_DATE_STRING)} 12:00 AM`
 		);
 
 		await pickCalendarDay(user, 'to[date-time]', PAST_DATE);
 
 		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
-			`${PAST_DATE_STRING} 23:59`
+			`${toDisplayDateString(PAST_DATE_STRING)} 11:59 PM`
 		);
 
 		await user.click(screen.getByText('show-results'));
@@ -177,10 +201,10 @@ describe('DateFilter', () => {
 
 		await user.click(screen.getByLabelText('from'));
 
-		await user.paste('2026-01-02 08:00');
+		await user.paste('01/02/2026 08:00 AM');
 		await user.click(screen.getByLabelText('to[date-time]'));
 
-		await user.paste('2026-01-01 08:00');
+		await user.paste('01/01/2026 08:00 AM');
 
 		expect(screen.getAllByText('date-range-is-invalid')).toHaveLength(2);
 		expect(screen.getByText('show-results')).toBeDisabled();
@@ -229,7 +253,7 @@ describe('DateFilter', () => {
 
 		await user.click(screen.getByLabelText('from'));
 
-		await user.paste('2026-01-01');
+		await user.paste('01/01/2026');
 
 		expect(
 			screen.getByText('please-enter-a-valid-date')
@@ -269,10 +293,10 @@ describe('DateFilter', () => {
 
 		await user.click(screen.getByLabelText('from'));
 
-		await user.paste('2026-01-01 08:00');
+		await user.paste('01/01/2026 08:00 AM');
 		await user.click(screen.getByLabelText('to[date-time]'));
 
-		await user.paste('2026-01-02 08:00');
+		await user.paste('01/02/2026 08:00 AM');
 
 		await user.click(screen.getByText('show-results'));
 
@@ -282,10 +306,12 @@ describe('DateFilter', () => {
 			startDate: '2026-01-01 08:00',
 		});
 
-		expect(screen.getByLabelText('from')).toHaveValue('2026-01-01 08:00');
+		expect(screen.getByLabelText('from')).toHaveValue(
+			'01/01/2026 08:00 AM'
+		);
 		expect(screen.getByLabelText('from')).toBeEnabled();
 		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
-			'2026-01-02 08:00'
+			'01/02/2026 08:00 AM'
 		);
 		expect(screen.getByLabelText('to[date-time]')).toBeEnabled();
 

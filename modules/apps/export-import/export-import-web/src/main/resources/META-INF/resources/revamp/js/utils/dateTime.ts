@@ -3,15 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {format as formatDate} from 'date-fns';
+
+const BIDI_MARK_PATTERN = /[\u061C\u200E\u200F]/g;
+
+const DATE_FIELD_PATTERN = /d+|M+|y+/g;
+
+const DATE_FORMAT_REFERENCE_DATE = new Date(2024, 10, 22);
+
 const DATE_TIME_PATTERN = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
 
+const FIXED_SPACE_PATTERN = /[\u00A0\u2009\u202F]/g;
+
 const OFFSET_SAMPLE_DISTANCE = 36 * 60 * 60 * 1000;
+
+const STORAGE_DATE_FORMAT = 'yyyy-MM-dd';
 
 const TIME_PATTERN = /^\d{2}:\d{2}$/;
 
 const TIME_PLACEHOLDER = 'HH:MM';
 
 const TIME_PLACEHOLDER_12_HOUR = 'hh:mm AM';
+
+const TIME_SUFFIX_PATTERN = /\s(\d{1,2}:\d{2}|--:--)(?:\s(AM|PM|--))?$/i;
 
 export const UNSET_TIME = '--:--';
 
@@ -24,6 +38,39 @@ type DateTimeParts = {
 	month: number;
 	year: number;
 };
+
+export function getLocaleDateFormat(
+	locale: string = Liferay.ThemeDisplay.getBCP47LanguageId()
+): string {
+	return new Intl.DateTimeFormat(locale, {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	})
+		.formatToParts(DATE_FORMAT_REFERENCE_DATE)
+		.map((part) => {
+			if (part.type === 'day') {
+				return 'dd';
+			}
+
+			if (part.type === 'month') {
+				return 'MM';
+			}
+
+			if (part.type === 'year') {
+				return 'yyyy';
+			}
+
+			if (part.type === 'literal') {
+				return part.value
+					.replace(BIDI_MARK_PATTERN, '')
+					.replace(FIXED_SPACE_PATTERN, ' ');
+			}
+
+			return '';
+		})
+		.join('');
+}
 
 export function getTimePlaceholder(use12Hours: boolean): string {
 	return (
@@ -123,10 +170,42 @@ export function toDateTimeParts(dateTime: string): DateTimeParts {
 	return {day, hour, minute, month, year};
 }
 
+export function toDisplayDateTime(
+	dateTime: string,
+	dateFormat: string,
+	use12Hours: boolean
+): string {
+	const [dateText, timeText] = splitDateTime(dateTime);
+
+	const displayDate = reorderDate(dateText, STORAGE_DATE_FORMAT, dateFormat);
+
+	if (!timeText) {
+		return displayDate;
+	}
+
+	return `${displayDate} ${use12Hours ? to12HourTime(timeText) : timeText}`;
+}
+
 export function toLocalDate(dateTime: string): Date {
 	const {day, hour, minute, month, year} = toDateTimeParts(dateTime);
 
 	return new Date(year, month - 1, day, hour, minute);
+}
+
+export function toStorageDateTime(
+	dateTime: string,
+	dateFormat: string,
+	use12Hours: boolean
+): string {
+	const [dateText, timeText] = splitDateTime(dateTime);
+
+	const storageDate = reorderDate(dateText, dateFormat, STORAGE_DATE_FORMAT);
+
+	if (!timeText) {
+		return storageDate;
+	}
+
+	return `${storageDate} ${toCanonicalTime(timeText, use12Hours)}`;
 }
 
 export function toTimeParts(time: string): {hour: number; minute: number} {
@@ -147,7 +226,7 @@ export function toWallClockDateTime(
 		month: '2-digit',
 		timeZone: timeZoneId,
 		year: 'numeric',
-	} as Intl.DateTimeFormatOptions).formatToParts(new Date(isoDateTime));
+	}).formatToParts(new Date(isoDateTime));
 
 	const getPart = (type: string) =>
 		dateTimeFormatParts.find(
@@ -196,6 +275,63 @@ function padHour(time: string): string {
 	const [, hourString, minuteString] = match;
 
 	return `0${hourString}:${minuteString}`;
+}
+
+function reorderDate(
+	dateText: string,
+	fromFormat: string,
+	toFormat: string
+): string {
+	if (!dateText || fromFormat === toFormat) {
+		return dateText;
+	}
+
+	const date = toOrderedDate(dateText, fromFormat);
+
+	if (!date) {
+		return dateText;
+	}
+
+	return formatDate(date, toFormat);
+}
+
+function splitDateTime(dateTime: string): [string, string] {
+	const match = dateTime.match(TIME_SUFFIX_PATTERN);
+
+	if (!match || match.index === undefined) {
+		return [dateTime, ''];
+	}
+
+	return [dateTime.slice(0, match.index), dateTime.slice(match.index + 1)];
+}
+
+function toOrderedDate(dateText: string, dateFormat: string): Date | null {
+	const fields = dateFormat.match(DATE_FIELD_PATTERN);
+	const numbers = dateText.match(/\d+/g);
+
+	if (fields?.length !== 3 || numbers?.length !== 3) {
+		return null;
+	}
+
+	const values: Record<string, number> = {};
+
+	fields.forEach((field, index) => {
+		values[field[0]] = Number(numbers[index]);
+	});
+
+	const {M: month, d: day, y: year} = values;
+
+	const date = new Date(year, month - 1, day);
+
+	if (
+		date.getDate() !== day ||
+		date.getFullYear() !== year ||
+		date.getMonth() !== month - 1
+	) {
+		return null;
+	}
+
+	return date;
 }
 
 function toWallClockTime(dateTime: string): number {

@@ -12,7 +12,6 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import '../../../../../css/utilities.scss';
-import {DATE_FORMAT} from '../../../../components/date_filter/types';
 import FieldDatePicker from '../../../../components/forms/FieldDatePicker';
 import {FieldRadio} from '../../../../components/forms/FieldRadio';
 import FieldSelectWithOption from '../../../../components/forms/FieldSelectWithOption';
@@ -43,8 +42,6 @@ import {
 const MONTH_MAX_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 const MONTH_VALUES = MONTHS.map((month) => month.value);
-
-const DATE_TIME_PLACEHOLDER = `${DATE_FORMAT} HH:MM`.toUpperCase();
 
 export default function PublishScheduler({
 	cronExpressionErrorMessage,
@@ -191,7 +188,6 @@ export default function PublishScheduler({
 					<ClayLayout.Row>
 						<ClayLayout.Col md={6} size={12}>
 							<FieldDatePicker
-								dateFormat={DATE_FORMAT}
 								defaultTime="00:00"
 								errorMessage={startDateTimeErrorMessage}
 								id="publishScheduleStartDateTime"
@@ -203,7 +199,6 @@ export default function PublishScheduler({
 										startDateTime: startDateTime as string,
 									})
 								}
-								placeholder={DATE_TIME_PLACEHOLDER}
 								required
 								time
 								value={value.startDateTime}
@@ -548,7 +543,6 @@ export default function PublishScheduler({
 							<ClayLayout.Row>
 								<ClayLayout.Col md={6} size={12}>
 									<FieldDatePicker
-										dateFormat={DATE_FORMAT}
 										defaultTime="23:59"
 										disabled={value.neverEnd}
 										errorMessage={endDateTimeErrorMessage}
@@ -562,7 +556,6 @@ export default function PublishScheduler({
 													endDateTime as string,
 											})
 										}
-										placeholder={DATE_TIME_PLACEHOLDER}
 										required={!value.neverEnd}
 										time
 										value={value.endDateTime}

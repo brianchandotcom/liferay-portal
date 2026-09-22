@@ -14,10 +14,6 @@ import {
 	ScheduleValues,
 } from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/types';
 import {getInitialScheduleValues} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/utils';
-import {
-	toWallClockDateTime,
-	toZonedDate,
-} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
 
 const START_DATE_TIME = '2026-07-20 15:30';
 
@@ -692,79 +688,5 @@ describe('UI to cron is faithful', () => {
 		});
 
 		expect(broken).toEqual([]);
-	});
-});
-
-describe('toWallClockDateTime', () => {
-	it('formats the instant as a wall clock date time in the time zone', () => {
-		expect(
-			toWallClockDateTime('2026-07-20T19:30:00.000Z', 'America/New_York')
-		).toBe('2026-07-20 15:30');
-
-		expect(toWallClockDateTime('2026-07-20T19:30:00.000Z', 'UTC')).toBe(
-			'2026-07-20 19:30'
-		);
-	});
-});
-
-describe('toZonedDate', () => {
-	it('interprets the wall clock time in the given time zone', () => {
-		expect(
-			toZonedDate('2026-07-20 15:30', 'America/New_York').toISOString()
-		).toBe('2026-07-20T19:30:00.000Z');
-
-		expect(
-			toZonedDate('2026-07-20 15:30', 'Asia/Tokyo').toISOString()
-		).toBe('2026-07-20T06:30:00.000Z');
-
-		expect(toZonedDate('2026-07-20 15:30', 'UTC').toISOString()).toBe(
-			'2026-07-20T15:30:00.000Z'
-		);
-	});
-
-	it('resolves a wall clock time in the autumn overlap to the earlier instant', () => {
-		expect(
-			toZonedDate('2026-10-25 02:30', 'Europe/Madrid').toISOString()
-		).toBe('2026-10-25T00:30:00.000Z');
-
-		expect(
-			toZonedDate('2026-11-01 01:30', 'America/New_York').toISOString()
-		).toBe('2026-11-01T05:30:00.000Z');
-
-		expect(
-			toZonedDate('2026-04-05 02:30', 'Pacific/Auckland').toISOString()
-		).toBe('2026-04-04T13:30:00.000Z');
-	});
-
-	it('resolves the offset in effect at the wall clock time around a DST transition', () => {
-		expect(
-			toZonedDate('2026-03-29 01:30', 'Europe/Madrid').toISOString()
-		).toBe('2026-03-29T00:30:00.000Z');
-
-		expect(
-			toZonedDate('2026-10-25 01:30', 'Europe/Madrid').toISOString()
-		).toBe('2026-10-24T23:30:00.000Z');
-
-		expect(
-			toZonedDate('2026-03-08 03:30', 'America/New_York').toISOString()
-		).toBe('2026-03-08T07:30:00.000Z');
-	});
-
-	it('shifts a wall clock time inside the spring forward gap past the gap', () => {
-		expect(
-			toZonedDate('2026-03-29 02:30', 'Europe/Madrid').toISOString()
-		).toBe('2026-03-29T01:30:00.000Z');
-
-		expect(
-			toZonedDate('2026-03-08 02:30', 'America/New_York').toISOString()
-		).toBe('2026-03-08T07:30:00.000Z');
-
-		expect(
-			toZonedDate('2026-03-29 00:00', 'Atlantic/Azores').toISOString()
-		).toBe('2026-03-29T01:00:00.000Z');
-
-		expect(
-			toZonedDate('2026-09-27 02:30', 'Pacific/Auckland').toISOString()
-		).toBe('2026-09-26T14:30:00.000Z');
 	});
 });

@@ -25,6 +25,19 @@ const FUTURE_DATE = new Date(Date.now() + DAY);
 
 const FUTURE_DATE_TIME = toWallClockDateTime(FUTURE_DATE.toISOString(), 'UTC');
 
+function toDisplayedDateTime(dateTime: string): string {
+	const [datePart, timePart] = dateTime.split(' ');
+	const [year, month, day] = datePart.split('-');
+	const [hourString, minuteString] = timePart.split(':');
+	const hour = Number(hourString);
+	const period = hour < 12 ? 'AM' : 'PM';
+	const hour12 = String(hour % 12 || 12).padStart(2, '0');
+
+	return `${month}/${day}/${year} ${hour12}:${minuteString} ${period}`;
+}
+
+const FUTURE_DISPLAY_DATE_TIME = toDisplayedDateTime(FUTURE_DATE_TIME);
+
 const SCHEDULED_PUBLISH_PROCESS: ScheduledPublishProcess = {
 	cronExpression: '0 30 9 ? * MON/1 *',
 	id: 1234,
@@ -174,7 +187,7 @@ describe('NewPublish', () => {
 
 		await user.click(screen.getByLabelText('from'));
 
-		await user.paste('2026-01-01 08:00');
+		await user.paste('01/01/2026 08:00 AM');
 
 		await user.click(screen.getByRole('button', {name: /show-results/i}));
 
@@ -249,7 +262,7 @@ describe('NewPublish', () => {
 		).toBeInTheDocument();
 
 		await user.click(startDateField);
-		await user.paste(FUTURE_DATE_TIME);
+		await user.paste(FUTURE_DISPLAY_DATE_TIME);
 
 		await waitFor(() => {
 			expect(submitButton).toBeEnabled();
@@ -332,7 +345,7 @@ describe('NewPublish', () => {
 		await clickCalendarDay(startDatePicker, 0);
 
 		expect(startDateField).toHaveValue(
-			`${FUTURE_DATE_TIME.split(' ')[0]} 00:00`
+			toDisplayedDateTime(`${FUTURE_DATE_TIME.split(' ')[0]} 00:00`)
 		);
 
 		await user.click(document.body);
@@ -376,7 +389,7 @@ describe('NewPublish', () => {
 		await clickCalendarDay(endDatePicker, 1);
 
 		expect(endDateField).toHaveValue(
-			`${FUTURE_DATE_TIME.split(' ')[0]} 23:59`
+			toDisplayedDateTime(`${FUTURE_DATE_TIME.split(' ')[0]} 23:59`)
 		);
 	});
 
@@ -391,7 +404,7 @@ describe('NewPublish', () => {
 
 		await user.click(screen.getByRole('textbox', {name: /start-date/}));
 
-		await user.paste(FUTURE_DATE_TIME);
+		await user.paste(FUTURE_DISPLAY_DATE_TIME);
 
 		await user.selectOptions(
 			screen.getByRole('combobox', {name: 'repeat'}),
@@ -480,7 +493,7 @@ describe('NewPublish', () => {
 
 		await user.click(screen.getByRole('textbox', {name: /start-date/}));
 
-		await user.paste(FUTURE_DATE_TIME);
+		await user.paste(FUTURE_DISPLAY_DATE_TIME);
 
 		await user.tab();
 
@@ -515,7 +528,7 @@ describe('NewPublish', () => {
 
 		await user.click(screen.getByRole('textbox', {name: /start-date/}));
 
-		await user.paste(FUTURE_DATE_TIME);
+		await user.paste(FUTURE_DISPLAY_DATE_TIME);
 
 		await user.selectOptions(
 			screen.getByRole('combobox', {name: 'repeat'}),
@@ -527,9 +540,11 @@ describe('NewPublish', () => {
 		await user.click(screen.getByRole('textbox', {name: /end-date/}));
 
 		await user.paste(
-			toWallClockDateTime(
-				new Date(FUTURE_DATE.getTime() + DAY).toISOString(),
-				'UTC'
+			toDisplayedDateTime(
+				toWallClockDateTime(
+					new Date(FUTURE_DATE.getTime() + DAY).toISOString(),
+					'UTC'
+				)
 			)
 		);
 
@@ -644,7 +659,7 @@ describe('NewPublish', () => {
 			screen.getByRole('radio', {name: /schedule-for-later/})
 		).toBeChecked();
 		expect(screen.getByRole('textbox', {name: /start-date/})).toHaveValue(
-			FUTURE_DATE_TIME
+			toDisplayedDateTime(FUTURE_DATE_TIME)
 		);
 		expect(
 			screen.getByRole('checkbox', {
@@ -690,9 +705,11 @@ describe('NewPublish', () => {
 		expect(screen.getByLabelText('filter-content-by')).toHaveValue(
 			'dateRange'
 		);
-		expect(screen.getByLabelText('from')).toHaveValue('2026-08-22 15:05');
+		expect(screen.getByLabelText('from')).toHaveValue(
+			'08/22/2026 03:05 PM'
+		);
 		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
-			'2026-09-01 09:30'
+			'09/01/2026 09:30 AM'
 		);
 
 		const previewSearchParams = new URL(
@@ -914,7 +931,7 @@ describe('NewPublish', () => {
 
 		expect(
 			await screen.findByRole('textbox', {name: /start-date/})
-		).toHaveValue('2026-07-01 09:30');
+		).toHaveValue(toDisplayedDateTime('2026-07-01 09:30'));
 
 		await screen.findByText('the-publish-time-must-be-in-the-future');
 
@@ -940,7 +957,7 @@ describe('NewPublish', () => {
 
 		await user.clear(screen.getByRole('textbox', {name: /start-date/}));
 
-		await user.paste(FUTURE_DATE_TIME);
+		await user.paste(FUTURE_DISPLAY_DATE_TIME);
 
 		const submitButton = screen.getByRole('button', {
 			name: /schedule-publication-to-live/i,
@@ -1051,7 +1068,7 @@ describe('NewPublish', () => {
 
 		await user.click(screen.getByRole('textbox', {name: /start-date/}));
 
-		await user.paste(FUTURE_DATE_TIME);
+		await user.paste(FUTURE_DISPLAY_DATE_TIME);
 
 		await user.selectOptions(
 			screen.getByRole('combobox', {name: 'repeat'}),
@@ -1093,7 +1110,7 @@ describe('NewPublish', () => {
 
 		await user.click(screen.getByRole('textbox', {name: /start-date/}));
 
-		await user.paste(FUTURE_DATE_TIME);
+		await user.paste(FUTURE_DISPLAY_DATE_TIME);
 
 		await user.selectOptions(
 			screen.getByRole('combobox', {name: 'repeat'}),

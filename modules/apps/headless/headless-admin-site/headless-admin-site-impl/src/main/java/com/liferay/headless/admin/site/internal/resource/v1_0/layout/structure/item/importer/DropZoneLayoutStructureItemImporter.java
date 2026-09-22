@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructu
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,9 +41,18 @@ public class DropZoneLayoutStructureItemImporter
 		PageElement[] pageElements = pageElement.getPageElements();
 
 		if ((pageElements != null) && (pageElements.length > 1)) {
-			throw new IllegalArgumentException(
+			String message =
 				"A drop zone page element cannot have more than one child " +
-					"page element");
+					"page element";
+
+			if (Validator.isNotNull(pageElement.getExternalReferenceCode())) {
+				message = StringBundler.concat(
+					"The drop zone page element with the external reference ",
+					"code \"", pageElement.getExternalReferenceCode(),
+					"\" cannot have more than one child page element");
+			}
+
+			throw new IllegalArgumentException(message);
 		}
 
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =

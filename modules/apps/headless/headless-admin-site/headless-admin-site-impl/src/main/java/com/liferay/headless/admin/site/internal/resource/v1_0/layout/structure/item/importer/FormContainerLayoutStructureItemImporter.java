@@ -40,12 +40,14 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -117,8 +119,16 @@ public class FormContainerLayoutStructureItemImporter
 		}
 
 		if (formContainerConfig.getFormContainerReference() == null) {
-			throw new IllegalArgumentException(
-				"A form container reference is required");
+			String message = "A form container reference is required";
+
+			if (Validator.isNotNull(pageElement.getExternalReferenceCode())) {
+				message = StringBundler.concat(
+					"The form container page element with the external ",
+					"reference code \"", pageElement.getExternalReferenceCode(),
+					"\" requires a form container reference");
+			}
+
+			throw new IllegalArgumentException(message);
 		}
 
 		if (formContainerConfig.getFormContainerReference() instanceof

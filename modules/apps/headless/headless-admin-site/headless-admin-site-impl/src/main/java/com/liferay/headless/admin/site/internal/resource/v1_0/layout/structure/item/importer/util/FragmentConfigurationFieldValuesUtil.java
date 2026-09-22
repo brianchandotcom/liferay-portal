@@ -494,7 +494,10 @@ public class FragmentConfigurationFieldValuesUtil {
 		}
 
 		throw new IllegalArgumentException(
-			"The category tree node type is not supported");
+			StringBundler.concat(
+				"The item external reference class name \"",
+				itemExternalReference.getClassName(),
+				"\" is not supported for this fragment configuration field"));
 	}
 
 	private static JSONObject _getCategoryTreeNodeMissingReferenceJSONObject(
@@ -652,8 +655,12 @@ public class FragmentConfigurationFieldValuesUtil {
 						fragmentConfigurationField.getType()))) {
 
 				throw new IllegalArgumentException(
-					"The fragment configuration field value type does not " +
-						"match the fragment configuration field type");
+					StringBundler.concat(
+						"The fragment configuration field \"",
+						fragmentConfigurationField.getName(),
+						"\" expects the type ",
+						FragmentConfigurationFieldValueTypeUtil.toExternalType(
+							fragmentConfigurationField.getType())));
 			}
 
 			jsonObject.put(

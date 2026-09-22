@@ -31,6 +31,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -390,8 +391,10 @@ public class FragmentLayoutStructureItemImporter
 				layoutStructureItemImporterContext.getSegmentsExperienceId())) {
 
 			throw new IllegalArgumentException(
-				"The fragment entry link does not belong to this page " +
-					"experience");
+				StringBundler.concat(
+					"The fragment instance with the external reference code \"",
+					fragmentInstance.getFragmentInstanceExternalReferenceCode(),
+					"\" belongs to another page or page experience"));
 		}
 
 		FragmentEntryReference fragmentEntryReference =

@@ -31,11 +31,13 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Objects;
@@ -57,9 +59,18 @@ public class CollectionLayoutStructureItemImporter
 		PageElement[] pageElements = pageElement.getPageElements();
 
 		if ((pageElements != null) && (pageElements.length > 1)) {
-			throw new IllegalArgumentException(
+			String message =
 				"A collection display page element cannot have more than one " +
-					"child page element");
+					"child page element";
+
+			if (Validator.isNotNull(pageElement.getExternalReferenceCode())) {
+				message = StringBundler.concat(
+					"The collection display page element with the external ",
+					"reference code \"", pageElement.getExternalReferenceCode(),
+					"\" cannot have more than one child page element");
+			}
+
+			throw new IllegalArgumentException(message);
 		}
 
 		String collectionItemItemId = PortalUUIDUtil.generate();

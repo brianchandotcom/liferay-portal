@@ -29,6 +29,12 @@ public class HighlightTranslator {
 	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
 		Highlight highlight) {
 
+		return translate(highlight, null);
+	}
+
+	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
+		Highlight highlight, Query defaultHighlightQuery) {
+
 		co.elastic.clients.elasticsearch.core.search.Highlight.Builder builder =
 			new co.elastic.clients.elasticsearch.core.search.Highlight.
 				Builder();
@@ -73,6 +79,9 @@ public class HighlightTranslator {
 					ElasticsearchQueryVisitor.INSTANCE.translate(
 						highlight.getHighlightQuery())));
 		}
+		else if (defaultHighlightQuery != null) {
+			builder.highlightQuery(defaultHighlightQuery);
+		}
 
 		SetterUtil.setNotNullInteger(
 			builder::noMatchSize, highlight.getNoMatchSize());
@@ -106,6 +115,16 @@ public class HighlightTranslator {
 		String[] highlightFieldNames, int highlightFragmentSize,
 		boolean highlightRequireFieldMatch, int numberOfFragments) {
 
+		return translate(
+			highlightFieldNames, highlightFragmentSize,
+			highlightRequireFieldMatch, numberOfFragments, null);
+	}
+
+	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
+		String[] highlightFieldNames, int highlightFragmentSize,
+		boolean highlightRequireFieldMatch, int numberOfFragments,
+		Query highlightQuery) {
+
 		if (ArrayUtil.isEmpty(highlightFieldNames)) {
 			return null;
 		}
@@ -123,6 +142,10 @@ public class HighlightTranslator {
 					).numberOfFragments(
 						numberOfFragments
 					)));
+		}
+
+		if (highlightQuery != null) {
+			builder.highlightQuery(highlightQuery);
 		}
 
 		builder.postTags(HighlightUtil.HIGHLIGHT_TAG_CLOSE);

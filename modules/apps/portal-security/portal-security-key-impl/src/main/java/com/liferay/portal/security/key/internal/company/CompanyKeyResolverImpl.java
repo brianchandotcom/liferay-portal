@@ -59,15 +59,42 @@ import org.osgi.service.component.annotations.Reference;
 public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 
 	@Override
-	public Key deserializeKey(long companyId, String serializedKey) {
-		Key key = _getCachedKey(companyId, serializedKey);
+	public boolean isEnabled(long companyId) {
+		String companyKEKIdentifier = _getCompanyKEKIdentifier();
+
+		if (Validator.isNotNull(companyKEKIdentifier)) {
+			return true;
+		}
+
+		if (_log.isWarnEnabled()) {
+			if (PropsValues.FIPS_ENABLED) {
+				_log.warn(
+					StringBundler.concat(
+						"The company key is stored in plaintext in FIPS mode ",
+						"because the KEK identifier is not configured for ",
+						"company ", companyId));
+			}
+			else if (!Validator.isBlank(companyKEKIdentifier)) {
+				_log.warn(
+					"Company key wrapping is inactive because the KEK " +
+						"identifier is set to an unusable value for company " +
+							companyId);
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public Key unwrapKey(long companyId, String wrappedKey) {
+		Key key = _getCachedKey(companyId, wrappedKey);
 
 		if (key != null) {
 			return key;
 		}
 
 		WrappedCompanyKey wrappedCompanyKey = WrappedCompanyKey.parse(
-			companyId, serializedKey);
+			companyId, wrappedKey);
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
@@ -76,7 +103,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 
 		if (currentCountDownLatch == null) {
 			try {
-				return _decryptKey(companyId, serializedKey, wrappedCompanyKey);
+				return _decryptKey(companyId, wrappedCompanyKey, wrappedKey);
 			}
 			finally {
 				_companyKeyCountDownLatches.remove(companyId, countDownLatch);
@@ -107,44 +134,17 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 				interruptedException);
 		}
 
-		key = _getCachedKey(companyId, serializedKey);
+		key = _getCachedKey(companyId, wrappedKey);
 
 		if (key != null) {
 			return key;
 		}
 
-		return _decryptKey(companyId, serializedKey, wrappedCompanyKey);
+		return _decryptKey(companyId, wrappedCompanyKey, wrappedKey);
 	}
 
 	@Override
-	public boolean isEnabled(long companyId) {
-		String companyKEKIdentifier = _getCompanyKEKIdentifier();
-
-		if (Validator.isNotNull(companyKEKIdentifier)) {
-			return true;
-		}
-
-		if (_log.isWarnEnabled()) {
-			if (PropsValues.FIPS_ENABLED) {
-				_log.warn(
-					StringBundler.concat(
-						"The company key is stored in plaintext in FIPS mode ",
-						"because the KEK identifier is not configured for ",
-						"company ", companyId));
-			}
-			else if (!Validator.isBlank(companyKEKIdentifier)) {
-				_log.warn(
-					"Company key wrapping is inactive because the KEK " +
-						"identifier is set to an unusable value for company " +
-							companyId);
-			}
-		}
-
-		return false;
-	}
-
-	@Override
-	public String serializeKey(long companyId, Key key) {
+	public String wrapKey(long companyId, Key key) {
 		String companyKEKIdentifier = _getCompanyKEKIdentifier();
 
 		if (Validator.isNull(companyKEKIdentifier)) {
@@ -206,11 +206,11 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 			WrappedCompanyKey wrappedCompanyKey = new WrappedCompanyKey(
 				ciphertext, keyReference);
 
-			String serializedKey = wrappedCompanyKey.serialize();
+			String wrappedKey = wrappedCompanyKey.toWrappedKey();
 
-			_putCompanyKeyCacheEntry(companyId, keyBytes, serializedKey);
+			_putCompanyKeyCacheEntry(companyId, keyBytes, wrappedKey);
 
-			return serializedKey;
+			return wrappedKey;
 		}
 		catch (CryptoException cryptoException) {
 			throw new CompanyKeyResolutionException(
@@ -296,8 +296,8 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 	}
 
 	private Key _decryptKey(
-		long companyId, String serializedKey,
-		WrappedCompanyKey wrappedCompanyKey) {
+		long companyId, WrappedCompanyKey wrappedCompanyKey,
+		String wrappedKey) {
 
 		byte[] keyBytes = null;
 
@@ -316,7 +316,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 						"for company ", companyId));
 			}
 
-			_putCompanyKeyCacheEntry(companyId, keyBytes, serializedKey);
+			_putCompanyKeyCacheEntry(companyId, keyBytes, wrappedKey);
 
 			return _createKey(keyBytes);
 		}
@@ -346,9 +346,22 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 			});
 	}
 
-	private Key _getCachedKey(long companyId, String serializedKey) {
+	private long _getCacheTTLMillis() {
+		KeyManagerConfiguration keyManagerConfiguration =
+			_keyManagerConfiguration;
+
+		if (keyManagerConfiguration == null) {
+			return 0;
+		}
+
+		long cacheTTLSeconds = keyManagerConfiguration.companyKeyCacheTTL();
+
+		return cacheTTLSeconds * 1000;
+	}
+
+	private Key _getCachedKey(long companyId, String wrappedKey) {
 		CompanyKeyCacheEntry companyKeyCacheEntry = _getCompanyKeyCacheEntry(
-			companyId, serializedKey);
+			companyId, wrappedKey);
 
 		if (companyKeyCacheEntry == null) {
 			return null;
@@ -366,19 +379,6 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		finally {
 			Arrays.fill(keyBytes, (byte)0);
 		}
-	}
-
-	private long _getCacheTTLMillis() {
-		KeyManagerConfiguration keyManagerConfiguration =
-			_keyManagerConfiguration;
-
-		if (keyManagerConfiguration == null) {
-			return 0;
-		}
-
-		long cacheTTLSeconds = keyManagerConfiguration.companyKeyCacheTTL();
-
-		return cacheTTLSeconds * 1000;
 	}
 
 	private String _getCompanyKEKIdentifier() {
@@ -404,7 +404,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 	}
 
 	private CompanyKeyCacheEntry _getCompanyKeyCacheEntry(
-		long companyId, String serializedKey) {
+		long companyId, String wrappedKey) {
 
 		CompanyKeyCacheEntry companyKeyCacheEntry = _companyKeyCacheEntries.get(
 			companyId);
@@ -414,8 +414,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		}
 
 		if (companyKeyCacheEntry.isExpired(System.currentTimeMillis()) ||
-			!Objects.equals(
-				companyKeyCacheEntry.getSerializedKey(), serializedKey)) {
+			!Objects.equals(companyKeyCacheEntry.getWrappedKey(), wrappedKey)) {
 
 			if (_companyKeyCacheEntries.remove(
 					companyId, companyKeyCacheEntry)) {
@@ -444,7 +443,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 	}
 
 	private void _putCompanyKeyCacheEntry(
-		long companyId, byte[] keyBytes, String serializedKey) {
+		long companyId, byte[] keyBytes, String wrappedKey) {
 
 		long cacheTTLMillis = _getCacheTTLMillis();
 
@@ -458,7 +457,7 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 			companyId,
 			new CompanyKeyCacheEntry(
 				System.currentTimeMillis() + cacheTTLMillis, keyBytes,
-				serializedKey));
+				wrappedKey));
 
 		if (companyKeyCacheEntry != null) {
 			companyKeyCacheEntry.destroy();

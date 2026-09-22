@@ -32,7 +32,7 @@ public class CompanyKeyUtil {
 				"Key resolver is not available for company " + companyId);
 		}
 
-		return companyKeyResolver.deserializeKey(companyId, serializedKey);
+		return companyKeyResolver.unwrapKey(companyId, serializedKey);
 	}
 
 	public static boolean isWrappedKey(String serializedKey) {
@@ -55,7 +55,7 @@ public class CompanyKeyUtil {
 			return EncryptorUtil.serializeKey(key);
 		}
 
-		return companyKeyResolver.serializeKey(companyId, key);
+		return companyKeyResolver.wrapKey(companyId, key);
 	}
 
 	private static final Snapshot<CompanyKeyResolver>

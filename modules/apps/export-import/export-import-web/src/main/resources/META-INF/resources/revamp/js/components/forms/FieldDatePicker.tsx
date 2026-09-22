@@ -10,7 +10,24 @@ import React, {useState} from 'react';
 
 import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 
+const UNSET_TIME = '--:--';
+
+function applyDefaultTime(value: string, defaultTime?: string): string {
+	if (!defaultTime) {
+		return value;
+	}
+
+	const [datePart, timePart] = value.split(' ');
+
+	if (!/^\d{4}-\d{2}-\d{2}$/.test(datePart) || timePart !== UNSET_TIME) {
+		return value;
+	}
+
+	return `${datePart} ${defaultTime}`;
+}
+
 export type FieldDatePickerProps = {
+	defaultTime?: string;
 	disabled?: boolean;
 	errorMessage?: string;
 	formGroupProps?: {className: string};
@@ -26,6 +43,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 	const {
+		defaultTime,
 		disabled,
 		errorMessage: externalErrorMessage,
 		firstDayOfWeek = dateUtils.getFirstDayOfWeek(
@@ -64,11 +82,16 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 	};
 
 	const handleOnChange = (val: string) => {
-		if (internalErrorMessage && (!val || dateUtils.isValid(val))) {
+		const storageValue = applyDefaultTime(val, defaultTime);
+
+		if (
+			internalErrorMessage &&
+			(!storageValue || dateUtils.isValid(storageValue))
+		) {
 			setInternalErrorMessage('');
 		}
 
-		onChange?.(val);
+		onChange?.(storageValue);
 	};
 
 	const errorMessage = internalErrorMessage || externalErrorMessage;

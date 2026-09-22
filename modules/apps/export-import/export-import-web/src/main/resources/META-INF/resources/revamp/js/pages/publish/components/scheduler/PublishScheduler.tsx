@@ -180,6 +180,7 @@ export default function PublishScheduler({
 						<ClayLayout.Col md={6} size={12}>
 							<FieldDatePicker
 								dateFormat={DATE_FORMAT}
+								defaultTime="00:00"
 								errorMessage={startDateTimeErrorMessage}
 								id="publishScheduleStartDateTime"
 								label={Liferay.Language.get('start-date')}
@@ -474,6 +475,7 @@ export default function PublishScheduler({
 						<ClayLayout.Col md={6} size={12}>
 							<FieldDatePicker
 								dateFormat={DATE_FORMAT}
+								defaultTime="23:59"
 								disabled={value.neverEnd}
 								errorMessage={endDateTimeErrorMessage}
 								id="publishScheduleEndDateTime"

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import React from 'react';
@@ -103,6 +103,25 @@ const fillRequiredFields = async () => {
 const renderComponent = (
 	props: Partial<React.ComponentProps<typeof NewPublish>> = {}
 ) => render(<NewPublish {...DEFAULT_PROPS} {...props} />);
+
+const clickCalendarDay = async (
+	datePicker: HTMLElement,
+	preferredIndex: number
+) => {
+	let dayCells = screen.queryAllByLabelText(FUTURE_DATE.toDateString());
+
+	if (dayCells.length <= preferredIndex) {
+		await user.click(
+			within(datePicker).getByRole('button', {
+				name: 'Select the next month',
+			})
+		);
+
+		dayCells = screen.getAllByLabelText(FUTURE_DATE.toDateString());
+	}
+
+	await user.click(dayCells[Math.min(preferredIndex, dayCells.length - 1)]);
+};
 
 describe('NewPublish', () => {
 	beforeEach(() => {
@@ -219,6 +238,95 @@ describe('NewPublish', () => {
 				'please-set-a-start-date-and-time-to-schedule-the-publication'
 			)
 		).not.toBeInTheDocument();
+	});
+
+	it('does not overwrite a time being typed after a complete date', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		const startDateField = screen.getByRole('textbox', {
+			name: /start-date/,
+		});
+
+		await user.click(startDateField);
+		await user.type(startDateField, `${FUTURE_DATE_TIME.split(' ')[0]} 1`);
+
+		expect(startDateField).toHaveValue(
+			`${FUTURE_DATE_TIME.split(' ')[0]} 1`
+		);
+	});
+
+	it('defaults the start date time to midnight when a day is picked from the calendar', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		const startDateField = screen.getByRole('textbox', {
+			name: /start-date/,
+		});
+		const startDatePicker = startDateField.closest(
+			'.date-picker'
+		) as HTMLElement;
+
+		await user.click(
+			within(startDatePicker).getByRole('button', {
+				name: 'Choose date',
+			})
+		);
+
+		await clickCalendarDay(startDatePicker, 0);
+
+		expect(startDateField).toHaveValue(
+			`${FUTURE_DATE_TIME.split(' ')[0]} 00:00`
+		);
+
+		await user.click(document.body);
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', {
+					name: /schedule-publication-to-live/i,
+				})
+			).toBeEnabled();
+		});
+	});
+
+	it('defaults the end date time to 23:59 when a day is picked from the calendar', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		await user.click(screen.getByRole('checkbox', {name: /never-end/}));
+
+		const endDateField = screen.getByRole('textbox', {
+			name: /end-date/,
+		});
+		const endDatePicker = endDateField.closest(
+			'.date-picker'
+		) as HTMLElement;
+
+		await user.click(
+			within(endDatePicker).getByRole('button', {name: 'Choose date'})
+		);
+
+		await clickCalendarDay(endDatePicker, 1);
+
+		expect(endDateField).toHaveValue(
+			`${FUTURE_DATE_TIME.split(' ')[0]} 23:59`
+		);
 	});
 
 	it('shows the end date error only after the field is touched', async () => {

@@ -58,6 +58,69 @@ tests:
         it: Labels every workflow pod so the workload identity webhook injects a token
     -   asserts:
             -   matchRegex:
+                    path: spec.templates[4].script.source
+                    pattern: "[(][(][$]retained_data_planes[[][.]metadata[.]labels[.]retainedDataPlane[]] // .1970-01-01T00:00:00Z.[)] [|] fromdateiso8601[)] > [(]now [+] 3600[)]"
+            -   matchRegex:
+                    path: spec.templates[4].script.source
+                    pattern: "server: [.]metadata[.]annotations[[].crossplane[.]io/external-name.[]]"
+            -   notMatchRegex:
+                    path: spec.templates[4].script.source
+                    pattern: retainedDatabaseServer=true
+        it: Leaves a retained data plane out of the restore sources once its release is within the hour
+    -   asserts:
+            -   contains:
+                    content:
+                        name: database-candidates
+                        valueFrom:
+                            path: /tmp/database-candidates.txt
+                    path: spec.templates[4].outputs.parameters
+            -   contains:
+                    content:
+                        name: database-candidates
+                    path: spec.templates[6].inputs.parameters
+            -   contains:
+                    content:
+                        name: restore-source-data-plane
+                        valueFrom:
+                            path: /tmp/restore-source-data-plane.txt
+                    path: spec.templates[6].outputs.parameters
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: for database_candidate in [$][(]echo '[{][{]inputs[.]parameters[.]database-candidates[}][}]' [|] jq --compact-output
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: elif [[][[] "[$][{]earliest_restore_date:0:19[}]" > "[$][{]recovery_point_time:0:19[}]" []][]]
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: (?s)elif [[][[] "[$][{]earliest_restore_date[}]" > "[$][{]restore_source_earliest_restore_date[}]" []][]].*?restore_source_data_plane=.*?jq --raw-output ".key"
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: (?s)function main [{].*?_find_recovery_point.*?_pick_restore_source "[$][(]cat /tmp/recovery-point-time[.]txt[)]".*?function _find_recovery_point [{].*?function _pick_restore_source [{]
+            -   notMatchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: sort [|]
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: No database server holds the recovery point time
+            -   notMatchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: server-id|server_id
+            -   contains:
+                    content:
+                        default: "null"
+                        name: restore-source-data-plane
+                    path: spec.templates[0].inputs.parameters
+            -   matchRegex:
+                    path: spec.templates[0].resource.manifest
+                    pattern: "restoreSourceDataPlane: [{][{]inputs[.]parameters[.]restore-source-data-plane[}][}]"
+            -   contains:
+                    content:
+                        name: restore-source-data-plane
+                        value: "{{tasks.get-recovery-point-time.outputs.parameters.restore-source-data-plane}}"
+                    path: spec.templates[9].dag.tasks[4].arguments.parameters
+        it: Picks the restore source as the latest data plane that can reach the recovery point
+    -   asserts:
+            -   matchRegex:
                     path: spec.templates[3].script.source
                     pattern: az extension add \\\s+--name dataprotection \\\s+--version 1\.11\.3
             -   matchRegex:

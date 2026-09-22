@@ -29,6 +29,8 @@ spec:
                     -   name: restore-phase
                     -   default: "null"
                         name: restore-point-in-time
+                    -   default: "null"
+                        name: restore-source-data-plane
                     -   name: target-active-data-plane
             name: apply-infrastructure
             outputs:
@@ -49,6 +51,7 @@ spec:
                     spec:
                         database:
                             restorePointInTime: {{ "{{" }}inputs.parameters.restore-point-in-time}}
+                            restoreSourceDataPlane: {{ "{{" }}inputs.parameters.restore-source-data-plane}}
                         restoreGeneration: {{ "{{" }}inputs.parameters.restore-generation}}
                         restorePhase: {{ "{{" }}inputs.parameters.restore-phase}}
                         targetActiveDataPlane: {{ "{{" }}inputs.parameters.target-active-data-plane}}
@@ -61,6 +64,8 @@ spec:
                     -   name: restore-phase
                     -   default: "null"
                         name: restore-point-in-time
+                    -   default: "null"
+                        name: restore-source-data-plane
                     -   name: target-active-data-plane
             name: apply-wait-infrastructure
             steps:
@@ -74,6 +79,8 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.restore-phase}}"
                                 -   name: restore-point-in-time
                                     value: "{{ "{{" }}inputs.parameters.restore-point-in-time}}"
+                                -   name: restore-source-data-plane
+                                    value: "{{ "{{" }}inputs.parameters.restore-source-data-plane}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
                         name: apply-infrastructure
@@ -136,9 +143,9 @@ spec:
                     -   name: data-inactive
                         valueFrom:
                             path: /tmp/data-plane-inactive.txt
-                    -   name: database-server-name-active
+                    -   name: database-candidates
                         valueFrom:
-                            path: /tmp/database-server-name-active.txt
+                            path: /tmp/database-candidates.txt
                     -   name: liferay-infrastructure-name
                         valueFrom:
                             path: /tmp/liferay-infrastructure-name.txt
@@ -188,7 +195,7 @@ spec:
             inputs:
                 parameters:
                     -   name: backup-vault-name
-                    -   name: database-server-name
+                    -   name: database-candidates
                     -   name: resource-group-name
                     -   name: storage-account-id
             name: get-recovery-point-time
@@ -200,6 +207,9 @@ spec:
                     -   name: recovery-point-time
                         valueFrom:
                             path: /tmp/recovery-point-time.txt
+                    -   name: restore-source-data-plane
+                        valueFrom:
+                            path: /tmp/restore-source-data-plane.txt
             script:
                 command: [sh]
                 env:
@@ -258,8 +268,8 @@ spec:
                             parameters:
                                 -   name: backup-vault-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.backup-vault-name}}"
-                                -   name: database-server-name
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.database-server-name-active}}"
+                                -   name: database-candidates
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.database-candidates}}"
                                 -   name: resource-group-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.resource-group-name}}"
                                 -   name: storage-account-id
@@ -288,6 +298,8 @@ spec:
                                     value: provisioning
                                 -   name: restore-point-in-time
                                     value: "{{ "{{" }}tasks.get-recovery-point-time.outputs.parameters.recovery-point-time}}"
+                                -   name: restore-source-data-plane
+                                    value: "{{ "{{" }}tasks.get-recovery-point-time.outputs.parameters.restore-source-data-plane}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
                         depends: get-recovery-point-time

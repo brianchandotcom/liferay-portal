@@ -620,11 +620,9 @@ public class CompanyKeyResolverImplTest {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
 			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
 
-		boolean fipsEnabled = PropsValues.FIPS_ENABLED;
-
-		try {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "FIPS_ENABLED", false);
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "FIPS_ENABLED", false)) {
 
 			Assert.assertTrue(companyKeyResolverImpl.isEnabled(_COMPANY_ID_1));
 
@@ -676,21 +674,15 @@ public class CompanyKeyResolverImplTest {
 
 			Assert.assertFalse(companyKeyResolverImpl.isEnabled(_COMPANY_ID_1));
 		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "FIPS_ENABLED", fipsEnabled);
-		}
 	}
 
 	private void _testIsEnabledInFIPSMode() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
 			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
 
-		boolean fipsEnabled = PropsValues.FIPS_ENABLED;
-
-		try {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "FIPS_ENABLED", true);
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "FIPS_ENABLED", true)) {
 
 			Assert.assertTrue(companyKeyResolverImpl.isEnabled(_COMPANY_ID_1));
 
@@ -717,10 +709,6 @@ public class CompanyKeyResolverImplTest {
 						"company ", _COMPANY_ID_1),
 					logEntry.getMessage());
 			}
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "FIPS_ENABLED", fipsEnabled);
 		}
 	}
 

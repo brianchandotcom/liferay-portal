@@ -16,9 +16,9 @@ import {
 } from './types';
 import {
 	MONTHS,
-	WEEKDAY_ORDINAL_OPTIONS,
 	getIntervalText,
 	getWeekdayName,
+	getWeekdayOrdinalProseText,
 	isRepeatingUnit,
 } from './utils';
 
@@ -68,11 +68,7 @@ function getWeekdayOrdinalText(
 	scheduleValues: ScheduleValues,
 	locale: string
 ): string {
-	const weekdayOrdinalOption = WEEKDAY_ORDINAL_OPTIONS.find(
-		({value}) => value === scheduleValues.weekdayOrdinal
-	);
-
-	return `${weekdayOrdinalOption?.label ?? scheduleValues.weekdayOrdinal} ${getWeekdayName(scheduleValues.weekday, locale)}`;
+	return `${getWeekdayOrdinalProseText(scheduleValues.weekdayOrdinal)} ${getWeekdayName(scheduleValues.weekday, locale)}`;
 }
 
 function getMonthListText(months: number[], locale: string): string {
@@ -111,26 +107,26 @@ function toMonthDayRanges(monthDays: number[]): string[] {
 
 function getMonthDayListText(monthDays: number[], locale: string): string {
 	if (monthDays.length === 1) {
-		return sub(Liferay.Language.get('day-x'), String(monthDays[0]));
+		return sub(Liferay.Language.get('repeat-day-x'), String(monthDays[0]));
 	}
 
 	return sub(
-		Liferay.Language.get('days-x'),
+		Liferay.Language.get('repeat-days-x'),
 		getListText(toMonthDayRanges(monthDays), locale)
 	);
 }
 
 function getUnitText(scheduleValues: ScheduleValues, locale: string): string {
 	if (scheduleValues.unit === IntervalUnit.Day) {
-		return Liferay.Language.get('day');
+		return Liferay.Language.get('repeat-unit-day');
 	}
 
 	if (scheduleValues.unit === IntervalUnit.Week) {
-		return Liferay.Language.get('week');
+		return Liferay.Language.get('repeat-unit-week');
 	}
 
 	if (scheduleValues.unit === IntervalUnit.Month) {
-		return Liferay.Language.get('month');
+		return Liferay.Language.get('repeat-unit-month');
 	}
 
 	if (scheduleValues.yearInterval > 1) {
@@ -141,7 +137,7 @@ function getUnitText(scheduleValues: ScheduleValues, locale: string): string {
 		);
 	}
 
-	return Liferay.Language.get('year');
+	return Liferay.Language.get('repeat-unit-year');
 }
 
 function getMonthlyRepeatText(
@@ -332,12 +328,14 @@ export function getScheduleSummary(
 		!scheduleValues.repeatOnTimeSynced &&
 		isCompleteTime(scheduleValues.repeatOnTime)
 			? toRepeatDate(startDate, scheduleValues.repeatOnTime)
-			: startDate;
+			: null;
 
-	const timeText = repeatDate.toLocaleTimeString(locale, {
-		hour: 'numeric',
-		minute: '2-digit',
-	});
+	const timeText = repeatDate
+		? repeatDate.toLocaleTimeString(locale, {
+				hour: 'numeric',
+				minute: '2-digit',
+			})
+		: startTimeText;
 
 	const endDate =
 		!scheduleValues.neverEnd &&
@@ -345,13 +343,36 @@ export function getScheduleSummary(
 			? toLocalDate(scheduleValues.endDateTime)
 			: null;
 
-	const startsText = endDate
+	if (scheduleValues.unit === IntervalUnit.Custom) {
+		return endDate
+			? sub(
+					Liferay.Language.get(
+						'the-process-starts-on-x-at-x-and-ends-on-x-at-x'
+					),
+					startDateText,
+					timeText,
+					endDate.toLocaleDateString(locale),
+					endDate.toLocaleTimeString(locale, {
+						hour: 'numeric',
+						minute: '2-digit',
+					})
+				)
+			: sub(
+					Liferay.Language.get(
+						'the-process-starts-on-x-at-x-and-never-ends'
+					),
+					startDateText,
+					timeText
+				);
+	}
+
+	const activeFromText = endDate
 		? sub(
 				Liferay.Language.get(
-					'the-process-starts-on-x-at-x-and-ends-on-x-at-x'
+					'the-process-is-active-from-x-at-x-and-ends-on-x-at-x'
 				),
 				startDateText,
-				timeText,
+				startTimeText,
 				endDate.toLocaleDateString(locale),
 				endDate.toLocaleTimeString(locale, {
 					hour: 'numeric',
@@ -360,15 +381,11 @@ export function getScheduleSummary(
 			)
 		: sub(
 				Liferay.Language.get(
-					'the-process-starts-on-x-at-x-and-never-ends'
+					'the-process-is-active-from-x-at-x-and-never-ends'
 				),
 				startDateText,
-				timeText
+				startTimeText
 			);
 
-	if (scheduleValues.unit === IntervalUnit.Custom) {
-		return startsText;
-	}
-
-	return `${getRepeatText(scheduleValues, locale, timeText)} ${startsText}`;
+	return `${activeFromText} ${getRepeatText(scheduleValues, locale, timeText)}`;
 }

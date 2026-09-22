@@ -52,6 +52,30 @@ export const WEEKDAY_ORDINAL_OPTIONS = [
 	{label: Liferay.Language.get('last'), value: LAST_WEEKDAY_ORDINAL},
 ];
 
+export function getWeekdayOrdinalProseText(weekdayOrdinal: string): string {
+	if (weekdayOrdinal === '1') {
+		return Liferay.Language.get('repeat-first');
+	}
+
+	if (weekdayOrdinal === '2') {
+		return Liferay.Language.get('repeat-second');
+	}
+
+	if (weekdayOrdinal === '3') {
+		return Liferay.Language.get('repeat-third');
+	}
+
+	if (weekdayOrdinal === '4') {
+		return Liferay.Language.get('repeat-fourth');
+	}
+
+	if (weekdayOrdinal === LAST_WEEKDAY_ORDINAL) {
+		return Liferay.Language.get('repeat-last');
+	}
+
+	return weekdayOrdinal;
+}
+
 export function isRepeatingUnit(unit: IntervalUnit): boolean {
 	return unit !== IntervalUnit.Custom && unit !== IntervalUnit.Never;
 }

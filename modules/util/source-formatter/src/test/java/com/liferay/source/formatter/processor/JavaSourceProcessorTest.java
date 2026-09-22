@@ -259,38 +259,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testFeatureFlagsAnnotationTest() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"FeatureFlagsAnnotationTest.testjava"
-			).addExpectedMessage(
-				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
-					"addProperties\" for feature flag",
-				22
-			).addExpectedMessage(
-				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
-					"addProperties\" for feature flag",
-				32
-			).addExpectedMessage(
-				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
-					"addProperties\" for feature flag",
-				42
-			));
-	}
-
-	@Test
-	public void testFetchContractCatch() throws Exception {
-		test(
-			"FetchContractCatch.testjava",
-			StringBundler.concat(
-				"Do not catch \"NoSuchUserNotificationEventException\" around ",
-				"the lookup \"userNotificationEventLocalService.getUser",
-				"NotificationEvent\" to signal a missing entity, call the ",
-				"null-tolerant fetch sibling and check for null instead"),
-			29);
-	}
-
-	@Test
 	public void testFIPSTLSVerification() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
@@ -343,6 +311,38 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"Missing check \"PropsValues.FIPS_ENABLED\" in if-statement " +
 				"condition in the same class as a trust manager, see LPD-93649",
 			17);
+	}
+
+	@Test
+	public void testFeatureFlagsAnnotationTest() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"FeatureFlagsAnnotationTest.testjava"
+			).addExpectedMessage(
+				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
+					"addProperties\" for feature flag",
+				22
+			).addExpectedMessage(
+				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
+					"addProperties\" for feature flag",
+				32
+			).addExpectedMessage(
+				"Use annotation \"@FeatureFlags\" instead of \"PropsUtil." +
+					"addProperties\" for feature flag",
+				42
+			));
+	}
+
+	@Test
+	public void testFetchContractCatch() throws Exception {
+		test(
+			"FetchContractCatch.testjava",
+			StringBundler.concat(
+				"Do not catch \"NoSuchUserNotificationEventException\" around ",
+				"the lookup \"userNotificationEventLocalService.getUser",
+				"NotificationEvent\" to signal a missing entity, call the ",
+				"null-tolerant fetch sibling and check for null instead"),
+			29);
 	}
 
 	@Test
@@ -1020,6 +1020,32 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSQLBooleanValues() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"SQLBooleanValues.testjava"
+			).addExpectedMessage(
+				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 21
+			).addExpectedMessage(
+				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 28
+			).addExpectedMessage(
+				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 42
+			).addExpectedMessage(
+				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 53
+			).addExpectedMessage(
+				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
+					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
+				63
+			).addExpectedMessage(
+				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 72
+			).addExpectedMessage(
+				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
+					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
+				83
+			));
+	}
+
+	@Test
 	public void testSafeCloseableMissingClose() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
@@ -1128,32 +1154,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testSortMethodsWithAnnotatedParameters() throws Exception {
 		test("SortMethodsWithAnnotatedParameters.testjava");
-	}
-
-	@Test
-	public void testSQLBooleanValues() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"SQLBooleanValues.testjava"
-			).addExpectedMessage(
-				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 21
-			).addExpectedMessage(
-				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 28
-			).addExpectedMessage(
-				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 42
-			).addExpectedMessage(
-				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 53
-			).addExpectedMessage(
-				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
-					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
-				63
-			).addExpectedMessage(
-				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 72
-			).addExpectedMessage(
-				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
-					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
-				83
-			));
 	}
 
 	@Test

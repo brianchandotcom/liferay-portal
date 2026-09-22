@@ -26,11 +26,18 @@ public class FragmentConfigurationFieldValueTypeUtil {
 			return fragmentConfigurationFieldType;
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"The fragment configuration field type \"" + internalType +
+				"\" is not supported");
 	}
 
 	public static String toInternalType(
 		FragmentConfigurationFieldValue.Type externalType) {
+
+		if (externalType == null) {
+			throw new IllegalArgumentException(
+				"A fragment configuration field value type is required");
+		}
 
 		for (Map.Entry<String, FragmentConfigurationFieldValue.Type> entry :
 				_internalToExternalValuesMap.entrySet()) {
@@ -40,7 +47,9 @@ public class FragmentConfigurationFieldValueTypeUtil {
 			}
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"The fragment configuration field value type \"" + externalType +
+				"\" is not supported");
 	}
 
 	private static final Map<String, FragmentConfigurationFieldValue.Type>

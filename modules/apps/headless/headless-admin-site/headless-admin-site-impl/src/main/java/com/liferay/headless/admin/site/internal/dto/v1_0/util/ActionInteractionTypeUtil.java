@@ -26,17 +26,26 @@ public class ActionInteractionTypeUtil {
 			}
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"The action interaction type \"" + internalType +
+				"\" is not supported");
 	}
 
 	public static String toInternalType(ActionInteraction.Type externalType) {
+		if (externalType == null) {
+			throw new IllegalArgumentException(
+				"An action interaction type is required");
+		}
+
 		String internalType = _externalToInternalValuesMap.get(externalType);
 
 		if (internalType != null) {
 			return internalType;
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"The action interaction type \"" + externalType +
+				"\" is not supported");
 	}
 
 	private static final Map<ActionInteraction.Type, String>

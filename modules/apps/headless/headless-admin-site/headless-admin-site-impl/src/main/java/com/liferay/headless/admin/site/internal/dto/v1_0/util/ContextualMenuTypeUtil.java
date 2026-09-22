@@ -26,11 +26,18 @@ public class ContextualMenuTypeUtil {
 			return contextualMenuType;
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"The contextual menu type \"" + internalType +
+				"\" is not supported");
 	}
 
 	public static String toInternalType(
 		ContextualMenuNavigationMenuValue.ContextualMenuType externalType) {
+
+		if (externalType == null) {
+			throw new IllegalArgumentException(
+				"A contextual menu type is required");
+		}
 
 		for (Map.Entry
 				<String, ContextualMenuNavigationMenuValue.ContextualMenuType>
@@ -41,7 +48,9 @@ public class ContextualMenuTypeUtil {
 			}
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"The contextual menu type \"" + externalType +
+				"\" is not supported");
 	}
 
 	private static final Map

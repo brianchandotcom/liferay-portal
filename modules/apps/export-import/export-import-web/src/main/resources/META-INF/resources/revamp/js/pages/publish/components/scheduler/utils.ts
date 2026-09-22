@@ -206,7 +206,7 @@ export function getIntervalText(
 		style: 'unit',
 		unit,
 		unitDisplay: 'long',
-	} as Intl.NumberFormatOptions).format(interval);
+	}).format(interval);
 }
 
 export function getWeekdayName(weekday: number, locale: string): string {

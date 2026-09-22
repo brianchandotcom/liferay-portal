@@ -39,13 +39,7 @@ function toRepeatDate(startDate: Date, repeatOnTime: string): Date {
 }
 
 function getListText(labels: string[], locale: string): string {
-
-	// @ts-ignore
-
 	if (typeof Intl.ListFormat === 'function') {
-
-		// @ts-ignore
-
 		return new Intl.ListFormat(locale, {
 			style: 'long',
 			type: 'conjunction',

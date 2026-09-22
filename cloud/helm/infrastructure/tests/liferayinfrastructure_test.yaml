@@ -114,9 +114,15 @@ tests:
             -   notExists:
                     path: spec.database.restorePointInTime
             -   notExists:
+                    path: spec.database.restoreSourceDataPlane
+            -   notExists:
                     path: spec.database.rootPasswordSecretName
             -   notExists:
+                    path: spec.restoreGeneration
+            -   notExists:
                     path: spec.restorePhase
+            -   notExists:
+                    path: spec.retainedDataPlanes
             -   notExists:
                     path: spec.targetActiveDataPlane
         it: Withholds the fields the provider and restore controller own

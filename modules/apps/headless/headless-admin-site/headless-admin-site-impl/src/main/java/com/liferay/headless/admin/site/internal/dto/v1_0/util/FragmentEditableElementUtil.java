@@ -466,6 +466,18 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
+	private static String _getErrorActionInteractionInternalType(
+		ActionInteraction.Type type) {
+
+		if (Objects.equals(ActionInteraction.Type.DISPLAY_PAGE, type)) {
+			throw new IllegalArgumentException(
+				"The error action interaction does not support the type " +
+					ActionInteraction.Type.DISPLAY_PAGE);
+		}
+
+		return ActionInteractionTypeUtil.toInternalType(type);
+	}
+
 	private static FragmentEditableElementValue
 			_getFragmentEditableElementValue(
 				long companyId, DTOConverterContext dtoConverterContext,
@@ -939,15 +951,7 @@ public class FragmentEditableElementUtil {
 				"onError",
 				() -> _getActionInteractionJSONObject(
 					errorActionInteraction, companyId, scopeGroupId,
-					type -> {
-						if (Objects.equals(
-								ActionInteraction.Type.DISPLAY_PAGE, type)) {
-
-							throw new UnsupportedOperationException();
-						}
-
-						return ActionInteractionTypeUtil.toInternalType(type);
-					})
+					type -> _getErrorActionInteractionInternalType(type))
 			).put(
 				"onSuccess",
 				() -> _getActionInteractionJSONObject(

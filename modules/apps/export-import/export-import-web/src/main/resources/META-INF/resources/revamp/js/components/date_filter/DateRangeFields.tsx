@@ -7,24 +7,16 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import FieldDatePicker from '../forms/FieldDatePicker';
-import {DATE_FORMAT, EditingState, TouchedFields, YEARS_OFFSET} from './types';
+import {DATE_FORMAT, EditingState, YEARS_OFFSET} from './types';
 import {getValidation} from './utils';
 
 type Props = {
 	editing: EditingState;
 	errors: ReturnType<typeof getValidation>['errors'];
 	handleUpdateFilter: (payload: Partial<EditingState>) => void;
-	handleUpdateTouched: (payload: Partial<TouchedFields>) => void;
-	touchedFields: TouchedFields;
 };
 
-const DateRangeFields = ({
-	editing,
-	errors,
-	handleUpdateFilter,
-	handleUpdateTouched,
-	touchedFields,
-}: Props) => {
+const DateRangeFields = ({editing, errors, handleUpdateFilter}: Props) => {
 	const currentYear = new Date().getFullYear();
 
 	return (
@@ -32,14 +24,12 @@ const DateRangeFields = ({
 			<ClayLayout.ContentCol>
 				<FieldDatePicker
 					dateFormat={DATE_FORMAT}
-					errorMessage={
-						touchedFields.startDate ? errors.startDate : undefined
-					}
+					defaultTime="00:00"
+					errorMessage={errors.startDate}
 					formGroupProps={{className: 'mb-0'}}
 					id="startDate"
 					label={Liferay.Language.get('from')}
 					name="startDate"
-					onBlur={() => handleUpdateTouched({startDate: true})}
 					onChange={(value) =>
 						handleUpdateFilter({startDate: value as string})
 					}
@@ -56,14 +46,12 @@ const DateRangeFields = ({
 			<ClayLayout.ContentCol>
 				<FieldDatePicker
 					dateFormat={DATE_FORMAT}
-					errorMessage={
-						touchedFields.endDate ? errors.endDate : undefined
-					}
+					defaultTime="23:59"
+					errorMessage={errors.endDate}
 					formGroupProps={{className: 'mb-0'}}
 					id="endDate"
 					label={Liferay.Language.get('to[date-time]')}
 					name="endDate"
-					onBlur={() => handleUpdateTouched({endDate: true})}
 					onChange={(value) =>
 						handleUpdateFilter({endDate: value as string})
 					}

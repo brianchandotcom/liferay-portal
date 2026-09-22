@@ -12,13 +12,7 @@ import React, {useMemo, useState} from 'react';
 import FieldSelectWithOption from '../forms/FieldSelectWithOption';
 import DateRangeFields from './DateRangeFields';
 import LastRangeFields from './LastRangeFields';
-import {
-	DateFilterValues,
-	EditingState,
-	LastRange,
-	Range,
-	TouchedFields,
-} from './types';
+import {DateFilterValues, EditingState, LastRange, Range} from './types';
 import {
 	RANGE_OPTIONS,
 	dateFilterToEditingState,
@@ -35,29 +29,26 @@ const INITIAL_EDITING: EditingState = {
 	startDate: '',
 };
 
-const INITIAL_TOUCHED: TouchedFields = {
-	endDate: false,
-	startDate: false,
-};
-
 export default function DateFilter({
 	appliedValue = {range: Range.All} as DateFilterValues,
 	itemsCount = 0,
 	lastPublishDate,
 	onApplyFilter,
+	timeZoneId,
 }: {
 	appliedValue?: DateFilterValues;
 	itemsCount?: number;
 	lastPublishDate?: string;
 	onApplyFilter?: (dateFilterValues: DateFilterValues) => void;
+	timeZoneId: string;
 }) {
 	const [editing, setEditing] = useState<EditingState>(() =>
 		dateFilterToEditingState(appliedValue)
 	);
-	const [touchedFields, setTouchedFields] =
-		useState<TouchedFields>(INITIAL_TOUCHED);
-
-	const validation = useMemo(() => getValidation(editing), [editing]);
+	const validation = useMemo(
+		() => getValidation(editing, timeZoneId),
+		[editing, timeZoneId]
+	);
 
 	const isDirty = useMemo(
 		() => getIsDirty(editing, appliedValue),
@@ -71,10 +62,6 @@ export default function DateFilter({
 
 	const updateFilter = (patch: Partial<EditingState>) => {
 		setEditing((prev) => ({...prev, ...patch}));
-	};
-
-	const updateTouched = (patch: Partial<TouchedFields>) => {
-		setTouchedFields((prev) => ({...prev, ...patch}));
 	};
 
 	const rangeOptions = useMemo(
@@ -94,8 +81,6 @@ export default function DateFilter({
 	);
 
 	const handleShowResults = () => {
-		setTouchedFields({endDate: true, startDate: true});
-
 		if (validation.isValid) {
 			onApplyFilter?.(editingToDateFilter(editing));
 		}
@@ -103,7 +88,6 @@ export default function DateFilter({
 
 	const handleClearFilters = () => {
 		setEditing(INITIAL_EDITING);
-		setTouchedFields(INITIAL_TOUCHED);
 		onApplyFilter?.({range: Range.All});
 	};
 
@@ -138,8 +122,6 @@ export default function DateFilter({
 						editing={editing}
 						errors={validation.errors}
 						handleUpdateFilter={updateFilter}
-						handleUpdateTouched={updateTouched}
-						touchedFields={touchedFields}
 					/>
 				)}
 

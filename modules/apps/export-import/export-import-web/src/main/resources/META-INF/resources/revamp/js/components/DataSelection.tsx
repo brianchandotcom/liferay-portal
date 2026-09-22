@@ -37,6 +37,7 @@ export default function DataSelection({
 	process = 'export',
 	sitesSelection,
 	subtitle,
+	timeZoneId,
 }: {
 	commentsAndRatingsEnabled?: boolean;
 	deletionCount?: number;
@@ -54,6 +55,7 @@ export default function DataSelection({
 	process?: ExportImportProcess;
 	sitesSelection?: ReactNode;
 	subtitle: string;
+	timeZoneId: string;
 }) {
 	return (
 		<>
@@ -92,6 +94,7 @@ export default function DataSelection({
 					lastPublishDate={lastPublishDate}
 					name="dateFilter"
 					onApplyFilter={onApplyFilter}
+					timeZoneId={timeZoneId}
 				/>
 			</ClayLayout.Sheet>
 

@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isCompleteTime, toTimeParts} from '../../../../utils/dateTime';
+import {
+	isCompleteDateTime,
+	isCompleteTime,
+	toDateTimeParts,
+	toTimeParts,
+} from '../../../../utils/dateTime';
 import {
 	IntervalUnit,
 	LAST_WEEKDAY_ORDINAL,
@@ -12,8 +17,6 @@ import {
 	YEAR_INTERVALS,
 } from './types';
 import {WEEKDAY_ORDINAL_OPTIONS, getInitialScheduleValues} from './utils';
-
-const DATE_TIME_PATTERN = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
 
 const DAY_OF_WEEK_NAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
@@ -41,98 +44,6 @@ const FIELD_BOUNDS = [
 	{maximum: 7, minimum: 1, names: DAY_OF_WEEK_NAMES},
 	{maximum: 2099, minimum: 1970, names: []},
 ];
-
-const OFFSET_SAMPLE_DISTANCE = 36 * 60 * 60 * 1000;
-
-type DateTimeParts = {
-	day: number;
-	hour: number;
-	minute: number;
-	month: number;
-	year: number;
-};
-
-export function toDateTimeParts(dateTime: string): DateTimeParts {
-	const [date, time = '00:00'] = dateTime.split(' ');
-
-	const [year, month, day] = date.split('-').map(Number);
-	const {hour, minute} = toTimeParts(time);
-
-	return {day, hour, minute, month, year};
-}
-
-export function isCompleteDateTime(dateTime: string): boolean {
-	if (!DATE_TIME_PATTERN.test(dateTime)) {
-		return false;
-	}
-
-	const {day, hour, minute, month, year} = toDateTimeParts(dateTime);
-
-	const date = new Date(Date.UTC(year, month - 1, day, hour, minute));
-
-	return (
-		date.getUTCDate() === day &&
-		date.getUTCFullYear() === year &&
-		date.getUTCHours() === hour &&
-		date.getUTCMinutes() === minute &&
-		date.getUTCMonth() === month - 1
-	);
-}
-
-function toWallClockTime(dateTime: string): number {
-	return new Date(`${dateTime.replace(' ', 'T')}:00Z`).getTime();
-}
-
-function getTimeZoneOffset(date: Date, timeZoneId: string): number {
-	return (
-		toWallClockTime(toWallClockDateTime(date.toISOString(), timeZoneId)) -
-		date.getTime()
-	);
-}
-
-export function toZonedDate(dateTime: string, timeZoneId: string): Date {
-	const wallClockTime = toWallClockTime(dateTime);
-
-	const [earlierTime, laterTime] = [
-		wallClockTime - OFFSET_SAMPLE_DISTANCE,
-		wallClockTime + OFFSET_SAMPLE_DISTANCE,
-	].map(
-		(sampleTime) =>
-			wallClockTime - getTimeZoneOffset(new Date(sampleTime), timeZoneId)
-	);
-
-	const times = [earlierTime, laterTime].filter(
-		(time) =>
-			getTimeZoneOffset(new Date(time), timeZoneId) ===
-			wallClockTime - time
-	);
-
-	return new Date(times.length ? Math.min(...times) : earlierTime);
-}
-
-export function toWallClockDateTime(
-	isoDateTime: string,
-	timeZoneId: string
-): string {
-	const dateTimeFormatParts = new Intl.DateTimeFormat('en-CA', {
-		day: '2-digit',
-		hour: '2-digit',
-		hourCycle: 'h23',
-		minute: '2-digit',
-		month: '2-digit',
-		timeZone: timeZoneId,
-		year: 'numeric',
-	} as Intl.DateTimeFormatOptions).formatToParts(new Date(isoDateTime));
-
-	const getPart = (type: string) =>
-		dateTimeFormatParts.find(
-			(dateTimeFormatPart) => dateTimeFormatPart.type === type
-		)?.value ?? '';
-
-	return `${getPart('year')}-${getPart('month')}-${getPart(
-		'day'
-	)} ${getPart('hour')}:${getPart('minute')}`;
-}
 
 function toFieldNumber(value: string, names: string[]): number {
 	const nameIndex = names.indexOf(value.toUpperCase());

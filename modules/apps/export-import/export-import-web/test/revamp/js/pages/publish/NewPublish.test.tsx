@@ -11,8 +11,8 @@ import React from 'react';
 import '@testing-library/jest-dom';
 
 import {NewPublish} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/NewPublish';
-import {toWallClockDateTime} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/cron';
 import {ScheduledPublishProcess} from '../../../../../src/main/resources/META-INF/resources/revamp/js/types/exportImportProcess';
+import {toWallClockDateTime} from '../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
 import {mockPreview} from '../../mocks/mockPreview';
 
 jest.mock('staging-taglib', () => ({
@@ -66,6 +66,9 @@ const getPublishProcessCall = () =>
 
 const getUnscheduleCall = () =>
 	fetch.mock.calls.find(([, init]) => init?.method === 'DELETE');
+
+const getFilteredPreviewCall = () =>
+	fetch.mock.calls.find(([url]) => String(url).includes('publish-preview?'));
 
 const mockAPIRoutes = ({
 	deleteStatus = 204,
@@ -157,6 +160,48 @@ describe('NewPublish', () => {
 		expect(Liferay.Util.navigate).toHaveBeenCalledWith(
 			DEFAULT_PROPS.processesBackURL
 		);
+	});
+
+	it('resolves the date range bounds in the portal time zone', async () => {
+		renderComponent({timeZoneId: 'Europe/Madrid'});
+
+		await fillRequiredFields();
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'filter-content-by'}),
+			'dateRange'
+		);
+
+		await user.click(screen.getByLabelText('from'));
+
+		await user.paste('2026-01-01 08:00');
+
+		await user.click(screen.getByRole('button', {name: /show-results/i}));
+
+		await waitFor(() => {
+			expect(getFilteredPreviewCall()).toBeDefined();
+		});
+
+		expect(
+			new URL(
+				String(getFilteredPreviewCall()![0]),
+				'http://localhost'
+			).searchParams.get('startDate')
+		).toBe('2026-01-01T07:00:00.000Z');
+
+		await user.click(
+			screen.getByRole('button', {name: /publish-to-live/i})
+		);
+
+		await waitFor(() => {
+			expect(getPublishProcessCall()).toBeDefined();
+		});
+
+		const body = JSON.parse(getPublishProcessCall()![1]!.body as string);
+
+		expect(body.dateRangeType).toBe('DATE_RANGE');
+		expect(body.endDate).toBeUndefined();
+		expect(body.startDate).toBe('2026-01-01T07:00:00.000Z');
 	});
 
 	it('selects the schedule option when it is the default', async () => {
@@ -609,6 +654,72 @@ describe('NewPublish', () => {
 		expect(screen.getByLabelText('filter-content-by')).toHaveValue(
 			'fromLastPublishDate'
 		);
+	});
+
+	it('round-trips a seeded date range through the portal time zone', async () => {
+		mockAPIRoutes({
+			scheduledPublishProcess: {
+				...SCHEDULED_PUBLISH_PROCESS,
+				publishParameters: {
+					...SCHEDULED_PUBLISH_PROCESS.publishParameters,
+					endDateAmPm: ['0'],
+					endDateDay: ['1'],
+					endDateHour: ['9'],
+					endDateMinute: ['30'],
+					endDateMonth: ['8'],
+					endDateYear: ['2026'],
+					range: ['dateRange'],
+					startDateAmPm: ['1'],
+					startDateDay: ['22'],
+					startDateHour: ['3'],
+					startDateMinute: ['5'],
+					startDateMonth: ['7'],
+					startDateYear: ['2026'],
+				},
+			},
+		});
+
+		renderComponent({
+			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,
+			timeZoneId: 'Europe/Madrid',
+		});
+
+		await screen.findByRole('textbox', {name: /^name/i});
+		await screen.findByText('loaded');
+
+		expect(screen.getByLabelText('filter-content-by')).toHaveValue(
+			'dateRange'
+		);
+		expect(screen.getByLabelText('from')).toHaveValue('2026-08-22 15:05');
+		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
+			'2026-09-01 09:30'
+		);
+
+		const previewSearchParams = new URL(
+			String(getFilteredPreviewCall()![0]),
+			'http://localhost'
+		).searchParams;
+
+		expect(previewSearchParams.get('startDate')).toBe(
+			'2026-08-22T13:05:00.000Z'
+		);
+		expect(previewSearchParams.get('endDate')).toBe(
+			'2026-09-01T07:30:00.000Z'
+		);
+
+		await user.click(
+			screen.getByRole('button', {name: /schedule-publication-to-live/i})
+		);
+
+		await waitFor(() => {
+			expect(getPublishProcessCall()).toBeDefined();
+		});
+
+		const body = JSON.parse(getPublishProcessCall()![1]!.body as string);
+
+		expect(body.dateRangeType).toBe('DATE_RANGE');
+		expect(body.startDate).toBe('2026-08-22T13:05:00.000Z');
+		expect(body.endDate).toBe('2026-09-01T07:30:00.000Z');
 	});
 
 	it('reclassifies a custom cron whose time matches the start date, keeping the sync', async () => {

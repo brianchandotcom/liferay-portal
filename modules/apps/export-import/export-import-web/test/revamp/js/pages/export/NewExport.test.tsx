@@ -39,6 +39,9 @@ const getExportCall = () =>
 			String(url).includes('export-processes') && init?.method === 'POST'
 	);
 
+const getFilteredPreviewCall = () =>
+	fetch.mock.calls.find(([url]) => String(url).includes('export-preview?'));
+
 const DEFAULT_PROPS = {
 	backURL: '/some/back/url',
 	exportPreviewAPIURL: '/o/export-import/v1.0/export-preview',
@@ -48,6 +51,7 @@ const DEFAULT_PROPS = {
 		pageSize: 20,
 		privateLayoutsAvailable: false,
 	},
+	timeZoneId: 'UTC',
 };
 
 const INSTANCE_PROPS = {
@@ -472,6 +476,53 @@ describe('NewExport', () => {
 				new Date(applyTime - 12 * HOUR).toISOString()
 			);
 			expect(body.endDate).toBeUndefined();
+		});
+	});
+
+	it('resolves the date range bounds in the portal time zone', async () => {
+		renderComponent({timeZoneId: 'Europe/Madrid'});
+
+		await screen.findByText('loaded');
+
+		await userEvent.type(
+			await screen.findByRole('textbox', {name: /^name/i}),
+			'test-file'
+		);
+
+		await userEvent.selectOptions(
+			screen.getByRole('combobox', {name: 'filter-content-by'}),
+			'dateRange'
+		);
+
+		await userEvent.click(screen.getByLabelText('from'));
+
+		await userEvent.paste('2026-01-01 08:00');
+
+		await userEvent.click(
+			screen.getByRole('button', {name: /show-results/i})
+		);
+
+		await waitFor(() => {
+			expect(getFilteredPreviewCall()).toBeDefined();
+		});
+
+		expect(
+			new URL(
+				String(getFilteredPreviewCall()![0]),
+				'http://localhost'
+			).searchParams.get('startDate')
+		).toBe('2026-01-01T07:00:00.000Z');
+
+		fetch.mockResponseOnce(JSON.stringify({}));
+
+		await userEvent.click(screen.getByRole('button', {name: /^export$/i}));
+
+		await waitFor(() => {
+			const body = JSON.parse(getExportCall()![1]!.body as string);
+
+			expect(body.dateRangeType).toBe('DATE_RANGE');
+			expect(body.endDate).toBeUndefined();
+			expect(body.startDate).toBe('2026-01-01T07:00:00.000Z');
 		});
 	});
 

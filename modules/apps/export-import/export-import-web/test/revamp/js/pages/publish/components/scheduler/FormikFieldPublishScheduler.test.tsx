@@ -15,7 +15,7 @@ import {
 	ScheduleValues,
 } from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/types';
 import {getInitialScheduleValues} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/utils';
-import {toWallClockDateTime} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/cron';
+import {toWallClockDateTime} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
 
 const DAY = 24 * 60 * 60 * 1000;
 

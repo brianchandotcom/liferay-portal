@@ -5,8 +5,13 @@
 
 import {sub} from 'frontend-js-web';
 
-import {isCompleteTime, toTimeParts} from '../../../../utils/dateTime';
-import {isCompleteDateTime, toDateTimeParts, toZonedDate} from './cron';
+import {
+	isCompleteDateTime,
+	isCompleteTime,
+	toLocalDate,
+	toTimeParts,
+	toZonedDate,
+} from '../../../../utils/dateTime';
 import {
 	IntervalUnit,
 	MONTH_DAYS,
@@ -22,12 +27,6 @@ import {
 	hasEndDate,
 	isRepeatingUnit,
 } from './utils';
-
-function toLocalDate(dateTime: string): Date {
-	const {day, hour, minute, month, year} = toDateTimeParts(dateTime);
-
-	return new Date(year, month - 1, day, hour, minute);
-}
 
 function toRepeatDate(startDate: Date, repeatOnTime: string): Date {
 	const {hour, minute} = toTimeParts(repeatOnTime);

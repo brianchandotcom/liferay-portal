@@ -48,6 +48,7 @@ export function NewExport({
 	lookAndFeelEnabled = false,
 	pageTreeModalConfiguration,
 	siteSelectionEnabled = false,
+	timeZoneId,
 }: {
 	backURL: string;
 	commentsAndRatingsEnabled?: boolean;
@@ -58,9 +59,10 @@ export function NewExport({
 	lookAndFeelEnabled?: boolean;
 	pageTreeModalConfiguration: PageTreeModalConfiguration;
 	siteSelectionEnabled?: boolean;
+	timeZoneId: string;
 }) {
 	const {appliedDateFilterRef, error, handleApplyFilter, loading, preview} =
-		usePreview(exportPreviewAPIURL, exportPreview);
+		usePreview(exportPreviewAPIURL, timeZoneId, exportPreview);
 
 	if (error) {
 		return <ClayAlert displayType="danger">{error}</ClayAlert>;
@@ -187,6 +189,7 @@ export function NewExport({
 							subtitle={Liferay.Language.get(
 								'select-and-filter-the-data-you-want-to-include-in-your-export'
 							)}
+							timeZoneId={timeZoneId}
 						/>
 
 						{(formik.touched.contentSelection ||

@@ -32,6 +32,7 @@ const renderFormikFieldDateFilter = ({
 			<FormikFieldDateFilter
 				name="dateFilter"
 				onApplyFilter={onApplyFilter}
+				timeZoneId="UTC"
 			/>
 		</Formik>
 	);

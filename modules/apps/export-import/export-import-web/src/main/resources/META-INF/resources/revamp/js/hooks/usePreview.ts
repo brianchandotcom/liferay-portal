@@ -14,7 +14,11 @@ import {
 import {PreviewParams, getPreview} from '../services/getPreview';
 import {Preview} from '../types/exportImportPreview';
 
-export function usePreview(previewAPIURL: string, initialPreview?: Preview) {
+export function usePreview(
+	previewAPIURL: string,
+	timeZoneId: string,
+	initialPreview?: Preview
+) {
 	const [preview, setPreview] = useState<Preview | undefined>(initialPreview);
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(!initialPreview);
@@ -58,8 +62,10 @@ export function usePreview(previewAPIURL: string, initialPreview?: Preview) {
 
 	const handleApplyFilter = useCallback(
 		(dateFilterValues: DateFilterValues) => {
-			appliedDateFilterRef.current =
-				normalizeDateFilter(dateFilterValues);
+			appliedDateFilterRef.current = normalizeDateFilter(
+				dateFilterValues,
+				timeZoneId
+			);
 
 			if (
 				dateFilterValues.range === Range.All &&
@@ -79,7 +85,7 @@ export function usePreview(previewAPIURL: string, initialPreview?: Preview) {
 				url: previewAPIURL,
 			});
 		},
-		[loadPreview, previewAPIURL]
+		[loadPreview, previewAPIURL, timeZoneId]
 	);
 
 	return {

@@ -26,6 +26,7 @@ import {
 	toProcessRequestFlags,
 	withSelectedLayoutSetCount,
 } from '../../utils/contentSelection';
+import {toWallClockDateTime, toZonedDate} from '../../utils/dateTime';
 import {getProcessFormErrors} from '../../utils/getProcessFormErrors';
 import {toContentSelection} from '../../utils/toContentSelection';
 import {toDateFilterValues} from '../../utils/toDateFilterValues';
@@ -34,8 +35,6 @@ import {FormikFieldPublishScheduler} from './components/scheduler/FormikFieldPub
 import {
 	fromCronExpression,
 	toCronExpression,
-	toWallClockDateTime,
-	toZonedDate,
 } from './components/scheduler/cron';
 import {getDefaultTimeZoneId} from './components/scheduler/timeZones';
 import {ScheduleValues, TimeZoneOption} from './components/scheduler/types';
@@ -93,7 +92,7 @@ export function NewPublish({
 		loading,
 		preview,
 		setError,
-	} = usePreview(publishPreviewAPIURL);
+	} = usePreview(publishPreviewAPIURL, timeZoneId);
 	const [initialFormValues, setInitialFormValues] =
 		useState<PublishFormValues>(() => ({
 			contentSelection: undefined,
@@ -368,6 +367,7 @@ export function NewPublish({
 							subtitle={Liferay.Language.get(
 								'select-and-filter-the-data-you-want-to-publish'
 							)}
+							timeZoneId={timeZoneId}
 						/>
 
 						<Footer

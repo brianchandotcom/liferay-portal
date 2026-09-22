@@ -38,11 +38,6 @@ export type EditingState = {
 	startDate: string;
 };
 
-export type TouchedFields = {
-	endDate: boolean;
-	startDate: boolean;
-};
-
 export const YEARS_OFFSET = 10;
 
 export const DATE_FORMAT = 'yyyy-MM-dd';

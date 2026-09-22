@@ -6,8 +6,6 @@
 import {
 	fromCronExpression,
 	toCronExpression,
-	toWallClockDateTime,
-	toZonedDate,
 } from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/cron';
 import {
 	IntervalUnit,
@@ -16,6 +14,10 @@ import {
 	ScheduleValues,
 } from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/types';
 import {getInitialScheduleValues} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/utils';
+import {
+	toWallClockDateTime,
+	toZonedDate,
+} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
 
 const START_DATE_TIME = '2026-07-20 15:30';
 

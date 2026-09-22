@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, {useState} from 'react';
 
@@ -14,6 +14,16 @@ import {
 	LastRange,
 	Range,
 } from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter/types';
+
+const DAY = 24 * 60 * 60 * 1000;
+
+const FUTURE_DATE = new Date(Date.now() + DAY);
+
+const PAST_DATE = new Date(Date.now() - DAY);
+
+const PAST_DATE_STRING = PAST_DATE.toISOString().slice(0, 10);
+
+const TODAY = new Date();
 
 function ControlledDateFilter({
 	appliedValue: initialAppliedValue,
@@ -36,6 +46,7 @@ function ControlledDateFilter({
 				setAppliedValue(dateFilterValues);
 				onApplyFilter(dateFilterValues);
 			}}
+			timeZoneId="UTC"
 		/>
 	);
 }
@@ -61,6 +72,37 @@ describe('DateFilter', () => {
 		);
 
 		return {onApplyFilter, user};
+	};
+
+	const pickCalendarDay = async (
+		user: ReturnType<typeof userEvent.setup>,
+		label: string,
+		date: Date
+	) => {
+		const chooseDateButton = within(
+			screen.getByLabelText(label).closest('.date-picker') as HTMLElement
+		).getByRole('button', {name: 'Choose date'});
+
+		await user.click(chooseDateButton);
+
+		const calendar = document.getElementById(
+			chooseDateButton.getAttribute('aria-controls') as string
+		) as HTMLElement;
+
+		if (!within(calendar).queryByLabelText(date.toDateString())) {
+			await user.click(
+				within(calendar).getByRole('button', {
+					name:
+						date.getTime() < Date.now()
+							? 'Select the previous month'
+							: 'Select the next month',
+				})
+			);
+		}
+
+		await user.click(within(calendar).getByLabelText(date.toDateString()));
+
+		await user.click(document.body);
 	};
 
 	it('renders in initial state without Show Results button', () => {
@@ -94,6 +136,105 @@ describe('DateFilter', () => {
 
 		expect(screen.getByLabelText('from')).toBeInTheDocument();
 		expect(screen.getByLabelText('to[date-time]')).toBeInTheDocument();
+	});
+
+	it('fills the start and end of the day when the date range bounds are picked from the calendar', async () => {
+		const {onApplyFilter, user} = renderDateFilter();
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		await pickCalendarDay(user, 'from', PAST_DATE);
+
+		expect(screen.getByLabelText('from')).toHaveValue(
+			`${PAST_DATE_STRING} 00:00`
+		);
+
+		await pickCalendarDay(user, 'to[date-time]', PAST_DATE);
+
+		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
+			`${PAST_DATE_STRING} 23:59`
+		);
+
+		await user.click(screen.getByText('show-results'));
+
+		expect(onApplyFilter).toHaveBeenCalledWith({
+			endDate: `${PAST_DATE_STRING} 23:59`,
+			range: Range.DateRange,
+			startDate: `${PAST_DATE_STRING} 00:00`,
+		});
+	});
+
+	it('flags both bounds as soon as the range is complete and inverted', async () => {
+		const {user} = renderDateFilter();
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		await user.click(screen.getByLabelText('from'));
+
+		await user.paste('2026-01-02 08:00');
+		await user.click(screen.getByLabelText('to[date-time]'));
+
+		await user.paste('2026-01-01 08:00');
+
+		expect(screen.getAllByText('date-range-is-invalid')).toHaveLength(2);
+		expect(screen.getByText('show-results')).toBeDisabled();
+	});
+
+	it('flags a future day picked from the calendar', async () => {
+		const {user} = renderDateFilter();
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		await pickCalendarDay(user, 'from', FUTURE_DATE);
+
+		expect(
+			screen.getByText('dates-must-not-be-in-the-future')
+		).toBeInTheDocument();
+		expect(screen.getByText('show-results')).toBeDisabled();
+	});
+
+	it('flags the end of today that the To calendar fills in', async () => {
+		const {user} = renderDateFilter();
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		await pickCalendarDay(user, 'from', PAST_DATE);
+		await pickCalendarDay(user, 'to[date-time]', TODAY);
+
+		expect(
+			screen.getByText('dates-must-not-be-in-the-future')
+		).toBeInTheDocument();
+		expect(screen.getByText('show-results')).toBeDisabled();
+	});
+
+	it('explains why an incomplete bound blocks the results', async () => {
+		const {user} = renderDateFilter();
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		await user.click(screen.getByLabelText('from'));
+
+		await user.paste('2026-01-01');
+
+		expect(
+			screen.getByText('please-enter-a-valid-date')
+		).toBeInTheDocument();
+		expect(screen.getByText('show-results')).toBeDisabled();
 	});
 
 	it('calls onApplyFilter with correct values when applying a Modified Last filter', async () => {

@@ -5,6 +5,8 @@
 
 import {DateFilterValues, LastRange, Range} from '../components/date_filter';
 
+const EPOCH_YEAR = 1970;
+
 const LAST_RANGES: Array<{hours: number; lastRange: LastRange}> = [
 	{hours: 12, lastRange: LastRange.H12},
 	{hours: 24, lastRange: LastRange.H24},
@@ -32,19 +34,26 @@ function toDateTime(
 	const getNumber = (name: string) =>
 		Number(publishParameters[`${prefix}${name}`]?.[0] ?? 0);
 
+	const amPm = getNumber('AmPm');
+	const day = getNumber('Day');
+	const minute = getNumber('Minute');
+	const month = getNumber('Month');
 	const year = getNumber('Year');
 
-	if (!year) {
+	const hour = getNumber('Hour');
+
+	if (
+		![amPm, day, hour, minute, month, year].every(Number.isInteger) ||
+		year <= EPOCH_YEAR
+	) {
 		return '';
 	}
 
-	const hour = (getNumber('Hour') % 12) + (getNumber('AmPm') ? 12 : 0);
-
 	const pad = (value: number) => String(value).padStart(2, '0');
 
-	return `${year}-${pad(getNumber('Month') + 1)}-${pad(
-		getNumber('Day')
-	)} ${pad(hour)}:${pad(getNumber('Minute'))}`;
+	return `${year}-${pad(month + 1)}-${pad(day)} ${pad(
+		(hour % 12) + (amPm ? 12 : 0)
+	)}:${pad(minute)}`;
 }
 
 export function toDateFilterValues(

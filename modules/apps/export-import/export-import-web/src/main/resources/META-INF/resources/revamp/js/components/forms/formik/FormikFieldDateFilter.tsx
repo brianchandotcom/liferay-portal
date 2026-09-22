@@ -13,6 +13,7 @@ interface FormikFieldDateFilterProps {
 	lastPublishDate?: string;
 	name: string;
 	onApplyFilter?: (dateFilterValues: DateFilterValues) => void;
+	timeZoneId: string;
 }
 
 export function FormikFieldDateFilter({
@@ -20,6 +21,7 @@ export function FormikFieldDateFilter({
 	lastPublishDate,
 	name,
 	onApplyFilter,
+	timeZoneId,
 }: FormikFieldDateFilterProps) {
 	const [field, , helpers] = useField<DateFilterValues>(name);
 	const {setFieldTouched} = useFormikContext();
@@ -34,6 +36,7 @@ export function FormikFieldDateFilter({
 				setFieldTouched(name, true, false);
 				onApplyFilter?.(dateFilterValues);
 			}}
+			timeZoneId={timeZoneId}
 		/>
 	);
 }

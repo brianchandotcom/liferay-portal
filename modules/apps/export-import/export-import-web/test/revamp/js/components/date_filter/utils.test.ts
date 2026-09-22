@@ -9,74 +9,88 @@ import {
 } from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter/types';
 import {
 	dateFilterToEditingState,
+	getAppliedFilterSummary,
+	getValidation,
 	normalizeDateFilter,
 } from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter/utils';
+import {toWallClockDateTime} from '../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
+
+const HOUR = 60 * 60 * 1000;
 
 describe('normalizeDateFilter', () => {
 	it('returns the all type for the show all range', () => {
-		expect(normalizeDateFilter({range: Range.All})).toEqual({
+		expect(normalizeDateFilter({range: Range.All}, 'UTC')).toEqual({
 			dateRangeType: 'ALL',
 		});
 	});
 
-	it('returns the absolute dates for the date range', () => {
-		const endDate = '2000-07-28T00:00:00';
-		const startDate = '2000-07-27T00:00:00';
-
+	it('resolves the date range bounds in the given time zone', () => {
 		expect(
-			normalizeDateFilter({endDate, range: Range.DateRange, startDate})
+			normalizeDateFilter(
+				{
+					endDate: '2026-10-20 09:30',
+					range: Range.DateRange,
+					startDate: '2026-08-22 15:05',
+				},
+				'Europe/Madrid'
+			)
 		).toEqual({
 			dateRangeType: 'DATE_RANGE',
-			endDate: new Date(endDate).toISOString(),
-			startDate: new Date(startDate).toISOString(),
+			endDate: '2026-10-20T07:30:00.000Z',
+			startDate: '2026-08-22T13:05:00.000Z',
 		});
 	});
 
 	it('returns only the start date for an open-ended date range', () => {
-		const startDate = '2000-07-27T00:00:00';
-
 		expect(
-			normalizeDateFilter({
-				endDate: '',
-				range: Range.DateRange,
-				startDate,
-			})
+			normalizeDateFilter(
+				{
+					endDate: '',
+					range: Range.DateRange,
+					startDate: '2026-08-22 15:05',
+				},
+				'Europe/Madrid'
+			)
 		).toEqual({
 			dateRangeType: 'DATE_RANGE',
-			startDate: new Date(startDate).toISOString(),
+			startDate: '2026-08-22T13:05:00.000Z',
 		});
 	});
 
 	it('returns only the end date for an open-ended date range', () => {
-		const endDate = '2000-07-27T00:00:00';
-
 		expect(
-			normalizeDateFilter({
-				endDate,
-				range: Range.DateRange,
-				startDate: '',
-			})
+			normalizeDateFilter(
+				{
+					endDate: '2026-10-20 09:30',
+					range: Range.DateRange,
+					startDate: '',
+				},
+				'Europe/Madrid'
+			)
 		).toEqual({
 			dateRangeType: 'DATE_RANGE',
-			endDate: new Date(endDate).toISOString(),
+			endDate: '2026-10-20T07:30:00.000Z',
 		});
 	});
 
 	it('returns the from last publish date type without dates', () => {
-		expect(normalizeDateFilter({range: Range.FromLastPublishDate})).toEqual(
-			{
-				dateRangeType: 'FROM_LAST_PUBLISH_DATE',
-			}
-		);
+		expect(
+			normalizeDateFilter({range: Range.FromLastPublishDate}, 'UTC')
+		).toEqual({
+			dateRangeType: 'FROM_LAST_PUBLISH_DATE',
+		});
 	});
 
 	it('resolves the modified last range to a start date only', () => {
 		const beforeTime = Date.now();
 
-		const normalizedDateFilter = normalizeDateFilter({
-			last: LastRange.H24,
-			range: Range.Last,
-		});
+		const normalizedDateFilter = normalizeDateFilter(
+			{
+				last: LastRange.H24,
+				range: Range.Last,
+			},
+			'UTC'
+		);
 
 		const afterTime = Date.now();
 
@@ -88,6 +102,114 @@ describe('normalizeDateFilter', () => {
 		expect(normalizedDateFilter.endDate).toBeUndefined();
 		expect(startTime).toBeGreaterThanOrEqual(beforeTime - dayMilliseconds);
 		expect(startTime).toBeLessThanOrEqual(afterTime - dayMilliseconds);
+	});
+});
+
+describe('getValidation', () => {
+	const toDateRangeEditingState = (startDate: string) => ({
+		endDate: '',
+		last: LastRange.H12,
+		range: Range.DateRange,
+		startDate,
+	});
+
+	it('rejects a start bound in the future, which the From calendar never fills in', () => {
+		expect(
+			getValidation(
+				toDateRangeEditingState(
+					toWallClockDateTime(
+						new Date(Date.now() + HOUR).toISOString(),
+						'UTC'
+					)
+				),
+				'UTC'
+			)
+		).toEqual({
+			errors: {startDate: 'dates-must-not-be-in-the-future'},
+			isValid: false,
+		});
+	});
+
+	it('accepts a bound that only reads as future outside the given time zone', () => {
+		expect(
+			getValidation(
+				toDateRangeEditingState(
+					toWallClockDateTime(
+						new Date(Date.now() + 13 * HOUR).toISOString(),
+						'UTC'
+					)
+				),
+				'Pacific/Kiritimati'
+			)
+		).toEqual({errors: {}, isValid: true});
+	});
+
+	it('explains why a malformed bound is rejected', () => {
+		expect(
+			getValidation(toDateRangeEditingState('2026-01-01 8:00'), 'UTC')
+		).toEqual({
+			errors: {startDate: 'please-enter-a-valid-date'},
+			isValid: false,
+		});
+	});
+
+	it('rejects an end bound whose time is still ahead of now', () => {
+		expect(
+			getValidation(
+				{
+					endDate: toWallClockDateTime(
+						new Date(Date.now() + HOUR).toISOString(),
+						'UTC'
+					),
+					last: LastRange.H12,
+					range: Range.DateRange,
+					startDate: '',
+				},
+				'UTC'
+			)
+		).toEqual({
+			errors: {endDate: 'dates-must-not-be-in-the-future'},
+			isValid: false,
+		});
+	});
+
+	it('accepts an end bound that has already passed', () => {
+		expect(
+			getValidation(
+				{
+					endDate: toWallClockDateTime(
+						new Date(Date.now() - HOUR).toISOString(),
+						'UTC'
+					),
+					last: LastRange.H12,
+					range: Range.DateRange,
+					startDate: '',
+				},
+				'UTC'
+			)
+		).toEqual({errors: {}, isValid: true});
+	});
+
+	it('rejects an end bound that falls after today', () => {
+		const [tomorrow] = toWallClockDateTime(
+			new Date(Date.now() + 24 * HOUR).toISOString(),
+			'UTC'
+		).split(' ');
+
+		expect(
+			getValidation(
+				{
+					endDate: `${tomorrow} 00:00`,
+					last: LastRange.H12,
+					range: Range.DateRange,
+					startDate: '',
+				},
+				'UTC'
+			)
+		).toEqual({
+			errors: {endDate: 'dates-must-not-be-in-the-future'},
+			isValid: false,
+		});
 	});
 });
 
@@ -114,5 +236,72 @@ describe('dateFilterToEditingState', () => {
 			range: Range.Last,
 			startDate: '',
 		});
+	});
+});
+
+describe('getAppliedFilterSummary', () => {
+	const LANGUAGE_KEYS: Record<string, string> = {
+		'date-range-after-x': 'Date Range: After {0}',
+		'date-range-before-x': 'Date Range: Before {0}',
+		'date-range-x-to-x': 'Date Range: {0} to {1}',
+	};
+
+	const getLanguageKey = Liferay.Language.get as jest.Mock;
+
+	const defaultLanguageKeyImplementation =
+		getLanguageKey.getMockImplementation();
+
+	beforeEach(() => {
+		getLanguageKey.mockImplementation(
+			(key: string) => LANGUAGE_KEYS[key] ?? key
+		);
+	});
+
+	afterEach(() => {
+		getLanguageKey.mockImplementation(defaultLanguageKeyImplementation);
+	});
+
+	function toLocaleDateTimeText(dateTime: string): string {
+		const date = new Date(dateTime.replace(' ', 'T'));
+		const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
+
+		return `${date.toLocaleDateString(locale)} ${date.toLocaleTimeString(
+			locale,
+			{hour: 'numeric', minute: '2-digit'}
+		)}`;
+	}
+
+	it('formats both bounds of a date range in the portal locale', () => {
+		expect(
+			getAppliedFilterSummary({
+				endDate: '2026-10-20 09:30',
+				range: Range.DateRange,
+				startDate: '2026-08-22 15:05',
+			})
+		).toBe(
+			`Date Range: ${toLocaleDateTimeText(
+				'2026-08-22 15:05'
+			)} to ${toLocaleDateTimeText('2026-10-20 09:30')}`
+		);
+	});
+
+	it('formats the single bound of an open-ended date range in the portal locale', () => {
+		expect(
+			getAppliedFilterSummary({
+				endDate: '',
+				range: Range.DateRange,
+				startDate: '2026-08-22 15:05',
+			})
+		).toBe(`Date Range: After ${toLocaleDateTimeText('2026-08-22 15:05')}`);
+
+		expect(
+			getAppliedFilterSummary({
+				endDate: '2026-10-20 09:30',
+				range: Range.DateRange,
+				startDate: '',
+			})
+		).toBe(
+			`Date Range: Before ${toLocaleDateTimeText('2026-10-20 09:30')}`
+		);
 	});
 });

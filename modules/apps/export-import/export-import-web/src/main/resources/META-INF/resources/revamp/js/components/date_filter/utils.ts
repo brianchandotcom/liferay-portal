@@ -3,8 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {dateUtils, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 
+import {
+	isCompleteDateTime,
+	toLocalDate,
+	toZonedDate,
+} from '../../utils/dateTime';
 import {
 	DateFilterValues,
 	EditingState,
@@ -55,16 +60,19 @@ export const LAST_RANGE_OPTIONS = [
 ];
 
 export function normalizeDateFilter(
-	dateFilter: DateFilterValues
+	dateFilter: DateFilterValues,
+	timeZoneId: string
 ): NormalizedDateFilter {
 	if (dateFilter.range === Range.DateRange) {
 		const {endDate, startDate} = dateFilter;
 
 		return {
 			dateRangeType: 'DATE_RANGE',
-			endDate: endDate ? new Date(endDate).toISOString() : undefined,
+			endDate: endDate
+				? toZonedDate(endDate, timeZoneId).toISOString()
+				: undefined,
 			startDate: startDate
-				? new Date(startDate).toISOString()
+				? toZonedDate(startDate, timeZoneId).toISOString()
 				: undefined,
 		};
 	}
@@ -138,17 +146,23 @@ export function getAppliedFilterSummary(
 
 		if (startDate && endDate) {
 			return sub(Liferay.Language.get('date-range-x-to-x'), [
-				startDate,
-				endDate,
+				getDateTimeText(startDate),
+				getDateTimeText(endDate),
 			]);
 		}
 
 		if (startDate) {
-			return sub(Liferay.Language.get('date-range-after-x'), startDate);
+			return sub(
+				Liferay.Language.get('date-range-after-x'),
+				getDateTimeText(startDate)
+			);
 		}
 
 		if (endDate) {
-			return sub(Liferay.Language.get('date-range-before-x'), endDate);
+			return sub(
+				Liferay.Language.get('date-range-before-x'),
+				getDateTimeText(endDate)
+			);
 		}
 	}
 
@@ -197,7 +211,10 @@ export function getIsDirty(
 	return false;
 }
 
-export function getValidation(editingState: EditingState): {
+export function getValidation(
+	editingState: EditingState,
+	timeZoneId: string
+): {
 	errors: {endDate?: string; startDate?: string};
 	isValid: boolean;
 } {
@@ -213,15 +230,23 @@ export function getValidation(editingState: EditingState): {
 		return {errors, isValid: false};
 	}
 
-	const isStartValid = !startDate || dateUtils.isValid(startDate);
-	const isEndValid = !endDate || dateUtils.isValid(endDate);
+	const isStartValid = !startDate || isCompleteDateTime(startDate);
+	const isEndValid = !endDate || isCompleteDateTime(endDate);
+
+	if (!isStartValid) {
+		errors.startDate = Liferay.Language.get('please-enter-a-valid-date');
+	}
+
+	if (!isEndValid) {
+		errors.endDate = Liferay.Language.get('please-enter-a-valid-date');
+	}
 
 	if (!isStartValid || !isEndValid) {
 		return {errors, isValid: false};
 	}
 
-	const startDateObj = startDate ? new Date(startDate) : null;
-	const endDateObj = endDate ? new Date(endDate) : null;
+	const startDateObj = startDate ? toZonedDate(startDate, timeZoneId) : null;
+	const endDateObj = endDate ? toZonedDate(endDate, timeZoneId) : null;
 
 	if (startDateObj && startDateObj > new Date()) {
 		errors.startDate = Liferay.Language.get(
@@ -235,7 +260,7 @@ export function getValidation(editingState: EditingState): {
 		);
 	}
 
-	if (startDateObj && endDateObj && startDateObj > endDateObj) {
+	if (startDateObj && endDateObj && startDateObj >= endDateObj) {
 		const rangeError = Liferay.Language.get('date-range-is-invalid');
 
 		errors.startDate = rangeError;
@@ -246,4 +271,14 @@ export function getValidation(editingState: EditingState): {
 		errors,
 		isValid: !Object.keys(errors).length,
 	};
+}
+
+function getDateTimeText(dateTime: string): string {
+	const date = toLocalDate(dateTime);
+	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
+
+	return `${date.toLocaleDateString(locale)} ${date.toLocaleTimeString(
+		locale,
+		{hour: 'numeric', minute: '2-digit'}
+	)}`;
 }

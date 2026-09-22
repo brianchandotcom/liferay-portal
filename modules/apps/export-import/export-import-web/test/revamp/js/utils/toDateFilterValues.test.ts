@@ -86,4 +86,66 @@ describe('toDateFilterValues', () => {
 			startDate: '2026-08-22 15:05',
 		});
 	});
+
+	it('leaves the start bound empty when the server stored the epoch for an open start', () => {
+		const endDateParameters = {
+			endDateAmPm: ['0'],
+			endDateDay: ['20'],
+			endDateHour: ['9'],
+			endDateMinute: ['30'],
+			endDateMonth: ['9'],
+			endDateYear: ['2026'],
+			range: ['dateRange'],
+		};
+
+		expect(
+			toDateFilterValues({
+				...endDateParameters,
+				startDateAmPm: ['0'],
+				startDateDay: ['1'],
+				startDateHour: ['0'],
+				startDateMinute: ['0'],
+				startDateMonth: ['0'],
+				startDateYear: ['1970'],
+			})
+		).toEqual({
+			endDate: '2026-10-20 09:30',
+			range: Range.DateRange,
+			startDate: '',
+		});
+
+		expect(
+			toDateFilterValues({
+				...endDateParameters,
+				startDateAmPm: ['1'],
+				startDateDay: ['31'],
+				startDateHour: ['7'],
+				startDateMinute: ['0'],
+				startDateMonth: ['11'],
+				startDateYear: ['1969'],
+			})
+		).toEqual({
+			endDate: '2026-10-20 09:30',
+			range: Range.DateRange,
+			startDate: '',
+		});
+	});
+
+	it('ignores an unreadable year rather than building a broken date', () => {
+		expect(
+			toDateFilterValues({
+				range: ['dateRange'],
+				startDateAmPm: ['1'],
+				startDateDay: ['22'],
+				startDateHour: ['3'],
+				startDateMinute: ['5'],
+				startDateMonth: ['7'],
+				startDateYear: ['not-a-year'],
+			})
+		).toEqual({
+			endDate: '',
+			range: Range.DateRange,
+			startDate: '',
+		});
+	});
 });

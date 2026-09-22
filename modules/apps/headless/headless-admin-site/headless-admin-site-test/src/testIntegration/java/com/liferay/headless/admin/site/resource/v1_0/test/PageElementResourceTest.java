@@ -32,6 +32,7 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.admin.site.client.dto.v1_0.ActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.BasicFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
@@ -59,6 +60,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormRelationshipConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormRelationshipPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValueFragmentLink;
@@ -89,6 +91,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewportDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.NavigationMenuFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePageFormContainerSubmissionResult;
@@ -372,6 +375,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPostSitePageSpecificationPageExperiencePageElementWithNonexistentWidgetPermissionRole();
 		_testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithoutCollectionSettings();
+		_testPostSitePageSpecificationPageExperiencePageElementWithoutContextualMenuType();
 		_testPostSitePageSpecificationPageExperiencePageElementWithoutExternalReferenceCode();
 		_testPostSitePageSpecificationPageExperiencePageElementWithoutFormContainerReference();
 		_testPostSitePageSpecificationPageExperiencePageElementWithoutPageElementDefinition();
@@ -2963,6 +2967,82 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		ProblemExceptionTestUtil.assertProblemException(
 			"BAD_REQUEST", "Collection settings are required",
+			() ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementWithoutContextualMenuType()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		JSONObject configurationJSONObject = JSONUtil.put(
+			"fieldSets",
+			JSONUtil.put(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.put(
+						JSONUtil.put(
+							"defaultValue", StringPool.BLANK
+						).put(
+							"name", "navigationMenu"
+						).put(
+							"type", "navigationMenuSelector"
+						)))));
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			configurationJSONObject.toString(), testGroup.getGroupId(),
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		BasicFragmentInstancePageElementDefinition
+			basicFragmentInstancePageElementDefinition =
+				PageElementsTestUtil.
+					getBasicFragmentInstancePageElementDefinition(
+						null,
+						HashMapBuilder.<String, Object>put(
+							"navigationMenu",
+							HashMapBuilder.put(
+								"contextualMenu",
+								ContextualMenuNavigationMenuValue.
+									ContextualMenuType.CHILDREN
+							).build()
+						).build(),
+						new FragmentEditableElement[0], fragmentEntry,
+						testGroup.getGroupId());
+
+		FragmentInstance fragmentInstance =
+			basicFragmentInstancePageElementDefinition.getFragmentInstance();
+
+		Map<String, FragmentConfigurationFieldValue>
+			fragmentConfigurationFieldValues =
+				fragmentInstance.getFragmentConfigurationFieldValues();
+
+		NavigationMenuFragmentConfigurationFieldValue
+			navigationMenuFragmentConfigurationFieldValue =
+				(NavigationMenuFragmentConfigurationFieldValue)
+					fragmentConfigurationFieldValues.get("navigationMenu");
+
+		ContextualMenuNavigationMenuValue contextualMenuNavigationMenuValue =
+			(ContextualMenuNavigationMenuValue)
+				navigationMenuFragmentConfigurationFieldValue.getValue();
+
+		contextualMenuNavigationMenuValue.setContextualMenuType(
+			(ContextualMenuNavigationMenuValue.ContextualMenuType)null);
+
+		PageElement pageElement = _getFragmentInstancePageElement(
+			basicFragmentInstancePageElementDefinition,
+			RandomTestUtil.randomString());
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST", "A contextual menu type is required",
 			() ->
 				pageElementResource.
 					postSitePageSpecificationPageExperiencePageElement(

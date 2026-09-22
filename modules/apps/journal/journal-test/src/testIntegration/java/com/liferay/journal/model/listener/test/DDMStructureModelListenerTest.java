@@ -51,6 +51,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -298,6 +299,23 @@ public class DDMStructureModelListenerTest {
 		}
 	}
 
+	@Test
+	public void testUpdateDataDefinitionWithoutFieldSet() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle();
+
+		_updateDataDefinition(
+			_dataDefinition.getDataDefinitionKey(),
+			"dependencies/updated_data_definition_without_field_set.json");
+
+		JournalArticle updatedJournalArticle =
+			_journalArticleLocalService.getJournalArticle(
+				journalArticle.getId());
+
+		_assertDDMFormFieldValuesMap(
+			_expectedWithoutFieldSetFieldValuesMap,
+			updatedJournalArticle.getDDMFormValues());
+	}
+
 	private JournalArticle _addJournalArticle() throws Exception {
 		Class<?> clazz = getClass();
 
@@ -487,6 +505,22 @@ public class DDMStructureModelListenerTest {
 					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK)
 			).put(
 				"Text80567124", Arrays.asList("Parent1", "Parent2", "Parent3")
+			).build();
+	private static final Map<String, List<String>>
+		_expectedWithoutFieldSetFieldValuesMap =
+			HashMapBuilder.<String, List<String>>put(
+				"Field32391309",
+				Arrays.asList(
+					"Parent1Child1", "Parent1Child2", "Parent2Child1",
+					"Parent3Child1", "Parent3Child2")
+			).put(
+				"Field68979894",
+				Arrays.asList(
+					"Parent1GrandChild1", "Parent1GrandChild2",
+					"Parent2GrandChild1", "Parent2GrandChild2",
+					"Parent3GrandChild1")
+			).put(
+				"Text80567124", Collections.singletonList("Parent1")
 			).build();
 
 	@Inject

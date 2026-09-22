@@ -8797,11 +8797,60 @@ information. Make sure to commit in all format-javadoc results.
 					<sequential>
 						<echo>Executing Gradle tasks: @{modules.test.class}.</echo>
 
+						<var name="modules.test.class.file.names" unset="true" />
+						<var name="modules.test.class.file.names.task" unset="true" />
+						<var name="modules.test.class.task" unset="true" />
+
+						<beanshell>
+							<![CDATA[
+								String modulesTestClass = "@{modules.test.class}";
+
+								int index = modulesTestClass.indexOf("#");
+
+								if (index == -1) {
+									project.setProperty("modules.test.class.file.names", "");
+									project.setProperty("modules.test.class.task", modulesTestClass);
+								}
+								else {
+									String projectDirPath = project.getProperty("project.dir");
+
+									StringBuilder sb = new StringBuilder();
+
+									for (String testFileName : modulesTestClass.substring(index + 1).split("#")) {
+										if (sb.length() > 0) {
+											sb.append(",");
+										}
+
+										sb.append(projectDirPath);
+										sb.append("/");
+										sb.append(testFileName);
+									}
+
+									String testTask = modulesTestClass.substring(0, index);
+
+									project.setProperty("modules.test.class.file.names", sb.toString());
+									project.setProperty("modules.test.class.file.names.task", testTask.replaceAll(":packageRunTest$", ":runJSUnitTestFileNames"));
+									project.setProperty("modules.test.class.task", testTask);
+								}
+							]]>
+						</beanshell>
+
 						<trycatch property="gradle.failure">
 							<try>
-								<gradle-execute dir="modules" task="@{modules.test.class}">
-									<arg value="--continue" />
-								</gradle-execute>
+								<if>
+									<equals arg1="${modules.test.class.file.names}" arg2="" />
+									<then>
+										<gradle-execute dir="modules" task="${modules.test.class.task}">
+											<arg value="--continue" />
+										</gradle-execute>
+									</then>
+									<else>
+										<gradle-execute dir="modules" task="${modules.test.class.file.names.task}">
+											<arg value="--continue" />
+											<arg value="-Pjs.unit.test.file.names=${modules.test.class.file.names}" />
+										</gradle-execute>
+									</else>
+								</if>
 							</try>
 							<catch>
 								<echo>${gradle.failure}</echo>

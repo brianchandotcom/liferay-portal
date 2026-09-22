@@ -37,6 +37,7 @@ import {
 	getIntervalText,
 	getWeekdayName,
 	isRepeatingUnit,
+	showsEndDate,
 } from './utils';
 
 const MONTH_MAX_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -250,6 +251,12 @@ export default function PublishScheduler({
 														toCustomCronExpression(
 															value
 														),
+												}
+											: {}),
+										...(unit === IntervalUnit.Never
+											? {
+													endDateTime: '',
+													neverEnd: true,
 												}
 											: {}),
 										unit,
@@ -536,39 +543,46 @@ export default function PublishScheduler({
 						</>
 					)}
 
-					<ClayLayout.Row>
-						<ClayLayout.Col md={6} size={12}>
-							<FieldDatePicker
-								dateFormat={DATE_FORMAT}
-								defaultTime="23:59"
-								disabled={value.neverEnd}
-								errorMessage={endDateTimeErrorMessage}
-								id="publishScheduleEndDateTime"
-								label={Liferay.Language.get('end-date')}
-								name="publishScheduleEndDateTime"
-								onBlur={onEndDateTimeBlur}
-								onChange={(endDateTime) =>
-									set({
-										endDateTime: endDateTime as string,
-									})
-								}
-								placeholder={DATE_TIME_PLACEHOLDER}
-								required={!value.neverEnd}
-								time
-								value={value.endDateTime}
-								years={{
-									end: currentYear + 10,
-									start: currentYear,
-								}}
-							/>
-						</ClayLayout.Col>
-					</ClayLayout.Row>
+					{showsEndDate(value) && (
+						<>
+							<ClayLayout.Row>
+								<ClayLayout.Col md={6} size={12}>
+									<FieldDatePicker
+										dateFormat={DATE_FORMAT}
+										defaultTime="23:59"
+										disabled={value.neverEnd}
+										errorMessage={endDateTimeErrorMessage}
+										id="publishScheduleEndDateTime"
+										label={Liferay.Language.get('end-date')}
+										name="publishScheduleEndDateTime"
+										onBlur={onEndDateTimeBlur}
+										onChange={(endDateTime) =>
+											set({
+												endDateTime:
+													endDateTime as string,
+											})
+										}
+										placeholder={DATE_TIME_PLACEHOLDER}
+										required={!value.neverEnd}
+										time
+										value={value.endDateTime}
+										years={{
+											end: currentYear + 10,
+											start: currentYear,
+										}}
+									/>
+								</ClayLayout.Col>
+							</ClayLayout.Row>
 
-					<ClayCheckbox
-						checked={value.neverEnd}
-						label={Liferay.Language.get('never-end')}
-						onChange={() => set({neverEnd: !value.neverEnd})}
-					/>
+							<ClayCheckbox
+								checked={value.neverEnd}
+								label={Liferay.Language.get('never-end')}
+								onChange={() =>
+									set({neverEnd: !value.neverEnd})
+								}
+							/>
+						</>
+					)}
 
 					{scheduleSummary && (
 						<ClayAlert

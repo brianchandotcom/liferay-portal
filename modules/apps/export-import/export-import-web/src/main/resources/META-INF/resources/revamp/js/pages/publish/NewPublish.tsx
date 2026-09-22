@@ -42,6 +42,8 @@ import {ScheduleValues, TimeZoneOption} from './components/scheduler/types';
 import {
 	getInitialScheduleValues,
 	getScheduleValuesErrors,
+	hasEndDate,
+	showsEndDate,
 } from './components/scheduler/utils';
 
 type PublishFormValues = {
@@ -218,7 +220,8 @@ export function NewPublish({
 					? {
 							cronExpression: toCronExpression(scheduleValues),
 							scheduleEndDate:
-								!scheduleValues.neverEnd &&
+								showsEndDate(scheduleValues) &&
+								hasEndDate(scheduleValues) &&
 								scheduleValues.endDateTime
 									? toZonedDate(
 											scheduleValues.endDateTime,

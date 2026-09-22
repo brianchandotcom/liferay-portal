@@ -5,7 +5,13 @@
 
 // eslint-disable-next-line @liferay/portal/no-cross-module-deep-import
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
-import {fireEvent, render, screen, within} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -205,6 +211,28 @@ describe('PublishScheduler', () => {
 		expect(screen.getByLabelText('repeat-at')).toBeInTheDocument();
 	});
 
+	it('shows the end date field for every unit except never', () => {
+		renderPublishScheduler({enabled: true, unit: IntervalUnit.Never});
+
+		expect(screen.queryByLabelText('end-date')).not.toBeInTheDocument();
+		expect(
+			screen.queryByRole('checkbox', {name: 'never-end'})
+		).not.toBeInTheDocument();
+
+		cleanup();
+		renderPublishScheduler({enabled: true, unit: IntervalUnit.Custom});
+
+		expect(screen.getByLabelText('end-date')).toBeInTheDocument();
+
+		cleanup();
+		renderPublishScheduler({enabled: true, unit: IntervalUnit.Week});
+
+		expect(screen.getByLabelText('end-date')).toBeInTheDocument();
+		expect(
+			screen.getByRole('checkbox', {name: 'never-end'})
+		).toBeInTheDocument();
+	});
+
 	it('mirrors the start date time in the repeat at field while synced', () => {
 		renderPublishScheduler({
 			enabled: true,
@@ -295,7 +323,10 @@ describe('PublishScheduler', () => {
 	it('has no accessibility violations', async () => {
 		const {container} = renderPublishScheduler({
 			enabled: true,
+			neverEnd: false,
+			repeatOnTimeSynced: false,
 			startDateTime: START_DATE_TIME,
+			unit: IntervalUnit.Week,
 		});
 
 		await checkAccessibility({context: container});

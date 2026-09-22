@@ -19,6 +19,7 @@ import {
 	getIntervalText,
 	getWeekdayName,
 	getWeekdayOrdinalProseText,
+	hasEndDate,
 	isRepeatingUnit,
 } from './utils';
 
@@ -338,7 +339,7 @@ export function getScheduleSummary(
 		: startTimeText;
 
 	const endDate =
-		!scheduleValues.neverEnd &&
+		hasEndDate(scheduleValues) &&
 		isCompleteDateTime(scheduleValues.endDateTime)
 			? toLocalDate(scheduleValues.endDateTime)
 			: null;

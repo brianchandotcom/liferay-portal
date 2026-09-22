@@ -76,6 +76,14 @@ export function getWeekdayOrdinalProseText(weekdayOrdinal: string): string {
 	return weekdayOrdinal;
 }
 
+export function hasEndDate(scheduleValues: ScheduleValues): boolean {
+	return !scheduleValues.neverEnd;
+}
+
+export function showsEndDate(scheduleValues: ScheduleValues): boolean {
+	return scheduleValues.unit !== IntervalUnit.Never;
+}
+
 export function isRepeatingUnit(unit: IntervalUnit): boolean {
 	return unit !== IntervalUnit.Custom && unit !== IntervalUnit.Never;
 }
@@ -135,7 +143,7 @@ export function getScheduleValuesErrors(
 		}
 	}
 
-	if (!scheduleValues.neverEnd) {
+	if (showsEndDate(scheduleValues) && hasEndDate(scheduleValues)) {
 		if (!isCompleteDateTime(scheduleValues.endDateTime)) {
 			scheduleValuesErrors.endDateTime = Liferay.Language.get(
 				'please-enter-a-valid-date'

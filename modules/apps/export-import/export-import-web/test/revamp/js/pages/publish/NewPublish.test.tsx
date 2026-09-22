@@ -310,6 +310,11 @@ describe('NewPublish', () => {
 			screen.getByRole('radio', {name: /schedule-for-later/})
 		);
 
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'week'
+		);
+
 		await user.click(screen.getByRole('checkbox', {name: /never-end/}));
 
 		const endDateField = screen.getByRole('textbox', {
@@ -343,6 +348,11 @@ describe('NewPublish', () => {
 
 		await user.paste(FUTURE_DATE_TIME);
 
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'week'
+		);
+
 		await user.click(screen.getByRole('checkbox', {name: /never-end/}));
 
 		expect(
@@ -371,6 +381,15 @@ describe('NewPublish', () => {
 		expect(
 			screen.getByRole('textbox', {name: /start-date/})
 		).toHaveAccessibleName(/mandatory/i);
+
+		expect(
+			screen.queryByRole('textbox', {name: /end-date/})
+		).not.toBeInTheDocument();
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'week'
+		);
 
 		await user.click(screen.getByRole('checkbox', {name: /never-end/}));
 
@@ -438,6 +457,133 @@ describe('NewPublish', () => {
 		expect(Liferay.Util.navigate).toHaveBeenCalledWith(
 			DEFAULT_PROPS.scheduledBackURL
 		);
+	});
+
+	it('drops the end date once the repetition goes back to never', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		await user.click(screen.getByRole('textbox', {name: /start-date/}));
+
+		await user.paste(FUTURE_DATE_TIME);
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'week'
+		);
+
+		await user.click(screen.getByRole('checkbox', {name: /never-end/}));
+
+		await user.click(screen.getByRole('textbox', {name: /end-date/}));
+
+		await user.paste(
+			toWallClockDateTime(
+				new Date(FUTURE_DATE.getTime() + DAY).toISOString(),
+				'UTC'
+			)
+		);
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'never'
+		);
+
+		await user.click(
+			screen.getByRole('button', {name: /schedule-publication-to-live/i})
+		);
+
+		await waitFor(() => {
+			expect(getPublishProcessCall()).toBeDefined();
+		});
+
+		const body = JSON.parse(getPublishProcessCall()![1]!.body as string);
+
+		expect(body.scheduleEndDate).toBeUndefined();
+	});
+
+	it('drops the seeded end date once the repetition goes back to never', async () => {
+		mockAPIRoutes({
+			scheduledPublishProcess: {
+				...SCHEDULED_PUBLISH_PROCESS,
+				scheduleEndDate: new Date(
+					FUTURE_DATE.getTime() + DAY
+				).toISOString(),
+			},
+		});
+
+		renderComponent({
+			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,
+		});
+
+		await screen.findByRole('textbox', {name: /^name/i});
+		await screen.findByText('loaded');
+
+		expect(
+			screen.getByRole('checkbox', {name: /never-end/})
+		).not.toBeChecked();
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'never'
+		);
+
+		await user.click(
+			screen.getByRole('button', {name: /schedule-publication-to-live/i})
+		);
+
+		await waitFor(() => {
+			expect(getPublishProcessCall()).toBeDefined();
+		});
+
+		const body = JSON.parse(getPublishProcessCall()![1]!.body as string);
+
+		expect(body.scheduleEndDate).toBeUndefined();
+	});
+
+	it('drops the stored end date of an edited one time schedule', async () => {
+		const [datePart, timePart] = FUTURE_DATE_TIME.split(' ');
+		const [year, month, day] = datePart.split('-').map(Number);
+		const [hour, minute] = timePart.split(':').map(Number);
+
+		const scheduleEndDate = new Date(
+			FUTURE_DATE.getTime() + DAY
+		).toISOString();
+
+		mockAPIRoutes({
+			scheduledPublishProcess: {
+				...SCHEDULED_PUBLISH_PROCESS,
+				cronExpression: `0 ${minute} ${hour} ${day} ${month} ? ${year}`,
+				scheduleEndDate,
+			},
+		});
+
+		renderComponent({
+			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,
+		});
+
+		await screen.findByRole('textbox', {name: /^name/i});
+		await screen.findByText('loaded');
+
+		expect(screen.getByRole('combobox', {name: 'repeat'})).toHaveValue(
+			'never'
+		);
+
+		await user.click(
+			screen.getByRole('button', {name: /schedule-publication-to-live/i})
+		);
+
+		await waitFor(() => {
+			expect(getPublishProcessCall()).toBeDefined();
+		});
+
+		const body = JSON.parse(getPublishProcessCall()![1]!.body as string);
+
+		expect(body.scheduleEndDate).toBeUndefined();
 	});
 
 	it('seeds the form from the scheduled process when editing', async () => {

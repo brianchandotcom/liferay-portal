@@ -42,6 +42,8 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -92,15 +94,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutPageTemplateStructure.getData(
 				segmentsExperience.getSegmentsExperienceKey()));
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				pageElementExternalReferenceCode);
-
-		if (layoutStructureItem == null) {
-			throw new NoSuchEntityException(
-				"page element", pageElementExternalReferenceCode,
-				"page experience");
-		}
+		_getLayoutStructureItem(
+			layoutStructure, pageElementExternalReferenceCode);
 
 		layoutStructure.deleteLayoutStructureItem(
 			pageElementExternalReferenceCode);
@@ -144,14 +139,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				segmentsExperience.getSegmentsExperienceKey()));
 
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				pageElementExternalReferenceCode);
-
-		if (layoutStructureItem == null) {
-			throw new NoSuchEntityException(
-				"page element", pageElementExternalReferenceCode,
-				"page experience");
-		}
+			_getPageElementLayoutStructureItem(
+				layoutStructure, pageElementExternalReferenceCode);
 
 		PageElement pageElement = _pageElementDTOConverter.toDTO(
 			_getDTOConverterContext(
@@ -202,15 +191,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutPageTemplateStructure.getData(
 				segmentsExperience.getSegmentsExperienceKey()));
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				pageElementExternalReferenceCode);
-
-		if (layoutStructureItem == null) {
-			throw new NoSuchEntityException(
-				"page element", pageElementExternalReferenceCode,
-				"page experience");
-		}
+		LayoutStructureItem layoutStructureItem = _getLayoutStructureItem(
+			layoutStructure, pageElementExternalReferenceCode);
 
 		DTOConverterContext dtoConverterContext = _getDTOConverterContext(
 			layoutPageTemplateStructure.getCompanyId(), null, layout.getPlid(),
@@ -462,6 +444,44 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			).build(),
 			_dtoConverterRegistry, contextHttpServletRequest, itemId,
 			contextUriInfo, contextUser);
+	}
+
+	private LayoutStructureItem _getLayoutStructureItem(
+			LayoutStructure layoutStructure,
+			String pageElementExternalReferenceCode)
+		throws Exception {
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				pageElementExternalReferenceCode);
+
+		if (layoutStructureItem == null) {
+			throw new NoSuchEntityException(
+				"page element", pageElementExternalReferenceCode,
+				"page experience");
+		}
+
+		return layoutStructureItem;
+	}
+
+	private LayoutStructureItem _getPageElementLayoutStructureItem(
+			LayoutStructure layoutStructure,
+			String pageElementExternalReferenceCode)
+		throws Exception {
+
+		LayoutStructureItem layoutStructureItem = _getLayoutStructureItem(
+			layoutStructure, pageElementExternalReferenceCode);
+
+		if (Objects.equals(
+				layoutStructure.getMainItemId(),
+				layoutStructureItem.getItemId())) {
+
+			throw new NoSuchEntityException(
+				"page element", pageElementExternalReferenceCode,
+				"page experience");
+		}
+
+		return layoutStructureItem;
 	}
 
 	private SegmentsExperience _getSegmentsExperience(

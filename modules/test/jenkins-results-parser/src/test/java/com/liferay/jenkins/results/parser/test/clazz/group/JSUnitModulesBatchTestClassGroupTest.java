@@ -20,6 +20,7 @@ import java.util.Properties;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -167,12 +168,11 @@ public class JSUnitModulesBatchTestClassGroupTest
 			"test.batch.test.file.excludes[js-unit]",
 			"**/site-cms-site-initializer/**");
 
-		JSUnitModulesBatchTestClassGroup jsUnitModulesBatchTestClassGroup =
-			_newJSUnitModulesBatchTestClassGroup(jobProperties);
+		String message =
+			_testNewJSUnitModulesBatchTestClassGroupExpectedRuntimeException(
+				jobProperties);
 
-		testEquals(
-			Collections.emptyList(),
-			jsUnitModulesBatchTestClassGroup.getTestClasses());
+		testEquals(true, message.contains("Unable to select any of the 3"));
 	}
 
 	@Test
@@ -203,6 +203,42 @@ public class JSUnitModulesBatchTestClassGroupTest
 		_testSetTestClasses(
 			jobProperties, _MODULE_DIR_PATH + "/src/content/main_view.test.tsx",
 			_MODULE_DIR_PATH + "/src/page/page_view.test.js");
+	}
+
+	@Test
+	public void testSetTestClassesWithTestFileIncludesAndNoJSUnitFiles()
+		throws Exception {
+
+		Properties jobProperties = new Properties();
+
+		jobProperties.setProperty(
+			"test.batch.test.file.includes[js-unit]", _GLOB_INCLUDES);
+
+		JSUnitModulesBatchTestClassGroup jsUnitModulesBatchTestClassGroup =
+			BatchTestClassGroupTestUtil.newJSUnitModulesBatchTestClassGroup(
+				Collections.singletonList(_moduleDir), jobProperties,
+				Collections.<File>emptyList(), _workingDirectory);
+
+		testEquals(
+			Collections.emptyList(),
+			jsUnitModulesBatchTestClassGroup.getTestClasses());
+	}
+
+	@Test
+	public void testSetTestClassesWithTestFileIncludesMatchingNoTestFiles()
+		throws Exception {
+
+		Properties jobProperties = new Properties();
+
+		jobProperties.setProperty(
+			"test.batch.test.file.includes[js-unit]",
+			"apps/site/site-cms-site-initializer/**");
+
+		String message =
+			_testNewJSUnitModulesBatchTestClassGroupExpectedRuntimeException(
+				jobProperties);
+
+		testEquals(true, message.contains("Unable to select any of the 3"));
 	}
 
 	@Rule
@@ -272,6 +308,22 @@ public class JSUnitModulesBatchTestClassGroupTest
 		return BatchTestClassGroupTestUtil.newJSUnitModulesBatchTestClassGroup(
 			Collections.singletonList(_moduleDir), jobProperties, _jsUnitFiles,
 			_workingDirectory);
+	}
+
+	private String
+		_testNewJSUnitModulesBatchTestClassGroupExpectedRuntimeException(
+			Properties jobProperties) {
+
+		try {
+			_newJSUnitModulesBatchTestClassGroup(jobProperties);
+
+			Assert.fail("Expected RuntimeException");
+		}
+		catch (RuntimeException runtimeException) {
+			return runtimeException.getMessage();
+		}
+
+		return null;
 	}
 
 	private void _testSetTestClasses(

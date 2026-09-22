@@ -20,6 +20,33 @@ tests:
                     pattern: azure.liferay.com
         it: Binds every composite patch to the field manager ArgoCD tolerates
     -   asserts:
+            -   contains:
+                    content:
+                        name: restore-generation
+                        valueFrom:
+                            path: /tmp/restore-generation.txt
+                    path: spec.templates[4].outputs.parameters
+            -   matchRegex:
+                    path: spec.templates[4].script.source
+                    pattern: (?s)restore_generation=[$][(] .*?echo .[{][{]workflow[.]uid[}][}]..*?[|] jq --raw-input --raw-output .[.][[]0:6[]].[)]
+            -   matchRegex:
+                    path: spec.templates[4].script.source
+                    pattern: is already retained on the [$][(]cat /tmp/data-plane-inactive[.]txt[)] data plane
+            -   contains:
+                    content:
+                        default: "null"
+                        name: restore-generation
+                    path: spec.templates[0].inputs.parameters
+            -   matchRegex:
+                    path: spec.templates[0].resource.manifest
+                    pattern: "restoreGeneration: [{][{]inputs[.]parameters[.]restore-generation[}][}]"
+            -   contains:
+                    content:
+                        name: restore-generation
+                        value: "{{tasks.get-current-infrastructure-state.outputs.parameters.restore-generation}}"
+                    path: spec.templates[9].dag.tasks[4].arguments.parameters
+        it: Gives every restore its own data plane generation
+    -   asserts:
             -   equal:
                     path: spec.podMetadata.annotations["karpenter.sh/do-not-disrupt"]
                     value: "true"

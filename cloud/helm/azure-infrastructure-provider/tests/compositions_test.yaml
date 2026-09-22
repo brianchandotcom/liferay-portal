@@ -121,6 +121,10 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "Microsoft.DBforPostgreSQL/flexibleServers/\\{\\{ index \\$databaseServerNames \\$dataPlane \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "range \\$dataPlane := \\$dataPlanes \\}\\}\\s+apiVersion: authorization[^\\v]*\\s+kind: RoleAssignment\\s+metadata:\\s+annotations:\\s+gotemplating[^:]*: liferay-backup-restore-database-"
         it: Grants the restore identity read on each plane database server
     -   asserts:
@@ -303,6 +307,24 @@ tests:
         it: Keeps the document library container only on the active plane
     -   asserts:
             -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$observedDatabaseServer := dig \\(printf \"database-primary-%s\" \\$dataPlane\\) \"resource\" dict \\$observedResources"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "if and \\$observedDatabaseServer \\(not \\(dig \"metadata\" \"deletionTimestamp\" \"\" \\$observedDatabaseServer\\)\\) -\\}\\}\\s+\\{\\{- \\$_ := set \\$dataPlaneKeys \\$dataPlane \\(dig \"metadata\" \"labels\" \"dataPlaneKey\" \\$dataPlane \\$observedDatabaseServer\\)"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "kind: FlexibleServer\\s+metadata:[\\s\\S]{0,300}?dataPlaneKey: \\{\\{ index \\$dataPlaneKeys \\$dataPlane \\}\\}\\s+name: \\{\\{ \\$databaseServerName \\}\\}"
+            -   documentIndex: 0
+                notMatchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: observedStorageAccount|observedBackupInstance
+        it: Latches each plane key from the observed server unless it is being released
+    -   asserts:
+            -   documentIndex: 0
                 notMatchRegex:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "kind: BackupPolicyPostgreSQLFlexibleServer"
@@ -363,6 +385,28 @@ tests:
                     path: spec.pipeline[1].input.inline.template
                     pattern: printf "%s-storage-policy-%s" \$backupVaultName \$backupScheduleHash
         it: Names each policy after its schedule so a schedule change rolls the policy
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "else if and \\(eq \\$restorePhase \"provisioning\"\\) \\(eq \\$dataPlane \\$targetActiveDataPlane\\) \\$restoreGeneration -\\}\\}\\s+\\{\\{- \\$_ := set \\$dataPlaneKeys \\$dataPlane \\(printf \"%s-%s\" \\$dataPlane \\$restoreGeneration\\)"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "else -\\}\\}\\s+\\{\\{- \\$_ := set \\$dataPlaneKeys \\$dataPlane \\$dataPlane -\\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$resourceNames := dict \"databaseServer\" \\(printf \"%s-%s\" \\$baseName \\$dataPlaneKey\\)"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$databaseServerName := index \\$databaseServerNames \\$dataPlane"
+            -   documentIndex: 0
+                notMatchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "restorePointInTime \\| default \"\" \\| sha256sum"
+        it: Names each restored server after its restore generation so no two restores share one
     -   asserts:
             -   documentIndex: 0
                 matchRegex:
@@ -547,11 +591,15 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "sourceServerIdSelector:\\s+matchControllerRef: true\\s+matchLabels:\\s+dataPlane: \\{\\{ \\$activeDataPlane \\}\\}"
+                    pattern: "\\$restoreSourceDatabaseServerName := dig \\(\\$databaseSpec.restoreSourceDataPlane \\| default \\(index \\$dataPlaneKeys \\$activeDataPlane\\)\\) \"databaseServer\" \"\" \\$dataPlaneNames"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "sourceServerId: /subscriptions/[^\\n]+/flexibleServers/\\{\\{ \\$restoreSourceDatabaseServerName \\}\\}"
             -   documentIndex: 0
                 notMatchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "sourceServerId: "
+                    pattern: sourceServerIdSelector
         it: Restores the inactive plane to a point in time through initProvider
     -   asserts:
             -   documentIndex: 0

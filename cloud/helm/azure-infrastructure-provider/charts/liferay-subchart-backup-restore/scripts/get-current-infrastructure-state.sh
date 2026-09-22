@@ -37,6 +37,25 @@ function main {
 		echo "blue" > /tmp/data-plane-inactive.txt
 	fi
 
+	local restore_generation
+
+	restore_generation=$( \
+		echo "{{ "{{" }}workflow.uid}}" \
+			| jq --raw-input --raw-output ".[0:6]")
+
+	if echo "${liferay_infrastructure_json}" \
+		| jq \
+			--arg data_plane_key "$(cat /tmp/data-plane-inactive.txt)-${restore_generation}" \
+			--exit-status \
+			'.spec.retainedDataPlanes // {} | has($data_plane_key)' > /dev/null
+	then
+		echo "The generation ${restore_generation} is already retained on the $(cat /tmp/data-plane-inactive.txt) data plane. Retry the restore to draw another one." >&2
+
+		exit 1
+	fi
+
+	echo "${restore_generation}" > /tmp/restore-generation.txt
+
 	kubectl get backupvaults.dataprotection.azure.m.upbound.io \
 		--output jsonpath="{.items[0].metadata.name}" \
 		> /tmp/backup-vault-name.txt

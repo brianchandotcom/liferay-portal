@@ -42,6 +42,8 @@ const FIELD_BOUNDS = [
 	{maximum: 2099, minimum: 1970, names: []},
 ];
 
+const OFFSET_SAMPLE_DISTANCE = 36 * 60 * 60 * 1000;
+
 type DateTimeParts = {
 	day: number;
 	hour: number;
@@ -77,19 +79,35 @@ export function isCompleteDateTime(dateTime: string): boolean {
 	);
 }
 
+function toWallClockTime(dateTime: string): number {
+	return new Date(`${dateTime.replace(' ', 'T')}:00Z`).getTime();
+}
+
+function getTimeZoneOffset(date: Date, timeZoneId: string): number {
+	return (
+		toWallClockTime(toWallClockDateTime(date.toISOString(), timeZoneId)) -
+		date.getTime()
+	);
+}
+
 export function toZonedDate(dateTime: string, timeZoneId: string): Date {
-	const wallClockDate = new Date(`${dateTime.replace(' ', 'T')}:00Z`);
+	const wallClockTime = toWallClockTime(dateTime);
 
-	const timeZoneDate = new Date(
-		wallClockDate.toLocaleString('en-US', {timeZone: timeZoneId})
-	);
-	const utcDate = new Date(
-		wallClockDate.toLocaleString('en-US', {timeZone: 'UTC'})
+	const [earlierTime, laterTime] = [
+		wallClockTime - OFFSET_SAMPLE_DISTANCE,
+		wallClockTime + OFFSET_SAMPLE_DISTANCE,
+	].map(
+		(sampleTime) =>
+			wallClockTime - getTimeZoneOffset(new Date(sampleTime), timeZoneId)
 	);
 
-	return new Date(
-		wallClockDate.getTime() - (timeZoneDate.getTime() - utcDate.getTime())
+	const times = [earlierTime, laterTime].filter(
+		(time) =>
+			getTimeZoneOffset(new Date(time), timeZoneId) ===
+			wallClockTime - time
 	);
+
+	return new Date(times.length ? Math.min(...times) : earlierTime);
 }
 
 export function toWallClockDateTime(

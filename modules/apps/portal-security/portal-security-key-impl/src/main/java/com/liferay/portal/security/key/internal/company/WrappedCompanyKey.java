@@ -20,19 +20,17 @@ import java.util.Base64;
  */
 public class WrappedCompanyKey {
 
-	public static WrappedCompanyKey parse(
-		long companyId, String serializedKey) {
-
-		if (!CompanyKeyUtil.isWrappedKey(serializedKey) ||
-			!serializedKey.endsWith(StringPool.CLOSE_CURLY_BRACE)) {
+	public static WrappedCompanyKey parse(long companyId, String wrappedKey) {
+		if (!CompanyKeyUtil.isWrappedKey(wrappedKey) ||
+			!wrappedKey.endsWith(StringPool.CLOSE_CURLY_BRACE)) {
 
 			throw new CompanyKeyResolutionException(
 				"Wrapped key is malformed for company " + companyId);
 		}
 
-		String body = serializedKey.substring(
+		String body = wrappedKey.substring(
 			CompanyKeyUtil.WRAPPED_KEY_PREFIX.length(),
-			serializedKey.length() - 1);
+			wrappedKey.length() - 1);
 
 		int versionIndex = body.indexOf(CharPool.COLON);
 
@@ -62,7 +60,7 @@ public class WrappedCompanyKey {
 				"Wrapped key is malformed for company " + companyId);
 		}
 
-		byte[] ciphertext;
+		byte[] ciphertext = null;
 
 		try {
 			Base64.Decoder decoder = Base64.getDecoder();
@@ -127,7 +125,7 @@ public class WrappedCompanyKey {
 		return _keyReference;
 	}
 
-	public String serialize() {
+	public String toWrappedKey() {
 		Base64.Encoder encoder = Base64.getEncoder();
 
 		return StringBundler.concat(

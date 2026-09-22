@@ -58,7 +58,7 @@ public class CompanyKeyUtilTest {
 			CompanyKeyResolver.class);
 
 		Mockito.when(
-			companyKeyResolver.deserializeKey(_COMPANY_ID, wrappedKey)
+			companyKeyResolver.unwrapKey(_COMPANY_ID, wrappedKey)
 		).thenReturn(
 			key
 		);
@@ -128,7 +128,7 @@ public class CompanyKeyUtilTest {
 		);
 
 		Mockito.when(
-			companyKeyResolver.serializeKey(_COMPANY_ID, key)
+			companyKeyResolver.wrapKey(_COMPANY_ID, key)
 		).thenReturn(
 			wrappedKey
 		);

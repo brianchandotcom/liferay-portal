@@ -56,7 +56,7 @@ public class WrappedCompanyKeyTest {
 			new KeyReference(identifier, providerId, KeyReference.Type.CRYPTO));
 
 		WrappedCompanyKey parsedWrappedCompanyKey = WrappedCompanyKey.parse(
-			_COMPANY_ID, wrappedCompanyKey.serialize());
+			_COMPANY_ID, wrappedCompanyKey.toWrappedKey());
 
 		Assert.assertArrayEquals(
 			_CIPHERTEXT, parsedWrappedCompanyKey.getCiphertext());
@@ -85,7 +85,7 @@ public class WrappedCompanyKeyTest {
 	}
 
 	@Test
-	public void testSerialize() {
+	public void testToWrappedKey() {
 		String identifier = RandomTestUtil.randomString();
 		String providerId = RandomTestUtil.randomString();
 
@@ -93,12 +93,12 @@ public class WrappedCompanyKeyTest {
 			_CIPHERTEXT,
 			new KeyReference(identifier, providerId, KeyReference.Type.CRYPTO));
 
-		String serializedKey = wrappedCompanyKey.serialize();
+		String wrappedKey = wrappedCompanyKey.toWrappedKey();
 
-		Assert.assertTrue(CompanyKeyUtil.isWrappedKey(serializedKey));
+		Assert.assertTrue(CompanyKeyUtil.isWrappedKey(wrappedKey));
 
 		WrappedCompanyKey parsedWrappedCompanyKey = WrappedCompanyKey.parse(
-			_COMPANY_ID, serializedKey);
+			_COMPANY_ID, wrappedKey);
 
 		Assert.assertArrayEquals(
 			_CIPHERTEXT, parsedWrappedCompanyKey.getCiphertext());
@@ -108,7 +108,7 @@ public class WrappedCompanyKeyTest {
 		Assert.assertEquals(identifier, keyReference.getIdentifier());
 		Assert.assertEquals(providerId, keyReference.getProviderId());
 
-		Assert.assertEquals(serializedKey, parsedWrappedCompanyKey.serialize());
+		Assert.assertEquals(wrappedKey, parsedWrappedCompanyKey.toWrappedKey());
 	}
 
 	private void _testConstructor(
@@ -138,9 +138,9 @@ public class WrappedCompanyKeyTest {
 		}
 	}
 
-	private void _testParse(String serializedKey) {
+	private void _testParse(String wrappedKey) {
 		try {
-			WrappedCompanyKey.parse(_COMPANY_ID, serializedKey);
+			WrappedCompanyKey.parse(_COMPANY_ID, wrappedKey);
 
 			Assert.fail();
 		}

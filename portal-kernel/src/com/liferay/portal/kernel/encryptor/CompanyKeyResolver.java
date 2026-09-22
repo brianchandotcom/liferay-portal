@@ -15,10 +15,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CompanyKeyResolver {
 
-	public Key deserializeKey(long companyId, String serializedKey);
-
 	public boolean isEnabled(long companyId);
 
-	public String serializeKey(long companyId, Key key);
+	public Key unwrapKey(long companyId, String wrappedKey);
+
+	public String wrapKey(long companyId, Key key);
 
 }

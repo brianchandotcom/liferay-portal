@@ -10,6 +10,7 @@
 {{- range $i, $dataPlane := $dataPlanes }}
 {{- $databaseServerName := index $databaseServerNames $dataPlane }}
 {{- $isDatabaseRestoreTarget := and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
+{{- $isDemotedDataPlane := eq $dataPlane $demotedDataPlane }}
 {{- $restoreSourceDatabaseServerName := dig ($databaseSpec.restoreSourceDataPlane | default (index $dataPlaneKeys $activeDataPlane)) "databaseServer" "" $dataPlaneNames }}
 {{- if $i }}
 ---
@@ -73,7 +74,7 @@ spec:
         pointInTimeRestoreTimeInUtc: {{ $databaseSpec.restorePointInTime }}
         sourceServerId: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{{ $restoreSourceDatabaseServerName }}
     {{- end }}
-    managementPolicies: {{ $managementPolicies }}
+    managementPolicies: {{ $isDemotedDataPlane | ternary $demotedManagementPolicies $managementPolicies }}
 ---
 apiVersion: dbforpostgresql.azure.m.upbound.io/v1beta1
 kind: FlexibleServerDatabase
@@ -94,6 +95,26 @@ spec:
             matchLabels:
                 dataPlane: {{ $dataPlane }}
     managementPolicies: ["Create", "Observe", "Update"]
+{{- end }}
+{{- range $retainedDataPlaneKey, $_ := $retainedDataPlanes }}
+{{- if not (has $retainedDataPlaneKey $renderedDataPlaneKeys) }}
+{{- $retainedDatabaseServerName := index $dataPlaneNames $retainedDataPlaneKey "databaseServer" }}
+---
+apiVersion: dbforpostgresql.azure.m.upbound.io/v1beta1
+kind: FlexibleServer
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $retainedDatabaseServerName }}
+        gotemplating.fn.crossplane.io/composition-resource-name: database-retained-{{ $retainedDataPlaneKey }}
+    labels:
+        {{- $tags | toYaml | nindent 8 }}
+        retainedDataPlane: {{ $retainedDataPlaneKey }}
+    name: {{ $retainedDatabaseServerName }}-retained
+spec:
+    forProvider:
+        resourceGroupName: {{ $env.resourceGroupName }}
+    managementPolicies: {{ list "Delete" "Observe" | toJson }}
+{{- end }}
 {{- end }}
 {{- range $dataPlane := list "blue" "green" }}
 {{- if or (has $dataPlane $dataPlanes) (has $dataPlane $observedDatabaseDataPlanes) }}

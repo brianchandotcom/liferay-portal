@@ -13,6 +13,7 @@
 {{- $region := $xr.spec.region -}}
 {{- $restoreGeneration := $xr.spec.restoreGeneration | default "" -}}
 {{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
+{{- $retainedDataPlanes := $xr.spec.retainedDataPlanes | default dict -}}
 {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
 
 {{- $activeDataPlane := $targetActiveDataPlane -}}
@@ -52,7 +53,7 @@
 
 {{- $dataPlaneNames := dict -}}
 
-{{- range $dataPlaneKey := values $dataPlaneKeys -}}
+{{- range $dataPlaneKey := concat (values $dataPlaneKeys) (keys $retainedDataPlanes) -}}
     {{- $resourceNames := dict "databaseServer" (printf "%s-%s" $baseName $dataPlaneKey) -}}
     {{- $_ := set $dataPlaneNames $dataPlaneKey $resourceNames -}}
 {{- end }}
@@ -61,6 +62,19 @@
 
 {{- range $dataPlane, $dataPlaneKey := $dataPlaneKeys -}}
     {{- $_ := set $databaseServerNames $dataPlane (index $dataPlaneNames $dataPlaneKey "databaseServer") -}}
+{{- end }}
+
+{{- $demotedDataPlane := "" -}}
+
+{{- if and (eq $restorePhase "promoting") (hasKey $retainedDataPlanes (index $dataPlaneKeys $targetInactiveDataPlane)) -}}
+    {{- $demotedDataPlane = $targetInactiveDataPlane -}}
+{{- end }}
+
+{{- $demotedManagementPolicies := (eq $demotedDataPlane "") | ternary $managementPolicies (list "Create" "Observe" "Update" | toJson) -}}
+{{- $renderedDataPlaneKeys := list -}}
+
+{{- range $dataPlane := $dataPlanes -}}
+    {{- $renderedDataPlaneKeys = append $renderedDataPlaneKeys (index $dataPlaneKeys $dataPlane) -}}
 {{- end }}
 
 {{- $cmkIdentityId := printf "/subscriptions/%s/resourceGroups/%s/providers/Microsoft.ManagedIdentity/userAssignedIdentities/%s-cmk" $env.subscriptionId $env.resourceGroupName $baseName -}}

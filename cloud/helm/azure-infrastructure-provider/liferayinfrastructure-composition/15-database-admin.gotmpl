@@ -23,7 +23,7 @@ spec:
             matchLabels:
                 dataPlane: {{ $dataPlane }}
         tenantId: {{ $env.tenantId }}
-    managementPolicies: {{ $managementPolicies }}
+    managementPolicies: {{ (eq $dataPlane $demotedDataPlane) | ternary $demotedManagementPolicies $managementPolicies }}
 ---
 {{- end }}
 {{- end }}

@@ -7,7 +7,9 @@ import {sub} from 'frontend-js-web';
 
 import {
 	isCompleteDateTime,
-	toLocalDate,
+	toDateText,
+	toTimeText,
+	toWallClockDate,
 	toZonedDate,
 } from '../../utils/dateTime';
 import {
@@ -274,11 +276,7 @@ export function getValidation(
 }
 
 function getDateTimeText(dateTime: string): string {
-	const date = toLocalDate(dateTime);
-	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
+	const date = toWallClockDate(dateTime);
 
-	return `${date.toLocaleDateString(locale)} ${date.toLocaleTimeString(
-		locale,
-		{hour: 'numeric', minute: '2-digit'}
-	)}`;
+	return `${toDateText(date)} ${toTimeText(date)}`;
 }

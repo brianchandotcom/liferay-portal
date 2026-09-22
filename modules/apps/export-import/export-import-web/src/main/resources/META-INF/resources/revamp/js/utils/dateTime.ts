@@ -161,6 +161,13 @@ export function toCanonicalTime(time: string, use12Hours: boolean): string {
 	return padHour(use12Hours ? to24HourTime(time) : time);
 }
 
+export function toDateText(
+	date: Date,
+	locale: string = Liferay.ThemeDisplay.getBCP47LanguageId()
+): string {
+	return date.toLocaleDateString(locale, {timeZone: 'UTC'});
+}
+
 export function toDateTimeParts(dateTime: string): DateTimeParts {
 	const [date, time = '00:00'] = dateTime.split(' ');
 
@@ -186,12 +193,6 @@ export function toDisplayDateTime(
 	return `${displayDate} ${use12Hours ? to12HourTime(timeText) : timeText}`;
 }
 
-export function toLocalDate(dateTime: string): Date {
-	const {day, hour, minute, month, year} = toDateTimeParts(dateTime);
-
-	return new Date(year, month - 1, day, hour, minute);
-}
-
 export function toStorageDateTime(
 	dateTime: string,
 	dateFormat: string,
@@ -212,6 +213,23 @@ export function toTimeParts(time: string): {hour: number; minute: number} {
 	const [hour, minute] = time.split(':').map(Number);
 
 	return {hour, minute};
+}
+
+export function toTimeText(
+	date: Date,
+	locale: string = Liferay.ThemeDisplay.getBCP47LanguageId()
+): string {
+	return date.toLocaleTimeString(locale, {
+		hour: 'numeric',
+		minute: '2-digit',
+		timeZone: 'UTC',
+	});
+}
+
+export function toWallClockDate(dateTime: string): Date {
+	const {day, hour, minute, month, year} = toDateTimeParts(dateTime);
+
+	return new Date(Date.UTC(year, month - 1, day, hour, minute));
 }
 
 export function toWallClockDateTime(

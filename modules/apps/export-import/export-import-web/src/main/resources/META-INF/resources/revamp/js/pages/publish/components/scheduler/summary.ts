@@ -8,8 +8,10 @@ import {sub} from 'frontend-js-web';
 import {
 	isCompleteDateTime,
 	isCompleteTime,
-	toLocalDate,
+	toDateText,
 	toTimeParts,
+	toTimeText,
+	toWallClockDate,
 	toZonedDate,
 } from '../../../../utils/dateTime';
 import {
@@ -33,7 +35,7 @@ function toRepeatDate(startDate: Date, repeatOnTime: string): Date {
 
 	const repeatDate = new Date(startDate);
 
-	repeatDate.setHours(hour, minute);
+	repeatDate.setUTCHours(hour, minute);
 
 	return repeatDate;
 }
@@ -287,7 +289,7 @@ export function getScheduleSummary(
 		return null;
 	}
 
-	const startDate = toLocalDate(scheduleValues.startDateTime);
+	const startDate = toWallClockDate(scheduleValues.startDateTime);
 
 	if (
 		toZonedDate(
@@ -300,12 +302,9 @@ export function getScheduleSummary(
 
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
-	const startDateText = startDate.toLocaleDateString(locale);
+	const startDateText = toDateText(startDate, locale);
 
-	const startTimeText = startDate.toLocaleTimeString(locale, {
-		hour: 'numeric',
-		minute: '2-digit',
-	});
+	const startTimeText = toTimeText(startDate, locale);
 
 	if (scheduleValues.unit === IntervalUnit.Never) {
 		return sub(
@@ -317,24 +316,10 @@ export function getScheduleSummary(
 		);
 	}
 
-	const repeatDate =
-		isRepeatingUnit(scheduleValues.unit) &&
-		!scheduleValues.repeatOnTimeSynced &&
-		isCompleteTime(scheduleValues.repeatOnTime)
-			? toRepeatDate(startDate, scheduleValues.repeatOnTime)
-			: null;
-
-	const timeText = repeatDate
-		? repeatDate.toLocaleTimeString(locale, {
-				hour: 'numeric',
-				minute: '2-digit',
-			})
-		: startTimeText;
-
 	const endDate =
 		hasEndDate(scheduleValues) &&
 		isCompleteDateTime(scheduleValues.endDateTime)
-			? toLocalDate(scheduleValues.endDateTime)
+			? toWallClockDate(scheduleValues.endDateTime)
 			: null;
 
 	if (scheduleValues.unit === IntervalUnit.Custom) {
@@ -344,21 +329,29 @@ export function getScheduleSummary(
 						'the-process-starts-on-x-at-x-and-ends-on-x-at-x'
 					),
 					startDateText,
-					timeText,
-					endDate.toLocaleDateString(locale),
-					endDate.toLocaleTimeString(locale, {
-						hour: 'numeric',
-						minute: '2-digit',
-					})
+					startTimeText,
+					toDateText(endDate, locale),
+					toTimeText(endDate, locale)
 				)
 			: sub(
 					Liferay.Language.get(
 						'the-process-starts-on-x-at-x-and-never-ends'
 					),
 					startDateText,
-					timeText
+					startTimeText
 				);
 	}
+
+	const repeatDate =
+		isRepeatingUnit(scheduleValues.unit) &&
+		!scheduleValues.repeatOnTimeSynced &&
+		isCompleteTime(scheduleValues.repeatOnTime)
+			? toRepeatDate(startDate, scheduleValues.repeatOnTime)
+			: null;
+
+	const timeText = repeatDate
+		? toTimeText(repeatDate, locale)
+		: startTimeText;
 
 	const activeFromText = endDate
 		? sub(
@@ -367,11 +360,8 @@ export function getScheduleSummary(
 				),
 				startDateText,
 				startTimeText,
-				endDate.toLocaleDateString(locale),
-				endDate.toLocaleTimeString(locale, {
-					hour: 'numeric',
-					minute: '2-digit',
-				})
+				toDateText(endDate, locale),
+				toTimeText(endDate, locale)
 			)
 		: sub(
 				Liferay.Language.get(

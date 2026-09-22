@@ -46,6 +46,7 @@ const DEFAULT_PROPS = {
 		pageSize: 20,
 		privateLayoutsAvailable: false,
 	},
+	processesBackURL: '/some/back/url?tab=processes',
 	publishPreviewAPIURL:
 		'/o/export-import/v1.0/sites/site-erc/publish-preview',
 	publishProcessAPIURL:
@@ -132,7 +133,7 @@ describe('NewPublish', () => {
 		mockAPIRoutes();
 	});
 
-	it('publishes immediately and navigates back', async () => {
+	it('publishes immediately and navigates to processes', async () => {
 		renderComponent();
 
 		await fillRequiredFields();
@@ -154,7 +155,7 @@ describe('NewPublish', () => {
 		expect(body.requestPortletDataHandlers.length).toBeGreaterThan(0);
 
 		expect(Liferay.Util.navigate).toHaveBeenCalledWith(
-			DEFAULT_PROPS.backURL
+			DEFAULT_PROPS.processesBackURL
 		);
 	});
 
@@ -615,6 +616,30 @@ describe('NewPublish', () => {
 		);
 		expect(Liferay.Util.navigate).toHaveBeenCalledWith(
 			DEFAULT_PROPS.scheduledBackURL
+		);
+	});
+
+	it('navigates to processes when an edited scheduled process is switched to publish now', async () => {
+		renderComponent({
+			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,
+		});
+
+		await screen.findByRole('textbox', {name: /^name/i});
+		await screen.findByText('loaded');
+
+		await user.click(screen.getByRole('radio', {name: /publish-now/}));
+
+		await user.click(screen.getByRole('button', {name: /-to-live/i}));
+
+		await waitFor(() => {
+			expect(getUnscheduleCall()).toBeDefined();
+		});
+
+		expect(String(getUnscheduleCall()![0])).toContain(
+			String(SCHEDULED_PUBLISH_PROCESS.id)
+		);
+		expect(Liferay.Util.navigate).toHaveBeenCalledWith(
+			DEFAULT_PROPS.processesBackURL
 		);
 	});
 

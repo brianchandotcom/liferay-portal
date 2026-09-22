@@ -60,6 +60,7 @@ export function NewPublish({
 	lastPublishDate,
 	lookAndFeelEnabled = false,
 	pageTreeModalConfiguration,
+	processesBackURL,
 	publishPreviewAPIURL,
 	publishProcessAPIURL,
 	scheduledBackURL,
@@ -74,6 +75,7 @@ export function NewPublish({
 	lastPublishDate?: string;
 	lookAndFeelEnabled?: boolean;
 	pageTreeModalConfiguration: PageTreeModalConfiguration;
+	processesBackURL: string;
 	publishPreviewAPIURL: string;
 	publishProcessAPIURL: string;
 	scheduledBackURL: string;
@@ -270,7 +272,9 @@ export function NewPublish({
 					}
 				}
 
-				Liferay.Util.navigate(scheduled ? scheduledBackURL : backURL);
+				Liferay.Util.navigate(
+					scheduled ? scheduledBackURL : processesBackURL
+				);
 			}}
 			validate={(values: FormikValues) => {
 				const errors = getProcessFormErrors(values);

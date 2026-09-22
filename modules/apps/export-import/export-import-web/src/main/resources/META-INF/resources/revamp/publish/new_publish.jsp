@@ -26,6 +26,8 @@ String backURL = ParamUtil.getString(request, "backURL", themeDisplay.getURLCurr
 
 portletDisplay.setURLBack(backURL);
 
+String tabs1ParameterName = liferayPortletResponse.getNamespace() + "tabs1";
+
 long scheduledPublishProcessId = ParamUtil.getLong(request, "scheduledPublishProcessId");
 
 if (liveGroup == null) {
@@ -67,11 +69,13 @@ renderResponse.setTitle(publishProcessDisplayContext.getTitle(scheduledPublishPr
 					"privateLayoutsAvailable", publishSourceGroup.isPrivateLayoutsEnabled() && publishSourceGroup.hasPrivateLayouts()
 				).build()
 			).put(
+				"processesBackURL", HttpComponentsUtil.setParameter(backURL, tabs1ParameterName, "processes")
+			).put(
 				"publishPreviewAPIURL", publishProcessDisplayContext.getPublishPreviewAPIURL()
 			).put(
 				"publishProcessAPIURL", publishProcessDisplayContext.getPublishProcessAPIURL()
 			).put(
-				"scheduledBackURL", HttpComponentsUtil.setParameter(backURL, liferayPortletResponse.getNamespace() + "tabs1", "scheduled")
+				"scheduledBackURL", HttpComponentsUtil.setParameter(backURL, tabs1ParameterName, "scheduled")
 			).put(
 				"scheduledPublishProcessAPIURL", publishProcessDisplayContext.getScheduledPublishProcessAPIURL()
 			).put(

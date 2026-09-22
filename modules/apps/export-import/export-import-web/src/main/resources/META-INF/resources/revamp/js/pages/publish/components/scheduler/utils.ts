@@ -176,6 +176,7 @@ export function getInitialScheduleValues(
 		repeatOnTimeSynced: true,
 		repeatType: RepeatType.DayOfMonth,
 		startDateTime: '',
+		storedCronExpression: '',
 		timeZoneId,
 		unit: IntervalUnit.Never,
 		weekday: 2,

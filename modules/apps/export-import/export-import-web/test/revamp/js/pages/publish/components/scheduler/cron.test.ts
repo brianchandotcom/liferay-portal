@@ -336,6 +336,7 @@ describe('toCronExpression', () => {
 describe('fromCronExpression', () => {
 	it('parses a one time cron', () => {
 		expect(decode('0 30 15 20 7 ? 2026')).toEqual({
+			storedCronExpression: '0 30 15 20 7 ? 2026',
 			unit: IntervalUnit.Never,
 		});
 	});
@@ -344,12 +345,14 @@ describe('fromCronExpression', () => {
 		expect(decode('0 30 15 * * ? *')).toEqual({
 			monthDays: [],
 			months: [],
+			storedCronExpression: '0 30 15 * * ? *',
 			unit: IntervalUnit.Day,
 		});
 	});
 
 	it('parses a weekly cron with the selected days', () => {
 		expect(decode('0 30 15 ? * MON,WED *')).toEqual({
+			storedCronExpression: '0 30 15 ? * MON,WED *',
 			unit: IntervalUnit.Week,
 			weekdays: [2, 4],
 		});
@@ -357,11 +360,13 @@ describe('fromCronExpression', () => {
 
 	it('expands the day step of a legacy weekly cron', () => {
 		expect(decode('0 30 15 ? * MON,WED/2 *')).toEqual({
+			storedCronExpression: '0 30 15 ? * MON,WED/2 *',
 			unit: IntervalUnit.Week,
 			weekdays: [2, 4, 6],
 		});
 
 		expect(decode('0 30 15 ? * MON/1 *')).toEqual({
+			storedCronExpression: '0 30 15 ? * MON/1 *',
 			unit: IntervalUnit.Week,
 			weekdays: [2, 3, 4, 5, 6, 7],
 		});
@@ -369,6 +374,7 @@ describe('fromCronExpression', () => {
 
 	it('expands ranges and names', () => {
 		expect(decode('0 30 15 ? * MON-FRI *')).toEqual({
+			storedCronExpression: '0 30 15 ? * MON-FRI *',
 			unit: IntervalUnit.Week,
 			weekdays: [2, 3, 4, 5, 6],
 		});
@@ -377,6 +383,7 @@ describe('fromCronExpression', () => {
 			monthDays: [1, 2, 3],
 			months: [1, 4],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 1-3 JAN,APR ? *',
 			unit: IntervalUnit.Month,
 		});
 	});
@@ -386,6 +393,7 @@ describe('fromCronExpression', () => {
 			monthDays: [15],
 			months: [],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 15 * ? *',
 			unit: IntervalUnit.Month,
 		});
 
@@ -393,6 +401,7 @@ describe('fromCronExpression', () => {
 			monthDays: [1, 15],
 			months: [1, 4, 7, 10],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 1,15 1,4,7,10 ? *',
 			unit: IntervalUnit.Month,
 		});
 	});
@@ -402,6 +411,7 @@ describe('fromCronExpression', () => {
 			monthDays: [15],
 			months: [1, 4, 7, 10],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 15 1/3 ? *',
 			unit: IntervalUnit.Month,
 		});
 
@@ -409,6 +419,7 @@ describe('fromCronExpression', () => {
 			monthDays: [15],
 			months: [1, 6, 11],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 15 1/5 ? *',
 			unit: IntervalUnit.Month,
 		});
 
@@ -416,6 +427,7 @@ describe('fromCronExpression', () => {
 			monthDays: [15],
 			months: [1],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 15 1/12 ? *',
 			unit: IntervalUnit.Month,
 		});
 	});
@@ -425,6 +437,7 @@ describe('fromCronExpression', () => {
 			monthDays: [1, 11, 21, 31],
 			months: [],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 1/10 * ? *',
 			unit: IntervalUnit.Month,
 		});
 	});
@@ -433,6 +446,7 @@ describe('fromCronExpression', () => {
 		expect(decode('0 30 15 ? * THU#4 *')).toEqual({
 			months: [],
 			repeatType: RepeatType.DayOfWeek,
+			storedCronExpression: '0 30 15 ? * THU#4 *',
 			unit: IntervalUnit.Month,
 			weekday: 5,
 			weekdayOrdinal: '4',
@@ -442,6 +456,7 @@ describe('fromCronExpression', () => {
 		expect(decode('0 30 15 ? 2,5,8,11 FRIL *')).toEqual({
 			months: [2, 5, 8, 11],
 			repeatType: RepeatType.DayOfWeek,
+			storedCronExpression: '0 30 15 ? 2,5,8,11 FRIL *',
 			unit: IntervalUnit.Month,
 			weekday: 6,
 			weekdayOrdinal: LAST_WEEKDAY_ORDINAL,
@@ -454,6 +469,7 @@ describe('fromCronExpression', () => {
 			monthDays: [4],
 			months: [7],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 4 7 ? 2026/1',
 			unit: IntervalUnit.Year,
 			yearInterval: 1,
 		});
@@ -463,6 +479,7 @@ describe('fromCronExpression', () => {
 		expect(decode('0 30 15 ? 7 MON#1 2026/1')).toEqual({
 			months: [7],
 			repeatType: RepeatType.DayOfWeek,
+			storedCronExpression: '0 30 15 ? 7 MON#1 2026/1',
 			unit: IntervalUnit.Year,
 			weekday: 2,
 			weekdayOrdinal: '1',
@@ -471,9 +488,14 @@ describe('fromCronExpression', () => {
 	});
 
 	it('parses the day of week names case insensitively', () => {
-		expect(decode('0 30 15 ? * monl *')).toEqual(
-			decode('0 30 15 ? * MONL *')
-		);
+		const {storedCronExpression: lowercaseCronExpression, ...lowercase} =
+			decode('0 30 15 ? * monl *');
+		const {storedCronExpression: uppercaseCronExpression, ...uppercase} =
+			decode('0 30 15 ? * MONL *');
+
+		expect(lowercase).toEqual(uppercase);
+		expect(lowercaseCronExpression).toBe('0 30 15 ? * monl *');
+		expect(uppercaseCronExpression).toBe('0 30 15 ? * MONL *');
 	});
 
 	it('keeps an expression the form cannot represent as a custom one', () => {
@@ -515,6 +537,7 @@ describe('fromCronExpression', () => {
 			repeatOnTime: '09:45',
 			repeatOnTimeSynced: false,
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 45 09 15 * ? *',
 			unit: IntervalUnit.Month,
 		});
 	});
@@ -526,6 +549,7 @@ describe('fromCronExpression', () => {
 			repeatOnTime: '09:45',
 			repeatOnTimeSynced: false,
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '00 45 09 15 * ? *',
 			unit: IntervalUnit.Month,
 		});
 	});
@@ -535,6 +559,7 @@ describe('fromCronExpression', () => {
 			monthDays: [15],
 			months: [],
 			repeatType: RepeatType.DayOfMonth,
+			storedCronExpression: '0 30 15 15 * ? *',
 			unit: IntervalUnit.Month,
 		});
 	});
@@ -543,6 +568,7 @@ describe('fromCronExpression', () => {
 		const cronExpression = '0 0 0 ? * MON,FRI *';
 
 		expect(fromCronExpression(cronExpression, '2026-07-20 00:00')).toEqual({
+			storedCronExpression: cronExpression,
 			unit: IntervalUnit.Week,
 			weekdays: [2, 6],
 		});
@@ -550,6 +576,7 @@ describe('fromCronExpression', () => {
 		expect(fromCronExpression(cronExpression, '2026-07-20 15:30')).toEqual({
 			repeatOnTime: '00:00',
 			repeatOnTimeSynced: false,
+			storedCronExpression: cronExpression,
 			unit: IntervalUnit.Week,
 			weekdays: [2, 6],
 		});

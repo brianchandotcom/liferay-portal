@@ -18,6 +18,7 @@ import {FieldRadio} from '../../../../components/forms/FieldRadio';
 import FieldSelectWithOption from '../../../../components/forms/FieldSelectWithOption';
 import FieldText from '../../../../components/forms/FieldText';
 import FieldTimePicker from '../../../../components/forms/FieldTimePicker';
+import {toCustomCronExpression} from './cron';
 import {getScheduleSummary} from './summary';
 import {
 	IntervalUnit,
@@ -243,6 +244,14 @@ export default function PublishScheduler({
 													months: [yearMonth],
 												}
 											: {months: []}),
+										...(unit === IntervalUnit.Custom
+											? {
+													cronExpression:
+														toCustomCronExpression(
+															value
+														),
+												}
+											: {}),
 										unit,
 										yearInterval: 1,
 									});

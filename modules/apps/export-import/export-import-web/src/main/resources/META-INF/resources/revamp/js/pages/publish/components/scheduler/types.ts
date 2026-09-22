@@ -36,6 +36,7 @@ export type ScheduleValues = {
 	repeatOnTimeSynced: boolean;
 	repeatType: RepeatType;
 	startDateTime: string;
+	storedCronExpression: string;
 	timeZoneId: string;
 	unit: IntervalUnit;
 	weekday: number;

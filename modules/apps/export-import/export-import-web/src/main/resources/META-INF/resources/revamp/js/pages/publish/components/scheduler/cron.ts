@@ -278,7 +278,28 @@ export function fromCronExpression(
 		return {cronExpression, unit: IntervalUnit.Custom};
 	}
 
-	return scheduleValues;
+	return {...scheduleValues, storedCronExpression: cronExpression};
+}
+
+export function toCustomCronExpression(scheduleValues: ScheduleValues): string {
+	if (
+		scheduleValues.cronExpression ||
+		!isCompleteDateTime(scheduleValues.startDateTime) ||
+		!scheduleValues.storedCronExpression
+	) {
+		return scheduleValues.cronExpression;
+	}
+
+	const cronExpression = toCronExpression(scheduleValues);
+
+	if (
+		toCanonicalCronExpression(cronExpression) ===
+		toCanonicalCronExpression(scheduleValues.storedCronExpression)
+	) {
+		return scheduleValues.storedCronExpression;
+	}
+
+	return cronExpression;
 }
 
 function toRepeatOnTimeFields(

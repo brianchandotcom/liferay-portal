@@ -538,6 +538,62 @@ describe('NewPublish', () => {
 		expect(screen.getByLabelText(/repeat-at/)).toBeEnabled();
 	});
 
+	it('shows the original cron when a reclassified process is switched back to custom', async () => {
+		mockAPIRoutes({
+			scheduledPublishProcess: {
+				...SCHEDULED_PUBLISH_PROCESS,
+				cronExpression: '0 0 0 ? * MON,FRI *',
+				scheduleStartDate: FUTURE_DATE.toISOString(),
+			},
+		});
+
+		renderComponent({
+			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,
+		});
+
+		await screen.findByRole('textbox', {name: /^name/i});
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'custom'
+		);
+
+		expect(
+			screen.getByRole('textbox', {name: /cron-expression/})
+		).toHaveValue('0 0 0 ? * MON,FRI *');
+	});
+
+	it('rebuilds the cron of a reclassified process edited before switching to custom', async () => {
+		mockAPIRoutes({
+			scheduledPublishProcess: {
+				...SCHEDULED_PUBLISH_PROCESS,
+				cronExpression: '0 0 0 ? * MON,FRI *',
+				scheduleStartDate: FUTURE_DATE.toISOString(),
+			},
+		});
+
+		renderComponent({
+			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,
+		});
+
+		await screen.findByRole('textbox', {name: /^name/i});
+
+		await user.clear(screen.getByLabelText(/repeat-at/));
+
+		await user.click(screen.getByLabelText(/repeat-at/));
+
+		await user.paste('03:15 PM');
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'custom'
+		);
+
+		expect(
+			screen.getByRole('textbox', {name: /cron-expression/})
+		).toHaveValue('0 15 15 ? * MON,FRI *');
+	});
+
 	it('replaces the scheduled process on submit when editing', async () => {
 		renderComponent({
 			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,

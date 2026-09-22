@@ -601,6 +601,24 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "gotemplating[^:]*: backup-restore-release-cron-workflow"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "kind: CronWorkflow\\s+metadata:\\s+labels:\\s+\\{\\{- \\$tags \\| toYaml \\| nindent 20 \\}\\}\\s+name: backup-restore-release-cron-workflow\\s+namespace: \\{\\{ \\$namespace \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "concurrencyPolicy: Forbid\\s+schedules:\\s+-   0 \\* \\* \\* \\*"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "clusterScope: true\\s+name: backup-restore-cluster-workflow-template\\s+template: release-retained-data-planes"
+        it: Releases retained data planes hourly from a CronWorkflow the composition owns
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: R/%sT%s:00\+00:00/%s
             -   documentIndex: 0
                 matchRegex:

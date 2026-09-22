@@ -366,6 +366,14 @@ spec:
                         name: wait-for-database
                         template: wait-for-infrastructure
             name: main
+        -   name: release-retained-data-planes
+            script:
+                command: [sh]
+                image: "{{ $helmKubectl }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+                source: |-
+                    {{- tpl (.Files.Get "scripts/release-retained-data-planes.sh") . | nindent 20 }}
         -   name: reset-restore-phase
             script:
                 command: [sh]

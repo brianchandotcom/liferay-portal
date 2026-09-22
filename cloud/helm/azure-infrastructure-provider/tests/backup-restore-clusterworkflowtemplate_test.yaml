@@ -174,29 +174,49 @@ tests:
     -   asserts:
             -   equal:
                     path: spec.templates[10].name
-                    value: reset-restore-phase
+                    value: release-retained-data-planes
+            -   equal:
+                    path: spec.templates[10].script.image
+                    value: dtzar/helm-kubectl:4.1.1
+            -   matchRegex:
+                    path: spec.templates[10].script.source
+                    pattern: restore_phase}" != "none"
+            -   matchRegex:
+                    path: spec.templates[10].script.source
+                    pattern: "[(][.]spec[.]retainedDataPlanes // [{][}][)] [|] with_entries[(]select[(][.]value [|] fromdateiso8601 < now[)][)] [|] with_entries[(][.]value = null[)]"
             -   matchRegex:
                     path: spec.templates[10].script.source
                     pattern: --field-manager=liferay-backup-restore
             -   matchRegex:
                     path: spec.templates[10].script.source
+                    pattern: retainedDataPlanes.*expired_data_planes}}}
+        it: Releases retained data planes only after their deadline under the restore field manager
+    -   asserts:
+            -   equal:
+                    path: spec.templates[11].name
+                    value: reset-restore-phase
+            -   matchRegex:
+                    path: spec.templates[11].script.source
+                    pattern: --field-manager=liferay-backup-restore
+            -   matchRegex:
+                    path: spec.templates[11].script.source
                     pattern: "\"restorePhase\":\"none\""
         it: Resets the restore phase under the same field manager on exit
     -   asserts:
             -   equal:
-                    path: spec.templates[13].name
+                    path: spec.templates[14].name
                     value: restore-document-library-blob
             -   matchRegex:
-                    path: spec.templates[13].script.source
+                    path: spec.templates[14].script.source
                     pattern: --target-resource-id
             -   notMatchRegex:
-                    path: spec.templates[13].script.source
+                    path: spec.templates[14].script.source
                     pattern: --backup-instance-id
             -   matchRegex:
-                    path: spec.templates[13].script.source
+                    path: spec.templates[14].script.source
                     pattern: az dataprotection job show
             -   matchRegex:
-                    path: spec.templates[13].script.source
+                    path: spec.templates[14].script.source
                     pattern: --query properties.status
         it: Restores to the alternate location and gates on the job status
     -   asserts:
@@ -236,10 +256,10 @@ tests:
                     path: spec.templates[6].activeDeadlineSeconds
                     value: 7200
             -   equal:
-                    path: spec.templates[13].activeDeadlineSeconds
+                    path: spec.templates[14].activeDeadlineSeconds
                     value: 7200
             -   equal:
-                    path: spec.templates[17].activeDeadlineSeconds
+                    path: spec.templates[18].activeDeadlineSeconds
                     value: 3600
         it: Sets every step timeout well above the measured restore duration
     -   asserts:
@@ -250,37 +270,37 @@ tests:
                     path: spec.templates[9].dag.tasks[9].depends
                     value: promote-inactive-data-plane
             -   equal:
-                    path: spec.templates[16].activeDeadlineSeconds
+                    path: spec.templates[17].activeDeadlineSeconds
                     value: 600
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: backup-instance resume-protection
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: backup-instance suspend-backup
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: promoted_state.. == .BackupsSuspended
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: demoted_state.. == .ProtectionConfigured
             -   notMatchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: stop-protection
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: _wait_for_protection_state
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: (?s)resume-protection.*?--no-wait
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: (?s)suspend-backup.*?--no-wait
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: (?s)function main \{.*?function _wait_for_protection_state \{
             -   matchRegex:
-                    path: spec.templates[16].script.source
+                    path: spec.templates[17].script.source
                     pattern: (?s)function main \{.*?\nmain
         it: Suspends backups on the demoted plane and resumes them on the promoted one
     -   asserts:

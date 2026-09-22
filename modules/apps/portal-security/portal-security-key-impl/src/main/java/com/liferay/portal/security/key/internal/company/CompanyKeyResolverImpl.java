@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -93,54 +92,9 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 			return key;
 		}
 
-		WrappedCompanyKey wrappedCompanyKey = WrappedCompanyKey.parse(
-			companyId, wrappedKey);
-
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		CountDownLatch currentCountDownLatch =
-			_companyKeyCountDownLatches.putIfAbsent(companyId, countDownLatch);
-
-		if (currentCountDownLatch == null) {
-			try {
-				return _decryptKey(companyId, wrappedCompanyKey, wrappedKey);
-			}
-			finally {
-				_companyKeyCountDownLatches.remove(companyId, countDownLatch);
-
-				countDownLatch.countDown();
-			}
-		}
-
-		try {
-			if (!currentCountDownLatch.await(
-					_AWAIT_DECRYPT_TIMEOUT, TimeUnit.MILLISECONDS)) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Timed out waiting for the wrapped key for company " +
-							companyId);
-				}
-			}
-		}
-		catch (InterruptedException interruptedException) {
-			Thread currentThread = Thread.currentThread();
-
-			currentThread.interrupt();
-
-			throw new CompanyKeyResolutionException(
-				"Interrupted while waiting for the wrapped key for company " +
-					companyId,
-				interruptedException);
-		}
-
-		key = _getCachedKey(companyId, wrappedKey);
-
-		if (key != null) {
-			return key;
-		}
-
-		return _decryptKey(companyId, wrappedCompanyKey, wrappedKey);
+		return _decryptKey(
+			companyId, WrappedCompanyKey.parse(companyId, wrappedKey),
+			wrappedKey);
 	}
 
 	@Override
@@ -464,14 +418,10 @@ public class CompanyKeyResolverImpl implements CompanyKeyResolver {
 		}
 	}
 
-	private static final long _AWAIT_DECRYPT_TIMEOUT = 10000;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyKeyResolverImpl.class);
 
 	private final Map<Long, CompanyKeyCacheEntry> _companyKeyCacheEntries =
-		new ConcurrentHashMap<>();
-	private final Map<Long, CountDownLatch> _companyKeyCountDownLatches =
 		new ConcurrentHashMap<>();
 
 	@Reference

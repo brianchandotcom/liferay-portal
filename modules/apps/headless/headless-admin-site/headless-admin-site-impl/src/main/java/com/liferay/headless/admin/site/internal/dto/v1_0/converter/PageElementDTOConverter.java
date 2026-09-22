@@ -255,7 +255,10 @@ public class PageElementDTOConverter
 				(RowStyledLayoutStructureItem)layoutStructureItem);
 		}
 
-		throw new UnsupportedOperationException();
+		String itemType = layoutStructureItem.getItemType();
+
+		throw new IllegalArgumentException(
+			"The page element type \"" + itemType + "\" is not supported");
 	}
 
 	private PageElement[] _getPageElements(

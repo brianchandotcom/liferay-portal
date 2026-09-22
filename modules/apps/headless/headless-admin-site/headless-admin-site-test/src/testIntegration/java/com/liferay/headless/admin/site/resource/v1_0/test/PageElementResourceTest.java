@@ -288,6 +288,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testGetSitePageSpecificationPageExperiencePageElementWithMismatchedPageSpecification();
 		_testGetSitePageSpecificationPageExperiencePageElementWithNonexistentPageExperience();
 		_testGetSitePageSpecificationPageExperiencePageElementWithOrphanedFragmentEntryLink();
+		_testGetSitePageSpecificationPageExperiencePageElementWithPageRoot();
 	}
 
 	@Override
@@ -2426,6 +2427,31 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						_draftLayout.getExternalReferenceCode(),
 						segmentsExperience.getExternalReferenceCode(),
 						pageElement.getExternalReferenceCode()));
+	}
+
+	private void _testGetSitePageSpecificationPageExperiencePageElementWithPageRoot()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
+		String mainItemId = layoutStructure.getMainItemId();
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"NOT_FOUND",
+			"No page element with the external reference code \"" + mainItemId +
+				"\" exists in this page experience",
+			() ->
+				pageElementResource.
+					getSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						mainItemId));
 	}
 
 	private void _testMissingOptionalReference(

@@ -14,6 +14,7 @@ import {
 	ClientExtensionDefinition,
 	ClientExtensionResolution,
 	deepClone,
+	escapeHTML,
 	fetch,
 	getObjectValueFromPath,
 	loadClientExtensions,
@@ -1440,8 +1441,8 @@ const FrontendDataSetContent = ({
 		logError(apiErrorMessage);
 
 		openToast({
-			message: apiErrorMessage,
-			title: `${Liferay.Language.get('error')} ${statusCode}`,
+			message: escapeHTML(apiErrorMessage),
+			title: escapeHTML(`${Liferay.Language.get('error')} ${statusCode}`),
 			type: 'danger',
 		});
 	};
@@ -2003,7 +2004,7 @@ const FrontendDataSetContent = ({
 			.catch((error) => {
 				logError(error);
 				openToast({
-					message: error.message,
+					message: escapeHTML(String(error.message ?? '')),
 					type: 'danger',
 				});
 
@@ -2058,7 +2059,7 @@ const FrontendDataSetContent = ({
 			.catch((error) => {
 				logError(error);
 				openToast({
-					message: error.message,
+					message: escapeHTML(String(error.message ?? '')),
 					type: 'danger',
 				});
 

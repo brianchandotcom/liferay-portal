@@ -31,6 +31,8 @@ spec:
                         name: restore-point-in-time
                     -   default: "null"
                         name: restore-source-data-plane
+                    -   default: "{}"
+                        name: retained-data-planes
                     -   name: target-active-data-plane
             name: apply-infrastructure
             outputs:
@@ -54,6 +56,7 @@ spec:
                             restoreSourceDataPlane: {{ "{{" }}inputs.parameters.restore-source-data-plane}}
                         restoreGeneration: {{ "{{" }}inputs.parameters.restore-generation}}
                         restorePhase: {{ "{{" }}inputs.parameters.restore-phase}}
+                        retainedDataPlanes: {{ "{{" }}inputs.parameters.retained-data-planes}}
                         targetActiveDataPlane: {{ "{{" }}inputs.parameters.target-active-data-plane}}
                 mergeStrategy: merge
         -   inputs:
@@ -66,6 +69,8 @@ spec:
                         name: restore-point-in-time
                     -   default: "null"
                         name: restore-source-data-plane
+                    -   default: "{}"
+                        name: retained-data-planes
                     -   name: target-active-data-plane
             name: apply-wait-infrastructure
             steps:
@@ -81,6 +86,8 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.restore-point-in-time}}"
                                 -   name: restore-source-data-plane
                                     value: "{{ "{{" }}inputs.parameters.restore-source-data-plane}}"
+                                -   name: retained-data-planes
+                                    value: "{{ "{{" }}inputs.parameters.retained-data-planes}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
                         name: apply-infrastructure
@@ -94,6 +101,8 @@ spec:
         -   inputs:
                 parameters:
                     -   name: liferay-infrastructure-name
+                    -   default: "{}"
+                        name: retained-data-planes
                     -   name: target-active-data-plane
             name: clean-up-infrastructure
             steps:
@@ -103,6 +112,8 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: none
+                                -   name: retained-data-planes
+                                    value: "{{ "{{" }}inputs.parameters.retained-data-planes}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
                         name: apply-wait-infrastructure
@@ -143,6 +154,9 @@ spec:
                     -   name: data-inactive
                         valueFrom:
                             path: /tmp/data-plane-inactive.txt
+                    -   name: data-plane-key-active
+                        valueFrom:
+                            path: /tmp/data-plane-key-active.txt
                     -   name: database-candidates
                         valueFrom:
                             path: /tmp/database-candidates.txt
@@ -158,6 +172,9 @@ spec:
                     -   name: restore-generation
                         valueFrom:
                             path: /tmp/restore-generation.txt
+                    -   name: retained-data-plane-release
+                        valueFrom:
+                            path: /tmp/retained-data-plane-release.txt
                     -   name: storage-account-id-active
                         valueFrom:
                             path: /tmp/storage-account-id-active.txt
@@ -222,6 +239,22 @@ spec:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
                     {{- tpl (.Files.Get "scripts/get-recovery-point-time.sh") . | nindent 20 }}
+        -   inputs:
+                parameters:
+                    -   name: data-plane-key
+            name: get-retained-data-plane
+            outputs:
+                parameters:
+                    -   name: retained-data-plane
+                        valueFrom:
+                            path: /tmp/retained-data-plane.txt
+            script:
+                command: [sh]
+                image: "{{ $helmKubectl }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+                source: |-
+                    {{- tpl (.Files.Get "scripts/get-retained-data-plane.sh") . | nindent 20 }}
         -   container:
                 args:
                     -   rollout
@@ -279,13 +312,22 @@ spec:
                         template: get-recovery-point-time
                     -   arguments:
                             parameters:
+                                -   name: data-plane-key
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-plane-key-active}}"
+                        depends: restore-document-library && wait-for-database
+                        name: get-retained-data-plane
+                        template: get-retained-data-plane
+                    -   arguments:
+                            parameters:
                                 -   name: liferay-infrastructure-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: promoting
+                                -   name: retained-data-planes
+                                    value: "{{ "{{" }}tasks.get-retained-data-plane.outputs.parameters.retained-data-plane}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
-                        depends: restore-document-library && wait-for-database
+                        depends: get-retained-data-plane
                         name: promote-inactive-data-plane
                         template: apply-wait-infrastructure
                     -   arguments:
@@ -329,6 +371,8 @@ spec:
                             parameters:
                                 -   name: liferay-infrastructure-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
+                                -   name: retained-data-planes
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.retained-data-plane-release}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}"
                         depends: "(!provision-inactive-data-plane.Omitted && !provision-inactive-data-plane.Skipped || !restore-document-library.Omitted && !restore-document-library.Skipped || !wait-for-database.Omitted && !wait-for-database.Skipped) && !promote-inactive-data-plane.Succeeded"
@@ -340,6 +384,8 @@ spec:
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
                                 -   name: liferay-workload-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-workload-name}}"
+                                -   name: retained-data-planes
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.retained-data-plane-release}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}"
                         depends: "promote-inactive-data-plane.Succeeded && !restart-liferay.Succeeded"
@@ -458,6 +504,8 @@ spec:
                 parameters:
                     -   name: liferay-infrastructure-name
                     -   name: liferay-workload-name
+                    -   default: "{}"
+                        name: retained-data-planes
                     -   name: target-active-data-plane
             name: roll-back-restart
             steps:
@@ -467,6 +515,8 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: promoting
+                                -   name: retained-data-planes
+                                    value: "{{ "{{" }}inputs.parameters.retained-data-planes}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
                         name: apply-wait-infrastructure
@@ -481,6 +531,8 @@ spec:
                             parameters:
                                 -   name: liferay-infrastructure-name
                                     value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
+                                -   name: retained-data-planes
+                                    value: "{{ "{{" }}inputs.parameters.retained-data-planes}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
                         name: clean-up-infrastructure

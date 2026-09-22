@@ -69,7 +69,8 @@ public class PageElementDTOConverter
 		throws Exception {
 
 		if (dtoConverterContext == null) {
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(
+				"A DTO converter context is required");
 		}
 
 		LayoutStructure layoutStructure =
@@ -77,7 +78,9 @@ public class PageElementDTOConverter
 				LayoutStructure.class.getName());
 
 		if (layoutStructure == null) {
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(
+				"No layout structure attribute is set on the DTO converter " +
+					"context");
 		}
 
 		PageElementDefinition pageElementDefinition = _getPageElementDefinition(
@@ -243,7 +246,8 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_ROOT)) {
 
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(
+				"The page root is not a page element");
 		}
 
 		if (Objects.equals(
@@ -285,7 +289,9 @@ public class PageElementDTOConverter
 								"scopeGroupId");
 
 						if (scopeGroupId == null) {
-							throw new UnsupportedOperationException();
+							throw new UnsupportedOperationException(
+								"No scope group ID attribute is set on the " +
+									"DTO converter context");
 						}
 
 						return InfoFormUtil.getCollectionInfoForm(

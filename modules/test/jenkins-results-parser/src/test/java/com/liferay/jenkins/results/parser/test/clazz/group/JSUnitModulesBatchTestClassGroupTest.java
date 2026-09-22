@@ -116,6 +116,28 @@ public class JSUnitModulesBatchTestClassGroupTest
 	}
 
 	@Test
+	public void testGetTestCasePropertiesContent() throws Exception {
+		testEquals(_TEST_TASK_NAME, _getTestClassGroup(null));
+	}
+
+	@Test
+	public void testGetTestCasePropertiesContentWithTestFileIncludes()
+		throws Exception {
+
+		Properties jobProperties = new Properties();
+
+		jobProperties.setProperty(
+			"test.batch.test.file.includes[js-unit]", _GLOB_INCLUDES);
+
+		testEquals(
+			JenkinsResultsParserUtil.combine(
+				_TEST_TASK_NAME, "#", _MODULE_DIR_PATH,
+				"/src/content/main_view.test.tsx#", _MODULE_DIR_PATH,
+				"/src/content/side_view.test.tsx"),
+			_getTestClassGroup(jobProperties));
+	}
+
+	@Test
 	public void testSetTestClasses() throws Exception {
 		_testSetTestClasses(
 			null, _MODULE_DIR_PATH + "/src/content/main_view.test.tsx",
@@ -192,6 +214,30 @@ public class JSUnitModulesBatchTestClassGroupTest
 		return globsJSONArray.toList();
 	}
 
+	private String _getTestClassGroup(Properties jobProperties) {
+		JSUnitModulesBatchTestClassGroup jsUnitModulesBatchTestClassGroup =
+			_newJSUnitModulesBatchTestClassGroup(jobProperties);
+
+		List<SegmentTestClassGroup> segmentTestClassGroups =
+			jsUnitModulesBatchTestClassGroup.getSegmentTestClassGroups();
+
+		SegmentTestClassGroup segmentTestClassGroup =
+			segmentTestClassGroups.get(0);
+
+		String testCasePropertiesContent =
+			segmentTestClassGroup.getTestCasePropertiesContent();
+
+		String testClassGroupKey = "TEST_CLASS_GROUP_0=";
+
+		for (String line : testCasePropertiesContent.split("\n")) {
+			if (line.startsWith(testClassGroupKey)) {
+				return line.substring(testClassGroupKey.length());
+			}
+		}
+
+		return null;
+	}
+
 	private List<String> _getTestClassMethodNames(
 		BatchTestClassGroup batchTestClassGroup) {
 
@@ -246,6 +292,9 @@ public class JSUnitModulesBatchTestClassGroupTest
 
 	private static final String _MODULE_DIR_PATH =
 		"modules/apps/site/site-cms-site-initializer";
+
+	private static final String _TEST_TASK_NAME =
+		":apps:site:site-cms-site-initializer:packageRunTest";
 
 	private List<File> _jsUnitFiles;
 	private File _moduleDir;

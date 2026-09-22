@@ -374,6 +374,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPostSitePageSpecificationPageExperiencePageElementWithInvalidPageElementDefinition();
 		_testPostSitePageSpecificationPageExperiencePageElementWithNonexistentParentPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithNonexistentWidgetPermissionRole();
+		_testPostSitePageSpecificationPageExperiencePageElementWithUnsupportedErrorActionInteraction();
 		_testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithoutCollectionSettings();
 		_testPostSitePageSpecificationPageExperiencePageElementWithoutContextualMenuType();
@@ -2902,6 +2903,46 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					PortletIdCodec.encode(
 						JournalContentPortletKeys.JOURNAL_CONTENT, namespace)),
 				guestRole.getRoleId(), ActionKeys.VIEW));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementWithUnsupportedErrorActionInteraction()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			StringPool.BLANK, testGroup.getGroupId(),
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		PageElement pageElement = _getFragmentInstancePageElement(
+			PageElementsTestUtil.getBasicFragmentInstancePageElementDefinition(
+				null, Collections.emptyMap(),
+				new FragmentEditableElement[] {
+					FragmentEditableElementTestUtil.
+						getActionFragmentEditableElement(
+							FragmentEditableElementTestUtil.
+								getDisplayPageActionInteraction(),
+							null, "element-action1", null,
+							FragmentEditableElementTestUtil.
+								getTextFragmentInlineValue())
+				},
+				fragmentEntry, testGroup.getGroupId()),
+			RandomTestUtil.randomString());
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
+			"The error action interaction does not support the type " +
+				ActionInteraction.Type.DISPLAY_PAGE,
+			() ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement));
 	}
 
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement()

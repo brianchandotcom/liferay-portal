@@ -9,6 +9,24 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "range \\$retainedDataPlaneKey, \\$_ := \\$retainedDataPlanes \\}\\}\\s+\\{\\{- if not \\(has \\$retainedDataPlaneKey \\$renderedDataPlaneKeys\\) \\}\\}\\s+\\{\\{- \\$retainedDatabaseServerName := index \\$dataPlaneNames \\$retainedDataPlaneKey \"databaseServer\" \\}\\}\\s+---\\s+apiVersion: dbforpostgresql[^\\n]+\\s+kind: FlexibleServer"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "crossplane.io/external-name: \\{\\{ \\$retainedDatabaseServerName \\}\\}\\s+gotemplating[^:]*: database-retained-\\{\\{ \\$retainedDataPlaneKey \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "retainedDataPlane: \\{\\{ \\$retainedDataPlaneKey \\}\\}\\s+name: \\{\\{ \\$retainedDatabaseServerName \\}\\}-retained\\s+spec:\\s+forProvider:\\s+resourceGroupName: \\{\\{ \\$env.resourceGroupName \\}\\}\\s+managementPolicies: \\{\\{ list \"Delete\" \"Observe\" \\| toJson \\}\\}"
+            -   documentIndex: 0
+                notMatchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: retained-until
+        it: Adopts each retained server by name alone without managing its spec
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "composition-resource-name: backup-restore-role-binding"
             -   documentIndex: 0
                 matchRegex:
@@ -137,6 +155,16 @@ tests:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "principalId: \\{\\{ \\$backupRestoreIdentityPrincipalId \\}\\}\\s+principalType: ServicePrincipal\\s+roleDefinitionName: Reader\\s+scope: [^\\n]+Microsoft.Storage/storageAccounts/"
         it: Grants the restore identity read on each plane storage account
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "composition-resource-name: liferay-backup-restore-database-retained-\\{\\{ \\$retainedDataPlaneKey \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "roleDefinitionName: Reader\\s+scope: [^\\n]+Microsoft.DBforPostgreSQL/flexibleServers/\\{\\{ index \\$dataPlaneNames \\$retainedDataPlaneKey \"databaseServer\" \\}\\}"
+        it: Grants the restore identity read on each retained database server
     -   asserts:
             -   documentIndex: 0
                 matchRegex:
@@ -443,6 +471,24 @@ tests:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "or \\(eq \\$dataPlane \\$activeDataPlane\\) \\(has \\$dataPlane \\$observedBackupDataPlanes\\)"
         it: Orders the storage account deletion behind its backup instance
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "if and \\(eq \\$restorePhase \"promoting\"\\) \\(hasKey \\$retainedDataPlanes \\(index \\$dataPlaneKeys \\$targetInactiveDataPlane\\)\\) -\\}\\}\\s+\\{\\{- \\$demotedDataPlane = \\$targetInactiveDataPlane -\\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$demotedManagementPolicies := \\(eq \\$demotedDataPlane \"\"\\) \\| ternary \\$managementPolicies \\(list \"Create\" \"Observe\" \"Update\" \\| toJson\\)"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "kind: FlexibleServerActiveDirectoryAdministrator[\\s\\S]*?managementPolicies: \\{\\{ \\(eq \\$dataPlane \\$demotedDataPlane\\) \\| ternary \\$demotedManagementPolicies \\$managementPolicies \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "managementPolicies: \\{\\{ \\$isDemotedDataPlane \\| ternary \\$demotedManagementPolicies \\$managementPolicies \\}\\}"
+        it: Orphans the demoted server only when the workflow has marked its data plane retained
     -   asserts:
             -   documentIndex: 0
                 matchRegex:

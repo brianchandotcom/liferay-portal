@@ -75,6 +75,30 @@ spec:
         name: iam
 ---
 {{- end }}
+{{- range $retainedDataPlaneKey, $_ := $retainedDataPlanes }}
+{{- if not (has $retainedDataPlaneKey $renderedDataPlaneKeys) }}
+apiVersion: authorization.azure.m.upbound.io/v1beta1
+kind: RoleAssignment
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-database-retained-{{ $retainedDataPlaneKey }}
+    labels:
+        {{- $tags | toYaml | nindent 8 }}
+        retainedDataPlane: {{ $retainedDataPlaneKey }}
+    name: {{ $backupRestoreIdentityName }}-database-retained-{{ $retainedDataPlaneKey }}
+spec:
+    forProvider:
+        principalId: {{ $backupRestoreIdentityPrincipalId }}
+        principalType: ServicePrincipal
+        roleDefinitionName: Reader
+        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{{ index $dataPlaneNames $retainedDataPlaneKey "databaseServer" }}
+    managementPolicies: {{ $managementPolicies }}
+    providerConfigRef:
+        kind: ClusterProviderConfig
+        name: iam
+---
+{{- end }}
+{{- end }}
 {{- range $dataPlane := list "blue" "green" }}
 apiVersion: authorization.azure.m.upbound.io/v1beta1
 kind: RoleAssignment

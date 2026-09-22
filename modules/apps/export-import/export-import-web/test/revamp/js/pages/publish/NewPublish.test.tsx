@@ -385,6 +385,23 @@ describe('NewPublish', () => {
 		expect(
 			screen.getByRole('textbox', {name: /cron-expression/})
 		).toHaveAccessibleName(/mandatory/i);
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'week'
+		);
+
+		expect(screen.getByLabelText(/repeat-at/)).not.toHaveAccessibleName(
+			/mandatory/i
+		);
+
+		await user.click(
+			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
+		);
+
+		expect(screen.getByLabelText(/repeat-at/)).toHaveAccessibleName(
+			/mandatory/i
+		);
 	});
 
 	it('schedules the publication with the cron fields', async () => {
@@ -445,6 +462,80 @@ describe('NewPublish', () => {
 		expect(screen.getByLabelText('filter-content-by')).toHaveValue(
 			'fromLastPublishDate'
 		);
+	});
+
+	it('reclassifies a custom cron whose time matches the start date, keeping the sync', async () => {
+		const midnight = new Date(FUTURE_DATE);
+
+		midnight.setUTCHours(0, 0, 0, 0);
+
+		if (midnight.getTime() <= Date.now()) {
+			midnight.setUTCDate(midnight.getUTCDate() + 1);
+		}
+
+		mockAPIRoutes({
+			scheduledPublishProcess: {
+				...SCHEDULED_PUBLISH_PROCESS,
+				cronExpression: '0 0 0 ? * MON,FRI *',
+				scheduleStartDate: midnight.toISOString(),
+			},
+		});
+
+		renderComponent({
+			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,
+		});
+
+		await screen.findByRole('textbox', {name: /^name/i});
+
+		expect(screen.getByRole('combobox', {name: 'repeat'})).toHaveValue(
+			'week'
+		);
+		expect(screen.getByRole('button', {name: 'Monday'})).toHaveAttribute(
+			'aria-pressed',
+			'true'
+		);
+		expect(screen.getByRole('button', {name: 'Friday'})).toHaveAttribute(
+			'aria-pressed',
+			'true'
+		);
+		expect(
+			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
+		).toBeChecked();
+		expect(screen.getByLabelText(/repeat-at/)).toHaveValue('12:00 AM');
+		expect(screen.getByLabelText(/repeat-at/)).toBeDisabled();
+	});
+
+	it('reclassifies a custom cron whose time differs from the start date, unchecking the sync', async () => {
+		mockAPIRoutes({
+			scheduledPublishProcess: {
+				...SCHEDULED_PUBLISH_PROCESS,
+				cronExpression: '0 0 0 ? * MON,FRI *',
+				scheduleStartDate: FUTURE_DATE.toISOString(),
+			},
+		});
+
+		renderComponent({
+			scheduledPublishProcessId: SCHEDULED_PUBLISH_PROCESS.id,
+		});
+
+		await screen.findByRole('textbox', {name: /^name/i});
+
+		expect(screen.getByRole('combobox', {name: 'repeat'})).toHaveValue(
+			'week'
+		);
+		expect(screen.getByRole('button', {name: 'Monday'})).toHaveAttribute(
+			'aria-pressed',
+			'true'
+		);
+		expect(screen.getByRole('button', {name: 'Friday'})).toHaveAttribute(
+			'aria-pressed',
+			'true'
+		);
+		expect(
+			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
+		).not.toBeChecked();
+		expect(screen.getByLabelText(/repeat-at/)).toHaveValue('12:00 AM');
+		expect(screen.getByLabelText(/repeat-at/)).toBeEnabled();
 	});
 
 	it('replaces the scheduled process on submit when editing', async () => {
@@ -638,6 +729,45 @@ describe('NewPublish', () => {
 		});
 
 		await user.click(cronExpressionField);
+		await user.tab();
+
+		expect(
+			await screen.findByText('this-field-is-required')
+		).toBeInTheDocument();
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', {
+					name: /schedule-publication-to-live/i,
+				})
+			).toBeDisabled();
+		});
+	});
+
+	it('requires the repeat at time once the sync is unchecked', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		await user.click(screen.getByRole('textbox', {name: /start-date/}));
+
+		await user.paste(FUTURE_DATE_TIME);
+
+		await user.selectOptions(
+			screen.getByRole('combobox', {name: 'repeat'}),
+			'week'
+		);
+
+		await user.click(
+			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
+		);
+
+		await user.clear(screen.getByLabelText(/repeat-at/));
+
 		await user.tab();
 
 		expect(

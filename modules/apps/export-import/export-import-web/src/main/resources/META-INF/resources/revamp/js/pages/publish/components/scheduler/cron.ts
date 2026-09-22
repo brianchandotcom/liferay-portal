@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {isCompleteTime, toTimeParts} from '../../../../utils/dateTime';
 import {
 	IntervalUnit,
 	LAST_WEEKDAY_ORDINAL,
@@ -53,7 +54,7 @@ export function toDateTimeParts(dateTime: string): DateTimeParts {
 	const [date, time = '00:00'] = dateTime.split(' ');
 
 	const [year, month, day] = date.split('-').map(Number);
-	const [hour, minute] = time.split(':').map(Number);
+	const {hour, minute} = toTimeParts(time);
 
 	return {day, hour, minute, month, year};
 }
@@ -260,7 +261,10 @@ export function fromCronExpression(
 		return {cronExpression, unit: IntervalUnit.Custom};
 	}
 
-	const scheduleValues = fromSupportedCronExpression(cronExpression);
+	const scheduleValues = fromSupportedCronExpression(
+		cronExpression,
+		startDateTime
+	);
 
 	if (
 		toCanonicalCronExpression(
@@ -277,18 +281,48 @@ export function fromCronExpression(
 	return scheduleValues;
 }
 
-function fromSupportedCronExpression(
-	cronExpression: string
+function toRepeatOnTimeFields(
+	second: string,
+	minute: string,
+	hour: string,
+	startDateTime: string
 ): Partial<ScheduleValues> {
-	const [, , , dayOfMonth, month, dayOfWeek, year = '*'] = cronExpression
-		.trim()
-		.toUpperCase()
-		.split(/\s+/);
+	const seconds = toFieldNumbers(second, 0);
 
-	if (year !== '*' && !year.includes('/')) {
-		return {unit: IntervalUnit.Never};
+	if (seconds?.length !== 1 || seconds[0] !== 0) {
+		return {};
 	}
 
+	const minutes = toFieldNumbers(minute, 1);
+	const hours = toFieldNumbers(hour, 2);
+
+	if (minutes?.length !== 1 || hours?.length !== 1) {
+		return {};
+	}
+
+	if (isCompleteDateTime(startDateTime)) {
+		const {hour: startHour, minute: startMinute} =
+			toDateTimeParts(startDateTime);
+
+		if (hours[0] === startHour && minutes[0] === startMinute) {
+			return {};
+		}
+	}
+
+	return {
+		repeatOnTime: `${String(hours[0]).padStart(2, '0')}:${String(
+			minutes[0]
+		).padStart(2, '0')}`,
+		repeatOnTimeSynced: false,
+	};
+}
+
+function toCronScheduleValueFields(
+	dayOfMonth: string,
+	dayOfWeek: string,
+	month: string,
+	year: string
+): Partial<ScheduleValues> {
 	const months = toFieldNumbers(month, 4) ?? [];
 
 	let yearInterval = Number(year.split('/')[1]) || 1;
@@ -328,7 +362,11 @@ function fromSupportedCronExpression(
 	}
 
 	if (!months.length && !monthDays.length) {
-		return {monthDays, months, unit: IntervalUnit.Day};
+		return {
+			monthDays,
+			months,
+			unit: IntervalUnit.Day,
+		};
 	}
 
 	return {
@@ -336,6 +374,23 @@ function fromSupportedCronExpression(
 		months,
 		repeatType: RepeatType.DayOfMonth,
 		unit: IntervalUnit.Month,
+	};
+}
+
+function fromSupportedCronExpression(
+	cronExpression: string,
+	startDateTime: string
+): Partial<ScheduleValues> {
+	const [second, minute, hour, dayOfMonth, month, dayOfWeek, year = '*'] =
+		cronExpression.trim().toUpperCase().split(/\s+/);
+
+	if (year !== '*' && !year.includes('/')) {
+		return {unit: IntervalUnit.Never};
+	}
+
+	return {
+		...toRepeatOnTimeFields(second, minute, hour, startDateTime),
+		...toCronScheduleValueFields(dayOfMonth, dayOfWeek, month, year),
 	};
 }
 
@@ -352,6 +407,12 @@ export function toCronExpression(scheduleValues: ScheduleValues): string {
 		return `0 ${minute} ${hour} ${day} ${month} ? ${year}`;
 	}
 
+	const repeatTime =
+		scheduleValues.repeatOnTimeSynced ||
+		!isCompleteTime(scheduleValues.repeatOnTime)
+			? {hour, minute}
+			: toTimeParts(scheduleValues.repeatOnTime);
+
 	if (scheduleValues.unit === IntervalUnit.Week) {
 		const days = scheduleValues.weekdays.length
 			? scheduleValues.weekdays
@@ -362,11 +423,11 @@ export function toCronExpression(scheduleValues: ScheduleValues): string {
 			.map((weekday) => DAY_OF_WEEK_NAMES[weekday - 1])
 			.join(',');
 
-		return `0 ${minute} ${hour} ? * ${dayOfWeek} *`;
+		return `0 ${repeatTime.minute} ${repeatTime.hour} ? * ${dayOfWeek} *`;
 	}
 
 	if (scheduleValues.unit === IntervalUnit.Day) {
-		return `0 ${minute} ${hour} * * ? *`;
+		return `0 ${repeatTime.minute} ${repeatTime.hour} * * ? *`;
 	}
 
 	if (scheduleValues.unit === IntervalUnit.Year) {
@@ -377,23 +438,23 @@ export function toCronExpression(scheduleValues: ScheduleValues): string {
 		}`;
 
 		if (scheduleValues.repeatType === RepeatType.DayOfWeek) {
-			return `0 ${minute} ${hour} ? ${month} ${toDayOfWeekExpression(
-				scheduleValues
-			)} ${yearField}`;
+			return `0 ${repeatTime.minute} ${
+				repeatTime.hour
+			} ? ${month} ${toDayOfWeekExpression(scheduleValues)} ${yearField}`;
 		}
 
-		return `0 ${minute} ${hour} ${scheduleValues.monthDays[0] ?? 1} ${month} ? ${yearField}`;
+		return `0 ${repeatTime.minute} ${repeatTime.hour} ${scheduleValues.monthDays[0] ?? 1} ${month} ? ${yearField}`;
 	}
 
 	const monthsField = toNumberListField(scheduleValues.months, 12);
 
 	if (scheduleValues.repeatType === RepeatType.DayOfWeek) {
-		return `0 ${minute} ${hour} ? ${monthsField} ${toDayOfWeekExpression(
-			scheduleValues
-		)} *`;
+		return `0 ${repeatTime.minute} ${
+			repeatTime.hour
+		} ? ${monthsField} ${toDayOfWeekExpression(scheduleValues)} *`;
 	}
 
-	return `0 ${minute} ${hour} ${toNumberListField(
+	return `0 ${repeatTime.minute} ${repeatTime.hour} ${toNumberListField(
 		scheduleValues.monthDays,
 		31
 	)} ${monthsField} ? *`;

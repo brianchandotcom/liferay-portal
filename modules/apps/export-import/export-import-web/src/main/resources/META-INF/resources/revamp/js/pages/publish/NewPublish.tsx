@@ -275,11 +275,18 @@ export function NewPublish({
 			validate={(values: FormikValues) => {
 				const errors = getProcessFormErrors(values);
 
-				const {cronExpression, endDateTime, startDateTime} =
-					getScheduleValuesErrors(values.scheduleValues);
+				const {
+					cronExpression,
+					endDateTime,
+					repeatOnTime,
+					startDateTime,
+				} = getScheduleValuesErrors(values.scheduleValues);
 
 				const scheduleValuesError =
-					startDateTime ?? cronExpression ?? endDateTime;
+					startDateTime ??
+					cronExpression ??
+					repeatOnTime ??
+					endDateTime;
 
 				if (scheduleValuesError) {
 					errors.scheduleValues = scheduleValuesError;

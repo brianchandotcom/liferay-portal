@@ -32,6 +32,8 @@ export type ScheduleValues = {
 	monthDays: number[];
 	months: number[];
 	neverEnd: boolean;
+	repeatOnTime: string;
+	repeatOnTimeSynced: boolean;
 	repeatType: RepeatType;
 	startDateTime: string;
 	timeZoneId: string;
@@ -45,6 +47,7 @@ export type ScheduleValues = {
 export type ScheduleValuesErrors = {
 	cronExpression?: string;
 	endDateTime?: string;
+	repeatOnTime?: string;
 	startDateTime?: string;
 };
 

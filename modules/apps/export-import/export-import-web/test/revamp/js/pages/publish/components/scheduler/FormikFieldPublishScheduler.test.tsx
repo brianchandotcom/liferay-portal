@@ -10,7 +10,10 @@ import React from 'react';
 import '@testing-library/jest-dom';
 
 import {FormikFieldPublishScheduler} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/FormikFieldPublishScheduler';
-import {ScheduleValues} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/types';
+import {
+	IntervalUnit,
+	ScheduleValues,
+} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/types';
 import {getInitialScheduleValues} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/utils';
 import {toWallClockDateTime} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/cron';
 
@@ -60,6 +63,20 @@ describe('FormikFieldPublishScheduler', () => {
 		).not.toBeInTheDocument();
 	});
 
+	it('stays quiet while the repeat at time is still blank', () => {
+		renderFormikFieldPublishScheduler({
+			enabled: true,
+			repeatOnTime: '',
+			repeatOnTimeSynced: false,
+			startDateTime: FUTURE_START_DATE_TIME,
+			unit: IntervalUnit.Day,
+		});
+
+		expect(
+			screen.queryByText('this-field-is-required')
+		).not.toBeInTheDocument();
+	});
+
 	it('shows the start date error for an untouched value that is already wrong', () => {
 		renderFormikFieldPublishScheduler({
 			enabled: true,
@@ -71,4 +88,17 @@ describe('FormikFieldPublishScheduler', () => {
 		).toBeInTheDocument();
 	});
 
+	it('shows the repeat at error for an untouched value that is already wrong', () => {
+		renderFormikFieldPublishScheduler({
+			enabled: true,
+			repeatOnTime: '7:3',
+			repeatOnTimeSynced: false,
+			startDateTime: FUTURE_START_DATE_TIME,
+			unit: IntervalUnit.Day,
+		});
+
+		expect(
+			screen.getByText('please-enter-a-valid-time')
+		).toBeInTheDocument();
+	});
 });

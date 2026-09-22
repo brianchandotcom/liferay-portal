@@ -466,16 +466,35 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
-	private static String _getErrorActionInteractionInternalType(
-		ActionInteraction.Type type) {
+	private static FragmentEditableElement[] _getFragmentEditableElements(
+		long companyId, DTOConverterContext dtoConverterContext,
+		Map<String, String> editableTypes,
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
 
-		if (Objects.equals(ActionInteraction.Type.DISPLAY_PAGE, type)) {
-			throw new IllegalArgumentException(
-				"The error action interaction does not support the type " +
-					ActionInteraction.Type.DISPLAY_PAGE);
-		}
+		return TransformUtil.transformToArray(
+			new TreeSet<>(jsonObject.keySet()),
+			fieldId -> {
+				FragmentEditableElementValue fragmentEditableElementValue =
+					_getFragmentEditableElementValue(
+						companyId, dtoConverterContext, infoItemServiceRegistry,
+						jsonObject.getJSONObject(fieldId), scopeGroupId,
+						editableTypes.getOrDefault(fieldId, "text"));
 
-		return ActionInteractionTypeUtil.toInternalType(type);
+				if (fragmentEditableElementValue == null) {
+					return null;
+				}
+
+				FragmentEditableElement fragmentEditableElement =
+					new FragmentEditableElement();
+
+				fragmentEditableElement.setFragmentEditableElementValue(
+					() -> fragmentEditableElementValue);
+				fragmentEditableElement.setId(() -> fieldId);
+
+				return fragmentEditableElement;
+			},
+			FragmentEditableElement.class);
 	}
 
 	private static FragmentEditableElementValue
@@ -536,37 +555,6 @@ public class FragmentEditableElementUtil {
 		}
 
 		return null;
-	}
-
-	private static FragmentEditableElement[] _getFragmentEditableElements(
-		long companyId, DTOConverterContext dtoConverterContext,
-		Map<String, String> editableTypes,
-		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		long scopeGroupId) {
-
-		return TransformUtil.transformToArray(
-			new TreeSet<>(jsonObject.keySet()),
-			fieldId -> {
-				FragmentEditableElementValue fragmentEditableElementValue =
-					_getFragmentEditableElementValue(
-						companyId, dtoConverterContext, infoItemServiceRegistry,
-						jsonObject.getJSONObject(fieldId), scopeGroupId,
-						editableTypes.getOrDefault(fieldId, "text"));
-
-				if (fragmentEditableElementValue == null) {
-					return null;
-				}
-
-				FragmentEditableElement fragmentEditableElement =
-					new FragmentEditableElement();
-
-				fragmentEditableElement.setFragmentEditableElementValue(
-					() -> fragmentEditableElementValue);
-				fragmentEditableElement.setId(() -> fieldId);
-
-				return fragmentEditableElement;
-			},
-			FragmentEditableElement.class);
 	}
 
 	private static FragmentInlineValue _getFragmentInlineValue(
@@ -951,7 +939,18 @@ public class FragmentEditableElementUtil {
 				"onError",
 				() -> _getActionInteractionJSONObject(
 					errorActionInteraction, companyId, scopeGroupId,
-					type -> _getErrorActionInteractionInternalType(type))
+					type -> {
+						if (Objects.equals(
+								ActionInteraction.Type.DISPLAY_PAGE, type)) {
+
+							throw new IllegalArgumentException(
+								"The error action interaction does not " +
+									"support the type " +
+										ActionInteraction.Type.DISPLAY_PAGE);
+						}
+
+						return ActionInteractionTypeUtil.toInternalType(type);
+					})
 			).put(
 				"onSuccess",
 				() -> _getActionInteractionJSONObject(

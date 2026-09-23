@@ -258,16 +258,17 @@ public class SecretResolverImplTest {
 	public void testVaultWhenValueReferencesForeignNamespace()
 		throws Exception {
 
+		String key = RandomTestUtil.randomString();
+
 		String value = _toKeyReferenceString(
 			StringBundler.concat(
-				RandomTestUtil.randomString(), StringPool.SLASH,
-				RandomTestUtil.randomString()));
+				RandomTestUtil.randomString(), StringPool.SLASH, key));
 
-		Assert.assertEquals(
-			value,
-			_secretResolverImpl.vault(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), value));
+		Assert.assertThrows(
+			SecretException.class,
+			() -> _secretResolverImpl.vault(
+				RandomTestUtil.randomLong(), key, RandomTestUtil.randomString(),
+				value));
 
 		Mockito.verifyNoInteractions(_secretManager);
 	}

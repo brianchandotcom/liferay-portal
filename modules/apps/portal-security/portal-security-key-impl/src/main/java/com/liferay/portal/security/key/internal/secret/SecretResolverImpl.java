@@ -148,7 +148,7 @@ public class SecretResolverImpl implements SecretResolver {
 
 		String identifier = keyReference.getIdentifier();
 
-		if (!identifier.startsWith(_IDENTIFIER_PREFIX) ||
+		if (identifier.startsWith(_IDENTIFIER_PREFIX) &&
 			Objects.equals(
 				key, StringUtil.extractLast(identifier, CharPool.SLASH))) {
 

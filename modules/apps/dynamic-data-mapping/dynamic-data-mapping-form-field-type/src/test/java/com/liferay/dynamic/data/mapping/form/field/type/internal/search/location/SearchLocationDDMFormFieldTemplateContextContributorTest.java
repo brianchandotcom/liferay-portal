@@ -217,9 +217,17 @@ public class SearchLocationDDMFormFieldTemplateContextContributorTest {
 	}
 
 	private static void _setUpSecretResolver() {
+		SecretResolver secretResolver = Mockito.mock(SecretResolver.class);
+
+		Mockito.when(
+			secretResolver.resolve(Mockito.anyLong(), Mockito.any())
+		).thenAnswer(
+			invocationOnMock -> invocationOnMock.getArgument(1)
+		);
+
 		ReflectionTestUtil.setFieldValue(
 			_searchLocationDDMFormFieldTemplateContextContributor,
-			"_secretResolver", (SecretResolver)(companyId, value) -> value);
+			"_secretResolver", secretResolver);
 	}
 
 	private DDMFormFieldRenderingContext _createDDMFormFieldRenderingContext() {

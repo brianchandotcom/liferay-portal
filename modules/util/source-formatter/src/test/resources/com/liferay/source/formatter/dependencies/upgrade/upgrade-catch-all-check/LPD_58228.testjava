@@ -34,7 +34,7 @@ public class LPD_58228 {
 			userId, groupId, classNameId, classPK, resourceClassNameId,
 			templateKey, nameMap, descriptionMap, type, mode, language, script,
 			cacheable, smallImage, smallImageURL, smallImageFile,
-			serviceContext)
+			serviceContext);
 	}
 
 	public void method(
@@ -56,7 +56,7 @@ public class LPD_58228 {
 		_ddmTemplateService.addTemplate(
 			groupId, classNameId, classPK, resourceClassNameId, templateKey,
 			nameMap, descriptionMap, type, mode, language, script, cacheable,
-			smallImage, smallImageURL, smallImageFile, serviceContext)
+			smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
 	@Reference

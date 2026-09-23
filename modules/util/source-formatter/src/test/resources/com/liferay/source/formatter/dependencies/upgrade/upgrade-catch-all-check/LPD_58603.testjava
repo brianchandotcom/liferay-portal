@@ -23,7 +23,7 @@ public class LPD_58603 {
 			123, groupId, originalFragmentEntryLinkId, fragmentEntryId,
 			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
 			editableValues, namespace, position, rendererKey, type,
-			serviceContext)
+			serviceContext);
 		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			userId, groupId, originalFragmentEntryLinkId, fragmentEntryId,
 			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
@@ -47,7 +47,7 @@ public class LPD_58603 {
 			123, originalFragmentEntryLinkId, fragmentEntryId,
 			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
 			editableValues, namespace, position, rendererKey, type,
-			serviceContext)
+			serviceContext);
 		FragmentEntryLinkServiceUtil.addFragmentEntryLink(
 			groupId, originalFragmentEntryLinkId, fragmentEntryId,
 			segmentsExperienceId, plid, css, htmlUtil, js, configuration,

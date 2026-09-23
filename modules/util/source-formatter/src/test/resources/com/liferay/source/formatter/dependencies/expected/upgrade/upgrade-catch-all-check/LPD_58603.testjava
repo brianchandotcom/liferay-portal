@@ -23,7 +23,7 @@ public class LPD_58603 {
 			123, groupId, originalFragmentEntryLinkId, fragmentEntryId,
 			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
 			editableValues, namespace, position, rendererKey, type,
-			serviceContext)
+			serviceContext);
 		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(null, userId, groupId, originalFragmentEntryLinkId, fragmentEntryId, segmentsExperienceId, plid, css, htmlUtil, js, configuration, editableValues, namespace, position, rendererKey, type, serviceContext);
 		_fragmentEntryLinkLocalService.addFragmentEntryLink(null, userId, groupId, originalFragmentEntryLinkId, fragmentEntryId, segmentsExperienceId, plid, css, htmlUtil, js, configuration, editableValues, namespace, position, rendererKey, type, serviceContext);
 	}
@@ -39,7 +39,7 @@ public class LPD_58603 {
 			123, originalFragmentEntryLinkId, fragmentEntryId,
 			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
 			editableValues, namespace, position, rendererKey, type,
-			serviceContext)
+			serviceContext);
 		FragmentEntryLinkServiceUtil.addFragmentEntryLink(null, groupId, originalFragmentEntryLinkId, fragmentEntryId, segmentsExperienceId, plid, css, htmlUtil, js, configuration, editableValues, namespace, position, rendererKey, type, serviceContext);
 		_fragmentEntryLinkService.addFragmentEntryLink(null, groupId, originalFragmentEntryLinkId, fragmentEntryId, segmentsExperienceId, plid, css, htmlUtil, js, configuration, editableValues, namespace, position, rendererKey, type, serviceContext);
 	}

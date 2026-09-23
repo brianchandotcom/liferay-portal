@@ -26,7 +26,7 @@ public class LPD_58228 {
 			cacheable, smallImage, smallImageURL, smallImageFile,
 			serviceContext);
 		DDMTemplateLocalServiceUtil.addTemplate(null, userId, groupId, classNameId, classPK, resourceClassNameId, templateKey, nameMap, descriptionMap, type, mode, language, script, cacheable, smallImage, smallImageURL, smallImageFile, serviceContext);
-		_ddmTemplateLocalService.addTemplate(null, userId, groupId, classNameId, classPK, resourceClassNameId, templateKey, nameMap, descriptionMap, type, mode, language, script, cacheable, smallImage, smallImageURL, smallImageFile, serviceContext)
+		_ddmTemplateLocalService.addTemplate(null, userId, groupId, classNameId, classPK, resourceClassNameId, templateKey, nameMap, descriptionMap, type, mode, language, script, cacheable, smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
 	public void method(
@@ -42,7 +42,7 @@ public class LPD_58228 {
 			nameMap, descriptionMap, type, mode, language, script, cacheable,
 			smallImage, smallImageURL, smallImageFile, serviceContext);
 		DDMTemplateServiceUtil.addTemplate(null, groupId, classNameId, classPK, resourceClassNameId, templateKey, nameMap, descriptionMap, type, mode, language, script, cacheable, smallImage, smallImageURL, smallImageFile, serviceContext);
-		_ddmTemplateService.addTemplate(null, groupId, classNameId, classPK, resourceClassNameId, templateKey, nameMap, descriptionMap, type, mode, language, script, cacheable, smallImage, smallImageURL, smallImageFile, serviceContext)
+		_ddmTemplateService.addTemplate(null, groupId, classNameId, classPK, resourceClassNameId, templateKey, nameMap, descriptionMap, type, mode, language, script, cacheable, smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
 	@Reference

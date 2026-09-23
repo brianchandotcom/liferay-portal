@@ -5,9 +5,6 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
-import antlr.CommonASTWithHiddenTokens;
-import antlr.CommonHiddenStreamToken;
-
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -34,6 +31,7 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import com.puppycrawl.tools.checkstyle.DetailAstImpl;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
@@ -50,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.antlr.v4.runtime.Token;
 
 /**
  * @author Hugo Huijser
@@ -392,22 +392,25 @@ public abstract class BaseCheck extends AbstractCheck {
 			StringPool.PERIOD + typeName;
 	}
 
-	protected CommonHiddenStreamToken getHiddenAfter(DetailAST detailAST) {
-		CommonASTWithHiddenTokens commonASTWithHiddenTokens =
-			(CommonASTWithHiddenTokens)detailAST;
+	protected Token getHiddenAfter(DetailAST detailAST) {
+		DetailAstImpl detailAstImpl = (DetailAstImpl)detailAST;
 
-		return commonASTWithHiddenTokens.getHiddenAfter();
+		List<Token> hiddenAfterTokens = detailAstImpl.getHiddenAfter();
+
+		if (hiddenAfterTokens == null) {
+			return null;
+		}
+
+		return hiddenAfterTokens.get(0);
 	}
 
-	protected CommonHiddenStreamToken getHiddenBefore(DetailAST detailAST) {
-		CommonASTWithHiddenTokens commonASTWithHiddenTokens =
-			(CommonASTWithHiddenTokens)detailAST;
+	protected Token getHiddenBefore(DetailAST detailAST) {
+		DetailAstImpl detailAstImpl = (DetailAstImpl)detailAST;
 
-		CommonHiddenStreamToken commonHiddenStreamToken =
-			commonASTWithHiddenTokens.getHiddenBefore();
+		List<Token> hiddenBeforeTokens = detailAstImpl.getHiddenBefore();
 
-		if (commonHiddenStreamToken != null) {
-			return commonHiddenStreamToken;
+		if (hiddenBeforeTokens != null) {
+			return hiddenBeforeTokens.get(hiddenBeforeTokens.size() - 1);
 		}
 
 		DetailAST previousSiblingDetailAST = detailAST.getPreviousSibling();
@@ -417,10 +420,10 @@ public abstract class BaseCheck extends AbstractCheck {
 				return null;
 			}
 
-			commonHiddenStreamToken = getHiddenAfter(previousSiblingDetailAST);
+			Token hiddenAfterToken = getHiddenAfter(previousSiblingDetailAST);
 
-			if (commonHiddenStreamToken != null) {
-				return commonHiddenStreamToken;
+			if (hiddenAfterToken != null) {
+				return hiddenAfterToken;
 			}
 
 			previousSiblingDetailAST = previousSiblingDetailAST.getLastChild();
@@ -1212,14 +1215,13 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected boolean hasPrecedingPlaceholder(DetailAST detailAST) {
-		CommonHiddenStreamToken commonHiddenStreamToken = getHiddenBefore(
-			detailAST);
+		Token hiddenBeforeToken = getHiddenBefore(detailAST);
 
-		if (commonHiddenStreamToken == null) {
+		if (hiddenBeforeToken == null) {
 			return false;
 		}
 
-		String text = commonHiddenStreamToken.getText();
+		String text = hiddenBeforeToken.getText();
 
 		return text.contains("PLACEHOLDER");
 	}

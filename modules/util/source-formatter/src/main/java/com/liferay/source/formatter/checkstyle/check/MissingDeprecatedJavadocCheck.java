@@ -5,12 +5,12 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
-import antlr.CommonHiddenStreamToken;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.Objects;
+
+import org.antlr.v4.runtime.Token;
 
 /**
  * @author Hugo Huijser
@@ -48,11 +48,10 @@ public class MissingDeprecatedJavadocCheck extends BaseCheck {
 
 		DetailAST firstChildDetailAST = annotationDetailAST.getFirstChild();
 
-		CommonHiddenStreamToken commonHiddenStreamToken = getHiddenBefore(
-			firstChildDetailAST);
+		Token hiddenBeforeToken = getHiddenBefore(firstChildDetailAST);
 
-		if (commonHiddenStreamToken != null) {
-			String text = commonHiddenStreamToken.getText();
+		if (hiddenBeforeToken != null) {
+			String text = hiddenBeforeToken.getText();
 
 			if (text.contains("@deprecated")) {
 				return;

@@ -2,9 +2,9 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	api group: "com.puppycrawl.tools", name: "checkstyle", version: "8.43"
+	api group: "com.puppycrawl.tools", name: "checkstyle", version: "9.3"
 	api group: "commons-io", name: "commons-io", version: "2.19.0"
-	api group: "org.antlr", name: "antlr4-runtime", version: "4.9.2"
+	api group: "org.antlr", name: "antlr4-runtime", version: "4.9.3"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

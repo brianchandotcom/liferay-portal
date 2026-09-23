@@ -11,7 +11,11 @@ import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {FrontendDataSet, replaceTokens} from '@liferay/frontend-data-set-web';
+import {
+	EConfigInURLBehavior,
+	FrontendDataSet,
+	replaceTokens,
+} from '@liferay/frontend-data-set-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -144,6 +148,7 @@ const DetailedAssetUsageModal: React.FC<IDetailedAssetUsageModalProps> = ({
 
 					<FrontendDataSet
 						apiURL={`/o/headless-cms/v1.0/asset-usages/${item.classPK}`}
+						configInURLBehavior={EConfigInURLBehavior.OFF}
 						customRenderers={{
 							tableCell: [
 								{
@@ -179,6 +184,8 @@ const DetailedAssetUsageModal: React.FC<IDetailedAssetUsageModalProps> = ({
 							deltas: [{label: 20}, {label: 40}, {label: 60}],
 							initialDelta: 20,
 						}}
+						searchAsYouType={true}
+						searchSuggestionsEnabled={true}
 						showManagementBar
 						showPagination
 						showSearch

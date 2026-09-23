@@ -8,12 +8,15 @@ package com.liferay.frontend.data.set.internal.serializer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -49,6 +52,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -69,29 +75,40 @@ public class SystemFDSSerializerTest {
 	public void setUp() throws Exception {
 		FrontendDataSetTestUtil.initialize(SystemFDSSerializerTest.class);
 
-		_memberUser = UserTestUtil.addUser();
-		_otherUser = UserTestUtil.addUser();
-		_userGroup = UserGroupTestUtil.addUserGroup();
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET_SNAPSHOT", TestPropsValues.getCompanyId());
 
-		_objectEntry = _addObjectEntry(_FDS_NAME, _LABEL, objectDefinition);
+		_dataSetSnapshotObjectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), 0, null,
+			HashMapBuilder.<String, Serializable>put(
+				"fdsName", _FDS_NAME
+			).put(
+				"label", _LABEL
+			).put(
+				"viewConfig", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		_memberUser = UserTestUtil.addUser();
+
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userLocalService.addUserGroupUser(
+			_userGroup.getUserGroupId(), _memberUser.getUserId());
 
 		_sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			null, TestPropsValues.getUserId(), 0, _userGroup.getUserGroupId(),
 			0,
 			_classNameLocalService.getClassNameId(
 				objectDefinition.getClassName()),
-			_objectEntry.getObjectEntryId(), 0, true,
+			_dataSetSnapshotObjectEntry.getObjectEntryId(), 0, true,
 			Arrays.asList(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
-
-		_userLocalService.addUserGroupUser(
-			_userGroup.getUserGroupId(), _memberUser.getUserId());
 	}
 
 	@Test
@@ -99,34 +116,81 @@ public class SystemFDSSerializerTest {
 		JSONArray jsonArray = _fdsSerializer.serializeSnapshots(
 			_FDS_NAME, _getHttpServletRequest(_memberUser.getUserId()));
 
-		JSONObject itemJSONObject = _getItemJSONObject(
-			jsonArray, _objectEntry.getObjectEntryId());
+		JSONObject itemJSONObject = _getItemJSONObject(jsonArray);
 
 		Assert.assertEquals(_LABEL, itemJSONObject.getString("label"));
 
-		jsonArray = _fdsSerializer.serializeSnapshots(
-			_FDS_NAME, _getHttpServletRequest(_otherUser.getUserId()));
+		_nonmemberUser = UserTestUtil.addUser();
 
-		Assert.assertNull(
-			_getItemJSONObject(jsonArray, _objectEntry.getObjectEntryId()));
+		jsonArray = _fdsSerializer.serializeSnapshots(
+			_FDS_NAME, _getHttpServletRequest(_nonmemberUser.getUserId()));
+
+		Assert.assertNull(_getItemJSONObject(jsonArray));
 	}
 
-	private ObjectEntry _addObjectEntry(
-			String fdsName, String label, ObjectDefinition objectDefinition)
-		throws Exception {
+	@Test
+	public void testSerializeUserConfiguration() throws Exception {
 
-		return _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), 0, null,
-			HashMapBuilder.<String, Serializable>put(
-				"fdsName", fdsName
-			).put(
-				"label", label
-			).put(
-				"viewConfig", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		// Malformed configuration JSON
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest(
+			_memberUser.getUserId());
+
+		Assert.assertNull(
+			_fdsSerializer.serializeUserConfiguration(
+				_FDS_NAME, httpServletRequest));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET_USER_CONFIGURATION",
+					TestPropsValues.getCompanyId());
+
+		_dataSetUserConfigurationObjectEntry =
+			_objectEntryLocalService.addOrUpdateObjectEntry(
+				_memberUser.getExternalReferenceCode() + StringPool.UNDERLINE +
+					_FDS_NAME,
+				0, _memberUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				HashMapBuilder.<String, Serializable>put(
+					"configuration", RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _memberUser.getUserId()));
+
+		Assert.assertNull(
+			_fdsSerializer.serializeUserConfiguration(
+				_FDS_NAME, httpServletRequest));
+
+		// Valid configuration JSON
+
+		_dataSetUserConfigurationObjectEntry =
+			_objectEntryLocalService.updateObjectEntry(
+				_memberUser.getUserId(),
+				_dataSetUserConfigurationObjectEntry.getObjectEntryId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				HashMapBuilder.<String, Serializable>put(
+					"configuration",
+					JSONUtil.put(
+						"initialDataSetSnapshotERC",
+						_dataSetSnapshotObjectEntry.getExternalReferenceCode()
+					).toString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _memberUser.getUserId()));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"initialDataSetSnapshotERC",
+				_dataSetSnapshotObjectEntry.getExternalReferenceCode()
+			).toString(),
+			_fdsSerializer.serializeUserConfiguration(
+				_FDS_NAME, httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
 	}
 
 	private HttpServletRequest _getHttpServletRequest(long userId)
@@ -143,9 +207,7 @@ public class SystemFDSSerializerTest {
 		return mockHttpServletRequest;
 	}
 
-	private JSONObject _getItemJSONObject(
-		JSONArray jsonArray, long objectEntryId) {
-
+	private JSONObject _getItemJSONObject(JSONArray jsonArray) {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject groupJSONObject = jsonArray.getJSONObject(i);
 
@@ -158,7 +220,9 @@ public class SystemFDSSerializerTest {
 			for (int j = 0; j < itemsJSONArray.length(); j++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(j);
 
-				if (itemJSONObject.getLong("id") == objectEntryId) {
+				if (itemJSONObject.getLong("id") ==
+						_dataSetSnapshotObjectEntry.getObjectEntryId()) {
+
 					return itemJSONObject;
 				}
 			}
@@ -174,23 +238,26 @@ public class SystemFDSSerializerTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	@DeleteAfterTestRun
+	private ObjectEntry _dataSetSnapshotObjectEntry;
+
+	@DeleteAfterTestRun
+	private ObjectEntry _dataSetUserConfigurationObjectEntry;
+
 	@Inject(filter = "frontend.data.set.serializer.type=system")
 	private FDSSerializer _fdsSerializer;
 
 	@DeleteAfterTestRun
 	private User _memberUser;
 
+	@DeleteAfterTestRun
+	private User _nonmemberUser;
+
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@DeleteAfterTestRun
-	private ObjectEntry _objectEntry;
-
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@DeleteAfterTestRun
-	private User _otherUser;
 
 	@DeleteAfterTestRun
 	private SharingEntry _sharingEntry;

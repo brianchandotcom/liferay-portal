@@ -31,6 +31,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -52,6 +53,63 @@ public class TokenAudienceTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testRefreshTokenPreservesAudiences() throws Exception {
+		JSONObject authorizationCodeTokenJSONObject =
+			_getAuthorizationCodeTokenJSONObject();
+
+		Assert.assertEquals(
+			Collections.singletonList(_RESOURCE_URI),
+			_getAudiences(
+				authorizationCodeTokenJSONObject.getString("access_token")));
+
+		JSONObject refreshTokenJSONObject = _getRefreshTokenJSONObject(
+			authorizationCodeTokenJSONObject.getString("refresh_token"),
+			Collections.emptyList());
+
+		Assert.assertEquals(
+			Collections.singletonList(_RESOURCE_URI),
+			_getAudiences(refreshTokenJSONObject.getString("access_token")));
+	}
+
+	@Test
+	public void testRefreshTokenWithGrantedResource() throws Exception {
+		JSONObject authorizationCodeTokenJSONObject =
+			_getAuthorizationCodeTokenJSONObject();
+
+		JSONObject refreshTokenJSONObject = _getRefreshTokenJSONObject(
+			authorizationCodeTokenJSONObject.getString("refresh_token"),
+			Collections.singletonList(_RESOURCE_URI));
+
+		Assert.assertEquals(
+			Collections.singletonList(_RESOURCE_URI),
+			_getAudiences(refreshTokenJSONObject.getString("access_token")));
+	}
+
+	@Test
+	public void testRefreshTokenWithInvalidResource() throws Exception {
+		_testRefreshTokenWithInvalidResource(RandomTestUtil.randomString());
+		_testRefreshTokenWithInvalidResource(
+			StringBundler.concat(
+				Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(), "/#",
+				RandomTestUtil.randomString()));
+		_testRefreshTokenWithInvalidResource(StringPool.SPACE);
+	}
+
+	@Test
+	public void testRefreshTokenWithUngrantedResource() throws Exception {
+		JSONObject authorizationCodeTokenJSONObject =
+			_getAuthorizationCodeTokenJSONObject();
+
+		Response response = _getRefreshTokenResponse(
+			authorizationCodeTokenJSONObject.getString("refresh_token"),
+			Collections.singletonList(
+				Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString()));
+
+		Assert.assertEquals(400, response.getStatus());
+		Assert.assertEquals("invalid_target", parseError(response));
+	}
+
+	@Test
 	public void testTokenIntrospectionAudience() throws Exception {
 		_testTokenIntrospectionAudience(
 			Collections.singletonList(_RESOURCE_URI));
@@ -65,6 +123,62 @@ public class TokenAudienceTest extends BaseClientTestCase {
 	public void testTokenIntrospectionAudienceWithAuthorizationCodeGrant()
 		throws Exception {
 
+		JSONObject authorizationCodeTokenJSONObject =
+			_getAuthorizationCodeTokenJSONObject();
+
+		Assert.assertEquals(
+			Collections.singletonList(_RESOURCE_URI),
+			_getAudiences(
+				authorizationCodeTokenJSONObject.getString("access_token")));
+	}
+
+	@Test
+	public void testTokenRequestWithInvalidResource() throws Exception {
+		_testTokenRequestWithInvalidResource(RandomTestUtil.randomString());
+		_testTokenRequestWithInvalidResource(
+			StringBundler.concat(
+				Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(), "/#",
+				RandomTestUtil.randomString()));
+		_testTokenRequestWithInvalidResource(StringPool.SPACE);
+	}
+
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new TokenAudienceTestPreparatorBundleActivator();
+	}
+
+	private List<String> _getAudiences(String accessToken) throws Exception {
+		WebTarget introspectWebTarget = getIntrospectWebTarget();
+
+		Invocation.Builder invocationBuilder = introspectWebTarget.request();
+
+		Response response = invocationBuilder.post(
+			Entity.form(
+				new MultivaluedHashMap<>(
+					HashMapBuilder.put(
+						"client_id", _CLIENT_ID
+					).put(
+						"client_secret", _CLIENT_SECRET
+					).put(
+						"token", accessToken
+					).build())));
+
+		Assert.assertEquals(200, response.getStatus());
+
+		JSONObject jsonObject = parseJSONObject(response);
+
+		Assert.assertTrue(jsonObject.getBoolean("active"));
+
+		JSONArray audJSONArray = jsonObject.getJSONArray("aud");
+
+		if (audJSONArray == null) {
+			return Collections.emptyList();
+		}
+
+		return JSONUtil.toStringList(audJSONArray);
+	}
+
+	private JSONObject _getAuthorizationCodeTokenJSONObject() throws Exception {
 		String authorizationCode = parseAuthorizationCodeString(
 			getCodeResponse(
 				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
@@ -78,76 +192,43 @@ public class TokenAudienceTest extends BaseClientTestCase {
 
 		Assert.assertNotNull(authorizationCode);
 
-		WebTarget tokenWebTarget = getTokenWebTarget();
+		Response response = _getTokenResponse(
+			HashMapBuilder.put(
+				"code", authorizationCode
+			).put(
+				"grant_type", "authorization_code"
+			).build(),
+			Collections.singletonList(_RESOURCE_URI));
 
-		Invocation.Builder tokenInvocationBuilder = tokenWebTarget.request();
+		Assert.assertEquals(200, response.getStatus());
 
-		Response tokenResponse = tokenInvocationBuilder.post(
-			Entity.form(
-				new MultivaluedHashMap<>(
-					HashMapBuilder.put(
-						"client_id", _CLIENT_ID
-					).put(
-						"client_secret", _CLIENT_SECRET
-					).put(
-						"code", authorizationCode
-					).put(
-						"grant_type", "authorization_code"
-					).put(
-						"resource", _RESOURCE_URI
-					).build())));
-
-		Assert.assertEquals(200, tokenResponse.getStatus());
-
-		String accessToken = parseTokenString(tokenResponse);
-
-		Assert.assertNotNull(accessToken);
-
-		WebTarget introspectWebTarget = getIntrospectWebTarget();
-
-		Invocation.Builder introspectInvocationBuilder =
-			introspectWebTarget.request();
-
-		Response introspectResponse = introspectInvocationBuilder.post(
-			Entity.form(
-				new MultivaluedHashMap<>(
-					HashMapBuilder.put(
-						"client_id", _CLIENT_ID
-					).put(
-						"client_secret", _CLIENT_SECRET
-					).put(
-						"token", accessToken
-					).build())));
-
-		Assert.assertEquals(200, introspectResponse.getStatus());
-
-		JSONObject jsonObject = parseJSONObject(introspectResponse);
-
-		Assert.assertTrue(jsonObject.getBoolean("active"));
-
-		JSONArray audJSONArray = jsonObject.getJSONArray("aud");
-
-		Assert.assertEquals(1, audJSONArray.length());
-		Assert.assertEquals(_RESOURCE_URI, audJSONArray.getString(0));
+		return parseJSONObject(response);
 	}
 
-	@Test
-	public void testTokenRequestWithInvalidResource() throws Exception {
-		_testTokenRequestWithInvalidResource(StringPool.SPACE);
-		_testTokenRequestWithInvalidResource(
-			StringBundler.concat(
-				Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(), "/#",
-				RandomTestUtil.randomString()));
-		_testTokenRequestWithInvalidResource(RandomTestUtil.randomString());
+	private JSONObject _getRefreshTokenJSONObject(
+		String refreshToken, List<String> resources) {
+
+		Response response = _getRefreshTokenResponse(refreshToken, resources);
+
+		Assert.assertEquals(200, response.getStatus());
+
+		return parseJSONObject(response);
 	}
 
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new TokenAudienceTestPreparatorBundleActivator();
+	private Response _getRefreshTokenResponse(
+		String refreshToken, List<String> resources) {
+
+		return _getTokenResponse(
+			HashMapBuilder.put(
+				"grant_type", "refresh_token"
+			).put(
+				"refresh_token", refreshToken
+			).build(),
+			resources);
 	}
 
-	private void _testTokenIntrospectionAudience(List<String> resources)
-		throws Exception {
+	private Response _getTokenResponse(
+		Map<String, String> parameters, List<String> resources) {
 
 		MultivaluedHashMap<String, String> tokenFormData =
 			new MultivaluedHashMap<>(
@@ -155,8 +236,8 @@ public class TokenAudienceTest extends BaseClientTestCase {
 					"client_id", _CLIENT_ID
 				).put(
 					"client_secret", _CLIENT_SECRET
-				).put(
-					"grant_type", "client_credentials"
+				).putAll(
+					parameters
 				).build());
 
 		for (String resource : resources) {
@@ -165,10 +246,33 @@ public class TokenAudienceTest extends BaseClientTestCase {
 
 		WebTarget tokenWebTarget = getTokenWebTarget();
 
-		Invocation.Builder tokenInvocationBuilder = tokenWebTarget.request();
+		Invocation.Builder invocationBuilder = tokenWebTarget.request();
 
-		Response tokenResponse = tokenInvocationBuilder.post(
-			Entity.form(tokenFormData));
+		return invocationBuilder.post(Entity.form(tokenFormData));
+	}
+
+	private void _testRefreshTokenWithInvalidResource(String resource)
+		throws Exception {
+
+		JSONObject authorizationCodeTokenJSONObject =
+			_getAuthorizationCodeTokenJSONObject();
+
+		Response response = _getRefreshTokenResponse(
+			authorizationCodeTokenJSONObject.getString("refresh_token"),
+			Collections.singletonList(resource));
+
+		Assert.assertEquals(400, response.getStatus());
+		Assert.assertEquals("invalid_target", parseError(response));
+	}
+
+	private void _testTokenIntrospectionAudience(List<String> resources)
+		throws Exception {
+
+		Response tokenResponse = _getTokenResponse(
+			HashMapBuilder.put(
+				"grant_type", "client_credentials"
+			).build(),
+			resources);
 
 		Assert.assertEquals(200, tokenResponse.getStatus());
 
@@ -176,56 +280,21 @@ public class TokenAudienceTest extends BaseClientTestCase {
 
 		Assert.assertNotNull(accessToken);
 
-		WebTarget introspectWebTarget = getIntrospectWebTarget();
+		List<String> audiences = _getAudiences(accessToken);
 
-		Invocation.Builder introspectInvocationBuilder =
-			introspectWebTarget.request();
-
-		Response introspectResponse = introspectInvocationBuilder.post(
-			Entity.form(
-				new MultivaluedHashMap<>(
-					HashMapBuilder.put(
-						"client_id", _CLIENT_ID
-					).put(
-						"client_secret", _CLIENT_SECRET
-					).put(
-						"token", accessToken
-					).build())));
-
-		Assert.assertEquals(200, introspectResponse.getStatus());
-
-		JSONObject jsonObject = parseJSONObject(introspectResponse);
-
-		Assert.assertTrue(jsonObject.getBoolean("active"));
-
-		JSONArray audJSONArray = jsonObject.getJSONArray("aud");
-
-		Assert.assertEquals(resources.size(), audJSONArray.length());
-
-		List<String> audiences = JSONUtil.toStringList(audJSONArray);
-
+		Assert.assertEquals(
+			audiences.toString(), resources.size(), audiences.size());
 		Assert.assertTrue(audiences.containsAll(resources));
 	}
 
 	private void _testTokenRequestWithInvalidResource(String resource)
 		throws Exception {
 
-		WebTarget tokenWebTarget = getTokenWebTarget();
-
-		Invocation.Builder invocationBuilder = tokenWebTarget.request();
-
-		Response response = invocationBuilder.post(
-			Entity.form(
-				new MultivaluedHashMap<>(
-					HashMapBuilder.put(
-						"client_id", _CLIENT_ID
-					).put(
-						"client_secret", _CLIENT_SECRET
-					).put(
-						"grant_type", "client_credentials"
-					).put(
-						"resource", resource
-					).build())));
+		Response response = _getTokenResponse(
+			HashMapBuilder.put(
+				"grant_type", "client_credentials"
+			).build(),
+			Collections.singletonList(resource));
 
 		Assert.assertEquals(400, response.getStatus());
 		Assert.assertEquals("invalid_target", parseError(response));
@@ -252,7 +321,8 @@ public class TokenAudienceTest extends BaseClientTestCase {
 			createOAuth2Application(
 				companyId, _user, _CLIENT_ID, _CLIENT_SECRET,
 				Arrays.asList(
-					GrantType.CLIENT_CREDENTIALS, GrantType.AUTHORIZATION_CODE),
+					GrantType.CLIENT_CREDENTIALS, GrantType.AUTHORIZATION_CODE,
+					GrantType.REFRESH_TOKEN),
 				"client_secret_post", null,
 				Collections.singletonList(
 					Http.HTTP_WITH_SLASH + RandomTestUtil.randomString()),

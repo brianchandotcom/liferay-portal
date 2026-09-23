@@ -8,7 +8,7 @@ import {
 	TaxonomyVocabularyAPI,
 } from '@liferay/headless-admin-taxonomy-client-js';
 import {expect, mergeTests} from '@playwright/test';
-import {createReadStream, readdirSync} from 'fs';
+import {createReadStream} from 'fs';
 import path from 'path';
 
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
@@ -31,20 +31,21 @@ import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import {enableLocalStaging} from '../../../utils/staging';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import {exportImportPagesTest} from '../revamp/fixtures/exportImportPagesTest';
 import {exportImportConfig} from './export_import.config';
-import {exportPageTest} from './fixtures/exportPageTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {StageableEntities} from './utils/stagingConstants';
-import {unzipAndCheckFolder} from './utils/stagingUtil';
+import {getTomcatTempDir, unzipAndCheckFolder} from './utils/stagingUtil';
 
 const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
 		'LPD-39304': {enabled: true},
-		'LPD-57655': {enabled: false},
+		'LPD-57655': {enabled: true},
 		'LPD-76864': {enabled: true},
+		'LPD-101272': {enabled: true},
 		'LPD-105778': {enabled: true},
 	}),
 	loginTest(),
@@ -52,7 +53,7 @@ const test = mergeTests(
 	assetPublisherWidgetPagesTest,
 	collectionsPagesTest,
 	displayPageTemplatesPagesTest,
-	exportPageTest,
+	exportImportPagesTest,
 	journalPagesTest,
 	pageEditorPagesTest,
 	pageViewModePagesTest,
@@ -440,7 +441,7 @@ test(
 		assetPublisherWidgetPage,
 		collectionsPage,
 		displayPageTemplatesPage,
-		exportPage,
+		exportImportPage,
 		page,
 		pageEditorPage,
 		uiElementsPage,
@@ -538,10 +539,7 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontentStructureId}`,
 		await collectionsPage.goto(site.friendlyUrlPath);
 		await page.getByRole('link', {name: assetListEntryName}).click();
 
-		await assetPublisherPage.addManualItem(
-			'Basic Web Content',
-			webContentName
-		);
+		await assetPublisherPage.addManualItem(webContentName);
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 		await pageEditorPage.addWidget(
 			'Content Management',
@@ -557,9 +555,15 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontentStructureId}`,
 
 		await uiElementsPage.closeClickable.click();
 
-		await exportPage.goto(site.friendlyUrlPath);
+		await exportImportPage.goToExport(site.friendlyUrlPath);
 
-		await exportPage.exportPages();
+		const exportName = `MyExport-${getRandomString()}`;
+
+		await exportImportPage.export(exportName);
+
+		await expect(
+			exportImportPage.taskStatusLabel(exportName)
+		).toBeVisible();
 	}
 );
 
@@ -628,14 +632,8 @@ test(
 			includeIfModified: ['Web Content 1 Items Web'],
 		});
 
-		const tomcatDir = exportImportConfig.environment.tomcatDir;
-
-		const files = readdirSync(tomcatDir).filter((file) =>
-			file.startsWith('tomcat-')
-		);
-
 		const hasFolder = await unzipAndCheckFolder(
-			path.resolve(tomcatDir, files[0], 'temp')
+			getTomcatTempDir(exportImportConfig.environment.tomcatDir)
 		);
 
 		expect(hasFolder).toEqual(false);

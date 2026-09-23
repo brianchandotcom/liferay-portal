@@ -85,10 +85,41 @@ public class BasicFragmentEntryVerticalCardTest {
 		_testGetLabels("approved", "cached", "draft");
 	}
 
+	@Test
+	@TestInfo("LPD-101584")
+	public void testGetSubtitle() {
+		Mockito.when(
+			_fragmentEntry.getUsageCount()
+		).thenReturn(
+			3
+		);
+
+		BasicFragmentEntryVerticalCard basicFragmentEntryVerticalCard =
+			new BasicFragmentEntryVerticalCard(
+				_fragmentEntry, _renderRequest,
+				Mockito.mock(RenderResponse.class),
+				Mockito.mock(RowChecker.class));
+
+		Assert.assertEquals("3", basicFragmentEntryVerticalCard.getSubtitle());
+
+		Mockito.verify(
+			_fragmentEntry, Mockito.times(1)
+		).getUsageCount();
+	}
+
 	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.format(
+				Mockito.eq(_httpServletRequest), Mockito.anyString(),
+				Mockito.any(Object.class))
+		).thenAnswer(
+			(Answer<String>)invocationOnMock -> String.valueOf(
+				invocationOnMock.getArgument(2, Object.class))
+		);
 
 		Mockito.when(
 			language.get(Mockito.eq(_httpServletRequest), Mockito.anyString())
@@ -110,21 +141,19 @@ public class BasicFragmentEntryVerticalCardTest {
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		portalUtil.setPortal(_portal);
-	}
-
-	private void _testGetLabels(String... expectedLabels) {
-		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
-
 		Mockito.when(
-			_portal.getHttpServletRequest(renderRequest)
+			_portal.getHttpServletRequest(_renderRequest)
 		).thenReturn(
 			_httpServletRequest
 		);
 
+		portalUtil.setPortal(_portal);
+	}
+
+	private void _testGetLabels(String... expectedLabels) {
 		BasicFragmentEntryVerticalCard basicFragmentEntryVerticalCard =
 			new BasicFragmentEntryVerticalCard(
-				_fragmentEntry, renderRequest,
+				_fragmentEntry, _renderRequest,
 				Mockito.mock(RenderResponse.class),
 				Mockito.mock(RowChecker.class));
 
@@ -144,5 +173,7 @@ public class BasicFragmentEntryVerticalCardTest {
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
+	private final RenderRequest _renderRequest = Mockito.mock(
+		RenderRequest.class);
 
 }

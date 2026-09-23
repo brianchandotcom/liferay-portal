@@ -7,16 +7,31 @@ package com.liferay.site.staticexport;
 
 import java.io.File;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Víctor Galán
  */
-@ProviderType
-public interface StaticSiteExportResource {
+public class StaticSiteExportResource {
 
-	public File getFile();
+	public StaticSiteExportResource(File file, String path, String url) {
+		_file = file;
+		_path = path;
+		_url = url;
+	}
 
-	public String getURL();
+	public File getFile() {
+		return _file;
+	}
+
+	public String getPath() {
+		return _path;
+	}
+
+	public String getURL() {
+		return _url;
+	}
+
+	private final File _file;
+	private final String _path;
+	private final String _url;
 
 }

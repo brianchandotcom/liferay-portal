@@ -20,6 +20,8 @@ public interface StaticSiteExport extends AutoCloseable {
 
 	public List<StaticSiteExportLayout> getStaticSiteExportLayouts();
 
+	public StaticSiteExportReport getStaticSiteExportReport();
+
 	public List<StaticSiteExportResource> getStaticSiteExportResources();
 
 }

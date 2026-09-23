@@ -150,7 +150,23 @@ public class LiferayFileItemTest {
 	}
 
 	@Test
-	public void testGetTempFileIgnoresFileNameExtension() {
+	public void testGetTempFile() {
+		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString() + ".txt");
+
+		File tempFile = liferayFileItem.getTempFile();
+
+		Assert.assertEquals(_tempDir, tempFile.getParentFile());
+
+		String name = tempFile.getName();
+
+		Assert.assertTrue(name, name.startsWith("upload_"));
+		Assert.assertTrue(name, name.endsWith(".txt"));
+	}
+
+	@Test
+	public void testGetTempFileWithPathInFileName() {
 		LiferayFileItem liferayFileItem = _liferayFileItemFactory.createItem(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			StringBundler.concat(
@@ -164,8 +180,7 @@ public class LiferayFileItemTest {
 
 		String name = tempFile.getName();
 
-		Assert.assertTrue(name, name.startsWith("upload_"));
-		Assert.assertTrue(name, name.endsWith(".tmp"));
+		Assert.assertTrue(name, name.matches("upload_\\d+"));
 	}
 
 	@Test

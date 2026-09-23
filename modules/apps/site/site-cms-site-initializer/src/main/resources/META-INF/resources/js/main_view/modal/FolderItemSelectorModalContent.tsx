@@ -6,7 +6,11 @@
 import Alert from '@clayui/alert';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
-import {IFrontendDataSetProps, IView} from '@liferay/frontend-data-set-web';
+import {
+	EConfigInURLBehavior,
+	IFrontendDataSetProps,
+	IView,
+} from '@liferay/frontend-data-set-web';
 import {ItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -75,10 +79,18 @@ const SUCCESS_MESSAGES = {
 };
 
 const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
+	configInURLBehavior: EConfigInURLBehavior.OFF,
 	pagination: {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,
 	},
+
+	// The id below is built per item and changes again when the user drills
+	// into a Space, and the item carries no id of its own while the Spaces are
+	// listed. A search history kept under it would be shared by every item and
+	// read back by none, so the suggestions stay off.
+
+	searchAsYouType: true,
 	selectionType: 'single',
 };
 

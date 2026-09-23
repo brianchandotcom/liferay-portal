@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IView} from '@liferay/frontend-data-set-web';
+import {EConfigInURLBehavior, IView} from '@liferay/frontend-data-set-web';
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {openToast} from 'frontend-js-components-web';
 import {v4 as uuidv4} from 'uuid';
@@ -33,11 +33,19 @@ export default function selectAssetsAction(
 	openItemSelectorModal({
 		apiURL: `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}${searchAPIURL}`,
 		fdsProps: {
+			configInURLBehavior: EConfigInURLBehavior.OFF,
 			id: `itemSelectorModal-cms-${uuidv4()}`,
 			pagination: {
 				deltas: [{label: 20}, {label: 40}, {label: 60}],
 				initialDelta: 20,
 			},
+
+			// The id is new on every open, so each one gets its own state
+			// rather than inheriting the last one's. That id also keys the
+			// search history, which nothing could ever read back, so the
+			// suggestions stay off here.
+
+			searchAsYouType: true,
 			views: [
 				{
 					contentRenderer: 'cards',

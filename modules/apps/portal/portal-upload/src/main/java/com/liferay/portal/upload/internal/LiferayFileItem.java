@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
@@ -175,7 +176,16 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			return _tempFile;
 		}
 
-		String tempFileName = "upload_" + _getUniqueId() + ".tmp";
+		String tempFileName = "upload_" + _getUniqueId();
+
+		if (_fileName != null) {
+			String extension = FileUtil.getExtension(
+				FileUtil.getShortFileName(_fileName));
+
+			if (Validator.isNotNull(extension)) {
+				tempFileName += "." + extension;
+			}
+		}
 
 		_tempFile = new File(_tempDir, tempFileName);
 

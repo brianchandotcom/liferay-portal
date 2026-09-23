@@ -7,6 +7,7 @@ package com.liferay.frontend.data.set.internal.renderer;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
+import com.liferay.frontend.data.set.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.renderer.FDSRenderer;
@@ -30,6 +31,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
+
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.ResourceURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -245,6 +249,21 @@ public class FDSRendererImpl implements FDSRenderer {
 						return paginationJSONObject;
 					}
 				).put(
+					"saveDataSetUserConfigurationURL",
+					() -> {
+						ResourceURL resourceURL =
+							(ResourceURL)_portal.getControlPanelPortletURL(
+								httpServletRequest,
+								FDSAdminPortletKeys.FDS_ADMIN,
+								PortletRequest.RESOURCE_PHASE);
+
+						resourceURL.setResourceID(
+							"/frontend_data_set_admin" +
+								"/save_data_set_user_configuration");
+
+						return resourceURL.toString();
+					}
+				).put(
 					"searchAsYouType",
 					() -> fdsSerializer.serializeSearchAsYouType(
 						fdsName, httpServletRequest)
@@ -300,6 +319,10 @@ public class FDSRendererImpl implements FDSRenderer {
 
 						return fdsSortItems;
 					}
+				).put(
+					"userConfiguration",
+					() -> fdsSerializer.serializeUserConfiguration(
+						fdsName, httpServletRequest)
 				).put(
 					"views",
 					() -> {

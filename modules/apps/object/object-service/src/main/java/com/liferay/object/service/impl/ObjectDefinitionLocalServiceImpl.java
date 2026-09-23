@@ -144,6 +144,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
@@ -1317,7 +1318,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_addOrUpdateObjectDefinitionSettings(
 			objectDefinition, objectDefinitionSettings);
 
-		_updateObjectFields(objectDefinition, objectFields);
+		_updateObjectFields(false, objectDefinition, objectFields);
 
 		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
 			objectDefinitionId, objectDefinition.getObjectFolderId(),
@@ -2768,6 +2769,14 @@ public class ObjectDefinitionLocalServiceImpl
 		boolean oldEnableObjectEntrySubscription =
 			objectDefinition.isEnableObjectEntrySubscription();
 
+		boolean addSystemObjectFields = false;
+
+		if (LazyReferencingThreadLocal.isEnabled() &&
+			(objectDefinition.getStatus() == WorkflowConstants.STATUS_EMPTY)) {
+
+			addSystemObjectFields = true;
+		}
+
 		_validateExternalReferenceCode(
 			externalReferenceCode, objectDefinition.isSystem());
 		_validateAccountEntryRestrictedObjectFieldId(
@@ -2930,7 +2939,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 			objectDefinition = _update(objectDefinition);
 
-			_updateObjectFields(objectDefinition, objectFields);
+			_updateObjectFields(
+				addSystemObjectFields, objectDefinition, objectFields);
 
 			_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
 				objectDefinition.getObjectDefinitionId(),
@@ -2993,7 +3003,8 @@ public class ObjectDefinitionLocalServiceImpl
 			_objectFieldLocalService.updateObjectField(objectField);
 		}
 
-		_updateObjectFields(objectDefinition, objectFields);
+		_updateObjectFields(
+			addSystemObjectFields, objectDefinition, objectFields);
 
 		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
 			objectDefinition.getObjectDefinitionId(),
@@ -3005,7 +3016,8 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _updateObjectFields(
-			ObjectDefinition objectDefinition, List<ObjectField> objectFields)
+			boolean addSystemObjectFields, ObjectDefinition objectDefinition,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		if (objectFields == null) {
@@ -3026,35 +3038,37 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.getExternalReferenceCode(),
 						objectDefinition.getObjectDefinitionId());
 
-				if (existingObjectField == null) {
+				if (existingObjectField != null) {
+					_objectFieldLocalService.updateObjectField(
+						existingObjectField.getExternalReferenceCode(),
+						existingObjectField.getObjectFieldId(),
+						existingObjectField.getUserId(),
+						existingObjectField.getListTypeDefinitionId(),
+						existingObjectField.getObjectDefinitionId(),
+						existingObjectField.getBusinessType(),
+						existingObjectField.getDBColumnName(),
+						existingObjectField.getDBTableName(),
+						existingObjectField.getDBType(),
+						objectField.getDescriptionMap(),
+						existingObjectField.isIndexed(),
+						objectField.isIndexedAsKeyword(),
+						objectField.getIndexedLanguageId(),
+						objectField.getLabelMap(),
+						existingObjectField.isLocalized(),
+						existingObjectField.getName(),
+						existingObjectField.getReadOnly(),
+						existingObjectField.getReadOnlyConditionExpression(),
+						existingObjectField.isRequired(),
+						existingObjectField.isState(),
+						existingObjectField.isSystem(),
+						objectField.getObjectFieldSettings());
+
 					continue;
 				}
 
-				_objectFieldLocalService.updateObjectField(
-					existingObjectField.getExternalReferenceCode(),
-					existingObjectField.getObjectFieldId(),
-					existingObjectField.getUserId(),
-					existingObjectField.getListTypeDefinitionId(),
-					existingObjectField.getObjectDefinitionId(),
-					existingObjectField.getBusinessType(),
-					existingObjectField.getDBColumnName(),
-					existingObjectField.getDBTableName(),
-					existingObjectField.getDBType(),
-					objectField.getDescriptionMap(),
-					existingObjectField.isIndexed(),
-					objectField.isIndexedAsKeyword(),
-					objectField.getIndexedLanguageId(),
-					objectField.getLabelMap(),
-					existingObjectField.isLocalized(),
-					existingObjectField.getName(),
-					existingObjectField.getReadOnly(),
-					existingObjectField.getReadOnlyConditionExpression(),
-					existingObjectField.isRequired(),
-					existingObjectField.isState(),
-					existingObjectField.isSystem(),
-					objectField.getObjectFieldSettings());
-
-				continue;
+				if (!addSystemObjectFields) {
+					continue;
+				}
 			}
 
 			if (objectField.compareBusinessType(

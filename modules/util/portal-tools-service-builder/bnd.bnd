@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Service Builder
 Bundle-SymbolicName: com.liferay.portal.tools.service.builder
-Bundle-Version: 1.0.560
+Bundle-Version: 1.0.561
 Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 -includeresource:\
 	com/liferay/account/service.xml=../../../modules/apps/account/account-service/service.xml,\
@@ -31,6 +31,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.petra.function-*.jar!/com/liferay/petra/function/transform/TransformUtil.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/BoundaryCheckerUtil.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncBufferedReader.class,\
+	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncByteArrayInputStream.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncByteArrayOutputStream.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.petra.io-*.jar!/com/liferay/petra/io/unsync/UnsyncStringWriter.class,\

@@ -7,12 +7,17 @@ package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.design.library.util.DesignLibraryUtil;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,13 +40,14 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	public void testGetActionDropdownItemsForDraftFragmentEntry()
 		throws Exception {
 
-		setUpFragmentPermission(true);
 		_setUpFragmentEntry(true, false, false);
+		setUpFragmentPermission(true);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
+					_fragmentEntry, renderRequest, renderResponse,
+					RandomTestUtil.randomInt());
 
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -67,7 +73,8 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
+					_fragmentEntry, renderRequest, renderResponse,
+					RandomTestUtil.randomInt());
 
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -80,13 +87,14 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	public void testGetActionDropdownItemsForReactFragmentEntry()
 		throws Exception {
 
-		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, false, true);
+		setUpFragmentPermission(true);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
+					_fragmentEntry, renderRequest, renderResponse,
+					RandomTestUtil.randomInt());
 
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -99,13 +107,14 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	public void testGetActionDropdownItemsForReadonlyFragmentEntry()
 		throws Exception {
 
-		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, true, false);
+		setUpFragmentPermission(true);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
+					_fragmentEntry, renderRequest, renderResponse,
+					RandomTestUtil.randomInt());
 
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -118,8 +127,8 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	public void testGetActionDropdownItemsForSiteScopedFragmentEntry()
 		throws Exception {
 
-		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, false, false);
+		setUpFragmentPermission(true);
 
 		Mockito.when(
 			_fragmentEntry.getGroupId()
@@ -130,7 +139,8 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
+					_fragmentEntry, renderRequest, renderResponse,
+					RandomTestUtil.randomInt());
 
 		try (MockedStatic<DesignLibraryUtil> designLibraryUtilMockedStatic =
 				Mockito.mockStatic(DesignLibraryUtil.class);
@@ -183,13 +193,14 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	public void testGetActionDropdownItemsWithManageFragmentEntries()
 		throws Exception {
 
-		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, false, false);
+		setUpFragmentPermission(true);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
+					_fragmentEntry, renderRequest, renderResponse,
+					RandomTestUtil.randomInt());
 
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -199,30 +210,71 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	}
 
 	@Test
+	@TestInfo("LPD-101584")
+	public void testGetActionDropdownItemsWithUsageCount() throws Exception {
+		_assertViewSiteUsagesDropdownItemDisabled(
+			false, RandomTestUtil.randomInt());
+		_assertViewSiteUsagesDropdownItemDisabled(true, 0);
+	}
+
+	@Test
 	public void testGetActionDropdownItemsWithoutManageFragmentEntries()
 		throws Exception {
 
-		setUpFragmentPermission(false);
 		_setUpFragmentEntry(false, false, false);
+		setUpFragmentPermission(false);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
+					_fragmentEntry, renderRequest, renderResponse,
+					RandomTestUtil.randomInt());
 
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentEntryActionDropdownItemsProvider.
 				getActionDropdownItems());
 	}
 
+	private void _assertViewSiteUsagesDropdownItemDisabled(
+			boolean disabled, int usageCount)
+		throws Exception {
+
+		_setUpFragmentEntry(false, false, false);
+		setUpFragmentPermission(true);
+
+		BasicFragmentEntryActionDropdownItemsProvider
+			basicFragmentEntryActionDropdownItemsProvider =
+				new BasicFragmentEntryActionDropdownItemsProvider(
+					_fragmentEntry, renderRequest, renderResponse, usageCount);
+
+		DropdownItem dropdownItem = _getViewSiteUsagesDropdownItem(
+			basicFragmentEntryActionDropdownItemsProvider.
+				getActionDropdownItems());
+
+		Assert.assertEquals("view-site-usages", dropdownItem.get("label"));
+		Assert.assertEquals(disabled, dropdownItem.get("disabled"));
+	}
+
+	private DropdownItem _getViewSiteUsagesDropdownItem(
+		List<DropdownItem> dropdownItems) {
+
+		for (DropdownItem dropdownItem :
+				getActionDropdownItems(dropdownItems)) {
+
+			if (StringUtil.equals(
+					(String)dropdownItem.get("label"), "view-site-usages")) {
+
+				return dropdownItem;
+			}
+		}
+
+		throw new AssertionError(
+			"Unable to find the \"view-site-usages\" dropdown item in " +
+				dropdownItems);
+	}
+
 	private void _setUpFragmentEntry(
 		boolean draft, boolean readOnly, boolean typeReact) {
-
-		Mockito.when(
-			_fragmentEntry.getUsageCount()
-		).thenReturn(
-			0
-		);
 
 		Mockito.when(
 			_fragmentEntry.isDraft()

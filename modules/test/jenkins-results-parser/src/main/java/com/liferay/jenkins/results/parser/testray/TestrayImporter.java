@@ -40,6 +40,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.JSUnitAxisTestClassGr
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.ModulesAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.WorkspacesCompileAxisTestClassGroup;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +58,7 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1033,6 +1035,26 @@ public class TestrayImporter {
 			throw new RuntimeException(timeoutException);
 		}
 
+		int failedTaskCount = parallelExecutor.getFailedTaskCount();
+
+		if (failedTaskCount > 0) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to record ", String.valueOf(failedTaskCount),
+					" of ", String.valueOf(callables.size()), " Testray axes"));
+		}
+
+		int uncreatedTestrayCaseResultsCount =
+			_uncreatedTestrayCaseResultsCount.get();
+
+		if (uncreatedTestrayCaseResultsCount > 0) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create ",
+					String.valueOf(uncreatedTestrayCaseResultsCount), " of ",
+					String.valueOf(callables.size()), " Testray case results"));
+		}
+
 		List<Long> testrayBuildIds = new ArrayList<>();
 
 		for (TestrayBuild testrayBuild : _testrayBuilds.values()) {
@@ -1666,12 +1688,17 @@ public class TestrayImporter {
 
 		buildTestrayCaseResult.cacheTestrayCaseResultURL();
 
+		if (buildTestrayCaseResult.getTestrayCaseResultURL() == null) {
+			_uncreatedTestrayCaseResultsCount.incrementAndGet();
+		}
+
 		testrayCaseResults.add(buildTestrayCaseResult);
 
 		if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
 			axisTestClassGroup instanceof JSUnitAxisTestClassGroup ||
 			axisTestClassGroup instanceof JUnitAxisTestClassGroup ||
-			axisTestClassGroup instanceof ModulesAxisTestClassGroup) {
+			axisTestClassGroup instanceof ModulesAxisTestClassGroup ||
+			axisTestClassGroup instanceof WorkspacesCompileAxisTestClassGroup) {
 
 			PortalLogBatchBuildTestrayCaseResult
 				portalLogBatchBuildTestrayCaseResult =
@@ -1789,6 +1816,15 @@ public class TestrayImporter {
 					getTestrayBuild(testBaseDir), _topLevelBuildReport);
 
 		topLevelStandaloneBuildTestrayCaseResult.recordTestrayCaseResult(job);
+
+		topLevelStandaloneBuildTestrayCaseResult.cacheTestrayCaseResultURL();
+
+		URL testrayCaseResultURL =
+			topLevelStandaloneBuildTestrayCaseResult.getTestrayCaseResultURL();
+
+		if (testrayCaseResultURL == null) {
+			_uncreatedTestrayCaseResultsCount.incrementAndGet();
+		}
 
 		return topLevelStandaloneBuildTestrayCaseResult;
 	}
@@ -2278,6 +2314,8 @@ public class TestrayImporter {
 	private final Map<File, TestrayServer> _testrayServers =
 		Collections.synchronizedMap(new HashMap<File, TestrayServer>());
 	private final TopLevelBuildReport _topLevelBuildReport;
+	private final AtomicInteger _uncreatedTestrayCaseResultsCount =
+		new AtomicInteger();
 	private final List<Workspace> _workspaces;
 
 }

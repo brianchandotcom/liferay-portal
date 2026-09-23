@@ -16,6 +16,7 @@ export interface IViewsContext {
 	snapshots: Array<ISnapshots>;
 	snapshotsEnabled: boolean;
 	sorts: Array<any>;
+	userConfiguration: IUserConfiguration | null;
 	views: Array<any>;
 	visibleFieldNames: any;
 }
@@ -31,6 +32,10 @@ export interface ISnapshots {
 	headerVisible: boolean;
 	items: Array<ISnapshot>;
 	label?: string;
+}
+
+export interface IUserConfiguration {
+	initialDataSetSnapshotERC: null | string;
 }
 
 export type TViewsContextDispatch = ({
@@ -52,6 +57,7 @@ const ViewsContext = createContext<[IViewsContext, any]>([
 		snapshots: [],
 		snapshotsEnabled: false,
 		sorts: [],
+		userConfiguration: null,
 		views: [],
 		visibleFieldNames: {},
 	},

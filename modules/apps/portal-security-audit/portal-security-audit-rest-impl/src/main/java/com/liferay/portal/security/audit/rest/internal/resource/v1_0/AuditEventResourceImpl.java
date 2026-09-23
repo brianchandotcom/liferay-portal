@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.audit.rest.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -83,11 +84,7 @@ public class AuditEventResourceImpl extends BaseAuditEventResourceImpl {
 				setClientIP(serviceBuilderAuditEvent::getClientIP);
 				setContextName(serviceBuilderAuditEvent::getContextName);
 				setCorrelationId(serviceBuilderAuditEvent::getCorrelationId);
-				setCreator(
-					() -> CreatorUtil.toCreator(
-						null, _portal,
-						_userLocalService.fetchUser(
-							serviceBuilderAuditEvent.getUserId())));
+				setCreator(() -> _toCreator(serviceBuilderAuditEvent));
 				setDateCreated(serviceBuilderAuditEvent::getCreateDate);
 				setEntityId(
 					() -> GetterUtil.getLong(
@@ -106,6 +103,31 @@ public class AuditEventResourceImpl extends BaseAuditEventResourceImpl {
 				setRoles(serviceBuilderAuditEvent::getRoles);
 				setServerName(serviceBuilderAuditEvent::getServerName);
 				setUserAgent(serviceBuilderAuditEvent::getUserAgent);
+			}
+		};
+	}
+
+	private Creator _toCreator(
+		com.liferay.portal.security.audit.storage.model.AuditEvent
+			serviceBuilderAuditEvent) {
+
+		long userId = serviceBuilderAuditEvent.getUserId();
+
+		if (!serviceBuilderAuditEvent.isPseudonymized()) {
+			return CreatorUtil.toCreator(
+				null, _portal, _userLocalService.fetchUser(userId));
+		}
+
+		String userName = serviceBuilderAuditEvent.getUserName();
+
+		if ((userId <= 0) && Validator.isBlank(userName)) {
+			return null;
+		}
+
+		return new Creator() {
+			{
+				setId(() -> userId);
+				setName(() -> userName);
 			}
 		};
 	}

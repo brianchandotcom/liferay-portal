@@ -32,7 +32,7 @@ public class ComponentAnnotationCheck extends BaseCheck {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentDetailAST != null) ||
+		if ((parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) ||
 			!importNames.contains(
 				"org.osgi.service.component.annotations.Component")) {
 

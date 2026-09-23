@@ -35,7 +35,7 @@ public class UpgradeRemovedAPICheck extends BaseAPICheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentDetailAST != null) ||
+		if ((parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) ||
 			AnnotationUtil.containsAnnotation(detailAST, "Deprecated")) {
 
 			return;

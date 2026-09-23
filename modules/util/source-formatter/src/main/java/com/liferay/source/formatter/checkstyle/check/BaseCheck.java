@@ -439,41 +439,20 @@ public abstract class BaseCheck extends AbstractCheck {
 					0, absolutePath.lastIndexOf(CharPool.SLASH)));
 		}
 
-		DetailAST rootDetailAST = detailAST;
-
-		while (true) {
-			if (rootDetailAST.getParent() != null) {
-				rootDetailAST = rootDetailAST.getParent();
-			}
-			else if (rootDetailAST.getPreviousSibling() != null) {
-				rootDetailAST = rootDetailAST.getPreviousSibling();
-			}
-			else {
-				break;
-			}
-		}
-
 		List<String> importNames = new ArrayList<>();
 
-		DetailAST siblingDetailAST = rootDetailAST.getNextSibling();
+		for (DetailAST importDetailAST :
+				getAllChildTokens(
+					_getCompilationUnitDetailAST(detailAST), false,
+					TokenTypes.IMPORT)) {
 
-		while (true) {
-			if (siblingDetailAST == null) {
-				return importNames;
-			}
+			FullIdent importFullIdent = FullIdent.createFullIdentBelow(
+				importDetailAST);
 
-			if (siblingDetailAST.getType() == TokenTypes.IMPORT) {
-				FullIdent importFullIdent = FullIdent.createFullIdentBelow(
-					siblingDetailAST);
-
-				importNames.add(importFullIdent.getText());
-			}
-			else if (siblingDetailAST.getType() != TokenTypes.STATIC_IMPORT) {
-				return importNames;
-			}
-
-			siblingDetailAST = siblingDetailAST.getNextSibling();
+			importNames.add(importFullIdent.getText());
 		}
+
+		return importNames;
 	}
 
 	protected int getMaxDirLevel() {
@@ -568,25 +547,18 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected String getPackageName(DetailAST detailAST) {
-		DetailAST rootDetailAST = detailAST;
+		DetailAST compilationUnitDetailAST = _getCompilationUnitDetailAST(
+			detailAST);
 
-		while (true) {
-			if (rootDetailAST.getParent() != null) {
-				rootDetailAST = rootDetailAST.getParent();
-			}
-			else if (rootDetailAST.getPreviousSibling() != null) {
-				rootDetailAST = rootDetailAST.getPreviousSibling();
-			}
-			else {
-				break;
-			}
-		}
+		DetailAST packageDefinitionDetailAST =
+			compilationUnitDetailAST.findFirstToken(TokenTypes.PACKAGE_DEF);
 
-		if (rootDetailAST.getType() != TokenTypes.PACKAGE_DEF) {
+		if (packageDefinitionDetailAST == null) {
 			return StringPool.BLANK;
 		}
 
-		DetailAST dotDetailAST = rootDetailAST.findFirstToken(TokenTypes.DOT);
+		DetailAST dotDetailAST = packageDefinitionDetailAST.findFirstToken(
+			TokenTypes.DOT);
 
 		FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);
 
@@ -1590,6 +1562,16 @@ public abstract class BaseCheck extends AbstractCheck {
 
 		if (name == null) {
 			return null;
+	private DetailAST _getCompilationUnitDetailAST(DetailAST detailAST) {
+		DetailAST compilationUnitDetailAST = detailAST;
+
+		while (compilationUnitDetailAST.getParent() != null) {
+			compilationUnitDetailAST = compilationUnitDetailAST.getParent();
+		}
+
+		return compilationUnitDetailAST;
+	}
+
 		}
 
 		return getVariableTypeName(detailAST, name, false);

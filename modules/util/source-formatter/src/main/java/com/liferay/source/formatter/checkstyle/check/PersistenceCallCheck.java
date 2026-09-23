@@ -44,7 +44,7 @@ public class PersistenceCallCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if (parentDetailAST != null) {
+		if (parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 			return;
 		}
 

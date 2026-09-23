@@ -28,7 +28,9 @@ public class UnusedVariableCheck extends BaseCheck {
 		if (parentDetailAST.getType() == TokenTypes.OBJBLOCK) {
 			parentDetailAST = parentDetailAST.getParent();
 
-			if (parentDetailAST.getParent() != null) {
+			DetailAST grandparentDetailAST = parentDetailAST.getParent();
+
+			if (grandparentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 				return;
 			}
 		}

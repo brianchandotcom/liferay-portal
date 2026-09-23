@@ -33,7 +33,9 @@ public class InnerExceptionClassCheck extends BaseCheck {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentDetailAST != null) || !_isExtendedException(detailAST)) {
+		if ((parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) ||
+			!_isExtendedException(detailAST)) {
+
 			return;
 		}
 

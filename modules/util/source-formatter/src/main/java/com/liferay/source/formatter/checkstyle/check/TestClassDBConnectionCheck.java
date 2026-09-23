@@ -41,7 +41,7 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if (parentDetailAST != null) {
+		if (parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 			return;
 		}
 

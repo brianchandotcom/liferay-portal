@@ -55,7 +55,7 @@ public class JavaClassParser {
 			}
 		}
 
-		DetailAST siblingDetailAST = detailAST.getNextSibling();
+		DetailAST siblingDetailAST = detailAST.getFirstChild();
 
 		while ((siblingDetailAST != null) &&
 			   (siblingDetailAST.getType() != TokenTypes.CLASS_DEF) &&
@@ -117,7 +117,7 @@ public class JavaClassParser {
 			String content, DetailAST detailAST, FileContents fileContents)
 		throws IOException, ParseException {
 
-		DetailAST siblingDetailAST = detailAST.getNextSibling();
+		DetailAST siblingDetailAST = detailAST.getFirstChild();
 
 		while ((siblingDetailAST != null) &&
 			   (siblingDetailAST.getType() != TokenTypes.ANNOTATION_DEF) &&

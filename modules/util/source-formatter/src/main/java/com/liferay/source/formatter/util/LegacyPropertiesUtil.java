@@ -40,7 +40,7 @@ public class LegacyPropertiesUtil {
 
 		DetailAST rootDetailAST = JavaParser.parse(fileContents);
 
-		DetailAST nextSiblingDetailAST = rootDetailAST.getNextSibling();
+		DetailAST nextSiblingDetailAST = rootDetailAST.getFirstChild();
 
 		while (true) {
 			if (nextSiblingDetailAST.getType() != TokenTypes.CLASS_DEF) {

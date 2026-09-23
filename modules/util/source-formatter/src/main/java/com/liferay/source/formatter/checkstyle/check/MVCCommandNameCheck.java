@@ -37,7 +37,9 @@ public class MVCCommandNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if ((detailAST.getParent() != null) ||
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if ((parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) ||
 			AnnotationUtil.containsAnnotation(detailAST, "Deprecated")) {
 
 			return;

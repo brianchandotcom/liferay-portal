@@ -26,8 +26,10 @@ public class TestClassHardcodedPortCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
+		DetailAST parentDetailAST = detailAST.getParent();
+
 		if (!absolutePath.endsWith("Test.java") ||
-			(detailAST.getParent() != null)) {
+			(parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT)) {
 
 			return;
 		}

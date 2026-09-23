@@ -31,7 +31,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentDetailAST != null) || !_isUpgradeProcess(detailAST)) {
+		if ((parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) ||
+			!_isUpgradeProcess(detailAST)) {
+
 			return;
 		}
 

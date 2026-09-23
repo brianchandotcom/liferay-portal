@@ -227,13 +227,22 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			externalReferenceCodes.containsAll(
 				Arrays.asList(externalReferenceCode1, externalReferenceCode2)));
 
+		long targetGroupId = _getTargetGroupId(scope);
+
+		Assert.assertEquals(
+			getEntryValue(groupId, externalReferenceCode1),
+			getEntryValue(targetGroupId, externalReferenceCode1));
+		Assert.assertEquals(
+			getEntryValue(groupId, externalReferenceCode2),
+			getEntryValue(targetGroupId, externalReferenceCode2));
+
 		updateEntry(groupId, externalReferenceCode1);
 
 		_exportImport(scope, Collections.emptyMap(), null, null);
 
 		Assert.assertEquals(
 			getEntryValue(groupId, externalReferenceCode1),
-			getEntryValue(_getTargetGroupId(scope), externalReferenceCode1));
+			getEntryValue(targetGroupId, externalReferenceCode1));
 	}
 
 	@Test

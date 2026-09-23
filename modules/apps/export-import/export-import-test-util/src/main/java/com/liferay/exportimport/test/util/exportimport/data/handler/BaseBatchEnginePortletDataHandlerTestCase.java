@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -102,35 +101,19 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	extends BasePortletDataHandlerTestCase {
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
-		if (_targetCompany != null) {
-			_companyLocalService.deleteCompany(_targetCompany);
-
-			_companyGroup = null;
-			_targetCompany = null;
-			_targetCompanyGroup = null;
-			_targetUser = null;
-		}
-
-		if (_depotEntry != null) {
-			_depotEntryLocalService.deleteDepotEntry(_depotEntry);
-			_depotEntryLocalService.deleteDepotEntry(_targetDepotEntry);
-
-			_depotEntry = null;
-			_depotLayout = null;
-			_targetDepotEntry = null;
-			_targetDepotLayout = null;
-		}
-
-		if (_group != null) {
-			_groupLocalService.deleteGroup(_group);
-			_groupLocalService.deleteGroup(_targetGroup);
-
-			_group = null;
-			_siteLayout = null;
-			_targetGroup = null;
-			_targetSiteLayout = null;
-		}
+	public static void tearDownClass() {
+		_companyGroup = null;
+		_depotEntry = null;
+		_depotLayout = null;
+		_group = null;
+		_siteLayout = null;
+		_targetCompany = null;
+		_targetCompanyGroup = null;
+		_targetDepotEntry = null;
+		_targetDepotLayout = null;
+		_targetGroup = null;
+		_targetSiteLayout = null;
+		_targetUser = null;
 	}
 
 	@Before
@@ -1011,21 +994,9 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	}
 
 	private static Group _companyGroup;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private static DepotEntry _depotEntry;
-
-	@Inject
-	private static DepotEntryLocalService _depotEntryLocalService;
-
 	private static Layout _depotLayout;
 	private static Group _group;
-
-	@Inject
-	private static GroupLocalService _groupLocalService;
-
 	private static Layout _siteLayout;
 	private static Company _targetCompany;
 	private static Group _targetCompanyGroup;
@@ -1051,8 +1022,14 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	private User _creatorUser;
 
 	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

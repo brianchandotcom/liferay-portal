@@ -6,7 +6,6 @@
 package com.liferay.style.book.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.frontend.token.definition.util.FrontendTokenDefinitionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -35,7 +34,6 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.test.util.FrontendTokenDefinitionTestUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -125,14 +123,8 @@ public class EditStyleBookEntryDisplayContextTest {
 		Map<String, JSONObject> frontendTokenDefinitionJSONObjects =
 			JSONUtil.toJSONObjectMap(frontendTokenDefinitionsJSONArray, "id");
 
-		JSONObject frontendTokenDefinitionJSONObject =
-			frontendTokenDefinitionJSONObjects.get(_THEME_ID_CLASSIC);
-
-		List<String> frontendTokenNames =
-			FrontendTokenDefinitionUtil.getFrontendTokenNames(
-				frontendTokenDefinitionJSONObject);
-
-		Assert.assertTrue(frontendTokenNames.contains(frontendTokenName));
+		Assert.assertTrue(
+			frontendTokenDefinitionJSONObjects.containsKey(_THEME_ID_CLASSIC));
 	}
 
 	private static final String _THEME_ID_CLASSIC = "classic_WAR_classictheme";

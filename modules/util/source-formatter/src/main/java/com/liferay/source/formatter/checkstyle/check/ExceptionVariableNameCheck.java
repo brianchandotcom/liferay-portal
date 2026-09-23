@@ -187,20 +187,16 @@ public class ExceptionVariableNameCheck extends VariableNameCheck {
 
 		DetailAST parentDetailAST = definitionDetailAST.getParent();
 
-		if (parentDetailAST.getType() == TokenTypes.LITERAL_CATCH) {
-			DetailAST firstChildDetailAST = typeDetailAST.getFirstChild();
+		if ((parentDetailAST.getType() == TokenTypes.LITERAL_CATCH) &&
+			(typeDetailAST.findFirstToken(TokenTypes.BOR) != null)) {
 
-			if ((firstChildDetailAST != null) &&
-				(firstChildDetailAST.getType() == TokenTypes.BOR)) {
-
-				for (String name : getNames(firstChildDetailAST, true)) {
-					if (name.endsWith("Exception")) {
-						return "Exception";
-					}
+			for (String name : getNames(typeDetailAST, true)) {
+				if (name.endsWith("Exception")) {
+					return "Exception";
 				}
-
-				return null;
 			}
+
+			return null;
 		}
 
 		String exceptionTypeName = getTypeName(typeDetailAST, false);

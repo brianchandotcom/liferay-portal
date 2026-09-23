@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -227,9 +228,7 @@ public class GenericTypeCheck extends BaseCheck {
 		}
 
 		if (detailAST.getType() == TokenTypes.DOT) {
-			FullIdent fullIdent = FullIdent.createFullIdent(detailAST);
-
-			return fullIdent.getText();
+			return DetailASTUtil.getBaseTypeName(detailAST);
 		}
 
 		return detailAST.getText();

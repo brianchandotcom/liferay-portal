@@ -23,6 +23,12 @@ public class MissingParenthesesCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST.getType() == TokenTypes.TYPE) {
+			return;
+		}
+
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
 		if (detailAST.getType() == TokenTypes.QUESTION) {

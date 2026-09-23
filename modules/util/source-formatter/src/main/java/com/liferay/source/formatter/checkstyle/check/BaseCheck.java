@@ -766,21 +766,16 @@ public abstract class BaseCheck extends AbstractCheck {
 			return StringPool.BLANK;
 		}
 
-		int arrayDimension = 0;
-
-		while (childDetailAST.getType() == TokenTypes.ARRAY_DECLARATOR) {
-			arrayDimension++;
-
-			childDetailAST = childDetailAST.getFirstChild();
-		}
+		List<DetailAST> arrayDeclaratorDetailASTs = getAllChildTokens(
+			typeDetailAST, false, TokenTypes.ARRAY_DECLARATOR);
 
 		StringBundler sb = new StringBundler();
 
-		FullIdent typeFullIdent = FullIdent.createFullIdent(childDetailAST);
+		String baseTypeName = DetailASTUtil.getBaseTypeName(childDetailAST);
 
 		if (fullyQualifiedName) {
 			String packageName = JavaSourceUtil.getPackageName(
-				typeFullIdent.getText(), getPackageName(detailAST),
+				baseTypeName, getPackageName(detailAST),
 				getImportNames(detailAST));
 
 			if (Validator.isNotNull(packageName)) {
@@ -789,10 +784,10 @@ public abstract class BaseCheck extends AbstractCheck {
 			}
 		}
 
-		sb.append(typeFullIdent.getText());
+		sb.append(baseTypeName);
 
 		if (includeArrayDimension) {
-			for (int i = 0; i < arrayDimension; i++) {
+			for (int i = 0; i < arrayDeclaratorDetailASTs.size(); i++) {
 				sb.append("[]");
 			}
 		}
@@ -1562,6 +1557,11 @@ public abstract class BaseCheck extends AbstractCheck {
 
 		if (name == null) {
 			return null;
+		}
+
+		return getVariableTypeName(detailAST, name, false);
+	}
+
 	private DetailAST _getCompilationUnitDetailAST(DetailAST detailAST) {
 		DetailAST compilationUnitDetailAST = detailAST;
 
@@ -1570,11 +1570,6 @@ public abstract class BaseCheck extends AbstractCheck {
 		}
 
 		return compilationUnitDetailAST;
-	}
-
-		}
-
-		return getVariableTypeName(detailAST, name, false);
 	}
 
 	private List<String> _getJSPImportNames(String directoryName) {

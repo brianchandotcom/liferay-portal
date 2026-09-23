@@ -8,6 +8,7 @@ package com.liferay.source.formatter.checkstyle.util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,18 @@ public class DetailASTUtil {
 		DetailAST detailAST, boolean recursive, int... tokenTypes) {
 
 		return _getAllChildTokens(detailAST, recursive, null, tokenTypes);
+	}
+
+	public static String getBaseTypeName(DetailAST detailAST) {
+		FullIdent fullIdent = FullIdent.createFullIdent(detailAST);
+
+		String baseTypeName = fullIdent.getText();
+
+		while (baseTypeName.endsWith("[]")) {
+			baseTypeName = baseTypeName.substring(0, baseTypeName.length() - 2);
+		}
+
+		return baseTypeName;
 	}
 
 	private static List<DetailAST> _getAllChildTokens(

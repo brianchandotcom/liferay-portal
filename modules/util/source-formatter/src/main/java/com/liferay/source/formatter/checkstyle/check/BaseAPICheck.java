@@ -737,13 +737,15 @@ public abstract class BaseAPICheck extends BaseCheck {
 			DetailAST curDetailAST = firstChildDetailAST.getNextSibling();
 
 			while (true) {
-				if (curDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) {
+				if ((curDetailAST == null) ||
+					(curDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR)) {
+
 					return parameterTypeName;
 				}
 
 				parameterTypeName += "[]";
 
-				curDetailAST = curDetailAST.getFirstChild();
+				curDetailAST = curDetailAST.getNextSibling();
 			}
 		}
 

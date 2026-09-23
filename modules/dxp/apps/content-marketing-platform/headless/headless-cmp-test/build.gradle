@@ -9,8 +9,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:depot:depot-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
 	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
-	testIntegrationImplementation project(":apps:headless:headless-cmp:headless-cmp-api")
-	testIntegrationImplementation project(":apps:headless:headless-cmp:headless-cmp-client")
 	testIntegrationImplementation project(":apps:layout:layout-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
 	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-scope-api")
@@ -23,6 +21,8 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationImplementation project(":apps:sharing:sharing-api")
 	testIntegrationImplementation project(":apps:site:site-api")
-	testIntegrationImplementation project(":apps:site:site-cmp-site-initializer-test-util")
+	testIntegrationImplementation project(":dxp:apps:content-marketing-platform:headless:headless-cmp-api")
+	testIntegrationImplementation project(":dxp:apps:content-marketing-platform:headless:headless-cmp-client")
+	testIntegrationImplementation project(":dxp:apps:content-marketing-platform:site:site-cmp-site-initializer-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

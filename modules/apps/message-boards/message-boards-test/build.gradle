@@ -27,7 +27,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal:portal-upgrade-test-util")
 	testIntegrationImplementation project(":apps:portal:portal-verify-test-util")
 	testIntegrationImplementation project(":apps:ratings:ratings-test-util")
-	testIntegrationImplementation project(":apps:site:site-cmp-site-initializer-test-util")
 	testIntegrationImplementation project(":apps:social:social-activity-test-util")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":apps:subscription:subscription-api")
@@ -35,5 +34,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:trash:trash-api")
 	testIntegrationImplementation project(":apps:trash:trash-test-util")
 	testIntegrationImplementation project(":apps:users-admin:users-admin-test-util")
+	testIntegrationImplementation project(":dxp:apps:content-marketing-platform:site:site-cmp-site-initializer-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

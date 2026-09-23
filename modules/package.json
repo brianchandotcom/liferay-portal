@@ -36,6 +36,7 @@
 			"apps/*/*/*",
 			"apps/frontend-js/frontend-js-clay-web/clay/clay-*",
 			"dxp/apps/*/*",
+			"dxp/apps/content-marketing-platform/*/*",
 			"dxp/apps/osb/osb-patcher/*",
 			"frontend-sdk/*",
 			"test/playwright",

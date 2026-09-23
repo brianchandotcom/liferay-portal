@@ -31,47 +31,65 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 		transform: scale(1);
 	}
 
-	.modal-dialog {
-		margin-top: $omni-search-dialog-margin-y;
-	}
-
-	.modal-content {
-		background-color: transparent;
-		border: 0;
-		box-shadow: none;
-		max-height: calc(100vh - #{$omni-search-dialog-margin-y} * 2);
-		overflow: visible;
-	}
-
-	.modal-header {
+	.btn.omni-search-result {
 		align-items: center;
-		background: var(--cadmin-white);
-		border-radius: $cadmin-border-radius-xl;
-		border-width: 0;
-		box-shadow: $cadmin-box-shadow-lg;
-		height: auto;
-		margin-bottom: $omni-search-header-margin-bottom;
-		padding: $cadmin-spacer calc(#{$cadmin-spacer} * 1.25) $cadmin-spacer
-			$cadmin-spacer;
-		z-index: 0;
-	}
+		border-radius: $cadmin-border-radius;
+		display: flex;
+		gap: calc(#{$cadmin-spacer} * 0.75);
+		padding: calc(#{$cadmin-spacer} * 0.5);
+		text-align: left;
+		width: 100%;
 
-	@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
-		.modal-header .close {
-			@include sr-only();
-			@include sr-only-focusable();
+		&.active,
+		&:focus,
+		&:hover {
+			background-color: var(--cadmin-gray-100);
+		}
 
-			&:active,
-			&:focus {
-				margin-left: calc(#{$cadmin-spacer} * 0.5);
-				position: relative;
-				z-index: 5;
-			}
+		.omni-search-result-source {
+			font-size: 0.8125rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.omni-search-result-sticker {
+			border-radius: $cadmin-border-radius;
+			flex-shrink: 0;
+		}
+
+		.omni-search-result-text {
+			display: flex;
+			flex-direction: column;
+			line-height: 1.4;
+			min-width: 0;
+		}
+
+		.omni-search-result-title {
+			font-weight: 600;
 		}
 	}
 
-	.modal-title {
-		overflow: visible;
+	.form-control.omni-search-input {
+		font-size: $cadmin-modal-title-font-size;
+		height: $cadmin-input-height-lg;
+	}
+
+	.input-group-inset-item-after {
+		border-bottom-right-radius: $cadmin-border-radius;
+		border-top-right-radius: $cadmin-border-radius;
+		min-width: $cadmin-input-height;
+	}
+
+	.input-group-inset-item-before {
+		border-bottom-left-radius: $cadmin-border-radius;
+		border-top-left-radius: $cadmin-border-radius;
+		padding-left: $cadmin-spacer;
+		padding-right: calc(#{$cadmin-spacer} * 0.5);
+	}
+
+	.input-group-item-focusable {
+		border-radius: $cadmin-border-radius;
 	}
 
 	.modal-body {
@@ -91,30 +109,64 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 		}
 	}
 
+	.modal-content {
+		background-color: transparent;
+		border: 0;
+		box-shadow: none;
+		max-height: calc(100vh - #{$omni-search-dialog-margin-y} * 2);
+		overflow: visible;
+	}
+
+	.modal-dialog {
+		margin-top: $omni-search-dialog-margin-y;
+	}
+
+	.modal-header {
+		align-items: center;
+		background: var(--cadmin-white);
+		border-radius: $cadmin-border-radius-xl;
+		border-width: 0;
+		box-shadow: $cadmin-box-shadow-lg;
+		height: auto;
+		margin-bottom: $omni-search-header-margin-bottom;
+		padding: $cadmin-spacer calc(#{$cadmin-spacer} * 1.25) $cadmin-spacer
+			$cadmin-spacer;
+		z-index: 0;
+	}
+
 	.modal-header .input-group {
 		flex-grow: 1;
 	}
 
-	.form-control.omni-search-input {
-		font-size: $cadmin-modal-title-font-size;
-		height: $cadmin-input-height-lg;
+	.modal-title {
+		overflow: visible;
 	}
 
-	.input-group-item-focusable {
-		border-radius: $cadmin-border-radius;
+	.omni-search-list {
+		margin-bottom: 0;
 	}
 
-	.input-group-inset-item-before {
-		border-bottom-left-radius: $cadmin-border-radius;
-		border-top-left-radius: $cadmin-border-radius;
-		padding-left: $cadmin-spacer;
-		padding-right: calc(#{$cadmin-spacer} * 0.5);
-	}
+	.omni-search-result-item {
+		position: relative;
 
-	.input-group-inset-item-after {
-		border-bottom-right-radius: $cadmin-border-radius;
-		border-top-right-radius: $cadmin-border-radius;
-		min-width: $cadmin-input-height;
+		&:focus-within .omni-search-result-delete,
+		&:has(.omni-search-result.active) .omni-search-result-delete,
+		&:hover .omni-search-result-delete,
+		.omni-search-result-delete:focus {
+			opacity: 1;
+		}
+
+		&:has(.omni-search-result-delete) .omni-search-result {
+			padding-right: calc(#{$cadmin-spacer} * 3);
+		}
+
+		.omni-search-result-delete {
+			opacity: 0;
+			position: absolute;
+			right: calc(#{$cadmin-spacer} * 0.5);
+			top: 50%;
+			transform: translateY(-50%);
+		}
 	}
 
 	.omni-search-section-header {
@@ -130,76 +182,12 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 		}
 	}
 
-	.omni-search-list {
-		margin-bottom: 0;
-	}
-
-	.omni-search-result-item {
-		position: relative;
-
-		.omni-search-result-delete {
-			opacity: 0;
-			position: absolute;
-			right: calc(#{$cadmin-spacer} * 0.5);
-			top: 50%;
-			transform: translateY(-50%);
-		}
-
-		&:focus-within .omni-search-result-delete,
-		&:has(.omni-search-result.active) .omni-search-result-delete,
-		&:hover .omni-search-result-delete,
-		.omni-search-result-delete:focus {
-			opacity: 1;
-		}
-
-		&:has(.omni-search-result-delete) .omni-search-result {
-			padding-right: calc(#{$cadmin-spacer} * 3);
-		}
-	}
-
-	.btn.omni-search-result {
-		align-items: center;
-		border-radius: $cadmin-border-radius;
-		display: flex;
-		gap: calc(#{$cadmin-spacer} * 0.75);
-		padding: calc(#{$cadmin-spacer} * 0.5);
-		text-align: left;
-		width: 100%;
-
-		&:hover,
-		&:focus,
-		&.active {
-			background-color: var(--cadmin-gray-100);
-		}
-
-		.omni-search-result-sticker {
-			border-radius: $cadmin-border-radius;
-			flex-shrink: 0;
-		}
-
-		.omni-search-result-text {
-			display: flex;
-			flex-direction: column;
-			line-height: 1.4;
-			min-width: 0;
-		}
-
-		.omni-search-result-title {
-			font-weight: 600;
-		}
-
-		.omni-search-result-source {
-			font-size: 0.8125rem;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-	}
-
 	@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
-		.modal-dialog {
-			margin-bottom: $omni-search-dialog-margin-y-mobile;
-			margin-top: $omni-search-dialog-margin-y-mobile;
+		.modal-body {
+			max-height: calc(
+				100vh - #{$omni-search-dialog-margin-y-mobile} * 2 - #{$omni-search-header-height} -
+					#{$omni-search-header-margin-bottom-mobile}
+			);
 		}
 
 		.modal-content {
@@ -208,15 +196,27 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 			);
 		}
 
+		.modal-dialog {
+			margin-bottom: $omni-search-dialog-margin-y-mobile;
+			margin-top: $omni-search-dialog-margin-y-mobile;
+		}
+
 		.modal-header {
 			margin-bottom: $omni-search-header-margin-bottom-mobile;
 		}
+	}
 
-		.modal-body {
-			max-height: calc(
-				100vh - #{$omni-search-dialog-margin-y-mobile} * 2 - #{$omni-search-header-height} -
-					#{$omni-search-header-margin-bottom-mobile}
-			);
+	@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+		.modal-header .close {
+			@include sr-only();
+			@include sr-only-focusable();
+
+			&:active,
+			&:focus {
+				margin-left: calc(#{$cadmin-spacer} * 0.5);
+				position: relative;
+				z-index: 5;
+			}
 		}
 	}
 }

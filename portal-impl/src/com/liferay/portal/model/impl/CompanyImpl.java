@@ -195,7 +195,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 			String key = getKey();
 
 			if (Validator.isNotNull(key)) {
-				_keyObj = CompanyKeyUtil.deserializeKey(getCompanyId(), key);
+				_keyObj = CompanyKeyUtil.unwrapKey(getCompanyId(), key);
 			}
 		}
 

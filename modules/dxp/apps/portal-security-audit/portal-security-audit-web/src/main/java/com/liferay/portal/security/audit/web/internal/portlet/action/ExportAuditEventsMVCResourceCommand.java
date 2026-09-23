@@ -227,6 +227,10 @@ public class ExportAuditEventsMVCResourceCommand
 	}
 
 	private String _getEmailAddress(AuditEvent auditEvent) {
+		if (auditEvent.isPseudonymized()) {
+			return auditEvent.getUserEmailAddress();
+		}
+
 		if (auditEvent.getUserId() <= 0) {
 			return StringPool.BLANK;
 		}
@@ -241,7 +245,7 @@ public class ExportAuditEventsMVCResourceCommand
 	}
 
 	private String _getScreenName(AuditEvent auditEvent) {
-		if (auditEvent.getUserId() <= 0) {
+		if (auditEvent.isPseudonymized() || (auditEvent.getUserId() <= 0)) {
 			return StringPool.BLANK;
 		}
 

@@ -50,6 +50,8 @@ public interface AuditEvent {
 
 	public String getSessionID();
 
+	public String getUserEmailAddress();
+
 	public long getUserId();
 
 	public String getUserName();

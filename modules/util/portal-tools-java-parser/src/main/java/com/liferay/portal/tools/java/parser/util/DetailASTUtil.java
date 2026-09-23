@@ -11,15 +11,16 @@ import com.liferay.portal.tools.java.parser.Position;
 import com.puppycrawl.tools.checkstyle.DetailAstImpl;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
 import org.antlr.v4.runtime.Token;
 
+/**
  * @author Hugo Huijser
  */
 public class DetailASTUtil {
@@ -34,6 +35,18 @@ public class DetailASTUtil {
 		DetailAST detailAST, boolean recursive, int... tokenTypes) {
 
 		return _getAllChildTokens(detailAST, recursive, null, tokenTypes);
+	}
+
+	public static String getBaseTypeName(DetailAST detailAST) {
+		FullIdent fullIdent = FullIdent.createFullIdent(detailAST);
+
+		String baseTypeName = fullIdent.getText();
+
+		while (baseTypeName.endsWith("[]")) {
+			baseTypeName = baseTypeName.substring(0, baseTypeName.length() - 2);
+		}
+
+		return baseTypeName;
 	}
 
 	public static DetailAST getClosingDetailAST(DetailAST detailAST) {

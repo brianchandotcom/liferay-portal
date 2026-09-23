@@ -64,7 +64,6 @@ import com.liferay.portal.tools.java.parser.JavaType;
 import com.liferay.portal.tools.java.parser.JavaTypeCast;
 import com.liferay.portal.tools.java.parser.JavaVariableDefinition;
 import com.liferay.portal.tools.java.parser.JavaWhileStatement;
-import com.liferay.portal.tools.java.parser.Position;
 import com.liferay.portal.tools.java.parser.util.comparator.ModifierComparator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -220,65 +219,11 @@ public class JavaParserUtil {
 	}
 
 	private static int _getArrayDimension(DetailAST detailAST) {
-		int arrayDimension = 0;
-
-		DetailAST childDetailAST = detailAST.getFirstChild();
-
-		while (childDetailAST.getType() == TokenTypes.ARRAY_DECLARATOR) {
-			arrayDimension++;
-
-			childDetailAST = childDetailAST.getFirstChild();
-		}
-
-		// Checkstyle parses the following two types as identical DetailASTs:
-		// 'Map<Long, List<String>[]>' and 'Map<Long, List<String>>[]'. The
-		// following logic is to 'correct' misplaced array declarators.
-
-		if (arrayDimension > 0) {
-			DetailAST parentDetailAST = detailAST.getParent();
-
-			if (parentDetailAST.getType() == TokenTypes.TYPE_ARGUMENT) {
-				parentDetailAST = parentDetailAST.getParent();
-			}
-
-			if ((parentDetailAST.getType() == TokenTypes.TYPE_ARGUMENTS) &&
-				_isMisplacedArrayDeclarator(
-					parentDetailAST.getLastChild(),
-					detailAST.getFirstChild())) {
-
-				return 0;
-			}
-
-			return arrayDimension;
-		}
-
-		DetailAST typeInfoDetailAST = detailAST;
-
-		if (childDetailAST.getType() == TokenTypes.DOT) {
-			typeInfoDetailAST = childDetailAST;
-		}
-
-		DetailAST typeArgumentsDetailAST = typeInfoDetailAST.findFirstToken(
-			TokenTypes.TYPE_ARGUMENTS);
-
-		if (typeArgumentsDetailAST == null) {
-			return arrayDimension;
-		}
-
 		List<DetailAST> arrayDeclaratorDetailASTs =
 			DetailASTUtil.getAllChildTokens(
-				typeInfoDetailAST, true, TokenTypes.ARRAY_DECLARATOR);
+				detailAST, false, TokenTypes.ARRAY_DECLARATOR);
 
-		for (DetailAST arrayDeclaratorDetailAST : arrayDeclaratorDetailASTs) {
-			if (_isMisplacedArrayDeclarator(
-					typeArgumentsDetailAST.getLastChild(),
-					arrayDeclaratorDetailAST)) {
-
-				arrayDimension++;
-			}
-		}
-
-		return arrayDimension;
+		return arrayDeclaratorDetailASTs.size();
 	}
 
 	private static Tuple _getChainTuple(DetailAST dotDetailAST) {
@@ -305,7 +250,8 @@ public class JavaParserUtil {
 			JavaExpression javaExpression = null;
 
 			if (ArrayUtil.contains(_SIMPLE_TYPES, detailAST.getType()) &&
-				(detailAST.getFirstChild() == null)) {
+				(detailAST.getFirstChild() == null) &&
+				!_hasArrayDeclarator(detailAST)) {
 
 				name = detailAST.getText() + "." + name;
 			}
@@ -332,9 +278,7 @@ public class JavaParserUtil {
 
 		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
 
-		FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);
-
-		return fullIdent.getText();
+		return DetailASTUtil.getBaseTypeName(dotDetailAST);
 	}
 
 	private static String _getSuffix(DetailAST detailAST) {
@@ -354,21 +298,45 @@ public class JavaParserUtil {
 		return closingDetailAST.getText();
 	}
 
-	private static boolean _isMisplacedArrayDeclarator(
-		DetailAST genericEndDetailAST, DetailAST arrayDeclaratorDetailAST) {
+	private static boolean _hasArrayDeclarator(DetailAST detailAST) {
+		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
 
-		Position genericEndPosition = new Position(
-			genericEndDetailAST.getLineNo(), genericEndDetailAST.getColumnNo());
+		if ((nextSiblingDetailAST != null) &&
+			(nextSiblingDetailAST.getType() == TokenTypes.ARRAY_DECLARATOR)) {
 
-		Position arrayDeclaratorPosition = new Position(
-			arrayDeclaratorDetailAST.getLineNo(),
-			arrayDeclaratorDetailAST.getColumnNo());
-
-		if (arrayDeclaratorPosition.compareTo(genericEndPosition) > 0) {
 			return true;
 		}
 
 		return false;
+	}
+
+	private static List<JavaExpression>
+		_parseArrayDimensionValueJavaExpressions(
+			DetailAST literalNewDetailAST) {
+
+		List<JavaExpression> dimensionValueJavaExpressions = new ArrayList<>();
+
+		for (DetailAST arrayDeclaratorDetailAST :
+				DetailASTUtil.getAllChildTokens(
+					literalNewDetailAST, false, TokenTypes.ARRAY_DECLARATOR)) {
+
+			DetailAST closeBracketDetailAST =
+				arrayDeclaratorDetailAST.findFirstToken(TokenTypes.RBRACK);
+
+			DetailAST previousSiblingDetailAST =
+				closeBracketDetailAST.getPreviousSibling();
+
+			if (previousSiblingDetailAST == null) {
+				dimensionValueJavaExpressions.add(
+					new JavaSimpleValue(StringPool.BLANK));
+			}
+			else {
+				dimensionValueJavaExpressions.add(
+					_parseJavaExpression(previousSiblingDetailAST));
+			}
+		}
+
+		return dimensionValueJavaExpressions;
 	}
 
 	private static List<JavaExpression> _parseArrayValueJavaExpressions(
@@ -490,10 +458,8 @@ public class JavaParserUtil {
 	private static JavaType _parseGenericBoundJavaType(
 		DetailAST detailAST, int arrayDimension) {
 
-		FullIdent fullIdent = FullIdent.createFullIdent(detailAST);
-
 		JavaType genericBoundJavaType = new JavaType(
-			arrayDimension, fullIdent.getText());
+			arrayDimension, DetailASTUtil.getBaseTypeName(detailAST));
 
 		DetailAST typeArgumentsDetailAST = null;
 
@@ -518,39 +484,14 @@ public class JavaParserUtil {
 	private static List<JavaType> _parseGenericBoundJavaTypes(
 		DetailAST detailAST, int genericBoundType) {
 
-		List<DetailAST> typeGenericBoundsDetailASTs =
-			DetailASTUtil.getAllChildTokens(detailAST, true, genericBoundType);
-
-		int arrayDimension = 0;
-		DetailAST typeGenericBoundsDetailAST = null;
-
-		outerLoop:
-		for (DetailAST curTypeGenericBoundsDetailAST :
-				typeGenericBoundsDetailASTs) {
-
-			DetailAST parentDetailAST =
-				curTypeGenericBoundsDetailAST.getParent();
-
-			while (true) {
-				if (DetailASTUtil.equals(detailAST, parentDetailAST)) {
-					typeGenericBoundsDetailAST = curTypeGenericBoundsDetailAST;
-
-					break outerLoop;
-				}
-
-				if (parentDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) {
-					continue outerLoop;
-				}
-
-				arrayDimension++;
-
-				parentDetailAST = parentDetailAST.getParent();
-			}
-		}
+		DetailAST typeGenericBoundsDetailAST = detailAST.findFirstToken(
+			genericBoundType);
 
 		if (typeGenericBoundsDetailAST == null) {
 			return null;
 		}
+
+		int arrayDimension = _getArrayDimension(typeGenericBoundsDetailAST);
 
 		List<JavaType> genericBoundJavaTypes = new ArrayList<>();
 
@@ -561,7 +502,8 @@ public class JavaParserUtil {
 				return genericBoundJavaTypes;
 			}
 
-			if ((childDetailAST.getType() != TokenTypes.TYPE_ARGUMENTS) &&
+			if ((childDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) &&
+				(childDetailAST.getType() != TokenTypes.TYPE_ARGUMENTS) &&
 				(childDetailAST.getType() != TokenTypes.TYPE_EXTENSION_AND)) {
 
 				genericBoundJavaTypes.add(
@@ -728,28 +670,25 @@ public class JavaParserUtil {
 	}
 
 	private static JavaArrayDeclarator _parseJavaArrayDeclarator(
-		DetailAST arrayDeclaratorDetailAST) {
+		DetailAST detailAST) {
 
 		List<JavaExpression> dimensionValueJavaExpressions = new ArrayList<>();
 
-		dimensionValueJavaExpressions.add(
-			new JavaSimpleValue(StringPool.BLANK));
+		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
 
-		DetailAST childDetailAST = arrayDeclaratorDetailAST.getFirstChild();
-
-		while (true) {
-			if (childDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) {
-				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
-
-				return new JavaArrayDeclarator(
-					fullIdent.getText(), dimensionValueJavaExpressions);
-			}
+		while ((nextSiblingDetailAST != null) &&
+			   (nextSiblingDetailAST.getType() ==
+				   TokenTypes.ARRAY_DECLARATOR)) {
 
 			dimensionValueJavaExpressions.add(
 				new JavaSimpleValue(StringPool.BLANK));
 
-			childDetailAST = childDetailAST.getFirstChild();
+			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
 		}
+
+		return new JavaArrayDeclarator(
+			DetailASTUtil.getBaseTypeName(detailAST),
+			dimensionValueJavaExpressions);
 	}
 
 	private static JavaArrayElement _parseJavaArrayElement(
@@ -809,25 +748,14 @@ public class JavaParserUtil {
 
 		DetailAST childDetailAST = typeDetailAST.getFirstChild();
 
-		while (true) {
-			DetailAST nextSiblingDetailAST = childDetailAST.getNextSibling();
-
-			if (nextSiblingDetailAST != null) {
-				FullIdent fullIdent = FullIdent.createFullIdent(
-					nextSiblingDetailAST);
-
-				parameterJavaTypes.add(new JavaType(0, fullIdent.getText()));
-			}
-
+		while (childDetailAST != null) {
 			if (childDetailAST.getType() != TokenTypes.BOR) {
 				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
 
 				parameterJavaTypes.add(new JavaType(0, fullIdent.getText()));
-
-				break;
 			}
 
-			childDetailAST = childDetailAST.getFirstChild();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 
 		if (parameterJavaTypes.size() > 1) {
@@ -910,6 +838,8 @@ public class JavaParserUtil {
 			classJavaType, _parseJavaAnnotations(modifiersDetailAST),
 			_parseModifiers(modifiersDetailAST), type);
 
+		DetailAST parentDetailAST = definitionDetailAST.getParent();
+
 		DetailAST extendsClauseDetailAST = definitionDetailAST.findFirstToken(
 			TokenTypes.EXTENDS_CLAUSE);
 
@@ -919,7 +849,7 @@ public class JavaParserUtil {
 					extendsClauseDetailAST);
 
 			if ((extendedClassJavaTypes.size() > 1) &&
-				((definitionDetailAST.getParent() == null) ||
+				((parentDetailAST.getType() == TokenTypes.COMPILATION_UNIT) ||
 				 !AnnotationUtil.containsAnnotation(definitionDetailAST))) {
 
 				Collections.sort(extendedClassJavaTypes);
@@ -938,7 +868,7 @@ public class JavaParserUtil {
 					implementsClauseDetailAST);
 
 			if ((implementedClassJavaTypes.size() > 1) &&
-				((definitionDetailAST.getParent() == null) ||
+				((parentDetailAST.getType() == TokenTypes.COMPILATION_UNIT) ||
 				 !AnnotationUtil.containsAnnotation(definitionDetailAST))) {
 
 				Collections.sort(implementedClassJavaTypes);
@@ -957,7 +887,7 @@ public class JavaParserUtil {
 					permitsClauseDetailAST);
 
 			if ((permittedClassJavaTypes.size() > 1) &&
-				((definitionDetailAST.getParent() == null) ||
+				((parentDetailAST.getType() == TokenTypes.COMPILATION_UNIT) ||
 				 !AnnotationUtil.containsAnnotation(definitionDetailAST))) {
 
 				Collections.sort(permittedClassJavaTypes);
@@ -1141,7 +1071,7 @@ public class JavaParserUtil {
 
 			javaExpression = _parseJavaArray(detailAST);
 		}
-		else if (detailAST.getType() == TokenTypes.ARRAY_DECLARATOR) {
+		else if (_hasArrayDeclarator(detailAST)) {
 			javaExpression = _parseJavaArrayDeclarator(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.DOT) {
@@ -1542,9 +1472,7 @@ public class JavaParserUtil {
 
 		JavaArrayDeclarator javaArrayDeclarator = new JavaArrayDeclarator(
 			_getName(literalNewDetailAST),
-			_parseArrayValueJavaExpressions(
-				literalNewDetailAST.findFirstToken(
-					TokenTypes.ARRAY_DECLARATOR)));
+			_parseArrayDimensionValueJavaExpressions(literalNewDetailAST));
 
 		javaArrayDeclarator.setGenericJavaTypes(
 			_parseGenericJavaTypes(
@@ -1923,14 +1851,9 @@ public class JavaParserUtil {
 
 		int arrayDimension = _getArrayDimension(detailAST);
 
-		while (childDetailAST.getType() == TokenTypes.ARRAY_DECLARATOR) {
-			childDetailAST = childDetailAST.getFirstChild();
-		}
-
-		FullIdent typeFullIdent = FullIdent.createFullIdent(childDetailAST);
-
 		JavaType javaType = new JavaType(
-			arrayDimension, javaAnnotations, typeFullIdent.getText());
+			arrayDimension, javaAnnotations,
+			DetailASTUtil.getBaseTypeName(childDetailAST));
 
 		DetailAST typeInfoDetailAST = childDetailAST;
 

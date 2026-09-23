@@ -13,25 +13,23 @@ import java.security.Key;
 /**
  * @author Christopher Kian
  */
-public class CompanyKeyUtil {
+public class CompanyKeyResolverUtil {
 
 	public static final String WRAPPED_KEY_PREFIX = "${wrappedKey:";
 
 	public static final String WRAPPED_KEY_VERSION = "v1";
 
-	public static boolean isWrappedKey(String serializedKey) {
-		if ((serializedKey != null) &&
-			serializedKey.startsWith(WRAPPED_KEY_PREFIX)) {
-
+	public static boolean isWrappedKey(String key) {
+		if ((key != null) && key.startsWith(WRAPPED_KEY_PREFIX)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public static Key unwrapKey(long companyId, String serializedKey) {
-		if (!isWrappedKey(serializedKey)) {
-			return EncryptorUtil.deserializeKey(serializedKey);
+	public static Key unwrapKey(long companyId, String wrappedKey) {
+		if (!isWrappedKey(wrappedKey)) {
+			return EncryptorUtil.deserializeKey(wrappedKey);
 		}
 
 		CompanyKeyResolver companyKeyResolver =
@@ -42,7 +40,7 @@ public class CompanyKeyUtil {
 				"Key resolver is not available for company " + companyId);
 		}
 
-		return companyKeyResolver.unwrapKey(companyId, serializedKey);
+		return companyKeyResolver.unwrapKey(companyId, wrappedKey);
 	}
 
 	public static String wrapKey(long companyId, Key key) {
@@ -60,6 +58,6 @@ public class CompanyKeyUtil {
 
 	private static final Snapshot<CompanyKeyResolver>
 		_companyKeyResolverSnapshot = new Snapshot<>(
-			CompanyKeyUtil.class, CompanyKeyResolver.class, null, true);
+			CompanyKeyResolverUtil.class, CompanyKeyResolver.class, null, true);
 
 }

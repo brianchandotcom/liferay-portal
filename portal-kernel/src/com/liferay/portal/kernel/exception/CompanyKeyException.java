@@ -8,20 +8,20 @@ package com.liferay.portal.kernel.exception;
 /**
  * @author Christopher Kian
  */
-public class CompanyKeyResolutionException extends SystemException {
+public class CompanyKeyException extends SystemException {
 
-	public CompanyKeyResolutionException() {
+	public CompanyKeyException() {
 	}
 
-	public CompanyKeyResolutionException(String msg) {
+	public CompanyKeyException(String msg) {
 		super(msg);
 	}
 
-	public CompanyKeyResolutionException(String msg, Throwable throwable) {
+	public CompanyKeyException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public CompanyKeyResolutionException(Throwable throwable) {
+	public CompanyKeyException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -794,7 +794,7 @@ public class HighlightTranslatorTest {
 				defaultHighlightQuery) {
 
 		return _highlightTranslator.translate(
-			_buildHighlight(highlightPrototype), defaultHighlightQuery
+			defaultHighlightQuery, _buildHighlight(highlightPrototype)
 		).highlightQuery();
 	}
 

@@ -20,15 +20,16 @@ import org.mockito.Mockito;
 /**
  * @author Christopher Kian
  */
-public class CompanyKeyUtilTest {
+public class CompanyKeyResolverUtilTest {
 
 	@Test
 	public void testIsWrappedKey() {
-		Assert.assertFalse(CompanyKeyUtil.isWrappedKey(null));
+		Assert.assertFalse(CompanyKeyResolverUtil.isWrappedKey(null));
 		Assert.assertFalse(
-			CompanyKeyUtil.isWrappedKey(RandomTestUtil.randomString()));
+			CompanyKeyResolverUtil.isWrappedKey(RandomTestUtil.randomString()));
 		Assert.assertTrue(
-			CompanyKeyUtil.isWrappedKey(CompanyKeyUtil.WRAPPED_KEY_PREFIX));
+			CompanyKeyResolverUtil.isWrappedKey(
+				CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX));
 	}
 
 	@Test
@@ -47,14 +48,16 @@ public class CompanyKeyUtilTest {
 			AutoCloseable autoCloseable2 = _setCompanyKeyResolver(null)) {
 
 			Assert.assertSame(
-				key, CompanyKeyUtil.unwrapKey(_COMPANY_ID, serializedKey));
+				key,
+				CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, serializedKey));
 		}
 
 		String wrappedKey =
-			CompanyKeyUtil.WRAPPED_KEY_PREFIX + RandomTestUtil.randomString();
+			CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX +
+				RandomTestUtil.randomString();
 
 		try (AutoCloseable autoCloseable = _setCompanyKeyResolver(null)) {
-			CompanyKeyUtil.unwrapKey(_COMPANY_ID, wrappedKey);
+			CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, wrappedKey);
 
 			Assert.fail();
 		}
@@ -74,7 +77,7 @@ public class CompanyKeyUtilTest {
 				companyKeyResolver)) {
 
 			Assert.assertSame(
-				key, CompanyKeyUtil.unwrapKey(_COMPANY_ID, wrappedKey));
+				key, CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, wrappedKey));
 		}
 	}
 
@@ -94,7 +97,8 @@ public class CompanyKeyUtilTest {
 			AutoCloseable autoCloseable2 = _setCompanyKeyResolver(null)) {
 
 			Assert.assertEquals(
-				serializedKey, CompanyKeyUtil.wrapKey(_COMPANY_ID, key));
+				serializedKey,
+				CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 
 		CompanyKeyResolver companyKeyResolver = Mockito.mock(
@@ -111,11 +115,13 @@ public class CompanyKeyUtilTest {
 				companyKeyResolver)) {
 
 			Assert.assertEquals(
-				serializedKey, CompanyKeyUtil.wrapKey(_COMPANY_ID, key));
+				serializedKey,
+				CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 
 		String wrappedKey =
-			CompanyKeyUtil.WRAPPED_KEY_PREFIX + RandomTestUtil.randomString();
+			CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX +
+				RandomTestUtil.randomString();
 
 		Mockito.when(
 			companyKeyResolver.isEnabled(_COMPANY_ID)
@@ -133,7 +139,7 @@ public class CompanyKeyUtilTest {
 				companyKeyResolver)) {
 
 			Assert.assertEquals(
-				wrappedKey, CompanyKeyUtil.wrapKey(_COMPANY_ID, key));
+				wrappedKey, CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 	}
 
@@ -149,7 +155,8 @@ public class CompanyKeyUtilTest {
 		);
 
 		return ReflectionTestUtil.setFieldValueWithAutoCloseable(
-			CompanyKeyUtil.class, "_companyKeyResolverSnapshot", snapshot);
+			CompanyKeyResolverUtil.class, "_companyKeyResolverSnapshot",
+			snapshot);
 	}
 
 	private AutoCloseable _setEncryptor(Encryptor encryptor) {

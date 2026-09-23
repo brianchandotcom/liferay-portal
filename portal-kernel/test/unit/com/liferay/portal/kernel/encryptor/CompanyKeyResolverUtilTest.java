@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.encryptor;
 
-import com.liferay.portal.kernel.exception.CompanyKeyResolutionException;
+import com.liferay.portal.kernel.exception.CompanyKeyException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -61,7 +61,7 @@ public class CompanyKeyResolverUtilTest {
 
 			Assert.fail();
 		}
-		catch (CompanyKeyResolutionException companyKeyResolutionException) {
+		catch (CompanyKeyException companyKeyException) {
 		}
 
 		CompanyKeyResolver companyKeyResolver = Mockito.mock(

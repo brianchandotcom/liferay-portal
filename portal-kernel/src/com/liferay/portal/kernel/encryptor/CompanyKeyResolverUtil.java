@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.encryptor;
 
-import com.liferay.portal.kernel.exception.CompanyKeyResolutionException;
+import com.liferay.portal.kernel.exception.CompanyKeyException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.security.Key;
@@ -36,7 +36,7 @@ public class CompanyKeyResolverUtil {
 			_companyKeyResolverSnapshot.get();
 
 		if (companyKeyResolver == null) {
-			throw new CompanyKeyResolutionException(
+			throw new CompanyKeyException(
 				"Key resolver is not available for company " + companyId);
 		}
 

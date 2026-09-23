@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,9 +45,19 @@ public class JSPJavaParserCheck extends BaseFileCheck {
 					indent += "\t";
 				}
 
-				String match = matcher.group(3);
+				String match = matcher.group(4);
 
-				String replacement = JavaParser.parseSnippet(match, indent);
+				String replacement = null;
+
+				if (Validator.isNull(matcher.group(3))) {
+					replacement = JavaParser.parseSnippet(match, indent);
+				}
+				else {
+					replacement = JavaParser.parseSnippet(match + ";", indent);
+
+					replacement = StringUtil.replaceLast(
+						replacement, ';', StringPool.BLANK);
+				}
 
 				if (!match.equals(replacement)) {
 					return StringUtil.replaceFirst(
@@ -67,6 +78,6 @@ public class JSPJavaParserCheck extends BaseFileCheck {
 		JSPJavaParserCheck.class);
 
 	private static final Pattern _javaSourcePattern = Pattern.compile(
-		"\n(\t*)(.*)<%=?\n(((?!%>)[\\s\\S])*)\n\t*%>");
+		"\n(\t*)(.*)<%(=?)\n(((?!%>)[\\s\\S])*)\n\t*%>");
 
 }

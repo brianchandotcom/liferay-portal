@@ -7113,7 +7113,8 @@ public class ObjectEntryLocalServiceImpl
 					AssetVocabularyGroupRel::getVocabularyId),
 				TransformUtil.transformToLongArray(
 					_assetVocabularyGroupRelLocalService.
-						getAssetVocabularyGroupRelsByGroupId(-1),
+						getAssetVocabularyGroupRelsByGroupId(
+							GroupConstants.ANY_PARENT_GROUP_ID),
 					AssetVocabularyGroupRel::getVocabularyId)));
 
 		for (long assetCategoryId : assetEntry.getCategoryIds()) {

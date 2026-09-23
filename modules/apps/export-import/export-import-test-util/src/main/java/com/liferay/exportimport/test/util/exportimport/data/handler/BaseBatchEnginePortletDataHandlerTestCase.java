@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -70,6 +69,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.io.File;
@@ -87,6 +87,7 @@ import java.util.Objects;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.osgi.framework.Bundle;
@@ -258,16 +259,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 		_exportImport(scope, Collections.emptyMap(), null, null);
 
-		String name = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
-		try {
-			deleteEntry(groupId, externalReferenceCode1);
-		}
-		finally {
-			PrincipalThreadLocal.setName(name);
-		}
+		deleteEntry(groupId, externalReferenceCode1);
 
 		_exportImport(
 			scope,
@@ -486,20 +478,13 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	@Test
 	public void testPrepareManifestSummary() throws Exception {
 		Group originalStagingGroup = stagingGroup;
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
 			stagingGroup = _getGroup(getScope());
 
 			super.testPrepareManifestSummary();
 		}
 		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
 			stagingGroup = originalStagingGroup;
 		}
 	}
@@ -553,6 +538,11 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			ExportImportReportEntryConstants.STATUS_RESOLVED,
 			exportImportReportEntry.getStatus());
 	}
+
+	@Rule
+	public final PermissionCheckerMethodTestRule
+		permissionCheckerMethodTestRule =
+			PermissionCheckerMethodTestRule.INSTANCE;
 
 	protected static User getTargetUser() {
 		return _targetUser;
@@ -758,57 +748,51 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			new String[] {Boolean.FALSE.toString()}
 		).build();
 
+		User user = TestPropsValues.getUser();
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, _companyGroup.getGroupId(), false, new long[0],
+					parameterMap);
+
+		_setDateRange(settingsMap, startDate, endDate);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					settingsMap);
+
+		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
+			exportImportConfiguration);
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			User user = TestPropsValues.getUser();
-
 			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+				PermissionCheckerFactoryUtil.create(_targetUser));
 
-			Map<String, Serializable> settingsMap =
+			exportImportConfiguration = _updateImportConfiguration(
+				exportImportConfiguration, _targetUser,
 				ExportImportConfigurationSettingsMapFactoryUtil.
-					buildExportLayoutSettingsMap(
-						user, _companyGroup.getGroupId(), false, new long[0],
-						parameterMap);
+					buildImportLayoutSettingsMap(
+						_targetUser, _targetCompanyGroup.getGroupId(), false,
+						null, parameterMap),
+				_targetCompanyGroup.getGroupId());
 
-			_setDateRange(settingsMap, startDate, endDate);
+			ExportImportLocalServiceUtil.importLayoutsDataDeletions(
+				exportImportConfiguration, larFile);
 
-			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
-					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						settingsMap);
-
-			File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
-				exportImportConfiguration);
-
-			try {
-				PermissionThreadLocal.setPermissionChecker(
-					PermissionCheckerFactoryUtil.create(_targetUser));
-
-				exportImportConfiguration = _updateImportConfiguration(
-					exportImportConfiguration, _targetUser,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							_targetUser, _targetCompanyGroup.getGroupId(),
-							false, null, parameterMap),
-					_targetCompanyGroup.getGroupId());
-
-				ExportImportLocalServiceUtil.importLayoutsDataDeletions(
-					exportImportConfiguration, larFile);
-
-				ExportImportLocalServiceUtil.importLayouts(
-					exportImportConfiguration, larFile);
-			}
-			finally {
-				FileUtil.delete(larFile);
-			}
+			ExportImportLocalServiceUtil.importLayouts(
+				exportImportConfiguration, larFile);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+			FileUtil.delete(larFile);
 		}
 	}
 
@@ -817,67 +801,56 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			Date endDate)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		User user = TestPropsValues.getUser();
+
+		Layout layout = _siteLayout;
+
+		if (scope == Scope.DEPOT) {
+			layout = _depotLayout;
+		}
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportPortletSettingsMap(
+					user, layout.getPlid(), layout.getGroupId(), portletId,
+					parameterMap, StringPool.BLANK);
+
+		_setDateRange(settingsMap, startDate, endDate);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL,
+					settingsMap);
+
+		File larFile = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
+			exportImportConfiguration);
 
 		try {
-			User user = TestPropsValues.getUser();
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
-			Layout layout = _siteLayout;
+			Layout targetLayout = _targetSiteLayout;
 
 			if (scope == Scope.DEPOT) {
-				layout = _depotLayout;
+				targetLayout = _targetDepotLayout;
 			}
 
-			Map<String, Serializable> settingsMap =
+			exportImportConfiguration = _updateImportConfiguration(
+				exportImportConfiguration, user,
 				ExportImportConfigurationSettingsMapFactoryUtil.
-					buildExportPortletSettingsMap(
-						user, layout.getPlid(), layout.getGroupId(), portletId,
-						parameterMap, StringPool.BLANK);
+					buildImportPortletSettingsMap(
+						user, targetLayout.getPlid(), targetLayout.getGroupId(),
+						portletId, parameterMap),
+				targetLayout.getGroupId());
 
-			_setDateRange(settingsMap, startDate, endDate);
+			ExportImportLocalServiceUtil.importPortletDataDeletions(
+				exportImportConfiguration, larFile);
 
-			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
-					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_PORTLET_LOCAL,
-						settingsMap);
-
-			File larFile = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
-				exportImportConfiguration);
-
-			try {
-				Layout targetLayout = _targetSiteLayout;
-
-				if (scope == Scope.DEPOT) {
-					targetLayout = _targetDepotLayout;
-				}
-
-				exportImportConfiguration = _updateImportConfiguration(
-					exportImportConfiguration, user,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportPortletSettingsMap(
-							user, targetLayout.getPlid(),
-							targetLayout.getGroupId(), portletId, parameterMap),
-					targetLayout.getGroupId());
-
-				ExportImportLocalServiceUtil.importPortletDataDeletions(
-					exportImportConfiguration, larFile);
-
-				ExportImportLocalServiceUtil.importPortletInfo(
-					exportImportConfiguration, larFile);
-			}
-			finally {
-				FileUtil.delete(larFile);
-			}
+			ExportImportLocalServiceUtil.importPortletInfo(
+				exportImportConfiguration, larFile);
 		}
 		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			FileUtil.delete(larFile);
 		}
 	}
 

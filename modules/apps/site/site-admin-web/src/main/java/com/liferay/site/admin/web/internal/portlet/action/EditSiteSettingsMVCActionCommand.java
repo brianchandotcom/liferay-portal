@@ -6,6 +6,7 @@
 package com.liferay.site.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.google.places.constants.GooglePlacesWebKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.security.key.secret.SecretVaultUtil;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -50,6 +52,12 @@ public class EditSiteSettingsMVCActionCommand
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
+		_vault(
+			liveGroup, GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
+			formTypeSettingsUnicodeProperties);
+		_vault(
+			liveGroup, "googleMapsAPIKey", formTypeSettingsUnicodeProperties);
+
 		typeSettingsUnicodeProperties.putAll(formTypeSettingsUnicodeProperties);
 
 		if (liveGroup.hasStagingGroup()) {
@@ -68,6 +76,19 @@ public class EditSiteSettingsMVCActionCommand
 
 		_groupService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
+	}
+
+	private void _vault(
+			Group group, String key, UnicodeProperties unicodeProperties)
+		throws Exception {
+
+		unicodeProperties.setProperty(
+			key,
+			SecretVaultUtil.vault(
+				group.getCompanyId(),
+				SecretVaultUtil.getIdentifier(
+					key, "group/" + group.getGroupId()),
+				unicodeProperties.getProperty(key)));
 	}
 
 	@Reference

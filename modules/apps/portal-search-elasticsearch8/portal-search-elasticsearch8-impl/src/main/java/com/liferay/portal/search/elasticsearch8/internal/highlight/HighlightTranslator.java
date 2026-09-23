@@ -29,11 +29,11 @@ public class HighlightTranslator {
 	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
 		Highlight highlight) {
 
-		return translate(highlight, null);
+		return translate(null, highlight);
 	}
 
 	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
-		Highlight highlight, Query defaultHighlightQuery) {
+		Query defaultHighlightQuery, Highlight highlight) {
 
 		co.elastic.clients.elasticsearch.core.search.Highlight.Builder builder =
 			new co.elastic.clients.elasticsearch.core.search.Highlight.
@@ -116,14 +116,14 @@ public class HighlightTranslator {
 		boolean highlightRequireFieldMatch, int numberOfFragments) {
 
 		return translate(
-			highlightFieldNames, highlightFragmentSize,
-			highlightRequireFieldMatch, numberOfFragments, null);
+			highlightFieldNames, highlightFragmentSize, null,
+			highlightRequireFieldMatch, numberOfFragments);
 	}
 
 	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
 		String[] highlightFieldNames, int highlightFragmentSize,
-		boolean highlightRequireFieldMatch, int numberOfFragments,
-		Query highlightQuery) {
+		Query highlightQuery, boolean highlightRequireFieldMatch,
+		int numberOfFragments) {
 
 		if (ArrayUtil.isEmpty(highlightFieldNames)) {
 			return null;

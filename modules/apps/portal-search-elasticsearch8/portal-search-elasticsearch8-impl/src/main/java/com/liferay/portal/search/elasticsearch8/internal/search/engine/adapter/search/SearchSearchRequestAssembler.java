@@ -215,16 +215,16 @@ public class SearchSearchRequestAssembler {
 		if (searchSearchRequest.getHighlight() != null) {
 			searchRequestBuilder.highlight(
 				_highlightTranslator.translate(
-					searchSearchRequest.getHighlight(), highlightQuery));
+					highlightQuery, searchSearchRequest.getHighlight()));
 		}
 		else {
 			searchRequestBuilder.highlight(
 				_highlightTranslator.translate(
 					searchSearchRequest.getHighlightFieldNames(),
 					searchSearchRequest.getHighlightFragmentSize(),
+					highlightQuery,
 					searchSearchRequest.isHighlightRequireFieldMatch(),
-					searchSearchRequest.getHighlightSnippetSize(),
-					highlightQuery));
+					searchSearchRequest.getHighlightSnippetSize()));
 		}
 	}
 

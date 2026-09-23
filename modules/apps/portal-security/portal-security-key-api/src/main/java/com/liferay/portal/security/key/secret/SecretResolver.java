@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.key.secret;
 
+import com.liferay.portal.security.key.secret.exception.SecretException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -14,5 +16,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SecretResolver {
 
 	public String resolve(long companyId, String value);
+
+	public String vault(long companyId, String key, String scope, String value)
+		throws SecretException;
 
 }

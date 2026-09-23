@@ -66,7 +66,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.key.secret.SecretVaultUtil;
+import com.liferay.portal.security.key.secret.SecretResolver;
 import com.liferay.portal.settings.web.internal.exception.RequiredLocaleException;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -424,9 +424,8 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		unicodeProperties.setProperty(
 			key,
-			SecretVaultUtil.vault(
-				companyId,
-				SecretVaultUtil.getIdentifier(key, "company/" + companyId),
+			_secretResolver.vault(
+				companyId, key, "company/" + companyId,
 				unicodeProperties.getProperty(key)));
 	}
 
@@ -459,6 +458,9 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 	@Reference
 	private PrefsProps _prefsProps;
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 	@Reference
 	private URLValidator _urlValidator;

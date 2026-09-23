@@ -5,11 +5,13 @@
 
 package com.liferay.portal.security.key.internal.secret;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
 import com.liferay.portal.security.key.secret.Secret;
@@ -17,6 +19,9 @@ import com.liferay.portal.security.key.secret.SecretManager;
 import com.liferay.portal.security.key.secret.exception.SecretException;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -41,6 +46,11 @@ public class SecretResolverImplTest {
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 
+		_fipsEnabled = PropsValues.FIPS_ENABLED;
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "FIPS_ENABLED", true);
+
 		ReflectionTestUtil.setFieldValue(
 			_secretResolverImpl, "_portalCache", _portalCache);
 		ReflectionTestUtil.setFieldValue(
@@ -54,6 +64,12 @@ public class SecretResolverImplTest {
 				}
 
 			});
+	}
+
+	@After
+	public void tearDown() {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "FIPS_ENABLED", _fipsEnabled);
 	}
 
 	@Test
@@ -154,6 +170,144 @@ public class SecretResolverImplTest {
 		Mockito.verifyNoInteractions(_secretManager);
 	}
 
+	@Test
+	public void testVault() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
+		KeyReference keyReference = new KeyReference(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			KeyReference.Type.SECRET);
+
+		AtomicReference<Secret> atomicReference = new AtomicReference<>();
+
+		Mockito.when(
+			_secretManager.putSecret(Mockito.eq(companyId), Mockito.any())
+		).thenAnswer(
+			invocationOnMock -> {
+				atomicReference.set(invocationOnMock.getArgument(1));
+
+				return keyReference;
+			}
+		);
+
+		String key = RandomTestUtil.randomString();
+		String scope = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			KeyReferenceUtil.toKeyReferenceString(keyReference),
+			_secretResolverImpl.vault(
+				companyId, key, scope, RandomTestUtil.randomString()));
+
+		Secret secret = atomicReference.get();
+
+		KeyReference secretKeyReference = secret.getKeyReference();
+
+		Assert.assertEquals(
+			StringBundler.concat("preference/", scope, StringPool.SLASH, key),
+			secretKeyReference.getIdentifier());
+		Assert.assertEquals(
+			StringPool.STAR, secretKeyReference.getProviderId());
+
+		Assert.assertTrue(secret.isDestroyed());
+	}
+
+	@Test
+	public void testVaultWhenFIPSIsDisabled() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "FIPS_ENABLED", false);
+
+		String value = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			value,
+			_secretResolverImpl.vault(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	@Test
+	public void testVaultWhenValueIsBlank() throws Exception {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			_secretResolverImpl.vault(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), StringPool.BLANK));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	@Test
+	public void testVaultWhenValueReferencesAnotherKey() throws Exception {
+		String value = _toKeyReferenceString(
+			StringBundler.concat(
+				"preference/", RandomTestUtil.randomString(), StringPool.SLASH,
+				RandomTestUtil.randomString()));
+
+		Assert.assertThrows(
+			SecretException.class,
+			() -> _secretResolverImpl.vault(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	@Test
+	public void testVaultWhenValueReferencesForeignNamespace()
+		throws Exception {
+
+		String value = _toKeyReferenceString(
+			StringBundler.concat(
+				RandomTestUtil.randomString(), StringPool.SLASH,
+				RandomTestUtil.randomString()));
+
+		Assert.assertEquals(
+			value,
+			_secretResolverImpl.vault(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	@Test
+	public void testVaultWhenValueReferencesSameKeyInAnotherScope()
+		throws Exception {
+
+		String key = RandomTestUtil.randomString();
+
+		String value = _toKeyReferenceString(
+			StringBundler.concat(
+				"preference/", RandomTestUtil.randomString(), StringPool.SLASH,
+				key));
+
+		Assert.assertEquals(
+			value,
+			_secretResolverImpl.vault(
+				RandomTestUtil.randomLong(), key, RandomTestUtil.randomString(),
+				value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	@Test
+	public void testVaultWhenValueReferencesSameSlot() throws Exception {
+		String key = RandomTestUtil.randomString();
+		String scope = RandomTestUtil.randomString();
+
+		String value = _toKeyReferenceString(
+			StringBundler.concat("preference/", scope, StringPool.SLASH, key));
+
+		Assert.assertEquals(
+			value,
+			_secretResolverImpl.vault(
+				RandomTestUtil.randomLong(), key, scope, value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
 	private void _assertResolve(String providerId) throws Exception {
 		long companyId = RandomTestUtil.randomLong();
 
@@ -191,6 +345,15 @@ public class SecretResolverImplTest {
 			value
 		);
 	}
+
+	private String _toKeyReferenceString(String identifier) {
+		return KeyReferenceUtil.toKeyReferenceString(
+			new KeyReference(
+				identifier, RandomTestUtil.randomString(),
+				KeyReference.Type.SECRET));
+	}
+
+	private boolean _fipsEnabled;
 
 	@Mock
 	private PortalCache<String, String> _portalCache;

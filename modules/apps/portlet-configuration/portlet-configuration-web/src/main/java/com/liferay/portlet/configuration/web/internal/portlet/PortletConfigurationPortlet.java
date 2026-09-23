@@ -72,7 +72,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.key.secret.SecretVaultUtil;
+import com.liferay.portal.security.key.secret.SecretResolver;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys;
@@ -1015,10 +1015,12 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		portletPreferences.setValue(
 			"lfrFacebookApiKey",
-			_vault(
-				"lfrFacebookApiKey",
-				ParamUtil.getString(actionRequest, "portletResource"),
-				themeDisplay, facebookAPIKey));
+			_secretResolver.vault(
+				themeDisplay.getCompanyId(), "lfrFacebookApiKey",
+				StringBundler.concat(
+					"portlet/", themeDisplay.getPlid(), StringPool.SLASH,
+					ParamUtil.getString(actionRequest, "portletResource")),
+				facebookAPIKey));
 
 		portletPreferences.setValue(
 			"lfrFacebookCanvasPageUrl", facebookCanvasPageURL);
@@ -1133,21 +1135,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 	}
 
-	private String _vault(
-			String name, String portletId, ThemeDisplay themeDisplay,
-			String value)
-		throws Exception {
-
-		return SecretVaultUtil.vault(
-			themeDisplay.getCompanyId(),
-			SecretVaultUtil.getIdentifier(
-				name,
-				StringBundler.concat(
-					"portlet/", themeDisplay.getPlid(), StringPool.SLASH,
-					portletId)),
-			value);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationPortlet.class);
 
@@ -1194,6 +1181,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 	private ServiceTrackerMap<String, CTService<?>> _serviceTrackerMap;
 

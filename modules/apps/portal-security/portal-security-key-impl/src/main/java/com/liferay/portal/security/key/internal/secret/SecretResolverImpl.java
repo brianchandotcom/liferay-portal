@@ -6,18 +6,24 @@
 package com.liferay.portal.security.key.internal.secret;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
 import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManager;
 import com.liferay.portal.security.key.secret.SecretResolver;
 import com.liferay.portal.security.key.secret.exception.SecretException;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -87,6 +93,38 @@ public class SecretResolverImpl implements SecretResolver {
 		}
 	}
 
+	@Override
+	public String vault(long companyId, String key, String scope, String value)
+		throws SecretException {
+
+		if (!PropsValues.FIPS_ENABLED || Validator.isNull(value)) {
+			return value;
+		}
+
+		if (KeyReferenceUtil.isKeyReference(value)) {
+			_validateKeyReference(key, value);
+
+			return value;
+		}
+
+		SecretManager secretManager = _secretManagerSnapshot.get();
+
+		if (secretManager == null) {
+			throw new IllegalStateException("Secret manager is unavailable");
+		}
+
+		try (Secret secret = new Secret(
+				new KeyReference(
+					StringBundler.concat(
+						_IDENTIFIER_PREFIX, scope, StringPool.SLASH, key),
+					StringPool.STAR, KeyReference.Type.SECRET),
+				value)) {
+
+			return KeyReferenceUtil.toKeyReferenceString(
+				secretManager.putSecret(companyId, secret));
+		}
+	}
+
 	@Activate
 	protected void activate() {
 		_portalCache = PortalCacheHelperUtil.getPortalCache(
@@ -98,6 +136,32 @@ public class SecretResolverImpl implements SecretResolver {
 		PortalCacheHelperUtil.removePortalCache(
 			PortalCacheManagerNames.SINGLE_VM, PORTAL_CACHE_NAME);
 	}
+
+	private void _validateKeyReference(String key, String value)
+		throws SecretException {
+
+		KeyReference keyReference = KeyReferenceUtil.parseKeyReference(value);
+
+		if (keyReference == null) {
+			throw new SecretException("Unable to parse the key reference");
+		}
+
+		String identifier = keyReference.getIdentifier();
+
+		if (!identifier.startsWith(_IDENTIFIER_PREFIX) ||
+			Objects.equals(
+				key, StringUtil.extractLast(identifier, CharPool.SLASH))) {
+
+			return;
+		}
+
+		throw new SecretException(
+			StringBundler.concat(
+				"Key \"", key, "\" cannot reference a value belonging to \"",
+				identifier, "\""));
+	}
+
+	private static final String _IDENTIFIER_PREFIX = "preference/";
 
 	private static final Snapshot<SecretManager> _secretManagerSnapshot =
 		new Snapshot<>(

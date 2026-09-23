@@ -3,14 +3,14 @@
 $content-gap-cell-accent: var(--teal);
 $content-gap-cell-accent-tier-4: var(--teal-d2);
 $content-gap-cell-background-gap-hover: var(--warning-l2);
-$content-gap-cell-text: #125449;
-$content-gap-cell-text-gap: #863a00;
-$content-gap-cell-text-inverse: #ffffff;
+$content-gap-cell-text: var(--teal-d2);
+$content-gap-cell-text-gap: var(--warning-d2);
+$content-gap-cell-text-inverse: $white;
 $content-gap-cell-tiers: (
-	1: #ccf4ee,
-	2: #96e9db,
-	3: #5dc9b7,
-	4: #15806e,
+	1: var(--teal-l5),
+	2: var(--teal-l4),
+	3: var(--teal-l2),
+	4: var(--teal),
 );
 
 .lfr-cmp__content-gap-cell {

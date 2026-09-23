@@ -17,7 +17,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,6 +33,8 @@ import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -160,6 +164,8 @@ public class EditAudiencesEntryDisplayContext {
 		).put(
 			"backURLTitle", getBackURLTitle()
 		).put(
+			"companyGroupERC", _getCompanyGroupERC(themeDisplay)
+		).put(
 			"externalReferenceCode", _getExternalReferenceCode()
 		).put(
 			"name", _getName()
@@ -169,6 +175,8 @@ public class EditAudiencesEntryDisplayContext {
 			"redirect", getRedirect()
 		).put(
 			"rulesGroup", getAudiencesEntryJSONObject()
+		).put(
+			"scopeSites", _getGroups(themeDisplay)
 		).put(
 			"updateAudiencesEntryActionURL",
 			PortletURLBuilder.createActionURL(
@@ -230,6 +238,17 @@ public class EditAudiencesEntryDisplayContext {
 		return null;
 	}
 
+	private String _getCompanyGroupERC(ThemeDisplay themeDisplay) {
+		Group companyGroup = GroupLocalServiceUtil.fetchGroup(
+			themeDisplay.getCompanyGroupId());
+
+		if (companyGroup != null) {
+			return companyGroup.getExternalReferenceCode();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getExternalReferenceCode() {
 		try {
 			AudiencesEntry audiencesEntry = _getAudiencesEntry();
@@ -245,6 +264,46 @@ public class EditAudiencesEntryDisplayContext {
 		}
 
 		return PortalUUIDUtil.generate();
+	}
+
+	private List<Map<String, Object>> _getGroups(ThemeDisplay themeDisplay) {
+		AudiencesEntry audiencesEntry = null;
+
+		try {
+			audiencesEntry = _getAudiencesEntry();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		if (audiencesEntry == null) {
+			return Collections.emptyList();
+		}
+
+		return TransformUtil.transform(
+			audiencesEntry.getGroupERCs(),
+			groupERC -> {
+				Group group =
+					GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+						groupERC, themeDisplay.getCompanyId());
+
+				if (group == null) {
+					return null;
+				}
+
+				return HashMapBuilder.<String, Object>put(
+					"descriptiveName",
+					group.getDescriptiveName(themeDisplay.getLocale())
+				).put(
+					"externalReferenceCode", group.getExternalReferenceCode()
+				).put(
+					"id", group.getGroupId()
+				).put(
+					"logo", group.getLogoURL(themeDisplay, true)
+				).build();
+			});
 	}
 
 	private String _getName() {

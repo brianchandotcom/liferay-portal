@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.security.key.secret.SecretVaultUtil;
+import com.liferay.portal.security.key.secret.SecretResolver;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -84,10 +84,8 @@ public class EditSiteSettingsMVCActionCommand
 
 		unicodeProperties.setProperty(
 			key,
-			SecretVaultUtil.vault(
-				group.getCompanyId(),
-				SecretVaultUtil.getIdentifier(
-					key, "group/" + group.getGroupId()),
+			_secretResolver.vault(
+				group.getCompanyId(), key, "group/" + group.getGroupId(),
 				unicodeProperties.getProperty(key)));
 	}
 
@@ -96,5 +94,8 @@ public class EditSiteSettingsMVCActionCommand
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 }

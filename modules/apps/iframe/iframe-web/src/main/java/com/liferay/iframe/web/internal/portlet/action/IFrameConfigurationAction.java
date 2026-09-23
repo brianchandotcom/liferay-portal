@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.key.secret.SecretVaultUtil;
+import com.liferay.portal.security.key.secret.SecretResolver;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -31,6 +31,7 @@ import jakarta.portlet.ReadOnlyException;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -119,13 +120,11 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String vaultedValue = SecretVaultUtil.vault(
-			companyId,
-			SecretVaultUtil.getIdentifier(
-				name,
-				StringBundler.concat(
-					"portlet/", themeDisplay.getPlid(), StringPool.SLASH,
-					ParamUtil.getString(portletRequest, "portletResource"))),
+		String vaultedValue = _secretResolver.vault(
+			companyId, name,
+			StringBundler.concat(
+				"portlet/", themeDisplay.getPlid(), StringPool.SLASH,
+				ParamUtil.getString(portletRequest, "portletResource")),
 			value);
 
 		if (vaultedValue.equals(value)) {
@@ -139,5 +138,8 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			throw new PortalException(readOnlyException);
 		}
 	}
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 }

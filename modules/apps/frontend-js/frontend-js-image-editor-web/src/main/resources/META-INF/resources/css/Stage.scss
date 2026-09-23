@@ -31,7 +31,10 @@
 	fill: rgba($dark, 0.6);
 }
 
-.image-editor .crop-border {
+.image-editor .crop-border,
+.image-editor .editor-draw-cursor-line line,
+.image-editor .focus-ring-outer,
+.image-editor .selection-ring {
 	stroke: var(--editor-accent);
 }
 
@@ -76,7 +79,10 @@
 	pointer-events: none;
 }
 
-.image-editor .crop-handle-visual {
+.image-editor .crop-handle-visual,
+.image-editor .editor-draw-anchor,
+.image-editor .editor-draw-cursor-dot,
+.image-editor .object-handle {
 	fill: $white;
 	stroke: var(--editor-accent);
 }
@@ -87,6 +93,7 @@
 
 .image-editor .crop-handle,
 .image-editor .crop-move,
+.image-editor .editor-draw-surface rect,
 .image-editor .overlay-hit {
 	outline: none;
 }
@@ -95,40 +102,18 @@
 	cursor: move;
 }
 
-.image-editor .editor-draw-surface rect:focus {
-	outline: none;
-}
-
-.image-editor .editor-draw-cursor-halo line {
+.image-editor .editor-draw-cursor-halo line,
+.image-editor .focus-ring-inner {
 	stroke: $white;
-}
-
-.image-editor .editor-draw-cursor-line line {
-	stroke: var(--editor-accent);
-}
-
-.image-editor .editor-draw-cursor-dot {
-	fill: $white;
-	stroke: var(--editor-accent);
 }
 
 .image-editor .editor-draw-preview {
 	opacity: 0.9;
 }
 
-.image-editor .editor-draw-anchor {
-	fill: $white;
-	stroke: var(--editor-accent);
-}
-
 .image-editor .editor-draw-anchor-halo {
 	fill: none;
 	stroke: $white;
-}
-
-.image-editor .object-handle {
-	fill: $white;
-	stroke: var(--editor-accent);
 }
 
 .image-editor .object-handle-rotate {
@@ -151,18 +136,6 @@
 	.c-prefers-reduced-motion & {
 		animation: none;
 	}
-}
-
-.image-editor .focus-ring-inner {
-	stroke: $white;
-}
-
-.image-editor .focus-ring-outer {
-	stroke: var(--editor-accent);
-}
-
-.image-editor .selection-ring {
-	stroke: var(--editor-accent);
 }
 
 .image-editor .editor-crop-size-row {

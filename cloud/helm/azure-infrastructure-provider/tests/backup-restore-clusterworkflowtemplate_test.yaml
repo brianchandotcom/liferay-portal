@@ -242,8 +242,22 @@ tests:
                     pattern: --query backup.earliestRestoreDate
             -   matchRegex:
                     path: spec.templates[6].script.source
-                    pattern: "\\[\\?properties.dataSourceInfo.resourceID=="
+                    pattern: --query properties.dataSourceInfo.resourceID
         it: Reads the restore point from the recovery point and guards it against the window
+    -   asserts:
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: for candidate_backup_instance_name in \$\( \\\s+az dataprotection backup-instance list \\\s+--output tsv \\\s+--query "\[\].name"
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: was not found in the backup vault
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: backup_instance_storage_account_id}" != ".{storage_account_id}"
+            -   matchRegex:
+                    path: spec.templates[6].script.source
+                    pattern: cannot restore a vaulted blob recovery point into the storage account it was taken from
+        it: Refuses a recovery point whose document library lives on the target plane
     -   asserts:
             -   matchRegex:
                     path: spec.templates[4].script.source

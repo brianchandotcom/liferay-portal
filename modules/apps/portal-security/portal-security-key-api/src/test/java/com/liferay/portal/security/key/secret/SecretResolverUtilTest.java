@@ -17,6 +17,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.Mockito;
+
 /**
  * @author Pedro Victor Silvestre
  */
@@ -46,13 +48,15 @@ public class SecretResolverUtilTest {
 		String resolvedValue = RandomTestUtil.randomString();
 		String value = RandomTestUtil.randomString();
 
-		_setUpSecretResolverSnapshot(
-			(secretResolverCompanyId, secretResolverValue) -> {
-				Assert.assertEquals(companyId, secretResolverCompanyId);
-				Assert.assertSame(value, secretResolverValue);
+		SecretResolver secretResolver = Mockito.mock(SecretResolver.class);
 
-				return resolvedValue;
-			});
+		Mockito.when(
+			secretResolver.resolve(companyId, value)
+		).thenReturn(
+			resolvedValue
+		);
+
+		_setUpSecretResolverSnapshot(secretResolver);
 
 		Assert.assertSame(
 			resolvedValue, SecretResolverUtil.resolve(companyId, value));

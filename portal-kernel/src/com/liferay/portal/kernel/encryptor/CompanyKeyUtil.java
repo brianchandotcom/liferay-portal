@@ -19,7 +19,17 @@ public class CompanyKeyUtil {
 
 	public static final String WRAPPED_KEY_VERSION = "v1";
 
-	public static Key deserializeKey(long companyId, String serializedKey) {
+	public static boolean isWrappedKey(String serializedKey) {
+		if ((serializedKey != null) &&
+			serializedKey.startsWith(WRAPPED_KEY_PREFIX)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static Key unwrapKey(long companyId, String serializedKey) {
 		if (!isWrappedKey(serializedKey)) {
 			return EncryptorUtil.deserializeKey(serializedKey);
 		}
@@ -35,17 +45,7 @@ public class CompanyKeyUtil {
 		return companyKeyResolver.unwrapKey(companyId, serializedKey);
 	}
 
-	public static boolean isWrappedKey(String serializedKey) {
-		if ((serializedKey != null) &&
-			serializedKey.startsWith(WRAPPED_KEY_PREFIX)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public static String serializeKey(long companyId, Key key) {
+	public static String wrapKey(long companyId, Key key) {
 		CompanyKeyResolver companyKeyResolver =
 			_companyKeyResolverSnapshot.get();
 

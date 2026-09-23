@@ -5,6 +5,12 @@
 
 @import 'cadmin-variables';
 
+$omni-search-dialog-margin-y: calc(#{$cadmin-spacer} * 4);
+$omni-search-header-height: calc(
+	#{$cadmin-input-height-lg} + #{$cadmin-spacer} * 2
+);
+$omni-search-header-margin-bottom: $cadmin-spacer;
+
 html#{$cadmin-selector} .modal-backdrop:has(+ .cadmin.omni-search-modal) {
 	opacity: 0;
 }
@@ -24,14 +30,14 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 	}
 
 	.modal-dialog {
-		margin-top: 4rem;
+		margin-top: $omni-search-dialog-margin-y;
 	}
 
 	.modal-content {
 		background-color: transparent;
 		border: 0;
 		box-shadow: none;
-		max-height: calc(100vh - 3.75rem);
+		max-height: calc(100vh - #{$omni-search-dialog-margin-y} * 2);
 		overflow: visible;
 	}
 
@@ -42,8 +48,28 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 		border-width: 0;
 		box-shadow: $cadmin-box-shadow-lg;
 		height: auto;
-		margin-bottom: $cadmin-spacer;
-		padding: $cadmin-spacer 20px $cadmin-spacer $cadmin-spacer;
+		margin-bottom: $omni-search-header-margin-bottom;
+		padding: $cadmin-spacer calc(#{$cadmin-spacer} * 1.25) $cadmin-spacer
+			$cadmin-spacer;
+		z-index: 0;
+	}
+
+	@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+		.modal-header .close {
+			@include sr-only();
+			@include sr-only-focusable();
+
+			&:active,
+			&:focus {
+				margin-left: calc(#{$cadmin-spacer} * 0.5);
+				position: relative;
+				z-index: 5;
+			}
+		}
+	}
+
+	.modal-title {
+		overflow: visible;
 	}
 
 	.modal-body {
@@ -51,9 +77,16 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 		border-radius: $cadmin-border-radius-xl;
 		border-width: 0;
 		box-shadow: $cadmin-box-shadow-lg;
-		max-height: calc(100vh - 16rem);
+		max-height: calc(
+			100vh - #{$omni-search-dialog-margin-y} * 2 - #{$omni-search-header-height} -
+				#{$omni-search-header-margin-bottom}
+		);
 		overflow-y: auto;
 		padding: $cadmin-spacer;
+
+		&:empty {
+			display: none;
+		}
 	}
 
 	.modal-header .input-group {
@@ -61,8 +94,8 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 	}
 
 	.form-control.omni-search-input {
-		font-size: 20px;
-		height: 48px;
+		font-size: $cadmin-modal-title-font-size;
+		height: $cadmin-input-height-lg;
 	}
 
 	.input-group-item-focusable {
@@ -79,7 +112,7 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 	.input-group-inset-item-after {
 		border-bottom-right-radius: $cadmin-border-radius;
 		border-top-right-radius: $cadmin-border-radius;
-		min-width: 40px;
+		min-width: $cadmin-input-height;
 	}
 
 	.omni-search-section-header {
@@ -88,7 +121,7 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 		font-size: 0.75rem;
 		font-weight: 600;
 		letter-spacing: 0.05em;
-		margin: 1rem 0 0.5rem;
+		margin: $cadmin-spacer 0 calc(#{$cadmin-spacer} * 0.5);
 
 		&:first-child {
 			margin-top: 0;
@@ -118,7 +151,7 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 		}
 
 		&:has(.omni-search-result-delete) .omni-search-result {
-			padding-right: 48px;
+			padding-right: calc(#{$cadmin-spacer} * 3);
 		}
 	}
 
@@ -126,8 +159,8 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 		align-items: center;
 		border-radius: $cadmin-border-radius;
 		display: flex;
-		gap: 0.75rem;
-		padding: 0.5rem;
+		gap: calc(#{$cadmin-spacer} * 0.75);
+		padding: calc(#{$cadmin-spacer} * 0.5);
 		text-align: left;
 		width: 100%;
 

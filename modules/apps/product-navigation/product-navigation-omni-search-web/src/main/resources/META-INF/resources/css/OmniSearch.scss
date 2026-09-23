@@ -10,6 +10,8 @@ $omni-search-header-height: calc(
 	#{$cadmin-input-height-lg} + #{$cadmin-spacer} * 2
 );
 $omni-search-header-margin-bottom: $cadmin-spacer;
+$omni-search-dialog-margin-y-mobile: $cadmin-modal-dialog-margin;
+$omni-search-header-margin-bottom-mobile: calc(#{$cadmin-spacer} * 0.5);
 
 html#{$cadmin-selector} .modal-backdrop:has(+ .cadmin.omni-search-modal) {
 	opacity: 0;
@@ -191,6 +193,30 @@ html#{$cadmin-selector} .cadmin.omni-search-modal {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+		}
+	}
+
+	@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+		.modal-dialog {
+			margin-bottom: $omni-search-dialog-margin-y-mobile;
+			margin-top: $omni-search-dialog-margin-y-mobile;
+		}
+
+		.modal-content {
+			max-height: calc(
+				100vh - #{$omni-search-dialog-margin-y-mobile} * 2
+			);
+		}
+
+		.modal-header {
+			margin-bottom: $omni-search-header-margin-bottom-mobile;
+		}
+
+		.modal-body {
+			max-height: calc(
+				100vh - #{$omni-search-dialog-margin-y-mobile} * 2 - #{$omni-search-header-height} -
+					#{$omni-search-header-margin-bottom-mobile}
+			);
 		}
 	}
 }

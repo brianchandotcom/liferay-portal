@@ -5,6 +5,8 @@
 
 package com.liferay.headless.admin.fragment.client.serdes.v1_0;
 
+import com.liferay.headless.admin.fragment.client.dto.v1_0.ApprovedFragmentVersion;
+import com.liferay.headless.admin.fragment.client.dto.v1_0.DraftFragmentVersion;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentVersion;
 import com.liferay.headless.admin.fragment.client.json.BaseJSONParser;
 
@@ -43,81 +45,27 @@ public class FragmentVersionSerDes {
 			return "null";
 		}
 
-		StringBuilder sb = new StringBuilder();
+		FragmentVersion.Status status = fragmentVersion.getStatus();
 
-		sb.append("{");
+		if (status != null) {
+			String statusString = status.toString();
 
-		if (fragmentVersion.getConfiguration() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			if (statusString.equals("Approved")) {
+				return ApprovedFragmentVersionSerDes.toJSON(
+					(ApprovedFragmentVersion)fragmentVersion);
 			}
 
-			sb.append("\"configuration\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragmentVersion.getConfiguration()));
-
-			sb.append("\"");
-		}
-
-		if (fragmentVersion.getCss() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			if (statusString.equals("Draft")) {
+				return DraftFragmentVersionSerDes.toJSON(
+					(DraftFragmentVersion)fragmentVersion);
 			}
 
-			sb.append("\"css\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragmentVersion.getCss()));
-
-			sb.append("\"");
+			throw new IllegalArgumentException(
+				"Unknown status " + statusString);
 		}
-
-		if (fragmentVersion.getHtml() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"html\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragmentVersion.getHtml()));
-
-			sb.append("\"");
+		else {
+			throw new IllegalArgumentException("Missing status parameter");
 		}
-
-		if (fragmentVersion.getJs() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"js\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fragmentVersion.getJs()));
-
-			sb.append("\"");
-		}
-
-		if (fragmentVersion.getStatus() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"status\": ");
-
-			sb.append("\"");
-			sb.append(fragmentVersion.getStatus());
-			sb.append("\"");
-		}
-
-		sb.append("}");
-
-		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
@@ -133,15 +81,6 @@ public class FragmentVersionSerDes {
 		}
 
 		Map<String, String> map = new TreeMap<>();
-
-		if (fragmentVersion.getConfiguration() == null) {
-			map.put("configuration", null);
-		}
-		else {
-			map.put(
-				"configuration",
-				String.valueOf(fragmentVersion.getConfiguration()));
-		}
 
 		if (fragmentVersion.getCss() == null) {
 			map.put("css", null);
@@ -179,7 +118,7 @@ public class FragmentVersionSerDes {
 
 		@Override
 		protected FragmentVersion createDTO() {
-			return new FragmentVersion();
+			return null;
 		}
 
 		@Override
@@ -189,10 +128,7 @@ public class FragmentVersionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "configuration")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "css")) {
+			if (Objects.equals(jsonParserFieldName, "css")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "html")) {
@@ -209,17 +145,36 @@ public class FragmentVersionSerDes {
 		}
 
 		@Override
+		public FragmentVersion parseToDTO(String json) {
+			Map<String, Object> jsonMap = parseToMap(json);
+
+			Object status = jsonMap.get("status");
+
+			if (status != null) {
+				String statusString = status.toString();
+
+				if (statusString.equals("Approved")) {
+					return ApprovedFragmentVersion.toDTO(json);
+				}
+
+				if (statusString.equals("Draft")) {
+					return DraftFragmentVersion.toDTO(json);
+				}
+
+				throw new IllegalArgumentException(
+					"Unknown status " + statusString);
+			}
+			else {
+				throw new IllegalArgumentException("Missing status parameter");
+			}
+		}
+
+		@Override
 		protected void setField(
 			FragmentVersion fragmentVersion, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "configuration")) {
-				if (jsonParserFieldValue != null) {
-					fragmentVersion.setConfiguration(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "css")) {
+			if (Objects.equals(jsonParserFieldName, "css")) {
 				if (jsonParserFieldValue != null) {
 					fragmentVersion.setCss((String)jsonParserFieldValue);
 				}
@@ -328,4 +283,4 @@ public class FragmentVersionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1492855569
+// LIFERAY-REST-BUILDER-HASH:853713944

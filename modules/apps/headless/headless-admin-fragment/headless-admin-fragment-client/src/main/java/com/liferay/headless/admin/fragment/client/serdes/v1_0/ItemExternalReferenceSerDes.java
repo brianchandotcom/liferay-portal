@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.fragment.client.serdes.v1_0;
 
-import com.liferay.headless.admin.fragment.client.dto.v1_0.ThumbnailURLReference;
+import com.liferay.headless.admin.fragment.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.fragment.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -22,24 +22,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class ThumbnailURLReferenceSerDes {
+public class ItemExternalReferenceSerDes {
 
-	public static ThumbnailURLReference toDTO(String json) {
-		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
-			new ThumbnailURLReferenceJSONParser();
+	public static ItemExternalReference toDTO(String json) {
+		ItemExternalReferenceJSONParser itemExternalReferenceJSONParser =
+			new ItemExternalReferenceJSONParser();
 
-		return thumbnailURLReferenceJSONParser.parseToDTO(json);
+		return itemExternalReferenceJSONParser.parseToDTO(json);
 	}
 
-	public static ThumbnailURLReference[] toDTOs(String json) {
-		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
-			new ThumbnailURLReferenceJSONParser();
+	public static ItemExternalReference[] toDTOs(String json) {
+		ItemExternalReferenceJSONParser itemExternalReferenceJSONParser =
+			new ItemExternalReferenceJSONParser();
 
-		return thumbnailURLReferenceJSONParser.parseToDTOs(json);
+		return itemExternalReferenceJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ThumbnailURLReference thumbnailURLReference) {
-		if (thumbnailURLReference == null) {
+	public static String toJSON(ItemExternalReference itemExternalReference) {
+		if (itemExternalReference == null) {
 			return "null";
 		}
 
@@ -47,7 +47,21 @@ public class ThumbnailURLReferenceSerDes {
 
 		sb.append("{");
 
-		if (thumbnailURLReference.getExternalReferenceCode() != null) {
+		if (itemExternalReference.getClassName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"className\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(itemExternalReference.getClassName()));
+
+			sb.append("\"");
+		}
+
+		if (itemExternalReference.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -57,37 +71,19 @@ public class ThumbnailURLReferenceSerDes {
 			sb.append("\"");
 
 			sb.append(
-				_escape(thumbnailURLReference.getExternalReferenceCode()));
+				_escape(itemExternalReference.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
 
-		if (thumbnailURLReference.getFileBase64() != null) {
+		if (itemExternalReference.getScope() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fileBase64\": ");
+			sb.append("\"scope\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(thumbnailURLReference.getFileBase64()));
-
-			sb.append("\"");
-		}
-
-		if (thumbnailURLReference.getUrl() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"url\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(thumbnailURLReference.getUrl()));
-
-			sb.append("\"");
+			sb.append(itemExternalReference.getScope());
 		}
 
 		sb.append("}");
@@ -96,72 +92,74 @@ public class ThumbnailURLReferenceSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
-			new ThumbnailURLReferenceJSONParser();
+		ItemExternalReferenceJSONParser itemExternalReferenceJSONParser =
+			new ItemExternalReferenceJSONParser();
 
-		return thumbnailURLReferenceJSONParser.parseToMap(json);
+		return itemExternalReferenceJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		ThumbnailURLReference thumbnailURLReference) {
+		ItemExternalReference itemExternalReference) {
 
-		if (thumbnailURLReference == null) {
+		if (itemExternalReference == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (thumbnailURLReference.getExternalReferenceCode() == null) {
+		if (itemExternalReference.getClassName() == null) {
+			map.put("className", null);
+		}
+		else {
+			map.put(
+				"className",
+				String.valueOf(itemExternalReference.getClassName()));
+		}
+
+		if (itemExternalReference.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
 				String.valueOf(
-					thumbnailURLReference.getExternalReferenceCode()));
+					itemExternalReference.getExternalReferenceCode()));
 		}
 
-		if (thumbnailURLReference.getFileBase64() == null) {
-			map.put("fileBase64", null);
+		if (itemExternalReference.getScope() == null) {
+			map.put("scope", null);
 		}
 		else {
-			map.put(
-				"fileBase64",
-				String.valueOf(thumbnailURLReference.getFileBase64()));
-		}
-
-		if (thumbnailURLReference.getUrl() == null) {
-			map.put("url", null);
-		}
-		else {
-			map.put("url", String.valueOf(thumbnailURLReference.getUrl()));
+			map.put("scope", String.valueOf(itemExternalReference.getScope()));
 		}
 
 		return map;
 	}
 
-	public static class ThumbnailURLReferenceJSONParser
-		extends BaseJSONParser<ThumbnailURLReference> {
+	public static class ItemExternalReferenceJSONParser
+		extends BaseJSONParser<ItemExternalReference> {
 
 		@Override
-		protected ThumbnailURLReference createDTO() {
-			return new ThumbnailURLReference();
+		protected ItemExternalReference createDTO() {
+			return new ItemExternalReference();
 		}
 
 		@Override
-		protected ThumbnailURLReference[] createDTOArray(int size) {
-			return new ThumbnailURLReference[size];
+		protected ItemExternalReference[] createDTOArray(int size) {
+			return new ItemExternalReference[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "className")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "fileBase64")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "url")) {
+			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				return false;
 			}
 
@@ -170,24 +168,28 @@ public class ThumbnailURLReferenceSerDes {
 
 		@Override
 		protected void setField(
-			ThumbnailURLReference thumbnailURLReference,
+			ItemExternalReference itemExternalReference,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "className")) {
 				if (jsonParserFieldValue != null) {
-					thumbnailURLReference.setExternalReferenceCode(
+					itemExternalReference.setClassName(
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "fileBase64")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				if (jsonParserFieldValue != null) {
-					thumbnailURLReference.setFileBase64(
+					itemExternalReference.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "url")) {
+			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				if (jsonParserFieldValue != null) {
-					thumbnailURLReference.setUrl((String)jsonParserFieldValue);
+					itemExternalReference.setScope(
+						com.liferay.headless.admin.fragment.client.scope.Scope.
+							toDTO((String)jsonParserFieldValue));
 				}
 			}
 		}
@@ -277,4 +279,4 @@ public class ThumbnailURLReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-251991538
+// LIFERAY-REST-BUILDER-HASH:1220976381

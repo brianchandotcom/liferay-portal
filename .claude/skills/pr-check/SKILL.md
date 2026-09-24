@@ -64,6 +64,8 @@ Each validation belongs to a slice, decided by where its file sits, and sees onl
 
 Paths directly under `workspaces` that sit in no workspace, such as the refresh scripts, belong to the portal slice.
 
+In every workspace other than `liferay-sample-workspace`, a changed path that `workspaces/refresh_other_workspaces.sh` regenerates is seen only by [Generated Workspace File](validations/workspaces/generated-file.md). Such a path may change only through a refresh, and building it would only repeat what the sample workspace already checks. A path is regenerated when it does not match the regex that validation builds from the script's `--exclude` patterns, so a workspace whose changed paths are all regenerated runs no other workspace validation.
+
 Run the slices the settings enable, and skip every validation the settings name. When the portal slice is disabled, list every changed path that belongs to no workspace in the Results Summary as unchecked, so that a change nothing examined never reads as a pass.
 
 The build root of a changed path is its workspace directory when it belongs to a workspace, and `${REPO_ROOT}` otherwise. A validation that needs a place to search, such as a sweep for references, searches the build root of the path it is examining, and every workspace validation runs its commands from `${BUILD_ROOT}`, the absolute path of its workspace directory.

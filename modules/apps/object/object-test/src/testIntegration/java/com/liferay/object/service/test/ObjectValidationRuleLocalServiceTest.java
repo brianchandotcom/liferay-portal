@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -856,20 +857,21 @@ public class ObjectValidationRuleLocalServiceTest {
 				user.getUserId(), _objectDefinition.getObjectDefinitionId());
 
 			_testGetErrorLabel(
-				LocaleUtil.BRAZIL, objectValidationRule, user.getUserId());
+				LocaleUtil.BRAZIL, objectValidationRule,
+				ServiceContextTestUtil.getServiceContext(), user.getUserId());
 
 			// Guest user
 
 			User guestUser = _userLocalService.getGuestUser(
 				TestPropsValues.getCompanyId());
 
-			Locale themeDisplayLocale = LocaleUtil.BRAZIL;
+			Locale requestLocale = LocaleUtil.BRAZIL;
 
-			if (Objects.equals(guestUser.getLocale(), themeDisplayLocale)) {
-				themeDisplayLocale = LocaleUtil.US;
+			if (Objects.equals(guestUser.getLocale(), requestLocale)) {
+				requestLocale = LocaleUtil.US;
 			}
 
-			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
+			LocaleThreadLocal.setThemeDisplayLocale(requestLocale);
 
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(guestUser));
@@ -877,7 +879,42 @@ public class ObjectValidationRuleLocalServiceTest {
 			PrincipalThreadLocal.setName(guestUser.getUserId());
 
 			_testGetErrorLabel(
-				themeDisplayLocale, objectValidationRule,
+				requestLocale, objectValidationRule,
+				ServiceContextTestUtil.getServiceContext(),
+				guestUser.getUserId());
+
+			// Guest user with a service context language
+
+			LocaleThreadLocal.setThemeDisplayLocale(null);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setLanguageId(
+				LanguageUtil.getLanguageId(requestLocale));
+
+			_testGetErrorLabel(
+				requestLocale, objectValidationRule, serviceContext,
+				guestUser.getUserId());
+
+			// Guest user with a theme display locale and a service context
+			// language
+
+			Locale serviceContextLocale = LocaleUtil.US;
+
+			if (Objects.equals(requestLocale, serviceContextLocale)) {
+				serviceContextLocale = LocaleUtil.BRAZIL;
+			}
+
+			LocaleThreadLocal.setThemeDisplayLocale(requestLocale);
+
+			serviceContext = ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setLanguageId(
+				LanguageUtil.getLanguageId(serviceContextLocale));
+
+			_testGetErrorLabel(
+				requestLocale, objectValidationRule, serviceContext,
 				guestUser.getUserId());
 		}
 		finally {
@@ -1298,7 +1335,7 @@ public class ObjectValidationRuleLocalServiceTest {
 
 	private void _testGetErrorLabel(
 			Locale locale, ObjectValidationRule objectValidationRule,
-			long userId)
+			ServiceContext serviceContext, long userId)
 		throws Exception {
 
 		try {
@@ -1310,7 +1347,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				HashMapBuilder.<String, Serializable>put(
 					"textObjectField", RandomTestUtil.randomString()
 				).build(),
-				ServiceContextTestUtil.getServiceContext());
+				serviceContext);
 
 			Assert.fail();
 		}

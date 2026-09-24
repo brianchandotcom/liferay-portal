@@ -44,11 +44,6 @@ function main {
 		> /tmp/storage-account-id-inactive.txt
 
 	kubectl get accounts.storage.azure.m.upbound.io \
-		--output jsonpath="{.items[0].metadata.name}" \
-		--selector "dataPlane=${data_plane_inactive}" \
-		> /tmp/storage-account-name-inactive.txt
-
-	kubectl get accounts.storage.azure.m.upbound.io \
 		--output jsonpath="{.items[0].spec.forProvider.location}" \
 		--selector "dataPlane=${data_plane_inactive}" \
 		> /tmp/storage-account-location.txt

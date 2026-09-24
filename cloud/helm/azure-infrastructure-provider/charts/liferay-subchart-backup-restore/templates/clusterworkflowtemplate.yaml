@@ -118,30 +118,6 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
                         name: apply-wait-infrastructure
                         template: apply-wait-infrastructure
-        -   activeDeadlineSeconds: {{ .Values.azureBackupService.restoreWaitTimeoutSeconds }}
-            inputs:
-                parameters:
-                    -   name: storage-account-name
-            name: delete-target-container
-            retryStrategy:
-                backoff:
-                    duration: 30s
-                    factor: 2
-                    maxDuration: 20m
-                limit: 5
-                retryPolicy: OnFailure
-            script:
-                command: [sh]
-                env:
-                    -   name: AZURE_CONFIG_DIR
-                        value: /tmp/azure
-                    -   name: AZURE_EXTENSION_DIR
-                        value: /tmp/azure-extensions
-                image: "{{ $azureCli }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-                source: |-
-                    {{- tpl (.Files.Get "scripts/delete-target-container.sh") . | nindent 20 }}
         -   name: get-current-infrastructure-state
             outputs:
                 parameters:
@@ -178,9 +154,6 @@ spec:
                     -   name: retained-data-plane-release
                         valueFrom:
                             path: /tmp/retained-data-plane-release.txt
-                    -   name: storage-account-id-active
-                        valueFrom:
-                            path: /tmp/storage-account-id-active.txt
             script:
                 command: [sh]
                 image: "{{ $helmKubectl }}"
@@ -201,9 +174,6 @@ spec:
                     -   name: storage-account-location
                         valueFrom:
                             path: /tmp/storage-account-location.txt
-                    -   name: storage-account-name
-                        valueFrom:
-                            path: /tmp/storage-account-name-inactive.txt
             script:
                 command: [sh]
                 image: "{{ $helmKubectl }}"
@@ -217,7 +187,6 @@ spec:
                     -   name: backup-vault-name
                     -   name: database-candidates
                     -   name: resource-group-name
-                    -   name: storage-account-id
             name: get-recovery-point-time
             outputs:
                 parameters:
@@ -308,8 +277,6 @@ spec:
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.database-candidates}}"
                                 -   name: resource-group-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.resource-group-name}}"
-                                -   name: storage-account-id
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.storage-account-id-active}}"
                         depends: get-current-infrastructure-state
                         name: get-recovery-point-time
                         template: get-recovery-point-time
@@ -471,12 +438,6 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.data-inactive}}"
                         name: get-inactive-storage-account
                         template: get-inactive-storage-account
-                -   -   arguments:
-                            parameters:
-                                -   name: storage-account-name
-                                    value: "{{ "{{" }}steps.get-inactive-storage-account.outputs.parameters.storage-account-name}}"
-                        name: delete-target-container
-                        template: delete-target-container
                 -   -   arguments:
                             parameters:
                                 -   name: backup-instance-name

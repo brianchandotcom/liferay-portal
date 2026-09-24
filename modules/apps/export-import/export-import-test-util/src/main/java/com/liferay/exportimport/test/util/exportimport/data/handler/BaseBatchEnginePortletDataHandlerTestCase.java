@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
@@ -299,29 +300,22 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			groupId, TestPropsValues.getUserId(), new Date());
 
 		ChangesetCollection changesetCollection =
-			_changesetCollectionLocalService.addChangesetCollection(
-				TestPropsValues.getUserId(), groupId,
-				RandomTestUtil.randomString(), StringPool.BLANK);
+			_changesetCollectionLocalService.fetchOrAddChangesetCollection(
+				groupId,
+				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
 
-		_changesetEntryLocalService.addChangesetEntry(
-			TestPropsValues.getUserId(),
+		_changesetEntryLocalService.fetchOrAddChangesetEntry(
 			changesetCollection.getChangesetCollectionId(),
 			externalReferenceCode1,
 			_classNameLocalService.getClassNameId(
 				exportImportDescriptor.getModelClassName()),
-			0);
+			getPrimaryKey(groupId, externalReferenceCode1));
 
 		_exportImport(
 			scope,
 			HashMapBuilder.put(
 				ExportImportDateUtil.RANGE,
 				new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE}
-			).put(
-				"changesetCollectionId",
-				new String[] {
-					String.valueOf(
-						changesetCollection.getChangesetCollectionId())
-				}
 			).build(),
 			null, null);
 

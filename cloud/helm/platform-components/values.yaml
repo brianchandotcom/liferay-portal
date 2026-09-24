@@ -96,7 +96,7 @@ observability:
     namespace: observability
     parameters: []
     repoURL: oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/observability
-    targetRevision: 1.1.1
+    targetRevision: 1.1.2
 operatorApplications:
     ackPrometheusService:
         enabled: false
@@ -257,7 +257,7 @@ operatorApplications:
         namespaceLabels:
             pod-security.kubernetes.io/enforce: restricted
         repoURL: oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-dxp-operator
-        targetRevision: 0.1.2
+        targetRevision: 0.1.3
         values:
             fullnameOverride: dxp-operator
     eckOperator:

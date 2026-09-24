@@ -45,8 +45,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enableWiki() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 

@@ -1695,8 +1695,7 @@ definition {
 
 	@summary = "Default summary"
 	macro tearDownInstance() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 

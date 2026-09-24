@@ -841,8 +841,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enableDynamicAndManualSelection() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 

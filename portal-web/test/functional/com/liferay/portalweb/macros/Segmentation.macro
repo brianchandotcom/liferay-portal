@@ -297,8 +297,7 @@ definition {
 	@summary = "Default summary"
 	macro enableDXPSegments() {
 		task ("Enable DXP segments deprecation feature flag") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "System Settings");
 
@@ -464,8 +463,7 @@ definition {
 	@summary = "Default summary"
 	macro gotoSegmeentsService(key_portlet = null) {
 		if (${key_portlet} == "Instance Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 
@@ -475,8 +473,7 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 		}
 		else if (${key_portlet} == "System Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "System Settings");
 
@@ -567,8 +564,7 @@ definition {
 
 	@summary = "Default summary"
 	macro updateSegmentsInterval(interval = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

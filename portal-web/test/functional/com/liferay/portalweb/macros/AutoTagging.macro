@@ -3,8 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro disableAutoTagging(disableAutoTaggingFor = null, siteURLKey = null) {
 		if (${disableAutoTaggingFor} == "System Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "System Settings");
 

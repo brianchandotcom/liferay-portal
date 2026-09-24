@@ -268,8 +268,7 @@ definition {
 	@priority = 3
 	test CanNotFilterAssetByTypeWhenDisableIndexAllArticleVersionsEnabled {
 		task ("Given a site administrator disable Index All Article Versions Enabled") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 

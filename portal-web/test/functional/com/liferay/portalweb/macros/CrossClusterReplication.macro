@@ -37,8 +37,7 @@ definition {
 
 	@summary = "Default summary"
 	macro setupCrossClusterReplication(portalCluster = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

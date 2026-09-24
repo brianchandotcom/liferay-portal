@@ -1230,8 +1230,7 @@ ${runtimeInstance}
 		}
 
 		task ("Enable server connectors in System Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "System Settings");
 

@@ -836,8 +836,7 @@ definition {
 	macro enableDeprecationFeatureFlag(featureFlagName = null) {
 		Variables.assertDefined(parameterList = ${featureFlagName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 

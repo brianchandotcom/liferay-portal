@@ -819,8 +819,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enableDeleteApplicationDataBeforeImport(navigate = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 

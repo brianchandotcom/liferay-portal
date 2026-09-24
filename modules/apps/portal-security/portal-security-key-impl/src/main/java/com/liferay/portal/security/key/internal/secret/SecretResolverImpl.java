@@ -94,7 +94,7 @@ public class SecretResolverImpl implements SecretResolver {
 	}
 
 	@Override
-	public String vault(long companyId, String key, String scope, String value)
+	public String store(long companyId, String key, String scope, String value)
 		throws SecretException {
 
 		if (!PropsValues.FIPS_ENABLED || Validator.isNull(value)) {

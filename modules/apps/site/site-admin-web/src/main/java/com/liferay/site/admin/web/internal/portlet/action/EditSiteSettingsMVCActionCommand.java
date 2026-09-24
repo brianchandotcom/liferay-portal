@@ -52,10 +52,10 @@ public class EditSiteSettingsMVCActionCommand
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
-		_vault(
+		_store(
 			liveGroup, GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
 			formTypeSettingsUnicodeProperties);
-		_vault(
+		_store(
 			liveGroup, "googleMapsAPIKey", formTypeSettingsUnicodeProperties);
 
 		typeSettingsUnicodeProperties.putAll(formTypeSettingsUnicodeProperties);
@@ -78,13 +78,13 @@ public class EditSiteSettingsMVCActionCommand
 			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 	}
 
-	private void _vault(
+	private void _store(
 			Group group, String key, UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		unicodeProperties.setProperty(
 			key,
-			_secretResolver.vault(
+			_secretResolver.store(
 				group.getCompanyId(), key, "group/" + group.getGroupId(),
 				unicodeProperties.getProperty(key)));
 	}

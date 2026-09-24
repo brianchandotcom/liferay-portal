@@ -106,11 +106,11 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			}
 		}
 
-		_vault(companyId, "basicPassword", portletPreferences, portletRequest);
-		_vault(companyId, "formPassword", portletPreferences, portletRequest);
+		_store(companyId, "basicPassword", portletPreferences, portletRequest);
+		_store(companyId, "formPassword", portletPreferences, portletRequest);
 	}
 
-	private void _vault(
+	private void _store(
 			long companyId, String name, PortletPreferences portletPreferences,
 			PortletRequest portletRequest)
 		throws PortalException {
@@ -120,19 +120,19 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String vaultedValue = _secretResolver.vault(
+		String storedValue = _secretResolver.store(
 			companyId, name,
 			StringBundler.concat(
 				"portlet/", themeDisplay.getPlid(), StringPool.SLASH,
 				ParamUtil.getString(portletRequest, "portletResource")),
 			value);
 
-		if (vaultedValue.equals(value)) {
+		if (storedValue.equals(value)) {
 			return;
 		}
 
 		try {
-			portletPreferences.setValue(name, vaultedValue);
+			portletPreferences.setValue(name, storedValue);
 		}
 		catch (ReadOnlyException readOnlyException) {
 			throw new PortalException(readOnlyException);

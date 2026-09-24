@@ -171,7 +171,7 @@ public class SecretResolverImplTest {
 	}
 
 	@Test
-	public void testVault() throws Exception {
+	public void testStore() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
 
 		KeyReference keyReference = new KeyReference(
@@ -195,7 +195,7 @@ public class SecretResolverImplTest {
 
 		Assert.assertEquals(
 			KeyReferenceUtil.toKeyReferenceString(keyReference),
-			_secretResolverImpl.vault(
+			_secretResolverImpl.store(
 				companyId, key, scope, RandomTestUtil.randomString()));
 
 		Secret secret = atomicReference.get();
@@ -212,7 +212,7 @@ public class SecretResolverImplTest {
 	}
 
 	@Test
-	public void testVaultWhenFIPSIsDisabled() throws Exception {
+	public void testStoreWhenFIPSIsDisabled() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "FIPS_ENABLED", false);
 
@@ -220,7 +220,7 @@ public class SecretResolverImplTest {
 
 		Assert.assertEquals(
 			value,
-			_secretResolverImpl.vault(
+			_secretResolverImpl.store(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), value));
 
@@ -228,10 +228,10 @@ public class SecretResolverImplTest {
 	}
 
 	@Test
-	public void testVaultWhenValueIsBlank() throws Exception {
+	public void testStoreWhenValueIsBlank() throws Exception {
 		Assert.assertEquals(
 			StringPool.BLANK,
-			_secretResolverImpl.vault(
+			_secretResolverImpl.store(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), StringPool.BLANK));
 
@@ -239,7 +239,7 @@ public class SecretResolverImplTest {
 	}
 
 	@Test
-	public void testVaultWhenValueReferencesAnotherKey() throws Exception {
+	public void testStoreWhenValueReferencesAnotherKey() throws Exception {
 		String value = _toKeyReferenceString(
 			StringBundler.concat(
 				"preference/", RandomTestUtil.randomString(), StringPool.SLASH,
@@ -247,7 +247,7 @@ public class SecretResolverImplTest {
 
 		Assert.assertThrows(
 			SecretException.class,
-			() -> _secretResolverImpl.vault(
+			() -> _secretResolverImpl.store(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), value));
 
@@ -255,7 +255,7 @@ public class SecretResolverImplTest {
 	}
 
 	@Test
-	public void testVaultWhenValueReferencesForeignNamespace()
+	public void testStoreWhenValueReferencesForeignNamespace()
 		throws Exception {
 
 		String key = RandomTestUtil.randomString();
@@ -266,7 +266,7 @@ public class SecretResolverImplTest {
 
 		Assert.assertThrows(
 			SecretException.class,
-			() -> _secretResolverImpl.vault(
+			() -> _secretResolverImpl.store(
 				RandomTestUtil.randomLong(), key, RandomTestUtil.randomString(),
 				value));
 
@@ -274,7 +274,7 @@ public class SecretResolverImplTest {
 	}
 
 	@Test
-	public void testVaultWhenValueReferencesSameKeyInAnotherScope()
+	public void testStoreWhenValueReferencesSameKeyInAnotherScope()
 		throws Exception {
 
 		String key = RandomTestUtil.randomString();
@@ -286,7 +286,7 @@ public class SecretResolverImplTest {
 
 		Assert.assertEquals(
 			value,
-			_secretResolverImpl.vault(
+			_secretResolverImpl.store(
 				RandomTestUtil.randomLong(), key, RandomTestUtil.randomString(),
 				value));
 
@@ -294,7 +294,7 @@ public class SecretResolverImplTest {
 	}
 
 	@Test
-	public void testVaultWhenValueReferencesSameSlot() throws Exception {
+	public void testStoreWhenValueReferencesSameSlot() throws Exception {
 		String key = RandomTestUtil.randomString();
 		String scope = RandomTestUtil.randomString();
 
@@ -303,7 +303,7 @@ public class SecretResolverImplTest {
 
 		Assert.assertEquals(
 			value,
-			_secretResolverImpl.vault(
+			_secretResolverImpl.store(
 				RandomTestUtil.randomLong(), key, scope, value));
 
 		Mockito.verifyNoInteractions(_secretManager);

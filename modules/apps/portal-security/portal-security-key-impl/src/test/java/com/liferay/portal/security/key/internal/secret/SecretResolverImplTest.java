@@ -21,7 +21,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -46,11 +45,6 @@ public class SecretResolverImplTest {
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 
-		_fipsEnabled = PropsValues.FIPS_ENABLED;
-
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "FIPS_ENABLED", true);
-
 		ReflectionTestUtil.setFieldValue(
 			_secretResolverImpl, "_portalCache", _portalCache);
 		ReflectionTestUtil.setFieldValue(
@@ -64,12 +58,6 @@ public class SecretResolverImplTest {
 				}
 
 			});
-	}
-
-	@After
-	public void tearDown() {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "FIPS_ENABLED", _fipsEnabled);
 	}
 
 	@Test
@@ -172,141 +160,19 @@ public class SecretResolverImplTest {
 
 	@Test
 	public void testStore() throws Exception {
-		long companyId = RandomTestUtil.randomLong();
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "FIPS_ENABLED", true)) {
 
-		KeyReference keyReference = new KeyReference(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			KeyReference.Type.SECRET);
+			_testStoreWhenFIPSIsDisabled();
+			_testStoreWhenValueIsBlank();
+			_testStoreWhenValueReferencesAnotherKey();
+			_testStoreWhenValueReferencesForeignNamespace();
+			_testStoreWhenValueReferencesSameKeyInAnotherScope();
+			_testStoreWhenValueReferencesSameSlot();
 
-		AtomicReference<Secret> atomicReference = new AtomicReference<>();
-
-		Mockito.when(
-			_secretManager.putSecret(Mockito.eq(companyId), Mockito.any())
-		).thenAnswer(
-			invocationOnMock -> {
-				atomicReference.set(invocationOnMock.getArgument(1));
-
-				return keyReference;
-			}
-		);
-
-		String key = RandomTestUtil.randomString();
-		String scope = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			KeyReferenceUtil.toKeyReferenceString(keyReference),
-			_secretResolverImpl.store(
-				companyId, key, scope, RandomTestUtil.randomString()));
-
-		Secret secret = atomicReference.get();
-
-		KeyReference secretKeyReference = secret.getKeyReference();
-
-		Assert.assertEquals(
-			StringBundler.concat("preference/", scope, StringPool.SLASH, key),
-			secretKeyReference.getIdentifier());
-		Assert.assertEquals(
-			StringPool.STAR, secretKeyReference.getProviderId());
-
-		Assert.assertTrue(secret.isDestroyed());
-	}
-
-	@Test
-	public void testStoreWhenFIPSIsDisabled() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "FIPS_ENABLED", false);
-
-		String value = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			value,
-			_secretResolverImpl.store(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), value));
-
-		Mockito.verifyNoInteractions(_secretManager);
-	}
-
-	@Test
-	public void testStoreWhenValueIsBlank() throws Exception {
-		Assert.assertEquals(
-			StringPool.BLANK,
-			_secretResolverImpl.store(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), StringPool.BLANK));
-
-		Mockito.verifyNoInteractions(_secretManager);
-	}
-
-	@Test
-	public void testStoreWhenValueReferencesAnotherKey() throws Exception {
-		String value = _toKeyReferenceString(
-			StringBundler.concat(
-				"preference/", RandomTestUtil.randomString(), StringPool.SLASH,
-				RandomTestUtil.randomString()));
-
-		Assert.assertThrows(
-			SecretException.class,
-			() -> _secretResolverImpl.store(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), value));
-
-		Mockito.verifyNoInteractions(_secretManager);
-	}
-
-	@Test
-	public void testStoreWhenValueReferencesForeignNamespace()
-		throws Exception {
-
-		String key = RandomTestUtil.randomString();
-
-		String value = _toKeyReferenceString(
-			StringBundler.concat(
-				RandomTestUtil.randomString(), StringPool.SLASH, key));
-
-		Assert.assertThrows(
-			SecretException.class,
-			() -> _secretResolverImpl.store(
-				RandomTestUtil.randomLong(), key, RandomTestUtil.randomString(),
-				value));
-
-		Mockito.verifyNoInteractions(_secretManager);
-	}
-
-	@Test
-	public void testStoreWhenValueReferencesSameKeyInAnotherScope()
-		throws Exception {
-
-		String key = RandomTestUtil.randomString();
-
-		String value = _toKeyReferenceString(
-			StringBundler.concat(
-				"preference/", RandomTestUtil.randomString(), StringPool.SLASH,
-				key));
-
-		Assert.assertEquals(
-			value,
-			_secretResolverImpl.store(
-				RandomTestUtil.randomLong(), key, RandomTestUtil.randomString(),
-				value));
-
-		Mockito.verifyNoInteractions(_secretManager);
-	}
-
-	@Test
-	public void testStoreWhenValueReferencesSameSlot() throws Exception {
-		String key = RandomTestUtil.randomString();
-		String scope = RandomTestUtil.randomString();
-
-		String value = _toKeyReferenceString(
-			StringBundler.concat("preference/", scope, StringPool.SLASH, key));
-
-		Assert.assertEquals(
-			value,
-			_secretResolverImpl.store(
-				RandomTestUtil.randomLong(), key, scope, value));
-
-		Mockito.verifyNoInteractions(_secretManager);
+			_testStore();
+		}
 	}
 
 	private void _assertResolve(String providerId) throws Exception {
@@ -347,14 +213,146 @@ public class SecretResolverImplTest {
 		);
 	}
 
+	private void _testStore() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
+		KeyReference keyReference = new KeyReference(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			KeyReference.Type.SECRET);
+
+		AtomicReference<Secret> atomicReference = new AtomicReference<>();
+
+		Mockito.when(
+			_secretManager.putSecret(Mockito.eq(companyId), Mockito.any())
+		).thenAnswer(
+			invocationOnMock -> {
+				atomicReference.set(invocationOnMock.getArgument(1));
+
+				return keyReference;
+			}
+		);
+
+		String key = RandomTestUtil.randomString();
+		String scope = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			KeyReferenceUtil.toKeyReferenceString(keyReference),
+			_secretResolverImpl.store(
+				companyId, key, scope, RandomTestUtil.randomString()));
+
+		Secret secret = atomicReference.get();
+
+		KeyReference secretKeyReference = secret.getKeyReference();
+
+		Assert.assertEquals(
+			StringBundler.concat("preference/", scope, StringPool.SLASH, key),
+			secretKeyReference.getIdentifier());
+		Assert.assertEquals(
+			StringPool.STAR, secretKeyReference.getProviderId());
+
+		Assert.assertTrue(secret.isDestroyed());
+	}
+
+	private void _testStoreWhenFIPSIsDisabled() throws Exception {
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "FIPS_ENABLED", false)) {
+
+			String value = RandomTestUtil.randomString();
+
+			Assert.assertEquals(
+				value,
+				_secretResolverImpl.store(
+					RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), value));
+
+			Mockito.verifyNoInteractions(_secretManager);
+		}
+	}
+
+	private void _testStoreWhenValueIsBlank() throws Exception {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			_secretResolverImpl.store(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), StringPool.BLANK));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	private void _testStoreWhenValueReferencesAnotherKey() throws Exception {
+		String value = _toKeyReferenceString(
+			StringBundler.concat(
+				"preference/", RandomTestUtil.randomString(), StringPool.SLASH,
+				RandomTestUtil.randomString()));
+
+		Assert.assertThrows(
+			SecretException.class,
+			() -> _secretResolverImpl.store(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	private void _testStoreWhenValueReferencesForeignNamespace()
+		throws Exception {
+
+		String key = RandomTestUtil.randomString();
+
+		String value = _toKeyReferenceString(
+			StringBundler.concat(
+				RandomTestUtil.randomString(), StringPool.SLASH, key));
+
+		Assert.assertThrows(
+			SecretException.class,
+			() -> _secretResolverImpl.store(
+				RandomTestUtil.randomLong(), key, RandomTestUtil.randomString(),
+				value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	private void _testStoreWhenValueReferencesSameKeyInAnotherScope()
+		throws Exception {
+
+		String key = RandomTestUtil.randomString();
+
+		String value = _toKeyReferenceString(
+			StringBundler.concat(
+				"preference/", RandomTestUtil.randomString(), StringPool.SLASH,
+				key));
+
+		Assert.assertEquals(
+			value,
+			_secretResolverImpl.store(
+				RandomTestUtil.randomLong(), key, RandomTestUtil.randomString(),
+				value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
+	private void _testStoreWhenValueReferencesSameSlot() throws Exception {
+		String key = RandomTestUtil.randomString();
+		String scope = RandomTestUtil.randomString();
+
+		String value = _toKeyReferenceString(
+			StringBundler.concat("preference/", scope, StringPool.SLASH, key));
+
+		Assert.assertEquals(
+			value,
+			_secretResolverImpl.store(
+				RandomTestUtil.randomLong(), key, scope, value));
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
 	private String _toKeyReferenceString(String identifier) {
 		return KeyReferenceUtil.toKeyReferenceString(
 			new KeyReference(
 				identifier, RandomTestUtil.randomString(),
 				KeyReference.Type.SECRET));
 	}
-
-	private boolean _fipsEnabled;
 
 	@Mock
 	private PortalCache<String, String> _portalCache;

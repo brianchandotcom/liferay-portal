@@ -1,0 +1,13 @@
+deploymentContext:
+    accountId: "000000000000"
+    clusterSecurityGroupId: sg-00000000000000000
+    clusterSubnetIds: '["subnet-11111111111111111","subnet-22222222222222222"]'
+    crossplaneDataRoleArn: arn:aws:iam::000000000000:role/liferay-example-crossplane-data
+    crossplaneIamBoundaryArn: arn:aws:iam::000000000000:policy/liferay-example-crossplane-iam-boundary
+    crossplaneIamPath: /crossplane/liferay-example/
+    crossplaneIamRoleArn: arn:aws:iam::000000000000:role/liferay-example-crossplane-iam
+    deploymentName: liferay-example
+    oidcIssuerUrl: https://oidc.eks.us-east-1.amazonaws.com/id/00000000000000000000000000000000
+    partition: aws
+    region: us-east-1
+    vpcId: vpc-00000000000000000

@@ -132,3 +132,11 @@ tests:
         it: Sizes the sanitization timeout from the values
         set:
             liferay-subchart-backup-restore.restoreSanitization.timeoutSeconds: 600
+    -   asserts:
+            -   contains:
+                    content: --field-manager=liferay-backup-restore
+                    path: spec.templates[?(@.name=="apply-infrastructure")].resource.flags
+            -   matchRegex:
+                    path: spec.templates[?(@.name=="reset-restore-phase")].script.source
+                    pattern: --field-manager=liferay-backup-restore
+        it: Writes the restore state with the field manager ArgoCD ignores

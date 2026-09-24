@@ -23,6 +23,7 @@ function main {
 		patch \
 		liferayinfrastructure \
 		"${liferay_infrastructure_name}" \
+		--field-manager=liferay-backup-restore \
 		--patch '{"spec":{"restorePhase":"none"}}' \
 		--type merge
 }

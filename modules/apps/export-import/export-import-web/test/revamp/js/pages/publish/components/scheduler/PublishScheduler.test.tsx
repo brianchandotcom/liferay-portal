@@ -23,7 +23,10 @@ import {
 	ScheduleValues,
 } from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/types';
 import {getInitialScheduleValues} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/utils';
-import {toWallClockDateTime} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
+import {
+	toWallClockDate,
+	toWallClockDateTime,
+} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
 
 const user = userEvent.setup({delay: null});
 
@@ -64,6 +67,29 @@ describe('PublishScheduler', () => {
 				'the-process-runs-once-on-x-at-x-and-does-not-repeat'
 			)
 		).toBeInTheDocument();
+	});
+
+	it('fills a start date picked for today with a time still ahead', () => {
+		const onChange = jest.fn();
+
+		renderPublishScheduler({enabled: true}, onChange);
+
+		const today = new Date().toLocaleDateString('en-US', {
+			day: '2-digit',
+			month: '2-digit',
+			timeZone: 'UTC',
+			year: 'numeric',
+		});
+
+		fireEvent.change(screen.getByLabelText(/start-date/), {
+			target: {value: `${today} --:-- --`},
+		});
+
+		const {startDateTime} = onChange.mock.calls[0][0];
+
+		expect(toWallClockDate(startDateTime).getTime()).toBeGreaterThan(
+			Date.now()
+		);
 	});
 
 	it('hides the summary while there is no start date', () => {
@@ -245,7 +271,8 @@ describe('PublishScheduler', () => {
 		expect(
 			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
 		).toBeChecked();
-		expect(screen.getByLabelText('repeat-at')).toHaveValue('09:15 AM');
+		expect(screen.getByLabelText('hours')).toHaveValue('09');
+		expect(screen.getByLabelText('minutes')).toHaveValue('15');
 		expect(screen.getByLabelText('repeat-at')).toBeDisabled();
 	});
 
@@ -273,7 +300,7 @@ describe('PublishScheduler', () => {
 		);
 	});
 
-	it('re-syncs to the start date time when the checkbox is checked again', async () => {
+	it('resyncs to the start date time when the checkbox is checked again', async () => {
 		const onChange = jest.fn();
 
 		renderPublishScheduler(
@@ -287,7 +314,8 @@ describe('PublishScheduler', () => {
 			onChange
 		);
 
-		expect(screen.getByLabelText(/repeat-at/)).toHaveValue('10:00 AM');
+		expect(screen.getByLabelText('hours')).toHaveValue('10');
+		expect(screen.getByLabelText('minutes')).toHaveValue('00');
 		expect(screen.getByLabelText(/repeat-at/)).toBeEnabled();
 
 		await user.click(
@@ -313,9 +341,10 @@ describe('PublishScheduler', () => {
 			onChange
 		);
 
-		fireEvent.change(screen.getByLabelText(/repeat-at/), {
-			target: {value: '5:30 PM'},
-		});
+		fireEvent.keyDown(screen.getByLabelText('hours'), {key: '5'});
+		fireEvent.keyDown(screen.getByLabelText('minutes'), {key: '3'});
+		fireEvent.keyDown(screen.getByLabelText('minutes'), {key: '0'});
+		fireEvent.keyDown(screen.getByLabelText('am-pm'), {key: 'ArrowUp'});
 
 		expect(onChange).toHaveBeenCalledWith(
 			expect.objectContaining({repeatOnTime: '17:30'})

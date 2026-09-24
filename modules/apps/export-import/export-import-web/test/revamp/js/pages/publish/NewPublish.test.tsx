@@ -18,7 +18,10 @@ import '@testing-library/jest-dom';
 
 import {NewPublish} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/NewPublish';
 import {ScheduledPublishProcess} from '../../../../../src/main/resources/META-INF/resources/revamp/js/types/exportImportProcess';
-import {toWallClockDateTime} from '../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
+import {
+	toDateTimeParts,
+	toWallClockDateTime,
+} from '../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
 import {mockPreview} from '../../mocks/mockPreview';
 
 jest.mock('staging-taglib', () => ({
@@ -194,6 +197,24 @@ describe('NewPublish', () => {
 		expect(
 			await screen.findByRole('radio', {name: /schedule-for-later/})
 		).toBeChecked();
+	});
+
+	it('starts a new schedule on the time zone of the user', async () => {
+		renderComponent({
+			defaultScheduled: true,
+			timeZoneId: 'Europe/Paris',
+			timeZones: [
+				{label: '(UTC) Coordinated Universal Time', value: 'UTC'},
+				{
+					label: '(UTC +01:00) Central European Time',
+					value: 'Europe/Paris',
+				},
+			],
+		});
+
+		expect(
+			await screen.findByRole('combobox', {name: 'time-zone'})
+		).toHaveValue('Europe/Paris');
 	});
 
 	it('requires a start date to schedule the publication', async () => {
@@ -425,17 +446,17 @@ describe('NewPublish', () => {
 			'week'
 		);
 
-		expect(screen.getByLabelText(/repeat-at/)).not.toHaveAccessibleName(
-			/mandatory/i
-		);
+		expect(
+			screen.queryByLabelText(/repeat-at.*mandatory/i)
+		).not.toBeInTheDocument();
 
 		await user.click(
 			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
 		);
 
-		expect(screen.getByLabelText(/repeat-at/)).toHaveAccessibleName(
-			/mandatory/i
-		);
+		expect(
+			screen.getByLabelText(/repeat-at.*mandatory/i)
+		).toBeInTheDocument();
 	});
 
 	it('schedules the publication with the cron fields', async () => {
@@ -557,9 +578,8 @@ describe('NewPublish', () => {
 	});
 
 	it('drops the stored end date of an edited one time schedule', async () => {
-		const [datePart, timePart] = FUTURE_DATE_TIME.split(' ');
-		const [year, month, day] = datePart.split('-').map(Number);
-		const [hour, minute] = timePart.split(':').map(Number);
+		const {day, hour, minute, month, year} =
+			toDateTimeParts(FUTURE_DATE_TIME);
 
 		const scheduleEndDate = new Date(
 			FUTURE_DATE.getTime() + DAY
@@ -622,7 +642,7 @@ describe('NewPublish', () => {
 		);
 	});
 
-	it('round-trips a seeded date range through the portal time zone', async () => {
+	it('round trips a seeded date range through the portal time zone', async () => {
 		mockAPIRoutes({
 			scheduledPublishProcess: {
 				...SCHEDULED_PUBLISH_PROCESS,
@@ -723,7 +743,8 @@ describe('NewPublish', () => {
 		expect(
 			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
 		).toBeChecked();
-		expect(screen.getByLabelText(/repeat-at/)).toHaveValue('12:00 AM');
+		expect(screen.getByLabelText('hours')).toHaveValue('12');
+		expect(screen.getByLabelText('am-pm')).toHaveValue('AM');
 		expect(screen.getByLabelText(/repeat-at/)).toBeDisabled();
 	});
 
@@ -756,7 +777,8 @@ describe('NewPublish', () => {
 		expect(
 			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
 		).not.toBeChecked();
-		expect(screen.getByLabelText(/repeat-at/)).toHaveValue('12:00 AM');
+		expect(screen.getByLabelText('hours')).toHaveValue('12');
+		expect(screen.getByLabelText('am-pm')).toHaveValue('AM');
 		expect(screen.getByLabelText(/repeat-at/)).toBeEnabled();
 	});
 
@@ -800,11 +822,12 @@ describe('NewPublish', () => {
 
 		await screen.findByRole('textbox', {name: /^name/i});
 
-		await user.clear(screen.getByLabelText(/repeat-at/));
-
-		await user.click(screen.getByLabelText(/repeat-at/));
-
-		await user.paste('03:15 PM');
+		fireEvent.keyDown(screen.getByLabelText('hours'), {key: 'Backspace'});
+		fireEvent.keyDown(screen.getByLabelText('hours'), {key: '3'});
+		fireEvent.keyDown(screen.getByLabelText('minutes'), {key: 'Backspace'});
+		fireEvent.keyDown(screen.getByLabelText('minutes'), {key: '1'});
+		fireEvent.keyDown(screen.getByLabelText('minutes'), {key: '5'});
+		fireEvent.keyDown(screen.getByLabelText('am-pm'), {key: 'ArrowUp'});
 
 		await user.selectOptions(
 			screen.getByRole('combobox', {name: 'repeat'}),
@@ -1068,7 +1091,9 @@ describe('NewPublish', () => {
 			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
 		);
 
-		await user.clear(screen.getByLabelText(/repeat-at/));
+		await user.click(screen.getByLabelText('hours'));
+
+		fireEvent.keyDown(screen.getByLabelText('hours'), {key: 'Backspace'});
 
 		await user.tab();
 

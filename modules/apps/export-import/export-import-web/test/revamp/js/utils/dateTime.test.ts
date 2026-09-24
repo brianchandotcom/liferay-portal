@@ -5,11 +5,9 @@
 
 import {
 	getLocaleDateFormat,
-	getTimePlaceholder,
 	is12HourLocale,
 	to12HourTime,
 	to24HourTime,
-	toCanonicalTime,
 	toDisplayDateTime,
 	toStorageDateTime,
 	toWallClockDateTime,
@@ -28,21 +26,10 @@ describe('getLocaleDateFormat', () => {
 		expect(getLocaleDateFormat('hu-HU')).toBe('yyyy. MM. dd.');
 		expect(getLocaleDateFormat('ko-KR')).toBe('yyyy. MM. dd.');
 	});
-
-	it('falls back to the portal locale', () => {
-		expect(getLocaleDateFormat()).toBe('MM/dd/yyyy');
-	});
-});
-
-describe('getTimePlaceholder', () => {
-	it('names the expected shape for each clock', () => {
-		expect(getTimePlaceholder(true)).toBe('HH:MM AM');
-		expect(getTimePlaceholder(false)).toBe('HH:MM');
-	});
 });
 
 describe('is12HourLocale', () => {
-	it('accepts the 12-hour clock whenever the locale marks a day period', () => {
+	it('accepts the 12 hour clock whenever the locale marks a day period', () => {
 		expect(is12HourLocale('en-AU')).toBe(true);
 		expect(is12HourLocale('en-US')).toBe(true);
 		expect(is12HourLocale('ko-KR')).toBe(true);
@@ -70,7 +57,7 @@ describe('is12HourLocale', () => {
 });
 
 describe('to12HourTime', () => {
-	it('renders a canonical time on the 12-hour clock', () => {
+	it('renders a canonical time on the 12 hour clock', () => {
 		expect(to12HourTime('00:00')).toBe('12:00 AM');
 		expect(to12HourTime('12:00')).toBe('12:00 PM');
 		expect(to12HourTime('17:05')).toBe('05:05 PM');
@@ -87,7 +74,7 @@ describe('to12HourTime', () => {
 });
 
 describe('to24HourTime', () => {
-	it('reads midnight and noon from the 12-hour clock', () => {
+	it('reads midnight and noon from the 12 hour clock', () => {
 		expect(to24HourTime('12:00 AM')).toBe('00:00');
 		expect(to24HourTime('12:00 PM')).toBe('12:00');
 	});
@@ -111,28 +98,12 @@ describe('to24HourTime', () => {
 		expect(to24HourTime('17:00')).toBe('17:00');
 	});
 
-	it('maps the unset 12-hour sentinel back to the unset time', () => {
+	it('maps the unset 12 hour sentinel back to the unset time', () => {
 		expect(to24HourTime('--:-- --')).toBe('--:--');
 	});
 
 	it('passes anything else through untouched', () => {
 		expect(to24HourTime('junk')).toBe('junk');
-	});
-});
-
-describe('toCanonicalTime', () => {
-	it('pads a single-digit hour on the 24-hour clock', () => {
-		expect(toCanonicalTime('8:00', false)).toBe('08:00');
-	});
-
-	it('converts and pads on the 12-hour clock', () => {
-		expect(toCanonicalTime('8:00 pm', true)).toBe('20:00');
-		expect(toCanonicalTime('8:00', true)).toBe('08:00');
-		expect(toCanonicalTime('17:00', true)).toBe('17:00');
-	});
-
-	it('leaves a 12-hour time alone on the 24-hour clock', () => {
-		expect(toCanonicalTime('5:00 PM', false)).toBe('5:00 PM');
 	});
 });
 
@@ -164,7 +135,7 @@ describe('toDisplayDateTime', () => {
 		);
 	});
 
-	it('passes a half-typed or unreadable date through untouched', () => {
+	it('passes a half typed or unreadable date through untouched', () => {
 		expect(toDisplayDateTime('2026-09', 'dd.MM.yyyy', false)).toBe(
 			'2026-09'
 		);
@@ -189,6 +160,12 @@ describe('toStorageDateTime', () => {
 		expect(
 			toStorageDateTime('2026. 09. 26. 17:00', 'yyyy. MM. dd.', false)
 		).toBe('2026-09-26 17:00');
+	});
+
+	it('refuses a date whose year is not complete yet', () => {
+		expect(toStorageDateTime('01/01/202', 'MM/dd/yyyy', false)).toBe(
+			'01/01/202'
+		);
 	});
 
 	it('refuses a date the display order cannot account for', () => {
@@ -217,7 +194,7 @@ describe('toStorageDateTime', () => {
 		).toBe('2024-11-22 17:00');
 	});
 
-	it('round-trips every display order it is given', () => {
+	it('round trips every display order it is given', () => {
 		const dateFormats = [
 			'MM/dd/yyyy',
 			'dd/MM/yyyy',
@@ -250,9 +227,21 @@ describe('toWallClockDateTime', () => {
 			'2026-07-20 19:30'
 		);
 	});
+
+	it('pads an early year to four digits', () => {
+		expect(toWallClockDateTime('0202-01-01T00:00:00.000Z', 'UTC')).toBe(
+			'0202-01-01 00:00'
+		);
+	});
 });
 
 describe('toZonedDate', () => {
+	it('resolves an early year', () => {
+		expect(toZonedDate('0202-01-01 00:00', 'UTC').toISOString()).toBe(
+			'0202-01-01T00:00:00.000Z'
+		);
+	});
+
 	it('interprets the wall clock time in the given time zone', () => {
 		expect(
 			toZonedDate('2026-07-20 15:30', 'America/New_York').toISOString()

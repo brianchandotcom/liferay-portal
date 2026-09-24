@@ -107,6 +107,27 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenCalledWith('2026-09-19 --:--');
 	});
 
+	it('leaves a date only value without a time on blur', () => {
+		const onChange = jest.fn();
+
+		render(
+			<FieldDatePicker
+				dateFormat="yyyy-MM-dd"
+				label="Start Date"
+				name="startDate"
+				onChange={onChange}
+				value="2026-09-19"
+			/>
+		);
+
+		fireEvent.blur(screen.getByLabelText('Start Date'));
+
+		expect(onChange).not.toHaveBeenCalled();
+		expect(
+			screen.queryByText('the-field-value-is-invalid')
+		).not.toBeInTheDocument();
+	});
+
 	it('fills in the default time when the typed time is cleared', () => {
 		const onChange = jest.fn();
 
@@ -161,7 +182,7 @@ describe('FieldDatePicker', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('displays a canonical 24-hour value as 12-hour when use12Hours is set', () => {
+	it('displays a canonical 24 hour value as 12 hour when use12Hours is set', () => {
 		render(
 			<FieldDatePicker
 				dateFormat="yyyy-MM-dd"
@@ -179,7 +200,7 @@ describe('FieldDatePicker', () => {
 		);
 	});
 
-	it('converts a typed 12-hour value back to the canonical 24-hour value', () => {
+	it('converts a typed 12 hour value back to the canonical 24 hour value', () => {
 		const onChange = jest.fn();
 
 		render(
@@ -200,7 +221,7 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenCalledWith('2026-09-19 17:00');
 	});
 
-	it('round-trips midnight and noon correctly in 12-hour mode', () => {
+	it('round trips midnight and noon correctly in 12 hour mode', () => {
 		const onChange = jest.fn();
 
 		render(
@@ -227,7 +248,7 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenCalledWith('2026-09-19 12:00');
 	});
 
-	it('fills in the default time in 12-hour mode when a date is picked without one', () => {
+	it('fills in the default time in 12 hour mode when a date is picked without one', () => {
 		const onChange = jest.fn();
 
 		render(
@@ -249,7 +270,7 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenCalledWith('2026-09-19 00:00');
 	});
 
-	it('normalizes the 12-hour unset placeholder when no default time is configured', () => {
+	it('normalizes the 12 hour unset placeholder when no default time is configured', () => {
 		const onChange = jest.fn();
 
 		render(
@@ -270,7 +291,7 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenCalledWith('2026-09-19 --:--');
 	});
 
-	it('derives the 12-hour clock from the portal locale when use12Hours is omitted', () => {
+	it('derives the 12 hour clock from the portal locale when use12Hours is omitted', () => {
 		const onChange = jest.fn();
 
 		render(
@@ -294,7 +315,7 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenCalledWith('2026-09-19 08:30');
 	});
 
-	it('keeps the 24-hour clock for a 24-hour portal locale', () => {
+	it('keeps the 24 hour clock for a 24 hour portal locale', () => {
 		['es-ES', 'ja-JP'].forEach((locale) => {
 			(
 				Liferay.ThemeDisplay.getBCP47LanguageId as jest.Mock
@@ -326,7 +347,7 @@ describe('FieldDatePicker', () => {
 		});
 	});
 
-	it('normalizes a single-digit hour and a lowercase period typed in 12-hour mode', () => {
+	it('normalizes a single digit hour and a lowercase period typed in 12 hour mode', () => {
 		const onChange = jest.fn();
 
 		render(
@@ -353,7 +374,7 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenCalledWith('2026-09-19 08:05');
 	});
 
-	it('pads a single-digit hour typed in 24-hour mode', () => {
+	it('pads a single digit hour typed in 24 hour mode', () => {
 		const onChange = jest.fn();
 
 		render(
@@ -482,7 +503,7 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenLastCalledWith('2026-10-01 12:30');
 	});
 
-	it('reports an hour outside the 12-hour clock as invalid', () => {
+	it('reports an hour outside the 12 hour clock as invalid', () => {
 		const onChange = jest.fn();
 
 		render(

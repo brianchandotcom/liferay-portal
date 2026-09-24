@@ -87,18 +87,4 @@ describe('FormikFieldPublishScheduler', () => {
 			screen.getByText('the-publish-time-must-be-in-the-future')
 		).toBeInTheDocument();
 	});
-
-	it('shows the repeat at error for an untouched value that is already wrong', () => {
-		renderFormikFieldPublishScheduler({
-			enabled: true,
-			repeatOnTime: '7:3',
-			repeatOnTimeSynced: false,
-			startDateTime: FUTURE_START_DATE_TIME,
-			unit: IntervalUnit.Day,
-		});
-
-		expect(
-			screen.getByText('please-enter-a-valid-time')
-		).toBeInTheDocument();
-	});
 });

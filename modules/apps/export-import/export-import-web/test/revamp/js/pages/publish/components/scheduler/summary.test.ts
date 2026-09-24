@@ -93,9 +93,33 @@ describe('getScheduleSummary', () => {
 		expect(
 			getScheduleSummary(
 				buildScheduleValues({
+					cronExpression: '0 0 12 * * ? *',
 					endDateTime: '2099-08',
 					neverEnd: false,
 					unit: IntervalUnit.Custom,
+				})
+			)
+		).toBeNull();
+	});
+
+	it('returns null while a custom cron expression is missing', () => {
+		expect(
+			getScheduleSummary(
+				buildScheduleValues({
+					cronExpression: ' ',
+					unit: IntervalUnit.Custom,
+				})
+			)
+		).toBeNull();
+	});
+
+	it('returns null while an unsynced repeat at time is missing', () => {
+		expect(
+			getScheduleSummary(
+				buildScheduleValues({
+					repeatOnTime: '',
+					repeatOnTimeSynced: false,
+					unit: IntervalUnit.Week,
 				})
 			)
 		).toBeNull();
@@ -143,8 +167,6 @@ describe('getScheduleSummary', () => {
 
 describe('schedule summary wording', () => {
 	const LANGUAGE_KEYS: Record<string, string> = {
-		'day': 'Day',
-		'month': 'Month',
 		'repeat-day-x': 'day {0}',
 		'repeat-days-x': 'days {0}',
 		'repeat-first': 'first',
@@ -175,8 +197,6 @@ describe('schedule summary wording', () => {
 			'The process repeats in {0} on the {1} at {2}.',
 		'the-process-repeats-in-x-on-x-at-x':
 			'The process repeats in {0} on {1} at {2}.',
-		'week': 'Week',
-		'year': 'Year',
 	};
 
 	function getActiveFromSentence(
@@ -323,7 +343,7 @@ describe('schedule summary wording', () => {
 		);
 	});
 
-	it('shows the repeat time in the repeats sentence and the start time in the active-from sentence, once unsynced', () => {
+	it('shows the repeat time in the repeats sentence and the start time in the active from sentence, once unsynced', () => {
 		const unsyncedScheduleValues = {
 			repeatOnTime: '00:00',
 			repeatOnTimeSynced: false,
@@ -350,7 +370,7 @@ describe('schedule summary wording', () => {
 		);
 	});
 
-	it('keeps the end date and its own time in the active-from sentence', () => {
+	it('keeps the end date and its own time in the active from sentence', () => {
 		expect(
 			getActiveFromSentence({
 				endDateTime: END_DATE_TIME,

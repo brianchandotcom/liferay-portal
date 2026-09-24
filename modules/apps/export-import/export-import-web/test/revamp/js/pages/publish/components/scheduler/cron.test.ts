@@ -541,7 +541,7 @@ describe('fromCronExpression', () => {
 		});
 	});
 
-	it('classifies a pattern whose seconds field is a zero-padded zero', () => {
+	it('classifies a pattern whose seconds field is a zero padded zero', () => {
 		expect(decode('00 45 09 15 * ? *')).toEqual({
 			monthDays: [15],
 			months: [],

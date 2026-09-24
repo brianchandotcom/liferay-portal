@@ -19,11 +19,7 @@ const DAY = 24 * 60 * 60 * 1000;
 
 const FUTURE_DATE = new Date(Date.now() + DAY);
 
-const PAST_DATE = new Date(Date.now() - DAY);
-
-const PAST_DATE_STRING = PAST_DATE.toISOString().slice(0, 10);
-
-const TODAY = new Date();
+const PAST_DATE_STRING = new Date(Date.now() - DAY).toISOString().slice(0, 10);
 
 function toDisplayDateString(dateString: string) {
 	const [year, month, day] = dateString.split('-');
@@ -234,7 +230,7 @@ describe('DateFilter', () => {
 		expect(screen.getByText('show-results')).toBeDisabled();
 	});
 
-	it('flags the end of today that the To calendar fills in', async () => {
+	it('fills the current time when today is picked as the To bound', async () => {
 		const {user} = renderDateFilter();
 
 		await user.selectOptions(
@@ -242,16 +238,22 @@ describe('DateFilter', () => {
 			Range.DateRange
 		);
 
-		await pickCalendarDay(user, 'from', PAST_DATE);
-		await pickCalendarDay(user, 'to[date-time]', TODAY);
+		const todayString = new Date().toISOString().slice(0, 10);
 
+		fireEvent.change(screen.getByLabelText('to[date-time]'), {
+			target: {value: `${toDisplayDateString(todayString)} --:-- --`},
+		});
+
+		expect(screen.getByLabelText('to[date-time]')).not.toHaveValue(
+			`${toDisplayDateString(todayString)} 11:59 PM`
+		);
 		expect(
-			screen.getByText('dates-must-not-be-in-the-future')
-		).toBeInTheDocument();
-		expect(screen.getByText('show-results')).toBeDisabled();
+			screen.queryByText('dates-must-not-be-in-the-future')
+		).not.toBeInTheDocument();
+		expect(screen.getByText('show-results')).toBeEnabled();
 	});
 
-	it('explains why an incomplete bound blocks the results', async () => {
+	it('explains why an incomplete bound blocks the results once it is left', async () => {
 		const {user} = renderDateFilter();
 
 		await user.selectOptions(
@@ -261,7 +263,33 @@ describe('DateFilter', () => {
 
 		await user.click(screen.getByLabelText('from'));
 
-		await user.paste('01/01/2026');
+		await user.paste('01/01/2026 1');
+
+		expect(
+			screen.queryByText('please-enter-a-valid-date')
+		).not.toBeInTheDocument();
+		expect(screen.getByText('show-results')).toBeDisabled();
+
+		await user.tab();
+
+		expect(
+			screen.getByText('the-field-value-is-invalid')
+		).toBeInTheDocument();
+	});
+
+	it('reports an unfinished year once the bound is left', async () => {
+		const {user} = renderDateFilter();
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		await user.click(screen.getByLabelText('from'));
+
+		await user.paste('01/01/202');
+
+		await user.tab();
 
 		expect(
 			screen.getByText('please-enter-a-valid-date')

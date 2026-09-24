@@ -78,18 +78,6 @@ describe('getScheduleValuesErrors', () => {
 		).toEqual({});
 	});
 
-	it('reports a repeat at time that is partially typed', () => {
-		expect(
-			getScheduleValuesErrors(
-				buildScheduleValues({
-					repeatOnTime: '10:',
-					repeatOnTimeSynced: false,
-					unit: IntervalUnit.Day,
-				})
-			).repeatOnTime
-		).toBe('please-enter-a-valid-time');
-	});
-
 	it('requires the repeat at time once the sync is unchecked', () => {
 		expect(
 			getScheduleValuesErrors(

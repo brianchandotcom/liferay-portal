@@ -36,7 +36,6 @@ import {
 	fromCronExpression,
 	toCronExpression,
 } from './components/scheduler/cron';
-import {getDefaultTimeZoneId} from './components/scheduler/timeZones';
 import {ScheduleValues, TimeZoneOption} from './components/scheduler/types';
 import {
 	getInitialScheduleValues,
@@ -100,7 +99,7 @@ export function NewPublish({
 			name: '',
 			permissions: false,
 			scheduleValues: getInitialScheduleValues(
-				getDefaultTimeZoneId(timeZones, timeZoneId),
+				timeZoneId,
 				defaultScheduled
 			),
 		}));

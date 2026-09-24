@@ -15,18 +15,13 @@ import {
 } from '../../../../utils/dateTime';
 import {
 	IntervalUnit,
+	LAST_WEEKDAY_ORDINAL,
 	MONTH_DAYS,
 	RepeatType,
 	ScheduleValues,
 	WEEKDAYS,
 } from './types';
-import {
-	MONTHS,
-	getIntervalText,
-	getWeekdayName,
-	getWeekdayOrdinalProseText,
-	hasEndDate,
-} from './utils';
+import {MONTHS, getIntervalText, getWeekdayName, hasEndDate} from './utils';
 
 function getListText(labels: string[], locale: string): string {
 	if (typeof Intl.ListFormat === 'function') {
@@ -46,6 +41,30 @@ function getWeekdayListText(weekdays: number[], locale: string): string {
 		),
 		locale
 	);
+}
+
+function getWeekdayOrdinalProseText(weekdayOrdinal: string): string {
+	if (weekdayOrdinal === '1') {
+		return Liferay.Language.get('repeat-first');
+	}
+
+	if (weekdayOrdinal === '2') {
+		return Liferay.Language.get('repeat-second');
+	}
+
+	if (weekdayOrdinal === '3') {
+		return Liferay.Language.get('repeat-third');
+	}
+
+	if (weekdayOrdinal === '4') {
+		return Liferay.Language.get('repeat-fourth');
+	}
+
+	if (weekdayOrdinal === LAST_WEEKDAY_ORDINAL) {
+		return Liferay.Language.get('repeat-last');
+	}
+
+	return weekdayOrdinal;
 }
 
 function getWeekdayOrdinalText(

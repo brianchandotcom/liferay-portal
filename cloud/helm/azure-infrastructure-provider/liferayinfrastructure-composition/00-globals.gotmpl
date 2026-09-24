@@ -38,6 +38,7 @@
 {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 {{- $storageAccountBase := printf "%.15s%s" ($projectIdFull | replace "-" "" | lower) $uidHash -}}
 
+{{- $backupVaultName := printf "%s-vault" $baseName -}}
 {{- $dataPlaneKeys := dict -}}
 
 {{- range $dataPlane := list "blue" "green" -}}
@@ -59,8 +60,10 @@
     {{- $resourceNames := dict "databaseServer" (printf "%s-%s" $baseName $dataPlaneKey) -}}
     {{- if eq $generation $dataPlaneKey -}}
         {{- $_ := set $resourceNames "storageAccount" (printf "%s%s" $storageAccountBase (trunc 1 $dataPlane)) -}}
+        {{- $_ := set $resourceNames "backupInstance" (printf "%s-storage-instance-%s" $backupVaultName $dataPlane) -}}
     {{- else -}}
         {{- $_ := set $resourceNames "storageAccount" (printf "%.11s%s%s%s" ($projectIdFull | replace "-" "" | lower) $uidHash (trunc 1 $dataPlane) $generation) -}}
+        {{- $_ := set $resourceNames "backupInstance" (printf "%s-%s" $backupVaultName $resourceNames.storageAccount) -}}
     {{- end -}}
     {{- $_ := set $dataPlaneNames $dataPlaneKey $resourceNames -}}
 {{- end }}

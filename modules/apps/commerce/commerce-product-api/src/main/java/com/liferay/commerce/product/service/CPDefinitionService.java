@@ -114,10 +114,6 @@ public interface CPDefinitionService extends BaseService {
 			long cpDefinitionId, long groupId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CPDefinition copyCPDefinition(
-			long sourceCPDefinitionId, long groupId, int status)
-		throws PortalException;
-
 	public void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId, ServiceContext serviceContext)
 		throws PortalException;
@@ -289,4 +285,4 @@ public interface CPDefinitionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:981781788
+// LIFERAY-SERVICE-BUILDER-HASH:-1225366900

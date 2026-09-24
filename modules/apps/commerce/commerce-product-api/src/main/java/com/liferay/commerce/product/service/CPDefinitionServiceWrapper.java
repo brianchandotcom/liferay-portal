@@ -149,15 +149,6 @@ public class CPDefinitionServiceWrapper
 	}
 
 	@Override
-	public CPDefinition copyCPDefinition(
-			long sourceCPDefinitionId, long groupId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionService.copyCPDefinition(
-			sourceCPDefinitionId, groupId, status);
-	}
-
-	@Override
 	public void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -501,4 +492,4 @@ public class CPDefinitionServiceWrapper
 	private CPDefinitionService _cpDefinitionService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-135650984
+// LIFERAY-SERVICE-BUILDER-HASH:1276086684

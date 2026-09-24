@@ -149,14 +149,6 @@ public class CPDefinitionServiceUtil {
 			cpDefinitionId, groupId, serviceContext);
 	}
 
-	public static CPDefinition copyCPDefinition(
-			long sourceCPDefinitionId, long groupId, int status)
-		throws PortalException {
-
-		return getService().copyCPDefinition(
-			sourceCPDefinitionId, groupId, status);
-	}
-
 	public static void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -462,4 +454,4 @@ public class CPDefinitionServiceUtil {
 			CPDefinitionServiceUtil.class, CPDefinitionService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:113470783
+// LIFERAY-SERVICE-BUILDER-HASH:1252171968

@@ -1,0 +1,30 @@
+<#assign hasEntityFinderWhereClauses = serviceBuilder.isVersionGTE_7_4_0() && entityFinderWhereClauses?? && (entityFinderWhereClauses?size > 0) />
+
+<#if serviceBuilder.isVersionGTE_7_4_0()>
+	package ${packagePath}.service.persistence.impl;
+	import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelper;
+	import com.liferay.portal.kernel.model.BaseModel;
+
+	import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+	import java.text.SimpleDateFormat;
+
+	import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
+	import java.text.DateFormat;
+
+	<#if hasEntityFinderWhereClauses>
+		import com.liferay.portal.kernel.util.GetterUtil;
+
+		import com.liferay.portal.kernel.util.Validator;
+
+	</#if>
+
+	import java.util.ArrayList;
+
+	<#if hasEntityFinderWhereClauses>
+		import java.util.HashMap;
+
+	<#else>
+		import java.util.Map;
+
+	</#if>
+</#if>

@@ -8738,8 +8738,8 @@ information. Make sure to commit in all format-javadoc results.
 					<sequential>
 						<echo>Executing Gradle tasks: @{modules.test.class}.</echo>
 
-						<var name="modules.test.class.file.names" unset="true" />
-						<var name="modules.test.class.file.names.task" unset="true" />
+						<var name="modules.test.class.file.paths" unset="true" />
+						<var name="modules.test.class.file.paths.task" unset="true" />
 						<var name="modules.test.class.task" unset="true" />
 
 						<beanshell>
@@ -8749,7 +8749,7 @@ information. Make sure to commit in all format-javadoc results.
 								int index = modulesTestClass.indexOf("#");
 
 								if (index == -1) {
-									project.setProperty("modules.test.class.file.names", "");
+									project.setProperty("modules.test.class.file.paths", "");
 									project.setProperty("modules.test.class.task", modulesTestClass);
 								}
 								else {
@@ -8757,21 +8757,21 @@ information. Make sure to commit in all format-javadoc results.
 
 									StringBuilder sb = new StringBuilder();
 
-									for (String testFileName : modulesTestClass.substring(index + 1).split("#")) {
+									for (String testFilePath : modulesTestClass.substring(index + 1).split("#")) {
 										if (sb.length() > 0) {
 											sb.append(",");
 										}
 
 										sb.append(projectDirPath);
 										sb.append("/");
-										sb.append(testFileName);
+										sb.append(testFilePath);
 									}
 
 									String testTask = modulesTestClass.substring(0, index);
 
 									project.setProperty("js.unit.test.file.reported", "true");
-									project.setProperty("modules.test.class.file.names", sb.toString());
-									project.setProperty("modules.test.class.file.names.task", testTask.replaceAll(":packageRunTest$", ":runJSUnitTestFileNames"));
+									project.setProperty("modules.test.class.file.paths", sb.toString());
+									project.setProperty("modules.test.class.file.paths.task", testTask.replaceAll(":packageRunTest$", ":runJSUnitTestFilePaths"));
 									project.setProperty("modules.test.class.task", testTask);
 								}
 							]]>
@@ -8780,16 +8780,16 @@ information. Make sure to commit in all format-javadoc results.
 						<trycatch property="gradle.failure">
 							<try>
 								<if>
-									<equals arg1="${modules.test.class.file.names}" arg2="" />
+									<equals arg1="${modules.test.class.file.paths}" arg2="" />
 									<then>
 										<gradle-execute dir="modules" task="${modules.test.class.task}">
 											<arg value="--continue" />
 										</gradle-execute>
 									</then>
 									<else>
-										<gradle-execute dir="modules" task="${modules.test.class.file.names.task}">
+										<gradle-execute dir="modules" task="${modules.test.class.file.paths.task}">
 											<arg value="--continue" />
-											<arg value="-Pjs.unit.test.file.names=${modules.test.class.file.names}" />
+											<arg value="-Pjs.unit.test.file.paths=${modules.test.class.file.paths}" />
 										</gradle-execute>
 									</else>
 								</if>

@@ -279,8 +279,8 @@ gradle.beforeProject {
 					}
 				}
 
-				if (tasks.findByName("packageRunTest") && project.hasProperty("js.unit.test.file.names")) {
-					tasks.create(name: "runJSUnitTestFileNames", type: Exec) {
+				if (tasks.findByName("packageRunTest") && project.hasProperty("js.unit.test.file.paths")) {
+					tasks.create(name: "runJSUnitTestFilePaths", type: Exec) {
 						args node.scriptFile
 
 						if (node.useNpm) {
@@ -298,8 +298,8 @@ gradle.beforeProject {
 
 						args "--runTestsByPath"
 
-						for (String jsUnitTestFileName : project.property("js.unit.test.file.names").split(",")) {
-							args jsUnitTestFileName
+						for (String jsUnitTestFilePath : project.property("js.unit.test.file.paths").split(",")) {
+							args jsUnitTestFilePath
 						}
 
 						dependsOn npmInstall

@@ -89,6 +89,8 @@ public class PageSpecificationResourceImpl
 				true, contextCompany.getCompanyId(), siteExternalReferenceCode),
 			pageSpecificationExternalReferenceCode);
 
+		_validateLayoutType(layout);
+
 		if (!layout.isDraftLayout() ||
 			(layout.isApproved() &&
 			 GetterUtil.getBoolean(
@@ -194,12 +196,7 @@ public class PageSpecificationResourceImpl
 				siteExternalReferenceCode),
 			pageSpecificationExternalReferenceCode);
 
-		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
-			!layout.isTypePortlet()) {
-
-			throw new IllegalArgumentException(
-				"Only content, widget, or asset display pages are supported");
-		}
+		_validateLayoutType(layout);
 
 		return _pageSpecificationDTOConverter.toDTO(
 			DTOConverterContextUtil.getDTOConverterContext(
@@ -379,6 +376,8 @@ public class PageSpecificationResourceImpl
 				siteExternalReferenceCode),
 			pageSpecificationExternalReferenceCode);
 
+		_validateLayoutType(layout);
+
 		if ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
 			!(pageSpecification instanceof ContentPageSpecification)) {
 
@@ -416,6 +415,8 @@ public class PageSpecificationResourceImpl
 
 		Layout layout = _getLayout(
 			groupId, pageSpecificationExternalReferenceCode);
+
+		_validateLayoutType(layout);
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			groupId, contextHttpServletRequest, contextUser.getUserId());
@@ -636,6 +637,15 @@ public class PageSpecificationResourceImpl
 					contextHttpServletRequest, draftLayout.getPlid(),
 					contextUriInfo, contextUser),
 				draftLayout));
+	}
+
+	private void _validateLayoutType(Layout layout) {
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
+			!layout.isTypePortlet()) {
+
+			throw new IllegalArgumentException(
+				"Only content, widget, or asset display pages are supported");
+		}
 	}
 
 	@Reference

@@ -316,11 +316,16 @@ export function getScheduleSummary(
 		);
 	}
 
-	const endDate =
+	if (
 		hasEndDate(scheduleValues) &&
-		isCompleteDateTime(scheduleValues.endDateTime)
-			? toWallClockDate(scheduleValues.endDateTime)
-			: null;
+		!isCompleteDateTime(scheduleValues.endDateTime)
+	) {
+		return null;
+	}
+
+	const endDate = hasEndDate(scheduleValues)
+		? toWallClockDate(scheduleValues.endDateTime)
+		: null;
 
 	if (scheduleValues.unit === IntervalUnit.Custom) {
 		return endDate

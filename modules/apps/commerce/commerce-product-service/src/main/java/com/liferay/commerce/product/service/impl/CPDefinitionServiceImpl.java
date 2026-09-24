@@ -164,17 +164,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public CPDefinition copyCPDefinition(
-			long sourceCPDefinitionId, long groupId, int status)
-		throws PortalException {
-
-		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
-
-		return cpDefinitionLocalService.copyCPDefinition(
-			sourceCPDefinitionId, groupId, status);
-	}
-
-	@Override
 	public void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId, ServiceContext serviceContext)
 		throws PortalException {

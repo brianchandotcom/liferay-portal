@@ -11,10 +11,17 @@ Always.
 ## Command
 
 ```bash
-(cd "${BUILD_ROOT}" && ./gradlew --continue test packageRunTest)
+cd "${BUILD_ROOT}"
+
+if git grep --extended-regexp --quiet '"test"[[:space:]]*:' -- ':(glob)**/package.json'
+then
+	./gradlew --continue packageRunTest test
+else
+	./gradlew --continue test
+fi
 ```
 
-`test` runs every Java unit test in the workspace and `packageRunTest` every JavaScript unit test, with no integration test and no product bundle. A workspace runs its whole suite in a few minutes, so every test runs rather than a selection by counterpart.
+`test` runs every Java unit test in the workspace and `packageRunTest` every JavaScript unit test, with no integration test and no product bundle. `packageRunTest` exists only in a workspace where some `package.json` declares a `test` script, and naming a task Gradle cannot find fails the whole command before any test runs, so the command names it only then. The two invocations are written out rather than built from a variable, because zsh passes an unquoted variable as a single argument and Gradle would look for one task named after both. A workspace runs its whole suite in a few minutes, so every test runs rather than a selection by counterpart.
 
 `--continue` keeps one failing module from hiding the rest.
 

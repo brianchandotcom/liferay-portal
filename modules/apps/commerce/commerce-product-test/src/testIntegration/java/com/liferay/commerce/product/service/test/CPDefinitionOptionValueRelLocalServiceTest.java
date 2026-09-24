@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -318,7 +319,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 				getOrAddEmptyCPDefinitionOptionValueRel(
 					externalReferenceCode, _serviceContext.getCompanyId(),
 					_serviceContext.getUserId(),
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					externalReferenceCode);
 
 			Assert.fail();
 		}
@@ -338,7 +340,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 					getOrAddEmptyCPDefinitionOptionValueRel(
 						externalReferenceCode, _serviceContext.getCompanyId(),
 						_serviceContext.getUserId(),
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						externalReferenceCode);
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY,
@@ -355,7 +358,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 					getOrAddEmptyCPDefinitionOptionValueRel(
 						externalReferenceCode, _serviceContext.getCompanyId(),
 						_serviceContext.getUserId(),
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						externalReferenceCode);
 
 			Assert.assertEquals(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
@@ -370,6 +374,93 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			cpDefinitionOptionValueRel.getStatus());
+	}
+
+	@Test
+	public void testGetOrAddEmptyCPDefinitionOptionValueRelWithDateCPDefinitionOptionRel()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Get or add an empty product definition option value under a " +
+				"select date product definition option"
+		).given(
+			"An existing select date product definition option"
+		).when(
+			"An empty product definition option value is requested under it"
+		).then(
+			"The stub is created even though its key carries no date"
+		).and(
+			"The key is validated once the stub is updated"
+		);
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = null;
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId());
+		CPOption cpOption = CPTestUtil.addCPOption(
+			_commerceCatalog.getGroupId(),
+			CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY, false);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			CPTestUtil.addCPDefinitionOptionRel(
+				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
+				cpOption.getCPOptionId());
+
+		_cpDefinitionOptionRels.add(cpDefinitionOptionRel);
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			cpDefinitionOptionValueRel =
+				_cpDefinitionOptionValueRelLocalService.
+					getOrAddEmptyCPDefinitionOptionValueRel(
+						externalReferenceCode, _serviceContext.getCompanyId(),
+						_serviceContext.getUserId(),
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						null);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY,
+				cpDefinitionOptionValueRel.getStatus());
+			Assert.assertEquals(
+				externalReferenceCode, cpDefinitionOptionValueRel.getKey());
+		}
+
+		try {
+			_updateCPDefinitionOptionValueRel(
+				cpDefinitionOptionValueRel, 0,
+				cpDefinitionOptionValueRel.isPreselected(), null,
+				BigDecimal.ZERO);
+
+			Assert.fail();
+		}
+		catch (CPDefinitionOptionValueRelKeyException
+					cpDefinitionOptionValueRelKeyException) {
+
+			Assert.assertNotNull(cpDefinitionOptionValueRelKeyException);
+		}
+
+		cpDefinitionOptionValueRel =
+			_cpDefinitionOptionValueRelLocalService.
+				updateCPDefinitionOptionValueRel(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId(),
+					0, "03-18-2024-16-45-1-hours-europe-paris",
+					cpDefinitionOptionValueRel.getNameMap(),
+					cpDefinitionOptionValueRel.isPreselected(), null,
+					cpDefinitionOptionValueRel.getPriority(), BigDecimal.ZERO,
+					cpDefinitionOptionValueRel.getUnitOfMeasureKey(),
+					_serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			cpDefinitionOptionValueRel.getStatus());
+		Assert.assertEquals(
+			"03-18-2024-16-45-1-hours-europe-paris",
+			cpDefinitionOptionValueRel.getKey());
 	}
 
 	@Test

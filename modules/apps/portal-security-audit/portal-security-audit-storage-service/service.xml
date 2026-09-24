@@ -38,6 +38,7 @@
 		<column name="impersonatedUserName" type="String" />
 		<column name="message" type="String" />
 		<column name="objectName" type="String" />
+		<column name="pseudonymized" type="boolean" />
 		<column name="requestId" type="String" />
 		<column name="requestIdGenerated" type="boolean" />
 		<column name="resourceAction" type="String" />

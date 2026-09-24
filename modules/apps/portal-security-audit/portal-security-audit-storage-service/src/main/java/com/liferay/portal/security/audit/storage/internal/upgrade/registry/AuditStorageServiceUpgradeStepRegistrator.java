@@ -72,6 +72,11 @@ public class AuditStorageServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.3.0", "2.4.0", AuditEventPseudonymFieldTable.create());
+
+		registry.register(
+			"2.4.0", "2.5.0",
+			UpgradeProcessFactory.addColumns(
+				"Audit_AuditEvent", "pseudonymized BOOLEAN"));
 	}
 
 	@Reference

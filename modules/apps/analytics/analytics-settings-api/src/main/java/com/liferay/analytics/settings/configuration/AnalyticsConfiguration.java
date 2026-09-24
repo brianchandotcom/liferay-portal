@@ -15,7 +15,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Marcellus Tavares
  */
 @ExtendedObjectClassDefinition(
-	category = "analytics-cloud", generateUI = false,
+	category = "liferay-data-platform", generateUI = false,
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

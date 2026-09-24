@@ -175,7 +175,7 @@ public class CommerceSitemapURLProviderTest {
 
 		Assert.assertTrue(
 			sitemapURLs.toString(),
-			sitemapURLs.contains(_getCategoryFriendlyURL(assetCategory)));
+			sitemapURLs.contains(_getAssetCategoryFriendlyURL(assetCategory)));
 	}
 
 	@Test
@@ -224,7 +224,7 @@ public class CommerceSitemapURLProviderTest {
 		Assert.assertEquals(sitemapURLs.toString(), 2, sitemapURLs.size());
 		Assert.assertTrue(
 			sitemapURLs.toString(),
-			sitemapURLs.remove(_getCategoryFriendlyURL(assetCategory)));
+			sitemapURLs.remove(_getAssetCategoryFriendlyURL(assetCategory)));
 
 		String translatedCategoryFriendlyURL = sitemapURLs.get(0);
 
@@ -237,7 +237,7 @@ public class CommerceSitemapURLProviderTest {
 				urlSeparator + translatedUrlTitle));
 
 		Assert.assertNotEquals(
-			_getCategoryFriendlyURL(translatedUrlTitle),
+			_getAssetCategoryFriendlyURL(translatedUrlTitle),
 			translatedCategoryFriendlyURL);
 
 		for (Element urlElement : element.elements()) {
@@ -277,10 +277,10 @@ public class CommerceSitemapURLProviderTest {
 
 		Assert.assertTrue(
 			sitemapURLs.toString(),
-			sitemapURLs.contains(_getCategoryFriendlyURL(assetCategory)));
+			sitemapURLs.contains(_getAssetCategoryFriendlyURL(assetCategory)));
 		Assert.assertTrue(
 			sitemapURLs.toString(),
-			sitemapURLs.contains(_getCategoryFriendlyURL(childAssetCategory)));
+			sitemapURLs.contains(_getAssetCategoryFriendlyURL(childAssetCategory)));
 	}
 
 	@Test
@@ -437,7 +437,7 @@ public class CommerceSitemapURLProviderTest {
 		return cpInstance.getCPDefinition();
 	}
 
-	private String _getCategoryFriendlyURL(AssetCategory assetCategory)
+	private String _getAssetCategoryFriendlyURL(AssetCategory assetCategory)
 		throws Exception {
 
 		FriendlyURLEntry friendlyURLEntry =
@@ -445,11 +445,11 @@ public class CommerceSitemapURLProviderTest {
 				_portal.getClassNameId(AssetCategory.class),
 				assetCategory.getCategoryId());
 
-		return _getCategoryFriendlyURL(
+		return _getAssetCategoryFriendlyURL(
 			friendlyURLEntry.getUrlTitle(_themeDisplay.getLanguageId()));
 	}
 
-	private String _getCategoryFriendlyURL(String urlTitle) throws Exception {
+	private String _getAssetCategoryFriendlyURL(String urlTitle) throws Exception {
 		return StringBundler.concat(
 			_portal.getGroupFriendlyURL(
 				_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false),

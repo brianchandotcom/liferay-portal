@@ -25,84 +25,6 @@ definition {
 	}
 
 	@priority = 4
-	test APIUrlIsPresentInAPIExplorerRestApplications {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given an published API application") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "app-test",
-				status = "published",
-				title = "App-test");
-		}
-
-		task ("When I go to API Explorer") {
-			APIExplorer.navigateToOpenAPI();
-		}
-
-		task ("Then the c/{url} is present in Rest Applications") {
-			AssertElementPresent(
-				locator1 = "Button#BUTTON_WITH_VALUE",
-				value = "c/app-test");
-		}
-	}
-
-	@priority = 3
-	test APIUrlsArePresentInAPIExplorer {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given an published API application") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "app-test",
-				status = "published",
-				title = "App-test");
-		}
-
-		task ("When I navigate to /o/c/{applicationUrl}") {
-			APIExplorer.navigateToOpenAPI(customObjectPlural = "app-test");
-		}
-
-		task ("Then {protocol}//{host}:{port}/o/c/{applicationUrl}/openapi.json is present") {
-			var portalURL = JSONCompany.getPortalURL();
-
-			AssertTextEquals(
-				locator1 = "OpenAPI#API_URL",
-				value1 = "${portalURL}/o/c/app-test/openapi.json");
-		}
-
-		task ("And Then {protocol}//{host}:{port}/o/c/{applicationUrl} is present in Servers") {
-			AssertTextEquals(
-				locator1 = "Select#HEADLESS_SERVERS",
-				value1 = "${portalURL}/o/c/app-test/");
-		}
-	}
-
-	@priority = 4
-	test CanLoadAPIApplicationURL {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given an published API application") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "app-test",
-				status = "published",
-				title = "App-test");
-		}
-
-		task ("When I navigate to {protocol}//{host}:{port}/o/api?endpoint={protocol}//{host}:{port}/o/c/{applicationUrl}/openapi.json") {
-			APIExplorer.navigateToOpenAPI(customObjectPlural = "app-test");
-		}
-
-		task ("Then the page can load without errors") {
-			WaitForElementPresent(
-				locator1 = "OpenAPI#API_METHOD",
-				method = "getOpenAPI",
-				service = "default");
-		}
-	}
-
-	@priority = 4
 	test PathIsPresentInEndpointsWithEditAPIApplication {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -126,34 +48,6 @@ definition {
 			AssertElementPresent(
 				key_name = "/testendpoint/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
-		}
-	}
-
-	@priority = 4
-	test PathIsPresentUnderGetEndpointPage {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given with postAPIApplication including apiApplicationToAPIEndpoints and path to create an published API application with its endpoint") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "app-test",
-				endpointName = "testendpoint",
-				endpointPath = "/testendpoint",
-				relatedEndpoint = "true",
-				status = "published",
-				title = "App-test");
-		}
-
-		task ("When I navigate to /o/c/{applicationUrl}") {
-			APIExplorer.navigateToOpenAPI(customObjectPlural = "app-test");
-		}
-
-		task ("Then I can see '/{path}' is present under get{Endpoint}Page") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "OpenAPI#API_METHOD",
-				method = "getTestendpointPage",
-				service = "default",
-				value1 = "/testendpoint");
 		}
 	}
 

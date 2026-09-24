@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -817,63 +818,73 @@ public class ObjectValidationRuleLocalServiceTest {
 
 	@Test
 	public void testGetErrorLabel() throws Exception {
-
-		// Authenticated user
-
-		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
-			StringPool.BLANK, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
-			HashMapBuilder.put(
-				LocaleUtil.BRAZIL, RandomTestUtil.randomString()
-			).put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"invalidFields = true;");
-
-		User user = UserTestUtil.addUser();
-
-		user = _userLocalService.updateLanguageId(
-			user.getUserId(), LanguageUtil.getLanguageId(LocaleUtil.BRAZIL));
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			user.getUserId(), _objectDefinition.getObjectDefinitionId());
-
-		_testGetErrorLabel(
-			objectValidationRule, LocaleUtil.BRAZIL, user.getUserId());
-
-		// Guest user
-
-		User guestUser = _userLocalService.getGuestUser(
-			TestPropsValues.getCompanyId());
-
-		Locale themeDisplayLocale = LocaleUtil.BRAZIL;
-
-		if (Objects.equals(guestUser.getLocale(), themeDisplayLocale)) {
-			themeDisplayLocale = LocaleUtil.US;
-		}
-
 		Locale originalThemeDisplayLocale =
 			LocaleThreadLocal.getThemeDisplayLocale();
-
-		LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
 
 		try {
+
+			// Authenticated user
+
+			ObjectValidationRule objectValidationRule =
+				_addObjectValidationRule(
+					StringPool.BLANK,
+					ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+					HashMapBuilder.put(
+						LocaleUtil.BRAZIL, RandomTestUtil.randomString()
+					).put(
+						LocaleUtil.US, RandomTestUtil.randomString()
+					).build(),
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					"invalidFields = true;");
+
+			User user = UserTestUtil.addUser();
+
+			user = _userLocalService.updateLanguageId(
+				user.getUserId(),
+				LanguageUtil.getLanguageId(LocaleUtil.BRAZIL));
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				user.getUserId(), _objectDefinition.getObjectDefinitionId());
+
+			_testGetErrorLabel(
+				LocaleUtil.BRAZIL, objectValidationRule, user.getUserId());
+
+			// Guest user
+
+			User guestUser = _userLocalService.getGuestUser(
+				TestPropsValues.getCompanyId());
+
+			Locale themeDisplayLocale = LocaleUtil.BRAZIL;
+
+			if (Objects.equals(guestUser.getLocale(), themeDisplayLocale)) {
+				themeDisplayLocale = LocaleUtil.US;
+			}
+
+			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
+
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(guestUser));
 
 			PrincipalThreadLocal.setName(guestUser.getUserId());
 
 			_testGetErrorLabel(
-				objectValidationRule, themeDisplayLocale,
+				themeDisplayLocale, objectValidationRule,
 				guestUser.getUserId());
 		}
 		finally {
 			LocaleThreadLocal.setThemeDisplayLocale(originalThemeDisplayLocale);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
@@ -1286,7 +1297,7 @@ public class ObjectValidationRuleLocalServiceTest {
 	}
 
 	private void _testGetErrorLabel(
-			ObjectValidationRule objectValidationRule, Locale locale,
+			Locale locale, ObjectValidationRule objectValidationRule,
 			long userId)
 		throws Exception {
 

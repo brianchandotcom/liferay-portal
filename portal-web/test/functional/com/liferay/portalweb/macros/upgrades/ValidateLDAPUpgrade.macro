@@ -2,8 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewLDAPConfiguration() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -14,8 +13,7 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "enabled");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -28,8 +26,7 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "importOnStartup");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

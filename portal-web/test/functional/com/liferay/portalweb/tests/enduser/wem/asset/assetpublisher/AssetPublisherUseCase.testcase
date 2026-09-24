@@ -278,8 +278,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Change the RSS Feed Time on System Settings") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "System Settings");
 

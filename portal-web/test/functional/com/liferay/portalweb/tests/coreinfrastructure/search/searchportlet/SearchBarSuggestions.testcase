@@ -859,8 +859,7 @@ definition {
 	@description = "This is a use case for LPS-162509."
 	@priority = 4
 	test ViewSuggestionsLocalizedDisplayGroupName {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "Language Override");
 

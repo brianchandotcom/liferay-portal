@@ -121,8 +121,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewSystemSettings() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -157,8 +156,7 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "expireAllArticleVersionsEnabled");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -171,8 +169,7 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "journalArticleForceAutogenerateId");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -193,8 +190,7 @@ definition {
 
 		FormFields.viewCheckboxNotChecked(fieldName = "emailArticleUpdatedEnabled");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -239,8 +235,7 @@ definition {
 			fieldName = "rssAbstractLength",
 			fieldValue = 500);
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -262,8 +257,7 @@ definition {
 		// Ignore test until LPS-97976 is resolved
 
 		/*
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -286,8 +280,7 @@ definition {
 			fieldName = "smallImageMaxSize",
 			fieldValue = "5120");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

@@ -658,8 +658,7 @@ definition {
 
 		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -715,8 +714,7 @@ definition {
 			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

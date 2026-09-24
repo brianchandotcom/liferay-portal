@@ -138,8 +138,7 @@ definition {
 	@summary = "Default summary"
 	macro disablePublications(gotoInstancesettings = null) {
 		if (${gotoInstancesettings} == "true") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 
@@ -194,8 +193,7 @@ definition {
 	@summary = "Default summary"
 	macro enablePublications(gotoInstancesettings = null, enableSandboxOnly = null) {
 		if (${gotoInstancesettings} == "true") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 

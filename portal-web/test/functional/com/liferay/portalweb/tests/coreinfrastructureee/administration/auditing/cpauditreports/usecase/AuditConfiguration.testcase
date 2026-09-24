@@ -41,8 +41,7 @@ definition {
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -73,8 +72,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -89,8 +87,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -126,8 +123,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -152,8 +148,7 @@ definition {
 			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

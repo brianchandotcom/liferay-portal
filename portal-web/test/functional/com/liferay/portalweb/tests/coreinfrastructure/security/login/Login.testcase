@@ -49,8 +49,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 

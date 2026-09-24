@@ -30,7 +30,7 @@ Prerequisites:
 
 - Each baseline resolves the last released artifact from Nexus, so the run needs network access. Use the local check below when there is none.
 - A project that has not been cleanly built on this branch cannot be baselined at all. Rerun after `ant all`, which rebuilds all seven and baselines each one through the `jar` target.
-- Silence is not a pass, but a `baseline-all` that reports something is worth reading. [build.xml](../../../../build.xml) passes `--quiet` to both of its Gradle calls, which suppresses lifecycle output and so deletes every `> Task` line. Warning rows are logged at `WARN` and survive, so a run that finds something prints its table and names the failing task. Take the findings from there when they are present.
+- Silence is not a pass, but a `baseline-all` that reports something is worth reading. [build.xml](../../../../../build.xml) passes `--quiet` to both of its Gradle calls, which suppresses lifecycle output and so deletes every `> Task` line. Warning rows are logged at `WARN` and survive, so a run that finds something prints its table and names the failing task. Take the findings from there when they are present.
 
 	A `BUILD SUCCESSFUL` from `baseline-all` is what proves nothing. The modules half runs `--continue --parallel` with no `--rerun`, so a cached `UP-TO-DATE` verdict is indistinguishable from a comparison, the seven Ant projects run under `failonerror="false"`, and `<parallel threadCount="2">` interleaves the two halves so nothing in the output can be attributed to a project. Use the standalone runs below to prove a project compared something, not to find what it found.
 
@@ -107,7 +107,7 @@ A newly exported package needs its own `packageinfo`, so a diff adding the packa
 
 ## Autocommit
 
-**A module the branch changed, a minor or micro rise, and only when the run produced nothing else.** Stage those files and commit them, resolving `<TICKET>` from the branch name the way [commit.md](../../../rules/commit.md) does, which is the leading ticket pattern rather than the whole branch name, so `LRCI-8065-rules` yields `LRCI-8065`. `${paths}` is the classified subset from the Interpretation step, one path per line — not a rescan of `git status`, which would sweep in the findings below:
+**A module the branch changed, a minor or micro rise, and only when the run produced nothing else.** Stage those files and commit them, resolving `<TICKET>` from the branch name the way [commit.md](../../../../rules/commit.md) does, which is the leading ticket pattern rather than the whole branch name, so `LRCI-8065-rules` yields `LRCI-8065`. `${paths}` is the classified subset from the Interpretation step, one path per line — not a rescan of `git status`, which would sweep in the findings below:
 
 ```bash
 printf '%s\n' "${paths}" | git add --pathspec-from-file=-

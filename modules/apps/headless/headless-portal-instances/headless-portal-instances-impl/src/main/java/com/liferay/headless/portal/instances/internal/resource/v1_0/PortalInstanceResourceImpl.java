@@ -5,24 +5,30 @@
 
 package com.liferay.headless.portal.instances.internal.resource.v1_0;
 
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.headless.portal.instances.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceCopy;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceExport;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceImport;
 import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResource;
+import com.liferay.portal.instances.constants.PortalInstancesNotificationConstants;
+import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.instances.exporter.PortalInstanceExporter;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
@@ -54,6 +60,8 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		Company company = _companyService.getCompanyByWebId(portalInstanceId);
 
 		_companyService.deleteCompany(company.getCompanyId());
+
+		_sendUserNotificationEvent(portalInstanceId);
 	}
 
 	@Override
@@ -298,6 +306,34 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		}
 	}
 
+	private void _sendUserNotificationEvent(String portalInstanceId) {
+		if (!BatchEngineThreadLocal.isBatchImportInProcess()) {
+			return;
+		}
+
+		try {
+			_userNotificationEventLocalService.sendUserNotificationEvents(
+				contextUser.getUserId(),
+				PortalInstancesPortletKeys.PORTAL_INSTANCES,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE,
+				JSONUtil.put(
+					"operationType",
+					PortalInstancesNotificationConstants.OPERATION_TYPE_DELETE
+				).put(
+					"portalInstanceId", portalInstanceId
+				).put(
+					"status",
+					PortalInstancesNotificationConstants.STATUS_SUCCESS
+				));
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to send the user notification event for portal " +
+					"instance " + portalInstanceId,
+				exception);
+		}
+	}
+
 	private PortalInstance _toPortalInstance(Company company) {
 		return new PortalInstance() {
 			{
@@ -335,5 +371,9 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 
 	@Reference
 	private PortalInstanceExporter _portalInstanceExporter;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

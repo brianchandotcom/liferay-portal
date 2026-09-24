@@ -4,9 +4,9 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import React from 'react';
+import React, {useState} from 'react';
 
-import {toWallClockDateTime} from '../../utils/dateTime';
+import {isCompleteDateTime, toWallClockDateTime} from '../../utils/dateTime';
 import FieldDatePicker from '../forms/FieldDatePicker';
 import {EditingState, YEARS_OFFSET} from './types';
 import {getValidation} from './utils';
@@ -33,6 +33,9 @@ const DateRangeFields = ({
 	handleUpdateFilter,
 	timeZoneId,
 }: Props) => {
+	const [endDateTouched, setEndDateTouched] = useState(false);
+	const [startDateTouched, setStartDateTouched] = useState(false);
+
 	const currentYear = new Date().getFullYear();
 
 	return (
@@ -40,11 +43,17 @@ const DateRangeFields = ({
 			<ClayLayout.ContentCol>
 				<FieldDatePicker
 					defaultTime="00:00"
-					errorMessage={errors.startDate}
+					errorMessage={
+						startDateTouched ||
+						isCompleteDateTime(editing.startDate)
+							? errors.startDate
+							: undefined
+					}
 					formGroupProps={{className: 'mb-0'}}
 					id="startDate"
 					label={Liferay.Language.get('from')}
 					name="startDate"
+					onBlur={() => setStartDateTouched(true)}
 					onChange={(value) =>
 						handleUpdateFilter({startDate: value as string})
 					}
@@ -60,11 +69,16 @@ const DateRangeFields = ({
 			<ClayLayout.ContentCol>
 				<FieldDatePicker
 					defaultTime={(date) => getEndDefaultTime(date, timeZoneId)}
-					errorMessage={errors.endDate}
+					errorMessage={
+						endDateTouched || isCompleteDateTime(editing.endDate)
+							? errors.endDate
+							: undefined
+					}
 					formGroupProps={{className: 'mb-0'}}
 					id="endDate"
 					label={Liferay.Language.get('to[date-time]')}
 					name="endDate"
+					onBlur={() => setEndDateTouched(true)}
 					onChange={(value) =>
 						handleUpdateFilter({endDate: value as string})
 					}

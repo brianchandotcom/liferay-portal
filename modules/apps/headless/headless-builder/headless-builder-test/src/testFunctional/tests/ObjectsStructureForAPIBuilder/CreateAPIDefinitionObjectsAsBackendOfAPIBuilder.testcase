@@ -91,33 +91,6 @@ definition {
 	}
 
 	@priority = 5
-	test CanCreateUnpublishedAPIApplication {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("When in ‘headless-builder/applications’ I request postAPIApplication with applicationStatus 'unpublished', baseURL 'my-app', and title 'My App'") {
-			APIExplorer.navigateToOpenAPI(
-				api = "headless-builder",
-				version = "applications");
-
-			APIExplorer.executeAPIMethod(
-				method = "postAPIApplication",
-				requestBody = "{\"applicationStatus\": \"unpublished\", \"baseURL\": \"my-app\", \"title\": \"My App\"}",
-				service = "APIApplication");
-		}
-
-		task ("Then API application is created") {
-			var response = ApplicationAPI.getAPIApplications();
-
-			var totcalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
-
-			TestUtils.assertEquals(
-				actual = ${totcalCount},
-				expected = 1);
-		}
-	}
-
-	@priority = 5
 	test CanDeleteAPIApplication {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

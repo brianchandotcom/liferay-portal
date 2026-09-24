@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.util;
 
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -23,6 +24,14 @@ public class ObjectDefinitionUtil {
 	public static String getDescription(ObjectDefinition objectDefinition) {
 		return _getDescription(
 			languageId -> objectDefinition.getDescription(languageId, false),
+			objectDefinition.getDefaultLanguageId());
+	}
+
+	public static String getDescription(
+		ObjectDefinition objectDefinition, ObjectAction objectAction) {
+
+		return _getDescription(
+			languageId -> objectAction.getDescription(languageId, false),
 			objectDefinition.getDefaultLanguageId());
 	}
 

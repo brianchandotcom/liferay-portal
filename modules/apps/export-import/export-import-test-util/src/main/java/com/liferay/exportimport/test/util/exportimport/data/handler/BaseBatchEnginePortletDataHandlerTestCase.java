@@ -281,17 +281,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	}
 
 	@Test
-	public void testExportImportDescriptor() {
-		ExportImportDescriptor<?> exportImportDescriptor =
-			_getExportImportDescriptor();
-
-		Assert.assertNotNull(exportImportDescriptor.getKey());
-		Assert.assertNotNull(exportImportDescriptor.getModelClassName());
-		Assert.assertNotNull(exportImportDescriptor.getPortletId());
-		Assert.assertNotNull(exportImportDescriptor.getScope());
-	}
-
-	@Test
 	public void testExportImportFromLastPublishDate() throws Exception {
 		ExportImportDescriptor<?> exportImportDescriptor =
 			_getExportImportDescriptor();

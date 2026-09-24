@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {format as formatDate} from 'date-fns';
-
 const BIDI_MARK_PATTERN = /[\u061C\u200E\u200F]/g;
 
 const DATE_FIELD_PATTERN = /d+|M+|y+/g;
@@ -310,7 +308,10 @@ function reorderDate(
 		return dateText;
 	}
 
-	return formatDate(date, toFormat);
+	return toFormat
+		.replace('dd', String(date.getDate()).padStart(2, '0'))
+		.replace('MM', String(date.getMonth() + 1).padStart(2, '0'))
+		.replace('yyyy', String(date.getFullYear()));
 }
 
 function splitDateTime(dateTime: string): [string, string] {

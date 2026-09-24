@@ -309,12 +309,12 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\{\\{- if eq \\$dataPlane \\$activeDataPlane \\}\\}\\s+---\\s+apiVersion: storage.azure.m.upbound.io/v1beta1\\s+kind: Container"
+                    pattern: "\\{\\{- if or \\(eq \\$dataPlane \\$activeDataPlane\\) \\(eq \\$restorePhase \"promoting\"\\) \\}\\}\\s+---\\s+apiVersion: storage.azure.m.upbound.io/v1beta1\\s+kind: Container"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "writeConnectionSecretToRef:\\s+name: liferay-storage-\\{\\{ \\$dataPlane \\}\\}-credentials\\s+\\{\\{- if eq \\$dataPlane \\$activeDataPlane \\}\\}"
-        it: Keeps the document library container only on the active plane
+                    pattern: "writeConnectionSecretToRef:\\s+name: liferay-storage-\\{\\{ \\$dataPlane \\}\\}-credentials\\s+\\{\\{- if or \\(eq \\$dataPlane \\$activeDataPlane\\)"
+        it: Keeps the demoted document library container until the restore is cleaned up
     -   asserts:
             -   documentIndex: 0
                 matchRegex:

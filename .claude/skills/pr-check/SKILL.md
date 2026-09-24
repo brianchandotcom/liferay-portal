@@ -18,6 +18,8 @@ These settings describe this repository. The `pr-check` skill of another reposit
 | --- | --- |
 | **Base Branch** | `master` |
 | **Repository** | `liferay/liferay-portal` |
+| **Slices** | branch, portal, workspaces |
+| **Skipped Validations** | none |
 
 `${BASE_BRANCH}` below stands for the base branch.
 
@@ -46,6 +48,22 @@ These settings describe this repository. The `pr-check` skill of another reposit
 ```bash
 git diff --name-status "$(git merge-base HEAD "${BASE_BRANCH}")...HEAD"
 ```
+
+### Routing
+
+Each validation belongs to a slice, decided by where its file sits, and sees only the changed paths its slice covers.
+
+- **Branch.** A file directly in `validations` checks the branch as a whole and sees every changed path.
+
+- **Portal.** A file in `validations/portal` sees every changed path that belongs to no workspace.
+
+- **Workspaces.** A file in `validations/workspaces` runs once for each workspace the branch changed. A workspace is a directory named `workspaces/<name>-workspace`, and every path beneath it belongs to that workspace. The validation sees those paths relative to the workspace directory, so its `## Match` never names the `workspaces` segment.
+
+Paths directly under `workspaces` that sit in no workspace, such as the refresh scripts, belong to the portal slice.
+
+Run the slices the settings enable, and skip every validation the settings name. When the portal slice is disabled, list every changed path that belongs to no workspace in the Results Summary as unchecked, so that a change nothing examined never reads as a pass.
+
+The build root of a changed path is its workspace directory when it belongs to a workspace, and `${REPO_ROOT}` otherwise. A validation that needs a place to search, such as a sweep for references, searches the build root of the path it is examining, and every workspace validation runs its commands from `${BUILD_ROOT}`, the absolute path of its workspace directory.
 
 ## Expected Output
 
@@ -112,11 +130,11 @@ Read every validation file the list above links, and no other file under `valida
 In your next turn, compose a single bash script that:
 
 - computes the diff: `git diff --name-only --no-renames "$(git merge-base HEAD "${BASE_BRANCH}")...HEAD"`, since a detected rename collapses to its new path alone and hides the old one from every regex
-- for each validation, tests its regex against the diff and prints the validation name when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
+- for each validation, tests its regex against the paths its slice sees, once per workspace for a workspace validation, and prints the validation name, with the workspace name for a workspace validation, when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
 - ` &! ` in the regex splits it into an include side and an exclude side. The validation fires when a diff path matches the include side but not the exclude side.
 - runs as a single Bash tool invocation
 
-From the script's output, sum the matched validations' `## Time Estimate` values for the cumulative total. The matching is mechanical; consult each file's prose `## Trigger` only when a result needs human-judgment context (e.g., Service Builder output-only catch-up).
+From the script's output, sum the matched validations' `## Time Estimate` values for the cumulative total, counting a workspace validation once for each workspace it fired for. The matching is mechanical; consult each file's prose `## Trigger` only when a result needs human-judgment context (e.g., Service Builder output-only catch-up).
 
 When the total exceeds 20 minutes, surface the breakdown and ask the developer whether to trim a validation or proceed.
 
@@ -130,6 +148,8 @@ A validation reports **`NOT VERIFIED`** when it ran and established nothing abou
 
 A `NOT VERIFIED` run does not autocommit, since a run that established nothing has produced nothing worth recording and the tree it would stage may hold a half finished setup. A `FAIL` run still autocommits where its **Autocommit** section says to, because a formatter's repairs are worth keeping even when an unfixable violation blocks the branch, and so does a `PASS` run. Tell the subagent this when you dispatch it, since its **Autocommit** section reads as unconditional on its own.
 
+Run workspace validations one workspace at a time. Each workspace build has its own Gradle daemon and heap and shares the Gradle cache with the others.
+
 Run a validation that autocommits with **nothing else that writes to the working tree** in flight, since `git add --all` cannot tell its own repair from one another validation made seconds earlier and commits the wrong work under its title. A validation that only reads is safe alongside anything, provided it reads a commit it pinned at the start rather than the working tree or the index. A concurrent validation moves the tree when it writes and the index when it stages, so only a pinned commit holds still for the whole run. Whether a validation reads or writes can depend on the diff, since **Module Registration** only reports when its markers are all removals and builds when one is added, so treat it as a writer unless its own text rules the writing branch out for the diff at hand. Keep tree writers off each other too, since several share build output such as `modules/build/node`.
 
 Run `ant compile install-portal-snapshots` once before the first validation that declares it, rather than letting each launch the same build into the same `${REPO_ROOT}/.m2`. Tell every later subagent that it is satisfied, since a subagent sees only its own **Command** and would otherwise run it again.
@@ -138,7 +158,7 @@ A validation may hand off to another, as **Per-Module Compile** does when its de
 
 An autocommit can change the diff, so recompute the ledger after a validation whose commit may add a path Pass 1 never saw, as Baseline's `packageinfo` and `bnd.bnd` repairs do, and dispatch whatever newly fires. Skip it after a validation that can only touch paths the branch already changed, such as a formatter running in current branch mode, since its commit cannot widen the diff.
 
-Give the subagent everything the validations use and none of them define. That is `${REPO_ROOT}`, `${BASE_BRANCH}`, the ticket their **Autocommit** sections write into a commit title as `<TICKET>`, and the result its own verdict implies for committing, since the rule above lives here and the subagent never reads this document:
+Give the subagent everything the validations use and none of them define. That is `${REPO_ROOT}`, `${BASE_BRANCH}`, `${BUILD_ROOT}` for a workspace validation, the ticket their **Autocommit** sections write into a commit title as `<TICKET>`, and the result its own verdict implies for committing, since the rule above lives here and the subagent never reads this document:
 
 ```bash
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -182,7 +202,7 @@ After the two passes complete, emit a Results Summary block. It is the canonical
 
 Capture the tested commit with `git rev-parse HEAD` **after** Pass 2 completes, so the SHA reflects the tree that was actually exercised — including any autocommits the validations made, such as the `<TICKET> SF` source-format commit. This is the commit the `pr` skill pushes as the PR head and the commit the webhook binds the `pr-check` status to, so a reviewer can tell whether the current head is the one that was tested.
 
-The block is the overall state and tested SHA, followed by a table with one row per **matched** validation — the validations that actually ran, in the execution order above. Validations whose `## Match` regex did not fire are omitted rather than listed as skipped, so the table reflects only what the diff exercised.
+The block is the overall state and tested SHA, followed by a table with one row per **matched** validation — the validations that actually ran, in the execution order above. A workspace validation has one row for each workspace it ran for, named with the workspace in parentheses, such as `Workspace Compile (liferay-aihub-workspace)`. Validations whose `## Match` regex did not fire are omitted rather than listed as skipped, so the table reflects only what the diff exercised.
 
 ```markdown
 **pr-check: PASS** — tested on `<head-SHA>`

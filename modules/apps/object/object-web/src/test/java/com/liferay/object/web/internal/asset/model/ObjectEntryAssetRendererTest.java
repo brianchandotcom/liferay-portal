@@ -68,6 +68,7 @@ public class ObjectEntryAssetRendererTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_objectFieldUtilMockedStatic.close();
+		_portalUtilMockedStatic.close();
 	}
 
 	@Before
@@ -103,11 +104,11 @@ public class ObjectEntryAssetRendererTest {
 		);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(false, themeDisplay),
+			_getCMSFriendlyURL(false, null, null, themeDisplay),
 			assetRenderer.getSharingEntryRowPortletURL(false, themeDisplay));
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(true, themeDisplay),
+			_getCMSFriendlyURL(true, null, null, themeDisplay),
 			assetRenderer.getSharingEntryRowPortletURL(true, themeDisplay));
 	}
 
@@ -181,14 +182,12 @@ public class ObjectEntryAssetRendererTest {
 
 		try (MockedStatic<GroupLocalServiceUtil>
 				groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
-					GroupLocalServiceUtil.class);
-			MockedStatic<PortalUtil> portalUtilMockedStatic =
-				Mockito.mockStatic(PortalUtil.class)) {
+					GroupLocalServiceUtil.class)) {
 
 			PortletURL cmsObjectEntryPortletURL = Mockito.mock(
 				PortletURL.class);
 
-			portalUtilMockedStatic.when(
+			_portalUtilMockedStatic.when(
 				() -> PortalUtil.getControlPanelPortletURL(
 					Mockito.eq(httpServletRequest), Mockito.any(),
 					Mockito.eq(ObjectPortletKeys.CMS_OBJECT_ENTRY),
@@ -200,7 +199,7 @@ public class ObjectEntryAssetRendererTest {
 
 			PortletURL objectEntryPortletURL = Mockito.mock(PortletURL.class);
 
-			portalUtilMockedStatic.when(
+			_portalUtilMockedStatic.when(
 				() -> PortalUtil.getControlPanelPortletURL(
 					Mockito.eq(httpServletRequest), Mockito.any(),
 					Mockito.eq(portletId), Mockito.anyLong(), Mockito.anyLong(),
@@ -236,90 +235,28 @@ public class ObjectEntryAssetRendererTest {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(false, themeDisplay),
+			_getCMSFriendlyURL(false, null, null, themeDisplay),
 			assetRenderer.getURLSharingNotification(false, themeDisplay));
-
 		Assert.assertEquals(
-			_getCMSFriendlyURL(true, themeDisplay),
+			_getCMSFriendlyURL(true, null, null, themeDisplay),
 			assetRenderer.getURLSharingNotification(true, themeDisplay));
-	}
 
-	@Test
-	public void testGetURLSharingNotificationWhenRefererIsPresent()
-		throws Exception {
-
-		AssetRenderer<ObjectEntry> assetRenderer =
-			_getObjectEntryAssetRenderer();
-
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		String portalURL = "http://" + RandomTestUtil.randomString();
-
-		Mockito.when(
-			themeDisplay.getPortalURL()
-		).thenReturn(
-			portalURL
-		);
-
-		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
-
-		Mockito.when(
-			themeDisplay.getPathMain()
-		).thenReturn(
-			pathMain
-		);
-
+		String escapedReferer =
+			"http://" + RandomTestUtil.randomString() + "?a=1&b=2";
 		String referer = "http://" + RandomTestUtil.randomString();
 
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		Mockito.when(
-			httpServletRequest.getHeader(HttpHeaders.REFERER)
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.escapeRedirect(referer)
 		).thenReturn(
-			referer
+			escapedReferer
 		);
 
-		Mockito.when(
-			themeDisplay.getRequest()
-		).thenReturn(
-			httpServletRequest
-		);
-
-		Mockito.when(
-			_objectDefinition.isCMS()
-		).thenReturn(
-			true
-		);
-
-		long objectEntryId = RandomTestUtil.randomLong();
-
-		Mockito.doReturn(
-			objectEntryId
-		).when(
-			_objectEntry
-		).getObjectEntryId();
-
-		try (MockedStatic<PortalUtil> portalUtilMockedStatic =
-				Mockito.mockStatic(PortalUtil.class)) {
-
-			String escapedReferer =
-				"http://" + RandomTestUtil.randomString() + "?a=1&b=2";
-
-			portalUtilMockedStatic.when(
-				() -> PortalUtil.escapeRedirect(referer)
-			).thenReturn(
-				escapedReferer
-			);
-
-			Assert.assertEquals(
-				StringBundler.concat(
-					portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
-					"/edit_content_item?objectEntryId=", objectEntryId,
-					"&p_l_mode=read&p_p_state=pop_up&redirect=",
-					HtmlUtil.escapeURL(escapedReferer)),
-				assetRenderer.getURLSharingNotification(false, themeDisplay));
-		}
+		Assert.assertEquals(
+			_getCMSFriendlyURL(false, escapedReferer, referer, themeDisplay),
+			assetRenderer.getURLSharingNotification(false, themeDisplay));
+		Assert.assertEquals(
+			_getCMSFriendlyURL(true, escapedReferer, referer, themeDisplay),
+			assetRenderer.getURLSharingNotification(true, themeDisplay));
 	}
 
 	@Test
@@ -398,7 +335,8 @@ public class ObjectEntryAssetRendererTest {
 	}
 
 	private String _getCMSFriendlyURL(
-		boolean editable, ThemeDisplay themeDisplay) {
+		boolean editable, String escapedReferer, String referer,
+		ThemeDisplay themeDisplay) {
 
 		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
 
@@ -420,18 +358,30 @@ public class ObjectEntryAssetRendererTest {
 			HttpServletRequest.class);
 
 		Mockito.when(
+			httpServletRequest.getHeader(HttpHeaders.REFERER)
+		).thenReturn(
+			referer
+		);
+
+		Mockito.when(
 			themeDisplay.getRequest()
 		).thenReturn(
 			httpServletRequest
 		);
 
-		String urlHome = "http://" + RandomTestUtil.randomString();
+		String redirect = escapedReferer;
 
-		Mockito.when(
-			themeDisplay.getURLHome()
-		).thenReturn(
-			urlHome
-		);
+		if (referer == null) {
+			redirect = "http://" + RandomTestUtil.randomString();
+
+			Mockito.when(
+				themeDisplay.getURLHome()
+			).thenReturn(
+				redirect
+			);
+		}
+
+		redirect = HtmlUtil.escapeURL(redirect);
 
 		long objectEntryId = RandomTestUtil.randomLong();
 
@@ -451,14 +401,13 @@ public class ObjectEntryAssetRendererTest {
 			return StringBundler.concat(
 				portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
 				"/edit_content_item?objectEntryId=", objectEntryId,
-				"&p_l_mode=edit&redirect=", HtmlUtil.escapeURL(urlHome));
+				"&p_l_mode=edit&redirect=", redirect);
 		}
 
 		return StringBundler.concat(
 			portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
 			"/edit_content_item?objectEntryId=", objectEntryId,
-			"&p_l_mode=read&p_p_state=pop_up&redirect=",
-			HtmlUtil.escapeURL(urlHome));
+			"&p_l_mode=read&p_p_state=pop_up&redirect=", redirect);
 	}
 
 	private String _getFriendlyURL(LiferayPortletRequest liferayPortletRequest)
@@ -599,6 +548,8 @@ public class ObjectEntryAssetRendererTest {
 	private static final MockedStatic<ObjectFieldUtil>
 		_objectFieldUtilMockedStatic = Mockito.mockStatic(
 			ObjectFieldUtil.class);
+	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
+		Mockito.mockStatic(PortalUtil.class);
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider = Mockito.mock(

@@ -34,26 +34,19 @@ function toDateTime(
 	const getNumber = (name: string) =>
 		Number(publishParameters[`${prefix}${name}`]?.[0] ?? 0);
 
-	const amPm = getNumber('AmPm');
-	const day = getNumber('Day');
-	const minute = getNumber('Minute');
-	const month = getNumber('Month');
 	const year = getNumber('Year');
 
-	const hour = getNumber('Hour');
-
-	if (
-		![amPm, day, hour, minute, month, year].every(Number.isInteger) ||
-		year <= EPOCH_YEAR
-	) {
+	if (Number.isNaN(year) || year <= EPOCH_YEAR) {
 		return '';
 	}
 
+	const hour = (getNumber('Hour') % 12) + (getNumber('AmPm') ? 12 : 0);
+
 	const pad = (value: number) => String(value).padStart(2, '0');
 
-	return `${year}-${pad(month + 1)}-${pad(day)} ${pad(
-		(hour % 12) + (amPm ? 12 : 0)
-	)}:${pad(minute)}`;
+	return `${year}-${pad(getNumber('Month') + 1)}-${pad(
+		getNumber('Day')
+	)} ${pad(hour)}:${pad(getNumber('Minute'))}`;
 }
 
 export function toDateFilterValues(

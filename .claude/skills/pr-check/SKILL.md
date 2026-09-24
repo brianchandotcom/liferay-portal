@@ -8,7 +8,7 @@ name: pr-check
 
 # PR Check
 
-Run premerge checks against the current branch. The skill iterates through the validations under `validations`, runs each one whose trigger matches the diff, and reports PASS or FAIL. Integration tests, Playwright tests, and Poshi tests are out of scope. Use the `test-plan` skill when their coverage is needed.
+Run premerge checks against the current branch. The skill iterates through the validations listed below, runs each one whose trigger matches the diff, and reports PASS or FAIL. Integration tests, Playwright tests, and Poshi tests are out of scope. Use the `test-plan` skill when their coverage is needed.
 
 ## Preconditions
 
@@ -42,19 +42,19 @@ git diff --name-status "$(git merge-base HEAD master)...HEAD"
 
 The procedure runs in two passes over the validations, in the order below. The order is dependency-driven: drift first (later validations see the regenerated tree), then formatting, then build, then tests.
 
-1. [Instance Wrapper Build](validations/instance-wrapper-build.md)
+1. [Instance Wrapper Build](validations/portal/instance-wrapper-build.md)
 
-1. [REST Builder](validations/rest-builder.md)
+1. [REST Builder](validations/portal/rest-builder.md)
 
-1. [Service Builder](validations/service-builder.md)
+1. [Service Builder](validations/portal/service-builder.md)
 
-1. [Go Generate](validations/go-generate.md)
+1. [Go Generate](validations/portal/go-generate.md)
 
 1. [Source Format](validations/source-format.md)
 
-1. [Go Source Format](validations/go-source-format.md)
+1. [Go Source Format](validations/portal/go-source-format.md)
 
-1. [Module Registration](validations/module-registration.md)
+1. [Module Registration](validations/portal/module-registration.md)
 
 1. [Portlet Title](validations/portlet-title.md)
 
@@ -64,39 +64,39 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [HTML Escaping](validations/html-escaping.md)
 
-1. [Full Portal Build](validations/full-portal-build.md)
+1. [Full Portal Build](validations/portal/full-portal-build.md)
 
-1. [Per-Module Compile](validations/per-module-compile.md)
+1. [Per-Module Compile](validations/portal/per-module-compile.md)
 
-1. [Integration Test Compile](validations/integration-test-compile.md)
+1. [Integration Test Compile](validations/portal/integration-test-compile.md)
 
-1. [Cross-Module Compile](validations/cross-module-compile.md)
+1. [Cross-Module Compile](validations/portal/cross-module-compile.md)
 
-1. [Baseline](validations/baseline.md)
+1. [Baseline](validations/portal/baseline.md)
 
-1. [JSP Compile](validations/jsp-compile.md)
+1. [JSP Compile](validations/portal/jsp-compile.md)
 
-1. [Theme Build](validations/theme-build.md)
+1. [Theme Build](validations/portal/theme-build.md)
 
 1. [Workspace Build](validations/workspace-build.md)
 
-1. [Poshi Syntax](validations/poshi-syntax.md)
+1. [Poshi Syntax](validations/portal/poshi-syntax.md)
 
-1. [Structural Smoke](validations/structural-smoke.md)
+1. [Structural Smoke](validations/portal/structural-smoke.md)
 
-1. [Java Unit Tests](validations/java-unit-test.md)
+1. [Java Unit Tests](validations/portal/java-unit-test.md)
 
-1. [PQL Validation](validations/pql-validation.md)
+1. [PQL Validation](validations/portal/pql-validation.md)
 
-1. [JavaScript Unit Tests](validations/javascript-unit-test.md)
+1. [JavaScript Unit Tests](validations/portal/javascript-unit-test.md)
 
-1. [Helm Unit Test Order](validations/helm-unit-test-order.md)
+1. [Helm Unit Test Order](validations/portal/helm-unit-test-order.md)
 
 Process each validation in a subagent.
 
 ### Pass 1: Estimate
 
-Read every validation file under `.claude/skills/pr-check/validations` in a single parallel batch — one Read tool call per file, all in the same tool-use turn. From each file, take the regex inside its `## Match` section.
+Read every validation file the list above links, and no other file under `validations`, in a single parallel batch — one Read tool call per file, all in the same tool-use turn. From each file, take the regex inside its `## Match` section.
 
 In your next turn, compose a single bash script that:
 

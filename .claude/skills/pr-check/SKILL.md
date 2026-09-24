@@ -10,21 +10,32 @@ name: pr-check
 
 Run premerge checks against the current branch. The skill iterates through the validations listed below, runs each one whose trigger matches the diff, and reports PASS or FAIL. Integration tests, Playwright tests, and Poshi tests are out of scope. Use the `test-plan` skill when their coverage is needed.
 
+## Repository Settings
+
+These settings describe this repository. The `pr-check` skill of another repository may follow this document with settings of its own, and each value it supplies replaces the one below.
+
+| Setting | Value |
+| --- | --- |
+| **Base Branch** | `master` |
+| **Repository** | `liferay/liferay-portal` |
+
+`${BASE_BRANCH}` below stands for the base branch.
+
 ## Preconditions
 
-- **On a feature branch.** When `HEAD` is `master` or detached, exit with a one-line message.
+- **On a feature branch.** When `HEAD` is `${BASE_BRANCH}` or detached, exit with a one-line message.
 
 - **Working tree clean.** `git status --porcelain` must return empty. When dirty, abort and ask the developer to commit first.
 
-- **Rebased on the latest `master`.** Resolve the master remote. Prefer `upstream`, otherwise the remote whose URL points at `liferay/liferay-portal` (check `git remote --verbose`). When none resolves, compare `git merge-base HEAD master` to `git rev-parse master`. Abort and tell the developer to rebase when the two differ, and warn that the branch was not checked against a remote. Otherwise run these steps.
+- **Rebased on the latest `${BASE_BRANCH}`.** Resolve the remote. Prefer `upstream`, otherwise the remote whose URL points at the repository in the settings (check `git remote --verbose`). When none resolves, compare `git merge-base HEAD ${BASE_BRANCH}` to `git rev-parse ${BASE_BRANCH}`. Abort and tell the developer to rebase when the two differ, and warn that the branch was not checked against a remote. Otherwise run these steps.
 
-	1. `git fetch <remote> master`.
+	1. `git fetch <remote> ${BASE_BRANCH}`.
 
-	1. Fast forward local `master` to the fetched tip. When `master` is checked out in another worktree, fast forward it there with `git -C <worktree> merge --ff-only <remote>/master`. Otherwise update it in place with `git fetch <remote> master:master`, which also creates `master` when it does not exist. Both are fast forward only. When the command fails (because `master` has diverged or its worktree is not clean), warn the developer and stop the run.
+	1. Fast forward local `${BASE_BRANCH}` to the fetched tip. When `${BASE_BRANCH}` is checked out in another worktree, fast forward it there with `git -C <worktree> merge --ff-only <remote>/${BASE_BRANCH}`. Otherwise update it in place with `git fetch <remote> ${BASE_BRANCH}:${BASE_BRANCH}`, which also creates `${BASE_BRANCH}` when it does not exist. Both are fast forward only. When the command fails (because `${BASE_BRANCH}` has diverged or its worktree is not clean), warn the developer and stop the run.
 
-	1. `git rebase <remote>/master`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer asks you to resolve them, fix the conflicts, `git add` the files, and run `git rebase --continue`. In every other case (the developer resolves them, the conflicts cannot be resolved, or the rebase fails otherwise) run `git rebase --abort` and stop the run.
+	1. `git rebase <remote>/${BASE_BRANCH}`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer asks you to resolve them, fix the conflicts, `git add` the files, and run `git rebase --continue`. In every other case (the developer resolves them, the conflicts cannot be resolved, or the rebase fails otherwise) run `git rebase --abort` and stop the run.
 
-- **Diff baseline is local `master`.** After the rebase, the three-dot diff against local `master` is the baseline.
+- **Diff baseline is local `${BASE_BRANCH}`.** After the rebase, the three-dot diff against local `${BASE_BRANCH}` is the baseline.
 
 - **Diff is nonempty.** When the three-dot diff produces no files, exit with a one-line message — no validation produces useful signal on a clean branch.
 
@@ -33,7 +44,7 @@ Run premerge checks against the current branch. The skill iterates through the v
 ### Diff
 
 ```bash
-git diff --name-status "$(git merge-base HEAD master)...HEAD"
+git diff --name-status "$(git merge-base HEAD "${BASE_BRANCH}")...HEAD"
 ```
 
 ## Expected Output
@@ -100,7 +111,7 @@ Read every validation file the list above links, and no other file under `valida
 
 In your next turn, compose a single bash script that:
 
-- computes the diff: `git diff --name-only --no-renames "$(git merge-base HEAD master)...HEAD"`, since a detected rename collapses to its new path alone and hides the old one from every regex
+- computes the diff: `git diff --name-only --no-renames "$(git merge-base HEAD "${BASE_BRANCH}")...HEAD"`, since a detected rename collapses to its new path alone and hides the old one from every regex
 - for each validation, tests its regex against the diff and prints the validation name when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
 - ` &! ` in the regex splits it into an include side and an exclude side. The validation fires when a diff path matches the include side but not the exclude side.
 - runs as a single Bash tool invocation
@@ -127,7 +138,7 @@ A validation may hand off to another, as **Per-Module Compile** does when its de
 
 An autocommit can change the diff, so recompute the ledger after a validation whose commit may add a path Pass 1 never saw, as Baseline's `packageinfo` and `bnd.bnd` repairs do, and dispatch whatever newly fires. Skip it after a validation that can only touch paths the branch already changed, such as a formatter running in current branch mode, since its commit cannot widen the diff.
 
-Give the subagent everything the validations use and none of them define. That is `${REPO_ROOT}`, the ticket their **Autocommit** sections write into a commit title as `<TICKET>`, and the result its own verdict implies for committing, since the rule above lives here and the subagent never reads this document:
+Give the subagent everything the validations use and none of them define. That is `${REPO_ROOT}`, `${BASE_BRANCH}`, the ticket their **Autocommit** sections write into a commit title as `<TICKET>`, and the result its own verdict implies for committing, since the rule above lives here and the subagent never reads this document:
 
 ```bash
 REPO_ROOT=$(git rev-parse --show-toplevel)

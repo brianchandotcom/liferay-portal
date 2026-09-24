@@ -36,7 +36,6 @@ import {
 	getIntervalText,
 	getWeekdayName,
 	isRepeatingUnit,
-	showsEndDate,
 } from './utils';
 
 const MONTH_MAX_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -246,12 +245,6 @@ export default function PublishScheduler({
 														toCustomCronExpression(
 															value
 														),
-												}
-											: {}),
-										...(unit === IntervalUnit.Never
-											? {
-													endDateTime: '',
-													neverEnd: true,
 												}
 											: {}),
 										unit,
@@ -538,7 +531,7 @@ export default function PublishScheduler({
 						</>
 					)}
 
-					{showsEndDate(value) && (
+					{value.unit !== IntervalUnit.Never && (
 						<>
 							<ClayLayout.Row>
 								<ClayLayout.Col md={6} size={12}>

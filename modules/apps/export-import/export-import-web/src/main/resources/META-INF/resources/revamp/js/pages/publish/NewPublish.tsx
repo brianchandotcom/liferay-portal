@@ -42,7 +42,6 @@ import {
 	getInitialScheduleValues,
 	getScheduleValuesErrors,
 	hasEndDate,
-	showsEndDate,
 } from './components/scheduler/utils';
 
 type PublishFormValues = {
@@ -218,15 +217,12 @@ export function NewPublish({
 				const scheduleFields = scheduled
 					? {
 							cronExpression: toCronExpression(scheduleValues),
-							scheduleEndDate:
-								showsEndDate(scheduleValues) &&
-								hasEndDate(scheduleValues) &&
-								scheduleValues.endDateTime
-									? toZonedDate(
-											scheduleValues.endDateTime,
-											scheduleValues.timeZoneId
-										).toISOString()
-									: undefined,
+							scheduleEndDate: hasEndDate(scheduleValues)
+								? toZonedDate(
+										scheduleValues.endDateTime,
+										scheduleValues.timeZoneId
+									).toISOString()
+								: undefined,
 							scheduleStartDate: toZonedDate(
 								scheduleValues.startDateTime,
 								scheduleValues.timeZoneId

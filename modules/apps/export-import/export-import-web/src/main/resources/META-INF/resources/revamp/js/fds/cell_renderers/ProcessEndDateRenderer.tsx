@@ -6,10 +6,16 @@
 import {DateTimeRenderer} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
-export default function ProcessEndDateRenderer({value}: {value?: string}) {
+export default function ProcessEndDateRenderer({
+	options,
+	value,
+}: {
+	options?: Parameters<typeof DateTimeRenderer>[0]['options'];
+	value?: string;
+}) {
 	if (!value) {
 		return <>{Liferay.Language.get('no-end-date')}</>;
 	}
 
-	return DateTimeRenderer({value});
+	return DateTimeRenderer({options, value});
 }

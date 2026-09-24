@@ -7,7 +7,6 @@ package com.liferay.exportimport.web.internal.frontend.data.set.view.table;
 
 import com.liferay.exportimport.web.internal.constants.ExportImportFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -27,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = FDSView.class
 )
-public class ExportProcessesTableFDSView extends BaseTableFDSView {
+public class ExportProcessesTableFDSView extends BaseProcessesTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -41,18 +40,12 @@ public class ExportProcessesTableFDSView extends BaseTableFDSView {
 				fdsTableSchemaField.setSortable(true);
 			}
 		).add(
-			"dateCreated", "creation-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("dateTime");
-				fdsTableSchemaField.setSortable(true);
-			}
+			getDateFDSTableSchemaField(
+				"dateTime", "dateCreated", "creation-date")
 		).add(
-			"dateCompleted", "completion-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer(
-					"processCompletionDateRenderer");
-				fdsTableSchemaField.setSortable(true);
-			}
+			getDateFDSTableSchemaField(
+				"processCompletionDateRenderer", "dateCompleted",
+				"completion-date")
 		).add(
 			"creator.name", "author",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

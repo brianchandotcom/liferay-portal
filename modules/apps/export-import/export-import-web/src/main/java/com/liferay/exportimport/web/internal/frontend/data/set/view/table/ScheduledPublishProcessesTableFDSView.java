@@ -6,7 +6,6 @@
 package com.liferay.exportimport.web.internal.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -24,7 +23,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + StagingProcessesFDSNames.SCHEDULED_PUBLISH_PROCESSES,
 	service = FDSView.class
 )
-public class ScheduledPublishProcessesTableFDSView extends BaseTableFDSView {
+public class ScheduledPublishProcessesTableFDSView
+	extends BaseProcessesTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -38,24 +38,14 @@ public class ScheduledPublishProcessesTableFDSView extends BaseTableFDSView {
 				fdsTableSchemaField.setSortable(true);
 			}
 		).add(
-			"dateCreated", "creation-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("dateTime");
-				fdsTableSchemaField.setSortable(true);
-			}
+			getDateFDSTableSchemaField(
+				"dateTime", "dateCreated", "creation-date")
 		).add(
-			"scheduleEndDate", "end-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer(
-					"processEndDateRenderer");
-				fdsTableSchemaField.setSortable(true);
-			}
+			getDateFDSTableSchemaField(
+				"processEndDateRenderer", "scheduleEndDate", "end-date")
 		).add(
-			"nextFireDate", "next-fire-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("dateTime");
-				fdsTableSchemaField.setSortable(true);
-			}
+			getDateFDSTableSchemaField(
+				"dateTime", "nextFireDate", "next-fire-date")
 		).add(
 			"creator.name", "author",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

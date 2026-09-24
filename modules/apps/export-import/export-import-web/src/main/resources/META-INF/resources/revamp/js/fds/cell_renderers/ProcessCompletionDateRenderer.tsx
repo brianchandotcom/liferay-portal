@@ -10,9 +10,11 @@ import {useLiveProcess} from '../liveProcesses';
 
 export default function ProcessCompletionDateRenderer({
 	itemData,
+	options,
 	value,
 }: {
 	itemData?: {id?: number};
+	options?: Parameters<typeof DateTimeRenderer>[0]['options'];
 	value?: string;
 }) {
 	const liveProcess = useLiveProcess(itemData?.id);
@@ -23,5 +25,5 @@ export default function ProcessCompletionDateRenderer({
 		return <>{Liferay.Language.get('processing')}...</>;
 	}
 
-	return DateTimeRenderer({value: dateCompleted});
+	return DateTimeRenderer({options, value: dateCompleted});
 }

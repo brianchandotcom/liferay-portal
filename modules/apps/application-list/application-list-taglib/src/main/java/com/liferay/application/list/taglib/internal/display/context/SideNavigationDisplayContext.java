@@ -170,12 +170,21 @@ public class SideNavigationDisplayContext {
 			return expandedKeys;
 		}
 
-		List<PanelCategory> childPanelCategories =
-			_panelCategoryHelper.getChildPanelCategories(
-				_panelCategory.getKey(), _themeDisplay);
+		for (PanelCategory childPanelCategory :
+				_getRootChildPanelCategories()) {
 
-		for (PanelCategory childPanelCategory : childPanelCategories) {
-			expandedKeys.add(childPanelCategory.getKey());
+			if (!_scopes.containsKey(childPanelCategory.getKey())) {
+				expandedKeys.add(childPanelCategory.getKey());
+
+				continue;
+			}
+
+			for (PanelCategory scopeChildPanelCategory :
+					_panelCategoryHelper.getChildPanelCategories(
+						childPanelCategory.getKey(), _themeDisplay)) {
+
+				expandedKeys.add(scopeChildPanelCategory.getKey());
+			}
 		}
 
 		return expandedKeys;
@@ -187,38 +196,8 @@ public class SideNavigationDisplayContext {
 			_panelCategory.getKey());
 	}
 
-	private List<Map<String, Object>> _getPropsItems() throws Exception {
-		List<Map<String, Object>> propsItems = new ArrayList<>();
-
-		propsItems.addAll(_getPropsItems(_panelCategory));
-
-		for (PanelCategory childPanelCategory :
-				_panelCategoryHelper.getChildPanelCategories(
-					_panelCategory.getKey(), _themeDisplay)) {
-
-			List<Map<String, Object>> childrenPropsItems = _getPropsItems(
-				childPanelCategory);
-
-			if (childrenPropsItems.isEmpty()) {
-				continue;
-			}
-
-			propsItems.add(
-				HashMapBuilder.<String, Object>put(
-					"id", childPanelCategory.getKey()
-				).put(
-					"items", childrenPropsItems
-				).put(
-					"label",
-					childPanelCategory.getLabel(_themeDisplay.getLocale())
-				).build());
-		}
-
-		return propsItems;
-	}
-
-	private List<Map<String, Object>> _getPropsItems(
-			PanelCategory panelCategory)
+	private List<Map<String, Object>> _getPanelAppPropsItems(
+			PanelCategory panelCategory, String scope)
 		throws Exception {
 
 		List<Map<String, Object>> propsItems = new ArrayList<>();
@@ -243,10 +222,121 @@ public class SideNavigationDisplayContext {
 					"label", panelApp.getLabel(_themeDisplay.getLocale())
 				).put(
 					"leadingIcon", panelApp.getIcon()
+				).put(
+					"scope", () -> scope
 				).build());
 		}
 
 		return propsItems;
+	}
+
+	private Map<String, Object> _getPanelCategoryPropsItem(
+			PanelCategory panelCategory, String scope)
+		throws Exception {
+
+		List<Map<String, Object>> panelAppPropsItems = _getPanelAppPropsItems(
+			panelCategory, scope);
+
+		if (panelAppPropsItems.isEmpty()) {
+			return null;
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"id", panelCategory.getKey()
+		).put(
+			"items", panelAppPropsItems
+		).put(
+			"label", panelCategory.getLabel(_themeDisplay.getLocale())
+		).put(
+			"scope", () -> scope
+		).build();
+	}
+
+	private List<Map<String, Object>> _getPropsItems() throws Exception {
+		List<Map<String, Object>> propsItems = _getPanelAppPropsItems(
+			_panelCategory, null);
+
+		List<PanelCategory> rootChildPanelCategories =
+			_getRootChildPanelCategories();
+
+		for (PanelCategory childPanelCategory : rootChildPanelCategories) {
+			String childPanelCategoryScope = _scopes.get(
+				childPanelCategory.getKey());
+
+			if (childPanelCategoryScope == null) {
+				continue;
+			}
+
+			List<Map<String, Object>> scopePropsItems = _getScopePropsItems(
+				childPanelCategory, childPanelCategoryScope);
+
+			if (scopePropsItems.isEmpty()) {
+				continue;
+			}
+
+			propsItems.add(
+				HashMapBuilder.<String, Object>put(
+					"id", childPanelCategory.getKey()
+				).put(
+					"label",
+					childPanelCategory.getLabel(_themeDisplay.getLocale())
+				).put(
+					"scope", () -> childPanelCategoryScope
+				).put(
+					"scopeMarker", true
+				).build());
+
+			propsItems.addAll(scopePropsItems);
+		}
+
+		for (PanelCategory childPanelCategory : rootChildPanelCategories) {
+			if (_scopes.containsKey(childPanelCategory.getKey())) {
+				continue;
+			}
+
+			Map<String, Object> panelCategoryPropsItem =
+				_getPanelCategoryPropsItem(childPanelCategory, null);
+
+			if (panelCategoryPropsItem != null) {
+				propsItems.add(panelCategoryPropsItem);
+			}
+		}
+
+		return propsItems;
+	}
+
+	private List<PanelCategory> _getRootChildPanelCategories() {
+		if (_rootChildPanelCategories != null) {
+			return _rootChildPanelCategories;
+		}
+
+		_rootChildPanelCategories =
+			_panelCategoryHelper.getChildPanelCategories(
+				_panelCategory.getKey(), _themeDisplay);
+
+		return _rootChildPanelCategories;
+	}
+
+	private List<Map<String, Object>> _getScopePropsItems(
+			PanelCategory panelCategory, String scope)
+		throws Exception {
+
+		List<Map<String, Object>> scopePropsItems = _getPanelAppPropsItems(
+			panelCategory, scope);
+
+		for (PanelCategory childPanelCategory :
+				_panelCategoryHelper.getChildPanelCategories(
+					panelCategory.getKey(), _themeDisplay)) {
+
+			Map<String, Object> panelCategoryPropsItem =
+				_getPanelCategoryPropsItem(childPanelCategory, scope);
+
+			if (panelCategoryPropsItem != null) {
+				scopePropsItems.add(panelCategoryPropsItem);
+			}
+		}
+
+		return scopePropsItems;
 	}
 
 	private static final String _COLOR_SCHEME_SESSION_KEY =
@@ -257,12 +347,18 @@ public class SideNavigationDisplayContext {
 
 	private static final Snapshot<ItemSelector> _itemSelectorSnapshot =
 		new Snapshot<>(SideNavigationDisplayContext.class, ItemSelector.class);
+	private static final Map<String, String> _scopes = HashMapBuilder.put(
+		PanelCategoryKeys.CONTROL_PANEL_INSTANCE, "instance"
+	).put(
+		PanelCategoryKeys.CONTROL_PANEL_SYSTEM, "system"
+	).build();
 
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;
 	private final PanelCategory _panelCategory;
 	private final PanelCategoryHelper _panelCategoryHelper;
 	private final String _portletId;
+	private List<PanelCategory> _rootChildPanelCategories;
 	private final ThemeDisplay _themeDisplay;
 
 }

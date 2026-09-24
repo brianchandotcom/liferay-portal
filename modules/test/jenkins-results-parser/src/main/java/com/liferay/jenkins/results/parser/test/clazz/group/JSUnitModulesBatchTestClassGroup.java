@@ -386,6 +386,10 @@ public class JSUnitModulesBatchTestClassGroup
 	}
 
 	private boolean _isTestClassFileReported() {
+		if (hasTestFileGlobs()) {
+			return true;
+		}
+
 		JobProperty jobProperty = getJobProperty("test.batch.report.type");
 
 		String jobPropertyValue = jobProperty.getValue();

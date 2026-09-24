@@ -79,42 +79,6 @@ definition {
 	}
 
 	@priority = 4
-	test CanCreateEndpointWithValidPath {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given creating an API application") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "app-test",
-				title = "App-test");
-		}
-
-		task ("And Given I go to Endpoints tab in Edit API application") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "App-test");
-		}
-
-		task ("When I create an endpoint with a valid path") {
-			APIBuilderUI.createAPIEndpoint(
-				name = "testendpoint",
-				path = "/testendpoint");
-		}
-
-		task ("Then I can see endpoint is created with correct path") {
-			Alert.viewSuccessMessage();
-
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "App-test");
-
-			AssertElementPresent(
-				key_name = "/testendpoint/",
-				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
-		}
-	}
-
-	@priority = 4
 	test CanLoadAPIApplicationURL {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

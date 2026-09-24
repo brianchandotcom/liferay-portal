@@ -13,6 +13,8 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
+import getRandomString from '../../../utils/getRandomString';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const test = mergeTests(
@@ -20,7 +22,8 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	loginTest(),
 	headlessBuilderPagesTest({}),
-	headlessDiscoveryPagesTest
+	headlessDiscoveryPagesTest,
+	uiElementsPageTest
 );
 
 const applicationData = {
@@ -350,3 +353,50 @@ test('can list site scoped endpoint', async ({
 	await applicationPage.goToEndpointsTab();
 	await applicationPage.goToEditEndpoint('/gettest/{entryerc}/');
 });
+
+test(
+	'can create an endpoint with a valid path',
+	{tag: '@LPD-106934'},
+	async ({
+		apiHelpers,
+		applicationPage,
+		headlessBuilderPage,
+		page,
+		uiElementsPage,
+	}) => {
+
+		// Add an application
+
+		const application = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				applicationStatus: 'unpublished',
+				baseURL: `test-${getRandomString()}`,
+				title: getRandomString(),
+			},
+			'headless-builder/applications'
+		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
+		// Create the endpoint
+
+		await headlessBuilderPage.goto();
+		await headlessBuilderPage.goToEditApplication(application.title);
+		await applicationPage.createCollectionEndpoint(
+			'Company',
+			'/testendpoint'
+		);
+
+		await expect(uiElementsPage.anySuccessAlert).toBeVisible();
+
+		// Check that the endpoint is listed with its path
+
+		await headlessBuilderPage.goto();
+		await headlessBuilderPage.goToEditApplication(application.title);
+		await applicationPage.goToEndpointsTab();
+
+		await expect(
+			page.locator('.fds tbody tr', {hasText: '/testendpoint/'})
+		).toBeVisible();
+	}
+);

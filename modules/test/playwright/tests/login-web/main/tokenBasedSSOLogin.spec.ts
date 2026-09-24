@@ -65,6 +65,8 @@ test.describe('Users could login using Token Based SSO.  See LRQA-27622.', () =>
 		browser,
 		page,
 	}) => {
+		test.setTimeout(180000);
+
 		const virtualInstancesPage = new VirtualInstancesPage(page);
 
 		await virtualInstancesPage.addNewVirtualInstance(

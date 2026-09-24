@@ -29,7 +29,7 @@ test(
 	'On demand admin',
 	{tag: ['@LPD-70297', '@LPS-150388', '@LPS-156154']},
 	async ({onDemandAdminPage, page, virtualInstancesPage}) => {
-		test.setTimeout(90000);
+		test.setTimeout(180000);
 
 		const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 

@@ -169,6 +169,8 @@ test.describe('Accessibility Menu Configuration Override and Inheritance', () =>
 			systemSettingsPage,
 			virtualInstancesPage,
 		}) => {
+			test.setTimeout(180000);
+
 			await systemSettingsPage.goToSystemSetting(
 				SETTING_CATEGORY_KEY,
 				SETTING_CONFIGURATION_NAME

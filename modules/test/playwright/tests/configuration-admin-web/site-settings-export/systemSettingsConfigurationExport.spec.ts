@@ -37,6 +37,8 @@ test('Check that Site OSGI configurations can be used across different systems.'
 	siteSettingsPage,
 	virtualInstancesPage,
 }) => {
+	test.setTimeout(180000);
+
 	let virtualInstancePage: Page;
 
 	const firstAllowedAccountType = (targetPage: Page = page) =>

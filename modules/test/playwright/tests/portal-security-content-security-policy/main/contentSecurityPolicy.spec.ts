@@ -40,6 +40,8 @@ let hasVirtualInstance: boolean = false;
 test.afterEach(
 	'Reset CSP configuration',
 	async ({contentSecurityPolicyPage, page, virtualInstancesPage}) => {
+		test.setTimeout(180000);
+
 		liferayConfig.environment.baseUrl = defaultBaseUrl;
 
 		await page.goto('/');

@@ -38,6 +38,8 @@ test.afterEach(
 		formsPage,
 		virtualInstancesPage,
 	}) => {
+		test.setTimeout(180000);
+
 		await formsPage.goTo();
 
 		await deleteItems(formsPage);

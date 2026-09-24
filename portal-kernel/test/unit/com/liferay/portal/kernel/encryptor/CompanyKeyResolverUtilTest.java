@@ -36,10 +36,10 @@ public class CompanyKeyResolverUtilTest {
 	public void testUnwrapKey() throws Exception {
 		Encryptor encryptor = Mockito.mock(Encryptor.class);
 		Key key = Mockito.mock(Key.class);
-		String serializedKey = RandomTestUtil.randomString();
+		String keyString = RandomTestUtil.randomString();
 
 		Mockito.when(
-			encryptor.deserializeKey(serializedKey)
+			encryptor.deserializeKey(keyString)
 		).thenReturn(
 			key
 		);
@@ -48,16 +48,15 @@ public class CompanyKeyResolverUtilTest {
 			AutoCloseable autoCloseable2 = _setCompanyKeyResolver(null)) {
 
 			Assert.assertSame(
-				key,
-				CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, serializedKey));
+				key, CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, keyString));
 		}
 
-		String wrappedKey =
+		String wrappedKeyString =
 			CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX +
 				RandomTestUtil.randomString();
 
 		try (AutoCloseable autoCloseable = _setCompanyKeyResolver(null)) {
-			CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, wrappedKey);
+			CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, wrappedKeyString);
 
 			Assert.fail();
 		}
@@ -68,7 +67,7 @@ public class CompanyKeyResolverUtilTest {
 			CompanyKeyResolver.class);
 
 		Mockito.when(
-			companyKeyResolver.unwrapKey(_COMPANY_ID, wrappedKey)
+			companyKeyResolver.unwrapKey(_COMPANY_ID, wrappedKeyString)
 		).thenReturn(
 			key
 		);
@@ -77,7 +76,9 @@ public class CompanyKeyResolverUtilTest {
 				companyKeyResolver)) {
 
 			Assert.assertSame(
-				key, CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, wrappedKey));
+				key,
+				CompanyKeyResolverUtil.unwrapKey(
+					_COMPANY_ID, wrappedKeyString));
 		}
 	}
 
@@ -85,20 +86,19 @@ public class CompanyKeyResolverUtilTest {
 	public void testWrapKey() throws Exception {
 		Encryptor encryptor = Mockito.mock(Encryptor.class);
 		Key key = Mockito.mock(Key.class);
-		String serializedKey = RandomTestUtil.randomString();
+		String keyString = RandomTestUtil.randomString();
 
 		Mockito.when(
 			encryptor.serializeKey(key)
 		).thenReturn(
-			serializedKey
+			keyString
 		);
 
 		try (AutoCloseable autoCloseable1 = _setEncryptor(encryptor);
 			AutoCloseable autoCloseable2 = _setCompanyKeyResolver(null)) {
 
 			Assert.assertEquals(
-				serializedKey,
-				CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
+				keyString, CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 
 		CompanyKeyResolver companyKeyResolver = Mockito.mock(
@@ -115,11 +115,10 @@ public class CompanyKeyResolverUtilTest {
 				companyKeyResolver)) {
 
 			Assert.assertEquals(
-				serializedKey,
-				CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
+				keyString, CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 
-		String wrappedKey =
+		String wrappedKeyString =
 			CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX +
 				RandomTestUtil.randomString();
 
@@ -132,14 +131,15 @@ public class CompanyKeyResolverUtilTest {
 		Mockito.when(
 			companyKeyResolver.wrapKey(_COMPANY_ID, key)
 		).thenReturn(
-			wrappedKey
+			wrappedKeyString
 		);
 
 		try (AutoCloseable autoCloseable = _setCompanyKeyResolver(
 				companyKeyResolver)) {
 
 			Assert.assertEquals(
-				wrappedKey, CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
+				wrappedKeyString,
+				CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 	}
 

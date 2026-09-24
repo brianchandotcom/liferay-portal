@@ -19,17 +19,17 @@ public class CompanyKeyResolverUtil {
 
 	public static final String WRAPPED_KEY_VERSION = "v1";
 
-	public static boolean isWrappedKey(String key) {
-		if ((key != null) && key.startsWith(WRAPPED_KEY_PREFIX)) {
+	public static boolean isWrappedKey(String keyString) {
+		if ((keyString != null) && keyString.startsWith(WRAPPED_KEY_PREFIX)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public static Key unwrapKey(long companyId, String wrappedKey) {
-		if (!isWrappedKey(wrappedKey)) {
-			return EncryptorUtil.deserializeKey(wrappedKey);
+	public static Key unwrapKey(long companyId, String keyString) {
+		if (!isWrappedKey(keyString)) {
+			return EncryptorUtil.deserializeKey(keyString);
 		}
 
 		CompanyKeyResolver companyKeyResolver =
@@ -40,7 +40,7 @@ public class CompanyKeyResolverUtil {
 				"Key resolver is not available for company " + companyId);
 		}
 
-		return companyKeyResolver.unwrapKey(companyId, wrappedKey);
+		return companyKeyResolver.unwrapKey(companyId, keyString);
 	}
 
 	public static String wrapKey(long companyId, Key key) {

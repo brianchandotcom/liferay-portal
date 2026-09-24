@@ -11018,7 +11018,7 @@ junit.jvm.override.version=21</echo>
 									<action>
 										<exec dir="${workspace.dir}" executable="${workspace.absolute.dir}/gradlew" failonerror="true">
 											<arg value="assemble" />
-											<env key="GRADLE_USER_HOME" value="${project.dir}/workspaces/.gradle" />
+											<env key="GRADLE_USER_HOME" value="${workspace.absolute.dir}/../.gradle" />
 											<env key="YARN_YARN_OFFLINE_MIRROR_PRUNING" value="false" />
 										</exec>
 									</action>

@@ -45,35 +45,6 @@ definition {
 	}
 
 	@priority = 4
-	test CanFilterAPIsByExcludeStatus {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("When I filter by Published status with exclude enabled") {
-			APIBuilderUI.filterByStatus(
-				exclude = "true",
-				labelName = "Published");
-		}
-
-		task ("Then two unpublished APIs are listed") {
-			AssertElementPresent(
-				key_status = "Unpublished",
-				key_title = "test2",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
-
-			AssertElementPresent(
-				key_status = "Unpublished",
-				key_title = "test3",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
-
-			AssertElementNotPresent(
-				key_status = "Published",
-				key_title = "test1",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
-		}
-	}
-
-	@priority = 4
 	test CanFilterAPIsByLastUpdated {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

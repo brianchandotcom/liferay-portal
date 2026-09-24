@@ -648,7 +648,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<propertycopy from="test.batch.report.type[${test.batch.name}]" name="test.batch.report.type" silent="true" />
 
 			<if>
-				<equals arg1="${test.batch.report.type}" arg2="test-file" />
+				<or>
+					<equals arg1="${test.batch.report.type}" arg2="test-file" />
+					<isset property="js.unit.test.file.reported" />
+				</or>
 				<then>
 					<for param="test.results.file">
 						<path>
@@ -8766,6 +8769,7 @@ information. Make sure to commit in all format-javadoc results.
 
 									String testTask = modulesTestClass.substring(0, index);
 
+									project.setProperty("js.unit.test.file.reported", "true");
 									project.setProperty("modules.test.class.file.names", sb.toString());
 									project.setProperty("modules.test.class.file.names.task", testTask.replaceAll(":packageRunTest$", ":runJSUnitTestFileNames"));
 									project.setProperty("modules.test.class.task", testTask);

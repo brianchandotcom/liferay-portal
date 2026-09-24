@@ -32,30 +32,6 @@ definition {
 	}
 
 	@priority = 4
-	test CanGetUnpublishedStatusInResponse {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("And Given I unpublish it with Change Publication Status") {
-			APIBuilderUI.changePublicationStatus(
-				key_title = "App-test",
-				unpublish = "true");
-		}
-
-		task ("When with getAPIApplicationsPage to retrieve the api application") {
-			var response = ApplicationAPI.getAPIApplications();
-		}
-
-		task ("Then I can get the unpublished status in response") {
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..applicationStatus.name");
-
-			TestUtils.assertEquals(
-				actual = ${actualValue},
-				expected = "unpublished");
-		}
-	}
-
-	@priority = 4
 	test CanPromptUnpublishAPIApplicationDialog {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

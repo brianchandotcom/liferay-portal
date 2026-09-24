@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
+import getRandomString from '../../../utils/getRandomString';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const test = mergeTests(
@@ -92,3 +93,52 @@ test.describe('Headless Builder - API Application', () => {
 		await expect(applicationPage.publishButton).toBeEnabled();
 	});
 });
+
+test(
+	'Can get unpublished status in response after unpublish',
+	{tag: '@LPD-106934'},
+	async ({apiHelpers, headlessBuilderPage, page}) => {
+
+		// Add a published application
+
+		const application = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				applicationStatus: 'published',
+				baseURL: `test-${getRandomString()}`,
+				title: getRandomString(),
+			},
+			'headless-builder/applications'
+		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
+		// Unpublish it from the applications list
+
+		await headlessBuilderPage.goto();
+		await headlessBuilderPage.openApplicationActions(application.title);
+
+		await page
+			.getByRole('menuitem', {name: 'Change Publication Status'})
+			.click();
+		await page
+			.getByRole('button', {exact: true, name: 'Unpublish'})
+			.click();
+
+		// Check the status in the response
+
+		await expect(async () => {
+			const updatedApplication =
+				await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+					{
+						applicationName: 'headless-builder/applications',
+						externalReferenceCode:
+							application.externalReferenceCode,
+					}
+				);
+
+			expect(updatedApplication.applicationStatus.key).toBe(
+				'unpublished'
+			);
+		}).toPass({timeout: 15000});
+	}
+);

@@ -1,5 +1,18 @@
 #!/bin/bash
 
+function assert_advanced_file_system_store_root_dir {
+	local document_library_dir="${LIFERAY_HOME}/data/document_library1"
+
+	if [[ ! -f ${document_library_dir}/README.txt ]]
+	then
+		echo "Unable to confirm the advanced file system store used ${document_library_dir}."
+
+		find "${LIFERAY_HOME}/data" -maxdepth 2 -name README.txt
+
+		exit 1
+	fi
+}
+
 function assert_clean_upgrade_log {
 	local upgrade_log="${LIFERAY_HOME}/tools/portal-tools-db-upgrade-client/logs/upgrade.log"
 

@@ -2208,6 +2208,51 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testGetWithSiteScopedEndpointAndAPIFilter() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_siteScopedObjectDefinition1.getExternalReferenceCode(),
+			_siteScopedObjectRelationship1.getName(),
+			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
+			null, APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
+			APIApplication.Endpoint.Scope.SITE);
+
+		assertSuccessfulJSONObject(
+			JSONUtil.put(
+				"oDataFilter", "textField ne 'value2'"
+			).put(
+				"r_apiEndpointToAPIFilters_l_apiEndpointERC",
+				_API_ENDPOINT_ERC_1
+			).toString(),
+			"headless-builder/filters", Http.Method.POST);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		for (int i = 1; i <= 4; i++) {
+			_addCustomObjectEntry(
+				_group.getGroupId(), i, null, _siteScopedObjectDefinition1,
+				"value" + i, RandomTestUtil.randomString());
+		}
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"c/", _BASE_URL_1, "/scopes/", _group.getGroupId(),
+				_API_APPLICATION_PATH_1, "?filter=",
+				URLCodec.encodeURL("textProperty ne 'value3'"), "&sort=",
+				URLCodec.encodeURL("textProperty:desc")),
+			Http.Method.GET);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put("textProperty", "value4"),
+				JSONUtil.put("textProperty", "value1")
+			).toString(),
+			String.valueOf(jsonObject.getJSONArray("items")),
+			JSONCompareMode.STRICT_ORDER);
+	}
+
+	@Test
 	public void testGetWithSiteScopedEndpointIndividualObjectEntryByExternalReferenceCode()
 		throws Exception {
 

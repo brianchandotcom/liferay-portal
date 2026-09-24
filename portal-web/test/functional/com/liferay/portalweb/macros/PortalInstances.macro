@@ -87,7 +87,11 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCP(virtualHost = null) {
+	macro deleteCP(virtualHost = null, webId = null) {
+		if (!(isSet(webId))) {
+			var webId = ${virtualHost};
+		}
+
 		var key_virtualHost = ${virtualHost};
 
 		LexiconTable.clickEllipsisItem(
@@ -102,7 +106,17 @@ definition {
 			key_text = "Delete",
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
-		Alert.viewSuccessMessage();
+		Alert.viewInfoMessage(infoMessage = "The instance ${webId} is being deleted. You will be notified when it finishes.");
+
+		var deletionPauseCount = 0;
+
+		while ((IsElementPresent(locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST")) && (${deletionPauseCount} != 60)) {
+			Refresh();
+
+			var deletionPauseCount = ${deletionPauseCount} + 1;
+
+			echo("Deletion pause count: ${deletionPauseCount}");
+		}
 
 		AssertTextNotPresent(
 			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",

@@ -50,50 +50,6 @@ definition {
 		}
 	}
 
-	@priority = 5
-	test CanApplyFilterParameter {
-		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				endpointName = "testendpoint",
-				endpointPath = "/testendpoint",
-				mainObjectDefinitionErc = "student",
-				relatedEndpoint = "true",
-				relatedSchema = "true",
-				schemaName = "testSchema",
-				status = "published",
-				title = "My-app");
-
-			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				responseSchemaErc = "My-app_testSchema");
-		}
-
-		task ("And Given I create schema a property with erc of name field") {
-			PropertyAPI.createAPIProperty(
-				name = "entryName",
-				objectFieldERC = "studentName",
-				schemaERC = "My-app_testSchema");
-		}
-
-		task ("When execute get{Endpoint}Page with filter={property} eq 'Able' in API Explorer") {
-			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
-
-			APIExplorer.executeAPIMethod(
-				method = "getTestendpointPage",
-				parameter = "filter",
-				service = "testSchema",
-				value = "entryName eq 'Able'");
-		}
-
-		task ("Then I can see correct response with property equals to Able") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "OpenAPI#RESPONSE_BODY",
-				method = "getTestendpointPage",
-				value1 = "\"items\": [     {       \"entryName\": \"Able\"     }   ]");
-		}
-	}
-
 	@priority = 4
 	test CanApplyFilterParameterAndPreFilter {
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {

@@ -96,7 +96,7 @@
 			"externalReferenceCode": "8818db63-0e64-48b3-a609-bc6ddadc39a4",
 			"host": "Liferay",
 			"name": "ac_client_batch",
-			"purpose": "Stores a list of the session's event IDs to avoid sending duplicate events to Analytics Cloud. Statistics.",
+			"purpose": "Stores a list of the session's event IDs to avoid sending duplicate events to Liferay Data Platform. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -104,7 +104,7 @@
 			"externalReferenceCode": "100522f5-949f-410e-a983-ed156cec2775",
 			"host": "Liferay",
 			"name": "ac_client_channel_id",
-			"purpose": "Stores the current site's Channel ID to send to Analytics Cloud. Statistics.",
+			"purpose": "Stores the current site's Channel ID to send to Liferay Data Platform. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -112,7 +112,7 @@
 			"externalReferenceCode": "79765961-2d08-444d-b549-7c3bbdabb580",
 			"host": "Liferay",
 			"name": "ac_client_context",
-			"purpose": "Stores a list of page and user properties to send to Analytics Cloud so event analysis has the necessary context. Statistics.",
+			"purpose": "Stores a list of page and user properties to send to Liferay Data Platform so event analysis has the necessary context. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -120,7 +120,7 @@
 			"externalReferenceCode": "192a7263-1d3f-4ab8-aa6b-449a69ec470d",
 			"host": "Liferay",
 			"name": "ac_client_identity",
-			"purpose": "Stores the current user's Analytics Cloud SHA-256 hashed user ID combined with email so users with accounts can be tracked by Analytics Cloud as known individuals. Statistics.",
+			"purpose": "Stores the current user's Liferay Data Platform SHA-256 hashed user ID combined with email so users with accounts can be tracked by Liferay Data Platform as known individuals. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -144,7 +144,7 @@
 			"externalReferenceCode": "c86f9553-cb17-4ea7-94f6-caa207f2ac1c",
 			"host": "Liferay",
 			"name": "ac_client_user_id",
-			"purpose": "Stores the current user's Analytics Cloud user ID to track and segment guest users as anonymous individuals. Statistics.",
+			"purpose": "Stores the current user's Liferay Data Platform user ID to track and segment guest users as anonymous individuals. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -152,7 +152,7 @@
 			"externalReferenceCode": "8e1fd120-ae3c-4af2-9ce8-573c3ded34e8",
 			"host": "Liferay",
 			"name": "ac_message_queue",
-			"purpose": "Stores an array of events to send to Analytics Cloud when possible. Statistics.",
+			"purpose": "Stores an array of events to send to Liferay Data Platform when possible. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -160,7 +160,7 @@
 			"externalReferenceCode": "2d43f854-d24f-4c07-854c-2c3f975fecdd",
 			"host": "Liferay",
 			"name": "ac_message_queue_identity",
-			"purpose": "Stores an array of identities to send to Analytics Cloud when possible. Statistics.",
+			"purpose": "Stores an array of identities to send to Liferay Data Platform when possible. Statistics.",
 			"type": "First Party"
 		}
 	]

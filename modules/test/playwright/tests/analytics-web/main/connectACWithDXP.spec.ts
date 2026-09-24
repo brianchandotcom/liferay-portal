@@ -40,7 +40,7 @@ test('Connect AC token authentication fails with invalid token', async ({
 		page
 			.locator('.alert-danger')
 			.getByText(
-				'Token is not valid. Please insert a valid Analytics Cloud token.'
+				'Token is not valid. Please insert a valid Liferay Data Platform token.'
 			)
 	).toBeVisible();
 });

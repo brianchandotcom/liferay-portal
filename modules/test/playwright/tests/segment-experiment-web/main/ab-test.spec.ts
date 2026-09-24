@@ -51,7 +51,7 @@ test(
 		await openABTesSidebar(page);
 
 		await expect(
-			page.getByText('Sync to Liferay Analytics Cloud')
+			page.getByText('Sync to Liferay Data Platform')
 		).toBeVisible();
 
 		await expect(
@@ -155,7 +155,7 @@ test(
 
 		await clickOnLink({
 			baseUrl: faroConfig.environment.baseUrl,
-			name: 'View Data in Analytics Cloud',
+			name: 'View Data in Liferay Data Platform',
 			page,
 		});
 

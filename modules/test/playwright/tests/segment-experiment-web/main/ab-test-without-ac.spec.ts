@@ -81,7 +81,7 @@ test(
 		// Open the AB Test panel
 
 		await clickAndExpectToBeVisible({
-			target: page.getByText('Connect to Liferay Analytics Cloud'),
+			target: page.getByText('Connect to Liferay Data Platform'),
 			trigger: page.getByRole('button', {exact: true, name: 'A/B Test'}),
 		});
 
@@ -94,13 +94,13 @@ test(
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 		await expect(
-			page.getByText('Connect to Liferay Analytics Cloud')
+			page.getByText('Connect to Liferay Data Platform')
 		).not.toBeVisible();
 
 		// Hide the AB Test panel permanently
 
 		await clickAndExpectToBeVisible({
-			target: page.getByText('Connect to Liferay Analytics Cloud'),
+			target: page.getByText('Connect to Liferay Data Platform'),
 			trigger: page.getByRole('button', {exact: true, name: 'A/B Test'}),
 		});
 

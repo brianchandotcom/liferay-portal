@@ -154,7 +154,7 @@
 			"externalReferenceCode": "336a227c-eb20-481a-9160-deb1cbd96e83",
 			"host": "Liferay",
 			"name": "maintenanceSeen",
-			"purpose": "Stores whether the user has frequently dismissed the server maintenance message (true/false) so Analytics Cloud stops displaying it. Preferences.",
+			"purpose": "Stores whether the user has frequently dismissed the server maintenance message (true/false) so Liferay Data Platform stops displaying it. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -162,7 +162,7 @@
 			"externalReferenceCode": "82819a34-1bfd-4e5d-ad0b-429fcb9f9117",
 			"host": "Liferay",
 			"name": "sidebar",
-			"purpose": "Stores the open/close state of the Analytics Cloud sidebar for the user's convenience. Preferences.",
+			"purpose": "Stores the open/close state of the Liferay Data Platform sidebar for the user's convenience. Preferences.",
 			"type": "First Party"
 		},
 		{

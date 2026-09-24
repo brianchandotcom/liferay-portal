@@ -19,6 +19,8 @@ import {
 
 import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
 function applyDefaultTime(value: string, defaultTime?: string): string {
 	if (!defaultTime) {
 		return value;
@@ -26,7 +28,7 @@ function applyDefaultTime(value: string, defaultTime?: string): string {
 
 	const [datePart, timePart] = value.split(' ');
 
-	if (!/^\d{4}-\d{2}-\d{2}$/.test(datePart) || timePart !== UNSET_TIME) {
+	if (!DATE_PATTERN.test(datePart) || timePart !== UNSET_TIME) {
 		return value;
 	}
 
@@ -97,7 +99,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 		);
 
 		const val = applyDefaultTime(
-			storageDateTime && !storageDateTime.includes(' ')
+			time && DATE_PATTERN.test(storageDateTime)
 				? `${storageDateTime} ${UNSET_TIME}`
 				: storageDateTime,
 			defaultTime

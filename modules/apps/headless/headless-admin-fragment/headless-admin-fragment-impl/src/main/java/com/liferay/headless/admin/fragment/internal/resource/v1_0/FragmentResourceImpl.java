@@ -15,6 +15,9 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.headless.admin.fragment.dto.v1_0.ApprovedFragmentVersion;
+import com.liferay.headless.admin.fragment.dto.v1_0.Configuration;
+import com.liferay.headless.admin.fragment.dto.v1_0.DraftFragmentVersion;
 import com.liferay.headless.admin.fragment.dto.v1_0.FormFragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
@@ -22,11 +25,13 @@ import com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion;
 import com.liferay.headless.admin.fragment.internal.odata.entity.v1_0.FragmentEntityModel;
 import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.FragmentSetUtil;
 import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.ServiceContextUtil;
+import com.liferay.headless.admin.fragment.internal.util.ConfigurationUtil;
 import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
 import com.liferay.headless.admin.fragment.internal.util.FieldTypeUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentResource;
 import com.liferay.headless.admin.site.dto.v1_0.util.FileEntryUtil;
 import com.liferay.headless.common.spi.util.GroupUtil;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -246,10 +251,10 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 
 		FragmentEntry fragmentEntry = null;
 
-		FragmentVersion approvedFragmentVersion = _getFragmentVersion(
-			fragment, FragmentVersion.Status.APPROVED);
-		FragmentVersion draftFragmentVersion = _getFragmentVersion(
-			fragment, FragmentVersion.Status.DRAFT);
+		ApprovedFragmentVersion approvedFragmentVersion = _getFragmentVersion(
+			ApprovedFragmentVersion.class, fragment);
+		DraftFragmentVersion draftFragmentVersion = _getFragmentVersion(
+			DraftFragmentVersion.class, fragment);
 		int type = _getType(fragment);
 		String typeOptions = _getTypeOptions(fragment);
 
@@ -268,15 +273,16 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				approvedFragmentVersion.getHtml(),
 				approvedFragmentVersion.getJs(),
 				GetterUtil.getBoolean(fragment.getCacheable()),
-				approvedFragmentVersion.getConfiguration(), fragment.getIcon(),
-				previewFileEntryId,
+				_toConfigurationJSON(
+					approvedFragmentVersion.getConfiguration(), groupId),
+				fragment.getIcon(), previewFileEntryId,
 				GetterUtil.getBoolean(fragment.getMarketplace()),
 				GetterUtil.getBoolean(fragment.getReadOnly()), type,
 				typeOptions, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			if (draftFragmentVersion != null) {
 				_updateDraft(
-					fragmentEntry.getFragmentEntryId(), draftFragmentVersion);
+					draftFragmentVersion, fragmentEntry.getFragmentEntryId());
 			}
 		}
 		else if (draftFragmentVersion != null) {
@@ -307,8 +313,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		return _toFragment(fragmentEntry);
 	}
 
-	private FragmentVersion _getFragmentVersion(
-		Fragment fragment, FragmentVersion.Status status) {
+	private <T extends FragmentVersion> T _getFragmentVersion(
+		Class<T> clazz, Fragment fragment) {
 
 		FragmentVersion[] fragmentVersions = fragment.getFragmentVersions();
 
@@ -317,8 +323,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		}
 
 		for (FragmentVersion fragmentVersion : fragmentVersions) {
-			if (status == fragmentVersion.getStatus()) {
-				return fragmentVersion;
+			if (clazz.isInstance(fragmentVersion)) {
+				return clazz.cast(fragmentVersion);
 			}
 		}
 
@@ -417,6 +423,14 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 	}
 
+	private String _toConfigurationJSON(
+			Configuration configuration, long groupId)
+		throws Exception {
+
+		return ConfigurationUtil.toConfigurationJSON(
+			configuration, groupId, _infoItemServiceRegistry);
+	}
+
 	private Fragment _toFragment(FragmentEntry fragmentEntry) throws Exception {
 		return _fragmentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -428,16 +442,17 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 	}
 
 	private void _updateDraft(
-			long fragmentEntryId, FragmentVersion fragmentVersion)
+			DraftFragmentVersion draftFragmentVersion, long fragmentEntryId)
 		throws Exception {
 
 		FragmentEntry draftFragmentEntry = _fragmentEntryService.getDraft(
 			fragmentEntryId);
 
-		draftFragmentEntry.setCss(fragmentVersion.getCss());
-		draftFragmentEntry.setHtml(fragmentVersion.getHtml());
-		draftFragmentEntry.setJs(fragmentVersion.getJs());
-		draftFragmentEntry.setConfiguration(fragmentVersion.getConfiguration());
+		draftFragmentEntry.setCss(draftFragmentVersion.getCss());
+		draftFragmentEntry.setHtml(draftFragmentVersion.getHtml());
+		draftFragmentEntry.setJs(draftFragmentVersion.getJs());
+		draftFragmentEntry.setConfiguration(
+			draftFragmentVersion.getConfiguration());
 
 		_fragmentEntryService.updateDraft(draftFragmentEntry);
 	}
@@ -446,10 +461,10 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			Fragment fragment, FragmentEntry fragmentEntry, long groupId)
 		throws Exception {
 
-		FragmentVersion approvedFragmentVersion = _getFragmentVersion(
-			fragment, FragmentVersion.Status.APPROVED);
-		FragmentVersion draftFragmentVersion = _getFragmentVersion(
-			fragment, FragmentVersion.Status.DRAFT);
+		ApprovedFragmentVersion approvedFragmentVersion = _getFragmentVersion(
+			ApprovedFragmentVersion.class, fragment);
+		DraftFragmentVersion draftFragmentVersion = _getFragmentVersion(
+			DraftFragmentVersion.class, fragment);
 
 		if ((approvedFragmentVersion == null) &&
 			(draftFragmentVersion == null)) {
@@ -505,15 +520,16 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				approvedFragmentVersion.getHtml(),
 				approvedFragmentVersion.getJs(),
 				GetterUtil.getBoolean(fragment.getCacheable()),
-				approvedFragmentVersion.getConfiguration(), fragment.getIcon(),
-				previewFileEntryId,
+				_toConfigurationJSON(
+					approvedFragmentVersion.getConfiguration(), groupId),
+				fragment.getIcon(), previewFileEntryId,
 				GetterUtil.getBoolean(fragment.getReadOnly()), typeOptions,
 				WorkflowConstants.STATUS_APPROVED);
 
 			if (draftFragmentVersion != null) {
 				_updateDraft(
-					updatedFragmentEntry.getFragmentEntryId(),
-					draftFragmentVersion);
+					draftFragmentVersion,
+					updatedFragmentEntry.getFragmentEntryId());
 			}
 		}
 		else {
@@ -555,6 +571,9 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

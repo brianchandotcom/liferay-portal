@@ -58,8 +58,7 @@ definition {
 			var iterator = ${iterator} + 1;
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

@@ -15,8 +15,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given portal configured with DDL") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 

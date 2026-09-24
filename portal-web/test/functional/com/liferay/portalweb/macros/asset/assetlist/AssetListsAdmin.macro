@@ -430,8 +430,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enableCollectionsToCombineAssetsFromSegments(collectionType = null) {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -561,8 +560,7 @@ definition {
 
 	@summary = "Default summary"
 	macro resetCollectionsToCombineAssetsFromSegments() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

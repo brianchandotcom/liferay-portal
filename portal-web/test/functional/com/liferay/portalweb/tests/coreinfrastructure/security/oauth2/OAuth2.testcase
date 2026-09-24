@@ -1763,8 +1763,7 @@ definition {
 		task ("Given: Provide a signing key in JSON Web Key format") {
 			var jwk = FileUtil.read("test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies/jwk.txt");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
+			ApplicationsMenu.gotoRootPortlet(
 				panel = "Control Panel",
 				portlet = "System Settings");
 

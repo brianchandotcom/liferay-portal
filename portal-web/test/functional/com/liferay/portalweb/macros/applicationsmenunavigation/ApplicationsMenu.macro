@@ -52,6 +52,15 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro gotoRootPortlet(portlet = null, panel = null) {
+		ApplicationsMenu.gotoPanel(panel = ${panel});
+
+		Click(
+			key_portlet = ${portlet},
+			locator1 = "ApplicationsMenu#ROOT_PORTLET");
+	}
+
+	@summary = "Default summary"
 	macro gotoSite(site = null) {
 		ApplicationsMenu.openApplicationsMenu();
 

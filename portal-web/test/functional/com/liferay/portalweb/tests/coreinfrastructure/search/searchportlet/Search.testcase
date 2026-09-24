@@ -148,8 +148,7 @@ definition {
 
 		var templateKey = WidgetTemplates.getWidgetTemplateKey(templateID = ${templateID});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

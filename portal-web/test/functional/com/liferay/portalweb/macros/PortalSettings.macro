@@ -604,8 +604,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoPortalSettings() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 

@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROOT_PORTLET</td>
+	<td>//div[@data-qa-id='sideNavigation']//ul[@role='menubar']/li/a[@role='menuitem' and normalize-space()='${key_portlet}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDE_NAVIGATION</td>
 	<td>//div[@data-qa-id='sideNavigation']</td>
 	<td></td>

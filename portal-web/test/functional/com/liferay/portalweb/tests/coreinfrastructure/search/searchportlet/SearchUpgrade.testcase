@@ -22,8 +22,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -125,8 +124,7 @@ definition {
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property portal.version = "7.0.10.6";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 
@@ -211,8 +209,7 @@ definition {
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
+		ApplicationsMenu.gotoRootPortlet(
 			panel = "Control Panel",
 			portlet = "System Settings");
 

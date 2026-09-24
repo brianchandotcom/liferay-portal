@@ -262,10 +262,10 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			throw new WebsiteURLException(https);
 		}
 
-		_vault(
+		_store(
 			companyId, GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
 			unicodeProperties);
-		_vault(companyId, "googleMapsAPIKey", unicodeProperties);
+		_store(companyId, "googleMapsAPIKey", unicodeProperties);
 
 		String[] discardLegacyKeys = ParamUtil.getStringValues(
 			actionRequest, "discardLegacyKey");
@@ -418,13 +418,13 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		}
 	}
 
-	private void _vault(
+	private void _store(
 			long companyId, String key, UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		unicodeProperties.setProperty(
 			key,
-			_secretResolver.vault(
+			_secretResolver.store(
 				companyId, key, "company/" + companyId,
 				unicodeProperties.getProperty(key)));
 	}

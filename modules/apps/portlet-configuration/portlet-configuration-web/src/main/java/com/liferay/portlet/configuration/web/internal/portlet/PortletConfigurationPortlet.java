@@ -1015,7 +1015,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		portletPreferences.setValue(
 			"lfrFacebookApiKey",
-			_secretResolver.vault(
+			_secretResolver.store(
 				themeDisplay.getCompanyId(), "lfrFacebookApiKey",
 				StringBundler.concat(
 					"portlet/", themeDisplay.getPlid(), StringPool.SLASH,

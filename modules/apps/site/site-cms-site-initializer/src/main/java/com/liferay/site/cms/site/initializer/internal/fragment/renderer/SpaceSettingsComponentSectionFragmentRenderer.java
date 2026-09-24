@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,10 +62,7 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long groupId = InfoItemUtil.getGroupId(httpServletRequest);
-
-		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
-			groupId);
+		long depotEntryId = InfoItemUtil.getDepotEntryId(httpServletRequest);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -74,8 +70,8 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 
 		try {
 			_depotEntryModelResourcePermission.check(
-				themeDisplay.getPermissionChecker(),
-				depotEntry.getDepotEntryId(), ActionKeys.UPDATE);
+				themeDisplay.getPermissionChecker(), depotEntryId,
+				ActionKeys.UPDATE);
 		}
 		catch (PrincipalException principalException) {
 			if (_log.isWarnEnabled()) {
@@ -100,6 +96,8 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 				));
 		}
 
+		long groupId = InfoItemUtil.getGroupId(httpServletRequest);
+
 		Group group = _groupLocalService.getGroup(groupId);
 
 		return HashMapBuilder.<String, Object>put(
@@ -115,9 +113,6 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SpaceSettingsComponentSectionFragmentRenderer.class);
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.depot.model.DepotEntry)")
 	private ModelResourcePermission<DepotEntry>

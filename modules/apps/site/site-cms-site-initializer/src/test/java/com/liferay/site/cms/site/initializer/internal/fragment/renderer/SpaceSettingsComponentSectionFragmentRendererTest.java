@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -14,6 +13,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -54,9 +54,6 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_spaceSettingsComponentSectionFragmentRenderer,
-			"_depotEntryLocalService", _depotEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			_spaceSettingsComponentSectionFragmentRenderer,
 			"_depotEntryModelResourcePermission",
 			_depotEntryModelResourcePermission);
 		ReflectionTestUtil.setFieldValue(
@@ -74,14 +71,13 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 
 	@Test(expected = PrincipalException.class)
 	public void testGetPropsWhenUserDoesNotHavePermission() throws Exception {
-		_mockGetGroupDepotEntry();
-
 		Mockito.doThrow(
 			new PrincipalException()
 		).when(
 			_depotEntryModelResourcePermission
 		).check(
-			Mockito.any(), Mockito.anyLong(), Mockito.anyString()
+			Mockito.any(), Mockito.eq(_DEPOT_ENTRY_ID),
+			Mockito.eq(ActionKeys.UPDATE)
 		);
 
 		_getProps();
@@ -89,7 +85,13 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 
 	@Test
 	public void testGetPropsWhenUserHasPermission() throws Exception {
-		_mockGetGroupDepotEntry();
+		Mockito.doNothing(
+		).when(
+			_depotEntryModelResourcePermission
+		).check(
+			Mockito.any(), Mockito.eq(_DEPOT_ENTRY_ID),
+			Mockito.eq(ActionKeys.UPDATE)
+		);
 
 		Mockito.when(
 			_groupLocalService.getGroup(_GROUP_ID)
@@ -126,6 +128,12 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 		DepotEntry infoItemDepotEntry = Mockito.mock(DepotEntry.class);
 
 		Mockito.when(
+			infoItemDepotEntry.getDepotEntryId()
+		).thenReturn(
+			_DEPOT_ENTRY_ID
+		);
+
+		Mockito.when(
 			infoItemDepotEntry.getGroupId()
 		).thenReturn(
 			_GROUP_ID
@@ -158,32 +166,12 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 			null, mockHttpServletRequest);
 	}
 
-	private void _mockGetGroupDepotEntry() throws Exception {
-		Mockito.when(
-			_depotEntryLocalService.getGroupDepotEntry(_GROUP_ID)
-		).thenReturn(
-			_depotEntry
-		);
-
-		Mockito.when(
-			_depotEntry.getDepotEntryId()
-		).thenReturn(
-			_DEPOT_ENTRY_ID
-		);
-	}
-
 	private static final long _DEPOT_ENTRY_ID = RandomTestUtil.randomLong();
 
 	private static final String _EXTERNAL_REFERENCE_CODE =
 		RandomTestUtil.randomString();
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
-
-	@Mock
-	private DepotEntry _depotEntry;
-
-	@Mock
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Mock
 	private ModelResourcePermission<DepotEntry>

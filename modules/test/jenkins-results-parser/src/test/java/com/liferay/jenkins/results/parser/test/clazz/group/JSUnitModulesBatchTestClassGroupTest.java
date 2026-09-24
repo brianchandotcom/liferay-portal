@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.test.clazz.JSUnitJUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 
@@ -136,6 +137,35 @@ public class JSUnitModulesBatchTestClassGroupTest
 				"/src/content/main_view.test.tsx#", _MODULE_DIR_PATH,
 				"/src/content/side_view.test.tsx"),
 			_getTestClassGroup(jobProperties));
+	}
+
+	@Test
+	public void testIsTestClassFileReported() throws Exception {
+		_testIsTestClassFileReported(null, false);
+	}
+
+	@Test
+	public void testIsTestClassFileReportedWithTestFileExcludes()
+		throws Exception {
+
+		Properties jobProperties = new Properties();
+
+		jobProperties.setProperty(
+			"test.batch.test.file.excludes[js-unit]", _GLOB_EXCLUDES);
+
+		_testIsTestClassFileReported(jobProperties, true);
+	}
+
+	@Test
+	public void testIsTestClassFileReportedWithTestFileIncludes()
+		throws Exception {
+
+		Properties jobProperties = new Properties();
+
+		jobProperties.setProperty(
+			"test.batch.test.file.includes[js-unit]", _GLOB_INCLUDES);
+
+		_testIsTestClassFileReported(jobProperties, true);
 	}
 
 	@Test
@@ -308,6 +338,27 @@ public class JSUnitModulesBatchTestClassGroupTest
 		return BatchTestClassGroupTestUtil.newJSUnitModulesBatchTestClassGroup(
 			Collections.singletonList(_moduleDir), jobProperties, _jsUnitFiles,
 			_workingDirectory);
+	}
+
+	private void _testIsTestClassFileReported(
+		Properties jobProperties, boolean expectedTestClassFileReported) {
+
+		JSUnitModulesBatchTestClassGroup jsUnitModulesBatchTestClassGroup =
+			_newJSUnitModulesBatchTestClassGroup(jobProperties);
+
+		List<TestClass> testClasses =
+			jsUnitModulesBatchTestClassGroup.getTestClasses();
+
+		Assert.assertFalse(testClasses.isEmpty());
+
+		for (TestClass testClass : testClasses) {
+			JSUnitJUnitTestClass jsUnitJUnitTestClass =
+				(JSUnitJUnitTestClass)testClass;
+
+			testEquals(
+				expectedTestClassFileReported,
+				jsUnitJUnitTestClass.isTestClassFileReported());
+		}
 	}
 
 	private String

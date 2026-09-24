@@ -1,12 +1,4 @@
 {{- if $backup.enabled }}
-{{- $observedBackupDataPlanes := list -}}
-
-{{- range $dataPlane := list "blue" "green" -}}
-    {{- if hasKey $observedResources (printf "liferay-backup-instance-storage-%s" $dataPlane) -}}
-        {{- $observedBackupDataPlanes = append $observedBackupDataPlanes $dataPlane -}}
-    {{- end -}}
-{{- end }}
-
 {{- $anchorDates := dict "Friday" "2024-01-05" "Monday" "2024-01-01" "Saturday" "2024-01-06" "Sunday" "2024-01-07" "Thursday" "2024-01-04" "Tuesday" "2024-01-02" "Wednesday" "2024-01-03" -}}
 {{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
 {{- $isWeekly := eq ($backup.frequency | default "Daily") "Weekly" -}}
@@ -14,13 +6,18 @@
 {{- $anchorDate := $isWeekly | ternary (index $anchorDates ($backup.dayOfWeek | default "Sunday")) "2024-01-01" -}}
 {{- $backupRestoreIdentityName := printf "%s-backup-restore" $baseName -}}
 {{- $backupRetentionDuration := printf "P%dD" $backupRetentionDays -}}
-{{- $backupVaultName := printf "%s-vault" $baseName -}}
 
 {{- $backupRepeatingTimeInterval := printf "R/%sT%s:00+00:00/%s" $anchorDate ($backup.timeOfDay | default "05:00") ($isWeekly | ternary "P1W" "P1D") -}}
 
 {{- $backupScheduleHash := printf "%s|%s|%s" $backupRepeatingTimeInterval ($backup.timeZone | default "UTC") $backupRetentionDuration | sha256sum | trunc 6 -}}
 
 {{- $backupPolicyStorageName := printf "%s-storage-policy-%s" $backupVaultName $backupScheduleHash -}}
+
+{{- $backupInstanceDataPlanes := list $activeDataPlane -}}
+
+{{- if $demotedDataPlane -}}
+    {{- $backupInstanceDataPlanes = append $backupInstanceDataPlanes $demotedDataPlane -}}
+{{- end }}
 
 {{- $backupRestoreIdentityClientId := dig "liferay-backup-restore-identity" "resource" "status" "atProvider" "clientId" "" $observedResources -}}
 {{- $backupRestoreIdentityPrincipalId := dig "liferay-backup-restore-identity" "resource" "status" "atProvider" "principalId" "" $observedResources -}}
@@ -180,9 +177,9 @@ spec:
         name: iam
 ---
 {{- end }}
-{{- range $dataPlane := list "blue" "green" }}
+{{- range $dataPlane := $backupInstanceDataPlanes }}
 {{- $backupRoleId := dig (printf "liferay-backup-vault-storage-%s" $dataPlane) "resource" "status" "atProvider" "id" "" $observedResources }}
-{{- if and $backupRoleId (or (eq $dataPlane $activeDataPlane) (has $dataPlane $observedBackupDataPlanes)) }}
+{{- if $backupRoleId }}
 apiVersion: dataprotection.azure.m.upbound.io/v1beta1
 kind: BackupInstanceBlobStorage
 metadata:
@@ -191,7 +188,8 @@ metadata:
     labels:
         {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
-    name: {{ $backupVaultName }}-storage-instance-{{ $dataPlane }}
+        dataPlaneKey: {{ index $dataPlaneKeys $dataPlane }}
+    name: {{ index $dataPlaneNames (index $dataPlaneKeys $dataPlane) "backupInstance" }}
 spec:
     forProvider:
         backupPolicyIdRef:
@@ -207,7 +205,7 @@ spec:
                 dataPlane: {{ $dataPlane }}
         vaultIdRef:
             name: {{ $backupVaultName }}
-    managementPolicies: {{ $managementPolicies }}
+    managementPolicies: {{ (eq $dataPlane $demotedDataPlane) | ternary $demotedManagementPolicies $managementPolicies }}
 ---
 {{- end }}
 {{- end }}
@@ -384,8 +382,8 @@ spec:
     providerConfigRef:
         kind: ClusterProviderConfig
         name: iam
-{{- range $dataPlane := list "blue" "green" }}
-{{- if or (eq $dataPlane $activeDataPlane) (has $dataPlane $observedBackupDataPlanes) }}
+{{- range $dataPlane := $backupInstanceDataPlanes }}
+{{- if dig (printf "liferay-backup-vault-storage-%s" $dataPlane) "resource" "status" "atProvider" "id" "" $observedResources }}
 ---
 apiVersion: protection.crossplane.io/v1beta1
 kind: Usage

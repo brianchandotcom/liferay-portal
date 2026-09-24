@@ -17,7 +17,7 @@ Newly created PRs do not need this skill: the `pr` skill writes the same Results
 
 ### Pull Request
 
-`${ARGUMENTS}` carries a PR URL of the form `https://github.com/<target-org>/liferay-portal/pull/<number>`. When missing or malformed, abort and ask the user for the URL.
+`${ARGUMENTS}` carries a PR URL of the form `https://github.com/<target-org>/<repository>/pull/<number>`, where `<repository>` is `liferay-portal` or `liferay-portal-ee`. The webhook applies the status and label to a pull request in either. When missing or malformed, abort and ask the user for the URL.
 
 ### Results Summary
 

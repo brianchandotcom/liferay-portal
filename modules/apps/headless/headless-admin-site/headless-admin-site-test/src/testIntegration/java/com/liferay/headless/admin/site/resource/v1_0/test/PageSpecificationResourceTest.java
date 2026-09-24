@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -122,6 +123,8 @@ public class PageSpecificationResourceTest
 
 		_testDeleteSitePageSpecificationWithLockedLayout(serviceContext);
 		_testDeleteSitePageSpecificationWithSupportedPageTypes(serviceContext);
+		_testDeleteSitePageSpecificationWithUnsupportedLayoutType(
+			serviceContext);
 		_testDeleteSitePageSpecificationWithWidgetPage(serviceContext);
 		_testDeleteSitePageSpecificationWithWidgetPageTemplate(serviceContext);
 
@@ -419,6 +422,9 @@ public class PageSpecificationResourceTest
 			() -> pageSpecificationResource.patchSitePageSpecification(
 				testGroup.getExternalReferenceCode(), externalReferenceCode,
 				contentPageSpecification));
+
+		_testPatchSitePageSpecificationWithUnsupportedLayoutType(
+			serviceContext);
 	}
 
 	@Ignore
@@ -479,6 +485,7 @@ public class PageSpecificationResourceTest
 			serviceContext);
 		_testPutSitePageSpecificationWithInvalidPageExperiences(serviceContext);
 		_testPutSitePageSpecificationWithInvalidSettings(serviceContext);
+		_testPutSitePageSpecificationWithUnsupportedLayoutType(serviceContext);
 	}
 
 	@Override
@@ -1038,6 +1045,21 @@ public class PageSpecificationResourceTest
 			serviceContext);
 	}
 
+	private void _testDeleteSitePageSpecificationWithUnsupportedLayoutType(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = _addLayout(
+			LayoutConstants.TYPE_EMBEDDED, serviceContext);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
+			"Only content, widget, or asset display pages are supported",
+			() -> pageSpecificationResource.deleteSitePageSpecification(
+				testGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode()));
+	}
+
 	private void _testDeleteSitePageSpecificationWithUnsupportedSite()
 		throws Exception {
 
@@ -1440,6 +1462,39 @@ public class PageSpecificationResourceTest
 				widgetPageSpecification));
 	}
 
+	private void _testPatchSitePageSpecificationWithUnsupportedLayoutType(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = _addLayout(LayoutConstants.TYPE_URL, serviceContext);
+
+		LinkToURLPageSpecification linkToURLPageSpecification =
+			new LinkToURLPageSpecification();
+
+		linkToURLPageSpecification.setType(
+			PageSpecification.Type.LINK_TO_URL_PAGE_SPECIFICATION);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
+			"Only content, widget, or asset display pages are supported",
+			() -> pageSpecificationResource.patchSitePageSpecification(
+				testGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode(), linkToURLPageSpecification));
+
+		WidgetPageSpecification widgetPageSpecification =
+			new WidgetPageSpecification();
+
+		widgetPageSpecification.setType(
+			PageSpecification.Type.WIDGET_PAGE_SPECIFICATION);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
+			"Only content, widget, or asset display pages are supported",
+			() -> pageSpecificationResource.patchSitePageSpecification(
+				testGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode(), widgetPageSpecification));
+	}
+
 	private void _testPutSitePageSpecification(
 			Layout layout, String pageSpecificationExternalReferenceCode,
 			ServiceContext serviceContext)
@@ -1816,6 +1871,27 @@ public class PageSpecificationResourceTest
 		Assert.assertEquals(
 			scope.getExternalReferenceCode(),
 			draftLayout.getStyleBookEntryScopeERC());
+	}
+
+	private void _testPutSitePageSpecificationWithUnsupportedLayoutType(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = _addLayout(LayoutConstants.TYPE_URL, serviceContext);
+
+		WidgetPageSpecification widgetPageSpecification =
+			new WidgetPageSpecification();
+
+		widgetPageSpecification.setStatus(PageSpecification.Status.APPROVED);
+		widgetPageSpecification.setType(
+			PageSpecification.Type.WIDGET_PAGE_SPECIFICATION);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
+			"Only content, widget, or asset display pages are supported",
+			() -> pageSpecificationResource.putSitePageSpecification(
+				testGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode(), widgetPageSpecification));
 	}
 
 	private Layout _updateLayout(Layout layout, ServiceContext serviceContext)

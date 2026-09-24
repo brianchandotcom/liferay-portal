@@ -60,16 +60,8 @@ public class JSUnitModulesSegmentTestClassGroup
 	}
 
 	private boolean _hasTestFileGlobs() {
-		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
-
-		if (!(batchTestClassGroup instanceof
-				JSUnitModulesBatchTestClassGroup)) {
-
-			return false;
-		}
-
 		JSUnitModulesBatchTestClassGroup jsUnitModulesBatchTestClassGroup =
-			(JSUnitModulesBatchTestClassGroup)batchTestClassGroup;
+			(JSUnitModulesBatchTestClassGroup)getBatchTestClassGroup();
 
 		return jsUnitModulesBatchTestClassGroup.hasTestFileGlobs();
 	}

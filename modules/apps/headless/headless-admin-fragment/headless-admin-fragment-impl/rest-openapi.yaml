@@ -30,6 +30,23 @@ components:
             required:
                 -   fieldSets
             type: object
+        Dependency:
+            description:
+                A visibility condition on another fragment configuration field's value. The dependent field is shown only when the condition is met.
+            properties:
+                type:
+                    description:
+                        The comparison operator applied to the other field's value.
+                    enum: [equal, not-equal]
+                    type: string
+                value:
+                    description:
+                        The value the other field's value is compared with.
+                    type: string
+            required:
+                -   type
+                -   value
+            type: object
         DraftFragmentVersion:
             allOf:
                 -   $ref: "#/components/schemas/FragmentVersion"
@@ -44,6 +61,10 @@ components:
         Field:
             description:
                 A customizable field of a fragment configuration's field set.
+            discriminator:
+                mapping:
+                    itemSelector: "#/components/schemas/ItemSelectorField"
+                propertyName: type
             properties:
                 dataType:
                     description:
@@ -290,6 +311,59 @@ components:
                     enum: [Approved, Draft]
                     type: string
             type: object
+        ItemFragmentConfigurationFieldDefaultValue:
+            description:
+                The default value of an `itemSelector` fragment configuration field. It mirrors the shape of the corresponding fragment configuration field value of the headless admin site API.
+            properties:
+                value:
+                    $ref: ../../headless-admin-site/headless-admin-site-impl/rest-openapi.yaml#ItemValue
+                    description:
+                        A reference to the selected item. The item is referenced by external reference code, which survives promoting the fragment across environments. The value's `templateReference` is not stored: a fragment configuration cannot carry the template that renders the item.
+            type: object
+        ItemSelectorField:
+            allOf:
+                -   $ref: "#/components/schemas/Field"
+                -   properties:
+                        defaultValue:
+                            $ref: "#/components/schemas/ItemFragmentConfigurationFieldDefaultValue"
+                            description:
+                                The field's default value.
+                        typeOptions:
+                            $ref: "#/components/schemas/ItemSelectorTypeOptions"
+                            description:
+                                The field's type-specific options.
+            description:
+                An `itemSelector` field of a fragment configuration's field set.
+            type: object
+        ItemSelectorTypeOptions:
+            allOf:
+                -   $ref: "#/components/schemas/TypeOptions"
+                -   properties:
+                        className:
+                            description:
+                                The class name of the items that can be selected.
+                            type: string
+                        enableSelectTemplate:
+                            description:
+                                A flag that indicates whether a template can be selected for the item.
+                            type: boolean
+                        itemSubtype:
+                            description:
+                                The subtype of the items that can be selected.
+                            type: string
+                        itemType:
+                            description:
+                                The type of the items that can be selected.
+                            type: string
+                        mimeTypes:
+                            description:
+                                The MIME types of the files that can be selected.
+                            items:
+                                type: string
+                            type: array
+            description:
+                The type-specific options of an `itemSelector` fragment configuration field.
+            type: object
         ResourceFile:
             description:
                 A resource file of a fragment set.
@@ -381,6 +455,17 @@ components:
                     description:
                         The external reference code of the resource folder's parent resource folder, used to reference an existing parent. Takes precedence over `parentResourceFolder` when both are set.
                     type: string
+            type: object
+        TypeOptions:
+            description:
+                The type-specific options of a fragment configuration field.
+            properties:
+                dependency:
+                    additionalProperties:
+                        $ref: "#/components/schemas/Dependency"
+                    description:
+                        The field's visibility conditions, keyed by the name of the field each condition applies to.
+                    type: object
             type: object
 info:
     description:

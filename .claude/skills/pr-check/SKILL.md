@@ -86,7 +86,7 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Module Registration](validations/portal/module-registration.md)
 
-1. [Portlet Title](validations/portlet-title.md)
+1. [Portlet Title](validations/portal/portlet-title.md)
 
 1. [Service Registration](validations/service-registration.md)
 

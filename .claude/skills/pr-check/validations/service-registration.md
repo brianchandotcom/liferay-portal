@@ -18,7 +18,7 @@ Take the changed Java files from the diff:
 
 ```bash
 REPO_ROOT=$(git rev-parse --show-toplevel)
-MERGE_BASE=$(git merge-base HEAD master)
+MERGE_BASE=$(git merge-base HEAD "${BASE_BRANCH}")
 
 git diff --name-only "${MERGE_BASE}...HEAD" -- ':/*.java'
 ```
@@ -44,10 +44,16 @@ Collect the risky class names from the diff:
 
 An empty collection ends the scan.
 
-List every `@Reference` in the repository and keep those whose declared field type is exactly a collected class, never a substring match:
+List every `@Reference` in the build root of the file each class came from, and keep those whose declared field type is exactly a collected class, never a substring match. A class from a workspace can only be referenced inside that workspace, and a class from the rest of the repository cannot be referenced from a workspace, which compiles against released artifacts rather than this source. For a class from the rest of the repository:
 
 ```bash
-(cd "${REPO_ROOT}" && git grep --after-context=30 --fixed-strings '@Reference' -- ':/*.java')
+(cd "${REPO_ROOT}" && git grep --after-context=30 --fixed-strings '@Reference' -- ':/*.java' ':(exclude,glob)workspaces/*-workspace/**')
+```
+
+For a class from a workspace, with `<workspace>` as its directory under `workspaces`:
+
+```bash
+(cd "${REPO_ROOT}" && git grep --after-context=30 --fixed-strings '@Reference' -- ':(glob)workspaces/<workspace>/**/*.java')
 ```
 
 `git grep` searches from the current directory down, so run it from `${REPO_ROOT}` or the sweep silently narrows to a subtree.
@@ -84,4 +90,4 @@ Add one subitem per selected scan:
 
 ## Time Estimate
 
-~10-30 sec, mostly the `@Reference` sweep across the repository.
+~10-30 sec, mostly the `@Reference` sweep across the build root.

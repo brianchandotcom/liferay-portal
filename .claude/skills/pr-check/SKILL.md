@@ -19,8 +19,10 @@ These settings describe this repository. The `pr-check` skill of another reposit
 | **Base Branch** | `master` |
 | **Repository** | `liferay/liferay-portal` |
 | **Slices** | branch, portal, workspaces |
-| **Skipped Validations** | none |
+| **Skipped Validations** | Workspace Source Format |
 | **Rules Commit** | `HEAD` |
+
+Workspace Source Format is skipped here because Source Format already formats every changed file in this repository, workspace files included.
 
 `${BASE_BRANCH}` below stands for the base branch, and `${SOURCE_SHA}` for the rules commit, the commit this document and its validations were read from. A repository that fetches them from another supplies that commit.
 
@@ -80,7 +82,11 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Go Generate](validations/portal/go-generate.md)
 
+1. [Generated Workspace File](validations/workspaces/generated-file.md)
+
 1. [Source Format](validations/source-format.md)
+
+1. [Workspace Source Format](validations/workspaces/source-format.md)
 
 1. [Go Source Format](validations/portal/go-source-format.md)
 
@@ -108,7 +114,7 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Theme Build](validations/portal/theme-build.md)
 
-1. [Workspace Build](validations/workspace-build.md)
+1. [Workspace Compile](validations/workspaces/workspace-compile.md)
 
 1. [Poshi Syntax](validations/portal/poshi-syntax.md)
 
@@ -119,6 +125,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 1. [PQL Validation](validations/portal/pql-validation.md)
 
 1. [JavaScript Unit Tests](validations/portal/javascript-unit-test.md)
+
+1. [Workspace Unit Tests](validations/workspaces/workspace-unit-test.md)
 
 1. [Helm Unit Test Order](validations/portal/helm-unit-test-order.md)
 
@@ -149,7 +157,7 @@ A validation reports **`NOT VERIFIED`** when it ran and established nothing abou
 
 A `NOT VERIFIED` run does not autocommit, since a run that established nothing has produced nothing worth recording and the tree it would stage may hold a half finished setup. A `FAIL` run still autocommits where its **Autocommit** section says to, because a formatter's repairs are worth keeping even when an unfixable violation blocks the branch, and so does a `PASS` run. Tell the subagent this when you dispatch it, since its **Autocommit** section reads as unconditional on its own.
 
-Run workspace validations one workspace at a time. Each workspace build has its own Gradle daemon and heap and shares the Gradle cache with the others.
+Run workspace validations one workspace at a time. Each workspace build has its own Gradle daemon and heap and shares the Gradle cache with the others. Never pass `--offline` to a workspace build, since a cache miss under it prints as a dependency error that reads exactly like a compile failure.
 
 Run a validation that autocommits with **nothing else that writes to the working tree** in flight, since `git add --all` cannot tell its own repair from one another validation made seconds earlier and commits the wrong work under its title. A validation that only reads is safe alongside anything, provided it reads a commit it pinned at the start rather than the working tree or the index. A concurrent validation moves the tree when it writes and the index when it stages, so only a pinned commit holds still for the whole run. Whether a validation reads or writes can depend on the diff, since **Module Registration** only reports when its markers are all removals and builds when one is added, so treat it as a writer unless its own text rules the writing branch out for the diff at hand. Keep tree writers off each other too, since several share build output such as `modules/build/node`.
 

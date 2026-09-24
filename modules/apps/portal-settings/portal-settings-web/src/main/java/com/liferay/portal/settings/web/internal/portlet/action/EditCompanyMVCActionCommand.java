@@ -177,6 +177,17 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		throws Exception {
 	}
 
+	private void _store(
+			long companyId, String key, UnicodeProperties unicodeProperties)
+		throws Exception {
+
+		unicodeProperties.setProperty(
+			key,
+			_secretResolver.store(
+				companyId, key, "company/" + companyId,
+				unicodeProperties.getProperty(key)));
+	}
+
 	private void _updateCompany(ActionRequest actionRequest) throws Exception {
 		long companyId = _portal.getCompanyId(actionRequest);
 
@@ -416,17 +427,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 				"you-cannot-remove-a-language-that-is-the-current-default-" +
 					"language");
 		}
-	}
-
-	private void _store(
-			long companyId, String key, UnicodeProperties unicodeProperties)
-		throws Exception {
-
-		unicodeProperties.setProperty(
-			key,
-			_secretResolver.store(
-				companyId, key, "company/" + companyId,
-				unicodeProperties.getProperty(key)));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

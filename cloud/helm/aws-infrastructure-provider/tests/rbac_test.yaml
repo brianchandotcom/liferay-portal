@@ -14,20 +14,8 @@ tests:
         set:
             crossplaneNamespace: custom-system
     -   asserts:
-            -   contains:
-                    content:
-                        apiGroups: ["elasticsearch.k8s.elastic.co"]
-                        resources: ["elasticsearches"]
-                        verbs: ["get", "list", "patch", "watch"]
-                    path: rules
-                documentIndex: 0
-        it: Grants required permissions on ElasticSearch resources
-    -   asserts:
             -   hasDocuments:
                     count: 2
-            -   documentIndex: 0
-                isKind:
-                    of: ClusterRole
             -   documentIndex: 0
                 equal:
                     path: metadata.name
@@ -51,9 +39,9 @@ tests:
                         -   apiGroups: ["rbac.authorization.k8s.io"]
                             resources: ["rolebindings"]
                             verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
-            -   documentIndex: 1
+            -   documentIndex: 0
                 isKind:
-                    of: ClusterRoleBinding
+                    of: ClusterRole
             -   documentIndex: 1
                 equal:
                     path: roleRef.name
@@ -62,4 +50,7 @@ tests:
                 equal:
                     path: subjects[0].name
                     value: provider-kubernetes
+            -   documentIndex: 1
+                isKind:
+                    of: ClusterRoleBinding
         it: Renders only the provider-kubernetes role and binding, leaving the AWS providers to the Crossplane RBAC manager

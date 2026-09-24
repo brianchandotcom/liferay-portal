@@ -337,7 +337,6 @@ spec:
                                             name: backup-restore-service-account
                                             namespace: {{ $namespace }}
                             managementPolicies: {{ $managementPolicies }}
-                        ---
                         {{- $backupRestoreRole := dict -}}
 
                         {{- if .observed.resources -}}
@@ -357,6 +356,8 @@ spec:
                                 {{- end -}}
                             {{- end -}}
                         {{- end }}
+                        {{- if $backupRestoreRoleArn }}
+                        ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
                         metadata:
@@ -385,6 +386,7 @@ spec:
                                         name: backup-restore-service-account
                                         namespace: {{ $namespace }}
                             managementPolicies: {{ $managementPolicies }}
+                        {{- end }}
                         ---
                         apiVersion: backup.aws.m.upbound.io/v1beta1
                         kind: Plan
@@ -483,8 +485,6 @@ spec:
                             name: {{ $baseName }}-backup-restore-role
                         spec:
                             forProvider:
-                                path: {{ $iamPath }}
-                                permissionsBoundary: {{ $iamBoundaryArn }}
                                 assumeRolePolicy: |
                                     {
                                         "Statement": [
@@ -504,6 +504,8 @@ spec:
                                         ],
                                         "Version": "2012-10-17"
                                     }
+                                path: {{ $iamPath }}
+                                permissionsBoundary: {{ $iamBoundaryArn }}
                             managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: iam.aws.m.upbound.io/v1beta1
@@ -520,8 +522,6 @@ spec:
                             name: {{ $baseName }}-backup-service-role
                         spec:
                             forProvider:
-                                path: {{ $iamPath }}
-                                permissionsBoundary: {{ $iamBoundaryArn }}
                                 assumeRolePolicy: |
                                     {
                                         "Statement": [
@@ -540,6 +540,8 @@ spec:
                                     -   arn:{{ $partition }}:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForRestores
                                     -   arn:{{ $partition }}:iam::aws:policy/AWSBackupServiceRolePolicyForS3Backup
                                     -   arn:{{ $partition }}:iam::aws:policy/AWSBackupServiceRolePolicyForS3Restore
+                                path: {{ $iamPath }}
+                                permissionsBoundary: {{ $iamBoundaryArn }}
                             managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: iam.aws.m.upbound.io/v1beta1
@@ -1084,8 +1086,6 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                path: {{ $iamPath }}
-                                permissionsBoundary: {{ $iamBoundaryArn }}
                                 assumeRolePolicy: |
                                     {
                                         "Statement": [
@@ -1105,6 +1105,8 @@ spec:
                                         ],
                                         "Version": "2012-10-17"
                                     }
+                                path: {{ $iamPath }}
+                                permissionsBoundary: {{ $iamBoundaryArn }}
                             managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: iam.aws.m.upbound.io/v1beta1
@@ -1134,7 +1136,6 @@ spec:
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
                             managementPolicies: {{ $managementPolicies }}
-                        ---
                         {{- $liferayRole := dict -}}
 
                         {{- if .observed.resources -}}
@@ -1154,6 +1155,8 @@ spec:
                                 {{- end -}}
                             {{- end -}}
                         {{- end }}
+                        {{- if $liferayRoleArn }}
+                        ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
                         metadata:
@@ -1182,6 +1185,7 @@ spec:
                                         name: liferay-default
                                         namespace: {{ $namespace }}
                             managementPolicies: {{ $managementPolicies }}
+                        {{- end }}
 
                         {{- $searchName := printf "%.21s-search" $baseName -}}
                         {{- $searchSpec := $xr.spec.search.opensearch }}
@@ -1501,7 +1505,6 @@ spec:
                         {{- end }}
                         ---
                         apiVersion: meta.gotemplating.fn.crossplane.io/v1alpha1
-                        kind: Context
                         data:
                             apiextensions.crossplane.io/environment:
                                 apiVersion: internal.crossplane.io/v1alpha1
@@ -1510,6 +1513,7 @@ spec:
                                     EnvironmentId: {{ $environmentId | quote }}
                                     ProjectId: {{ $projectId | quote }}
                                 kind: Environment
+                        kind: Context
                         `}}
                 kind: GoTemplate
                 source: Inline

@@ -85,18 +85,24 @@ data "aws_iam_policy_document" "crossplane_data_cloudwatchlogs" {
 		actions=[
 			"logs:CreateLogGroup",
 			"logs:DeleteLogGroup",
-			"logs:DeleteResourcePolicy",
 			"logs:DeleteRetentionPolicy",
 			"logs:DescribeLogGroups",
-			"logs:DescribeResourcePolicies",
 			"logs:ListTagsForResource",
-			"logs:PutResourcePolicy",
 			"logs:PutRetentionPolicy",
 			"logs:TagResource",
 			"logs:UntagResource",
 		]
 		effect="Allow"
 		resources=["arn:${local.partition}:logs:${var.region}:${local.account_id}:log-group:*"]
+	}
+	statement {
+		actions=[
+			"logs:DeleteResourcePolicy",
+			"logs:DescribeResourcePolicies",
+			"logs:PutResourcePolicy",
+		]
+		effect="Allow"
+		resources=["*"]
 	}
 }
 data "aws_iam_policy_document" "crossplane_data_ec2" {
@@ -108,6 +114,7 @@ data "aws_iam_policy_document" "crossplane_data_ec2" {
 			"ec2:CreateTags",
 			"ec2:DeleteNetworkInterface",
 			"ec2:DeleteSecurityGroup",
+			"ec2:DeleteTags",
 			"ec2:DescribeAvailabilityZones",
 			"ec2:DescribeNetworkInterfaces",
 			"ec2:DescribeSecurityGroupRules",
@@ -162,15 +169,27 @@ data "aws_iam_policy_document" "crossplane_data_opensearch" {
 			"es:DescribeDomainNodes",
 			"es:ESHttpGet",
 			"es:ESHttpPut",
+			"es:GetUpgradeStatus",
 			"es:ListDomainNames",
 			"es:ListTags",
 			"es:RemoveTags",
 			"es:UpdateDomainConfig",
+			"es:UpgradeDomain",
 			"kms:CreateGrant",
 			"kms:DescribeKey",
 		]
 		effect="Allow"
 		resources=["*"]
+	}
+	statement {
+		actions=["iam:CreateServiceLinkedRole"]
+		condition {
+			test="StringEquals"
+			values=["opensearchservice.amazonaws.com"]
+			variable="iam:AWSServiceName"
+		}
+		effect="Allow"
+		resources=["arn:${local.partition}:iam::${local.account_id}:role/aws-service-role/opensearchservice.amazonaws.com/*"]
 	}
 }
 data "aws_iam_policy_document" "crossplane_data_rds" {
@@ -188,6 +207,7 @@ data "aws_iam_policy_document" "crossplane_data_rds" {
 			"rds:ListTagsForResource",
 			"rds:ModifyDBInstance",
 			"rds:ModifyDBSubnetGroup",
+			"rds:RemoveTagsFromResource",
 			"rds:RestoreDBInstanceFromDBSnapshot",
 		]
 		effect="Allow"
@@ -202,6 +222,16 @@ data "aws_iam_policy_document" "crossplane_data_rds" {
 		]
 		effect="Allow"
 		resources=["*"]
+	}
+	statement {
+		actions=["iam:CreateServiceLinkedRole"]
+		condition {
+			test="StringEquals"
+			values=["rds.amazonaws.com"]
+			variable="iam:AWSServiceName"
+		}
+		effect="Allow"
+		resources=["arn:${local.partition}:iam::${local.account_id}:role/aws-service-role/rds.amazonaws.com/*"]
 	}
 }
 data "aws_iam_policy_document" "crossplane_data_s3" {
@@ -228,6 +258,7 @@ data "aws_iam_policy_document" "crossplane_data_s3" {
 			"s3:GetReplicationConfiguration",
 			"s3:ListBucket",
 			"s3:ListBucketMultipartUploads",
+			"s3:ListBucketVersions",
 			"s3:PutBucketAcl",
 			"s3:PutBucketCORS",
 			"s3:PutBucketOwnershipControls",
@@ -245,6 +276,7 @@ data "aws_iam_policy_document" "crossplane_data_s3" {
 	statement {
 		actions=[
 			"s3:DeleteObject",
+			"s3:DeleteObjectVersion",
 			"s3:GetObject",
 			"s3:PutObject",
 		]
@@ -256,6 +288,7 @@ data "aws_iam_policy_document" "crossplane_iam" {
 	statement {
 		actions=[
 			"iam:GetAccessKeyLastUsed",
+			"iam:GetLoginProfile",
 			"iam:GetPolicy",
 			"iam:GetPolicyVersion",
 			"iam:GetRole",
@@ -266,9 +299,14 @@ data "aws_iam_policy_document" "crossplane_iam" {
 			"iam:ListAttachedUserPolicies",
 			"iam:ListGroupsForUser",
 			"iam:ListInstanceProfilesForRole",
+			"iam:ListMFADevices",
 			"iam:ListPolicyVersions",
 			"iam:ListRolePolicies",
+			"iam:ListSSHPublicKeys",
+			"iam:ListServiceSpecificCredentials",
+			"iam:ListSigningCertificates",
 			"iam:ListUserPolicies",
+			"iam:ListVirtualMFADevices",
 		]
 		effect="Allow"
 		resources=["*"]
@@ -299,10 +337,12 @@ data "aws_iam_policy_document" "crossplane_iam" {
 		actions=[
 			"iam:CreateAccessKey",
 			"iam:DeleteAccessKey",
+			"iam:DeleteLoginProfile",
 			"iam:DeleteRole",
 			"iam:DeleteUser",
 			"iam:TagRole",
 			"iam:TagUser",
+			"iam:UntagRole",
 			"iam:UntagUser",
 			"iam:UpdateAccessKey",
 			"iam:UpdateAssumeRolePolicy",
@@ -321,6 +361,7 @@ data "aws_iam_policy_document" "crossplane_iam" {
 			"iam:DeletePolicy",
 			"iam:DeletePolicyVersion",
 			"iam:TagPolicy",
+			"iam:UntagPolicy",
 		]
 		effect="Allow"
 		resources=["arn:${local.partition}:iam::${local.account_id}:policy${local.crossplane_iam_path}*"]

@@ -136,3 +136,11 @@ tests:
                     path: spec.serviceAccountTemplate.metadata.name
                     value: crossplane-data
         it: Runs only the IAM provider as the crossplane-iam service account and every other provider as crossplane-data
+    -   asserts:
+            -   equal:
+                    path: metadata.annotations["argocd.argoproj.io/sync-options"]
+                    value: SkipDryRunOnMissingResource=true
+            -   equal:
+                    path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+                    value: "-90"
+        it: Skips the dry run until the Crossplane CRDs exist, one wave ahead of the providers

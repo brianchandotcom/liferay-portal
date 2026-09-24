@@ -245,6 +245,10 @@ run "should_fence_crossplane_iam_with_a_permissions_boundary" {
 		condition=alltrue([for statement in data.aws_iam_policy_document.crossplane_iam.statement : !anytrue([for action in statement.actions : strcontains(action, "PermissionsBoundary")])])
 		error_message="crossplane-iam must not be able to remove or replace a permissions boundary"
 	}
+	assert {
+		condition=contains(data.aws_iam_policy_document.crossplane_iam.statement[2].actions, "iam:UntagRole") && contains(data.aws_iam_policy_document.crossplane_iam.statement[3].actions, "iam:UntagPolicy")
+		error_message="crossplane-iam must be able to remove the tags it applies to managed roles and policies"
+	}
 	command=plan
 	override_resource {
 		override_during=plan
@@ -262,6 +266,18 @@ run "should_grant_the_crossplane_roles_their_provider_permissions" {
 	assert {
 		condition=aws_iam_role_policy.crossplane_iam.name == "iam"
 		error_message="The crossplane-iam role must carry the IAM provider policy"
+	}
+	assert {
+		condition=alltrue([for requirement in [{actions=["ec2:DeleteTags"], document=data.aws_iam_policy_document.crossplane_data_ec2}, {actions=["es:GetUpgradeStatus", "es:UpgradeDomain"], document=data.aws_iam_policy_document.crossplane_data_opensearch}, {actions=["rds:RemoveTagsFromResource"], document=data.aws_iam_policy_document.crossplane_data_rds}, {actions=["s3:DeleteObjectVersion", "s3:ListBucketVersions"], document=data.aws_iam_policy_document.crossplane_data_s3}] : length(setsubtract(requirement.actions, flatten([for statement in requirement.document.statement : statement.actions]))) == 0])
+		error_message="crossplane-data must be able to remove tags, upgrade search engines, and empty versioned buckets"
+	}
+	assert {
+		condition=join(",", one([for statement in data.aws_iam_policy_document.crossplane_data_cloudwatchlogs.statement : statement if contains(statement.actions, "logs:PutResourcePolicy")]).resources) == "*"
+		error_message="The CloudWatch Logs resource policy actions take no resource type, so they must be granted on all resources"
+	}
+	assert {
+		condition=alltrue([for document in [data.aws_iam_policy_document.crossplane_data_opensearch, data.aws_iam_policy_document.crossplane_data_rds] : alltrue([for statement in document.statement : !contains(statement.actions, "iam:CreateServiceLinkedRole") || (one(statement.condition).variable == "iam:AWSServiceName" && alltrue([for resource in statement.resources : strcontains(resource, ":role/aws-service-role/${one(one(statement.condition).values)}/")]))])])
+		error_message="crossplane-data may only create the service-linked role of the service it manages"
 	}
 	command=plan
 }

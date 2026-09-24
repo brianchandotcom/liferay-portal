@@ -10,14 +10,6 @@ rules:
         verbs:
             -   get
             -   list
-    -   apiGroups: [""]
-        resourceNames: ["managed-service-details"]
-        resources: ["secrets"]
-        verbs:
-            -   create
-            -   get
-            -   patch
-            -   update
     -   apiGroups: ["apps"]
         resources: ["statefulsets"]
         verbs:

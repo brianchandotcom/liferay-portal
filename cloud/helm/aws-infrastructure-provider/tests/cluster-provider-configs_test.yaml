@@ -12,6 +12,12 @@ tests:
                     path: apiVersion
                     value: aws.m.upbound.io/v1beta1
             -   equal:
+                    path: metadata.annotations["argocd.argoproj.io/sync-options"]
+                    value: SkipDryRunOnMissingResource=true
+            -   equal:
+                    path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+                    value: "-70"
+            -   equal:
                     path: metadata.name
                     value: default
             -   equal:

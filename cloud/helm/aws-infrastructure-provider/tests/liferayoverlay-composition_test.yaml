@@ -1,0 +1,83 @@
+release:
+    name: my-release
+    namespace: my-namespace
+suite: LiferayOverlay Composition
+templates:
+    -   templates/liferayoverlay-composition.yaml
+tests:
+    -   asserts:
+            -   equal:
+                    path: spec.pipeline[0]
+                    value:
+                        functionRef:
+                            name: function-environment-configs
+                        input:
+                            apiVersion: environmentconfigs.fn.crossplane.io/v1beta1
+                            kind: Input
+                            spec:
+                                environmentConfigs:
+                                    -   ref:
+                                            name: environment-config
+                                        type: Reference
+                        step: environment-configs
+        documentSelector:
+            path: kind
+            value: Composition
+        it: Loads the environment config ahead of templating
+    -   asserts:
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: 'kind: Policy\n(?:.*\n)*? +path: \{\{ \$iamPath \}\}\n'
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: 'kind: User\n(?:.*\n)*? +path: \{\{ \$iamPath \}\}\n +permissionsBoundary: \{\{ \$iamBoundaryArn \}\}\n'
+            -   notMatchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: 'arn:aws:'
+        documentSelector:
+            path: kind
+            value: Composition
+        it: Places the overlay uploader and its policy under the Crossplane IAM path and boundary in the deployment partition
+    -   asserts:
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: 'kind: User\n(?:.*\n)*? +permissionsBoundary: \{\{ \$iamBoundaryArn \}\}\n +managementPolicies: \{\{ \$managementPolicies \}\}\n'
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: 'kind: UserPolicyAttachment\n(?:.*\n)*? +managementPolicies: \{\{ \$managementPolicies \}\}\n---\n'
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: 'kind: AccessKey\n(?:.*\n)*? +managementPolicies: \{\{ \$managementPolicies \}\}\n +writeConnectionSecretToRef:\n'
+        documentSelector:
+            path: kind
+            value: Composition
+        it: Protects the overlay uploader, its policy attachment, and its access key when orphaning on delete
+    -   asserts:
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: '\$env := index \.context "apiextensions\.crossplane\.io/environment"'
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: '\$region := \$env\.region'
+            -   notMatchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: 'xr\.spec\.region'
+        documentSelector:
+            path: kind
+            value: Composition
+        it: Reads the deployment facts from the environment config
+    -   asserts:
+            -   equal:
+                    path: spec.pipeline[-2].input.addTags
+                    value:
+                        -   fromFieldPath: spec.commonTags
+                            type: FromCompositeFieldPath
+                        -   fromFieldPath: defaultTags
+                            type: FromEnvironmentFieldPath
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: 'apiVersion: meta\.gotemplating\.fn\.crossplane\.io/v1alpha1\ndata:\n +apiextensions\.crossplane\.io/environment:\n +apiVersion: internal\.crossplane\.io/v1alpha1\n +defaultTags:\n +DeploymentName: \{\{ \$deploymentName \| quote \}\}\n +ProjectId: \{\{ \$projectId \| quote \}\}\n +kind: Environment\nkind: Context\n'
+        documentSelector:
+            path: kind
+            value: Composition
+        it: Tags every composed resource with the environment's common tags and the identifier tags derived in the composition

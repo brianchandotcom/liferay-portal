@@ -261,6 +261,7 @@ spec:
                                 forceDestroy: {{ $forceDestroy }}
                                 path: {{ $iamPath }}
                                 permissionsBoundary: {{ $iamBoundaryArn }}
+                            managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: iam.aws.m.upbound.io/v1beta1
                         kind: UserPolicyAttachment
@@ -278,6 +279,7 @@ spec:
                                 userSelector:
                                     matchLabels:
                                         aws.liferay.com/username: {{ $overlayBucketName }}-ci-uploader
+                            managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: iam.aws.m.upbound.io/v1beta1
                         kind: AccessKey
@@ -291,11 +293,11 @@ spec:
                                 userSelector:
                                     matchLabels:
                                         aws.liferay.com/username: {{ $overlayBucketName }}-ci-uploader
+                            managementPolicies: {{ $managementPolicies }}
                             writeConnectionSecretToRef:
                                 name: {{ $overlayBucketName }}-ci-uploader-access-key
                         ---
                         apiVersion: meta.gotemplating.fn.crossplane.io/v1alpha1
-                        kind: Context
                         data:
                             apiextensions.crossplane.io/environment:
                                 apiVersion: internal.crossplane.io/v1alpha1
@@ -303,6 +305,7 @@ spec:
                                     DeploymentName: {{ $deploymentName | quote }}
                                     ProjectId: {{ $projectId | quote }}
                                 kind: Environment
+                        kind: Context
                         `}}
                 kind: GoTemplate
                 source: Inline

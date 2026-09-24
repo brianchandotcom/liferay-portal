@@ -119,5 +119,5 @@ tests:
             -   documentIndex: 7
                 equal:
                     path: spec.package
-                    value: xpkg.upbound.io/crossplane-contrib/function-tag-manager:v0.6.0
+                    value: xpkg.upbound.io/crossplane-contrib/function-tag-manager:v0.8.2
         it: Renders the default functions with hardened runtime configs

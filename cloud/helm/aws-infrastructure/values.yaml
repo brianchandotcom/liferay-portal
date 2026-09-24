@@ -11,18 +11,16 @@ backup:
     vaultTags: {}
 cmk:
     enabled: false
+commonTags: {}
 database:
     autoMinorVersionUpgrade: true
     databaseInsightsMode: standard
-    deletionProtection: true
-    engine: postgres
     engineVersion: "16.11"
     instanceClass: db.t3.medium
     iops: 12000
     multiAz: false
     storageGB: 20
     storageThroughput: 500
-    username: liferay_database_admin
 enabled: true
 endpoints: {}
 forceDestroy: false
@@ -70,7 +68,6 @@ search:
         engineVersion: OpenSearch_2.15
         instanceCount: 2
         instanceType: t3.small.search
-        username: liferay_search_admin
         volumeSizeGB: 20
 storage:
     tags: {}

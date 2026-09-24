@@ -34,13 +34,10 @@ spec:
                                     type: boolean
                                 projectId:
                                     type: string
-                                region:
-                                    type: string
                             required:
                                 -   forceDestroy
                                 -   orphanOnDelete
                                 -   projectId
-                                -   region
                             type: object
                         status:
                             properties:
@@ -64,22 +61,36 @@ spec:
     mode: Pipeline
     pipeline:
         -   functionRef:
+                name: function-environment-configs
+            input:
+                apiVersion: environmentconfigs.fn.crossplane.io/v1beta1
+                kind: Input
+                spec:
+                    environmentConfigs:
+                        -   ref:
+                                name: environment-config
+                            type: Reference
+            step: environment-configs
+        -   functionRef:
                 name: function-go-templating
             input:
                 apiVersion: template.fn.crossplane.io/v1beta1
                 inline:
                     template: |
                         {{`
-                        {{- $accountId := `}}{{ .Values.aws.accountId | quote }}{{` -}}
-                        {{- $deploymentName := `}}{{ .Values.deploymentName | quote }}{{` -}}
-
+                        {{- $env := index .context "apiextensions.crossplane.io/environment" -}}
                         {{- $xr := .observed.composite.resource -}}
 
+                        {{- $accountId := $env.accountId -}}
+                        {{- $deploymentName := $env.deploymentName -}}
                         {{- $forceDestroy := $xr.spec.forceDestroy -}}
+                        {{- $iamBoundaryArn := $env.crossplaneIamBoundaryArn -}}
+                        {{- $iamPath := $env.crossplaneIamPath -}}
                         {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
                         {{- $namespace := $xr.metadata.namespace -}}
+                        {{- $partition := $env.partition -}}
                         {{- $projectId := $xr.spec.projectId -}}
-                        {{- $region := $xr.spec.region -}}
+                        {{- $region := $env.region -}}
 
                         {{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName (printf "%.18s-%s" $projectId (printf "%s-%s-%s" $accountId $deploymentName $projectId | sha256sum | trunc 6)) -}}
                         ---
@@ -194,6 +205,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
+                                path: {{ $iamPath }}
                                 policy: |
                                     {
                                         "Statement": [
@@ -203,7 +215,7 @@ spec:
                                                 ],
                                                 "Effect": "Allow",
                                                 "Resource": [
-                                                    "arn:aws:s3:::{{ $overlayBucketName }}"
+                                                    "arn:{{ $partition }}:s3:::{{ $overlayBucketName }}"
                                                 ],
                                                 "Sid": "AllowListBucket"
                                             },
@@ -213,7 +225,7 @@ spec:
                                                 ],
                                                 "Effect": "Allow",
                                                 "Resource": [
-                                                    "arn:aws:s3:::{{ $overlayBucketName }}/*"
+                                                    "arn:{{ $partition }}:s3:::{{ $overlayBucketName }}/*"
                                                 ],
                                                 "Sid": "AllowPutBucket"
                                             },
@@ -224,8 +236,8 @@ spec:
                                                 ],
                                                 "Effect": "Deny",
                                                 "Resource": [
-                                                    "arn:aws:s3:::{{ $overlayBucketName }}",
-                                                    "arn:aws:s3:::{{ $overlayBucketName }}/*"
+                                                    "arn:{{ $partition }}:s3:::{{ $overlayBucketName }}",
+                                                    "arn:{{ $partition }}:s3:::{{ $overlayBucketName }}/*"
                                                 ],
                                                 "Sid": "DenyDeleteBucket"
                                             }
@@ -247,6 +259,8 @@ spec:
                         spec:
                             forProvider:
                                 forceDestroy: {{ $forceDestroy }}
+                                path: {{ $iamPath }}
+                                permissionsBoundary: {{ $iamBoundaryArn }}
                         ---
                         apiVersion: iam.aws.m.upbound.io/v1beta1
                         kind: UserPolicyAttachment
@@ -279,6 +293,16 @@ spec:
                                         aws.liferay.com/username: {{ $overlayBucketName }}-ci-uploader
                             writeConnectionSecretToRef:
                                 name: {{ $overlayBucketName }}-ci-uploader-access-key
+                        ---
+                        apiVersion: meta.gotemplating.fn.crossplane.io/v1alpha1
+                        kind: Context
+                        data:
+                            apiextensions.crossplane.io/environment:
+                                apiVersion: internal.crossplane.io/v1alpha1
+                                defaultTags:
+                                    DeploymentName: {{ $deploymentName | quote }}
+                                    ProjectId: {{ $projectId | quote }}
+                                kind: Environment
                         `}}
                 kind: GoTemplate
                 source: Inline
@@ -289,9 +313,8 @@ spec:
                 addTags:
                     -   fromFieldPath: spec.commonTags
                         type: FromCompositeFieldPath
-                    -   tags:
-                            DeploymentName: {{ .Values.deploymentName | quote }}
-                        type: FromValue
+                    -   fromFieldPath: defaultTags
+                        type: FromEnvironmentFieldPath
                 apiVersion: tag-manager.fn.crossplane.io/v1beta1
                 kind: ManagedTags
             step: apply-default-tags

@@ -420,9 +420,6 @@ data "aws_iam_policy_document" "keda" {
 		resources=["arn:${local.partition}:aps:${var.region}:${local.account_id}:workspace/*"]
 	}
 }
-data "aws_iam_role" "liferay" {
-	name="${var.deployment_name}-irsa"
-}
 data "aws_partition" "current" {
 }
 data "aws_subnet" "cluster" {

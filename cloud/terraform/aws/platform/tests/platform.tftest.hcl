@@ -57,12 +57,6 @@ override_data {
 	}
 }
 override_data {
-	target=data.aws_iam_role.liferay
-	values={
-		name="liferay-test-irsa"
-	}
-}
-override_data {
 	target=data.aws_partition.current
 	values={
 		partition="aws"
@@ -85,7 +79,7 @@ override_module {
 }
 run "should_assemble_the_deployment_context" {
 	assert {
-		condition=join(",", keys(local.deployment_context)) == "accountId,clusterSecurityGroupId,clusterSubnetIds,crossplaneDataRoleArn,crossplaneIamBoundaryArn,crossplaneIamPath,crossplaneIamRoleArn,deploymentName,liferayServiceAccountRoleName,oidcIssuerUrl,partition,region,vpcId"
+		condition=join(",", keys(local.deployment_context)) == "accountId,clusterSecurityGroupId,clusterSubnetIds,crossplaneDataRoleArn,crossplaneIamBoundaryArn,crossplaneIamPath,crossplaneIamRoleArn,deploymentName,oidcIssuerUrl,partition,region,vpcId"
 		error_message="The deployment context must carry exactly the keys the infrastructure provider consumes"
 	}
 	assert {
@@ -111,10 +105,6 @@ run "should_assemble_the_deployment_context" {
 	assert {
 		condition=local.deployment_context.crossplaneIamBoundaryArn == aws_iam_policy.crossplane_iam_boundary.arn
 		error_message="The deployment context must carry the permissions boundary the composition attaches to its principals"
-	}
-	assert {
-		condition=local.deployment_context.liferayServiceAccountRoleName == "liferay-test-irsa"
-		error_message="The deployment context must carry the Liferay service account role name"
 	}
 	assert {
 		condition=local.deployment_context.oidcIssuerUrl == "https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"

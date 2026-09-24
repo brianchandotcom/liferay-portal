@@ -1,4 +1,18 @@
-aws: {}
 crossplaneNamespace: crossplane-system
+deploymentContext:
+    accountId: ""
+    clusterSecurityGroupId: ""
+    clusterSubnetIds: ""
+    crossplaneDataRoleArn: ""
+    crossplaneIamBoundaryArn: ""
+    crossplaneIamPath: ""
+    crossplaneIamRoleArn: ""
+    deploymentName: ""
+    oidcIssuerUrl: ""
+    partition: ""
+    region: ""
+    vpcId: ""
 liferay-subchart-backup-restore:
+    enabled: true
+providers:
     enabled: true

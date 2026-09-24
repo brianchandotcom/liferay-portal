@@ -1,0 +1,46 @@
+release:
+    name: my-release
+    namespace: crossplane-system
+suite: Providers
+templates:
+    -   templates/providers.yaml
+tests:
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: Omits the providers when they are disabled
+        set:
+            providers:
+                enabled: false
+    -   asserts:
+            -   hasDocuments:
+                    count: 9
+            -   documentIndex: 0
+                equal:
+                    path: spec.package
+                    value: xpkg.upbound.io/upbound/provider-aws-backup:v2.3.0
+            -   documentIndex: 0
+                equal:
+                    path: spec.runtimeConfigRef.name
+                    value: aws-backup-config
+            -   documentIndex: 0
+                equal:
+                    path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+                    value: "-80"
+            -   documentIndex: 1
+                equal:
+                    path: spec.package
+                    value: xpkg.upbound.io/upbound/provider-aws-cloudwatchlogs:v2.3.0
+            -   documentIndex: 4
+                equal:
+                    path: spec.package
+                    value: xpkg.upbound.io/upbound/provider-aws-kms:v2.3.0
+            -   documentIndex: 8
+                equal:
+                    path: metadata.name
+                    value: provider-family-aws
+            -   documentIndex: 8
+                equal:
+                    path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+                    value: "-85"
+        it: Renders the AWS provider family by default, with the family provider one wave ahead

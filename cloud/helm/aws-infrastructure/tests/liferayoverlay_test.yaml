@@ -17,18 +17,6 @@ tests:
             overlayBucket.enabled: true
     -   asserts:
             -   equal:
-                    path: spec.commonTags.ProjectId
-                    value: proj-456
-            -   equal:
-                    path: spec.commonTags.team
-                    value: platform
-        it: Merges the project identifier with the overlay common tags
-        set:
-            overlayBucket.commonTags.team: platform
-            overlayBucket.enabled: true
-            projectId: proj-456
-    -   asserts:
-            -   equal:
                     path: apiVersion
                     value: aws.liferay.com/v1alpha1
             -   equal:
@@ -52,12 +40,21 @@ tests:
             overlayBucket.enabled: false
     -   asserts:
             -   equal:
+                    path: spec.commonTags
+                    value:
+                        team: platform
+        it: Passes the overlay common tags through, leaving the project identifier tag to the composition
+        set:
+            overlayBucket.commonTags.team: platform
+            overlayBucket.enabled: true
+            projectId: proj-456
+    -   asserts:
+            -   equal:
                     path: spec.projectId
                     value: proj-456
-            -   equal:
+            -   notExists:
                     path: spec.region
-                    value: us-east-1
-        it: Propagates the project and region into the spec
+        it: Propagates the project, leaving the cluster region to the composition
         set:
             overlayBucket.enabled: true
             projectId: proj-456

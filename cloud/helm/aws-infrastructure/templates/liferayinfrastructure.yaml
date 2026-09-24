@@ -14,9 +14,10 @@ spec:
         rules: {{ .Values.backup.rules | toYaml | nindent 12 }}
         vaultTags: {{ .Values.backup.vaultTags | default dict | toYaml | nindent 12 }}
     cmk: {{ .Values.cmk | toYaml | nindent 8 }}
+    {{- with .Values.commonTags }}
     commonTags:
-        EnvironmentId: {{ .Values.environmentId }}
-        ProjectId: {{ .Values.projectId }}
+        {{- . | toYaml | nindent 8 }}
+    {{- end }}
     database: {{ .Values.database | toYaml | nindent 8 }}
     environmentId: {{ .Values.environmentId }}
     forceDestroy: {{ .Values.forceDestroy }}
@@ -24,7 +25,6 @@ spec:
     overlayAccess:
         enabled: {{ .Values.overlayAccess.enabled }}
     projectId: {{ .Values.projectId }}
-    region: {{ .Values.region }}
     search:
         elasticsearch:
             enabled: {{ .Values.search.elasticsearch.enabled }}

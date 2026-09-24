@@ -189,7 +189,7 @@ operatorApplications:
                         cpu: 15m
                         memory: 128Mi
             function-tag-manager:
-                package: xpkg.upbound.io/crossplane-contrib/function-tag-manager:v0.6.0
+                package: xpkg.upbound.io/crossplane-contrib/function-tag-manager:v0.8.2
                 resources:
                     limits:
                         memory: 256Mi

@@ -32,6 +32,16 @@ tests:
         set:
             enabled: false
     -   asserts:
+            -   notExists:
+                    path: spec.database.deletionProtection
+            -   notExists:
+                    path: spec.database.engine
+            -   notExists:
+                    path: spec.database.username
+            -   notExists:
+                    path: spec.search.opensearch.username
+        it: Omits the database and search settings the composition derives or fixes
+    -   asserts:
             -   equal:
                     path: spec.backup.enabled
                     value: true
@@ -46,6 +56,14 @@ tests:
             backup.restore.sanitizationScripts.x-010-fix-urls: UPDATE Foo SET url = 'https://a.example.com';
     -   asserts:
             -   equal:
+                    path: spec.commonTags
+                    value:
+                        CostCenter: "42"
+        it: Passes only the environment's own common tags
+        set:
+            commonTags.CostCenter: "42"
+    -   asserts:
+            -   equal:
                     path: spec.backup.region
                     value: eu-west-1
         it: Propagates the backup region into the spec
@@ -53,15 +71,16 @@ tests:
             backup.region: eu-west-1
     -   asserts:
             -   equal:
-                    path: spec.commonTags.EnvironmentId
+                    path: spec.environmentId
                     value: env-123
             -   equal:
-                    path: spec.commonTags.ProjectId
+                    path: spec.projectId
                     value: proj-456
-            -   equal:
+            -   notExists:
+                    path: spec.commonTags
+            -   notExists:
                     path: spec.region
-                    value: us-east-1
-        it: Propagates the environment, project, and region into the spec
+        it: Propagates the environment and project, leaving the cluster region and the identifier tags to the composition
         set:
             environmentId: env-123
             projectId: proj-456

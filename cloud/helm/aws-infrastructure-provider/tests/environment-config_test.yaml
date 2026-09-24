@@ -1,0 +1,44 @@
+release:
+    name: my-release
+    namespace: crossplane-system
+set:
+    deploymentContext:
+        accountId: "000000000000"
+        clusterSecurityGroupId: sg-00000000000000000
+        clusterSubnetIds: '["subnet-11111111111111111","subnet-22222222222222222"]'
+        crossplaneDataRoleArn: arn:aws:iam::000000000000:role/liferay-test-crossplane-data
+        crossplaneIamBoundaryArn: arn:aws:iam::000000000000:policy/liferay-test-crossplane-iam-boundary
+        crossplaneIamPath: /crossplane/liferay-test/
+        crossplaneIamRoleArn: arn:aws:iam::000000000000:role/liferay-test-crossplane-iam
+        deploymentName: liferay-test
+        oidcIssuerUrl: https://oidc.eks.us-east-1.amazonaws.com/id/00000000000000000000000000000000
+        partition: aws
+        region: us-east-1
+        vpcId: vpc-00000000000000000
+suite: Environment Config
+templates:
+    -   templates/environment-config.yaml
+tests:
+    -   asserts:
+            -   equal:
+                    path: data
+                    value:
+                        accountId: "000000000000"
+                        clusterSecurityGroupId: sg-00000000000000000
+                        clusterSubnetIds: '["subnet-11111111111111111","subnet-22222222222222222"]'
+                        crossplaneIamBoundaryArn: arn:aws:iam::000000000000:policy/liferay-test-crossplane-iam-boundary
+                        crossplaneIamPath: /crossplane/liferay-test/
+                        deploymentName: liferay-test
+                        oidcIssuerUrl: https://oidc.eks.us-east-1.amazonaws.com/id/00000000000000000000000000000000
+                        partition: aws
+                        region: us-east-1
+                        vpcId: vpc-00000000000000000
+            -   equal:
+                    path: metadata.annotations["argocd.argoproj.io/sync-wave"]
+                    value: "-100"
+            -   equal:
+                    path: metadata.name
+                    value: environment-config
+            -   isKind:
+                    of: EnvironmentConfig
+        it: Renders the environment config with the deployment context the compositions consume, leaving out the provider role ARNs

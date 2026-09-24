@@ -1,0 +1,54 @@
+{{- $runtimeConfigs := list
+    (dict "cpuRequest" "23m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-backup-config" "provider" "provider-aws-backup" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "25m" "memoryLimit" "1Gi" "memoryRequest" "512Mi" "name" "aws-cloudwatchlogs-config" "provider" "provider-aws-cloudwatchlogs" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "49m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-ec2-config" "provider" "provider-aws-ec2" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "23m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-family-config" "provider" "provider-family-aws" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "35m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-iam-config" "provider" "provider-aws-iam" "roleArnKey" "crossplaneIamRoleArn" "serviceAccountName" "crossplane-iam")
+    (dict "cpuRequest" "23m" "memoryLimit" "1Gi" "memoryRequest" "768Mi" "name" "aws-kms-config" "provider" "provider-aws-kms" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "23m" "memoryLimit" "1Gi" "memoryRequest" "768Mi" "name" "aws-opensearch-config" "provider" "provider-aws-opensearch" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "49m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-rds-config" "provider" "provider-aws-rds" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "126m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-s3-config" "provider" "provider-aws-s3" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+-}}
+{{- range $runtimeConfig := $runtimeConfigs }}
+---
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    name: {{ $runtimeConfig.name }}
+spec:
+    deploymentTemplate:
+        spec:
+            selector:
+                matchLabels:
+                    pkg.crossplane.io/provider: {{ $runtimeConfig.provider }}
+            template:
+                metadata:
+                    annotations:
+                        instrumentation.opentelemetry.io/inject-dotnet: "false"
+                        instrumentation.opentelemetry.io/inject-java: "false"
+                        instrumentation.opentelemetry.io/inject-nodejs: "false"
+                        instrumentation.opentelemetry.io/inject-python: "false"
+                        sidecar.opentelemetry.io/inject: "false"
+                    labels:
+                        pkg.crossplane.io/provider: {{ $runtimeConfig.provider }}
+                spec:
+                    containers:
+                        -   name: package-runtime
+                            resources:
+                                limits:
+                                    memory: {{ $runtimeConfig.memoryLimit }}
+                                requests:
+                                    cpu: {{ $runtimeConfig.cpuRequest }}
+                                    memory: {{ $runtimeConfig.memoryRequest }}
+                            {{- include "crossplane-runtime-configs.containerSecurityContext" $ | nindent 28 }}
+                    {{- include "crossplane-runtime-configs.podSecurityContext" $ | nindent 20 }}
+                    serviceAccountName: {{ $runtimeConfig.serviceAccountName }}
+    serviceAccountTemplate:
+        metadata:
+            annotations:
+                eks.amazonaws.com/role-arn: {{ index $.Values.deploymentContext $runtimeConfig.roleArnKey | quote }}
+            name: {{ $runtimeConfig.serviceAccountName }}
+{{- end }}

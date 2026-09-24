@@ -26,7 +26,6 @@ locals {
 		crossplaneIamPath=local.crossplane_iam_path
 		crossplaneIamRoleArn=aws_iam_role.crossplane_iam.arn
 		deploymentName=var.deployment_name
-		liferayServiceAccountRoleName=data.aws_iam_role.liferay.name
 		oidcIssuerUrl=data.aws_eks_cluster.eks.identity[0].oidc[0].issuer
 		partition=local.partition
 		region=var.region

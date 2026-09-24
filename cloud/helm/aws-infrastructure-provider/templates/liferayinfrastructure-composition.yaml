@@ -75,10 +75,6 @@ spec:
                                             type: boolean
                                         databaseInsightsMode:
                                             type: string
-                                        deletionProtection:
-                                            type: boolean
-                                        engine:
-                                            type: string
                                         engineVersion:
                                             type: string
                                         instanceClass:
@@ -87,8 +83,6 @@ spec:
                                             type: integer
                                         multiAz:
                                             type: boolean
-                                        region:
-                                            type: string
                                         snapshotIdentifier:
                                             nullable: true
                                             type: string
@@ -96,8 +90,6 @@ spec:
                                             type: integer
                                         storageThroughput:
                                             type: integer
-                                        username:
-                                            type: string
                                     type: object
                                 environmentId:
                                     type: string
@@ -113,8 +105,6 @@ spec:
                                             type: boolean
                                     type: object
                                 projectId:
-                                    type: string
-                                region:
                                     type: string
                                 restorePhase:
                                     enum:
@@ -141,10 +131,6 @@ spec:
                                                     type: integer
                                                 instanceType:
                                                     type: string
-                                                region:
-                                                    type: string
-                                                username:
-                                                    type: string
                                                 volumeSizeGB:
                                                     type: integer
                                             type: object
@@ -169,7 +155,6 @@ spec:
                                 -   environmentId
                                 -   orphanOnDelete
                                 -   projectId
-                                -   region
                                 -   search
                                 -   storage
                             type: object
@@ -195,41 +180,54 @@ spec:
     mode: Pipeline
     pipeline:
         -   functionRef:
+                name: function-environment-configs
+            input:
+                apiVersion: environmentconfigs.fn.crossplane.io/v1beta1
+                kind: Input
+                spec:
+                    environmentConfigs:
+                        -   ref:
+                                name: environment-config
+                            type: Reference
+            step: environment-configs
+        -   functionRef:
                 name: function-go-templating
             input:
                 apiVersion: template.fn.crossplane.io/v1beta1
                 inline:
                     template: |
                         {{`
-                        {{- $accountId := `}}{{ .Values.aws.accountId | quote }}{{` -}}
-                        {{- $deploymentName := `}}{{ .Values.deploymentName | quote }}{{` -}}
-                        {{- $liferayServiceAccountRoleName := `}}{{ .Values.liferayServiceAccountRoleName | quote }}{{` -}}
-                        {{- $nodesSecurityGroupId := `}}{{ .Values.aws.nodesSecurityGroupId | quote }}{{` -}}
-                        {{- $privateSubnetIds := `}}{{ .Values.aws.privateSubnetIds | quote }}{{` -}}
-                        {{- $vpcId := `}}{{ .Values.aws.vpcId | quote }}{{` -}}
-
+                        {{- $env := index .context "apiextensions.crossplane.io/environment" -}}
                         {{- $xr := .observed.composite.resource -}}
 
-                        {{- $baseRegion := $xr.spec.region -}}
+                        {{- $accountId := $env.accountId -}}
+                        {{- $backupSpec := $xr.spec.backup -}}
+                        {{- $baseRegion := $env.region -}}
+                        {{- $clusterSecurityGroupId := $env.clusterSecurityGroupId -}}
+                        {{- $clusterSubnetIds := $env.clusterSubnetIds | fromJson -}}
                         {{- $cmkEnabled := $xr.spec.cmk.enabled -}}
-                        {{- $forceDestroy := $xr.spec.forceDestroy -}}
-
+                        {{- $deploymentName := $env.deploymentName -}}
                         {{- $environmentId := $xr.spec.environmentId -}}
-                        {{- $projectId := $xr.spec.projectId -}}
-                        {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
-                        {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectIdFull | sha256sum | trunc 6 -}}
-                        {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
-
+                        {{- $forceDestroy := $xr.spec.forceDestroy -}}
+                        {{- $iamBoundaryArn := $env.crossplaneIamBoundaryArn -}}
+                        {{- $iamPath := $env.crossplaneIamPath -}}
                         {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
                         {{- $managementPoliciesNoUpdate := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
                         {{- $namespace := $xr.metadata.namespace -}}
-                        {{- $oidcProvider := `}}{{ .Values.aws.oidcProvider | quote }}{{` -}}
-                        {{- $storageName := printf "%s-%s-storage" $accountId $baseName -}}
-                        {{- $privateSubnetIdsList := $privateSubnetIds | fromJson -}}
-                        {{- $subnetCount := len $privateSubnetIdsList -}}
+                        {{- $oidcProvider := trimPrefix "https://" $env.oidcIssuerUrl -}}
+                        {{- $partition := $env.partition -}}
+                        {{- $projectId := $xr.spec.projectId -}}
+                        {{- $vpcId := $env.vpcId -}}
 
-                        {{- $backupSpec := $xr.spec.backup -}}
                         {{- $backupRegion := $backupSpec.region | default $baseRegion -}}
+                        {{- $clusterSubnetIdsCount := len $clusterSubnetIds -}}
+                        {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
+
+                        {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectIdFull | sha256sum | trunc 6 -}}
+
+                        {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
+
+                        {{- $storageName := printf "%s-%s-storage" $accountId $baseName -}}
 
                         {{- if $backupSpec.enabled }}
                         {{- if $cmkEnabled }}
@@ -279,7 +277,7 @@ spec:
                                                 "Action": "kms:*",
                                                 "Effect": "Allow",
                                                 "Principal": {
-                                                    "AWS": "arn:aws:iam::{{ $accountId }}:root"
+                                                    "AWS": "arn:{{ $partition }}:iam::{{ $accountId }}:root"
                                                 },
                                                 "Resource": "*"
                                             },
@@ -294,7 +292,7 @@ spec:
                                                 ],
                                                 "Effect": "Allow",
                                                 "Principal": {
-                                                    "AWS": "arn:aws:iam::{{ $accountId }}:role/{{ $baseName }}-backup-service-role"
+                                                    "AWS": "arn:{{ $partition }}:iam::{{ $accountId }}:role{{ $iamPath }}{{ $baseName }}-backup-service-role"
                                                 },
                                                 "Resource": "*"
                                             }
@@ -433,6 +431,7 @@ spec:
                             name: {{ $baseName }}-backup-restore-policy
                         spec:
                             forProvider:
+                                path: {{ $iamPath }}
                                 policy: |
                                     {
                                         "Statement": [
@@ -444,16 +443,16 @@ spec:
                                                 ],
                                                 "Effect": "Allow",
                                                 "Resource": [
-                                                    "arn:aws:s3:::{{ $storageName }}-blue",
-                                                    "arn:aws:s3:::{{ $storageName }}-blue/*",
-                                                    "arn:aws:s3:::{{ $storageName }}-green",
-                                                    "arn:aws:s3:::{{ $storageName }}-green/*"
+                                                    "arn:{{ $partition }}:s3:::{{ $storageName }}-blue",
+                                                    "arn:{{ $partition }}:s3:::{{ $storageName }}-blue/*",
+                                                    "arn:{{ $partition }}:s3:::{{ $storageName }}-green",
+                                                    "arn:{{ $partition }}:s3:::{{ $storageName }}-green/*"
                                                 ]
                                             },
                                             {
                                                 "Action": "iam:PassRole",
                                                 "Effect": "Allow",
-                                                "Resource": "arn:aws:iam::{{ $accountId }}:role/{{ $baseName }}-backup-service-role"
+                                                "Resource": "arn:{{ $partition }}:iam::{{ $accountId }}:role{{ $iamPath }}{{ $baseName }}-backup-service-role"
                                             },
                                             {
                                                 "Action": [
@@ -484,6 +483,8 @@ spec:
                             name: {{ $baseName }}-backup-restore-role
                         spec:
                             forProvider:
+                                path: {{ $iamPath }}
+                                permissionsBoundary: {{ $iamBoundaryArn }}
                                 assumeRolePolicy: |
                                     {
                                         "Statement": [
@@ -497,7 +498,7 @@ spec:
                                                 },
                                                 "Effect": "Allow",
                                                 "Principal": {
-                                                    "Federated": "arn:aws:iam::{{ $accountId }}:oidc-provider/{{ $oidcProvider }}"
+                                                    "Federated": "arn:{{ $partition }}:iam::{{ $accountId }}:oidc-provider/{{ $oidcProvider }}"
                                                 }
                                             }
                                         ],
@@ -519,6 +520,8 @@ spec:
                             name: {{ $baseName }}-backup-service-role
                         spec:
                             forProvider:
+                                path: {{ $iamPath }}
+                                permissionsBoundary: {{ $iamBoundaryArn }}
                                 assumeRolePolicy: |
                                     {
                                         "Statement": [
@@ -533,10 +536,10 @@ spec:
                                         "Version": "2012-10-17"
                                     }
                                 managedPolicyArns:
-                                    -   arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup
-                                    -   arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForRestores
-                                    -   arn:aws:iam::aws:policy/AWSBackupServiceRolePolicyForS3Backup
-                                    -   arn:aws:iam::aws:policy/AWSBackupServiceRolePolicyForS3Restore
+                                    -   arn:{{ $partition }}:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup
+                                    -   arn:{{ $partition }}:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForRestores
+                                    -   arn:{{ $partition }}:iam::aws:policy/AWSBackupServiceRolePolicyForS3Backup
+                                    -   arn:{{ $partition }}:iam::aws:policy/AWSBackupServiceRolePolicyForS3Restore
                             managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: iam.aws.m.upbound.io/v1beta1
@@ -644,7 +647,6 @@ spec:
 
                         {{- $databaseSpec := $xr.spec.database -}}
 
-                        {{- $databaseRegion := $databaseSpec.region | default $baseRegion }}
                         {{- $isAboveAllocatedStorageThreshold := ge (int $databaseSpec.storageGB) 400 -}}
 
                         {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
@@ -693,8 +695,8 @@ spec:
                                         dataPlane: {{ $dataPlane }}
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                deletionProtection: {{ $databaseSpec.deletionProtection }}
-                                engine: {{ $databaseSpec.engine | quote }}
+                                deletionProtection: {{ not $forceDestroy }}
+                                engine: postgres
                                 engineVersion: {{ $databaseSpec.engineVersion | quote }}
                                 iamDatabaseAuthenticationEnabled: true
                                 identifier: {{ $baseName }}-database-{{ $dataPlane }}
@@ -706,7 +708,7 @@ spec:
                                 passwordSecretRef:
                                     key: password
                                     name: liferay-database-{{ $dataPlane }}-password
-                                region: {{ $databaseRegion }}
+                                region: {{ $baseRegion }}
                                 skipFinalSnapshot: true
                                 {{- if and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
                                 snapshotIdentifier: {{ $databaseSpec.snapshotIdentifier }}
@@ -716,7 +718,7 @@ spec:
                                 storageThroughput: {{ int $databaseSpec.storageThroughput }}
                                 {{- end }}
                                 storageType: gp3
-                                username: {{ $databaseSpec.username }}
+                                username: liferay_database_admin
                                 vpcSecurityGroupIdSelector:
                                     matchLabels:
                                         app: liferay
@@ -746,7 +748,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $databaseRegion }}
+                                region: {{ $baseRegion }}
                                 tags:
                                     Name: {{ $baseName }}-database-security-group-{{ $dataPlane }}
                                 vpcId: {{ $vpcId }}
@@ -768,8 +770,8 @@ spec:
                             forProvider:
                                 fromPort: 5432
                                 ipProtocol: tcp
-                                referencedSecurityGroupId: {{ $nodesSecurityGroupId }}
-                                region: {{ $databaseRegion }}
+                                referencedSecurityGroupId: {{ $clusterSecurityGroupId }}
+                                region: {{ $baseRegion }}
                                 securityGroupIdSelector:
                                     matchLabels:
                                         app: liferay
@@ -796,8 +798,8 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $databaseRegion }}
-                                subnetIds: {{ $privateSubnetIdsList | toJson }}
+                                region: {{ $baseRegion }}
+                                subnetIds: {{ $clusterSubnetIds | toJson }}
                                 tags:
                                     Name: {{ $baseName }}-database-{{ $dataPlane }}-subnets
                             managementPolicies: {{ $managementPolicies }}
@@ -967,6 +969,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
+                                path: {{ $iamPath }}
                                 policy: |
                                     {
                                         "Statement": [
@@ -979,8 +982,8 @@ spec:
                                                 ],
                                                 "Effect": "Allow",
                                                 "Resource": [
-                                                    "arn:aws:s3:::{{ $storageName }}-{{ $dataPlane }}",
-                                                    "arn:aws:s3:::{{ $storageName }}-{{ $dataPlane }}/*"
+                                                    "arn:{{ $partition }}:s3:::{{ $storageName }}-{{ $dataPlane }}",
+                                                    "arn:{{ $partition }}:s3:::{{ $storageName }}-{{ $dataPlane }}/*"
                                                 ]
                                             }
                                         ],
@@ -1011,13 +1014,177 @@ spec:
                                         dataPlane: {{ $dataPlane }}
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                role: {{ $liferayServiceAccountRoleName }}
+                                roleSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: liferay-role
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
                             managementPolicies: {{ $managementPolicies }}
                         {{- end -}}
 
+                        {{- $overlayAccess := $xr.spec.overlayAccess | default dict -}}
+                        {{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName (printf "%.18s-%s" $projectId (printf "%s-%s-%s" $accountId $deploymentName $projectId | sha256sum | trunc 6)) }}
+                        ---
+                        apiVersion: iam.aws.m.upbound.io/v1beta1
+                        kind: Policy
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-liferay-policy
+                                gotemplating.fn.crossplane.io/composition-resource-name: liferay-policy
+                            labels:
+                                app: liferay
+                                component: liferay-policy
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-liferay-policy
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                path: {{ $iamPath }}
+                                policy: |
+                                    {
+                                        "Statement": [
+                                            {
+                                                "Action": [
+                                                    "aws-marketplace:BatchMeterUsage",
+                                                    "aws-marketplace:RegisterUsage"
+                                                ],
+                                                "Effect": "Allow",
+                                                "Resource": "*"
+                                            }{{ if $overlayAccess.enabled }},
+                                            {
+                                                "Action": [
+                                                    "s3:GetObject",
+                                                    "s3:ListBucket"
+                                                ],
+                                                "Effect": "Allow",
+                                                "Resource": [
+                                                    "arn:{{ $partition }}:s3:::{{ $overlayBucketName }}",
+                                                    "arn:{{ $partition }}:s3:::{{ $overlayBucketName }}/*"
+                                                ]
+                                            }{{ end }}
+                                        ],
+                                        "Version": "2012-10-17"
+                                    }
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: iam.aws.m.upbound.io/v1beta1
+                        kind: Role
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-liferay-role
+                                gotemplating.fn.crossplane.io/composition-resource-name: liferay-role
+                            labels:
+                                app: liferay
+                                component: liferay-role
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-liferay-role
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                path: {{ $iamPath }}
+                                permissionsBoundary: {{ $iamBoundaryArn }}
+                                assumeRolePolicy: |
+                                    {
+                                        "Statement": [
+                                            {
+                                                "Action": "sts:AssumeRoleWithWebIdentity",
+                                                "Condition": {
+                                                    "StringEquals": {
+                                                        "{{ $oidcProvider }}:aud": "sts.amazonaws.com",
+                                                        "{{ $oidcProvider }}:sub": "system:serviceaccount:{{ $namespace }}:liferay-default"
+                                                    }
+                                                },
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "Federated": "arn:{{ $partition }}:iam::{{ $accountId }}:oidc-provider/{{ $oidcProvider }}"
+                                                }
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    }
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: iam.aws.m.upbound.io/v1beta1
+                        kind: RolePolicyAttachment
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: liferay-policy-attachment
+                            labels:
+                                app: liferay
+                                component: liferay-policy-attachment
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-liferay-policy-attachment
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                policyArnSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: liferay-policy
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                                roleSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: liferay-role
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        {{- $liferayRole := dict -}}
+
+                        {{- if .observed.resources -}}
+                            {{- $liferayRole = index .observed.resources "liferay-role" -}}
+                        {{- end -}}
+
+                        {{- $liferayRoleArn := "" -}}
+
+                        {{- if kindIs "map" $liferayRole -}}
+                            {{- with $liferayRole -}}
+                                {{- with .resource -}}
+                                    {{- with .status -}}
+                                        {{- with .atProvider -}}
+                                            {{- $liferayRoleArn = .arn -}}
+                                        {{- end -}}
+                                    {{- end -}}
+                                {{- end -}}
+                            {{- end -}}
+                        {{- end }}
+                        apiVersion: kubernetes.m.crossplane.io/v1alpha1
+                        kind: Object
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: liferay-service-account
+                            labels:
+                                app: liferay
+                                component: liferay-role
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-liferay-service-account
+                            namespace: {{ $namespace }}
+                        spec:
+                            forProvider:
+                                manifest:
+                                    apiVersion: v1
+                                    kind: ServiceAccount
+                                    metadata:
+                                        annotations:
+                                            eks.amazonaws.com/role-arn: {{ $liferayRoleArn }}
+                                        labels:
+                                            app: liferay
+                                            component: liferay-role
+                                            environmentId: {{ $environmentId }}
+                                            projectId: {{ $projectId }}
+                                        name: liferay-default
+                                        namespace: {{ $namespace }}
+                            managementPolicies: {{ $managementPolicies }}
+
                         {{- $searchName := printf "%.21s-search" $baseName -}}
                         {{- $searchSpec := $xr.spec.search.opensearch }}
-                        {{- $searchRegion := $searchSpec.region | default $baseRegion }}
 
                         {{- if $searchSpec.enabled }}
                         ---
@@ -1025,7 +1192,7 @@ spec:
                         kind: Domain
                         metadata:
                             annotations:
-                                crossplane.io/external-name: arn:aws:es:{{ $searchRegion }}:{{ $accountId }}:domain/{{ $searchName }}
+                                crossplane.io/external-name: arn:{{ $partition }}:es:{{ $baseRegion }}:{{ $accountId }}:domain/{{ $searchName }}
                                 gotemplating.fn.crossplane.io/composition-resource-name: search
                             labels:
                                 app: liferay
@@ -1040,7 +1207,7 @@ spec:
                                     enabled: true
                                     internalUserDatabaseEnabled: true
                                     masterUserOptions:
-                                        masterUserName: {{ $searchSpec.username }}
+                                        masterUserName: liferay_search_admin
                                         masterUserPasswordSecretRef:
                                             key: password
                                             name: liferay-search-password
@@ -1048,8 +1215,8 @@ spec:
                                     instanceCount: {{ $searchSpec.instanceCount }}
                                     instanceType: {{ $searchSpec.instanceType }}
                                     zoneAwarenessConfig:
-                                        availabilityZoneCount: {{ $subnetCount }}
-                                    zoneAwarenessEnabled: {{ gt $subnetCount 1 }}
+                                        availabilityZoneCount: {{ $clusterSubnetIdsCount }}
+                                    zoneAwarenessEnabled: {{ gt $clusterSubnetIdsCount 1 }}
                                 domainEndpointOptions:
                                     enforceHttps: true
                                     tlsSecurityPolicy: Policy-Min-TLS-1-2-2019-07
@@ -1070,15 +1237,15 @@ spec:
                                     {{- end }}
                                 engineVersion: {{ $searchSpec.engineVersion | quote }}
                                 logPublishingOptions:
-                                    -   cloudwatchLogGroupArn: arn:aws:logs:{{ $searchRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-audit-logs
+                                    -   cloudwatchLogGroupArn: arn:{{ $partition }}:logs:{{ $baseRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-audit-logs
                                         enabled: true
                                         logType: AUDIT_LOGS
-                                    -   cloudwatchLogGroupArn: arn:aws:logs:{{ $searchRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-index-logs
+                                    -   cloudwatchLogGroupArn: arn:{{ $partition }}:logs:{{ $baseRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-index-logs
                                         enabled: true
                                         logType: INDEX_SLOW_LOGS
                                 nodeToNodeEncryption:
                                     enabled: true
-                                region: {{ $searchRegion }}
+                                region: {{ $baseRegion }}
                                 softwareUpdateOptions:
                                     autoSoftwareUpdateEnabled: {{ $searchSpec.autoSoftwareUpdateEnabled }}
                                 tags:
@@ -1090,7 +1257,7 @@ spec:
                                             component: search-security-group
                                             environmentId: {{ $environmentId }}
                                             projectId: {{ $projectId }}
-                                    subnetIds: {{ $privateSubnetIdsList | toJson }}
+                                    subnetIds: {{ $clusterSubnetIds | toJson }}
                             managementPolicies: {{ $managementPolicies }}
                             writeConnectionSecretToRef:
                                 name: liferay-search-credentials
@@ -1119,7 +1286,7 @@ spec:
                                                     "AWS": "*"
                                                 },
                                                 "Resource": [
-                                                    "arn:aws:es:{{ $searchRegion }}:{{ $accountId }}:domain/{{ $searchName }}/*"
+                                                    "arn:{{ $partition }}:es:{{ $baseRegion }}:{{ $accountId }}:domain/{{ $searchName }}/*"
                                                 ]
                                             }
                                         ],
@@ -1131,7 +1298,7 @@ spec:
                                         component: search
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                region: {{ $searchRegion }}
+                                region: {{ $baseRegion }}
                             managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
@@ -1142,7 +1309,7 @@ spec:
                             name: {{ $searchName }}-audit-logs
                         spec:
                             forProvider:
-                                region: {{ $searchRegion }}
+                                region: {{ $baseRegion }}
                                 retentionInDays: 7
                         ---
                         apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
@@ -1153,7 +1320,7 @@ spec:
                             name: {{ $searchName }}-index-logs
                         spec:
                             forProvider:
-                                region: {{ $searchRegion }}
+                                region: {{ $baseRegion }}
                                 retentionInDays: 7
                         {{- if $cmkEnabled }}
                         ---
@@ -1171,7 +1338,7 @@ spec:
                             name: {{ $searchName }}-kms-alias
                         spec:
                             forProvider:
-                                region: {{ $searchRegion }}
+                                region: {{ $baseRegion }}
                                 targetKeyIdSelector:
                                     matchLabels:
                                         app: liferay
@@ -1202,7 +1369,7 @@ spec:
                                                 "Action": "kms:*",
                                                 "Effect": "Allow",
                                                 "Principal": {
-                                                    "AWS": "arn:aws:iam::{{ $accountId }}:root"
+                                                    "AWS": "arn:{{ $partition }}:iam::{{ $accountId }}:root"
                                                 },
                                                 "Resource": "*"
                                             },
@@ -1224,7 +1391,7 @@ spec:
                                         ],
                                         "Version": "2012-10-17"
                                     }
-                                region: {{ $searchRegion }}
+                                region: {{ $baseRegion }}
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
                         ---
@@ -1249,12 +1416,12 @@ spec:
                                                 "Principal": {
                                                     "Service": "es.amazonaws.com"
                                                 },
-                                                "Resource": "arn:aws:logs:{{ $searchRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-*"
+                                                "Resource": "arn:{{ $partition }}:logs:{{ $baseRegion }}:{{ $accountId }}:log-group:{{ $searchName }}-*"
                                             }
                                         ],
                                         "Version": "2012-10-17"
                                     }
-                                region: {{ $searchRegion }}
+                                region: {{ $baseRegion }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
@@ -1300,7 +1467,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $searchRegion }}
+                                region: {{ $baseRegion }}
                                 tags:
                                     Name: {{ $searchName }}-security-group
                                 vpcId: {{ $vpcId }}
@@ -1321,8 +1488,8 @@ spec:
                             forProvider:
                                 fromPort: 443
                                 ipProtocol: tcp
-                                referencedSecurityGroupId: {{ $nodesSecurityGroupId }}
-                                region: {{ $searchRegion }}
+                                referencedSecurityGroupId: {{ $clusterSecurityGroupId }}
+                                region: {{ $baseRegion }}
                                 securityGroupIdSelector:
                                     matchLabels:
                                         app: liferay
@@ -1332,6 +1499,17 @@ spec:
                                 toPort: 443
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
+                        ---
+                        apiVersion: meta.gotemplating.fn.crossplane.io/v1alpha1
+                        kind: Context
+                        data:
+                            apiextensions.crossplane.io/environment:
+                                apiVersion: internal.crossplane.io/v1alpha1
+                                defaultTags:
+                                    DeploymentName: {{ $deploymentName | quote }}
+                                    EnvironmentId: {{ $environmentId | quote }}
+                                    ProjectId: {{ $projectId | quote }}
+                                kind: Environment
                         `}}
                 kind: GoTemplate
                 source: Inline
@@ -1343,11 +1521,11 @@ spec:
                 inline:
                     template: |
                         {{`
-                        {{- $accountId := `}}{{ .Values.aws.accountId | quote }}{{` -}}
-                        {{- $deploymentName := `}}{{ .Values.deploymentName | quote }}{{` -}}
-
+                        {{- $env := index .context "apiextensions.crossplane.io/environment" -}}
                         {{- $xr := .observed.composite.resource -}}
 
+                        {{- $accountId := $env.accountId -}}
+                        {{- $deploymentName := $env.deploymentName -}}
                         {{- $environmentId := $xr.spec.environmentId -}}
                         {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
                         {{- $namespace := $xr.metadata.namespace -}}
@@ -1356,15 +1534,14 @@ spec:
                         {{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
                         {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
 
+                        {{- $activeDataPlane := $targetActiveDataPlane -}}
                         {{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName (printf "%.18s-%s" $projectId (printf "%s-%s-%s" $accountId $deploymentName $projectId | sha256sum | trunc 6)) -}}
-
                         {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
+                        {{- $targetInactiveDataPlane := (eq $targetActiveDataPlane "blue") | ternary "green" "blue" -}}
 
                         {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectIdFull | sha256sum | trunc 6 -}}
-                        {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
-                        {{- $targetInactiveDataPlane := (eq $targetActiveDataPlane "blue") | ternary "green" "blue" -}}
-                        {{- $activeDataPlane := $targetActiveDataPlane -}}
+                        {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
                         {{- if (eq $restorePhase "provisioning") -}}
                             {{- $activeDataPlane = $targetInactiveDataPlane -}}
@@ -1725,9 +1902,8 @@ spec:
                 addTags:
                     -   fromFieldPath: spec.commonTags
                         type: FromCompositeFieldPath
-                    -   tags:
-                            DeploymentName: {{ .Values.deploymentName | quote }}
-                        type: FromValue
+                    -   fromFieldPath: defaultTags
+                        type: FromEnvironmentFieldPath
                 apiVersion: tag-manager.fn.crossplane.io/v1beta1
                 kind: ManagedTags
             step: apply-default-tags

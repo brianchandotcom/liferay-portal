@@ -15845,6 +15845,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<![CDATA[
 								#!/bin/bash
 
+								su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 force applications all'
+
+								su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 deactivate database lportal'
+
 								echo "su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 ON /database/config/db2inst1 replace existing'"
 
 								output=$(su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 ON /database/config/db2inst1 replace existing')
@@ -15871,6 +15875,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<echo file="${import.database.sh.file.path}">
 								<![CDATA[
 									#!/bin/bash
+
+									db2 force applications all
+
+									db2 deactivate database lportal
 
 									echo "db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing"
 

@@ -5,8 +5,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>[$WORKFLOW-DEFINITION-NAME$]</name>
-	<description>[$WORKFLOW-DEFINITION-DESCRIPTION$]</description>
+	<name>[$WORKFLOW_DEFINITION_NAME$]</name>
+	<description>[$WORKFLOW_DEFINITION_DESCRIPTION$]</description>
 	<version>1</version>
 	<fork>
 		<name>fork</name>

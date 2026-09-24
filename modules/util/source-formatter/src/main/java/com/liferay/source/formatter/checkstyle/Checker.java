@@ -10,12 +10,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.java.parser.DetailASTParser;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.check.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 
-import com.puppycrawl.tools.checkstyle.JavaParser;
 import com.puppycrawl.tools.checkstyle.ModuleFactory;
 import com.puppycrawl.tools.checkstyle.PackageNamesLoader;
 import com.puppycrawl.tools.checkstyle.PackageObjectFactory;
@@ -188,7 +188,7 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 		FileContents fileContents = new FileContents(fileText);
 
 		try {
-			DetailAST rootDetailAST = JavaParser.parse(fileContents);
+			DetailAST rootDetailAST = DetailASTParser.parse(fileContents);
 
 			return _walk(rootDetailAST, fileContents, checks);
 		}

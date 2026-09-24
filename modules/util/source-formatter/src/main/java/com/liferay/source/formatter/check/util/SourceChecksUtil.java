@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.tools.java.parser.DetailASTParser;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.check.FileCheck;
 import com.liferay.source.formatter.check.GradleFileCheck;
@@ -34,7 +35,6 @@ import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterCheckUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
-import com.puppycrawl.tools.checkstyle.JavaParser;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
@@ -139,9 +139,10 @@ public class SourceChecksUtil {
 						FileText fileText = new FileText(
 							file, CheckstyleUtil.getLines(content));
 
-						DetailAST detailAST = JavaParser.parseFileText(
-							fileText, JavaParser.Options.WITH_COMMENTS);
 						FileContents fileContents = new FileContents(fileText);
+
+						DetailAST detailAST = DetailASTParser.parseWithComments(
+							fileContents);
 
 						javaClass = JavaClassParser.parseJavaClass(
 							sourceChecksResult.getContent(), detailAST,

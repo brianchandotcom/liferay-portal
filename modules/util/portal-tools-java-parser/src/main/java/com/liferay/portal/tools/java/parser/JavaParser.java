@@ -993,8 +993,7 @@ public class JavaParser {
 
 		FileContents fileContents = new FileContents(fileText);
 
-		DetailAST rootDetailAST =
-			com.puppycrawl.tools.checkstyle.JavaParser.parse(fileContents);
+		DetailAST rootDetailAST = DetailASTParser.parse(fileContents);
 
 		ParsedJavaClass parsedJavaClass = _getParsedJavaClass(
 			rootDetailAST, fileContents, maxLineLength);

@@ -7,12 +7,12 @@ package com.liferay.source.formatter.parser;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.tools.java.parser.DetailASTParser;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
-import com.puppycrawl.tools.checkstyle.JavaParser;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
@@ -47,8 +47,8 @@ public class JavaClassParser {
 
 		if (detailAST == null) {
 			try {
-				detailAST = JavaParser.parseFileText(
-					fileText, JavaParser.Options.WITH_COMMENTS);
+				detailAST = DetailASTParser.parseWithComments(
+					new FileContents(fileText));
 			}
 			catch (CheckstyleException checkstyleException) {
 				throw new RuntimeException(checkstyleException);
@@ -223,17 +223,18 @@ public class JavaClassParser {
 		FileText fileText = new FileText(
 			file, CheckstyleUtil.getLines(content));
 
+		FileContents fileContents = new FileContents(fileText);
+
 		DetailAST detailAST;
 
 		try {
-			detailAST = JavaParser.parseFileText(
-				fileText, JavaParser.Options.WITH_COMMENTS);
+			detailAST = DetailASTParser.parseWithComments(fileContents);
 		}
 		catch (CheckstyleException checkstyleException) {
 			throw new RuntimeException(checkstyleException);
 		}
 
-		return parseJavaClass(content, detailAST, new FileContents(fileText));
+		return parseJavaClass(content, detailAST, fileContents);
 	}
 
 	private static Position _getEndPosition(DetailAST detailAST) {

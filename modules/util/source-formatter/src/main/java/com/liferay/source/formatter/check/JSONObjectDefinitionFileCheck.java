@@ -15,12 +15,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.java.parser.DetailASTParser;
 import com.liferay.source.formatter.check.util.JSONSourceUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
-import com.puppycrawl.tools.checkstyle.JavaParser;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
@@ -173,7 +173,7 @@ public class JSONObjectDefinitionFileCheck extends BaseFileCheck {
 
 		FileContents fileContents = new FileContents(fileText);
 
-		DetailAST rootDetailAST = JavaParser.parse(fileContents);
+		DetailAST rootDetailAST = DetailASTParser.parse(fileContents);
 
 		DetailAST nextSiblingDetailAST = rootDetailAST.getFirstChild();
 

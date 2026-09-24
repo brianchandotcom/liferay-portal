@@ -155,7 +155,7 @@ public class OAuthClientASLocalMetadataBatchEnginePortletDataHandlerTest
 
 	@Override
 	protected boolean supportsPermissions() {
-		return false;
+		return true;
 	}
 
 	@Override

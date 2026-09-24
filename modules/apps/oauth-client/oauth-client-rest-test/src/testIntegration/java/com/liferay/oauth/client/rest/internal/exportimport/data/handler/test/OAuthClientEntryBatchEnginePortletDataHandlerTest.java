@@ -162,7 +162,7 @@ public class OAuthClientEntryBatchEnginePortletDataHandlerTest
 
 	@Override
 	protected boolean supportsPermissions() {
-		return false;
+		return true;
 	}
 
 	@Override

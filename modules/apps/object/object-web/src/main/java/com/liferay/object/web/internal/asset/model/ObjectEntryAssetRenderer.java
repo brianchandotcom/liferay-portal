@@ -255,16 +255,13 @@ public class ObjectEntryAssetRenderer
 			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
-		String redirect = themeDisplay.getRequest(
-		).getHeader(
-			HttpHeaders.REFERER
-		);
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		String redirect = PortalUtil.escapeRedirect(
+			httpServletRequest.getHeader(HttpHeaders.REFERER));
 
 		if (Validator.isNull(redirect)) {
 			redirect = themeDisplay.getURLHome();
-		}
-		else {
-			redirect = PortalUtil.escapeRedirect(redirect);
 		}
 
 		redirect = HtmlUtil.escapeURL(redirect);

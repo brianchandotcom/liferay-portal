@@ -29,7 +29,7 @@
 {{- $backupVaultPrincipalId := $backupVaultIdentity.principalId | default "" -}}
 
 {{- if $backupVaultPrincipalId }}
-{{- range $dataPlane := list "blue" "green" }}
+{{- range $dataPlane := $dataPlanes }}
 apiVersion: authorization.azure.m.upbound.io/v1beta1
 kind: RoleAssignment
 metadata:
@@ -44,7 +44,7 @@ spec:
         principalId: {{ $backupVaultPrincipalId }}
         principalType: ServicePrincipal
         roleDefinitionName: Storage Account Backup Contributor
-        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.Storage/storageAccounts/{{ $storageAccountBase }}{{ trunc 1 $dataPlane }}
+        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.Storage/storageAccounts/{{ index $storageAccountNames $dataPlane }}
     managementPolicies: {{ $managementPolicies }}
     providerConfigRef:
         kind: ClusterProviderConfig
@@ -99,7 +99,7 @@ spec:
 ---
 {{- end }}
 {{- end }}
-{{- range $dataPlane := list "blue" "green" }}
+{{- range $dataPlane := $dataPlanes }}
 apiVersion: authorization.azure.m.upbound.io/v1beta1
 kind: RoleAssignment
 metadata:
@@ -114,7 +114,7 @@ spec:
         principalId: {{ $backupRestoreIdentityPrincipalId }}
         principalType: ServicePrincipal
         roleDefinitionName: Storage Blob Data Contributor
-        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.Storage/storageAccounts/{{ $storageAccountBase }}{{ trunc 1 $dataPlane }}
+        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.Storage/storageAccounts/{{ index $storageAccountNames $dataPlane }}
     managementPolicies: {{ $managementPolicies }}
     providerConfigRef:
         kind: ClusterProviderConfig
@@ -134,7 +134,7 @@ spec:
         principalId: {{ $backupRestoreIdentityPrincipalId }}
         principalType: ServicePrincipal
         roleDefinitionName: Reader
-        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.Storage/storageAccounts/{{ $storageAccountBase }}{{ trunc 1 $dataPlane }}
+        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.Storage/storageAccounts/{{ index $storageAccountNames $dataPlane }}
     managementPolicies: {{ $managementPolicies }}
     providerConfigRef:
         kind: ClusterProviderConfig

@@ -61,7 +61,7 @@ spec:
             data:
                 LIFERAY_DOCLIB_CONNECTION_STRING: {{ $doclibConnectionString | b64enc | quote }}
                 LIFERAY_DOCLIB_CONTAINER_NAME: {{ "document-library" | b64enc | quote }}
-                LIFERAY_DOCLIB_STORAGE_ACCOUNT_NAME: {{ printf "%s%s" $storageAccountBase (trunc 1 $activeDataPlane) | b64enc | quote }}
+                LIFERAY_DOCLIB_STORAGE_ACCOUNT_NAME: {{ index $storageAccountNames $activeDataPlane | b64enc | quote }}
             kind: Secret
             metadata:
                 labels:

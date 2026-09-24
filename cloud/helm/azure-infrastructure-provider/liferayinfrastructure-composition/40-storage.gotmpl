@@ -1,7 +1,7 @@
 {{- $storage := $xr.spec.storage | default dict -}}
 
-{{- range $i, $dataPlane := list "blue" "green" }}
-{{- $storageAccountName := printf "%s%s" $storageAccountBase (trunc 1 $dataPlane) }}
+{{- range $i, $dataPlane := $dataPlanes }}
+{{- $storageAccountName := index $storageAccountNames $dataPlane }}
 {{- if $i }}
 ---
 {{- end }}
@@ -13,6 +13,7 @@ metadata:
     labels:
         {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
+        dataPlaneKey: {{ index $dataPlaneKeys $dataPlane }}
     name: {{ $storageAccountName }}
 spec:
     forProvider:

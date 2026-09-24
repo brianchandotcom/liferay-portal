@@ -1732,6 +1732,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long companyId, String emailAddress)
 		throws PortalException {
 
+		User user = userLocalService.getUserByEmailAddress(
+			companyId, emailAddress);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.UPDATE);
+
 		return userLocalService.sendPasswordByEmailAddress(
 			companyId, emailAddress);
 	}
@@ -1760,6 +1766,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public boolean sendPasswordByScreenName(long companyId, String screenName)
 		throws PortalException {
 
+		User user = userLocalService.getUserByScreenName(companyId, screenName);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.UPDATE);
+
 		return userLocalService.sendPasswordByScreenName(companyId, screenName);
 	}
 
@@ -1784,6 +1795,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public boolean sendPasswordByUserId(long userId) throws PortalException {
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.UPDATE);
+
 		return userLocalService.sendPasswordByUserId(userId);
 	}
 

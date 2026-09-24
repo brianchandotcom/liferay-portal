@@ -6,12 +6,20 @@
 package com.liferay.user.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -117,6 +125,8 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 
 	@Before
 	public void setUp() throws Exception {
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
 		_user = UserTestUtil.addUser();
 
 		ServiceContextThreadLocal.pushServiceContext(
@@ -147,6 +157,10 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
 					"email_password_reset_body.tmpl"));
+
+			_assertPermission(
+				() -> _userService.sendPasswordByEmailAddress(
+					_user.getCompanyId(), _user.getEmailAddress()));
 		}
 		finally {
 			restorePortletPreferences(portletPreferences);
@@ -171,6 +185,10 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
 					"email_password_reset_body.tmpl"));
+
+			_assertPermission(
+				() -> _userService.sendPasswordByScreenName(
+					_user.getCompanyId(), _user.getScreenName()));
 		}
 		finally {
 			restorePortletPreferences(portletPreferences);
@@ -195,6 +213,9 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
 					"email_password_reset_body.tmpl"));
+
+			_assertPermission(
+				() -> _userService.sendPasswordByUserId(_user.getUserId()));
 		}
 		finally {
 			restorePortletPreferences(portletPreferences);
@@ -224,6 +245,32 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 			PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK);
 
 		portletPreferences.store();
+	}
+
+	private void _assertPermission(
+			UnsafeSupplier<Boolean, Exception> unsafeSupplier)
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must have UPDATE permission for ",
+				User.class.getName(), StringPool.SPACE, _user.getUserId()),
+			unsafeSupplier::get);
+
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		Assert.assertFalse(unsafeSupplier.get());
+
+		Assert.assertEquals(2, MailServiceTestUtil.getInboxSize());
 	}
 
 	private static String _adminEmailPasswordResetBody;

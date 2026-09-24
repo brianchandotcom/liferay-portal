@@ -182,10 +182,9 @@ public class CommerceSitemapURLProviderTest {
 	public void testAssetCategorySitemapURLProviderFriendlyURLTranslation()
 		throws Exception {
 
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
-
 		List<Locale> companyAvailableLocales = new ArrayList<>(
 			_language.getCompanyAvailableLocales(_company.getCompanyId()));
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
 
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), companyAvailableLocales, siteDefaultLocale);

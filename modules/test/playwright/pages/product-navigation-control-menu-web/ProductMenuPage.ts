@@ -191,49 +191,6 @@ export class ProductMenuPage {
 		await this.webContentButton.click();
 	}
 
-	async goToPortlet({
-		category,
-		panel,
-		portlet,
-	}: {
-		category: string;
-		panel: string;
-		portlet: string;
-	}) {
-		await this.page.reload();
-
-		await this.openProductMenuIfClosed();
-
-		const categoryTrigger = this.productMenuWrapper
-			.getByLabel(panel)
-			.getByRole('menuitem', {name: category});
-
-		await clickAndExpectToBeVisible({
-			target: categoryTrigger,
-			trigger: this.productMenuWrapper.getByRole('button', {
-				name: panel,
-			}),
-		});
-
-		const portletTrigger = this.productMenuWrapper
-			.getByLabel(panel)
-			.getByLabel(category)
-			.getByRole('menuitem', {name: portlet});
-
-		await clickAndExpectToBeVisible({
-			target: portletTrigger,
-			trigger: categoryTrigger,
-		});
-
-		await clickAndExpectToBeVisible({
-			target: this.page.getByRole('heading', {
-				exact: true,
-				name: portlet,
-			}),
-			trigger: portletTrigger,
-		});
-	}
-
 	async openProductMenuIfClosed() {
 		await clickAndExpectToBeVisible({
 			target: this.productMenuWrapper,

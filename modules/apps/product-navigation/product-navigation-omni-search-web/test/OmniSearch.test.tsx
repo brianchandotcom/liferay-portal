@@ -42,7 +42,7 @@ const RESULTS_RESPONSE = [
 				url: '/content-dashboard',
 			},
 			{
-				description: 'Control Panel › Configuration',
+				description: 'Control Panel › Instance: Liferay',
 				icon: 'grid',
 				title: 'Instance Settings',
 				type: 'ENTRY',

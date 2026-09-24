@@ -12,6 +12,7 @@ export class HeadlessBuilderPage {
 	readonly globalMenuPage: GlobalMenuPage;
 	readonly createApplicationButton: Locator;
 	readonly newApplicationTitleBox: Locator;
+	readonly newApplicationURLBox: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -23,6 +24,7 @@ export class HeadlessBuilderPage {
 			name: 'Create',
 		});
 		this.newApplicationTitleBox = page.getByPlaceholder('Enter title.');
+		this.newApplicationURLBox = page.locator('#modalURLField');
 		this.page = page;
 	}
 

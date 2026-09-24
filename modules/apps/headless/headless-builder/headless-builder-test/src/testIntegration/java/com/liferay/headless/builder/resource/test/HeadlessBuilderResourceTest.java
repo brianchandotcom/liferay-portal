@@ -268,6 +268,16 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).apply(
 			() -> {
+				for (String path :
+						new String[] {
+							"applications", "endpoints", "filters",
+							"properties", "schemas", "sorts"
+						}) {
+
+					assertSuccessfulJSONObject(
+						null, "headless-builder/" + path, Http.Method.GET);
+				}
+
 				try (LogCapture logCapture =
 						LoggerTestUtil.configureLog4JLogger(
 							"portal_web.docroot.errors.code_jsp",

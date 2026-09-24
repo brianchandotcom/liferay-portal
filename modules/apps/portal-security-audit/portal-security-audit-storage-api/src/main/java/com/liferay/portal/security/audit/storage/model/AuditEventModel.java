@@ -408,6 +408,27 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	public void setObjectName(String objectName);
 
 	/**
+	 * Returns the pseudonymized of this audit event.
+	 *
+	 * @return the pseudonymized of this audit event
+	 */
+	public boolean getPseudonymized();
+
+	/**
+	 * Returns <code>true</code> if this audit event is pseudonymized.
+	 *
+	 * @return <code>true</code> if this audit event is pseudonymized; <code>false</code> otherwise
+	 */
+	public boolean isPseudonymized();
+
+	/**
+	 * Sets whether this audit event is pseudonymized.
+	 *
+	 * @param pseudonymized the pseudonymized of this audit event
+	 */
+	public void setPseudonymized(boolean pseudonymized);
+
+	/**
 	 * Returns the request ID of this audit event.
 	 *
 	 * @return the request ID of this audit event
@@ -570,4 +591,4 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1801397197
+// LIFERAY-SERVICE-BUILDER-HASH:-1952693272

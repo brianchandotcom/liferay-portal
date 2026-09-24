@@ -56,6 +56,7 @@ public class AuditEventWrapper
 		attributes.put("impersonatedUserName", getImpersonatedUserName());
 		attributes.put("message", getMessage());
 		attributes.put("objectName", getObjectName());
+		attributes.put("pseudonymized", isPseudonymized());
 		attributes.put("requestId", getRequestId());
 		attributes.put("requestIdGenerated", isRequestIdGenerated());
 		attributes.put("resourceAction", getResourceAction());
@@ -204,6 +205,12 @@ public class AuditEventWrapper
 
 		if (objectName != null) {
 			setObjectName(objectName);
+		}
+
+		Boolean pseudonymized = (Boolean)attributes.get("pseudonymized");
+
+		if (pseudonymized != null) {
+			setPseudonymized(pseudonymized);
 		}
 
 		String requestId = (String)attributes.get("requestId");
@@ -494,6 +501,16 @@ public class AuditEventWrapper
 	}
 
 	/**
+	 * Returns the pseudonymized of this audit event.
+	 *
+	 * @return the pseudonymized of this audit event
+	 */
+	@Override
+	public boolean getPseudonymized() {
+		return model.getPseudonymized();
+	}
+
+	/**
 	 * Returns the request ID of this audit event.
 	 *
 	 * @return the request ID of this audit event
@@ -631,6 +648,16 @@ public class AuditEventWrapper
 	@Override
 	public boolean isImpersonated() {
 		return model.isImpersonated();
+	}
+
+	/**
+	 * Returns <code>true</code> if this audit event is pseudonymized.
+	 *
+	 * @return <code>true</code> if this audit event is pseudonymized; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPseudonymized() {
+		return model.isPseudonymized();
 	}
 
 	/**
@@ -871,6 +898,16 @@ public class AuditEventWrapper
 	}
 
 	/**
+	 * Sets whether this audit event is pseudonymized.
+	 *
+	 * @param pseudonymized the pseudonymized of this audit event
+	 */
+	@Override
+	public void setPseudonymized(boolean pseudonymized) {
+		model.setPseudonymized(pseudonymized);
+	}
+
+	/**
 	 * Sets the request ID of this audit event.
 	 *
 	 * @param requestId the request ID of this audit event
@@ -1011,4 +1048,4 @@ public class AuditEventWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-304411144
+// LIFERAY-SERVICE-BUILDER-HASH:-2072993607

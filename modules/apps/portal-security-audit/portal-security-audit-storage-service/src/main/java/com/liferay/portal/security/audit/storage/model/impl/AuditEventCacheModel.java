@@ -53,7 +53,7 @@ public class AuditEventCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{auditEventId=");
 		sb.append(auditEventId);
@@ -99,6 +99,8 @@ public class AuditEventCacheModel
 		sb.append(message);
 		sb.append(", objectName=");
 		sb.append(objectName);
+		sb.append(", pseudonymized=");
+		sb.append(pseudonymized);
 		sb.append(", requestId=");
 		sb.append(requestId);
 		sb.append(", requestIdGenerated=");
@@ -245,6 +247,8 @@ public class AuditEventCacheModel
 			auditEventImpl.setObjectName(objectName);
 		}
 
+		auditEventImpl.setPseudonymized(pseudonymized);
+
 		if (requestId == null) {
 			auditEventImpl.setRequestId("");
 		}
@@ -342,6 +346,8 @@ public class AuditEventCacheModel
 		impersonatedUserName = objectInput.readUTF();
 		message = objectInput.readUTF();
 		objectName = objectInput.readUTF();
+
+		pseudonymized = objectInput.readBoolean();
 		requestId = objectInput.readUTF();
 
 		requestIdGenerated = objectInput.readBoolean();
@@ -472,6 +478,8 @@ public class AuditEventCacheModel
 			objectOutput.writeUTF(objectName);
 		}
 
+		objectOutput.writeBoolean(pseudonymized);
+
 		if (requestId == null) {
 			objectOutput.writeUTF("");
 		}
@@ -555,6 +563,7 @@ public class AuditEventCacheModel
 	public String impersonatedUserName;
 	public String message;
 	public String objectName;
+	public boolean pseudonymized;
 	public String requestId;
 	public boolean requestIdGenerated;
 	public String resourceAction;
@@ -567,4 +576,4 @@ public class AuditEventCacheModel
 	public String userEmailAddress;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1646860033
+// LIFERAY-SERVICE-BUILDER-HASH:1409561296

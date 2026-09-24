@@ -74,6 +74,8 @@ public class AuditEventTable extends BaseTable<AuditEventTable> {
 		"message", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> objectName = createColumn(
 		"objectName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AuditEventTable, Boolean> pseudonymized = createColumn(
+		"pseudonymized", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> requestId = createColumn(
 		"requestId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, Boolean> requestIdGenerated =
@@ -104,4 +106,4 @@ public class AuditEventTable extends BaseTable<AuditEventTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-227131097
+// LIFERAY-SERVICE-BUILDER-HASH:-296859701

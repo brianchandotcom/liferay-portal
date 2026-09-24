@@ -120,6 +120,16 @@ export class ApplicationPage {
 		await this.createButton.click();
 	}
 
+	async createCollectionEndpoint(scope: 'Company' | 'Site', path: string) {
+		await this.goToEndpointsTab();
+		await this.addEndpointButton.click();
+		await this.setEndpointMethod('GET');
+		await this.setEndpointType('Collection');
+		await this.setEndpointScope(scope);
+		await this.endpointPathTextBox.fill(path);
+		await this.createButton.click();
+	}
+
 	async createSingleElementEndpoint(
 		scope: 'Company' | 'Site',
 		path: string,

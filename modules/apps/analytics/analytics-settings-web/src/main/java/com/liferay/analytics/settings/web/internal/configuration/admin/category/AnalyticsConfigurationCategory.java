@@ -27,7 +27,7 @@ public class AnalyticsConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return "analytics-cloud";
+		return "liferay-data-platform";
 	}
 
 	@Override

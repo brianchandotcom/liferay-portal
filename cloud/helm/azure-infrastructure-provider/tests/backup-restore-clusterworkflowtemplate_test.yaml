@@ -315,6 +315,23 @@ tests:
                     pattern: --query properties.status
         it: Restores to the alternate location and gates on the job status
     -   asserts:
+            -   matchRegex:
+                    path: spec.templates[4].script.source
+                    pattern: any[(]contains[(]"ScopeLocked"[)][)]
+            -   matchRegex:
+                    path: spec.templates[4].script.source
+                    pattern: cannot be deleted while Azure Backup locks it[.] Suspend backups on the backup instance that protects it with az dataprotection backup-instance suspend-backup, then retry the restore[.]
+            -   equal:
+                    path: spec.templates[19].retryStrategy
+                    value:
+                        backoff:
+                            duration: 30s
+                            factor: 2
+                            maxDuration: 20m
+                        limit: 5
+                        retryPolicy: OnFailure
+        it: Retries suspending backups and names the fix for a demoted account Azure Backup still locks
+    -   asserts:
             -   equal:
                     path: spec.templates[10].name
                     value: main
@@ -331,10 +348,10 @@ tests:
                     path: spec.templates[10].dag.tasks[7].depends
                     value: provision-inactive-data-plane
             -   equal:
-                    path: spec.templates[10].dag.tasks[11].name
+                    path: spec.templates[10].dag.tasks[12].name
                     value: wait-for-database
             -   equal:
-                    path: spec.templates[10].dag.tasks[11].depends
+                    path: spec.templates[10].dag.tasks[12].depends
                     value: provision-inactive-data-plane
             -   equal:
                     path: spec.templates[10].dag.tasks[3].name
@@ -354,7 +371,7 @@ tests:
                     path: spec.templates[15].activeDeadlineSeconds
                     value: 7200
             -   equal:
-                    path: spec.templates[19].activeDeadlineSeconds
+                    path: spec.templates[20].activeDeadlineSeconds
                     value: 3600
         it: Sets every step timeout well above the measured restore duration
     -   asserts:
@@ -365,39 +382,45 @@ tests:
                     path: spec.templates[10].dag.tasks[10].depends
                     value: promote-inactive-data-plane
             -   equal:
+                    path: spec.templates[10].dag.tasks[11].name
+                    value: suspend-demoted-backups
+            -   equal:
+                    path: spec.templates[10].dag.tasks[11].depends
+                    value: restart-liferay
+            -   equal:
+                    path: spec.templates[10].dag.tasks[0].depends
+                    value: suspend-demoted-backups
+            -   equal:
                     path: spec.templates[18].activeDeadlineSeconds
                     value: 600
             -   matchRegex:
                     path: spec.templates[18].script.source
-                    pattern: backup-instance resume-protection
-            -   matchRegex:
-                    path: spec.templates[18].script.source
-                    pattern: backup-instance suspend-backup
-            -   matchRegex:
-                    path: spec.templates[18].script.source
-                    pattern: promoted_state.. == .BackupsSuspended
-            -   matchRegex:
-                    path: spec.templates[18].script.source
-                    pattern: demoted_state.. == .ProtectionConfigured
+                    pattern: _wait_for_protection_state "[$]{promoted_instance_name}" ProtectionConfigured
             -   notMatchRegex:
                     path: spec.templates[18].script.source
-                    pattern: stop-protection
-            -   matchRegex:
+                    pattern: suspend-backup
+            -   notMatchRegex:
                     path: spec.templates[18].script.source
-                    pattern: _wait_for_protection_state
-            -   matchRegex:
-                    path: spec.templates[18].script.source
-                    pattern: (?s)resume-protection.*?--no-wait
-            -   matchRegex:
-                    path: spec.templates[18].script.source
-                    pattern: (?s)suspend-backup.*?--no-wait
+                    pattern: resume-protection
             -   matchRegex:
                     path: spec.templates[18].script.source
                     pattern: (?s)function main \{.*?function _wait_for_protection_state \{
+            -   equal:
+                    path: spec.templates[19].name
+                    value: suspend-demoted-backups
             -   matchRegex:
-                    path: spec.templates[18].script.source
-                    pattern: (?s)function main \{.*?\nmain
-        it: Suspends backups on the demoted plane and resumes them on the promoted one
+                    path: spec.templates[19].script.source
+                    pattern: (?s)backup-instance suspend-backup.*?--no-wait
+            -   matchRegex:
+                    path: spec.templates[19].script.source
+                    pattern: "state}\" == \"BackupsSuspended\""
+            -   matchRegex:
+                    path: spec.templates[19].script.source
+                    pattern: No backup instance protected the demoted data plane, so no backups were suspended
+            -   notMatchRegex:
+                    path: spec.templates[19].script.source
+                    pattern: backup-instance delete
+        it: Suspends backups on the demoted plane only once Liferay has restarted and waits for the promoted one
     -   asserts:
             -   equal:
                     path: spec.templates[5].name

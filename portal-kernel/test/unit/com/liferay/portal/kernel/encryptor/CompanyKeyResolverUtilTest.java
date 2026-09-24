@@ -51,12 +51,12 @@ public class CompanyKeyResolverUtilTest {
 				key, CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, keyString));
 		}
 
-		String wrappedKeyString =
+		keyString =
 			CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX +
 				RandomTestUtil.randomString();
 
 		try (AutoCloseable autoCloseable = _setCompanyKeyResolver(null)) {
-			CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, wrappedKeyString);
+			CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, keyString);
 
 			Assert.fail();
 		}
@@ -67,7 +67,7 @@ public class CompanyKeyResolverUtilTest {
 			CompanyKeyResolver.class);
 
 		Mockito.when(
-			companyKeyResolver.unwrapKey(_COMPANY_ID, wrappedKeyString)
+			companyKeyResolver.unwrapKey(_COMPANY_ID, keyString)
 		).thenReturn(
 			key
 		);
@@ -76,9 +76,7 @@ public class CompanyKeyResolverUtilTest {
 				companyKeyResolver)) {
 
 			Assert.assertSame(
-				key,
-				CompanyKeyResolverUtil.unwrapKey(
-					_COMPANY_ID, wrappedKeyString));
+				key, CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, keyString));
 		}
 	}
 
@@ -118,7 +116,7 @@ public class CompanyKeyResolverUtilTest {
 				keyString, CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 
-		String wrappedKeyString =
+		keyString =
 			CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX +
 				RandomTestUtil.randomString();
 
@@ -131,15 +129,14 @@ public class CompanyKeyResolverUtilTest {
 		Mockito.when(
 			companyKeyResolver.wrapKey(_COMPANY_ID, key)
 		).thenReturn(
-			wrappedKeyString
+			keyString
 		);
 
 		try (AutoCloseable autoCloseable = _setCompanyKeyResolver(
 				companyKeyResolver)) {
 
 			Assert.assertEquals(
-				wrappedKeyString,
-				CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
+				keyString, CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 	}
 

@@ -11,7 +11,6 @@ import React, {useState} from 'react';
 import {
 	UNSET_TIME,
 	getLocaleDateFormat,
-	getTimePlaceholder,
 	is12HourLocale,
 	toDisplayDateTime,
 	toStorageDateTime,
@@ -38,13 +37,6 @@ function applyDefaultTime(
 	return `${datePart} ${
 		typeof defaultTime === 'function' ? defaultTime(datePart) : defaultTime
 	}`;
-}
-
-function getDateTimePlaceholder(
-	dateFormat: string,
-	use12Hours: boolean
-): string {
-	return `${dateFormat} ${getTimePlaceholder(use12Hours)}`.toUpperCase();
 }
 
 export type FieldDatePickerProps = {
@@ -180,7 +172,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 				placeholder={
 					placeholder ??
 					(time
-						? getDateTimePlaceholder(dateFormat, use12Hours)
+						? `${dateFormat} ${use12Hours ? 'HH:MM AM' : 'HH:MM'}`.toUpperCase()
 						: undefined)
 				}
 				time={time}

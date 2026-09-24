@@ -19,10 +19,6 @@ const STORAGE_DATE_FORMAT = 'yyyy-MM-dd';
 
 const TIME_PATTERN = /^\d{2}:\d{2}$/;
 
-const TIME_PLACEHOLDER = 'HH:MM';
-
-const TIME_PLACEHOLDER_12_HOUR = 'hh:mm AM';
-
 const TIME_SUFFIX_PATTERN = /\s(\d{1,2}:\d{2}|--:--)(?:\s(AM|PM|--))?$/i;
 
 export const UNSET_TIME = '--:--';
@@ -68,12 +64,6 @@ export function getLocaleDateFormat(
 			return '';
 		})
 		.join('');
-}
-
-export function getTimePlaceholder(use12Hours: boolean): string {
-	return (
-		use12Hours ? TIME_PLACEHOLDER_12_HOUR : TIME_PLACEHOLDER
-	).toUpperCase();
 }
 
 export function is12HourLocale(locale: string): boolean {
@@ -153,10 +143,6 @@ export function to24HourTime(time: string): string {
 	}
 
 	return `${String(hour).padStart(2, '0')}:${minuteString}`;
-}
-
-export function toCanonicalTime(time: string, use12Hours: boolean): string {
-	return padHour(use12Hours ? to24HourTime(time) : time);
 }
 
 export function toDateText(
@@ -322,6 +308,10 @@ function splitDateTime(dateTime: string): [string, string] {
 	}
 
 	return [dateTime.slice(0, match.index), dateTime.slice(match.index + 1)];
+}
+
+function toCanonicalTime(time: string, use12Hours: boolean): string {
+	return padHour(use12Hours ? to24HourTime(time) : time);
 }
 
 function toOrderedDate(dateText: string, dateFormat: string): Date | null {

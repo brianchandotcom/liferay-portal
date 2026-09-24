@@ -56,6 +56,8 @@ public interface AuditEvent {
 
 	public String getUserUuid();
 
+	public boolean isPseudonymized();
+
 	public void setAccountEntryId(long accountEntryId);
 
 	public void setAdditionalInfo(String additionalInfo);
@@ -81,6 +83,8 @@ public interface AuditEvent {
 	public void setMessage(String message);
 
 	public void setPrimaryKey(long primaryKey);
+
+	public void setPseudonymized(boolean pseudonymized);
 
 	public void setServerName(String serverName);
 

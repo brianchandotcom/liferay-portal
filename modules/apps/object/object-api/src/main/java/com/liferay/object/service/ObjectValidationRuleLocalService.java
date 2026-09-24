@@ -365,4 +365,4 @@ public interface ObjectValidationRuleLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:697232372
+// LIFERAY-SERVICE-BUILDER-HASH:-974507261

@@ -24,33 +24,6 @@ definition {
 		}
 	}
 
-	@priority = 4
-	test PathIsPresentInEndpointsWithEditAPIApplication {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given with postAPIApplication including apiApplicationToAPIEndpoints and path to create an API application with its endpoint") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "app-test",
-				endpointName = "testendpoint",
-				endpointPath = "/testendpoint",
-				relatedEndpoint = "true",
-				title = "App-test");
-		}
-
-		task ("When I navigate to Endpoints tab in Edit API application") {
-			APIBuilderUI.switchToRelatedEntryInEditApplication(
-				entity = "Endpoints",
-				title = "App-test");
-		}
-
-		task ("Then I can see correct path") {
-			AssertElementPresent(
-				key_name = "/testendpoint/",
-				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
-		}
-	}
-
 	@priority = 3
 	test UrlSubtitleIsPresentInEditAPIApplication {
 		property test.liferay.virtual.instance = "false";

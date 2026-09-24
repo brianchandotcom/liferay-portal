@@ -457,21 +457,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			externalReferenceCodes.contains(afterExternalReferenceCode));
 	}
 
-	@Override
-	@Test
-	public void testPrepareManifestSummary() throws Exception {
-		Group originalStagingGroup = stagingGroup;
-
-		try {
-			stagingGroup = _getGroup(getScope());
-
-			super.testPrepareManifestSummary();
-		}
-		finally {
-			stagingGroup = originalStagingGroup;
-		}
-	}
-
 	@Test
 	public void testUpdateResolvesEmptyEntry() throws Exception {
 		if (!supportsEmptyEntries()) {
@@ -866,18 +851,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 		return exportImportVulcanBatchEngineTaskItemDelegate.
 			getExportImportDescriptor();
-	}
-
-	private Group _getGroup(Scope scope) throws Exception {
-		if (scope == Scope.COMPANY) {
-			return _companyGroup;
-		}
-
-		if (scope == Scope.DEPOT) {
-			return _groupLocalService.getGroup(_depotEntry.getGroupId());
-		}
-
-		return _group;
 	}
 
 	private long _getGroupId(Scope scope) {

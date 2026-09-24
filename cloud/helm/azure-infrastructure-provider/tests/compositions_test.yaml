@@ -9,6 +9,20 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "range \\$retainedDataPlaneKey, \\$_ := \\$retainedDataPlanes \\}\\}\\s+\\{\\{- if not \\(has \\$retainedDataPlaneKey \\$renderedDataPlaneKeys\\) \\}\\}\\s+\\{\\{- \\$retainedBackupInstanceName := index \\$dataPlaneNames \\$retainedDataPlaneKey \"backupInstance\" \\}\\}\\s+apiVersion: dataprotection[^\\n]+\\s+kind: BackupInstanceBlobStorage"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "crossplane.io/external-name: \\{\\{ \\$retainedBackupInstanceName \\}\\}\\s+gotemplating[^:]*: liferay-backup-instance-retained-\\{\\{ \\$retainedDataPlaneKey \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "retainedDataPlane: \\{\\{ \\$retainedDataPlaneKey \\}\\}\\s+name: \\{\\{ \\$retainedBackupInstanceName \\}\\}-retained\\s+spec:\\s+forProvider:\\s+vaultId: [^\\n]+backupVaults/\\{\\{ \\$backupVaultName \\}\\}\\s+managementPolicies: \\{\\{ list \"Delete\" \"Observe\" \\| toJson \\}\\}"
+        it: Adopts each retained backup instance without ever updating it
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "range \\$retainedDataPlaneKey, \\$_ := \\$retainedDataPlanes \\}\\}\\s+\\{\\{- if not \\(has \\$retainedDataPlaneKey \\$renderedDataPlaneKeys\\) \\}\\}\\s+\\{\\{- \\$retainedDatabaseServerName := index \\$dataPlaneNames \\$retainedDataPlaneKey \"databaseServer\" \\}\\}\\s+---\\s+apiVersion: dbforpostgresql[^\\n]+\\s+kind: FlexibleServer"
             -   documentIndex: 0
                 matchRegex:

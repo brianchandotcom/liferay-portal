@@ -209,6 +209,26 @@ spec:
 ---
 {{- end }}
 {{- end }}
+{{- range $retainedDataPlaneKey, $_ := $retainedDataPlanes }}
+{{- if not (has $retainedDataPlaneKey $renderedDataPlaneKeys) }}
+{{- $retainedBackupInstanceName := index $dataPlaneNames $retainedDataPlaneKey "backupInstance" }}
+apiVersion: dataprotection.azure.m.upbound.io/v1beta1
+kind: BackupInstanceBlobStorage
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $retainedBackupInstanceName }}
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-instance-retained-{{ $retainedDataPlaneKey }}
+    labels:
+        {{- $tags | toYaml | nindent 8 }}
+        retainedDataPlane: {{ $retainedDataPlaneKey }}
+    name: {{ $retainedBackupInstanceName }}-retained
+spec:
+    forProvider:
+        vaultId: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.DataProtection/backupVaults/{{ $backupVaultName }}
+    managementPolicies: {{ list "Delete" "Observe" | toJson }}
+---
+{{- end }}
+{{- end }}
 apiVersion: dataprotection.azure.m.upbound.io/v1beta1
 kind: BackupPolicyBlobStorage
 metadata:

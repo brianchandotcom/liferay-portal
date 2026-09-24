@@ -32,14 +32,14 @@ public class HighlightQueryUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testKeepsExactPhraseQuery() {
+	public void testGetHighlightQueryKeepsExactPhraseQuery() {
 		Query query = _createMatchPhraseQuery(null);
 
 		Assert.assertSame(query, HighlightQueryUtil.getHighlightQuery(query));
 	}
 
 	@Test
-	public void testKeepsFilterQueryClauses() {
+	public void testGetHighlightQueryKeepsFilterQueryClauses() {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
 		Query filterQuery = _createMatchQuery();
@@ -62,7 +62,7 @@ public class HighlightQueryUtilTest {
 	}
 
 	@Test
-	public void testKeepsMustNotQueryClauses() {
+	public void testGetHighlightQueryKeepsMustNotQueryClauses() {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
 		Query query = _createMatchQuery();
@@ -78,7 +78,7 @@ public class HighlightQueryUtilTest {
 	}
 
 	@Test
-	public void testKeepsProximityQueryInMustQueryClauses() {
+	public void testGetHighlightQueryKeepsProximityQueryInMustQueryClauses() {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
 		Query proximityQuery = _createMatchPhraseQuery(50);
@@ -93,21 +93,21 @@ public class HighlightQueryUtilTest {
 	}
 
 	@Test
-	public void testKeepsQueryWithoutProximityQuery() {
+	public void testGetHighlightQueryKeepsQueryWithoutProximityQuery() {
 		Query query = _createMatchQuery();
 
 		Assert.assertSame(query, HighlightQueryUtil.getHighlightQuery(query));
 	}
 
 	@Test
-	public void testKeepsStandaloneProximityQuery() {
+	public void testGetHighlightQueryKeepsStandaloneProximityQuery() {
 		Query query = _createMatchPhraseQuery(50);
 
 		Assert.assertSame(query, HighlightQueryUtil.getHighlightQuery(query));
 	}
 
 	@Test
-	public void testRemovesProximityQueryFromBooleanQuery() {
+	public void testGetHighlightQueryRemovesProximityQueryFromBooleanQuery() {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
 		Query exactPhraseQuery = _createMatchPhraseQuery(null);
@@ -127,7 +127,7 @@ public class HighlightQueryUtilTest {
 	}
 
 	@Test
-	public void testRemovesProximityQueryFromInnerBooleanQuery() {
+	public void testGetHighlightQueryRemovesProximityQueryFromInnerBooleanQuery() {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 		BoolQuery.Builder innerBoolQueryBuilder = QueryBuilders.bool();
 
@@ -156,7 +156,7 @@ public class HighlightQueryUtilTest {
 	}
 
 	@Test
-	public void testRemovesProximityQueryFromShouldQueryClausesUnderMust() {
+	public void testGetHighlightQueryRemovesProximityQueryFromShouldUnderMust() {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 		BoolQuery.Builder innerBoolQueryBuilder = QueryBuilders.bool();
 		BoolQuery.Builder middleBoolQueryBuilder = QueryBuilders.bool();
@@ -192,7 +192,7 @@ public class HighlightQueryUtilTest {
 	}
 
 	@Test
-	public void testRemovesProximityQueryLeavingNothing() {
+	public void testGetHighlightQueryRemovesProximityQueryLeavingNothing() {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
 		boolQueryBuilder.should(_createMatchPhraseQuery(50));
@@ -203,12 +203,12 @@ public class HighlightQueryUtilTest {
 	}
 
 	@Test
-	public void testReturnsNullForNullQuery() {
+	public void testGetHighlightQueryReturnsNullForNullQuery() {
 		Assert.assertNull(HighlightQueryUtil.getHighlightQuery(null));
 	}
 
 	@Test
-	public void testReturnsNullWhenOnlyFilterQueryClausesSurvive() {
+	public void testGetHighlightQueryReturnsNullWhenOnlyFiltersSurvive() {
 		BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
 		boolQueryBuilder.filter(_createMatchQuery());

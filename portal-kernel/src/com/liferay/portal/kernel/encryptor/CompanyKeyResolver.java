@@ -17,7 +17,7 @@ public interface CompanyKeyResolver {
 
 	public boolean isEnabled(long companyId);
 
-	public Key unwrapKey(long companyId, String wrappedKey);
+	public Key unwrapKey(long companyId, String keyString);
 
 	public String wrapKey(long companyId, Key key);
 

@@ -637,7 +637,7 @@ spec:
                                 region: {{ $backupRegion }}
                                 {{- with $backupSpec.vaultTags }}
                                 tags:
-                                    {{- . | toYaml | nindent 36 }}
+                                    {{- . | toYaml | nindent 12 }}
                                 {{- end }}
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
@@ -833,7 +833,7 @@ spec:
                                     Backup: "true"
                                     Name: {{ $storageName }}-{{ $dataPlane }}
                                     {{- with $storageSpec.tags }}
-                                    {{- . | toYaml | nindent 36 }}
+                                    {{- . | toYaml | nindent 12 }}
                                     {{- end }}
                             managementPolicies: {{ $managementPolicies }}
                         ---

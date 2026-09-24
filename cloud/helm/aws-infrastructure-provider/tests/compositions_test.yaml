@@ -78,6 +78,18 @@ tests:
             -   documentIndex: 1
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: '\n( +)Name: \{\{ \$storageName \}\}-\{\{ \$dataPlane \}\}\n +\{\{- with \$storageSpec\.tags \}\}\n +\{\{- \. \| toYaml \| nindent 12 \}\}\n'
+                template: templates/liferayinfrastructure-composition.yaml
+            -   documentIndex: 1
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: '\{\{- with \$backupSpec\.vaultTags \}\}\n +tags:\n +\{\{- \. \| toYaml \| nindent 12 \}\}\n'
+                template: templates/liferayinfrastructure-composition.yaml
+        it: Merges the environment's storage and vault tags at the tag map's own indentation
+    -   asserts:
+            -   documentIndex: 1
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: 'path: \{\{ \$iamPath \}\}\n +permissionsBoundary: \{\{ \$iamBoundaryArn \}\}'
             -   documentIndex: 1
                 notMatchRegex:

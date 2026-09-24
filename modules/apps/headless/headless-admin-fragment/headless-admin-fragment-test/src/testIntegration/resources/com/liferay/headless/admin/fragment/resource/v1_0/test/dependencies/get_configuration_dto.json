@@ -1,0 +1,78 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": {
+						"value": {
+							"itemExternalReference": {
+								"className": "com.liferay.journal.model.JournalArticle",
+								"externalReferenceCode": "${JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE}"
+							}
+						}
+					},
+					"name": "itemByClassPK",
+					"type": "itemSelector"
+				},
+				{
+					"defaultValue": {
+						"value": {
+							"itemExternalReference": {
+								"className": "com.liferay.journal.model.JournalArticle",
+								"externalReferenceCode": "item-erc"
+							}
+						}
+					},
+					"name": "itemByExternalReferenceCode",
+					"type": "itemSelector",
+					"typeOptions": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"enableSelectTemplate": true,
+						"itemSubtype": "BASIC-WEB-CONTENT",
+						"itemType": "com.liferay.journal.model.JournalArticle",
+						"mimeTypes": [
+							"image/jpeg",
+							"image/png"
+						]
+					}
+				},
+				{
+					"defaultValue": {
+						"value": {
+							"itemExternalReference": {
+								"className": "com.liferay.journal.model.JournalArticle",
+								"externalReferenceCode": "item-erc-and-scope-erc",
+								"scope": {
+									"externalReferenceCode": "item-scope-erc",
+									"type": "Site"
+								}
+							}
+						}
+					},
+					"name": "itemByExternalReferenceCodeAndScope",
+					"type": "itemSelector"
+				},
+				{
+					"defaultValue": {
+						"value": {
+							"itemExternalReference": {
+								"className": "com.liferay.journal.model.JournalArticle",
+								"externalReferenceCode": "item-as-string-erc",
+								"scope": {
+									"externalReferenceCode": "item-as-string-scope-erc",
+									"type": "Site"
+								}
+							}
+						}
+					},
+					"name": "itemByExternalReferenceCodeAndScopeAsString",
+					"type": "itemSelector"
+				},
+				{
+					"name": "itemByNonexistentClassPK",
+					"type": "itemSelector"
+				}
+			]
+		}
+	]
+}

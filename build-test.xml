@@ -2366,6 +2366,8 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				<arg value="@{task}" />
 				<arg line="@{test.name}" />
 				<env key="GIT_DISCOVERY_ACROSS_FILESYSTEM" value="1" />
+				<env if:set="env.JENKINS_HOME" key="GRADLE_USER_HOME" value="${workspace.dir}/../.gradle" />
+				<env if:set="env.JENKINS_HOME" key="YARN_YARN_OFFLINE_MIRROR_PRUNING" value="false" />
 			</exec>
 		</sequential>
 	</macrodef>
@@ -12451,6 +12453,8 @@ send_user $expect_out(buffer)]]></echo>
 					<arg value="${test.task}" />
 					<arg line="${test.name}" />
 					<env key="GIT_DISCOVERY_ACROSS_FILESYSTEM" value="1" />
+					<env if:set="env.JENKINS_HOME" key="GRADLE_USER_HOME" value="${workspace.dir}/../.gradle" />
+					<env if:set="env.JENKINS_HOME" key="YARN_YARN_OFFLINE_MIRROR_PRUNING" value="false" />
 				</exec>
 			</try>
 			<catch>
@@ -12565,6 +12569,8 @@ send_user $expect_out(buffer)]]></echo>
 					<arg line="${gradle.jvm.args}" />
 					<arg value="${test.task}" />
 					<env key="GIT_DISCOVERY_ACROSS_FILESYSTEM" value="1" />
+					<env if:set="env.JENKINS_HOME" key="GRADLE_USER_HOME" value="${workspace.dir}/../.gradle" />
+					<env if:set="env.JENKINS_HOME" key="YARN_YARN_OFFLINE_MIRROR_PRUNING" value="false" />
 				</exec>
 			</try>
 			<catch>

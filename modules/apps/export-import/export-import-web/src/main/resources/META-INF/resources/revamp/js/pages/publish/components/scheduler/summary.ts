@@ -9,7 +9,6 @@ import {
 	isCompleteDateTime,
 	isCompleteTime,
 	toDateText,
-	toTimeParts,
 	toTimeText,
 	toWallClockDate,
 	toZonedDate,
@@ -27,18 +26,7 @@ import {
 	getWeekdayName,
 	getWeekdayOrdinalProseText,
 	hasEndDate,
-	isRepeatingUnit,
 } from './utils';
-
-function toRepeatDate(startDate: Date, repeatOnTime: string): Date {
-	const {hour, minute} = toTimeParts(repeatOnTime);
-
-	const repeatDate = new Date(startDate);
-
-	repeatDate.setUTCHours(hour, minute);
-
-	return repeatDate;
-}
 
 function getListText(labels: string[], locale: string): string {
 	if (typeof Intl.ListFormat === 'function') {
@@ -328,6 +316,10 @@ export function getScheduleSummary(
 		: null;
 
 	if (scheduleValues.unit === IntervalUnit.Custom) {
+		if (!scheduleValues.cronExpression.trim()) {
+			return null;
+		}
+
 		return endDate
 			? sub(
 					Liferay.Language.get(
@@ -347,16 +339,23 @@ export function getScheduleSummary(
 				);
 	}
 
-	const repeatDate =
-		isRepeatingUnit(scheduleValues.unit) &&
+	if (
 		!scheduleValues.repeatOnTimeSynced &&
-		isCompleteTime(scheduleValues.repeatOnTime)
-			? toRepeatDate(startDate, scheduleValues.repeatOnTime)
-			: null;
+		!isCompleteTime(scheduleValues.repeatOnTime)
+	) {
+		return null;
+	}
 
-	const timeText = repeatDate
-		? toTimeText(repeatDate, locale)
-		: startTimeText;
+	const timeText = scheduleValues.repeatOnTimeSynced
+		? startTimeText
+		: toTimeText(
+				toWallClockDate(
+					`${scheduleValues.startDateTime.split(' ')[0]} ${
+						scheduleValues.repeatOnTime
+					}`
+				),
+				locale
+			);
 
 	const activeFromText = endDate
 		? sub(

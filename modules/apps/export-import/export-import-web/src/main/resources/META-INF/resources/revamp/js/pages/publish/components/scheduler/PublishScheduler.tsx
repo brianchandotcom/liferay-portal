@@ -17,6 +17,7 @@ import {FieldRadio} from '../../../../components/forms/FieldRadio';
 import FieldSelectWithOption from '../../../../components/forms/FieldSelectWithOption';
 import FieldText from '../../../../components/forms/FieldText';
 import FieldTimePicker from '../../../../components/forms/FieldTimePicker';
+import {toTimeParts, toWallClockDateTime} from '../../../../utils/dateTime';
 import {toCustomCronExpression} from './cron';
 import {getScheduleSummary} from './summary';
 import {
@@ -41,6 +42,21 @@ import {
 const MONTH_MAX_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 const MONTH_VALUES = MONTHS.map((month) => month.value);
+
+function getStartDefaultTime(date: string, timeZoneId: string): string {
+	const [today, time] = toWallClockDateTime(
+		new Date().toISOString(),
+		timeZoneId
+	).split(' ');
+
+	if (date !== today) {
+		return '00:00';
+	}
+
+	const nextHour = toTimeParts(time).hour + 1;
+
+	return nextHour > 23 ? '23:59' : `${String(nextHour).padStart(2, '0')}:00`;
+}
 
 export default function PublishScheduler({
 	cronExpressionErrorMessage,
@@ -187,7 +203,9 @@ export default function PublishScheduler({
 					<ClayLayout.Row>
 						<ClayLayout.Col md={6} size={12}>
 							<FieldDatePicker
-								defaultTime="00:00"
+								defaultTime={(date) =>
+									getStartDefaultTime(date, value.timeZoneId)
+								}
 								errorMessage={startDateTimeErrorMessage}
 								id="publishScheduleStartDateTime"
 								label={Liferay.Language.get('start-date')}

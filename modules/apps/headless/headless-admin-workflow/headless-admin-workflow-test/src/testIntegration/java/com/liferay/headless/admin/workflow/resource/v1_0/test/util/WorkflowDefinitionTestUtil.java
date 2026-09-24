@@ -67,8 +67,8 @@ public class WorkflowDefinitionTestUtil {
 				WorkflowDefinitionTestUtil.class,
 				"dependencies/" + workflowDefinitionFileName),
 			new String[] {
-				"[$WORKFLOW-DEFINITION-DESCRIPTION$]",
-				"[$WORKFLOW-DEFINITION-NAME$]"
+				"[$WORKFLOW_DEFINITION_DESCRIPTION$]",
+				"[$WORKFLOW_DEFINITION_NAME$]"
 			},
 			new String[] {
 				workflowDefinitionDescription, workflowDefinitionName

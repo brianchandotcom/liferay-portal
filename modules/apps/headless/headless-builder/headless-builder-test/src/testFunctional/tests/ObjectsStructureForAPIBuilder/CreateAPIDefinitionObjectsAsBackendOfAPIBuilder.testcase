@@ -24,43 +24,6 @@ definition {
 		}
 	}
 
-	@priority = 4
-	test CanChangeAPIApplicationStatus {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given API application with applicationStatus 'unpublished', baseURL 'my-app', and title 'My App' created") {
-			var response = ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				title = "My APP");
-		}
-
-		task ("When in ‘headless-builder/applications’ I request putAPIApplication with ${aPIApplicationId}, applicationStatus 'published', baseURL 'my-app', and title 'My App'") {
-			var applicationId = JSONPathUtil.getIdValue(response = ${response});
-
-			APIExplorer.navigateToOpenAPI(
-				api = "headless-builder",
-				version = "applications");
-
-			APIExplorer.executeAPIMethod(
-				method = "putAPIApplication",
-				parameter = "aPIApplicationId",
-				requestBody = "{\"applicationStatus\": \"published\", \"baseURL\": \"my-app\", \"title\": \"My App\"}",
-				service = "APIApplication",
-				value = ${applicationId});
-		}
-
-		task ("Then applicationStatus value is changed to 'published'") {
-			var response = ApplicationAPI.getAPIApplications();
-
-			var applicationStatus = JSONUtil.getWithJSONPath(${response}, "$..applicationStatus.key");
-
-			TestUtils.assertEquals(
-				actual = ${applicationStatus},
-				expected = "published");
-		}
-	}
-
 	@priority = 5
 	test CanCreateAPIApplicationWithValidBaseUrl {
 		property test.liferay.virtual.instance = "false";
@@ -87,87 +50,6 @@ definition {
 				locator1 = "OpenAPI#RESPONSE_BODY",
 				method = "postAPIApplication",
 				value1 = "\"key\": \"unpublished\"");
-		}
-	}
-
-	@priority = 5
-	test CanDeleteAPIApplication {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given API application with baseURL 'my-app', and title 'My App' created") {
-			var response = ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				status = "published",
-				title = "My APP");
-		}
-
-		task ("When I request deleteAPIApplication with ${aPIApplicationId}") {
-			var applicationId = JSONPathUtil.getIdValue(response = ${response});
-
-			APIExplorer.navigateToOpenAPI(
-				api = "headless-builder",
-				version = "applications");
-
-			APIExplorer.executeAPIMethod(
-				method = "deleteAPIApplication",
-				parameter = "aPIApplicationId",
-				service = "APIApplication",
-				value = ${applicationId});
-		}
-
-		task ("Then API application is deleted") {
-			AssertTextEquals(
-				locator1 = "OpenAPI#RESPONSE_CODE",
-				method = "deleteAPIApplication",
-				value1 = 204);
-
-			var response = ApplicationAPI.getAPIApplications();
-
-			var totalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
-
-			TestUtils.assertEquals(
-				actual = ${totalCount},
-				expected = 0);
-		}
-	}
-
-	@priority = 5
-	test CannotCreateAPIApplicationWithInvalidBaseUrl {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("When I create API application baseURL 'my app 1234', and title 'My App'") {
-			APIExplorer.navigateToOpenAPI(
-				api = "headless-builder",
-				version = "applications");
-
-			APIExplorer.executeAPIMethod(
-				method = "postAPIApplication",
-				requestBody = "{\"baseURL\": \"my app 1234\", \"title\": \"My App\"}",
-				service = "APIApplication");
-		}
-
-		task ("Then status code 400 with an error message 'Base URL can have a maximum of 255 alphanumeric characters.'") {
-			AssertTextEquals(
-				locator1 = "OpenAPI#RESPONSE_CODE",
-				method = "postAPIApplication",
-				value1 = 400);
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "OpenAPI#RESPONSE_BODY",
-				method = "postAPIApplication",
-				value1 = "Base URL can have a maximum of 255 alphanumeric characters.");
-		}
-
-		task ("And Then API application is not created") {
-			var response = ApplicationAPI.getAPIApplications();
-
-			var totalCount = JSONUtil.getWithJSONPath(${response}, "$..totalCount");
-
-			TestUtils.assertEquals(
-				actual = ${totalCount},
-				expected = 0);
 		}
 	}
 

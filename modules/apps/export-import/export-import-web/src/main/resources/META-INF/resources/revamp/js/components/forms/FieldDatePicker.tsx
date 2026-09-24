@@ -49,7 +49,6 @@ export type FieldDatePickerProps = {
 	label: string;
 	name: string;
 	required?: boolean;
-	use12Hours?: boolean;
 	value?: string;
 } & React.ComponentProps<typeof ClayDatePicker>;
 
@@ -118,7 +117,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 	};
 
 	const handleOnChange = (val: string) => {
-		const storageValue = applyDefaultTime(
+		const storageDateTime = applyDefaultTime(
 			toStorageDateTime(val, dateFormat, use12Hours),
 			defaultTime
 		);
@@ -127,12 +126,12 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 
 		if (
 			internalErrorMessage &&
-			(!storageValue || dateUtils.isValid(storageValue))
+			(!storageDateTime || dateUtils.isValid(storageDateTime))
 		) {
 			setInternalErrorMessage('');
 		}
 
-		onChange?.(storageValue);
+		onChange?.(storageDateTime);
 	};
 
 	const errorMessage = internalErrorMessage || externalErrorMessage;

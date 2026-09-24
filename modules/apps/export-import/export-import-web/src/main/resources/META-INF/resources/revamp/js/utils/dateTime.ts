@@ -3,23 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const BIDI_MARK_PATTERN = /[\u061C\u200E\u200F]/g;
-
-const DATE_FIELD_PATTERN = /d+|M+|y+/g;
-
-const DATE_FORMAT_REFERENCE_DATE = new Date(2024, 10, 22);
-
-const DATE_TIME_PATTERN = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
-
-const FIXED_SPACE_PATTERN = /[\u00A0\u2009\u202F]/g;
-
 const OFFSET_SAMPLE_DISTANCE = 36 * 60 * 60 * 1000;
 
 const STORAGE_DATE_FORMAT = 'yyyy-MM-dd';
-
-const TIME_PATTERN = /^\d{2}:\d{2}$/;
-
-const TIME_SUFFIX_PATTERN = /\s(\d{1,2}:\d{2}|--:--)(?:\s(AM|PM|--))?$/i;
 
 export const UNSET_TIME = '--:--';
 
@@ -33,15 +19,13 @@ type DateTimeParts = {
 	year: number;
 };
 
-export function getLocaleDateFormat(
-	locale: string = Liferay.ThemeDisplay.getBCP47LanguageId()
-): string {
+export function getLocaleDateFormat(locale: string): string {
 	return new Intl.DateTimeFormat(locale, {
 		day: '2-digit',
 		month: '2-digit',
 		year: 'numeric',
 	})
-		.formatToParts(DATE_FORMAT_REFERENCE_DATE)
+		.formatToParts(new Date(2024, 10, 22))
 		.map((part) => {
 			if (part.type === 'day') {
 				return 'dd';
@@ -57,8 +41,8 @@ export function getLocaleDateFormat(
 
 			if (part.type === 'literal') {
 				return part.value
-					.replace(BIDI_MARK_PATTERN, '')
-					.replace(FIXED_SPACE_PATTERN, ' ');
+					.replace(/[\u061C\u200E\u200F]/g, '')
+					.replace(/[\u00A0\u2009\u202F]/g, ' ');
 			}
 
 			return '';
@@ -75,7 +59,7 @@ export function is12HourLocale(locale: string): boolean {
 }
 
 export function isCompleteDateTime(dateTime: string): boolean {
-	if (!DATE_TIME_PATTERN.test(dateTime)) {
+	if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateTime)) {
 		return false;
 	}
 
@@ -93,7 +77,7 @@ export function isCompleteDateTime(dateTime: string): boolean {
 }
 
 export function isCompleteTime(time: string): boolean {
-	if (!TIME_PATTERN.test(time)) {
+	if (!/^\d{2}:\d{2}$/.test(time)) {
 		return false;
 	}
 
@@ -115,8 +99,8 @@ export function to12HourTime(time: string): string {
 
 	const [, hourString, minuteString] = match;
 	const hour = Number(hourString);
-	const period = hour < 12 ? 'AM' : 'PM';
 	const hour12 = String(hour % 12 || 12).padStart(2, '0');
+	const period = hour < 12 ? 'AM' : 'PM';
 
 	return `${hour12}:${minuteString} ${period}`;
 }
@@ -190,7 +174,9 @@ export function toStorageDateTime(
 		return storageDate;
 	}
 
-	return `${storageDate} ${toCanonicalTime(timeText, use12Hours)}`;
+	return `${storageDate} ${padHour(
+		use12Hours ? to24HourTime(timeText) : timeText
+	)}`;
 }
 
 export function toTimeParts(time: string): {hour: number; minute: number} {
@@ -243,7 +229,7 @@ export function toWallClockDateTime(
 export function toZonedDate(dateTime: string, timeZoneId: string): Date {
 	const wallClockTime = toWallClockTime(dateTime);
 
-	const [earlierTime, laterTime] = [
+	const times = [
 		wallClockTime - OFFSET_SAMPLE_DISTANCE,
 		wallClockTime + OFFSET_SAMPLE_DISTANCE,
 	].map(
@@ -251,13 +237,15 @@ export function toZonedDate(dateTime: string, timeZoneId: string): Date {
 			wallClockTime - getTimeZoneOffset(new Date(sampleTime), timeZoneId)
 	);
 
-	const times = [earlierTime, laterTime].filter(
+	const matchingTimes = times.filter(
 		(time) =>
 			getTimeZoneOffset(new Date(time), timeZoneId) ===
 			wallClockTime - time
 	);
 
-	return new Date(times.length ? Math.min(...times) : earlierTime);
+	return new Date(
+		matchingTimes.length ? Math.min(...matchingTimes) : times[0]
+	);
 }
 
 function getTimeZoneOffset(date: Date, timeZoneId: string): number {
@@ -301,7 +289,7 @@ function reorderDate(
 }
 
 function splitDateTime(dateTime: string): [string, string] {
-	const match = dateTime.match(TIME_SUFFIX_PATTERN);
+	const match = dateTime.match(/\s(\d{1,2}:\d{2}|--:--)(?:\s(AM|PM|--))?$/i);
 
 	if (!match || match.index === undefined) {
 		return [dateTime, ''];
@@ -310,12 +298,8 @@ function splitDateTime(dateTime: string): [string, string] {
 	return [dateTime.slice(0, match.index), dateTime.slice(match.index + 1)];
 }
 
-function toCanonicalTime(time: string, use12Hours: boolean): string {
-	return padHour(use12Hours ? to24HourTime(time) : time);
-}
-
 function toOrderedDate(dateText: string, dateFormat: string): Date | null {
-	const fields = dateFormat.match(DATE_FIELD_PATTERN);
+	const fields = dateFormat.match(/d+|M+|y+/g);
 	const numbers = dateText.match(/\d+/g);
 
 	if (fields?.length !== 3 || numbers?.length !== 3) {

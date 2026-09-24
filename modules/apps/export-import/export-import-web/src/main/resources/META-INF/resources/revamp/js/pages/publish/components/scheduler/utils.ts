@@ -3,11 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	isCompleteDateTime,
-	isCompleteTime,
-	toZonedDate,
-} from '../../../../utils/dateTime';
+import {isCompleteDateTime, toZonedDate} from '../../../../utils/dateTime';
 import {
 	IntervalUnit,
 	LAST_WEEKDAY_ORDINAL,
@@ -130,18 +126,12 @@ export function getScheduleValuesErrors(
 
 	if (
 		isRepeatingUnit(scheduleValues.unit) &&
-		!scheduleValues.repeatOnTimeSynced
+		!scheduleValues.repeatOnTimeSynced &&
+		!scheduleValues.repeatOnTime
 	) {
-		if (!scheduleValues.repeatOnTime) {
-			scheduleValuesErrors.repeatOnTime = Liferay.Language.get(
-				'this-field-is-required'
-			);
-		}
-		else if (!isCompleteTime(scheduleValues.repeatOnTime)) {
-			scheduleValuesErrors.repeatOnTime = Liferay.Language.get(
-				'please-enter-a-valid-time'
-			);
-		}
+		scheduleValuesErrors.repeatOnTime = Liferay.Language.get(
+			'this-field-is-required'
+		);
 	}
 
 	if (hasEndDate(scheduleValues)) {

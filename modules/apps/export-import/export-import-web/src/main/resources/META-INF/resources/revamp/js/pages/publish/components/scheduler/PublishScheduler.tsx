@@ -104,9 +104,7 @@ export default function PublishScheduler({
 
 	const repeatsOnDayOfWeek = value.repeatType === RepeatType.DayOfWeek;
 
-	const [, startDateTimeTime = ''] = value.startDateTime.split(' ');
-
-	const repeats = isRepeatingUnit(value.unit);
+	const [, startTime = ''] = value.startDateTime.split(' ');
 
 	const scheduleSummary = getScheduleSummary(value);
 
@@ -503,7 +501,7 @@ export default function PublishScheduler({
 						</ClayLayout.Row>
 					)}
 
-					{repeats && (
+					{isRepeatingUnit(value.unit) && (
 						<>
 							<ClayLayout.Row>
 								<ClayLayout.Col md={6} size={12}>
@@ -522,7 +520,7 @@ export default function PublishScheduler({
 										required={!value.repeatOnTimeSynced}
 										value={
 											value.repeatOnTimeSynced
-												? startDateTimeTime
+												? startTime
 												: value.repeatOnTime
 										}
 									/>
@@ -534,17 +532,16 @@ export default function PublishScheduler({
 								label={Liferay.Language.get(
 									'sync-with-start-date-time'
 								)}
-								onChange={() => {
-									if (value.repeatOnTimeSynced) {
-										set({
-											repeatOnTime: startDateTimeTime,
-											repeatOnTimeSynced: false,
-										});
-									}
-									else {
-										set({repeatOnTimeSynced: true});
-									}
-								}}
+								onChange={() =>
+									set(
+										value.repeatOnTimeSynced
+											? {
+													repeatOnTime: startTime,
+													repeatOnTimeSynced: false,
+												}
+											: {repeatOnTimeSynced: true}
+									)
+								}
 							/>
 						</>
 					)}

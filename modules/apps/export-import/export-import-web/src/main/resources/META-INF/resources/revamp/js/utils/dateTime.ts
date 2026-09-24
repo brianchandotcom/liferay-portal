@@ -251,7 +251,7 @@ export function toWallClockDateTime(
 			(dateTimeFormatPart) => dateTimeFormatPart.type === type
 		)?.value ?? '';
 
-	return `${getPart('year')}-${getPart('month')}-${getPart(
+	return `${getPart('year').padStart(4, '0')}-${getPart('month')}-${getPart(
 		'day'
 	)} ${getPart('hour')}:${getPart('minute')}`;
 }
@@ -328,6 +328,12 @@ function toOrderedDate(dateText: string, dateFormat: string): Date | null {
 	const numbers = dateText.match(/\d+/g);
 
 	if (fields?.length !== 3 || numbers?.length !== 3) {
+		return null;
+	}
+
+	if (
+		numbers[fields.findIndex((field) => field.startsWith('y'))].length !== 4
+	) {
 		return null;
 	}
 

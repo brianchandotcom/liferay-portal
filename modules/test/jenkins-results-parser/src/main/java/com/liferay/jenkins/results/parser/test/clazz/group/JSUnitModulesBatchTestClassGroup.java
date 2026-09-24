@@ -27,8 +27,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -52,19 +50,19 @@ public class JSUnitModulesBatchTestClassGroup
 
 		jsonObject.put(
 			"test_file_exclude_globs",
-			_getTestFileGlobs("test.batch.test.file.excludes"));
+			getGlobs(_getTestFileExcludesJobProperties()));
 		jsonObject.put(
 			"test_file_include_globs",
-			_getTestFileGlobs("test.batch.test.file.includes"));
+			getGlobs(_getTestFileIncludesJobProperties()));
 
 		return jsonObject;
 	}
 
 	public boolean hasTestFileGlobs() {
-		List<String> testFileExcludeGlobs = _getTestFileGlobs(
-			"test.batch.test.file.excludes");
-		List<String> testFileIncludeGlobs = _getTestFileGlobs(
-			"test.batch.test.file.includes");
+		List<String> testFileExcludeGlobs = getGlobs(
+			_getTestFileExcludesJobProperties());
+		List<String> testFileIncludeGlobs = getGlobs(
+			_getTestFileIncludesJobProperties());
 
 		if (testFileExcludeGlobs.isEmpty() && testFileIncludeGlobs.isEmpty()) {
 			return false;
@@ -192,10 +190,10 @@ public class JSUnitModulesBatchTestClassGroup
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
-		List<PathMatcher> testFileExcludesPathMatchers =
-			_getTestFilePathMatchers("test.batch.test.file.excludes");
-		List<PathMatcher> testFileIncludesPathMatchers =
-			_getTestFilePathMatchers("test.batch.test.file.includes");
+		List<PathMatcher> testFileExcludesPathMatchers = getPathMatchers(
+			_getTestFileExcludesJobProperties());
+		List<PathMatcher> testFileIncludesPathMatchers = getPathMatchers(
+			_getTestFileIncludesJobProperties());
 
 		int jsUnitFileCount = 0;
 
@@ -350,39 +348,30 @@ public class JSUnitModulesBatchTestClassGroup
 		return modulesProjectDirs;
 	}
 
-	private List<String> _getTestFileGlobs(String basePropertyName) {
-		String jobPropertyValue = _getTestFileJobPropertyValue(
-			basePropertyName);
+	private List<JobProperty> _getTestFileExcludesJobProperties() {
+		List<JobProperty> excludesJobProperties = new ArrayList<>();
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			return Collections.emptyList();
-		}
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.test.file.excludes", testSuiteName, batchName,
+				JobProperty.Type.EXCLUDE_GLOB));
 
-		return Arrays.asList(
-			JenkinsResultsParserUtil.getGlobsFromProperty(jobPropertyValue));
+		recordJobProperties(excludesJobProperties);
+
+		return excludesJobProperties;
 	}
 
-	private String _getTestFileJobPropertyValue(String basePropertyName) {
-		JobProperty jobProperty = getJobProperty(
-			basePropertyName, testSuiteName, batchName);
+	private List<JobProperty> _getTestFileIncludesJobProperties() {
+		List<JobProperty> includesJobProperties = new ArrayList<>();
 
-		String jobPropertyValue = jobProperty.getValue();
+		includesJobProperties.add(
+			getJobProperty(
+				"test.batch.test.file.includes", testSuiteName, batchName,
+				JobProperty.Type.INCLUDE_GLOB));
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			return null;
-		}
+		recordJobProperties(includesJobProperties);
 
-		recordJobProperty(jobProperty);
-
-		return jobPropertyValue;
-	}
-
-	private List<PathMatcher> _getTestFilePathMatchers(
-		String basePropertyName) {
-
-		return getPathMatchers(
-			_getTestFileJobPropertyValue(basePropertyName),
-			portalGitWorkingDirectory.getWorkingDirectory());
+		return includesJobProperties;
 	}
 
 	private boolean _isTestClassFileReported() {

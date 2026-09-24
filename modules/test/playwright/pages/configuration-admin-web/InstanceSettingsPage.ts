@@ -9,43 +9,28 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {waitForPageToBeLoaded} from '../../utils/waitForPageToBeLoaded';
 import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
-import {ProductMenuPage} from '../product-navigation-control-menu-web/ProductMenuPage';
 
 export class InstanceSettingsPage {
 	readonly actionsButton: Locator;
 	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
-	readonly productMenuPage: ProductMenuPage;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.actionsButton = page.getByRole('button', {name: 'Actions'});
 		this.globalMenuPage = new GlobalMenuPage(page);
 		this.page = page;
-		this.productMenuPage = new ProductMenuPage(page);
 		this.saveButton = page
 			.getByRole('button', {name: 'Save'})
 			.or(page.getByRole('button', {name: 'Update'}));
 	}
 
-	async goto({
-		forceReload = true,
-		useProductMenu = false,
-	}: {forceReload?: boolean; useProductMenu?: boolean} = {}) {
-		if (useProductMenu) {
-			await this.productMenuPage.goToPortlet({
-				category: 'Configuration',
-				panel: 'Control Panel',
-				portlet: 'Instance Settings',
-			});
+	async goto({forceReload = true}: {forceReload?: boolean} = {}) {
+		if (forceReload) {
+			await this.globalMenuPage.goToHome();
 		}
-		else {
-			if (forceReload) {
-				await this.globalMenuPage.goToHome();
-			}
 
-			await this.globalMenuPage.goToControlPanel('Instance Settings');
-		}
+		await this.globalMenuPage.goToControlPanel('Instance Settings');
 	}
 
 	async checkOption(label: string, checked: boolean) {
@@ -98,10 +83,9 @@ export class InstanceSettingsPage {
 		categoryKey: string,
 		configurationName: string,
 		forceReload = true,
-		sectionName?: string,
-		useProductMenu?: boolean
+		sectionName?: string
 	) {
-		await this.goto({forceReload, useProductMenu});
+		await this.goto({forceReload});
 
 		await this.page
 			.getByRole('link', {

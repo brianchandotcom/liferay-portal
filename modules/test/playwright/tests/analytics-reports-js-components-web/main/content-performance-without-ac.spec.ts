@@ -137,7 +137,7 @@ test(
 			);
 
 			await clickAndExpectToBeVisible({
-				target: page.getByText('Sync to Liferay Analytics Cloud'),
+				target: page.getByText('Sync to Liferay Data Platform'),
 				trigger: page
 					.locator('.control-menu-nav')
 					.getByLabel('Content Performance'),

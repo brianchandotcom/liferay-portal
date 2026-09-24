@@ -142,13 +142,15 @@ test('Displays empty state when Analytics Cloud is not connected', async ({
 
 	await expect(
 		page.getByText(
-			'In order to view asset performance, your Liferay instance has to be connected with Liferay Analytics Cloud.'
+			'In order to view asset performance, your Liferay DXP instance has to be connected with Liferay Data Platform.'
 		)
 	).toBeVisible();
 
 	await page.locator('.tab-content a').click();
 
-	await expect(page.getByText('Connect to Analytics Cloud')).toBeVisible();
+	await expect(
+		page.getByText('Connect to Liferay Data Platform')
+	).toBeVisible();
 });
 
 test('Displays empty state when asset belongs to an asset library with no site connected', async ({
@@ -184,7 +186,7 @@ test('Displays empty state when asset belongs to an asset library with no site c
 
 	await expect(
 		page.getByText(
-			'In order to view asset performance, connect sites that are synced to Analytics Cloud to your asset library.'
+			'In order to view asset performance, connect sites that are synced to Liferay Data Platform to your asset library.'
 		)
 	).toBeVisible();
 
@@ -220,7 +222,7 @@ test('Displays empty state when site is not synced to Analytics Cloud', async ({
 
 	await expect(
 		page.getByText(
-			'In order to view asset performance, your sites have to be synced to Liferay Analytics Cloud.'
+			'In order to view asset performance, your sites have to be synced to Liferay Data Platform.'
 		)
 	).toBeVisible();
 

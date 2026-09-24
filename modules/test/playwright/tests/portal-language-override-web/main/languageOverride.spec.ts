@@ -156,7 +156,8 @@ test(
 			await languageOverridePage.editLanguageKey(existingLanguageKey);
 
 			await page
-				.getByText('Original Value: Analytics Cloud Connection')
+				.locator('.form-group[lang="en-US"]')
+				.getByText('Original Value: Liferay Data Platform Connection')
 				.waitFor();
 
 			await languageOverridePage.assertLanguageKeyTranslationValue(

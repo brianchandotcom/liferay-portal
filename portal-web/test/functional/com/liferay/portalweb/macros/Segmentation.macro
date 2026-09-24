@@ -570,7 +570,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Segments",
-			configurationName = "Analytics Cloud Segments",
+			configurationName = "Liferay Data Platform Segments",
 			configurationScope = "System Scope");
 
 		if (isSet(interval)) {

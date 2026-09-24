@@ -2249,7 +2249,7 @@ test(
 
 		await instanceSettingsPage.goToInstanceSetting(
 			'Segments',
-			'Analytics Cloud Segments'
+			'Liferay Data Platform Segments'
 		);
 
 		// Assert the Anonymous Segment and Interest Terms cache help texts are displayed

@@ -118,7 +118,9 @@ export async function goToAnalyticsCloudInstanceSettings(page: Page) {
 
 	await page.goto(`${PORTLET_URLS.analyticsCloudConnection}`);
 
-	await page.getByText('Analytics Cloud Token').waitFor({state: 'visible'});
+	await page
+		.getByText('Liferay Data Platform Token')
+		.waitFor({state: 'visible'});
 }
 
 export async function goToSettingsStep({
@@ -285,7 +287,7 @@ export async function syncAnalyticsCloud({
 
 	await waitForAlert(
 		page,
-		'Success:DXP has successfully connected to Analytics Cloud. You will begin to see data as activities occur on your sites.'
+		'Success:DXP has successfully connected to Liferay Data Platform. You will begin to see data as activities occur on your sites.'
 	);
 
 	return {

@@ -257,7 +257,7 @@ public class CommerceSitemapURLProviderTest {
 	}
 
 	@Test
-	public void testAssetCategorySitemapURLProviderWithSubcategories()
+	public void testAssetCategorySitemapURLProviderWithChildAssetcategories()
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(

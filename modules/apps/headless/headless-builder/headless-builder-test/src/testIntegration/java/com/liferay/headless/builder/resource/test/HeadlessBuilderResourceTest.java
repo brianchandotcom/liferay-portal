@@ -421,7 +421,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		assertSuccessfulJSONObject(
 			JSONUtil.put(
-				"oDataFilter", "textField eq 'value5' or textField eq 'value7'"
+				"oDataFilter",
+				"textField eq 'value5' or contains(textField, 'lue7')"
 			).put(
 				"r_apiEndpointToAPIFilters_l_apiEndpointERC",
 				_API_ENDPOINT_ERC_1

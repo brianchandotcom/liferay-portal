@@ -307,18 +307,16 @@ describe('FieldTimePicker', () => {
 
 		const dialog = screen.getByRole('dialog', {name: 'select-time'});
 
-		[
-			'Delete the entered time',
-			'Enter the hour in 00:00 format',
-			'Enter the minutes in 00:00 format',
-			'Select time of day (AM/PM) using up (PM) and down (AM) arrow keys',
-			'Time down',
-			'Time up',
-		].forEach((untranslatedLabel) => {
-			expect(
-				within(dialog).queryByLabelText(untranslatedLabel)
-			).not.toBeInTheDocument();
-		});
+		expect(within(dialog).getByLabelText('am-pm')).toBeInTheDocument();
+		expect(within(dialog).getByLabelText('clear-time')).toBeInTheDocument();
+		expect(
+			within(dialog).getByLabelText('decrease-time')
+		).toBeInTheDocument();
+		expect(within(dialog).getByLabelText('hours')).toBeInTheDocument();
+		expect(
+			within(dialog).getByLabelText('increase-time')
+		).toBeInTheDocument();
+		expect(within(dialog).getByLabelText('minutes')).toBeInTheDocument();
 	});
 
 	it('shows the picker segments on the 24-hour clock of a 24-hour portal locale', async () => {

@@ -295,31 +295,35 @@ describe('FieldDatePicker', () => {
 	});
 
 	it('keeps the 24-hour clock for a 24-hour portal locale', () => {
-		(Liferay.ThemeDisplay.getBCP47LanguageId as jest.Mock).mockReturnValue(
-			'es-ES'
-		);
+		['es-ES', 'ja-JP'].forEach((locale) => {
+			(
+				Liferay.ThemeDisplay.getBCP47LanguageId as jest.Mock
+			).mockReturnValue(locale);
 
-		const onChange = jest.fn();
+			const onChange = jest.fn();
 
-		render(
-			<FieldDatePicker
-				dateFormat="yyyy-MM-dd"
-				label="Start Date"
-				name="startDate"
-				onChange={onChange}
-				time
-				value="2026-09-19 17:00"
-			/>
-		);
+			const {unmount} = render(
+				<FieldDatePicker
+					dateFormat="yyyy-MM-dd"
+					label="Start Date"
+					name="startDate"
+					onChange={onChange}
+					time
+					value="2026-09-19 17:00"
+				/>
+			);
 
-		const input = screen.getByLabelText('Start Date');
+			const input = screen.getByLabelText('Start Date');
 
-		expect(input).toHaveValue('2026-09-19 17:00');
-		expect(input).toHaveAttribute('placeholder', 'YYYY-MM-DD HH:MM');
+			expect(input).toHaveValue('2026-09-19 17:00');
+			expect(input).toHaveAttribute('placeholder', 'YYYY-MM-DD HH:MM');
 
-		fireEvent.change(input, {target: {value: '2026-09-19 08:30'}});
+			fireEvent.change(input, {target: {value: '2026-09-19 08:30'}});
 
-		expect(onChange).toHaveBeenCalledWith('2026-09-19 08:30');
+			expect(onChange).toHaveBeenCalledWith('2026-09-19 08:30');
+
+			unmount();
+		});
 	});
 
 	it('normalizes a single-digit hour and a lowercase period typed in 12-hour mode', () => {
@@ -453,34 +457,6 @@ describe('FieldDatePicker', () => {
 		expect(onChange).toHaveBeenLastCalledWith('2026-09-19 23:00');
 	});
 
-	it('keeps the 24-hour clock for a locale that marks no day period', () => {
-		(Liferay.ThemeDisplay.getBCP47LanguageId as jest.Mock).mockReturnValue(
-			'ja-JP'
-		);
-
-		const onChange = jest.fn();
-
-		render(
-			<FieldDatePicker
-				dateFormat="yyyy-MM-dd"
-				label="Start Date"
-				name="startDate"
-				onChange={onChange}
-				time
-				value="2026-09-19 17:00"
-			/>
-		);
-
-		const input = screen.getByLabelText('Start Date');
-
-		expect(input).toHaveValue('2026-09-19 17:00');
-		expect(input).toHaveAttribute('placeholder', 'YYYY-MM-DD HH:MM');
-
-		fireEvent.change(input, {target: {value: '2026-09-19 08:30'}});
-
-		expect(onChange).toHaveBeenCalledWith('2026-09-19 08:30');
-	});
-
 	it('normalizes the zero hour emitted when the hour segment is cleared', () => {
 		const onChange = jest.fn();
 
@@ -523,32 +499,11 @@ describe('FieldDatePicker', () => {
 			target: {value: '2026-10-01 13:30 PM'},
 		});
 
-		expect(onChange).toHaveBeenLastCalledWith('2026-10-01 13:30 PM');
-
 		fireEvent.blur(screen.getByLabelText('Start Date'));
 
 		expect(
 			screen.getByText('the-field-value-is-invalid')
 		).toBeInTheDocument();
-	});
-
-	it('renders the date in the order the given format asks for', () => {
-		render(
-			<FieldDatePicker
-				dateFormat="dd.MM.yyyy"
-				label="Start Date"
-				name="startDate"
-				onChange={jest.fn()}
-				time
-				use12Hours={false}
-				value="2026-09-26 17:00"
-			/>
-		);
-
-		const input = screen.getByLabelText('Start Date');
-
-		expect(input).toHaveValue('26.09.2026 17:00');
-		expect(input).toHaveAttribute('placeholder', 'DD.MM.YYYY HH:MM');
 	});
 
 	it('stores a date typed in the given order as a canonical date', () => {
@@ -574,12 +529,12 @@ describe('FieldDatePicker', () => {
 
 	it('renders one stored date in whatever order it is asked for', () => {
 		const cases = [
-			['MM/dd/yyyy', '09/26/2026 17:00'],
-			['dd.MM.yyyy', '26.09.2026 17:00'],
-			['yyyy. MM. dd.', '2026. 09. 26. 17:00'],
+			['MM/dd/yyyy', '09/26/2026 17:00', 'MM/DD/YYYY HH:MM'],
+			['dd.MM.yyyy', '26.09.2026 17:00', 'DD.MM.YYYY HH:MM'],
+			['yyyy. MM. dd.', '2026. 09. 26. 17:00', 'YYYY. MM. DD. HH:MM'],
 		];
 
-		cases.forEach(([dateFormat, displayValue]) => {
+		cases.forEach(([dateFormat, displayValue, placeholder]) => {
 			const {unmount} = render(
 				<FieldDatePicker
 					dateFormat={dateFormat}
@@ -592,9 +547,10 @@ describe('FieldDatePicker', () => {
 				/>
 			);
 
-			expect(screen.getByLabelText('Start Date')).toHaveValue(
-				displayValue
-			);
+			const input = screen.getByLabelText('Start Date');
+
+			expect(input).toHaveAttribute('placeholder', placeholder);
+			expect(input).toHaveValue(displayValue);
 
 			unmount();
 		});

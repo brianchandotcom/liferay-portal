@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {render, screen, within} from '@testing-library/react';
+import {fireEvent, render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, {useState} from 'react';
 
@@ -162,7 +162,7 @@ describe('DateFilter', () => {
 		);
 	});
 
-	it('fills the start and end of the day when the date range bounds are picked from the calendar', async () => {
+	it('fills the start and end of the day when the date range bounds are picked without a time', async () => {
 		const {onApplyFilter, user} = renderDateFilter();
 
 		await user.selectOptions(
@@ -170,13 +170,21 @@ describe('DateFilter', () => {
 			Range.DateRange
 		);
 
-		await pickCalendarDay(user, 'from', PAST_DATE);
+		fireEvent.change(screen.getByLabelText('from'), {
+			target: {
+				value: `${toDisplayDateString(PAST_DATE_STRING)} --:-- --`,
+			},
+		});
 
 		expect(screen.getByLabelText('from')).toHaveValue(
 			`${toDisplayDateString(PAST_DATE_STRING)} 12:00 AM`
 		);
 
-		await pickCalendarDay(user, 'to[date-time]', PAST_DATE);
+		fireEvent.change(screen.getByLabelText('to[date-time]'), {
+			target: {
+				value: `${toDisplayDateString(PAST_DATE_STRING)} --:-- --`,
+			},
+		});
 
 		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
 			`${toDisplayDateString(PAST_DATE_STRING)} 11:59 PM`

@@ -202,10 +202,12 @@ describe('PublishScheduler', () => {
 
 		expect(screen.queryByLabelText('repeat-at')).not.toBeInTheDocument();
 
+		cleanup();
 		renderPublishScheduler({enabled: true, unit: IntervalUnit.Custom});
 
-		expect(screen.queryAllByLabelText('repeat-at')).toHaveLength(0);
+		expect(screen.queryByLabelText('repeat-at')).not.toBeInTheDocument();
 
+		cleanup();
 		renderPublishScheduler({enabled: true, unit: IntervalUnit.Week});
 
 		expect(screen.getByLabelText('repeat-at')).toBeInTheDocument();

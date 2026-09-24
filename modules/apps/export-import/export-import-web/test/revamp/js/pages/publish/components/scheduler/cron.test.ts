@@ -6,6 +6,7 @@
 import {
 	fromCronExpression,
 	toCronExpression,
+	toCustomCronExpression,
 } from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/cron';
 import {
 	IntervalUnit,
@@ -688,5 +689,56 @@ describe('UI to cron is faithful', () => {
 		});
 
 		expect(broken).toEqual([]);
+	});
+});
+
+describe('toCustomCronExpression', () => {
+	it('keeps a typed custom cron', () => {
+		expect(
+			toCustomCronExpression(
+				buildScheduleValues({
+					cronExpression: '0 0 12 ? * SUN *',
+					unit: IntervalUnit.Day,
+				})
+			)
+		).toBe('0 0 12 ? * SUN *');
+	});
+
+	it('leaves the field empty for a schedule without a stored cron', () => {
+		expect(
+			toCustomCronExpression(
+				buildScheduleValues({unit: IntervalUnit.Day})
+			)
+		).toBe('');
+	});
+
+	it('leaves the field empty while the start date is incomplete', () => {
+		expect(
+			toCustomCronExpression(
+				buildScheduleValues({
+					...decode('0 30 15 ? * MON-FRI *'),
+					startDateTime: '2026-07',
+				})
+			)
+		).toBe('');
+	});
+
+	it('rebuilds the cron once the form has moved on from the stored one', () => {
+		expect(
+			toCustomCronExpression(
+				buildScheduleValues({
+					...decode('0 30 15 ? * MON-FRI *'),
+					weekdays: [2],
+				})
+			)
+		).toBe('0 30 15 ? * MON *');
+	});
+
+	it('returns the stored cron while the form still describes it', () => {
+		expect(
+			toCustomCronExpression(
+				buildScheduleValues(decode('0 30 15 ? * MON-FRI *'))
+			)
+		).toBe('0 30 15 ? * MON-FRI *');
 	});
 });

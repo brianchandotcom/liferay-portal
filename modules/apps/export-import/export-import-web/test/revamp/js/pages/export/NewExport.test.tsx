@@ -484,10 +484,11 @@ describe('NewExport', () => {
 
 		await screen.findByText('loaded');
 
-		await userEvent.type(
-			await screen.findByRole('textbox', {name: /^name/i}),
-			'test-file'
+		await userEvent.click(
+			await screen.findByRole('textbox', {name: /^name/i})
 		);
+
+		await userEvent.paste('test-file');
 
 		await userEvent.selectOptions(
 			screen.getByRole('combobox', {name: 'filter-content-by'}),

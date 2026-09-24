@@ -49,11 +49,56 @@ describe('getScheduleValuesErrors', () => {
 		).toBe('please-enter-a-valid-date');
 	});
 
+	it('leaves the end date unchecked while never end is checked', () => {
+		expect(
+			getScheduleValuesErrors(
+				buildScheduleValues({neverEnd: true, unit: IntervalUnit.Day})
+			).endDateTime
+		).toBeUndefined();
+	});
+
 	it('leaves the end date of a one time schedule unchecked', () => {
 		expect(
 			getScheduleValuesErrors(
 				buildScheduleValues({unit: IntervalUnit.Never})
 			)
 		).toEqual({});
+	});
+
+	it('leaves the repeat at time unchecked while it is synced', () => {
+		expect(
+			getScheduleValuesErrors(
+				buildScheduleValues({
+					neverEnd: true,
+					repeatOnTime: '',
+					repeatOnTimeSynced: true,
+					unit: IntervalUnit.Day,
+				})
+			)
+		).toEqual({});
+	});
+
+	it('reports a repeat at time that is partially typed', () => {
+		expect(
+			getScheduleValuesErrors(
+				buildScheduleValues({
+					repeatOnTime: '10:',
+					repeatOnTimeSynced: false,
+					unit: IntervalUnit.Day,
+				})
+			).repeatOnTime
+		).toBe('please-enter-a-valid-time');
+	});
+
+	it('requires the repeat at time once the sync is unchecked', () => {
+		expect(
+			getScheduleValuesErrors(
+				buildScheduleValues({
+					repeatOnTime: '',
+					repeatOnTimeSynced: false,
+					unit: IntervalUnit.Week,
+				})
+			).repeatOnTime
+		).toBe('this-field-is-required');
 	});
 });

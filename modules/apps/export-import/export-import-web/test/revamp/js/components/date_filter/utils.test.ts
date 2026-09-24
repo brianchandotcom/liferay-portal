@@ -261,16 +261,6 @@ describe('getAppliedFilterSummary', () => {
 		getLanguageKey.mockImplementation(defaultLanguageKeyImplementation);
 	});
 
-	function toLocaleDateTimeText(dateTime: string): string {
-		const date = new Date(dateTime.replace(' ', 'T'));
-		const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
-
-		return `${date.toLocaleDateString(locale)} ${date.toLocaleTimeString(
-			locale,
-			{hour: 'numeric', minute: '2-digit'}
-		)}`;
-	}
-
 	it('formats both bounds of a date range in the portal locale', () => {
 		expect(
 			getAppliedFilterSummary({
@@ -278,11 +268,7 @@ describe('getAppliedFilterSummary', () => {
 				range: Range.DateRange,
 				startDate: '2026-08-22 15:05',
 			})
-		).toBe(
-			`Date Range: ${toLocaleDateTimeText(
-				'2026-08-22 15:05'
-			)} to ${toLocaleDateTimeText('2026-10-20 09:30')}`
-		);
+		).toBe('Date Range: 8/22/2026 3:05 PM to 10/20/2026 9:30 AM');
 	});
 
 	it('formats the single bound of an open-ended date range in the portal locale', () => {
@@ -292,7 +278,7 @@ describe('getAppliedFilterSummary', () => {
 				range: Range.DateRange,
 				startDate: '2026-08-22 15:05',
 			})
-		).toBe(`Date Range: After ${toLocaleDateTimeText('2026-08-22 15:05')}`);
+		).toBe('Date Range: After 8/22/2026 3:05 PM');
 
 		expect(
 			getAppliedFilterSummary({
@@ -300,8 +286,6 @@ describe('getAppliedFilterSummary', () => {
 				range: Range.DateRange,
 				startDate: '',
 			})
-		).toBe(
-			`Date Range: Before ${toLocaleDateTimeText('2026-10-20 09:30')}`
-		);
+		).toBe('Date Range: Before 10/20/2026 9:30 AM');
 	});
 });

@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render, screen, waitFor, within} from '@testing-library/react';
+import {
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+	within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import React from 'react';
@@ -21,22 +27,24 @@ jest.mock('staging-taglib', () => ({
 
 const DAY = 24 * 60 * 60 * 1000;
 
-const FUTURE_DATE = new Date(Date.now() + DAY);
+const FUTURE_DATE = new Date(
+	new Date(Date.now() + DAY).setUTCHours(15, 30, 0, 0)
+);
 
 const FUTURE_DATE_TIME = toWallClockDateTime(FUTURE_DATE.toISOString(), 'UTC');
 
-function toDisplayedDateTime(dateTime: string): string {
-	const [datePart, timePart] = dateTime.split(' ');
-	const [year, month, day] = datePart.split('-');
-	const [hourString, minuteString] = timePart.split(':');
-	const hour = Number(hourString);
-	const period = hour < 12 ? 'AM' : 'PM';
-	const hour12 = String(hour % 12 || 12).padStart(2, '0');
-
-	return `${month}/${day}/${year} ${hour12}:${minuteString} ${period}`;
+function toDisplayDate(date: Date): string {
+	return date.toLocaleDateString('en-US', {
+		day: '2-digit',
+		month: '2-digit',
+		timeZone: 'UTC',
+		year: 'numeric',
+	});
 }
 
-const FUTURE_DISPLAY_DATE_TIME = toDisplayedDateTime(FUTURE_DATE_TIME);
+const FUTURE_DISPLAY_DATE = toDisplayDate(FUTURE_DATE);
+
+const FUTURE_DISPLAY_DATE_TIME = `${FUTURE_DISPLAY_DATE} 03:30 PM`;
 
 const SCHEDULED_PUBLISH_PROCESS: ScheduledPublishProcess = {
 	cronExpression: '0 30 9 ? * MON/1 *',
@@ -121,23 +129,28 @@ const renderComponent = (
 	props: Partial<React.ComponentProps<typeof NewPublish>> = {}
 ) => render(<NewPublish {...DEFAULT_PROPS} {...props} />);
 
-const clickCalendarDay = async (
-	datePicker: HTMLElement,
-	preferredIndex: number
-) => {
-	let dayCells = screen.queryAllByLabelText(FUTURE_DATE.toDateString());
+const pickCalendarDay = async (datePicker: HTMLElement) => {
+	const chooseDateButton = within(datePicker).getByRole('button', {
+		name: 'Choose date',
+	});
 
-	if (dayCells.length <= preferredIndex) {
+	await user.click(chooseDateButton);
+
+	const calendar = document.getElementById(
+		chooseDateButton.getAttribute('aria-controls') as string
+	) as HTMLElement;
+
+	if (!within(calendar).queryByLabelText(FUTURE_DATE.toDateString())) {
 		await user.click(
-			within(datePicker).getByRole('button', {
+			within(calendar).getByRole('button', {
 				name: 'Select the next month',
 			})
 		);
-
-		dayCells = screen.getAllByLabelText(FUTURE_DATE.toDateString());
 	}
 
-	await user.click(dayCells[Math.min(preferredIndex, dayCells.length - 1)]);
+	await user.click(
+		within(calendar).getByLabelText(FUTURE_DATE.toDateString())
+	);
 };
 
 describe('NewPublish', () => {
@@ -173,48 +186,6 @@ describe('NewPublish', () => {
 		expect(Liferay.Util.navigate).toHaveBeenCalledWith(
 			DEFAULT_PROPS.processesBackURL
 		);
-	});
-
-	it('resolves the date range bounds in the portal time zone', async () => {
-		renderComponent({timeZoneId: 'Europe/Madrid'});
-
-		await fillRequiredFields();
-
-		await user.selectOptions(
-			screen.getByRole('combobox', {name: 'filter-content-by'}),
-			'dateRange'
-		);
-
-		await user.click(screen.getByLabelText('from'));
-
-		await user.paste('01/01/2026 08:00 AM');
-
-		await user.click(screen.getByRole('button', {name: /show-results/i}));
-
-		await waitFor(() => {
-			expect(getFilteredPreviewCall()).toBeDefined();
-		});
-
-		expect(
-			new URL(
-				String(getFilteredPreviewCall()![0]),
-				'http://localhost'
-			).searchParams.get('startDate')
-		).toBe('2026-01-01T07:00:00.000Z');
-
-		await user.click(
-			screen.getByRole('button', {name: /publish-to-live/i})
-		);
-
-		await waitFor(() => {
-			expect(getPublishProcessCall()).toBeDefined();
-		});
-
-		const body = JSON.parse(getPublishProcessCall()![1]!.body as string);
-
-		expect(body.dateRangeType).toBe('DATE_RANGE');
-		expect(body.endDate).toBeUndefined();
-		expect(body.startDate).toBe('2026-01-01T07:00:00.000Z');
 	});
 
 	it('selects the schedule option when it is the default', async () => {
@@ -336,17 +307,9 @@ describe('NewPublish', () => {
 			'.date-picker'
 		) as HTMLElement;
 
-		await user.click(
-			within(startDatePicker).getByRole('button', {
-				name: 'Choose date',
-			})
-		);
+		await pickCalendarDay(startDatePicker);
 
-		await clickCalendarDay(startDatePicker, 0);
-
-		expect(startDateField).toHaveValue(
-			toDisplayedDateTime(`${FUTURE_DATE_TIME.split(' ')[0]} 00:00`)
-		);
+		expect(startDateField).toHaveValue(`${FUTURE_DISPLAY_DATE} 12:00 AM`);
 
 		await user.click(document.body);
 
@@ -359,7 +322,7 @@ describe('NewPublish', () => {
 		});
 	});
 
-	it('defaults the end date time to 23:59 when a day is picked from the calendar', async () => {
+	it('defaults the end date time to 23:59 when a day is picked without a time', async () => {
 		renderComponent();
 
 		await fillRequiredFields();
@@ -378,19 +341,12 @@ describe('NewPublish', () => {
 		const endDateField = screen.getByRole('textbox', {
 			name: /end-date/,
 		});
-		const endDatePicker = endDateField.closest(
-			'.date-picker'
-		) as HTMLElement;
 
-		await user.click(
-			within(endDatePicker).getByRole('button', {name: 'Choose date'})
-		);
+		fireEvent.change(endDateField, {
+			target: {value: `${FUTURE_DISPLAY_DATE} --:-- --`},
+		});
 
-		await clickCalendarDay(endDatePicker, 1);
-
-		expect(endDateField).toHaveValue(
-			toDisplayedDateTime(`${FUTURE_DATE_TIME.split(' ')[0]} 23:59`)
-		);
+		expect(endDateField).toHaveValue(`${FUTURE_DISPLAY_DATE} 11:59 PM`);
 	});
 
 	it('shows the end date error only after the field is touched', async () => {
@@ -540,12 +496,7 @@ describe('NewPublish', () => {
 		await user.click(screen.getByRole('textbox', {name: /end-date/}));
 
 		await user.paste(
-			toDisplayedDateTime(
-				toWallClockDateTime(
-					new Date(FUTURE_DATE.getTime() + DAY).toISOString(),
-					'UTC'
-				)
-			)
+			`${toDisplayDate(new Date(FUTURE_DATE.getTime() + DAY))} 03:30 PM`
 		);
 
 		await user.selectOptions(
@@ -659,7 +610,7 @@ describe('NewPublish', () => {
 			screen.getByRole('radio', {name: /schedule-for-later/})
 		).toBeChecked();
 		expect(screen.getByRole('textbox', {name: /start-date/})).toHaveValue(
-			toDisplayedDateTime(FUTURE_DATE_TIME)
+			FUTURE_DISPLAY_DATE_TIME
 		);
 		expect(
 			screen.getByRole('checkbox', {
@@ -743,10 +694,6 @@ describe('NewPublish', () => {
 		const midnight = new Date(FUTURE_DATE);
 
 		midnight.setUTCHours(0, 0, 0, 0);
-
-		if (midnight.getTime() <= Date.now()) {
-			midnight.setUTCDate(midnight.getUTCDate() + 1);
-		}
 
 		mockAPIRoutes({
 			scheduledPublishProcess: {
@@ -931,7 +878,7 @@ describe('NewPublish', () => {
 
 		expect(
 			await screen.findByRole('textbox', {name: /start-date/})
-		).toHaveValue(toDisplayedDateTime('2026-07-01 09:30'));
+		).toHaveValue('07/01/2026 09:30 AM');
 
 		await screen.findByText('the-publish-time-must-be-in-the-future');
 

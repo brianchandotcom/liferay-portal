@@ -2,7 +2,7 @@
 {{- $identityPrincipalId := dig "liferay-identity" "resource" "status" "atProvider" "principalId" "" $observedResources }}
 
 {{- if $identityPrincipalId }}
-{{- range $dataPlane := list "blue" "green" }}
+{{- range $dataPlane := $dataPlanes }}
 apiVersion: authorization.azure.m.upbound.io/v1beta1
 kind: RoleAssignment
 metadata:
@@ -17,7 +17,7 @@ spec:
         principalId: {{ $identityPrincipalId }}
         principalType: ServicePrincipal
         roleDefinitionName: Storage Blob Data Contributor
-        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.Storage/storageAccounts/{{ $storageAccountBase }}{{ trunc 1 $dataPlane }}
+        scope: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.Storage/storageAccounts/{{ index $storageAccountNames $dataPlane }}
     managementPolicies: {{ $managementPolicies }}
     providerConfigRef:
         kind: ClusterProviderConfig

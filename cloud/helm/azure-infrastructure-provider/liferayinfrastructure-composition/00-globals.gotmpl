@@ -54,14 +54,23 @@
 {{- $dataPlaneNames := dict -}}
 
 {{- range $dataPlaneKey := concat (values $dataPlaneKeys) (keys $retainedDataPlanes) -}}
+    {{- $dataPlane := first (splitList "-" $dataPlaneKey) -}}
+    {{- $generation := trimPrefix (printf "%s-" $dataPlane) $dataPlaneKey -}}
     {{- $resourceNames := dict "databaseServer" (printf "%s-%s" $baseName $dataPlaneKey) -}}
+    {{- if eq $generation $dataPlaneKey -}}
+        {{- $_ := set $resourceNames "storageAccount" (printf "%s%s" $storageAccountBase (trunc 1 $dataPlane)) -}}
+    {{- else -}}
+        {{- $_ := set $resourceNames "storageAccount" (printf "%.11s%s%s%s" ($projectIdFull | replace "-" "" | lower) $uidHash (trunc 1 $dataPlane) $generation) -}}
+    {{- end -}}
     {{- $_ := set $dataPlaneNames $dataPlaneKey $resourceNames -}}
 {{- end }}
 
 {{- $databaseServerNames := dict -}}
+{{- $storageAccountNames := dict -}}
 
 {{- range $dataPlane, $dataPlaneKey := $dataPlaneKeys -}}
     {{- $_ := set $databaseServerNames $dataPlane (index $dataPlaneNames $dataPlaneKey "databaseServer") -}}
+    {{- $_ := set $storageAccountNames $dataPlane (index $dataPlaneNames $dataPlaneKey "storageAccount") -}}
 {{- end }}
 
 {{- $demotedDataPlane := "" -}}

@@ -121,7 +121,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "principalId: \\{\\{ \\$backupRestoreIdentityPrincipalId \\}\\}\\s+principalType: ServicePrincipal\\s+roleDefinitionName: Storage Blob Data Contributor\\s+scope: [^\\n]+Microsoft.Storage/storageAccounts/\\{\\{ \\$storageAccountBase \\}\\}\\{\\{ trunc 1 \\$dataPlane \\}\\}"
+                    pattern: "principalId: \\{\\{ \\$backupRestoreIdentityPrincipalId \\}\\}\\s+principalType: ServicePrincipal\\s+roleDefinitionName: Storage Blob Data Contributor\\s+scope: [^\\n]+Microsoft.Storage/storageAccounts/\\{\\{ index \\$storageAccountNames \\$dataPlane \\}\\}"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
@@ -309,24 +309,6 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "range \\$i, \\$dataPlane := list \"blue\" \"green\" \\}\\}\\s+\\{\\{- \\$storageAccountName"
-            -   documentIndex: 0
-                matchRegex:
-                    path: spec.pipeline[1].input.inline.template
-                    pattern: "range \\$dataPlane := list \"blue\" \"green\" \\}\\}\\s+apiVersion: authorization[^\\v]*\\s+kind: RoleAssignment\\s+metadata:\\s+annotations:\\s+gotemplating[^:]*: liferay-storage-role-assignment-"
-            -   documentIndex: 0
-                matchRegex:
-                    path: spec.pipeline[1].input.inline.template
-                    pattern: "range \\$dataPlane := list \"blue\" \"green\" \\}\\}\\s+apiVersion: authorization[^\\v]*\\s+kind: RoleAssignment\\s+metadata:\\s+annotations:\\s+gotemplating[^:]*: liferay-backup-vault-storage-"
-            -   documentIndex: 0
-                matchRegex:
-                    path: spec.pipeline[1].input.inline.template
-                    pattern: "range \\$dataPlane := list \"blue\" \"green\" \\}\\}\\s+apiVersion: authorization[^\\v]*\\s+kind: RoleAssignment\\s+metadata:\\s+annotations:\\s+gotemplating[^:]*: liferay-backup-restore-storage-"
-        it: Keeps each plane storage account and its role assignments beyond a data plane swap
-    -   asserts:
-            -   documentIndex: 0
-                matchRegex:
-                    path: spec.pipeline[1].input.inline.template
                     pattern: "\\{\\{- if eq \\$dataPlane \\$activeDataPlane \\}\\}\\s+---\\s+apiVersion: storage.azure.m.upbound.io/v1beta1\\s+kind: Container"
             -   documentIndex: 0
                 matchRegex:
@@ -346,6 +328,10 @@ tests:
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "kind: FlexibleServer\\s+metadata:[\\s\\S]{0,300}?dataPlaneKey: \\{\\{ index \\$dataPlaneKeys \\$dataPlane \\}\\}\\s+name: \\{\\{ \\$databaseServerName \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "kind: Account\\s+metadata:[\\s\\S]{0,300}?dataPlaneKey: \\{\\{ index \\$dataPlaneKeys \\$dataPlane \\}\\}\\s+name: \\{\\{ \\$storageAccountName \\}\\}"
             -   documentIndex: 0
                 notMatchRegex:
                     path: spec.pipeline[1].input.inline.template
@@ -435,6 +421,20 @@ tests:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "restorePointInTime \\| default \"\" \\| sha256sum"
         it: Names each restored server after its restore generation so no two restores share one
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "set \\$resourceNames \"storageAccount\" \\(printf \"%.11s%s%s%s\" \\(\\$projectIdFull \\| replace \"-\" \"\" \\| lower\\) \\$uidHash \\(trunc 1 \\$dataPlane\\) \\$generation\\)"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "set \\$resourceNames \"storageAccount\" \\(printf \"%s%s\" \\$storageAccountBase \\(trunc 1 \\$dataPlane\\)\\)"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "LIFERAY_DOCLIB_STORAGE_ACCOUNT_NAME: \\{\\{ index \\$storageAccountNames \\$activeDataPlane \\| b64enc \\| quote \\}\\}"
+        it: Names each restored storage account after its restore generation so the demoted account keeps its own
     -   asserts:
             -   documentIndex: 0
                 matchRegex:
@@ -615,6 +615,24 @@ tests:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "clusterScope: true\\s+name: backup-restore-cluster-workflow-template\\s+template: release-retained-data-planes"
         it: Releases retained data planes hourly from a CronWorkflow the composition owns
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "range \\$i, \\$dataPlane := \\$dataPlanes \\}\\}\\s+\\{\\{- \\$storageAccountName := index \\$storageAccountNames \\$dataPlane \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "range \\$dataPlane := \\$dataPlanes \\}\\}\\s+apiVersion: authorization[^\\v]*\\s+kind: RoleAssignment\\s+metadata:\\s+annotations:\\s+gotemplating[^:]*: liferay-storage-role-assignment-"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "range \\$dataPlane := \\$dataPlanes \\}\\}\\s+apiVersion: authorization[^\\v]*\\s+kind: RoleAssignment\\s+metadata:\\s+annotations:\\s+gotemplating[^:]*: liferay-backup-vault-storage-"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "range \\$dataPlane := \\$dataPlanes \\}\\}\\s+apiVersion: authorization[^\\v]*\\s+kind: RoleAssignment\\s+metadata:\\s+annotations:\\s+gotemplating[^:]*: liferay-backup-restore-storage-"
+        it: Renders each storage account and its role assignments only while its plane is rendered
     -   asserts:
             -   documentIndex: 0
                 matchRegex:

@@ -51,6 +51,28 @@ function main {
 		exit 1
 	fi
 
+	local storage_account_json_inactive
+
+	storage_account_json_inactive=$( \
+		kubectl get accounts.storage.azure.m.upbound.io \
+			--output json \
+			--selector "dataPlane=${data_plane_inactive}" \
+			| jq ".items[0]")
+
+	if [ "${storage_account_json_inactive}" != "null" ]
+	then
+		if echo "${storage_account_json_inactive}" | jq --exit-status '.metadata.deletionTimestamp != null and ([.status.conditions[]?.message // ""] | any(contains("ScopeLocked")))' > /dev/null
+		then
+			echo "The ${data_plane_inactive} storage account $(echo "${storage_account_json_inactive}" | jq --raw-output ".metadata.name") cannot be deleted while Azure Backup locks it. Suspend backups on the backup instance that protects it with az dataprotection backup-instance suspend-backup, then retry the restore." >&2
+
+			exit 1
+		fi
+
+		echo "The ${data_plane_inactive} data plane still holds a storage account that is being released. Retry the restore once it is gone." >&2
+
+		exit 1
+	fi
+
 	local restore_generation
 
 	restore_generation=$( \
@@ -104,6 +126,11 @@ function main {
 		--null-input \
 		'{($data_plane_key): null}' \
 		> /tmp/retained-data-plane-release.txt
+
+	kubectl get backupinstanceblobstorages.dataprotection.azure.m.upbound.io \
+		--output jsonpath="{.items[0].metadata.name}" \
+		--selector "dataPlane=${data_plane_active}" \
+		> /tmp/backup-instance-name-active.txt 2> /dev/null || true
 
 	kubectl get flexibleservers.dbforpostgresql.azure.m.upbound.io \
 		--output jsonpath="{.items[0].spec.forProvider.resourceGroupName}" \

@@ -145,6 +145,9 @@ spec:
         -   name: get-current-infrastructure-state
             outputs:
                 parameters:
+                    -   name: backup-instance-name-active
+                        valueFrom:
+                            path: /tmp/backup-instance-name-active.txt
                     -   name: backup-vault-name
                         valueFrom:
                             path: /tmp/backup-vault-name.txt
@@ -292,7 +295,7 @@ spec:
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
-                        depends: restart-liferay
+                        depends: suspend-demoted-backups
                         name: clean-up-infrastructure
                         template: clean-up-infrastructure
                     -   name: get-current-infrastructure-state
@@ -399,11 +402,20 @@ spec:
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
                                 -   name: resource-group-name
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.resource-group-name}}"
-                                -   name: storage-account-id-demoted
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.storage-account-id-active}}"
                         depends: promote-inactive-data-plane
                         name: set-data-plane-protection
                         template: set-data-plane-protection
+                    -   arguments:
+                            parameters:
+                                -   name: backup-instance-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.backup-instance-name-active}}"
+                                -   name: backup-vault-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.backup-vault-name}}"
+                                -   name: resource-group-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.resource-group-name}}"
+                        depends: restart-liferay
+                        name: suspend-demoted-backups
+                        template: suspend-demoted-backups
                     -   arguments:
                             parameters:
                                 -   name: expected-generation
@@ -542,7 +554,6 @@ spec:
                     -   name: backup-vault-name
                     -   name: data-inactive
                     -   name: resource-group-name
-                    -   name: storage-account-id-demoted
             name: set-data-plane-protection
             steps:
                 -   -   arguments:
@@ -557,8 +568,6 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.backup-vault-name}}"
                                 -   name: resource-group-name
                                     value: "{{ "{{" }}inputs.parameters.resource-group-name}}"
-                                -   name: storage-account-id-demoted
-                                    value: "{{ "{{" }}inputs.parameters.storage-account-id-demoted}}"
                                 -   name: storage-account-id-promoted
                                     value: "{{ "{{" }}steps.get-inactive-storage-account.outputs.parameters.storage-account-id}}"
                         name: set-data-plane-protection-backup-instances
@@ -568,7 +577,6 @@ spec:
                 parameters:
                     -   name: backup-vault-name
                     -   name: resource-group-name
-                    -   name: storage-account-id-demoted
                     -   name: storage-account-id-promoted
             name: set-data-plane-protection-backup-instances
             script:
@@ -583,6 +591,32 @@ spec:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
                     {{- tpl (.Files.Get "scripts/set-data-plane-protection-backup-instances.sh") . | nindent 20 }}
+        -   activeDeadlineSeconds: {{ .Values.azureBackupService.protectionWaitTimeoutSeconds }}
+            inputs:
+                parameters:
+                    -   name: backup-instance-name
+                    -   name: backup-vault-name
+                    -   name: resource-group-name
+            name: suspend-demoted-backups
+            retryStrategy:
+                backoff:
+                    duration: 30s
+                    factor: 2
+                    maxDuration: 20m
+                limit: 5
+                retryPolicy: OnFailure
+            script:
+                command: [sh]
+                env:
+                    -   name: AZURE_CONFIG_DIR
+                        value: /tmp/azure
+                    -   name: AZURE_EXTENSION_DIR
+                        value: /tmp/azure-extensions
+                image: "{{ $azureCli }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+                source: |-
+                    {{- tpl (.Files.Get "scripts/suspend-demoted-backups.sh") . | nindent 20 }}
         -   activeDeadlineSeconds: {{ .Values.liferayInfrastructure.waitTimeoutSeconds }}
             inputs:
                 parameters:

@@ -3568,13 +3568,13 @@
 				},
 				"pid": {
 					"const": "com.liferay.portal.search.internal.configuration.SiteActivityAsahConfiguration",
-					"title": "Analytics Cloud Search Site Activity"
+					"title": "Liferay Data Platform Search Site Activity"
 				}
 			},
 			"required": [
 				"pid"
 			],
-			"title": "Analytics Cloud Search Site Activity"
+			"title": "Liferay Data Platform Search Site Activity"
 		},
 		{
 			"properties": {
@@ -3585,13 +3585,13 @@
 				},
 				"pid": {
 					"const": "com.liferay.portal.search.internal.configuration.UserActivityAsahConfiguration",
-					"title": "Analytics Cloud Search User Activity"
+					"title": "Liferay Data Platform Search User Activity"
 				}
 			},
 			"required": [
 				"pid"
 			],
-			"title": "Analytics Cloud Search User Activity"
+			"title": "Liferay Data Platform Search User Activity"
 		},
 		{
 			"properties": {
@@ -4725,13 +4725,13 @@
 				},
 				"pid": {
 					"const": "com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahCompanyConfiguration",
-					"title": "Analytics Cloud Segments"
+					"title": "Liferay Data Platform Segments"
 				}
 			},
 			"required": [
 				"pid"
 			],
-			"title": "Analytics Cloud Segments"
+			"title": "Liferay Data Platform Segments"
 		},
 		{
 			"properties": {

@@ -54,7 +54,12 @@ public class JSUnitModulesBatchTestClassGroupTest
 
 		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
 
-		_workingDirectory = temporaryFolder.getRoot();
+		_workingDirectory = JenkinsResultsParserUtil.getCanonicalFile(
+			temporaryFolder.getRoot());
+
+		File gitDir = new File(_workingDirectory, ".git");
+
+		gitDir.mkdir();
 
 		_moduleDir = new File(_workingDirectory, _MODULE_DIR_PATH);
 

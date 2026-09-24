@@ -6,6 +6,7 @@
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
+import {toWallClockDateTime} from '../../utils/dateTime';
 import FieldDatePicker from '../forms/FieldDatePicker';
 import {EditingState, YEARS_OFFSET} from './types';
 import {getValidation} from './utils';
@@ -14,9 +15,24 @@ type Props = {
 	editing: EditingState;
 	errors: ReturnType<typeof getValidation>['errors'];
 	handleUpdateFilter: (payload: Partial<EditingState>) => void;
+	timeZoneId: string;
 };
 
-const DateRangeFields = ({editing, errors, handleUpdateFilter}: Props) => {
+function getEndDefaultTime(date: string, timeZoneId: string): string {
+	const [today, time] = toWallClockDateTime(
+		new Date().toISOString(),
+		timeZoneId
+	).split(' ');
+
+	return date === today ? time : '23:59';
+}
+
+const DateRangeFields = ({
+	editing,
+	errors,
+	handleUpdateFilter,
+	timeZoneId,
+}: Props) => {
 	const currentYear = new Date().getFullYear();
 
 	return (
@@ -43,7 +59,7 @@ const DateRangeFields = ({editing, errors, handleUpdateFilter}: Props) => {
 
 			<ClayLayout.ContentCol>
 				<FieldDatePicker
-					defaultTime="23:59"
+					defaultTime={(date) => getEndDefaultTime(date, timeZoneId)}
 					errorMessage={errors.endDate}
 					formGroupProps={{className: 'mb-0'}}
 					id="endDate"

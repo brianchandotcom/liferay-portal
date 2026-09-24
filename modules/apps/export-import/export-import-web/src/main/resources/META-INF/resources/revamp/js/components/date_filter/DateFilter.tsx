@@ -122,6 +122,7 @@ export default function DateFilter({
 						editing={editing}
 						errors={validation.errors}
 						handleUpdateFilter={updateFilter}
+						timeZoneId={timeZoneId}
 					/>
 				)}
 

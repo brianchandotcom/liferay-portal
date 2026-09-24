@@ -21,7 +21,10 @@ import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
-function applyDefaultTime(value: string, defaultTime?: string): string {
+function applyDefaultTime(
+	value: string,
+	defaultTime: FieldDatePickerProps['defaultTime']
+): string {
 	if (!defaultTime) {
 		return value;
 	}
@@ -32,7 +35,9 @@ function applyDefaultTime(value: string, defaultTime?: string): string {
 		return value;
 	}
 
-	return `${datePart} ${defaultTime}`;
+	return `${datePart} ${
+		typeof defaultTime === 'function' ? defaultTime(datePart) : defaultTime
+	}`;
 }
 
 function getDateTimePlaceholder(
@@ -43,7 +48,7 @@ function getDateTimePlaceholder(
 }
 
 export type FieldDatePickerProps = {
-	defaultTime?: string;
+	defaultTime?: string | ((date: string) => string);
 	disabled?: boolean;
 	errorMessage?: string;
 	formGroupProps?: {className: string};

@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.fragment.client.serdes.v1_0;
 
-import com.liferay.headless.admin.fragment.client.dto.v1_0.ThumbnailURLReference;
+import com.liferay.headless.admin.fragment.client.dto.v1_0.TemplateReference;
 import com.liferay.headless.admin.fragment.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -22,24 +22,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class ThumbnailURLReferenceSerDes {
+public class TemplateReferenceSerDes {
 
-	public static ThumbnailURLReference toDTO(String json) {
-		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
-			new ThumbnailURLReferenceJSONParser();
+	public static TemplateReference toDTO(String json) {
+		TemplateReferenceJSONParser templateReferenceJSONParser =
+			new TemplateReferenceJSONParser();
 
-		return thumbnailURLReferenceJSONParser.parseToDTO(json);
+		return templateReferenceJSONParser.parseToDTO(json);
 	}
 
-	public static ThumbnailURLReference[] toDTOs(String json) {
-		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
-			new ThumbnailURLReferenceJSONParser();
+	public static TemplateReference[] toDTOs(String json) {
+		TemplateReferenceJSONParser templateReferenceJSONParser =
+			new TemplateReferenceJSONParser();
 
-		return thumbnailURLReferenceJSONParser.parseToDTOs(json);
+		return templateReferenceJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ThumbnailURLReference thumbnailURLReference) {
-		if (thumbnailURLReference == null) {
+	public static String toJSON(TemplateReference templateReference) {
+		if (templateReference == null) {
 			return "null";
 		}
 
@@ -47,45 +47,30 @@ public class ThumbnailURLReferenceSerDes {
 
 		sb.append("{");
 
-		if (thumbnailURLReference.getExternalReferenceCode() != null) {
+		if (templateReference.getRendererKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"externalReferenceCode\": ");
+			sb.append("\"rendererKey\": ");
 
 			sb.append("\"");
 
-			sb.append(
-				_escape(thumbnailURLReference.getExternalReferenceCode()));
+			sb.append(_escape(templateReference.getRendererKey()));
 
 			sb.append("\"");
 		}
 
-		if (thumbnailURLReference.getFileBase64() != null) {
+		if (templateReference.getTemplateKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fileBase64\": ");
+			sb.append("\"templateKey\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(thumbnailURLReference.getFileBase64()));
-
-			sb.append("\"");
-		}
-
-		if (thumbnailURLReference.getUrl() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"url\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(thumbnailURLReference.getUrl()));
+			sb.append(_escape(templateReference.getTemplateKey()));
 
 			sb.append("\"");
 		}
@@ -96,72 +81,61 @@ public class ThumbnailURLReferenceSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ThumbnailURLReferenceJSONParser thumbnailURLReferenceJSONParser =
-			new ThumbnailURLReferenceJSONParser();
+		TemplateReferenceJSONParser templateReferenceJSONParser =
+			new TemplateReferenceJSONParser();
 
-		return thumbnailURLReferenceJSONParser.parseToMap(json);
+		return templateReferenceJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		ThumbnailURLReference thumbnailURLReference) {
+		TemplateReference templateReference) {
 
-		if (thumbnailURLReference == null) {
+		if (templateReference == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (thumbnailURLReference.getExternalReferenceCode() == null) {
-			map.put("externalReferenceCode", null);
+		if (templateReference.getRendererKey() == null) {
+			map.put("rendererKey", null);
 		}
 		else {
 			map.put(
-				"externalReferenceCode",
-				String.valueOf(
-					thumbnailURLReference.getExternalReferenceCode()));
+				"rendererKey",
+				String.valueOf(templateReference.getRendererKey()));
 		}
 
-		if (thumbnailURLReference.getFileBase64() == null) {
-			map.put("fileBase64", null);
+		if (templateReference.getTemplateKey() == null) {
+			map.put("templateKey", null);
 		}
 		else {
 			map.put(
-				"fileBase64",
-				String.valueOf(thumbnailURLReference.getFileBase64()));
-		}
-
-		if (thumbnailURLReference.getUrl() == null) {
-			map.put("url", null);
-		}
-		else {
-			map.put("url", String.valueOf(thumbnailURLReference.getUrl()));
+				"templateKey",
+				String.valueOf(templateReference.getTemplateKey()));
 		}
 
 		return map;
 	}
 
-	public static class ThumbnailURLReferenceJSONParser
-		extends BaseJSONParser<ThumbnailURLReference> {
+	public static class TemplateReferenceJSONParser
+		extends BaseJSONParser<TemplateReference> {
 
 		@Override
-		protected ThumbnailURLReference createDTO() {
-			return new ThumbnailURLReference();
+		protected TemplateReference createDTO() {
+			return new TemplateReference();
 		}
 
 		@Override
-		protected ThumbnailURLReference[] createDTOArray(int size) {
-			return new ThumbnailURLReference[size];
+		protected TemplateReference[] createDTOArray(int size) {
+			return new TemplateReference[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "rendererKey")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "fileBase64")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "url")) {
+			else if (Objects.equals(jsonParserFieldName, "templateKey")) {
 				return false;
 			}
 
@@ -170,24 +144,19 @@ public class ThumbnailURLReferenceSerDes {
 
 		@Override
 		protected void setField(
-			ThumbnailURLReference thumbnailURLReference,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			TemplateReference templateReference, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "rendererKey")) {
 				if (jsonParserFieldValue != null) {
-					thumbnailURLReference.setExternalReferenceCode(
+					templateReference.setRendererKey(
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "fileBase64")) {
+			else if (Objects.equals(jsonParserFieldName, "templateKey")) {
 				if (jsonParserFieldValue != null) {
-					thumbnailURLReference.setFileBase64(
+					templateReference.setTemplateKey(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "url")) {
-				if (jsonParserFieldValue != null) {
-					thumbnailURLReference.setUrl((String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -277,4 +246,4 @@ public class ThumbnailURLReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-251991538
+// LIFERAY-REST-BUILDER-HASH:137844705

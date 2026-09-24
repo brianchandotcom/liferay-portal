@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
@@ -25,6 +23,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -44,198 +43,65 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A version of a fragment (draft or published).",
-	value = "FragmentVersion"
+	description = "A group of related fields in a fragment's configuration.",
+	value = "FieldSet"
 )
 @io.swagger.v3.oas.annotations.media.Schema(
-	description = "A version of a fragment (draft or published)."
+	description = "A group of related fields in a fragment's configuration.",
+	requiredProperties = {"fields"}
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "Approved", value = ApprovedFragmentVersion.class
-		),
-		@JsonSubTypes.Type(name = "Draft", value = DraftFragmentVersion.class)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "status",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "FragmentVersion")
-public abstract class FragmentVersion implements Serializable {
+@XmlRootElement(name = "FieldSet")
+public class FieldSet implements Serializable {
 
-	public static FragmentVersion toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentVersion.class, json);
+	public static FieldSet toDTO(String json) {
+		return ObjectMapperUtil.readValue(FieldSet.class, json);
 	}
 
-	public static FragmentVersion unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentVersion.class, json);
+	public static FieldSet unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(FieldSet.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's CSS code."
+		description = "The role of the field set in the page editor's configuration panel."
 	)
-	public String getCss() {
-		if (_cssSupplier != null) {
-			css = _cssSupplier.get();
-
-			_cssSupplier = null;
-		}
-
-		return css;
-	}
-
-	public void setCss(String css) {
-		this.css = css;
-
-		_cssSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCss(UnsafeSupplier<String, Exception> cssUnsafeSupplier) {
-		_cssSupplier = () -> {
-			try {
-				return cssUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's CSS code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String css;
-
-	@JsonIgnore
-	private Supplier<String> _cssSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's HTML code."
-	)
-	public String getHtml() {
-		if (_htmlSupplier != null) {
-			html = _htmlSupplier.get();
-
-			_htmlSupplier = null;
-		}
-
-		return html;
-	}
-
-	public void setHtml(String html) {
-		this.html = html;
-
-		_htmlSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setHtml(UnsafeSupplier<String, Exception> htmlUnsafeSupplier) {
-		_htmlSupplier = () -> {
-			try {
-				return htmlUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's HTML code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String html;
-
-	@JsonIgnore
-	private Supplier<String> _htmlSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's JavaScript code."
-	)
-	public String getJs() {
-		if (_jsSupplier != null) {
-			js = _jsSupplier.get();
-
-			_jsSupplier = null;
-		}
-
-		return js;
-	}
-
-	public void setJs(String js) {
-		this.js = js;
-
-		_jsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setJs(UnsafeSupplier<String, Exception> jsUnsafeSupplier) {
-		_jsSupplier = () -> {
-			try {
-				return jsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's JavaScript code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String js;
-
-	@JsonIgnore
-	private Supplier<String> _jsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's status (Approved or Draft)."
-	)
-	@JsonGetter("status")
+	@JsonGetter("configurationRole")
 	@Valid
-	public Status getStatus() {
-		if (_statusSupplier != null) {
-			status = _statusSupplier.get();
+	public ConfigurationRole getConfigurationRole() {
+		if (_configurationRoleSupplier != null) {
+			configurationRole = _configurationRoleSupplier.get();
 
-			_statusSupplier = null;
+			_configurationRoleSupplier = null;
 		}
 
-		return status;
+		return configurationRole;
 	}
 
 	@JsonIgnore
-	public String getStatusAsString() {
-		Status status = getStatus();
+	public String getConfigurationRoleAsString() {
+		ConfigurationRole configurationRole = getConfigurationRole();
 
-		if (status == null) {
+		if (configurationRole == null) {
 			return null;
 		}
 
-		return status.toString();
+		return configurationRole.toString();
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setConfigurationRole(ConfigurationRole configurationRole) {
+		this.configurationRole = configurationRole;
 
-		_statusSupplier = null;
+		_configurationRoleSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
+	public void setConfigurationRole(
+		UnsafeSupplier<ConfigurationRole, Exception>
+			configurationRoleUnsafeSupplier) {
 
-		_statusSupplier = () -> {
+		_configurationRoleSupplier = () -> {
 			try {
-				return statusUnsafeSupplier.get();
+				return configurationRoleUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -247,13 +113,146 @@ public abstract class FragmentVersion implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The fragment version's status (Approved or Draft)."
+		description = "The role of the field set in the page editor's configuration panel."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Status status;
+	protected ConfigurationRole configurationRole;
 
 	@JsonIgnore
-	private Supplier<Status> _statusSupplier;
+	private Supplier<ConfigurationRole> _configurationRoleSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The JavaScript module loaded to render the field set with a custom component."
+	)
+	public String getCustomComponentModule() {
+		if (_customComponentModuleSupplier != null) {
+			customComponentModule = _customComponentModuleSupplier.get();
+
+			_customComponentModuleSupplier = null;
+		}
+
+		return customComponentModule;
+	}
+
+	public void setCustomComponentModule(String customComponentModule) {
+		this.customComponentModule = customComponentModule;
+
+		_customComponentModuleSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCustomComponentModule(
+		UnsafeSupplier<String, Exception> customComponentModuleUnsafeSupplier) {
+
+		_customComponentModuleSupplier = () -> {
+			try {
+				return customComponentModuleUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The JavaScript module loaded to render the field set with a custom component."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String customComponentModule;
+
+	@JsonIgnore
+	private Supplier<String> _customComponentModuleSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The field set's fields."
+	)
+	@Valid
+	public Field[] getFields() {
+		if (_fieldsSupplier != null) {
+			fields = _fieldsSupplier.get();
+
+			_fieldsSupplier = null;
+		}
+
+		return fields;
+	}
+
+	public void setFields(Field[] fields) {
+		this.fields = fields;
+
+		_fieldsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFields(
+		UnsafeSupplier<Field[], Exception> fieldsUnsafeSupplier) {
+
+		_fieldsSupplier = () -> {
+			try {
+				return fieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The field set's fields.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
+	protected Field[] fields;
+
+	@JsonIgnore
+	private Supplier<Field[]> _fieldsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The field set's label."
+	)
+	public String getLabel() {
+		if (_labelSupplier != null) {
+			label = _labelSupplier.get();
+
+			_labelSupplier = null;
+		}
+
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+
+		_labelSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
+
+		_labelSupplier = () -> {
+			try {
+				return labelUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The field set's label.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String label;
+
+	@JsonIgnore
+	private Supplier<String> _labelSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -261,13 +260,13 @@ public abstract class FragmentVersion implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentVersion)) {
+		if (!(object instanceof FieldSet)) {
 			return false;
 		}
 
-		FragmentVersion fragmentVersion = (FragmentVersion)object;
+		FieldSet fieldSet = (FieldSet)object;
 
-		return Objects.equals(toString(), fragmentVersion.toString());
+		return Objects.equals(toString(), fieldSet.toString());
 	}
 
 	@Override
@@ -282,65 +281,71 @@ public abstract class FragmentVersion implements Serializable {
 
 		sb.append("{");
 
-		String css = getCss();
+		ConfigurationRole configurationRole = getConfigurationRole();
 
-		if (css != null) {
+		if (configurationRole != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"css\": ");
+			sb.append("\"configurationRole\": ");
+
+			sb.append("\"");
+			sb.append(configurationRole);
+			sb.append("\"");
+		}
+
+		String customComponentModule = getCustomComponentModule();
+
+		if (customComponentModule != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customComponentModule\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(css));
+			sb.append(_escape(customComponentModule));
 
 			sb.append("\"");
 		}
 
-		String html = getHtml();
+		Field[] fields = getFields();
 
-		if (html != null) {
+		if (fields != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"html\": ");
+			sb.append("\"fields\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(html));
+			for (int i = 0; i < fields.length; i++) {
+				sb.append(String.valueOf(fields[i]));
 
-			sb.append("\"");
+				if ((i + 1) < fields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		String js = getJs();
+		String label = getLabel();
 
-		if (js != null) {
+		if (label != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"js\": ");
+			sb.append("\"label\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(js));
+			sb.append(_escape(label));
 
-			sb.append("\"");
-		}
-
-		Status status = getStatus();
-
-		if (status != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"status\": ");
-
-			sb.append("\"");
-			sb.append(status);
 			sb.append("\"");
 		}
 
@@ -351,25 +356,25 @@ public abstract class FragmentVersion implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion",
+		defaultValue = "com.liferay.headless.admin.fragment.dto.v1_0.FieldSet",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("Status")
-	public static enum Status {
+	@GraphQLName("ConfigurationRole")
+	public static enum ConfigurationRole {
 
-		APPROVED("Approved"), DRAFT("Draft");
+		ADVANCED("advanced"), STYLE("style");
 
 		@JsonCreator
-		public static Status create(String value) {
+		public static ConfigurationRole create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (Status status : values()) {
-				if (Objects.equals(status.getValue(), value)) {
-					return status;
+			for (ConfigurationRole configurationRole : values()) {
+				if (Objects.equals(configurationRole.getValue(), value)) {
+					return configurationRole;
 				}
 			}
 
@@ -386,7 +391,7 @@ public abstract class FragmentVersion implements Serializable {
 			return _value;
 		}
 
-		private Status(String value) {
+		private ConfigurationRole(String value) {
 			_value = value;
 		}
 
@@ -504,4 +509,4 @@ public abstract class FragmentVersion implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1577870936
+// LIFERAY-REST-BUILDER-HASH:-781265830

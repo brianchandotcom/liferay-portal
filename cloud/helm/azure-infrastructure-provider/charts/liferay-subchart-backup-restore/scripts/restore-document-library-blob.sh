@@ -35,17 +35,35 @@ function main {
 		--target-resource-id "{{ "{{" }}inputs.parameters.storage-account-id}}" \
 		> /tmp/restore-request.json
 
+	local trigger_timeout
+
+	trigger_timeout=$(($(date +%s) + {{ .Values.azureBackupService.protectionWaitTimeoutSeconds }}))
+
 	local triggered_at
 
 	triggered_at=$(date --utc +%Y-%m-%dT%H:%M:%S)
 
-	az dataprotection backup-instance restore trigger \
+	while ! az dataprotection backup-instance restore trigger \
 		--backup-instance-name "${backup_instance_name}" \
 		--no-wait \
 		--output none \
 		--resource-group "${resource_group_name}" \
 		--restore-request-object @/tmp/restore-request.json \
 		--vault-name "${backup_vault_name}"
+	do
+		if [[ "$(date +%s)" -ge "${trigger_timeout}" ]]
+		then
+			echo "The restore into {{ "{{" }}inputs.parameters.storage-account-id}} was not accepted before the timeout." >&2
+
+			exit 1
+		fi
+
+		echo "The restore into {{ "{{" }}inputs.parameters.storage-account-id}} was not accepted yet while the vault role assignment propagates."
+
+		sleep 30
+
+		triggered_at=$(date --utc +%Y-%m-%dT%H:%M:%S)
+	done
 
 	local job_id
 

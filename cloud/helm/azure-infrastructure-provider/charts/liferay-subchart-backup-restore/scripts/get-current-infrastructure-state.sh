@@ -141,11 +141,6 @@ function main {
 		--output jsonpath="{.items[0].metadata.name}" \
 		--selector "component=liferay" \
 		> /tmp/liferay-workload-name.txt
-
-	kubectl get accounts.storage.azure.m.upbound.io \
-		--output jsonpath="{.items[0].status.atProvider.id}" \
-		--selector "dataPlane=${data_plane_active}" \
-		> /tmp/storage-account-id-active.txt
 }
 
 main

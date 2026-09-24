@@ -1,10 +1,32 @@
 components:
     schemas:
+        ApprovedFragmentVersion:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentVersion"
+                -   properties:
+                        configuration:
+                            description:
+                                The fragment version's configuration, which defines the field sets a page creator can use to customize the fragment. It must match the configuration schema.
+                            type: string
+            description:
+                An approved (published) version of a fragment. Its configuration must match the configuration schema.
+            type: object
         BasicFragment:
             allOf:
                 -   $ref: "#/components/schemas/Fragment"
             description:
                 A basic fragment entry.
+            type: object
+        DraftFragmentVersion:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentVersion"
+                -   properties:
+                        configuration:
+                            description:
+                                The fragment version's raw configuration JSON. A draft's configuration is not validated, so any value is preserved as it is stored.
+                            type: string
+            description:
+                A draft version of a fragment. Its configuration is not validated against the configuration schema.
             type: object
         FieldType:
             description:
@@ -169,11 +191,12 @@ components:
         FragmentVersion:
             description:
                 A version of a fragment (draft or published).
+            discriminator:
+                mapping:
+                    Approved: "#/components/schemas/ApprovedFragmentVersion"
+                    Draft: "#/components/schemas/DraftFragmentVersion"
+                propertyName: status
             properties:
-                configuration:
-                    description:
-                        The fragment version's JSON configuration.
-                    type: string
                 css:
                     description:
                         The fragment version's CSS code.

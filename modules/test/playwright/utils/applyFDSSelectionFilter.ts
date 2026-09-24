@@ -15,8 +15,15 @@ export async function applyFDSSelectionFilter(
 		chained = false,
 		exclude = false,
 		filter,
+		multiple = true,
 		value,
-	}: {chained?: boolean; exclude?: boolean; filter: string; value: string}
+	}: {
+		chained?: boolean;
+		exclude?: boolean;
+		filter: string;
+		multiple?: boolean;
+		value: string;
+	}
 ) {
 	await page.getByRole('button', {exact: true, name: 'Filter'}).click();
 
@@ -26,7 +33,9 @@ export async function applyFDSSelectionFilter(
 
 	await page.getByRole('menuitem', {exact: true, name: filter}).click();
 
-	await page.getByRole('checkbox', {exact: true, name: value}).check();
+	await page
+		.getByRole(multiple ? 'checkbox' : 'radio', {exact: true, name: value})
+		.check();
 
 	if (exclude) {
 		await page.getByRole('switch', {exact: true, name: 'Exclude'}).click();

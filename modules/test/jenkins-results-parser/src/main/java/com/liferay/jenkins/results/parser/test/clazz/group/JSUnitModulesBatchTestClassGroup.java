@@ -284,9 +284,10 @@ public class JSUnitModulesBatchTestClassGroup
 				JenkinsResultsParserUtil.combine(
 					"Unable to select any of the ",
 					String.valueOf(jsUnitFilesCount), " test files in the ",
-					batchName, " batch. Please check the modules.excludes, ",
-					"modules.includes, test.batch.test.file.excludes and ",
-					"test.batch.test.file.includes properties."));
+					batchName,
+					" batch. Please check the \"modules.excludes\", ",
+					"\"modules.includes\", \"test.batch.test.file.excludes\" ",
+					"and \"test.batch.test.file.includes\" properties."));
 		}
 	}
 

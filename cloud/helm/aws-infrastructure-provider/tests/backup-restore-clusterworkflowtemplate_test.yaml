@@ -8,16 +8,16 @@ tests:
     -   asserts:
             -   matchRegex:
                     path: spec.templates[?(@.name=="get-current-infrastructure-state")].script.source
-                    pattern: '\n\s+liferayinfrastructures\.aws\.liferay\.com \\\n'
+                    pattern: "\\n\\s+liferayinfrastructures\\.aws\\.liferay\\.com \\\\\\n"
             -   matchRegex:
                     path: spec.templates[?(@.name=="reset-restore-phase")].script.source
-                    pattern: '\n\s+liferayinfrastructures\.aws\.liferay\.com \\\n'
+                    pattern: "\\n\\s+liferayinfrastructures\\.aws\\.liferay\\.com \\\\\\n"
             -   matchRegex:
                     path: spec.templates[?(@.name=="wait-for-infrastructure")].script.source
-                    pattern: '\n\s+liferayinfrastructures\.aws\.liferay\.com \\\n'
+                    pattern: "\\n\\s+liferayinfrastructures\\.aws\\.liferay\\.com \\\\\\n"
             -   notMatchRegex:
                     path: spec.templates[?(@.name=="reset-restore-phase")].script.source
-                    pattern: '\n\s+liferayinfrastructure \\\n'
+                    pattern: "\\n\\s+liferayinfrastructure \\\\\\n"
         it: Addresses the AWS composite by its fully qualified resource name, which the shared liferay.com composite also claims in short form
     -   asserts:
             -   equal:

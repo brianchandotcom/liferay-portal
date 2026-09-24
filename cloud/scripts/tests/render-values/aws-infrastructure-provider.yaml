@@ -1,7 +1,7 @@
 deploymentContext:
     accountId: "000000000000"
     clusterSecurityGroupId: sg-00000000000000000
-    clusterSubnetIds: '["subnet-11111111111111111","subnet-22222222222222222"]'
+    clusterSubnetIds: "[\"subnet-11111111111111111\",\"subnet-22222222222222222\"]"
     crossplaneDataRoleArn: arn:aws:iam::000000000000:role/liferay-example-crossplane-data
     crossplaneIamBoundaryArn: arn:aws:iam::000000000000:policy/liferay-example-crossplane-iam-boundary
     crossplaneIamPath: /crossplane/liferay-example/

@@ -376,3 +376,55 @@ test(
 		});
 	}
 );
+
+test(
+	'The Control Panel root shows the System and Instance scopes',
+	{tag: '@LPD-100172'},
+	async ({globalMenuPage, page}) => {
+		const sideNavigation = page.getByLabel('Control Panel Menu', {
+			exact: true,
+		});
+
+		await test.step('Go to the Control Panel', async () => {
+			await globalMenuPage.goToControlPanel();
+
+			await expect(sideNavigation).toBeVisible();
+		});
+
+		await test.step('Both scopes mark the start of a zone', async () => {
+			const scopeItems = sideNavigation.getByTestId(
+				'sideNavigationScopeItem'
+			);
+
+			await expect(scopeItems).toHaveCount(2);
+			await expect(scopeItems.first()).toHaveText('System');
+			await expect(scopeItems.last()).toContainText('Instance:');
+		});
+
+		await test.step('Neither scope is collapsible', async () => {
+			await expect(
+				sideNavigation
+					.getByTestId('sideNavigationScopeItem')
+					.getByRole('button')
+			).toHaveCount(0);
+		});
+
+		await test.step('An application of a scope sits at the root', async () => {
+			await expect(
+				sideNavigation.getByRole('menuitem', {
+					exact: true,
+					name: 'Server Administration',
+				})
+			).not.toHaveAttribute('aria-expanded');
+		});
+
+		await test.step('A category below a scope still collapses', async () => {
+			await expect(
+				sideNavigation.getByRole('menuitem', {
+					exact: true,
+					name: 'Users',
+				})
+			).toHaveAttribute('aria-expanded');
+		});
+	}
+);

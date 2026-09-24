@@ -1,0 +1,335 @@
+{{- $oidcProvider := trimPrefix "https://" $env.oidcIssuerUrl }}
+
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: Policy
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-liferay-policy
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-policy
+    labels:
+        app: liferay
+        component: liferay-policy
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-liferay-policy
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        path: {{ $env.crossplaneIamPath }}
+        policy: |
+            {
+                "Statement": [
+                    {
+                        "Action": [
+                            "aws-marketplace:BatchMeterUsage",
+                            "aws-marketplace:RegisterUsage"
+                        ],
+                        "Effect": "Allow",
+                        "Resource": "*"
+                    }{{ if $overlayAccess.enabled }},
+                    {
+                        "Action": [
+                            "s3:GetObject",
+                            "s3:ListBucket"
+                        ],
+                        "Effect": "Allow",
+                        "Resource": [
+                            "arn:{{ $env.partition }}:s3:::{{ $overlayBucketName }}",
+                            "arn:{{ $env.partition }}:s3:::{{ $overlayBucketName }}/*"
+                        ]
+                    }{{ end }}
+                ],
+                "Version": "2012-10-17"
+            }
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: Role
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-liferay-role
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-role
+    labels:
+        app: liferay
+        component: liferay-role
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-liferay-role
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        assumeRolePolicy: |
+            {
+                "Statement": [
+                    {
+                        "Action": "sts:AssumeRoleWithWebIdentity",
+                        "Condition": {
+                            "StringEquals": {
+                                "{{ $oidcProvider }}:aud": "sts.amazonaws.com",
+                                "{{ $oidcProvider }}:sub": "system:serviceaccount:{{ $namespace }}:liferay-default"
+                            }
+                        },
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Federated": "arn:{{ $env.partition }}:iam::{{ $env.accountId }}:oidc-provider/{{ $oidcProvider }}"
+                        }
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+        path: {{ $env.crossplaneIamPath }}
+        permissionsBoundary: {{ $env.crossplaneIamBoundaryArn }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: RolePolicyAttachment
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: liferay-policy-attachment
+    labels:
+        app: liferay
+        component: liferay-policy-attachment
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-liferay-policy-attachment
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        policyArnSelector:
+            matchLabels:
+                app: liferay
+                component: liferay-policy
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        roleSelector:
+            matchLabels:
+                app: liferay
+                component: liferay-role
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+    managementPolicies: {{ $managementPolicies }}
+{{- range $dataPlane := list "blue" "green" }}
+---
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: Policy
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $storageName }}-policy-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: storage-policy-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: storage-policy
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $storageName }}-policy-{{ $dataPlane }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        path: {{ $env.crossplaneIamPath }}
+        policy: |
+            {
+                "Statement": [
+                    {
+                        "Action": [
+                            "s3:DeleteObject",
+                            "s3:GetObject",
+                            "s3:ListBucket",
+                            "s3:PutObject"
+                        ],
+                        "Effect": "Allow",
+                        "Resource": [
+                            "arn:{{ $env.partition }}:s3:::{{ $storageName }}-{{ $dataPlane }}",
+                            "arn:{{ $env.partition }}:s3:::{{ $storageName }}-{{ $dataPlane }}/*"
+                        ]
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: RolePolicyAttachment
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $storageName }}-policy-attachment-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: storage-policy-attachment-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: storage-policy-attachment
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $storageName }}-policy-attachment-{{ $dataPlane }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        policyArnSelector:
+            matchLabels:
+                app: liferay
+                component: storage-policy
+                dataPlane: {{ $dataPlane }}
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        roleSelector:
+            matchLabels:
+                app: liferay
+                component: liferay-role
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}
+{{- if $backupSpec.enabled }}
+---
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: Policy
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-backup-restore-policy
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-policy
+    labels:
+        app: liferay
+        component: backup-restore-role
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-backup-restore-policy
+spec:
+    forProvider:
+        path: {{ $env.crossplaneIamPath }}
+        policy: |
+            {
+                "Statement": [
+                    {
+                        "Action": [
+                            "s3:DeleteObject",
+                            "s3:GetBucketLocation",
+                            "s3:ListBucket"
+                        ],
+                        "Effect": "Allow",
+                        "Resource": [
+                            "arn:{{ $env.partition }}:s3:::{{ $storageName }}-blue",
+                            "arn:{{ $env.partition }}:s3:::{{ $storageName }}-blue/*",
+                            "arn:{{ $env.partition }}:s3:::{{ $storageName }}-green",
+                            "arn:{{ $env.partition }}:s3:::{{ $storageName }}-green/*"
+                        ]
+                    },
+                    {
+                        "Action": "iam:PassRole",
+                        "Effect": "Allow",
+                        "Resource": "arn:{{ $env.partition }}:iam::{{ $env.accountId }}:role{{ $env.crossplaneIamPath }}{{ $baseName }}-backup-service-role"
+                    },
+                    {
+                        "Action": [
+                            "backup:DescribeRecoveryPoint",
+                            "backup:DescribeRestoreJob",
+                            "backup:GetRecoveryPointRestoreMetadata",
+                            "backup:ListRecoveryPointsByBackupVault",
+                            "backup:StartRestoreJob"
+                        ],
+                        "Effect": "Allow",
+                        "Resource": "*"
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+---
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: Role
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-backup-restore-role
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-role
+    labels:
+        app: liferay
+        component: backup-restore-role
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-backup-restore-role
+spec:
+    forProvider:
+        assumeRolePolicy: |
+            {
+                "Statement": [
+                    {
+                        "Action": "sts:AssumeRoleWithWebIdentity",
+                        "Condition": {
+                            "StringEquals": {
+                                "{{ $oidcProvider }}:aud": "sts.amazonaws.com",
+                                "{{ $oidcProvider }}:sub": "system:serviceaccount:{{ $namespace }}:backup-restore-service-account"
+                            }
+                        },
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Federated": "arn:{{ $env.partition }}:iam::{{ $env.accountId }}:oidc-provider/{{ $oidcProvider }}"
+                        }
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+        path: {{ $env.crossplaneIamPath }}
+        permissionsBoundary: {{ $env.crossplaneIamBoundaryArn }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: Role
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-backup-service-role
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-service-role
+    labels:
+        app: liferay
+        component: backup-service-role
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-backup-service-role
+spec:
+    forProvider:
+        assumeRolePolicy: |
+            {
+                "Statement": [
+                    {
+                        "Action": "sts:AssumeRole",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": "backup.amazonaws.com"
+                        }
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+        managedPolicyArns:
+            -   arn:{{ $env.partition }}:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup
+            -   arn:{{ $env.partition }}:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForRestores
+            -   arn:{{ $env.partition }}:iam::aws:policy/AWSBackupServiceRolePolicyForS3Backup
+            -   arn:{{ $env.partition }}:iam::aws:policy/AWSBackupServiceRolePolicyForS3Restore
+        path: {{ $env.crossplaneIamPath }}
+        permissionsBoundary: {{ $env.crossplaneIamBoundaryArn }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: iam.aws.m.upbound.io/v1beta1
+kind: RolePolicyAttachment
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-role-policy-attachment
+    labels:
+        app: liferay
+        component: backup-restore-role
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-backup-restore-role-policy-attachment
+spec:
+    forProvider:
+        policyArnSelector:
+            matchLabels:
+                app: liferay
+                component: backup-restore-role
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        roleSelector:
+            matchLabels:
+                app: liferay
+                component: backup-restore-role
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

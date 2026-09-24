@@ -1,0 +1,143 @@
+{{- if and $backupSpec.enabled $cmkEnabled }}
+apiVersion: kms.aws.m.upbound.io/v1beta1
+kind: Alias
+metadata:
+    annotations:
+        crossplane.io/external-name: alias/{{ $baseName }}-backup-vault
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-vault-kms-alias
+    labels:
+        app: liferay
+        component: backup-vault
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-backup-vault-kms-alias
+spec:
+    forProvider:
+        region: {{ $backupRegion }}
+        targetKeyIdSelector:
+            matchLabels:
+                app: liferay
+                component: backup-vault
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: kms.aws.m.upbound.io/v1beta1
+kind: Key
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-vault-kms-key
+    labels:
+        app: liferay
+        component: backup-vault
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-backup-vault-kms-key
+spec:
+    forProvider:
+        deletionWindowInDays: 7
+        enableKeyRotation: true
+        policy: |
+            {
+                "Statement": [
+                    {
+                        "Action": "kms:*",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:{{ $env.partition }}:iam::{{ $env.accountId }}:root"
+                        },
+                        "Resource": "*"
+                    },
+                    {
+                        "Action": [
+                            "kms:CreateGrant",
+                            "kms:Decrypt",
+                            "kms:DescribeKey",
+                            "kms:Encrypt",
+                            "kms:GenerateDataKey*",
+                            "kms:ReEncrypt*"
+                        ],
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:{{ $env.partition }}:iam::{{ $env.accountId }}:role{{ $env.crossplaneIamPath }}{{ $baseName }}-backup-service-role"
+                        },
+                        "Resource": "*"
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+        region: {{ $backupRegion }}
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}
+{{- if and $searchSpec.enabled $cmkEnabled }}
+---
+apiVersion: kms.aws.m.upbound.io/v1beta1
+kind: Alias
+metadata:
+    annotations:
+        crossplane.io/external-name: alias/{{ $searchName }}
+        gotemplating.fn.crossplane.io/composition-resource-name: search-kms-alias
+    labels:
+        app: liferay
+        component: search
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $searchName }}-kms-alias
+spec:
+    forProvider:
+        region: {{ $env.region }}
+        targetKeyIdSelector:
+            matchLabels:
+                app: liferay
+                component: search
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: kms.aws.m.upbound.io/v1beta1
+kind: Key
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: search-kms-key
+    labels:
+        app: liferay
+        component: search
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $searchName }}-kms-key
+spec:
+    forProvider:
+        deletionWindowInDays: 7
+        enableKeyRotation: true
+        policy: |
+            {
+                "Statement": [
+                    {
+                        "Action": "kms:*",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "arn:{{ $env.partition }}:iam::{{ $env.accountId }}:root"
+                        },
+                        "Resource": "*"
+                    },
+                    {
+                        "Action": [
+                            "kms:CreateGrant",
+                            "kms:Decrypt",
+                            "kms:DescribeKey",
+                            "kms:Encrypt",
+                            "kms:GenerateDataKey*",
+                            "kms:ReEncrypt*"
+                        ],
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": "es.amazonaws.com"
+                        },
+                        "Resource": "*"
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+        region: {{ $env.region }}
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

@@ -1,0 +1,211 @@
+{{- if $searchSpec.enabled }}
+{{- $clusterSubnetIdsCount := len $clusterSubnetIds }}
+
+apiVersion: opensearch.aws.m.upbound.io/v1beta1
+kind: Domain
+metadata:
+    annotations:
+        crossplane.io/external-name: arn:{{ $env.partition }}:es:{{ $env.region }}:{{ $env.accountId }}:domain/{{ $searchName }}
+        gotemplating.fn.crossplane.io/composition-resource-name: search
+    labels:
+        app: liferay
+        component: search
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $searchName }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        advancedSecurityOptions:
+            enabled: true
+            internalUserDatabaseEnabled: true
+            masterUserOptions:
+                masterUserName: {{ $searchUsername }}
+                masterUserPasswordSecretRef:
+                    key: password
+                    name: liferay-search-password
+        clusterConfig:
+            instanceCount: {{ $searchSpec.instanceCount }}
+            instanceType: {{ $searchSpec.instanceType }}
+            zoneAwarenessConfig:
+                availabilityZoneCount: {{ $clusterSubnetIdsCount }}
+            zoneAwarenessEnabled: {{ gt $clusterSubnetIdsCount 1 }}
+        domainEndpointOptions:
+            enforceHttps: true
+            tlsSecurityPolicy: Policy-Min-TLS-1-2-2019-07
+        domainName: {{ $searchName }}
+        ebsOptions:
+            ebsEnabled: true
+            volumeSize: {{ $searchSpec.volumeSizeGB }}
+            volumeType: gp3
+        encryptAtRest:
+            enabled: true
+            {{- if $cmkEnabled }}
+            kmsKeyIdSelector:
+                matchLabels:
+                    app: liferay
+                    component: search
+                    environmentId: {{ $environmentId }}
+                    projectId: {{ $projectId }}
+            {{- end }}
+        engineVersion: {{ $searchSpec.engineVersion | quote }}
+        logPublishingOptions:
+            -   cloudwatchLogGroupArn: arn:{{ $env.partition }}:logs:{{ $env.region }}:{{ $env.accountId }}:log-group:{{ $searchName }}-audit-logs
+                enabled: true
+                logType: AUDIT_LOGS
+            -   cloudwatchLogGroupArn: arn:{{ $env.partition }}:logs:{{ $env.region }}:{{ $env.accountId }}:log-group:{{ $searchName }}-index-logs
+                enabled: true
+                logType: INDEX_SLOW_LOGS
+        nodeToNodeEncryption:
+            enabled: true
+        region: {{ $env.region }}
+        softwareUpdateOptions:
+            autoSoftwareUpdateEnabled: {{ $searchSpec.autoSoftwareUpdateEnabled }}
+        tags:
+            Name: {{ $searchName }}
+        vpcOptions:
+            securityGroupIdSelector:
+                matchLabels:
+                    app: liferay
+                    component: search-security-group
+                    environmentId: {{ $environmentId }}
+                    projectId: {{ $projectId }}
+            subnetIds: {{ $clusterSubnetIds | toJson }}
+    managementPolicies: {{ $managementPolicies }}
+    writeConnectionSecretToRef:
+        name: liferay-search-credentials
+---
+apiVersion: opensearch.aws.m.upbound.io/v1beta1
+kind: DomainPolicy
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: search-policy
+    labels:
+        app: liferay
+        component: search-policy
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $searchName }}-policy
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        accessPolicies: |
+            {
+                "Statement": [
+                    {
+                        "Action": "es:*",
+                        "Effect": "Allow",
+                        "Principal": {
+                            "AWS": "*"
+                        },
+                        "Resource": [
+                            "arn:{{ $env.partition }}:es:{{ $env.region }}:{{ $env.accountId }}:domain/{{ $searchName }}/*"
+                        ]
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+        domainNameSelector:
+            matchLabels:
+                app: liferay
+                component: search
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        region: {{ $env.region }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+kind: Group
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: {{ $searchName }}-audit-logs
+    name: {{ $searchName }}-audit-logs
+spec:
+    forProvider:
+        region: {{ $env.region }}
+        retentionInDays: 7
+---
+apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+kind: Group
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: {{ $searchName }}-index-logs
+    name: {{ $searchName }}-index-logs
+spec:
+    forProvider:
+        region: {{ $env.region }}
+        retentionInDays: 7
+---
+apiVersion: cloudwatchlogs.aws.m.upbound.io/v1beta1
+kind: ResourcePolicy
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: {{ $searchName }}-log-publishing-policy
+    name: {{ $searchName }}-log-publishing-policy
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        policyDocument: |
+            {
+                "Statement": [
+                    {
+                        "Action": [
+                            "logs:CreateLogStream",
+                            "logs:PutLogEvents"
+                        ],
+                        "Effect": "Allow",
+                        "Principal": {
+                            "Service": "es.amazonaws.com"
+                        },
+                        "Resource": "arn:{{ $env.partition }}:logs:{{ $env.region }}:{{ $env.accountId }}:log-group:{{ $searchName }}-*"
+                    }
+                ],
+                "Version": "2012-10-17"
+            }
+        region: {{ $env.region }}
+---
+apiVersion: ec2.aws.m.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: search-security-group
+    labels:
+        app: liferay
+        component: search-security-group
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        region: {{ $env.region }}
+        tags:
+            Name: {{ $searchName }}-security-group
+        vpcId: {{ $env.vpcId }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: ec2.aws.m.upbound.io/v1beta1
+kind: SecurityGroupIngressRule
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: search-security-group-ingress
+    labels:
+        app: liferay
+        component: search-security-group-ingress
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        fromPort: 443
+        ipProtocol: tcp
+        referencedSecurityGroupId: {{ $env.clusterSecurityGroupId }}
+        region: {{ $env.region }}
+        securityGroupIdSelector:
+            matchLabels:
+                app: liferay
+                component: search-security-group
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        toPort: 443
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

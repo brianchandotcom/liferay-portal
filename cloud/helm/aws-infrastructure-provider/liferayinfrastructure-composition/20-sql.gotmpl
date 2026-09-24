@@ -1,0 +1,148 @@
+{{- $databaseSpec := $xr.spec.database -}}
+
+{{- $isAboveAllocatedStorageThreshold := ge (int $databaseSpec.storageGB) 400 }}
+
+{{- range $i, $dataPlane := has $restorePhase (list "promoting" "provisioning") | ternary (list "blue" "green") (list $targetActiveDataPlane) }}
+{{- if $i }}
+---
+{{- end }}
+apiVersion: rds.aws.m.upbound.io/v1beta1
+kind: Instance
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-database-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: database-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: database
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-database-{{ $dataPlane }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        allocatedStorage: {{ $databaseSpec.storageGB }}
+        applyImmediately: {{ and (eq $dataPlane $targetActiveDataPlane) (ne $restorePhase "none") }}
+        autoMinorVersionUpgrade: {{ $databaseSpec.autoMinorVersionUpgrade }}
+        autoGeneratePassword: true
+        backupRetentionPeriod: 7
+        copyTagsToSnapshot: true
+        databaseInsightsMode: {{ $databaseSpec.databaseInsightsMode | quote }}
+        dbName: lportal
+        dbSubnetGroupNameSelector:
+            matchLabels:
+                app: liferay
+                component: database-subnet-group
+                dataPlane: {{ $dataPlane }}
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        deletionProtection: {{ and (not $forceDestroy) (eq $dataPlane $activeDataPlane) }}
+        engine: postgres
+        engineVersion: {{ $databaseSpec.engineVersion | quote }}
+        iamDatabaseAuthenticationEnabled: true
+        identifier: {{ $baseName }}-database-{{ $dataPlane }}
+        instanceClass: {{ $databaseSpec.instanceClass }}
+        {{- if $isAboveAllocatedStorageThreshold }}
+        iops: {{ int $databaseSpec.iops }}
+        {{- end }}
+        multiAz: {{ $databaseSpec.multiAz }}
+        passwordSecretRef:
+            key: password
+            name: liferay-database-{{ $dataPlane }}-password
+        region: {{ $env.region }}
+        skipFinalSnapshot: true
+        {{- if and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
+        snapshotIdentifier: {{ $databaseSpec.snapshotIdentifier }}
+        {{- end }}
+        storageEncrypted: true
+        {{- if $isAboveAllocatedStorageThreshold }}
+        storageThroughput: {{ int $databaseSpec.storageThroughput }}
+        {{- end }}
+        storageType: gp3
+        username: {{ $databaseUsername }}
+        vpcSecurityGroupIdSelector:
+            matchLabels:
+                app: liferay
+                component: database-security-group
+                dataPlane: {{ $dataPlane }}
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        tags:
+            Active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
+            Backup: "true"
+            Name: {{ $baseName }}-database-{{ $dataPlane }}
+    managementPolicies: {{ $backupSpec.enabled | ternary ((list "*") | toJson) $managementPolicies }}
+    writeConnectionSecretToRef:
+        name: liferay-database-{{ $dataPlane }}-credentials
+---
+apiVersion: ec2.aws.m.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: database-security-group-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: database-security-group
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        region: {{ $env.region }}
+        tags:
+            Name: {{ $baseName }}-database-security-group-{{ $dataPlane }}
+        vpcId: {{ $env.vpcId }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: ec2.aws.m.upbound.io/v1beta1
+kind: SecurityGroupIngressRule
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: database-security-group-ingress-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: database-security-group-ingress
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        fromPort: 5432
+        ipProtocol: tcp
+        referencedSecurityGroupId: {{ $env.clusterSecurityGroupId }}
+        region: {{ $env.region }}
+        securityGroupIdSelector:
+            matchLabels:
+                app: liferay
+                component: database-security-group
+                dataPlane: {{ $dataPlane }}
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        toPort: 5432
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: rds.aws.m.upbound.io/v1beta1
+kind: SubnetGroup
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-database-subnet-group-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: database-subnet-group-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: database-subnet-group
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-database-subnet-group-{{ $dataPlane }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        region: {{ $env.region }}
+        subnetIds: {{ $clusterSubnetIds | toJson }}
+        tags:
+            Name: {{ $baseName }}-database-{{ $dataPlane }}-subnets
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

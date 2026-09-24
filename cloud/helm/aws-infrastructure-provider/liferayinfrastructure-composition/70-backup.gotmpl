@@ -1,0 +1,104 @@
+{{- if $backupSpec.enabled }}
+apiVersion: backup.aws.m.upbound.io/v1beta1
+kind: Plan
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-plan
+    labels:
+        app: liferay
+        component: backup-plan
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-backup-plan
+spec:
+    forProvider:
+        name: {{ $baseName }}-backup-plan
+        region: {{ $backupRegion }}
+        rule:
+            {{- range $backupSpec.rules }}
+            -   lifecycle:
+                    deleteAfter: {{ .retentionDays }}
+                ruleName: {{ .ruleName }}
+                schedule: {{ .schedule | quote }}
+                startWindow: {{ .startWindow }}
+                targetVaultNameSelector:
+                    matchLabels:
+                        app: liferay
+                        component: backup-vault
+                        environmentId: {{ $environmentId }}
+                        projectId: {{ $projectId }}
+            {{- end }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: backup.aws.m.upbound.io/v1beta1
+kind: Selection
+metadata:
+    annotations:
+        gotemplating.fn.crossplane.io/composition-resource-name: by-tags-selection
+    labels:
+        app: liferay
+        component: backup-selection
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-by-tags-selection
+spec:
+    forProvider:
+        condition:
+            -   stringEquals:
+                -   key: aws:ResourceTag/Active
+                    value: "true"
+                -   key: aws:ResourceTag/Backup
+                    value: "true"
+                -   key: aws:ResourceTag/DeploymentName
+                    value: {{ $env.deploymentName }}
+                -   key: aws:ResourceTag/EnvironmentId
+                    value: {{ $environmentId }}
+                -   key: aws:ResourceTag/ProjectId
+                    value: {{ $projectId }}
+        iamRoleArnSelector:
+            matchLabels:
+                app: liferay
+                component: backup-service-role
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        name: {{ $baseName }}-by-tags-selection
+        planIdSelector:
+            matchLabels:
+                app: liferay
+                component: backup-plan
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        region: {{ $backupRegion }}
+        resources: ["*"]
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: backup.aws.m.upbound.io/v1beta1
+kind: Vault
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $baseName }}-backup-vault
+        gotemplating.fn.crossplane.io/composition-resource-name: backup-vault
+    labels:
+        app: liferay
+        component: backup-vault
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $baseName }}-backup-vault
+spec:
+    forProvider:
+        forceDestroy: {{ $forceDestroy }}
+        {{- if $cmkEnabled }}
+        kmsKeyArnSelector:
+            matchLabels:
+                app: liferay
+                component: backup-vault
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        {{- end }}
+        region: {{ $backupRegion }}
+        {{- with $backupSpec.vaultTags }}
+        tags:
+            {{- . | toYaml | nindent 12 }}
+        {{- end }}
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

@@ -1,0 +1,151 @@
+{{- $storageSpec := $xr.spec.storage -}}
+
+{{- $storageRegion := $storageSpec.region | default $env.region }}
+
+{{- range $i, $dataPlane := list "blue" "green" }}
+{{- if $i }}
+---
+{{- end }}
+apiVersion: s3.aws.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $storageName }}-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: storage-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: storage
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $storageName }}-{{ $dataPlane }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        forceDestroy: {{ $forceDestroy }}
+        region: {{ $storageRegion }}
+        tags:
+            Active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
+            Backup: "true"
+            Name: {{ $storageName }}-{{ $dataPlane }}
+            {{- with $storageSpec.tags }}
+            {{- . | toYaml | nindent 12 }}
+            {{- end }}
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: s3.aws.m.upbound.io/v1beta1
+kind: BucketLifecycleConfiguration
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $storageName }}-lifecycle-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: storage-lifecycle-{{ $dataPlane }}
+    labels:
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $storageName }}-lifecycle-{{ $dataPlane }}
+spec:
+    forProvider:
+        bucketSelector:
+            matchLabels:
+                app: liferay
+                component: storage
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+                dataPlane: {{ $dataPlane }}
+        region: {{ $storageRegion }}
+        rule:
+            -   abortIncompleteMultipartUpload:
+                    -   daysAfterInitiation: 7
+                expiration:
+                    -   expiredObjectDeleteMarker: true
+                id: bucket-scoped-rule
+                noncurrentVersionExpiration:
+                    -   noncurrentDays: 7
+                status: Enabled
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: s3.aws.m.upbound.io/v1beta1
+kind: BucketOwnershipControls
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $storageName }}-ownership-controls-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: storage-ownership-controls-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: storage
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $storageName }}-ownership-controls-{{ $dataPlane }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        bucketSelector:
+            matchLabels:
+                app: liferay
+                component: storage
+                dataPlane: {{ $dataPlane }}
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        region: {{ $storageRegion }}
+        rule:
+            objectOwnership: BucketOwnerPreferred
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: s3.aws.m.upbound.io/v1beta1
+kind: BucketPublicAccessBlock
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $storageName }}-public-access-block-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: storage-public-access-block-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: storage
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $storageName }}-public-access-block-{{ $dataPlane }}
+spec:
+    forProvider:
+        blockPublicAcls: true
+        blockPublicPolicy: true
+        bucketSelector:
+            matchLabels:
+                app: liferay
+                component: storage
+                dataPlane: {{ $dataPlane }}
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+        ignorePublicAcls: true
+        region: {{ $storageRegion }}
+        restrictPublicBuckets: true
+    managementPolicies: {{ $managementPolicies }}
+---
+apiVersion: s3.aws.m.upbound.io/v1beta1
+kind: BucketVersioning
+metadata:
+    annotations:
+        crossplane.io/external-name: {{ $storageName }}-versioning-{{ $dataPlane }}
+        gotemplating.fn.crossplane.io/composition-resource-name: storage-versioning-{{ $dataPlane }}
+    labels:
+        app: liferay
+        component: storage
+        dataPlane: {{ $dataPlane }}
+        environmentId: {{ $environmentId }}
+        projectId: {{ $projectId }}
+    name: {{ $storageName }}-versioning-{{ $dataPlane }}
+    namespace: {{ $namespace }}
+spec:
+    forProvider:
+        bucketSelector:
+            matchLabels:
+                app: liferay
+                component: storage
+                dataPlane: {{ $dataPlane }}
+                environmentId: {{ $environmentId }}
+                projectId: {{ $projectId }}
+            namespace: {{ $namespace }}
+        region: {{ $storageRegion }}
+        versioningConfiguration:
+            status: Enabled
+    managementPolicies: {{ $managementPolicies }}
+{{- end }}

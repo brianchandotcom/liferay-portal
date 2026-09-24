@@ -8,7 +8,7 @@ tests:
     -   asserts:
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "crossplane\\.io/external-name: \\{\\{ \\$baseName \\}\\}-liferay-role\\n(?:.*\\n)*? +path: \\{\\{ \\$iamPath \\}\\}\\n +permissionsBoundary: \\{\\{ \\$iamBoundaryArn \\}\\}"
+                    pattern: "crossplane\\.io/external-name: \\{\\{ \\$baseName \\}\\}-liferay-role\\n(?:.*\\n)*? +path: \\{\\{ \\$env\\.crossplaneIamPath \\}\\}\\n +permissionsBoundary: \\{\\{ \\$env\\.crossplaneIamBoundaryArn \\}\\}"
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "\"\\{\\{ \\$oidcProvider \\}\\}:sub\": \"system:serviceaccount:\\{\\{ \\$namespace \\}\\}:liferay-default\""
@@ -25,7 +25,7 @@ tests:
     -   asserts:
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\}\\{\\{ if \\$overlayAccess\\.enabled \\}\\},\\n(?:.*\\n)*? +\"arn:\\{\\{ \\$partition \\}\\}:s3:::\\{\\{ \\$overlayBucketName \\}\\}/\\*\"\\n +\\]\\n +\\}\\{\\{ end \\}\\}"
+                    pattern: "\\}\\{\\{ if \\$overlayAccess\\.enabled \\}\\},\\n(?:.*\\n)*? +\"arn:\\{\\{ \\$env\\.partition \\}\\}:s3:::\\{\\{ \\$overlayBucketName \\}\\}/\\*\"\\n +\\]\\n +\\}\\{\\{ end \\}\\}"
         documentSelector:
             path: kind
             value: Composition
@@ -50,6 +50,29 @@ tests:
             value: Composition
         it: Loads the environment config ahead of templating
     -   asserts:
+            -   lengthEqual:
+                    count: 4
+                    path: spec.pipeline
+            -   equal:
+                    path: spec.pipeline[1].functionRef.name
+                    value: function-go-templating
+            -   equal:
+                    path: spec.pipeline[1].step
+                    value: go-templating
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "^\\{\\{- \\$databaseUsername := "
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "kind: LiferayInfrastructure\\nstatus:\\n +managedServiceDetailsReady: "
+            -   notMatchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "`|\\.Values"
+        documentSelector:
+            path: kind
+            value: Composition
+        it: Loads the globals and every section file into a single templating step
+    -   asserts:
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "\\n( +)Name: \\{\\{ \\$storageName \\}\\}-\\{\\{ \\$dataPlane \\}\\}\\n +\\{\\{- with \\$storageSpec\\.tags \\}\\}\\n +\\{\\{- \\. \\| toYaml \\| nindent 12 \\}\\}\\n"
@@ -62,10 +85,10 @@ tests:
         it: Merges the environment's storage and vault tags at the tag map's own indentation
     -   asserts:
             -   matchRegex:
-                    path: spec.pipeline[2].input.inline.template
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "name: \\{\\{ \\$elasticsearchName \\}\\}\\n\\s+namespace: \\{\\{ \\$elasticsearchNamespace \\}\\}"
             -   matchRegex:
-                    path: spec.pipeline[2].input.inline.template
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "name: \\{\\{ \\$elasticsearchSecretName \\}\\}\\n\\s+namespace: \\{\\{ \\$elasticsearchNamespace \\}\\}"
         documentSelector:
             path: kind
@@ -74,7 +97,7 @@ tests:
     -   asserts:
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "path: \\{\\{ \\$iamPath \\}\\}\\n +permissionsBoundary: \\{\\{ \\$iamBoundaryArn \\}\\}"
+                    pattern: "path: \\{\\{ \\$env\\.crossplaneIamPath \\}\\}\\n +permissionsBoundary: \\{\\{ \\$env\\.crossplaneIamBoundaryArn \\}\\}"
             -   notMatchRegex:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "arn:aws:"
@@ -91,10 +114,16 @@ tests:
                     pattern: "engine: postgres\\n"
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\n +username: liferay_database_admin\\n"
+                    pattern: "\\$databaseUsername := \"liferay_database_admin\""
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "masterUserName: liferay_search_admin\\n"
+                    pattern: "\\$searchUsername := \"liferay_search_admin\""
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\n +username: \\{\\{ \\$databaseUsername \\}\\}\\n"
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "masterUserName: \\{\\{ \\$searchUsername \\}\\}\\n"
         documentSelector:
             path: kind
             value: Composition
@@ -105,7 +134,7 @@ tests:
                     pattern: "\\{\\{- if \\$backupRestoreRoleArn \\}\\}\\n---\\napiVersion: kubernetes\\.m\\.crossplane\\.io/v1alpha1\\nkind: Object\\nmetadata:\\n +annotations:\\n +gotemplating\\.fn\\.crossplane\\.io/composition-resource-name: backup-restore-service-account\\n"
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\{\\{- if \\$liferayRoleArn \\}\\}\\n---\\napiVersion: kubernetes\\.m\\.crossplane\\.io/v1alpha1\\nkind: Object\\nmetadata:\\n +annotations:\\n +gotemplating\\.fn\\.crossplane\\.io/composition-resource-name: liferay-service-account\\n"
+                    pattern: "\\{\\{- if \\$liferayRoleArn \\}\\}\\napiVersion: kubernetes\\.m\\.crossplane\\.io/v1alpha1\\nkind: Object\\nmetadata:\\n +annotations:\\n +gotemplating\\.fn\\.crossplane\\.io/composition-resource-name: liferay-service-account\\n"
         documentSelector:
             path: kind
             value: Composition
@@ -119,7 +148,7 @@ tests:
                     pattern: "\\$oidcProvider := trimPrefix \"https://\" \\$env\\.oidcIssuerUrl"
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\$baseRegion := \\$env\\.region"
+                    pattern: "region: \\{\\{ \\$env\\.region \\}\\}"
             -   notMatchRegex:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "xr\\.spec\\.region|databaseSpec\\.region|searchSpec\\.region"
@@ -129,7 +158,7 @@ tests:
         it: Reads the deployment facts from the environment config
     -   asserts:
             -   matchRegex:
-                    path: spec.pipeline[2].input.inline.template
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "SEARCH_URL: http://\\{\\{ \\$elasticsearchName \\}\\}-es-http\\.\\{\\{ \\$elasticsearchNamespace \\}\\}\\.svc:9200"
         documentSelector:
             path: kind
@@ -145,14 +174,14 @@ tests:
                             type: FromEnvironmentFieldPath
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "apiVersion: meta\\.gotemplating\\.fn\\.crossplane\\.io/v1alpha1\\ndata:\\n +apiextensions\\.crossplane\\.io/environment:\\n +apiVersion: internal\\.crossplane\\.io/v1alpha1\\n +defaultTags:\\n +DeploymentName: \\{\\{ \\$deploymentName \\| quote \\}\\}\\n +EnvironmentId: \\{\\{ \\$environmentId \\| quote \\}\\}\\n +ProjectId: \\{\\{ \\$projectId \\| quote \\}\\}\\n +kind: Environment\\nkind: Context\\n"
+                    pattern: "apiVersion: meta\\.gotemplating\\.fn\\.crossplane\\.io/v1alpha1\\ndata:\\n +apiextensions\\.crossplane\\.io/environment:\\n +apiVersion: internal\\.crossplane\\.io/v1alpha1\\n +defaultTags:\\n +DeploymentName: \\{\\{ \\$env\\.deploymentName \\| quote \\}\\}\\n +EnvironmentId: \\{\\{ \\$environmentId \\| quote \\}\\}\\n +ProjectId: \\{\\{ \\$projectId \\| quote \\}\\}\\n +kind: Environment\\nkind: Context\\n"
         documentSelector:
             path: kind
             value: Composition
         it: Tags every composed resource with the environment's common tags and the identifier tags derived in the composition
     -   asserts:
             -   matchRegex:
-                    path: spec.pipeline[2].input.inline.template
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "name: search-connection-details\\n\\s+namespace: \\{\\{ \\$namespace \\}\\}"
         documentSelector:
             path: kind

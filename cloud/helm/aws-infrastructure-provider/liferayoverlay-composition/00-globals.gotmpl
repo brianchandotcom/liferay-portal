@@ -1,0 +1,4 @@
+{{- $env := index .context "apiextensions.crossplane.io/environment" -}}
+{{- $xr := .observed.composite.resource -}}
+
+{{- $projectId := $xr.spec.projectId -}}

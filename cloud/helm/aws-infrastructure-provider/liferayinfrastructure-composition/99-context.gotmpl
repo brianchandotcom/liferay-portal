@@ -1,0 +1,10 @@
+apiVersion: meta.gotemplating.fn.crossplane.io/v1alpha1
+data:
+    apiextensions.crossplane.io/environment:
+        apiVersion: internal.crossplane.io/v1alpha1
+        defaultTags:
+            DeploymentName: {{ $env.deploymentName | quote }}
+            EnvironmentId: {{ $environmentId | quote }}
+            ProjectId: {{ $projectId | quote }}
+        kind: Environment
+kind: Context

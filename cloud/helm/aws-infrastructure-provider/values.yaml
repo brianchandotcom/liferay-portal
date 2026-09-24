@@ -1,32 +1,4 @@
 aws: {}
-clusterBootstrap:
-    image: alpine:3
-    resources:
-        limits:
-            cpu: 3m
-            memory: 16Mi
-        requests:
-            cpu: 1m
-            memory: 8Mi
-    script: |
-        sysctl -w vm.max_map_count=1048576
 crossplaneNamespace: crossplane-system
-gateway:
-    accessControl:
-        allowedCIDRs: []
-        enabled: false
-        gateways: []
-    internetFacing: true
-    namespace: envoy-gateway-system
-liferay-dxp-operator:
-    enabled: true
-    fullnameOverride: dxp-operator
-    marketplace:
-        claimName: dxp-operator-marketplace
-        csi:
-            driver: efs.csi.aws.com
-        enabled: true
-        mountPath: /marketplace
-    namespaceOverride: dxp-operator-system
 liferay-subchart-backup-restore:
     enabled: true

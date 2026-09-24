@@ -43,46 +43,6 @@ kind: DeploymentRuntimeConfig
 metadata:
     annotations:
         argocd.argoproj.io/sync-wave: "-90"
-    name: kubernetes-config
-spec:
-    deploymentTemplate:
-        spec:
-            selector:
-                matchLabels:
-                    pkg.crossplane.io/provider: provider-kubernetes
-            template:
-                metadata:
-                    annotations:
-                        instrumentation.opentelemetry.io/inject-dotnet: "false"
-                        instrumentation.opentelemetry.io/inject-java: "false"
-                        instrumentation.opentelemetry.io/inject-nodejs: "false"
-                        instrumentation.opentelemetry.io/inject-python: "false"
-                        sidecar.opentelemetry.io/inject: "false"
-                    labels:
-                        pkg.crossplane.io/provider: provider-kubernetes
-                spec:
-                    containers:
-                        -   name: package-runtime
-                            resources:
-                                limits:
-                                    memory: 1Gi
-                                requests:
-                                    cpu: 15m
-                                    memory: 256Mi
-                            {{- include "crossplane-runtime-configs.containerSecurityContext" . | nindent 28 }}
-                    {{- include "crossplane-runtime-configs.podSecurityContext" . | nindent 20 }}
-                    serviceAccountName: provider-kubernetes
-    serviceAccountTemplate:
-        metadata:
-            labels:
-                app.kubernetes.io/managed-by: liferay-infrastructure-chart
-            name: provider-kubernetes
----
-apiVersion: pkg.crossplane.io/v1beta1
-kind: DeploymentRuntimeConfig
-metadata:
-    annotations:
-        argocd.argoproj.io/sync-wave: "-90"
     name: aws-backup-config
 spec:
     deploymentTemplate:

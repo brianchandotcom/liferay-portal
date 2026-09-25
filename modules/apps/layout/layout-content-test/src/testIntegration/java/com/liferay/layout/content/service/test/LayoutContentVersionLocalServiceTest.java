@@ -144,57 +144,7 @@ public class LayoutContentVersionLocalServiceTest {
 	@Test
 	@TestInfo({"LPD-103233", "LPD-103846", "LPD-104550", "LPD-104976"})
 	public void testAddLayoutContentVersion() throws Exception {
-		_addSegmentsExperiences(2);
-
-		Map<SegmentsExperience, JSONObject> segmentsExperienceJSONObjectsMap =
-			_getRandomSegmentsExperienceLocalizedContentMap();
-
-		FragmentEntry fragmentEntry = _addFragmentEntry();
-
-		_addFragmentEntryLinksToLayout(
-			fragmentEntry, segmentsExperienceJSONObjectsMap);
-
-		String data = RandomTestUtil.randomString();
-
-		LayoutContentVersion draftLayoutContentVersion =
-			_layoutContentVersionLocalService.addLayoutContentVersion(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				data, RandomTestUtil.randomLocaleStringMap(),
-				_draftLayout.getPlid(), WorkflowConstants.STATUS_DRAFT);
-
-		Assert.assertNotNull(draftLayoutContentVersion.getDataHash());
-		Assert.assertEquals(
-			_draftLayout.getPlid(), draftLayoutContentVersion.getPlid());
-		Assert.assertEquals(1, draftLayoutContentVersion.getVersion());
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT,
-			draftLayoutContentVersion.getStatus());
-
-		_assertLayoutContentVersionPreviews(
-			fragmentEntry.getCss(), draftLayoutContentVersion,
-			segmentsExperienceJSONObjectsMap);
-
-		try (SafeCloseable safeCloseable =
-				_swapLayoutPreviewRendererWithSafeCloseable()) {
-
-			LayoutContentVersion approvedLayoutContentVersion =
-				_layoutContentVersionLocalService.addLayoutContentVersion(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					data, RandomTestUtil.randomLocaleStringMap(),
-					_draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED);
-
-			Assert.assertNotEquals(
-				draftLayoutContentVersion.getLayoutContentVersionId(),
-				approvedLayoutContentVersion.getLayoutContentVersionId());
-			Assert.assertEquals(2, approvedLayoutContentVersion.getVersion());
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED,
-				approvedLayoutContentVersion.getStatus());
-
-			_assertPreviewErrorLayoutContentVersionPreviews(
-				approvedLayoutContentVersion,
-				segmentsExperienceJSONObjectsMap.keySet());
-		}
+		_testAddLayoutContentVersion();
 
 		_testAddLayoutContentVersionWithExternalReferenceCodeTooLong();
 		_testAddLayoutContentVersionWithNullExternalReferenceCode();
@@ -629,6 +579,60 @@ public class LayoutContentVersionLocalServiceTest {
 		return () -> ReflectionTestUtil.setFieldValue(
 			layoutContentVersionLocalServiceImpl, "_layoutPreviewRenderer",
 			originalLayoutPreviewRenderer);
+	}
+
+	private void _testAddLayoutContentVersion() throws Exception {
+		_addSegmentsExperiences(2);
+
+		Map<SegmentsExperience, JSONObject> segmentsExperienceJSONObjectsMap =
+			_getRandomSegmentsExperienceLocalizedContentMap();
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		_addFragmentEntryLinksToLayout(
+			fragmentEntry, segmentsExperienceJSONObjectsMap);
+
+		String data = RandomTestUtil.randomString();
+
+		LayoutContentVersion draftLayoutContentVersion =
+			_layoutContentVersionLocalService.addLayoutContentVersion(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				data, RandomTestUtil.randomLocaleStringMap(),
+				_draftLayout.getPlid(), WorkflowConstants.STATUS_DRAFT);
+
+		Assert.assertNotNull(draftLayoutContentVersion.getDataHash());
+		Assert.assertEquals(
+			_draftLayout.getPlid(), draftLayoutContentVersion.getPlid());
+		Assert.assertEquals(1, draftLayoutContentVersion.getVersion());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT,
+			draftLayoutContentVersion.getStatus());
+
+		_assertLayoutContentVersionPreviews(
+			fragmentEntry.getCss(), draftLayoutContentVersion,
+			segmentsExperienceJSONObjectsMap);
+
+		try (SafeCloseable safeCloseable =
+				_swapLayoutPreviewRendererWithSafeCloseable()) {
+
+			LayoutContentVersion approvedLayoutContentVersion =
+				_layoutContentVersionLocalService.addLayoutContentVersion(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					data, RandomTestUtil.randomLocaleStringMap(),
+					_draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED);
+
+			Assert.assertNotEquals(
+				draftLayoutContentVersion.getLayoutContentVersionId(),
+				approvedLayoutContentVersion.getLayoutContentVersionId());
+			Assert.assertEquals(2, approvedLayoutContentVersion.getVersion());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED,
+				approvedLayoutContentVersion.getStatus());
+
+			_assertPreviewErrorLayoutContentVersionPreviews(
+				approvedLayoutContentVersion,
+				segmentsExperienceJSONObjectsMap.keySet());
+		}
 	}
 
 	private void _testAddLayoutContentVersionWithExternalReferenceCodeTooLong() {

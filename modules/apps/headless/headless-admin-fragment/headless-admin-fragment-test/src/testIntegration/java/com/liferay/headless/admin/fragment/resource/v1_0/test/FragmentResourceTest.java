@@ -297,7 +297,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo({"LPD-88395", "LPD-88489", "LPD-95281"})
+	@TestInfo({"LPD-88395", "LPD-88489", "LPD-95281", "LPD-103947"})
 	public void testPutSiteFragment() throws Exception {
 		_testPutSiteFragmentBatch();
 		_testPutSiteFragmentCreateApproved();
@@ -313,6 +313,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_testPutSiteFragmentUpdateApprovedAddDraftModifyApproved();
 		_testPutSiteFragmentUpdateApprovedAndDraftToDraftProblemException();
 		_testPutSiteFragmentUpdateApprovedAndDraftToEmptyProblemException();
+		_testPutSiteFragmentUpdateApprovedConfigurationUnmodified();
 		_testPutSiteFragmentUpdateApprovedModifyApproved();
 		_testPutSiteFragmentUpdateApprovedModifyApprovedAndDraft();
 		_testPutSiteFragmentUpdateApprovedToDraftProblemException();
@@ -811,6 +812,25 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		return configuration.toString();
 	}
 
+	private Map<String, String> _getConfigurationValuesMap() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		return HashMapBuilder.put(
+			"JOURNAL_ARTICLE_CLASS_NAME_ID",
+			String.valueOf(PortalUtil.getClassNameId(JournalArticle.class))
+		).put(
+			"JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE",
+			journalArticle.getExternalReferenceCode()
+		).put(
+			"JOURNAL_ARTICLE_RESOURCE_PRIM_KEY",
+			String.valueOf(journalArticle.getResourcePrimKey())
+		).put(
+			"NONEXISTENT_CLASS_PK", String.valueOf(RandomTestUtil.randomLong())
+		).build();
+	}
+
 	private FragmentResource _getFragmentResource(String nestedFields)
 		throws Exception {
 
@@ -901,6 +921,26 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		return fragmentResource.postSiteFragment(
 			testGroup.getExternalReferenceCode(), fragment);
+	}
+
+	private Fragment _postSiteFragment(String configuration) throws Exception {
+		Fragment postFragment = _postSiteFragment(_randomFragment(true, false));
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
+				postFragment.getExternalReferenceCode(),
+				testGroup.getGroupId());
+
+		_fragmentEntryLocalService.updateFragmentEntry(
+			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.isCacheable(), configuration,
+			fragmentEntry.getIcon(), fragmentEntry.getPreviewFileEntryId(),
+			fragmentEntry.isReadOnly(), fragmentEntry.getTypeOptions(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		return postFragment;
 	}
 
 	private Fragment _postSiteFragmentAndAssertThumbnailURLReference(
@@ -1354,39 +1394,10 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	private void _testGetSiteFragmentApprovedConfiguration() throws Exception {
-		Fragment postFragment = _postSiteFragment(_randomFragment(true, false));
+		Map<String, String> valuesMap = _getConfigurationValuesMap();
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
-				postFragment.getExternalReferenceCode(),
-				testGroup.getGroupId());
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			testGroup.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		Map<String, String> valuesMap = HashMapBuilder.put(
-			"JOURNAL_ARTICLE_CLASS_NAME_ID",
-			String.valueOf(PortalUtil.getClassNameId(JournalArticle.class))
-		).put(
-			"JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE",
-			journalArticle.getExternalReferenceCode()
-		).put(
-			"JOURNAL_ARTICLE_RESOURCE_PRIM_KEY",
-			String.valueOf(journalArticle.getResourcePrimKey())
-		).put(
-			"NONEXISTENT_CLASS_PK", String.valueOf(RandomTestUtil.randomLong())
-		).build();
-
-		_fragmentEntryLocalService.updateFragmentEntry(
-			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
-			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
-			_readConfiguration("get_configuration.json", valuesMap),
-			fragmentEntry.getIcon(), fragmentEntry.getPreviewFileEntryId(),
-			fragmentEntry.isReadOnly(), fragmentEntry.getTypeOptions(),
-			WorkflowConstants.STATUS_APPROVED);
+		Fragment postFragment = _postSiteFragment(
+			_readConfiguration("get_configuration.json", valuesMap));
 
 		Fragment getFragment = fragmentResource.getSiteFragment(
 			testGroup.getExternalReferenceCode(),
@@ -1793,20 +1804,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			(ApprovedFragmentVersion)_getFragmentVersion(
 				fragment, FragmentVersion.Status.APPROVED);
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			testGroup.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		Map<String, String> valuesMap = HashMapBuilder.put(
-			"JOURNAL_ARTICLE_CLASS_NAME_ID",
-			String.valueOf(PortalUtil.getClassNameId(JournalArticle.class))
-		).put(
-			"JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE",
-			journalArticle.getExternalReferenceCode()
-		).put(
-			"JOURNAL_ARTICLE_RESOURCE_PRIM_KEY",
-			String.valueOf(journalArticle.getResourcePrimKey())
-		).build();
+		Map<String, String> valuesMap = _getConfigurationValuesMap();
 
 		approvedFragmentVersion.setConfiguration(
 			ConfigurationSerDes.toDTO(
@@ -2839,6 +2837,32 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				false, false, postFragment.getExternalReferenceCode(),
 				postFragment.getKey()),
 			"at-least-one-fragment-entry-version-is-required");
+	}
+
+	private void _testPutSiteFragmentUpdateApprovedConfigurationUnmodified()
+		throws Exception {
+
+		Map<String, String> valuesMap = _getConfigurationValuesMap();
+
+		Fragment postFragment = _postSiteFragment(
+			_readConfiguration("get_configuration.json", valuesMap));
+
+		Fragment getFragment = fragmentResource.getSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			postFragment.getExternalReferenceCode());
+
+		fragmentResource.putSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			postFragment.getExternalReferenceCode(), getFragment);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
+				postFragment.getExternalReferenceCode(),
+				testGroup.getGroupId());
+
+		_assertEqualsJSON(
+			_readConfiguration("put_configuration.json", valuesMap),
+			fragmentEntry.getConfiguration());
 	}
 
 	private void _testPutSiteFragmentUpdateApprovedModifyApproved()

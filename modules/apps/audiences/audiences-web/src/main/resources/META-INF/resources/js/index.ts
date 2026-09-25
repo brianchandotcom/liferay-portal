@@ -4,3 +4,4 @@
  */
 
 export {default as AudienceBuilder} from './AudienceBuilder';
+export {default as AudiencesFDSPropsTransformer} from './props_transformer/AudiencesFDSPropsTransformer';

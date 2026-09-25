@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.portlet.PortletURL;
+import jakarta.portlet.ResourceURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -66,23 +68,24 @@ public class AudiencesFDSActionProvider implements FDSActionProvider {
 			() -> manageAudiencesEntries,
 			dropdownItem -> {
 				dropdownItem.putData(
-					"confirmationMessage",
-					_language.get(
-						httpServletRequest,
-						"are-you-sure-you-want-to-delete-this"));
-				dropdownItem.setHref(
+					"deleteURL",
 					_getDeleteURL(
 						fdsAudiencesEntry.getAudiencesEntryId(),
 						httpServletRequest));
+				dropdownItem.putData(
+					"getAudiencesEntryUsagesURL",
+					_getGetAudiencesEntryUsagesURL(
+						fdsAudiencesEntry.getAudiencesEntryId(),
+						httpServletRequest));
+				dropdownItem.putData("id", "delete");
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "delete"));
-				dropdownItem.setTarget("link");
 			}
 		).build();
 	}
 
-	private PortletURL _getDeleteURL(
+	private String _getDeleteURL(
 		long audiencesEntryId, HttpServletRequest httpServletRequest) {
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
@@ -97,7 +100,7 @@ public class AudiencesFDSActionProvider implements FDSActionProvider {
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"audiencesEntryId", audiencesEntryId
-		).buildPortletURL();
+		).buildString();
 	}
 
 	private PortletURL _getEditURL(
@@ -116,6 +119,22 @@ public class AudiencesFDSActionProvider implements FDSActionProvider {
 		).setParameter(
 			"audiencesEntryId", audiencesEntryId
 		).buildPortletURL();
+	}
+
+	private String _getGetAudiencesEntryUsagesURL(
+		long audiencesEntryId, HttpServletRequest httpServletRequest) {
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
+
+		return ResourceURLBuilder.createResourceURL(
+			(ResourceURL)requestBackedPortletURLFactory.createResourceURL(
+				AudiencesPortletKeys.AUDIENCES)
+		).setParameter(
+			"audiencesEntryId", audiencesEntryId
+		).setResourceID(
+			"/audiences/get_audiences_entry_usages"
+		).buildString();
 	}
 
 	@Reference

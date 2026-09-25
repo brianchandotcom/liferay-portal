@@ -9,8 +9,10 @@ import ClayLink from '@clayui/link';
 import {AIAssistantTriggerButton} from '@liferay/ai-hub-cell-js-components-web';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import {ApiHelper, Toolbar} from '@liferay/site-cms-site-initializer';
-import {navigate, sessionStorage, sub} from 'frontend-js-web';
+import {escapeHTML, navigate, sessionStorage, sub} from 'frontend-js-web';
 import React, {useEffect, useId, useRef, useState} from 'react';
+
+import {getFormattedLabel} from '../utils/getFormattedText';
 
 export default function EditorToolbar({
 	backURL,
@@ -34,7 +36,7 @@ export default function EditorToolbar({
 	const discardingRef = useRef(false);
 	const submitLabelId = useId();
 	const submitTitle = getSubmitTitle(
-		sub(Liferay.Language.get('save-x'), title)
+		sub(Liferay.Language.get('save-x'), escapeHTML(title))
 	);
 
 	function discardDraft(event: React.MouseEvent) {
@@ -153,7 +155,7 @@ export default function EditorToolbar({
 										: Liferay.Language.get(
 												'x-was-updated-successfully'
 											),
-									`<strong>${value}</strong>`
+									getFormattedLabel(value)
 								),
 								sessionStorage.TYPES.NECESSARY
 							);

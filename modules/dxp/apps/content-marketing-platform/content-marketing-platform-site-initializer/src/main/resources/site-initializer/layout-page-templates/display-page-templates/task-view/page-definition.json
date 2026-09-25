@@ -1,0 +1,677 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "com.liferay.content.marketing.platform.web.internal.fragment.renderer.TaskBreadcrumbComponentSectionFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentDropZoneId": "1",
+					"name": "task-details-container"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingBottom": "4",
+								"paddingLeft": "4",
+								"paddingRight": "4",
+								"paddingTop": "4"
+							},
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+										"modulesPerRow": 2
+									}
+								},
+								{
+									"id": "desktop",
+									"rowViewportDefinition": {
+										"modulesPerRow": 2
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 8
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n width: 90%;\n}",
+											"indexed": true,
+											"layout": {
+											},
+											"name": "task-details-first-column-container"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginBottom": "40px",
+														"marginTop": "8px"
+													},
+													"indexed": true,
+													"layout": {
+													},
+													"name": "task-details-first-column-content"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "3"
+															},
+															"indexed": true,
+															"layout": {
+																"marginBottom": 1
+															},
+															"name": "task-description-header-container"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-heading"
+																	},
+																	"fragmentConfig": {
+																		"headingLevel": "h5"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "الوصف",
+																						"bg_BG": "Описание",
+																						"ca_AD": "Descripció",
+																						"ca_ES": "Descripció",
+																						"ca_ES_VALENCIA": "Descripció",
+																						"cs_CZ": "Popis",
+																						"da_DK": "Abonnering",
+																						"de_AT": "Beschreibung",
+																						"de_CH": "Beschreibung",
+																						"de_DE": "Beschreibung",
+																						"el_GR": "Περιγραφή",
+																						"en_US": "Description",
+																						"es_AR": "Descripción",
+																						"es_CO": "Descripción",
+																						"es_ES": "Descripción",
+																						"es_MX": "Descripción",
+																						"et_EE": "Kirjeldus",
+																						"eu_ES": "Deskribapena",
+																						"fa_IR": "توضیح",
+																						"fi_FI": "Kuvaus",
+																						"fr_CA": "Abonnement",
+																						"gl_ES": "Descrición",
+																						"hi_IN": "विवरण",
+																						"hr_HR": "Opis",
+																						"hu_HU": "Leírás",
+																						"in_ID": "Deskripsi",
+																						"it_CH": "Descrizione",
+																						"it_IT": "Descrizione",
+																						"iw_IL": "תיאור",
+																						"ja_JP": "説明",
+																						"ko_KR": "묘사",
+																						"lo_LA": "ການອະທິບາຍ",
+																						"lt_LT": "Aprašymas / kontrolė",
+																						"ms_MY": "Keterangan",
+																						"nb_NO": "Beskrivelse",
+																						"nl_BE": "Beschrijving",
+																						"nl_NL": "Beschrijving",
+																						"no_NO": "Beskrivelse",
+																						"pl_PL": "Opis",
+																						"pt_BR": "Descrição",
+																						"pt_PT": "Descrição",
+																						"ro_RO": "Descriere",
+																						"ru_RU": "Описание",
+																						"sk_SK": "Popis",
+																						"sl_SI": "Opis",
+																						"sr_RS": "Опис",
+																						"sr_RS_latin": "Opis",
+																						"sv_SE": "Beskrivning",
+																						"ta_IN": "விளக்கம்",
+																						"th_TH": "คำอธิบาย",
+																						"tr_TR": "Tanım",
+																						"uk_UA": "Опис",
+																						"vi_VN": "Mô tả",
+																						"zh_CN": "描述",
+																						"zh_TW": "描述"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"marginBottom": "40px",
+																"marginRight": "48px"
+															},
+															"indexed": true,
+															"layout": {
+															},
+															"name": "task-details-description-container"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-paragraph"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"defaultFragmentInlineValue": {
+																						"value": ""
+																					},
+																					"mapping": {
+																						"fieldKey": "ObjectField_description",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n display: flex; flex-direction: column; align-items: end;\n}",
+											"indexed": true,
+											"layout": {
+											},
+											"name": "task-details-second-column-container"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"maxWidth": "424px",
+														"minWidth": "320px",
+														"width": "100%"
+													},
+													"indexed": true,
+													"layout": {
+													},
+													"name": "task-details-second-column-container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "com.liferay.content.marketing.platform.web.internal.fragment.renderer.ViewTaskInfoSummaryJSPSectionFragmentRenderer"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "FragmentDropZone"
+			},
+			{
+				"definition": {
+					"cssClasses": [
+						"px-4"
+					],
+					"fragment": {
+						"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewRelatedAssetsJSPSectionFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					},
+					"name": "task-details-activity-container"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h5"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "فعّل",
+												"bg_BG": "Активност",
+												"ca_AD": "Activitat",
+												"ca_ES": "Activitat",
+												"ca_ES_VALENCIA": "Activitat",
+												"cs_CZ": "Aktivita",
+												"de_AT": "Aktivität",
+												"de_CH": "Aktivität",
+												"de_DE": "Aktivität",
+												"el_GR": "Δραστηριότητα",
+												"en_US": "Activity",
+												"es_AR": "Actividad",
+												"es_CO": "Actividad",
+												"es_ES": "Actividad",
+												"es_MX": "Actividad",
+												"et_EE": "Tegevus",
+												"eu_ES": "Jarduera",
+												"fa_IR": "فعالیت",
+												"fi_FI": "Aktiviteetti",
+												"fr_BE": "Activité",
+												"fr_CA": "Activité",
+												"fr_CH": "Activité",
+												"fr_FR": "Activité",
+												"gl_ES": "Actividade",
+												"hi_IN": "गतिविधि",
+												"hr_HR": "Aktivnost",
+												"hu_HU": "Tevékenység",
+												"in_ID": "Kegiatan",
+												"it_CH": "Attività",
+												"it_IT": "Attività",
+												"iw_IL": "פעילות",
+												"ja_JP": "アクティビティ",
+												"km_KH": "សកម្មភាព",
+												"ko_KR": "활동",
+												"lo_LA": "ກິດຈະກຳ",
+												"lt_LT": "Veiklos",
+												"ms_MY": "Aktiviti",
+												"nb_NO": "Aktivitet",
+												"nl_BE": "Activiteit",
+												"nl_NL": "Activiteit",
+												"no_NO": "Aktivitet",
+												"pl_PL": "Działanie",
+												"pt_BR": "Atividade",
+												"pt_PT": "Atividade",
+												"ro_RO": "Activitate",
+												"ru_RU": "Деятельность",
+												"sk_SK": "Aktivita",
+												"sl_SI": "AKtivnost",
+												"sr_RS": "Активност",
+												"sr_RS_latin": "Aktivnost",
+												"sv_SE": "Aktivitet",
+												"ta_IN": "செயல்பாடு",
+												"th_TH": "กิจกรรม",
+												"tr_TR": "Etkinlik",
+												"uk_UA": "Діяльність",
+												"vi_VN": "Hoạt động",
+												"zh_CN": "活动",
+												"zh_TW": "活動"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"paddingBottom": "4",
+								"paddingLeft": "4",
+								"paddingRight": "4",
+								"paddingTop": "4"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n .navigation-bar .navbar-nav .nav-link {\n margin-bottom: 0px;\n border-color: #cdced9;\n }\n\n .navigation-bar .navbar-nav .nav-link.active {\n border-color: #cdced9 #cdced9 #fff;\n border-style: solid;\n border-width: 0.0625rem;\n border-radius: 0.5rem 0.5rem 0 0;\n}\n\n .navigation-bar .navbar-nav .nav-link.active::after {\n background-color: white !important;\n bottom: -0.2rem !important;}\n}",
+							"fragment": {
+								"key": "BASIC_COMPONENT-tabs"
+							},
+							"fragmentConfig": {
+								"numberOfTabs": 2,
+								"persistSelectedTab": false
+							},
+							"fragmentFields": [
+								{
+									"id": "title1",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "ملاحظات",
+												"bg_BG": "Коментари",
+												"ca_AD": "Comentaris",
+												"ca_ES": "Comentaris",
+												"ca_ES_VALENCIA": "Comentaris",
+												"cs_CZ": "Komentáře",
+												"da_DK": "Kommentarer",
+												"de_AT": "Kommentare",
+												"de_CH": "Kommentare",
+												"de_DE": "Kommentare",
+												"el_GR": "Σχόλια",
+												"en_US": "Comments",
+												"es_AR": "Comentarios",
+												"es_CO": "Comentarios",
+												"es_ES": "Comentarios",
+												"es_MX": "Comentarios",
+												"et_EE": "Kommentaarid",
+												"eu_ES": "Iruzkinak",
+												"fa_IR": "نظرات",
+												"fi_FI": "Kommentit",
+												"fr_BE": "Commentaires",
+												"fr_CA": "Commentaires",
+												"fr_CH": "Commentaires",
+												"fr_FR": "Commentaires",
+												"gl_ES": "Comentarios",
+												"hi_IN": "टिप्पणियाँ",
+												"hr_HR": "Komentari",
+												"hu_HU": "Megjegyzések",
+												"in_ID": "Komentar",
+												"it_CH": "Commenti",
+												"it_IT": "Commenti",
+												"iw_IL": "הערות",
+												"ja_JP": "コメント",
+												"ko_KR": "비평",
+												"lo_LA": "ຄວາມຄິດເຫັນຕ່າງໆ",
+												"lt_LT": "Komentarai",
+												"ms_MY": "Komen",
+												"nb_NO": "Kommentarer",
+												"nl_BE": "Opmerkingen",
+												"nl_NL": "Reacties",
+												"no_NO": "Kommentarer",
+												"pl_PL": "Komentarze",
+												"pt_BR": "Comentários",
+												"pt_PT": "Comentários",
+												"ro_RO": "Comentarii",
+												"ru_RU": "Комментарии",
+												"sk_SK": "Komentáre",
+												"sl_SI": "Komentarji",
+												"sr_RS": "Коментари",
+												"sr_RS_latin": "Komentari",
+												"sv_SE": "Kommentarer",
+												"ta_IN": "கருத்துக்கள்",
+												"th_TH": "ความคิดเห็น",
+												"tr_TR": "Yorumlar",
+												"uk_UA": "Коментарі",
+												"vi_VN": "Các lời bình",
+												"zh_CN": "评论",
+												"zh_TW": "評論"
+											}
+										}
+									}
+								},
+								{
+									"id": "title2",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"ar_SA": "تاريخ",
+												"bg_BG": "История",
+												"ca_AD": "Història",
+												"ca_ES": "Història",
+												"ca_ES_VALENCIA": "Història",
+												"cs_CZ": "Historie",
+												"de_AT": "Historie",
+												"de_CH": "Historie",
+												"de_DE": "Historie",
+												"el_GR": "Ιστορικό",
+												"en_US": "History",
+												"es_AR": "Historia",
+												"es_CO": "Historia",
+												"es_ES": "Historia",
+												"es_MX": "Historia",
+												"et_EE": "Ajalugu",
+												"eu_ES": "Historia",
+												"fa_IR": "تاریخچه",
+												"fi_FI": "Historia",
+												"fr_BE": "Historique",
+												"fr_CA": "Histoire",
+												"fr_CH": "Historique",
+												"fr_FR": "Historique",
+												"gl_ES": "Historia",
+												"hi_IN": "इतिहास",
+												"hr_HR": "Povijest",
+												"hu_HU": "Előzmények",
+												"in_ID": "Histori",
+												"it_CH": "Cronologia",
+												"it_IT": "Cronologia",
+												"iw_IL": "היסטוריה",
+												"ja_JP": "履歴",
+												"ko_KR": "역사",
+												"lo_LA": "ປະຫວັດການ",
+												"lt_LT": "Istorija",
+												"ms_MY": "Sejarah",
+												"nb_NO": "Historie",
+												"nl_BE": "Geschiedenis",
+												"nl_NL": "Geschiedenis",
+												"no_NO": "Historie",
+												"pl_PL": "Historia",
+												"pt_BR": "Histórico",
+												"pt_PT": "Histórico",
+												"ro_RO": "Istorie",
+												"ru_RU": "История",
+												"sk_SK": "História",
+												"sl_SI": "Zgodovina",
+												"sr_RS": "Историја",
+												"sr_RS_latin": "Istorija",
+												"sv_SE": "Historik",
+												"ta_IN": "வரலாறு",
+												"th_TH": "ประวัติ",
+												"tr_TR": "Tarihçe",
+												"uk_UA": "Історія",
+												"vi_VN": "Lịch sử",
+												"zh_CN": "历史记录",
+												"zh_TW": "歷史"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"paddingBottom": "4",
+								"paddingLeft": "4",
+								"paddingRight": "4"
+							},
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentDropZoneId": "1"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.content.marketing.platform.web.internal.fragment.renderer.CommentsComponentSectionFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"paddingTop": "3"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+									"fragmentDropZoneId": "2"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.content.marketing.platform.web.internal.fragment.renderer.HistoryComponentSectionFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"paddingTop": "3"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "cms-master"
+		},
+		"themeName": "CMS"
+	},
+	"version": 1.1
+}

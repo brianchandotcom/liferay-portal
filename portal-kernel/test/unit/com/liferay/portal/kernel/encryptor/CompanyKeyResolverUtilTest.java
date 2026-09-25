@@ -28,8 +28,7 @@ public class CompanyKeyResolverUtilTest {
 		Assert.assertFalse(
 			CompanyKeyResolverUtil.isWrappedKey(RandomTestUtil.randomString()));
 		Assert.assertTrue(
-			CompanyKeyResolverUtil.isWrappedKey(
-				CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX));
+			CompanyKeyResolverUtil.isWrappedKey(_WRAPPED_KEY_PREFIX));
 	}
 
 	@Test
@@ -51,9 +50,7 @@ public class CompanyKeyResolverUtilTest {
 				key, CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, keyString));
 		}
 
-		keyString =
-			CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX +
-				RandomTestUtil.randomString();
+		keyString = _WRAPPED_KEY_PREFIX + RandomTestUtil.randomString();
 
 		try (AutoCloseable autoCloseable = _setCompanyKeyResolver(null)) {
 			CompanyKeyResolverUtil.unwrapKey(_COMPANY_ID, keyString);
@@ -116,9 +113,7 @@ public class CompanyKeyResolverUtilTest {
 				keyString, CompanyKeyResolverUtil.wrapKey(_COMPANY_ID, key));
 		}
 
-		keyString =
-			CompanyKeyResolverUtil.WRAPPED_KEY_PREFIX +
-				RandomTestUtil.randomString();
+		keyString = _WRAPPED_KEY_PREFIX + RandomTestUtil.randomString();
 
 		Mockito.when(
 			companyKeyResolver.isEnabled(_COMPANY_ID)
@@ -170,5 +165,7 @@ public class CompanyKeyResolverUtilTest {
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private static final String _WRAPPED_KEY_PREFIX = "${wrappedKey:";
 
 }

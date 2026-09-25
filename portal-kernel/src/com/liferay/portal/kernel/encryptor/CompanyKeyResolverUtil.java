@@ -15,12 +15,8 @@ import java.security.Key;
  */
 public class CompanyKeyResolverUtil {
 
-	public static final String WRAPPED_KEY_PREFIX = "${wrappedKey:";
-
-	public static final String WRAPPED_KEY_VERSION = "v1";
-
 	public static boolean isWrappedKey(String keyString) {
-		if ((keyString != null) && keyString.startsWith(WRAPPED_KEY_PREFIX)) {
+		if ((keyString != null) && keyString.startsWith(_WRAPPED_KEY_PREFIX)) {
 			return true;
 		}
 
@@ -55,6 +51,8 @@ public class CompanyKeyResolverUtil {
 
 		return companyKeyResolver.wrapKey(companyId, key);
 	}
+
+	private static final String _WRAPPED_KEY_PREFIX = "${wrappedKey:";
 
 	private static final Snapshot<CompanyKeyResolver>
 		_companyKeyResolverSnapshot = new Snapshot<>(

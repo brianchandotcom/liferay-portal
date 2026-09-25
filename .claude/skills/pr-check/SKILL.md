@@ -18,7 +18,7 @@ These settings describe this repository. The `pr-check` skill of another reposit
 | --- | --- |
 | **Base Branch** | `master` |
 | **Repository** | `liferay/liferay-portal` |
-| **Slices** | branch, portal, workspaces |
+| **Scopes** | branch, portal, workspaces |
 | **Skipped Validations** | Workspace Source Format |
 | **Rules Commit** | `HEAD` |
 
@@ -54,7 +54,7 @@ git diff --name-status "$(git merge-base HEAD "${BASE_BRANCH}")...HEAD"
 
 ### Routing
 
-Each validation belongs to a slice, decided by where its file sits, and sees only the changed paths its slice covers.
+Each validation has a scope, decided by the folder its file sits in, and sees only the changed paths its scope covers.
 
 - **Branch.** A file directly in `validations` checks the branch as a whole and sees every changed path.
 
@@ -62,11 +62,11 @@ Each validation belongs to a slice, decided by where its file sits, and sees onl
 
 - **Workspaces.** A file in `validations/workspaces` runs once for each workspace the branch changed. A workspace is a directory named `workspaces/<name>-workspace`, and every path beneath it belongs to that workspace. The validation sees those paths relative to the workspace directory, so its `## Match` never names the `workspaces` segment.
 
-Paths directly under `workspaces` that sit in no workspace, such as the refresh scripts, belong to the portal slice.
+Paths directly under `workspaces` that sit in no workspace, such as the refresh scripts, belong to the portal scope.
 
 In every workspace other than `liferay-sample-workspace`, a changed path that `workspaces/refresh_other_workspaces.sh` regenerates is seen only by [Generated Workspace File](validations/workspaces/generated-file.md). Such a path may change only through a refresh, and building it would only repeat what the sample workspace already checks. A path is regenerated when it does not match the regex that validation builds from the script's `--exclude` patterns, so a workspace whose changed paths are all regenerated runs no other workspace validation.
 
-Run the slices the settings enable, and skip every validation the settings name. When the portal slice is disabled, list every changed path that belongs to no workspace in the Results Summary as unchecked, so that a change nothing examined never reads as a pass.
+Run the scopes the settings enable, and skip every validation the settings name. When the portal scope is disabled, list every changed path that belongs to no workspace in the Results Summary as unchecked, so that a change nothing examined never reads as a pass.
 
 The build root of a changed path is its workspace directory when it belongs to a workspace, and `${REPO_ROOT}` otherwise. A validation that needs a place to search, such as a sweep for references, searches the build root of the path it is examining, and every workspace validation runs its commands from `${BUILD_ROOT}`, the absolute path of its workspace directory.
 
@@ -141,7 +141,7 @@ Read every validation file the list above links, and no other file under `valida
 In your next turn, compose a single bash script that:
 
 - computes the diff: `git diff --name-only --no-renames "$(git merge-base HEAD "${BASE_BRANCH}")...HEAD"`, since a detected rename collapses to its new path alone and hides the old one from every regex
-- for each validation, tests its regex against the paths its slice sees, once per workspace for a workspace validation, and prints the validation name, with the workspace name for a workspace validation, when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
+- for each validation, tests its regex against the paths its scope sees, once per workspace for a workspace validation, and prints the validation name, with the workspace name for a workspace validation, when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
 - ` &! ` in the regex splits it into an include side and an exclude side. The validation fires when a diff path matches the include side but not the exclude side.
 - runs as a single Bash tool invocation
 

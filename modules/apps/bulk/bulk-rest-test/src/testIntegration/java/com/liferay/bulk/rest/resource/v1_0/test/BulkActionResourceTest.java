@@ -31,6 +31,7 @@ import com.liferay.bulk.rest.client.pagination.Page;
 import com.liferay.bulk.rest.client.pagination.Pagination;
 import com.liferay.bulk.rest.client.problem.Problem;
 import com.liferay.bulk.selection.constants.BulkSelectionActionStatusConstants;
+import com.liferay.content.marketing.platform.test.util.CMPTestUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -106,7 +107,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.io.ByteArrayInputStream;
@@ -873,7 +873,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Bundle bundle = FrameworkUtil.getBundle(BulkActionResourceTest.class);
 
 		bundle = BundleUtil.getBundle(
-			bundle.getBundleContext(), "com.liferay.site.cmp.site.initializer");
+			bundle.getBundleContext(),
+			"com.liferay.content.marketing.platform.web");
 
 		try {
 			if (bundle != null) {

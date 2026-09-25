@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '783b7dee33b0b82d42889309c690950c7e38d965df81be98e838fb2e248175e8',
+	hash: '8ace1cccc871f52d8147c46f240b8df386028d9610d1bfbbc361d3cb314e73af',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -64,6 +64,7 @@ module.exports = {
 		'@liferay/configuration-admin-web': [],
 		'@liferay/content-dashboard-document-library-impl': [],
 		'@liferay/content-dashboard-web': [],
+		'@liferay/content-marketing-platform-web': [],
 		'@liferay/content-site-generator-web': [],
 		'@liferay/cookies-banner-web': [],
 		'@liferay/cookies-sample-web': [],
@@ -272,7 +273,6 @@ module.exports = {
 		'@liferay/saved-content-web': [],
 		'@liferay/scim-configuration-web': [],
 		'@liferay/search-experiences-web': [],
-		'@liferay/site-cmp-site-initializer': [],
 		'@liferay/site-cms-site-initializer': [],
 		'@liferay/site-cms-standalone-site-initializer': [],
 		'@liferay/site-dsr-site-initializer': [],

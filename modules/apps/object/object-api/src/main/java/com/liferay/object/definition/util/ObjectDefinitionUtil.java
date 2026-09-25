@@ -152,6 +152,7 @@ public class ObjectDefinitionUtil {
 		"com.liferay.account.service",
 		"com.liferay.ai.hub.pricing.site.initializer",
 		"com.liferay.ai.hub.site.initializer", "com.liferay.commerce.service",
+		"com.liferay.content.marketing.platform.site.initializer",
 		"com.liferay.content.site.generator.impl", "com.liferay.cookies.impl",
 		"com.liferay.frontend.data.set.admin.web",
 		"com.liferay.frontend.data.set.impl",
@@ -160,8 +161,8 @@ public class ObjectDefinitionUtil {
 		"com.liferay.list.type.service", "com.liferay.mcp.server.rest.impl",
 		"com.liferay.notification.service", "com.liferay.object.service",
 		"com.liferay.seo.studio.site.initializer",
-		"com.liferay.site.initializer.cmp", "com.liferay.site.initializer.cms",
-		"com.liferay.site.initializer.dsr", "com.liferay.site.initializer.pim"
+		"com.liferay.site.initializer.cms", "com.liferay.site.initializer.dsr",
+		"com.liferay.site.initializer.pim"
 	};
 
 	private static final Map<String, String>

@@ -1,0 +1,15 @@
+apiDir: ../content-marketing-platform-rest-api/src/main/java
+apiPackagePath: com.liferay.content.marketing.platform.rest
+application:
+    baseURI: /headless-cmp
+    className: HeadlessCMPApplication
+    name: Liferay.Headless.CMP
+author: Carolina Barbosa
+changeTrackingEnabled: true
+clientDir: ../content-marketing-platform-rest-client/src/main/java
+compatibilityVersion: 16
+forcePredictableOperationId: true
+generateBatch: false
+generatePermissions: true
+javaEEPackage: jakarta
+testDir: ../content-marketing-platform-rest-test/src/testIntegration/java

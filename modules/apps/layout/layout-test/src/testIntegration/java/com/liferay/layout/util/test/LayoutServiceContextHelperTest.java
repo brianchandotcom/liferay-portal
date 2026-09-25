@@ -201,6 +201,11 @@ public class LayoutServiceContextHelperTest {
 
 		ThemeDisplay originalThemeDisplay = new ThemeDisplay();
 
+		Locale locale = LocaleUtil.GERMANY;
+
+		originalThemeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
+		originalThemeDisplay.setLocale(locale);
+
 		String serverName = RandomTestUtil.randomString();
 
 		originalThemeDisplay.setPortalDomain(serverName);
@@ -233,6 +238,11 @@ public class LayoutServiceContextHelperTest {
 			ThemeDisplay themeDisplay = currentServiceContext.getThemeDisplay();
 
 			Assert.assertEquals(portalURL, themeDisplay.getCDNBaseURL());
+			Assert.assertEquals(
+				layout.getDefaultLanguageId(), themeDisplay.getLanguageId());
+			Assert.assertEquals(
+				LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()),
+				themeDisplay.getLocale());
 
 			String pathThemeImages = themeDisplay.getPathThemeImages();
 
@@ -253,6 +263,7 @@ public class LayoutServiceContextHelperTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
+		Assert.assertEquals(locale, originalThemeDisplay.getLocale());
 		Assert.assertSame(
 			originalThemeDisplay,
 			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY));

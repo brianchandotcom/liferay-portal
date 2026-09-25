@@ -26,6 +26,8 @@ The formatter comes from the workspace's own plugins, so its version is the one 
 
 Pass `source.base.dir` as an absolute path. From a relative one, the formatter computes the depth of the workspace below the repository root one level too deep, and then either drops changed files silently or fails with a `NullPointerException`.
 
+Current branch mode also reads every file the branch changed across the whole repository and strips the depth of the workspace from each path without checking that the path belongs to the workspace. A changed file outside the workspace that sits two or more directories deep, such as `.claude/skills/pr-check/SKILL.md`, becomes a path inside the workspace. That path usually does not exist, and the formatter fails with a `NullPointerException` in `BaseSourceProcessor.hasGeneratedTag`. When the branch changes such a file, report **NOT VERIFIED** and name the file, since the formatter checked nothing.
+
 A nonzero exit is a finding. Read the violations from the middle of the log, because the terminal Gradle error names the failing task and not the reason for it.
 
 ## Autocommit

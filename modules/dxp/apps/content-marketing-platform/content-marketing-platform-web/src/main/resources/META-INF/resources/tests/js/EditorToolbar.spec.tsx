@@ -60,6 +60,14 @@ jest.mock('@liferay/site-cms-site-initializer', () => {
 });
 
 jest.mock('frontend-js-web', () => ({
+	escapeHTML: jest.fn((value: string) =>
+		value
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;')
+	),
 	navigate: jest.fn(),
 	sessionStorage: {
 		TYPES: {NECESSARY: 'NECESSARY'},
@@ -137,6 +145,16 @@ describe('EditorToolbar', () => {
 
 					return key;
 				}),
+			},
+			Util: {
+				escapeHTML: jest.fn((value: string) =>
+					value
+						.replace(/&/g, '&amp;')
+						.replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;')
+						.replace(/"/g, '&quot;')
+						.replace(/'/g, '&#39;')
+				),
 			},
 		};
 	});

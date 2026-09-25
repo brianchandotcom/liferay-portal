@@ -13,12 +13,13 @@ import {
 } from '@liferay/site-cms-site-initializer';
 import React, {useState} from 'react';
 
-import {displayBulkAssignSuccessToast} from '../../utils/toastUtil';
+import {
+	displayBulkAssignSuccessToast,
+	displayErrorToast,
+} from '../../utils/toastUtil';
 import CustomAssignee from '../CustomAssignee';
 
 import './../AssigneeTrigger.scss';
-
-import {openToast} from 'frontend-js-components-web';
 
 type Props = {
 	apiURL: string;
@@ -27,15 +28,6 @@ type Props = {
 	dataSetId: string;
 	selectedData: IBulkActionFDSData;
 	value: AssigneeValue | {} | null;
-};
-const displayErrorToast = (errorMessage?: string) => {
-	openToast({
-		message:
-			errorMessage ||
-			Liferay.Language.get('an-unexpected-error-occurred'),
-		title: Liferay.Language.get('error'),
-		type: 'danger',
-	});
 };
 export default function BulkEditAssigneeModalContent({
 	apiURL,

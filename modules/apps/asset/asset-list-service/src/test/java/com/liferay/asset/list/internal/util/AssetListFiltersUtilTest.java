@@ -948,6 +948,61 @@ public class AssetListFiltersUtilTest {
 			term1, term2);
 	}
 
+	@Test
+	public void testFilterQueriesWithUserNameContainsQuotedPhraseOperators() {
+		String term1 = RandomTestUtil.randomString();
+		String term2 = RandomTestUtil.randomString();
+
+		String phrase = term1 + StringPool.SPACE + term2;
+
+		_assertMatchQuery(
+			Field.USER_NAME + ".text", phrase,
+			_assertFilterQuery(
+				BooleanClauseOccur.MUST,
+				_getCommonFieldFilterJSONObject(
+					"contains", Field.USER_NAME,
+					StringUtil.quote(phrase, CharPool.QUOTE)
+				).put(
+					"quantifier", "all"
+				)));
+
+		String term3 = RandomTestUtil.randomString();
+
+		String userName =
+			StringUtil.quote(phrase, CharPool.QUOTE) + StringPool.SPACE + term3;
+
+		_assertTermsQuery(
+			BooleanClauseOccur.MUST, Field.USER_NAME + ".text",
+			_assertFilterQuery(
+				BooleanClauseOccur.MUST,
+				_getCommonFieldFilterJSONObject(
+					"contains", Field.USER_NAME, userName
+				).put(
+					"quantifier", "all"
+				)),
+			phrase, term3);
+		_assertTermsQuery(
+			BooleanClauseOccur.SHOULD, Field.USER_NAME + ".text",
+			_assertFilterQuery(
+				BooleanClauseOccur.MUST,
+				_getCommonFieldFilterJSONObject(
+					"contains", Field.USER_NAME, userName
+				).put(
+					"quantifier", "any"
+				)),
+			phrase, term3);
+		_assertTermsQuery(
+			BooleanClauseOccur.MUST, Field.USER_NAME + ".text",
+			_assertFilterQuery(
+				BooleanClauseOccur.MUST_NOT,
+				_getCommonFieldFilterJSONObject(
+					"not-contains", Field.USER_NAME, userName
+				).put(
+					"quantifier", "all"
+				)),
+			phrase, term3);
+	}
+
 	private void _assertAssetCategoryIds(
 		boolean all, boolean contains, JSONObject filterJSONObject,
 		long... expectedAssetCategoryIds) {

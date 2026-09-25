@@ -5,7 +5,7 @@
 
 package com.liferay.mcp.server.rest.resource.v1_0;
 
-import com.liferay.mcp.server.rest.dto.v1_0.Tool;
+import com.liferay.mcp.server.rest.dto.v1_0.ToolSearchResult;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -14,13 +14,13 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.annotation.Generated;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -40,15 +40,10 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface ToolResource {
+public interface ToolSearchResultResource {
 
-	public Tool getToolSetToolSetNameTool(
-			String toolSetName, String toolName,
-			Boolean requiredInputSchemaOnly)
-		throws Exception;
-
-	public Response postToolSetToolSetNameToolInvokeObject(
-			String toolSetName, String toolName, Object object)
+	public Page<ToolSearchResult> getToolSearchPage(
+			Boolean includeRequiredInputSchema, String search)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -113,7 +108,7 @@ public interface ToolResource {
 	@ProviderType
 	public interface Builder {
 
-		public ToolResource build();
+		public ToolSearchResultResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 
@@ -139,4 +134,4 @@ public interface ToolResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-313033119
+// LIFERAY-REST-BUILDER-HASH:1521516465

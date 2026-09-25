@@ -53,7 +53,7 @@ String maximumAgeTimeUnit = fipsSessionConfiguration.maximumAgeTimeUnit();
 
 						<div class="c-mb-1 form-feedback-group" id="<portlet:namespace />idleTimeoutHelp">
 							<div class="form-text text-weight-normal">
-								<liferay-ui:message key="fips-session-idle-timeout-help" />
+								<liferay-ui:message arguments="<%= 12 %>" key="fips-session-idle-timeout-help-x" />
 							</div>
 						</div>
 					</div>
@@ -91,7 +91,7 @@ String maximumAgeTimeUnit = fipsSessionConfiguration.maximumAgeTimeUnit();
 
 						<div class="c-mb-1 form-feedback-group" id="<portlet:namespace />maximumAgeHelp">
 							<div class="form-text text-weight-normal">
-								<liferay-ui:message key="fips-session-maximum-age-help" />
+								<liferay-ui:message arguments="<%= 30 %>" key="fips-session-maximum-age-help-x" />
 							</div>
 						</div>
 					</div>

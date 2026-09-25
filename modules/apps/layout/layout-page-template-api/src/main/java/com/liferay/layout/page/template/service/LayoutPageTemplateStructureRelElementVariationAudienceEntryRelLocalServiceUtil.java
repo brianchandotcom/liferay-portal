@@ -468,6 +468,15 @@ public class
 			getLayoutPageTemplateStructureRelElementVariationAudienceEntryRelsCount();
 	}
 
+	public static int
+		getLayoutPageTemplateStructureRelElementVariationAudienceEntryRelsCountByAudienceEntryERC(
+			long companyId, String audienceEntryERC) {
+
+		return getService().
+			getLayoutPageTemplateStructureRelElementVariationAudienceEntryRelsCountByAudienceEntryERC(
+				companyId, audienceEntryERC);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -520,4 +529,4 @@ public class
 				LayoutPageTemplateStructureRelElementVariationAudienceEntryRelLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1122807439
+// LIFERAY-SERVICE-BUILDER-HASH:856447395

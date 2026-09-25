@@ -370,6 +370,11 @@ public interface
 	public int
 		getLayoutPageTemplateStructureRelElementVariationAudienceEntryRelsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int
+		getLayoutPageTemplateStructureRelElementVariationAudienceEntryRelsCountByAudienceEntryERC(
+			long companyId, String audienceEntryERC);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -422,4 +427,4 @@ public interface
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1000949198
+// LIFERAY-SERVICE-BUILDER-HASH:877475869

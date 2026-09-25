@@ -199,7 +199,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			).build(),
 			null, null);
 
-		List<String> comments = getComments(
+		List<String> comments = _getComments(
 			_getTargetGroupId(scope), externalReferenceCode);
 
 		Assert.assertTrue(
@@ -528,25 +528,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			long groupId, String externalReferenceCode)
 		throws Exception;
 
-	protected List<String> getComments(
-			long groupId, String externalReferenceCode)
-		throws Exception {
-
-		return TransformUtil.transform(
-			_commentManager.getComments(
-				getTargetModelClassName(),
-				getPrimaryKey(groupId, externalReferenceCode),
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS),
-			comment -> {
-				if (comment.isRoot()) {
-					return null;
-				}
-
-				return comment.getBody();
-			});
-	}
-
 	protected abstract long getCreatorUserId(
 			long groupId, String externalReferenceCode)
 		throws Exception;
@@ -820,6 +801,25 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 		finally {
 			FileUtil.delete(larFile);
 		}
+	}
+
+	private List<String> _getComments(
+			long groupId, String externalReferenceCode)
+		throws Exception {
+
+		return TransformUtil.transform(
+			_commentManager.getComments(
+				getTargetModelClassName(),
+				getPrimaryKey(groupId, externalReferenceCode),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			comment -> {
+				if (comment.isRoot()) {
+					return null;
+				}
+
+				return comment.getBody();
+			});
 	}
 
 	private ExportImportReportEntry _getEmptyExportImportReportEntry(

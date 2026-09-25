@@ -1690,6 +1690,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	<#if cacheFields?size != 0>
 		@Override
 		public void copyCacheFields(${entity.name} source) {
+			<#if entity.isMvccEnabled()>
+				if (getMvccVersion() != source.getMvccVersion()) {
+					return;
+				}
+
+			</#if>
 			${entity.name}ModelImpl sourceModelImpl = (${entity.name}ModelImpl)source;
 
 			<#list cacheFields as cacheField>

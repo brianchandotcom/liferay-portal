@@ -82,6 +82,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -1812,16 +1813,38 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			ConfigurationSerDes.toDTO(
 				_readConfiguration("post_configuration_dto.json", valuesMap)));
 
-		Fragment postFragment = _postSiteFragment(fragment);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.headless.admin.fragment.internal.util." +
+					"ConfigurationUtil",
+				LoggerTestUtil.WARN)) {
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
-				postFragment.getExternalReferenceCode(),
-				testGroup.getGroupId());
+			Fragment postFragment = _postSiteFragment(fragment);
 
-		_assertEqualsJSON(
-			_readConfiguration("post_configuration.json", valuesMap),
-			fragmentEntry.getConfiguration());
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLocalService.
+					getFragmentEntryByExternalReferenceCode(
+						postFragment.getExternalReferenceCode(),
+						testGroup.getGroupId());
+
+			_assertEqualsJSON(
+				_readConfiguration("post_configuration.json", valuesMap),
+				fragmentEntry.getConfiguration());
+
+			Assert.assertEquals(
+				Arrays.asList(
+					StringBundler.concat(
+						"Optional reference generated for missing entity with ",
+						"class name ", JournalArticle.class.getName(),
+						", external reference code item-erc, and null scope ",
+						"with current scope ID ", testGroup.getGroupId()),
+					StringBundler.concat(
+						"Optional reference generated for missing entity with ",
+						"class name ", JournalArticle.class.getName(),
+						", external reference code item-erc-and-scope-erc, ",
+						"and scope external reference code item-scope-erc")),
+				TransformUtil.transform(
+					logCapture.getLogEntries(), LogEntry::getMessage));
+		}
 	}
 
 	private void _testPostSiteFragmentBatch() throws Exception {

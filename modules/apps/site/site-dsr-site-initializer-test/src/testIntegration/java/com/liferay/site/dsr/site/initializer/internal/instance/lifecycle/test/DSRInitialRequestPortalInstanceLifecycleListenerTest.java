@@ -8,7 +8,7 @@ package com.liferay.site.dsr.site.initializer.internal.instance.lifecycle.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -124,7 +124,7 @@ public class DSRInitialRequestPortalInstanceLifecycleListenerTest {
 						FRAGMENT_RENDERER_KEY_DSR_VIEW_ROOMS)));
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLink(
+			_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 				fragmentEntryLink);
 		}
 
@@ -204,7 +204,7 @@ public class DSRInitialRequestPortalInstanceLifecycleListenerTest {
 		String key, Layout layout, Locale locale) {
 
 		return TransformUtil.transform(
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				layout.getGroupId(), layout.getPlid()),
 			fragmentEntryLink -> {
 				JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
@@ -226,7 +226,7 @@ public class DSRInitialRequestPortalInstanceLifecycleListenerTest {
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			group.getGroupId(), false, "/home");
 
-		return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
+		return _fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 			group.getGroupId(), layout.getPlid());
 	}
 
@@ -235,6 +235,9 @@ public class DSRInitialRequestPortalInstanceLifecycleListenerTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

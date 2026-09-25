@@ -85,15 +85,9 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 	@Test
 	public void testGetPropsWhenUserHasPermission() throws Exception {
 		Mockito.when(
-			_groupLocalService.getGroup(_GROUP_ID)
+			_jsonFactory.createJSONArray()
 		).thenReturn(
-			_group
-		);
-
-		Mockito.when(
-			_group.getExternalReferenceCode()
-		).thenReturn(
-			_EXTERNAL_REFERENCE_CODE
+			Mockito.mock(JSONArray.class)
 		);
 
 		Mockito.when(
@@ -103,9 +97,15 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 		);
 
 		Mockito.when(
-			_jsonFactory.createJSONArray()
+			_groupLocalService.getGroup(_GROUP_ID)
 		).thenReturn(
-			Mockito.mock(JSONArray.class)
+			_group
+		);
+
+		Mockito.when(
+			_group.getExternalReferenceCode()
+		).thenReturn(
+			_EXTERNAL_REFERENCE_CODE
 		);
 
 		Map<String, Object> props = _getProps();
@@ -123,25 +123,8 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 	}
 
 	private Map<String, Object> _getProps() throws Exception {
-		DepotEntry infoItemDepotEntry = Mockito.mock(DepotEntry.class);
-
-		Mockito.when(
-			infoItemDepotEntry.getDepotEntryId()
-		).thenReturn(
-			_DEPOT_ENTRY_ID
-		);
-
-		Mockito.when(
-			infoItemDepotEntry.getGroupId()
-		).thenReturn(
-			_GROUP_ID
-		);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM, infoItemDepotEntry);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
@@ -159,6 +142,23 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		DepotEntry infoItemDepotEntry = Mockito.mock(DepotEntry.class);
+
+		Mockito.when(
+			infoItemDepotEntry.getDepotEntryId()
+		).thenReturn(
+			_DEPOT_ENTRY_ID
+		);
+
+		Mockito.when(
+			infoItemDepotEntry.getGroupId()
+		).thenReturn(
+			_GROUP_ID
+		);
+
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM, infoItemDepotEntry);
 
 		return _spaceSettingsComponentSectionFragmentRenderer.getProps(
 			null, mockHttpServletRequest);

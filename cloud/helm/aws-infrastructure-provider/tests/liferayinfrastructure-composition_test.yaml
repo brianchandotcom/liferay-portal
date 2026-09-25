@@ -109,7 +109,7 @@ tests:
         documentSelector:
             path: kind
             value: Composition
-        it: Publishes each service account only once its role ARN is known, so pods never start without IRSA
+        it: Publishes each service account only once its role ARN is known
     -   asserts:
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template

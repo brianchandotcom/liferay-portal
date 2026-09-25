@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.fragment.internal.util;
 
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.headless.admin.fragment.dto.v1_0.Configuration;
@@ -152,6 +153,10 @@ public class ConfigurationUtil {
 					externalReferenceCode, scopeExternalReferenceCode));
 
 			if (infoItem == null) {
+				_logOptionalReference(
+					className, externalReferenceCode, groupId,
+					scopeExternalReferenceCode);
+
 				return null;
 			}
 
@@ -176,10 +181,14 @@ public class ConfigurationUtil {
 
 			return classPKInfoItemIdentifier.getClassPK();
 		}
-		catch (Exception exception) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(portalException);
 			}
+
+			_logOptionalReference(
+				className, externalReferenceCode, groupId,
+				scopeExternalReferenceCode);
 		}
 
 		return null;
@@ -191,6 +200,35 @@ public class ConfigurationUtil {
 		}
 
 		return scope.getExternalReferenceCode();
+	}
+
+	private static void _logOptionalReference(
+		String className, String externalReferenceCode, long groupId,
+		String scopeExternalReferenceCode) {
+
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("Optional reference generated for missing entity with ");
+			sb.append("class name ");
+			sb.append(className);
+			sb.append(", external reference code ");
+			sb.append(externalReferenceCode);
+
+			if (Validator.isNotNull(scopeExternalReferenceCode)) {
+				sb.append(", and scope external reference code ");
+				sb.append(scopeExternalReferenceCode);
+			}
+			else {
+				sb.append(", and null scope with current scope ID ");
+				sb.append(groupId);
+			}
+
+			_log.warn(sb.toString());
+		}
+
+		EmptyModelManagerUtil.reportMissingReference(
+			className, externalReferenceCode, groupId);
 	}
 
 	private static Dependency _toDependency(JSONObject dependencyJSONObject) {

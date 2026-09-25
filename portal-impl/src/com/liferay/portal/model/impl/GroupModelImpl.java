@@ -1565,6 +1565,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public void copyCacheFields(Group source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		GroupModelImpl sourceModelImpl = (GroupModelImpl)source;
 
 		setClassName(sourceModelImpl.getClassName());
@@ -1999,4 +2003,4 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private Group _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1730413023
+// LIFERAY-SERVICE-BUILDER-HASH:-1035949016

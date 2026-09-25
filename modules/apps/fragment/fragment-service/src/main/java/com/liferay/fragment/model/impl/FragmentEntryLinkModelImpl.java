@@ -1497,6 +1497,10 @@ public class FragmentEntryLinkModelImpl
 
 	@Override
 	public void copyCacheFields(FragmentEntryLink source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		FragmentEntryLinkModelImpl sourceModelImpl =
 			(FragmentEntryLinkModelImpl)source;
 
@@ -2104,4 +2108,4 @@ public class FragmentEntryLinkModelImpl
 	private FragmentEntryLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-497871176
+// LIFERAY-SERVICE-BUILDER-HASH:-583454107

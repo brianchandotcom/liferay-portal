@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "Single entry point for an AI to discover, understand, and invoke any tool exposed by Liferay. When the user asks for something you do not already know how to do in Liferay, start with `getToolSetsPage` to find a tool set matching their intent, then `getToolSetToolSetNameToolSummariesPage` to find the right tool in it, then `getToolSetToolSetNameTool` to fetch the tool's input schema, then `postToolSetToolSetNameToolInvoke` with an input map matching that schema to execute it. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.mcp.server.rest.client', and version '1.1.1'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "MCP", version = "v1.0")
+	info = @Info(description = "Single entry point for an AI to discover, understand, and invoke any tool exposed by Liferay. When the user asks for something you do not already know how to do in Liferay, find the tool first: search with `getToolSearchPage`, setting `includeRequiredInputSchema` so the leading matches carry the arguments they need, then run the match with `postToolSetToolSetNameToolInvoke`. Browse with `getToolSetsPage` and `getToolSetToolSetNameToolSummariesPage` only when search is unavailable or returns nothing relevant, and fetch a tool's full `inputSchema` with `getToolSetToolSetNameTool` when a search result has not supplied one. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.mcp.server.rest.client', and version '1.1.0'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "MCP", version = "v1.0")
 )
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(ToolResourceImpl.class);
 
+			add(ToolSearchResultResourceImpl.class);
+
 			add(ToolSetResourceImpl.class);
 
 			add(ToolSummaryResourceImpl.class);
@@ -96,4 +98,4 @@ public class OpenAPIResourceImpl {
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:310005814
+// LIFERAY-REST-BUILDER-HASH:-1943620149

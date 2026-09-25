@@ -5,10 +5,11 @@
 
 package com.liferay.mcp.server.rest.client.resource.v1_0;
 
-import com.liferay.mcp.server.rest.client.dto.v1_0.Tool;
+import com.liferay.mcp.server.rest.client.dto.v1_0.ToolSearchResult;
 import com.liferay.mcp.server.rest.client.http.HttpInvoker;
+import com.liferay.mcp.server.rest.client.pagination.Page;
 import com.liferay.mcp.server.rest.client.problem.Problem;
-import com.liferay.mcp.server.rest.client.serdes.v1_0.ToolSerDes;
+import com.liferay.mcp.server.rest.client.serdes.v1_0.ToolSearchResultSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -26,29 +27,18 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface ToolResource {
+public interface ToolSearchResultResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Tool getToolSetToolSetNameTool(
-			String toolSetName, String toolName,
-			Boolean requiredInputSchemaOnly)
+	public Page<ToolSearchResult> getToolSearchPage(
+			Boolean includeRequiredInputSchema, String search)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getToolSetToolSetNameToolHttpResponse(
-			String toolSetName, String toolName,
-			Boolean requiredInputSchemaOnly)
-		throws Exception;
-
-	public void postToolSetToolSetNameToolInvoke(
-			String toolSetName, String toolName, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postToolSetToolSetNameToolInvokeHttpResponse(
-				String toolSetName, String toolName, Object object)
+	public HttpInvoker.HttpResponse getToolSearchPageHttpResponse(
+			Boolean includeRequiredInputSchema, String search)
 		throws Exception;
 
 	public static class Builder {
@@ -64,8 +54,8 @@ public interface ToolResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public ToolResource build() {
-			return new ToolResourceImpl(this);
+		public ToolSearchResultResource build() {
+			return new ToolSearchResultResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -157,16 +147,16 @@ public interface ToolResource {
 
 	}
 
-	public static class ToolResourceImpl implements ToolResource {
+	public static class ToolSearchResultResourceImpl
+		implements ToolSearchResultResource {
 
-		public Tool getToolSetToolSetNameTool(
-				String toolSetName, String toolName,
-				Boolean requiredInputSchemaOnly)
+		public Page<ToolSearchResult> getToolSearchPage(
+				Boolean includeRequiredInputSchema, String search)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getToolSetToolSetNameToolHttpResponse(
-					toolSetName, toolName, requiredInputSchemaOnly);
+				getToolSearchPageHttpResponse(
+					includeRequiredInputSchema, search);
 
 			String content = httpResponse.getContent();
 
@@ -216,7 +206,7 @@ public interface ToolResource {
 			}
 
 			try {
-				return ToolSerDes.toDTO(content);
+				return Page.of(content, ToolSearchResultSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -227,9 +217,8 @@ public interface ToolResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getToolSetToolSetNameToolHttpResponse(
-				String toolSetName, String toolName,
-				Boolean requiredInputSchemaOnly)
+		public HttpInvoker.HttpResponse getToolSearchPageHttpResponse(
+				Boolean includeRequiredInputSchema, String search)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -253,19 +242,20 @@ public interface ToolResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (requiredInputSchemaOnly != null) {
+			if (includeRequiredInputSchema != null) {
 				httpInvoker.parameter(
-					"requiredInputSchemaOnly",
-					String.valueOf(requiredInputSchemaOnly));
+					"includeRequiredInputSchema",
+					String.valueOf(includeRequiredInputSchema));
+			}
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/mcp-server/v1.0/tool-sets/{toolSetName}/tools/{toolName}");
-
-			httpInvoker.path("toolSetName", toolSetName);
-			httpInvoker.path("toolName", toolName);
+						"/o/mcp-server/v1.0/tool-search");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -275,116 +265,16 @@ public interface ToolResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postToolSetToolSetNameToolInvoke(
-				String toolSetName, String toolName, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postToolSetToolSetNameToolInvokeHttpResponse(
-					toolSetName, toolName, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postToolSetToolSetNameToolInvokeHttpResponse(
-					String toolSetName, String toolName, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/mcp-server/v1.0/tool-sets/{toolSetName}/tools/{toolName}/invoke");
-
-			httpInvoker.path("toolSetName", toolSetName);
-			httpInvoker.path("toolName", toolName);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		private ToolResourceImpl(Builder builder) {
+		private ToolSearchResultResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			ToolResource.class.getName());
+			ToolSearchResultResource.class.getName());
 
 		private Builder _builder;
 
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2115239122
+// LIFERAY-REST-BUILDER-HASH:1870118437

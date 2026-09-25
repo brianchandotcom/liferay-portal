@@ -141,16 +141,9 @@ test(
 				await newPage.close();
 			}
 
-			await Promise.all([
-				page.waitForResponse(
-					(response) =>
-						response.url().includes('delete_instance') &&
-						response.status() === 200
-				),
-				virtualInstancesPage.deleteVirtualInstance(
-					DEFAULT_VIRTUAL_INSTANCE_NAME
-				),
-			]);
+			await virtualInstancesPage.deleteVirtualInstance(
+				DEFAULT_VIRTUAL_INSTANCE_NAME
+			);
 
 			await expect(
 				page.getByRole('row').filter({

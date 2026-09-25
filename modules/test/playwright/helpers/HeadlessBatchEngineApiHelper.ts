@@ -8,7 +8,7 @@ import * as fs from 'fs';
 import getRandomString from '../utils/getRandomString';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
-type TExportTask = {
+type TBatchEngineTask = {
 	className?: string;
 	contentType?: string;
 	errorMessage?: string;
@@ -29,7 +29,7 @@ export class HeadlessBatchEngineApiHelper {
 		this.basePath = 'headless-batch-engine/v1.0/';
 	}
 
-	async getExportTask(exportTaskId: number): Promise<TExportTask> {
+	async getExportTask(exportTaskId: number): Promise<TBatchEngineTask> {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/export-task/${exportTaskId}`
 		);
@@ -45,5 +45,11 @@ export class HeadlessBatchEngineApiHelper {
 		fs.writeFileSync(fileName, body);
 
 		return fileName;
+	}
+
+	async getImportTask(importTaskId: number): Promise<TBatchEngineTask> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}import-task/${importTaskId}`
+		);
 	}
 }

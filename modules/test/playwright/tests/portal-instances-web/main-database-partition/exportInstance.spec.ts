@@ -33,10 +33,7 @@ test(
 		}
 		finally {
 			if (created) {
-				await virtualInstancesPage.deleteVirtualInstance(
-					webId,
-					180 * 1000
-				);
+				await virtualInstancesPage.deleteVirtualInstance(webId);
 			}
 		}
 	}

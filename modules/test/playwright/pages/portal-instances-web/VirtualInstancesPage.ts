@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
+import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
@@ -251,10 +252,16 @@ export class VirtualInstancesPage {
 		return this.page.getByText(`The instance was copied to ${webId}.`);
 	}
 
-	async deleteVirtualInstance(name: string, timeout?: number) {
+	deletionStartedMessage(name: string) {
+		return this.page.getByText(
+			`The instance ${name} is being deleted. You will be notified when it finishes.`
+		);
+	}
+
+	async deleteVirtualInstance(name: string) {
 		await this.globalMenuPage.goToControlPanel('Virtual Instances');
 
-		const row = await this.page.getByRole('row').filter({hasText: name});
+		const row = this.page.getByRole('row').filter({hasText: name});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -262,23 +269,37 @@ export class VirtualInstancesPage {
 			trigger: row.getByRole('button', {name: 'Show Actions'}),
 		});
 
-		await this.page.getByRole('button', {name: 'Delete'}).waitFor();
+		const confirmButton = this.page.getByRole('button', {name: 'Delete'});
 
-		if (timeout === undefined) {
-			await this.page.getByRole('button', {name: 'Delete'}).click();
+		await confirmButton.waitFor();
+		await confirmButton.click();
 
-			return;
-		}
+		await expect(this.deletionStartedMessage(name)).toBeVisible();
 
-		await Promise.all([
-			this.page.waitForResponse(
-				(response) => response.url().includes('delete_instance'),
-				{timeout}
-			),
-			this.page.getByRole('button', {name: 'Delete'}).click(),
-		]);
+		await expect(row).toBeVisible();
 
-		await expect(row).toBeHidden({timeout});
+		const apiHelpers = new ApiHelpers(this.page);
+
+		const headlessPortalInstance = apiHelpers.headlessPortalInstance;
+
+		await expect
+			.poll(
+				async () => {
+					const portalInstances =
+						await headlessPortalInstance.getVirtualInstances();
+
+					return portalInstances.some(
+						(portalInstance) =>
+							portalInstance.portalInstanceId === name
+					);
+				},
+				{intervals: [1000], timeout: 180 * 1000}
+			)
+			.toBe(false);
+
+		await this.goto();
+
+		await expect(row).toBeHidden();
 	}
 
 	async exportVirtualInstance(name: string) {

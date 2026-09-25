@@ -47,10 +47,7 @@ test(
 			const schemaName =
 				await virtualInstancesPage.exportVirtualInstance(exportedWebId);
 
-			await virtualInstancesPage.deleteVirtualInstance(
-				exportedWebId,
-				180 * 1000
-			);
+			await virtualInstancesPage.deleteVirtualInstance(exportedWebId);
 
 			exportedCreated = false;
 
@@ -73,8 +70,7 @@ test(
 		finally {
 			if (exportedCreated || imported) {
 				await virtualInstancesPage.deleteVirtualInstance(
-					imported ? importedWebId : exportedWebId,
-					180 * 1000
+					imported ? importedWebId : exportedWebId
 				);
 			}
 		}

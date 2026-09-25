@@ -10,10 +10,8 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelElementVariation;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelElementVariationModel;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -33,8 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -44,7 +40,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -1122,13 +1117,6 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_targetElement = targetElement;
 	}
 
-	public List<String> getAudienceEntryERCs() {
-		return null;
-	}
-
-	public void setAudienceEntryERCs(List<String> audienceEntryERCs) {
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1398,17 +1386,6 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	}
 
 	@Override
-	public void copyCacheFields(
-		LayoutPageTemplateStructureRelElementVariation source) {
-
-		LayoutPageTemplateStructureRelElementVariationModelImpl
-			sourceModelImpl =
-				(LayoutPageTemplateStructureRelElementVariationModelImpl)source;
-
-		setAudienceEntryERCs(sourceModelImpl.getAudienceEntryERCs());
-	}
-
-	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -1623,17 +1600,6 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		if ((targetElement != null) && (targetElement.length() == 0)) {
 			layoutPageTemplateStructureRelElementVariationCacheModel.
 				targetElement = null;
-		}
-
-		try {
-			layoutPageTemplateStructureRelElementVariationCacheModel.
-				audienceEntryERCs =
-					(List<String>)_audienceEntryERCsMethodHandle.invokeExact(
-						(LayoutPageTemplateStructureRelElementVariationImpl)
-							this);
-		}
-		catch (Throwable throwable) {
-			ReflectionUtil.throwException(throwable);
 		}
 
 		return layoutPageTemplateStructureRelElementVariationCacheModel;
@@ -1852,49 +1818,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	}
 
 	private long _columnBitmask;
-
-	protected static final BiConsumer
-		<LayoutPageTemplateStructureRelElementVariation, List<String>>
-			audienceEntryERCsUpdateEntityCacheBiConsumer =
-				(layoutPageTemplateStructureRelElementVariation,
-				 audienceEntryERCs) -> {
-
-					LayoutPageTemplateStructureRelElementVariationCacheModel
-						layoutPageTemplateStructureRelElementVariationCacheModel =
-							EntityCacheUtil.fetchCacheModel(
-								LayoutPageTemplateStructureRelElementVariationImpl.class,
-								layoutPageTemplateStructureRelElementVariation.
-									getPrimaryKey(),
-								LayoutPageTemplateStructureRelElementVariationCacheModel.class);
-
-					if ((layoutPageTemplateStructureRelElementVariationCacheModel !=
-							null) &&
-						(layoutPageTemplateStructureRelElementVariationCacheModel.
-							getMvccVersion() ==
-								layoutPageTemplateStructureRelElementVariation.
-									getMvccVersion())) {
-
-						layoutPageTemplateStructureRelElementVariationCacheModel.audienceEntryERCs =
-							audienceEntryERCs;
-					}
-				};
-
-	private static final MethodHandle _audienceEntryERCsMethodHandle;
-
-	static {
-		MethodHandles.Lookup lookup = ReflectionUtil.getImplLookup();
-
-		try {
-			_audienceEntryERCsMethodHandle = lookup.findGetter(
-				LayoutPageTemplateStructureRelElementVariationImpl.class,
-				"_audienceEntryERCs", List.class);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new ExceptionInInitializerError(reflectiveOperationException);
-		}
-	}
-
 	private LayoutPageTemplateStructureRelElementVariation _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:544493210
+// LIFERAY-SERVICE-BUILDER-HASH:-829667833

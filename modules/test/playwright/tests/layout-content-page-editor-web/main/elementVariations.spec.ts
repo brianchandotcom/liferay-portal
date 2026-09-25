@@ -1098,7 +1098,7 @@ test(
 
 test(
 	'Warns about the element variations whose audience was deleted',
-	{tag: '@LPD-104867'},
+	{tag: ['@LPD-104867', '@LPD-107094']},
 	async ({
 		apiHelpers,
 		audiencesPage,
@@ -1167,9 +1167,24 @@ test(
 			elementVariationsPage.missingAudiencesAlert
 		).not.toBeVisible();
 
-		// Delete the audience of the first variation
+		// Deleting the audience of the first variation warns that a variation
+		// uses it, and cancelling keeps the audience
 
 		await audiencesPage.goto();
+
+		expect(
+			await audiencesPage.deleteAudience(deletedAudienceName, {
+				accept: false,
+			})
+		).toBe(
+			'This audience is used in one element variation. Deleting it will remove it from that variation. Are you sure you want to delete it?'
+		);
+
+		await expect(
+			page.locator('tr', {hasText: deletedAudienceName})
+		).toBeVisible();
+
+		// Delete the audience of the first variation
 
 		await audiencesPage.deleteAudience(deletedAudienceName);
 

@@ -40,15 +40,13 @@ public class JSUnitModulesBatchTestClassGroupTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_workingDirectory = JenkinsResultsParserUtil.getCanonicalFile(
+		_workingDirectory = BatchTestClassGroupTestUtil.newGitWorkingDirectory(
 			temporaryFolder.getRoot());
 
-		File gitDir = new File(_workingDirectory, ".git");
-
-		gitDir.mkdir();
-
-		_moduleDirPath1 = _newModuleDirPath();
-		_moduleDirPath2 = _newModuleDirPath();
+		_moduleDirPath1 = BatchTestClassGroupTestUtil.newJSUnitModuleDirPath(
+			_workingDirectory);
+		_moduleDirPath2 = BatchTestClassGroupTestUtil.newJSUnitModuleDirPath(
+			_workingDirectory);
 
 		_jsUnitFilePaths = Arrays.asList(
 			_moduleDirPath1 + "/test/js/a1.test.js",
@@ -351,35 +349,6 @@ public class JSUnitModulesBatchTestClassGroupTest
 				new File(_workingDirectory, _moduleDirPath1),
 				new File(_workingDirectory, _moduleDirPath2)),
 			jobProperties, jsUnitFiles, _workingDirectory);
-	}
-
-	private String _newModuleDirPath() throws Exception {
-		String moduleName = RandomTestUtil.randomString();
-
-		String moduleDirPath = JenkinsResultsParserUtil.combine(
-			"modules/apps/", moduleName, "/", moduleName, "-web");
-
-		File moduleDir = new File(_workingDirectory, moduleDirPath);
-
-		moduleDir.mkdirs();
-
-		File buildGradleFile = new File(moduleDir, "build.gradle");
-
-		buildGradleFile.createNewFile();
-
-		JSONObject packageJSONObject = new JSONObject();
-
-		packageJSONObject.put(
-			"scripts",
-			new JSONObject(
-			).put(
-				"test", RandomTestUtil.randomString()
-			));
-
-		JenkinsResultsParserUtil.write(
-			new File(moduleDir, "package.json"), packageJSONObject.toString());
-
-		return moduleDirPath;
 	}
 
 	private void _testHasTestFileGlobs(

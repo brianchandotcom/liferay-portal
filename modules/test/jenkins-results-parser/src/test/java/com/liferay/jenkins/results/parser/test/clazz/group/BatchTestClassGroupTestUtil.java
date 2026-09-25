@@ -11,6 +11,8 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.JobFactory;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.RandomTestUtil;
+import com.liferay.jenkins.results.parser.ReflectionTestUtil;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
@@ -24,7 +26,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+
+import org.json.JSONObject;
 
 import org.mockito.Mockito;
 
@@ -129,10 +134,58 @@ public class BatchTestClassGroupTestUtil {
 			"modules-compile", portalTestClassJob);
 	}
 
+	public static File newGitWorkingDirectory(File directory) {
+		File gitWorkingDirectory = JenkinsResultsParserUtil.getCanonicalFile(
+			directory);
+
+		File gitDir = new File(gitWorkingDirectory, ".git");
+
+		gitDir.mkdir();
+
+		return gitWorkingDirectory;
+	}
+
+	public static String newJSUnitModuleDirPath(File workingDirectory)
+		throws IOException {
+
+		String moduleName = RandomTestUtil.randomString();
+
+		String moduleDirPath = JenkinsResultsParserUtil.combine(
+			"modules/apps/", moduleName, "/", moduleName, "-web");
+
+		File moduleDir = new File(workingDirectory, moduleDirPath);
+
+		moduleDir.mkdirs();
+
+		File buildGradleFile = new File(moduleDir, "build.gradle");
+
+		buildGradleFile.createNewFile();
+
+		JSONObject packageJSONObject = new JSONObject();
+
+		packageJSONObject.put(
+			"scripts",
+			new JSONObject(
+			).put(
+				"test", RandomTestUtil.randomString()
+			));
+
+		JenkinsResultsParserUtil.write(
+			new File(moduleDir, "package.json"), packageJSONObject.toString());
+
+		return moduleDirPath;
+	}
+
 	public static JSUnitModulesBatchTestClassGroup
 		newJSUnitModulesBatchTestClassGroup(
 			List<File> baseModuleDirs, Properties jobProperties,
 			List<File> jsUnitFiles, File workingDirectory) {
+
+		Map<String, BatchTestClassGroup> batchTestClassGroups =
+			ReflectionTestUtil.getFieldValue(
+				TestClassGroupFactory.class, "_batchTestClassGroups");
+
+		batchTestClassGroups.clear();
 
 		PortalTestClassJob portalTestClassJob = getPortalTestClassJob(
 			jobProperties, Collections.<File>emptyList(), workingDirectory);

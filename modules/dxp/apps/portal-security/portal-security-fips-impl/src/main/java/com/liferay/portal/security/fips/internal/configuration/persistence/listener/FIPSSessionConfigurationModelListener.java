@@ -42,17 +42,17 @@ public class FIPSSessionConfigurationModelListener
 
 		_checkCryptoOfficerRole(properties);
 		_validate(
-			"fips-session-idle-timeout",
+			FIPSConstants.SESSION_IDLE_TIMEOUT_MAX_MINUTES,
 			FIPSUtil.toMinutes(
 				GetterUtil.getInteger(properties.get("idleTimeout")),
 				GetterUtil.getString(properties.get("idleTimeoutTimeUnit"))),
-			FIPSConstants.SESSION_IDLE_TIMEOUT_MAX_MINUTES, properties);
+			"fips-session-idle-timeout", properties);
 		_validate(
-			"fips-session-maximum-age",
+			FIPSConstants.SESSION_MAXIMUM_AGE_MAX_MINUTES,
 			FIPSUtil.toMinutes(
 				GetterUtil.getInteger(properties.get("maximumAge")),
 				GetterUtil.getString(properties.get("maximumAgeTimeUnit"))),
-			FIPSConstants.SESSION_MAXIMUM_AGE_MAX_MINUTES, properties);
+			"fips-session-maximum-age", properties);
 	}
 
 	private void _checkCryptoOfficerRole(Dictionary<String, Object> properties)
@@ -73,7 +73,7 @@ public class FIPSSessionConfigurationModelListener
 	}
 
 	private void _validate(
-			String name, long minutes, int maximumMinutes,
+			int maximumMinutes, long minutes, String name,
 			Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 

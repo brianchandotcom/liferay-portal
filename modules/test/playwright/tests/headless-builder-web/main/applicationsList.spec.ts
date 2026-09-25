@@ -18,7 +18,7 @@ const test = mergeTests(
 );
 
 test(
-	'can filter API applications by excluding a status',
+	'can list API applications and filter them by excluding a status',
 	{tag: '@LPD-106934'},
 	async ({apiHelpers, headlessBuilderPage, page}) => {
 
@@ -45,9 +45,27 @@ test(
 			applications.push(application);
 		}
 
-		// Exclude the published status
+		// Check that the applications are listed with their status
 
 		await headlessBuilderPage.goto();
+
+		const [publishedApplication, ...unpublishedApplications] = applications;
+
+		await expect(
+			page.locator('.fds tbody tr', {
+				hasText: publishedApplication.title,
+			})
+		).toContainText('Published');
+
+		for (const unpublishedApplication of unpublishedApplications) {
+			await expect(
+				page.locator('.fds tbody tr', {
+					hasText: unpublishedApplication.title,
+				})
+			).toContainText('Unpublished');
+		}
+
+		// Exclude the published status
 
 		await applyFDSSelectionFilter(page, {
 			exclude: true,
@@ -57,8 +75,6 @@ test(
 		});
 
 		// Check that only the unpublished applications are listed
-
-		const [publishedApplication, ...unpublishedApplications] = applications;
 
 		for (const unpublishedApplication of unpublishedApplications) {
 			await expect(

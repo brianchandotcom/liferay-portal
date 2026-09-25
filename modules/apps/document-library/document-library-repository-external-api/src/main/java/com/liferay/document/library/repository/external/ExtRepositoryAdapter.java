@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.key.secret.SecretResolverUtil;
 
 import java.io.InputStream;
 
@@ -1298,7 +1299,9 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		String login = PrincipalThreadLocal.getName();
 
 		if (Validator.isNull(login) || _isGuestUser(login)) {
-			return PropsUtil.get(PropsKeys.DL_REPOSITORY_GUEST_PASSWORD);
+			return SecretResolverUtil.resolve(
+				CompanyConstants.SYSTEM,
+				PropsUtil.get(PropsKeys.DL_REPOSITORY_GUEST_PASSWORD));
 		}
 
 		return PrincipalThreadLocal.getPassword();

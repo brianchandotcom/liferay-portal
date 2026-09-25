@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
@@ -775,7 +776,11 @@ public class SharingEntryLocalServiceImpl
 
 		_validateSharingEntryActions(sharingEntryActions);
 
-		_validateExpirationDate(expirationDate);
+		if (_hasSharingEntryChanged(
+				expirationDate, shareable, sharingEntry, sharingEntryActions)) {
+
+			_validateExpirationDate(expirationDate);
+		}
 
 		sharingEntry.setUserId(userId);
 		sharingEntry.setShareable(shareable);
@@ -844,6 +849,42 @@ public class SharingEntryLocalServiceImpl
 					).withParentheses()
 				)
 			));
+	}
+
+	private boolean _hasExpirationDateChanged(
+		Date currentExpirationDate, Date newExpirationDate) {
+
+		if ((currentExpirationDate == null) && (newExpirationDate == null)) {
+			return false;
+		}
+
+		if ((currentExpirationDate == null) || (newExpirationDate == null)) {
+			return true;
+		}
+
+		long deltaTime = Math.abs(
+			currentExpirationDate.getTime() - newExpirationDate.getTime());
+
+		if (deltaTime >= Time.SECOND) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasSharingEntryChanged(
+		Date expirationDate, boolean shareable, SharingEntry sharingEntry,
+		Collection<SharingEntryAction> sharingEntryActions) {
+
+		if ((sharingEntry.isShareable() != shareable) ||
+			(sharingEntry.getActionIds() != _getActionIds(
+				sharingEntryActions))) {
+
+			return true;
+		}
+
+		return _hasExpirationDateChanged(
+			sharingEntry.getExpirationDate(), expirationDate);
 	}
 
 	private void _validateExpirationDate(Date expirationDate)

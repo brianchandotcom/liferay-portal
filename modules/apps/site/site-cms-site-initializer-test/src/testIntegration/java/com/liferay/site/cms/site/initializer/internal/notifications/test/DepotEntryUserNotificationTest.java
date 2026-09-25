@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.notifications.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.content.marketing.platform.test.util.CMPTestUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotPortletKeys;
 import com.liferay.depot.model.DepotEntry;
@@ -47,7 +48,6 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
 
 import jakarta.portlet.PortletRequest;
 

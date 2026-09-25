@@ -1,0 +1,98 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.content.marketing.platform.web.internal.fragment.renderer;
+
+import com.liferay.content.marketing.platform.web.internal.util.ActionUtil;
+import com.liferay.content.marketing.platform.web.internal.util.ObjectEntryUtil;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Kevin Tan
+ */
+@Component(service = FragmentRenderer.class)
+public class TasksOverviewComponentSectionFragmentRenderer
+	extends BaseComponentSectionFragmentRenderer {
+
+	@Override
+	public String getCollectionKey() {
+		return "sections";
+	}
+
+	@Override
+	protected String getComponentName(HttpServletRequest httpServletRequest) {
+		return "TasksOverview";
+	}
+
+	@Override
+	protected String getLabelKey() {
+		return "tasks-overview";
+	}
+
+	@Override
+	protected String getModuleName() {
+		return "content-marketing-platform-web";
+	}
+
+	@Override
+	protected Map<String, Object> getProps(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
+		ObjectEntry cmpProjectObjectEntry = ObjectEntryUtil.getObjectEntry(
+			httpServletRequest);
+
+		if (cmpProjectObjectEntry == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		ObjectDefinition cmpTaskObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_CMP_TASK", themeDisplay.getCompanyId());
+
+		return HashMapBuilder.<String, Object>put(
+			"cmpProjectObjectEntryId", cmpProjectObjectEntry.getObjectEntryId()
+		).put(
+			"hasAddTaskPermission",
+			() -> _objectEntryService.hasPortletResourcePermission(
+				cmpProjectObjectEntry.getGroupId(),
+				cmpTaskObjectDefinition.getObjectDefinitionId(),
+				ObjectActionKeys.ADD_OBJECT_ENTRY)
+		).put(
+			"redirect",
+			ActionUtil.getAddTaskURL(
+				cmpProjectObjectEntry.getGroupId(), cmpTaskObjectDefinition,
+				cmpProjectObjectEntry.getObjectEntryId(), themeDisplay)
+		).build();
+	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
+
+}

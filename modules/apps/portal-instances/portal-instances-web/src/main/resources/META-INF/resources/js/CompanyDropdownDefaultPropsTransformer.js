@@ -4,13 +4,19 @@
  */
 
 import {openToast} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {escapeHTML, fetch, sub} from 'frontend-js-web';
 
 import openCopyCompanyModal from './openCopyCompanyModal';
 import openDeleteCompanyModal from './openDeleteCompanyModal';
 import openExportCompanyModal from './openExportCompanyModal';
 
 const pendingExportURLs = new Set();
+
+const getErrorMessage = (response) =>
+	response.json().then(
+		({title}) => title || response.statusText,
+		() => response.statusText
+	);
 
 const showUnexpectedErrorToast = () => {
 	openToast({
@@ -29,10 +35,38 @@ const ACTIONS = {
 
 	deleteInstance(itemData) {
 		openDeleteCompanyModal({
-			onDelete: () => {
-				fetch(itemData.deleteURL, {method: 'POST'}).then(() => {
-					window.location.reload();
-				});
+			onDelete: async () => {
+				try {
+					const response = await fetch(itemData.deleteURL, {
+						method: 'POST',
+					});
+
+					if (!response.ok) {
+						throw new Error(await getErrorMessage(response));
+					}
+
+					const responseJSON = await response.json();
+
+					if (responseJSON.error) {
+						throw new Error(responseJSON.error);
+					}
+
+					openToast({
+						message: sub(
+							Liferay.Language.get(
+								'the-instance-x-is-being-deleted-you-will-be-notified-when-it-finishes'
+							),
+							escapeHTML(itemData.portalInstanceId)
+						),
+						type: 'info',
+					});
+				}
+				catch (error) {
+					openToast({
+						message: escapeHTML(error.message),
+						type: 'danger',
+					});
+				}
 			},
 		});
 	},

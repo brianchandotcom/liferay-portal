@@ -15,8 +15,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.instances.web.internal.constants.PortalInstancesWebKeys" %><%@
+<%@ page import="com.liferay.portal.instances.web.internal.constants.PortalInstancesWebKeys" %><%@
 page import="com.liferay.portal.instances.web.internal.display.context.PortalInstancesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.portal.instances.web.internal.taglib.util.CompanyActionDropdownItems" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -44,8 +43,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.site.initializer.SiteInitializer" %><%@
-page import="com.liferay.site.initializer.SiteInitializerRegistry" %><%@
-page import="com.liferay.taglib.search.ResultRow" %>
+page import="com.liferay.site.initializer.SiteInitializerRegistry" %>
 
 <%@ page import="jakarta.portlet.PortletURL" %>
 

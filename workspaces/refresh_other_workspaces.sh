@@ -29,6 +29,13 @@ function refresh_workspaces {
 			continue
 		fi
 
+		local exclude_github=()
+
+		if [[ -f "${workspace_dir}/.github/CODEOWNERS" ]]
+		then
+			exclude_github=(--exclude .github)
+		fi
+
 		rsync \
 			--archive \
 			--delete \
@@ -49,6 +56,7 @@ function refresh_workspaces {
 			--exclude test.properties \
 			--exclude themes \
 			--exclude yarn.lock \
+			"${exclude_github[@]}" \
 			"${PWD}/liferay-sample-workspace/" "${workspace_dir}"
 	done
 }

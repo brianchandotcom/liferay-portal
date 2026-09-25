@@ -32,6 +32,7 @@ function refresh_workspaces {
 		rsync \
 			--archive \
 			--delete \
+			--exclude .github \
 			--exclude Jenkinsfile \
 			--exclude README.md \
 			--exclude build.gradle \

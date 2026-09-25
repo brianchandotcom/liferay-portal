@@ -22,7 +22,7 @@ cd "${BUILD_ROOT}"
 	formatSource
 ```
 
-The formatter comes from the workspace's own plugins, so its version is the one the workspace pins. The properties are JVM system properties, so pass them with `--system-prop`, since the plugin reads a Gradle project property as unset without any error and then formats the whole workspace.
+The formatter comes from the workspace's own plugins, so its version is the one the workspace pins. The properties are JVM system properties, so pass them with `--system-prop`. The plugin reads a Gradle project property as unset without an error and then formats the whole workspace.
 
 Pass `source.base.dir` as an absolute path. From a relative one, the formatter computes the depth of the workspace below the repository root one level too deep, and then either drops changed files silently or fails with a `NullPointerException`.
 

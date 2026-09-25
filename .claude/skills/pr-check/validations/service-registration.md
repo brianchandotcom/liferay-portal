@@ -44,7 +44,7 @@ Collect the risky class names from the diff:
 
 An empty collection ends the scan.
 
-List every `@Reference` in the build root of the file each class came from, and keep those whose declared field type is exactly a collected class, never a substring match. A class from a workspace can only be referenced inside that workspace, and a class from the rest of the repository cannot be referenced from a workspace, which compiles against released artifacts rather than this source. For a class from the rest of the repository:
+List every `@Reference` in the build root of the file each class came from, and keep those whose declared field type is exactly a collected class, never a substring match. A workspace compiles against released artifacts rather than this source, so a class from the rest of the repository cannot be referenced from a workspace, and a class from a workspace can be referenced only inside that workspace. For a class from the rest of the repository:
 
 ```bash
 (cd "${REPO_ROOT}" && git grep --after-context=30 --fixed-strings '@Reference' -- ':/*.java' ':(exclude,glob)workspaces/*-workspace/**')

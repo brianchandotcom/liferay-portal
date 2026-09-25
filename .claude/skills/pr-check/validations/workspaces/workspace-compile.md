@@ -20,7 +20,7 @@ Always.
 
 Do not add heap flags. A workspace that needs more heap sets `org.gradle.jvmargs` in its own `gradle.properties`, and a flag here would override it.
 
-Report FAIL when a failing task is in something the diff changed, quoting the failing task line and the error. When it is in code the diff did not touch, the workspace is already broken, so report **NOT VERIFIED** for it and name the failing task and the commit that last changed its source. Report **NOT VERIFIED** as well when the run could not proceed, such as a dependency that failed to download.
+Report FAIL when a failing task is in something the diff changed, quoting the failing task line and the error. When the failing task is in code the diff did not touch, the workspace is already broken, so report **NOT VERIFIED** for it and name the failing task and the commit that last changed its source. Report **NOT VERIFIED** as well when the run could not proceed, such as a dependency that failed to download.
 
 ## Notes
 

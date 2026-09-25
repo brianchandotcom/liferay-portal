@@ -24,11 +24,11 @@ These settings describe this repository. The `pr-check` skill of another reposit
 
 Workspace Source Format is skipped here because Source Format already formats every changed file in this repository, workspace files included.
 
-`${BASE_BRANCH}` below stands for the base branch, and `${SOURCE_SHA}` for the rules commit, the commit this document and its validations were read from. A repository that fetches them from another supplies that commit.
+`${BASE_BRANCH}` below stands for the base branch, and `${SOURCE_SHA}` stands for the rules commit, which is the commit this document and its validations were read from. A repository that fetches them from another repository supplies that commit.
 
 ## Preconditions
 
-- **On a feature branch.** When `HEAD` is `${BASE_BRANCH}` or detached, exit with a one-line message.
+- **On a feature branch.** When `HEAD` is `${BASE_BRANCH}` or detached, exit with a one line message.
 
 - **Working tree clean.** `git status --porcelain` must return empty. When dirty, abort and ask the developer to commit first.
 
@@ -40,7 +40,7 @@ Workspace Source Format is skipped here because Source Format already formats ev
 
 	1. `git rebase <remote>/${BASE_BRANCH}`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer asks you to resolve them, fix the conflicts, `git add` the files, and run `git rebase --continue`. In every other case (the developer resolves them, the conflicts cannot be resolved, or the rebase fails otherwise) run `git rebase --abort` and stop the run.
 
-- **Diff baseline is local `${BASE_BRANCH}`.** After the rebase, the three-dot diff against local `${BASE_BRANCH}` is the baseline.
+- **Diff baseline is local `${BASE_BRANCH}`.** After the rebase, the three dot diff against local `${BASE_BRANCH}` is the baseline.
 
 - **Diff is nonempty.** When the three-dot diff produces no files, exit with a one-line message — no validation produces useful signal on a clean branch.
 
@@ -54,7 +54,7 @@ git diff --name-status "$(git merge-base HEAD "${BASE_BRANCH}")...HEAD"
 
 ### Routing
 
-Each validation has a scope, decided by the folder its file sits in, and sees only the changed paths its scope covers.
+The folder a validation file sits in decides its scope. A validation sees only the changed paths its scope covers.
 
 - **Branch.** A file directly in `validations` checks the branch as a whole and sees every changed path.
 
@@ -64,11 +64,11 @@ Each validation has a scope, decided by the folder its file sits in, and sees on
 
 Paths directly under `workspaces` that sit in no workspace, such as the refresh scripts, belong to the portal scope.
 
-In every workspace other than `liferay-sample-workspace`, a changed path that `workspaces/refresh_other_workspaces.sh` regenerates is seen only by [Generated Workspace File](validations/workspaces/generated-file.md). Such a path may change only through a refresh, and building it would only repeat what the sample workspace already checks. A path is regenerated when it does not match the regex that validation builds from the script's `--exclude` patterns, so a workspace whose changed paths are all regenerated runs no other workspace validation.
+In every workspace other than `liferay-sample-workspace`, a changed path that `workspaces/refresh_other_workspaces.sh` regenerates is seen only by [Generated Workspace File](validations/workspaces/generated-file.md). Such a path may change only through a refresh, and building it would only repeat what the sample workspace already checks. A path is regenerated when it does not match the regex that validation builds from the script's `--exclude` patterns. A workspace whose changed paths are all regenerated therefore runs no other workspace validation.
 
-Run the scopes the settings enable, and skip every validation the settings name. When the portal scope is disabled, list every changed path that belongs to no workspace in the Results Summary as unchecked, so that a change nothing examined never reads as a pass.
+Run only the validations in the scopes the settings enable, and skip every validation the settings name. When the portal scope is disabled, list every changed path that belongs to no workspace in the Results Summary as unchecked, so that a change nothing examined never reads as a pass.
 
-The build root of a changed path is its workspace directory when it belongs to a workspace, and `${REPO_ROOT}` otherwise. A validation that needs a place to search, such as a sweep for references, searches the build root of the path it is examining, and every workspace validation runs its commands from `${BUILD_ROOT}`, the absolute path of its workspace directory.
+The build root of a changed path is its workspace directory when it belongs to a workspace, and `${REPO_ROOT}` otherwise. A validation that needs a place to search, such as a sweep for references, searches the build root of the path it is examining. Every workspace validation runs its commands from `${BUILD_ROOT}`, which is the absolute path of its workspace directory.
 
 ## Expected Output
 
@@ -136,12 +136,13 @@ Process each validation in a subagent.
 
 ### Pass 1: Estimate
 
-Read every validation file the list above links, and no other file under `validations`, in a single parallel batch — one Read tool call per file, all in the same tool-use turn. From each file, take the regex inside its `## Match` section.
+Read every validation file the list above links, and no other file under `validations`, in a single parallel batch — one Read tool call per file, all in the same tool use turn. From each file, take the regex inside its `## Match` section.
 
 In your next turn, compose a single bash script that:
 
 - computes the diff: `git diff --name-only --no-renames "$(git merge-base HEAD "${BASE_BRANCH}")...HEAD"`, since a detected rename collapses to its new path alone and hides the old one from every regex
-- for each validation, tests its regex against the paths its scope sees, once per workspace for a workspace validation, and prints the validation name, with the workspace name for a workspace validation, when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
+- for each validation, tests its regex against the paths its scope sees and prints the validation name when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
+- tests a workspace validation once for each workspace and prints the workspace name with it
 - ` &! ` in the regex splits it into an include side and an exclude side. The validation fires when a diff path matches the include side but not the exclude side.
 - runs as a single Bash tool invocation
 

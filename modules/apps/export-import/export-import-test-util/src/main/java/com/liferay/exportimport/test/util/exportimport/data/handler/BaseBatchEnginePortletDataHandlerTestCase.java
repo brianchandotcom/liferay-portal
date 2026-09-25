@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -104,17 +105,10 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 	@AfterClass
 	public static void tearDownClass() {
-		_companyGroup = null;
-		_depotEntry = null;
-		_depotLayout = null;
 		_group = null;
-		_siteLayout = null;
-		_targetCompany = null;
-		_targetCompanyGroup = null;
-		_targetDepotEntry = null;
-		_targetDepotLayout = null;
+		_layout = null;
 		_targetGroup = null;
-		_targetSiteLayout = null;
+		_targetLayout = null;
 		_targetUser = null;
 	}
 
@@ -123,41 +117,38 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	public void setUp() throws Exception {
 		super.setUp();
 
+		if (_group != null) {
+			return;
+		}
+
 		Scope scope = getScope();
 
-		if ((scope == Scope.COMPANY) && (_targetCompany == null)) {
-			_companyGroup = _stagingGroupHelper.fetchCompanyGroup(
+		if (scope == Scope.COMPANY) {
+			_group = _stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId());
 
-			_targetCompany = CompanyTestUtil.addCompany();
+			Company targetCompany = CompanyTestUtil.addCompany();
 
-			_targetCompanyGroup = _stagingGroupHelper.fetchCompanyGroup(
-				_targetCompany.getCompanyId());
+			_targetGroup = _stagingGroupHelper.fetchCompanyGroup(
+				targetCompany.getCompanyId());
+			_targetUser = UserTestUtil.addCompanyAdminUser(targetCompany);
 
-			_targetUser = UserTestUtil.addCompanyAdminUser(_targetCompany);
+			return;
 		}
-		else if ((scope == Scope.DEPOT) && (_depotEntry == null)) {
-			_depotEntry = _addDepotEntry();
 
-			_depotLayout = LayoutTestUtil.addTypePortletLayout(
-				_depotEntry.getGroupId());
-
-			_targetDepotEntry = _addDepotEntry();
-
-			_targetDepotLayout = LayoutTestUtil.addTypePortletLayout(
-				_targetDepotEntry.getGroupId());
+		if (scope == Scope.DEPOT) {
+			_group = _addDepotGroup();
+			_targetGroup = _addDepotGroup();
 		}
-		else if ((scope == Scope.SITE) && (_group == null)) {
+		else {
 			_group = GroupTestUtil.addGroup();
-
-			_siteLayout = LayoutTestUtil.addTypePortletLayout(
-				_group.getGroupId());
-
 			_targetGroup = GroupTestUtil.addGroup();
-
-			_targetSiteLayout = LayoutTestUtil.addTypePortletLayout(
-				_targetGroup.getGroupId());
 		}
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
+		_targetLayout = LayoutTestUtil.addTypePortletLayout(
+			_targetGroup.getGroupId());
+		_targetUser = TestPropsValues.getUser();
 	}
 
 	@Test
@@ -166,9 +157,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			return;
 		}
 
-		Scope scope = getScope();
-
-		long groupId = _getGroupId(scope);
+		long groupId = _group.getGroupId();
 
 		String externalReferenceCode = addEntry(
 			groupId, TestPropsValues.getUserId(), new Date());
@@ -192,7 +181,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			});
 
 		_exportImport(
-			scope,
 			HashMapBuilder.put(
 				PortletDataHandlerKeys.COMMENTS,
 				new String[] {Boolean.TRUE.toString()}
@@ -200,7 +188,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			null, null);
 
 		List<String> comments = _getComments(
-			_getTargetGroupId(scope), externalReferenceCode);
+			_targetGroup.getGroupId(), externalReferenceCode);
 
 		Assert.assertTrue(
 			comments.toString(),
@@ -210,26 +198,24 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	@Override
 	@Test
 	public void testExportImportData() throws Exception {
-		Scope scope = getScope();
-
-		long groupId = _getGroupId(scope);
+		long groupId = _group.getGroupId();
 
 		String externalReferenceCode1 = addEntry(
 			groupId, TestPropsValues.getUserId(), new Date());
 		String externalReferenceCode2 = addEntry(
 			groupId, TestPropsValues.getUserId(), new Date());
 
-		_exportImport(scope, Collections.emptyMap(), null, null);
+		_exportImport(Collections.emptyMap(), null, null);
 
-		List<String> externalReferenceCodes = _getTargetExternalReferenceCodes(
-			scope);
+		List<String> externalReferenceCodes =
+			_getTargetExternalReferenceCodes();
 
 		Assert.assertTrue(
 			externalReferenceCodes.toString(),
 			externalReferenceCodes.containsAll(
 				Arrays.asList(externalReferenceCode1, externalReferenceCode2)));
 
-		long targetGroupId = _getTargetGroupId(scope);
+		long targetGroupId = _targetGroup.getGroupId();
 
 		Assert.assertEquals(
 			getEntryValue(groupId, externalReferenceCode1),
@@ -240,7 +226,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 		updateEntry(groupId, externalReferenceCode1);
 
-		_exportImport(scope, Collections.emptyMap(), null, null);
+		_exportImport(Collections.emptyMap(), null, null);
 
 		Assert.assertEquals(
 			getEntryValue(groupId, externalReferenceCode1),
@@ -249,29 +235,26 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 	@Test
 	public void testExportImportDeletions() throws Exception {
-		Scope scope = getScope();
-
-		long groupId = _getGroupId(scope);
+		long groupId = _group.getGroupId();
 
 		String externalReferenceCode1 = addEntry(
 			groupId, TestPropsValues.getUserId(), new Date());
 		String externalReferenceCode2 = addEntry(
 			groupId, TestPropsValues.getUserId(), new Date());
 
-		_exportImport(scope, Collections.emptyMap(), null, null);
+		_exportImport(Collections.emptyMap(), null, null);
 
 		deleteEntry(groupId, externalReferenceCode1);
 
 		_exportImport(
-			scope,
 			HashMapBuilder.put(
 				PortletDataHandlerKeys.DELETIONS,
 				new String[] {Boolean.TRUE.toString()}
 			).build(),
 			null, null);
 
-		List<String> externalReferenceCodes = _getTargetExternalReferenceCodes(
-			scope);
+		List<String> externalReferenceCodes =
+			_getTargetExternalReferenceCodes();
 
 		Assert.assertFalse(
 			externalReferenceCodes.toString(),
@@ -290,9 +273,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			return;
 		}
 
-		Scope scope = getScope();
-
-		long groupId = _getGroupId(scope);
+		long groupId = _group.getGroupId();
 
 		String externalReferenceCode1 = addEntry(
 			groupId, TestPropsValues.getUserId(), new Date());
@@ -312,15 +293,14 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			getPrimaryKey(groupId, externalReferenceCode1));
 
 		_exportImport(
-			scope,
 			HashMapBuilder.put(
 				ExportImportDateUtil.RANGE,
 				new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE}
 			).build(),
 			null, null);
 
-		List<String> externalReferenceCodes = _getTargetExternalReferenceCodes(
-			scope);
+		List<String> externalReferenceCodes =
+			_getTargetExternalReferenceCodes();
 
 		Assert.assertTrue(
 			externalReferenceCodes.toString(),
@@ -334,7 +314,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	public void testExportImportKeepCreatorData() throws Exception {
 		Scope scope = getScope();
 
-		long groupId = _getGroupId(scope);
+		long groupId = _group.getGroupId();
 
 		_creatorUser = UserTestUtil.addUser();
 
@@ -344,7 +324,8 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 			_creatorUser = _userLocalService.updateUser(_creatorUser);
 
-			User targetCreatorUser = UserTestUtil.addUser(_targetCompany);
+			User targetCreatorUser = UserTestUtil.addUser(
+				_companyLocalService.getCompany(_targetGroup.getCompanyId()));
 
 			targetCreatorUser.setExternalReferenceCode(
 				_creatorUser.getExternalReferenceCode());
@@ -356,7 +337,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			groupId, _creatorUser.getUserId(), new Date());
 
 		_exportImport(
-			scope,
 			HashMapBuilder.put(
 				PortletDataHandlerKeys.USER_ID_STRATEGY,
 				new String[] {UserIdStrategy.CURRENT_USER_ID}
@@ -364,7 +344,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			null, null);
 
 		User targetCreatorUser = _userLocalService.getUser(
-			getCreatorUserId(_getTargetGroupId(scope), externalReferenceCode));
+			getCreatorUserId(_targetGroup.getGroupId(), externalReferenceCode));
 
 		Assert.assertEquals(
 			_creatorUser.getExternalReferenceCode(),
@@ -379,7 +359,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 		Scope scope = getScope();
 
-		long groupId = _getGroupId(scope);
+		long groupId = _group.getGroupId();
 
 		String externalReferenceCode = addEntry(
 			groupId, TestPropsValues.getUserId(), new Date());
@@ -404,7 +384,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			_role.getRoleId(), new String[] {getPermissionsActionKey()});
 
 		_exportImport(
-			scope,
 			HashMapBuilder.put(
 				PortletDataHandlerKeys.PERMISSIONS,
 				new String[] {Boolean.TRUE.toString()}
@@ -413,19 +392,17 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
-				_getTargetCompanyId(scope), getTargetModelClassName(),
+				_targetGroup.getCompanyId(), getTargetModelClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(
 					getPrimaryKey(
-						_getTargetGroupId(scope), externalReferenceCode)),
+						_targetGroup.getGroupId(), externalReferenceCode)),
 				_getTargetRoleId(scope), getPermissionsActionKey()));
 	}
 
 	@Test
 	public void testExportImportWithDateRange() throws Exception {
-		Scope scope = getScope();
-
-		long groupId = _getGroupId(scope);
+		long groupId = _group.getGroupId();
 
 		long time = System.currentTimeMillis();
 
@@ -441,10 +418,10 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 		Date startDate = new Date(time - (3 * Time.DAY));
 		Date endDate = new Date(time - Time.DAY);
 
-		_exportImport(scope, Collections.emptyMap(), startDate, endDate);
+		_exportImport(Collections.emptyMap(), startDate, endDate);
 
-		List<String> externalReferenceCodes = _getTargetExternalReferenceCodes(
-			scope);
+		List<String> externalReferenceCodes =
+			_getTargetExternalReferenceCodes();
 
 		Assert.assertFalse(
 			externalReferenceCodes.toString(),
@@ -463,7 +440,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			return;
 		}
 
-		long groupId = _getGroupId(getScope());
+		long groupId = _group.getGroupId();
 
 		String externalReferenceCode = null;
 
@@ -633,19 +610,20 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			long groupId, String externalReferenceCode)
 		throws Exception;
 
-	private DepotEntry _addDepotEntry() throws Exception {
-		return _depotEntryLocalService.addDepotEntry(
+	private Group _addDepotGroup() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
+
+		return depotEntry.getGroup();
 	}
 
 	private void _exportImport(
-			Scope scope, Map<String, String[]> parameterMap, Date startDate,
-			Date endDate)
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
 		ExportImportDescriptor<?> exportImportDescriptor =
@@ -678,11 +656,11 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			parameterMap
 		).build();
 
-		if (scope == Scope.COMPANY) {
+		if (getScope() == Scope.COMPANY) {
 			_exportImportLayouts(parameterMap, startDate, endDate);
 		}
 		else {
-			_exportImportPortletInfo(scope, parameterMap, startDate, endDate);
+			_exportImportPortletInfo(parameterMap, startDate, endDate);
 		}
 	}
 
@@ -702,7 +680,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportLayoutSettingsMap(
-					user, _companyGroup.getGroupId(), false, new long[0],
+					user, _group.getGroupId(), false, new long[0],
 					parameterMap);
 
 		_setDateRange(settingsMap, startDate, endDate);
@@ -728,9 +706,9 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 				exportImportConfiguration, _targetUser,
 				ExportImportConfigurationSettingsMapFactoryUtil.
 					buildImportLayoutSettingsMap(
-						_targetUser, _targetCompanyGroup.getGroupId(), false,
-						null, parameterMap),
-				_targetCompanyGroup.getGroupId());
+						_targetUser, _targetGroup.getGroupId(), false, null,
+						parameterMap),
+				_targetGroup.getGroupId());
 
 			ExportImportLocalServiceUtil.importLayoutsDataDeletions(
 				exportImportConfiguration, larFile);
@@ -746,22 +724,15 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	}
 
 	private void _exportImportPortletInfo(
-			Scope scope, Map<String, String[]> parameterMap, Date startDate,
-			Date endDate)
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
 		User user = TestPropsValues.getUser();
 
-		Layout layout = _siteLayout;
-
-		if (scope == Scope.DEPOT) {
-			layout = _depotLayout;
-		}
-
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportPortletSettingsMap(
-					user, layout.getPlid(), layout.getGroupId(), portletId,
+					user, _layout.getPlid(), _layout.getGroupId(), portletId,
 					parameterMap, StringPool.BLANK);
 
 		_setDateRange(settingsMap, startDate, endDate);
@@ -778,19 +749,13 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			exportImportConfiguration);
 
 		try {
-			Layout targetLayout = _targetSiteLayout;
-
-			if (scope == Scope.DEPOT) {
-				targetLayout = _targetDepotLayout;
-			}
-
 			exportImportConfiguration = _updateImportConfiguration(
 				exportImportConfiguration, user,
 				ExportImportConfigurationSettingsMapFactoryUtil.
 					buildImportPortletSettingsMap(
-						user, targetLayout.getPlid(), targetLayout.getGroupId(),
-						portletId, parameterMap),
-				targetLayout.getGroupId());
+						user, _targetLayout.getPlid(),
+						_targetLayout.getGroupId(), portletId, parameterMap),
+				_targetLayout.getGroupId());
 
 			ExportImportLocalServiceUtil.importPortletDataDeletions(
 				exportImportConfiguration, larFile);
@@ -853,46 +818,8 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			getExportImportDescriptor();
 	}
 
-	private long _getGroupId(Scope scope) {
-		if (scope == Scope.COMPANY) {
-			return _companyGroup.getGroupId();
-		}
-
-		if (scope == Scope.DEPOT) {
-			return _depotEntry.getGroupId();
-		}
-
-		return _group.getGroupId();
-	}
-
-	private long _getTargetCompanyId(Scope scope) {
-		if (scope == Scope.COMPANY) {
-			return _targetCompanyGroup.getCompanyId();
-		}
-
-		if (scope == Scope.DEPOT) {
-			return _targetDepotEntry.getCompanyId();
-		}
-
-		return _targetGroup.getCompanyId();
-	}
-
-	private List<String> _getTargetExternalReferenceCodes(Scope scope)
-		throws Exception {
-
-		return getExternalReferenceCodes(_getTargetGroupId(scope));
-	}
-
-	private long _getTargetGroupId(Scope scope) {
-		if (scope == Scope.COMPANY) {
-			return _targetCompanyGroup.getGroupId();
-		}
-
-		if (scope == Scope.DEPOT) {
-			return _targetDepotEntry.getGroupId();
-		}
-
-		return _targetGroup.getGroupId();
+	private List<String> _getTargetExternalReferenceCodes() throws Exception {
+		return getExternalReferenceCodes(_targetGroup.getGroupId());
 	}
 
 	private long _getTargetRoleId(Scope scope) {
@@ -931,17 +858,10 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			updateExportImportConfiguration(exportImportConfiguration);
 	}
 
-	private static Group _companyGroup;
-	private static DepotEntry _depotEntry;
-	private static Layout _depotLayout;
 	private static Group _group;
-	private static Layout _siteLayout;
-	private static Company _targetCompany;
-	private static Group _targetCompanyGroup;
-	private static DepotEntry _targetDepotEntry;
-	private static Layout _targetDepotLayout;
+	private static Layout _layout;
 	private static Group _targetGroup;
-	private static Layout _targetSiteLayout;
+	private static Layout _targetLayout;
 	private static User _targetUser;
 
 	@Inject
@@ -955,6 +875,9 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 	@Inject
 	private CommentManager _commentManager;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private User _creatorUser;

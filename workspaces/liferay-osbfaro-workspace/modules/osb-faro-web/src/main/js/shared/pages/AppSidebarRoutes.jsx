@@ -56,9 +56,6 @@ const SegmentProfileRoutes = lazy(() =>
 		/* webpackChunkName: "SegmentProfileRoutes" */ '../../segment/pages/ProfileRoutes'
 	)
 );
-const SegmentEdit = lazy(() =>
-	import(/* webpackChunkName: "SegmentEdit" */ '../../segment/pages/Edit')
-);
 
 /* Accounts */
 
@@ -74,18 +71,6 @@ const AccountProfileRoutes = lazy(() =>
 );
 
 /* Event Analysis */
-
-const EventAnalysisCreate = lazy(() =>
-	import(
-		/* webpackChunkName: "EventAnalysisCreate" */ '../../event-analysis/pages/Create'
-	)
-);
-
-const EventAnalysisEdit = lazy(() =>
-	import(
-		/* webpackChunkName: "EventAnalysisEdit" */ '../../event-analysis/pages/Edit'
-	)
-);
 
 const EventAnalysisList = lazy(() =>
 	import(
@@ -137,18 +122,6 @@ const CampaignDetail = lazy(() =>
 const LifecycleDashboard = lazy(() =>
 	import(
 		/* webpackChunkname: "LifecycleDashboard" */ '../../lifecycle/pages/BaseLifecycle'
-	)
-);
-
-const LifecycleCreate = lazy(() =>
-	import(
-		/* webpackChunkName: "LifecycleCreate" */ '../../lifecycle/pages/CreateLifecycle'
-	)
-);
-
-const LifecycleEdit = lazy(() =>
-	import(
-		/* webpackChunkName: "LifecycleEdit" */ '../../lifecycle/pages/EditLifecycle'
 	)
 );
 
@@ -272,30 +245,6 @@ const AppSidebarRoutes = ({LDPEnabled, currentUser, groupId}) => {
 								<Route
 									element={
 										<BundleRouter
-											data={LifecycleCreate}
-											destructured={false}
-										/>
-									}
-									path=":channelId?/lifecycle/new"
-								/>
-							)}
-
-							{LDPEnabled && (
-								<Route
-									element={
-										<BundleRouter
-											data={LifecycleEdit}
-											destructured={false}
-										/>
-									}
-									path=":channelId?/lifecycle/:lifecycleId/edit"
-								/>
-							)}
-
-							{LDPEnabled && (
-								<Route
-									element={
-										<BundleRouter
 											data={LifecycleDashboard}
 											destructured={false}
 										/>
@@ -307,16 +256,6 @@ const AppSidebarRoutes = ({LDPEnabled, currentUser, groupId}) => {
 							<Route
 								element={<BundleRouter data={SegmentsList} />}
 								path=":channelId?/contacts/segments"
-							/>
-
-							<Route
-								element={<BundleRouter data={SegmentEdit} />}
-								path=":channelId?/contacts/segments/:id/edit"
-							/>
-
-							<Route
-								element={<BundleRouter data={SegmentEdit} />}
-								path=":channelId?/contacts/segments/create"
 							/>
 
 							<Route
@@ -354,26 +293,6 @@ const AppSidebarRoutes = ({LDPEnabled, currentUser, groupId}) => {
 									/>
 								}
 								path=":channelId?/event-analysis"
-							/>
-
-							<Route
-								element={
-									<BundleRouter
-										data={EventAnalysisCreate}
-										destructured={false}
-									/>
-								}
-								path=":channelId?/event-analysis/create"
-							/>
-
-							<Route
-								element={
-									<BundleRouter
-										data={EventAnalysisEdit}
-										destructured={false}
-									/>
-								}
-								path=":channelId?/event-analysis/:id"
 							/>
 
 							<Route

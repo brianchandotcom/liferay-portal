@@ -1,4 +1,5 @@
 import BundleRouter from 'route-middleware/BundleRouter';
+import EditLayout, {LDPEditLayout} from 'shared/components/EditLayout';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
 import Toolbar from 'shared/components/toolbar';
@@ -20,6 +21,38 @@ const AppSidebarRoutes = lazy(
 );
 const Settings = lazy(
 	() => import(/* webpackChunkName: "Settings" */ 'settings/pages/Settings')
+);
+
+const EventAnalysisCreate = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "EventAnalysisCreate" */ 'event-analysis/pages/Create'
+		)
+);
+const EventAnalysisEdit = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "EventAnalysisEdit" */ 'event-analysis/pages/Edit'
+		)
+);
+const LifecycleCreate = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "LifecycleCreate" */ 'lifecycle/pages/CreateLifecycle'
+		)
+);
+const LifecycleEdit = lazy(
+	() =>
+		import(
+
+			/* webpackChunkName: "LifecycleEdit" */ 'lifecycle/pages/EditLifecycle'
+		)
+);
+const SegmentEdit = lazy(
+	() => import(/* webpackChunkName: "SegmentEdit" */ 'segment/pages/Edit')
 );
 
 const connector = connect(
@@ -59,6 +92,60 @@ const WorkspaceLayer = ({
 					element={<BundleRouter data={Settings} />}
 					path="settings/*"
 				/>
+
+				<Route element={<EditLayout />}>
+					<Route
+						element={<BundleRouter data={SegmentEdit} />}
+						path=":channelId?/contacts/segments/:id/edit"
+					/>
+
+					<Route
+						element={<BundleRouter data={SegmentEdit} />}
+						path=":channelId?/contacts/segments/create"
+					/>
+
+					<Route
+						element={
+							<BundleRouter
+								data={EventAnalysisCreate}
+								destructured={false}
+							/>
+						}
+						path=":channelId?/event-analysis/create"
+					/>
+
+					<Route
+						element={
+							<BundleRouter
+								data={EventAnalysisEdit}
+								destructured={false}
+							/>
+						}
+						path=":channelId?/event-analysis/:id"
+					/>
+
+					<Route element={<LDPEditLayout />}>
+						<Route
+							element={
+								<BundleRouter
+									data={LifecycleCreate}
+									destructured={false}
+								/>
+							}
+							path=":channelId?/lifecycle/new"
+						/>
+
+						<Route
+							element={
+								<BundleRouter
+									data={LifecycleEdit}
+									destructured={false}
+								/>
+							}
+							path=":channelId?/lifecycle/:lifecycleId/edit"
+						/>
+					</Route>
+				</Route>
 
 				<Route
 					element={

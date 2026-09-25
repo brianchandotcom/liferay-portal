@@ -3336,7 +3336,7 @@ public class DefaultObjectEntryManagerImpl
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (propertyValue == null) {
+		if (!(propertyValue instanceof Map<?, ?>)) {
 			return 0;
 		}
 

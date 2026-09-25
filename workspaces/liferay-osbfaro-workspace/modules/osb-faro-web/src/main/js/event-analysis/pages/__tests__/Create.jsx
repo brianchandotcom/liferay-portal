@@ -86,16 +86,14 @@ describe('Event Analysis Create', () => {
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container} = render(<WrappedComponent />);
+		const {container, getByLabelText} = render(<WrappedComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelector('.event-analysis-editor-root')
 		).toBeInTheDocument();
-		expect(
-			container.querySelector('input.title-input')
-		).toBeInTheDocument();
+		expect(getByLabelText(/^title/i)).toBeInTheDocument();
 	});
 
 	it('should render empty state', async () => {
@@ -105,7 +103,7 @@ describe('Event Analysis Create', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByPlaceholderText('Unnamed Analysis')).toBeTruthy();
+		expect(getByPlaceholderText('New Analysis')).toBeTruthy();
 		expect(getByText('Add an event to analyze.')).toBeTruthy();
 		expect(
 			container.querySelector('.dropdown-range-key-root button')
@@ -137,11 +135,13 @@ describe('Event Analysis Create', () => {
 	});
 
 	it('should enable the save button when there is at least one name and one event added', async () => {
-		const {container, getByText} = render(<WrappedComponent />);
+		const {container, getByLabelText, getByText} = render(
+			<WrappedComponent />
+		);
 
 		await waitForLoadingToBeRemoved(container);
 
-		const inputName = container.querySelector('input.title-input');
+		const inputName = getByLabelText(/^title/i);
 
 		fireEvent.change(inputName, {
 			target: {
@@ -149,7 +149,7 @@ describe('Event Analysis Create', () => {
 			}
 		});
 
-		expect(getByText('My First Event Analysis')).toBeTruthy();
+		expect(inputName).toHaveValue('My First Event Analysis');
 
 		expect(getByText('Save Analysis')).toBeDisabled();
 

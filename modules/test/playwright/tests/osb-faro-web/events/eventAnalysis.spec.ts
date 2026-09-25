@@ -2738,10 +2738,7 @@ test(
 
 		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
 
-		await page
-			.locator('.event-analysis-toolbar-right-content')
-			.getByRole('button', {name: 'Save Analysis'})
-			.click();
+		await page.getByRole('button', {name: 'Save Analysis'}).click();
 
 		// The saved analysis is listed; reopen it
 
@@ -2854,7 +2851,6 @@ test(
 		await addCustomEvent({customEventName: 'customEvent', page});
 
 		const saveButton = page
-			.locator('.event-analysis-toolbar-right-content')
 			.getByRole('button', {name: 'Save Analysis'});
 
 		await saveButton.click();
@@ -3037,7 +3033,6 @@ test(
 		]);
 
 		const saveButton = page
-			.locator('.event-analysis-toolbar-right-content')
 			.getByRole('button', {name: 'Save Analysis'});
 
 		// Create and save an analysis with a price breakdown
@@ -3691,10 +3686,7 @@ test(
 
 		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
 
-		await page
-			.locator('.event-analysis-toolbar-right-content')
-			.getByRole('button', {name: 'Save Analysis'})
-			.click();
+		await page.getByRole('button', {name: 'Save Analysis'}).click();
 
 		// Sign in as a member (non-admin) user
 

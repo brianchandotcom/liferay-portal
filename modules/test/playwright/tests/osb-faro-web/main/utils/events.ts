@@ -240,10 +240,7 @@ export async function createAndSaveEventAnalysis({
 
 	await addCustomEvent({customEventName: eventName, page});
 
-	await page
-		.locator('.event-analysis-toolbar-right-content')
-		.getByRole('button', {name: 'Save Analysis'})
-		.click();
+	await page.getByRole('button', {name: 'Save Analysis'}).click();
 
 	await expect(page.getByText(name, {exact: true})).toBeVisible();
 }
@@ -284,11 +281,5 @@ export async function setEventAnalysisName({
 	eventAnalysisName: string;
 	page: Page;
 }) {
-	const editEventAnalysisName = await page.locator(
-		'.event-analysis-toolbar-left-content button'
-	);
-
-	await editEventAnalysisName.click();
-
-	await page.keyboard.type(eventAnalysisName);
+	await page.getByLabel('Title', {exact: true}).fill(eventAnalysisName);
 }

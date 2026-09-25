@@ -118,9 +118,9 @@ public class LayoutContentVersionLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_draftLayout = layout.fetchDraftLayout();
+		_draftLayout = _layout.fetchDraftLayout();
 
 		ServiceContextThreadLocal.pushServiceContext(_getServiceContext(null));
 	}
@@ -137,6 +137,7 @@ public class LayoutContentVersionLocalServiceTest {
 	public void testAddLayoutContentVersion() throws Exception {
 		_testAddLayoutContentVersion();
 
+		_testAddLayoutContentVersionPublishLayout();
 		_testAddLayoutContentVersionWithExternalReferenceCodeTooLong();
 		_testAddLayoutContentVersionWithNullExternalReferenceCode();
 		_testAddLayoutContentVersionWithNullNameMap();
@@ -693,6 +694,19 @@ public class LayoutContentVersionLocalServiceTest {
 		}
 	}
 
+	private void _testAddLayoutContentVersionPublishLayout() throws Exception {
+		String portalURL = _getRandomPortalURL();
+
+		ContentLayoutTestUtil.publishLayout(
+			_draftLayout, _layout,
+			_getServiceContext(_getThemeDisplay(portalURL)));
+
+		_assertLayoutContentVersionPreviewsPortalURL(
+			_layoutContentVersionLocalService.
+				getLatestApprovedLayoutContentVersionId(_draftLayout.getPlid()),
+			portalURL);
+	}
+
 	private void _testAddLayoutContentVersionWithExternalReferenceCodeTooLong() {
 		int maxLength = ModelHintsUtil.getMaxLength(
 			LayoutContentVersion.class.getName(), "externalReferenceCode");
@@ -801,6 +815,8 @@ public class LayoutContentVersionLocalServiceTest {
 
 	@Inject
 	private Language _language;
+
+	private Layout _layout;
 
 	@Inject
 	private LayoutContentVersionLocalService _layoutContentVersionLocalService;

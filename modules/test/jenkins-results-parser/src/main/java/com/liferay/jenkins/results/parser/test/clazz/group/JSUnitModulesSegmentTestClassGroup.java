@@ -35,12 +35,10 @@ public class JSUnitModulesSegmentTestClassGroup
 		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup(
 			axisIndex);
 
-		boolean hasTestFileGlobs = _hasTestFileGlobs();
-
 		for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
 			sb.append(testClass.getTestTaskName());
 
-			if (hasTestFileGlobs) {
+			if (_hasTestFileGlobs()) {
 				for (TestClassMethod testClassMethod :
 						testClass.getTestClassMethods()) {
 

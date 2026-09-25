@@ -11,6 +11,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.dsr.site.initializer.constants.DSRFragmentRendererConstants;
 import com.liferay.site.dsr.site.initializer.internal.display.context.ViewRoomsSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +33,8 @@ public class ViewRoomsJSPSectionFragmentRenderer
 
 	@Override
 	public String getKey() {
-		return "dsr-view-rooms";
+		return DSRFragmentRendererConstants.
+			FRAGMENT_RENDERER_KEY_DSR_VIEW_ROOMS;
 	}
 
 	@Override

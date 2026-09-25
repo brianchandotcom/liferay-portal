@@ -7,14 +7,11 @@ package com.liferay.site.dsr.site.initializer.internal.instance.lifecycle;
 
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.license.util.App;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -24,11 +21,13 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.site.dsr.site.initializer.constants.DSRFragmentRendererConstants;
 import com.liferay.site.dsr.site.initializer.internal.constants.DSRConstants;
 import com.liferay.site.dsr.site.initializer.internal.constants.DSRSiteInitializerConstants;
-import com.liferay.site.dsr.site.initializer.internal.servlet.ServletContextUtil;
 import com.liferay.site.dsr.site.initializer.internal.util.SiteInitializerUtil;
 import com.liferay.site.initializer.SiteInitializer;
+
+import jakarta.servlet.ServletContext;
 
 import java.util.Objects;
 
@@ -56,18 +55,6 @@ public class DSRInitialRequestPortalInstanceLifecycleListener
 	@Override
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {
 		if (!LicenseManagerUtil.isAppEnabled(App.DSR)) {
-			return;
-		}
-
-		if (ServletContextUtil.getServletContext() == null) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to initialize the Digital Sales Room site for ",
-					"company ", companyId, " because the web context of \"",
-					DSRSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME,
-					"\" is not registered yet. Restart the portal to ",
-					"initialize the site."));
-
 			return;
 		}
 
@@ -100,7 +87,8 @@ public class DSRInitialRequestPortalInstanceLifecycleListener
 						layout.getGroupId(), layout.getPlid()),
 					fragmentEntryLink -> Objects.equals(
 						fragmentEntryLink.getRendererKey(),
-						"dsr-view-rooms"))) {
+						DSRFragmentRendererConstants.
+							FRAGMENT_RENDERER_KEY_DSR_VIEW_ROOMS))) {
 
 				return;
 			}
@@ -108,9 +96,6 @@ public class DSRInitialRequestPortalInstanceLifecycleListener
 			SiteInitializerUtil.initialize(companyId, group, _siteInitializer);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DSRInitialRequestPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
@@ -120,6 +105,11 @@ public class DSRInitialRequestPortalInstanceLifecycleListener
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=" + DSRSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + ")"
+	)
+	private ServletContext _servletContext;
 
 	@Reference(
 		target = "(site.initializer.key=com.liferay.site.initializer.dsr)"

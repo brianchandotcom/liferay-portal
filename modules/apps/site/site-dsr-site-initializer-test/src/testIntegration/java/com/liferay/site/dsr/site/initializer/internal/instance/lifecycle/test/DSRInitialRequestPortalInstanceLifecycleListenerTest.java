@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.dsr.site.initializer.constants.DSRFragmentRendererConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -118,7 +119,9 @@ public class DSRInitialRequestPortalInstanceLifecycleListenerTest {
 			ListUtil.exists(
 				fragmentEntryLinks,
 				fragmentEntryLink -> Objects.equals(
-					fragmentEntryLink.getRendererKey(), "dsr-view-rooms")));
+					fragmentEntryLink.getRendererKey(),
+					DSRFragmentRendererConstants.
+						FRAGMENT_RENDERER_KEY_DSR_VIEW_ROOMS)));
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLink(
@@ -131,7 +134,9 @@ public class DSRInitialRequestPortalInstanceLifecycleListenerTest {
 			ListUtil.exists(
 				_getFragmentEntryLinks(group),
 				fragmentEntryLink -> Objects.equals(
-					fragmentEntryLink.getRendererKey(), "dsr-view-rooms")));
+					fragmentEntryLink.getRendererKey(),
+					DSRFragmentRendererConstants.
+						FRAGMENT_RENDERER_KEY_DSR_VIEW_ROOMS)));
 
 		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
 

@@ -337,20 +337,10 @@ public class ObjectEntryAssetRendererTest {
 		boolean editable, String escapedRedirect, String referer,
 		ThemeDisplay themeDisplay) {
 
-		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
-
 		Mockito.when(
-			themeDisplay.getPathMain()
+			_objectDefinition.isCMS()
 		).thenReturn(
-			pathMain
-		);
-
-		String portalURL = "http://" + RandomTestUtil.randomString();
-
-		Mockito.when(
-			themeDisplay.getPortalURL()
-		).thenReturn(
-			portalURL
+			true
 		);
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
@@ -380,6 +370,22 @@ public class ObjectEntryAssetRendererTest {
 			);
 		}
 
+		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
+
+		Mockito.when(
+			themeDisplay.getPathMain()
+		).thenReturn(
+			pathMain
+		);
+
+		String portalURL = "http://" + RandomTestUtil.randomString();
+
+		Mockito.when(
+			themeDisplay.getPortalURL()
+		).thenReturn(
+			portalURL
+		);
+
 		long objectEntryId = RandomTestUtil.randomLong();
 
 		Mockito.doReturn(
@@ -387,12 +393,6 @@ public class ObjectEntryAssetRendererTest {
 		).when(
 			_objectEntry
 		).getObjectEntryId();
-
-		Mockito.when(
-			_objectDefinition.isCMS()
-		).thenReturn(
-			true
-		);
 
 		if (editable) {
 			return StringBundler.concat(

@@ -1,3 +1,4 @@
+import BaseEditPage from 'shared/components/base-edit-page';
 import Breadcrumbs from 'shared/components/Breadcrumbs';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -9,7 +10,6 @@ import NotificationAlertList, {
 } from 'shared/components/NotificationAlertList';
 import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
-import Toolbar from './Toolbar';
 import {DEVELOPER_MODE} from 'shared/util/constants';
 import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
 import {matchPath, useLocation, useParams} from 'react-router-dom';
@@ -157,13 +157,10 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 
 	return (
 		<div className="settings-root">
-			<Toolbar
-				backURL={{
-					label: Liferay.Language.get('settings'),
-					url: toRoute(Routes.WORKSPACE_WITH_ID, {
-						groupId,
-					}),
-				}}
+			<BaseEditPage.Toolbar
+				backURL={toRoute(Routes.WORKSPACE_WITH_ID, {groupId})}
+				className="mb-4"
+				title={Liferay.Language.get('settings')}
 			/>
 
 			<div className="content-wrapper">

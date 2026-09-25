@@ -1,8 +1,8 @@
+import BaseEditPage from 'shared/components/base-edit-page';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import React, {useEffect, useState} from 'react';
-import Toolbar from './Toolbar';
 import URLConstants from 'shared/util/url-constants';
 import {addAlert} from 'shared/actions/alerts';
 import {close, open} from 'shared/actions/modals';
@@ -173,13 +173,12 @@ const WizardPage = ({children}: {children: React.ReactNode}) => {
 	return (
 		<WizardPageProvider>
 			<div className="wizard-page">
-				<Toolbar
-					backURL={{
-						label: Liferay.Language.get('data-sources'),
-						url: toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-							groupId,
-						}),
-					}}
+				<BaseEditPage.Toolbar
+					backURL={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
+						groupId,
+					})}
+					className="mb-4"
+					title={Liferay.Language.get('data-sources')}
 				/>
 
 				<ClayLayout.Container fluid>

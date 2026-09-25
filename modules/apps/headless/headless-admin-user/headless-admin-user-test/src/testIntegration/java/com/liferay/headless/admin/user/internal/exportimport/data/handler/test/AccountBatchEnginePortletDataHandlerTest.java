@@ -44,6 +44,17 @@ public class AccountBatchEnginePortletDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		AccountEntry accountEntry =
+			_accountEntryLocalService.getOrAddEmptyAccountEntry(
+				RandomTestUtil.randomString(), _getCompanyId(groupId), userId,
+				RandomTestUtil.randomString(),
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+		return accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
 		throws Exception {
 
@@ -131,13 +142,23 @@ public class AccountBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		AccountEntry accountEntry = _getAccountEntry(
+			groupId, externalReferenceCode);
+
+		return accountEntry.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override

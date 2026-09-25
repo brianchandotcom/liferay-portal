@@ -45,6 +45,17 @@ public class ObjectEntryFolderBatchEnginePortletDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
+				RandomTestUtil.randomString(), groupId, _getCompanyId(groupId),
+				userId,
+				ServiceContextTestUtil.getServiceContext(groupId, userId));
+
+		return objectEntryFolder.getExternalReferenceCode();
+	}
+
+	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
 		throws Exception {
 
@@ -138,13 +149,23 @@ public class ObjectEntryFolderBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder = _getObjectEntryFolder(
+			groupId, externalReferenceCode);
+
+		return objectEntryFolder.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override

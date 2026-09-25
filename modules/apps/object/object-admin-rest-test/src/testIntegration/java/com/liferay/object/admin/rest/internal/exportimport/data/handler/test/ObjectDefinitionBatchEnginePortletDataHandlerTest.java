@@ -11,6 +11,8 @@ import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngin
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -45,6 +47,17 @@ public class ObjectDefinitionBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(),
+				_getCompanyId(groupId), userId, 0, true,
+				ObjectDefinitionConstants.SCOPE_COMPANY, false);
+
+		return objectDefinition.getExternalReferenceCode();
+	}
 
 	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
@@ -142,13 +155,23 @@ public class ObjectDefinitionBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _getObjectDefinition(
+			groupId, externalReferenceCode);
+
+		return objectDefinition.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -163,10 +186,59 @@ public class ObjectDefinitionBatchEnginePortletDataHandlerTest
 		ObjectDefinition objectDefinition = _getObjectDefinition(
 			groupId, externalReferenceCode);
 
-		objectDefinition.setLabelMap(
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+		objectDefinition =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				objectDefinition.getExternalReferenceCode(),
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getAccountEntryRestrictedObjectFieldId(),
+				objectDefinition.getDescriptionObjectFieldId(),
+				objectDefinition.getObjectFolderId(),
+				objectDefinition.getTitleObjectFieldId(),
+				objectDefinition.isAccountEntryRestricted(),
+				objectDefinition.isActive(), objectDefinition.getClassName(),
+				objectDefinition.getDescriptionMap(),
+				objectDefinition.isEnableCategorization(),
+				objectDefinition.isEnableComments(),
+				objectDefinition.isEnableFormContainer(),
+				objectDefinition.isEnableFriendlyURLCustomization(),
+				objectDefinition.isEnableIndexSearch(),
+				objectDefinition.isEnableObjectEntryDraft(),
+				objectDefinition.isEnableObjectEntryHistory(),
+				objectDefinition.isEnableObjectEntrySchedule(),
+				objectDefinition.isEnableObjectEntrySubscription(),
+				objectDefinition.isEnableObjectEntryVersioning(),
+				objectDefinition.getFriendlyURLSeparator(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				objectDefinition.getShortName(),
+				objectDefinition.getPanelAppOrder(),
+				objectDefinition.getPanelCategoryKey(),
+				objectDefinition.isPortlet(),
+				objectDefinition.getPluralLabelMap(),
+				objectDefinition.getScope(), objectDefinition.getStatus(),
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.emptyList(), new ServiceContext());
 
-		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
+		if (objectDefinition.isApproved()) {
+			return;
+		}
+
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				objectDefinition.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"x" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).required(
+				false
+			).build());
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	private long _getCompanyId(long groupId) throws Exception {

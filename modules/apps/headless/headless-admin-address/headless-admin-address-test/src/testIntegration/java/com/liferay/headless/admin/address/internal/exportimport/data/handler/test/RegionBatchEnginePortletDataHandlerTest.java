@@ -64,6 +64,19 @@ public class RegionBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		Country country = _getCountry(groupId, userId);
+
+		Region region = _regionLocalService.getOrAddEmptyRegion(
+			RandomTestUtil.randomString(), _getCompanyId(groupId), userId,
+			country.getCountryId(),
+			StringUtil.toUpperCase(RandomTestUtil.randomString(4)),
+			RandomTestUtil.randomString());
+
+		return region.getExternalReferenceCode();
+	}
+
+	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
 		throws Exception {
 
@@ -157,13 +170,22 @@ public class RegionBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		Region region = _getRegion(groupId, externalReferenceCode);
+
+		return region.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override

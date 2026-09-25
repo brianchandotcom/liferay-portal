@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -40,6 +42,16 @@ public class CurrencyBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getOrAddEmptyCommerceCurrency(
+				RandomTestUtil.randomString(), _getCompanyId(groupId), userId,
+				StringUtil.toUpperCase(RandomTestUtil.randomString(3)));
+
+		return commerceCurrency.getExternalReferenceCode();
+	}
 
 	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
@@ -124,13 +136,23 @@ public class CurrencyBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		CommerceCurrency commerceCurrency = _getCommerceCurrency(
+			groupId, externalReferenceCode);
+
+		return commerceCurrency.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -145,9 +167,18 @@ public class CurrencyBatchEnginePortletDataHandlerTest
 		CommerceCurrency commerceCurrency = _getCommerceCurrency(
 			groupId, externalReferenceCode);
 
-		commerceCurrency.setSymbol(RandomTestUtil.randomString());
-
-		_commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrency);
+		_commerceCurrencyLocalService.updateCommerceCurrency(
+			commerceCurrency.getExternalReferenceCode(),
+			commerceCurrency.getCommerceCurrencyId(),
+			commerceCurrency.getNameMap(), RandomTestUtil.randomString(),
+			commerceCurrency.getRate(), commerceCurrency.getFormatPatternMap(),
+			commerceCurrency.getMaxFractionDigits(),
+			commerceCurrency.getMinFractionDigits(),
+			commerceCurrency.getRoundingMode(), commerceCurrency.isPrimary(),
+			commerceCurrency.getPriority(), commerceCurrency.isActive(),
+			ServiceContextTestUtil.getServiceContext(
+				commerceCurrency.getCompanyId(), groupId,
+				commerceCurrency.getUserId()));
 	}
 
 	private CommerceCurrency _getCommerceCurrency(

@@ -697,7 +697,7 @@ spec:
                                         dataPlane: {{ $dataPlane }}
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                deletionProtection: {{ not $forceDestroy }}
+                                deletionProtection: {{ and (not $forceDestroy) (eq $dataPlane $activeDataPlane) }}
                                 engine: postgres
                                 engineVersion: {{ $databaseSpec.engineVersion | quote }}
                                 iamDatabaseAuthenticationEnabled: true

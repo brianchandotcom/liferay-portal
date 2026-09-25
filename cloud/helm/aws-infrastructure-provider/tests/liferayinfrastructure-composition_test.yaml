@@ -8,23 +8,6 @@ tests:
     -   asserts:
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "deletionProtection: \\{\\{ not \\$forceDestroy \\}\\}\\n"
-            -   matchRegex:
-                    path: spec.pipeline[1].input.inline.template
-                    pattern: "engine: postgres\\n"
-            -   matchRegex:
-                    path: spec.pipeline[1].input.inline.template
-                    pattern: "\\n +username: liferay_database_admin\\n"
-            -   matchRegex:
-                    path: spec.pipeline[1].input.inline.template
-                    pattern: "masterUserName: liferay_search_admin\\n"
-        documentSelector:
-            path: kind
-            value: Composition
-        it: Derives database deletion protection from force destroy and fixes the engine and administrator names
-    -   asserts:
-            -   matchRegex:
-                    path: spec.pipeline[1].input.inline.template
                     pattern: "crossplane\\.io/external-name: \\{\\{ \\$baseName \\}\\}-liferay-role\\n(?:.*\\n)*? +path: \\{\\{ \\$iamPath \\}\\}\\n +permissionsBoundary: \\{\\{ \\$iamBoundaryArn \\}\\}"
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template
@@ -99,6 +82,23 @@ tests:
             path: kind
             value: Composition
         it: Places the composed IAM identities under the Crossplane IAM path and boundary in the deployment partition
+    -   asserts:
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "deletionProtection: \\{\\{ and \\(not \\$forceDestroy\\) \\(eq \\$dataPlane \\$activeDataPlane\\) \\}\\}\\n"
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "engine: postgres\\n"
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\n +username: liferay_database_admin\\n"
+            -   matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "masterUserName: liferay_search_admin\\n"
+        documentSelector:
+            path: kind
+            value: Composition
+        it: Protects only the active data plane database unless force destroy is set and fixes the engine and administrator names
     -   asserts:
             -   matchRegex:
                     path: spec.pipeline[1].input.inline.template

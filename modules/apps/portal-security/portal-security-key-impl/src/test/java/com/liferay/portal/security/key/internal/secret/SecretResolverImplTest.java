@@ -164,14 +164,14 @@ public class SecretResolverImplTest {
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					PropsValues.class, "FIPS_ENABLED", true)) {
 
+			_testStore();
+
 			_testStoreWhenFIPSIsDisabled();
 			_testStoreWhenValueIsBlank();
 			_testStoreWhenValueReferencesAnotherKey();
 			_testStoreWhenValueReferencesForeignNamespace();
 			_testStoreWhenValueReferencesSameKeyInAnotherScope();
 			_testStoreWhenValueReferencesSameSlot();
-
-			_testStore();
 		}
 	}
 
@@ -251,6 +251,8 @@ public class SecretResolverImplTest {
 			StringPool.STAR, secretKeyReference.getProviderId());
 
 		Assert.assertTrue(secret.isDestroyed());
+
+		Mockito.clearInvocations(_secretManager);
 	}
 
 	private void _testStoreWhenFIPSIsDisabled() throws Exception {

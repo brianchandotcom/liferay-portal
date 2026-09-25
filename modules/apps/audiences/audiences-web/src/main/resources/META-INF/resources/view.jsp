@@ -16,5 +16,6 @@ AudiencesDisplayContext audiencesDisplayContext = new AudiencesDisplayContext(re
 	dataProviderKey="<%= AudiencesFDSNames.AUDIENCES_ENTRIES %>"
 	emptyState="<%= audiencesDisplayContext.getEmptyState() %>"
 	id="<%= AudiencesFDSNames.AUDIENCES_ENTRIES %>"
+	propsTransformer="{AudiencesFDSPropsTransformer} from audiences-web"
 	style="fluid"
 />

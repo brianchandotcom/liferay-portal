@@ -110,7 +110,7 @@ describe('EditLifecycle', () => {
 
 		expect(screen.getByText('Lifecycle Settings')).toBeInTheDocument();
 		expect(screen.getByRole('button', {name: 'Save'})).toBeInTheDocument();
-		expect(screen.getByLabelText('Lifecycle Name')).toHaveValue(
+		expect(screen.getByLabelText(/title/i)).toHaveValue(
 			'Growth and Retention Hub'
 		);
 	});

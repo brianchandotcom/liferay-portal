@@ -23,7 +23,6 @@ const CreateLifecycle = () => {
 		catalogError,
 		catalogFields,
 		catalogLoading,
-		goToDashboard,
 		lifecycleName,
 		lifecycleURL,
 		refetchCatalog,
@@ -68,7 +67,6 @@ const CreateLifecycle = () => {
 			backURL={lifecycleURL}
 			catalogFields={catalogFields?.items}
 			lifecycleName={lifecycleName}
-			onCancel={goToDashboard}
 			onLifecycleNameChange={setLifecycleName}
 			onStageChange={updateStage}
 			onSubmit={handleCreate}

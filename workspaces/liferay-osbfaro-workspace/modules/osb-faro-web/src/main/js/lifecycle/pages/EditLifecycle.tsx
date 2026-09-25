@@ -25,7 +25,6 @@ const EditLifecycleForm: React.FC<IEditLifecycleFormProps> = ({lifecycle}) => {
 		catalogError,
 		catalogFields,
 		catalogLoading,
-		goToDashboard,
 		lifecycleName,
 		lifecycleURL,
 		refetchCatalog,
@@ -69,7 +68,6 @@ const EditLifecycleForm: React.FC<IEditLifecycleFormProps> = ({lifecycle}) => {
 			backURL={lifecycleURL}
 			catalogFields={catalogFields?.items}
 			lifecycleName={lifecycleName}
-			onCancel={goToDashboard}
 			onLifecycleNameChange={setLifecycleName}
 			onStageChange={updateStage}
 			onSubmit={handleSave}

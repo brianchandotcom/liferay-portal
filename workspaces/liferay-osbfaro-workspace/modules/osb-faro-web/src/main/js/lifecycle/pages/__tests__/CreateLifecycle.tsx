@@ -102,10 +102,10 @@ describe('CreateLifecycle', () => {
 	it('renders the top nav with title and actions', () => {
 		renderPage();
 
-		expect(screen.getByText('Lifecycle Settings')).toBeInTheDocument();
 		expect(
-			screen.getByRole('button', {name: 'Cancel'})
+			screen.getByRole('heading', {level: 1, name: 'Lifecycle Settings'})
 		).toBeInTheDocument();
+		expect(screen.getByRole('link', {name: /cancel/i})).toBeInTheDocument();
 		expect(
 			screen.getByRole('button', {name: 'Create'})
 		).toBeInTheDocument();
@@ -121,10 +121,10 @@ describe('CreateLifecycle', () => {
 		expect(screen.getByText('Aware')).toBeInTheDocument();
 	});
 
-	it('renders the Lifecycle Name input and updates its value', () => {
+	it('renders the title input and updates its value', () => {
 		renderPage();
 
-		const nameInput = screen.getByLabelText('Lifecycle Name');
+		const nameInput = screen.getByLabelText(/title/i);
 
 		expect(nameInput).toBeInTheDocument();
 
@@ -133,12 +133,17 @@ describe('CreateLifecycle', () => {
 		expect(nameInput).toHaveValue('My Lifecycle');
 	});
 
-	it('navigates to the dashboard on cancel', () => {
+	it('links cancel and back to the dashboard', () => {
 		renderPage();
 
-		fireEvent.click(screen.getByRole('button', {name: 'Cancel'}));
-
-		expect(mockPush).toHaveBeenCalledWith(lifecycleURL);
+		expect(screen.getByRole('link', {name: /cancel/i})).toHaveAttribute(
+			'href',
+			lifecycleURL
+		);
+		expect(screen.getByRole('link', {name: /back/i})).toHaveAttribute(
+			'href',
+			lifecycleURL
+		);
 	});
 
 	it('disables Create until every stage is configured', () => {
@@ -148,7 +153,7 @@ describe('CreateLifecycle', () => {
 
 		expect(createButton).toBeDisabled();
 
-		fireEvent.change(screen.getByLabelText('Lifecycle Name'), {
+		fireEvent.change(screen.getByLabelText(/title/i), {
 			target: {value: 'My Lifecycle'},
 		});
 
@@ -217,7 +222,7 @@ describe('CreateLifecycle', () => {
 
 		renderPage();
 
-		fireEvent.change(screen.getByLabelText('Lifecycle Name'), {
+		fireEvent.change(screen.getByLabelText(/title/i), {
 			target: {value: 'My Lifecycle'},
 		});
 
@@ -256,7 +261,7 @@ describe('CreateLifecycle', () => {
 
 		renderPage();
 
-		fireEvent.change(screen.getByLabelText('Lifecycle Name'), {
+		fireEvent.change(screen.getByLabelText(/title/i), {
 			target: {value: 'My Lifecycle'},
 		});
 

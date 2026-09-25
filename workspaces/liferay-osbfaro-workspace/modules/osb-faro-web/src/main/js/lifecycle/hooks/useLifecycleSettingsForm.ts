@@ -102,7 +102,6 @@ export const useLifecycleSettingsForm = (
 		catalogError,
 		catalogFields,
 		catalogLoading,
-		goToDashboard,
 		lifecycleName,
 		lifecycleURL,
 		refetchCatalog,

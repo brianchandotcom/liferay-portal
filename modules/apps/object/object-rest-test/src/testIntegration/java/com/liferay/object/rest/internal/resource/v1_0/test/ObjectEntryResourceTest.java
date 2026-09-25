@@ -238,6 +238,7 @@ import com.liferay.portal.vulcan.resource.NestedFieldsContextResource;
 import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.sharing.model.SharingEntry;
@@ -9349,6 +9350,21 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPatchObjectEntryWithAttachmentObjectFieldIdJSONObject()
+		throws Exception {
+
+		_testPatchObjectEntryWithAttachmentObjectField(
+			fileEntryId -> JSONUtil.put("id", fileEntryId));
+	}
+
+	@Test
+	public void testPatchObjectEntryWithAttachmentObjectFieldIdString()
+		throws Exception {
+
+		_testPatchObjectEntryWithAttachmentObjectField(String::valueOf);
+	}
+
+	@Test
 	public void testPatchObjectEntryWithFriendlyURLCustomizationEnabled()
 		throws Exception {
 
@@ -9462,23 +9478,42 @@ public class ObjectEntryResourceTest {
 			objectEntryJSONObject.get(
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
 
-		JSONObject patchedJSONObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"keywords", JSONUtil.putAll("tag1")
-			).toString(),
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
-				objectEntryJSONObject.getString("id"),
-			Http.Method.PATCH);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ObjectMapperUtil.class.getName(), LoggerTestUtil.WARN)) {
 
-		Assert.assertNotNull(
-			patchedJSONObject.get(
-				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
+			JSONObject patchedJSONObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"keywords", JSONUtil.putAll("tag1")
+				).toString(),
+				_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+					objectEntryJSONObject.getString("id"),
+				Http.Method.PATCH);
 
-		JSONArray keywordsJSONArray = patchedJSONObject.getJSONArray(
-			"keywords");
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals("tag1", keywordsJSONArray.get(0));
-		Assert.assertEquals(1, keywordsJSONArray.length());
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+
+			Assert.assertNotNull(
+				patchedJSONObject.get(
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
+
+			JSONObject attachmentJSONObject =
+				objectEntryJSONObject.getJSONObject(
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+			JSONObject patchedAttachmentJSONObject =
+				patchedJSONObject.getJSONObject(
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+			Assert.assertEquals(
+				attachmentJSONObject.getLong("id"),
+				patchedAttachmentJSONObject.getLong("id"));
+
+			JSONArray keywordsJSONArray = patchedJSONObject.getJSONArray(
+				"keywords");
+
+			Assert.assertEquals("tag1", keywordsJSONArray.get(0));
+			Assert.assertEquals(1, keywordsJSONArray.length());
+		}
 	}
 
 	@Test
@@ -10673,6 +10708,33 @@ public class ObjectEntryResourceTest {
 			_objectRelationship1.getName());
 
 		Assert.assertEquals(0, jsonArray.length());
+	}
+
+	@Test
+	public void testPostCustomObjectEntryWithEmptyStringAttachmentObjectField()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ObjectMapperUtil.class.getName(), LoggerTestUtil.WARN)) {
+
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+					StringPool.BLANK
+				).toString(),
+				_getEndpoint(_objectDefinition1, _testGroupId),
+				Http.Method.POST);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+
+			Assert.assertNull(
+				jsonObject.get(
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE));
+		}
 	}
 
 	@Test
@@ -18513,6 +18575,52 @@ public class ObjectEntryResourceTest {
 				endpoint, Http.Method.PATCH
 			).toString(),
 			JSONCompareMode.LENIENT);
+	}
+
+	private void _testPatchObjectEntryWithAttachmentObjectField(
+			Function<Long, Object> function)
+		throws Exception {
+
+		JSONObject objectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				_toFileEntryJSONObject(
+					DLTestUtil.randomTextFileBytes(),
+					RandomTestUtil.randomString() + ".txt", null,
+					ContentTypes.TEXT_PLAIN,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)
+			).toString(),
+			_getEndpoint(_objectDefinition1, _testGroupId), Http.Method.POST);
+
+		JSONObject attachmentJSONObject = objectEntryJSONObject.getJSONObject(
+			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ObjectMapperUtil.class.getName(), LoggerTestUtil.WARN)) {
+
+			JSONObject patchedJSONObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+					function.apply(attachmentJSONObject.getLong("id"))
+				).toString(),
+				_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+					objectEntryJSONObject.getString("id"),
+				Http.Method.PATCH);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+
+			JSONObject patchedAttachmentJSONObject =
+				patchedJSONObject.getJSONObject(
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+
+			Assert.assertEquals(
+				attachmentJSONObject.getLong("id"),
+				patchedAttachmentJSONObject.getLong("id"));
+		}
 	}
 
 	private void _testPatchPutCustomObjectEntryExternalReferenceCode(

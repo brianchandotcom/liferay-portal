@@ -692,13 +692,20 @@ public class ContentLayoutTestUtil {
 	public static void publishLayout(Layout draftLayout, Layout layout)
 		throws Exception {
 
-		MVCActionCommand publishLayoutMVCActionCommand = getMVCActionCommand(
-			"/layout_content_page_editor/publish_layout");
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(layout.getGroupId());
 		serviceContext.setUserId(TestPropsValues.getUserId());
+
+		publishLayout(draftLayout, layout, serviceContext);
+	}
+
+	public static void publishLayout(
+			Layout draftLayout, Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		MVCActionCommand publishLayoutMVCActionCommand = getMVCActionCommand(
+			"/layout_content_page_editor/publish_layout");
 
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);

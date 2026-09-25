@@ -1,0 +1,14 @@
+.form-control-inline {
+	background-color: transparent;
+	font-size: 1.75rem;
+	font-weight: 700;
+
+	&:not(:hover) {
+		border-color: transparent;
+	}
+
+	&::placeholder {
+		color: $cadmin-secondary-l1;
+		font-style: italic;
+	}
+}

@@ -26,8 +26,6 @@ The formatter comes from the workspace's own plugins, so its version is the one 
 
 Pass `source.base.dir` as an absolute path. From a relative one, the formatter computes the depth of the workspace below the repository root one level too deep, and then either drops changed files silently or fails with a `NullPointerException`.
 
-Report **NOT VERIFIED** when the workspace's `settings.gradle` pins `com.liferay.gradle.plugins.workspace` below `17.1.11`. Those versions ignore `git.working.branch.name` and compare the branch against `master` instead.
-
 A nonzero exit is a finding. Read the violations from the middle of the log, because the terminal Gradle error names the failing task and not the reason for it.
 
 ## Autocommit

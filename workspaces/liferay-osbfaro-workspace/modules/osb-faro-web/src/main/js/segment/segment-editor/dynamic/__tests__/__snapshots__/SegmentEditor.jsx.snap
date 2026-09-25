@@ -6,186 +6,167 @@ exports[`SegmentEditor should render 1`] = `
     class="segment-edit-page-root"
   >
     <form
-      class="form-root contributor-builder-root editing"
+      class="form-root contributor-builder-root d-flex editing flex-column"
     >
-      <div
-        class="form-header"
+      <nav
+        class="align-items-center bg-white tbar component-tbar"
       >
-        <div
-          class="page-container"
+        <ul
+          class="align-items-center mx-3 tbar-nav"
         >
-          <div
-            class="container-fluid form-header-container"
+          <li
+            class="tbar-item"
+          >
+            <a
+              aria-label="Back"
+              class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm rounded-lg"
+              data-discover="true"
+              data-tooltip-align="bottom"
+              href="/workspace/23/321/contacts/segments"
+              title="Back"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-angle-left"
+                role="presentation"
+              >
+                <use
+                  href="#angle-left"
+                />
+              </svg>
+            </a>
+          </li>
+          <li
+            class="pl-0 tbar-item"
           >
             <div
-              class="form-header-section-left"
+              class="tbar-section"
             >
-              <div
-                class="title-editor-root"
+              <h1
+                class="font-weight-semi-bold m-0 text-5 text-dark text-nowrap"
+              >
+                New Segment
+              </h1>
+            </div>
+          </li>
+          <li
+            class="tbar-item tbar-item-expand"
+          />
+          <li
+            class="tbar-item"
+          >
+            <label
+              class="toggle-switch simple-toggle-switch"
+            >
+              <span
+                class="toggle-switch-check-bar"
               >
                 <input
-                  class="title-input hide"
-                  name="name"
-                  placeholder="Unnamed Segment"
-                  required=""
-                  type="text"
+                  class="toggle-switch-check"
+                  id="includeAnonymousUsers"
+                  role="switch"
+                  type="checkbox"
                   value=""
                 />
-                <div
-                  class="title-display placeholder-display"
+                <span
+                  aria-hidden="true"
+                  class="toggle-switch-bar"
                 >
                   <span
-                    class="title-value"
-                    role="button"
-                    tabindex="0"
-                  >
-                    Unnamed Segment
-                  </span>
-                  <button
-                    aria-label="Edit"
-                    class="button-root btn btn-outline-borderless btn-sm btn-outline-unstyled"
-                    type="button"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-pencil icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        href="#pencil"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div
-              class="form-header-section-right"
+                    class="toggle-switch-handle"
+                  />
+                </span>
+              </span>
+              <span
+                class="toggle-switch-label"
+              >
+                Include Anonymous
+              </span>
+            </label>
+          </li>
+          <li
+            class="pl-0 tbar-item"
+          >
+            <button
+              aria-label="Help"
+              class="rounded-lg btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs"
+              type="button"
             >
-              <div
-                class="btn-group"
+              <svg
+                class="lexicon-icon lexicon-icon-question-circle-full"
+                role="presentation"
               >
-                <div
-                  class="btn-group-item"
-                >
-                  <label
-                    class="toggle-switch toggle-switch-root include-anonymous"
-                    for="includeAnonymousUsers"
-                  >
-                    <input
-                      class="toggle-switch-check"
-                      data-testid="toggle-switch-input"
-                      id="includeAnonymousUsers"
-                      name="includeAnonymousUsers"
-                      type="checkbox"
-                      value="false"
-                    />
-                    <span
-                      aria-hidden="true"
-                      class="toggle-switch-bar"
-                    >
-                      <span
-                        class="toggle-switch-handle"
-                        data-label-off="Include Anonymous"
-                        data-label-on="Include Anonymous"
-                      />
-                    </span>
-                  </label>
-                </div>
-                <div
-                  class="btn-group-item"
-                >
-                  <span
-                    class="info-popover-root include-anon-help-icon"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-question-circle-full icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        href="#question-circle-full"
-                      />
-                    </svg>
-                  </span>
-                </div>
-              </div>
-              <div
-                class="btn-group"
+                <use
+                  href="#question-circle-full"
+                />
+              </svg>
+            </button>
+          </li>
+          <li
+            class="align-self-stretch border-left my-1 p-0 tbar-item"
+            data-testid="toolbar-divider"
+          />
+          <li
+            class="tbar-item"
+          >
+            <span
+              class="text-3 font-weight-semi-bold"
+            >
+              Total Members: 
+              <span>
+                0
+              </span>
+            </span>
+          </li>
+          <li
+            class="pl-0 tbar-item"
+          >
+            <button
+              aria-label="View Members"
+              class="rounded-lg btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
+              data-testid="preview-criteria-button"
+              data-tooltip="true"
+              data-tooltip-align="bottom"
+              disabled=""
+              title="Some of your criteria are incomplete or invalid."
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-view"
+                role="presentation"
               >
-                <div
-                  class="btn-group-item"
-                >
-                  <div
-                    class="total-members"
-                  >
-                    Total Members: 
-                    <div
-                      class="total-members-count"
-                    >
-                      <span
-                        aria-hidden="true"
-                        class="loading-root center loading-animation"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="btn-group-item"
-                >
-                  <button
-                    aria-label="View Members"
-                    class="button-root preview-criteria btn btn-outline-borderless btn-sm btn-outline-secondary"
-                    data-testid="preview-criteria-button"
-                    data-tooltip="true"
-                    disabled=""
-                    title="View Members"
-                    type="button"
-                  >
-                    <span
-                      data-tooltip="true"
-                      data-tooltip-align="bottom"
-                      title="Some of your criteria are incomplete or invalid."
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-view icon-root"
-                        role="presentation"
-                      >
-                        <use
-                          href="#view"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                </div>
-              </div>
-              <div
-                class="btn-group"
-              >
-                <div
-                  class="btn-group-item save"
-                >
-                  <button
-                    class="button-root btn btn-sm btn-primary"
-                    disabled=""
-                    type="submit"
-                  >
-                    Save Segment
-                  </button>
-                </div>
-                <div
-                  class="btn-group-item cancel"
-                >
-                  <a
-                    class="button-root btn btn-sm btn-secondary"
-                    href="/workspace/23/321/contacts/segments"
-                  >
-                    Cancel
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                <use
+                  href="#view"
+                />
+              </svg>
+            </button>
+          </li>
+          <li
+            class="align-self-stretch border-left my-1 p-0 tbar-item"
+            data-testid="toolbar-divider"
+          />
+          <li
+            class="tbar-item"
+          >
+            <a
+              class="rounded-lg btn btn-outline-borderless btn-sm btn-outline-secondary"
+              href="/workspace/23/321/contacts/segments"
+            >
+              Cancel
+            </a>
+          </li>
+          <li
+            class="tbar-item"
+          >
+            <button
+              class="rounded-lg btn btn-sm btn-primary"
+              disabled=""
+              type="submit"
+            >
+              Save Segment
+            </button>
+          </li>
+        </ul>
+      </nav>
       <div
         class="form-body"
       >
@@ -205,47 +186,132 @@ exports[`SegmentEditor should render 1`] = `
                 class="content-wrapper"
               >
                 <div
-                  class="segment-erc"
+                  class="form-group mb-0"
+                >
+                  <label
+                    class="mb-0 text-3"
+                    for="name"
+                  >
+                    Title
+                    <svg
+                      class="lexicon-icon lexicon-icon-asterisk reference-mark"
+                      role="presentation"
+                    >
+                      <use
+                        href="#asterisk"
+                      />
+                    </svg>
+                  </label>
+                  <input
+                    class="form-control form-control-inline"
+                    id="name"
+                    name="name"
+                    placeholder="New Segment"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="mb-4 mt-4"
                 >
                   <div
-                    class="form-group form-group-autofit"
+                    class="row align-items-center mb-3"
                   >
                     <div
-                      class="form-group-item form-group-item-label form-group-item-shrink"
+                      class="col-md-3 col-sm-12"
                     >
-                      <label
-                        class="form-control-label label-root required"
-                        for="externalReferenceCode"
+                      <span
+                        class="align-items-center d-flex font-weight-semi-bold text-nowrap text-secondary"
+                      >
+                        <svg
+                          class="lexicon-icon lexicon-icon-categories mr-2"
+                          role="presentation"
+                        >
+                          <use
+                            href="#categories"
+                          />
+                        </svg>
+                        Segment Type
+                      </span>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <span
+                        class="label label-secondary"
                       >
                         <span
-                          class="content-container"
+                          class="label-item label-item-expand"
                         >
-                          Segment ERC
+                          Individual
                         </span>
+                      </span>
+                      <span
+                        class="label label-info"
+                      >
                         <span
-                          class="info-popover-root"
+                          class="label-item label-item-expand"
+                        >
+                          Batch
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group mb-0"
+                  >
+                    <div
+                      class="row align-items-center"
+                    >
+                      <div
+                        class="align-items-center d-flex col-md-3 col-sm-12"
+                      >
+                        <label
+                          class="align-items-center d-flex font-weight-semi-bold mb-0 text-nowrap text-secondary"
+                          for="externalReferenceCode"
                         >
                           <svg
-                            class="lexicon-icon lexicon-icon-question-circle-full icon-root"
+                            class="lexicon-icon lexicon-icon-link mr-2"
+                            role="presentation"
+                          >
+                            <use
+                              href="#link"
+                            />
+                          </svg>
+                          Segment ERC
+                          <svg
+                            class="lexicon-icon lexicon-icon-asterisk reference-mark"
+                            role="presentation"
+                          >
+                            <use
+                              href="#asterisk"
+                            />
+                          </svg>
+                        </label>
+                        <button
+                          aria-label="Help"
+                          class="rounded-lg btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs"
+                          type="button"
+                        >
+                          <svg
+                            class="lexicon-icon lexicon-icon-question-circle-full"
                             role="presentation"
                           >
                             <use
                               href="#question-circle-full"
                             />
                           </svg>
-                        </span>
-                      </label>
-                    </div>
-                    <div
-                      class="form-group-item"
-                    >
+                        </button>
+                      </div>
                       <div
-                        class=""
+                        class="col"
                       >
                         <input
-                          class="input-root form-control"
+                          class="form-control form-control-sm"
                           id="externalReferenceCode"
                           name="externalReferenceCode"
+                          required=""
                           type="text"
                           value="00000000-0000-0000-0000-000000000000"
                         />

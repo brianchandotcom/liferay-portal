@@ -8,7 +8,8 @@ import {
 	fireEvent,
 	render,
 	screen,
-	waitFor
+	waitFor,
+	within
 } from '@testing-library/react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -187,6 +188,12 @@ describe('SegmentEditor', () => {
 			</Provider>
 		);
 
+		fireEvent.click(
+			within(
+				screen.getByLabelText(/segment erc/i).closest('.form-group')
+			).getByRole('button', {name: /help/i})
+		);
+
 		expect(
 			screen.getByText(
 				'Unique key for referencing the segment definition.'
@@ -238,7 +245,7 @@ describe('SegmentEditor', () => {
 			</Provider>
 		);
 
-		fireEvent.change(screen.getByPlaceholderText('Unnamed Segment'), {
+		fireEvent.change(screen.getByPlaceholderText('New Segment'), {
 			target: {value: 'Engaged Accounts'}
 		});
 

@@ -1976,7 +1976,7 @@ test(
 
 		await editSegment(page);
 
-		await expect(page.locator('.total-members-count')).toHaveText('3');
+		await expect(page.getByText(/Total Members: 3/)).toBeVisible();
 	}
 );
 

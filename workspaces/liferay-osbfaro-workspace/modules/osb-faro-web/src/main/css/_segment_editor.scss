@@ -2,7 +2,7 @@
 	background-color: $white;
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - 119px - #{$toolbarHeight});
+	height: 100vh;
 	position: relative;
 	width: 100%;
 
@@ -13,17 +13,8 @@
 
 	.form-body {
 		flex: 1;
-		height: calc(100% - 58px);
 		min-height: 0;
 		position: relative;
-	}
-
-	.header-root {
-		margin-bottom: 0;
-	}
-
-	.title-editor-root.editing + .source-icon {
-		display: none;
 	}
 }
 

@@ -1,15 +1,34 @@
 import * as API from 'shared/api';
 import * as data from 'test/data';
+import mockStore from 'test/mock-store';
 import React from 'react';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {Formik} from 'formik';
 import {MemoryRouter} from 'react-router';
 import {modalTypes} from 'shared/actions/modals';
-import {SegmentCategories} from 'shared/util/constants';
+import {Provider} from 'react-redux';
+import {SegmentCategories, SegmentTypes} from 'shared/util/constants';
 import {Toolbar} from '../Toolbar';
-import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
+
+const renderToolbar = (props = {}, store = mockStore()) =>
+	render(
+		<Provider store={store}>
+			<MemoryRouter>
+				<Formik initialValues={{includeAnonymousUsers: false}}>
+					<Toolbar
+						channelId='321'
+						criteria={data.mockNewCriteria(1, {valid: false})}
+						groupId='123'
+						segmentCategory={SegmentCategories.Individual}
+						segmentType={SegmentTypes.Batch}
+						{...props}
+					/>
+				</Formik>
+			</MemoryRouter>
+		</Provider>
+	);
 
 describe('Toolbar', () => {
 	afterEach(() => {
@@ -18,20 +37,53 @@ describe('Toolbar', () => {
 		cleanup();
 	});
 
-	it('should render', () => {
-		const {container} = render(
-			<MemoryRouter>
-				<Formik>
-					<Toolbar
-						channelId='321'
-						criteria={data.mockNewCriteria(1, {valid: false})}
-						groupId='123'
-						segmentType='BATCH'
-					/>
-				</Formik>
-			</MemoryRouter>
+	it('should render the new segment title and actions', () => {
+		renderToolbar();
+
+		expect(
+			screen.getByRole('heading', {level: 1, name: /new segment/i})
+		).toBeInTheDocument();
+		expect(screen.getByRole('link', {name: /cancel/i})).toBeInTheDocument();
+		expect(screen.getByRole('button', {name: /save segment/i})).toHaveAttribute(
+			'type',
+			'submit'
 		);
-		expect(container).toMatchSnapshot();
+	});
+
+	it('should render the edit segment title and the delete action when editing', () => {
+		const onDeleteSegment = jest.fn();
+
+		renderToolbar({id: '1', onDeleteSegment});
+
+		expect(
+			screen.getByRole('heading', {level: 1, name: /edit segment/i})
+		).toBeInTheDocument();
+
+		const deleteButton = screen.getByRole('button', {
+			name: /delete segment/i
+		});
+
+		expect(deleteButton).toHaveAttribute('type', 'button');
+
+		fireEvent.click(deleteButton);
+
+		expect(onDeleteSegment).toHaveBeenCalledTimes(1);
+	});
+
+	it('should render the anonymous toggle and total members only for batch segments', () => {
+		const {unmount} = renderToolbar();
+
+		expect(
+			screen.getByRole('switch', {name: /include anonymous/i})
+		).toBeInTheDocument();
+		expect(screen.getByText(/total members/i)).toBeInTheDocument();
+
+		unmount();
+
+		renderToolbar({segmentType: SegmentTypes.RealTime});
+
+		expect(screen.queryByRole('switch')).not.toBeInTheDocument();
+		expect(screen.queryByText(/total members/i)).not.toBeInTheDocument();
 	});
 
 	it('should open the accounts modal for account segments', async () => {
@@ -39,32 +91,33 @@ describe('Toolbar', () => {
 			Promise.resolve({items: [], totalCount: 1})
 		);
 
-		const open = jest.fn();
+		const store = mockStore();
 
-		const {container, getByTestId} = render(
-			<MemoryRouter>
-				<Formik>
-					<Toolbar
-						channelId='321'
-						criteria={data.mockNewCriteria(1, {valid: true})}
-						groupId='123'
-						open={open}
-						segmentCategory={SegmentCategories.Account}
-						segmentType='BATCH'
-					/>
-				</Formik>
-			</MemoryRouter>
+		const dispatchSpy = jest.spyOn(store, 'dispatch');
+
+		renderToolbar(
+			{
+				criteria: data.mockNewCriteria(1, {valid: true}),
+				segmentCategory: SegmentCategories.Account
+			},
+			store
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		const previewButton = screen.getByTestId('preview-criteria-button');
 
-		fireEvent.click(getByTestId('preview-criteria-button'));
+		await waitFor(() => expect(previewButton).toBeEnabled());
 
-		expect(open).toHaveBeenCalledWith(
-			modalTypes.SEARCHABLE_ENTITIES_TABLE_MODAL,
+		fireEvent.click(previewButton);
+
+		expect(dispatchSpy).toHaveBeenCalledWith(
 			expect.objectContaining({
-				entityLabel: 'Accounts',
-				title: 'Segment Accounts'
+				payload: expect.objectContaining({
+					props: expect.objectContaining({
+						entityLabel: 'Accounts',
+						title: 'Segment Accounts'
+					}),
+					type: modalTypes.SEARCHABLE_ENTITIES_TABLE_MODAL
+				})
 			})
 		);
 	});
@@ -74,49 +127,52 @@ describe('Toolbar', () => {
 			Promise.resolve({items: [], total: 1})
 		);
 
-		const open = jest.fn();
+		const store = mockStore();
 
-		const {container, getByTestId} = render(
-			<MemoryRouter>
-				<Formik>
-					<Toolbar
-						channelId='321'
-						criteria={data.mockNewCriteria(1, {valid: true})}
-						criteriaString='filter'
-						groupId='123'
-						includeAnonymousUsers
-						open={open}
-						segmentCategory={SegmentCategories.Individual}
-						segmentType='BATCH'
-					/>
-				</Formik>
-			</MemoryRouter>
+		const dispatchSpy = jest.spyOn(store, 'dispatch');
+
+		renderToolbar(
+			{
+				criteria: data.mockNewCriteria(1, {valid: true}),
+				criteriaString: 'filter',
+				includeAnonymousUsers: true
+			},
+			store
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		const previewButton = screen.getByTestId('preview-criteria-button');
 
-		fireEvent.click(getByTestId('preview-criteria-button'));
+		await waitFor(() => expect(previewButton).toBeEnabled());
 
-		expect(open).toHaveBeenCalledWith(
-			modalTypes.SEARCHABLE_ENTITIES_TABLE_MODAL,
+		fireEvent.click(previewButton);
+
+		expect(dispatchSpy).toHaveBeenCalledWith(
 			expect.objectContaining({
-				columns: [
-					expect.objectContaining({
-						accessor: 'name',
-						className: 'w-50'
+				payload: expect.objectContaining({
+					props: expect.objectContaining({
+						columns: [
+							expect.objectContaining({
+								accessor: 'name',
+								className: 'w-50'
+							}),
+							expect.objectContaining({
+								accessor: 'accountName',
+								className: 'w-50',
+								label: 'Account Name'
+							})
+						],
+						entityLabel: 'Individuals',
+						title: 'Segment Membership'
 					}),
-					expect.objectContaining({
-						accessor: 'accountName',
-						className: 'w-50',
-						label: 'Account Name'
-					})
-				],
-				entityLabel: 'Individuals',
-				title: 'Segment Membership'
+					type: modalTypes.SEARCHABLE_ENTITIES_TABLE_MODAL
+				})
 			})
 		);
 
-		const [, {dataSourceFn}] = open.mock.calls[0];
+		const {dataSourceFn} = dispatchSpy.mock.calls.find(
+			([action]) =>
+				action.payload?.type === modalTypes.SEARCHABLE_ENTITIES_TABLE_MODAL
+		)[0].payload.props;
 
 		API.individuals.search.mockClear();
 
@@ -134,58 +190,29 @@ describe('Toolbar', () => {
 		);
 	});
 
-	it('should render w/ preview button disabled if criteria is valid and total members count is equal to 0', () => {
-		const {getByTestId} = render(
-			<MemoryRouter>
-				<Formik>
-					<Toolbar
-						channelId='321'
-						criteria={data.mockNewCriteria(1, {valid: true})}
-						groupId='123'
-						segmentType='BATCH'
-					/>
-				</Formik>
-			</MemoryRouter>
-		);
+	it('should render w/ preview button disabled if criteria is valid and total members count is equal to 0', async () => {
+		API.individuals.search.mockReturnValue(Promise.resolve({total: 0}));
 
-		expect(getByTestId('preview-criteria-button')).toBeDisabled();
+		renderToolbar({criteria: data.mockNewCriteria(1, {valid: true})});
+
+		await waitFor(() => expect(API.individuals.search).toHaveBeenCalled());
+
+		expect(screen.getByTestId('preview-criteria-button')).toBeDisabled();
 	});
 
 	it('should render w/ preview button disabled if criteria is not valid', () => {
-		const {getByTestId} = render(
-			<MemoryRouter>
-				<Formik>
-					<Toolbar
-						channelId='321'
-						criteria={data.mockNewCriteria(1, {valid: false})}
-						groupId='123'
-						segmentType='BATCH'
-					/>
-				</Formik>
-			</MemoryRouter>
-		);
+		renderToolbar();
 
-		expect(getByTestId('preview-criteria-button')).toBeDisabled();
+		expect(screen.getByTestId('preview-criteria-button')).toBeDisabled();
 	});
 
 	it('should render w/ preview button enabled if total members count is bigger thant 0', async () => {
 		API.individuals.search.mockReturnValue(Promise.resolve({total: 1}));
 
-		const {container, getByTestId} = render(
-			<MemoryRouter>
-				<Formik>
-					<Toolbar
-						channelId='321'
-						criteria={data.mockNewCriteria(1, {valid: true})}
-						groupId='123'
-						segmentType='BATCH'
-					/>
-				</Formik>
-			</MemoryRouter>
+		renderToolbar({criteria: data.mockNewCriteria(1, {valid: true})});
+
+		await waitFor(() =>
+			expect(screen.getByTestId('preview-criteria-button')).toBeEnabled()
 		);
-
-		await waitForLoadingToBeRemoved(container);
-
-		expect(getByTestId('preview-criteria-button')).toBeEnabled();
 	});
 });

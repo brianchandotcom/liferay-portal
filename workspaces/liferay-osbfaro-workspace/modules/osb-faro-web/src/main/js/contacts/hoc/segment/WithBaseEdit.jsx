@@ -1,21 +1,17 @@
 import * as API from 'shared/api';
-import * as breadcrumbs from 'shared/util/breadcrumbs';
 import autobind from 'autobind-decorator';
-import BasePage from 'shared/components/base-page';
+import BaseEditPage from 'shared/components/base-edit-page';
 import getCN from 'classnames';
-import Label from 'shared/components/Label';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
-import {ChannelContext} from 'shared/context/channel';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
 import {PropTypes} from 'prop-types';
 import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {Segment} from 'shared/util/records';
-import {SegmentCategories, SegmentTypes} from 'shared/util/constants';
-import {sub} from 'shared/util/lang';
+import {SegmentCategories} from 'shared/util/constants';
 
 const MessageKeys = {
 	ExternalReferenceCodeIsAlreadyUsed:
@@ -45,8 +41,6 @@ const ERRORS = {
 };
 export default WrappedComponent => {
 	class BaseEdit extends React.Component {
-		static contextType = ChannelContext;
-
 		static propTypes = {
 			addAlert: PropTypes.func.isRequired,
 			channelId: PropTypes.string,
@@ -217,40 +211,10 @@ export default WrappedComponent => {
 
 			const {onDelete} = this.state;
 
-			const {selectedChannel} = this.context;
-
 			const editing = !!id;
 
-			const breadcrumbItems = id
-				? [
-						breadcrumbs.getEntityName({
-							active: false,
-							href: toRoute(Routes.CONTACTS_SEGMENT, {
-								channelId,
-								groupId,
-								id
-							}),
-							label: segment.name
-						}),
-						{
-							active: true,
-							label: Liferay.Language.get('edit')
-						}
-				  ]
-				: [
-						{
-							active: true,
-							label: Liferay.Language.get('create-segment')
-						}
-				  ];
-
-			const SEGMENT_TYPES_LABEL_MAP = {
-				[SegmentTypes.Batch]: Liferay.Language.get('batch'),
-				[SegmentTypes.RealTime]: Liferay.Language.get('real-time')
-			};
-
 			return (
-				<BasePage
+				<BaseEditPage
 					className={getCN('segment-edit-root', className, {
 						editing
 					})}
@@ -258,68 +222,18 @@ export default WrappedComponent => {
 						'segment'
 					)}`}
 				>
-					<BasePage.Header
-						breadcrumbs={[
-							breadcrumbs.getHome({
-								channelId,
-								groupId,
-								label: selectedChannel && selectedChannel.name
-							}),
-							breadcrumbs.getSegments({channelId, groupId}),
-							...breadcrumbItems
-						]}
+					<WrappedComponent
+						{...omitDefinedProps(otherProps, BaseEdit.propTypes)}
+						channelId={channelId}
+						editing={editing}
 						groupId={groupId}
-					>
-						<BasePage.Row>
-							<BasePage.Header.TitleSection
-								title={this.getPageTitle()}
-							>
-								<Label display='secondary' size='lg' uppercase>
-									{sub(Liferay.Language.get('x-segment'), [
-										SEGMENT_TYPES_LABEL_MAP[type]
-									])}
-								</Label>
-							</BasePage.Header.TitleSection>
-
-							<BasePage.Header.Section>
-								<BasePage.Header.PageActions
-									actions={
-										editing
-											? [
-													{
-														button: true,
-														displayType:
-															'secondary',
-														label: Liferay.Language.get(
-															'delete-segment'
-														),
-														onClick:
-															this.deleteSegment
-													}
-											  ]
-											: []
-									}
-								/>
-							</BasePage.Header.Section>
-						</BasePage.Row>
-					</BasePage.Header>
-
-					<BasePage.Body pageContainer={false}>
-						<WrappedComponent
-							{...omitDefinedProps(
-								otherProps,
-								BaseEdit.propTypes
-							)}
-							channelId={channelId}
-							editing={editing}
-							groupId={groupId}
-							id={id}
-							onDelete={onDelete}
-							onSubmit={this.handleSubmit}
-							segment={segment}
-						/>
-					</BasePage.Body>
-				</BasePage>
+						id={id}
+						onDelete={onDelete}
+						onDeleteSegment={this.deleteSegment}
+						onSubmit={this.handleSubmit}
+						segment={segment}
+					/>
+				</BaseEditPage>
 			);
 		}
 	}

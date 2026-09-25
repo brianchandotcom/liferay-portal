@@ -172,7 +172,10 @@ export async function editCriteriaConjunction({
 
 export async function editSegment(page: Page) {
 	await page.getByRole('link', {name: 'Edit Segment'}).click();
-	await page.waitForSelector('text=Edit Individuals Segment');
+
+	await expect(
+		page.getByRole('heading', {level: 1, name: 'Edit Segment'})
+	).toBeVisible();
 }
 
 export async function includeAnonymousToggle({
@@ -182,7 +185,7 @@ export async function includeAnonymousToggle({
 	enable: boolean;
 	page: Page;
 }) {
-	const toggle = page.getByTestId('toggle-switch-input');
+	const toggle = page.getByRole('switch', {name: 'Include Anonymous'});
 
 	if (enable) {
 		await toggle.check();
@@ -242,15 +245,11 @@ export async function setSegmentName({
 	page: Page;
 	segmentName: string;
 }) {
-	const input = page.getByPlaceholder('Unnamed Segment');
+	const input = page.getByLabel('Title', {exact: true});
 
-	await expect(async () => {
-		await page.getByLabel('Edit').click();
+	await input.fill(segmentName);
 
-		await input.fill(segmentName, {timeout: 2000});
-
-		await expect(input).toHaveValue(segmentName);
-	}).toPass();
+	await expect(input).toHaveValue(segmentName);
 
 	await page.keyboard.press('Tab');
 }

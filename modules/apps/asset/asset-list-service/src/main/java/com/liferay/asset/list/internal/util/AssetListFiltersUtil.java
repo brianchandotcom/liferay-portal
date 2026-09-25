@@ -340,7 +340,7 @@ public class AssetListFiltersUtil {
 		}
 
 		if (Objects.equals(field, Field.USER_NAME)) {
-			return new MatchQuery(field + ".text", value);
+			return _toMatchQuery(field + ".text", jsonObject, value);
 		}
 
 		return new TermQuery(field, value);

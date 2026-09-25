@@ -30,6 +30,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,8 +57,10 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
@@ -119,21 +122,7 @@ public class LayoutContentVersionLocalServiceTest {
 
 		_draftLayout = layout.fetchDraftLayout();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(
-				ServletContextPool.get(StringPool.BLANK));
-
-		mockHttpServletRequest.setMethod(HttpMethods.GET);
-		mockHttpServletRequest.setParameter("p_l_mode", Constants.EDIT);
-		mockHttpServletRequest.setRequestURI(StringPool.SLASH);
-
-		serviceContext.setRequest(mockHttpServletRequest);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(_getServiceContext(null));
 	}
 
 	@After
@@ -142,7 +131,9 @@ public class LayoutContentVersionLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo({"LPD-103233", "LPD-103846", "LPD-104550", "LPD-104976"})
+	@TestInfo(
+		{"LPD-103233", "LPD-103846", "LPD-104550", "LPD-104976", "LPD-105674"}
+	)
 	public void testAddLayoutContentVersion() throws Exception {
 		_testAddLayoutContentVersion();
 
@@ -463,6 +454,27 @@ public class LayoutContentVersionLocalServiceTest {
 			layoutContentVersionPreviews.size());
 	}
 
+	private void _assertLayoutContentVersionPreviewsPortalURL(
+			long layoutContentVersionId, String portalURL)
+		throws Exception {
+
+		List<LayoutContentVersionPreview> layoutContentVersionPreviews =
+			_layoutContentVersionPreviewLocalService.
+				getLayoutContentVersionPreviews(layoutContentVersionId);
+
+		Assert.assertFalse(
+			layoutContentVersionPreviews.toString(),
+			layoutContentVersionPreviews.isEmpty());
+
+		for (LayoutContentVersionPreview layoutContentVersionPreview :
+				layoutContentVersionPreviews) {
+
+			String html = layoutContentVersionPreview.getHtml();
+
+			Assert.assertTrue(html, html.contains(portalURL));
+		}
+	}
+
 	private <T extends PortalException> void _assertPortalException(
 		String expectedMessage, Class<T> portalExceptionClass,
 		ThrowingRunnable runnable) {
@@ -519,6 +531,12 @@ public class LayoutContentVersionLocalServiceTest {
 				"generating-the-preview-when-this-version-was-created");
 	}
 
+	private String _getRandomPortalURL() {
+		return StringBundler.concat(
+			Http.HTTP_WITH_SLASH, RandomTestUtil.randomString(),
+			StringPool.COLON, RandomTestUtil.randomInt());
+	}
+
 	private Map<SegmentsExperience, JSONObject>
 		_getRandomSegmentsExperienceLocalizedContentMap() {
 
@@ -540,6 +558,44 @@ public class LayoutContentVersionLocalServiceTest {
 		}
 
 		return map;
+	}
+
+	private ServiceContext _getServiceContext(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(
+				ServletContextPool.get(StringPool.BLANK));
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
+		mockHttpServletRequest.setParameter("p_l_mode", Constants.EDIT);
+		mockHttpServletRequest.setRequestURI(StringPool.SLASH);
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		return serviceContext;
+	}
+
+	private ThemeDisplay _getThemeDisplay(String portalURL) throws Exception {
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_companyLocalService.getCompany(_group.getCompanyId()), _group,
+			_draftLayout);
+
+		themeDisplay.setPortalURL(portalURL);
+
+		return themeDisplay;
+	}
+
+	private AutoCloseable _pushServiceContext(ServiceContext serviceContext) {
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		return ServiceContextThreadLocal::popServiceContext;
 	}
 
 	private SafeCloseable _swapLayoutPreviewRendererWithSafeCloseable() {
@@ -592,46 +648,48 @@ public class LayoutContentVersionLocalServiceTest {
 		_addFragmentEntryLinksToLayout(
 			fragmentEntry, segmentsExperienceJSONObjectsMap);
 
-		String data = RandomTestUtil.randomString();
+		String portalURL = _getRandomPortalURL();
 
-		LayoutContentVersion draftLayoutContentVersion =
-			_layoutContentVersionLocalService.addLayoutContentVersion(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				data, RandomTestUtil.randomLocaleStringMap(),
-				_draftLayout.getPlid(), WorkflowConstants.STATUS_DRAFT);
+		try (AutoCloseable autoCloseable = _pushServiceContext(
+				_getServiceContext(_getThemeDisplay(portalURL)))) {
 
-		Assert.assertNotNull(draftLayoutContentVersion.getDataHash());
-		Assert.assertEquals(
-			_draftLayout.getPlid(), draftLayoutContentVersion.getPlid());
-		Assert.assertEquals(1, draftLayoutContentVersion.getVersion());
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT,
-			draftLayoutContentVersion.getStatus());
+			LayoutContentVersion draftLayoutContentVersion =
+				_addLayoutContentVersion(WorkflowConstants.STATUS_DRAFT);
 
-		_assertLayoutContentVersionPreviews(
-			fragmentEntry.getCss(), draftLayoutContentVersion,
-			segmentsExperienceJSONObjectsMap);
-
-		try (SafeCloseable safeCloseable =
-				_swapLayoutPreviewRendererWithSafeCloseable()) {
-
-			LayoutContentVersion approvedLayoutContentVersion =
-				_layoutContentVersionLocalService.addLayoutContentVersion(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					data, RandomTestUtil.randomLocaleStringMap(),
-					_draftLayout.getPlid(), WorkflowConstants.STATUS_APPROVED);
-
-			Assert.assertNotEquals(
-				draftLayoutContentVersion.getLayoutContentVersionId(),
-				approvedLayoutContentVersion.getLayoutContentVersionId());
-			Assert.assertEquals(2, approvedLayoutContentVersion.getVersion());
+			Assert.assertNotNull(draftLayoutContentVersion.getDataHash());
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED,
-				approvedLayoutContentVersion.getStatus());
+				_draftLayout.getPlid(), draftLayoutContentVersion.getPlid());
+			Assert.assertEquals(1, draftLayoutContentVersion.getVersion());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT,
+				draftLayoutContentVersion.getStatus());
 
-			_assertPreviewErrorLayoutContentVersionPreviews(
-				approvedLayoutContentVersion,
-				segmentsExperienceJSONObjectsMap.keySet());
+			_assertLayoutContentVersionPreviews(
+				fragmentEntry.getCss(), draftLayoutContentVersion,
+				segmentsExperienceJSONObjectsMap);
+			_assertLayoutContentVersionPreviewsPortalURL(
+				draftLayoutContentVersion.getLayoutContentVersionId(),
+				portalURL);
+
+			try (SafeCloseable safeCloseable =
+					_swapLayoutPreviewRendererWithSafeCloseable()) {
+
+				LayoutContentVersion approvedLayoutContentVersion =
+					_addLayoutContentVersion(WorkflowConstants.STATUS_APPROVED);
+
+				Assert.assertNotEquals(
+					draftLayoutContentVersion.getLayoutContentVersionId(),
+					approvedLayoutContentVersion.getLayoutContentVersionId());
+				Assert.assertEquals(
+					2, approvedLayoutContentVersion.getVersion());
+				Assert.assertEquals(
+					WorkflowConstants.STATUS_APPROVED,
+					approvedLayoutContentVersion.getStatus());
+
+				_assertPreviewErrorLayoutContentVersionPreviews(
+					approvedLayoutContentVersion,
+					segmentsExperienceJSONObjectsMap.keySet());
+			}
 		}
 	}
 

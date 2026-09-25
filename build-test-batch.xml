@@ -9918,6 +9918,30 @@ ${output.content}</echo>
 		<run-playwright-js-test database.type="sqlserver" />
 	</target>
 
+	<target name="playwright-js-upgrade-tomcat101-db2111">
+		<run-playwright-js-test database.type="db2" />
+	</target>
+
+	<target name="playwright-js-upgrade-tomcat101-mariadb106">
+		<run-playwright-js-test database.type="mariadb" />
+	</target>
+
+	<target name="playwright-js-upgrade-tomcat101-mysql84">
+		<run-playwright-js-test database.type="mysql" />
+	</target>
+
+	<target name="playwright-js-upgrade-tomcat101-oracle193">
+		<run-playwright-js-test database.type="oracle" />
+	</target>
+
+	<target name="playwright-js-upgrade-tomcat101-postgresql163">
+		<run-playwright-js-test database.type="postgresql" />
+	</target>
+
+	<target name="playwright-js-upgrade-tomcat101-sqlserver2022">
+		<run-playwright-js-test database.type="sqlserver" />
+	</target>
+
 	<target name="plugins-compile">
 		<run-batch-test>
 			<test-action>

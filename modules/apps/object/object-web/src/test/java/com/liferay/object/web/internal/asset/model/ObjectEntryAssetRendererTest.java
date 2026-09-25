@@ -241,21 +241,20 @@ public class ObjectEntryAssetRendererTest {
 			_getCMSFriendlyURL(true, null, null, themeDisplay),
 			assetRenderer.getURLSharingNotification(true, themeDisplay));
 
-		String escapedReferer =
-			"http://" + RandomTestUtil.randomString() + "?a=1&b=2";
+		String escapedRedirect = "http://" + RandomTestUtil.randomString();
 		String referer = "http://" + RandomTestUtil.randomString();
 
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.escapeRedirect(referer)
 		).thenReturn(
-			escapedReferer
+			escapedRedirect
 		);
 
 		Assert.assertEquals(
-			_getCMSFriendlyURL(false, escapedReferer, referer, themeDisplay),
+			_getCMSFriendlyURL(false, escapedRedirect, referer, themeDisplay),
 			assetRenderer.getURLSharingNotification(false, themeDisplay));
 		Assert.assertEquals(
-			_getCMSFriendlyURL(true, escapedReferer, referer, themeDisplay),
+			_getCMSFriendlyURL(true, escapedRedirect, referer, themeDisplay),
 			assetRenderer.getURLSharingNotification(true, themeDisplay));
 	}
 
@@ -335,7 +334,7 @@ public class ObjectEntryAssetRendererTest {
 	}
 
 	private String _getCMSFriendlyURL(
-		boolean editable, String escapedReferer, String referer,
+		boolean editable, String escapedRedirect, String referer,
 		ThemeDisplay themeDisplay) {
 
 		String pathMain = StringPool.SLASH + RandomTestUtil.randomString();
@@ -369,7 +368,7 @@ public class ObjectEntryAssetRendererTest {
 			httpServletRequest
 		);
 
-		String redirect = escapedReferer;
+		String redirect = escapedRedirect;
 
 		if (referer == null) {
 			redirect = "http://" + RandomTestUtil.randomString();
@@ -380,8 +379,6 @@ public class ObjectEntryAssetRendererTest {
 				redirect
 			);
 		}
-
-		redirect = HtmlUtil.escapeURL(redirect);
 
 		long objectEntryId = RandomTestUtil.randomLong();
 
@@ -401,13 +398,14 @@ public class ObjectEntryAssetRendererTest {
 			return StringBundler.concat(
 				portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
 				"/edit_content_item?objectEntryId=", objectEntryId,
-				"&p_l_mode=edit&redirect=", redirect);
+				"&p_l_mode=edit&redirect=", HtmlUtil.escapeURL(redirect));
 		}
 
 		return StringBundler.concat(
 			portalURL, pathMain, GroupConstants.CMS_FRIENDLY_URL,
 			"/edit_content_item?objectEntryId=", objectEntryId,
-			"&p_l_mode=read&p_p_state=pop_up&redirect=", redirect);
+			"&p_l_mode=read&p_p_state=pop_up&redirect=",
+			HtmlUtil.escapeURL(redirect));
 	}
 
 	private String _getFriendlyURL(LiferayPortletRequest liferayPortletRequest)

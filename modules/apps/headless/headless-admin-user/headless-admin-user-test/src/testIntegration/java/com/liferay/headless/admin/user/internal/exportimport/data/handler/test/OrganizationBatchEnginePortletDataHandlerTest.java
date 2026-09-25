@@ -45,6 +45,16 @@ public class OrganizationBatchEnginePortletDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		Organization organization =
+			_organizationLocalService.getOrAddEmptyOrganization(
+				RandomTestUtil.randomString(), _getCompanyId(groupId), userId,
+				RandomTestUtil.randomString());
+
+		return organization.getExternalReferenceCode();
+	}
+
+	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
 		throws Exception {
 
@@ -135,13 +145,23 @@ public class OrganizationBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		Organization organization = _getOrganization(
+			groupId, externalReferenceCode);
+
+		return organization.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override

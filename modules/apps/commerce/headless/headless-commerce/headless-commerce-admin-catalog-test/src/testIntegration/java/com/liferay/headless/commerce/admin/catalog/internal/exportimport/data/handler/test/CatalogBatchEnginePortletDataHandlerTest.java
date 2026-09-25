@@ -44,6 +44,22 @@ public class CatalogBatchEnginePortletDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		long companyId = _getCompanyId(groupId);
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+				companyId);
+
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.getOrAddEmptyCommerceCatalog(
+				RandomTestUtil.randomString(), companyId, userId,
+				commerceCurrency.getCode());
+
+		return commerceCatalog.getExternalReferenceCode();
+	}
+
+	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
 		throws Exception {
 
@@ -134,13 +150,23 @@ public class CatalogBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		CommerceCatalog commerceCatalog = _getCommerceCatalog(
+			groupId, externalReferenceCode);
+
+		return commerceCatalog.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override

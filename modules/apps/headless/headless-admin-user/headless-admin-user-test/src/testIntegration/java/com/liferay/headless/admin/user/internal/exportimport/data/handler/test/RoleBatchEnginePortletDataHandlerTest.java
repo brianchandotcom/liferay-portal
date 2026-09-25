@@ -44,6 +44,15 @@ public class RoleBatchEnginePortletDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		Role role = _roleLocalService.getOrAddEmptyRole(
+			RandomTestUtil.randomString(), _getCompanyId(groupId), userId, null,
+			0, RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+		return role.getExternalReferenceCode();
+	}
+
+	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
 		throws Exception {
 
@@ -124,13 +133,22 @@ public class RoleBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		Role role = _getRole(groupId, externalReferenceCode);
+
+		return role.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override

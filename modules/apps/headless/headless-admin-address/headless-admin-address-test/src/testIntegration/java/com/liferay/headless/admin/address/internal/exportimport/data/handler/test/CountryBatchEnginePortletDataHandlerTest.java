@@ -64,6 +64,18 @@ public class CountryBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		long companyId = _getCompanyId(groupId);
+
+		Country country = _countryLocalService.getOrAddEmptyCountry(
+			RandomTestUtil.randomString(), _randomA2(companyId),
+			_randomA3(companyId), companyId, RandomTestUtil.randomString(),
+			userId);
+
+		return country.getExternalReferenceCode();
+	}
+
+	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
 		throws Exception {
 
@@ -153,13 +165,22 @@ public class CountryBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		Country country = _getCountry(groupId, externalReferenceCode);
+
+		return country.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override

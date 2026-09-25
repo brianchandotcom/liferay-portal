@@ -46,6 +46,16 @@ public class ListTypeDefinitionBatchEnginePortletDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
+	protected String addEmptyEntry(long groupId, long userId) throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.getOrAddEmptyListTypeDefinition(
+				RandomTestUtil.randomString(), _getCompanyId(groupId), userId,
+				false);
+
+		return listTypeDefinition.getExternalReferenceCode();
+	}
+
+	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
 		throws Exception {
 
@@ -139,13 +149,23 @@ public class ListTypeDefinitionBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected int getStatus(long groupId, String externalReferenceCode)
+		throws Exception {
+
+		ListTypeDefinition listTypeDefinition = _getListTypeDefinition(
+			groupId, externalReferenceCode);
+
+		return listTypeDefinition.getStatus();
+	}
+
+	@Override
 	protected boolean supportsComments() {
 		return false;
 	}
 
 	@Override
 	protected boolean supportsEmptyEntries() {
-		return false;
+		return true;
 	}
 
 	@Override

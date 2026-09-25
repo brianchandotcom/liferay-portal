@@ -2,9 +2,9 @@
 
 ## Trigger
 
-The branch changed a file in a workspace other than `liferay-sample-workspace` that `workspaces/refresh_other_workspaces.sh` regenerates from `liferay-sample-workspace`.
+The branch changed a file that `workspaces/refresh_other_workspaces.sh` regenerates from `liferay-sample-workspace`, in a workspace other than the sample itself.
 
-That script copies the sample workspace over every other workspace with `rsync --archive --delete`, in `liferay-portal` and in the private repository alike. Its `--exclude` patterns name what each workspace owns, and everything else is overwritten or deleted on the next refresh. A change to one of those files outside the sample is therefore reverted without a build failure or a warning, so a regenerated file may change only through a refresh, and the edit belongs in `liferay-sample-workspace`.
+That script copies the sample workspace over every other workspace with `rsync --archive --delete`, in `liferay-portal` and in the private repository alike. Its `--exclude` patterns name what each workspace owns, and everything else is overwritten or deleted on the next refresh. A change to one of those files outside the sample is therefore reverted without a build failure or a warning. A regenerated file may change only through a refresh, and an edit to it belongs in `liferay-sample-workspace`.
 
 ## Match
 
@@ -34,7 +34,7 @@ git show "${SOURCE_SHA}:workspaces/liferay-sample-workspace/<path>" |
 	diff - "${BUILD_ROOT}/<path>"
 ```
 
-Read the sample from `${SOURCE_SHA}` and never from a local branch, which goes stale silently and then reports a file as diverged because the sample moved on rather than because the branch changed anything.
+Read the sample from `${SOURCE_SHA}` and never from a local branch. A local branch goes stale silently, and the comparison then reports a file as diverged because the sample moved on rather than because the branch changed anything.
 
 Report PASS for a path whose copies are identical, which is what a refresh produces. Report FAIL for a path whose copies differ, and for a path the sample does not contain, since the refresh deletes it. Name each path, and say that the next refresh reverts it and that the edit belongs in `liferay-sample-workspace`.
 

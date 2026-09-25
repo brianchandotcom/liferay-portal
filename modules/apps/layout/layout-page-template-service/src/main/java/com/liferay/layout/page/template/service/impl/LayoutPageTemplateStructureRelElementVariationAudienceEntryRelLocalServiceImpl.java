@@ -125,6 +125,15 @@ public class
 			findByC_AEERC(companyId, audienceEntryERC);
 	}
 
+	@Override
+	public int
+		getLayoutPageTemplateStructureRelElementVariationAudienceEntryRelsCountByAudienceEntryERC(
+			long companyId, String audienceEntryERC) {
+
+		return layoutPageTemplateStructureRelElementVariationAudienceEntryRelPersistence.
+			countByC_AEERC(companyId, audienceEntryERC);
+	}
+
 	@Reference
 	private UserLocalService _userLocalService;
 

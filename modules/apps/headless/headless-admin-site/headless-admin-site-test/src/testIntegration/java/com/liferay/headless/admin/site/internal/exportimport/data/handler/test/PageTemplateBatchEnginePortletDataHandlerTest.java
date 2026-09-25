@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -37,7 +36,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alberto Javier Moreno Lage
  */
-@ExportImportScopes(Scope.SITE)
 @RunWith(Arquillian.class)
 public class PageTemplateBatchEnginePortletDataHandlerTest
 	extends BaseBatchEnginePortletDataHandlerTestCase {
@@ -143,6 +141,11 @@ public class PageTemplateBatchEnginePortletDataHandlerTest
 			_getLayoutPageTemplateEntry(groupId, externalReferenceCode);
 
 		return layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.SITE;
 	}
 
 	@Override

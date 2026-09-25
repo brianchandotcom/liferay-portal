@@ -8,7 +8,6 @@ package com.liferay.headless.admin.taxonomy.internal.exportimport.data.handler.t
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -32,7 +31,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alberto Javier Moreno Lage
  */
-@ExportImportScopes(Scope.SITE)
 @RunWith(Arquillian.class)
 public class TaxonomyVocabularyBatchEnginePortletDataHandlerTest
 	extends BaseBatchEnginePortletDataHandlerTestCase {
@@ -125,6 +123,11 @@ public class TaxonomyVocabularyBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return assetVocabulary.getVocabularyId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.SITE;
 	}
 
 	@Override

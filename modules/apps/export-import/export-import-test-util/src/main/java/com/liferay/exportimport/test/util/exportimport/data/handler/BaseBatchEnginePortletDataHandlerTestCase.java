@@ -25,7 +25,6 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
-import com.liferay.exportimport.test.rule.ExportImportScopesTestRule;
 import com.liferay.exportimport.test.util.LazyReferencingTestUtil;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
@@ -88,8 +87,7 @@ import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.osgi.framework.Bundle;
@@ -103,15 +101,46 @@ import org.osgi.framework.ServiceReference;
 public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	extends BasePortletDataHandlerTestCase {
 
-	@ClassRule
-	public static final ExportImportScopesTestRule exportImportScopesTestRule =
-		ExportImportScopesTestRule.INSTANCE;
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		if (_targetCompany != null) {
+			_companyLocalService.deleteCompany(_targetCompany);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		List<Scope> scopes = exportImportScopesTestRule.getScopes();
+			_companyGroup = null;
+			_targetCompany = null;
+			_targetCompanyGroup = null;
+			_targetUser = null;
+		}
 
-		if (scopes.contains(Scope.COMPANY)) {
+		if (_depotEntry != null) {
+			_depotEntryLocalService.deleteDepotEntry(_depotEntry);
+			_depotEntryLocalService.deleteDepotEntry(_targetDepotEntry);
+
+			_depotEntry = null;
+			_depotLayout = null;
+			_targetDepotEntry = null;
+			_targetDepotLayout = null;
+		}
+
+		if (_group != null) {
+			_groupLocalService.deleteGroup(_group);
+			_groupLocalService.deleteGroup(_targetGroup);
+
+			_group = null;
+			_siteLayout = null;
+			_targetGroup = null;
+			_targetSiteLayout = null;
+		}
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		Scope scope = getScope();
+
+		if ((scope == Scope.COMPANY) && (_targetCompany == null)) {
 			_companyGroup = _stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId());
 
@@ -122,8 +151,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 			_targetUser = UserTestUtil.addCompanyAdminUser(_targetCompany);
 		}
-
-		if (scopes.contains(Scope.DEPOT)) {
+		else if ((scope == Scope.DEPOT) && (_depotEntry == null)) {
 			_depotEntry = _addDepotEntry();
 
 			_depotLayout = LayoutTestUtil.addTypePortletLayout(
@@ -134,8 +162,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			_targetDepotLayout = LayoutTestUtil.addTypePortletLayout(
 				_targetDepotEntry.getGroupId());
 		}
-
-		if (scopes.contains(Scope.SITE)) {
+		else if ((scope == Scope.SITE) && (_group == null)) {
 			_group = GroupTestUtil.addGroup();
 
 			_siteLayout = LayoutTestUtil.addTypePortletLayout(
@@ -148,32 +175,13 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 		}
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		List<Scope> scopes = exportImportScopesTestRule.getScopes();
-
-		if (scopes.contains(Scope.COMPANY)) {
-			_companyLocalService.deleteCompany(_targetCompany);
-		}
-
-		if (scopes.contains(Scope.DEPOT)) {
-			_depotEntryLocalService.deleteDepotEntry(_depotEntry);
-			_depotEntryLocalService.deleteDepotEntry(_targetDepotEntry);
-		}
-
-		if (scopes.contains(Scope.SITE)) {
-			_groupLocalService.deleteGroup(_group);
-			_groupLocalService.deleteGroup(_targetGroup);
-		}
-	}
-
 	@Test
 	public void testExportImportComments() throws Exception {
 		if (!supportsComments()) {
 			return;
 		}
 
-		Scope scope = _getScope();
+		Scope scope = getScope();
 
 		long groupId = _getGroupId(scope);
 
@@ -217,7 +225,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	@Override
 	@Test
 	public void testExportImportData() throws Exception {
-		Scope scope = _getScope();
+		Scope scope = getScope();
 
 		long groupId = _getGroupId(scope);
 
@@ -247,7 +255,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 	@Test
 	public void testExportImportDeletions() throws Exception {
-		Scope scope = _getScope();
+		Scope scope = getScope();
 
 		long groupId = _getGroupId(scope);
 
@@ -308,7 +316,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			return;
 		}
 
-		Scope scope = _getScope();
+		Scope scope = getScope();
 
 		long groupId = _getGroupId(scope);
 
@@ -357,7 +365,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 	@Test
 	public void testExportImportKeepCreatorData() throws Exception {
-		Scope scope = _getScope();
+		Scope scope = getScope();
 
 		long groupId = _getGroupId(scope);
 
@@ -402,7 +410,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			return;
 		}
 
-		Scope scope = _getScope();
+		Scope scope = getScope();
 
 		long groupId = _getGroupId(scope);
 
@@ -448,7 +456,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 	@Test
 	public void testExportImportWithDateRange() throws Exception {
-		Scope scope = _getScope();
+		Scope scope = getScope();
 
 		long groupId = _getGroupId(scope);
 
@@ -493,7 +501,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
-			stagingGroup = _getGroup(_getScope());
+			stagingGroup = _getGroup(getScope());
 
 			super.testPrepareManifestSummary();
 		}
@@ -510,7 +518,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			return;
 		}
 
-		long groupId = _getGroupId(_getScope());
+		long groupId = _getGroupId(getScope());
 
 		String externalReferenceCode = null;
 
@@ -595,7 +603,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 	@Override
 	protected DataLevel getDataLevel() {
-		Scope scope = _getScope();
+		Scope scope = getScope();
 
 		if (scope == Scope.COMPANY) {
 			return DataLevel.PORTAL;
@@ -669,6 +677,8 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			long groupId, String externalReferenceCode)
 		throws Exception;
 
+	protected abstract Scope getScope();
+
 	protected int getStatus(long groupId, String externalReferenceCode)
 		throws Exception {
 
@@ -692,7 +702,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			long groupId, String externalReferenceCode)
 		throws Exception;
 
-	private static DepotEntry _addDepotEntry() throws Exception {
+	private DepotEntry _addDepotEntry() throws Exception {
 		return _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -934,13 +944,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 		return _group.getGroupId();
 	}
 
-	private Scope _getScope() {
-		ExportImportDescriptor<?> exportImportDescriptor =
-			_getExportImportDescriptor();
-
-		return exportImportDescriptor.getScope();
-	}
-
 	private long _getTargetCompanyId(Scope scope) {
 		if (scope == Scope.COMPANY) {
 			return _targetCompanyGroup.getCompanyId();
@@ -1024,10 +1027,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	private static GroupLocalService _groupLocalService;
 
 	private static Layout _siteLayout;
-
-	@Inject
-	private static StagingGroupHelper _stagingGroupHelper;
-
 	private static Company _targetCompany;
 	private static Group _targetCompanyGroup;
 	private static DepotEntry _targetDepotEntry;
@@ -1063,6 +1062,9 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private StagingGroupHelper _stagingGroupHelper;
 
 	private Role _targetRole;
 

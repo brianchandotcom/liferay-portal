@@ -1194,6 +1194,10 @@ public class KaleoDefinitionModelImpl
 
 	@Override
 	public void copyCacheFields(KaleoDefinition source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		KaleoDefinitionModelImpl sourceModelImpl =
 			(KaleoDefinitionModelImpl)source;
 
@@ -1617,4 +1621,4 @@ public class KaleoDefinitionModelImpl
 	private KaleoDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1613417616
+// LIFERAY-SERVICE-BUILDER-HASH:1596618873

@@ -622,6 +622,10 @@ public class CompanyModelImpl
 
 	@Override
 	public void copyCacheFields(Company source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		CompanyModelImpl sourceModelImpl = (CompanyModelImpl)source;
 
 		setGroupId(sourceModelImpl.getGroupId());
@@ -969,4 +973,4 @@ public class CompanyModelImpl
 	private Company _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-166785418
+// LIFERAY-SERVICE-BUILDER-HASH:497011009

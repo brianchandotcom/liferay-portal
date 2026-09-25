@@ -1420,6 +1420,10 @@ public class DDMStructureModelImpl
 
 	@Override
 	public void copyCacheFields(DDMStructure source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		DDMStructureModelImpl sourceModelImpl = (DDMStructureModelImpl)source;
 
 		setClassName(sourceModelImpl.getClassName());
@@ -1947,4 +1951,4 @@ public class DDMStructureModelImpl
 	private DDMStructure _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1773620455
+// LIFERAY-SERVICE-BUILDER-HASH:-914918186

@@ -1611,6 +1611,10 @@ public class DDMTemplateModelImpl
 
 	@Override
 	public void copyCacheFields(DDMTemplate source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		DDMTemplateModelImpl sourceModelImpl = (DDMTemplateModelImpl)source;
 
 		setResourceClassName(sourceModelImpl.getResourceClassName());
@@ -2124,4 +2128,4 @@ public class DDMTemplateModelImpl
 	private DDMTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1610487170
+// LIFERAY-SERVICE-BUILDER-HASH:1134220627

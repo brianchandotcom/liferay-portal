@@ -1282,6 +1282,10 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void copyCacheFields(DDLRecordSet source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		DDLRecordSetModelImpl sourceModelImpl = (DDLRecordSetModelImpl)source;
 
 		setSettingsDDMFormValues(sourceModelImpl.getSettingsDDMFormValues());
@@ -1715,4 +1719,4 @@ public class DDLRecordSetModelImpl
 	private DDLRecordSet _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-148290140
+// LIFERAY-SERVICE-BUILDER-HASH:1778405425

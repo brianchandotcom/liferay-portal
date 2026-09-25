@@ -1033,6 +1033,10 @@ public class LayoutPageTemplateStructureRelModelImpl
 
 	@Override
 	public void copyCacheFields(LayoutPageTemplateStructureRel source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		LayoutPageTemplateStructureRelModelImpl sourceModelImpl =
 			(LayoutPageTemplateStructureRelModelImpl)source;
 
@@ -1457,4 +1461,4 @@ public class LayoutPageTemplateStructureRelModelImpl
 	private LayoutPageTemplateStructureRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1300687327
+// LIFERAY-SERVICE-BUILDER-HASH:-459427796

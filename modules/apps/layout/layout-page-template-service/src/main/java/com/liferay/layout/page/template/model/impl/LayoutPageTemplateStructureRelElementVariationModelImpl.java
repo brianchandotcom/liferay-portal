@@ -1401,6 +1401,10 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	public void copyCacheFields(
 		LayoutPageTemplateStructureRelElementVariation source) {
 
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		LayoutPageTemplateStructureRelElementVariationModelImpl
 			sourceModelImpl =
 				(LayoutPageTemplateStructureRelElementVariationModelImpl)source;
@@ -1897,4 +1901,4 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	private LayoutPageTemplateStructureRelElementVariation _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:544493210
+// LIFERAY-SERVICE-BUILDER-HASH:1997487599

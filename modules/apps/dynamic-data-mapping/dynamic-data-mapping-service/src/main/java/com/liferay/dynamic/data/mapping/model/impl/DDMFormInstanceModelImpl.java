@@ -1205,6 +1205,10 @@ public class DDMFormInstanceModelImpl
 
 	@Override
 	public void copyCacheFields(DDMFormInstance source) {
+		if (getMvccVersion() != source.getMvccVersion()) {
+			return;
+		}
+
 		DDMFormInstanceModelImpl sourceModelImpl =
 			(DDMFormInstanceModelImpl)source;
 
@@ -1617,4 +1621,4 @@ public class DDMFormInstanceModelImpl
 	private DDMFormInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1368697225
+// LIFERAY-SERVICE-BUILDER-HASH:2023697018

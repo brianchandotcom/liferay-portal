@@ -20,8 +20,9 @@ These settings describe this repository. The `pr-check` skill of another reposit
 | **Repository** | `liferay/liferay-portal` |
 | **Slices** | branch, portal, workspaces |
 | **Skipped Validations** | none |
+| **Rules Commit** | `HEAD` |
 
-`${BASE_BRANCH}` below stands for the base branch.
+`${BASE_BRANCH}` below stands for the base branch, and `${SOURCE_SHA}` for the rules commit, the commit this document and its validations were read from. A repository that fetches them from another supplies that commit.
 
 ## Preconditions
 
@@ -158,7 +159,7 @@ A validation may hand off to another, as **Per-Module Compile** does when its de
 
 An autocommit can change the diff, so recompute the ledger after a validation whose commit may add a path Pass 1 never saw, as Baseline's `packageinfo` and `bnd.bnd` repairs do, and dispatch whatever newly fires. Skip it after a validation that can only touch paths the branch already changed, such as a formatter running in current branch mode, since its commit cannot widen the diff.
 
-Give the subagent everything the validations use and none of them define. That is `${REPO_ROOT}`, `${BASE_BRANCH}`, `${BUILD_ROOT}` for a workspace validation, the ticket their **Autocommit** sections write into a commit title as `<TICKET>`, and the result its own verdict implies for committing, since the rule above lives here and the subagent never reads this document:
+Give the subagent everything the validations use and none of them define. That is `${REPO_ROOT}`, `${BASE_BRANCH}`, `${SOURCE_SHA}`, `${BUILD_ROOT}` for a workspace validation, the ticket their **Autocommit** sections write into a commit title as `<TICKET>`, and the result its own verdict implies for committing, since the rule above lives here and the subagent never reads this document:
 
 ```bash
 REPO_ROOT=$(git rev-parse --show-toplevel)

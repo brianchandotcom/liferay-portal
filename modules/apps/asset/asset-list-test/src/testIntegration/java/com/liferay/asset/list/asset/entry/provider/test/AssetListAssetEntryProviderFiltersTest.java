@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -70,6 +71,7 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -599,11 +601,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 				_getCommonFieldFilterJSONObject(
 					"contains", Field.USER_NAME, upperCaseUserName)),
 			objectEntry);
-		_assertFilteredObjectEntries(
-			_getFiltersJSONArray(
-				_getCommonFieldFilterJSONObject(
-					"eq", Field.USER_NAME, upperCaseUserName)),
-			objectEntry);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
@@ -928,6 +925,68 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry3);
 	}
 
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testGetAssetEntriesInfoPageWithUserNamePhraseFilters()
+		throws Exception {
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			_addUser("Anne Marie", "Jones"),
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).build());
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			_addUser("John", "Smith"),
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).build());
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			_addUser("Marie Anne", "Brown"),
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).build());
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			_addUser("Anne Marie", "Smith"),
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).build());
+
+		String userName = "\"anne marie\" smith";
+
+		_assertFilteredObjectEntries(
+			_getFiltersJSONArray(
+				_getCommonFieldFilterJSONObject(
+					"contains", Field.USER_NAME, userName
+				).put(
+					"quantifier", "all"
+				)),
+			objectEntry4);
+		_assertFilteredObjectEntries(
+			_getFiltersJSONArray(
+				_getCommonFieldFilterJSONObject(
+					"contains", Field.USER_NAME, userName
+				).put(
+					"quantifier", "any"
+				)),
+			objectEntry1, objectEntry2, objectEntry4);
+		_assertFilteredObjectEntries(
+			_getFiltersJSONArray(
+				_getCommonFieldFilterJSONObject(
+					"not-contains", Field.USER_NAME, userName
+				).put(
+					"quantifier", "all"
+				)),
+			objectEntry1, objectEntry2, objectEntry3);
+		_assertFilteredObjectEntries(
+			_getFiltersJSONArray(
+				_getCommonFieldFilterJSONObject(
+					"not-contains", Field.USER_NAME, userName
+				).put(
+					"quantifier", "any"
+				)),
+			objectEntry3);
+	}
+
 	@FeatureFlag(enable = false, value = "LPD-74731")
 	@Test
 	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagDisabled()
@@ -1102,16 +1161,35 @@ public class AssetListAssetEntryProviderFiltersTest {
 			serviceContext);
 	}
 
-	private ObjectEntry _addObjectEntry(Map<String, Serializable> values)
+	private ObjectEntry _addObjectEntry(
+			long userId, Map<String, Serializable> values)
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			_group.getGroupId(), TestPropsValues.getUserId(),
+			_group.getGroupId(), userId,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null, values,
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+				_group.getGroupId(), userId));
+	}
+
+	private ObjectEntry _addObjectEntry(Map<String, Serializable> values)
+		throws Exception {
+
+		return _addObjectEntry(TestPropsValues.getUserId(), values);
+	}
+
+	private long _addUser(String firstName, String lastName) throws Exception {
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			lastName, new long[] {_group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext());
+
+		_users.add(user);
+
+		return user.getUserId();
 	}
 
 	private void _assertFilteredClassPKs(
@@ -1318,5 +1396,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@Inject
 	private Portal _portal;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 }

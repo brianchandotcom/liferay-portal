@@ -94,34 +94,40 @@ public class SecretResolverImpl implements SecretResolver {
 	}
 
 	@Override
-	public String store(long companyId, String key, String scope, String value)
-		throws SecretException {
+	public String store(
+		long companyId, String key, String scope, String value) {
 
 		if (!PropsValues.FIPS_ENABLED || Validator.isNull(value)) {
 			return value;
 		}
 
-		if (KeyReferenceUtil.isKeyReference(value)) {
-			_validateKeyReference(key, value);
+		try {
+			if (KeyReferenceUtil.isKeyReference(value)) {
+				_validateKeyReference(key, value);
 
-			return value;
+				return value;
+			}
+
+			SecretManager secretManager = _secretManagerSnapshot.get();
+
+			if (secretManager == null) {
+				throw new IllegalStateException(
+					"Secret manager is unavailable");
+			}
+
+			try (Secret secret = new Secret(
+					new KeyReference(
+						StringBundler.concat(
+							_IDENTIFIER_PREFIX, scope, StringPool.SLASH, key),
+						StringPool.STAR, KeyReference.Type.SECRET),
+					value)) {
+
+				return KeyReferenceUtil.toKeyReferenceString(
+					secretManager.putSecret(companyId, secret));
+			}
 		}
-
-		SecretManager secretManager = _secretManagerSnapshot.get();
-
-		if (secretManager == null) {
-			throw new IllegalStateException("Secret manager is unavailable");
-		}
-
-		try (Secret secret = new Secret(
-				new KeyReference(
-					StringBundler.concat(
-						_IDENTIFIER_PREFIX, scope, StringPool.SLASH, key),
-					StringPool.STAR, KeyReference.Type.SECRET),
-				value)) {
-
-			return KeyReferenceUtil.toKeyReferenceString(
-				secretManager.putSecret(companyId, secret));
+		catch (SecretException secretException) {
+			return ReflectionUtil.throwException(secretException);
 		}
 	}
 

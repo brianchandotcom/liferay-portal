@@ -428,6 +428,34 @@ test(
 );
 
 test(
+	'Person account user row is keyed by the user ID',
+	{tag: '@LPD-106191'},
+	async ({accountsPage, apiHelpers, editAccountPage}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'person',
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[user.emailAddress]
+		);
+
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+		await expect(
+			editAccountPage.personAccountUserName(user.name)
+		).toBeVisible();
+		await expect(
+			editAccountPage.personAccountUserPrimaryKeysInput
+		).toHaveValue(String(user.id));
+	}
+);
+
+test(
 	'Only one user can be assigned to a Person Account',
 	{tag: ['@LPD-47225']},
 	async ({

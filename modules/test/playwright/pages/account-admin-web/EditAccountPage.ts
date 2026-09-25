@@ -46,6 +46,7 @@ export class EditAccountPage {
 	readonly page: Page;
 	readonly personAccountUserContainer: Locator;
 	readonly personAccountUserName: (name: string) => Locator;
+	readonly personAccountUserPrimaryKeysInput: Locator;
 	readonly personAccountUserRemoveButton: Locator;
 	readonly personAccountUserSelectButton: Locator;
 	readonly removeBillingDefaultAddressButton: Locator;
@@ -164,6 +165,9 @@ export class EditAccountPage {
 		);
 		this.personAccountUserName = (name) =>
 			this.personAccountUserContainer.getByText(name);
+		this.personAccountUserPrimaryKeysInput = page.locator(
+			'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_personAccountEntryUserSearchContainerPrimaryKeys'
+		);
 		this.personAccountUserRemoveButton =
 			this.personAccountUserContainer.getByRole('link', {name: 'Remove'});
 		this.personAccountUserSelectButton =

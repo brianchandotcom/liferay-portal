@@ -264,15 +264,13 @@ public class ObjectEntryAssetRenderer
 			redirect = themeDisplay.getURLHome();
 		}
 
-		redirect = HtmlUtil.escapeURL(redirect);
-
 		if (editable) {
 			return StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 				GroupConstants.CMS_FRIENDLY_URL,
 				"/edit_content_item?objectEntryId=",
 				_objectEntry.getObjectEntryId(), "&p_l_mode=", Constants.EDIT,
-				"&redirect=", redirect);
+				"&redirect=", HtmlUtil.escapeURL(redirect));
 		}
 
 		return StringBundler.concat(
@@ -280,7 +278,8 @@ public class ObjectEntryAssetRenderer
 			GroupConstants.CMS_FRIENDLY_URL,
 			"/edit_content_item?objectEntryId=",
 			_objectEntry.getObjectEntryId(), "&p_l_mode=", Constants.READ,
-			"&p_p_state=", LiferayWindowState.POP_UP, "&redirect=", redirect);
+			"&p_p_state=", LiferayWindowState.POP_UP, "&redirect=",
+			HtmlUtil.escapeURL(redirect));
 	}
 
 	@Override

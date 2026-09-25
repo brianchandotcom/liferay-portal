@@ -12,7 +12,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -39,7 +38,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alberto Javier Moreno Lage
  */
-@ExportImportScopes(Scope.SITE)
 @RunWith(Arquillian.class)
 public class TaxonomyCategoryBatchEnginePortletDataHandlerTest
 	extends BaseBatchEnginePortletDataHandlerTestCase {
@@ -143,6 +141,11 @@ public class TaxonomyCategoryBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return assetCategory.getCategoryId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.SITE;
 	}
 
 	@Override

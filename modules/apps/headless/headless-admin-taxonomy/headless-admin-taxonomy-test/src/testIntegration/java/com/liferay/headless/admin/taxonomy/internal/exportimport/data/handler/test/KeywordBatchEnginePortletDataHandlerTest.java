@@ -8,7 +8,6 @@ package com.liferay.headless.admin.taxonomy.internal.exportimport.data.handler.t
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -31,7 +30,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
-@ExportImportScopes(Scope.SITE)
 @RunWith(Arquillian.class)
 public class KeywordBatchEnginePortletDataHandlerTest
 	extends BaseBatchEnginePortletDataHandlerTestCase {
@@ -110,6 +108,11 @@ public class KeywordBatchEnginePortletDataHandlerTest
 		AssetTag assetTag = _getAssetTag(groupId, externalReferenceCode);
 
 		return assetTag.getTagId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.SITE;
 	}
 
 	@Override

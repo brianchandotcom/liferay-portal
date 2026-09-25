@@ -6,7 +6,6 @@
 package com.liferay.object.admin.rest.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -38,7 +37,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
-@ExportImportScopes(Scope.COMPANY)
 @RunWith(Arquillian.class)
 public class ObjectDefinitionBatchEnginePortletDataHandlerTest
 	extends BaseBatchEnginePortletDataHandlerTestCase {
@@ -54,8 +52,8 @@ public class ObjectDefinitionBatchEnginePortletDataHandlerTest
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				RandomTestUtil.randomString(), userId, 0, null, true, true,
-				false, false, true, false, false, false, false, null,
+				RandomTestUtil.randomString(), userId, 0, null, null, true,
+				true, false, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -136,6 +134,11 @@ public class ObjectDefinitionBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return objectDefinition.getObjectDefinitionId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

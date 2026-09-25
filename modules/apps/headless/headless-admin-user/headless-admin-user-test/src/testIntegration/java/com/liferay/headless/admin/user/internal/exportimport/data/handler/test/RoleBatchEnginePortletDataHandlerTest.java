@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.user.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -35,7 +34,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
-@ExportImportScopes(Scope.COMPANY)
 @RunWith(Arquillian.class)
 public class RoleBatchEnginePortletDataHandlerTest
 	extends BaseBatchEnginePortletDataHandlerTestCase {
@@ -118,6 +116,11 @@ public class RoleBatchEnginePortletDataHandlerTest
 		Role role = _getRole(groupId, externalReferenceCode);
 
 		return role.getRoleId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

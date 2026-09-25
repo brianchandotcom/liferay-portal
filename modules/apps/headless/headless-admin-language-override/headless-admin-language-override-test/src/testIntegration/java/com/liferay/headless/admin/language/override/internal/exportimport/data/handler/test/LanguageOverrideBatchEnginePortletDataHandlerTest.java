@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.language.override.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -34,7 +33,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alberto Javier Moreno Lage
  */
-@ExportImportScopes(Scope.COMPANY)
 @FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-49852"))
 @RunWith(Arquillian.class)
 public class LanguageOverrideBatchEnginePortletDataHandlerTest
@@ -115,6 +113,11 @@ public class LanguageOverrideBatchEnginePortletDataHandlerTest
 		PLOEntry ploEntry = _getPLOEntry(groupId, externalReferenceCode);
 
 		return ploEntry.getPloEntryId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

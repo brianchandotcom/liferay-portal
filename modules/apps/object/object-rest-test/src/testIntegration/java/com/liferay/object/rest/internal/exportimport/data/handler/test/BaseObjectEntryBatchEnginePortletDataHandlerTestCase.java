@@ -5,8 +5,6 @@
 
 package com.liferay.object.rest.internal.exportimport.data.handler.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -32,7 +30,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -40,10 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
@@ -52,25 +46,12 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.rules.TestRule;
-import org.junit.runner.RunWith;
-import org.junit.runners.model.Statement;
 
 /**
  * @author Alberto Javier Moreno Lage
  */
-@ExportImportScopes({Scope.COMPANY, Scope.DEPOT, Scope.SITE})
-@FeatureFlags(featureFlags = @FeatureFlag("LPD-43996"))
-@RunWith(Arquillian.class)
-public class ObjectEntryBatchEnginePortletDataHandlerTest
+public abstract class BaseObjectEntryBatchEnginePortletDataHandlerTestCase
 	extends BaseBatchEnginePortletDataHandlerTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Before
 	@Override
@@ -78,7 +59,7 @@ public class ObjectEntryBatchEnginePortletDataHandlerTest
 		List<ObjectDefinitionSetting> objectDefinitionSettings =
 			Collections.emptyList();
 
-		String scope = _objectDefinitionScope;
+		String scope = _getObjectDefinitionScope(getScope());
 
 		if (StringUtil.equals(scope, ObjectDefinitionConstants.SCOPE_DEPOT)) {
 			objectDefinitionSettings = Collections.singletonList(
@@ -92,8 +73,8 @@ public class ObjectEntryBatchEnginePortletDataHandlerTest
 
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, true, true, false,
-				false, true, false, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0, null, null, true, true,
+				false, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -140,30 +121,6 @@ public class ObjectEntryBatchEnginePortletDataHandlerTest
 			_targetObjectDefinition = null;
 		}
 	}
-
-	@Rule(order = Integer.MIN_VALUE)
-	public final TestRule objectDefinitionScopesTestRule =
-		(statement, description) -> new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				for (Scope scope : exportImportScopesTestRule.getScopes()) {
-					_objectDefinitionScope = _getObjectDefinitionScope(scope);
-
-					try {
-						statement.evaluate();
-					}
-					catch (Throwable throwable) {
-						throw new AssertionError(
-							StringBundler.concat(
-								"Scope \"", _objectDefinitionScope, "\": ",
-								throwable.getMessage()),
-							throwable);
-					}
-				}
-			}
-
-		};
 
 	@Override
 	protected String addEmptyEntry(long groupId, long userId) throws Exception {
@@ -328,8 +285,9 @@ public class ObjectEntryBatchEnginePortletDataHandlerTest
 		_targetObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				_objectDefinition.getExternalReferenceCode(), user.getUserId(),
-				0, null, true, true, false, false, true, false, false, false,
-				false, StringUtil.toLowerCase(RandomTestUtil.randomString()),
+				0, null, null, true, true, false, false, true, false, false,
+				false, false,
+				StringUtil.toLowerCase(RandomTestUtil.randomString()),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				_objectDefinition.getShortName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -402,10 +360,7 @@ public class ObjectEntryBatchEnginePortletDataHandlerTest
 	}
 
 	private long _getObjectEntryGroupId(long groupId) {
-		if (StringUtil.equals(
-				_objectDefinitionScope,
-				ObjectDefinitionConstants.SCOPE_COMPANY)) {
-
+		if (getScope() == Scope.COMPANY) {
 			return 0;
 		}
 
@@ -423,8 +378,6 @@ public class ObjectEntryBatchEnginePortletDataHandlerTest
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	private String _objectDefinitionScope;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

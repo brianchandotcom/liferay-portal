@@ -10,7 +10,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -35,7 +34,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alberto Javier Moreno Lage
  */
-@ExportImportScopes(Scope.COMPANY)
 @RunWith(Arquillian.class)
 public class CatalogBatchEnginePortletDataHandlerTest
 	extends BaseBatchEnginePortletDataHandlerTestCase {
@@ -128,6 +126,11 @@ public class CatalogBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return commerceCatalog.getCommerceCatalogId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

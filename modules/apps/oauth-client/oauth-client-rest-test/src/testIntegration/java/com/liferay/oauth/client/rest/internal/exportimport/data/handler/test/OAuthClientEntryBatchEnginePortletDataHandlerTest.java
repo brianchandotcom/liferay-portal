@@ -6,7 +6,6 @@
 package com.liferay.oauth.client.rest.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -38,7 +37,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
-@ExportImportScopes(Scope.COMPANY)
 @FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-49855"))
 @RunWith(Arquillian.class)
 public class OAuthClientEntryBatchEnginePortletDataHandlerTest
@@ -145,6 +143,11 @@ public class OAuthClientEntryBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return oAuthClientEntry.getOAuthClientEntryId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

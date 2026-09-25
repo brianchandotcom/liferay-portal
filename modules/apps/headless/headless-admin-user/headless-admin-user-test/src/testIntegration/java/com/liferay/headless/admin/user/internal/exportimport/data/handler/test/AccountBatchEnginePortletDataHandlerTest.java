@@ -9,7 +9,6 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.test.rule.ExportImportScopes;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -35,7 +34,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Alejandro Tardín
  */
-@ExportImportScopes(Scope.COMPANY)
 @RunWith(Arquillian.class)
 public class AccountBatchEnginePortletDataHandlerTest
 	extends BaseBatchEnginePortletDataHandlerTestCase {
@@ -125,6 +123,11 @@ public class AccountBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return accountEntry.getAccountEntryId();
+	}
+
+	@Override
+	protected Scope getScope() {
+		return Scope.COMPANY;
 	}
 
 	@Override

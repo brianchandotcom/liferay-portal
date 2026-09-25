@@ -205,7 +205,7 @@ public class CommerceSitemapURLProviderTest {
 			AssetTestUtil.addVocabulary(_company.getGroupId()),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-		String translatedUrlTitle =
+		String translatedURLTitle =
 			"translated-" +
 				StringUtil.toLowerCase(RandomTestUtil.randomString());
 
@@ -213,7 +213,7 @@ public class CommerceSitemapURLProviderTest {
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
 				_portal.getClassNameId(AssetCategory.class),
 				assetCategory.getCategoryId()),
-			_language.getLanguageId(translatedLocale), translatedUrlTitle);
+			_language.getLanguageId(translatedLocale), translatedURLTitle);
 
 		Element element = _visitLayout(
 			_assetCategorySitemapURLProvider,
@@ -226,38 +226,39 @@ public class CommerceSitemapURLProviderTest {
 			sitemapURLs.toString(),
 			sitemapURLs.remove(_getAssetCategoryFriendlyURL(assetCategory)));
 
-		String translatedCategoryFriendlyURL = sitemapURLs.get(0);
+		String translatedAssetCategoryFriendlyURL = sitemapURLs.get(0);
 
-		String urlSeparator = _cpFriendlyURL.getAssetCategoryURLSeparator(
-			_themeDisplay.getCompanyId());
+		String assetCategoryURLSeparator =
+			_cpFriendlyURL.getAssetCategoryURLSeparator(
+				_themeDisplay.getCompanyId());
 
 		Assert.assertTrue(
-			translatedCategoryFriendlyURL,
-			translatedCategoryFriendlyURL.endsWith(
-				urlSeparator + translatedUrlTitle));
+			translatedAssetCategoryFriendlyURL,
+			translatedAssetCategoryFriendlyURL.endsWith(
+				assetCategoryURLSeparator + translatedURLTitle));
 
 		Assert.assertNotEquals(
-			_getAssetCategoryFriendlyURL(translatedUrlTitle),
-			translatedCategoryFriendlyURL);
+			_getAssetCategoryFriendlyURL(translatedURLTitle),
+			translatedAssetCategoryFriendlyURL);
 
 		for (Element urlElement : element.elements()) {
-			List<String> hreflangs = _getHreflangs(urlElement);
+			List<String> hrefLangs = _getHrefLangs(urlElement);
 
 			Assert.assertTrue(
-				hreflangs.toString(), hreflangs.contains("x-default"));
+				hrefLangs.toString(), hrefLangs.contains("x-default"));
 			Assert.assertTrue(
-				hreflangs.toString(),
-				hreflangs.contains(
+				hrefLangs.toString(),
+				hrefLangs.contains(
 					LocaleUtil.toW3cLanguageId(siteDefaultLocale)));
 			Assert.assertTrue(
-				hreflangs.toString(),
-				hreflangs.contains(
+				hrefLangs.toString(),
+				hrefLangs.contains(
 					LocaleUtil.toW3cLanguageId(translatedLocale)));
 		}
 	}
 
 	@Test
-	public void testAssetCategorySitemapURLProviderWithChildAssetcategories()
+	public void testAssetCategorySitemapURLProviderWithChildAssetCategories()
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
@@ -280,7 +281,8 @@ public class CommerceSitemapURLProviderTest {
 			sitemapURLs.contains(_getAssetCategoryFriendlyURL(assetCategory)));
 		Assert.assertTrue(
 			sitemapURLs.toString(),
-			sitemapURLs.contains(_getAssetCategoryFriendlyURL(childAssetCategory)));
+			sitemapURLs.contains(
+				_getAssetCategoryFriendlyURL(childAssetCategory)));
 	}
 
 	@Test
@@ -319,11 +321,12 @@ public class CommerceSitemapURLProviderTest {
 	public void testCPDefinitionSitemapURLProviderReflectsTranslatedFriendlyURL()
 		throws Exception {
 
-		List<Locale> siteLocales = new ArrayList<>(
+		List<Locale> companyAvailableLocales = new ArrayList<>(
 			_language.getCompanyAvailableLocales(_company.getCompanyId()));
 
 		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(), siteLocales, siteLocales.get(0));
+			_group.getGroupId(), companyAvailableLocales,
+			companyAvailableLocales.get(0));
 
 		CPDefinition cpDefinition = _addCPDefinition();
 
@@ -332,20 +335,21 @@ public class CommerceSitemapURLProviderTest {
 				_portal.getClassNameId(CProduct.class),
 				cpDefinition.getCProductId());
 
-		String translatedUrlTitle =
+		String translatedURLTitle =
 			"translated-" +
 				StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		_friendlyURLEntryLocalService.updateFriendlyURLEntryLocalization(
-			friendlyURLEntry, _language.getLanguageId(siteLocales.get(1)),
-			translatedUrlTitle);
+			friendlyURLEntry,
+			_language.getLanguageId(companyAvailableLocales.get(1)),
+			translatedURLTitle);
 
 		Element element = _visitLayout(
 			_cpDefinitionSitemapURLProvider, CPPortletKeys.CP_CONTENT_WEB);
 
 		String xml = element.asXML();
 
-		Assert.assertTrue(xml, xml.contains(translatedUrlTitle));
+		Assert.assertTrue(xml, xml.contains(translatedURLTitle));
 	}
 
 	@Test
@@ -409,12 +413,12 @@ public class CommerceSitemapURLProviderTest {
 	}
 
 	private AssetCategory _addAssetCategory(
-			AssetVocabulary assetVocabulary, long parentCategoryId)
+			AssetVocabulary assetVocabulary, long parentAssetCategoryId)
 		throws Exception {
 
 		AssetCategory assetCategory = AssetTestUtil.addCategory(
 			assetVocabulary.getGroupId(), assetVocabulary.getVocabularyId(),
-			parentCategoryId);
+			parentAssetCategoryId);
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			_company.getGroupId(), _portal.getClassNameId(AssetCategory.class),
@@ -449,7 +453,9 @@ public class CommerceSitemapURLProviderTest {
 			friendlyURLEntry.getUrlTitle(_themeDisplay.getLanguageId()));
 	}
 
-	private String _getAssetCategoryFriendlyURL(String urlTitle) throws Exception {
+	private String _getAssetCategoryFriendlyURL(String urlTitle)
+		throws Exception {
+
 		return StringBundler.concat(
 			_portal.getGroupFriendlyURL(
 				_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false),
@@ -459,7 +465,7 @@ public class CommerceSitemapURLProviderTest {
 			urlTitle);
 	}
 
-	private List<String> _getHreflangs(Element urlElement) {
+	private List<String> _getHrefLangs(Element urlElement) {
 		return TransformUtil.transform(
 			urlElement.elements(),
 			childElement -> {

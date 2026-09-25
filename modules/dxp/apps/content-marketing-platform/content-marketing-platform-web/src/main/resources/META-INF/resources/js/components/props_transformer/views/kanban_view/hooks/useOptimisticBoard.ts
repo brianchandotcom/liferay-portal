@@ -12,7 +12,10 @@ import {
 	mapStateKeyToIcon,
 	mapStateKeyToLabel,
 } from '../../../../../utils/constants';
-import {displayStateSuccessToast} from '../../../../../utils/toastUtil';
+import {
+	displayErrorToast,
+	displayStateSuccessToast,
+} from '../../../../../utils/toastUtil';
 import {IColumn, ITask, ITaskObjectEntry} from '../../../../../utils/types';
 
 function mapByStateCode(items: ITask[]): {[key: string]: IColumn} {
@@ -134,10 +137,7 @@ export function useOptimisticBoard(
 
 				// No need to manually revert data; removing the pending move below does it.
 
-				Liferay.Util.openToast({
-					message: error,
-					type: 'danger',
-				});
+				displayErrorToast(error as string);
 			}
 			finally {
 				setPendingMoves((prevPendingMoves) =>

@@ -4,7 +4,7 @@
  */
 
 import {openToast} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
+import {escapeHTML, sub} from 'frontend-js-web';
 
 import {getFormattedLabel} from './getFormattedText';
 
@@ -13,7 +13,7 @@ const displayAssignSuccessToast = (title: string, value: string) => {
 		message: sub(
 			Liferay.Language.get('x-was-successfully-assigned-to-x'),
 			getFormattedLabel(title),
-			value
+			escapeHTML(value)
 		),
 		type: 'success',
 	});
@@ -27,14 +27,14 @@ const displayBulkAssignSuccessToast = (assignee: string, count: number) => {
 						Liferay.Language.get(
 							'task-was-successfully-assigned-to-x'
 						),
-						assignee
+						escapeHTML(assignee)
 					)
 				: sub(
 						Liferay.Language.get(
 							'x-tasks-were-successfully-assigned-to-x'
 						),
 						String(count),
-						assignee
+						escapeHTML(assignee)
 					),
 		type: 'success',
 	});
@@ -96,9 +96,9 @@ const displayDueDateSuccessToast = (title: string) => {
 
 const displayErrorToast = (errorMessage?: string) => {
 	openToast({
-		message:
-			errorMessage ||
-			Liferay.Language.get('an-unexpected-error-occurred'),
+		message: errorMessage
+			? escapeHTML(errorMessage)
+			: Liferay.Language.get('an-unexpected-error-occurred'),
 		title: Liferay.Language.get('error'),
 		type: 'danger',
 	});

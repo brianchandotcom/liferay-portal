@@ -107,7 +107,7 @@ function handleDropdownButtonName(item) {
 		item.querySelector('.navbar-text-truncate');
 
 	if (tabText) {
-		dropdownButton.querySelector('.navbar-text-truncate').innerHTML =
+		dropdownButton.querySelector('.navbar-text-truncate').textContent =
 			tabText.textContent;
 	}
 }

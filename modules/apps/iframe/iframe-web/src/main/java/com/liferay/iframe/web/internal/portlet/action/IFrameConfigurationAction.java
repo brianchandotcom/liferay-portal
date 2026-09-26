@@ -115,10 +115,10 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		String value = portletPreferences.getValue(name, StringPool.BLANK);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		String value = portletPreferences.getValue(name, StringPool.BLANK);
 
 		String storedValue = _secretResolver.store(
 			companyId, name,

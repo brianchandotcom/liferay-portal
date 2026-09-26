@@ -165,7 +165,6 @@ public class SecretResolverImplTest {
 					PropsValues.class, "FIPS_ENABLED", true)) {
 
 			_testStore();
-
 			_testStoreWhenFIPSIsDisabled();
 			_testStoreWhenValueIsBlank();
 			_testStoreWhenValueReferencesAnotherKey();

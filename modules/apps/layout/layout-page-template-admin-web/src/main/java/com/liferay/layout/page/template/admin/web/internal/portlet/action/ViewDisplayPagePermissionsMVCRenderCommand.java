@@ -49,8 +49,7 @@ public class ViewDisplayPagePermissionsMVCRenderCommand
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_getLayoutPageTemplateEntry(renderRequest, themeDisplay);

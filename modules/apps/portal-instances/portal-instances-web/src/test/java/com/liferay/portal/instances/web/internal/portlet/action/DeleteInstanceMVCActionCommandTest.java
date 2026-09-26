@@ -47,16 +47,6 @@ public class DeleteInstanceMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_deleteInstanceMVCActionCommand, "_componentServiceObjects",
-			_componentServiceObjects);
-		ReflectionTestUtil.setFieldValue(
-			_deleteInstanceMVCActionCommand, "_portal", _portal);
-		ReflectionTestUtil.setFieldValue(
-			_deleteInstanceMVCActionCommand,
-			"_vulcanBatchEngineImportTaskResourceFactory",
-			_vulcanBatchEngineImportTaskResourceFactory);
-
 		Mockito.when(
 			_actionRequest.getParameter("portalInstanceId")
 		).thenReturn(
@@ -68,6 +58,16 @@ public class DeleteInstanceMVCActionCommandTest {
 		).thenReturn(
 			_portalInstanceResource
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			_deleteInstanceMVCActionCommand, "_componentServiceObjects",
+			_componentServiceObjects);
+		ReflectionTestUtil.setFieldValue(
+			_deleteInstanceMVCActionCommand, "_portal", _portal);
+		ReflectionTestUtil.setFieldValue(
+			_deleteInstanceMVCActionCommand,
+			"_vulcanBatchEngineImportTaskResourceFactory",
+			_vulcanBatchEngineImportTaskResourceFactory);
 
 		Mockito.when(
 			_portal.getCompany(_actionRequest)

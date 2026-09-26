@@ -60,6 +60,15 @@ public class PortalInstancesUserNotificationHandlerTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
+				"<h2 class=\"title\">the-instance-x-could-not-be-deleted:",
+				portalInstanceId, "</h2><div class=\"body\">",
+				"the-default-instance-cannot-be-deleted</div>"),
+			_getBody(
+				_toPayloadJSONObject(
+					"the-default-instance-cannot-be-deleted", portalInstanceId,
+					PortalInstancesNotificationConstants.STATUS_FAILED)));
+		Assert.assertEquals(
+			StringBundler.concat(
 				"<h2 class=\"title\">the-instance-x-was-deleted:",
 				portalInstanceId, "</h2><div class=\"body\">",
 				"the-instance-x-is-no-longer-available:", portalInstanceId,
@@ -68,16 +77,6 @@ public class PortalInstancesUserNotificationHandlerTest {
 				_toPayloadJSONObject(
 					null, portalInstanceId,
 					PortalInstancesNotificationConstants.STATUS_SUCCESS)));
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"<h2 class=\"title\">the-instance-x-could-not-be-deleted:",
-				portalInstanceId, "</h2><div class=\"body\">",
-				"the-default-instance-cannot-be-deleted</div>"),
-			_getBody(
-				_toPayloadJSONObject(
-					"the-default-instance-cannot-be-deleted", portalInstanceId,
-					PortalInstancesNotificationConstants.STATUS_FAILED)));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -96,18 +95,17 @@ public class PortalInstancesUserNotificationHandlerTest {
 		String portalInstanceId = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			"the-instance-x-was-deleted:" + portalInstanceId,
-			_getTitle(
-				_toPayloadJSONObject(
-					null, portalInstanceId,
-					PortalInstancesNotificationConstants.STATUS_SUCCESS)));
-
-		Assert.assertEquals(
 			"the-instance-x-could-not-be-deleted:" + portalInstanceId,
 			_getTitle(
 				_toPayloadJSONObject(
 					"the-default-instance-cannot-be-deleted", portalInstanceId,
 					PortalInstancesNotificationConstants.STATUS_FAILED)));
+		Assert.assertEquals(
+			"the-instance-x-was-deleted:" + portalInstanceId,
+			_getTitle(
+				_toPayloadJSONObject(
+					null, portalInstanceId,
+					PortalInstancesNotificationConstants.STATUS_SUCCESS)));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

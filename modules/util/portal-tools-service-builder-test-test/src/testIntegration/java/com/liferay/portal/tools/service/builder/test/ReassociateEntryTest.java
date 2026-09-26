@@ -53,6 +53,11 @@ public class ReassociateEntryTest {
 		reassociateEntry = _reassociateEntryPersistence.update(
 			reassociateEntry);
 
+		Assert.assertSame(
+			reassociateEntry,
+			_reassociateEntryPersistence.reassociateIfAbsent(
+				reassociateEntry.cloneWithOriginalValues()));
+
 		Session session = _reassociateEntryPersistence.getCurrentSession();
 
 		session.flush();
@@ -95,7 +100,8 @@ public class ReassociateEntryTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"org.hibernate.SQL", LoggerTestUtil.DEBUG)) {
 
-			_reassociateEntryPersistence.reassociateIfAbsent(reassociateEntry);
+			reassociateEntry = _reassociateEntryPersistence.reassociateIfAbsent(
+				reassociateEntry);
 
 			String name = RandomTestUtil.randomString();
 

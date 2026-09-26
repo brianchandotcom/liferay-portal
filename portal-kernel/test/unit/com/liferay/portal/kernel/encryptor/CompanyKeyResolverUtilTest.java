@@ -24,11 +24,11 @@ public class CompanyKeyResolverUtilTest {
 
 	@Test
 	public void testIsWrappedKey() {
-		Assert.assertFalse(CompanyKeyResolverUtil.isWrappedKey(null));
-		Assert.assertFalse(
-			CompanyKeyResolverUtil.isWrappedKey(RandomTestUtil.randomString()));
 		Assert.assertTrue(
 			CompanyKeyResolverUtil.isWrappedKey(_WRAPPED_KEY_PREFIX));
+		Assert.assertFalse(
+			CompanyKeyResolverUtil.isWrappedKey(RandomTestUtil.randomString()));
+		Assert.assertFalse(CompanyKeyResolverUtil.isWrappedKey(null));
 	}
 
 	@Test

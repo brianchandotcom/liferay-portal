@@ -1209,6 +1209,46 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testTestClassStaticInitializer() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"TestClassStaticInitializer.testjava"
+			).addExpectedMessage(
+				StringBundler.concat(
+					"Do not use \"DLTestUtil.randomTextFileBytes\" in a ",
+					"static initializer of an Arquillian test, since it needs ",
+					"the portal but static initializers also run in the ",
+					"client JVM. Initialize it in a @Before or @BeforeClass ",
+					"method or where it is used"),
+				81
+			).addExpectedMessage(
+				StringBundler.concat(
+					"Do not use \"RandomTestUtil.nextInt\" in a static ",
+					"initializer of an Arquillian test, since it needs the ",
+					"portal but static initializers also run in the client ",
+					"JVM. Initialize it in a @Before or @BeforeClass method ",
+					"or where it is used"),
+				87
+			).addExpectedMessage(
+				StringBundler.concat(
+					"Do not use \"RandomTestUtil.randomString\" with ",
+					"\"TikaRandomizerBumper\" in a static initializer of an ",
+					"Arquillian test, since it needs the portal but static ",
+					"initializers also run in the client JVM. Initialize it ",
+					"in a @Before or @BeforeClass method or where it is used"),
+				89
+			).addExpectedMessage(
+				StringBundler.concat(
+					"Do not use class \"TestPropsValues\" in a static ",
+					"initializer of an Arquillian test, since it needs the ",
+					"portal but static initializers also run in the client ",
+					"JVM. Initialize it in a @Before or @BeforeClass method ",
+					"or where it is used"),
+				99
+			));
+	}
+
+	@Test
 	public void testTextBlock() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(

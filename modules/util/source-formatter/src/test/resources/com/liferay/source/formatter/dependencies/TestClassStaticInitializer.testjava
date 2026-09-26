@@ -1,0 +1,108 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.TikaRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.function.IntFunction;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.Description;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Adolfo Pérez
+ */
+@RunWith(Arquillian.class)
+public class TestClassStaticInitializer {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new ClassTestRule<Void>() {
+
+				@Override
+				public void afterClass(Description description, Void v) {
+					CounterLocalServiceUtil.reset(_COUNTER_NAME);
+				}
+
+				@Override
+				public Void beforeClass(Description description)
+					throws Exception {
+
+					_group = GroupTestUtil.addGroup();
+
+					return null;
+				}
+
+			},
+			new LiferayIntegrationTestRule());
+
+	@Before
+	public void setUp() {
+		_content = DLTestUtil.randomTextFileBytes();
+	}
+
+	@Test
+	public void testStaticInitializer() {
+		Assert.assertNotNull(_content);
+		Assert.assertNotNull(_FILE_CONTENT);
+		Assert.assertNotNull(_fileContentIntFunction.apply(_NEXT_INT));
+		Assert.assertNotNull(_group);
+		Assert.assertNotNull(_GROUP_KEY);
+		Assert.assertNotNull(_TEXT);
+		Assert.assertNotNull(_user);
+	}
+
+	private static final String _COUNTER_NAME = RandomTestUtil.randomString();
+
+	private static final byte[] _FILE_CONTENT =
+		DLTestUtil.randomTextFileBytes();
+
+	private static final String _GROUP_KEY = RandomTestUtil.randomString(
+		NumericStringRandomizerBumper.INSTANCE,
+		UniqueStringRandomizerBumper.INSTANCE);
+
+	private static final int _NEXT_INT = RandomTestUtil.nextInt();
+
+	private static final String _TEXT = RandomTestUtil.randomString(
+		TikaRandomizerBumper.INSTANCE);
+
+	private static final IntFunction<byte[]> _fileContentIntFunction =
+		length -> DLTestUtil.randomTextFileBytes(length + 1);
+	private static Group _group;
+	private static final User _user;
+
+	static {
+		try {
+			_user = TestPropsValues.getUser();
+		}
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
+	}
+
+	private byte[] _content;
+
+}

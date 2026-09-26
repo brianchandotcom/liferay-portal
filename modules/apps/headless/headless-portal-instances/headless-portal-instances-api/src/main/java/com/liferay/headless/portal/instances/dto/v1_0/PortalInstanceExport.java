@@ -19,6 +19,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
+import jakarta.validation.constraints.NotEmpty;
+
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -37,11 +39,12 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The result of exporting a portal instance.",
+	description = "The export of a portal instance.",
 	value = "PortalInstanceExport"
 )
 @io.swagger.v3.oas.annotations.media.Schema(
-	description = "The result of exporting a portal instance."
+	description = "The export of a portal instance.",
+	requiredProperties = {"portalInstanceId"}
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PortalInstanceExport")
@@ -95,11 +98,55 @@ public class PortalInstanceExport implements Serializable {
 	@GraphQLField(
 		description = "The name of the schema created by the export (e.g., lexported_12345)."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String exportedPartitionName;
 
 	@JsonIgnore
 	private Supplier<String> _exportedPartitionNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The web ID of the portal instance to export."
+	)
+	public String getPortalInstanceId() {
+		if (_portalInstanceIdSupplier != null) {
+			portalInstanceId = _portalInstanceIdSupplier.get();
+
+			_portalInstanceIdSupplier = null;
+		}
+
+		return portalInstanceId;
+	}
+
+	public void setPortalInstanceId(String portalInstanceId) {
+		this.portalInstanceId = portalInstanceId;
+
+		_portalInstanceIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPortalInstanceId(
+		UnsafeSupplier<String, Exception> portalInstanceIdUnsafeSupplier) {
+
+		_portalInstanceIdSupplier = () -> {
+			try {
+				return portalInstanceIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The web ID of the portal instance to export.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String portalInstanceId;
+
+	@JsonIgnore
+	private Supplier<String> _portalInstanceIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the source company that was exported (e.g., 12345)."
@@ -140,7 +187,7 @@ public class PortalInstanceExport implements Serializable {
 	@GraphQLField(
 		description = "The ID of the source company that was exported (e.g., 12345)."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sourceCompanyId;
 
 	@JsonIgnore
@@ -186,6 +233,22 @@ public class PortalInstanceExport implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(exportedPartitionName));
+
+			sb.append("\"");
+		}
+
+		String portalInstanceId = getPortalInstanceId();
+
+		if (portalInstanceId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"portalInstanceId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(portalInstanceId));
 
 			sb.append("\"");
 		}
@@ -324,4 +387,4 @@ public class PortalInstanceExport implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:217338071
+// LIFERAY-REST-BUILDER-HASH:-1890914690

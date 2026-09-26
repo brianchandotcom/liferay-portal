@@ -6,9 +6,6 @@
 package com.liferay.headless.portal.instances.resource.v1_0;
 
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstance;
-import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceCopy;
-import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceExport;
-import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceImport;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -67,18 +64,6 @@ public interface PortalInstanceResource {
 		throws Exception;
 
 	public Response postPortalInstanceBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public PortalInstance postPortalInstanceCopy(
-			String portalInstanceId, PortalInstanceCopy portalInstanceCopy)
-		throws Exception;
-
-	public PortalInstanceExport postPortalInstanceExport(
-			String portalInstanceId)
-		throws Exception;
-
-	public PortalInstance postPortalInstanceImport(
-			PortalInstanceImport portalInstanceImport)
 		throws Exception;
 
 	public Response postPortalInstancesPageExportBatch(
@@ -188,4 +173,4 @@ public interface PortalInstanceResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-683730514
+// LIFERAY-REST-BUILDER-HASH:-1475923803

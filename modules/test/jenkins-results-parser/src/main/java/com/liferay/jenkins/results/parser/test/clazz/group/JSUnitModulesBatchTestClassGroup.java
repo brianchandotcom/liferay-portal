@@ -187,15 +187,13 @@ public class JSUnitModulesBatchTestClassGroup
 			}
 		}
 
+		int jsUnitFilesCount = 0;
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
-
 		List<PathMatcher> testFileExcludesPathMatchers = getPathMatchers(
 			_getTestFileExcludesJobProperties());
 		List<PathMatcher> testFileIncludesPathMatchers = getPathMatchers(
 			_getTestFileIncludesJobProperties());
-
-		int jsUnitFilesCount = 0;
 
 		for (File baseModuleDir : getBaseModuleDirs()) {
 			List<File> moduleTestDirs = _getModulesProjectDirs(baseModuleDir);

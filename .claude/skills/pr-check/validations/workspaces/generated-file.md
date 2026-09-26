@@ -4,7 +4,7 @@
 
 The branch changed a file that `workspaces/refresh_other_workspaces.sh` regenerates from `liferay-sample-workspace`, in a workspace other than the sample itself.
 
-That script copies the sample workspace over every other workspace with `rsync --archive --delete`, in `liferay-portal` and in the private repository alike. Its `--exclude` patterns name what each workspace owns, and everything else is overwritten or deleted on the next refresh. A change to one of those files outside the sample is therefore reverted without a build failure or a warning. A regenerated file may change only through a refresh, and an edit to it belongs in `liferay-sample-workspace`.
+That script copies the sample workspace over every other workspace with `rsync --archive --delete`, in `liferay-portal` and in the private repository alike. Its `--exclude` patterns name what each workspace owns, and everything else is overwritten or deleted on the next refresh. A change to such a file outside the sample is therefore reverted without a build failure or a warning. A regenerated file may change only through a refresh, and an edit to it belongs in `liferay-sample-workspace`.
 
 ## Match
 
@@ -14,7 +14,7 @@ That script copies the sample workspace over every other workspace with `rsync -
 
 Skip this validation for `liferay-sample-workspace`, the source the other workspaces are regenerated from.
 
-Build a regex from the `--exclude` patterns of the refresh script at `${SOURCE_SHA}`, rather than keeping a copy of them here, and keep the changed files it does not match. An `rsync` pattern without a slash matches a path component at any depth, which is why the regex is anchored on `/` rather than on the start of the path:
+Build a regex from the `--exclude` patterns of the refresh script at `${SOURCE_SHA}`, rather than keeping a copy of them here, and keep the changed files it does not match. An `rsync` pattern without a slash matches a path component at any depth, which is why the regex matches after any `/` and not only at the start of the path:
 
 ```bash
 EXCLUDES_REGEX=$(

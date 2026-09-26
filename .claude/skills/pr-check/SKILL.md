@@ -42,7 +42,7 @@ Workspace Source Format is skipped here because Source Format already formats ev
 
 - **Diff baseline is local `${BASE_BRANCH}`.** After the rebase, the three dot diff against local `${BASE_BRANCH}` is the baseline.
 
-- **Diff is nonempty.** When the three-dot diff produces no files, exit with a one-line message — no validation produces useful signal on a clean branch.
+- **Diff is nonempty.** When the three dot diff produces no files, exit with a one line message — no validation produces useful signal on a clean branch.
 
 ## Input
 
@@ -146,7 +146,7 @@ In your next turn, compose a single bash script that:
 - ` &! ` in the regex splits it into an include side and an exclude side. The validation fires when a diff path matches the include side but not the exclude side.
 - runs as a single Bash tool invocation
 
-From the script's output, sum the matched validations' `## Time Estimate` values for the cumulative total, counting a workspace validation once for each workspace it fired for. The matching is mechanical; consult each file's prose `## Trigger` only when a result needs human-judgment context (e.g., Service Builder output-only catch-up).
+From the script's output, sum the matched validations' `## Time Estimate` values for the cumulative total, counting a workspace validation once for each workspace it fired for. The matching is mechanical; consult each file's prose `## Trigger` only when a result needs human judgment, such as a Service Builder run for a diff that changed only its output.
 
 When the total exceeds 20 minutes, surface the breakdown and ask the developer whether to trim a validation or proceed.
 
@@ -154,7 +154,7 @@ When the total exceeds 20 minutes, surface the breakdown and ask the developer w
 
 The rules below divide in two. Dispatch, ordering, the shared setup, handoffs, the ledger, and the overall state belong to this runner. Reading a log, judging a result, and reporting a note belong to the subagent, which never sees this document and is told only what it needs.
 
-For each matched validation, spawn one subagent. **Pass it only the `## Command` and `## Autocommit` sections of the validation file, not the full file.** Pass each section whole, from its heading to the next `## ` heading, taken from the file you read in Pass 1 and never through a line cap on that file such as `head`, `tail`, or a fixed line range: a truncated section reads as complete, the subagent cannot know what it lost, and nothing downstream recovers it. A validation with no `## Autocommit` section makes no commit, so say so rather than leaving the subagent to infer it from an absence. That says nothing about the working tree, since a validation without one can still build and leave output behind. Record `PASS`, `FAIL`, or `NOT VERIFIED`, and capture any note the command directs it to return. Tell the subagent to run every command in the foreground and to return only once it has a verdict. A subagent that starts a build in the background and returns while it runs hands back no verdict, and nothing reports the build's result afterwards. Do not halt on a failure, so the developer sees the full picture.
+For each matched validation, spawn one subagent. **Pass it only the `## Command` and `## Autocommit` sections of the validation file, not the full file.** Pass each section whole, from its heading to the next `## ` heading, taken from the file you read in Pass 1 and never through a line cap on that file such as `head`, `tail`, or a fixed line range: a truncated section reads as complete, the subagent cannot know what it lost, and nothing downstream recovers it. A validation with no `## Autocommit` section makes no commit, so say so rather than leaving the subagent to infer it from an absence. That says nothing about the working tree, since a validation without one can still build and leave output behind. Record `PASS`, `FAIL`, or `NOT VERIFIED`, and capture any note the command directs it to return. Tell the subagent to run every command in the foreground and to return only once it has a verdict. A subagent that starts a build in the background and returns while it runs hands back no verdict, and nothing reports the build's result afterward. Do not halt on a failure, so the developer sees the full picture.
 
 A validation reports **`NOT VERIFIED`** when it ran and established nothing about the branch, such as an empty work set, a compile with no source, or a change with no counterpart to exercise. It does not block, and it carries a reason naming what went unexamined, one line in the table with whatever detail the validation asks for beneath it. Reserve `FAIL` for a validation that found a real defect.
 

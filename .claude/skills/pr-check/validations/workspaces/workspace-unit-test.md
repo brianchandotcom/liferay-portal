@@ -21,7 +21,7 @@ else
 fi
 ```
 
-`test` runs every Java unit test in the workspace and `packageRunTest` runs every JavaScript unit test, with no integration test and no product bundle. A workspace runs its whole suite in a few minutes, so every test runs rather than a selection by counterpart.
+`test` runs every Java unit test in the workspace, and `packageRunTest` runs every JavaScript unit test, with no integration test and no product bundle. A workspace runs its whole suite in a few minutes, so every test runs rather than a selection by counterpart.
 
 `packageRunTest` exists only in a workspace where some `package.json` declares a `test` script. Naming a task Gradle cannot find fails the whole command before any test runs, so the command names it only then. The two invocations are written out rather than built from a variable, because zsh passes an unquoted variable as a single argument and Gradle would then look for one task named after both.
 

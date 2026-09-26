@@ -1,6 +1,6 @@
 # Testing Changes to PR Check
 
-A change to this skill is prose, so reading it proves nothing. Test it by running the text against changes planted for the purpose on a branch that is never sent. Judge the result from git and from the logs rather than from the summary a run prints.
+A change to this skill is prose, so reading it proves nothing. Test it by running the text against changes planted for the purpose on a branch that is never pushed. Judge the result from git and from the logs rather than from the summary a run prints.
 
 ## Selection
 

@@ -110,7 +110,7 @@ public interface PersistentResource {
 	public static enum Type {
 
 		ASAH_BUNDLE("asah-bundle"), FARO_BUNDLE("faro-bundle"),
-		PORTAL_BUNDLE("portal-bundle");
+		PORTAL_BUNDLE("portal-bundle"), WORKSPACE_BUNDLE("workspace-bundle");
 
 		public static Type get(String key) {
 			return _types.get(key);

@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.persistent.resource;
 
 import com.liferay.jenkins.results.parser.BuildDatabase;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.ParallelExecutor;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
@@ -22,11 +23,22 @@ import java.util.concurrent.TimeoutException;
  */
 public class PersistentResourceFactory {
 
-	public static synchronized PersistentResource newPersistentResource(
+	public static PersistentResource newPersistentResource(
 		BuildDatabase buildDatabase, TopLevelBuild topLevelBuild,
 		PersistentResource.Type type) {
 
+		return newPersistentResource(buildDatabase, topLevelBuild, type, null);
+	}
+
+	public static synchronized PersistentResource newPersistentResource(
+		BuildDatabase buildDatabase, TopLevelBuild topLevelBuild,
+		PersistentResource.Type type, String workspaceName) {
+
 		String key = buildDatabase.getBuildDatabaseFile() + "/" + type;
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(workspaceName)) {
+			key = key + "/" + workspaceName;
+		}
 
 		PersistentResource persistentResource = _persistentResources.get(key);
 
@@ -45,6 +57,10 @@ public class PersistentResourceFactory {
 		else if (type == PersistentResource.Type.PORTAL_BUNDLE) {
 			persistentResource = new PortalBundlePersistentResource(
 				buildDatabase, topLevelBuild);
+		}
+		else if (type == PersistentResource.Type.WORKSPACE_BUNDLE) {
+			persistentResource = new WorkspaceBundlePersistentResource(
+				buildDatabase, topLevelBuild, workspaceName);
 		}
 
 		if (persistentResource != null) {

@@ -313,6 +313,7 @@ TestClassCheck | [Naming Conventions](naming_conventions_checks.md#naming-conven
 TestClassDBConnectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases of incorrect use of database connection. |
 TestClassHardcodedPortCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks usages of `PortalUtil.getPortalServerPort()` in test classes. |
 TestClassMissingLiferayUnitTestRuleCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds missing LiferayUnitTestRule. |
+[TestClassStaticInitializerCheck](check/test_class_static_initializer_check.md#testclassstaticinitializercheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that static initializers of Arquillian tests do not call portal test utilities and service methods. |
 TestClassStaticVariableCheck | [Performance](performance_checks.md#performance-checks) | Finds unnecessary static modifiers in test classes. |
 TextBlockCheck | [Styling](styling_checks.md#styling-checks) | Finds usage of text block. |
 [ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.md#threadcontextclassloadercheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks usage of `Thread.setContextClassLoader`. |

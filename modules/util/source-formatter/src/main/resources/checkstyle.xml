@@ -984,6 +984,14 @@
 			<property name="description" value="Finds missing LiferayUnitTestRule." />
 			<message key="test.rule.missing" value="Missing test rule &quot;LiferayUnitTestRule&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.TestClassStaticInitializerCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks that static initializers of Arquillian tests do not call portal test utilities and service methods." />
+			<property name="enabled" value="false" />
+			<message key="class.incorrect" value="Do not use class &quot;{0}&quot; in a static initializer of an Arquillian test, since it needs the portal but static initializers also run in the client JVM. Initialize it in a @Before or @BeforeClass method or where it is used" />
+			<message key="method.call.incorrect" value="Do not use &quot;{0}&quot; in a static initializer of an Arquillian test, since it needs the portal but static initializers also run in the client JVM. Initialize it in a @Before or @BeforeClass method or where it is used" />
+			<message key="randomizer.bumper.incorrect" value="Do not use &quot;{0}&quot; with &quot;{1}&quot; in a static initializer of an Arquillian test, since it needs the portal but static initializers also run in the client JVM. Initialize it in a @Before or @BeforeClass method or where it is used" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.TestClassStaticVariableCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary static modifiers in test classes." />

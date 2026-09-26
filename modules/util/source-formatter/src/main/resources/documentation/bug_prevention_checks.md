@@ -250,6 +250,7 @@ TSSpecFileLocationCheck | .ts or .tsx | Checks that `*.spec.ts` file should be i
 TestClassDBConnectionCheck | .java | Finds cases of incorrect use of database connection. |
 TestClassHardcodedPortCheck | .java | Checks usages of `PortalUtil.getPortalServerPort()` in test classes. |
 TestClassMissingLiferayUnitTestRuleCheck | .java | Finds missing LiferayUnitTestRule. |
+[TestClassStaticInitializerCheck](check/test_class_static_initializer_check.md#testclassstaticinitializercheck) | .java | Checks that static initializers of Arquillian tests do not call portal test utilities and service methods. |
 [ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.md#threadcontextclassloadercheck) | .java | Checks usage of `Thread.setContextClassLoader`. |
 TransactionalTestRuleCheck | .java | Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`. |
 URLInputStreamCheck | .java | Checks usages of `URL.openStream()`. |

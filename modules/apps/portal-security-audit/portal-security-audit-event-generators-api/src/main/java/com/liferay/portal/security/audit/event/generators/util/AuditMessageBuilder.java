@@ -7,6 +7,7 @@ package com.liferay.portal.security.audit.event.generators.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.audit.AuditRequest;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -66,10 +67,9 @@ public class AuditMessageBuilder {
 			userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
 		}
 
-		AuditRequestThreadLocal auditRequestThreadLocal =
-			AuditRequestThreadLocal.getAuditThreadLocal();
+		AuditRequest auditRequest = AuditRequestThreadLocal.getAuditRequest();
 
-		long realUserId = auditRequestThreadLocal.getRealUserId();
+		long realUserId = auditRequest.getRealUserId();
 
 		String realUserName = PortalUtil.getUserName(
 			realUserId, StringPool.BLANK);

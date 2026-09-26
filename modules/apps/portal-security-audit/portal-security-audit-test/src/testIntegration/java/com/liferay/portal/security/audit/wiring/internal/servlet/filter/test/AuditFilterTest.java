@@ -8,6 +8,7 @@ package com.liferay.portal.security.audit.wiring.internal.servlet.filter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.audit.AuditRequest;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -66,7 +67,7 @@ public class AuditFilterTest {
 
 	@After
 	public void tearDown() throws Exception {
-		AuditRequestThreadLocal.removeAuditThreadLocal();
+		AuditRequestThreadLocal.removeAuditRequest();
 	}
 
 	@Test
@@ -84,24 +85,21 @@ public class AuditFilterTest {
 
 		httpSession.setAttribute(WebKeys.USER_ID, TestPropsValues.getUserId());
 
-		AuditRequestThreadLocal auditRequestThreadLocal = _testDoFilter(
-			mockHttpServletRequest);
+		AuditRequest auditRequest = _testDoFilter(mockHttpServletRequest);
 
-		Assert.assertEquals(
-			auditSessionId, auditRequestThreadLocal.getSessionID());
+		Assert.assertEquals(auditSessionId, auditRequest.getSessionID());
 		Assert.assertNotEquals(
-			httpSession.getId(), auditRequestThreadLocal.getSessionID());
+			httpSession.getId(), auditRequest.getSessionID());
 	}
 
 	@Test
 	public void testDoFilterCapturesNoAuditSessionIdBeforeAuthentication()
 		throws Exception {
 
-		AuditRequestThreadLocal auditRequestThreadLocal = _testDoFilter(
-			new MockHttpServletRequest());
+		AuditRequest auditRequest = _testDoFilter(new MockHttpServletRequest());
 
-		Assert.assertNotNull(auditRequestThreadLocal.getRequestURL());
-		Assert.assertNull(auditRequestThreadLocal.getSessionID());
+		Assert.assertNotNull(auditRequest.getRequestURL());
+		Assert.assertNull(auditRequest.getSessionID());
 	}
 
 	@FeatureFlag(enable = false, value = "LPD-6417")
@@ -109,35 +107,32 @@ public class AuditFilterTest {
 	public void testDoFilterDoesNotResolveRequestIdWhenFeatureFlagIsDisabled()
 		throws Exception {
 
-		AuditRequestThreadLocal auditRequestThreadLocal = _testDoFilter(
-			PortalUUIDUtil.generate());
+		AuditRequest auditRequest = _testDoFilter(PortalUUIDUtil.generate());
 
-		Assert.assertNull(auditRequestThreadLocal.getRequestId());
-		Assert.assertFalse(auditRequestThreadLocal.isRequestIdGenerated());
+		Assert.assertNull(auditRequest.getRequestId());
+		Assert.assertFalse(auditRequest.isRequestIdGenerated());
 	}
 
 	@FeatureFlag("LPD-6417")
 	@Test
 	public void testDoFilterResolvesRequestId() throws Exception {
-		AuditRequestThreadLocal auditRequestThreadLocal = _testDoFilter(
-			new MockHttpServletRequest());
+		AuditRequest auditRequest = _testDoFilter(new MockHttpServletRequest());
 
-		Assert.assertNotNull(auditRequestThreadLocal.getRequestId());
-		Assert.assertTrue(auditRequestThreadLocal.isRequestIdGenerated());
+		Assert.assertNotNull(auditRequest.getRequestId());
+		Assert.assertTrue(auditRequest.isRequestIdGenerated());
 
-		auditRequestThreadLocal = _testDoFilter("invalid");
+		auditRequest = _testDoFilter("invalid");
 
-		Assert.assertNotEquals(
-			"invalid", auditRequestThreadLocal.getRequestId());
-		Assert.assertNotNull(auditRequestThreadLocal.getRequestId());
-		Assert.assertTrue(auditRequestThreadLocal.isRequestIdGenerated());
+		Assert.assertNotEquals("invalid", auditRequest.getRequestId());
+		Assert.assertNotNull(auditRequest.getRequestId());
+		Assert.assertTrue(auditRequest.isRequestIdGenerated());
 
 		String xRequestId = PortalUUIDUtil.generate();
 
-		auditRequestThreadLocal = _testDoFilter(xRequestId);
+		auditRequest = _testDoFilter(xRequestId);
 
-		Assert.assertEquals(xRequestId, auditRequestThreadLocal.getRequestId());
-		Assert.assertFalse(auditRequestThreadLocal.isRequestIdGenerated());
+		Assert.assertEquals(xRequestId, auditRequest.getRequestId());
+		Assert.assertFalse(auditRequest.isRequestIdGenerated());
 	}
 
 	@FeatureFlag("LPD-6417")
@@ -208,7 +203,7 @@ public class AuditFilterTest {
 		}
 	}
 
-	private AuditRequestThreadLocal _testDoFilter(
+	private AuditRequest _testDoFilter(
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
 
@@ -226,17 +221,14 @@ public class AuditFilterTest {
 				mockHttpServletRequest, new MockHttpServletResponse());
 		}
 
-		AuditRequestThreadLocal auditRequestThreadLocal =
-			AuditRequestThreadLocal.getAuditThreadLocal();
+		AuditRequest auditRequest = AuditRequestThreadLocal.getAuditRequest();
 
-		AuditRequestThreadLocal.removeAuditThreadLocal();
+		AuditRequestThreadLocal.removeAuditRequest();
 
-		return auditRequestThreadLocal;
+		return auditRequest;
 	}
 
-	private AuditRequestThreadLocal _testDoFilter(String xRequestId)
-		throws Exception {
-
+	private AuditRequest _testDoFilter(String xRequestId) throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.audit;
 
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -24,27 +23,18 @@ public class AuditRequestThreadLocalTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetCorrelationId() {
-		AuditRequestThreadLocal auditRequestThreadLocal =
-			AuditRequestThreadLocal.getAuditThreadLocal();
+	public void testGetAuditRequest() {
+		AuditRequest auditRequest = AuditRequestThreadLocal.getAuditRequest();
 
-		Assert.assertNull(auditRequestThreadLocal.getCorrelationId());
+		Assert.assertSame(
+			auditRequest, AuditRequestThreadLocal.getAuditRequest());
 
-		String correlationId = RandomTestUtil.randomString();
+		AuditRequestThreadLocal.removeAuditRequest();
 
-		auditRequestThreadLocal.setCorrelationId(correlationId);
+		Assert.assertNotSame(
+			auditRequest, AuditRequestThreadLocal.getAuditRequest());
 
-		Assert.assertEquals(
-			correlationId, auditRequestThreadLocal.getCorrelationId());
-
-		String newCorrelationId = RandomTestUtil.randomString();
-
-		auditRequestThreadLocal.setCorrelationId(newCorrelationId);
-
-		Assert.assertEquals(
-			newCorrelationId, auditRequestThreadLocal.getCorrelationId());
-
-		AuditRequestThreadLocal.removeAuditThreadLocal();
+		AuditRequestThreadLocal.removeAuditRequest();
 	}
 
 }

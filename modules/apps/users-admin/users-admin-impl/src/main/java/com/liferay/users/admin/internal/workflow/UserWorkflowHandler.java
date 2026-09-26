@@ -5,6 +5,7 @@
 
 package com.liferay.users.admin.internal.workflow;
 
+import com.liferay.portal.kernel.audit.AuditRequest;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -107,20 +108,19 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 	private void _updateAuditRequestThreadLocal(
 		Map<String, Serializable> workflowContext) {
 
-		AuditRequestThreadLocal auditRequestThreadLocal =
-			AuditRequestThreadLocal.getAuditThreadLocal();
+		AuditRequest auditRequest = AuditRequestThreadLocal.getAuditRequest();
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-		auditRequestThreadLocal.setClientHost(serviceContext.getRemoteHost());
-		auditRequestThreadLocal.setClientIP(serviceContext.getRemoteAddr());
+		auditRequest.setClientHost(serviceContext.getRemoteHost());
+		auditRequest.setClientIP(serviceContext.getRemoteAddr());
 
 		long userId = GetterUtil.getLong(
 			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 
 		if (userId != 0) {
-			auditRequestThreadLocal.setRealUserId(userId);
+			auditRequest.setRealUserId(userId);
 		}
 
 		Serializable serverName = serviceContext.getAttribute("serverName");
@@ -129,8 +129,8 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 			return;
 		}
 
-		auditRequestThreadLocal.setServerName((String)serverName);
-		auditRequestThreadLocal.setServerPort(
+		auditRequest.setServerName((String)serverName);
+		auditRequest.setServerPort(
 			(int)serviceContext.getAttribute("serverPort"));
 
 		Serializable sessionId = serviceContext.getAttribute("sessionId");
@@ -139,7 +139,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 			return;
 		}
 
-		auditRequestThreadLocal.setSessionID((String)sessionId);
+		auditRequest.setSessionID((String)sessionId);
 	}
 
 	@Reference

@@ -1694,8 +1694,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				if (getMvccVersion() != source.getMvccVersion()) {
 					return;
 				}
-
 			</#if>
+
 			${entity.name}ModelImpl sourceModelImpl = (${entity.name}ModelImpl)source;
 
 			<#list cacheFields as cacheField>

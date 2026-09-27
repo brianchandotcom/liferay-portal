@@ -5,9 +5,9 @@ components:
                 -   $ref: "#/components/schemas/FragmentVersion"
                 -   properties:
                         configuration:
+                            $ref: "#/components/schemas/Configuration"
                             description:
-                                The fragment version's configuration, which defines the field sets a page creator can use to customize the fragment. It must match the configuration schema.
-                            type: string
+                                The fragment version's configuration, which defines the field sets a page creator can use to customize the fragment. Reading a fragment whose stored configuration does not match the configuration schema fails.
             description:
                 An approved (published) version of a fragment. Its configuration must match the configuration schema.
             type: object
@@ -16,6 +16,19 @@ components:
                 -   $ref: "#/components/schemas/Fragment"
             description:
                 A basic fragment entry.
+            type: object
+        Configuration:
+            description:
+                A fragment's configuration, which defines the field sets a page creator can use to customize the fragment.
+            properties:
+                fieldSets:
+                    description:
+                        The configuration's field sets.
+                    items:
+                        $ref: "#/components/schemas/FieldSet"
+                    type: array
+            required:
+                -   fieldSets
             type: object
         DraftFragmentVersion:
             allOf:
@@ -27,6 +40,68 @@ components:
                             type: string
             description:
                 A draft version of a fragment. Its configuration is not validated against the configuration schema.
+            type: object
+        Field:
+            description:
+                A customizable field of a fragment configuration's field set.
+            properties:
+                dataType:
+                    description:
+                        The data type the field's value is converted to when it is rendered.
+                    enum: [array, double, int, object, string]
+                    type: string
+                description:
+                    description:
+                        The field's description.
+                    type: string
+                label:
+                    description:
+                        The field's label.
+                    type: string
+                localizable:
+                    description:
+                        A flag that indicates whether the field's value can be localized.
+                    type: boolean
+                name:
+                    description:
+                        The field's name. It can only contain alphanumeric characters.
+                    minLength: 1
+                    pattern: ^[A-Za-z0-9]+$
+                    type: string
+                type:
+                    description:
+                        The field's type.
+                    enum: [itemSelector]
+                    type: string
+            required:
+                -   name
+                -   type
+            type: object
+        FieldSet:
+            description:
+                A group of related fields in a fragment's configuration.
+            properties:
+                configurationRole:
+                    description:
+                        The role of the field set in the page editor's configuration panel.
+                    enum: [advanced, style]
+                    type: string
+                customComponentModule:
+                    description:
+                        The JavaScript module loaded to render the field set with a custom component.
+                    type: string
+                fields:
+                    description:
+                        The field set's fields.
+                    items:
+                        $ref: "#/components/schemas/Field"
+                    type: array
+                label:
+                    description:
+                        The field set's label.
+                    type: string
+            required:
+                -   fields
             type: object
         FieldType:
             description:

@@ -19,6 +19,19 @@
 						"value": {
 							"itemExternalReference": {
 								"className": "com.liferay.journal.model.JournalArticle",
+								"externalReferenceCode": "${JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE}"
+							}
+						}
+					},
+					"localizable": true,
+					"name": "itemByClassPKLocalizable",
+					"type": "itemSelector"
+				},
+				{
+					"defaultValue": {
+						"value": {
+							"itemExternalReference": {
+								"className": "com.liferay.journal.model.JournalArticle",
 								"externalReferenceCode": "item-erc"
 							}
 						}

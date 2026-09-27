@@ -1,0 +1,72 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"classNameId": "${JOURNAL_ARTICLE_CLASS_NAME_ID}",
+						"classPK": "${JOURNAL_ARTICLE_RESOURCE_PRIM_KEY}",
+						"externalReferenceCode": "${JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE}"
+					},
+					"name": "itemByClassPK",
+					"type": "itemSelector"
+				},
+				{
+					"defaultValue": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"classNameId": "${JOURNAL_ARTICLE_CLASS_NAME_ID}",
+						"classPK": "${JOURNAL_ARTICLE_RESOURCE_PRIM_KEY}",
+						"externalReferenceCode": "${JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE}"
+					},
+					"localizable": true,
+					"name": "itemByClassPKLocalizable",
+					"type": "itemSelector"
+				},
+				{
+					"defaultValue": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"classNameId": "${JOURNAL_ARTICLE_CLASS_NAME_ID}",
+						"externalReferenceCode": "item-erc"
+					},
+					"name": "itemByExternalReferenceCode",
+					"type": "itemSelector",
+					"typeOptions": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"enableSelectTemplate": true,
+						"itemSubtype": "BASIC-WEB-CONTENT",
+						"itemType": "com.liferay.journal.model.JournalArticle",
+						"mimeTypes": [
+							"image/jpeg",
+							"image/png"
+						]
+					}
+				},
+				{
+					"defaultValue": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"classNameId": "${JOURNAL_ARTICLE_CLASS_NAME_ID}",
+						"externalReferenceCode": "item-erc-and-scope-erc",
+						"scopeExternalReferenceCode": "item-scope-erc"
+					},
+					"name": "itemByExternalReferenceCodeAndScope",
+					"type": "itemSelector"
+				},
+				{
+					"defaultValue": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"classNameId": "${JOURNAL_ARTICLE_CLASS_NAME_ID}",
+						"externalReferenceCode": "item-as-string-erc",
+						"scopeExternalReferenceCode": "item-as-string-scope-erc"
+					},
+					"name": "itemByExternalReferenceCodeAndScopeAsString",
+					"type": "itemSelector"
+				},
+				{
+					"name": "itemByNonexistentClassPK",
+					"type": "itemSelector"
+				}
+			]
+		}
+	]
+}

@@ -177,7 +177,7 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
-	public void testValidateConfigurationInvalidFieldItemSelectorDefaultValueClassPKMissing()
+	public void testValidateConfigurationInvalidFieldItemSelectorDefaultValueClassPKAndExternalReferenceCodeMissing()
 		throws Exception {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
@@ -185,11 +185,15 @@ public class FragmentEntryValidatorImplTest {
 			new StringContains(
 				"/fieldSets/0/fields/0/defaultValue: required key [classPK] " +
 					"not found"));
+		expectedException.expectMessage(
+			new StringContains(
+				"/fieldSets/0/fields/0/defaultValue: required key " +
+					"[externalReferenceCode] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_readJSONObject(
 				"configuration_invalid_field_itemselector_defaultvalue_" +
-					"classpk_missing.json"));
+					"classpk_and_externalreferencecode_missing.json"));
 	}
 
 	@Test
@@ -658,6 +662,16 @@ public class FragmentEntryValidatorImplTest {
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_readJSONObject(
 				"configuration_valid_field_itemselector_complete.json"));
+	}
+
+	@Test
+	public void testValidateConfigurationValidFieldItemSelectorDefaultValueExternalReferenceCode()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfiguration(
+			_readJSONObject(
+				"configuration_valid_field_itemselector_defaultvalue_" +
+					"externalreferencecode.json"));
 	}
 
 	@Test

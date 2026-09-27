@@ -3,21 +3,13 @@
 		{
 			"fields": [
 				{
-					"dataType": "object",
 					"defaultValue": {
 						"className": "com.liferay.journal.model.JournalArticle",
-						"classNameId": "126820",
-						"classPK": "126821",
 						"externalReferenceCode": "8e5e3dd1-9b57-4184-4271-066a55f9c452",
 						"scopeExternalReferenceCode": "5237a55f-9f2c-1a44-1c37-01d2a55f9c37"
 					},
-					"label": "Text color",
 					"name": "itemSelector1",
-					"type": "itemSelector",
-					"typeOptions": {
-						"className": "com.liferay.journal.model.JournalArticle",
-						"enableSelectTemplate": true
-					}
+					"type": "itemSelector"
 				}
 			]
 		}

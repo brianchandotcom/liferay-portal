@@ -9,14 +9,20 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.headless.admin.fragment.constant.v1_0.FieldType;
+import com.liferay.headless.admin.fragment.dto.v1_0.ApprovedFragmentVersion;
 import com.liferay.headless.admin.fragment.dto.v1_0.BasicFragment;
+import com.liferay.headless.admin.fragment.dto.v1_0.Configuration;
+import com.liferay.headless.admin.fragment.dto.v1_0.DraftFragmentVersion;
 import com.liferay.headless.admin.fragment.dto.v1_0.FormFragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion;
 import com.liferay.headless.admin.fragment.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.admin.fragment.internal.util.ConfigurationUtil;
 import com.liferay.headless.admin.fragment.internal.util.FieldTypeUtil;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.util.ThumbnailURLReferenceUtil;
 import com.liferay.petra.function.UnsafeSupplierValue;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -56,7 +62,9 @@ public class FragmentDTOConverter
 
 	@Override
 	public Fragment toDTO(
-		DTOConverterContext dtoConverterContext, FragmentEntry fragmentEntry) {
+			DTOConverterContext dtoConverterContext,
+			FragmentEntry fragmentEntry)
+		throws Exception {
 
 		FragmentEntry headListableFragmentEntry =
 			_fetchHeadListableFragmentEntry(fragmentEntry);
@@ -208,7 +216,7 @@ public class FragmentDTOConverter
 		return formFragment;
 	}
 
-	private Fragment _toFragment(FragmentEntry fragmentEntry) {
+	private Fragment _toFragment(FragmentEntry fragmentEntry) throws Exception {
 		List<FragmentVersion> fragmentVersions = new ArrayList<>();
 
 		if (fragmentEntry.isHead()) {
@@ -240,27 +248,59 @@ public class FragmentDTOConverter
 	}
 
 	private FragmentVersion _toFragmentVersion(
-		FragmentEntry fragmentEntry,
-		FragmentVersion.Status fragmentVersionStatus) {
+			FragmentEntry fragmentEntry,
+			FragmentVersion.Status fragmentVersionStatus)
+		throws Exception {
 
-		FragmentVersion fragmentVersion = new FragmentVersion() {
-			{
-				setStatus(() -> fragmentVersionStatus);
+		if (fragmentVersionStatus == FragmentVersion.Status.DRAFT) {
+			DraftFragmentVersion draftFragmentVersion =
+				new DraftFragmentVersion() {
+					{
+						setStatus(() -> FragmentVersion.Status.DRAFT);
+					}
+				};
+
+			if (!fragmentEntry.isMarketplace()) {
+				draftFragmentVersion.setConfiguration(
+					fragmentEntry::getConfiguration);
+				draftFragmentVersion.setCss(fragmentEntry::getCss);
+				draftFragmentVersion.setHtml(fragmentEntry::getHtml);
+				draftFragmentVersion.setJs(fragmentEntry::getJs);
 			}
-		};
 
-		if (!fragmentEntry.isMarketplace()) {
-			fragmentVersion.setConfiguration(fragmentEntry::getConfiguration);
-			fragmentVersion.setCss(fragmentEntry::getCss);
-			fragmentVersion.setHtml(fragmentEntry::getHtml);
-			fragmentVersion.setJs(fragmentEntry::getJs);
+			return draftFragmentVersion;
 		}
 
-		return fragmentVersion;
+		ApprovedFragmentVersion approvedFragmentVersion =
+			new ApprovedFragmentVersion() {
+				{
+					setStatus(() -> FragmentVersion.Status.APPROVED);
+				}
+			};
+
+		if (!fragmentEntry.isMarketplace()) {
+			Configuration configuration = ConfigurationUtil.toConfiguration(
+				_fragmentConfigurationFieldValueDTOConverter, fragmentEntry);
+
+			approvedFragmentVersion.setConfiguration(() -> configuration);
+
+			approvedFragmentVersion.setCss(fragmentEntry::getCss);
+			approvedFragmentVersion.setHtml(fragmentEntry::getHtml);
+			approvedFragmentVersion.setJs(fragmentEntry::getJs);
+		}
+
+		return approvedFragmentVersion;
 	}
 
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FragmentConfigurationFieldValueDTOConverter)"
+	)
+	private DTOConverter
+		<FragmentConfigurationField, FragmentConfigurationFieldValue>
+			_fragmentConfigurationFieldValueDTOConverter;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

@@ -297,7 +297,7 @@ describe('SelectionFilter.getOdataString', () => {
 			);
 		});
 
-		it('generates an "any" filter with "ne" for a single excluded item', () => {
+		it('generates a negated "any" filter for a single excluded item', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION,
 				id: 'testField',
@@ -308,10 +308,10 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe("testField/any(x:(x ne '123'))");
+			expect(result).toBe("not (testField/any(x:(x eq '123')))");
 		});
 
-		it('generates an "any" filter with "and" for multiple excluded items', () => {
+		it('generates a negated "any" filter for multiple excluded items', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION,
 				id: 'testField',
@@ -326,7 +326,7 @@ describe('SelectionFilter.getOdataString', () => {
 			} as any);
 
 			expect(result).toBe(
-				"testField/any(x:(x ne '123') and (x ne '456'))"
+				"not (testField/any(x:(x eq '123') or (x eq '456')))"
 			);
 		});
 	});
@@ -379,7 +379,7 @@ describe('SelectionFilter.getOdataString', () => {
 			);
 		});
 
-		it('generates an "any" filter with "ne" for a single excluded item', () => {
+		it('generates a negated "any" filter for a single excluded item', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION_STRING,
 				id: 'testField',
@@ -390,10 +390,10 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe("testField/any(x:(x ne '123'))");
+			expect(result).toBe("not (testField/any(x:(x eq '123')))");
 		});
 
-		it('generates an "any" filter with "and" for multiple excluded items', () => {
+		it('generates a negated "any" filter for multiple excluded items', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION_STRING,
 				id: 'testField',
@@ -408,7 +408,7 @@ describe('SelectionFilter.getOdataString', () => {
 			} as any);
 
 			expect(result).toBe(
-				"testField/any(x:(x ne '123') and (x ne '456'))"
+				"not (testField/any(x:(x eq '123') or (x eq '456')))"
 			);
 		});
 	});
@@ -459,7 +459,7 @@ describe('SelectionFilter.getOdataString', () => {
 			expect(result).toBe('testField/any(x:(x eq 123) or (x eq 456))');
 		});
 
-		it('generates an "any" filter with "ne" for a single excluded item', () => {
+		it('generates a negated "any" filter for a single excluded item', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION_INTEGER,
 				id: 'testField',
@@ -470,10 +470,10 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe('testField/any(x:(x ne 123))');
+			expect(result).toBe('not (testField/any(x:(x eq 123)))');
 		});
 
-		it('generates an "any" filter with "and" for multiple excluded items', () => {
+		it('generates a negated "any" filter for multiple excluded items', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION_INTEGER,
 				id: 'testField',
@@ -487,7 +487,9 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe('testField/any(x:(x ne 123) and (x ne 456))');
+			expect(result).toBe(
+				'not (testField/any(x:(x eq 123) or (x eq 456)))'
+			);
 		});
 	});
 

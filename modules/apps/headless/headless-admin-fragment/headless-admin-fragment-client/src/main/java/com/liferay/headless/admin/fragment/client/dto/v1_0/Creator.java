@@ -242,4 +242,4 @@ public class Creator implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1969294849
+// LIFERAY-REST-BUILDER-HASH:727620991

@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
@@ -25,6 +23,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -44,198 +44,62 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A version of a fragment (draft or published).",
-	value = "FragmentVersion"
+	description = "A visibility condition on another fragment configuration field's value. The dependent field is shown only when the condition is met.",
+	value = "Dependency"
 )
 @io.swagger.v3.oas.annotations.media.Schema(
-	description = "A version of a fragment (draft or published)."
+	description = "A visibility condition on another fragment configuration field's value. The dependent field is shown only when the condition is met.",
+	requiredProperties = {"type", "value"}
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "Approved", value = ApprovedFragmentVersion.class
-		),
-		@JsonSubTypes.Type(name = "Draft", value = DraftFragmentVersion.class)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "status",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "FragmentVersion")
-public abstract class FragmentVersion implements Serializable {
+@XmlRootElement(name = "Dependency")
+public class Dependency implements Serializable {
 
-	public static FragmentVersion toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentVersion.class, json);
+	public static Dependency toDTO(String json) {
+		return ObjectMapperUtil.readValue(Dependency.class, json);
 	}
 
-	public static FragmentVersion unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentVersion.class, json);
+	public static Dependency unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Dependency.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's CSS code."
+		description = "The comparison operator applied to the other field's value."
 	)
-	public String getCss() {
-		if (_cssSupplier != null) {
-			css = _cssSupplier.get();
-
-			_cssSupplier = null;
-		}
-
-		return css;
-	}
-
-	public void setCss(String css) {
-		this.css = css;
-
-		_cssSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCss(UnsafeSupplier<String, Exception> cssUnsafeSupplier) {
-		_cssSupplier = () -> {
-			try {
-				return cssUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's CSS code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String css;
-
-	@JsonIgnore
-	private Supplier<String> _cssSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's HTML code."
-	)
-	public String getHtml() {
-		if (_htmlSupplier != null) {
-			html = _htmlSupplier.get();
-
-			_htmlSupplier = null;
-		}
-
-		return html;
-	}
-
-	public void setHtml(String html) {
-		this.html = html;
-
-		_htmlSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setHtml(UnsafeSupplier<String, Exception> htmlUnsafeSupplier) {
-		_htmlSupplier = () -> {
-			try {
-				return htmlUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's HTML code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String html;
-
-	@JsonIgnore
-	private Supplier<String> _htmlSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's JavaScript code."
-	)
-	public String getJs() {
-		if (_jsSupplier != null) {
-			js = _jsSupplier.get();
-
-			_jsSupplier = null;
-		}
-
-		return js;
-	}
-
-	public void setJs(String js) {
-		this.js = js;
-
-		_jsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setJs(UnsafeSupplier<String, Exception> jsUnsafeSupplier) {
-		_jsSupplier = () -> {
-			try {
-				return jsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's JavaScript code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String js;
-
-	@JsonIgnore
-	private Supplier<String> _jsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's status (Approved or Draft)."
-	)
-	@JsonGetter("status")
+	@JsonGetter("type")
 	@Valid
-	public Status getStatus() {
-		if (_statusSupplier != null) {
-			status = _statusSupplier.get();
+	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
 
-			_statusSupplier = null;
+			_typeSupplier = null;
 		}
 
-		return status;
+		return type;
 	}
 
 	@JsonIgnore
-	public String getStatusAsString() {
-		Status status = getStatus();
+	public String getTypeAsString() {
+		Type type = getType();
 
-		if (status == null) {
+		if (type == null) {
 			return null;
 		}
 
-		return status.toString();
+		return type.toString();
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setType(Type type) {
+		this.type = type;
 
-		_statusSupplier = null;
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
-
-		_statusSupplier = () -> {
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
 			try {
-				return statusUnsafeSupplier.get();
+				return typeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -247,13 +111,60 @@ public abstract class FragmentVersion implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The fragment version's status (Approved or Draft)."
+		description = "The comparison operator applied to the other field's value."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Status status;
+	@NotNull
+	protected Type type;
 
 	@JsonIgnore
-	private Supplier<Status> _statusSupplier;
+	private Supplier<Type> _typeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The value the other field's value is compared with."
+	)
+	public String getValue() {
+		if (_valueSupplier != null) {
+			value = _valueSupplier.get();
+
+			_valueSupplier = null;
+		}
+
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+
+		_valueSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+
+		_valueSupplier = () -> {
+			try {
+				return valueUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The value the other field's value is compared with."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String value;
+
+	@JsonIgnore
+	private Supplier<String> _valueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -261,13 +172,13 @@ public abstract class FragmentVersion implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentVersion)) {
+		if (!(object instanceof Dependency)) {
 			return false;
 		}
 
-		FragmentVersion fragmentVersion = (FragmentVersion)object;
+		Dependency dependency = (Dependency)object;
 
-		return Objects.equals(toString(), fragmentVersion.toString());
+		return Objects.equals(toString(), dependency.toString());
 	}
 
 	@Override
@@ -282,65 +193,33 @@ public abstract class FragmentVersion implements Serializable {
 
 		sb.append("{");
 
-		String css = getCss();
+		Type type = getType();
 
-		if (css != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"css\": ");
+			sb.append("\"type\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(css));
-
+			sb.append(type);
 			sb.append("\"");
 		}
 
-		String html = getHtml();
+		String value = getValue();
 
-		if (html != null) {
+		if (value != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"html\": ");
+			sb.append("\"value\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(html));
+			sb.append(_escape(value));
 
-			sb.append("\"");
-		}
-
-		String js = getJs();
-
-		if (js != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"js\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(js));
-
-			sb.append("\"");
-		}
-
-		Status status = getStatus();
-
-		if (status != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"status\": ");
-
-			sb.append("\"");
-			sb.append(status);
 			sb.append("\"");
 		}
 
@@ -351,25 +230,25 @@ public abstract class FragmentVersion implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion",
+		defaultValue = "com.liferay.headless.admin.fragment.dto.v1_0.Dependency",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("Status")
-	public static enum Status {
+	@GraphQLName("Type")
+	public static enum Type {
 
-		APPROVED("Approved"), DRAFT("Draft");
+		EQUAL("equal"), NOT_EQUAL("not-equal");
 
 		@JsonCreator
-		public static Status create(String value) {
+		public static Type create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (Status status : values()) {
-				if (Objects.equals(status.getValue(), value)) {
-					return status;
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
 				}
 			}
 
@@ -386,7 +265,7 @@ public abstract class FragmentVersion implements Serializable {
 			return _value;
 		}
 
-		private Status(String value) {
+		private Type(String value) {
 			_value = value;
 		}
 
@@ -504,4 +383,4 @@ public abstract class FragmentVersion implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1577870936
+// LIFERAY-REST-BUILDER-HASH:66169240

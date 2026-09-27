@@ -19,32 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class FragmentVersion implements Cloneable, Serializable {
+public abstract class FragmentVersion implements Cloneable, Serializable {
 
 	public static FragmentVersion toDTO(String json) {
 		return FragmentVersionSerDes.toDTO(json);
 	}
-
-	public String getConfiguration() {
-		return configuration;
-	}
-
-	public void setConfiguration(String configuration) {
-		this.configuration = configuration;
-	}
-
-	public void setConfiguration(
-		UnsafeSupplier<String, Exception> configurationUnsafeSupplier) {
-
-		try {
-			configuration = configurationUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String configuration;
 
 	public String getCss() {
 		return css;
@@ -197,4 +176,4 @@ public class FragmentVersion implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:913635407
+// LIFERAY-REST-BUILDER-HASH:-457089774

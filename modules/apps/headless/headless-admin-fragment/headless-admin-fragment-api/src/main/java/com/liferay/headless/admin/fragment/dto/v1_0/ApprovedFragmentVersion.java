@@ -5,14 +5,9 @@
 
 package com.liferay.headless.admin.fragment.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -44,198 +39,53 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A version of a fragment (draft or published).",
-	value = "FragmentVersion"
+	description = "An approved (published) version of a fragment. Its configuration must match the configuration schema.",
+	value = "ApprovedFragmentVersion"
 )
 @io.swagger.v3.oas.annotations.media.Schema(
-	description = "A version of a fragment (draft or published)."
+	description = "An approved (published) version of a fragment. Its configuration must match the configuration schema."
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "Approved", value = ApprovedFragmentVersion.class
-		),
-		@JsonSubTypes.Type(name = "Draft", value = DraftFragmentVersion.class)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "status",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "FragmentVersion")
-public abstract class FragmentVersion implements Serializable {
+@XmlRootElement(name = "ApprovedFragmentVersion")
+public class ApprovedFragmentVersion
+	extends FragmentVersion implements Serializable {
 
-	public static FragmentVersion toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentVersion.class, json);
+	public static ApprovedFragmentVersion toDTO(String json) {
+		return ObjectMapperUtil.readValue(ApprovedFragmentVersion.class, json);
 	}
 
-	public static FragmentVersion unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentVersion.class, json);
+	public static ApprovedFragmentVersion unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			ApprovedFragmentVersion.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's CSS code."
+		description = "The fragment version's configuration, which defines the field sets a page creator can use to customize the fragment. Reading a fragment whose stored configuration does not match the configuration schema fails."
 	)
-	public String getCss() {
-		if (_cssSupplier != null) {
-			css = _cssSupplier.get();
-
-			_cssSupplier = null;
-		}
-
-		return css;
-	}
-
-	public void setCss(String css) {
-		this.css = css;
-
-		_cssSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCss(UnsafeSupplier<String, Exception> cssUnsafeSupplier) {
-		_cssSupplier = () -> {
-			try {
-				return cssUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's CSS code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String css;
-
-	@JsonIgnore
-	private Supplier<String> _cssSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's HTML code."
-	)
-	public String getHtml() {
-		if (_htmlSupplier != null) {
-			html = _htmlSupplier.get();
-
-			_htmlSupplier = null;
-		}
-
-		return html;
-	}
-
-	public void setHtml(String html) {
-		this.html = html;
-
-		_htmlSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setHtml(UnsafeSupplier<String, Exception> htmlUnsafeSupplier) {
-		_htmlSupplier = () -> {
-			try {
-				return htmlUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's HTML code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String html;
-
-	@JsonIgnore
-	private Supplier<String> _htmlSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's JavaScript code."
-	)
-	public String getJs() {
-		if (_jsSupplier != null) {
-			js = _jsSupplier.get();
-
-			_jsSupplier = null;
-		}
-
-		return js;
-	}
-
-	public void setJs(String js) {
-		this.js = js;
-
-		_jsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setJs(UnsafeSupplier<String, Exception> jsUnsafeSupplier) {
-		_jsSupplier = () -> {
-			try {
-				return jsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment version's JavaScript code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String js;
-
-	@JsonIgnore
-	private Supplier<String> _jsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment version's status (Approved or Draft)."
-	)
-	@JsonGetter("status")
 	@Valid
-	public Status getStatus() {
-		if (_statusSupplier != null) {
-			status = _statusSupplier.get();
+	public Configuration getConfiguration() {
+		if (_configurationSupplier != null) {
+			configuration = _configurationSupplier.get();
 
-			_statusSupplier = null;
+			_configurationSupplier = null;
 		}
 
-		return status;
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+
+		_configurationSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getStatusAsString() {
-		Status status = getStatus();
+	public void setConfiguration(
+		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
 
-		if (status == null) {
-			return null;
-		}
-
-		return status.toString();
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-
-		_statusSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setStatus(
-		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
-
-		_statusSupplier = () -> {
+		_configurationSupplier = () -> {
 			try {
-				return statusUnsafeSupplier.get();
+				return configurationUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -247,13 +97,13 @@ public abstract class FragmentVersion implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The fragment version's status (Approved or Draft)."
+		description = "The fragment version's configuration, which defines the field sets a page creator can use to customize the fragment. Reading a fragment whose stored configuration does not match the configuration schema fails."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Status status;
+	protected Configuration configuration;
 
 	@JsonIgnore
-	private Supplier<Status> _statusSupplier;
+	private Supplier<Configuration> _configurationSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -261,13 +111,14 @@ public abstract class FragmentVersion implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentVersion)) {
+		if (!(object instanceof ApprovedFragmentVersion)) {
 			return false;
 		}
 
-		FragmentVersion fragmentVersion = (FragmentVersion)object;
+		ApprovedFragmentVersion approvedFragmentVersion =
+			(ApprovedFragmentVersion)object;
 
-		return Objects.equals(toString(), fragmentVersion.toString());
+		return Objects.equals(toString(), approvedFragmentVersion.toString());
 	}
 
 	@Override
@@ -281,6 +132,18 @@ public abstract class FragmentVersion implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Configuration configuration = getConfiguration();
+
+		if (configuration != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"configuration\": ");
+
+			sb.append(String.valueOf(configuration));
+		}
 
 		String css = getCss();
 
@@ -351,48 +214,10 @@ public abstract class FragmentVersion implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion",
+		defaultValue = "com.liferay.headless.admin.fragment.dto.v1_0.ApprovedFragmentVersion",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Status")
-	public static enum Status {
-
-		APPROVED("Approved"), DRAFT("Draft");
-
-		@JsonCreator
-		public static Status create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Status status : values()) {
-				if (Objects.equals(status.getValue(), value)) {
-					return status;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Status(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(
@@ -504,4 +329,4 @@ public abstract class FragmentVersion implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1577870936
+// LIFERAY-REST-BUILDER-HASH:-901399401

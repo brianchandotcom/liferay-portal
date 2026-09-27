@@ -26,6 +26,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -312,8 +314,9 @@ public class ConfigurationUtil {
 	}
 
 	private static JSONObject _toFieldJSONObject(
-		Field field, long groupId,
-		InfoItemServiceRegistry infoItemServiceRegistry) {
+			Field field, long groupId,
+			InfoItemServiceRegistry infoItemServiceRegistry)
+		throws PortalException {
 
 		JSONObject fieldJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -480,9 +483,10 @@ public class ConfigurationUtil {
 	}
 
 	private static JSONObject _toItemJSONObject(
-		long groupId, InfoItemServiceRegistry infoItemServiceRegistry,
-		ItemFragmentConfigurationFieldDefaultValue
-			itemFragmentConfigurationFieldDefaultValue) {
+			long groupId, InfoItemServiceRegistry infoItemServiceRegistry,
+			ItemFragmentConfigurationFieldDefaultValue
+				itemFragmentConfigurationFieldDefaultValue)
+		throws PortalException {
 
 		if (itemFragmentConfigurationFieldDefaultValue == null) {
 			return null;
@@ -502,8 +506,11 @@ public class ConfigurationUtil {
 
 		String className = itemExternalReference.getClassName();
 
-		String scopeExternalReferenceCode = _getScopeExternalReferenceCode(
-			itemExternalReference.getScope());
+		String scopeExternalReferenceCode =
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				_getScopeExternalReferenceCode(
+					itemExternalReference.getScope()),
+				groupId);
 
 		return JSONUtil.put(
 			"className", className

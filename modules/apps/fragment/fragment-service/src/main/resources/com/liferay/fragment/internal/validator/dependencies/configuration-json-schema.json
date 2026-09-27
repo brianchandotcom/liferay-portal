@@ -330,6 +330,18 @@
 			"properties": {
 				"defaultValue": {
 					"additionalProperties": false,
+					"anyOf": [
+						{
+							"required": [
+								"classPK"
+							]
+						},
+						{
+							"required": [
+								"externalReferenceCode"
+							]
+						}
+					],
 					"properties": {
 						"className": {
 							"title": "The ClassName Schema",
@@ -342,11 +354,18 @@
 						"classPK": {
 							"title": "The ClassPK Schema",
 							"type": "string"
+						},
+						"externalReferenceCode": {
+							"title": "The ExternalReferenceCode Schema",
+							"type": "string"
+						},
+						"scopeExternalReferenceCode": {
+							"title": "The ScopeExternalReferenceCode Schema",
+							"type": "string"
 						}
 					},
 					"required": [
-						"className",
-						"classPK"
+						"className"
 					],
 					"title": "The DefaultValue Schema"
 				},

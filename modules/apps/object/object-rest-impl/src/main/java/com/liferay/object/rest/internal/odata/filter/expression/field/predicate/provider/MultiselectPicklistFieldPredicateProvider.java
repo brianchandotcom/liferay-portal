@@ -45,11 +45,8 @@ public class MultiselectPicklistFieldPredicateProvider
 				String.valueOf(left));
 
 		if (Objects.equals(operation, BinaryExpression.Operation.EQ)) {
-			expression = DSLFunctionFactoryUtil.concat(
-				new Scalar<>(_SCALAR_EXPRESSION), expression,
-				new Scalar<>(_SCALAR_EXPRESSION));
-
-			return expression.like(
+			return _getDelimitedLikePredicate(
+				expression,
 				_getFieldValueExpression(String.valueOf(right), null));
 		}
 		else if (Objects.equals(operation, BinaryExpression.Operation.NE)) {
@@ -117,14 +114,25 @@ public class MultiselectPicklistFieldPredicateProvider
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
 		String fieldName, Object fieldValue) {
 
-		Expression<String> expression = DSLFunctionFactoryUtil.concat(
-			new Scalar<>(_SCALAR_EXPRESSION),
+		return _getDelimitedLikePredicate(
 			(Expression<String>)objectDefinitionColumnSupplier.apply(fieldName),
-			new Scalar<>(_SCALAR_EXPRESSION));
-
-		return expression.like(
 			_getFieldValueExpression(
 				String.valueOf(fieldValue), MethodExpression.Type.STARTS_WITH));
+	}
+
+	private Predicate _getDelimitedLikePredicate(
+		Expression<String> expression,
+		Expression<String> fieldValueExpression) {
+
+		return expression.isNotNull(
+		).and(
+			DSLFunctionFactoryUtil.concat(
+				new Scalar<>(_SCALAR_EXPRESSION), expression,
+				new Scalar<>(_SCALAR_EXPRESSION)
+			).like(
+				fieldValueExpression
+			)
+		);
 	}
 
 	private Expression<String> _getFieldValueExpression(

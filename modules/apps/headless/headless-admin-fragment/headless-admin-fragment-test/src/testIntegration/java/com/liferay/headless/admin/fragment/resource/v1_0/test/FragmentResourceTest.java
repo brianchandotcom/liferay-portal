@@ -828,6 +828,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			String.valueOf(journalArticle.getResourcePrimKey())
 		).put(
 			"NONEXISTENT_CLASS_PK", String.valueOf(RandomTestUtil.randomLong())
+		).put(
+			"SITE_EXTERNAL_REFERENCE_CODE", testGroup.getExternalReferenceCode()
 		).build();
 	}
 

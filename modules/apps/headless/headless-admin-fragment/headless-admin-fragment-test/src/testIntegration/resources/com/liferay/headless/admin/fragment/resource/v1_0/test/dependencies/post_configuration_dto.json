@@ -50,6 +50,21 @@
 					},
 					"name": "itemByResolvableExternalReferenceCode",
 					"type": "itemSelector"
+				},
+				{
+					"defaultValue": {
+						"value": {
+							"itemExternalReference": {
+								"className": "com.liferay.journal.model.JournalArticle",
+								"externalReferenceCode": "${JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE}",
+								"scope": {
+									"externalReferenceCode": "${SITE_EXTERNAL_REFERENCE_CODE}"
+								}
+							}
+						}
+					},
+					"name": "itemByResolvableExternalReferenceCodeAndCurrentSiteScope",
+					"type": "itemSelector"
 				}
 			]
 		}

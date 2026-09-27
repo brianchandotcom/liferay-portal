@@ -40,6 +40,16 @@
 					},
 					"name": "itemByResolvableExternalReferenceCode",
 					"type": "itemSelector"
+				},
+				{
+					"defaultValue": {
+						"className": "com.liferay.journal.model.JournalArticle",
+						"classNameId": "${JOURNAL_ARTICLE_CLASS_NAME_ID}",
+						"classPK": "${JOURNAL_ARTICLE_RESOURCE_PRIM_KEY}",
+						"externalReferenceCode": "${JOURNAL_ARTICLE_EXTERNAL_REFERENCE_CODE}"
+					},
+					"name": "itemByResolvableExternalReferenceCodeAndCurrentSiteScope",
+					"type": "itemSelector"
 				}
 			]
 		}

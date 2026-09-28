@@ -63,18 +63,31 @@ public class FinderPath {
 		_convertNullBitmask = convertNullBitmask;
 		_baseModelResult = baseModelResult;
 
+		if (methodName.equals("dslQuery")) {
+			_entityClassName = null;
+		}
+		else if (cacheName.endsWith(_LIST_WITH_PAGINATION_SUFFIX) ||
+				 cacheName.endsWith(_LIST_WITHOUT_PAGINATION_SUFFIX)) {
+
+			_entityClassName = cacheName.substring(
+				0,
+				cacheName.length() - _LIST_WITHOUT_PAGINATION_SUFFIX.length());
+		}
+		else {
+			_entityClassName = cacheName;
+		}
+
 		if (cacheName.endsWith(_LIST_WITHOUT_PAGINATION_SUFFIX) &&
 			methodName.startsWith("count") &&
 			ArrayUtil.isNotEmpty(columnNames)) {
 
-			String entityClassName = cacheName.substring(
-				0,
-				cacheName.length() - _LIST_WITHOUT_PAGINATION_SUFFIX.length());
-
-			_cacheName = entityClassName.concat(".Count");
+			_cacheName = _entityClassName.concat(".Count");
+			_countResult = true;
 		}
 		else {
 			_cacheName = cacheName;
+
+			_countResult = false;
 		}
 
 		if (argsExtractorFunction == null) {
@@ -119,12 +132,20 @@ public class FinderPath {
 		return _columnNames;
 	}
 
+	public String getEntityClassName() {
+		return _entityClassName;
+	}
+
 	public String getFinderName() {
 		return _finderName;
 	}
 
 	public boolean isBaseModelResult() {
 		return _baseModelResult;
+	}
+
+	public boolean isCountResult() {
+		return _countResult;
 	}
 
 	public boolean isTouched() {
@@ -223,6 +244,8 @@ public class FinderPath {
 	private static final Function<Object, Object[]>
 		_EMPTY_ARGS_EXTRACTOR_FUNCTION = baseModel -> new Object[0];
 
+	private static final String _LIST_WITH_PAGINATION_SUFFIX = ".List1";
+
 	private static final String _LIST_WITHOUT_PAGINATION_SUFFIX = ".List2";
 
 	private static final String _PARAMS_SEPARATOR = "_P_";
@@ -238,6 +261,8 @@ public class FinderPath {
 	private final int _caseInsensitiveBitmask;
 	private final String[] _columnNames;
 	private final int _convertNullBitmask;
+	private final boolean _countResult;
+	private final String _entityClassName;
 	private final String _finderName;
 	private final boolean _singleResult;
 	private volatile long _timestamp;

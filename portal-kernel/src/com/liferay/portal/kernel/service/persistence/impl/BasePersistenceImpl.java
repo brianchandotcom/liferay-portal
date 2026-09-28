@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.dao.orm.ModelRemovalThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -825,7 +826,14 @@ public class BasePersistenceImpl
 			modelListener.onBeforeRemove(model);
 		}
 
-		T removedModel = function.apply(model);
+		T removedModel = null;
+
+		try (SafeCloseable safeCloseable =
+				ModelRemovalThreadLocal.setRemovingBaseModelWithSafeCloseable(
+					model)) {
+
+			removedModel = function.apply(model);
+		}
 
 		if (removedModel != null) {
 			model = removedModel;

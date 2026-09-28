@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.CountFinderPathRegistry;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.dao.orm.ModelRemovalThreadLocal;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
@@ -390,8 +391,20 @@ public class FinderCacheImpl
 			ctAwarePortalCache.removeAllFromCTPortalCaches();
 		}
 
+		boolean removing = ModelRemovalThreadLocal.isRemoving(baseModel);
+
 		for (FinderPath finderPath :
 				CountFinderPathRegistry.getCountFinderPaths(className)) {
+
+			if (removing) {
+				_adjustResult(
+					finderPath,
+					argumentsResolver.getArguments(
+						finderPath, baseModel, false, true),
+					-1, false);
+
+				continue;
+			}
 
 			_removeResult(
 				finderPath,
@@ -507,19 +520,19 @@ public class FinderCacheImpl
 						finderPath,
 						argumentsResolver.getArguments(
 							finderPath, baseModel, false, false),
-						1);
+						1, true);
 				}
 				else {
 					_adjustResult(
 						finderPath,
 						argumentsResolver.getArguments(
 							finderPath, baseModel, true, false),
-						1);
+						1, true);
 					_adjustResult(
 						finderPath,
 						argumentsResolver.getArguments(
 							finderPath, baseModel, true, true),
-						-1);
+						-1, true);
 				}
 
 				continue;
@@ -665,7 +678,8 @@ public class FinderCacheImpl
 	}
 
 	private void _adjustResult(
-		FinderPath finderPath, Object[] args, long delta) {
+		FinderPath finderPath, Object[] args, long delta,
+		boolean removeFromCTPortalCaches) {
 
 		if (args == null) {
 			return;
@@ -675,6 +689,12 @@ public class FinderCacheImpl
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
+
+		if (!removeFromCTPortalCaches &&
+			(portalCache instanceof CTAwarePortalCache ctAwarePortalCache)) {
+
+			portalCache = ctAwarePortalCache.getCTPortalCache();
+		}
 
 		CountKey countKey = null;
 

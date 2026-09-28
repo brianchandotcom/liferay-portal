@@ -58,7 +58,7 @@ public class CompanyKeyResolverImplTest {
 	@Test
 	public void testActivate() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		CompanyKeyCacheEntry companyKeyCacheEntry = _createCompanyKeyCacheEntry(
 			companyKeyResolverImpl);
@@ -66,8 +66,6 @@ public class CompanyKeyResolverImplTest {
 		companyKeyResolverImpl.activate(
 			HashMapBuilder.<String, Object>put(
 				"companyKEKIdentifier", _KEK_IDENTIFIER
-			).put(
-				"companyKeyCacheTTL", 1
 			).build());
 
 		Map<Long, CompanyKeyCacheEntry> companyKeyCacheEntries =
@@ -79,7 +77,6 @@ public class CompanyKeyResolverImplTest {
 
 		Assert.assertEquals(
 			_KEK_IDENTIFIER, keyManagerConfiguration.companyKEKIdentifier());
-		Assert.assertEquals(1, keyManagerConfiguration.companyKeyCacheTTL());
 
 		Assert.assertNull(companyKeyCacheEntry.getKeyBytes());
 		Assert.assertTrue(companyKeyCacheEntries.isEmpty());
@@ -90,7 +87,7 @@ public class CompanyKeyResolverImplTest {
 	@Test
 	public void testDeactivate() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		CompanyKeyCacheEntry companyKeyCacheEntry = _createCompanyKeyCacheEntry(
 			companyKeyResolverImpl);
@@ -118,12 +115,9 @@ public class CompanyKeyResolverImplTest {
 		_testUnwrapKey();
 		_testUnwrapKeyWithChangedWrappedKey();
 		_testUnwrapKeyWithDecryptFailure();
-		_testUnwrapKeyWithExpiredCacheEntry();
-		_testUnwrapKeyWithExpiredCacheEntryForOtherCompany();
 		_testUnwrapKeyWithMalformedWrappedKey();
 		_testUnwrapKeyWithMultipleCompanies();
 		_testUnwrapKeyWithUnsupportedVersion();
-		_testUnwrapKeyWithoutCache();
 	}
 
 	@Test
@@ -175,8 +169,7 @@ public class CompanyKeyResolverImplTest {
 		return companyKeyCacheEntries.get(_COMPANY_ID_1);
 	}
 
-	private CompanyKeyResolverImpl _createCompanyKeyResolverImpl(
-			int companyKeyCacheTTL)
+	private CompanyKeyResolverImpl _createCompanyKeyResolverImpl()
 		throws Exception {
 
 		CompanyKeyResolverImpl companyKeyResolverImpl =
@@ -196,12 +189,6 @@ public class CompanyKeyResolverImplTest {
 			_keyManagerConfiguration.companyKEKIdentifier()
 		).thenReturn(
 			_KEK_IDENTIFIER
-		);
-
-		Mockito.when(
-			_keyManagerConfiguration.companyKeyCacheTTL()
-		).thenReturn(
-			companyKeyCacheTTL
 		);
 
 		_keyManagerProfile = Mockito.mock(KeyManagerProfile.class);
@@ -291,7 +278,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testIsEnabled() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -351,7 +338,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testIsEnabledInFIPSMode() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -387,7 +374,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testUnwrapKey() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		String keyString = _toKeyString(_CIPHERTEXT_1);
 
@@ -412,7 +399,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testUnwrapKeyWithChangedWrappedKey() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		_mockDecrypt(_COMPANY_ID_1, _CIPHERTEXT_1, _KEY_BYTES_1);
 
@@ -448,7 +435,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testUnwrapKeyWithDecryptFailure() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		_createCompanyKeyCacheEntry(companyKeyResolverImpl);
 
@@ -459,76 +446,16 @@ public class CompanyKeyResolverImplTest {
 		Assert.assertEquals(
 			_key1, companyKeyResolverImpl.unwrapKey(_COMPANY_ID_1, keyString));
 
-		companyKeyResolverImpl = _createCompanyKeyResolverImpl(
-			RandomTestUtil.randomInt(1, 1000));
+		companyKeyResolverImpl = _createCompanyKeyResolverImpl();
 
 		_mockDecryptFailure();
 
 		_assertUnwrapKeyFails(companyKeyResolverImpl, keyString);
 	}
 
-	private void _testUnwrapKeyWithExpiredCacheEntry() throws Exception {
-		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
-
-		String keyString = _toKeyString(_CIPHERTEXT_1);
-
-		_mockDecrypt(_COMPANY_ID_1, _CIPHERTEXT_1, _KEY_BYTES_1);
-
-		companyKeyResolverImpl.unwrapKey(_COMPANY_ID_1, keyString);
-
-		Map<Long, CompanyKeyCacheEntry> companyKeyCacheEntries =
-			_getCompanyKeyCacheEntries(companyKeyResolverImpl);
-
-		CompanyKeyCacheEntry expiredCompanyKeyCacheEntry =
-			new CompanyKeyCacheEntry(
-				System.currentTimeMillis() - 1, _KEY_BYTES_1, keyString);
-
-		companyKeyCacheEntries.put(_COMPANY_ID_1, expiredCompanyKeyCacheEntry);
-
-		Assert.assertEquals(
-			_key1, companyKeyResolverImpl.unwrapKey(_COMPANY_ID_1, keyString));
-
-		Mockito.verify(
-			_cryptoManager, Mockito.times(2)
-		).decrypt(
-			ArgumentMatchers.any(), ArgumentMatchers.anyLong(),
-			ArgumentMatchers.any()
-		);
-
-		Assert.assertNull(expiredCompanyKeyCacheEntry.getKeyBytes());
-	}
-
-	private void _testUnwrapKeyWithExpiredCacheEntryForOtherCompany()
-		throws Exception {
-
-		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
-
-		Map<Long, CompanyKeyCacheEntry> companyKeyCacheEntries =
-			_getCompanyKeyCacheEntries(companyKeyResolverImpl);
-
-		CompanyKeyCacheEntry expiredCompanyKeyCacheEntry =
-			new CompanyKeyCacheEntry(
-				System.currentTimeMillis() - 1, _KEY_BYTES_1,
-				_toKeyString(_CIPHERTEXT_1));
-
-		companyKeyCacheEntries.put(_COMPANY_ID_1, expiredCompanyKeyCacheEntry);
-
-		_mockDecrypt(_COMPANY_ID_2, _CIPHERTEXT_2, _KEY_BYTES_2);
-
-		Assert.assertEquals(
-			_key2,
-			companyKeyResolverImpl.unwrapKey(
-				_COMPANY_ID_2, _toKeyString(_CIPHERTEXT_2)));
-
-		Assert.assertFalse(companyKeyCacheEntries.containsKey(_COMPANY_ID_1));
-		Assert.assertNull(expiredCompanyKeyCacheEntry.getKeyBytes());
-	}
-
 	private void _testUnwrapKeyWithMalformedWrappedKey() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		_assertUnwrapKeyFails(
 			companyKeyResolverImpl, RandomTestUtil.randomString());
@@ -551,7 +478,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testUnwrapKeyWithMultipleCompanies() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		String keyString1 = _toKeyString(_CIPHERTEXT_1);
 		String keyString2 = _toKeyString(_CIPHERTEXT_2);
@@ -590,38 +517,12 @@ public class CompanyKeyResolverImplTest {
 
 		Assert.assertTrue(CompanyKeyResolverUtil.isWrappedKey(keyString));
 
-		_assertUnwrapKeyFails(
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000)),
-			keyString);
-	}
-
-	private void _testUnwrapKeyWithoutCache() throws Exception {
-		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(0);
-
-		String keyString = _toKeyString(_CIPHERTEXT_1);
-
-		_mockDecrypt(_COMPANY_ID_1, _CIPHERTEXT_1, _KEY_BYTES_1);
-
-		companyKeyResolverImpl.unwrapKey(_COMPANY_ID_1, keyString);
-		companyKeyResolverImpl.unwrapKey(_COMPANY_ID_1, keyString);
-
-		Mockito.verify(
-			_cryptoManager, Mockito.times(2)
-		).decrypt(
-			ArgumentMatchers.any(), ArgumentMatchers.anyLong(),
-			ArgumentMatchers.any()
-		);
-
-		Map<Long, CompanyKeyCacheEntry> companyKeyCacheEntries =
-			_getCompanyKeyCacheEntries(companyKeyResolverImpl);
-
-		Assert.assertTrue(companyKeyCacheEntries.isEmpty());
+		_assertUnwrapKeyFails(_createCompanyKeyResolverImpl(), keyString);
 	}
 
 	private void _testWrapKey() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		Mockito.when(
 			_cryptoManager.encrypt(
@@ -672,7 +573,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testWrapKeyWithEncryptFailure() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		Mockito.when(
 			_cryptoManager.encrypt(
@@ -687,7 +588,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testWrapKeyWithUnregisteredKEKProvider() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		Mockito.when(
 			_cryptoManager.getCryptoProviderIds(ArgumentMatchers.anyLong())
@@ -707,7 +608,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testWrapKeyWithWildcardKEKProvider() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		_mockCompanyKEKProviderId(StringPool.STAR);
 
@@ -716,7 +617,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testWrapKeyWithoutKEKIdentifier() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		_mockCompanyKEKIdentifier(StringPool.BLANK);
 
@@ -725,7 +626,7 @@ public class CompanyKeyResolverImplTest {
 
 	private void _testWrapKeyWithoutKEKProvider() throws Exception {
 		CompanyKeyResolverImpl companyKeyResolverImpl =
-			_createCompanyKeyResolverImpl(RandomTestUtil.randomInt(1, 1000));
+			_createCompanyKeyResolverImpl();
 
 		Mockito.when(
 			_keyManagerProfileRegistry.getActiveKeyManagerProfile()

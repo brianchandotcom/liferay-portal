@@ -44,6 +44,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -178,6 +179,16 @@ public class OpenAPIUtil {
 		boolean injectVulcanParameters, JSONObject openAPIJSONObject,
 		String restrictFields, String toolName) {
 
+		return getTool(
+			injectVulcanParameters, UnaryOperator.identity(), openAPIJSONObject,
+			restrictFields, toolName);
+	}
+
+	public static Tool getTool(
+		boolean injectVulcanParameters,
+		UnaryOperator<Map<String, Object>> inputSchemaUnaryOperator,
+		JSONObject openAPIJSONObject, String restrictFields, String toolName) {
+
 		Operation operation = _getOperation(openAPIJSONObject, toolName);
 
 		return new Tool() {
@@ -187,10 +198,12 @@ public class OpenAPIUtil {
 						operation._method, operation._operationJSONObject,
 						operation._path));
 				setInputSchema(
-					() -> _getInputSchema(
-						injectVulcanParameters, operation._method,
-						openAPIJSONObject, operation._operationJSONObject,
-						operation._pathParametersJSONArray, restrictFields));
+					() -> inputSchemaUnaryOperator.apply(
+						_getInputSchema(
+							injectVulcanParameters, operation._method,
+							openAPIJSONObject, operation._operationJSONObject,
+							operation._pathParametersJSONArray,
+							restrictFields)));
 
 				setName(() -> toolName);
 			}

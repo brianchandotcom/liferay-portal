@@ -160,6 +160,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 						: undefined
 				}
 				aria-invalid={!!errorMessage}
+				aria-required={required}
 				dateFormat={dateFormat}
 				disabled={disabled}
 				firstDayOfWeek={firstDayOfWeek}

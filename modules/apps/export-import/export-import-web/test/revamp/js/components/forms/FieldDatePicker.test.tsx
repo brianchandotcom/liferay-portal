@@ -42,6 +42,23 @@ describe('FieldDatePicker', () => {
 		);
 	});
 
+	it('marks a required input as required', () => {
+		render(
+			<FieldDatePicker
+				dateFormat="yyyy-MM-dd"
+				label="Start Date"
+				name="startDate"
+				required
+				use12Hours={false}
+			/>
+		);
+
+		expect(screen.getByLabelText(/Start Date/)).toHaveAttribute(
+			'aria-required',
+			'true'
+		);
+	});
+
 	it('fills in the default time when a date is picked without one', () => {
 		const onChange = jest.fn();
 

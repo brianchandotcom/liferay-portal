@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
-import com.liferay.headless.admin.content.client.dto.v1_0.PageRuleCondition;
+import com.liferay.headless.admin.content.client.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -22,24 +22,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class PageRuleConditionSerDes {
+public class UserGroupBriefSerDes {
 
-	public static PageRuleCondition toDTO(String json) {
-		PageRuleConditionJSONParser pageRuleConditionJSONParser =
-			new PageRuleConditionJSONParser();
+	public static UserGroupBrief toDTO(String json) {
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return pageRuleConditionJSONParser.parseToDTO(json);
+		return userGroupBriefJSONParser.parseToDTO(json);
 	}
 
-	public static PageRuleCondition[] toDTOs(String json) {
-		PageRuleConditionJSONParser pageRuleConditionJSONParser =
-			new PageRuleConditionJSONParser();
+	public static UserGroupBrief[] toDTOs(String json) {
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return pageRuleConditionJSONParser.parseToDTOs(json);
+		return userGroupBriefJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(PageRuleCondition pageRuleCondition) {
-		if (pageRuleCondition == null) {
+	public static String toJSON(UserGroupBrief userGroupBrief) {
+		if (userGroupBrief == null) {
 			return "null";
 		}
 
@@ -47,54 +47,54 @@ public class PageRuleConditionSerDes {
 
 		sb.append("{");
 
-		if (pageRuleCondition.getField() != null) {
+		if (userGroupBrief.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"field\": ");
+			sb.append("\"description\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(pageRuleCondition.getField()));
+			sb.append(_escape(userGroupBrief.getDescription()));
 
 			sb.append("\"");
 		}
 
-		if (pageRuleCondition.getId() != null) {
+		if (userGroupBrief.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userGroupBrief.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (userGroupBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(pageRuleCondition.getId()));
-
-			sb.append("\"");
+			sb.append(userGroupBrief.getId());
 		}
 
-		if (pageRuleCondition.getOptions() != null) {
+		if (userGroupBrief.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"options\": ");
-
-			sb.append(String.valueOf(pageRuleCondition.getOptions()));
-		}
-
-		if (pageRuleCondition.getType() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
+			sb.append("\"name\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(pageRuleCondition.getType()));
+			sb.append(_escape(userGroupBrief.getName()));
 
 			sb.append("\"");
 		}
@@ -105,77 +105,80 @@ public class PageRuleConditionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PageRuleConditionJSONParser pageRuleConditionJSONParser =
-			new PageRuleConditionJSONParser();
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return pageRuleConditionJSONParser.parseToMap(json);
+		return userGroupBriefJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		PageRuleCondition pageRuleCondition) {
-
-		if (pageRuleCondition == null) {
+	public static Map<String, String> toMap(UserGroupBrief userGroupBrief) {
+		if (userGroupBrief == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageRuleCondition.getField() == null) {
-			map.put("field", null);
+		if (userGroupBrief.getDescription() == null) {
+			map.put("description", null);
 		}
 		else {
-			map.put("field", String.valueOf(pageRuleCondition.getField()));
+			map.put(
+				"description", String.valueOf(userGroupBrief.getDescription()));
 		}
 
-		if (pageRuleCondition.getId() == null) {
+		if (userGroupBrief.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(userGroupBrief.getExternalReferenceCode()));
+		}
+
+		if (userGroupBrief.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(pageRuleCondition.getId()));
+			map.put("id", String.valueOf(userGroupBrief.getId()));
 		}
 
-		if (pageRuleCondition.getOptions() == null) {
-			map.put("options", null);
+		if (userGroupBrief.getName() == null) {
+			map.put("name", null);
 		}
 		else {
-			map.put("options", String.valueOf(pageRuleCondition.getOptions()));
-		}
-
-		if (pageRuleCondition.getType() == null) {
-			map.put("type", null);
-		}
-		else {
-			map.put("type", String.valueOf(pageRuleCondition.getType()));
+			map.put("name", String.valueOf(userGroupBrief.getName()));
 		}
 
 		return map;
 	}
 
-	public static class PageRuleConditionJSONParser
-		extends BaseJSONParser<PageRuleCondition> {
+	public static class UserGroupBriefJSONParser
+		extends BaseJSONParser<UserGroupBrief> {
 
 		@Override
-		protected PageRuleCondition createDTO() {
-			return new PageRuleCondition();
+		protected UserGroupBrief createDTO() {
+			return new UserGroupBrief();
 		}
 
 		@Override
-		protected PageRuleCondition[] createDTOArray(int size) {
-			return new PageRuleCondition[size];
+		protected UserGroupBrief[] createDTOArray(int size) {
+			return new UserGroupBrief[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "field")) {
+			if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "options")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
+			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
 
@@ -184,28 +187,31 @@ public class PageRuleConditionSerDes {
 
 		@Override
 		protected void setField(
-			PageRuleCondition pageRuleCondition, String jsonParserFieldName,
+			UserGroupBrief userGroupBrief, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "field")) {
+			if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					pageRuleCondition.setField((String)jsonParserFieldValue);
+					userGroupBrief.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					userGroupBrief.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					pageRuleCondition.setId((String)jsonParserFieldValue);
+					userGroupBrief.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "options")) {
+			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					pageRuleCondition.setOptions(
-						OptionsSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
-				if (jsonParserFieldValue != null) {
-					pageRuleCondition.setType((String)jsonParserFieldValue);
+					userGroupBrief.setName((String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -295,4 +301,4 @@ public class PageRuleConditionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:769918475
+// LIFERAY-REST-BUILDER-HASH:444243538

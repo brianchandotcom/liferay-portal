@@ -118,4 +118,4 @@ public class RelatedContent implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:27408319
+// LIFERAY-REST-BUILDER-HASH:1016325447

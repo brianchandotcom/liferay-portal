@@ -99,4 +99,4 @@ public class Geo implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-421579157
+// LIFERAY-REST-BUILDER-HASH:298027491

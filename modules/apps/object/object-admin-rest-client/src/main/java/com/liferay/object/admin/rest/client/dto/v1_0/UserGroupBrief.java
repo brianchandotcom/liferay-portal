@@ -1,18 +1,17 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.admin.content.client.dto.v1_0;
+package com.liferay.object.admin.rest.client.dto.v1_0;
 
-import com.liferay.headless.admin.content.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.content.client.serdes.v1_0.ClientExtensionSerDes;
+import com.liferay.object.admin.rest.client.function.UnsafeSupplier;
+import com.liferay.object.admin.rest.client.serdes.v1_0.UserGroupBriefSerDes;
 
 import jakarta.annotation.Generated;
 
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -20,35 +19,32 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ClientExtension implements Cloneable, Serializable {
+public class UserGroupBrief implements Cloneable, Serializable {
 
-	public static ClientExtension toDTO(String json) {
-		return ClientExtensionSerDes.toDTO(json);
+	public static UserGroupBrief toDTO(String json) {
+		return UserGroupBriefSerDes.toDTO(json);
 	}
 
-	public Map<String, String> getClientExtensionConfig() {
-		return clientExtensionConfig;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setClientExtensionConfig(
-		Map<String, String> clientExtensionConfig) {
-
-		this.clientExtensionConfig = clientExtensionConfig;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setClientExtensionConfig(
-		UnsafeSupplier<Map<String, String>, Exception>
-			clientExtensionConfigUnsafeSupplier) {
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
 		try {
-			clientExtensionConfig = clientExtensionConfigUnsafeSupplier.get();
+			description = descriptionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, String> clientExtensionConfig;
+	protected String description;
 
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
@@ -71,6 +67,25 @@ public class ClientExtension implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long id;
+
 	public String getName() {
 		return name;
 	}
@@ -91,8 +106,8 @@ public class ClientExtension implements Cloneable, Serializable {
 	protected String name;
 
 	@Override
-	public ClientExtension clone() throws CloneNotSupportedException {
-		return (ClientExtension)super.clone();
+	public UserGroupBrief clone() throws CloneNotSupportedException {
+		return (UserGroupBrief)super.clone();
 	}
 
 	@Override
@@ -101,13 +116,13 @@ public class ClientExtension implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ClientExtension)) {
+		if (!(object instanceof UserGroupBrief)) {
 			return false;
 		}
 
-		ClientExtension clientExtension = (ClientExtension)object;
+		UserGroupBrief userGroupBrief = (UserGroupBrief)object;
 
-		return Objects.equals(toString(), clientExtension.toString());
+		return Objects.equals(toString(), userGroupBrief.toString());
 	}
 
 	@Override
@@ -118,8 +133,8 @@ public class ClientExtension implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ClientExtensionSerDes.toJSON(this);
+		return UserGroupBriefSerDes.toJSON(this);
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2037861237
+// LIFERAY-REST-BUILDER-HASH:448411666

@@ -201,4 +201,4 @@ public class PageRule implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1467364374
+// LIFERAY-REST-BUILDER-HASH:1718399538

@@ -646,15 +646,19 @@ public class ObjectValidationRuleLocalServiceImpl
 			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 			_systemObjectDefinitionManagerRegistry);
 
-		Locale locale = LocaleUtil.getMostRelevantLocale();
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		if (locale == null) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-		if ((LocaleThreadLocal.getThemeDisplayLocale() == null) &&
-			(serviceContext != null)) {
-
-			locale = LocaleUtil.fromLanguageId(serviceContext.getLanguageId());
+			if (serviceContext == null) {
+				locale = LocaleUtil.getDefault();
+			}
+			else {
+				locale = LocaleUtil.fromLanguageId(
+					serviceContext.getLanguageId());
+			}
 		}
 
 		User user = _userLocalService.fetchUser(userId);

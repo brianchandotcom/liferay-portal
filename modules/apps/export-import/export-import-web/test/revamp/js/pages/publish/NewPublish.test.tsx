@@ -1098,6 +1098,12 @@ describe('NewPublish', () => {
 		await user.tab();
 
 		expect(
+			screen.queryByText('this-field-is-required')
+		).not.toBeInTheDocument();
+
+		await user.click(document.body);
+
+		expect(
 			await screen.findByText('this-field-is-required')
 		).toBeInTheDocument();
 

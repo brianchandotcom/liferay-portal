@@ -103,7 +103,7 @@ describe('FieldTimePicker', () => {
 		expect(screen.getByText('This field is required.')).toBeInTheDocument();
 	});
 
-	it('calls onBlur once a segment loses focus', () => {
+	it('does not call onBlur while the focus moves between segments', () => {
 		const onBlur = jest.fn();
 
 		render(
@@ -115,10 +115,32 @@ describe('FieldTimePicker', () => {
 			/>
 		);
 
-		fireEvent.blur(screen.getByLabelText('hours'));
+		fireEvent.blur(screen.getByLabelText('hours'), {
+			relatedTarget: screen.getByLabelText('minutes'),
+		});
+
+		expect(onBlur).not.toHaveBeenCalled();
+	});
+
+	it('calls onBlur once the focus leaves the field', () => {
+		const onBlur = jest.fn();
+
+		render(
+			<FieldTimePicker
+				id="time"
+				label="Time of Day"
+				name="time"
+				onBlur={onBlur}
+			/>
+		);
+
+		fireEvent.blur(screen.getByLabelText('minutes'), {
+			relatedTarget: document.body,
+		});
 
 		expect(onBlur).toHaveBeenCalledTimes(1);
 	});
+
 
 	it('has no accessibility violations', async () => {
 		const {container} = render(

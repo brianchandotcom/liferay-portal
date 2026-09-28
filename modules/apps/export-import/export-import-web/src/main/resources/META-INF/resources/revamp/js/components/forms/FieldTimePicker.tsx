@@ -87,7 +87,17 @@ const FieldTimePicker = ({
 			label={label}
 			required={required}
 		>
-			<div onBlur={onBlur}>
+			<div
+				onBlur={(event) => {
+					if (
+						!event.currentTarget.contains(
+							event.relatedTarget as Node
+						)
+					) {
+						onBlur?.();
+					}
+				}}
+			>
 				<ClayTimePicker
 					ariaLabels={{
 						ampm: Liferay.Language.get('am-pm'),

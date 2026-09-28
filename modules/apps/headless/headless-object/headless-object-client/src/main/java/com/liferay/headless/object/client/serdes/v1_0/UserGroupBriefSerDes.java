@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.admin.content.client.serdes.v1_0;
+package com.liferay.headless.object.client.serdes.v1_0;
 
-import com.liferay.headless.admin.content.client.dto.v1_0.ClientExtension;
-import com.liferay.headless.admin.content.client.json.BaseJSONParser;
+import com.liferay.headless.object.client.dto.v1_0.UserGroupBrief;
+import com.liferay.headless.object.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
 
@@ -18,28 +18,28 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
- * @author Javier Gamarra
+ * @author Alicia García
  * @generated
  */
 @Generated("")
-public class ClientExtensionSerDes {
+public class UserGroupBriefSerDes {
 
-	public static ClientExtension toDTO(String json) {
-		ClientExtensionJSONParser clientExtensionJSONParser =
-			new ClientExtensionJSONParser();
+	public static UserGroupBrief toDTO(String json) {
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return clientExtensionJSONParser.parseToDTO(json);
+		return userGroupBriefJSONParser.parseToDTO(json);
 	}
 
-	public static ClientExtension[] toDTOs(String json) {
-		ClientExtensionJSONParser clientExtensionJSONParser =
-			new ClientExtensionJSONParser();
+	public static UserGroupBrief[] toDTOs(String json) {
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return clientExtensionJSONParser.parseToDTOs(json);
+		return userGroupBriefJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ClientExtension clientExtension) {
-		if (clientExtension == null) {
+	public static String toJSON(UserGroupBrief userGroupBrief) {
+		if (userGroupBrief == null) {
 			return "null";
 		}
 
@@ -47,17 +47,21 @@ public class ClientExtensionSerDes {
 
 		sb.append("{");
 
-		if (clientExtension.getClientExtensionConfig() != null) {
+		if (userGroupBrief.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"clientExtensionConfig\": ");
+			sb.append("\"description\": ");
 
-			sb.append(_toJSON(clientExtension.getClientExtensionConfig()));
+			sb.append("\"");
+
+			sb.append(_escape(userGroupBrief.getDescription()));
+
+			sb.append("\"");
 		}
 
-		if (clientExtension.getExternalReferenceCode() != null) {
+		if (userGroupBrief.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -66,12 +70,22 @@ public class ClientExtensionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(clientExtension.getExternalReferenceCode()));
+			sb.append(_escape(userGroupBrief.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
 
-		if (clientExtension.getName() != null) {
+		if (userGroupBrief.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(userGroupBrief.getId());
+		}
+
+		if (userGroupBrief.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -80,7 +94,7 @@ public class ClientExtensionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(clientExtension.getName()));
+			sb.append(_escape(userGroupBrief.getName()));
 
 			sb.append("\"");
 		}
@@ -91,68 +105,77 @@ public class ClientExtensionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ClientExtensionJSONParser clientExtensionJSONParser =
-			new ClientExtensionJSONParser();
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return clientExtensionJSONParser.parseToMap(json);
+		return userGroupBriefJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(ClientExtension clientExtension) {
-		if (clientExtension == null) {
+	public static Map<String, String> toMap(UserGroupBrief userGroupBrief) {
+		if (userGroupBrief == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (clientExtension.getClientExtensionConfig() == null) {
-			map.put("clientExtensionConfig", null);
+		if (userGroupBrief.getDescription() == null) {
+			map.put("description", null);
 		}
 		else {
 			map.put(
-				"clientExtensionConfig",
-				String.valueOf(clientExtension.getClientExtensionConfig()));
+				"description", String.valueOf(userGroupBrief.getDescription()));
 		}
 
-		if (clientExtension.getExternalReferenceCode() == null) {
+		if (userGroupBrief.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
-				String.valueOf(clientExtension.getExternalReferenceCode()));
+				String.valueOf(userGroupBrief.getExternalReferenceCode()));
 		}
 
-		if (clientExtension.getName() == null) {
+		if (userGroupBrief.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(userGroupBrief.getId()));
+		}
+
+		if (userGroupBrief.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(clientExtension.getName()));
+			map.put("name", String.valueOf(userGroupBrief.getName()));
 		}
 
 		return map;
 	}
 
-	public static class ClientExtensionJSONParser
-		extends BaseJSONParser<ClientExtension> {
+	public static class UserGroupBriefJSONParser
+		extends BaseJSONParser<UserGroupBrief> {
 
 		@Override
-		protected ClientExtension createDTO() {
-			return new ClientExtension();
+		protected UserGroupBrief createDTO() {
+			return new UserGroupBrief();
 		}
 
 		@Override
-		protected ClientExtension[] createDTOArray(int size) {
-			return new ClientExtension[size];
+		protected UserGroupBrief[] createDTOArray(int size) {
+			return new UserGroupBrief[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "clientExtensionConfig")) {
-				return true;
+			if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -164,26 +187,31 @@ public class ClientExtensionSerDes {
 
 		@Override
 		protected void setField(
-			ClientExtension clientExtension, String jsonParserFieldName,
+			UserGroupBrief userGroupBrief, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "clientExtensionConfig")) {
+			if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					clientExtension.setClientExtensionConfig(
-						(Map<String, String>)jsonParserFieldValue);
+					userGroupBrief.setDescription((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
-					clientExtension.setExternalReferenceCode(
+					userGroupBrief.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					userGroupBrief.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					clientExtension.setName((String)jsonParserFieldValue);
+					userGroupBrief.setName((String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -273,4 +301,4 @@ public class ClientExtensionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2038716242
+// LIFERAY-REST-BUILDER-HASH:-857650096

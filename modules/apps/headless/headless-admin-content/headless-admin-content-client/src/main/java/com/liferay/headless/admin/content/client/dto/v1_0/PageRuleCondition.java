@@ -137,4 +137,4 @@ public class PageRuleCondition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:871086368
+// LIFERAY-REST-BUILDER-HASH:1259740520

@@ -897,8 +897,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				requestLocale, objectValidationRule, serviceContext,
 				guestUser.getUserId());
 
-			// Guest user with a theme display locale and a service context
-			// language
+			// Guest user with a theme display and a service context language
 
 			Locale serviceContextLocale = LocaleUtil.US;
 

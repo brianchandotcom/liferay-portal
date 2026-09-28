@@ -357,8 +357,15 @@ public class LayoutContentVersionLocalServiceImpl
 		SegmentsExperience segmentsExperience, ServiceContext serviceContext,
 		long userId) {
 
-		String css = _getCommonStylesCSS(
-			layout, segmentsExperience.getSegmentsExperienceId());
+		String css = null;
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				layout.getPlid(), segmentsExperience.getSegmentsExperienceId());
+
+		if (layoutStructure != null) {
+			css = CommonStylesUtil.getCSS(layout, layoutStructure, false);
+		}
 
 		for (Locale locale :
 				_language.getAvailableLocales(layout.getGroupId())) {
@@ -409,20 +416,6 @@ public class LayoutContentVersionLocalServiceImpl
 				}
 			}
 		}
-	}
-
-	private String _getCommonStylesCSS(
-		Layout layout, long segmentsExperienceId) {
-
-		LayoutStructure layoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				layout.getPlid(), segmentsExperienceId);
-
-		if (layoutStructure == null) {
-			return null;
-		}
-
-		return CommonStylesUtil.getCSS(layout, layoutStructure, false);
 	}
 
 	private int _getNextVersion(long plid) {

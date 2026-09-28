@@ -54,7 +54,8 @@ public class MBSuspiciousActivityServiceUtil {
 	}
 
 	public static List<MBSuspiciousActivity> getMessageSuspiciousActivities(
-		long messageId) {
+			long messageId)
+		throws PortalException {
 
 		return getService().getMessageSuspiciousActivities(messageId);
 	}
@@ -76,7 +77,8 @@ public class MBSuspiciousActivityServiceUtil {
 	}
 
 	public static List<MBSuspiciousActivity> getThreadSuspiciousActivities(
-		long threadId) {
+			long threadId)
+		throws PortalException {
 
 		return getService().getThreadSuspiciousActivities(threadId);
 	}
@@ -98,4 +100,4 @@ public class MBSuspiciousActivityServiceUtil {
 			MBSuspiciousActivityService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-619389639
+// LIFERAY-SERVICE-BUILDER-HASH:-1628524679

@@ -172,8 +172,9 @@ public class MBSuspiciousActivityServiceHttp {
 
 	public static java.util.List
 		<com.liferay.message.boards.model.MBSuspiciousActivity>
-			getMessageSuspiciousActivities(
-				HttpPrincipal httpPrincipal, long messageId) {
+				getMessageSuspiciousActivities(
+					HttpPrincipal httpPrincipal, long messageId)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -190,6 +191,13 @@ public class MBSuspiciousActivityServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -251,8 +259,9 @@ public class MBSuspiciousActivityServiceHttp {
 
 	public static java.util.List
 		<com.liferay.message.boards.model.MBSuspiciousActivity>
-			getThreadSuspiciousActivities(
-				HttpPrincipal httpPrincipal, long threadId) {
+				getThreadSuspiciousActivities(
+					HttpPrincipal httpPrincipal, long threadId)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -269,6 +278,13 @@ public class MBSuspiciousActivityServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -355,4 +371,4 @@ public class MBSuspiciousActivityServiceHttp {
 		new Class[] {long.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1633664974
+// LIFERAY-SERVICE-BUILDER-HASH:452781746

@@ -238,23 +238,27 @@ public class OpenAPIParserUtil {
 
 		String baseDir = configYAML.getBaseDir();
 		String externalReference = null;
-		Set<String> visitedPaths = new HashSet<>();
+		List<String> externalReferences = getExternalReferences(openAPIYAML);
+		Map<String, Map<String, Schema>> externalSchemasMap = new HashMap<>();
 
-		Queue<String> queue = new LinkedList<>(
-			getExternalReferences(openAPIYAML));
+		Queue<String> queue = new LinkedList<>(externalReferences);
 
 		while ((externalReference = queue.poll()) != null) {
 			File externalFile = _resolveExternalFile(
 				baseDir, externalReference);
 
-			if (!visitedPaths.add(externalFile.getPath())) {
+			if (externalSchemasMap.containsKey(externalFile.getPath())) {
 				continue;
 			}
 
 			openAPIYAML = YAMLUtil.loadOpenAPIYAML(externalFile);
 
-			externalReferencesMap.putAll(
-				OpenAPIUtil.getAllSchemas(configYAML, openAPIYAML));
+			Map<String, Schema> externalSchemas = OpenAPIUtil.getAllSchemas(
+				configYAML, openAPIYAML);
+
+			externalSchemasMap.put(externalFile.getPath(), externalSchemas);
+
+			externalReferencesMap.putAll(externalSchemas);
 
 			String parentPath = externalFile.getParent() + "/";
 
@@ -262,6 +266,22 @@ public class OpenAPIParserUtil {
 					getExternalReferences(openAPIYAML)) {
 
 				queue.add(parentPath + curExternalReference);
+			}
+		}
+
+		for (String curExternalReference : externalReferences) {
+			File externalFile = _resolveExternalFile(
+				baseDir, curExternalReference);
+
+			Map<String, Schema> externalSchemas = externalSchemasMap.get(
+				externalFile.getPath());
+
+			String referenceName = getReferenceName(curExternalReference);
+
+			Schema schema = externalSchemas.get(referenceName);
+
+			if (schema != null) {
+				externalReferencesMap.put(referenceName, schema);
 			}
 		}
 
@@ -325,12 +345,13 @@ public class OpenAPIParserUtil {
 		Map<String, String> javaDataTypeMap = new TreeMap<>();
 
 		String baseDir = configYAML.getBaseDir();
+		List<String> externalReferences = getExternalReferences(openAPIYAML);
+		Map<String, Map<String, String>> externalJavaDataTypeMaps =
+			new HashMap<>();
 		Set<String> visitedPaths = new HashSet<>();
 
 		try {
-			for (String externalReference :
-					getExternalReferences(openAPIYAML)) {
-
+			for (String externalReference : externalReferences) {
 				File externalFile = _resolveExternalFile(
 					baseDir, externalReference);
 
@@ -356,7 +377,31 @@ public class OpenAPIParserUtil {
 				Map<String, String> externalJavaDataTypeMap =
 					getJavaDataTypeMap(externalConfigYAML, externalOpenAPIYAML);
 
+				externalJavaDataTypeMaps.put(
+					externalFile.getPath(), externalJavaDataTypeMap);
+
 				javaDataTypeMap.putAll(externalJavaDataTypeMap);
+			}
+
+			for (String externalReference : externalReferences) {
+				File externalFile = _resolveExternalFile(
+					baseDir, externalReference);
+
+				Map<String, String> externalJavaDataTypeMap =
+					externalJavaDataTypeMaps.get(externalFile.getPath());
+
+				if (externalJavaDataTypeMap == null) {
+					continue;
+				}
+
+				String referenceName = getReferenceName(externalReference);
+
+				String javaDataType = externalJavaDataTypeMap.get(
+					referenceName);
+
+				if (javaDataType != null) {
+					javaDataTypeMap.put(referenceName, javaDataType);
+				}
 			}
 		}
 		catch (IOException ioException) {

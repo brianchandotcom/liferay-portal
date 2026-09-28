@@ -88,6 +88,14 @@ const FieldTimePicker = ({
 			required={required}
 		>
 			<div
+				aria-describedby={
+					errorMessage ? `${fieldId}fieldFeedback` : undefined
+				}
+				aria-label={
+					required
+						? `${label} ${Liferay.Language.get('mandatory')}`
+						: label
+				}
 				onBlur={(event) => {
 					if (
 						!event.currentTarget.contains(
@@ -97,6 +105,7 @@ const FieldTimePicker = ({
 						onBlur?.();
 					}
 				}}
+				role="group"
 			>
 				<ClayTimePicker
 					ariaLabels={{

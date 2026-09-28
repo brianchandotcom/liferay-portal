@@ -86,8 +86,13 @@ describe('FieldTimePicker', () => {
 			/>
 		);
 
-		expect(screen.getByLabelText(/Time of Day/)).toBeDisabled();
+		expect(
+			screen.getByRole('group', {name: /Time of Day/})
+		).toBeInTheDocument();
+
+		expect(screen.getByLabelText('hours')).toBeDisabled();
 		expect(screen.getByLabelText('minutes')).toBeDisabled();
+		expect(screen.getByLabelText('am-pm')).toBeDisabled();
 	});
 
 	it('shows an error message', () => {
@@ -141,6 +146,35 @@ describe('FieldTimePicker', () => {
 		expect(onBlur).toHaveBeenCalledTimes(1);
 	});
 
+	it('groups the segments under the field label', () => {
+		render(
+			<FieldTimePicker
+				id="time"
+				label="Time of Day"
+				name="time"
+				required
+			/>
+		);
+
+		expect(
+			screen.getByRole('group', {name: 'Time of Day mandatory'})
+		).toBeInTheDocument();
+	});
+
+	it('describes the segments with the error message', () => {
+		render(
+			<FieldTimePicker
+				errorMessage="This field is required."
+				id="time"
+				label="Time of Day"
+				name="time"
+			/>
+		);
+
+		expect(
+			screen.getByRole('group', {name: 'Time of Day'})
+		).toHaveAccessibleDescription('This field is required.');
+	});
 
 	it('has no accessibility violations', async () => {
 		const {container} = render(

@@ -447,7 +447,7 @@ describe('NewPublish', () => {
 		);
 
 		expect(
-			screen.queryByLabelText(/repeat-at.*mandatory/i)
+			screen.queryByRole('group', {name: /repeat-at.*mandatory/i})
 		).not.toBeInTheDocument();
 
 		await user.click(
@@ -455,7 +455,7 @@ describe('NewPublish', () => {
 		);
 
 		expect(
-			screen.getByLabelText(/repeat-at.*mandatory/i)
+			screen.getByRole('group', {name: /repeat-at.*mandatory/i})
 		).toBeInTheDocument();
 	});
 
@@ -745,7 +745,7 @@ describe('NewPublish', () => {
 		).toBeChecked();
 		expect(screen.getByLabelText('hours')).toHaveValue('12');
 		expect(screen.getByLabelText('am-pm')).toHaveValue('AM');
-		expect(screen.getByLabelText(/repeat-at/)).toBeDisabled();
+		expect(screen.getByLabelText('hours')).toBeDisabled();
 	});
 
 	it('reclassifies a custom cron whose time differs from the start date, unchecking the sync', async () => {
@@ -779,7 +779,7 @@ describe('NewPublish', () => {
 		).not.toBeChecked();
 		expect(screen.getByLabelText('hours')).toHaveValue('12');
 		expect(screen.getByLabelText('am-pm')).toHaveValue('AM');
-		expect(screen.getByLabelText(/repeat-at/)).toBeEnabled();
+		expect(screen.getByLabelText('hours')).toBeEnabled();
 	});
 
 	it('shows the original cron when a reclassified process is switched back to custom', async () => {

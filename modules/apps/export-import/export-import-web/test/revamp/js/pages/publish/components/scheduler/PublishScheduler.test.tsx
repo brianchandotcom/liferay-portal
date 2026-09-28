@@ -226,17 +226,23 @@ describe('PublishScheduler', () => {
 	it('shows the repeat at field only for a repeating unit', () => {
 		renderPublishScheduler({enabled: true, unit: IntervalUnit.Never});
 
-		expect(screen.queryByLabelText('repeat-at')).not.toBeInTheDocument();
+		expect(
+			screen.queryByRole('group', {name: 'repeat-at'})
+		).not.toBeInTheDocument();
 
 		cleanup();
 		renderPublishScheduler({enabled: true, unit: IntervalUnit.Custom});
 
-		expect(screen.queryByLabelText('repeat-at')).not.toBeInTheDocument();
+		expect(
+			screen.queryByRole('group', {name: 'repeat-at'})
+		).not.toBeInTheDocument();
 
 		cleanup();
 		renderPublishScheduler({enabled: true, unit: IntervalUnit.Week});
 
-		expect(screen.getByLabelText('repeat-at')).toBeInTheDocument();
+		expect(
+			screen.getByRole('group', {name: 'repeat-at'})
+		).toBeInTheDocument();
 	});
 
 	it('shows the end date field for every unit except never', () => {
@@ -273,7 +279,7 @@ describe('PublishScheduler', () => {
 		).toBeChecked();
 		expect(screen.getByLabelText('hours')).toHaveValue('09');
 		expect(screen.getByLabelText('minutes')).toHaveValue('15');
-		expect(screen.getByLabelText('repeat-at')).toBeDisabled();
+		expect(screen.getByLabelText('hours')).toBeDisabled();
 	});
 
 	it('unchecks the sync and seeds the current start date time when unchecked', async () => {
@@ -316,7 +322,7 @@ describe('PublishScheduler', () => {
 
 		expect(screen.getByLabelText('hours')).toHaveValue('10');
 		expect(screen.getByLabelText('minutes')).toHaveValue('00');
-		expect(screen.getByLabelText(/repeat-at/)).toBeEnabled();
+		expect(screen.getByLabelText('hours')).toBeEnabled();
 
 		await user.click(
 			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})

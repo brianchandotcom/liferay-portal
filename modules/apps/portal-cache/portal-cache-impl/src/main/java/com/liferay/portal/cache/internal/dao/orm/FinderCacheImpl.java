@@ -297,13 +297,7 @@ public class FinderCacheImpl
 			return;
 		}
 
-		if (_isLocalCacheEnabled()) {
-			Map<LocalCacheKey, Serializable> localCache = _localCache.get();
-
-			localCache.put(
-				new LocalCacheKey(finderPath.getCacheName(), cacheKey),
-				cacheValue);
-		}
+		_putLocalCache(finderPath, cacheKey, cacheValue);
 	}
 
 	public void removeByEntityCache(String className, BaseModel<?> baseModel) {
@@ -821,6 +815,18 @@ public class FinderCacheImpl
 		}
 
 		return ThreadLocalFilterThreadLocal.isFilterInvoked();
+	}
+
+	private void _putLocalCache(
+		FinderPath finderPath, Serializable cacheKey, Serializable cacheValue) {
+
+		if (_isLocalCacheEnabled()) {
+			Map<LocalCacheKey, Serializable> localCache = _localCache.get();
+
+			localCache.put(
+				new LocalCacheKey(finderPath.getCacheName(), cacheKey),
+				cacheValue);
+		}
 	}
 
 	private void _removeResult(

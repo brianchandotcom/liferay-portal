@@ -134,4 +134,4 @@ public interface ToolSearchResultResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1521516465
+// LIFERAY-REST-BUILDER-HASH:-1969502633

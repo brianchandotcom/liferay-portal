@@ -526,6 +526,22 @@ public class OpenAPIUtilTest {
 				JSONFactoryUtil.createJSONObject()));
 	}
 
+	@Test
+	public void testGetToolWithAnInputSchemaUnaryOperator() {
+		Tool tool = OpenAPIUtil.getTool(
+			true,
+			inputSchema -> HashMapBuilder.<String, Object>put(
+				"type", "trimmed"
+			).build(),
+			_openAPIJSONObject, null, "getItemsPage");
+
+		Assert.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				"type", "trimmed"
+			).build(),
+			tool.getInputSchema());
+	}
+
 	private void _assertMultipartContentType(
 		VulcanRequestForwarder.Request request) {
 

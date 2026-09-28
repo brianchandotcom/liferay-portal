@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
 import java.util.ArrayList;
@@ -89,7 +90,30 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		sb.append("PLAYWRIGHT_PROJECT_NAME=");
 		sb.append(getProjectName());
 
+		String workspaceName = getWorkspaceName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(workspaceName)) {
+			sb.append("\nPLAYWRIGHT_WORKSPACE_NAME=");
+			sb.append(workspaceName);
+		}
+
 		return sb.toString();
+	}
+
+	public String getWorkspaceName() {
+		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
+			PlaywrightAxisTestClassGroup playwrightAxisTestClassGroup =
+				(PlaywrightAxisTestClassGroup)axisTestClassGroup;
+
+			String workspaceName =
+				playwrightAxisTestClassGroup.getWorkspaceName();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(workspaceName)) {
+				return workspaceName;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

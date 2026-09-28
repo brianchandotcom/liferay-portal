@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.test.clazz.PlaywrightJUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClassMethod;
@@ -89,6 +90,21 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 		}
 
 		return playwrightTestClassMethods;
+	}
+
+	public String getWorkspaceName() {
+		for (TestClass testClass : getTestClasses()) {
+			PlaywrightJUnitTestClass playwrightJUnitTestClass =
+				(PlaywrightJUnitTestClass)testClass;
+
+			String workspaceName = playwrightJUnitTestClass.getWorkspaceName();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(workspaceName)) {
+				return workspaceName;
+			}
+		}
+
+		return null;
 	}
 
 	public Boolean isAnalyticsCloudEnabled() {

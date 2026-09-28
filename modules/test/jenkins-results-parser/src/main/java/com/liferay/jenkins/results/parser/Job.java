@@ -99,6 +99,8 @@ public interface Job {
 
 	public int getTimeoutMinutes(JenkinsMaster jenkinsMaster);
 
+	public Set<String> getWorkspaceNames();
+
 	public boolean isBuildCachingEnabled();
 
 	public boolean isDownstreamEnabled();

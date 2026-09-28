@@ -108,7 +108,7 @@ tests:
         it: Omits the service account annotations by default
     -   asserts:
             -   lengthEqual:
-                    count: 8
+                    count: 10
                     path: rules
             -   contains:
                     content:
@@ -157,6 +157,30 @@ tests:
                             -   list
                             -   patch
                             -   update
+                            -   watch
+                    path: rules
+            -   contains:
+                    content:
+                        apiGroups:
+                            -   autoscaling
+                        resources:
+                            -   horizontalpodautoscalers
+                        verbs:
+                            -   get
+                            -   list
+                            -   patch
+                            -   watch
+                    path: rules
+            -   contains:
+                    content:
+                        apiGroups:
+                            -   keda.sh
+                        resources:
+                            -   scaledobjects
+                        verbs:
+                            -   get
+                            -   list
+                            -   patch
                             -   watch
                     path: rules
         documentSelector:

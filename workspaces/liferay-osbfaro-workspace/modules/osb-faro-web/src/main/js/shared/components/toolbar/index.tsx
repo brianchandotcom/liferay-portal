@@ -113,7 +113,7 @@ const Toolbar: React.FC<IToolbarProps> = ({className, groupId}) => {
 						aria-expanded={active}
 						aria-haspopup="true"
 						borderless
-						className="text-nowrap"
+						className="rounded-lg text-nowrap"
 						data-tooltip-align="bottom"
 						displayType="secondary"
 						onClick={() => setActive(!active)}

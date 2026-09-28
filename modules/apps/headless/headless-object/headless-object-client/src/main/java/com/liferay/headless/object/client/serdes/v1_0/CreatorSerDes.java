@@ -6,6 +6,7 @@
 package com.liferay.headless.object.client.serdes.v1_0;
 
 import com.liferay.headless.object.client.dto.v1_0.Creator;
+import com.liferay.headless.object.client.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.object.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -167,6 +168,26 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
+		if (creator.getUserGroupBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userGroupBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < creator.getUserGroupBriefs().length; i++) {
+				sb.append(String.valueOf(creator.getUserGroupBriefs()[i]));
+
+				if ((i + 1) < creator.getUserGroupBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -251,6 +272,15 @@ public class CreatorSerDes {
 			map.put("profileURL", String.valueOf(creator.getProfileURL()));
 		}
 
+		if (creator.getUserGroupBriefs() == null) {
+			map.put("userGroupBriefs", null);
+		}
+		else {
+			map.put(
+				"userGroupBriefs",
+				String.valueOf(creator.getUserGroupBriefs()));
+		}
+
 		return map;
 	}
 
@@ -295,6 +325,9 @@ public class CreatorSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "userGroupBriefs")) {
 				return false;
 			}
 
@@ -352,6 +385,22 @@ public class CreatorSerDes {
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
 				if (jsonParserFieldValue != null) {
 					creator.setProfileURL((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "userGroupBriefs")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					UserGroupBrief[] userGroupBriefsArray =
+						new UserGroupBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < userGroupBriefsArray.length; i++) {
+						userGroupBriefsArray[i] = UserGroupBriefSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					creator.setUserGroupBriefs(userGroupBriefsArray);
 				}
 			}
 		}
@@ -441,4 +490,4 @@ public class CreatorSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1127908679
+// LIFERAY-REST-BUILDER-HASH:-5303486

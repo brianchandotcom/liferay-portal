@@ -6,6 +6,7 @@
 package com.liferay.marketplace.settings.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.marketplace.settings.web.internal.util.MarketplaceUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -46,6 +47,8 @@ public class DisconnectMVCResourceCommand extends BaseMVCResourceCommand {
 		if (!permissionChecker.isCompanyAdmin()) {
 			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
 		}
+
+		MarketplaceUtil.deleteTokens(themeDisplay.getCompanyId());
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			themeDisplay.getCompanyId());

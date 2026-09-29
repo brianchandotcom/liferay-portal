@@ -18,13 +18,11 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.key.secret.SecretResolver;
 
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Keven Leone
@@ -53,10 +51,8 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 			themeDisplay.getPermissionChecker(), MarketplacePortletKeys.GENERAL,
 			MarketplaceActionKeys.GET_AUTHORIZATION);
 
-		String accessToken = _secretResolver.resolve(
-			themeDisplay.getCompanyId(),
-			PrefsPropsUtil.getString(
-				themeDisplay.getCompanyId(), "marketplaceAccessToken"));
+		String accessToken = MarketplaceUtil.getToken(
+			themeDisplay.getCompanyId(), "marketplaceAccessToken");
 		long accessTokenExpirationTime = PrefsPropsUtil.getLong(
 			themeDisplay.getCompanyId(),
 			"marketplaceAccessTokenExpirationTime");
@@ -67,7 +63,7 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 				PrefsPropsUtil.getString(
 					themeDisplay.getCompanyId(), "marketplaceCode"),
 				null,
-				PrefsPropsUtil.getString(
+				MarketplaceUtil.getToken(
 					themeDisplay.getCompanyId(), "marketplaceRefreshToken"),
 				PrefsPropsUtil.getString(
 					themeDisplay.getCompanyId(), "marketplaceServiceURL"),
@@ -87,8 +83,5 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 				"accessTokenExpirationTime", accessTokenExpirationTime
 			));
 	}
-
-	@Reference
-	private SecretResolver _secretResolver;
 
 }

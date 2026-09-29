@@ -29,6 +29,8 @@ spec:
                             value: {{ .Values.debug | quote }}
                         -   name: DOWNLOAD_POLL_INTERVAL
                             value: {{ .Values.downloadPollInterval | quote }}
+                        -   name: EXPIRATION_GRACE_PERIOD
+                            value: {{ .Values.expirationGracePeriod | quote }}
                         -   name: GRACE_PERIOD
                             value: {{ .Values.gracePeriod | quote }}
                         -   name: HEARTBEAT_INTERVAL

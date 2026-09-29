@@ -2,6 +2,7 @@ affinity: {}
 customLabels: {}
 debug: false
 downloadPollInterval: 15s
+expirationGracePeriod: 2160h
 fullnameOverride: ""
 gracePeriod: 168h
 heartbeatInterval: 10m

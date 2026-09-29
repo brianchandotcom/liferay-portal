@@ -93,14 +93,15 @@ func main() {
 			ServiceAccount: config.OperatorNamespace + "/" + config.OperatorServiceAccount,
 		},
 		&licensing.LiferayEnvironmentReconciler{
-			Client:               manager.GetClient(),
-			GracePeriod:          config.GracePeriod,
-			HeartbeatInterval:    config.HeartbeatInterval,
-			MarketplaceMountPath: config.MarketplaceMountPath,
-			Provisioning:         provisioningClient,
-			Recorder:             manager.GetEventRecorderFor("liferayenvironment-controller"),
-			RetryInitialDelay:    config.RetryInitialDelay,
-			RetryMaxDelay:        config.RetryMaxDelay,
+			Client:                manager.GetClient(),
+			ExpirationGracePeriod: config.ExpirationGracePeriod,
+			GracePeriod:           config.GracePeriod,
+			HeartbeatInterval:     config.HeartbeatInterval,
+			MarketplaceMountPath:  config.MarketplaceMountPath,
+			Provisioning:          provisioningClient,
+			Recorder:              manager.GetEventRecorderFor("liferayenvironment-controller"),
+			RetryInitialDelay:     config.RetryInitialDelay,
+			RetryMaxDelay:         config.RetryMaxDelay,
 			Syncer: addon.NewSyncer(
 				provisioningClient, config.DownloadPollInterval,
 				config.RetryInitialDelay, config.RetryMaxDelay, addon.GoRunner{},
@@ -130,6 +131,7 @@ func main() {
 type config struct {
 	Debug                  bool          `env:"DEBUG" envDefault:"false"`
 	DownloadPollInterval   time.Duration `env:"DOWNLOAD_POLL_INTERVAL" envDefault:"15s"`
+	ExpirationGracePeriod  time.Duration `env:"EXPIRATION_GRACE_PERIOD" envDefault:"2160h"`
 	GracePeriod            time.Duration `env:"GRACE_PERIOD" envDefault:"168h"`
 	HeartbeatInterval      time.Duration `env:"HEARTBEAT_INTERVAL" envDefault:"10m"`
 	MarketplaceMountPath   string        `env:"MARKETPLACE_MOUNT_PATH" envDefault:"/marketplace"`

@@ -148,6 +148,13 @@ tests:
             downloadPollInterval: 45s
     -   asserts:
             -   equal:
+                    path: spec.template.spec.containers[0].env[?(@.name=="EXPIRATION_GRACE_PERIOD")].value
+                    value: 720h
+        it: Propagates the expiration grace period as a quoted environment variable
+        set:
+            expirationGracePeriod: 720h
+    -   asserts:
+            -   equal:
                     path: spec.template.spec.containers[0].env[?(@.name=="GRACE_PERIOD")].value
                     value: 72h
         it: Propagates the grace period as a quoted environment variable

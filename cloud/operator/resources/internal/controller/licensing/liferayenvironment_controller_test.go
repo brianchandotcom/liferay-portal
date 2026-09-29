@@ -3330,14 +3330,15 @@ func reconcileEnvironment(
 	t.Helper()
 
 	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
-		Client:               newFakeClient(t, objects...),
-		GracePeriod:          7 * 24 * time.Hour,
-		HeartbeatInterval:    10 * time.Minute,
-		MarketplaceMountPath: t.TempDir(),
-		Provisioning:         provisioningClient,
-		Recorder:             record.NewFakeRecorder(10),
-		RetryInitialDelay:    30 * time.Second,
-		RetryMaxDelay:        30 * time.Minute,
+		Client:                newFakeClient(t, objects...),
+		ExpirationGracePeriod: 90 * 24 * time.Hour,
+		GracePeriod:           7 * 24 * time.Hour,
+		HeartbeatInterval:     10 * time.Minute,
+		MarketplaceMountPath:  t.TempDir(),
+		Provisioning:          provisioningClient,
+		Recorder:              record.NewFakeRecorder(10),
+		RetryInitialDelay:     30 * time.Second,
+		RetryMaxDelay:         30 * time.Minute,
 		Syncer: addon.NewSyncer(
 			provisioningClient, 15*time.Second, 30*time.Second, 30*time.Minute,
 			inlineRunner{},
@@ -3368,11 +3369,12 @@ func reconcileOfflineActivationBundle(
 	t.Helper()
 
 	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
-		Client:               newFakeClient(t, objects...),
-		HeartbeatInterval:    10 * time.Minute,
-		MarketplaceMountPath: marketplaceMountPath,
-		Provisioning:         &stubProvisioning{},
-		Recorder:             record.NewFakeRecorder(10),
+		Client:                newFakeClient(t, objects...),
+		ExpirationGracePeriod: 90 * 24 * time.Hour,
+		HeartbeatInterval:     10 * time.Minute,
+		MarketplaceMountPath:  marketplaceMountPath,
+		Provisioning:          &stubProvisioning{},
+		Recorder:              record.NewFakeRecorder(10),
 	}
 
 	return liferayEnvironmentReconciler, reconcile(liferayEnvironmentReconciler, t)

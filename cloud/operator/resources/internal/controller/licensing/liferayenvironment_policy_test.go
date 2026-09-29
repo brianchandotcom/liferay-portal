@@ -713,11 +713,12 @@ func newPolicyReconciler(
 	}
 
 	return &LiferayEnvironmentReconciler{
-		Client:               reconcilerClient,
-		HeartbeatInterval:    10 * time.Minute,
-		MarketplaceMountPath: t.TempDir(),
-		Provisioning:         provisioningClient,
-		Recorder:             record.NewFakeRecorder(10),
+		Client:                reconcilerClient,
+		ExpirationGracePeriod: 90 * 24 * time.Hour,
+		HeartbeatInterval:     10 * time.Minute,
+		MarketplaceMountPath:  t.TempDir(),
+		Provisioning:          provisioningClient,
+		Recorder:              record.NewFakeRecorder(10),
 		Syncer: addon.NewSyncer(
 			provisioningClient, 15*time.Second, 30*time.Second, 30*time.Minute,
 			inlineRunner{},

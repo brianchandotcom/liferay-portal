@@ -729,6 +729,15 @@ func TestEnforceReplicaCeiling(t *testing.T) {
 				)
 			}
 
+			if condition.Reason == "ExceedsLicensedMaximum" &&
+				!strings.Contains(condition.Message, "replica ceiling") {
+
+				t.Errorf(
+					"Condition message = %q, want it to name the replica ceiling",
+					condition.Message,
+				)
+			}
+
 			if !testCase.workloadExists {
 				return
 			}
@@ -2292,7 +2301,7 @@ func TestReconcileOfflineRestoresCeilingAfterOwnerMatches(t *testing.T) {
 	meta.SetStatusCondition(
 		&environment.Status.Conditions,
 		metav1.Condition{
-			Message: "Requested 3 replicas exceeds the licensed maximum of 0; capping to 0.",
+			Message: "Requested 3 replicas exceeds the replica ceiling of 0; capping to 0.",
 			Reason:  "ExceedsLicensedMaximum",
 			Status:  metav1.ConditionFalse,
 			Type:    conditionReplicasCountValid,

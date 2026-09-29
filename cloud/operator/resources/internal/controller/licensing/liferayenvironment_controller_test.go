@@ -2005,6 +2005,7 @@ func TestReconcilePersistsCeilingWhenWorkloadUpdateRejected(t *testing.T) {
 	environment := activatedEnvironment()
 	environment.Spec.DesiredReplicas = pointerInt32(3)
 	environment.Status.License.MaxClusterNodes = pointerInt32(0)
+	environment.Status.ReplicaCeiling = pointerInt32(0)
 
 	provisioningClient := &stubProvisioning{
 		entitlements: &provisioning.Entitlements{
@@ -2016,7 +2017,7 @@ func TestReconcilePersistsCeilingWhenWorkloadUpdateRejected(t *testing.T) {
 	}
 
 	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
-		Client: newFakeClientEnforcingMax(
+		Client: newFakeClientEnforcingCeiling(
 			t,
 			&corev1.Namespace{
 				ObjectMeta: metav1.ObjectMeta{
@@ -2058,9 +2059,9 @@ func TestReconcilePersistsCeilingWhenWorkloadUpdateRejected(t *testing.T) {
 		t.Logf("The workload update was rejected: %v", error)
 	}
 
-	maxClusterNodes := getEnvironment(
-		liferayEnvironmentReconciler, t,
-	).Status.License.MaxClusterNodes
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+	maxClusterNodes := liferayEnvironment.Status.License.MaxClusterNodes
 
 	if maxClusterNodes == nil {
 		t.Fatal(
@@ -2076,6 +2077,10 @@ func TestReconcilePersistsCeilingWhenWorkloadUpdateRejected(t *testing.T) {
 	}
 
 	assertReplicasEqual(
+		liferayEnvironment.Status.ReplicaCeiling, pointerInt32(3), "status.replicaCeiling", t,
+	)
+
+	assertReplicasEqual(
 		getStatefulSet(liferayEnvironmentReconciler, t).Spec.Replicas,
 		pointerInt32(3), "Replicas", t,
 	)
@@ -2086,29 +2091,54 @@ func TestReconcilePersistsGracePeriodWhenWorkloadUpdateRejected(t *testing.T) {
 
 	environment := activatedEnvironment()
 	environment.Spec.DesiredReplicas = pointerInt32(3)
-	environment.Status.License.MaxClusterNodes = pointerInt32(0)
+	environment.Status.License.MaxClusterNodes = pointerInt32(3)
+	environment.Status.ReplicaCeiling = pointerInt32(3)
 	environment.Status.UnreachableSince = &unreachableSince
 
+	fakeClient := fake.NewClientBuilder().WithInterceptorFuncs(
+		interceptor.Funcs{
+			Update: func(
+				context context.Context,
+				writer client.WithWatch,
+				object client.Object,
+				options ...client.UpdateOption,
+			) error {
+				if statefulSet, ok := object.(*appsv1.StatefulSet); ok {
+					return errors.NewForbidden(
+						schema.GroupResource{Group: "apps", Resource: "statefulsets"},
+						statefulSet.Name,
+						fmt.Errorf("the workload is locked"),
+					)
+				}
+
+				return writer.Update(context, object, options...)
+			},
+		},
+	).WithObjects(
+		&corev1.Namespace{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "liferay-dev",
+				UID:  "dev-namespace-uid",
+			},
+		},
+		&appsv1.StatefulSet{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "dev-liferay",
+				Namespace: "liferay-dev",
+			},
+			Spec: appsv1.StatefulSetSpec{
+				Replicas: pointerInt32(3),
+			},
+		},
+		environment,
+	).WithScheme(
+		newScheme(t),
+	).WithStatusSubresource(
+		&licensingv1alpha1.LiferayEnvironment{},
+	).Build()
+
 	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
-		Client: newFakeClientEnforcingMax(
-			t,
-			&corev1.Namespace{
-				ObjectMeta: metav1.ObjectMeta{
-					Name: "liferay-dev",
-					UID:  "dev-namespace-uid",
-				},
-			},
-			&appsv1.StatefulSet{
-				ObjectMeta: metav1.ObjectMeta{
-					Name:      "dev-liferay",
-					Namespace: "liferay-dev",
-				},
-				Spec: appsv1.StatefulSetSpec{
-					Replicas: pointerInt32(0),
-				},
-			},
-			environment,
-		),
+		Client:               fakeClient,
 		GracePeriod:          time.Hour,
 		HeartbeatInterval:    10 * time.Minute,
 		MarketplaceMountPath: t.TempDir(),
@@ -2133,12 +2163,27 @@ func TestReconcilePersistsGracePeriodWhenWorkloadUpdateRejected(t *testing.T) {
 		t.Logf("The workload update was rejected: %v", error)
 	}
 
-	if phase := getEnvironment(
-		liferayEnvironmentReconciler, t,
-	).Status.Phase; phase != "Degraded" {
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+	if liferayEnvironment.Status.Phase != "Degraded" {
 		t.Errorf(
 			"Phase = %q, want Degraded persisted so that the grace period and the backoff survive the rejected write",
-			phase,
+			liferayEnvironment.Status.Phase,
+		)
+	}
+
+	assertReplicasEqual(
+		liferayEnvironment.Status.ReplicaCeiling, pointerInt32(1), "status.replicaCeiling", t,
+	)
+
+	condition := meta.FindStatusCondition(
+		liferayEnvironment.Status.Conditions, conditionReplicasCountValid,
+	)
+
+	if condition == nil || condition.Reason != "WorkloadUpdateRejected" {
+		t.Errorf(
+			"ReplicasCountValid condition = %v, want reason WorkloadUpdateRejected",
+			condition,
 		)
 	}
 }
@@ -3079,7 +3124,7 @@ func newFakeClient(t *testing.T, objects ...client.Object) client.Client {
 	).Build()
 }
 
-func newFakeClientEnforcingMax(
+func newFakeClientEnforcingCeiling(
 	t *testing.T, objects ...client.Object,
 ) client.Client {
 	t.Helper()
@@ -3108,15 +3153,19 @@ func newFakeClientEnforcingMax(
 					return error
 				}
 
-				maxClusterNodes := liferayEnvironment.Status.License.MaxClusterNodes
+				replicaCeiling := liferayEnvironment.Status.ReplicaCeiling
 
-				if maxClusterNodes != nil && *statefulSet.Spec.Replicas > *maxClusterNodes {
+				if replicaCeiling == nil {
+					replicaCeiling = liferayEnvironment.Status.License.MaxClusterNodes
+				}
+
+				if replicaCeiling != nil && *statefulSet.Spec.Replicas > *replicaCeiling {
 					return errors.NewForbidden(
 						schema.GroupResource{Group: "apps", Resource: "statefulsets"},
 						statefulSet.Name,
 						fmt.Errorf(
-							"replicas %d exceeds licensed maxClusterNodes %d",
-							*statefulSet.Spec.Replicas, *maxClusterNodes,
+							"replicas %d exceeds the replica ceiling %d",
+							*statefulSet.Spec.Replicas, *replicaCeiling,
 						),
 					)
 				}

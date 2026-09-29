@@ -136,31 +136,45 @@ function combine_properties_files {
 }
 
 function default_set_up {
-	update_portal_ext_properties
+	if [[ -n ${PLAYWRIGHT_WORKSPACE_NAME} ]]
+	then
+		update_workspace_portal_ext_properties
 
-	update_learn_resources_dir
+		start_workspace_app_server
 
-	deploy_parent_project_osgi_modules
+		echo "Skipping the learn resources, OSGi modules, deploy folders, OSGi configs, and client extensions because the ${PLAYWRIGHT_WORKSPACE_NAME} workspace provides its own bundle."
+	else
+		update_portal_ext_properties
 
-	deploy_project_osgi_modules
+		update_learn_resources_dir
 
-	start_default_app_server
+		deploy_parent_project_osgi_modules
 
-	deploy_parent_project_deploy_folder
+		deploy_project_osgi_modules
 
-	deploy_project_deploy_folder
+		start_default_app_server
 
-	deploy_parent_project_osgi_configs
+		deploy_parent_project_deploy_folder
 
-	deploy_project_osgi_configs
+		deploy_project_deploy_folder
 
-	deploy_parent_project_client_extensions
+		deploy_parent_project_osgi_configs
 
-	deploy_project_client_extensions
+		deploy_project_osgi_configs
+
+		deploy_parent_project_client_extensions
+
+		deploy_project_client_extensions
+	fi
 }
 
 function default_tear_down {
-	stop_default_app_server
+	if [[ -n ${PLAYWRIGHT_WORKSPACE_NAME} ]]
+	then
+		stop_workspace_app_server
+	else
+		stop_default_app_server
+	fi
 }
 
 function delete_property {
@@ -738,6 +752,15 @@ function start_default_app_server {
 	start_app_server ${LIFERAY_HOME} ${LIFERAY_PORTAL_URL}
 }
 
+function start_workspace_app_server {
+	if ! LIFERAY_COMPOSE_OVERRIDES=ci /bin/bash ${PLAYWRIGHT_WORKSPACE_DIR}/scripts/bootstrap/start.sh
+	then
+		echo "Unable to start the ${PLAYWRIGHT_WORKSPACE_NAME} workspace."
+
+		exit 1
+	fi
+}
+
 function stop_additional_bundles {
 	default_tear_down
 
@@ -825,6 +848,14 @@ function stop_default_app_server {
 	stop_app_server ${LIFERAY_HOME} ${LIFERAY_PORTAL_URL}
 }
 
+function stop_workspace_app_server {
+	docker compose \
+		--file ${PLAYWRIGHT_WORKSPACE_DIR}/docker-compose.yaml \
+		--file ${PLAYWRIGHT_WORKSPACE_DIR}/docker-compose-ci.yaml \
+		down \
+		--volumes
+}
+
 function update_learn_resources_dir {
 	local learn_resources_dir=${_PORTAL_PROJECT_DIR}/learn-resources/data
 
@@ -873,6 +904,26 @@ function update_property {
 	do
 		sed -i "s/${property_name}=.*/${property_name}=${property_value}/g" "${properties_file}"
 	done
+}
+
+function update_workspace_portal_ext_properties {
+	local portal_setup_wizard_properties_file=$(mktemp)
+
+	combine_properties_files \
+		${portal_setup_wizard_properties_file} \
+		\
+		$(get_parent_portal_ext_properties_files) \
+		\
+		$(get_playwright_project_dir)/env/portal-ext.properties
+
+	chmod 644 ${portal_setup_wizard_properties_file}
+
+	if ! docker cp ${portal_setup_wizard_properties_file} ${HOSTNAME}_liferay:/opt/liferay/portal-setup-wizard.properties
+	then
+		echo "Unable to copy ${portal_setup_wizard_properties_file} to the ${PLAYWRIGHT_WORKSPACE_NAME} workspace."
+
+		exit 1
+	fi
 }
 
 function upgrade_legacy_database_set_up {

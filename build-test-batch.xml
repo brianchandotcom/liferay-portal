@@ -59,6 +59,99 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="create-workspace-bundle">
+		<attribute name="database.type" />
+		<attribute name="workspace.dir" />
+		<attribute name="workspace.name" />
+
+		<sequential>
+			<loadproperties prefix="workspace.portal.env" srcFile="@{workspace.dir}/configs/local/portal-env.properties" />
+
+			<local name="workspace.database.type" />
+
+			<propertyregex
+				input="${workspace.portal.env.jdbc.default.url}"
+				property="workspace.database.type"
+				regexp="^jdbc:([^:]+):.*"
+				select="\1"
+			/>
+
+			<fail message="Unable to find jdbc.default.url in @{workspace.dir}/configs/local/portal-env.properties." unless="workspace.database.type" />
+
+			<fail message="Unable to run the @{workspace.name} workspace on a @{database.type} batch because it runs on ${workspace.database.type}.">
+				<condition>
+					<not>
+						<equals arg1="${workspace.database.type}" arg2="@{database.type}" />
+					</not>
+				</condition>
+			</fail>
+
+			<fail message="Unable to create an empty ${workspace.database.type} database for the @{workspace.name} workspace.">
+				<condition>
+					<not>
+						<equals arg1="${workspace.database.type}" arg2="postgresql" />
+					</not>
+				</condition>
+			</fail>
+
+			<exec executable="docker" failonerror="true">
+				<arg value="load" />
+				<arg value="--input" />
+				<arg value="${project.dir}/dist/liferay-docker-@{workspace.name}.tar" />
+			</exec>
+
+			<exec executable="docker" failonerror="true">
+				<arg value="exec" />
+				<arg value="${database.postgresql.host}" />
+				<arg value="psql" />
+				<arg value="--command" />
+				<arg value="DROP DATABASE IF EXISTS lportal_workspace;" />
+				<arg value="--command" />
+				<arg value="CREATE DATABASE lportal_workspace;" />
+				<arg value="--dbname" />
+				<arg value="postgres" />
+				<arg value="--username" />
+				<arg value="${database.postgresql.username}" />
+			</exec>
+
+			<echo file="@{workspace.dir}/docker-compose-ci.yaml"><![CDATA[services:
+    database:
+        profiles:
+            - workspace-database
+    liferay:
+        container_name: ${env.HOSTNAME}_liferay
+        depends_on: !reset {}
+        environment:
+            LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME: ${database.postgresql.driver}
+            LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD: "${database.postgresql.password}"
+            LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL: jdbc:postgresql://${database.postgresql.host}:5432/lportal_workspace
+            LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME: ${database.postgresql.username}
+        network_mode: container:${env.NODE_NAME}
+        ports: !override []
+]]></echo>
+
+			<exec dir="@{workspace.dir}" executable="docker" failonerror="false">
+				<arg value="compose" />
+				<arg value="--file" />
+				<arg value="docker-compose.yaml" />
+				<arg value="--file" />
+				<arg value="docker-compose-ci.yaml" />
+				<arg value="down" />
+				<arg value="--volumes" />
+			</exec>
+
+			<exec dir="@{workspace.dir}" executable="docker" failonerror="true">
+				<arg value="compose" />
+				<arg value="--file" />
+				<arg value="docker-compose.yaml" />
+				<arg value="--file" />
+				<arg value="docker-compose-ci.yaml" />
+				<arg value="create" />
+				<arg value="liferay" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="database-test-action">
 		<attribute name="database.type" />
 		<element name="action" />
@@ -3605,10 +3698,28 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								replace="${java.jdk.home}/bin"
 							/>
 
+							<local name="workspace.dir" />
+
+							<if>
+								<isset property="env.PLAYWRIGHT_WORKSPACE_NAME" />
+								<then>
+									<condition else="${project.dir}/workspaces/${env.PLAYWRIGHT_WORKSPACE_NAME}" property="workspace.dir" value="${liferay.portal.private.dir}/workspaces/${env.PLAYWRIGHT_WORKSPACE_NAME}">
+										<available file="${liferay.portal.private.dir}/workspaces/${env.PLAYWRIGHT_WORKSPACE_NAME}" type="dir" />
+									</condition>
+								</then>
+							</if>
+
 							<local name="exception.message" />
 
 							<trycatch property="exception.message">
 								<try>
+									<if>
+										<isset property="env.PLAYWRIGHT_WORKSPACE_NAME" />
+										<then>
+											<create-workspace-bundle database.type="@{database.type}" workspace.dir="${workspace.dir}" workspace.name="${env.PLAYWRIGHT_WORKSPACE_NAME}" />
+										</then>
+									</if>
+
 									<exec executable="/bin/bash" failonerror="true" timeout="${test.class.playwright.setup.timeout}">
 										<arg value="modules/test/playwright/env/set_up.sh" />
 										<env key="APP_SERVER_TYPE" value="@{app.server.type}" />
@@ -3620,6 +3731,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 										<env key="LIFERAY_PORTAL_URL" value="http://${env.NODE_NAME}:8080" />
 										<env key="PATH" value="${execute.path}" />
 										<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
+										<env if:set="env.PLAYWRIGHT_WORKSPACE_NAME" key="PLAYWRIGHT_WORKSPACE_DIR" value="${workspace.dir}" />
+										<env if:set="env.PLAYWRIGHT_WORKSPACE_NAME" key="PLAYWRIGHT_WORKSPACE_NAME" value="${env.PLAYWRIGHT_WORKSPACE_NAME}" />
 									</exec>
 
 									<start-docker-playwright />
@@ -3674,6 +3787,13 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<finally>
 									<stop-docker-playwright />
 
+									<if>
+										<isset property="env.PLAYWRIGHT_WORKSPACE_NAME" />
+										<then>
+											<print-docker-logs container.name="${env.HOSTNAME}_liferay" />
+										</then>
+									</if>
+
 									<exec executable="/bin/bash" timeout="${test.class.playwright.teardown.timeout}">
 										<arg value="modules/test/playwright/env/tear_down.sh" />
 										<env key="APP_SERVER_TYPE" value="@{app.server.type}" />
@@ -3684,6 +3804,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 										<env key="LIFERAY_PORTAL_URL" value="http://${env.HOSTNAME}:8080" />
 										<env key="PATH" value="${execute.path}" />
 										<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
+										<env if:set="env.PLAYWRIGHT_WORKSPACE_NAME" key="PLAYWRIGHT_WORKSPACE_DIR" value="${workspace.dir}" />
+										<env if:set="env.PLAYWRIGHT_WORKSPACE_NAME" key="PLAYWRIGHT_WORKSPACE_NAME" value="${env.PLAYWRIGHT_WORKSPACE_NAME}" />
 									</exec>
 
 									<split-testsuites-junit-report test.suites.report.filepath="${playwright.dir}/test-results/TEST-playwright.xml" />

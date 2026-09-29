@@ -1429,9 +1429,9 @@ func TestReconcileAppliesExpirationWhileProvisioningUnreachable(t *testing.T) {
 	}
 
 	if meta.IsStatusConditionTrue(
-		liferayEnvironment.Status.Conditions, conditionGracePeriodExpired,
+		liferayEnvironment.Status.Conditions, conditionProvisioningGracePeriodExpired,
 	) {
-		t.Error("GracePeriodExpired condition = True, want it unset while provisioning is within its grace period")
+		t.Error("ProvisioningGracePeriodExpired condition = True, want it unset while provisioning is within its grace period")
 	}
 }
 
@@ -1532,7 +1532,7 @@ func TestReconcileBacksOffWhenActivationRejected(t *testing.T) {
 	}
 }
 
-func TestReconcileDowngradesAfterGracePeriod(t *testing.T) {
+func TestReconcileDowngradesAfterProvisioningGracePeriod(t *testing.T) {
 	unreachableSince := metav1.NewTime(time.Now().Add(-8 * 24 * time.Hour))
 
 	environment := activatedEnvironment()
@@ -1616,9 +1616,9 @@ func TestReconcileDowngradesAfterGracePeriod(t *testing.T) {
 	)
 
 	if !meta.IsStatusConditionTrue(
-		liferayEnvironment.Status.Conditions, conditionGracePeriodExpired,
+		liferayEnvironment.Status.Conditions, conditionProvisioningGracePeriodExpired,
 	) {
-		t.Error("GracePeriodExpired condition = not True, want True after the grace window")
+		t.Error("ProvisioningGracePeriodExpired condition = not True, want True after the grace window")
 	}
 
 	if licenseXML := getLicenseXML(liferayEnvironmentReconciler, t); licenseXML != "<license>known-good</license>" {
@@ -1629,11 +1629,11 @@ func TestReconcileDowngradesAfterGracePeriod(t *testing.T) {
 
 	select {
 	case event := <-recorder.Events:
-		if !strings.Contains(event, "GracePeriodExpired") {
-			t.Errorf("event = %q, should mention GracePeriodExpired", event)
+		if !strings.Contains(event, "ProvisioningGracePeriodExpired") {
+			t.Errorf("event = %q, should mention ProvisioningGracePeriodExpired", event)
 		}
 	default:
-		t.Error("Expected a GracePeriodExpired warning event")
+		t.Error("Expected a ProvisioningGracePeriodExpired warning event")
 	}
 }
 
@@ -1846,7 +1846,7 @@ func TestReconcileIsNotBlockedByAddOns(t *testing.T) {
 	}
 }
 
-func TestReconcileKeepsLowerCeilingAfterGracePeriod(t *testing.T) {
+func TestReconcileKeepsLowerCeilingAfterProvisioningGracePeriod(t *testing.T) {
 	unreachableSince := metav1.NewTime(time.Now().Add(-8 * 24 * time.Hour))
 
 	environment := activatedEnvironment()
@@ -2532,7 +2532,7 @@ func TestReconcilePersistsCeilingWhenWorkloadUpdateRejected(t *testing.T) {
 	)
 }
 
-func TestReconcilePersistsGracePeriodWhenWorkloadUpdateRejected(t *testing.T) {
+func TestReconcilePersistsProvisioningGracePeriodWhenWorkloadUpdateRejected(t *testing.T) {
 	unreachableSince := metav1.NewTime(time.Now().Add(-2 * time.Hour))
 
 	environment := activatedEnvironment()
@@ -2585,15 +2585,15 @@ func TestReconcilePersistsGracePeriodWhenWorkloadUpdateRejected(t *testing.T) {
 
 	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
 		Client:               fakeClient,
-		GracePeriod:          time.Hour,
 		HeartbeatInterval:    10 * time.Minute,
 		MarketplaceMountPath: t.TempDir(),
 		Provisioning: &stubProvisioning{
 			manifestError: fmt.Errorf("provisioning is unreachable"),
 		},
-		Recorder:          record.NewFakeRecorder(10),
-		RetryInitialDelay: 30 * time.Second,
-		RetryMaxDelay:     30 * time.Minute,
+		ProvisioningGracePeriod: time.Hour,
+		Recorder:                record.NewFakeRecorder(10),
+		RetryInitialDelay:       30 * time.Second,
+		RetryMaxDelay:           30 * time.Minute,
 	}
 
 	_, error := liferayEnvironmentReconciler.Reconcile(
@@ -2673,6 +2673,42 @@ func TestReconcileRejectsLicenseIssuedForAnotherEnvironment(t *testing.T) {
 	assertReplicasEqual(
 		statefulSet.Spec.Replicas, pointerInt32(0), "statefulSet.spec.replicas", t,
 	)
+}
+
+func TestReconcileRemovesLegacyGracePeriodCondition(t *testing.T) {
+	objects := developmentObjects()
+
+	environment := objects[len(objects)-1].(*licensingv1alpha1.LiferayEnvironment)
+
+	meta.SetStatusCondition(
+		&environment.Status.Conditions,
+		metav1.Condition{
+			Message: "Provisioning has been unreachable since 2026-01-01T00:00:00Z.",
+			Reason:  "ProvisioningUnreachable",
+			Status:  metav1.ConditionTrue,
+			Type:    conditionLegacyGracePeriodExpired,
+		},
+	)
+
+	liferayEnvironmentReconciler, _ := reconcileEnvironment(
+		&stubProvisioning{
+			entitlements: &provisioning.Entitlements{
+				LicenseXML: []byte(virtualClusterLicenseXML(
+					"Friday, March 2, 2029 12:00:00 AM GMT", 3, "dev-namespace-uid",
+				)),
+				MaxClusterNodes: 3,
+			},
+		},
+		t,
+		objects...,
+	)
+
+	if condition := meta.FindStatusCondition(
+		getEnvironment(liferayEnvironmentReconciler, t).Status.Conditions,
+		conditionLegacyGracePeriodExpired,
+	); condition != nil {
+		t.Errorf("GracePeriodExpired condition = %v, want it removed", condition)
+	}
 }
 
 func TestReconcileReportsAddOnsNotReadyWhenDownloadFails(t *testing.T) {
@@ -2902,7 +2938,7 @@ func TestReconcileRestoresReplicasWhenProvisioningRecovers(t *testing.T) {
 			Message: "The grace period elapsed while provisioning was unreachable.",
 			Reason:  "ProvisioningUnreachable",
 			Status:  metav1.ConditionTrue,
-			Type:    conditionGracePeriodExpired,
+			Type:    conditionProvisioningGracePeriodExpired,
 		},
 	)
 
@@ -2945,9 +2981,9 @@ func TestReconcileRestoresReplicasWhenProvisioningRecovers(t *testing.T) {
 	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
 
 	if meta.FindStatusCondition(
-		liferayEnvironment.Status.Conditions, conditionGracePeriodExpired,
+		liferayEnvironment.Status.Conditions, conditionProvisioningGracePeriodExpired,
 	) != nil {
-		t.Error("GracePeriodExpired condition still present, want it cleared after recovery")
+		t.Error("ProvisioningGracePeriodExpired condition still present, want it cleared after recovery")
 	}
 
 	if liferayEnvironment.Status.UnreachableSince != nil {
@@ -3285,14 +3321,14 @@ func TestSetupWithManagerWatchesScaledObjects(t *testing.T) {
 			}
 
 			liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
-				Client:               manager.GetClient(),
-				GracePeriod:          7 * 24 * time.Hour,
-				HeartbeatInterval:    time.Hour,
-				MarketplaceMountPath: t.TempDir(),
-				Provisioning:         provisioningClient,
-				Recorder:             record.NewFakeRecorder(100),
-				RetryInitialDelay:    30 * time.Second,
-				RetryMaxDelay:        30 * time.Minute,
+				Client:                  manager.GetClient(),
+				HeartbeatInterval:       time.Hour,
+				MarketplaceMountPath:    t.TempDir(),
+				Provisioning:            provisioningClient,
+				ProvisioningGracePeriod: 7 * 24 * time.Hour,
+				Recorder:                record.NewFakeRecorder(100),
+				RetryInitialDelay:       30 * time.Second,
+				RetryMaxDelay:           30 * time.Minute,
 				Syncer: addon.NewSyncer(
 					provisioningClient, 15*time.Second, 30*time.Second, 30*time.Minute,
 					inlineRunner{},
@@ -3881,15 +3917,15 @@ func reconcileEnvironment(
 	t.Helper()
 
 	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
-		Client:                newFakeClient(t, objects...),
-		ExpirationGracePeriod: 90 * 24 * time.Hour,
-		GracePeriod:           7 * 24 * time.Hour,
-		HeartbeatInterval:     10 * time.Minute,
-		MarketplaceMountPath:  t.TempDir(),
-		Provisioning:          provisioningClient,
-		Recorder:              record.NewFakeRecorder(10),
-		RetryInitialDelay:     30 * time.Second,
-		RetryMaxDelay:         30 * time.Minute,
+		Client:                  newFakeClient(t, objects...),
+		ExpirationGracePeriod:   90 * 24 * time.Hour,
+		HeartbeatInterval:       10 * time.Minute,
+		MarketplaceMountPath:    t.TempDir(),
+		Provisioning:            provisioningClient,
+		ProvisioningGracePeriod: 7 * 24 * time.Hour,
+		Recorder:                record.NewFakeRecorder(10),
+		RetryInitialDelay:       30 * time.Second,
+		RetryMaxDelay:           30 * time.Minute,
 		Syncer: addon.NewSyncer(
 			provisioningClient, 15*time.Second, 30*time.Second, 30*time.Minute,
 			inlineRunner{},

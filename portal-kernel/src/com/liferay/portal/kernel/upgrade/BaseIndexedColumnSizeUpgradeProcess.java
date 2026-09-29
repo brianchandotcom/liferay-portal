@@ -10,12 +10,16 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Marcela Cunha
@@ -40,52 +44,96 @@ public abstract class BaseIndexedColumnSizeUpgradeProcess
 			lengthFunctionName = "LEN";
 		}
 
-		String columnName = getColumnName();
+		String[][] tableAndColumnNames = getTableAndColumnNames();
+
+		Set<String> columnNames = new HashSet<>();
+
+		for (String[] tableAndColumnName : tableAndColumnNames) {
+			columnNames.add(StringUtil.merge(tableAndColumnName, "."));
+		}
+
 		int maxColumnLength = getMaxColumnLength();
-		String tableName = getTableName();
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select 1 from ", tableName, " group by ",
-					StringUtil.merge(getGroupByColumnNames(), ", "), ", ",
-					substringFunctionName, "(", columnName, ", 1, ",
-					maxColumnLength, ") having count(*) > 1 and max(",
-					lengthFunctionName, "(", columnName, ")) > ",
-					maxColumnLength));
+		for (String[] tableAndUniqueIndexColumnNames :
+				getTableAndUniqueIndexColumnNames()) {
 
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			List<String> groupByExpressions = new ArrayList<>();
+			List<String> havingExpressions = new ArrayList<>();
 
-			if (resultSet.next()) {
-				throw new UpgradeException(
+			String tableName = tableAndUniqueIndexColumnNames[0];
+
+			String[] uniqueIndexColumnNames = ArrayUtil.subset(
+				tableAndUniqueIndexColumnNames, 1,
+				tableAndUniqueIndexColumnNames.length);
+
+			for (String uniqueIndexColumnName : uniqueIndexColumnNames) {
+				if (!columnNames.contains(
+						tableName + "." + uniqueIndexColumnName)) {
+
+					groupByExpressions.add(uniqueIndexColumnName);
+
+					continue;
+				}
+
+				groupByExpressions.add(
 					StringBundler.concat(
-						"Unable to truncate \"", columnName, "\" in \"",
-						tableName, "\" because it would produce duplicate ",
-						"unique index entries"));
+						substringFunctionName, "(", uniqueIndexColumnName,
+						", 1, ", maxColumnLength, ")"));
+				havingExpressions.add(
+					StringBundler.concat(
+						"max(", lengthFunctionName, "(", uniqueIndexColumnName,
+						")) > ", maxColumnLength));
+			}
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select 1 from ", tableName, " group by ",
+							StringUtil.merge(groupByExpressions, ", "),
+							" having count(*) > 1 and (",
+							StringUtil.merge(havingExpressions, " or "), ")"));
+
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				if (resultSet.next()) {
+					throw new UpgradeException(
+						StringBundler.concat(
+							"Unable to truncate \"", tableName,
+							"\" because it would produce duplicate entries in ",
+							"the unique index on \"",
+							StringUtil.merge(uniqueIndexColumnNames, ", "),
+							"\""));
+				}
 			}
 		}
 
-		runSQL(
-			StringBundler.concat(
-				"update ", tableName, " set ", columnName, " = ",
-				substringFunctionName, "(", columnName, ", 1, ",
-				maxColumnLength, ") where ", lengthFunctionName, "(",
-				columnName, ") > ", maxColumnLength));
+		List<IndexMetadata> indexMetadatas = new ArrayList<>();
 
-		List<IndexMetadata> indexMetadatas = dropIndexes(tableName, columnName);
+		for (String[] tableAndColumnName : tableAndColumnNames) {
+			String tableName = tableAndColumnName[0];
+			String columnName = tableAndColumnName[1];
 
-		alterColumnType(
-			tableName, columnName,
-			StringBundler.concat("VARCHAR(", maxColumnLength, ") null"));
+			runSQL(
+				StringBundler.concat(
+					"update ", tableName, " set ", columnName, " = ",
+					substringFunctionName, "(", columnName, ", 1, ",
+					maxColumnLength, ") where ", lengthFunctionName, "(",
+					columnName, ") > ", maxColumnLength));
+
+			indexMetadatas.addAll(dropIndexes(tableName, columnName));
+
+			alterColumnType(
+				tableName, columnName,
+				StringBundler.concat("VARCHAR(", maxColumnLength, ") null"));
+		}
 
 		addIndexes(connection, indexMetadatas);
 	}
 
-	protected abstract String getColumnName();
-
-	protected abstract String[] getGroupByColumnNames();
-
 	protected abstract int getMaxColumnLength();
 
-	protected abstract String getTableName();
+	protected abstract String[][] getTableAndColumnNames();
+
+	protected abstract String[][] getTableAndUniqueIndexColumnNames();
 
 }

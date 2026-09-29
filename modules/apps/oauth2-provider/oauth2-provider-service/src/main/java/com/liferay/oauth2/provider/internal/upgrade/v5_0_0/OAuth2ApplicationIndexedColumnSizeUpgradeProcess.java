@@ -14,23 +14,20 @@ public class OAuth2ApplicationIndexedColumnSizeUpgradeProcess
 	extends BaseIndexedColumnSizeUpgradeProcess {
 
 	@Override
-	protected String getColumnName() {
-		return "externalReferenceCode";
-	}
-
-	@Override
-	protected String[] getGroupByColumnNames() {
-		return new String[] {"companyId"};
-	}
-
-	@Override
 	protected int getMaxColumnLength() {
 		return 500;
 	}
 
 	@Override
-	protected String getTableName() {
-		return "OAuth2Application";
+	protected String[][] getTableAndColumnNames() {
+		return new String[][] {{"OAuth2Application", "externalReferenceCode"}};
+	}
+
+	@Override
+	protected String[][] getTableAndUniqueIndexColumnNames() {
+		return new String[][] {
+			{"OAuth2Application", "companyId", "externalReferenceCode"}
+		};
 	}
 
 }

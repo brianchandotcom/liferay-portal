@@ -14,23 +14,23 @@ public class ObjectEntryIndexedColumnSizeUpgradeProcess
 	extends BaseIndexedColumnSizeUpgradeProcess {
 
 	@Override
-	protected String getColumnName() {
-		return "externalReferenceCode";
-	}
-
-	@Override
-	protected String[] getGroupByColumnNames() {
-		return new String[] {"companyId", "groupId", "objectDefinitionId"};
-	}
-
-	@Override
 	protected int getMaxColumnLength() {
 		return 500;
 	}
 
 	@Override
-	protected String getTableName() {
-		return "ObjectEntry";
+	protected String[][] getTableAndColumnNames() {
+		return new String[][] {{"ObjectEntry", "externalReferenceCode"}};
+	}
+
+	@Override
+	protected String[][] getTableAndUniqueIndexColumnNames() {
+		return new String[][] {
+			{
+				"ObjectEntry", "companyId", "groupId", "objectDefinitionId",
+				"externalReferenceCode"
+			}
+		};
 	}
 
 }

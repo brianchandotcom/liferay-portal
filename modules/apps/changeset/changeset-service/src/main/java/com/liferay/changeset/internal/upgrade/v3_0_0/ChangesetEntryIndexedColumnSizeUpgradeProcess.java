@@ -14,23 +14,25 @@ public class ChangesetEntryIndexedColumnSizeUpgradeProcess
 	extends BaseIndexedColumnSizeUpgradeProcess {
 
 	@Override
-	protected String getColumnName() {
-		return "classExternalReferenceCode";
-	}
-
-	@Override
-	protected String[] getGroupByColumnNames() {
-		return new String[] {"changesetCollectionId", "classNameId"};
-	}
-
-	@Override
 	protected int getMaxColumnLength() {
 		return 500;
 	}
 
 	@Override
-	protected String getTableName() {
-		return "ChangesetEntry";
+	protected String[][] getTableAndColumnNames() {
+		return new String[][] {
+			{"ChangesetEntry", "classExternalReferenceCode"}
+		};
+	}
+
+	@Override
+	protected String[][] getTableAndUniqueIndexColumnNames() {
+		return new String[][] {
+			{
+				"ChangesetEntry", "changesetCollectionId", "classNameId",
+				"classExternalReferenceCode"
+			}
+		};
 	}
 
 }

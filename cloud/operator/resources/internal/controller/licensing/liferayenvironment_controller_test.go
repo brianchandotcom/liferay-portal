@@ -1081,6 +1081,58 @@ func TestEnqueueScaleTargetEnvironments(t *testing.T) {
 	}
 }
 
+func TestExpirationReplicaCeiling(t *testing.T) {
+	expirationDate := time.Date(2026, time.January, 1, 0, 0, 0, 0, time.UTC)
+
+	testCases := map[string]struct {
+		elapsed                time.Duration
+		expectedReplicaCeiling int32
+		maxClusterNodes        int32
+	}{
+		"caps at the grace ceiling during the grace period": {
+			elapsed:                24 * time.Hour,
+			expectedReplicaCeiling: 1,
+			maxClusterNodes:        3,
+		},
+		"drops to zero once the grace period ends": {
+			elapsed:                90 * 24 * time.Hour,
+			expectedReplicaCeiling: 0,
+			maxClusterNodes:        3,
+		},
+		"keeps a licensed maximum below the grace ceiling": {
+			elapsed:                24 * time.Hour,
+			expectedReplicaCeiling: 0,
+			maxClusterNodes:        0,
+		},
+		"keeps the licensed maximum at the expiration date": {
+			elapsed:                0,
+			expectedReplicaCeiling: 3,
+			maxClusterNodes:        3,
+		},
+		"keeps the licensed maximum before the expiration date": {
+			elapsed:                -time.Hour,
+			expectedReplicaCeiling: 3,
+			maxClusterNodes:        3,
+		},
+	}
+
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			actualReplicaCeiling := expirationReplicaCeiling(
+				expirationDate, 90*24*time.Hour, testCase.maxClusterNodes,
+				expirationDate.Add(testCase.elapsed),
+			)
+
+			if actualReplicaCeiling != testCase.expectedReplicaCeiling {
+				t.Errorf(
+					"expirationReplicaCeiling = %d, want %d",
+					actualReplicaCeiling, testCase.expectedReplicaCeiling,
+				)
+			}
+		})
+	}
+}
+
 func TestExtractLiferayImageTag(t *testing.T) {
 	testCases := map[string]struct {
 		image string
@@ -1102,6 +1154,70 @@ func TestExtractLiferayImageTag(t *testing.T) {
 				t.Errorf("extractLiferayImageTag(%q) = %q, want %q", testCase.image, got, testCase.want)
 			}
 		})
+	}
+}
+
+func TestReconcileAppliesExpirationWhileProvisioningUnreachable(t *testing.T) {
+	unreachableSince := metav1.NewTime(time.Now().Add(-time.Hour))
+	validUntil := metav1.NewTime(time.Now().Add(-100 * 24 * time.Hour))
+
+	environment := activatedEnvironment()
+	environment.Spec.DesiredReplicas = pointerInt32(3)
+	environment.Status.License.MaxClusterNodes = pointerInt32(3)
+	environment.Status.License.ValidUntil = &validUntil
+	environment.Status.ReplicaCeiling = pointerInt32(3)
+	environment.Status.UnreachableSince = &unreachableSince
+
+	provisioningClient := &stubProvisioning{
+		manifestError: fmt.Errorf("provisioning: connection refused"),
+	}
+
+	liferayEnvironmentReconciler, _ := reconcileEnvironment(
+		provisioningClient,
+		t,
+		&appsv1.StatefulSet{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "dev-liferay",
+				Namespace: "liferay-dev",
+			},
+			Spec: appsv1.StatefulSetSpec{
+				Replicas: pointerInt32(3),
+			},
+		},
+		&corev1.Namespace{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "liferay-dev",
+				UID:  "dev-namespace-uid",
+			},
+		},
+		environment,
+	)
+
+	assertReplicasEqual(
+		getStatefulSet(liferayEnvironmentReconciler, t).Spec.Replicas,
+		pointerInt32(0),
+		"statefulSet.spec.replicas",
+		t,
+	)
+
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+	assertReplicasEqual(
+		liferayEnvironment.Status.ReplicaCeiling, pointerInt32(0), "status.replicaCeiling", t,
+	)
+
+	condition := meta.FindStatusCondition(
+		liferayEnvironment.Status.Conditions, conditionLicenseValid,
+	)
+
+	if condition == nil || condition.Reason != "Expired" {
+		t.Errorf("LicenseValid condition = %v, want reason Expired", condition)
+	}
+
+	if meta.IsStatusConditionTrue(
+		liferayEnvironment.Status.Conditions, conditionGracePeriodExpired,
+	) {
+		t.Error("GracePeriodExpired condition = True, want it unset while provisioning is within its grace period")
 	}
 }
 
@@ -1364,6 +1480,121 @@ func TestReconcileDownloadsAddOns(t *testing.T) {
 
 	if result.RequeueAfter != 10*time.Minute {
 		t.Errorf("RequeueAfter = %s, want the heartbeat 10m", result.RequeueAfter)
+	}
+}
+
+func TestReconcileEnforcesLicenseCeiling(t *testing.T) {
+	licenseDate := func(offset time.Duration) string {
+		return time.Now().Add(offset).UTC().Format("Monday, January 2, 2006 3:04:05 PM MST")
+	}
+
+	testCases := map[string]struct {
+		expectedPhase          string
+		expectedReason         string
+		expectedReplicaCeiling int32
+		licenseXML             string
+	}{
+		"a license expired beyond the grace period scales to zero": {
+			expectedPhase:          "Degraded",
+			expectedReason:         "Expired",
+			expectedReplicaCeiling: 0,
+			licenseXML: virtualClusterLicenseXML(
+				licenseDate(-100*24*time.Hour), 3, "dev-namespace-uid",
+			),
+		},
+		"a license expired within the grace period scales to the grace ceiling": {
+			expectedPhase:          "Degraded",
+			expectedReason:         "Expired",
+			expectedReplicaCeiling: 1,
+			licenseXML: virtualClusterLicenseXML(
+				licenseDate(-24*time.Hour), 3, "dev-namespace-uid",
+			),
+		},
+		"a license for another environment scales to zero": {
+			expectedPhase:          "Degraded",
+			expectedReason:         "EnvironmentMismatch",
+			expectedReplicaCeiling: 0,
+			licenseXML: virtualClusterLicenseXML(
+				licenseDate(365*24*time.Hour), 3, "some-other-environment-uid",
+			),
+		},
+		"a license without a valid expiration date scales to zero": {
+			expectedPhase:          "Degraded",
+			expectedReason:         "Invalid",
+			expectedReplicaCeiling: 0,
+			licenseXML: virtualClusterLicenseXML(
+				"not a date", 3, "dev-namespace-uid",
+			),
+		},
+		"a valid license scales to the licensed maximum": {
+			expectedPhase:          "Ready",
+			expectedReason:         "Valid",
+			expectedReplicaCeiling: 3,
+			licenseXML: virtualClusterLicenseXML(
+				licenseDate(365*24*time.Hour), 3, "dev-namespace-uid",
+			),
+		},
+		"an unparseable license scales to zero": {
+			expectedPhase:          "Degraded",
+			expectedReason:         "Invalid",
+			expectedReplicaCeiling: 0,
+			licenseXML:             "<licenses><license>",
+		},
+	}
+
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			objects := developmentObjects()
+
+			environment := objects[len(objects)-1].(*licensingv1alpha1.LiferayEnvironment)
+
+			environment.Spec.DesiredReplicas = pointerInt32(3)
+
+			liferayEnvironmentReconciler, _ := reconcileEnvironment(
+				&stubProvisioning{
+					entitlements: &provisioning.Entitlements{
+						LicenseXML:      []byte(testCase.licenseXML),
+						MaxClusterNodes: 3,
+					},
+				},
+				t,
+				objects...,
+			)
+
+			liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+			assertReplicasEqual(
+				liferayEnvironment.Status.ReplicaCeiling,
+				&testCase.expectedReplicaCeiling,
+				"status.replicaCeiling",
+				t,
+			)
+
+			assertReplicasEqual(
+				getStatefulSet(liferayEnvironmentReconciler, t).Spec.Replicas,
+				&testCase.expectedReplicaCeiling,
+				"statefulSet.spec.replicas",
+				t,
+			)
+
+			if liferayEnvironment.Status.Phase != testCase.expectedPhase {
+				t.Errorf(
+					"Phase = %q, want %q",
+					liferayEnvironment.Status.Phase, testCase.expectedPhase,
+				)
+			}
+
+			condition := meta.FindStatusCondition(
+				liferayEnvironment.Status.Conditions, conditionLicenseValid,
+			)
+
+			if condition == nil || condition.Reason != testCase.expectedReason {
+				t.Errorf(
+					"LicenseValid condition = %v, want reason %q",
+					condition, testCase.expectedReason,
+				)
+			}
+		})
 	}
 }
 
@@ -2561,9 +2792,27 @@ func TestReconcileWritesExpiredLicenseThrough(t *testing.T) {
 		t.Errorf("LicenseValid condition = %v, want False/Expired", condition)
 	}
 
+	if condition != nil && !strings.Contains(condition.Message, "grace period ended") {
+		t.Errorf(
+			"LicenseValid message = %q, want it to say the grace period ended",
+			condition.Message,
+		)
+	}
+
 	if liferayEnvironment.Status.Phase != "Degraded" {
 		t.Errorf("Phase = %q, want Degraded", liferayEnvironment.Status.Phase)
 	}
+
+	assertReplicasEqual(
+		liferayEnvironment.Status.ReplicaCeiling, pointerInt32(0), "status.replicaCeiling", t,
+	)
+
+	assertReplicasEqual(
+		getStatefulSet(liferayEnvironmentReconciler, t).Spec.Replicas,
+		pointerInt32(0),
+		"statefulSet.spec.replicas",
+		t,
+	)
 }
 
 func TestResolveDesiredReplicas(t *testing.T) {

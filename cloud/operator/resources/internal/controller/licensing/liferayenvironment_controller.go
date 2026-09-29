@@ -830,7 +830,7 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceReplica
 			&liferayEnvironment.Status.Conditions,
 			metav1.Condition{
 				Message: fmt.Sprintf(
-					"Requested %d replicas exceeds the licensed maximum of %d; capping to %d.",
+					"Requested %d replicas exceeds the replica ceiling of %d; capping to %d.",
 					requestedReplicas, replicaCeiling, replicaCeiling,
 				),
 				Reason: "ExceedsLicensedMaximum",

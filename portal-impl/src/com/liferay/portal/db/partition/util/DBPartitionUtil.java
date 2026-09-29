@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.ConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.ConnectionWrapper;
@@ -170,13 +171,9 @@ public class DBPartitionUtil {
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
-		Connection connection = CurrentConnectionUtil.getConnection(dataSource);
+		try (Connection connection = ConnectionUtil.getConnection(dataSource);
 
-		if (connection == null) {
-			connection = dataSource.getConnection();
-		}
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into ", getExportedPartitionName(companyId),
 					".Configuration_ (configurationId, dictionary",
@@ -300,13 +297,9 @@ public class DBPartitionUtil {
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
-		Connection connection = CurrentConnectionUtil.getConnection(dataSource);
+		try (Connection connection = ConnectionUtil.getConnection(dataSource);
 
-		if (connection == null) {
-			connection = dataSource.getConnection();
-		}
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select configurationId, dictionary from ",
 					getPartitionName(companyId), ".Configuration_"));

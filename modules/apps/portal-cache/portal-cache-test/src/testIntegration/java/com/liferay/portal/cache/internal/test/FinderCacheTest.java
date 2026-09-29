@@ -84,6 +84,32 @@ public class FinderCacheTest {
 
 		Assert.assertEquals(tickets.toString(), 2, tickets.size());
 
+		Assert.assertNull(
+			_finderCache.getResult(
+				_countFinderPath, finderArgs, _ticketPersistence));
+
+		TransactionInvokerUtil.invoke(
+			TransactionConfig.Factory.create(
+				Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+			(Callable<Void>)() -> {
+				Assert.assertNull(
+					_finderCache.getResult(
+						_countFinderPath, finderArgs, _ticketPersistence));
+
+				_finderCache.putResult(_countFinderPath, finderArgs, 2L);
+
+				return null;
+			});
+
+		_addTicket(classPK, serviceContext);
+
+		_finderCache.putResult(_countFinderPath, finderArgs, 2L);
+
+		Assert.assertEquals(
+			3L,
+			_finderCache.getResult(
+				_countFinderPath, finderArgs, _ticketPersistence));
+
 		Object[] countFinderArgs = _getFinderArgs(RandomTestUtil.randomLong());
 
 		Assert.assertNull(

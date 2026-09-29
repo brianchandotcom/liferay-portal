@@ -74,15 +74,15 @@ func main() {
 			Recorder: manager.GetEventRecorderFor("clientextension-controller"),
 		},
 		&licensing.LiferayEnvironmentReconciler{
-			Client:                manager.GetClient(),
-			ExpirationGracePeriod: config.ExpirationGracePeriod,
-			GracePeriod:           config.GracePeriod,
-			HeartbeatInterval:     config.HeartbeatInterval,
-			MarketplaceMountPath:  config.MarketplaceMountPath,
-			Provisioning:          provisioningClient,
-			Recorder:              manager.GetEventRecorderFor("liferayenvironment-controller"),
-			RetryInitialDelay:     config.RetryInitialDelay,
-			RetryMaxDelay:         config.RetryMaxDelay,
+			Client:                  manager.GetClient(),
+			ExpirationGracePeriod:   config.ExpirationGracePeriod,
+			HeartbeatInterval:       config.HeartbeatInterval,
+			MarketplaceMountPath:    config.MarketplaceMountPath,
+			Provisioning:            provisioningClient,
+			ProvisioningGracePeriod: config.ProvisioningGracePeriod,
+			Recorder:                manager.GetEventRecorderFor("liferayenvironment-controller"),
+			RetryInitialDelay:       config.RetryInitialDelay,
+			RetryMaxDelay:           config.RetryMaxDelay,
 			Syncer: addon.NewSyncer(
 				provisioningClient, config.DownloadPollInterval,
 				config.RetryInitialDelay, config.RetryMaxDelay, addon.GoRunner{},
@@ -110,17 +110,17 @@ func main() {
 }
 
 type config struct {
-	Debug                 bool          `env:"DEBUG" envDefault:"false"`
-	DownloadPollInterval  time.Duration `env:"DOWNLOAD_POLL_INTERVAL" envDefault:"15s"`
-	ExpirationGracePeriod time.Duration `env:"EXPIRATION_GRACE_PERIOD" envDefault:"2160h"`
-	GracePeriod           time.Duration `env:"GRACE_PERIOD" envDefault:"168h"`
-	HeartbeatInterval     time.Duration `env:"HEARTBEAT_INTERVAL" envDefault:"10m"`
-	MarketplaceMountPath  string        `env:"MARKETPLACE_MOUNT_PATH" envDefault:"/marketplace"`
-	MetricsAddress        string        `env:"METRICS_ADDRESS" envDefault:":8080"`
-	ProbeAddress          string        `env:"PROBE_ADDRESS" envDefault:":8081"`
-	ProvisioningBaseURL   string        `env:"PROVISIONING_BASE_URL" envDefault:"https://api.one.liferay.com"`
-	RetryInitialDelay     time.Duration `env:"RETRY_INITIAL_DELAY" envDefault:"30s"`
-	RetryMaxDelay         time.Duration `env:"RETRY_MAX_DELAY" envDefault:"30m"`
+	Debug                   bool          `env:"DEBUG" envDefault:"false"`
+	DownloadPollInterval    time.Duration `env:"DOWNLOAD_POLL_INTERVAL" envDefault:"15s"`
+	ExpirationGracePeriod   time.Duration `env:"EXPIRATION_GRACE_PERIOD" envDefault:"2160h"`
+	HeartbeatInterval       time.Duration `env:"HEARTBEAT_INTERVAL" envDefault:"10m"`
+	MarketplaceMountPath    string        `env:"MARKETPLACE_MOUNT_PATH" envDefault:"/marketplace"`
+	MetricsAddress          string        `env:"METRICS_ADDRESS" envDefault:":8080"`
+	ProbeAddress            string        `env:"PROBE_ADDRESS" envDefault:":8081"`
+	ProvisioningBaseURL     string        `env:"PROVISIONING_BASE_URL" envDefault:"https://api.one.liferay.com"`
+	ProvisioningGracePeriod time.Duration `env:"PROVISIONING_GRACE_PERIOD" envDefault:"168h"`
+	RetryInitialDelay       time.Duration `env:"RETRY_INITIAL_DELAY" envDefault:"30s"`
+	RetryMaxDelay           time.Duration `env:"RETRY_MAX_DELAY" envDefault:"30m"`
 }
 
 var scheme = runtime.NewScheme()

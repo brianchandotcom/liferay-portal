@@ -224,17 +224,17 @@ func TestReconcileWithAdmissionPolicy(t *testing.T) {
 	}
 }
 
-func TestReconcileWithAdmissionPolicyHoldsGracePeriodCeiling(t *testing.T) {
+func TestReconcileWithAdmissionPolicyHoldsProvisioningGracePeriodCeiling(t *testing.T) {
 	config := startPolicyEnvironment(t)
 
 	namespaceName := "liferay-grace-period"
 
 	liferayEnvironmentReconciler := newPolicyReconciler(config, true, namespaceName, t)
 
-	liferayEnvironmentReconciler.GracePeriod = 168 * time.Hour
 	liferayEnvironmentReconciler.Provisioning = &stubProvisioning{
 		manifestError: fmt.Errorf("provisioning: connection refused"),
 	}
+	liferayEnvironmentReconciler.ProvisioningGracePeriod = 168 * time.Hour
 	liferayEnvironmentReconciler.RetryInitialDelay = 30 * time.Second
 	liferayEnvironmentReconciler.RetryMaxDelay = 30 * time.Minute
 

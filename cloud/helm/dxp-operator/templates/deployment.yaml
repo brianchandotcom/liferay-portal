@@ -31,8 +31,6 @@ spec:
                             value: {{ .Values.downloadPollInterval | quote }}
                         -   name: EXPIRATION_GRACE_PERIOD
                             value: {{ .Values.expirationGracePeriod | quote }}
-                        -   name: GRACE_PERIOD
-                            value: {{ .Values.gracePeriod | quote }}
                         -   name: HEARTBEAT_INTERVAL
                             value: {{ .Values.heartbeatInterval | quote }}
                         -   name: MARKETPLACE_MOUNT_PATH
@@ -43,6 +41,8 @@ spec:
                             value: {{ printf ":%d" (int .Values.probes.port) | quote }}
                         -   name: PROVISIONING_BASE_URL
                             value: {{ .Values.provisioning.baseURL | quote }}
+                        -   name: PROVISIONING_GRACE_PERIOD
+                            value: {{ .Values.provisioningGracePeriod | quote }}
                         -   name: RETRY_INITIAL_DELAY
                             value: {{ .Values.retry.initialDelay | quote }}
                         -   name: RETRY_MAX_DELAY

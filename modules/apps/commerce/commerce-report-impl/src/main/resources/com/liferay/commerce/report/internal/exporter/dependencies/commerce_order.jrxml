@@ -89,24 +89,19 @@
 	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="shippingAmountMoney" />
 	<parameter class="java.lang.String" name="shippingDiscountAmount" />
 	<parameter class="java.util.Locale" name="siteDefaultLocale" />
+	<parameter class="java.util.Map" name="skuOptions" />
 	<parameter class="java.lang.String" name="taxAmount" />
 	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="totalMoney" />
 	<parameter class="com.liferay.commerce.currency.model.CommerceMoney" name="totalWithTaxAmountMoney" />
 	<query language="sql"><![CDATA[]]></query>
+	<field class="java.lang.Long" name="commerceOrderItemId" />
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="discountAmountMoney" />
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="finalPriceMoney" />
 	<field class="java.util.Map" name="nameMap" />
 	<field class="java.math.BigDecimal" name="quantity" />
 	<field class="java.util.Date" name="requestedDeliveryDate" />
-	<field class="java.lang.String" name="json" />
 	<field class="java.lang.String" name="sku" />
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="unitPriceMoney" />
-	<variable class="com.fasterxml.jackson.databind.JsonNode" name="skuOptionsJsonArray">
-		<expression><![CDATA[new com.fasterxml.jackson.databind.ObjectMapper().readTree($F{json})]]></expression>
-	</variable>
-	<variable class="java.lang.String" name="skuOptions">
-		<expression><![CDATA[java.util.stream.StreamSupport.stream($V{skuOptionsJsonArray}.spliterator(), false).map(skuOption -> skuOption.get("skuOptionValueNames").get(0).asText()).collect(java.util.stream.Collectors.joining(", "))]]></expression>
-	</variable>
 	<title height="425" splitType="Stretch">
 		<element backcolor="#FFFFFF" height="24" hImageAlign="Center" kind="image" onErrorType="Blank" uuid="94883631-a913-43e2-b182-ab8d77d0181e" vImageAlign="Middle" width="100" x="0" y="0">
 			<expression><![CDATA[$P{logoURL}]]></expression>
@@ -325,8 +320,8 @@
 				<expression><![CDATA[($F{nameMap}.containsKey($P{locale})) ? $F{nameMap}.get($P{locale}) : $F{nameMap}.get($P{siteDefaultLocale})]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9059262-f622-43aa-aebf-0c5b57fc5204" />
 			</element>
-			<element fontSize="8.0" height="25" hTextAlign="Left" kind="textField" uuid="94c254b7-d16c-486d-926f-9988e404b865" vTextAlign="Middle" width="52" x="136" y="1">
-				<expression><![CDATA[$V{skuOptions}]]></expression>
+			<element blankWhenNull="true" fontSize="8.0" height="25" hTextAlign="Left" kind="textField" uuid="94c254b7-d16c-486d-926f-9988e404b865" vTextAlign="Middle" width="52" x="136" y="1">
+				<expression><![CDATA[$P{skuOptions}.get($F{commerceOrderItemId})]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="895dde53-9a59-4aea-90ff-211d1966faf4" />
 			</element>
 			<element fontSize="9.0" height="20" hTextAlign="Left" kind="textField" uuid="550e1c16-4b1a-46a4-8c0a-f652b28ff76e" vTextAlign="Middle" width="52" x="194" y="1">

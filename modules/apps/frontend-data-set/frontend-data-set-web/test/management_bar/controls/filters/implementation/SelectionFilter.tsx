@@ -250,7 +250,7 @@ describe('SelectionFilter.getOdataString', () => {
 	});
 
 	describe('with entityFieldType="collection"', () => {
-		it('generates an "any" filter with "eq" for a single item', () => {
+		it('generates an "any" filter with "in" for a single item', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION,
 				id: 'testField',
@@ -261,10 +261,10 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe("testField/any(x:(x eq '123'))");
+			expect(result).toBe("testField/any(x:x in ('123'))");
 		});
 
-		it('generates an "any" filter with "eq" with quotes for a single item with a number value', () => {
+		it('generates an "any" filter with "in" with quotes for a single item with a number value', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION,
 				id: 'testField',
@@ -275,10 +275,10 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe("testField/any(x:(x eq '123'))");
+			expect(result).toBe("testField/any(x:x in ('123'))");
 		});
 
-		it('generates an "any" filter with "or" for multiple items', () => {
+		it('generates an "any" filter with "in" for multiple items', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION,
 				id: 'testField',
@@ -292,9 +292,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe(
-				"testField/any(x:(x eq '123') or (x eq '456'))"
-			);
+			expect(result).toBe("testField/any(x:x in ('123', '456'))");
 		});
 
 		it('generates a negated "any" filter for a single excluded item', () => {
@@ -308,7 +306,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe("not (testField/any(x:(x eq '123')))");
+			expect(result).toBe("not (testField/any(x:x in ('123')))");
 		});
 
 		it('generates a negated "any" filter for multiple excluded items', () => {
@@ -325,14 +323,12 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe(
-				"not (testField/any(x:(x eq '123') or (x eq '456')))"
-			);
+			expect(result).toBe("not (testField/any(x:x in ('123', '456')))");
 		});
 	});
 
 	describe('with entityFieldType="collection-string"', () => {
-		it('generates an "any" filter with "eq" and quotes for a single item', () => {
+		it('generates an "any" filter with "in" and quotes for a single item', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION_STRING,
 				id: 'testField',
@@ -343,10 +339,10 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe("testField/any(x:(x eq '123'))");
+			expect(result).toBe("testField/any(x:x in ('123'))");
 		});
 
-		it('generates an "any" filter with "eq" and quotes for a single item with a number value', () => {
+		it('generates an "any" filter with "in" and quotes for a single item with a number value', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION_STRING,
 				id: 'testField',
@@ -357,10 +353,10 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe("testField/any(x:(x eq '123'))");
+			expect(result).toBe("testField/any(x:x in ('123'))");
 		});
 
-		it('generates an "any" filter with "or" for multiple items', () => {
+		it('generates an "any" filter with "in" for multiple items', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION_STRING,
 				id: 'testField',
@@ -374,9 +370,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe(
-				"testField/any(x:(x eq '123') or (x eq '456'))"
-			);
+			expect(result).toBe("testField/any(x:x in ('123', '456'))");
 		});
 
 		it('generates a negated "any" filter for a single excluded item', () => {
@@ -390,7 +384,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe("not (testField/any(x:(x eq '123')))");
+			expect(result).toBe("not (testField/any(x:x in ('123')))");
 		});
 
 		it('generates a negated "any" filter for multiple excluded items', () => {
@@ -407,9 +401,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe(
-				"not (testField/any(x:(x eq '123') or (x eq '456')))"
-			);
+			expect(result).toBe("not (testField/any(x:x in ('123', '456')))");
 		});
 	});
 
@@ -425,7 +417,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe('testField/any(x:(x eq 123))');
+			expect(result).toBe('testField/any(x:x in (123))');
 		});
 
 		it('generates an "any" filter without quotes for a single item with a string value', () => {
@@ -439,10 +431,10 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe('testField/any(x:(x eq 123))');
+			expect(result).toBe('testField/any(x:x in (123))');
 		});
 
-		it('generates an "any" filter with "or" for multiple items', () => {
+		it('generates an "any" filter with "in" for multiple items', () => {
 			const result = getOdataString({
 				entityFieldType: EEntityFieldType.COLLECTION_INTEGER,
 				id: 'testField',
@@ -456,7 +448,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe('testField/any(x:(x eq 123) or (x eq 456))');
+			expect(result).toBe('testField/any(x:x in (123, 456))');
 		});
 
 		it('generates a negated "any" filter for a single excluded item', () => {
@@ -470,7 +462,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe('not (testField/any(x:(x eq 123)))');
+			expect(result).toBe('not (testField/any(x:x in (123)))');
 		});
 
 		it('generates a negated "any" filter for multiple excluded items', () => {
@@ -487,9 +479,7 @@ describe('SelectionFilter.getOdataString', () => {
 				},
 			} as any);
 
-			expect(result).toBe(
-				'not (testField/any(x:(x eq 123) or (x eq 456)))'
-			);
+			expect(result).toBe('not (testField/any(x:x in (123, 456)))');
 		});
 	});
 

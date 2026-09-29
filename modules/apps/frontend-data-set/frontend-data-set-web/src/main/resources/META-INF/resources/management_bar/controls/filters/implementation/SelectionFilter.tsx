@@ -175,9 +175,9 @@ function getOdataString({
 		entityFieldType === EEntityFieldType.COLLECTION_INTEGER ||
 		entityFieldType === EEntityFieldType.COLLECTION_STRING
 	) {
-		const expression = `${id}/any(x:${quotedSelectedItems
-			.map((value) => `(x eq ${value})`)
-			.join(' or ')})`;
+		const expression = `${id}/any(x:x in (${quotedSelectedItems.join(
+			', '
+		)}))`;
 
 		if (exclude) {
 			return `not (${expression})`;

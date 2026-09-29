@@ -359,17 +359,23 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceGracePe
 		return nil
 	}
 
+	replicaCeiling := int32(gracePeriodReplicaCeiling)
+
+	if liferayEnvironment.Status.ReplicaCeiling != nil {
+		replicaCeiling = min(replicaCeiling, *liferayEnvironment.Status.ReplicaCeiling)
+	}
+
 	if _, error := liferayEnvironmentReconciler.enforceReplicaCeiling(
-		context, liferayEnvironment, gracePeriodReplicaCeiling,
+		context, liferayEnvironment, replicaCeiling,
 	); error != nil {
 		return error
 	}
 
 	message := fmt.Sprintf(
-		"Provisioning has been unreachable since %s; scaled %q down to %d replica.",
+		"Provisioning has been unreachable since %s; the replica ceiling of %q is %d.",
 		liferayEnvironment.Status.UnreachableSince.Format(time.RFC3339),
 		liferayEnvironment.Spec.WorkloadRef.Name,
-		gracePeriodReplicaCeiling,
+		replicaCeiling,
 	)
 
 	if !meta.IsStatusConditionTrue(
@@ -623,6 +629,11 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceReplica
 ) (time.Duration, error) {
 	logger := logf.FromContext(context)
 
+	ceilingChanged := liferayEnvironment.Status.ReplicaCeiling == nil ||
+		*liferayEnvironment.Status.ReplicaCeiling != replicaCeiling
+
+	liferayEnvironment.Status.ReplicaCeiling = &replicaCeiling
+
 	statefulSet := &appsv1.StatefulSet{}
 
 	getError := liferayEnvironmentReconciler.Get(
@@ -663,12 +674,17 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceReplica
 
 	effectiveReplicas := min(desiredReplicas, replicaCeiling)
 
-	if statefulSet.Spec.Replicas == nil || *statefulSet.Spec.Replicas != effectiveReplicas {
-		liveReplicas := statefulSet.Spec.Replicas
+	replicasChanged := statefulSet.Spec.Replicas == nil ||
+		*statefulSet.Spec.Replicas != effectiveReplicas
 
+	if ceilingChanged || replicasChanged {
 		if error := liferayEnvironmentReconciler.Status().Update(context, liferayEnvironment); error != nil {
 			return 0, error
 		}
+	}
+
+	if replicasChanged {
+		liveReplicas := statefulSet.Spec.Replicas
 
 		statefulSet.Spec.Replicas = &effectiveReplicas
 

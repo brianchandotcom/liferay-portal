@@ -599,6 +599,13 @@ func TestEnforceReplicaCeiling(t *testing.T) {
 				t,
 			)
 
+			assertReplicasEqual(
+				liferayEnvironment.Status.ReplicaCeiling,
+				&testCase.replicaCeiling,
+				"status.replicaCeiling",
+				t,
+			)
+
 			condition := meta.FindStatusCondition(
 				liferayEnvironment.Status.Conditions, conditionReplicasCountValid,
 			)
@@ -683,7 +690,7 @@ func TestEnforceReplicaCeilingPersistsCeilingBeforeWritingWorkload(t *testing.T)
 						return error
 					}
 
-					observedCeiling = stored.Status.License.MaxClusterNodes
+					observedCeiling = stored.Status.ReplicaCeiling
 					observedWorkloadWrite = true
 				}
 
@@ -699,8 +706,6 @@ func TestEnforceReplicaCeilingPersistsCeilingBeforeWritingWorkload(t *testing.T)
 	).Build()
 
 	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{Client: fakeClient}
-
-	liferayEnvironment.Status.License.MaxClusterNodes = pointerInt32(3)
 
 	if _, error := liferayEnvironmentReconciler.enforceReplicaCeiling(
 		context.Background(), liferayEnvironment, 3,
@@ -719,6 +724,88 @@ func TestEnforceReplicaCeilingPersistsCeilingBeforeWritingWorkload(t *testing.T)
 	if *observedCeiling != 3 {
 		t.Errorf("Persisted ceiling = %d, want 3", *observedCeiling)
 	}
+}
+
+func TestEnforceReplicaCeilingPersistsRaisedCeilingBeforeRaisingAutoscaler(t *testing.T) {
+	liferayEnvironment := &licensingv1alpha1.LiferayEnvironment{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "dev",
+			Namespace: "liferay-dev",
+		},
+		Spec: licensingv1alpha1.LiferayEnvironmentSpec{
+			Autoscaling: &licensingv1alpha1.Autoscaling{MaxReplicas: 10, MinReplicas: 1},
+			WorkloadRef: licensingv1alpha1.WorkloadRef{
+				Name: "dev-liferay",
+			},
+		},
+		Status: licensingv1alpha1.LiferayEnvironmentStatus{
+			ReplicaCeiling: pointerInt32(1),
+		},
+	}
+
+	statefulSet := &appsv1.StatefulSet{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "dev-liferay",
+			Namespace: "liferay-dev",
+		},
+		Spec: appsv1.StatefulSetSpec{
+			Replicas: pointerInt32(1),
+		},
+	}
+
+	var observedCeiling *int32
+
+	observedAutoscalerPatch := false
+
+	fakeClient := fake.NewClientBuilder().WithInterceptorFuncs(
+		interceptor.Funcs{
+			Patch: func(
+				context context.Context,
+				writer client.WithWatch,
+				object client.Object,
+				patch client.Patch,
+				options ...client.PatchOption,
+			) error {
+				if _, ok := object.(*autoscalingv2.HorizontalPodAutoscaler); ok {
+					stored := &licensingv1alpha1.LiferayEnvironment{}
+
+					if error := writer.Get(
+						context, types.NamespacedName{
+							Name:      "dev",
+							Namespace: "liferay-dev",
+						}, stored,
+					); error != nil {
+						return error
+					}
+
+					observedCeiling = stored.Status.ReplicaCeiling
+					observedAutoscalerPatch = true
+				}
+
+				return writer.Patch(context, object, patch, options...)
+			},
+		},
+	).WithObjects(
+		liferayEnvironment, newHorizontalPodAutoscaler(1, 1, "dev-liferay"), statefulSet,
+	).WithScheme(
+		newScheme(t),
+	).WithStatusSubresource(
+		&licensingv1alpha1.LiferayEnvironment{},
+	).Build()
+
+	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{Client: fakeClient}
+
+	if _, error := liferayEnvironmentReconciler.enforceReplicaCeiling(
+		context.Background(), liferayEnvironment, 3,
+	); error != nil {
+		t.Fatalf("Unexpected error from enforceReplicaCeiling: %v", error)
+	}
+
+	if !observedAutoscalerPatch {
+		t.Fatal("Expected the autoscaler to be patched")
+	}
+
+	assertReplicasEqual(observedCeiling, pointerInt32(3), "persisted status.replicaCeiling", t)
 }
 
 func TestEnforceReplicaCeilingPersistsRefusalWhenAutoscalerUpdateRejected(t *testing.T) {
@@ -1193,6 +1280,10 @@ func TestReconcileDowngradesAfterGracePeriod(t *testing.T) {
 
 	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
 
+	assertReplicasEqual(
+		liferayEnvironment.Status.ReplicaCeiling, pointerInt32(1), "status.replicaCeiling", t,
+	)
+
 	if !meta.IsStatusConditionTrue(
 		liferayEnvironment.Status.Conditions, conditionGracePeriodExpired,
 	) {
@@ -1307,6 +1398,51 @@ func TestReconcileIsNotBlockedByAddOns(t *testing.T) {
 	if length := len(getSecret("dev-entitlements", liferayEnvironmentReconciler, t).Data["add-ons.json"]); length == 0 {
 		t.Error("add-ons.json was not written to the entitlements secret")
 	}
+}
+
+func TestReconcileKeepsLowerCeilingAfterGracePeriod(t *testing.T) {
+	unreachableSince := metav1.NewTime(time.Now().Add(-8 * 24 * time.Hour))
+
+	environment := activatedEnvironment()
+	environment.Status.ReplicaCeiling = pointerInt32(0)
+	environment.Status.UnreachableSince = &unreachableSince
+
+	provisioningClient := &stubProvisioning{
+		manifestError: fmt.Errorf("provisioning: connection refused"),
+	}
+
+	liferayEnvironmentReconciler, _ := reconcileEnvironment(
+		provisioningClient,
+		t,
+		&appsv1.StatefulSet{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "dev-liferay",
+				Namespace: "liferay-dev",
+			},
+			Spec: appsv1.StatefulSetSpec{
+				Replicas: pointerInt32(0),
+			},
+		},
+		&corev1.Namespace{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "liferay-dev",
+				UID:  "dev-namespace-uid",
+			},
+		},
+		environment,
+	)
+
+	statefulSet := getStatefulSet(liferayEnvironmentReconciler, t)
+
+	assertReplicasEqual(
+		statefulSet.Spec.Replicas, pointerInt32(0), "statefulSet.spec.replicas", t,
+	)
+
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+	assertReplicasEqual(
+		liferayEnvironment.Status.ReplicaCeiling, pointerInt32(0), "status.replicaCeiling", t,
+	)
 }
 
 func TestReconcileOfflineAwaitsMissingBundleFile(t *testing.T) {

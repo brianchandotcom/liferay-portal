@@ -34,6 +34,9 @@ spec:
         -   jsonPath: .spec.desiredReplicas
             name: Desired
             type: integer
+        -   jsonPath: .status.replicaCeiling
+            name: Ceiling
+            type: integer
         -   jsonPath: .status.effectiveReplicas
             name: Effective
             type: integer
@@ -246,6 +249,9 @@ spec:
                                 -   Pending
                                 -   Ready
                                 type: string
+                            replicaCeiling:
+                                format: int32
+                                type: integer
                             unreachableSince:
                                 format: date-time
                                 type: string

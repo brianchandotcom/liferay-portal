@@ -8,9 +8,6 @@ package com.liferay.exportimport.test.util.exportimport.data.handler;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.DataLevel;
@@ -26,19 +23,18 @@ import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.LazyReferencingTestUtil;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
-import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -56,22 +52,17 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.staging.StagingGroupHelper;
 
 import java.io.File;
 import java.io.Serializable;
@@ -85,7 +76,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -102,52 +92,19 @@ import org.osgi.framework.ServiceReference;
 public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	extends BasePortletDataHandlerTestCase {
 
-	@AfterClass
-	public static void tearDownClass() {
-		_group = null;
-		_layout = null;
-		_targetGroup = null;
-		_targetLayout = null;
-		_targetUser = null;
-	}
-
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
-		if (_group != null) {
-			return;
-		}
+		ExportImportScopeClassTestRule exportImportScopeClassTestRule =
+			getExportImportScopeClassTestRule();
 
-		Scope scope = getScope();
-
-		if (scope == Scope.COMPANY) {
-			_group = _stagingGroupHelper.fetchCompanyGroup(
-				TestPropsValues.getCompanyId());
-
-			Company targetCompany = CompanyTestUtil.addCompany();
-
-			_targetGroup = _stagingGroupHelper.fetchCompanyGroup(
-				targetCompany.getCompanyId());
-			_targetUser = UserTestUtil.addCompanyAdminUser(targetCompany);
-
-			return;
-		}
-
-		if (scope == Scope.DEPOT) {
-			_group = _addDepotGroup();
-			_targetGroup = _addDepotGroup();
-		}
-		else {
-			_group = GroupTestUtil.addGroup();
-			_targetGroup = GroupTestUtil.addGroup();
-		}
-
-		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
-		_targetLayout = LayoutTestUtil.addTypePortletLayout(
-			_targetGroup.getGroupId());
-		_targetUser = TestPropsValues.getUser();
+		_group = exportImportScopeClassTestRule.getGroup();
+		_layout = exportImportScopeClassTestRule.getLayout();
+		_targetGroup = exportImportScopeClassTestRule.getTargetGroup();
+		_targetLayout = exportImportScopeClassTestRule.getTargetLayout();
+		_targetUser = exportImportScopeClassTestRule.getTargetUser();
 	}
 
 	@Test
@@ -488,10 +445,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 		permissionCheckerMethodTestRule =
 			PermissionCheckerMethodTestRule.INSTANCE;
 
-	protected static User getTargetUser() {
-		return _targetUser;
-	}
-
 	protected String addEmptyEntry(long groupId, long userId) throws Exception {
 		throw new UnsupportedOperationException();
 	}
@@ -530,6 +483,9 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	protected abstract Object getEntryValue(
 			long groupId, String externalReferenceCode)
 		throws Exception;
+
+	protected abstract ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule();
 
 	protected abstract ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate();
@@ -584,7 +540,12 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			long groupId, String externalReferenceCode)
 		throws Exception;
 
-	protected abstract Scope getScope();
+	protected Scope getScope() {
+		ExportImportScopeClassTestRule exportImportScopeClassTestRule =
+			getExportImportScopeClassTestRule();
+
+		return exportImportScopeClassTestRule.getScope();
+	}
 
 	protected int getStatus(long groupId, String externalReferenceCode)
 		throws Exception {
@@ -599,6 +560,10 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 		return exportImportDescriptor.getModelClassName();
 	}
 
+	protected User getTargetUser() {
+		return _targetUser;
+	}
+
 	protected abstract boolean supportsComments();
 
 	protected abstract boolean supportsEmptyEntries();
@@ -608,18 +573,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	protected abstract void updateEntry(
 			long groupId, String externalReferenceCode)
 		throws Exception;
-
-	private Group _addDepotGroup() throws Exception {
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			DepotConstants.TYPE_ASSET_LIBRARY,
-			ServiceContextTestUtil.getServiceContext());
-
-		return depotEntry.getGroup();
-	}
 
 	private void _exportImport(
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
@@ -857,12 +810,6 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 			updateExportImportConfiguration(exportImportConfiguration);
 	}
 
-	private static Group _group;
-	private static Layout _layout;
-	private static Group _targetGroup;
-	private static Layout _targetLayout;
-	private static User _targetUser;
-
 	@Inject
 	private ChangesetCollectionLocalService _changesetCollectionLocalService;
 
@@ -882,11 +829,11 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	private User _creatorUser;
 
 	@Inject
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Inject
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
+
+	private Group _group;
+	private Layout _layout;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
@@ -897,10 +844,10 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	@Inject
 	private RoleLocalService _roleLocalService;
 
-	@Inject
-	private StagingGroupHelper _stagingGroupHelper;
-
+	private Group _targetGroup;
+	private Layout _targetLayout;
 	private Role _targetRole;
+	private User _targetUser;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -6,6 +6,7 @@
 package com.liferay.oauth.client.rest.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -45,6 +46,11 @@ public class OAuthClientASLocalMetadataBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final ExportImportScopeClassTestRule
+		exportImportScopeClassTestRule = new ExportImportScopeClassTestRule(
+			Scope.COMPANY);
 
 	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
@@ -105,6 +111,13 @@ public class OAuthClientASLocalMetadataBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule() {
+
+		return exportImportScopeClassTestRule;
+	}
+
+	@Override
 	protected ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate() {
 
@@ -136,11 +149,6 @@ public class OAuthClientASLocalMetadataBatchEnginePortletDataHandlerTest
 			_getOAuthClientASLocalMetadata(groupId, externalReferenceCode);
 
 		return oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId();
-	}
-
-	@Override
-	protected Scope getScope() {
-		return Scope.COMPANY;
 	}
 
 	@Override

@@ -6942,6 +6942,14 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(4, "keywords/any(k:k ne 'tag2')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k ne 'tag3')");
 
+		_assertFilteredObjectEntries(1, "not (keywords/any(k:k eq 'tag1'))");
+		_assertFilteredObjectEntries(1, "not (keywords/any(k:k eq 'TAG1'))");
+		_assertFilteredObjectEntries(3, "not (keywords/any(k:k eq 'tag2'))");
+		_assertFilteredObjectEntries(4, "not (keywords/any(k:k eq 'tag3'))");
+		_assertFilteredObjectEntries(5, "not (keywords/any(k:k eq '1234'))");
+		_assertFilteredObjectEntries(
+			3, "not (keywords/any(k:(k eq 'tag2') or (k eq 'tag3')))");
+
 		_assertFilteredObjectEntries(2, "keywords/any(k:k gt 'tag1')");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k gt 'TAG1')");
 		_assertFilteredObjectEntries(1, "keywords/any(k:k gt 'tag2')");
@@ -7302,6 +7310,29 @@ public class ObjectEntryResourceTest {
 			String.format(
 				"taxonomyCategoryIds/any(k:k ne %s)",
 				taxonomyCategory3.getId()));
+
+		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"not (taxonomyCategoryIds/any(k:k eq %s))",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"not (taxonomyCategoryIds/any(k:k eq %s))",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"not (taxonomyCategoryIds/any(k:k eq %s))",
+				taxonomyCategory3.getId()));
+		_assertFilteredObjectEntries(
+			4, "not (taxonomyCategoryIds/any(k:k eq 1234))");
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"not (taxonomyCategoryIds/any(k:(k eq %s) or (k eq %s)))",
+				taxonomyCategory2.getId(), taxonomyCategory3.getId()));
 
 		_assertFilteredObjectEntries(
 			2,

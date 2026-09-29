@@ -8,16 +8,25 @@ package com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.headless.commerce.machine.learning.internal.odata.entity.v1_0.ModifiedDateEntityModel;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +45,22 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 
 		return new ModifiedDateEntityModel();
 	}
+
+	@Override
+	public final Page<T> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		_checkPermission();
+
+		return doRead(filter, pagination, sorts, parameters, search);
+	}
+
+	protected abstract Page<T> doRead(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception;
 
 	protected Page<T> search(
 			DTOConverter<?, T> dtoConverter, String entryClassName,
@@ -81,5 +106,33 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 
 	@Reference
 	protected DTOConverterRegistry dtoConverterRegistry;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	private void _checkPermission() throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			throw new PrincipalException(
+				"Unable to read commerce machine learning entities without a " +
+					"permission checker");
+		}
+
+		long companyId = contextCompany.getCompanyId();
+
+		if (permissionChecker.isCompanyAdmin(companyId) ||
+			roleLocalService.hasUserRole(
+				permissionChecker.getUserId(), companyId,
+				RoleConstants.ANALYTICS_ADMINISTRATOR, true)) {
+
+			return;
+		}
+
+		throw new PrincipalException.MustHavePermission(
+			permissionChecker.getUserId(), Company.class.getName(), companyId,
+			ActionKeys.VIEW);
+	}
 
 }

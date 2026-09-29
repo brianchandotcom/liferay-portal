@@ -49,7 +49,7 @@ public class ProductChannelBatchEngineTaskItemDelegate
 	}
 
 	@Override
-	public Page<ProductChannel> read(
+	protected Page<ProductChannel> doRead(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {

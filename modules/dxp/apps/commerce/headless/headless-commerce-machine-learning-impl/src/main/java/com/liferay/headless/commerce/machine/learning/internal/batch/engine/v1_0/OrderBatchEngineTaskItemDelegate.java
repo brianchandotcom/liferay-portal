@@ -49,7 +49,7 @@ public class OrderBatchEngineTaskItemDelegate
 	}
 
 	@Override
-	public Page<Order> read(
+	protected Page<Order> doRead(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {

@@ -39,7 +39,7 @@ public class CategoryBatchEngineTaskItemDelegate
 	}
 
 	@Override
-	public Page<Category> read(
+	protected Page<Category> doRead(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {

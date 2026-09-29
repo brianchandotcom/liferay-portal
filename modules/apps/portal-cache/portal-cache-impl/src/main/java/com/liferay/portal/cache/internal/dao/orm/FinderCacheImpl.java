@@ -248,44 +248,13 @@ public class FinderCacheImpl
 			}
 		}
 
-		String cacheName = finderPath.getCacheName();
-		String cacheKeyPrefix = finderPath.getCacheKeyPrefix();
-
-		Map<String, FinderPath> finderPaths = _finderPathsMap.get(cacheName);
-
-		if (finderPaths == null) {
-			finderPaths = new ConcurrentHashMap<>();
-
-			Map<String, FinderPath> originalFinderPaths =
-				_finderPathsMap.putIfAbsent(cacheName, finderPaths);
-
-			if (originalFinderPaths != null) {
-				finderPaths = originalFinderPaths;
-			}
-		}
-
-		if (!finderPaths.containsKey(cacheKeyPrefix)) {
-			if (cacheKeyPrefix.startsWith("dslQuery")) {
-				for (String tableName :
-						FinderPath.decodeDSLQueryCacheName(cacheName)) {
-
-					Set<String> dslQueryCacheNames =
-						_dslQueryCacheNamesMap.computeIfAbsent(
-							tableName,
-							key -> Collections.newSetFromMap(
-								new ConcurrentHashMap<>()));
-
-					dslQueryCacheNames.add(cacheName);
-				}
-			}
-
-			finderPaths.putIfAbsent(cacheKeyPrefix, finderPath);
-		}
+		_addFinderPath(finderPath);
 
 		Serializable cacheKey = _encodeCacheKey(finderPath, args);
 
 		if (!TransactionalPortalCacheUtil.completePut(
-				_getCTPortalCache(cacheName), cacheKey, cacheValue)) {
+				_getCTPortalCache(finderPath.getCacheName()), cacheKey,
+				cacheValue)) {
 
 			if (_isLocalCacheEnabled()) {
 				Map<LocalCacheKey, Serializable> localCache = _localCache.get();
@@ -519,6 +488,42 @@ public class FinderCacheImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistration.unregister();
+	}
+
+	private void _addFinderPath(FinderPath finderPath) {
+		String cacheName = finderPath.getCacheName();
+		String cacheKeyPrefix = finderPath.getCacheKeyPrefix();
+
+		Map<String, FinderPath> finderPaths = _finderPathsMap.get(cacheName);
+
+		if (finderPaths == null) {
+			finderPaths = new ConcurrentHashMap<>();
+
+			Map<String, FinderPath> originalFinderPaths =
+				_finderPathsMap.putIfAbsent(cacheName, finderPaths);
+
+			if (originalFinderPaths != null) {
+				finderPaths = originalFinderPaths;
+			}
+		}
+
+		if (!finderPaths.containsKey(cacheKeyPrefix)) {
+			if (cacheKeyPrefix.startsWith("dslQuery")) {
+				for (String tableName :
+						FinderPath.decodeDSLQueryCacheName(cacheName)) {
+
+					Set<String> dslQueryCacheNames =
+						_dslQueryCacheNamesMap.computeIfAbsent(
+							tableName,
+							key -> Collections.newSetFromMap(
+								new ConcurrentHashMap<>()));
+
+					dslQueryCacheNames.add(cacheName);
+				}
+			}
+
+			finderPaths.putIfAbsent(cacheKeyPrefix, finderPath);
+		}
 	}
 
 	private void _clearCache(String cacheName) {

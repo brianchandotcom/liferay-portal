@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.dao.jdbc;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.sql.Connection;
@@ -58,7 +59,12 @@ public class ConnectionUtil {
 				return null;
 			}
 
-			return method.invoke(_connection, args);
+			try {
+				return method.invoke(_connection, args);
+			}
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getTargetException();
+			}
 		}
 
 		private UncloseableInvocationHandler(Connection connection) {

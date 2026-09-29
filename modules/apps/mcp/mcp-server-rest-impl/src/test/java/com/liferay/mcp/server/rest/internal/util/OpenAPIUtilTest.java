@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
@@ -342,17 +343,71 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
+	public void testGetRequestBodySchemaJSONObject() {
+		JSONObject openAPIJSONObject = JSONUtil.put(
+			"components",
+			JSONUtil.put(
+				"schemas",
+				JSONUtil.put(
+					"Item",
+					JSONUtil.put(
+						"properties",
+						JSONUtil.put("name", JSONUtil.put("type", "string"))
+					).put(
+						"type", "object"
+					)))
+		).put(
+			"paths",
+			JSONUtil.put(
+				"/items",
+				JSONUtil.put(
+					"get", JSONUtil.put("operationId", "getItemsPage")
+				).put(
+					"post",
+					JSONUtil.put(
+						"operationId", "postItem"
+					).put(
+						"requestBody",
+						JSONUtil.put(
+							"content",
+							JSONUtil.put(
+								"application/json",
+								JSONUtil.put(
+									"schema",
+									JSONUtil.put(
+										"$ref", "#/components/schemas/Item"))))
+					)
+				))
+		);
+
+		JSONObject schemaJSONObject =
+			OpenAPIUtil.getRequestBodySchemaJSONObject(
+				openAPIJSONObject, "postItem");
+
+		Assert.assertEquals("object", schemaJSONObject.getString("type"));
+		Assert.assertNotNull(
+			JSONUtil.getValueAsJSONObject(
+				schemaJSONObject, "JSONObject/properties", "JSONObject/name"));
+
+		Assert.assertNull(
+			OpenAPIUtil.getRequestBodySchemaJSONObject(
+				openAPIJSONObject, "getItemsPage"));
+	}
+
+	@Test
 	public void testGetTool() throws Exception {
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"OpenAPI document has no tool with name \"missing\"",
 			() -> OpenAPIUtil.getTool(
-				true, _openAPIJSONObject, null, "missing"));
+				true, UnaryOperator.identity(), _openAPIJSONObject, null,
+				"missing"));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"OpenAPI document has no \"paths\" object",
 			() -> OpenAPIUtil.getTool(
-				true, JSONFactoryUtil.createJSONObject(), null,
+				true, UnaryOperator.identity(),
+				JSONFactoryUtil.createJSONObject(), null,
 				RandomTestUtil.randomString()));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class, "Request body has no content",
@@ -400,7 +455,8 @@ public class OpenAPIUtilTest {
 			"putItem");
 
 		Tool tool = OpenAPIUtil.getTool(
-			true, _openAPIJSONObject, "boolean,object1.name", "getItems");
+			true, UnaryOperator.identity(), _openAPIJSONObject,
+			"boolean,object1.name", "getItems");
 
 		Map<String, ?> inputSchemaMap = tool.getInputSchema();
 
@@ -618,7 +674,7 @@ public class OpenAPIUtilTest {
 		JSONObject openAPIJSONObject, String toolName) {
 
 		Tool tool = OpenAPIUtil.getTool(
-			true, openAPIJSONObject, null, toolName);
+			true, UnaryOperator.identity(), openAPIJSONObject, null, toolName);
 
 		return tool.getInputSchema();
 	}
@@ -686,7 +742,8 @@ public class OpenAPIUtilTest {
 		throws Exception {
 
 		Tool tool = OpenAPIUtil.getTool(
-			injectVulcanParameters, _openAPIJSONObject, null, toolName);
+			injectVulcanParameters, UnaryOperator.identity(),
+			_openAPIJSONObject, null, toolName);
 
 		Assert.assertEquals(expectedDescription, tool.getDescription());
 		Assert.assertEquals(toolName, tool.getName());

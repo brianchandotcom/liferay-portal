@@ -17,6 +17,9 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
@@ -32,6 +35,8 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ResourceRequest;
@@ -39,7 +44,9 @@ import jakarta.portlet.ResourceResponse;
 
 import java.text.Format;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -297,6 +304,8 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		).put(
 			"siteDefaultLocale", themeDisplay.getSiteDefaultLocale()
 		).put(
+			"skuOptions", _getSkuOptions(commerceOrderItems)
+		).put(
 			"subtotalDiscountAmount",
 			_commercePriceFormatter.format(
 				commerceOrder.getCommerceCurrency(), true,
@@ -444,6 +453,41 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		return _portal.getPortalURL(themeDisplay) + logoURL;
 	}
 
+	private Map<Long, String> _getSkuOptions(
+			List<CommerceOrderItem> commerceOrderItems)
+		throws Exception {
+
+		Map<Long, String> skuOptions = new HashMap<>();
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			String json = commerceOrderItem.getJson();
+
+			if (Validator.isNull(json)) {
+				continue;
+			}
+
+			List<String> skuOptionValueNames = JSONUtil.toList(
+				_jsonFactory.createJSONArray(json),
+				jsonObject -> {
+					JSONArray skuOptionValueNamesJSONArray =
+						jsonObject.getJSONArray("skuOptionValueNames");
+
+					if (JSONUtil.isEmpty(skuOptionValueNamesJSONArray)) {
+						return null;
+					}
+
+					return skuOptionValueNamesJSONArray.getString(0);
+				});
+
+			skuOptions.put(
+				commerceOrderItem.getCommerceOrderItemId(),
+				StringUtil.merge(
+					skuOptionValueNames, StringPool.COMMA_AND_SPACE));
+		}
+
+		return skuOptions;
+	}
+
 	@Reference
 	private CommerceOrderService _commerceOrderService;
 
@@ -458,6 +502,9 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

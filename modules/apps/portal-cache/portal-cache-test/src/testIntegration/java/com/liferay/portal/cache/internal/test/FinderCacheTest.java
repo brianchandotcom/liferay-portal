@@ -166,6 +166,10 @@ public class FinderCacheTest {
 				Assert.assertEquals(
 					Collections.singletonList(Collections.singleton("Ticket")),
 					autoFlushQuerySpaces);
+				Assert.assertEquals(
+					2L,
+					_finderCache.getResult(
+						_countFinderPath, finderArgs, _ticketPersistence));
 
 				Ticket newTicket = _addTicket(classPK, serviceContext);
 

@@ -202,10 +202,15 @@ public class TransactionalPortalCacheTest {
 		transactionLifecycleListener.created(
 			transactionAttribute, transactionStatus);
 
+		long startSequence = TransactionalPortalCacheUtil.getStartSequence();
+
 		_commitRemove(transactionalPortalCache, _KEY_1);
 
 		transactionLifecycleListener.created(
 			savepointTransactionAttribute, savepointTransactionStatus);
+
+		Assert.assertEquals(
+			startSequence, TransactionalPortalCacheUtil.getStartSequence());
 
 		transactionalPortalCache.put(_KEY_1, _VALUE_1);
 

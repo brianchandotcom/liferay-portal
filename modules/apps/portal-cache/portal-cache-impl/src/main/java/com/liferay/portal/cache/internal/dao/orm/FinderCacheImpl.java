@@ -487,6 +487,32 @@ public class FinderCacheImpl
 		}
 
 		for (FinderPath finderPath : finderPaths) {
+			if (_isMaintainedCountFinderPath(finderPath) &&
+				(baseModel instanceof MVCCModel)) {
+
+				if (baseModel.isNew()) {
+					_adjustResult(
+						finderPath,
+						argumentsResolver.getArguments(
+							finderPath, baseModel, false, false),
+						1);
+				}
+				else {
+					_adjustResult(
+						finderPath,
+						argumentsResolver.getArguments(
+							finderPath, baseModel, true, false),
+						1);
+					_adjustResult(
+						finderPath,
+						argumentsResolver.getArguments(
+							finderPath, baseModel, true, true),
+						-1);
+				}
+
+				continue;
+			}
+
 			if (baseModel.isNew()) {
 				_removeResult(
 					finderPath,
@@ -624,6 +650,41 @@ public class FinderCacheImpl
 
 			finderPaths.putIfAbsent(cacheKeyPrefix, finderPath);
 		}
+	}
+
+	private void _adjustResult(
+		FinderPath finderPath, Object[] args, long delta) {
+
+		if (args == null) {
+			return;
+		}
+
+		Serializable cacheKey = _encodeCacheKey(finderPath, args);
+
+		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
+			finderPath.getCacheName());
+
+		CountKey countKey = null;
+
+		if (TransactionalPortalCacheUtil.isEnabled()) {
+			countKey = _createCountKey(finderPath, cacheKey);
+		}
+
+		if (countKey == null) {
+			portalCache.remove(cacheKey);
+
+			return;
+		}
+
+		Long privateCount = _getPrivateCount(countKey);
+
+		if (privateCount != null) {
+			TransactionalPortalCacheUtil.put(
+				_privateCountPortalCache, countKey, privateCount + delta,
+				PortalCache.DEFAULT_TIME_TO_LIVE, true);
+		}
+
+		portalCache.remove(cacheKey);
 	}
 
 	private void _clearCache(String cacheName) {
@@ -914,6 +975,10 @@ public class FinderCacheImpl
 
 		if (value instanceof PrivateCount privateCount) {
 			return privateCount._count;
+		}
+
+		if (value instanceof Long count) {
+			return count;
 		}
 
 		return null;

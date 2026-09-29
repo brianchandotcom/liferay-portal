@@ -49,6 +49,8 @@ import (
 )
 
 const (
+	annotationPausedReplicas                 = "autoscaling.keda.sh/paused-replicas"
+	annotationPausedReplicasOwner            = "licensing.liferay.com/paused-replicas"
 	conditionActivated                       = "Activated"
 	conditionAddOnsReady                     = "AddOnsReady"
 	conditionGracePeriodExpired              = "GracePeriodExpired"
@@ -284,6 +286,14 @@ func capReplicaBounds(
 	autoscaling *licensingv1alpha1.Autoscaling,
 	replicaCeiling int32,
 ) replicaBounds {
+	if replicaCeiling <= 0 {
+		return replicaBounds{
+			Maximum: 1,
+			Minimum: 1,
+			Paused:  true,
+		}
+	}
+
 	maximum := max(min(autoscaling.MaxReplicas, replicaCeiling), 1)
 
 	return replicaBounds{
@@ -851,19 +861,6 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceScaledO
 		return error
 	}
 
-	patchJSON, error := json.Marshal(
-		map[string]any{
-			"spec": map[string]any{
-				"maxReplicaCount": replicaBounds.Maximum,
-				"minReplicaCount": replicaBounds.Minimum,
-			},
-		},
-	)
-
-	if error != nil {
-		return error
-	}
-
 	for index := range scaledObjectList.Items {
 		scaledObject := &scaledObjectList.Items[index]
 
@@ -882,12 +879,43 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceScaledO
 			continue
 		}
 
-		if scaledObjectSpec.MaxReplicaCount != nil &&
+		annotations := scaledObject.GetAnnotations()
+
+		patchAnnotations := map[string]any{}
+
+		if replicaBounds.Paused && annotations[annotationPausedReplicas] != "0" {
+			patchAnnotations[annotationPausedReplicas] = "0"
+			patchAnnotations[annotationPausedReplicasOwner] = "true"
+		}
+
+		if !replicaBounds.Paused && annotations[annotationPausedReplicasOwner] == "true" {
+			patchAnnotations[annotationPausedReplicas] = nil
+			patchAnnotations[annotationPausedReplicasOwner] = nil
+		}
+
+		if len(patchAnnotations) == 0 &&
+			scaledObjectSpec.MaxReplicaCount != nil &&
 			*scaledObjectSpec.MaxReplicaCount == replicaBounds.Maximum &&
 			scaledObjectSpec.MinReplicaCount != nil &&
 			*scaledObjectSpec.MinReplicaCount == replicaBounds.Minimum {
 
 			continue
+		}
+
+		patchJSON, error := json.Marshal(
+			map[string]any{
+				"metadata": map[string]any{
+					"annotations": patchAnnotations,
+				},
+				"spec": map[string]any{
+					"maxReplicaCount": replicaBounds.Maximum,
+					"minReplicaCount": replicaBounds.Minimum,
+				},
+			},
+		)
+
+		if error != nil {
+			return error
 		}
 
 		if error := liferayEnvironmentReconciler.Patch(
@@ -904,6 +932,7 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceScaledO
 			"autoscaler", scaledObject.GetName(),
 			"maxReplicas", replicaBounds.Maximum,
 			"minReplicas", replicaBounds.Minimum,
+			"paused", replicaBounds.Paused,
 		)
 	}
 
@@ -1669,6 +1698,7 @@ type LiferayEnvironmentReconciler struct {
 type replicaBounds struct {
 	Maximum int32
 	Minimum int32
+	Paused  bool
 }
 
 type scaledObjectScaleTargetRef struct {

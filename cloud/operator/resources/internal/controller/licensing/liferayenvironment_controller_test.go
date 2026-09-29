@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"maps"
 	"os"
 	"path/filepath"
 	"slices"
@@ -96,15 +97,20 @@ func TestCapReplicaBounds(t *testing.T) {
 			expectedReplicaBounds: replicaBounds{Maximum: 3, Minimum: 3},
 			replicaCeiling:        3,
 		},
-		"floors the maximum at one replica when the ceiling is zero": {
-			autoscaling:           &licensingv1alpha1.Autoscaling{MaxReplicas: 10, MinReplicas: 2},
-			expectedReplicaBounds: replicaBounds{Maximum: 1, Minimum: 1},
-			replicaCeiling:        0,
-		},
 		"keeps bounds within the replica ceiling": {
 			autoscaling:           &licensingv1alpha1.Autoscaling{MaxReplicas: 4, MinReplicas: 2},
 			expectedReplicaBounds: replicaBounds{Maximum: 4, Minimum: 2},
 			replicaCeiling:        5,
+		},
+		"pauses at a ceiling of zero": {
+			autoscaling:           &licensingv1alpha1.Autoscaling{MaxReplicas: 10, MinReplicas: 2},
+			expectedReplicaBounds: replicaBounds{Maximum: 1, Minimum: 1, Paused: true},
+			replicaCeiling:        0,
+		},
+		"raises a zero minimum at a ceiling of zero": {
+			autoscaling:           &licensingv1alpha1.Autoscaling{MaxReplicas: 10, MinReplicas: 0},
+			expectedReplicaBounds: replicaBounds{Maximum: 1, Minimum: 1, Paused: true},
+			replicaCeiling:        0,
 		},
 	}
 
@@ -334,6 +340,105 @@ func TestEnforceAutoscalerCeilingIgnoresOtherAutoscalers(t *testing.T) {
 	}
 
 	assertScaledObjectReplicaCount(10, "maxReplicaCount", scaledObject, t)
+}
+
+func TestEnforceAutoscalerCeilingPausesKEDAAtZero(t *testing.T) {
+	testCases := map[string]struct {
+		annotations         map[string]string
+		expectedAnnotations map[string]string
+		expectedMaxReplicas int32
+		liveMaxReplicas     int32
+		replicaCeiling      int32
+	}{
+		"leaves a pause it did not set": {
+			annotations:         map[string]string{annotationPausedReplicas: "5"},
+			expectedAnnotations: map[string]string{annotationPausedReplicas: "5"},
+			expectedMaxReplicas: 3,
+			liveMaxReplicas:     10,
+			replicaCeiling:      3,
+		},
+		"lifts its own pause when the ceiling rises": {
+			annotations: map[string]string{
+				annotationPausedReplicas:      "0",
+				annotationPausedReplicasOwner: "true",
+			},
+			expectedAnnotations: nil,
+			expectedMaxReplicas: 3,
+			liveMaxReplicas:     1,
+			replicaCeiling:      3,
+		},
+		"pauses at a ceiling of zero": {
+			annotations: nil,
+			expectedAnnotations: map[string]string{
+				annotationPausedReplicas:      "0",
+				annotationPausedReplicasOwner: "true",
+			},
+			expectedMaxReplicas: 1,
+			liveMaxReplicas:     10,
+			replicaCeiling:      0,
+		},
+		"pauses when the ceiling drops from one to zero": {
+			annotations: nil,
+			expectedAnnotations: map[string]string{
+				annotationPausedReplicas:      "0",
+				annotationPausedReplicasOwner: "true",
+			},
+			expectedMaxReplicas: 1,
+			liveMaxReplicas:     1,
+			replicaCeiling:      0,
+		},
+		"stays unpaused at a ceiling of one": {
+			annotations:         nil,
+			expectedAnnotations: nil,
+			expectedMaxReplicas: 1,
+			liveMaxReplicas:     10,
+			replicaCeiling:      1,
+		},
+	}
+
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			liferayEnvironment := &licensingv1alpha1.LiferayEnvironment{
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      "dev",
+					Namespace: "liferay-dev",
+				},
+				Spec: licensingv1alpha1.LiferayEnvironmentSpec{
+					Autoscaling: &licensingv1alpha1.Autoscaling{MaxReplicas: 10, MinReplicas: 1},
+					WorkloadRef: licensingv1alpha1.WorkloadRef{
+						Name: "dev-liferay",
+					},
+				},
+			}
+
+			scaledObject := newScaledObject(testCase.liveMaxReplicas, 1, "dev-liferay")
+
+			scaledObject.SetAnnotations(testCase.annotations)
+
+			liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
+				Client: newFakeClient(t, liferayEnvironment, scaledObject),
+			}
+
+			if error := liferayEnvironmentReconciler.enforceAutoscalerCeiling(
+				context.Background(), liferayEnvironment, testCase.replicaCeiling,
+			); error != nil {
+				t.Fatalf("Unexpected error from enforceAutoscalerCeiling: %v", error)
+			}
+
+			scaledObject = getScaledObject(liferayEnvironmentReconciler, t)
+
+			if !maps.Equal(scaledObject.GetAnnotations(), testCase.expectedAnnotations) {
+				t.Errorf(
+					"scaledObject.metadata.annotations = %v, want %v",
+					scaledObject.GetAnnotations(), testCase.expectedAnnotations,
+				)
+			}
+
+			assertScaledObjectReplicaCount(
+				int64(testCase.expectedMaxReplicas), "maxReplicaCount", scaledObject, t,
+			)
+		})
+	}
 }
 
 func TestEnforceAutoscalerCeilingSetsMissingScaledObjectBounds(t *testing.T) {

@@ -25,7 +25,7 @@ export function FormikFieldPublishScheduler({
 		!!getIn(touched, `${name}.${fieldName}`);
 
 	const setTouched = (fieldName: keyof ScheduleValues) =>
-		setFieldTouched(`${name}.${fieldName}`);
+		setFieldTouched(`${name}.${fieldName}`, true, false);
 
 	const scheduleValuesErrors = getScheduleValuesErrors(field.value);
 

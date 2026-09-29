@@ -343,6 +343,34 @@ describe('NewPublish', () => {
 		});
 	});
 
+	it('enables scheduling once a typed start date gets its default time on blur', async () => {
+		renderComponent();
+
+		await fillRequiredFields();
+
+		await user.click(
+			screen.getByRole('radio', {name: /schedule-for-later/})
+		);
+
+		const startDateField = screen.getByRole('textbox', {
+			name: /start-date/,
+		});
+
+		await user.click(startDateField);
+		await user.paste(FUTURE_DISPLAY_DATE);
+		await user.tab();
+
+		expect(startDateField).toHaveValue(`${FUTURE_DISPLAY_DATE} 12:00 AM`);
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', {
+					name: /schedule-publication-to-live/i,
+				})
+			).toBeEnabled();
+		});
+	});
+
 	it('defaults the end date time to 23:59 when a day is picked without a time', async () => {
 		renderComponent();
 

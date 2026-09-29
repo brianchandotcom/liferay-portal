@@ -175,13 +175,35 @@ public class OpenAPIUtil {
 		};
 	}
 
-	public static Tool getTool(
-		boolean injectVulcanParameters, JSONObject openAPIJSONObject,
-		String restrictFields, String toolName) {
+	public static JSONObject getRequestBodySchemaJSONObject(
+		JSONObject openAPIJSONObject, String toolName) {
 
-		return getTool(
-			injectVulcanParameters, UnaryOperator.identity(), openAPIJSONObject,
-			restrictFields, toolName);
+		Operation operation = _getOperation(openAPIJSONObject, toolName);
+
+		JSONObject contentJSONObject = JSONUtil.getValueAsJSONObject(
+			operation._operationJSONObject, "JSONObject/requestBody",
+			"JSONObject/content");
+
+		if (contentJSONObject == null) {
+			return null;
+		}
+
+		JSONObject mediaTypeJSONObject = _getMediaTypeJSONObject(
+			contentJSONObject);
+
+		if (mediaTypeJSONObject == null) {
+			return null;
+		}
+
+		JSONObject schemaJSONObject = mediaTypeJSONObject.getJSONObject(
+			"schema");
+
+		if ((schemaJSONObject == null) || !schemaJSONObject.has("$ref")) {
+			return schemaJSONObject;
+		}
+
+		return _getRefJSONObject(
+			schemaJSONObject.getString("$ref"), openAPIJSONObject);
 	}
 
 	public static Tool getTool(
@@ -577,19 +599,8 @@ public class OpenAPIUtil {
 				"Request body has no \"content\"");
 		}
 
-		JSONObject mediaTypeJSONObject = contentJSONObject.getJSONObject(
-			"application/json");
-
-		if (mediaTypeJSONObject == null) {
-			for (String mediaType : contentJSONObject.keySet()) {
-				mediaTypeJSONObject = contentJSONObject.getJSONObject(
-					mediaType);
-
-				if (mediaTypeJSONObject != null) {
-					break;
-				}
-			}
-		}
+		JSONObject mediaTypeJSONObject = _getMediaTypeJSONObject(
+			contentJSONObject);
 
 		if (mediaTypeJSONObject == null) {
 			throw new IllegalArgumentException("Request body has no content");
@@ -773,6 +784,27 @@ public class OpenAPIUtil {
 		}
 
 		return new String(chars);
+	}
+
+	private static JSONObject _getMediaTypeJSONObject(
+		JSONObject contentJSONObject) {
+
+		JSONObject mediaTypeJSONObject = contentJSONObject.getJSONObject(
+			"application/json");
+
+		if (mediaTypeJSONObject != null) {
+			return mediaTypeJSONObject;
+		}
+
+		for (String mediaType : contentJSONObject.keySet()) {
+			mediaTypeJSONObject = contentJSONObject.getJSONObject(mediaType);
+
+			if (mediaTypeJSONObject != null) {
+				return mediaTypeJSONObject;
+			}
+		}
+
+		return null;
 	}
 
 	private static HttpEntity _getMultipartHttpEntity(

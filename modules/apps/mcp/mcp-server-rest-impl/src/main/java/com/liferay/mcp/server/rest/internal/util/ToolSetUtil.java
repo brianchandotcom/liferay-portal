@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -82,7 +83,10 @@ public class ToolSetUtil {
 				}
 
 				return _toRequiredInputSchema(
-					inputSchema, _isObjectOpenAPI(openAPIJSONObject));
+					inputSchema,
+					_isObjectEntrySchema(
+						OpenAPIUtil.getRequestBodySchemaJSONObject(
+							openAPIJSONObject, toolName)));
 			},
 			openAPIJSONObject,
 			_getRestrictFields(restrictFieldsMap, toolName, toolSetName),
@@ -432,14 +436,16 @@ public class ToolSetUtil {
 		return restrictFieldsMap.get(getToolKey(toolName, toolSetName));
 	}
 
-	private static boolean _isObjectOpenAPI(JSONObject openAPIJSONObject) {
-		JSONObject infoJSONObject = openAPIJSONObject.getJSONObject("info");
-
-		if (infoJSONObject == null) {
+	private static boolean _isObjectEntrySchema(JSONObject schemaJSONObject) {
+		if (schemaJSONObject == null) {
 			return false;
 		}
 
-		return Objects.equals(infoJSONObject.getString("title"), "Object");
+		return Objects.equals(
+			JSONUtil.getValueAsString(
+				schemaJSONObject, "JSONObject/properties",
+				"JSONObject/x-class-name", "Object/default"),
+			ObjectEntry.class.getName());
 	}
 
 	private static Map<String, Object> _removeObjectEntrySystemProperties(
@@ -518,7 +524,7 @@ public class ToolSetUtil {
 	private static Map<String, Object> _toRequiredSchema(
 		int depth, boolean objectToolSet, Map<String, ?> schema) {
 
-		if ((schema == null) || (depth > _MAX_SCHEMA_DEPTH)) {
+		if ((schema == null) || (depth > 4)) {
 			return null;
 		}
 
@@ -558,8 +564,6 @@ public class ToolSetUtil {
 			"type", schema.get("type")
 		).build();
 	}
-
-	private static final int _MAX_SCHEMA_DEPTH = 4;
 
 	private static final String _MCP_SERVER_TOOL_SET_NAME = "mcp-server-v1.0";
 

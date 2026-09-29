@@ -743,6 +743,107 @@ func TestEnforceReplicaCeiling(t *testing.T) {
 	}
 }
 
+func TestEnforceReplicaCeilingMarksItsOwnScaleToZero(t *testing.T) {
+	testCases := map[string]struct {
+		expectedMarked   bool
+		expectedReplicas int32
+		liveReplicas     int32
+		marked           bool
+		replicaCeiling   int32
+	}{
+		"keeps the marker while the ceiling stays at zero": {
+			expectedMarked:   true,
+			expectedReplicas: 0,
+			liveReplicas:     0,
+			marked:           true,
+			replicaCeiling:   0,
+		},
+		"leaves a workload a user scaled to zero at zero": {
+			expectedMarked:   false,
+			expectedReplicas: 0,
+			liveReplicas:     0,
+			marked:           false,
+			replicaCeiling:   3,
+		},
+		"leaves a workload already at zero unmarked": {
+			expectedMarked:   false,
+			expectedReplicas: 0,
+			liveReplicas:     0,
+			marked:           false,
+			replicaCeiling:   0,
+		},
+		"marks an autoscaled workload it scales to zero": {
+			expectedMarked:   true,
+			expectedReplicas: 0,
+			liveReplicas:     3,
+			marked:           false,
+			replicaCeiling:   0,
+		},
+		"raises its own scale to zero back to the minimum": {
+			expectedMarked:   false,
+			expectedReplicas: 2,
+			liveReplicas:     0,
+			marked:           true,
+			replicaCeiling:   3,
+		},
+	}
+
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			liferayEnvironment := &licensingv1alpha1.LiferayEnvironment{
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      "dev",
+					Namespace: "liferay-dev",
+				},
+				Spec: licensingv1alpha1.LiferayEnvironmentSpec{
+					Autoscaling: &licensingv1alpha1.Autoscaling{MaxReplicas: 10, MinReplicas: 2},
+					WorkloadRef: licensingv1alpha1.WorkloadRef{
+						Name: "dev-liferay",
+					},
+				},
+			}
+
+			statefulSet := &appsv1.StatefulSet{
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      "dev-liferay",
+					Namespace: "liferay-dev",
+				},
+				Spec: appsv1.StatefulSetSpec{
+					Replicas: &testCase.liveReplicas,
+				},
+			}
+
+			if testCase.marked {
+				statefulSet.Annotations = map[string]string{annotationScaledToZero: "true"}
+			}
+
+			liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
+				Client: newFakeClient(t, liferayEnvironment, statefulSet),
+			}
+
+			if _, error := liferayEnvironmentReconciler.enforceReplicaCeiling(
+				context.Background(), liferayEnvironment, testCase.replicaCeiling,
+			); error != nil {
+				t.Fatalf("Unexpected error from enforceReplicaCeiling: %v", error)
+			}
+
+			statefulSet = getStatefulSet(liferayEnvironmentReconciler, t)
+
+			assertReplicasEqual(
+				statefulSet.Spec.Replicas, &testCase.expectedReplicas,
+				"statefulSet.spec.replicas", t,
+			)
+
+			if marked := statefulSet.Annotations[annotationScaledToZero] == "true"; marked != testCase.expectedMarked {
+				t.Errorf(
+					"statefulSet.metadata.annotations[%q] present = %t, want %t",
+					annotationScaledToZero, marked, testCase.expectedMarked,
+				)
+			}
+		})
+	}
+}
+
 func TestEnforceReplicaCeilingPersistsCeilingBeforeWritingWorkload(t *testing.T) {
 	liferayEnvironment := &licensingv1alpha1.LiferayEnvironment{
 		ObjectMeta: metav1.ObjectMeta{
@@ -2690,6 +2791,93 @@ func TestReconcileResetsAddOnBackoffOnSuccess(t *testing.T) {
 	if appStatus.NextRetry != nil {
 		t.Error("NextRetry is set, want nil after success")
 	}
+}
+
+func TestReconcileRestoresAutoscaledWorkloadWhenLicenseRenewed(t *testing.T) {
+	environment := activatedEnvironment()
+	environment.Spec.Autoscaling = &licensingv1alpha1.Autoscaling{
+		MaxReplicas: 10,
+		MinReplicas: 2,
+	}
+	environment.Status.License.MaxClusterNodes = pointerInt32(0)
+	environment.Status.ReplicaCeiling = pointerInt32(0)
+
+	scaledObject := newScaledObject(1, 1, "dev-liferay")
+
+	scaledObject.SetAnnotations(
+		map[string]string{
+			annotationPausedReplicas:      "0",
+			annotationPausedReplicasOwner: "true",
+		},
+	)
+
+	liferayEnvironmentReconciler, _ := reconcileEnvironment(
+		&stubProvisioning{
+			entitlements: &provisioning.Entitlements{
+				LicenseXML: []byte(virtualClusterLicenseXML(
+					"Friday, March 2, 2029 12:00:00 AM GMT", 3, "dev-namespace-uid",
+				)),
+				MaxClusterNodes: 3,
+			},
+		},
+		t,
+		&appsv1.StatefulSet{
+			ObjectMeta: metav1.ObjectMeta{
+				Annotations: map[string]string{annotationScaledToZero: "true"},
+				Name:        "dev-liferay",
+				Namespace:   "liferay-dev",
+			},
+			Spec: appsv1.StatefulSetSpec{
+				Replicas: pointerInt32(0),
+			},
+		},
+		&corev1.Namespace{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "liferay-dev",
+				UID:  "dev-namespace-uid",
+			},
+		},
+		environment,
+		newHorizontalPodAutoscaler(1, 1, "dev-liferay"),
+		scaledObject,
+	)
+
+	statefulSet := getStatefulSet(liferayEnvironmentReconciler, t)
+
+	assertReplicasEqual(
+		statefulSet.Spec.Replicas, pointerInt32(2), "statefulSet.spec.replicas", t,
+	)
+
+	if _, ok := statefulSet.Annotations[annotationScaledToZero]; ok {
+		t.Errorf(
+			"statefulSet.metadata.annotations = %v, want the scale to zero marker removed",
+			statefulSet.Annotations,
+		)
+	}
+
+	assertReplicasEqual(
+		getEnvironment(liferayEnvironmentReconciler, t).Status.ReplicaCeiling,
+		pointerInt32(3),
+		"status.replicaCeiling",
+		t,
+	)
+
+	horizontalPodAutoscaler := getHorizontalPodAutoscaler(liferayEnvironmentReconciler, t)
+
+	assertReplicasEqual(
+		&horizontalPodAutoscaler.Spec.MaxReplicas,
+		pointerInt32(3),
+		"horizontalPodAutoscaler.spec.maxReplicas",
+		t,
+	)
+
+	scaledObject = getScaledObject(liferayEnvironmentReconciler, t)
+
+	if annotations := scaledObject.GetAnnotations(); len(annotations) != 0 {
+		t.Errorf("scaledObject.metadata.annotations = %v, want the pause lifted", annotations)
+	}
+
+	assertScaledObjectReplicaCount(3, "maxReplicaCount", scaledObject, t)
 }
 
 func TestReconcileRestoresReplicasWhenProvisioningRecovers(t *testing.T) {

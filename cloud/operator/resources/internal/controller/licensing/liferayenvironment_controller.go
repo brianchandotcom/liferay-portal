@@ -48,6 +48,7 @@ import (
 const (
 	annotationPausedReplicas            = "autoscaling.keda.sh/paused-replicas"
 	annotationPausedReplicasOwner       = "licensing.liferay.com/paused-replicas"
+	annotationScaledToZero              = "licensing.liferay.com/scaled-to-zero"
 	conditionActivated                  = "Activated"
 	conditionAddOnsReady                = "AddOnsReady"
 	conditionGracePeriodExpired         = "GracePeriodExpired"
@@ -705,7 +706,16 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceReplica
 
 	desiredReplicas := resolveDesiredReplicas(liferayEnvironment, statefulSet)
 
+	markedScaledToZero := statefulSet.Annotations[annotationScaledToZero] == "true"
+
+	if markedScaledToZero && replicaCeiling > 0 && liferayEnvironment.Spec.Autoscaling != nil {
+		desiredReplicas = max(desiredReplicas, liferayEnvironment.Spec.Autoscaling.MinReplicas)
+	}
+
 	effectiveReplicas := min(desiredReplicas, replicaCeiling)
+
+	markScaledToZero := liferayEnvironment.Spec.Autoscaling != nil && replicaCeiling == 0 &&
+		(markedScaledToZero || statefulSet.Spec.Replicas == nil || *statefulSet.Spec.Replicas > 0)
 
 	replicasChanged := statefulSet.Spec.Replicas == nil ||
 		*statefulSet.Spec.Replicas != effectiveReplicas
@@ -716,10 +726,20 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) enforceReplica
 		}
 	}
 
-	if replicasChanged {
+	if replicasChanged || markScaledToZero != markedScaledToZero {
 		liveReplicas := statefulSet.Spec.Replicas
 
 		statefulSet.Spec.Replicas = &effectiveReplicas
+
+		if markScaledToZero {
+			if statefulSet.Annotations == nil {
+				statefulSet.Annotations = map[string]string{}
+			}
+
+			statefulSet.Annotations[annotationScaledToZero] = "true"
+		} else {
+			delete(statefulSet.Annotations, annotationScaledToZero)
+		}
 
 		if error := liferayEnvironmentReconciler.Update(
 			context, statefulSet, client.FieldOwner(fieldOwner),

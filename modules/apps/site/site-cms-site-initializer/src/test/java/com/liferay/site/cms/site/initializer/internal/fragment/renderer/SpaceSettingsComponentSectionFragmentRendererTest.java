@@ -52,6 +52,10 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(_language);
+
 		ReflectionTestUtil.setFieldValue(
 			_spaceSettingsComponentSectionFragmentRenderer,
 			"_depotEntryModelResourcePermission",
@@ -62,10 +66,6 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 		ReflectionTestUtil.setFieldValue(
 			_spaceSettingsComponentSectionFragmentRenderer, "_jsonFactory",
 			_jsonFactory);
-
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(_language);
 	}
 
 	@Test(expected = PrincipalException.class)

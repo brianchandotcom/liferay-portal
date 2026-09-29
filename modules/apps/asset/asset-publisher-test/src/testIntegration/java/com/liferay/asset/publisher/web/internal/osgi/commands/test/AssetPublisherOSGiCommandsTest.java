@@ -71,6 +71,10 @@ public class AssetPublisherOSGiCommandsTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_classNameIds =
+			PortalUtil.getClassNameId(Layout.class) + StringPool.COMMA +
+				RandomTestUtil.nextLong();
+
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
@@ -150,8 +154,7 @@ public class AssetPublisherOSGiCommandsTest {
 		Assert.assertEquals(
 			"true", unicodeProperties.getProperty("anyAssetType", null));
 		Assert.assertEquals(
-			_CLASS_NAME_IDS,
-			unicodeProperties.getProperty("classNameIds", null));
+			_classNameIds, unicodeProperties.getProperty("classNameIds", null));
 
 		assetEntryQuery = _assetPublisherHelper.getAssetEntryQuery(
 			portletPreferences, _group.getGroupId(), _layout, null, null);
@@ -274,7 +277,7 @@ public class AssetPublisherOSGiCommandsTest {
 		PortletPreferences portletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, _portletId);
 
-		portletPreferences.setValue("classNameIds", _CLASS_NAME_IDS);
+		portletPreferences.setValue("classNameIds", _classNameIds);
 		portletPreferences.setValue(
 			"scopeIds",
 			AssetPublisherHelper.SCOPE_ID_GROUP_PREFIX + _group.getGroupId());
@@ -314,10 +317,6 @@ public class AssetPublisherOSGiCommandsTest {
 		return portletPreferences;
 	}
 
-	private static final String _CLASS_NAME_IDS =
-		PortalUtil.getClassNameId(Layout.class) + StringPool.COMMA +
-			RandomTestUtil.nextLong();
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -338,6 +337,8 @@ public class AssetPublisherOSGiCommandsTest {
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	private String _classNameIds;
 
 	@DeleteAfterTestRun
 	private Group _group;

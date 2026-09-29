@@ -68,6 +68,11 @@ public class AddAssetListMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_classNameIdNonexistent = String.valueOf(RandomTestUtil.nextLong());
+		_classNameIds =
+			PortalUtil.getClassNameId(Layout.class) + StringPool.COMMA +
+				RandomTestUtil.nextLong();
+
 		_group1 = GroupTestUtil.addGroup();
 
 		_group1Layout = LayoutTestUtil.addTypePortletLayout(_group1);
@@ -121,9 +126,9 @@ public class AddAssetListMVCActionCommandTest {
 		String portletId = LayoutTestUtil.addPortletToLayout(
 			layout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 			HashMapBuilder.put(
-				"anyAssetType", new String[] {_CLASS_NAME_ID_NONEXISTENT}
+				"anyAssetType", new String[] {_classNameIdNonexistent}
 			).put(
-				"classNameIds", new String[] {_CLASS_NAME_IDS}
+				"classNameIds", new String[] {_classNameIds}
 			).put(
 				"selectionStyle", new String[] {"dynamic"}
 			).build());
@@ -168,11 +173,10 @@ public class AddAssetListMVCActionCommandTest {
 		).build();
 
 		Assert.assertEquals(
-			_CLASS_NAME_ID_NONEXISTENT,
+			_classNameIdNonexistent,
 			unicodeProperties.getProperty("anyAssetType", null));
 		Assert.assertEquals(
-			_CLASS_NAME_IDS,
-			unicodeProperties.getProperty("classNameIds", null));
+			_classNameIds, unicodeProperties.getProperty("classNameIds", null));
 	}
 
 	private void _testAddAssetListFromManualCollection(
@@ -214,19 +218,15 @@ public class AddAssetListMVCActionCommandTest {
 			"asset-list", portletPreferences.getValue("selectionStyle", null));
 	}
 
-	private static final String _CLASS_NAME_ID_NONEXISTENT = String.valueOf(
-		RandomTestUtil.nextLong());
-
-	private static final String _CLASS_NAME_IDS =
-		PortalUtil.getClassNameId(Layout.class) + StringPool.COMMA +
-			RandomTestUtil.nextLong();
-
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Inject
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
+
+	private String _classNameIdNonexistent;
+	private String _classNameIds;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

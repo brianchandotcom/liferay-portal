@@ -12,6 +12,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.Retryable;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
@@ -420,7 +421,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 									JenkinsResultsParserUtil.combine(
 										"runPlaywright -Pplaywright.args=\"",
 										sb.toString(), "\""),
-									null);
+									null, 1000 * 60 * 10);
 							}
 							else {
 								result = _callNPMCommand(
@@ -474,8 +475,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private String _callGradleCommand(
-		File baseDir, String command,
-		Map<String, String> environmentVariables) {
+		File baseDir, String command, Map<String, String> environmentVariables,
+		long timeout) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -508,7 +509,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		try {
 			Process process = JenkinsResultsParserUtil.executeBashCommands(
-				true, baseDir, 1000 * 60 * 10, sb.toString());
+				true, baseDir, timeout, sb.toString());
 
 			return JenkinsResultsParserUtil.readInputStream(
 				process.getInputStream());
@@ -797,38 +798,56 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			String playwrightArgs = "test --list --reporter=json";
 
 			if (_hasRunPlaywrightGradleTask()) {
-				File playwrightReportFile = new File(
-					playwrightBaseDir, "playwright.report.json");
+				Retryable<JSONObject> retryable = new Retryable<JSONObject>(
+					false, 1, 5, true) {
 
-				try {
-					Map<String, String> environmentVariables = new HashMap<>();
+					@Override
+					public JSONObject execute() {
+						File playwrightReportFile = null;
 
-					environmentVariables.put(
-						"PLAYWRIGHT_JSON_OUTPUT_NAME",
-						JenkinsResultsParserUtil.getCanonicalPath(
-							playwrightReportFile));
+						try {
+							playwrightReportFile = File.createTempFile(
+								"playwright.report.", ".json");
 
-					_callGradleCommand(
-						playwrightBaseDir,
-						JenkinsResultsParserUtil.combine(
-							"runPlaywright -Pplaywright.args=\"",
-							playwrightArgs, "\""),
-						environmentVariables);
+							Map<String, String> environmentVariables =
+								new HashMap<>();
 
-					String result = JenkinsResultsParserUtil.read(
-						playwrightReportFile);
+							environmentVariables.put(
+								"PLAYWRIGHT_JSON_OUTPUT_NAME",
+								JenkinsResultsParserUtil.getCanonicalPath(
+									playwrightReportFile));
 
-					_playwrightJSONObject = new JSONObject(result.trim());
-				}
-				catch (Exception exception) {
+							_callGradleCommand(
+								playwrightBaseDir,
+								JenkinsResultsParserUtil.combine(
+									"runPlaywright -Pplaywright.args=\"",
+									playwrightArgs, "\""),
+								environmentVariables, 1000 * 60 * 30);
+
+							String result = JenkinsResultsParserUtil.read(
+								playwrightReportFile);
+
+							return new JSONObject(result.trim());
+						}
+						catch (IOException ioException) {
+							throw new RuntimeException(ioException);
+						}
+						finally {
+							if (playwrightReportFile != null) {
+								JenkinsResultsParserUtil.delete(
+									playwrightReportFile);
+							}
+						}
+					}
+
+				};
+
+				_playwrightJSONObject = retryable.executeWithRetries();
+
+				if (_playwrightJSONObject == null) {
 					_sendNotification("Unable to parse Playwright JSON object");
 
-					exception.printStackTrace();
-
 					_playwrightJSONObject = new JSONObject();
-				}
-				finally {
-					JenkinsResultsParserUtil.delete(playwrightReportFile);
 				}
 			}
 			else {

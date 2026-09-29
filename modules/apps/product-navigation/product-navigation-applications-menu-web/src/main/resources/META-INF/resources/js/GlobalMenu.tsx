@@ -293,9 +293,7 @@ function normalizeSiteItems({
 }): GroupItem[] {
 	const children: SiteItem[] = [
 		...(sites.recentSites ?? []),
-		...(sites.mySites ?? []).filter(
-			({label}) => label === Liferay.Language.get('global')
-		),
+		...(sites.mySites ?? []),
 	];
 
 	if (sites?.viewAllURL) {

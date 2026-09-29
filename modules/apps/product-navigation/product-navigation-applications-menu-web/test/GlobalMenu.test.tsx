@@ -103,6 +103,10 @@ describe('GlobalMenu', () => {
 			).toBeInTheDocument();
 
 			expect(
+				screen.getByRole('menuitem', {name: 'Site 1'})
+			).toBeInTheDocument();
+
+			expect(
 				screen.getByRole('menuitem', {name: 'Category 1'})
 			).toBeInTheDocument();
 

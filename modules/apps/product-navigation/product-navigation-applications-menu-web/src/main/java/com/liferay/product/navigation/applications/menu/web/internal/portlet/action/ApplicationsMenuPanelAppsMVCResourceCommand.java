@@ -23,7 +23,6 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -399,55 +398,46 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 
 		JSONObject sitesJSONObject = _jsonFactory.createJSONObject();
 
-		int max = 8;
-
 		List<Group> recentGroups = _recentGroupManager.getRecentGroups(
 			httpServletRequest);
+
+		User user = themeDisplay.getUser();
+
+		List<Group> mySiteGroups = ListUtil.filter(
+			user.getMySiteGroups(
+				new String[] {
+					Company.class.getName(), Group.class.getName(),
+					Organization.class.getName()
+				},
+				recentGroups.size() + _MAX_SITES + 1),
+			group -> !recentGroups.contains(group));
+
+		int count = recentGroups.size() + mySiteGroups.size();
+
+		if (count <= 1) {
+			return sitesJSONObject;
+		}
 
 		if (ListUtil.isNotEmpty(recentGroups)) {
 			sitesJSONObject.put(
 				"recentSites",
 				_getSitesJSONArray(
-					ListUtil.subList(recentGroups, 0, max), resourceRequest,
-					themeDisplay));
-
-			max -= recentGroups.size();
+					ListUtil.subList(recentGroups, 0, _MAX_SITES),
+					resourceRequest, themeDisplay));
 		}
 
-		if (max >= 0) {
-			List<Group> filteredGroups = new ArrayList<>();
+		if (ListUtil.isNotEmpty(mySiteGroups) &&
+			(recentGroups.size() < _MAX_SITES)) {
 
-			User user = themeDisplay.getUser();
-
-			List<Group> mySiteGroups = user.getMySiteGroups(
-				new String[] {
-					Company.class.getName(), Group.class.getName(),
-					Organization.class.getName()
-				},
-				QueryUtil.ALL_POS);
-
-			for (Group group : mySiteGroups) {
-				if (!recentGroups.contains(group)) {
-					filteredGroups.add(group);
-				}
-			}
-
-			if (ListUtil.isNotEmpty(filteredGroups)) {
-				if (ListUtil.isNotEmpty(recentGroups)) {
-					max--;
-				}
-
-				sitesJSONObject.put(
-					"mySites",
-					_getSitesJSONArray(
-						ListUtil.subList(filteredGroups, 0, Math.max(0, max)),
-						resourceRequest, themeDisplay));
-
-				max -= filteredGroups.size();
-			}
+			sitesJSONObject.put(
+				"mySites",
+				_getSitesJSONArray(
+					ListUtil.subList(
+						mySiteGroups, 0, _MAX_SITES - recentGroups.size()),
+					resourceRequest, themeDisplay));
 		}
 
-		if (max < 0) {
+		if (count > _MAX_SITES) {
 			sitesJSONObject.put(
 				"viewAllURL",
 				_getViewAllURL(resourceRequest, resourceResponse));
@@ -530,6 +520,8 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 				));
 		}
 	}
+
+	private static final int _MAX_SITES = 3;
 
 	@Reference
 	private AssetLibraryResource.Factory _assetLibraryResourceFactory;

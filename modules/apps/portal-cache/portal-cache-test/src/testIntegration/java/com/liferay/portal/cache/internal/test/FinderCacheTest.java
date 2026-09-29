@@ -141,6 +141,40 @@ public class FinderCacheTest {
 					Collections.singletonList(Collections.singleton("Ticket")),
 					autoFlushQuerySpaces);
 
+				Ticket newTicket = _addTicket(classPK, serviceContext);
+
+				long newClassPK = RandomTestUtil.randomLong();
+
+				Object[] newFinderArgs = _getFinderArgs(newClassPK);
+
+				Assert.assertNull(
+					_finderCache.getResult(
+						_countFinderPath, newFinderArgs, _ticketPersistence));
+
+				_finderCache.putResult(_countFinderPath, newFinderArgs, 0L);
+
+				_addTicket(newClassPK, serviceContext);
+
+				Assert.assertEquals(
+					1L,
+					_finderCache.getResult(
+						_countFinderPath, newFinderArgs, ticketPersistence));
+				Assert.assertEquals(
+					Collections.nCopies(2, Collections.singleton("Ticket")),
+					autoFlushQuerySpaces);
+
+				newTicket.setClassPK(newClassPK);
+
+				_ticketLocalService.updateTicket(newTicket);
+
+				Assert.assertEquals(
+					2L,
+					_finderCache.getResult(
+						_countFinderPath, newFinderArgs, ticketPersistence));
+				Assert.assertEquals(
+					Collections.nCopies(3, Collections.singleton("Ticket")),
+					autoFlushQuerySpaces);
+
 				return null;
 			});
 

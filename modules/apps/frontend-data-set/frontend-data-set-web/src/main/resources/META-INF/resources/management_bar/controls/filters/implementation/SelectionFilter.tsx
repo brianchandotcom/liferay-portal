@@ -192,7 +192,7 @@ function getOdataString({
 		const expression = `${id} in (${quotedSelectedItems.join(', ')})`;
 
 		if (exclude) {
-			return 'not (' + expression + ')';
+			return `not (${expression})`;
 		}
 
 		return expression;

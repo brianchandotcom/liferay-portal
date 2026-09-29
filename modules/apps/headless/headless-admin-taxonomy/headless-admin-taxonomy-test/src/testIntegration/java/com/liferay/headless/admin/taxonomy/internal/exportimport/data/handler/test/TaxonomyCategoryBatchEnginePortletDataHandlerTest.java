@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -46,6 +47,11 @@ public class TaxonomyCategoryBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final ExportImportScopeClassTestRule
+		exportImportScopeClassTestRule = new ExportImportScopeClassTestRule(
+			Scope.SITE);
 
 	@Override
 	protected String addEmptyEntry(long groupId, long userId) throws Exception {
@@ -106,6 +112,13 @@ public class TaxonomyCategoryBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule() {
+
+		return exportImportScopeClassTestRule;
+	}
+
+	@Override
 	protected ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate() {
 
@@ -141,11 +154,6 @@ public class TaxonomyCategoryBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return assetCategory.getCategoryId();
-	}
-
-	@Override
-	protected Scope getScope() {
-		return Scope.SITE;
 	}
 
 	@Override

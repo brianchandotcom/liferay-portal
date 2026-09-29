@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.address.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -47,6 +48,11 @@ public class RegionBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final ExportImportScopeClassTestRule
+		exportImportScopeClassTestRule = new ExportImportScopeClassTestRule(
+			Scope.COMPANY);
 
 	@Before
 	@Override
@@ -127,6 +133,13 @@ public class RegionBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule() {
+
+		return exportImportScopeClassTestRule;
+	}
+
+	@Override
 	protected ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate() {
 
@@ -162,11 +175,6 @@ public class RegionBatchEnginePortletDataHandlerTest
 		Region region = _getRegion(groupId, externalReferenceCode);
 
 		return region.getRegionId();
-	}
-
-	@Override
-	protected Scope getScope() {
-		return Scope.COMPANY;
 	}
 
 	@Override

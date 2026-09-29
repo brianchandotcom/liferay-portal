@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -40,6 +41,11 @@ public class DisplayPageTemplateFolderBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final ExportImportScopeClassTestRule
+		exportImportScopeClassTestRule = new ExportImportScopeClassTestRule(
+			Scope.SITE);
 
 	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
@@ -101,6 +107,13 @@ public class DisplayPageTemplateFolderBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule() {
+
+		return exportImportScopeClassTestRule;
+	}
+
+	@Override
 	protected ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate() {
 
@@ -129,11 +142,6 @@ public class DisplayPageTemplateFolderBatchEnginePortletDataHandlerTest
 			_getLayoutPageTemplateCollection(groupId, externalReferenceCode);
 
 		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
-	}
-
-	@Override
-	protected Scope getScope() {
-		return Scope.SITE;
 	}
 
 	@Override

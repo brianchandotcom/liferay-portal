@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -42,6 +43,11 @@ public class AccountBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final ExportImportScopeClassTestRule
+		exportImportScopeClassTestRule = new ExportImportScopeClassTestRule(
+			Scope.COMPANY);
 
 	@Override
 	protected String addEmptyEntry(long groupId, long userId) throws Exception {
@@ -108,6 +114,13 @@ public class AccountBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule() {
+
+		return exportImportScopeClassTestRule;
+	}
+
+	@Override
 	protected ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate() {
 
@@ -134,11 +147,6 @@ public class AccountBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return accountEntry.getAccountEntryId();
-	}
-
-	@Override
-	protected Scope getScope() {
-		return Scope.COMPANY;
 	}
 
 	@Override

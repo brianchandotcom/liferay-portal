@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.language.override.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -42,6 +43,11 @@ public class LanguageOverrideBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final ExportImportScopeClassTestRule
+		exportImportScopeClassTestRule = new ExportImportScopeClassTestRule(
+			Scope.COMPANY);
 
 	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
@@ -90,6 +96,13 @@ public class LanguageOverrideBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule() {
+
+		return exportImportScopeClassTestRule;
+	}
+
+	@Override
 	protected ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate() {
 
@@ -113,11 +126,6 @@ public class LanguageOverrideBatchEnginePortletDataHandlerTest
 		PLOEntry ploEntry = _getPLOEntry(groupId, externalReferenceCode);
 
 		return ploEntry.getPloEntryId();
-	}
-
-	@Override
-	protected Scope getScope() {
-		return Scope.COMPANY;
 	}
 
 	@Override

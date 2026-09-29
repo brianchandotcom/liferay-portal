@@ -8,6 +8,7 @@ package com.liferay.headless.admin.taxonomy.internal.exportimport.data.handler.t
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -38,6 +39,11 @@ public class KeywordBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final ExportImportScopeClassTestRule
+		exportImportScopeClassTestRule = new ExportImportScopeClassTestRule(
+			Scope.SITE);
 
 	@Override
 	protected String addEntry(long groupId, long userId, Date dateModified)
@@ -85,6 +91,13 @@ public class KeywordBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule() {
+
+		return exportImportScopeClassTestRule;
+	}
+
+	@Override
 	protected ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate() {
 
@@ -108,11 +121,6 @@ public class KeywordBatchEnginePortletDataHandlerTest
 		AssetTag assetTag = _getAssetTag(groupId, externalReferenceCode);
 
 		return assetTag.getTagId();
-	}
-
-	@Override
-	protected Scope getScope() {
-		return Scope.SITE;
 	}
 
 	@Override

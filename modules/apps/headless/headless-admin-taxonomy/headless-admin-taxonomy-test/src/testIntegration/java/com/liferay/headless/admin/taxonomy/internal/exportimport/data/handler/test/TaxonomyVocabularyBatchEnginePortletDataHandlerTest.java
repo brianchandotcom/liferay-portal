@@ -8,6 +8,7 @@ package com.liferay.headless.admin.taxonomy.internal.exportimport.data.handler.t
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.exportimport.test.rule.ExportImportScopeClassTestRule;
 import com.liferay.exportimport.test.util.exportimport.data.handler.BaseBatchEnginePortletDataHandlerTestCase;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
@@ -39,6 +40,11 @@ public class TaxonomyVocabularyBatchEnginePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final ExportImportScopeClassTestRule
+		exportImportScopeClassTestRule = new ExportImportScopeClassTestRule(
+			Scope.SITE);
 
 	@Override
 	protected String addEmptyEntry(long groupId, long userId) throws Exception {
@@ -99,6 +105,13 @@ public class TaxonomyVocabularyBatchEnginePortletDataHandlerTest
 	}
 
 	@Override
+	protected ExportImportScopeClassTestRule
+		getExportImportScopeClassTestRule() {
+
+		return exportImportScopeClassTestRule;
+	}
+
+	@Override
 	protected ExportImportVulcanBatchEngineTaskItemDelegate<?>
 		getExportImportVulcanBatchEngineTaskItemDelegate() {
 
@@ -123,11 +136,6 @@ public class TaxonomyVocabularyBatchEnginePortletDataHandlerTest
 			groupId, externalReferenceCode);
 
 		return assetVocabulary.getVocabularyId();
-	}
-
-	@Override
-	protected Scope getScope() {
-		return Scope.SITE;
 	}
 
 	@Override

@@ -1516,14 +1516,15 @@ func scalesWorkload(
 type LiferayEnvironmentReconciler struct {
 	client.Client
 
-	GracePeriod          time.Duration
-	HeartbeatInterval    time.Duration
-	MarketplaceMountPath string
-	Provisioning         provisioning.Client
-	Recorder             record.EventRecorder
-	RetryInitialDelay    time.Duration
-	RetryMaxDelay        time.Duration
-	Syncer               *addon.Syncer
+	ExpirationGracePeriod time.Duration
+	GracePeriod           time.Duration
+	HeartbeatInterval     time.Duration
+	MarketplaceMountPath  string
+	Provisioning          provisioning.Client
+	Recorder              record.EventRecorder
+	RetryInitialDelay     time.Duration
+	RetryMaxDelay         time.Duration
+	Syncer                *addon.Syncer
 }
 
 type replicaBounds struct {

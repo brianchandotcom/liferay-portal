@@ -140,11 +140,11 @@ tests:
             downloadPollInterval: 45s
     -   asserts:
             -   equal:
-                    path: spec.template.spec.containers[0].env[?(@.name=="HEARTBEAT_INTERVAL")].value
-                    value: 30m
-        it: Propagates the heartbeat interval as a quoted environment variable
+                    path: spec.template.spec.containers[0].env[?(@.name=="EXPIRATION_GRACE_PERIOD")].value
+                    value: 720h
+        it: Propagates the expiration grace period as a quoted environment variable
         set:
-            heartbeatInterval: 30m
+            expirationGracePeriod: 720h
     -   asserts:
             -   equal:
                     path: spec.template.spec.containers[0].env[?(@.name=="GRACE_PERIOD")].value
@@ -152,6 +152,13 @@ tests:
         it: Propagates the grace period as a quoted environment variable
         set:
             gracePeriod: 72h
+    -   asserts:
+            -   equal:
+                    path: spec.template.spec.containers[0].env[?(@.name=="HEARTBEAT_INTERVAL")].value
+                    value: 30m
+        it: Propagates the heartbeat interval as a quoted environment variable
+        set:
+            heartbeatInterval: 30m
     -   asserts:
             -   equal:
                     path: spec.replicas

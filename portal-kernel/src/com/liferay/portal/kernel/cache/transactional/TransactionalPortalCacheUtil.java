@@ -195,8 +195,14 @@ public class TransactionalPortalCacheUtil {
 
 		_pendingPut.remove();
 
+		return completePut(portalCache, key, value, pendingPut._sequence);
+	}
+
+	public static <K extends Serializable, V> boolean completePut(
+		PortalCache<K, V> portalCache, K key, V value, long sequence) {
+
 		return _invalidationSequence.publishKey(
-			_getRegionName(portalCache), key, pendingPut._sequence,
+			_getRegionName(portalCache), key, sequence,
 			() -> PortalCacheHelperUtil.putWithoutReplicator(
 				portalCache, key, value),
 			() -> PortalCacheHelperUtil.removeWithoutReplicator(

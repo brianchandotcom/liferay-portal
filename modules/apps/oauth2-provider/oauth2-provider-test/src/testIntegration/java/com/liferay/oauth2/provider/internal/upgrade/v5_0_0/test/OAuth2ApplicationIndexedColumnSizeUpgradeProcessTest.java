@@ -61,7 +61,7 @@ public class OAuth2ApplicationIndexedColumnSizeUpgradeProcessTest
 
 	@Override
 	protected String getUpgradeProcessClassName() {
-		return "com.liferay.oauth2.provider.internal.upgrade.v4_3_0." +
+		return "com.liferay.oauth2.provider.internal.upgrade.v5_0_0." +
 			"OAuth2ApplicationIndexedColumnSizeUpgradeProcess";
 	}
 

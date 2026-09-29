@@ -64,6 +64,7 @@ type LicenseStatus struct {
 // +kubebuilder:printcolumn:JSONPath=`.status.license.maxClusterNodes`,name="Max",type=integer
 // +kubebuilder:printcolumn:JSONPath=`.status.license.validUntil`,name="Valid-Until",type=string
 // +kubebuilder:printcolumn:JSONPath=`.spec.desiredReplicas`,name="Desired",type=integer
+// +kubebuilder:printcolumn:JSONPath=`.status.replicaCeiling`,name="Ceiling",type=integer
 // +kubebuilder:printcolumn:JSONPath=`.status.effectiveReplicas`,name="Effective",type=integer
 // +kubebuilder:printcolumn:JSONPath=`.status.phase`,name="Phase",priority=1,type=string
 // +kubebuilder:printcolumn:JSONPath=`.status.environmentId`,name="Environment-ID",priority=1,type=string
@@ -140,6 +141,9 @@ type LiferayEnvironmentStatus struct {
 	// +kubebuilder:validation:Enum=Degraded;Pending;Ready
 	// +optional
 	Phase string `json:"phase,omitempty"`
+
+	// +optional
+	ReplicaCeiling *int32 `json:"replicaCeiling,omitempty"`
 
 	// +optional
 	UnreachableSince *metav1.Time `json:"unreachableSince,omitempty"`

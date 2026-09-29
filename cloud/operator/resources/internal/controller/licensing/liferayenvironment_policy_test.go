@@ -47,6 +47,7 @@ func TestAdmissionPolicyDeniesOverLimitReplicas(t *testing.T) {
 		labelNamespace   bool
 		maxClusterNodes  *int32
 		namespaceName    string
+		replicaCeiling   *int32
 		scaleSubresource bool
 		shouldDeny       bool
 	}{
@@ -54,6 +55,7 @@ func TestAdmissionPolicyDeniesOverLimitReplicas(t *testing.T) {
 			labelNamespace:   true,
 			maxClusterNodes:  pointerInt32(1),
 			namespaceName:    "liferay-scale",
+			replicaCeiling:   pointerInt32(1),
 			scaleSubresource: true,
 			shouldDeny:       true,
 		},
@@ -61,18 +63,35 @@ func TestAdmissionPolicyDeniesOverLimitReplicas(t *testing.T) {
 			labelNamespace:  true,
 			maxClusterNodes: pointerInt32(1),
 			namespaceName:   "liferay-licensed",
+			replicaCeiling:  pointerInt32(1),
+			shouldDeny:      true,
+		},
+		"a licensed maximum without a replica ceiling denies an over limit write": {
+			labelNamespace:  true,
+			maxClusterNodes: pointerInt32(1),
+			namespaceName:   "liferay-fallback",
+			replicaCeiling:  nil,
+			shouldDeny:      true,
+		},
+		"a replica ceiling below the licensed maximum denies an over limit write": {
+			labelNamespace:  true,
+			maxClusterNodes: pointerInt32(3),
+			namespaceName:   "liferay-ceiling",
+			replicaCeiling:  pointerInt32(1),
 			shouldDeny:      true,
 		},
 		"any namespace the policy does not gate allows any write": {
 			labelNamespace:  false,
 			maxClusterNodes: pointerInt32(1),
 			namespaceName:   "liferay-any",
+			replicaCeiling:  pointerInt32(1),
 			shouldDeny:      false,
 		},
 		"any namespace without a ceiling allows any write": {
 			labelNamespace:  true,
 			maxClusterNodes: nil,
 			namespaceName:   "liferay-unlicensed",
+			replicaCeiling:  nil,
 			shouldDeny:      false,
 		},
 	}
@@ -81,7 +100,7 @@ func TestAdmissionPolicyDeniesOverLimitReplicas(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			writeClient := newPolicyFixture(
 				config, testCase.labelNamespace, testCase.maxClusterNodes,
-				testCase.namespaceName, t,
+				testCase.namespaceName, testCase.replicaCeiling, t,
 			)
 
 			error := attemptOverLimitWrite(
@@ -180,6 +199,11 @@ func TestReconcileWithAdmissionPolicy(t *testing.T) {
 				)
 			}
 
+			assertReplicasEqual(
+				liferayEnvironment.Status.ReplicaCeiling, pointerInt32(3),
+				"status.replicaCeiling", t,
+			)
+
 			var statefulSet appsv1.StatefulSet
 
 			if error := liferayEnvironmentReconciler.Get(
@@ -197,6 +221,82 @@ func TestReconcileWithAdmissionPolicy(t *testing.T) {
 				statefulSet.Spec.Replicas, pointerInt32(3), "Replicas", t,
 			)
 		})
+	}
+}
+
+func TestReconcileWithAdmissionPolicyHoldsGracePeriodCeiling(t *testing.T) {
+	config := startPolicyEnvironment(t)
+
+	namespaceName := "liferay-grace-period"
+
+	liferayEnvironmentReconciler := newPolicyReconciler(config, true, namespaceName, t)
+
+	liferayEnvironmentReconciler.GracePeriod = 168 * time.Hour
+	liferayEnvironmentReconciler.Provisioning = &stubProvisioning{
+		manifestError: fmt.Errorf("provisioning: connection refused"),
+	}
+	liferayEnvironmentReconciler.RetryInitialDelay = 30 * time.Second
+	liferayEnvironmentReconciler.RetryMaxDelay = 30 * time.Minute
+
+	var liferayEnvironment licensingv1alpha1.LiferayEnvironment
+
+	if error := liferayEnvironmentReconciler.Get(
+		context.Background(),
+		types.NamespacedName{Name: "dev", Namespace: namespaceName},
+		&liferayEnvironment,
+	); error != nil {
+		t.Fatalf("Unable to read the environment: %v", error)
+	}
+
+	unreachableSince := metav1.NewTime(time.Now().Add(-8 * 24 * time.Hour))
+
+	liferayEnvironment.Status.License.MaxClusterNodes = pointerInt32(3)
+	liferayEnvironment.Status.ReplicaCeiling = pointerInt32(3)
+	liferayEnvironment.Status.UnreachableSince = &unreachableSince
+
+	if error := liferayEnvironmentReconciler.Status().Update(
+		context.Background(), &liferayEnvironment,
+	); error != nil {
+		t.Fatalf("Unable to write the last known good license: %v", error)
+	}
+
+	if _, error := liferayEnvironmentReconciler.Reconcile(
+		context.Background(), controllerruntime.Request{
+			NamespacedName: types.NamespacedName{
+				Name:      "dev",
+				Namespace: namespaceName,
+			},
+		},
+	); error != nil {
+		t.Fatalf("Unexpected error from Reconcile: %v", error)
+	}
+
+	if error := liferayEnvironmentReconciler.Get(
+		context.Background(),
+		types.NamespacedName{Name: "dev", Namespace: namespaceName},
+		&liferayEnvironment,
+	); error != nil {
+		t.Fatalf("Unable to read the environment: %v", error)
+	}
+
+	assertReplicasEqual(
+		liferayEnvironment.Status.ReplicaCeiling, pointerInt32(1),
+		"status.replicaCeiling", t,
+	)
+
+	writeClient, error := client.New(config, client.Options{Scheme: newScheme(t)})
+
+	if error != nil {
+		t.Fatalf("Unable to build a client: %v", error)
+	}
+
+	if error := awaitForbidden(
+		namespaceName, true, t, writeClient,
+	); !errors.IsForbidden(error) {
+		t.Errorf(
+			"Scale error = %v, want the grace period ceiling to refuse an autoscaler scaling back up to the licensed maximum",
+			error,
+		)
 	}
 }
 
@@ -246,7 +346,7 @@ func awaitPolicyEnforcement(config *rest.Config, t *testing.T) {
 	t.Helper()
 
 	writeClient := newPolicyFixture(
-		config, true, pointerInt32(1), policyProbeNamespace, t,
+		config, true, pointerInt32(1), policyProbeNamespace, pointerInt32(1), t,
 	)
 
 	if error := awaitForbidden(
@@ -323,9 +423,15 @@ func describePolicyState(config *rest.Config, t *testing.T) string {
 			)
 		}
 
+		replicaCeiling := "<nil>"
+
+		if liferayEnvironment.Status.ReplicaCeiling != nil {
+			replicaCeiling = fmt.Sprint(*liferayEnvironment.Status.ReplicaCeiling)
+		}
+
 		fmt.Fprintf(
-			report, "Param %s: maxClusterNodes %s\n",
-			liferayEnvironment.Name, maxClusterNodes,
+			report, "Param %s: maxClusterNodes %s, replicaCeiling %s\n",
+			liferayEnvironment.Name, maxClusterNodes, replicaCeiling,
 		)
 	}
 
@@ -422,7 +528,7 @@ func installAdmissionPolicy(config *rest.Config, t *testing.T) {
 
 func newPolicyFixture(
 	config *rest.Config, labelNamespace bool, maxClusterNodes *int32,
-	namespaceName string, t *testing.T,
+	namespaceName string, replicaCeiling *int32, t *testing.T,
 ) client.Client {
 	t.Helper()
 
@@ -474,6 +580,7 @@ func newPolicyFixture(
 	}
 
 	liferayEnvironment.Status.License.MaxClusterNodes = maxClusterNodes
+	liferayEnvironment.Status.ReplicaCeiling = replicaCeiling
 
 	if error := setUpClient.Status().Update(
 		context.Background(), liferayEnvironment,
@@ -481,7 +588,7 @@ func newPolicyFixture(
 		t.Fatalf("Unable to write the ceiling: %v", error)
 	}
 
-	if maxClusterNodes != nil {
+	if maxClusterNodes != nil || replicaCeiling != nil {
 		var persisted licensingv1alpha1.LiferayEnvironment
 
 		if error := setUpClient.Get(
@@ -492,9 +599,15 @@ func newPolicyFixture(
 			t.Fatalf("Unable to read the ceiling back: %v", error)
 		}
 
-		if persisted.Status.License.MaxClusterNodes == nil {
+		if maxClusterNodes != nil && persisted.Status.License.MaxClusterNodes == nil {
 			t.Fatal(
 				"License.MaxClusterNodes = <nil> after the status write, so the policy would find no ceiling and admit every write",
+			)
+		}
+
+		if replicaCeiling != nil && persisted.Status.ReplicaCeiling == nil {
+			t.Fatal(
+				"ReplicaCeiling = <nil> after the status write, so the policy would read the licensed maximum instead",
 			)
 		}
 	}
@@ -558,6 +671,7 @@ func newPolicyReconciler(
 
 	liferayEnvironment.Status.ActivatedAt = &activatedAt
 	liferayEnvironment.Status.License.MaxClusterNodes = pointerInt32(0)
+	liferayEnvironment.Status.ReplicaCeiling = pointerInt32(0)
 
 	if error := setUpClient.Status().Update(
 		context.Background(), liferayEnvironment,

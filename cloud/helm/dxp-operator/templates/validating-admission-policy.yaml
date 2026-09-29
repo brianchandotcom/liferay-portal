@@ -32,23 +32,26 @@ spec:
         -   expression: >-
                 !variables.hasCeiling ||
                 variables.licensedWorkloadName != variables.workloadName ||
-                variables.requestedReplicas <= variables.maxClusterNodes
+                variables.requestedReplicas <= variables.replicaCeiling
             messageExpression: >-
                 'replicas ' + string(variables.requestedReplicas) +
-                ' exceeds licensed maxClusterNodes ' + string(variables.maxClusterNodes) +
+                ' exceeds the replica ceiling ' + string(variables.replicaCeiling) +
                 ' for StatefulSet "' + variables.workloadName + '"'
             reason: Forbidden
     variables:
         -   expression: >-
-                has(params.status) && has(params.status.license) &&
-                has(params.status.license.maxClusterNodes)
+                has(params.status) && (has(params.status.replicaCeiling) ||
+                (has(params.status.license) && has(params.status.license.maxClusterNodes)))
             name: hasCeiling
         -   expression: "has(request.subResource) && request.subResource == 'scale'"
             name: isScale
         -   expression: "has(params.spec.workloadRef) ? params.spec.workloadRef.name : ''"
             name: licensedWorkloadName
-        -   expression: "variables.hasCeiling ? params.status.license.maxClusterNodes : 0"
-            name: maxClusterNodes
+        -   expression: >-
+                !variables.hasCeiling ? 0 :
+                (has(params.status.replicaCeiling) ? params.status.replicaCeiling :
+                params.status.license.maxClusterNodes)
+            name: replicaCeiling
         -   expression: >-
                 has(object.spec.replicas) ? object.spec.replicas :
                 (variables.isScale ? 0 : 1)

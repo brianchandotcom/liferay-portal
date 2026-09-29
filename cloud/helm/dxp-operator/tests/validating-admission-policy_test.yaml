@@ -53,6 +53,20 @@ tests:
             value: ValidatingAdmissionPolicy
         it: Enforces the licensed ceiling on labeled namespaces and exempts the operator
     -   asserts:
+            -   matchRegex:
+                    path: spec.variables[?(@.name=="replicaCeiling")].expression
+                    pattern: params.status.replicaCeiling
+            -   matchRegex:
+                    path: spec.variables[?(@.name=="replicaCeiling")].expression
+                    pattern: params.status.license.maxClusterNodes
+            -   matchRegex:
+                    path: spec.validations[0].expression
+                    pattern: variables.requestedReplicas <= variables.replicaCeiling
+        documentSelector:
+            path: kind
+            value: ValidatingAdmissionPolicy
+        it: Reads the replica ceiling in force and falls back to the licensed maximum
+    -   asserts:
             -   hasDocuments:
                     count: 2
         it: Renders the policy and its binding

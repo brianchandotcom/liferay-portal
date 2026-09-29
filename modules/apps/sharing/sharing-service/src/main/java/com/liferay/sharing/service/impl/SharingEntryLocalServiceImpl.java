@@ -776,7 +776,7 @@ public class SharingEntryLocalServiceImpl
 
 		_validateSharingEntryActions(sharingEntryActions);
 
-		if (_hasSharingEntryChanged(
+		if (_isSharingEntryChanged(
 				expirationDate, shareable, sharingEntry, sharingEntryActions)) {
 
 			_validateExpirationDate(expirationDate);
@@ -851,7 +851,7 @@ public class SharingEntryLocalServiceImpl
 			));
 	}
 
-	private boolean _hasExpirationDateChanged(
+	private boolean _isExpirationDateChanged(
 		Date currentExpirationDate, Date newExpirationDate) {
 
 		if ((currentExpirationDate == null) && (newExpirationDate == null)) {
@@ -872,7 +872,7 @@ public class SharingEntryLocalServiceImpl
 		return false;
 	}
 
-	private boolean _hasSharingEntryChanged(
+	private boolean _isSharingEntryChanged(
 		Date expirationDate, boolean shareable, SharingEntry sharingEntry,
 		Collection<SharingEntryAction> sharingEntryActions) {
 
@@ -883,7 +883,7 @@ public class SharingEntryLocalServiceImpl
 			return true;
 		}
 
-		return _hasExpirationDateChanged(
+		return _isExpirationDateChanged(
 			sharingEntry.getExpirationDate(), expirationDate);
 	}
 

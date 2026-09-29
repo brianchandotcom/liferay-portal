@@ -2850,8 +2850,7 @@ test(
 
 		await addCustomEvent({customEventName: 'customEvent', page});
 
-		const saveButton = page
-			.getByRole('button', {name: 'Save Analysis'});
+		const saveButton = page.getByRole('button', {name: 'Save Analysis'});
 
 		await saveButton.click();
 
@@ -3032,8 +3031,7 @@ test(
 			},
 		]);
 
-		const saveButton = page
-			.getByRole('button', {name: 'Save Analysis'});
+		const saveButton = page.getByRole('button', {name: 'Save Analysis'});
 
 		// Create and save an analysis with a price breakdown
 

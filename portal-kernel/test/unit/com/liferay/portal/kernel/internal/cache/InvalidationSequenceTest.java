@@ -126,6 +126,16 @@ public class InvalidationSequenceTest {
 			() -> actions.add("withdraw"));
 
 		Assert.assertEquals(Arrays.asList("publish", "withdraw"), actions);
+
+		actions.clear();
+
+		long sequence = invalidationSequence.getSequence();
+
+		invalidationSequence.invalidateKey(_REGION_NAME_1, _KEY_1);
+
+		_publish(invalidationSequence, _REGION_NAME_1, sequence, actions);
+
+		Assert.assertEquals(Collections.singletonList("publish"), actions);
 	}
 
 	@Test
@@ -171,6 +181,15 @@ public class InvalidationSequenceTest {
 		_assertPublishKeyWithdrawn(
 			invalidationSequence, _REGION_NAME_1, _KEY_2, 8, true,
 			Collections.emptyList(), actions);
+
+		long sequence = invalidationSequence.getSequence();
+
+		invalidationSequence.invalidateKey(_REGION_NAME_1, _KEY_1);
+
+		_assertPublishKeyDropped(
+			invalidationSequence, _REGION_NAME_1, _KEY_1, sequence, actions);
+		_assertPublishKey(
+			invalidationSequence, _REGION_NAME_1, _KEY_2, sequence, actions);
 	}
 
 	private void _assertPublishKey(

@@ -51,6 +51,10 @@ public class InvalidationSequence {
 		return false;
 	}
 
+	public void invalidateKey(String regionName, Serializable key) {
+		_invalidateKey(regionName, key, _sequence.incrementAndGet());
+	}
+
 	public void publish(
 		String regionName, long sequence, Runnable publishRunnable,
 		Runnable withdrawRunnable) {

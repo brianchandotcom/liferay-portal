@@ -289,6 +289,16 @@ public class TransactionalPortalCacheTest {
 				_portalCache, _KEY_1, _VALUE_1));
 		Assert.assertNull(_portalCache.get(_KEY_1));
 
+		TransactionalPortalCacheUtil.preparePut(_portalCache, _KEY_2);
+
+		TransactionalPortalCacheUtil.invalidate(_portalCache, _KEY_2);
+
+		Assert.assertFalse(
+			"Put should be dropped",
+			TransactionalPortalCacheUtil.completePut(
+				_portalCache, _KEY_2, _VALUE_2));
+		Assert.assertNull(_portalCache.get(_KEY_2));
+
 		ShardedTestPortalCache<String, String> shardedPortalCache =
 			new ShardedTestPortalCache<>("Sharded Test Portal Cache");
 

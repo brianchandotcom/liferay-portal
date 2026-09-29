@@ -1430,6 +1430,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@TestInfo("LPD-102180")
 	public void testUpdateSharingEntryWithChangedActionsAndUnchangedExpirationDateInThePast()
 		throws Exception {
 
@@ -1480,6 +1481,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@TestInfo("LPD-102180")
 	public void testUpdateSharingEntryWithFullSecondExpirationDateChange()
 		throws Exception {
 
@@ -1504,6 +1506,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-102180")
 	public void testUpdateSharingEntryWithMillisecondExpirationDateChange()
 		throws Exception {
 
@@ -1530,6 +1533,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-102180")
 	public void testUpdateSharingEntryWithNoChangesAndExpirationDateInThePast()
 		throws Exception {
 

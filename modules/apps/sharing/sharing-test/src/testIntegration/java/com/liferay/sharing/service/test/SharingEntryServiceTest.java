@@ -718,6 +718,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@TestInfo("LPD-102180")
 	public void testUpdateSharingEntryWithChangedActionsAndUnchangedExpirationDateInThePast()
 		throws Exception {
 
@@ -789,6 +790,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-102180")
 	public void testUpdateSharingEntryWithNoChangesAndExpirationDateInThePast()
 		throws Exception {
 

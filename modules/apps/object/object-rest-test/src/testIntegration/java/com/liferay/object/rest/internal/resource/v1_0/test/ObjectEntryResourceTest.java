@@ -6931,69 +6931,68 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(4, "keywords/any()");
 		_assertFilteredObjectEntries(1, "not keywords/any()");
 
-		_assertFilteredObjectEntries(4, "keywords/any(k:k eq 'tag1')");
+		_assertFilteredObjectEntries(0, "keywords/any(k:k eq '1234')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k eq 'TAG1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k eq 'tag1')");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k eq 'tag2')");
 		_assertFilteredObjectEntries(1, "keywords/any(k:k eq 'tag3')");
-		_assertFilteredObjectEntries(0, "keywords/any(k:k eq '1234')");
+		_assertFilteredObjectEntries(5, "not (keywords/any(k:k eq '1234'))");
+		_assertFilteredObjectEntries(1, "not (keywords/any(k:k eq 'TAG1'))");
+		_assertFilteredObjectEntries(1, "not (keywords/any(k:k eq 'tag1'))");
+		_assertFilteredObjectEntries(3, "not (keywords/any(k:k eq 'tag2'))");
+		_assertFilteredObjectEntries(4, "not (keywords/any(k:k eq 'tag3'))");
 
-		_assertFilteredObjectEntries(2, "keywords/any(k:k ne 'tag1')");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k ne 'TAG1')");
+		_assertFilteredObjectEntries(2, "keywords/any(k:k ne 'tag1')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k ne 'tag2')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k ne 'tag3')");
 
-		_assertFilteredObjectEntries(1, "not (keywords/any(k:k eq 'tag1'))");
-		_assertFilteredObjectEntries(1, "not (keywords/any(k:k eq 'TAG1'))");
-		_assertFilteredObjectEntries(3, "not (keywords/any(k:k eq 'tag2'))");
-		_assertFilteredObjectEntries(4, "not (keywords/any(k:k eq 'tag3'))");
-		_assertFilteredObjectEntries(5, "not (keywords/any(k:k eq '1234'))");
-		_assertFilteredObjectEntries(
-			3, "not (keywords/any(k:k in ('tag2', 'tag3')))");
-
-		_assertFilteredObjectEntries(2, "keywords/any(k:k gt 'tag1')");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k gt 'TAG1')");
+		_assertFilteredObjectEntries(2, "keywords/any(k:k gt 'tag1')");
 		_assertFilteredObjectEntries(1, "keywords/any(k:k gt 'tag2')");
 		_assertFilteredObjectEntries(0, "keywords/any(k:k gt 'tag3')");
 
-		_assertFilteredObjectEntries(4, "keywords/any(k:k ge 'tag1')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k ge 'TAG1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k ge 'tag1')");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k ge 'tag2')");
 		_assertFilteredObjectEntries(1, "keywords/any(k:k ge 'tag3')");
 
-		_assertFilteredObjectEntries(0, "keywords/any(k:k lt 'tag1')");
 		_assertFilteredObjectEntries(0, "keywords/any(k:k lt 'TAG1')");
+		_assertFilteredObjectEntries(0, "keywords/any(k:k lt 'tag1')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k lt 'tag2')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k lt 'tag3')");
 
-		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'tag1')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'TAG1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'tag1')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'tag2')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'tag3')");
 
+		_assertFilteredObjectEntries(0, "keywords/any(k:startswith(k,'1234'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'TAG1'))");
 		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'t'))");
 		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'ta'))");
 		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'tag'))");
 		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'tag1'))");
-		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'TAG1'))");
 		_assertFilteredObjectEntries(2, "keywords/any(k:startswith(k,'tag2'))");
 		_assertFilteredObjectEntries(1, "keywords/any(k:startswith(k,'tag3'))");
-		_assertFilteredObjectEntries(0, "keywords/any(k:startswith(k,'1234'))");
 
-		_assertFilteredObjectEntries(4, "keywords/any(k:contains(k,'tag'))");
-		_assertFilteredObjectEntries(4, "keywords/any(k:contains(k,'ag1'))");
+		_assertFilteredObjectEntries(0, "keywords/any(k:contains(k,'1234'))");
 		_assertFilteredObjectEntries(4, "keywords/any(k:contains(k,'AG1'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:contains(k,'ag1'))");
 		_assertFilteredObjectEntries(2, "keywords/any(k:contains(k,'ag2'))");
 		_assertFilteredObjectEntries(1, "keywords/any(k:contains(k,'ag3'))");
-		_assertFilteredObjectEntries(0, "keywords/any(k:contains(k,'1234'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:contains(k,'tag'))");
 
 		_assertFilteredObjectEntries(
-			4, "keywords/any(k:k in ('tag1', 'tag2'))");
+			0, "keywords/any(k:k in ('1234', '5678'))");
 		_assertFilteredObjectEntries(
 			4, "keywords/any(k:k in ('TAG1', 'tag2'))");
 		_assertFilteredObjectEntries(
+			4, "keywords/any(k:k in ('tag1', 'tag2'))");
+		_assertFilteredObjectEntries(
 			2, "keywords/any(k:k in ('tag2', 'tag3'))");
 		_assertFilteredObjectEntries(
-			0, "keywords/any(k:k in ('1234', '5678'))");
+			3, "not (keywords/any(k:k in ('tag2', 'tag3')))");
 	}
 
 	@Test
@@ -7044,6 +7043,12 @@ public class ObjectEntryResourceTest {
 			String.format(
 				"not %s/any()", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST));
 		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"%s/any(k:contains(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString()));
+		_assertFilteredObjectEntries(
 			3,
 			String.format(
 				"%s/any(k:contains(k,'%s'))",
@@ -7064,8 +7069,7 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(
 			0,
 			String.format(
-				"%s/any(k:contains(k,'%s'))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				RandomTestUtil.randomString()));
 		_assertFilteredObjectEntries(
 			3,
@@ -7073,10 +7077,20 @@ public class ObjectEntryResourceTest {
 				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				_LIST_TYPE_ENTRY_KEY_1));
 		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_1.substring(1)));
+		_assertFilteredObjectEntries(
 			2,
 			String.format(
 				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				_LIST_TYPE_ENTRY_KEY_2));
+		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_2.substring(1)));
 		_assertFilteredObjectEntries(
 			1,
 			String.format(
@@ -7086,22 +7100,43 @@ public class ObjectEntryResourceTest {
 			0,
 			String.format(
 				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_3.substring(1)));
+		_assertFilteredObjectEntries(
+			4,
+			String.format(
+				"not (%s/any(k:k eq '%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				RandomTestUtil.randomString()));
 		_assertFilteredObjectEntries(
-			0,
+			1,
 			String.format(
-				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_1.substring(1)));
+				"not (%s/any(k:k eq '%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_1));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"not (%s/any(k:k eq '%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_2));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"not (%s/any(k:k eq '%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_3));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"not (%s/any(k:(k eq '%s') or (k eq '%s')))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_2,
+				_LIST_TYPE_ENTRY_KEY_3));
 		_assertFilteredObjectEntries(
 			0,
 			String.format(
-				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_2.substring(1)));
-		_assertFilteredObjectEntries(
-			0,
-			String.format(
-				"%s/any(k:k eq '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_3.substring(1)));
+				"%s/any(k:k in ('%s', '%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
@@ -7115,67 +7150,43 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_2,
 				_LIST_TYPE_ENTRY_KEY_3));
 		_assertFilteredObjectEntries(
-			0,
-			String.format(
-				"%s/any(k:k in ('%s', '%s'))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
-		_assertFilteredObjectEntries(
-			2,
-			String.format(
-				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_1));
-		_assertFilteredObjectEntries(
-			3,
-			String.format(
-				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_2));
-		_assertFilteredObjectEntries(
-			3,
-			String.format(
-				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_3));
-		_assertFilteredObjectEntries(
-			3,
-			String.format(
-				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				RandomTestUtil.randomString()));
-		_assertFilteredObjectEntries(
-			1,
-			String.format(
-				"not (%s/any(k:k eq '%s'))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_1));
-		_assertFilteredObjectEntries(
-			2,
-			String.format(
-				"not (%s/any(k:k eq '%s'))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_2));
-		_assertFilteredObjectEntries(
-			3,
-			String.format(
-				"not (%s/any(k:k eq '%s'))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_3));
-		_assertFilteredObjectEntries(
-			4,
-			String.format(
-				"not (%s/any(k:k eq '%s'))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				RandomTestUtil.randomString()));
-		_assertFilteredObjectEntries(
-			2,
-			String.format(
-				"not (%s/any(k:(k eq '%s') or (k eq '%s')))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_2,
-				_LIST_TYPE_ENTRY_KEY_3));
-		_assertFilteredObjectEntries(
 			2,
 			String.format(
 				"not (%s/any(k:k in ('%s', '%s')))",
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_2,
 				_LIST_TYPE_ENTRY_KEY_3));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString()));
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_1));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_2));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:k ne '%s')", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_3));
+		_assertFilteredObjectEntries(
+			0,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				RandomTestUtil.randomString()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"%s/any(k:startswith(k,'%s'))",
+				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
+				_LIST_TYPE_ENTRY_KEY_1));
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
@@ -7187,25 +7198,13 @@ public class ObjectEntryResourceTest {
 			String.format(
 				"%s/any(k:startswith(k,'%s'))",
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_2.substring(0, 2)));
-		_assertFilteredObjectEntries(
-			1,
-			String.format(
-				"%s/any(k:startswith(k,'%s'))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_3.substring(0, 2)));
-		_assertFilteredObjectEntries(
-			3,
-			String.format(
-				"%s/any(k:startswith(k,'%s'))",
-				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_1));
+				_LIST_TYPE_ENTRY_KEY_2));
 		_assertFilteredObjectEntries(
 			2,
 			String.format(
 				"%s/any(k:startswith(k,'%s'))",
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				_LIST_TYPE_ENTRY_KEY_2));
+				_LIST_TYPE_ENTRY_KEY_2.substring(0, 2)));
 		_assertFilteredObjectEntries(
 			1,
 			String.format(
@@ -7213,11 +7212,11 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				_LIST_TYPE_ENTRY_KEY_3));
 		_assertFilteredObjectEntries(
-			0,
+			1,
 			String.format(
 				"%s/any(k:startswith(k,'%s'))",
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
-				RandomTestUtil.randomString()));
+				_LIST_TYPE_ENTRY_KEY_3.substring(0, 2)));
 	}
 
 	@Test
@@ -7283,66 +7282,60 @@ public class ObjectEntryResourceTest {
 
 		_assertFilteredObjectEntries(3, "taxonomyCategoryIds/any()");
 		_assertFilteredObjectEntries(1, "not taxonomyCategoryIds/any()");
-		_assertFilteredObjectEntries(
-			3,
-			String.format(
-				"taxonomyCategoryIds/any(k:k eq %s)",
-				taxonomyCategory1.getId()));
-		_assertFilteredObjectEntries(
-			3,
-			String.format(
-				"taxonomyCategoryIds/any(k:k eq %s)",
-				taxonomyCategory1.getId()));
-		_assertFilteredObjectEntries(
-			2,
-			String.format(
-				"taxonomyCategoryIds/any(k:k eq %s)",
-				taxonomyCategory2.getId()));
-		_assertFilteredObjectEntries(
-			1,
-			String.format(
-				"taxonomyCategoryIds/any(k:k eq %s)",
-				taxonomyCategory3.getId()));
 		_assertFilteredObjectEntries(0, "taxonomyCategoryIds/any(k:k eq 1234)");
-
 		_assertFilteredObjectEntries(
-			2,
+			3,
 			String.format(
-				"taxonomyCategoryIds/any(k:k ne %s)",
+				"taxonomyCategoryIds/any(k:k eq %s)",
 				taxonomyCategory1.getId()));
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
-				"taxonomyCategoryIds/any(k:k ne %s)",
-				taxonomyCategory2.getId()));
+				"taxonomyCategoryIds/any(k:k eq %s)",
+				taxonomyCategory1.getId()));
 		_assertFilteredObjectEntries(
-			3,
+			2,
 			String.format(
-				"taxonomyCategoryIds/any(k:k ne %s)",
-				taxonomyCategory3.getId()));
-
+				"taxonomyCategoryIds/any(k:k eq %s)",
+				taxonomyCategory2.getId()));
 		_assertFilteredObjectEntries(
 			1,
 			String.format(
-				"not (taxonomyCategoryIds/any(k:k eq %s))",
-				taxonomyCategory1.getId()));
-		_assertFilteredObjectEntries(
-			2,
-			String.format(
-				"not (taxonomyCategoryIds/any(k:k eq %s))",
-				taxonomyCategory2.getId()));
-		_assertFilteredObjectEntries(
-			3,
-			String.format(
-				"not (taxonomyCategoryIds/any(k:k eq %s))",
+				"taxonomyCategoryIds/any(k:k eq %s)",
 				taxonomyCategory3.getId()));
 		_assertFilteredObjectEntries(
 			4, "not (taxonomyCategoryIds/any(k:k eq 1234))");
 		_assertFilteredObjectEntries(
+			1,
+			String.format(
+				"not (taxonomyCategoryIds/any(k:k eq %s))",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
 			2,
 			String.format(
-				"not (taxonomyCategoryIds/any(k:k in (%s, %s)))",
-				taxonomyCategory2.getId(), taxonomyCategory3.getId()));
+				"not (taxonomyCategoryIds/any(k:k eq %s))",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"not (taxonomyCategoryIds/any(k:k eq %s))",
+				taxonomyCategory3.getId()));
+
+		_assertFilteredObjectEntries(
+			2,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ne %s)",
+				taxonomyCategory1.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ne %s)",
+				taxonomyCategory2.getId()));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"taxonomyCategoryIds/any(k:k ne %s)",
+				taxonomyCategory3.getId()));
 
 		_assertFilteredObjectEntries(
 			2,
@@ -7408,6 +7401,8 @@ public class ObjectEntryResourceTest {
 				"taxonomyCategoryIds/any(k:k le %s)",
 				taxonomyCategory3.getId()));
 
+		_assertFilteredObjectEntries(
+			0, "taxonomyCategoryIds/any(k:k in (1234, 5678))");
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
@@ -7419,7 +7414,10 @@ public class ObjectEntryResourceTest {
 				"taxonomyCategoryIds/any(k:k in (%s, %s))",
 				taxonomyCategory2.getId(), taxonomyCategory3.getId()));
 		_assertFilteredObjectEntries(
-			0, "taxonomyCategoryIds/any(k:k in (1234, 5678))");
+			2,
+			String.format(
+				"not (taxonomyCategoryIds/any(k:k in (%s, %s)))",
+				taxonomyCategory2.getId(), taxonomyCategory3.getId()));
 	}
 
 	@Test

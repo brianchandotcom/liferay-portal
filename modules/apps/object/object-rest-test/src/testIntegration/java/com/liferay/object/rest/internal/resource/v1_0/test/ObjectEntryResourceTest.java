@@ -6986,10 +6986,14 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(1, "keywords/any(k:contains(k,'ag3'))");
 		_assertFilteredObjectEntries(0, "keywords/any(k:contains(k,'1234'))");
 
-		_assertFilteredObjectEntries(4, "keywords/any(k:k in ('tag1','tag2'))");
-		_assertFilteredObjectEntries(4, "keywords/any(k:k in ('TAG1','tag2'))");
-		_assertFilteredObjectEntries(2, "keywords/any(k:k in ('tag2','tag3'))");
-		_assertFilteredObjectEntries(0, "keywords/any(k:k in ('1234','5678'))");
+		_assertFilteredObjectEntries(
+			4, "keywords/any(k:k in ('tag1', 'tag2'))");
+		_assertFilteredObjectEntries(
+			4, "keywords/any(k:k in ('TAG1', 'tag2'))");
+		_assertFilteredObjectEntries(
+			2, "keywords/any(k:k in ('tag2', 'tag3'))");
+		_assertFilteredObjectEntries(
+			0, "keywords/any(k:k in ('1234', '5678'))");
 	}
 
 	@Test
@@ -7101,19 +7105,19 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
-				"%s/any(k:k in ('%s','%s'))",
+				"%s/any(k:k in ('%s', '%s'))",
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_1,
 				_LIST_TYPE_ENTRY_KEY_2));
 		_assertFilteredObjectEntries(
 			2,
 			String.format(
-				"%s/any(k:k in ('%s','%s'))",
+				"%s/any(k:k in ('%s', '%s'))",
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_2,
 				_LIST_TYPE_ENTRY_KEY_3));
 		_assertFilteredObjectEntries(
 			0,
 			String.format(
-				"%s/any(k:k in ('%s','%s'))",
+				"%s/any(k:k in ('%s', '%s'))",
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 		_assertFilteredObjectEntries(
@@ -7407,15 +7411,15 @@ public class ObjectEntryResourceTest {
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
-				"taxonomyCategoryIds/any(k:k in (%s,%s))",
+				"taxonomyCategoryIds/any(k:k in (%s, %s))",
 				taxonomyCategory1.getId(), taxonomyCategory2.getId()));
 		_assertFilteredObjectEntries(
 			2,
 			String.format(
-				"taxonomyCategoryIds/any(k:k in (%s,%s))",
+				"taxonomyCategoryIds/any(k:k in (%s, %s))",
 				taxonomyCategory2.getId(), taxonomyCategory3.getId()));
 		_assertFilteredObjectEntries(
-			0, "taxonomyCategoryIds/any(k:k in (1234,5678))");
+			0, "taxonomyCategoryIds/any(k:k in (1234, 5678))");
 	}
 
 	@Test
@@ -18071,7 +18075,7 @@ public class ObjectEntryResourceTest {
 		// in
 
 		_assertFilteredObjectEntries(
-			2, fieldName + " in (2023-09-20T10:05:00Z,2023-09-20T10:00:00Z)");
+			2, fieldName + " in (2023-09-20T10:05:00Z, 2023-09-20T10:00:00Z)");
 
 		// le
 

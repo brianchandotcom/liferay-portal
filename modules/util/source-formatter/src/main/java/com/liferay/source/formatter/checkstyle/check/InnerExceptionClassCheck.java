@@ -27,13 +27,8 @@ public class InnerExceptionClassCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
-		if (!absolutePath.endsWith("Exception.java")) {
-			return;
-		}
-
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if ((parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) ||
+		if (!absolutePath.endsWith("Exception.java") ||
+			!isDirectChildOfCompilationUnit(detailAST) ||
 			!_isExtendedException(detailAST)) {
 
 			return;

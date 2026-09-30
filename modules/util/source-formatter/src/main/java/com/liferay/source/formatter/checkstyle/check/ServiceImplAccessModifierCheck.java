@@ -26,14 +26,9 @@ public class ServiceImplAccessModifierCheck extends BaseCheck {
 
 		if (!absolutePath.matches(
 				".+-service/.+/service/impl/.+ServiceImpl.java") ||
-			absolutePath.contains("/modules/apps/archived")) {
+			absolutePath.contains("/modules/apps/archived") ||
+			!isDirectChildOfCompilationUnit(detailAST)) {
 
-			return;
-		}
-
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 			return;
 		}
 

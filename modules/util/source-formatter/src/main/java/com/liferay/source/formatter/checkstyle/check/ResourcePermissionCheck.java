@@ -38,9 +38,7 @@ public class ResourcePermissionCheck extends BaseCheck {
 	private void _checkModelResourcePermission(DetailAST detailAST) {
 		List<String> importNames = getImportNames(detailAST);
 
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if ((parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) ||
+		if (!isDirectChildOfCompilationUnit(detailAST) ||
 			!importNames.contains(
 				"org.osgi.service.component.annotations.Component")) {
 

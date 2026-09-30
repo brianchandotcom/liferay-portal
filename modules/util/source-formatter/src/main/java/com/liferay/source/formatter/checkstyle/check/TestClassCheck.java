@@ -22,15 +22,10 @@ public class TestClassCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
-		if (!absolutePath.contains("/test/") &&
-			!absolutePath.contains("/testIntegration/")) {
+		if ((!absolutePath.contains("/test/") &&
+			 !absolutePath.contains("/testIntegration/")) ||
+			!isDirectChildOfCompilationUnit(detailAST)) {
 
-			return;
-		}
-
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 			return;
 		}
 

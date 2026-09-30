@@ -39,14 +39,9 @@ public class ClassNameIdCheck extends BaseCheck {
 			className.equals("StagedModelType") ||
 			className.endsWith("Criterion") ||
 			className.endsWith("DisplayContext") ||
-			className.endsWith("ModelImpl") || className.endsWith("Tag")) {
+			className.endsWith("ModelImpl") || className.endsWith("Tag") ||
+			!isDirectChildOfCompilationUnit(detailAST)) {
 
-			return;
-		}
-
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 			return;
 		}
 

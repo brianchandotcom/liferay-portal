@@ -1330,6 +1330,22 @@ public abstract class BaseCheck extends AbstractCheck {
 		return false;
 	}
 
+	protected boolean isDirectChildOfCompilationUnit(DetailAST detailAST) {
+		if (detailAST == null) {
+			return false;
+		}
+
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if ((parentDetailAST != null) &&
+			(parentDetailAST.getType() == TokenTypes.COMPILATION_UNIT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isExcludedPath(String key) {
 		return SourceFormatterCheckUtil.isExcludedPath(
 			_excludesJSONObject, _excludesValuesMap, key, getAbsolutePath(), -1,

@@ -28,14 +28,9 @@ public class ModifiedMethodCheck extends BaseCheck {
 		List<String> importNames = getImportNames(detailAST);
 
 		if (!importNames.contains(
-				"org.osgi.service.component.annotations.Modified")) {
+				"org.osgi.service.component.annotations.Modified") ||
+			!isDirectChildOfCompilationUnit(detailAST)) {
 
-			return;
-		}
-
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 			return;
 		}
 

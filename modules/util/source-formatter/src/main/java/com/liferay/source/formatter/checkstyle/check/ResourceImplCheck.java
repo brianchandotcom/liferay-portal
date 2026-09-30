@@ -31,13 +31,9 @@ public class ResourceImplCheck extends BaseCheck {
 
 		String className = getName(detailAST);
 
-		if (!className.endsWith("ResourceImpl")) {
-			return;
-		}
+		if (!className.endsWith("ResourceImpl") ||
+			!isDirectChildOfCompilationUnit(detailAST)) {
 
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 			return;
 		}
 

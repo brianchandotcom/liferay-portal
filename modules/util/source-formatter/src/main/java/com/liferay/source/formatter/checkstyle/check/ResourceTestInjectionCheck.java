@@ -27,13 +27,9 @@ public class ResourceTestInjectionCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String className = getName(detailAST);
 
-		if (!className.endsWith("ResourceTest")) {
-			return;
-		}
+		if (!className.endsWith("ResourceTest") ||
+			!isDirectChildOfCompilationUnit(detailAST)) {
 
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.COMPILATION_UNIT) {
 			return;
 		}
 

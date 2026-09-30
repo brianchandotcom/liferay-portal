@@ -5,9 +5,6 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
-import com.liferay.frontend.token.definition.FrontendTokenDefinition;
-import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.frontend.token.definition.util.FrontendTokenDefinitionUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,6 +21,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.util.StyleBookUtil;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessorImportResultEntry;
 
@@ -108,7 +106,8 @@ public class ImportStyleBookEntriesMVCActionCommand
 							INVALID) &&
 					(styleBookEntry != null) &&
 					!_isValidFrontendTokensValues(
-						_getFrontendTokenNames(styleBookEntry, themeDisplay),
+						StyleBookUtil.getFrontendTokensValuesKeys(
+							themeDisplay.getLocale(), styleBookEntry),
 						styleBookEntry)) {
 
 					SessionMessages.add(
@@ -124,29 +123,6 @@ public class ImportStyleBookEntriesMVCActionCommand
 		}
 
 		sendRedirect(actionRequest, actionResponse);
-	}
-
-	private List<String> _getFrontendTokenNames(
-		StyleBookEntry styleBookEntry, ThemeDisplay themeDisplay) {
-
-		FrontendTokenDefinition themeFrontendTokenDefinition =
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				themeDisplay.getCompanyId(), styleBookEntry.getThemeId());
-
-		JSONObject overrideFrontendTokenDefinitionJSONObject =
-			FrontendTokenDefinitionUtil.parseFrontendTokenDefinitionJSONObject(
-				styleBookEntry.getFrontendTokenDefinition());
-
-		if (themeFrontendTokenDefinition == null) {
-			return FrontendTokenDefinitionUtil.getFrontendTokenNames(
-				overrideFrontendTokenDefinitionJSONObject);
-		}
-
-		return FrontendTokenDefinitionUtil.getFrontendTokenNames(
-			FrontendTokenDefinitionUtil.mergeFrontendTokenDefinitionJSONObject(
-				themeFrontendTokenDefinition.getJSONObject(
-					themeDisplay.getLocale()),
-				overrideFrontendTokenDefinitionJSONObject));
 	}
 
 	private List<StyleBookEntryZipProcessorImportResultEntry>
@@ -174,9 +150,6 @@ public class ImportStyleBookEntriesMVCActionCommand
 
 		return true;
 	}
-
-	@Reference
-	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

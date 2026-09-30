@@ -10,6 +10,7 @@ import com.liferay.exportimport.report.constants.ExportImportReportEntryConstant
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.test.util.FrontendTokenDefinitionTestUtil;
@@ -59,7 +61,9 @@ public class StyleBookEntryStagedModelDataHandlerTest
 			FrontendTokenDefinitionTestUtil.getFrontendTokenDefinition(
 				frontendTokenName);
 		String frontendTokensValues = JSONUtil.put(
-			frontendTokenName,
+			StringBundler.concat(
+				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+				StringPool.COLON, frontendTokenName),
 			JSONUtil.put("value", RandomTestUtil.randomString())
 		).toString();
 

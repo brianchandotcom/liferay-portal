@@ -15,10 +15,10 @@ import java.util.List;
 public class JavaRecordPattern extends BaseJavaExpression {
 
 	public JavaRecordPattern(
-		JavaType javaType, List<JavaTerm> componentJavaTerms) {
+		List<JavaTerm> componentJavaTerms, JavaType javaType) {
 
-		_javaType = javaType;
 		_componentJavaTerms = componentJavaTerms;
+		_javaType = javaType;
 	}
 
 	@Override

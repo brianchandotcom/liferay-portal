@@ -1667,9 +1667,9 @@ public class JavaParserUtil {
 		}
 
 		return new JavaRecordPattern(
+			componentJavaTerms,
 			_parseJavaType(
-				recordPatternDefDetailAST.findFirstToken(TokenTypes.TYPE)),
-			componentJavaTerms);
+				recordPatternDefDetailAST.findFirstToken(TokenTypes.TYPE)));
 	}
 
 	private static JavaReturnStatement _parseJavaReturnStatement(

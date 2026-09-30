@@ -48,6 +48,7 @@ import com.liferay.style.book.exception.StyleBookEntryFrontendTokenException;
 import com.liferay.style.book.exception.StyleBookEntryFrontendTokensValuesException;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
 import com.liferay.style.book.exception.StyleBookEntryThemeIdException;
+import com.liferay.style.book.internal.util.StyleBookEntryFrontendTokensValuesUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.base.StyleBookEntryLocalServiceBaseImpl;
 
@@ -96,6 +97,13 @@ public class StyleBookEntryLocalServiceImpl
 
 		_validateFrontendTokenDefinition(frontendTokenDefinition);
 
+		frontendTokensValues =
+			StyleBookEntryFrontendTokensValuesUtil.
+				normalizeFrontendTokensValues(
+					frontendTokenDefinition, frontendTokensValues, themeId);
+
+		_validateFrontendTokensValues(frontendTokensValues, null);
+
 		if (Validator.isNull(styleBookEntryKey)) {
 			styleBookEntryKey = generateStyleBookEntryKey(groupId, name);
 		}
@@ -104,8 +112,6 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		_validateStyleBookEntryKey(groupId, styleBookEntryKey);
-
-		_validateFrontendTokensValues(frontendTokensValues, null);
 
 		StyleBookEntry styleBookEntry = create();
 
@@ -632,6 +638,12 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
+		frontendTokensValues =
+			StyleBookEntryFrontendTokensValuesUtil.
+				normalizeFrontendTokensValues(
+					styleBookEntry.getFrontendTokenDefinition(),
+					frontendTokensValues, styleBookEntry.getThemeId());
+
 		_validateFrontendTokensValues(frontendTokensValues, styleBookEntry);
 
 		styleBookEntry.setModifiedDate(new Date());
@@ -722,9 +734,16 @@ public class StyleBookEntryLocalServiceImpl
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
 		_validate(styleBookEntry.getGroupId(), name, styleBookEntryId);
-		_validateFrontendTokensValues(frontendTokensValues, styleBookEntry);
 
 		_validateFrontendTokenDefinition(frontendTokenDefinition);
+
+		frontendTokensValues =
+			StyleBookEntryFrontendTokensValuesUtil.
+				normalizeFrontendTokensValues(
+					frontendTokenDefinition, frontendTokensValues,
+					styleBookEntry.getThemeId());
+
+		_validateFrontendTokensValues(frontendTokensValues, styleBookEntry);
 
 		if (Validator.isNull(styleBookEntryKey)) {
 			styleBookEntryKey = generateStyleBookEntryKey(
@@ -777,9 +796,16 @@ public class StyleBookEntryLocalServiceImpl
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
 		_validate(styleBookEntry.getGroupId(), name, styleBookEntryId);
-		_validateFrontendTokensValues(frontendTokensValues, styleBookEntry);
 
 		_validateFrontendTokenDefinition(frontendTokenDefinition);
+
+		frontendTokensValues =
+			StyleBookEntryFrontendTokensValuesUtil.
+				normalizeFrontendTokensValues(
+					frontendTokenDefinition, frontendTokensValues,
+					styleBookEntry.getThemeId());
+
+		_validateFrontendTokensValues(frontendTokensValues, styleBookEntry);
 
 		styleBookEntry.setFrontendTokenDefinition(frontendTokenDefinition);
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);

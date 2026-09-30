@@ -10,6 +10,9 @@ import com.liferay.exportimport.report.constants.ExportImportReportEntryConstant
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.frontend.token.definition.FrontendToken;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.style.book.constants.StyleBookConstants;
@@ -40,6 +44,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Petteri Karttunen
@@ -139,6 +146,76 @@ public class StyleBookEntryStagedModelDataHandlerTest
 		Assert.assertNotEquals(
 			externalReferenceCode,
 			importedStyleBookEntry.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testExportImportResolvesLegacyFrontendTokensValues()
+		throws Exception {
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				TestPropsValues.getCompanyId(), _THEME_ID_CLASSIC);
+
+		List<FrontendToken> frontendTokens = ListUtil.fromCollection(
+			frontendTokenDefinition.getFrontendTokens());
+
+		FrontendToken frontendToken = frontendTokens.get(0);
+
+		String customFrontendTokenName = RandomTestUtil.randomString();
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				false,
+				FrontendTokenDefinitionTestUtil.getFrontendTokenDefinition(
+					customFrontendTokenName),
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				StringPool.BLANK, _THEME_ID_CLASSIC,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		String customValue = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		styleBookEntry.setFrontendTokensValues(
+			JSONUtil.put(
+				customFrontendTokenName, JSONUtil.put("value", customValue)
+			).put(
+				frontendToken.getName(), JSONUtil.put("value", value)
+			).toString());
+
+		String expectedFrontendTokensValues = JSONUtil.put(
+			StringBundler.concat(
+				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+				StringPool.COLON, customFrontendTokenName),
+			JSONUtil.put(
+				"tokenDefinitionId",
+				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID
+			).put(
+				"value", customValue
+			)
+		).put(
+			StringBundler.concat(
+				_THEME_ID_CLASSIC, StringPool.COLON, frontendToken.getName()),
+			JSONUtil.put(
+				"tokenDefinitionId", _THEME_ID_CLASSIC
+			).put(
+				"value", value
+			)
+		).toString();
+
+		exportImportStagedModel(styleBookEntry);
+
+		StyleBookEntry importedStyleBookEntry = (StyleBookEntry)getStagedModel(
+			styleBookEntry.getUuid(), liveGroup);
+
+		JSONAssert.assertEquals(
+			expectedFrontendTokensValues,
+			importedStyleBookEntry.getFrontendTokensValues(),
+			JSONCompareMode.STRICT);
+
+		Assert.assertNull(
+			_getWarningExportImportReportEntry(liveGroup.getGroupId()));
 	}
 
 	@Test
@@ -321,9 +398,14 @@ public class StyleBookEntryStagedModelDataHandlerTest
 
 	private static final String _THEME_ID_ADMIN = "admin_WAR_admintheme";
 
+	private static final String _THEME_ID_CLASSIC = "classic_WAR_classictheme";
+
 	@Inject
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
+
+	@Inject
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

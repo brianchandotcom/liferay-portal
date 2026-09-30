@@ -55,6 +55,10 @@ test('LPD-21637 Virtual item details section visible for product and sku', async
 	await commerceAdminProductPage.productVirtualLink.click();
 	await commerceAdminProductPage.addVirtualProductFileEntryButton.click();
 
+	await expect(
+		commerceAdminProductPage.productVirtualFileEntrySaveAndPropagateButton
+	).toBeVisible();
+
 	const productVirtualFileEntryURL =
 		'http://test-virtual-product-details-section.com';
 
@@ -77,9 +81,7 @@ test('LPD-21637 Virtual item details section visible for product and sku', async
 	);
 	await commerceAdminProductPage.productSkuVirtualFileEntrySaveButton.click();
 
-	await waitForAlert(
-		page.frameLocator('iframe').frameLocator('iframe >> nth=1')
-	);
+	await waitForAlert(page.frameLocator('iframe').frameLocator('iframe'));
 
 	await commerceAdminProductPage.productSkuVirtualFileEntryCancelButton.click();
 

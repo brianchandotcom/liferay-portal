@@ -39,6 +39,7 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 	readonly productSkuVirtualOverrideToggle: Locator;
 	readonly productSkusLink: Locator;
 	readonly productVirtualFileEntryCancelButton: Locator;
+	readonly productVirtualFileEntrySaveAndPropagateButton: Locator;
 	readonly productVirtualFileEntrySaveButton: Locator;
 	readonly productVirtualFileEntryURLInput: Locator;
 	readonly productVirtualLink: Locator;
@@ -113,15 +114,15 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 			page.getByRole('link', {name: sku});
 		this.productSkuVirtualFileEntryCancelButton = page
 			.frameLocator('iframe')
-			.frameLocator('iframe >> nth=1')
+			.frameLocator('iframe')
 			.getByRole('button', {exact: true, name: 'Cancel'});
 		this.productSkuVirtualFileEntrySaveButton = page
 			.frameLocator('iframe')
-			.frameLocator('iframe >> nth=1')
+			.frameLocator('iframe')
 			.getByRole('button', {exact: true, name: 'Save'});
 		this.productSkuVirtualFileEntryURLInput = page
 			.frameLocator('iframe')
-			.frameLocator('iframe >> nth=1')
+			.frameLocator('iframe')
 			.getByLabel('URL');
 		this.productSkuVirtualOverrideToggle = page
 			.frameLocator('iframe')
@@ -131,13 +132,16 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 			name: 'SKUs',
 		});
 		this.productVirtualFileEntryCancelButton = page
-			.frameLocator('iframe >> nth=1')
+			.frameLocator('iframe')
 			.getByRole('button', {exact: true, name: 'Cancel'});
+		this.productVirtualFileEntrySaveAndPropagateButton = page
+			.frameLocator('iframe')
+			.getByRole('button', {exact: true, name: 'Save and Propagate'});
 		this.productVirtualFileEntrySaveButton = page
-			.frameLocator('iframe >> nth=1')
+			.frameLocator('iframe')
 			.getByRole('button', {exact: true, name: 'Save'});
 		this.productVirtualFileEntryURLInput = page
-			.frameLocator('iframe >> nth=1')
+			.frameLocator('iframe')
 			.getByLabel('URL');
 		this.productVirtualLink = page.getByRole('link', {
 			exact: true,

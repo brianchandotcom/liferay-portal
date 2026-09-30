@@ -25,6 +25,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 /**
@@ -70,6 +71,42 @@ public class OAuth2FaroControllerTest {
 			1, null, "demandbase", null);
 
 		Assert.assertEquals("abc", tokenDisplay.getToken());
+	}
+
+	@Test
+	public void testNewTokenSetsAccessTokenContent() throws Exception {
+		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization(
+			"abc");
+
+		Mockito.when(
+			_localOAuthClient.requestTokens(_mockOAuth2Application(), 100L)
+		).thenReturn(
+			"{\"access_token\": \"abc\"}"
+		);
+
+		Mockito.when(
+			_oAuth2AuthorizationLocalService.
+				fetchOAuth2AuthorizationByAccessTokenContent("abc")
+		).thenReturn(
+			oAuth2Authorization
+		);
+
+		_oAuth2FaroController.newToken(1, null, "demandbase", null);
+
+		ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(
+			String.class);
+
+		Mockito.verify(
+			oAuth2Authorization
+		).setAccessTokenContent(
+			argumentCaptor.capture()
+		);
+
+		String accessTokenContent = argumentCaptor.getValue();
+
+		Assert.assertNotEquals("abc", accessTokenContent);
+		Assert.assertTrue(
+			accessTokenContent, accessTokenContent.matches("[0-9a-f]+"));
 	}
 
 	@Test

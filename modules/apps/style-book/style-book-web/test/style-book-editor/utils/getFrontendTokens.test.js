@@ -25,7 +25,7 @@ function getFrontendTokenDefinition(id, frontendTokenName) {
 }
 
 describe('getFrontendTokens', () => {
-	it('keys every token by definition id and the theme tokens also by name', () => {
+	it('keys every token by definition id', () => {
 		const frontendToken = {
 			defaultValue: '#000',
 			tokenCategoryLabel: 'Category',
@@ -34,17 +34,13 @@ describe('getFrontendTokens', () => {
 		};
 
 		expect(
-			getFrontendTokens(
-				[
-					getFrontendTokenDefinition('theme', 'themeToken'),
-					getFrontendTokenDefinition('clay', 'clayToken'),
-				],
-				'theme'
-			)
+			getFrontendTokens([
+				getFrontendTokenDefinition('theme', 'themeToken'),
+				getFrontendTokenDefinition('clay', 'clayToken'),
+			])
 		).toEqual({
 			'clay:clayToken': {...frontendToken, name: 'clay:clayToken'},
 			'theme:themeToken': {...frontendToken, name: 'theme:themeToken'},
-			'themeToken': {...frontendToken, name: 'themeToken'},
 		});
 	});
 });

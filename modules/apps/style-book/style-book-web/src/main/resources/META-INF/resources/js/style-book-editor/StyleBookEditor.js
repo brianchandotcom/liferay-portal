@@ -80,7 +80,6 @@ export default function ({
 		}),
 		getFrontendTokens: getFrontendTokensFactory({
 			frontendTokenDefinitions,
-			themeFrontendTokenDefinitionId,
 		}),
 		isPrivateLayoutsEnabled,
 		namespace,

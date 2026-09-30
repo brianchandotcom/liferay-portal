@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export function getFrontendTokens(
-	frontendTokenDefinitions,
-	themeFrontendTokenDefinitionId
-) {
+export function getFrontendTokens(frontendTokenDefinitions) {
 	const frontendTokens = {};
 
 	for (const {frontendTokenCategories, id} of frontendTokenDefinitions) {
@@ -15,22 +12,13 @@ export function getFrontendTokens(
 				for (const frontendToken of frontendTokenSet.frontendTokens) {
 					const namespacedName = `${id}:${frontendToken.name}`;
 
-					const tokenData = {
+					frontendTokens[namespacedName] = {
 						...frontendToken,
 						name: namespacedName,
 						tokenCategoryLabel: frontendTokenCategory.label,
 						tokenSetLabel: frontendTokenSet.label,
 						value: frontendToken.defaultValue,
 					};
-
-					frontendTokens[namespacedName] = tokenData;
-
-					if (id === themeFrontendTokenDefinitionId) {
-						frontendTokens[frontendToken.name] = {
-							...tokenData,
-							name: frontendToken.name,
-						};
-					}
 				}
 			}
 		}

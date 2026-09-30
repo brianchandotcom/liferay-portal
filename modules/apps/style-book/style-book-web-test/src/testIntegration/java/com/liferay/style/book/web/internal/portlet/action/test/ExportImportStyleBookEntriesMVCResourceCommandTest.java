@@ -391,6 +391,10 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			true);
 		_testExportImportSingleStyleBookEntryWithFrontendTokensValues(
 			StringBundler.concat(
+				_THEME_ID_CLASSIC, StringPool.COLON, themeFrontendTokenName),
+			themeFrontendTokenName, true);
+		_testExportImportSingleStyleBookEntryWithFrontendTokensValues(
+			StringBundler.concat(
 				_THEME_ID_CLASSIC, StringPool.COLON,
 				RandomTestUtil.randomString()),
 			null, false);

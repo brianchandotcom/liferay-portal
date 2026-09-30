@@ -106,8 +106,8 @@ public class BaseWorkspaceTest extends com.liferay.jenkins.results.parser.Test {
 				"workspace_repository_dir_names", gitDirectoryName
 			));
 
-		Future<List<WorkspaceGitRepository>> loadFuture =
-			_executorService.submit(baseWorkspace::getWorkspaceGitRepositories);
+		Future<List<WorkspaceGitRepository>> future = _executorService.submit(
+			baseWorkspace::getWorkspaceGitRepositories);
 
 		Assert.assertTrue(startCountDownLatch.await(10, TimeUnit.SECONDS));
 
@@ -128,7 +128,7 @@ public class BaseWorkspaceTest extends com.liferay.jenkins.results.parser.Test {
 			workspaceGitRepository, lookupFuture.get(10, TimeUnit.SECONDS));
 		testEquals(
 			Arrays.asList(workspaceGitRepository),
-			loadFuture.get(10, TimeUnit.SECONDS));
+			future.get(10, TimeUnit.SECONDS));
 	}
 
 	private final ExecutorService _executorService =

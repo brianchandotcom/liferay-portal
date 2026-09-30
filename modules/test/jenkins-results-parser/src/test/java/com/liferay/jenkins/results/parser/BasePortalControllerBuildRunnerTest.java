@@ -160,21 +160,6 @@ public class BasePortalControllerBuildRunnerTest
 			"https://test-1-41.liferay.com/job/test-portal-testsuite-" +
 				"upstream(master-private)/34/";
 
-		String portalBaseBranchSHA = RandomTestUtil.randomSHA();
-		String portalBranchSHA = RandomTestUtil.randomSHA();
-
-		String portalBaseBranchSHAItem = JenkinsResultsParserUtil.combine(
-			"<strong>Base Git ID:</strong> <a href=\"https://github.com/",
-			"liferay/liferay-portal/commit/", portalBaseBranchSHA, "\">",
-			portalBaseBranchSHA.substring(0, 7), "</a>");
-		String portalBranchSHAItem = JenkinsResultsParserUtil.combine(
-			"<strong>Git ID:</strong> <a href=\"https://github.com/",
-			"brianchandotcom/liferay-portal-ee/commit/", portalBranchSHA, "\">",
-			portalBranchSHA.substring(0, 7), "</a>");
-		String portalGitHubCompareURLItem = JenkinsResultsParserUtil.combine(
-			"<strong>Git Compare:</strong> <a href=\"https://github.com/",
-			"brianchandotcom/liferay-portal-ee/compare/a...b\">3 commits</a>");
-
 		BasePortalControllerBuildRunner<?> basePortalControllerBuildRunner =
 			Mockito.mock(BasePortalControllerBuildRunner.class);
 
@@ -182,6 +167,24 @@ public class BasePortalControllerBuildRunnerTest
 		).when(
 			basePortalControllerBuildRunner
 		).previousBuildHasRunningInvocation();
+
+		String portalBaseBranchSHA = RandomTestUtil.randomSHA();
+
+		String portalBaseBranchSHAItem = JenkinsResultsParserUtil.combine(
+			"<strong>Base Git ID:</strong> <a href=\"https://github.com/",
+			"liferay/liferay-portal/commit/", portalBaseBranchSHA, "\">",
+			portalBaseBranchSHA.substring(0, 7), "</a>");
+
+		String portalBranchSHA = RandomTestUtil.randomSHA();
+
+		String portalBranchSHAItem = JenkinsResultsParserUtil.combine(
+			"<strong>Git ID:</strong> <a href=\"https://github.com/",
+			"brianchandotcom/liferay-portal-ee/commit/", portalBranchSHA, "\">",
+			portalBranchSHA.substring(0, 7), "</a>");
+
+		String portalGitHubCompareURLItem = JenkinsResultsParserUtil.combine(
+			"<strong>Git Compare:</strong> <a href=\"https://github.com/",
+			"brianchandotcom/liferay-portal-ee/compare/a...b\">3 commits</a>");
 
 		Mockito.doReturn(
 			Arrays.asList(

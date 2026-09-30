@@ -80,11 +80,11 @@ public class UpstreamPortalTopLevelBuildTest
 
 		String branchName = RandomTestUtil.randomString();
 
+		_testGetWorkspaceWithPortalBase(branchName, false, "build");
 		_testGetWorkspaceWithPortalBase(branchName + "-private", false, null);
 		_testGetWorkspaceWithPortalBase(branchName + "-private", true, "build");
 		_testGetWorkspaceWithPortalBase(
 			branchName + "-private", true, "controller");
-		_testGetWorkspaceWithPortalBase(branchName, false, "build");
 	}
 
 	private UpstreamPortalTopLevelBuild _getUpstreamPortalTopLevelBuild(

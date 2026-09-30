@@ -18,10 +18,6 @@ public class PortalTopLevelBuildDataTest
 
 	@Test
 	public void testGetPortalRemoteGitRef() {
-		String portalGitHubURL =
-			"https://github.com/liferay/liferay-portal/tree/" +
-				RandomTestUtil.randomString();
-
 		PortalTopLevelBuildData portalTopLevelBuildData = Mockito.mock(
 			PortalTopLevelBuildData.class);
 
@@ -36,6 +32,10 @@ public class PortalTopLevelBuildDataTest
 		).setPortalRemoteGitRef(
 			Mockito.any()
 		);
+
+		String portalGitHubURL =
+			"https://github.com/liferay/liferay-portal/tree/" +
+				RandomTestUtil.randomString();
 
 		Mockito.doReturn(
 			portalGitHubURL

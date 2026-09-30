@@ -145,6 +145,17 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 				_precedingCommentTokens.size() - 1);
 
 			if ((precedingCommentToken.getType() ==
+					TokenTypes.BLOCK_COMMENT_BEGIN) &&
+				StringUtil.startsWith(
+					StringUtil.trim(precedingCommentToken.getText()),
+					CharPool.STAR) &&
+				!StringUtil.startsWith(
+					StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
+
+				return SINGLE_LINE_BREAK_REQUIRED;
+			}
+
+			if ((precedingCommentToken.getType() ==
 					TokenTypes.SINGLE_LINE_COMMENT) &&
 				StringUtil.startsWith(
 					precedingCommentToken.getText(), CharPool.SPACE)) {
@@ -161,29 +172,11 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 				return DOUBLE_LINE_BREAK_REQUIRED;
 			}
 
-			if ((precedingCommentToken.getType() ==
-					TokenTypes.BLOCK_COMMENT_BEGIN) &&
-				StringUtil.startsWith(
-					StringUtil.trim(precedingCommentToken.getText()),
-					CharPool.STAR) &&
-				!StringUtil.startsWith(
-					StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
-
-				return SINGLE_LINE_BREAK_REQUIRED;
-			}
-
 			return NO_ACTION_REQUIRED;
 		}
 
 		if (previousParsedJavaTerm == null) {
 			return NO_ACTION_REQUIRED;
-		}
-
-		if (_className.equals(JavaVariableDefinition.class.getName()) &&
-			_className.equals(previousParsedJavaTerm.getClassName())) {
-
-			return _getBetweenVariableDefinitionsLineAction(
-				previousParsedJavaTerm);
 		}
 
 		if ((_className.equals(JavaConstructorDefinition.class.getName()) ||
@@ -192,6 +185,13 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 				StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
 
 			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		if (_className.equals(JavaVariableDefinition.class.getName()) &&
+			_className.equals(previousParsedJavaTerm.getClassName())) {
+
+			return _getBetweenVariableDefinitionsLineAction(
+				previousParsedJavaTerm);
 		}
 
 		if (StringUtil.endsWith(

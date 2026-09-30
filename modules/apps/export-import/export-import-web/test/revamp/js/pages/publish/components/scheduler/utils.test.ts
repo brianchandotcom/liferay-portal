@@ -89,4 +89,16 @@ describe('getScheduleValuesErrors', () => {
 			).repeatOnTime
 		).toBe('this-field-is-required');
 	});
+
+	it('requires a complete repeat at time once the sync is unchecked', () => {
+		expect(
+			getScheduleValuesErrors(
+				buildScheduleValues({
+					repeatOnTime: '1',
+					repeatOnTimeSynced: false,
+					unit: IntervalUnit.Week,
+				})
+			).repeatOnTime
+		).toBe('this-field-is-required');
+	});
 });

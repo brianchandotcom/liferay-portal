@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isCompleteDateTime, toZonedDate} from '../../../../utils/dateTime';
+import {
+	isCompleteDateTime,
+	isCompleteTime,
+	toZonedDate,
+} from '../../../../utils/dateTime';
 import {
 	IntervalUnit,
 	LAST_WEEKDAY_ORDINAL,
@@ -103,7 +107,7 @@ export function getScheduleValuesErrors(
 	if (
 		isRepeatingUnit(scheduleValues.unit) &&
 		!scheduleValues.repeatOnTimeSynced &&
-		!scheduleValues.repeatOnTime
+		!isCompleteTime(scheduleValues.repeatOnTime)
 	) {
 		scheduleValuesErrors.repeatOnTime = Liferay.Language.get(
 			'this-field-is-required'

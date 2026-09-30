@@ -158,17 +158,17 @@ public class UpdateSegmentsEntrySiteRolesMVCActionCommandTest {
 
 		_user = UserTestUtil.addUser();
 
-		try {
-			_mvcActionCommand.processAction(
-				_getMockLiferayPortletActionRequest(role, _user),
-				new MockLiferayPortletActionResponse());
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(role, _user);
 
-			Assert.fail();
-		}
-		catch (PortletException portletException) {
-			Assert.assertTrue(
-				portletException.getCause() instanceof PrincipalException);
-		}
+		PortletException portletException = Assert.assertThrows(
+			PortletException.class,
+			() -> _mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse()));
+
+		Assert.assertTrue(
+			portletException.getCause() instanceof PrincipalException);
 
 		Assert.assertFalse(
 			_segmentsEntryRoleLocalService.hasSegmentEntryRole(

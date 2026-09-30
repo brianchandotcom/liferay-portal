@@ -131,6 +131,9 @@ public class OAuth2FaroController extends BaseFaroController {
 					"token");
 		}
 
+		oAuth2Authorization.setAccessTokenContent(
+			_generateSecureRandomString(32));
+
 		Date accessTokenCreateDate =
 			oAuth2Authorization.getAccessTokenCreateDate();
 
@@ -208,20 +211,20 @@ public class OAuth2FaroController extends BaseFaroController {
 	}
 
 	private String _generateApplicationName() {
-		Matcher matcher = _baseIdPattern.matcher(_generateSecureRandomString());
+		Matcher matcher = _baseIdPattern.matcher(
+			_generateSecureRandomString(16));
 
 		return matcher.replaceFirst("app-$1-$2-$3-$4-$5");
 	}
 
 	private String _generateClientSecret() {
-		Matcher matcher = _baseIdPattern.matcher(_generateSecureRandomString());
+		Matcher matcher = _baseIdPattern.matcher(
+			_generateSecureRandomString(16));
 
 		return matcher.replaceFirst("secret-$1-$2-$3-$4-$5");
 	}
 
-	private String _generateSecureRandomString() {
-		int size = 16;
-
+	private String _generateSecureRandomString(int size) {
 		StringBundler sb = new StringBundler(size);
 
 		int count = (int)Math.ceil((double)size / 8);

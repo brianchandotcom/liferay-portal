@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
@@ -24,18 +25,25 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
+
+import java.io.Serializable;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,6 +65,8 @@ public class DeleteWorkflowInstanceMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
 		_group = GroupTestUtil.addGroup();
 
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
@@ -81,6 +91,51 @@ public class DeleteWorkflowInstanceMVCActionCommandTest {
 
 		_assertWorkflowInstanceDeleted(blogsEntry.getEntryId());
 
+		// Administrator user from a different company
+
+		blogsEntry = _addBlogsEntry();
+
+		_company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addCompanyAdminUser(_company);
+
+		_assertWorkflowInstanceNotDeleted(
+			blogsEntry.getEntryId(), WorkflowException.class,
+			_processAction(
+				blogsEntry, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
+				user));
+
+		// Administrator user with a workflow context from a different company
+
+		WorkflowInstance workflowInstance =
+			_workflowInstanceManager.startWorkflowInstance(
+				_company.getCompanyId(), 0, user.getUserId(), "Single Approver",
+				1, null,
+				HashMapBuilder.<String, Serializable>put(
+					WorkflowConstants.CONTEXT_COMPANY_ID,
+					String.valueOf(blogsEntry.getCompanyId())
+				).put(
+					WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
+					BlogsEntry.class.getName()
+				).put(
+					WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
+					String.valueOf(blogsEntry.getEntryId())
+				).put(
+					WorkflowConstants.CONTEXT_GROUP_ID,
+					String.valueOf(blogsEntry.getGroupId())
+				).put(
+					WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
+					ServiceContextTestUtil.getServiceContext(
+						_company.getGroupId(), user.getUserId())
+				).build());
+
+		_assertWorkflowInstanceNotDeleted(
+			blogsEntry.getEntryId(),
+			PrincipalException.MustHavePermission.class,
+			_processAction(
+				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE, user,
+				workflowInstance.getWorkflowInstanceId()));
+
 		// Nonowner user
 
 		for (String portletId :
@@ -92,24 +147,10 @@ public class DeleteWorkflowInstanceMVCActionCommandTest {
 
 			blogsEntry = _addBlogsEntry();
 
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-				_processAction(blogsEntry, portletId, _user2);
-
-			Assert.assertTrue(
-				SessionErrors.contains(
-					mockLiferayPortletActionRequest,
-					PrincipalException.MustHavePermission.class));
-
-			blogsEntry = _blogsEntryLocalService.getEntry(
-				blogsEntry.getEntryId());
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_PENDING, blogsEntry.getStatus());
-
-			Assert.assertNotNull(
-				_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
-					blogsEntry.getCompanyId(), blogsEntry.getGroupId(),
-					BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+			_assertWorkflowInstanceNotDeleted(
+				blogsEntry.getEntryId(),
+				PrincipalException.MustHavePermission.class,
+				_processAction(blogsEntry, portletId, _user2));
 		}
 
 		// Owner user
@@ -141,8 +182,41 @@ public class DeleteWorkflowInstanceMVCActionCommandTest {
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 	}
 
+	private void _assertWorkflowInstanceNotDeleted(
+			long entryId, Class<?> exceptionClass,
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest)
+		throws Exception {
+
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest, exceptionClass));
+
+		BlogsEntry blogsEntry = _blogsEntryLocalService.getEntry(entryId);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, blogsEntry.getStatus());
+
+		Assert.assertNotNull(
+			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+				blogsEntry.getCompanyId(), blogsEntry.getGroupId(),
+				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+	}
+
 	private MockLiferayPortletActionRequest _processAction(
 			BlogsEntry blogsEntry, String portletId, User user)
+		throws Exception {
+
+		WorkflowInstanceLink workflowInstanceLink =
+			_workflowInstanceLinkLocalService.getWorkflowInstanceLink(
+				blogsEntry.getCompanyId(), blogsEntry.getGroupId(),
+				BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		return _processAction(
+			portletId, user, workflowInstanceLink.getWorkflowInstanceId());
+	}
+
+	private MockLiferayPortletActionRequest _processAction(
+			String portletId, User user, long workflowInstanceId)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -163,14 +237,8 @@ public class DeleteWorkflowInstanceMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		WorkflowInstanceLink workflowInstanceLink =
-			_workflowInstanceLinkLocalService.getWorkflowInstanceLink(
-				blogsEntry.getCompanyId(), blogsEntry.getGroupId(),
-				BlogsEntry.class.getName(), blogsEntry.getEntryId());
-
 		mockLiferayPortletActionRequest.addParameter(
-			"workflowInstanceId",
-			String.valueOf(workflowInstanceLink.getWorkflowInstanceId()));
+			"workflowInstanceId", String.valueOf(workflowInstanceId));
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
@@ -181,6 +249,9 @@ public class DeleteWorkflowInstanceMVCActionCommandTest {
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
@@ -208,5 +279,8 @@ public class DeleteWorkflowInstanceMVCActionCommandTest {
 
 	@Inject
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+
+	@Inject
+	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

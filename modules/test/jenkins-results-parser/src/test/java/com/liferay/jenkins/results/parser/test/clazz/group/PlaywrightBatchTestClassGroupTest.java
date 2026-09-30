@@ -51,21 +51,26 @@ public class PlaywrightBatchTestClassGroupTest
 			)
 		);
 
+		String reportJSON = reportJSONObject.toString();
+
+		_testLoadPlaywrightJSONObjects(1, false, reportJSONObject, reportJSON);
 		_testLoadPlaywrightJSONObjects(
-			1, false, reportJSONObject, 0, reportJSONObject);
+			2, false, reportJSONObject, "", reportJSON);
 		_testLoadPlaywrightJSONObjects(
-			2, false, reportJSONObject, 1, reportJSONObject);
+			2, false, reportJSONObject, RandomTestUtil.randomString(),
+			reportJSON);
 		_testLoadPlaywrightJSONObjects(
-			2, true, new JSONObject(), 2, reportJSONObject);
+			2, false, reportJSONObject, null, reportJSON);
+
+		_testLoadPlaywrightJSONObjects(2, true, new JSONObject(), null, null);
 	}
 
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private void _testLoadPlaywrightJSONObjects(
-			int expectedExecutionRequestCount, boolean expectedNotified,
-			JSONObject expectedPlaywrightJSONObject,
-			int failedExecutionRequestCount, JSONObject reportJSONObject)
+			int expectedExecutionRequestsCount, boolean expectedNotified,
+			JSONObject expectedPlaywrightJSONObject, String... reports)
 		throws Exception {
 
 		AtomicBoolean playwrightJSONObjectsLoaded =
@@ -86,21 +91,31 @@ public class PlaywrightBatchTestClassGroupTest
 			portalGitWorkingDirectory
 		).getWorkingDirectory();
 
-		PlaywrightBatchTestClassGroup playwrightBatchTestClassGroup =
-			Mockito.mock(PlaywrightBatchTestClassGroup.class);
+		List<PlaywrightBatchTestClassGroup> playwrightBatchTestClassGroups =
+			new ArrayList<>();
 
-		Mockito.doCallRealMethod(
-		).when(
-			playwrightBatchTestClassGroup
-		).getPlaywrightBaseDir();
+		for (int i = 0; i < 2; i++) {
+			PlaywrightBatchTestClassGroup playwrightBatchTestClassGroup =
+				Mockito.mock(PlaywrightBatchTestClassGroup.class);
 
-		ReflectionTestUtil.setFieldValue(
-			playwrightBatchTestClassGroup, "portalGitWorkingDirectory",
-			portalGitWorkingDirectory);
+			Mockito.doCallRealMethod(
+			).when(
+				playwrightBatchTestClassGroup
+			).getPlaywrightBaseDir();
+
+			ReflectionTestUtil.setFieldValue(
+				playwrightBatchTestClassGroup, "portalGitWorkingDirectory",
+				portalGitWorkingDirectory);
+
+			playwrightBatchTestClassGroups.add(playwrightBatchTestClassGroup);
+		}
+
+		PlaywrightBatchTestClassGroup firstPlaywrightBatchTestClassGroup =
+			playwrightBatchTestClassGroups.get(0);
 
 		JenkinsResultsParserUtil.write(
 			new File(
-				playwrightBatchTestClassGroup.getPlaywrightBaseDir(),
+				firstPlaywrightBatchTestClassGroup.getPlaywrightBaseDir(),
 				"build.gradle"),
 			"task runPlaywright");
 
@@ -127,14 +142,15 @@ public class PlaywrightBatchTestClassGroupTest
 
 					reportFiles.add(reportFile);
 
-					if (executionRequests.size() <=
-							failedExecutionRequestCount) {
+					String report = reports[executionRequests.size() - 1];
 
+					if (report == null) {
 						throw new TimeoutException();
 					}
 
-					JenkinsResultsParserUtil.write(
-						reportFile, reportJSONObject.toString());
+					if (!report.isEmpty()) {
+						JenkinsResultsParserUtil.write(reportFile, report);
+					}
 
 					return new Shell.ExecutionResult(0, "", "");
 				}));
@@ -161,12 +177,13 @@ public class PlaywrightBatchTestClassGroupTest
 				invocation -> null
 			);
 
-			ReflectionTestUtil.invoke(
-				playwrightBatchTestClassGroup, "_loadPlaywrightJSONObjects",
-				new Class<?>[0]);
-			ReflectionTestUtil.invoke(
-				playwrightBatchTestClassGroup, "_loadPlaywrightJSONObjects",
-				new Class<?>[0]);
+			for (PlaywrightBatchTestClassGroup playwrightBatchTestClassGroup :
+					playwrightBatchTestClassGroups) {
+
+				ReflectionTestUtil.invoke(
+					playwrightBatchTestClassGroup, "_loadPlaywrightJSONObjects",
+					new Class<?>[0]);
+			}
 
 			notificationUtilMockedStatic.verify(
 				() -> NotificationUtil.sendSlackNotification(
@@ -177,7 +194,7 @@ public class PlaywrightBatchTestClassGroupTest
 		}
 
 		Assert.assertEquals(
-			executionRequests.toString(), expectedExecutionRequestCount,
+			executionRequests.toString(), expectedExecutionRequestsCount,
 			executionRequests.size());
 
 		for (Shell.ExecutionRequest executionRequest : executionRequests) {

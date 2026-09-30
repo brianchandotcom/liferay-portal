@@ -11,11 +11,17 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
+import com.liferay.frontend.token.definition.util.FrontendTokenDefinitionUtil;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -87,6 +93,40 @@ public class StyleBookUtil {
 		}
 
 		return frontendTokenDefinitionProviders;
+	}
+
+	public static List<String> getFrontendTokensValuesKeys(
+		Locale locale, StyleBookEntry styleBookEntry) {
+
+		List<String> frontendTokensValuesKeys = new ArrayList<>();
+
+		for (String themeId :
+				new String[] {
+					styleBookEntry.getThemeId(),
+					StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID
+				}) {
+
+			FrontendTokenDefinition frontendTokenDefinition =
+				_getFrontendTokenDefinition(
+					styleBookEntry.getCompanyId(), themeId);
+
+			if (frontendTokenDefinition == null) {
+				continue;
+			}
+
+			frontendTokensValuesKeys.addAll(
+				_getFrontendTokensValuesKeys(
+					themeId, frontendTokenDefinition.getJSONObject(locale)));
+		}
+
+		frontendTokensValuesKeys.addAll(
+			_getFrontendTokensValuesKeys(
+				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+				FrontendTokenDefinitionUtil.
+					parseFrontendTokenDefinitionJSONObject(
+						styleBookEntry.getFrontendTokenDefinition())));
+
+		return frontendTokensValuesKeys;
 	}
 
 	public static StyleBookEntry getStyleFromThemeStyleBookEntry(
@@ -180,6 +220,18 @@ public class StyleBookUtil {
 
 		return frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 			companyId, themeId);
+	}
+
+	private static List<String> _getFrontendTokensValuesKeys(
+		String frontendTokenDefinitionId,
+		JSONObject frontendTokenDefinitionJSONObject) {
+
+		return TransformUtil.transform(
+			FrontendTokenDefinitionUtil.getFrontendTokenNames(
+				frontendTokenDefinitionJSONObject),
+			frontendTokenName -> StringBundler.concat(
+				frontendTokenDefinitionId, StringPool.COLON,
+				frontendTokenName));
 	}
 
 	private static String _getThemeName(

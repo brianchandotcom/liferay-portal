@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -149,6 +148,14 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 			oAuth2ProviderApplicationHeadlessServerConfiguration.homePageURL(),
 			oAuth2ProviderApplicationHeadlessServerConfiguration.baseURL());
 
+		List<String> featuresList = ListUtil.fromArray("token.introspection");
+
+		if (oAuth2ProviderApplicationHeadlessServerConfiguration.
+				forwardUpstreamToken()) {
+
+			featuresList.add("upstream.token.forwarding");
+		}
+
 		oAuth2Application =
 			oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
 				externalReferenceCode, user.getUserId(), user.getScreenName(),
@@ -158,7 +165,7 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				ClientProfile.HEADLESS_SERVER.id(), clientSecret,
 				oAuth2ProviderApplicationHeadlessServerConfiguration.
 					description(),
-				Arrays.asList("token.introspection"), homePageURL, 0, null,
+				featuresList, homePageURL, 0, null,
 				getName(
 					oAuth2ProviderApplicationHeadlessServerConfiguration.name(),
 					externalReferenceCode),

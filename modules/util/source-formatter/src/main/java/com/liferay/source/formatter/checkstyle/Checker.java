@@ -30,6 +30,7 @@ import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.FilterSet;
 import com.puppycrawl.tools.checkstyle.api.Violation;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.io.File;
@@ -139,6 +140,11 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 
 			if (checkModule instanceof AbstractCheck) {
 				AbstractCheck check = (AbstractCheck)checkModule;
+
+				// Checkstyle 10 leaves the tab width at 0 until TreeWalker
+				// passes its own down, and TreeWalker is bypassed here
+
+				check.setTabWidth(CommonUtil.DEFAULT_TAB_WIDTH);
 
 				check.configure(checkConfiguration);
 

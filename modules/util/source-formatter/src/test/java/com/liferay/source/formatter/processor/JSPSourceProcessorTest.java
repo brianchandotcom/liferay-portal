@@ -89,6 +89,15 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJSONUtilPutCalls() throws Exception {
+		test(
+			"JSONUtilPutCalls.testjsp",
+			"Combine calls \"JSONFactoryUtil.createJSONObject\" (9) and " +
+				"\"jsonObject.put\" (11) into single call \"JSONUtil.put\"",
+			9);
+	}
+
+	@Test
 	public void testLanguageUtilCall() throws Exception {
 		test(
 			"LanguageUtilCall.testjsp",

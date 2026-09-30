@@ -13,11 +13,11 @@ import com.liferay.petra.string.StringBundler;
 public class JavaInstanceofStatement extends BaseJavaExpression {
 
 	public JavaInstanceofStatement(
-		JavaType classJavaType, JavaVariableDefinition javaVariableDefinition,
+		JavaType classJavaType, JavaTerm patternJavaTerm,
 		JavaExpression valueJavaExpression) {
 
 		_classJavaType = classJavaType;
-		_javaVariableDefinition = javaVariableDefinition;
+		_patternJavaTerm = patternJavaTerm;
 		_valueJavaExpression = valueJavaExpression;
 	}
 
@@ -53,15 +53,14 @@ public class JavaInstanceofStatement extends BaseJavaExpression {
 			append(sb, _classJavaType, indent, "", suffix, maxLineLength);
 		}
 		else {
-			append(
-				sb, _javaVariableDefinition, indent, "", suffix, maxLineLength);
+			append(sb, _patternJavaTerm, indent, "", suffix, maxLineLength);
 		}
 
 		return sb.toString();
 	}
 
 	private final JavaType _classJavaType;
-	private final JavaVariableDefinition _javaVariableDefinition;
+	private final JavaTerm _patternJavaTerm;
 	private final JavaExpression _valueJavaExpression;
 
 }

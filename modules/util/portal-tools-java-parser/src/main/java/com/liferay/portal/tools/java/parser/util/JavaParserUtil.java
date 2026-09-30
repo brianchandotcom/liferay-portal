@@ -30,6 +30,7 @@ import com.liferay.portal.tools.java.parser.JavaEnumConstantDefinitions;
 import com.liferay.portal.tools.java.parser.JavaExpression;
 import com.liferay.portal.tools.java.parser.JavaFinallyStatement;
 import com.liferay.portal.tools.java.parser.JavaForStatement;
+import com.liferay.portal.tools.java.parser.JavaGuardedPattern;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
 import com.liferay.portal.tools.java.parser.JavaImport;
 import com.liferay.portal.tools.java.parser.JavaInstanceInitialization;
@@ -47,6 +48,7 @@ import com.liferay.portal.tools.java.parser.JavaOperatorExpression;
 import com.liferay.portal.tools.java.parser.JavaPackageDefinition;
 import com.liferay.portal.tools.java.parser.JavaParameter;
 import com.liferay.portal.tools.java.parser.JavaRecordComponent;
+import com.liferay.portal.tools.java.parser.JavaRecordPattern;
 import com.liferay.portal.tools.java.parser.JavaReturnStatement;
 import com.liferay.portal.tools.java.parser.JavaSignature;
 import com.liferay.portal.tools.java.parser.JavaSimpleValue;
@@ -727,6 +729,32 @@ public class JavaParserUtil {
 		return javaBreakStatement;
 	}
 
+	private static List<JavaTerm> _parseJavaCaseLabels(
+		DetailAST literalCaseDetailAST) {
+
+		List<JavaTerm> javaTerms = new ArrayList<>();
+
+		DetailAST childDetailAST = literalCaseDetailAST.getFirstChild();
+
+		while (childDetailAST != null) {
+			if (childDetailAST.getType() == TokenTypes.EXPR) {
+				javaTerms.add(_parseJavaExpression(childDetailAST));
+			}
+			else if (childDetailAST.getType() == TokenTypes.LITERAL_DEFAULT) {
+				javaTerms.add(new JavaSimpleValue("default"));
+			}
+			else if ((childDetailAST.getType() != TokenTypes.COLON) &&
+					 (childDetailAST.getType() != TokenTypes.COMMA)) {
+
+				javaTerms.add(_parseJavaPattern(childDetailAST));
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
+		}
+
+		return javaTerms;
+	}
+
 	private static JavaCatchStatement _parseJavaCatchStatement(
 		DetailAST literalCatchDetailAST) {
 
@@ -1271,8 +1299,11 @@ public class JavaParserUtil {
 	private static JavaInstanceofStatement _parseJavaInstanceofStatement(
 		DetailAST literalInstanceofDetailAST) {
 
+		DetailAST javaExpressionDetailAST =
+			literalInstanceofDetailAST.getFirstChild();
+
 		JavaExpression javaExpression = _parseJavaExpression(
-			literalInstanceofDetailAST.getFirstChild());
+			javaExpressionDetailAST);
 
 		DetailAST typeDetailAST = literalInstanceofDetailAST.findFirstToken(
 			TokenTypes.TYPE);
@@ -1282,12 +1313,10 @@ public class JavaParserUtil {
 				_parseJavaType(typeDetailAST), null, javaExpression);
 		}
 
+		DetailAST patternDetailAST = javaExpressionDetailAST.getNextSibling();
+
 		return new JavaInstanceofStatement(
-			null,
-			_parseJavaVariableDefinition(
-				literalInstanceofDetailAST.findFirstToken(
-					TokenTypes.PATTERN_VARIABLE_DEF)),
-			javaExpression);
+			null, _parseJavaPattern(patternDetailAST), javaExpression);
 	}
 
 	private static JavaLoopStatement _parseJavaLabeledStatement(
@@ -1574,6 +1603,75 @@ public class JavaParserUtil {
 		return javaParameters;
 	}
 
+	private static JavaTerm _parseJavaPattern(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.PATTERN_DEF) {
+			DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() != TokenTypes.LITERAL_WHEN) {
+				return _parseJavaPattern(firstChildDetailAST);
+			}
+
+			DetailAST patternDetailAST = firstChildDetailAST.getFirstChild();
+
+			return new JavaGuardedPattern(
+				_parseJavaPattern(patternDetailAST),
+				_parseJavaExpression(patternDetailAST.getNextSibling()));
+		}
+
+		if (detailAST.getType() == TokenTypes.RECORD_PATTERN_DEF) {
+			return _parseJavaRecordPattern(detailAST);
+		}
+
+		return _parseJavaPatternVariableDefinition(detailAST);
+	}
+
+	private static JavaVariableDefinition _parseJavaPatternVariableDefinition(
+		DetailAST patternVariableDefDetailAST) {
+
+		DetailAST modifiersDetailAST =
+			patternVariableDefDetailAST.findFirstToken(TokenTypes.MODIFIERS);
+
+		JavaVariableDefinition javaVariableDefinition =
+			new JavaVariableDefinition(
+				_parseJavaAnnotations(modifiersDetailAST),
+				_parseModifiers(modifiersDetailAST));
+
+		javaVariableDefinition.setJavaType(
+			_parseJavaType(
+				patternVariableDefDetailAST.findFirstToken(TokenTypes.TYPE)));
+
+		javaVariableDefinition.addVariable(
+			_getName(patternVariableDefDetailAST));
+
+		return javaVariableDefinition;
+	}
+
+	private static JavaRecordPattern _parseJavaRecordPattern(
+		DetailAST recordPatternDefDetailAST) {
+
+		List<JavaTerm> componentJavaTerms = new ArrayList<>();
+
+		DetailAST recordPatternComponentsDetailAST =
+			recordPatternDefDetailAST.findFirstToken(
+				TokenTypes.RECORD_PATTERN_COMPONENTS);
+
+		DetailAST childDetailAST =
+			recordPatternComponentsDetailAST.getFirstChild();
+
+		while (childDetailAST != null) {
+			if (childDetailAST.getType() != TokenTypes.COMMA) {
+				componentJavaTerms.add(_parseJavaPattern(childDetailAST));
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
+		}
+
+		return new JavaRecordPattern(
+			_parseJavaType(
+				recordPatternDefDetailAST.findFirstToken(TokenTypes.TYPE)),
+			componentJavaTerms);
+	}
+
 	private static JavaReturnStatement _parseJavaReturnStatement(
 		DetailAST literalReturnDetailAST) {
 
@@ -1631,8 +1729,8 @@ public class JavaParserUtil {
 			caseGroupDetailAST, false, TokenTypes.LITERAL_CASE);
 
 		for (DetailAST literalCaseDetailAST : literalCaseDetailASTs) {
-			javaSwitchCaseStatement.addSwitchCaseJavaExpression(
-				_parseJavaExpression(literalCaseDetailAST.getFirstChild()));
+			javaSwitchCaseStatement.addSwitchCaseJavaTerms(
+				_parseJavaCaseLabels(literalCaseDetailAST));
 		}
 
 		return javaSwitchCaseStatement;
@@ -1659,13 +1757,10 @@ public class JavaParserUtil {
 			javaSwitchRuleStatement.setDefault(true);
 		}
 		else {
-			List<DetailAST> exprCaseDetailASTs =
-				DetailASTUtil.getAllChildTokens(
-					firstChildDetailAST, false, TokenTypes.EXPR);
+			for (JavaTerm javaTerm :
+					_parseJavaCaseLabels(firstChildDetailAST)) {
 
-			for (DetailAST exprCaseDetailAST : exprCaseDetailASTs) {
-				javaSwitchRuleStatement.addSwitchRuleJavaExpression(
-					_parseJavaExpression(exprCaseDetailAST));
+				javaSwitchRuleStatement.addSwitchRuleJavaTerm(javaTerm);
 			}
 		}
 

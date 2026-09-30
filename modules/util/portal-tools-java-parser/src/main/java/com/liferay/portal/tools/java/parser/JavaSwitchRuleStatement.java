@@ -6,6 +6,7 @@
 package com.liferay.portal.tools.java.parser;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,8 @@ import java.util.List;
  */
 public class JavaSwitchRuleStatement extends BaseJavaTerm {
 
-	public void addSwitchRuleJavaExpression(
-		JavaExpression switchRuleJavaExpression) {
-
-		_switchRuleJavaExpressions.add(switchRuleJavaExpression);
+	public void addSwitchRuleJavaTerm(JavaTerm switchRuleJavaTerm) {
+		_switchRuleJavaTerms.add(switchRuleJavaTerm);
 	}
 
 	public void setDefault(boolean isDefault) {
@@ -45,15 +44,17 @@ public class JavaSwitchRuleStatement extends BaseJavaTerm {
 			suffix = "";
 		}
 
+		suffix = " -> " + StringUtil.trimLeading(suffix);
+
 		if (_isDefault) {
 			appendNewLine(
-				sb, _switchRuleJavaExpressions, indent, prefix + "default",
-				" -> " + suffix, maxLineLength);
+				sb, _switchRuleJavaTerms, indent, prefix + "default", suffix,
+				maxLineLength);
 		}
 		else {
 			appendNewLine(
-				sb, _switchRuleJavaExpressions, indent, prefix + "case ",
-				" -> " + suffix, maxLineLength);
+				sb, _switchRuleJavaTerms, indent, prefix + "case ", suffix,
+				maxLineLength);
 		}
 
 		if (_lambdaActionJavaExpression != null) {
@@ -71,7 +72,6 @@ public class JavaSwitchRuleStatement extends BaseJavaTerm {
 	private boolean _isDefault;
 	private JavaExpression _lambdaActionJavaExpression;
 	private JavaTerm _lambdaActionJavaTerm;
-	private final List<JavaExpression> _switchRuleJavaExpressions =
-		new ArrayList<>();
+	private final List<JavaTerm> _switchRuleJavaTerms = new ArrayList<>();
 
 }

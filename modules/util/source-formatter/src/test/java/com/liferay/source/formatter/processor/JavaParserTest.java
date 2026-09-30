@@ -37,4 +37,25 @@ public class JavaParserTest extends BaseSourceProcessorTestCase {
 		test("JavaPatternMatchingForInstanceof.testjava");
 	}
 
+	@Test
+	public void testJavaPatternMatchingForSwitch() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"JavaPatternMatchingForSwitch.testjava"
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 14
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 24
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 33
+			));
+	}
+
+	@Test
+	public void testJavaRecordPatterns() throws Exception {
+		test(
+			"JavaRecordPatterns.testjava",
+			"Use \"if/else\" statement instead of \"switch\"", 17);
+	}
+
 }

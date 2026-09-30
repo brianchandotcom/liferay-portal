@@ -20,10 +20,8 @@ public class JavaSwitchCaseStatement extends BaseJavaTerm {
 		_hasDefault = true;
 	}
 
-	public void addSwitchCaseJavaExpression(
-		JavaExpression switchCaseJavaExpression) {
-
-		_switchCaseJavaExpressions.add(switchCaseJavaExpression);
+	public void addSwitchCaseJavaTerms(List<JavaTerm> switchCaseJavaTerms) {
+		_switchCaseJavaTermsList.add(switchCaseJavaTerms);
 	}
 
 	@Override
@@ -32,12 +30,17 @@ public class JavaSwitchCaseStatement extends BaseJavaTerm {
 
 		StringBundler sb = new StringBundler();
 
-		for (JavaExpression switchCaseJavaExpression :
-				_switchCaseJavaExpressions) {
-
-			appendNewLine(
-				sb, switchCaseJavaExpression, indent, prefix + "case ", suffix,
-				maxLineLength);
+		for (List<JavaTerm> switchCaseJavaTerms : _switchCaseJavaTermsList) {
+			if (switchCaseJavaTerms.size() == 1) {
+				appendNewLine(
+					sb, switchCaseJavaTerms.get(0), indent, prefix + "case ",
+					suffix, maxLineLength);
+			}
+			else {
+				appendNewLine(
+					sb, switchCaseJavaTerms, indent, prefix + "case ", suffix,
+					maxLineLength);
+			}
 
 			prefix = StringPool.BLANK;
 		}
@@ -57,7 +60,7 @@ public class JavaSwitchCaseStatement extends BaseJavaTerm {
 	}
 
 	private boolean _hasDefault;
-	private final List<JavaExpression> _switchCaseJavaExpressions =
+	private final List<List<JavaTerm>> _switchCaseJavaTermsList =
 		new ArrayList<>();
 
 }

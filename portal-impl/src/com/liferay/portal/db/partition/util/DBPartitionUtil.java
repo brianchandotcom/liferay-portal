@@ -273,10 +273,10 @@ public class DBPartitionUtil {
 
 		List<String> pids = new ArrayList<>();
 
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
+		try (Connection connection = ConnectionUtil.getConnection(
+				InfrastructureUtil.getDataSource());
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select configurationId from ", getPartitionName(companyId),
 					".Configuration_ where dictionary like ",

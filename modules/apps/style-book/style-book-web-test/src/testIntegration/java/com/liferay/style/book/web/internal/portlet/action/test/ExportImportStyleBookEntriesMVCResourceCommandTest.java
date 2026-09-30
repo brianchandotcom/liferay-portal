@@ -6,8 +6,14 @@
 package com.liferay.style.book.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.frontend.token.definition.FrontendToken;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -36,6 +42,7 @@ import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -43,10 +50,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upload.test.util.UploadTestUtil;
+import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
@@ -57,6 +66,9 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.nio.charset.StandardCharsets;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -353,6 +365,37 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 				updatedTargetGroupStyleBookEntry.getFrontendTokenDefinition()));
 	}
 
+	@FeatureFlag("LPD-84497")
+	@Test
+	public void testExportImportSingleStyleBookEntryWithFrontendTokensValues()
+		throws Exception {
+
+		String clayFrontendTokenName = _getFrontendTokenName(
+			StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID);
+		String themeFrontendTokenName = _getFrontendTokenName(
+			_THEME_ID_CLASSIC);
+
+		_testExportImportSingleStyleBookEntryWithFrontendTokensValues(
+			StringBundler.concat(
+				StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID,
+				StringPool.COLON, clayFrontendTokenName),
+			StringBundler.concat(
+				StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID,
+				StringPool.COLON, clayFrontendTokenName),
+			true);
+		_testExportImportSingleStyleBookEntryWithFrontendTokensValues(
+			StringBundler.concat(
+				_THEME_ID_CLASSIC, StringPool.COLON, themeFrontendTokenName),
+			StringBundler.concat(
+				_THEME_ID_CLASSIC, StringPool.COLON, themeFrontendTokenName),
+			true);
+		_testExportImportSingleStyleBookEntryWithFrontendTokensValues(
+			StringBundler.concat(
+				_THEME_ID_CLASSIC, StringPool.COLON,
+				RandomTestUtil.randomString()),
+			null, false);
+	}
+
 	@Test
 	public void testExportImportSingleStyleBookEntryWithScopedFrontendTokenIsValid()
 		throws Exception {
@@ -369,7 +412,9 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
 				false, StringPool.BLANK,
 				JSONUtil.put(
-					frontendTokenName,
+					StringBundler.concat(
+						StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+						StringPool.COLON, frontendTokenName),
 					JSONUtil.put("value", RandomTestUtil.randomString())
 				).toString(),
 				RandomTestUtil.randomString(), styleBookEntryKey,
@@ -545,6 +590,19 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			null);
 	}
 
+	private String _getFrontendTokenName(String themeId) {
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				_targetGroup.getCompanyId(), themeId);
+
+		List<FrontendToken> frontendTokens = ListUtil.fromCollection(
+			frontendTokenDefinition.getFrontendTokens());
+
+		FrontendToken frontendToken = frontendTokens.get(0);
+
+		return frontendToken.getName();
+	}
+
 	private MockHttpServletRequest _getMultipartMockHttpServletRequest() {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -573,6 +631,7 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 
 		themeDisplay.setLayout(layout);
 
+		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setScopeGroupId(_targetGroup.getGroupId());
 		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -644,6 +703,79 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
+	private void _testExportImportSingleStyleBookEntryWithFrontendTokensValues(
+			String expectedFrontendTokenName, String frontendTokenName,
+			boolean valid)
+		throws Exception {
+
+		String styleBookEntryKey = RandomTestUtil.randomString();
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), _sourceGroup.getGroupId(),
+				false, StringPool.BLANK, StringPool.BLANK,
+				RandomTestUtil.randomString(), styleBookEntryKey,
+				_THEME_ID_CLASSIC,
+				ServiceContextTestUtil.getServiceContext(
+					_sourceGroup, TestPropsValues.getUserId()));
+
+		if (frontendTokenName == null) {
+			frontendTokenName = expectedFrontendTokenName;
+		}
+
+		String value = RandomTestUtil.randomString();
+
+		try (Connection connection = DataAccess.getConnection();
+
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"update StyleBookEntry set frontendTokensValues = ? where " +
+					"styleBookEntryId = ?")) {
+
+			preparedStatement.setString(
+				1,
+				JSONUtil.put(
+					frontendTokenName, JSONUtil.put("value", value)
+				).toString());
+			preparedStatement.setLong(2, styleBookEntry.getStyleBookEntryId());
+
+			preparedStatement.executeUpdate();
+		}
+
+		EntityCacheUtil.clearCache();
+
+		File file = _exportStyleBookEntry(styleBookEntry.getStyleBookEntryId());
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter("overwrite", "false");
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		_importStyleBookEntry(file, mockLiferayPortletActionRequest);
+
+		Assert.assertEquals(
+			!valid,
+			SessionMessages.contains(
+				mockLiferayPortletActionRequest,
+				"styleBookFrontendTokensValuesNotValidated"));
+
+		StyleBookEntry targetGroupStyleBookEntry =
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				_targetGroup.getGroupId(), styleBookEntryKey);
+
+		JSONObject frontendTokensValuesJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				targetGroupStyleBookEntry.getFrontendTokensValues());
+
+		JSONObject frontendTokenValueJSONObject =
+			frontendTokensValuesJSONObject.getJSONObject(
+				expectedFrontendTokenName);
+
+		Assert.assertEquals(
+			value, frontendTokenValueJSONObject.getString("value"));
+	}
+
 	private void _validateZipEntry(
 			StyleBookEntry styleBookEntry, ZipEntry zipEntry, ZipFile zipFile)
 		throws Exception {
@@ -699,11 +831,16 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 		}
 	}
 
+	private static final String _THEME_ID_CLASSIC = "classic_WAR_classictheme";
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(filter = "mvc.command.name=/style_book/export_style_book_entries")
 	private MVCResourceCommand _exportStyleBookEntriesMVCResourceCommand;
+
+	@Inject
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Inject(filter = "mvc.command.name=/style_book/import_style_book_entries")
 	private MVCActionCommand _importStyleBookEntriesMVCActionCommand;

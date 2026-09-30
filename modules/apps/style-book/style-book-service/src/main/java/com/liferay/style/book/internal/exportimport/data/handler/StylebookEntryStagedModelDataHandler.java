@@ -14,9 +14,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.frontend.token.definition.FrontendTokenDefinition;
-import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.frontend.token.definition.util.FrontendTokenDefinitionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -35,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.util.StyleBookUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -213,28 +211,6 @@ public class StylebookEntryStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	private List<String> _getFrontendTokenNames(
-		PortletDataContext portletDataContext, StyleBookEntry styleBookEntry) {
-
-		FrontendTokenDefinition themeFrontendTokenDefinition =
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				portletDataContext.getCompanyId(), styleBookEntry.getThemeId());
-
-		JSONObject overrideFrontendTokenDefinitionJSONObject =
-			FrontendTokenDefinitionUtil.parseFrontendTokenDefinitionJSONObject(
-				styleBookEntry.getFrontendTokenDefinition());
-
-		if (themeFrontendTokenDefinition == null) {
-			return FrontendTokenDefinitionUtil.getFrontendTokenNames(
-				overrideFrontendTokenDefinitionJSONObject);
-		}
-
-		return FrontendTokenDefinitionUtil.getFrontendTokenNames(
-			FrontendTokenDefinitionUtil.mergeFrontendTokenDefinitionJSONObject(
-				themeFrontendTokenDefinition.getJSONObject(LocaleUtil.US),
-				overrideFrontendTokenDefinitionJSONObject));
-	}
-
 	private boolean _hasMissingTokens(
 			List<String> frontendTokenNames, String frontendTokensValues)
 		throws Exception {
@@ -290,8 +266,8 @@ public class StylebookEntryStagedModelDataHandler
 			warningMessages.add(themeWarningMessage);
 		}
 		else if (_hasMissingTokens(
-					_getFrontendTokenNames(
-						portletDataContext, importedStyleBookEntry),
+					StyleBookUtil.getFrontendTokensValuesKeys(
+						LocaleUtil.US, importedStyleBookEntry),
 					importedStyleBookEntry.getFrontendTokensValues())) {
 
 			warningMessages.add(
@@ -323,9 +299,6 @@ public class StylebookEntryStagedModelDataHandler
 	@Reference
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
-
-	@Reference
-	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

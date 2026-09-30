@@ -8,23 +8,36 @@ package com.liferay.commerce.product.type.virtual.order.service.impl;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceOrderItemTable;
+import com.liferay.commerce.model.CommerceOrderTable;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceTable;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingTable;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntry;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemFileEntryTable;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItemTable;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemFileEntryLocalService;
 import com.liferay.commerce.product.type.virtual.order.service.base.CommerceVirtualOrderItemLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
+import com.liferay.commerce.product.type.virtual.service.persistence.CPDVirtualSettingFileEntryPersistence;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -227,6 +240,49 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceVirtualOrderItem>
+			getCommerceVirtualOrderItemsWithoutCPDVirtualSettingFileEntry(
+				long cpdVirtualSettingFileEntryId)
+		throws PortalException {
+
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+			_cpdVirtualSettingFileEntryPersistence.findByPrimaryKey(
+				cpdVirtualSettingFileEntryId);
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				CommerceVirtualOrderItemTable.INSTANCE
+			).from(
+				CommerceVirtualOrderItemTable.INSTANCE
+			).innerJoinON(
+				CommerceOrderItemTable.INSTANCE,
+				CommerceOrderItemTable.INSTANCE.commerceOrderItemId.eq(
+					CommerceVirtualOrderItemTable.INSTANCE.commerceOrderItemId)
+			).innerJoinON(
+				CommerceOrderTable.INSTANCE,
+				CommerceOrderTable.INSTANCE.commerceOrderId.eq(
+					CommerceOrderItemTable.INSTANCE.commerceOrderId)
+			).innerJoinON(
+				CPInstanceTable.INSTANCE,
+				CPInstanceTable.INSTANCE.CPInstanceId.eq(
+					CommerceOrderItemTable.INSTANCE.CPInstanceId)
+			).where(
+				CommerceOrderTable.INSTANCE.orderStatus.neq(
+					CommerceOrderConstants.ORDER_STATUS_CANCELLED
+				).and(
+					_getCPDefinitionVirtualSettingPredicate(
+						cpdVirtualSettingFileEntry.
+							getCPDefinitionVirtualSetting())
+				).and(
+					CommerceVirtualOrderItemTable.INSTANCE.
+						commerceVirtualOrderItemId.notIn(
+							_getCommerceVirtualOrderItemIdsDSLQuery(
+								cpdVirtualSettingFileEntry))
+				)
+			));
+	}
+
+	@Override
 	public File getFile(
 			long commerceVirtualOrderItemId,
 			long commerceVirtualOrderItemFileEntryId)
@@ -379,6 +435,42 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		return calendar.getTime();
 	}
 
+	private Predicate _getCPDefinitionVirtualSettingPredicate(
+			CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
+		throws PortalException {
+
+		if (Objects.equals(
+				cpDefinitionVirtualSetting.getClassName(),
+				CPDefinition.class.getName())) {
+
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(
+					cpDefinitionVirtualSetting.getClassPK());
+
+			return CommerceOrderItemTable.INSTANCE.CProductId.eq(
+				cpDefinition.getCProductId()
+			).and(
+				CommerceOrderItemTable.INSTANCE.CPInstanceId.notIn(
+					_getOverrideCPInstanceIdsDSLQuery())
+			);
+		}
+
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			cpDefinitionVirtualSetting.getClassPK());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		return CommerceOrderItemTable.INSTANCE.CProductId.eq(
+			cpDefinition.getCProductId()
+		).and(
+			CPInstanceTable.INSTANCE.CPInstanceUuid.eq(
+				cpInstance.getCPInstanceUuid())
+		).and(
+			CommerceOrderItemTable.INSTANCE.CPInstanceId.in(
+				_getOverrideCPInstanceIdsDSLQuery())
+		);
+	}
+
 	private CommerceSubscriptionEntry _getCommerceSubscriptionEntry(
 		long commerceOrderItemId) {
 
@@ -393,6 +485,45 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		return _commerceSubscriptionEntryLocalService.
 			fetchCommerceSubscriptionEntryByCommerceOrderItemId(
 				commerceOrderItemId);
+	}
+
+	private DSLQuery _getCommerceVirtualOrderItemIdsDSLQuery(
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry) {
+
+		Predicate predicate = null;
+
+		if (cpdVirtualSettingFileEntry.getFileEntryId() > 0) {
+			predicate =
+				CommerceVirtualOrderItemFileEntryTable.INSTANCE.fileEntryId.eq(
+					cpdVirtualSettingFileEntry.getFileEntryId());
+		}
+		else {
+			predicate = CommerceVirtualOrderItemFileEntryTable.INSTANCE.url.eq(
+				cpdVirtualSettingFileEntry.getUrl());
+		}
+
+		return DSLQueryFactoryUtil.select(
+			CommerceVirtualOrderItemFileEntryTable.INSTANCE.
+				commerceVirtualOrderItemId
+		).from(
+			CommerceVirtualOrderItemFileEntryTable.INSTANCE
+		).where(
+			predicate
+		);
+	}
+
+	private DSLQuery _getOverrideCPInstanceIdsDSLQuery() {
+		return DSLQueryFactoryUtil.select(
+			CPDefinitionVirtualSettingTable.INSTANCE.classPK
+		).from(
+			CPDefinitionVirtualSettingTable.INSTANCE
+		).where(
+			CPDefinitionVirtualSettingTable.INSTANCE.classNameId.eq(
+				_classNameLocalService.getClassNameId(CPInstance.class)
+			).and(
+				CPDefinitionVirtualSettingTable.INSTANCE.override.eq(true)
+			)
+		);
 	}
 
 	private CommerceVirtualOrderItem _setDurationDates(
@@ -425,6 +556,9 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference
@@ -436,8 +570,18 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 		_commerceVirtualOrderItemFileEntryLocalService;
 
 	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
 	private CPDefinitionVirtualSettingLocalService
 		_cpDefinitionVirtualSettingLocalService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPDVirtualSettingFileEntryPersistence
+		_cpdVirtualSettingFileEntryPersistence;
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;

@@ -399,9 +399,6 @@ public class ConfigurationFactoryTest {
 		configurationFactory.userLocalService = _userLocalService;
 
 		ReflectionTestUtil.setFieldValue(
-			configurationFactory, "_scopeLocator", _scopeLocator);
-
-		ReflectionTestUtil.setFieldValue(
 			configurationFactory, "_portalK8sConfigMapModifierSnapshot",
 			_snapshot);
 

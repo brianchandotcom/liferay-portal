@@ -82,6 +82,7 @@ public class FinderCacheImpl
 		_clearCache(className);
 		_clearCache(_getCacheNameWithPagination(className));
 		_clearCache(_getCacheNameWithoutPagination(className));
+		_clearCache(_getCountCacheName(className));
 
 		_clearDSLQueryCache(className);
 	}
@@ -301,6 +302,8 @@ public class FinderCacheImpl
 					finderPath, baseModel, true, true),
 				false);
 		}
+
+		_clearCache(_getCountCacheName(className));
 	}
 
 	@Override
@@ -327,6 +330,7 @@ public class FinderCacheImpl
 		removeCache(cacheName);
 		removeCache(_getCacheNameWithPagination(cacheName));
 		removeCache(_getCacheNameWithoutPagination(cacheName));
+		removeCache(_getCountCacheName(cacheName));
 
 		String tableName = null;
 
@@ -383,6 +387,7 @@ public class FinderCacheImpl
 
 		finderPaths.addAll(
 			_getFinderPaths(_getCacheNameWithoutPagination(className)));
+		finderPaths.addAll(_getFinderPaths(_getCountCacheName(className)));
 		finderPaths.addAll(_getFinderPaths(className));
 
 		ArgumentsResolver argumentsResolver =
@@ -623,6 +628,10 @@ public class FinderCacheImpl
 		return cacheName.concat(".List2");
 	}
 
+	private String _getCountCacheName(String className) {
+		return className.concat(".Count");
+	}
+
 	private Collection<FinderPath> _getFinderPaths(String cacheName) {
 		Map<String, FinderPath> finderPaths = _finderPathsMap.get(cacheName);
 
@@ -647,7 +656,9 @@ public class FinderCacheImpl
 
 		String modelImplClassName = className;
 
-		if (className.endsWith(".List1") || className.endsWith(".List2")) {
+		if (className.endsWith(".Count") || className.endsWith(".List1") ||
+			className.endsWith(".List2")) {
+
 			modelImplClassName = className.substring(0, className.length() - 6);
 		}
 

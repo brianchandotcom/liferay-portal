@@ -120,7 +120,8 @@ public class CacheReplicatorEntryTest implements Serializable {
 			String[][] events = {
 				{cacheNames[0], "removeAll"}, {cacheNames[1], "remove"},
 				{cacheNames[2], "remove", "remove"},
-				{cacheNames[3], "removeAll"}, {cacheNames[4], "removeAll"}
+				{cacheNames[3], "removeAll"}, {cacheNames[4], "removeAll"},
+				{cacheNames[5], "removeAll"}
 			};
 
 			_tomcatNode1.syncExecute(
@@ -155,7 +156,8 @@ public class CacheReplicatorEntryTest implements Serializable {
 						"Node 1 replicator events mismatch",
 						new String[][] {
 							{cacheNames[0]}, {cacheNames[1], "remove"},
-							{cacheNames[2]}, {cacheNames[3]}, {cacheNames[4]}
+							{cacheNames[2]}, {cacheNames[3]}, {cacheNames[4]},
+							{cacheNames[5]}
 						},
 						TestPortalCacheReplicator.getEvents());
 
@@ -176,7 +178,7 @@ public class CacheReplicatorEntryTest implements Serializable {
 						"Node 2 replicator events mismatch",
 						new String[][] {
 							{cacheNames[0]}, {cacheNames[1]}, {cacheNames[2]},
-							{cacheNames[3]}, {cacheNames[4]}
+							{cacheNames[3]}, {cacheNames[4]}, {cacheNames[5]}
 						},
 						TestPortalCacheReplicator.getEvents());
 
@@ -380,7 +382,13 @@ public class CacheReplicatorEntryTest implements Serializable {
 			_LIST2_CACHE_NAME);
 
 		Assert.assertEquals(
-			list2FinderPaths.toString(), 2, list2FinderPaths.size());
+			list2FinderPaths.toString(), 1, list2FinderPaths.size());
+
+		Map<String, FinderPath> countFinderPaths = finderPathsMap.get(
+			_ENTITY_CLASS_NAME + ".Count");
+
+		Assert.assertEquals(
+			countFinderPaths.toString(), 1, countFinderPaths.size());
 	}
 
 	private List<PortalCache<Serializable, Serializable>>
@@ -401,6 +409,9 @@ public class CacheReplicatorEntryTest implements Serializable {
 				allowNotExisted),
 			_getPortalCache(
 				FinderCacheUtil.getFinderCache(), _LIST2_CACHE_NAME,
+				allowNotExisted),
+			_getPortalCache(
+				FinderCacheUtil.getFinderCache(), _ENTITY_CLASS_NAME + ".Count",
 				allowNotExisted));
 	}
 

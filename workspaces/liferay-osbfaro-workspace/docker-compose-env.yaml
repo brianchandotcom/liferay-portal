@@ -1,0 +1,5 @@
+services:
+    liferay:
+        environment:
+            LIFERAY_OAUTH2_ISSUE_JWT_ACCESS_TOKEN:
+            LIFERAY_OAUTH2_JWT_ACCESS_TOKEN_SIGNING_JSON_WEB_KEY:

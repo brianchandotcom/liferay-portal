@@ -49,6 +49,40 @@ All Docker build and runtime behaviour is controlled by a single variable:
 ./gradlew deploy
 ```
 
+### Enabling JWT Access Tokens
+
+The AI Hub cell reads the expiration of the OAuth2 access tokens the authorization server issues to it from the token itself, so the connection to AI Hub requires JWT access tokens. The `OAuth2AuthorizationServerConfiguration.config` files read two environment variables, and the authorization server keeps issuing opaque tokens until both are set:
+
+| Variable | Value |
+|---|---|
+| `LIFERAY_OAUTH2_ISSUE_JWT_ACCESS_TOKEN` | `true` |
+| `LIFERAY_OAUTH2_JWT_ACCESS_TOKEN_SIGNING_JSON_WEB_KEY` | An RSA private key in JSON Web Key format with `"alg": "RS256"` |
+
+Tokens generated for the report and export APIs under Settings > APIs, and connector tokens, keep their opaque format either way.
+
+The procedure for generating a signing key is in the team's internal documentation.
+
+Locally, add both variables to the `.env` file at the workspace root, which `docker-compose-env.yaml` passes to the Liferay container, and recreate the container so it reads them. The `.env` file is not ignored by Git, so never commit it:
+
+```bash
+./scripts/bootstrap/start.sh
+```
+
+Docker Compose does not load `docker-compose-env.yaml` on its own; the workspace scripts add it. When running Compose directly instead of through `start.sh` or `bootstrap.sh`, pass both files, or the variables never reach the container:
+
+```bash
+docker compose --file docker-compose.yaml --file docker-compose-env.yaml up --detach
+```
+
+In Liferay Cloud, generate a key once for each environment, store it as a secret, and reference it from the service's `LCP.json` next to the flag:
+
+```json
+"env": {
+	"LIFERAY_OAUTH2_ISSUE_JWT_ACCESS_TOKEN": "true",
+	"LIFERAY_OAUTH2_JWT_ACCESS_TOKEN_SIGNING_JSON_WEB_KEY": "@oauth2-jwt-signing-key"
+}
+```
+
 ### Running Frontend Development Server
 
 1. Run `./gradlew packageRunStart`.

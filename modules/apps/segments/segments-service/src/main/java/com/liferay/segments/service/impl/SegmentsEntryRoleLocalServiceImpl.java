@@ -7,6 +7,7 @@ package com.liferay.segments.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -17,7 +18,10 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.service.base.SegmentsEntryRoleLocalServiceBaseImpl;
@@ -169,6 +173,8 @@ public class SegmentsEntryRoleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		_checkSiteRoleIds(segmentsEntryId, siteRoleIds);
+
 		Set<Long> newSiteRoleIdsSet = SetUtil.fromArray(siteRoleIds);
 
 		Set<Long> oldSiteRoleIdsSet = _getSiteRoleIdsSet(segmentsEntryId);
@@ -184,6 +190,27 @@ public class SegmentsEntryRoleLocalServiceImpl
 		_addSiteRoles(segmentsEntryId, newSiteRoleIdsSet, serviceContext);
 	}
 
+	private void _checkSiteRoleIds(long segmentsEntryId, long[] siteRoleIds)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryPersistence.findByPrimaryKey(segmentsEntryId);
+
+		String[] excludedRoleNames = _getExcludedRoleNames();
+
+		for (long siteRoleId : siteRoleIds) {
+			Role role = _roleLocalService.getRole(siteRoleId);
+
+			if ((role.getCompanyId() != segmentsEntry.getCompanyId()) ||
+				(role.getType() != RoleConstants.TYPE_SITE) ||
+				ArrayUtil.contains(excludedRoleNames, role.getName())) {
+
+				throw new RoleAssignmentException(
+					"Role " + siteRoleId + " is not assignable to segments");
+			}
+		}
+	}
+
 	private void _addSiteRoles(
 			long segmentsEntryId, Set<Long> siteRoleIdsSet,
 			ServiceContext serviceContext)
@@ -193,6 +220,18 @@ public class SegmentsEntryRoleLocalServiceImpl
 			segmentsEntryRoleLocalService.addSegmentsEntryRole(
 				segmentsEntryId, siteRoleId, serviceContext);
 		}
+	}
+
+	private String[] _getExcludedRoleNames() {
+		RoleTypeContributor roleTypeContributor =
+			_roleTypeContributorProvider.getRoleTypeContributor(
+				RoleConstants.TYPE_SITE);
+
+		if (roleTypeContributor != null) {
+			return roleTypeContributor.getExcludedRoleNames();
+		}
+
+		return new String[0];
 	}
 
 	private Set<Long> _getSiteRoleIdsSet(long segmentsEntryId) {
@@ -239,6 +278,9 @@ public class SegmentsEntryRoleLocalServiceImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 	@Reference
 	private SegmentsEntryPersistence _segmentsEntryPersistence;

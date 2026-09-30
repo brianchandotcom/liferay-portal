@@ -5,14 +5,8 @@
 
 import {getFrontendTokens} from './getFrontendTokens';
 
-export function getFrontendTokensFactory({
-	frontendTokenDefinitions,
-	themeFrontendTokenDefinitionId,
-}) {
-	const frontendTokens = getFrontendTokens(
-		frontendTokenDefinitions,
-		themeFrontendTokenDefinitionId
-	);
+export function getFrontendTokensFactory({frontendTokenDefinitions}) {
+	const frontendTokens = getFrontendTokens(frontendTokenDefinitions);
 
 	return (customFrontendTokenDefinition) => ({
 		...frontendTokens,

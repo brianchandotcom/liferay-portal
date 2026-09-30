@@ -28,7 +28,6 @@ describe('getFrontendTokensFactory', () => {
 			frontendTokenDefinitions: [
 				getFrontendTokenDefinition('theme', 'themeToken'),
 			],
-			themeFrontendTokenDefinitionId: 'theme',
 		});
 
 		expect(
@@ -37,6 +36,6 @@ describe('getFrontendTokensFactory', () => {
 					getFrontendTokenDefinition('custom', 'customToken')
 				)
 			)
-		).toEqual(['theme:themeToken', 'themeToken', 'custom:customToken']);
+		).toEqual(['theme:themeToken', 'custom:customToken']);
 	});
 });

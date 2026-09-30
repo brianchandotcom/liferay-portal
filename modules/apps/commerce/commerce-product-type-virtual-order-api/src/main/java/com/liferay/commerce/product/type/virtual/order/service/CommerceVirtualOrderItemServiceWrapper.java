@@ -71,6 +71,15 @@ public class CommerceVirtualOrderItemServiceWrapper
 	}
 
 	@Override
+	public void propagateCPDVirtualSettingFileEntry(
+			long cpdVirtualSettingFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceVirtualOrderItemService.propagateCPDVirtualSettingFileEntry(
+			cpdVirtualSettingFileEntryId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.type.virtual.order.model.
 		CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
 				long commerceVirtualOrderItemId, int activationStatus,
@@ -97,4 +106,4 @@ public class CommerceVirtualOrderItemServiceWrapper
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1497462097
+// LIFERAY-SERVICE-BUILDER-HASH:1724070462

@@ -468,6 +468,19 @@ public class CommerceVirtualOrderItemLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.product.type.virtual.order.model.
+			CommerceVirtualOrderItem>
+					getCommerceVirtualOrderItemsWithoutCPDVirtualSettingFileEntry(
+						long cpdVirtualSettingFileEntryId)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceVirtualOrderItemLocalService.
+			getCommerceVirtualOrderItemsWithoutCPDVirtualSettingFileEntry(
+				cpdVirtualSettingFileEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -591,4 +604,4 @@ public class CommerceVirtualOrderItemLocalServiceWrapper
 		_commerceVirtualOrderItemLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2091342337
+// LIFERAY-SERVICE-BUILDER-HASH:1742373314

@@ -66,10 +66,14 @@ public interface CommerceVirtualOrderItemService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public void propagateCPDVirtualSettingFileEntry(
+			long cpdVirtualSettingFileEntryId)
+		throws PortalException;
+
 	public CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
 			long commerceVirtualOrderItemId, int activationStatus,
 			long duration, int maxUsages, boolean active)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1997993939
+// LIFERAY-SERVICE-BUILDER-HASH:-693669890

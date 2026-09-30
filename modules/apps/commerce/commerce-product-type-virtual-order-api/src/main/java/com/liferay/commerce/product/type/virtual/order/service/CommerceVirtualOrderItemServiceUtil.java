@@ -63,6 +63,14 @@ public class CommerceVirtualOrderItemServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static void propagateCPDVirtualSettingFileEntry(
+			long cpdVirtualSettingFileEntryId)
+		throws PortalException {
+
+		getService().propagateCPDVirtualSettingFileEntry(
+			cpdVirtualSettingFileEntryId);
+	}
+
 	public static CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
 			long commerceVirtualOrderItemId, int activationStatus,
 			long duration, int maxUsages, boolean active)
@@ -83,4 +91,4 @@ public class CommerceVirtualOrderItemServiceUtil {
 			CommerceVirtualOrderItemService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1772090751
+// LIFERAY-SERVICE-BUILDER-HASH:85209368

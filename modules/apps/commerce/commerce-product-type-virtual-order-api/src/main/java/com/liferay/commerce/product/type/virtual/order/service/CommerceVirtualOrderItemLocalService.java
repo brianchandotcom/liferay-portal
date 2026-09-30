@@ -328,6 +328,12 @@ public interface CommerceVirtualOrderItemLocalService
 		long groupId, long commerceAccountId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceVirtualOrderItem>
+			getCommerceVirtualOrderItemsWithoutCPDVirtualSettingFileEntry(
+				long cpdVirtualSettingFileEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -382,4 +388,4 @@ public interface CommerceVirtualOrderItemLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-804892620
+// LIFERAY-SERVICE-BUILDER-HASH:1275366197

@@ -393,6 +393,16 @@ public class CommerceVirtualOrderItemLocalServiceUtil {
 			groupId, commerceAccountId);
 	}
 
+	public static List<CommerceVirtualOrderItem>
+			getCommerceVirtualOrderItemsWithoutCPDVirtualSettingFileEntry(
+				long cpdVirtualSettingFileEntryId)
+		throws PortalException {
+
+		return getService().
+			getCommerceVirtualOrderItemsWithoutCPDVirtualSettingFileEntry(
+				cpdVirtualSettingFileEntryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -487,4 +497,4 @@ public class CommerceVirtualOrderItemLocalServiceUtil {
 			CommerceVirtualOrderItemLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:956614246
+// LIFERAY-SERVICE-BUILDER-HASH:1688161094

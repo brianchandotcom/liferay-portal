@@ -167,6 +167,43 @@ public class CommerceVirtualOrderItemServiceHttp {
 		}
 	}
 
+	public static void propagateCPDVirtualSettingFileEntry(
+			HttpPrincipal httpPrincipal, long cpdVirtualSettingFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceVirtualOrderItemServiceUtil.class,
+				"propagateCPDVirtualSettingFileEntry",
+				_propagateCPDVirtualSettingFileEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpdVirtualSettingFileEntryId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.product.type.virtual.order.model.
 		CommerceVirtualOrderItem updateCommerceVirtualOrderItem(
 				HttpPrincipal httpPrincipal, long commerceVirtualOrderItemId,
@@ -178,7 +215,7 @@ public class CommerceVirtualOrderItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceVirtualOrderItemServiceUtil.class,
 				"updateCommerceVirtualOrderItem",
-				_updateCommerceVirtualOrderItemParameterTypes3);
+				_updateCommerceVirtualOrderItemParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceVirtualOrderItemId, activationStatus,
@@ -227,9 +264,13 @@ public class CommerceVirtualOrderItemServiceHttp {
 		long.class, long.class
 	};
 	private static final Class<?>[]
-		_updateCommerceVirtualOrderItemParameterTypes3 = new Class[] {
+		_propagateCPDVirtualSettingFileEntryParameterTypes3 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_updateCommerceVirtualOrderItemParameterTypes4 = new Class[] {
 			long.class, int.class, long.class, int.class, boolean.class
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1188130107
+// LIFERAY-SERVICE-BUILDER-HASH:-1311097929

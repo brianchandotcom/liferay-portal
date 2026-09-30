@@ -33,10 +33,21 @@ public class AssetListFiltersUpgradeUtilTest {
 
 	@Test
 	public void testToUpgradedTypeSettingsCategories() throws Exception {
-		_assertCategories("true", "true", "contains", "all");
-		_assertCategories("true", "false", "contains", "any");
-		_assertCategories("false", "true", "not-contains", "all");
-		_assertCategories("false", "false", "not-contains", "any");
+		String assetCategoryId1 = String.valueOf(RandomTestUtil.randomLong());
+		String assetCategoryId2 = String.valueOf(RandomTestUtil.randomLong());
+
+		_assertAssetFilter(
+			"assetCategories", "true", "true", "contains", "all",
+			assetCategoryId1, assetCategoryId2);
+		_assertAssetFilter(
+			"assetCategories", "true", "false", "contains", "any",
+			assetCategoryId1, assetCategoryId2);
+		_assertAssetFilter(
+			"assetCategories", "false", "true", "not-contains", "all",
+			assetCategoryId1, assetCategoryId2);
+		_assertAssetFilter(
+			"assetCategories", "false", "false", "not-contains", "any",
+			assetCategoryId1, assetCategoryId2);
 	}
 
 	@Test
@@ -150,30 +161,39 @@ public class AssetListFiltersUpgradeUtilTest {
 
 	@Test
 	public void testToUpgradedTypeSettingsTags() throws Exception {
-		_assertTags("true", "true", "contains", "all");
-		_assertTags("true", "false", "contains", "any");
-		_assertTags("false", "true", "not-contains", "all");
-		_assertTags("false", "false", "not-contains", "any");
+		String assetTagName1 = RandomTestUtil.randomString();
+		String assetTagName2 = RandomTestUtil.randomString();
+
+		_assertAssetFilter(
+			"assetTags", "true", "true", "contains", "all", assetTagName1,
+			assetTagName2);
+		_assertAssetFilter(
+			"assetTags", "true", "false", "contains", "any", assetTagName1,
+			assetTagName2);
+		_assertAssetFilter(
+			"assetTags", "false", "true", "not-contains", "all", assetTagName1,
+			assetTagName2);
+		_assertAssetFilter(
+			"assetTags", "false", "false", "not-contains", "any", assetTagName1,
+			assetTagName2);
 	}
 
-	private void _assertCategories(
-			String queryContains, String queryAndOperator,
-			String expectedOperatorName, String expectedQuantifier)
+	private void _assertAssetFilter(
+			String propertyName, String queryContains, String queryAndOperator,
+			String expectedOperatorName, String expectedQuantifier,
+			String expectedValue1, String expectedValue2)
 		throws Exception {
 
-		String assetCategoryId1 = String.valueOf(RandomTestUtil.randomLong());
-		String assetCategoryId2 = String.valueOf(RandomTestUtil.randomLong());
-
 		JSONObject filterJSONObject = _getSingleFilterJSONObject(
-			"assetCategories", queryContains, queryAndOperator,
+			propertyName, queryContains, queryAndOperator,
 			StringUtil.merge(
-				new String[] {assetCategoryId1, assetCategoryId2},
+				new String[] {expectedValue1, expectedValue2},
 				StringPool.COMMA));
 
 		Assert.assertEquals(
 			expectedOperatorName, filterJSONObject.getString("operatorName"));
 		Assert.assertEquals(
-			"assetCategories", filterJSONObject.getString("propertyName"));
+			propertyName, filterJSONObject.getString("propertyName"));
 		Assert.assertEquals(
 			expectedQuantifier, filterJSONObject.getString("quantifier"));
 
@@ -184,14 +204,13 @@ public class AssetListFiltersUpgradeUtilTest {
 
 		JSONObject valueJSONObject = valueJSONArray.getJSONObject(0);
 
-		Assert.assertEquals(
-			assetCategoryId1, valueJSONObject.getString("value"));
+		Assert.assertEquals(expectedValue1, valueJSONObject.getString("value"));
 		Assert.assertFalse(valueJSONObject.has("label"));
 
 		valueJSONObject = valueJSONArray.getJSONObject(1);
 
-		Assert.assertEquals(
-			assetCategoryId2, valueJSONObject.getString("value"));
+		Assert.assertEquals(expectedValue2, valueJSONObject.getString("value"));
+		Assert.assertFalse(valueJSONObject.has("label"));
 	}
 
 	private void _assertKeywords(
@@ -211,42 +230,6 @@ public class AssetListFiltersUpgradeUtilTest {
 		Assert.assertEquals(
 			expectedQuantifier, filterJSONObject.getString("quantifier"));
 		Assert.assertEquals(keyword, filterJSONObject.getString("value"));
-	}
-
-	private void _assertTags(
-			String queryContains, String queryAndOperator,
-			String expectedOperatorName, String expectedQuantifier)
-		throws Exception {
-
-		String assetTagName1 = RandomTestUtil.randomString();
-		String assetTagName2 = RandomTestUtil.randomString();
-
-		JSONObject filterJSONObject = _getSingleFilterJSONObject(
-			"assetTags", queryContains, queryAndOperator,
-			StringUtil.merge(
-				new String[] {assetTagName1, assetTagName2}, StringPool.COMMA));
-
-		Assert.assertEquals(
-			expectedOperatorName, filterJSONObject.getString("operatorName"));
-		Assert.assertEquals(
-			"assetTags", filterJSONObject.getString("propertyName"));
-		Assert.assertEquals(
-			expectedQuantifier, filterJSONObject.getString("quantifier"));
-
-		JSONArray valueJSONArray = filterJSONObject.getJSONArray("value");
-
-		Assert.assertEquals(
-			valueJSONArray.toString(), 2, valueJSONArray.length());
-
-		JSONObject valueJSONObject = valueJSONArray.getJSONObject(0);
-
-		Assert.assertEquals(assetTagName1, valueJSONObject.getString("value"));
-		Assert.assertFalse(valueJSONObject.has("label"));
-
-		valueJSONObject = valueJSONArray.getJSONObject(1);
-
-		Assert.assertEquals(assetTagName2, valueJSONObject.getString("value"));
-		Assert.assertFalse(valueJSONObject.has("label"));
 	}
 
 	private JSONArray _getFiltersJSONArray(UnicodeProperties unicodeProperties)

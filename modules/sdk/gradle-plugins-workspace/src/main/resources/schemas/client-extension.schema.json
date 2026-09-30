@@ -312,6 +312,14 @@
 					"allOf": [
 						{
 							"$ref": "#/definitions/propertySets/properties/externalService"
+						},
+						{
+							"properties": {
+								"forwardUpstreamToken": {
+									"type": "boolean"
+								}
+							},
+							"type": "object"
 						}
 					],
 					"description": "Description for oAuthApplicationHeadlessServer"

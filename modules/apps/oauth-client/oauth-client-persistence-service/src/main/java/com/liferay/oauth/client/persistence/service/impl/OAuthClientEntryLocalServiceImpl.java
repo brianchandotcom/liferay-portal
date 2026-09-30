@@ -326,7 +326,18 @@ public class OAuthClientEntryLocalServiceImpl
 		throws PortalException {
 
 		try {
-			_validateRequestParametersJSON(authRequestParametersJSON);
+			JSONObject authRequestParametersJSONObject = JSONObjectUtils.parse(
+				authRequestParametersJSON);
+
+			_validateRequestParameters(authRequestParametersJSONObject);
+
+			if (authRequestParametersJSONObject.containsKey(
+					"allow_upstream_token_forwarding")) {
+
+				throw new ParseException(
+					"The \"allow_upstream_token_forwarding\" parameter is " +
+						"supported only in the token request parameters");
+			}
 		}
 		catch (Exception exception) {
 			throw new OAuthClientEntryAuthRequestParametersJSONException(
@@ -476,11 +487,9 @@ public class OAuthClientEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateRequestParametersJSON(String requestParametersJSON)
+	private void _validateRequestParameters(
+			JSONObject requestParametersJSONObject)
 		throws Exception {
-
-		JSONObject requestParametersJSONObject = JSONObjectUtils.parse(
-			requestParametersJSON);
 
 		_validateSpecsRequestParameters(requestParametersJSONObject);
 
@@ -529,7 +538,18 @@ public class OAuthClientEntryLocalServiceImpl
 		throws PortalException {
 
 		try {
-			_validateRequestParametersJSON(tokenRequestParametersJSON);
+			JSONObject tokenRequestParametersJSONObject = JSONObjectUtils.parse(
+				tokenRequestParametersJSON);
+
+			_validateRequestParameters(tokenRequestParametersJSONObject);
+
+			if (tokenRequestParametersJSONObject.containsKey(
+					"allow_upstream_token_forwarding")) {
+
+				JSONObjectUtils.getBoolean(
+					tokenRequestParametersJSONObject,
+					"allow_upstream_token_forwarding");
+			}
 		}
 		catch (Exception exception) {
 			throw new OAuthClientEntryTokenRequestParametersJSONException(

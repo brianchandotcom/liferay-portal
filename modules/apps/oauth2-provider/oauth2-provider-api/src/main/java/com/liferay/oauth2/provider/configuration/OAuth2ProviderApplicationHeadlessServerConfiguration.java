@@ -9,6 +9,8 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Raymond Augé
  */
@@ -17,6 +19,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	factory = true,
 	id = "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration"
 )
+@ProviderType
 public interface OAuth2ProviderApplicationHeadlessServerConfiguration {
 
 	@Meta.AD(type = Meta.Type.String)
@@ -24,6 +27,9 @@ public interface OAuth2ProviderApplicationHeadlessServerConfiguration {
 
 	@Meta.AD(deflt = "", required = false, type = Meta.Type.String)
 	public String description();
+
+	@Meta.AD(deflt = "false", required = false, type = Meta.Type.Boolean)
+	public boolean forwardUpstreamToken();
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)

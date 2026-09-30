@@ -75,4 +75,18 @@ public class OpenIdConnectRequestParametersUtil {
 			JSONObjectUtils.getString(requestParametersJSONObject, "scope"));
 	}
 
+	public static boolean isUpstreamTokenForwardingAllowed(
+			JSONObject requestParametersJSONObject)
+		throws ParseException {
+
+		if (!requestParametersJSONObject.containsKey(
+				"allow_upstream_token_forwarding")) {
+
+			return false;
+		}
+
+		return JSONObjectUtils.getBoolean(
+			requestParametersJSONObject, "allow_upstream_token_forwarding");
+	}
+
 }

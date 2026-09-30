@@ -9,8 +9,6 @@ import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadle
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -32,7 +30,6 @@ import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -51,7 +48,7 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 			String externalReferenceCode)
 		throws Exception {
 
-		Collection<String> scopeAliases = _scopeLocator.getScopeAliases(
+		Collection<String> scopeAliases = scopeLocator.getScopeAliases(
 			companyId);
 
 		OAuth2ProviderApplicationHeadlessServerConfiguration
@@ -97,7 +94,7 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				oAuth2Application.getClientId()
 			).put(
 				externalReferenceCode + ".oauth2.headless.server.client.secret",
-				_oAuth2ApplicationLocalService.getPlaintextClientSecret(
+				oAuth2ApplicationLocalService.getPlaintextClientSecret(
 					oAuth2Application)
 			).put(
 				externalReferenceCode + ".oauth2.headless.server.scopes",
@@ -135,7 +132,7 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				companyId, oAuth2Application.getClientCredentialUserId());
 			clientId = oAuth2Application.getClientId();
 			clientSecret =
-				_oAuth2ApplicationLocalService.getPlaintextClientSecret(
+				oAuth2ApplicationLocalService.getPlaintextClientSecret(
 					oAuth2Application);
 		}
 		else {
@@ -229,11 +226,5 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2ProviderApplicationHeadlessServerConfigurationFactory.class);
-
-	@Reference
-	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
-
-	@Reference
-	private ScopeLocator _scopeLocator;
 
 }

@@ -84,9 +84,11 @@ dependencies {
 
 deployDependencies {
 	from (configurations.compileClasspath) {
+		include "antlr4-runtime-*.jar"
 		include "checkstyle-*.jar"
 	}
 
+	rename(/antlr4-runtime-(.+)\.jar/, "antlr4-runtime" + renameSuffix)
 	rename(/checkstyle-(.+)\.jar/, "checkstyle" + renameSuffix)
 }
 

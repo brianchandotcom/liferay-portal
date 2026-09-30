@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationImplementation group: "com.github.ignaciotcrespo", name: "frutilla", version: "0.7.1"
+	testIntegrationImplementation project(":apps:account:account-api")
 	testIntegrationImplementation project(":apps:asset:asset-link-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-account-test-util")
 	testIntegrationImplementation project(":apps:commerce:commerce-api")
@@ -14,6 +15,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:commerce:commerce-test-util")
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":apps:portlet-display-template:portlet-display-template-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

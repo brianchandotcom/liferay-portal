@@ -26,6 +26,8 @@ services:
             LIFERAY_DISABLE_TRIAL_LICENSE: "true"
             LIFERAY_JPDA_ENABLED: "true"
             LIFERAY_JVM_OPTS: -XX:MaxMetaspaceSize=1g -XX:MaxNewSize=2g -XX:MetaspaceSize=768m -XX:NewSize=2g -XX:SurvivorRatio=7 -Xms8g -Xmx8g
+            LIFERAY_OAUTH2_ISSUE_JWT_ACCESS_TOKEN:
+            LIFERAY_OAUTH2_JWT_ACCESS_TOKEN_SIGNING_JSON_WEB_KEY:
             LIFERAY_WORKSPACE_ENVIRONMENT: local
         healthcheck:
             interval: 10s

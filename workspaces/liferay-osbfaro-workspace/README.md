@@ -49,6 +49,33 @@ All Docker build and runtime behaviour is controlled by a single variable:
 ./gradlew deploy
 ```
 
+### Enabling JWT Access Tokens
+
+The AI Hub cell reads the expiration of the OAuth2 access tokens the authorization server issues to it from the token itself, so the connection to AI Hub requires JWT access tokens. The `OAuth2AuthorizationServerConfiguration.config` files read two environment variables, and the authorization server keeps issuing opaque tokens until both are set:
+
+| Variable | Value |
+|---|---|
+| `LIFERAY_OAUTH2_ISSUE_JWT_ACCESS_TOKEN` | `true` |
+| `LIFERAY_OAUTH2_JWT_ACCESS_TOKEN_SIGNING_JSON_WEB_KEY` | An RSA private key in JSON Web Key format with `"alg": "RS256"` |
+
+Tokens generated for the report and export APIs under Settings > APIs, and connector tokens, keep their opaque format either way.
+
+Locally, generate a key into `.env` once and recreate the Liferay container so it reads the new environment. The script keeps an existing key unless it is run with `--force`, since the key stays the same across restarts:
+
+```bash
+./scripts/bootstrap/generate_oauth2_jwt_signing_key.sh
+./scripts/bootstrap/start.sh
+```
+
+The script is for local development only, since deployed environments never read `.env`. In Liferay Cloud, generate a key once for each environment, store it as a secret, and reference it from the service's `LCP.json` next to the flag:
+
+```json
+"env": {
+	"LIFERAY_OAUTH2_ISSUE_JWT_ACCESS_TOKEN": "true",
+	"LIFERAY_OAUTH2_JWT_ACCESS_TOKEN_SIGNING_JSON_WEB_KEY": "@oauth2-jwt-signing-key"
+}
+```
+
 ### Running Frontend Development Server
 
 1. Run `./gradlew packageRunStart`.

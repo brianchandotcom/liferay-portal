@@ -376,7 +376,8 @@ public class EditStyleBookEntryDisplayContext {
 
 		FrontendTokenDefinition globalFrontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				styleBookEntry.getCompanyId(), _THEME_ID_GLOBAL);
+				styleBookEntry.getCompanyId(),
+				StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID);
 
 		if (globalFrontendTokenDefinition != null) {
 			jsonArray.put(
@@ -713,9 +714,6 @@ public class EditStyleBookEntryDisplayContext {
 
 		_renderResponse.setTitle(_getStyleBookEntryTitle());
 	}
-
-	private static final String _THEME_ID_GLOBAL =
-		"com.liferay.frontend.js.clay.web";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditStyleBookEntryDisplayContext.class.getName());

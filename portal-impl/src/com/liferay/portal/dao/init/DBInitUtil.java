@@ -54,7 +54,7 @@ public class DBInitUtil {
 
 		_writeDataSource = _initDataSource("jdbc.write.");
 
-		if ((_readDataSource != null) && (_writeDataSource != null)) {
+		if (isReadWriteDataSource()) {
 			_dataSource = new DynamicDataSource(
 				_readDataSource, _writeDataSource);
 		}
@@ -75,6 +75,14 @@ public class DBInitUtil {
 		}
 
 		_dataSource = new LazyConnectionDataSourceProxy(_dataSource);
+	}
+
+	public static boolean isReadWriteDataSource() {
+		if ((_readDataSource != null) && (_writeDataSource != null)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _checkDefaultRelease(Connection connection) {

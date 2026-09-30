@@ -407,8 +407,7 @@ public class CommonStylesUtil {
 		}
 
 		return _mergeFrontendTokensJSONObjects(
-			_getThemeFrontendTokensJSONObject(
-				frontendTokenValuesJSONObject, layout),
+			_getThemeFrontendTokensJSONObject(layout),
 			_getCustomFrontendTokensJSONObject(frontendTokenValuesJSONObject));
 	}
 
@@ -533,9 +532,7 @@ public class CommonStylesUtil {
 		return JSONFactoryUtil.createJSONObject();
 	}
 
-	private static JSONObject _getThemeFrontendTokensJSONObject(
-		JSONObject frontendTokenValuesJSONObject, Layout layout) {
-
+	private static JSONObject _getThemeFrontendTokensJSONObject(Layout layout) {
 		JSONObject frontendTokensJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
@@ -567,17 +564,6 @@ public class CommonStylesUtil {
 				continue;
 			}
 
-			String value = String.valueOf(
-				frontendToken.<Object>getDefaultValue());
-
-			JSONObject valueJSONObject =
-				frontendTokenValuesJSONObject.getJSONObject(
-					frontendToken.getName());
-
-			if (valueJSONObject != null) {
-				value = valueJSONObject.getString("value");
-			}
-
 			frontendTokensJSONObject.put(
 				frontendToken.getName(),
 				JSONUtil.put(
@@ -587,10 +573,7 @@ public class CommonStylesUtil {
 							frontendTokenMappings.get(0);
 
 						return frontendTokenMapping.getValue();
-					}
-				).put(
-					"value", value
-				));
+					}));
 		}
 
 		return frontendTokensJSONObject;

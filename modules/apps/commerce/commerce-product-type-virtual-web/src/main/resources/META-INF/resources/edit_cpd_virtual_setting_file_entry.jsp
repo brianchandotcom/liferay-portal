@@ -45,8 +45,14 @@ FileEntry fileEntry = cpDefinitionVirtualSettingDisplayContext.getFileEntry(file
 		<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 		<aui:input name="cpdVirtualSettingFileEntryId" type="hidden" value="<%= cpdVirtualSettingFileEntryId %>" />
 		<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
+		<aui:input name="propagate" type="hidden" value="<%= false %>" />
 
 		<aui:model-context bean="<%= cpdVirtualSettingFileEntry %>" model="<%= CPDVirtualSettingFileEntry.class %>" />
+
+		<liferay-ui:error exception="<%= CommerceVirtualOrderItemException.class %>" message="unable-to-add-the-file-to-the-orders-of-an-unpublished-product" />
+		<liferay-ui:error exception="<%= CPDefinitionVirtualSettingException.class %>" message="please-enter-a-valid-url-or-select-an-existing-file" />
+		<liferay-ui:error exception="<%= CPDefinitionVirtualSettingFileEntryIdException.class %>" message="please-select-an-existing-file" />
+		<liferay-ui:error exception="<%= CPDefinitionVirtualSettingURLException.class %>" message="please-enter-a-valid-url" />
 
 		<commerce-ui:panel
 			title='<%= LanguageUtil.get(request, "details") %>'
@@ -84,95 +90,23 @@ FileEntry fileEntry = cpDefinitionVirtualSettingDisplayContext.getFileEntry(file
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" value="save" />
 
+			<c:if test="<%= cpDefinitionVirtualSettingDisplayContext.isShowSaveAndPropagateButton() %>">
+				<aui:button cssClass="btn-lg" name="saveAndPropagate" value="save-and-propagate" />
+			</c:if>
+
 			<aui:button cssClass="btn-lg" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </liferay-frontend:side-panel-content>
 
-<aui:script sandbox="<%= true %>">
-	const fileEntryNameInput = document.getElementById(
-		'<portlet:namespace />fileEntryNameInput'
-	);
-
-	const fileEntryRemove = document.getElementById(
-		'<portlet:namespace />fileEntryRemove'
-	);
-
-	const selectFile = document.getElementById('<portlet:namespace />selectFile');
-
-	if (fileEntryNameInput && fileEntryRemove && selectFile) {
-		selectFile.addEventListener('click', (event) => {
-			event.preventDefault();
-
-			Liferay.Util.openSelectionModal({
-				onSelect: (selectedItem) => {
-					if (!selectedItem) {
-						return;
-					}
-
-					const value = JSON.parse(selectedItem.value);
-
-					const fileEntryIdInput = document.getElementById(
-						'<portlet:namespace />fileEntryId'
-					);
-
-					if (fileEntryIdInput) {
-						fileEntryIdInput.value = value.fileEntryId;
-					}
-
-					const url = document.getElementById('<portlet:namespace />url');
-
-					if (url) {
-						url.setAttribute('disabled', true);
-					}
-
-					const message = document.getElementById(
-						'lfr-definition-virtual-button-row-message'
-					);
-
-					if (message) {
-						message.classList.add('hide');
-					}
-
-					fileEntryRemove.classList.remove('hide');
-
-					fileEntryNameInput.innerHTML =
-						'<a>' + Liferay.Util.escape(value.title) + '</a>';
-				},
-				selectEventName: 'uploadCPDefinitionVirtualSetting',
-				title: '<liferay-ui:message key="select-file" />',
-				url: '<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>',
-			});
-		});
-
-		fileEntryRemove.addEventListener('click', (event) => {
-			event.preventDefault();
-
-			const fileEntryIdInput = document.getElementById(
-				'<portlet:namespace />fileEntryId'
-			);
-
-			if (fileEntryIdInput) {
-				fileEntryIdInput.value = 0;
-			}
-
-			const url = document.getElementById('<portlet:namespace />url');
-
-			if (url) {
-				url.removeAttribute('disabled');
-			}
-
-			const message = document.getElementById(
-				'lfr-definition-virtual-button-row-message'
-			);
-
-			if (message) {
-				message.classList.remove('hide');
-			}
-
-			fileEntryNameInput.innerText = '<liferay-ui:message key="none" />';
-
-			fileEntryRemove.classList.add('hide');
-		});
-	}
-</aui:script>
+<liferay-frontend:component
+	componentId="cpdVirtualSettingFileEntryUtil"
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"fileEntryItemSelectorURL", cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL()
+		).put(
+			"portletNamespace", portletDisplay.getNamespace()
+		).build()
+	%>'
+	module="{CPDVirtualSettingFileEntryUtil} from commerce-product-type-virtual-web"
+/>

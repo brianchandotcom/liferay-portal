@@ -7,6 +7,7 @@ package com.liferay.commerce.product.type.virtual.web.internal.frontend.taglib.s
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext;
 import com.liferay.commerce.product.type.virtual.web.internal.portlet.action.helper.CPDefinitionVirtualSettingActionHelper;
@@ -64,7 +65,7 @@ public class CPDefinitionCPTypeVirtualScreenNavigationEntry
 			cpDefinitionVirtualSettingDisplayContext =
 				new CPDefinitionVirtualSettingDisplayContext(
 					_actionHelper, httpServletRequest, _dlAppService,
-					_journalArticleService,
+					_journalArticleService, _cpDefinitionLocalService,
 					_cpDefinitionVirtualSettingActionHelper, _itemSelector);
 
 		httpServletRequest.setAttribute(
@@ -78,6 +79,9 @@ public class CPDefinitionCPTypeVirtualScreenNavigationEntry
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionVirtualSettingActionHelper

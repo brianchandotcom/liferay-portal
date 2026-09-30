@@ -7,6 +7,7 @@ package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext;
 import com.liferay.commerce.product.type.virtual.web.internal.portlet.action.helper.CPDefinitionVirtualSettingActionHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -63,7 +64,7 @@ public class EditCommerceVirtualOrderItemFileEntryMVCRenderCommand
 				cpDefinitionVirtualSettingDisplayContext =
 					new CPDefinitionVirtualSettingDisplayContext(
 						_actionHelper, httpServletRequest, _dlAppService,
-						_journalArticleService,
+						_journalArticleService, _cpDefinitionLocalService,
 						_cpDefinitionVirtualSettingActionHelper, _itemSelector);
 
 			renderRequest.setAttribute(
@@ -87,6 +88,9 @@ public class EditCommerceVirtualOrderItemFileEntryMVCRenderCommand
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionVirtualSettingActionHelper

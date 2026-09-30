@@ -11,9 +11,12 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingURLException;
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+import com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemException;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
 import com.liferay.petra.string.StringPool;
@@ -91,9 +94,11 @@ public class EditCPDVirtualSettingFileEntryMVCActionCommand
 			}
 		}
 		catch (Throwable throwable) {
-			if (throwable instanceof CPDefinitionVirtualSettingException ||
+			if (throwable instanceof CommerceVirtualOrderItemException ||
+				throwable instanceof CPDefinitionVirtualSettingException ||
 				throwable instanceof
 					CPDefinitionVirtualSettingFileEntryIdException ||
+				throwable instanceof CPDefinitionVirtualSettingURLException ||
 				throwable instanceof
 					NoSuchCPDefinitionVirtualSettingException ||
 				throwable instanceof PrincipalException) {
@@ -211,6 +216,25 @@ public class EditCPDVirtualSettingFileEntryMVCActionCommand
 		return portletURL.toString();
 	}
 
+	private void _propagateCPDVirtualSettingFileEntry(
+			ActionRequest actionRequest,
+			CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry)
+		throws Exception {
+
+		long cpdVirtualSettingFileEntryId = ParamUtil.getLong(
+			actionRequest, "cpdVirtualSettingFileEntryId");
+
+		if ((cpdVirtualSettingFileEntryId > 0) ||
+			!ParamUtil.getBoolean(actionRequest, "propagate")) {
+
+			return;
+		}
+
+		_commerceVirtualOrderItemService.propagateCPDVirtualSettingFileEntry(
+			cpdVirtualSettingFileEntry.
+				getCPDefinitionVirtualSettingFileEntryId());
+	}
+
 	private CPDVirtualSettingFileEntry _updateCPDVirtualSettingFileEntry(
 			ActionRequest actionRequest)
 		throws Exception {
@@ -261,6 +285,9 @@ public class EditCPDVirtualSettingFileEntryMVCActionCommand
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
+	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;
+
+	@Reference
 	private CPDefinitionVirtualSettingService
 		_cpDefinitionVirtualSettingService;
 
@@ -273,7 +300,13 @@ public class EditCPDVirtualSettingFileEntryMVCActionCommand
 
 		@Override
 		public CPDVirtualSettingFileEntry call() throws Exception {
-			return _updateCPDVirtualSettingFileEntry(_actionRequest);
+			CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+				_updateCPDVirtualSettingFileEntry(_actionRequest);
+
+			_propagateCPDVirtualSettingFileEntry(
+				_actionRequest, cpdVirtualSettingFileEntry);
+
+			return cpdVirtualSettingFileEntry;
 		}
 
 		private CPDVirtualSettingFileEntryCallable(

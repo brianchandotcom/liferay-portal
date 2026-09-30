@@ -13,6 +13,7 @@ import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayCont
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
@@ -62,6 +63,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 	public CPDefinitionVirtualSettingDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		DLAppService dlAppService, JournalArticleService journalArticleService,
+		CPDefinitionLocalService cpDefinitionLocalService,
 		CPDefinitionVirtualSettingActionHelper
 			cpDefinitionVirtualSettingActionHelper,
 		ItemSelector itemSelector) {
@@ -70,6 +72,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		_dlAppService = dlAppService;
 		_journalArticleService = journalArticleService;
+		_cpDefinitionLocalService = cpDefinitionLocalService;
 		_cpDefinitionVirtualSettingActionHelper =
 			cpDefinitionVirtualSettingActionHelper;
 		_itemSelector = itemSelector;
@@ -361,6 +364,22 @@ public class CPDefinitionVirtualSettingDisplayContext
 				itemSelectorCriterion));
 	}
 
+	public boolean isShowSaveAndPropagateButton() throws PortalException {
+		if (getCPDVirtualSettingFileEntry() != null) {
+			return false;
+		}
+
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if ((cpDefinition != null) &&
+			_cpDefinitionLocalService.isPublishedCPDefinition(cpDefinition)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private long _getGroupId() throws PortalException {
 		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
 			getCommerceVirtualOrderItemFileEntry();
@@ -404,6 +423,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 	private CommerceVirtualOrderItemFileEntry
 		_commerceVirtualOrderItemFileEntry;
+	private final CPDefinitionLocalService _cpDefinitionLocalService;
 	private CPDefinitionVirtualSetting _cpDefinitionVirtualSetting;
 	private final CPDefinitionVirtualSettingActionHelper
 		_cpDefinitionVirtualSettingActionHelper;

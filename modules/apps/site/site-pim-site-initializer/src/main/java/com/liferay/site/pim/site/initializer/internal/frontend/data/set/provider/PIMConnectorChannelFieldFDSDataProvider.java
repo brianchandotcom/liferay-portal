@@ -134,9 +134,9 @@ public class PIMConnectorChannelFieldFDSDataProvider
 	}
 
 	private String _getLabel(
-		PIMConnectorChannelField pimConnectorChannelField) {
+		Locale locale, PIMConnectorChannelField pimConnectorChannelField) {
 
-		String label = pimConnectorChannelField.getLabel();
+		String label = pimConnectorChannelField.getLabel(locale);
 
 		if (pimConnectorChannelField.isMultiple()) {
 			return label + "[]";
@@ -145,7 +145,7 @@ public class PIMConnectorChannelFieldFDSDataProvider
 		return label;
 	}
 
-	private Map<String, String> _getObjectFieldLabelMap(
+	private Map<String, String> _getLabelMap(
 		long companyId, Locale locale,
 		Map<String, List<ObjectEntry>> objectEntriesMap) {
 
@@ -153,7 +153,7 @@ public class PIMConnectorChannelFieldFDSDataProvider
 			return Collections.emptyMap();
 		}
 
-		Map<String, String> objectFieldLabelMap = new HashMap<>();
+		Map<String, String> labelMap = new HashMap<>();
 
 		for (ObjectDefinition objectDefinition :
 				_objectDefinitionService.getCMSObjectDefinitions(
@@ -165,24 +165,28 @@ public class PIMConnectorChannelFieldFDSDataProvider
 
 			String objectDefinitionLabel = objectDefinition.getLabel(locale);
 
+			labelMap.put(
+				objectDefinition.getClassName() + StringPool.POUND,
+				objectDefinitionLabel);
+
 			for (ObjectField objectField :
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())) {
 
 				String objectFieldLabel = objectField.getLabel(locale);
 
-				objectFieldLabelMap.put(
+				labelMap.put(
 					objectDefinition.getClassName() + StringPool.POUND +
 						objectField.getName(),
 					StringBundler.concat(
 						objectDefinitionLabel, StringPool.SLASH,
 						objectFieldLabel));
-				objectFieldLabelMap.putIfAbsent(
+				labelMap.putIfAbsent(
 					StringPool.POUND + objectField.getName(), objectFieldLabel);
 			}
 		}
 
-		return objectFieldLabelMap;
+		return labelMap;
 	}
 
 	private List<PIMConnectorChannelFieldDisplay>
@@ -222,7 +226,7 @@ public class PIMConnectorChannelFieldFDSDataProvider
 			objectEntries.add(objectEntry);
 		}
 
-		Map<String, String> objectFieldLabelMap = _getObjectFieldLabelMap(
+		Map<String, String> labelMap = _getLabelMap(
 			themeDisplay.getCompanyId(), locale, objectEntriesMap);
 
 		return TransformUtil.transform(
@@ -232,13 +236,13 @@ public class PIMConnectorChannelFieldFDSDataProvider
 					pimConnectorChannelField.getName());
 
 				return new PIMConnectorChannelFieldDisplay(
-					apiURL, _getLabel(pimConnectorChannelField),
+					apiURL, _getLabel(locale, pimConnectorChannelField),
 					TransformUtil.transform(
 						objectEntries, ObjectEntry::getObjectEntryId),
 					editFieldMappingsURL + "&channelField=" +
 						URLCodec.encodeURL(pimConnectorChannelField.getName()),
 					locale, pimConnectorChannelField.isRequired(),
-					_getSourceAttributes(objectEntries, objectFieldLabelMap));
+					_getSourceAttributes(labelMap, objectEntries));
 			});
 	}
 
@@ -258,21 +262,23 @@ public class PIMConnectorChannelFieldFDSDataProvider
 			return Collections.emptyList();
 		}
 
+		String keywords = StringUtil.toLowerCase(fdsKeywords.getKeywords());
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String keywords = StringUtil.toLowerCase(fdsKeywords.getKeywords());
+		Locale locale = themeDisplay.getLocale();
 
 		return TransformUtil.transform(
-			pimConnector.getPIMConnectorChannelFields(themeDisplay.getLocale()),
+			pimConnector.getPIMConnectorChannelFields(),
 			pimConnectorChannelField -> {
 				if (Validator.isNull(keywords)) {
 					return pimConnectorChannelField;
 				}
 
 				String lowerCaseLabel = StringUtil.toLowerCase(
-					_getLabel(pimConnectorChannelField));
+					_getLabel(locale, pimConnectorChannelField));
 
 				if (!lowerCaseLabel.contains(keywords)) {
 					return null;
@@ -283,25 +289,32 @@ public class PIMConnectorChannelFieldFDSDataProvider
 	}
 
 	private List<String> _getSourceAttributes(
-		List<ObjectEntry> objectEntries,
-		Map<String, String> objectFieldLabelMap) {
+		Map<String, String> labelMap, List<ObjectEntry> objectEntries) {
 
 		return TransformUtil.transform(
 			objectEntries,
 			objectEntry -> {
 				Map<String, Serializable> values = objectEntry.getValues();
 
-				if (Objects.equals(
-						MapUtil.getString(values, "type"),
-						PIMConnectorFieldMappingsUtil.TYPE_FIXED_VALUE)) {
+				String sourceClassName = MapUtil.getString(
+					values, "sourceClassName");
 
+				if (PIMConnectorFieldMappingsUtil.isFixedValue(objectEntry)) {
 					String value = MapUtil.getString(values, "value");
 
 					if (Validator.isNull(value)) {
 						return null;
 					}
 
-					return value;
+					String objectDefinitionLabel = labelMap.get(
+						sourceClassName + StringPool.POUND);
+
+					if (objectDefinitionLabel == null) {
+						return value;
+					}
+
+					return StringBundler.concat(
+						objectDefinitionLabel, StringPool.SLASH, value);
 				}
 
 				String sourceFieldName = MapUtil.getString(
@@ -311,9 +324,8 @@ public class PIMConnectorChannelFieldFDSDataProvider
 					return null;
 				}
 
-				return objectFieldLabelMap.getOrDefault(
-					MapUtil.getString(values, "sourceClassName") +
-						StringPool.POUND + sourceFieldName,
+				return labelMap.getOrDefault(
+					sourceClassName + StringPool.POUND + sourceFieldName,
 					sourceFieldName);
 			});
 	}

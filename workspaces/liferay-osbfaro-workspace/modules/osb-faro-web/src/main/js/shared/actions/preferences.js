@@ -46,7 +46,7 @@ export function addDistributionTab({
 	};
 }
 
-export function fetchDefaultChannelId(groupId = 0) {
+export function fetchDefaultChannelId(groupId = '0') {
 	return {
 		meta: {
 			[CALL_API]: {

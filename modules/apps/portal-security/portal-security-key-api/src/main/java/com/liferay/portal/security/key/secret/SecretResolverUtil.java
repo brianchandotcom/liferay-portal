@@ -6,6 +6,7 @@
 package com.liferay.portal.security.key.secret;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.security.key.KeyReferenceUtil;
 
 /**
  * @author Pedro Victor Silvestre
@@ -13,6 +14,10 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 public class SecretResolverUtil {
 
 	public static String resolve(long companyId, String value) {
+		if (!KeyReferenceUtil.isKeyReference(value)) {
+			return value;
+		}
+
 		SecretResolver secretResolver = _secretResolverSnapshot.get();
 
 		if (secretResolver == null) {

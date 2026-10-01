@@ -34,6 +34,7 @@ const (
 	ReasonNamespaceNotPermitted  = "NamespaceNotPermitted"
 	ReasonNoExtInitRequired      = "NoExtInitRequired"
 	ReasonProvisioned            = "Provisioned"
+	ReasonReady                  = "Ready"
 	ReasonServiceIDConflict      = "ServiceIDConflict"
 	ReasonUnknownVirtualInstance = "UnknownVirtualInstance"
 )
@@ -75,7 +76,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 			newCondition(
 				metav1.ConditionFalse, refusalMessage(&clientExtension, dxpNamespace, refusedReason), refusedReason,
 			),
-			nil,
+			false, nil,
 		)
 	}
 
@@ -97,7 +98,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 				metav1.ConditionFalse, unknownVirtualInstanceMessage(&clientExtension, dxpNamespace),
 				ReasonUnknownVirtualInstance,
 			),
-			nil,
+			false, nil,
 		)
 	}
 
@@ -111,7 +112,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 		return controllerruntime.Result{}, error
 	}
 
-	conflictingConfigMap, error := clientExtensionReconciler.applyExtProvision(
+	conflictingConfigMap, operationResult, error := clientExtensionReconciler.applyExtProvision(
 		&clientExtension, context, dxpNamespace, string(payload),
 	)
 
@@ -127,7 +128,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 					),
 					ReasonDeliveryNotPermitted,
 				),
-				nil,
+				false, nil,
 			)
 	}
 
@@ -142,7 +143,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 				metav1.ConditionFalse, serviceIDConflictMessage(&clientExtension, conflictingConfigMap),
 				ReasonServiceIDConflict,
 			),
-			nil,
+			false, nil,
 		)
 	}
 
@@ -186,7 +187,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 	if error := clientExtensionReconciler.updateStatus(
 		&clientExtension, context,
 		newCondition(metav1.ConditionTrue, message, ReasonDelivered),
-		&provisionedCondition,
+		operationResult != controllerutil.OperationResultNone, &provisionedCondition,
 	); error != nil {
 		return controllerruntime.Result{}, error
 	}
@@ -222,7 +223,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 	context context.Context,
 	dxpNamespace string,
 	payload string,
-) (*corev1.ConfigMap, error) {
+) (*corev1.ConfigMap, controllerutil.OperationResult, error) {
 	configMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      extProvisionName(clientExtension),
@@ -230,7 +231,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 		},
 	}
 
-	_, error := controllerutil.CreateOrUpdate(
+	operationResult, error := controllerutil.CreateOrUpdate(
 		context, clientExtensionReconciler.Client, configMap,
 		func() error {
 			if (configMap.ResourceVersion != "") && !ownsExtProvision(clientExtension, configMap) {
@@ -268,7 +269,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 	)
 
 	if errors.Is(error, errExtProvisionOwnedElsewhere) {
-		return configMap, nil
+		return configMap, controllerutil.OperationResultNone, nil
 	}
 
 	if apierrors.IsAlreadyExists(error) {
@@ -277,15 +278,15 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 		if getError := clientExtensionReconciler.APIReader.Get(
 			context, client.ObjectKeyFromObject(configMap), &existingConfigMap,
 		); getError != nil {
-			return nil, getError
+			return nil, controllerutil.OperationResultNone, getError
 		}
 
 		if !ownsExtProvision(clientExtension, &existingConfigMap) {
-			return &existingConfigMap, nil
+			return &existingConfigMap, controllerutil.OperationResultNone, nil
 		}
 	}
 
-	return nil, error
+	return nil, operationResult, error
 }
 
 func (clientExtensionReconciler *ClientExtensionReconciler) deleteStaleExtProvisions(
@@ -394,6 +395,16 @@ func (clientExtensionReconciler *ClientExtensionReconciler) provisionedCondition
 		fmt.Sprintf("DXP wrote ConfigMap %q in namespace %q.", extInitConfigMapName.Name, extInitConfigMapName.Namespace),
 		ReasonProvisioned,
 	), nil
+}
+
+func readyCondition(conditions []metav1.Condition) metav1.Condition {
+	for _, condition := range conditions {
+		if condition.Status != metav1.ConditionTrue {
+			return condition
+		}
+	}
+
+	return newCondition(metav1.ConditionTrue, "The client extension is delivered and provisioned.", ReasonReady)
 }
 
 func refusalMessage(
@@ -567,6 +578,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 	clientExtension *cxv1alpha1.ClientExtension,
 	context context.Context,
 	delivered metav1.Condition,
+	extProvisionWritten bool,
 	provisioned *metav1.Condition,
 ) error {
 	status := clientExtension.Status.DeepCopy()
@@ -585,7 +597,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 		conditions = append(conditions, provisionedCondition)
 	}
 
-	ready := conditions[len(conditions)-1]
+	ready := readyCondition(conditions)
 
 	ready.Type = cxv1alpha1.ConditionReady
 
@@ -595,6 +607,14 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 		condition.ObservedGeneration = clientExtension.Generation
 
 		meta.SetStatusCondition(&status.Conditions, condition)
+	}
+
+	if extProvisionWritten {
+		if provisionedCondition := meta.FindStatusCondition(
+			status.Conditions, cxv1alpha1.ConditionProvisioned,
+		); (provisionedCondition != nil) && (provisionedCondition.Reason == ReasonExtInitMissing) {
+			provisionedCondition.LastTransitionTime = metav1.Now()
+		}
 	}
 
 	status.ObservedGeneration = clientExtension.Generation

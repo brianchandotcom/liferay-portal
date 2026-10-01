@@ -327,6 +327,10 @@ func TestReconcileGivesDxpAGracePeriodToWriteExtInit(t *testing.T) {
 		nil, t, clientExtension, newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("able"),
 	)
 
+	recorder := record.NewFakeRecorder(10)
+
+	clientExtensionReconciler.Recorder = recorder
+
 	result, error := clientExtensionReconciler.Reconcile(
 		context.Background(),
 		controllerruntime.Request{NamespacedName: client.ObjectKeyFromObject(clientExtension)},
@@ -360,6 +364,10 @@ func TestReconcileGivesDxpAGracePeriodToWriteExtInit(t *testing.T) {
 		if condition.Message != want {
 			t.Errorf("%s message = %q, want %q", conditionType, condition.Message, want)
 		}
+	}
+
+	if len(recorder.Events) != 0 {
+		t.Errorf("Expected no event during the grace period, got %d", len(recorder.Events))
 	}
 }
 
@@ -426,11 +434,14 @@ func TestReconcileProvisionsOnceDxpWritesExtInit(t *testing.T) {
 		t.Errorf("phase = %q, want %q", phase, cxv1alpha1.PhaseReady)
 	}
 
-	for _, conditionType := range []string{cxv1alpha1.ConditionProvisioned, cxv1alpha1.ConditionReady} {
+	for conditionType, wantReason := range map[string]string{
+		cxv1alpha1.ConditionProvisioned: ReasonProvisioned,
+		cxv1alpha1.ConditionReady:       ReasonReady,
+	} {
 		condition := getCondition(clientExtension, clientExtensionReconciler, conditionType, t)
 
-		if (condition.Status != metav1.ConditionTrue) || (condition.Reason != ReasonProvisioned) {
-			t.Errorf("%s = %s / %s, want True / %s", conditionType, condition.Status, condition.Reason, ReasonProvisioned)
+		if (condition == nil) || (condition.Status != metav1.ConditionTrue) || (condition.Reason != wantReason) {
+			t.Errorf("%s = %v, want True / %s", conditionType, condition, wantReason)
 		}
 	}
 }
@@ -678,23 +689,17 @@ func TestReconcileReportsExtInitMissingAfterGracePeriod(t *testing.T) {
 
 	addOAuth2Application(clientExtension, "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oauth-application-user-agent")
 
-	clientExtension.Status.Conditions = []metav1.Condition{
-		{
-			LastTransitionTime: metav1.NewTime(time.Now().Add(-time.Minute)),
-			Message:            "DXP has not written the ext-init ConfigMap.",
-			Reason:             ReasonExtInitMissing,
-			Status:             metav1.ConditionFalse,
-			Type:               cxv1alpha1.ConditionProvisioned,
-		},
-	}
-
 	clientExtensionReconciler := newReconciler(
 		nil, t, clientExtension, newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("able"),
 	)
 
-	recorder := record.NewFakeRecorder(1)
+	recorder := record.NewFakeRecorder(10)
 
 	clientExtensionReconciler.Recorder = recorder
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	expireExtInitGracePeriod(clientExtension, clientExtensionReconciler, t)
 
 	result, error := clientExtensionReconciler.Reconcile(
 		context.Background(),
@@ -717,12 +722,18 @@ func TestReconcileReportsExtInitMissingAfterGracePeriod(t *testing.T) {
 		t.Errorf("Ready = %v, want reason %s", ready, ReasonExtInitMissing)
 	}
 
-	if len(recorder.Events) == 0 {
-		t.Fatal("Expected a warning event once the grace period has passed")
+	if len(recorder.Events) != 1 {
+		t.Fatalf("Expected one warning event once the grace period has passed, got %d", len(recorder.Events))
 	}
 
 	if event := <-recorder.Events; !strings.HasPrefix(event, corev1.EventTypeWarning+" "+ReasonExtInitMissing+" ") {
 		t.Errorf("event = %q, want a %s warning", event, ReasonExtInitMissing)
+	}
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	if len(recorder.Events) != 0 {
+		t.Errorf("Expected the warning event not to repeat, got %d more", len(recorder.Events))
 	}
 }
 
@@ -787,12 +798,78 @@ func TestReconcileRequiresNoExtInitWithoutOAuth2Application(t *testing.T) {
 		t.Errorf("phase = %q, want %q", phase, cxv1alpha1.PhaseReady)
 	}
 
-	for _, conditionType := range []string{cxv1alpha1.ConditionProvisioned, cxv1alpha1.ConditionReady} {
+	for conditionType, wantReason := range map[string]string{
+		cxv1alpha1.ConditionProvisioned: ReasonNoExtInitRequired,
+		cxv1alpha1.ConditionReady:       ReasonReady,
+	} {
 		condition := getCondition(clientExtension, clientExtensionReconciler, conditionType, t)
 
-		if (condition == nil) || (condition.Status != metav1.ConditionTrue) || (condition.Reason != ReasonNoExtInitRequired) {
-			t.Errorf("%s = %v, want True / %s", conditionType, condition, ReasonNoExtInitRequired)
+		if (condition == nil) || (condition.Status != metav1.ConditionTrue) || (condition.Reason != wantReason) {
+			t.Errorf("%s = %v, want True / %s", conditionType, condition, wantReason)
 		}
+	}
+
+	if ready := getCondition(clientExtension, clientExtensionReconciler, cxv1alpha1.ConditionReady, t); ready.Message != "The client extension is delivered and provisioned." {
+		t.Errorf("Ready message = %q, want a summary rather than the OAuth2 detail", ready.Message)
+	}
+}
+
+func TestReconcileRestartsGracePeriodWhenPayloadChanges(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "able")
+
+	addOAuth2Application(clientExtension, "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oauth-application-user-agent")
+
+	clientExtensionReconciler := newReconciler(
+		nil, t, clientExtension, newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("able"),
+	)
+
+	recorder := record.NewFakeRecorder(10)
+
+	clientExtensionReconciler.Recorder = recorder
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	expireExtInitGracePeriod(clientExtension, clientExtensionReconciler, t)
+
+	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhaseDegraded {
+		t.Fatalf("phase = %q, want %q", phase, cxv1alpha1.PhaseDegraded)
+	}
+
+	if len(recorder.Events) != 1 {
+		t.Fatalf("Expected one warning event once the grace period has passed, got %d", len(recorder.Events))
+	}
+
+	<-recorder.Events
+
+	updatedClientExtension := getClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	updatedClientExtension.Spec.Configs["com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oauth-application-user-agent"] = cxv1alpha1.Configuration{
+		JSON: apiextensionsv1.JSON{Raw: []byte(`{"name": "Fixed OAuth2 Application"}`)},
+	}
+
+	if error := clientExtensionReconciler.Update(context.Background(), updatedClientExtension); error != nil {
+		t.Fatal(error)
+	}
+
+	result, error := clientExtensionReconciler.Reconcile(
+		context.Background(),
+		controllerruntime.Request{NamespacedName: client.ObjectKeyFromObject(clientExtension)},
+	)
+
+	if error != nil {
+		t.Fatalf("Reconcile() error = %v, want nil", error)
+	}
+
+	if (result.RequeueAfter <= 0) || (result.RequeueAfter > extInitGracePeriod) {
+		t.Errorf("Reconcile() RequeueAfter = %v, want a retry within %v", result.RequeueAfter, extInitGracePeriod)
+	}
+
+	if phase := getClientExtension(clientExtension, clientExtensionReconciler, t).Status.Phase; phase != cxv1alpha1.PhasePending {
+		t.Errorf("phase = %q, want %q: DXP has only just received the new payload", phase, cxv1alpha1.PhasePending)
+	}
+
+	if len(recorder.Events) != 0 {
+		t.Errorf("Expected no event for a payload DXP has only just received, got %d", len(recorder.Events))
 	}
 }
 
@@ -909,6 +986,28 @@ func TestRequestsForConfigMapMatchesExtInitByServiceID(t *testing.T) {
 func addOAuth2Application(clientExtension *cxv1alpha1.ClientExtension, pid string) {
 	clientExtension.Spec.Configs[pid] = cxv1alpha1.Configuration{
 		JSON: apiextensionsv1.JSON{Raw: []byte(`{"name": "Sample OAuth2 Application"}`)},
+	}
+}
+
+func expireExtInitGracePeriod(
+	clientExtension *cxv1alpha1.ClientExtension,
+	clientExtensionReconciler *ClientExtensionReconciler,
+	t *testing.T,
+) {
+	t.Helper()
+
+	updatedClientExtension := getClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	provisioned := meta.FindStatusCondition(updatedClientExtension.Status.Conditions, cxv1alpha1.ConditionProvisioned)
+
+	if (provisioned == nil) || (provisioned.Reason != ReasonExtInitMissing) {
+		t.Fatalf("Provisioned = %v, want reason %s", provisioned, ReasonExtInitMissing)
+	}
+
+	provisioned.LastTransitionTime = metav1.NewTime(time.Now().Add(-extInitGracePeriod - time.Second))
+
+	if error := clientExtensionReconciler.Status().Update(context.Background(), updatedClientExtension); error != nil {
+		t.Fatal(error)
 	}
 }
 

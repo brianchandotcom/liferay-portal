@@ -5,14 +5,21 @@
 
 package com.liferay.portal.vulcan.internal.extension.test;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -22,8 +29,10 @@ import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -107,6 +116,31 @@ public class EntityExtensionTest {
 	}
 
 	@Test
+	public void testFilterExtendedProperties() throws Exception {
+		TestExtensionProvider testExtensionProvider = new TestExtensionProvider(
+			false);
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				ExtensionProvider.class, testExtensionProvider, null));
+
+		_testFilterExtendedProperties(
+			"test-vulcan/test", testExtensionProvider.getPropertyName(),
+			path -> HTTPTestUtil.invokeToJSONObject(
+				null, path, Http.Method.GET));
+		_testFilterExtendedProperties(
+			"test-vulcan/tests", testExtensionProvider.getPropertyName(),
+			path -> {
+				JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+					null, path, Http.Method.GET);
+
+				JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+				return itemsJSONArray.getJSONObject(0);
+			});
+	}
+
+	@Test
 	public void testProcessCommitedRequest() throws Exception {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -161,6 +195,24 @@ public class EntityExtensionTest {
 			return Collections.singleton(this);
 		}
 
+		@GET
+		@Path("/test")
+		@Produces(MediaType.APPLICATION_JSON)
+		public TestClass getTest() {
+			TestClass testClass = new TestClass();
+
+			testClass.setGroupId(RandomTestUtil.randomLong());
+
+			return testClass;
+		}
+
+		@GET
+		@Path("/tests")
+		@Produces(MediaType.APPLICATION_JSON)
+		public Page<TestClass> getTestsPage() {
+			return Page.of(Collections.singletonList(getTest()));
+		}
+
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Path("/test")
 		@POST
@@ -197,6 +249,33 @@ public class EntityExtensionTest {
 		return httpURLConnection.getResponseCode();
 	}
 
+	private void _testFilterExtendedProperties(
+			String path, String propertyName,
+			UnsafeFunction<String, JSONObject, Exception> unsafeFunction)
+		throws Exception {
+
+		JSONObject jsonObject = unsafeFunction.apply(path);
+
+		Assert.assertTrue(jsonObject.has("groupId"));
+		Assert.assertTrue(jsonObject.has(propertyName));
+
+		jsonObject = unsafeFunction.apply(path + "?fields=groupId");
+
+		Assert.assertTrue(jsonObject.has("groupId"));
+		Assert.assertFalse(jsonObject.has(propertyName));
+
+		jsonObject = unsafeFunction.apply(path + "?fields=" + propertyName);
+
+		Assert.assertFalse(jsonObject.has("groupId"));
+		Assert.assertTrue(jsonObject.has(propertyName));
+
+		jsonObject = unsafeFunction.apply(
+			path + "?restrictFields=" + propertyName);
+
+		Assert.assertTrue(jsonObject.has("groupId"));
+		Assert.assertFalse(jsonObject.has(propertyName));
+	}
+
 	private BundleContext _bundleContext;
 
 	@Inject
@@ -206,6 +285,7 @@ public class EntityExtensionTest {
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 
+	@JsonFilter("Liferay.Vulcan")
 	private static class TestClass {
 
 		public long getGroupId() {
@@ -254,6 +334,10 @@ public class EntityExtensionTest {
 			long companyId, Object entity) {
 
 			return Collections.emptyList();
+		}
+
+		public String getPropertyName() {
+			return _propertyName;
 		}
 
 		@Override

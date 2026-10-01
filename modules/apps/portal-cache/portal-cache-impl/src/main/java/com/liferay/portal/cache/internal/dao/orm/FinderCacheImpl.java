@@ -298,6 +298,7 @@ public class FinderCacheImpl
 		Serializable cacheKey = _encodeCacheKey(finderPath, args);
 
 		Serializable portalCacheValue = cacheValue;
+		int timeToLive = PortalCache.DEFAULT_TIME_TO_LIVE;
 
 		if ((result instanceof Long count) &&
 			_isMaintainedCountFinderPath(finderPath)) {
@@ -320,11 +321,12 @@ public class FinderCacheImpl
 			}
 
 			portalCacheValue = new AtomicLong(count);
+			timeToLive = _countTimeToLive;
 		}
 
 		if (!TransactionalPortalCacheUtil.completePut(
 				_getCTPortalCache(finderPath.getCacheName()), cacheKey,
-				portalCacheValue)) {
+				portalCacheValue, timeToLive)) {
 
 			if (_isLocalCacheEnabled()) {
 				Map<LocalCacheKey, Serializable> localCache = _localCache.get();
@@ -565,6 +567,16 @@ public class FinderCacheImpl
 		_bundleContext = bundleContext;
 
 		_countMaintenanceEnabled = !DBInitUtil.isReadWriteDataSource();
+
+		if (PropsValues.CLUSTER_LINK_ENABLED) {
+			_countTimeToLive = GetterUtil.getInteger(
+				PropsUtil.get(
+					PropsKeys.
+						VALUE_OBJECT_FINDER_CACHE_COUNT_CLUSTER_TIME_TO_LIVE));
+		}
+		else {
+			_countTimeToLive = PortalCache.DEFAULT_TIME_TO_LIVE;
+		}
 
 		_valueObjectFinderCacheEnabled = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED));
@@ -1158,7 +1170,7 @@ public class FinderCacheImpl
 			TransactionalPortalCacheUtil.completePut(
 				countKey._portalCache.getWrappedPortalCache(),
 				countKey._cacheKey, new AtomicLong(privateCount._count),
-				privateCount._startSequence);
+				privateCount._startSequence, _countTimeToLive);
 		}
 	}
 
@@ -1254,6 +1266,7 @@ public class FinderCacheImpl
 	private ClusterExecutor _clusterExecutor;
 
 	private boolean _countMaintenanceEnabled;
+	private int _countTimeToLive;
 	private final Map<String, Set<String>> _dslQueryCacheNamesMap =
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, FinderPath>> _finderPathsMap =

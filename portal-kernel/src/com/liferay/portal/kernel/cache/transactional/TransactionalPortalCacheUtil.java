@@ -183,28 +183,38 @@ public class TransactionalPortalCacheUtil {
 	public static <K extends Serializable, V> boolean completePut(
 		PortalCache<K, V> portalCache, K key, V value) {
 
+		return completePut(
+			portalCache, key, value, PortalCache.DEFAULT_TIME_TO_LIVE);
+	}
+
+	public static <K extends Serializable, V> boolean completePut(
+		PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
+
 		PendingPut pendingPut = _pendingPut.get();
 
 		if ((pendingPut == null) || (pendingPut._portalCache != portalCache) ||
 			!key.equals(pendingPut._key) || isEnabled()) {
 
-			PortalCacheHelperUtil.putWithoutReplicator(portalCache, key, value);
+			PortalCacheHelperUtil.putWithoutReplicator(
+				portalCache, key, value, timeToLive);
 
 			return true;
 		}
 
 		_pendingPut.remove();
 
-		return completePut(portalCache, key, value, pendingPut._sequence);
+		return completePut(
+			portalCache, key, value, pendingPut._sequence, timeToLive);
 	}
 
 	public static <K extends Serializable, V> boolean completePut(
-		PortalCache<K, V> portalCache, K key, V value, long sequence) {
+		PortalCache<K, V> portalCache, K key, V value, long sequence,
+		int timeToLive) {
 
 		return _invalidationSequence.publishKey(
 			_getRegionName(portalCache), key, sequence,
 			() -> PortalCacheHelperUtil.putWithoutReplicator(
-				portalCache, key, value),
+				portalCache, key, value, timeToLive),
 			() -> PortalCacheHelperUtil.removeWithoutReplicator(
 				portalCache, key));
 	}

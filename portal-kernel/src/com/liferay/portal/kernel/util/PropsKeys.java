@@ -2893,6 +2893,10 @@ public interface PropsKeys {
 	public static final String VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE =
 		"value.object.entity.thread.local.cache.max.size";
 
+	public static final String
+		VALUE_OBJECT_FINDER_CACHE_COUNT_CLUSTER_TIME_TO_LIVE =
+			"value.object.finder.cache.count.cluster.time.to.live";
+
 	public static final String VALUE_OBJECT_FINDER_CACHE_ENABLED =
 		"value.object.finder.cache.enabled";
 

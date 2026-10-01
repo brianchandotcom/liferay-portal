@@ -43,9 +43,6 @@ public class DataCleanupPreupgradeProcessUtilTest {
 		try (MockedStatic<DBManagerUtil> dbManagerUtilMockedStatic =
 				Mockito.mockStatic(DBManagerUtil.class)) {
 
-			String primaryKeyColumnName = RandomTestUtil.randomString();
-			String tableName = RandomTestUtil.randomString();
-
 			DB db = Mockito.mock(DB.class);
 
 			dbManagerUtilMockedStatic.when(
@@ -56,6 +53,8 @@ public class DataCleanupPreupgradeProcessUtilTest {
 
 			Connection connection1 = Mockito.mock(Connection.class);
 
+			String tableName = RandomTestUtil.randomString();
+
 			Mockito.when(
 				db.getPrimaryKeyColumnNames(connection1, tableName)
 			).thenReturn(
@@ -63,6 +62,8 @@ public class DataCleanupPreupgradeProcessUtilTest {
 			);
 
 			Connection connection2 = Mockito.mock(Connection.class);
+
+			String primaryKeyColumnName = RandomTestUtil.randomString();
 
 			Mockito.when(
 				db.getPrimaryKeyColumnNames(connection2, tableName)
@@ -92,8 +93,18 @@ public class DataCleanupPreupgradeProcessUtilTest {
 				connection2, connection1, db, dbInspector3, dbInspector1,
 				primaryKeyColumnName, null, tableName);
 
-			_testGetPrimaryKeyColumnNameWithSQLException(
-				connection1, tableName);
+			DBInspector dbInspector4 = Mockito.mock(DBInspector.class);
+
+			Mockito.when(
+				dbInspector4.getCatalog()
+			).thenThrow(
+				new SQLException()
+			);
+
+			Assert.assertThrows(
+				SQLException.class,
+				() -> DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
+					connection1, dbInspector4, tableName));
 		}
 	}
 
@@ -158,24 +169,6 @@ public class DataCleanupPreupgradeProcessUtilTest {
 		);
 
 		DataCleanupPreupgradeProcessUtil.disableCache();
-	}
-
-	private void _testGetPrimaryKeyColumnNameWithSQLException(
-			Connection connection, String tableName)
-		throws Exception {
-
-		DBInspector dbInspector = Mockito.mock(DBInspector.class);
-
-		Mockito.when(
-			dbInspector.getCatalog()
-		).thenThrow(
-			new SQLException()
-		);
-
-		Assert.assertThrows(
-			SQLException.class,
-			() -> DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
-				connection, dbInspector, tableName));
 	}
 
 }

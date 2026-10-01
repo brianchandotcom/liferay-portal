@@ -5,15 +5,11 @@
 
 package com.liferay.mcp.server.rest.internal.util;
 
-import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationConfig;
-import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
 
 import com.liferay.mcp.server.rest.dto.v1_0.Tool;
 import com.liferay.mcp.server.rest.dto.v1_0.ToolSet;
 import com.liferay.mcp.server.rest.dto.v1_0.ToolSummary;
-import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -21,7 +17,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -29,7 +24,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,11 +38,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.ws.rs.core.Response;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -72,23 +61,12 @@ public class ToolSetUtil {
 		Map<String, String> restrictFieldsMap, String toolName,
 		String toolSetName) {
 
-		JSONObject openAPIJSONObject = _getOpenAPIJSONObject(
-			httpServletRequest, _getOpenAPIDocument(toolSetName), toolSetName);
-
 		return OpenAPIUtil.getTool(
 			!Objects.equals(toolSetName, _MCP_SERVER_TOOL_SET_NAME),
-			inputSchema -> {
-				if (!requiredInputSchemaOnly) {
-					return inputSchema;
-				}
-
-				return _toRequiredInputSchema(
-					inputSchema,
-					_isObjectEntrySchema(
-						OpenAPIUtil.getRequestBodySchemaJSONObject(
-							openAPIJSONObject, toolName)));
-			},
-			openAPIJSONObject,
+			_getOpenAPIJSONObject(
+				httpServletRequest, _getOpenAPIDocument(toolSetName),
+				toolSetName),
+			requiredInputSchemaOnly,
 			_getRestrictFields(restrictFieldsMap, toolName, toolSetName),
 			toolName);
 	}
@@ -234,43 +212,6 @@ public class ToolSetUtil {
 		).build();
 	}
 
-	private static Map<String, Object> _collapseNestedProperties(
-		Map<String, Object> schema) {
-
-		Map<String, Object> properties = (Map<String, Object>)schema.get(
-			"properties");
-
-		if (properties == null) {
-			return schema;
-		}
-
-		Map<String, Object> collapsedProperties = new LinkedHashMap<>();
-
-		for (Map.Entry<String, Object> entry : properties.entrySet()) {
-			Object value = entry.getValue();
-
-			if ((value instanceof Map<?, ?> valueMap) &&
-				(valueMap.containsKey("items") ||
-				 valueMap.containsKey("properties"))) {
-
-				collapsedProperties.put(
-					entry.getKey(),
-					HashMapBuilder.<String, Object>put(
-						"type", valueMap.get("type")
-					).build());
-			}
-			else {
-				collapsedProperties.put(entry.getKey(), value);
-			}
-		}
-
-		return HashMapBuilder.<String, Object>putAll(
-			schema
-		).put(
-			"properties", collapsedProperties
-		).build();
-	}
-
 	private static String _getContent(String content) {
 		if (Validator.isNull(content) || (content.charAt(0) != '{') ||
 			!content.contains("\"actions\"")) {
@@ -296,34 +237,6 @@ public class ToolSetUtil {
 
 			return content;
 		}
-	}
-
-	private static Set<String> _getObjectEntrySystemPropertyNames() {
-		if (_objectEntrySystemPropertyNames != null) {
-			return _objectEntrySystemPropertyNames;
-		}
-
-		ObjectMapper objectMapper = ObjectMapperProviderUtil.getObjectMapper();
-
-		SerializationConfig serializationConfig =
-			objectMapper.getSerializationConfig();
-
-		BeanDescription beanDescription = serializationConfig.introspect(
-			serializationConfig.constructType(ObjectEntry.class));
-
-		Set<String> objectEntrySystemPropertyNames = new HashSet<>();
-
-		for (BeanPropertyDefinition beanPropertyDefinition :
-				beanDescription.findProperties()) {
-
-			objectEntrySystemPropertyNames.add(
-				beanPropertyDefinition.getName());
-		}
-
-		_objectEntrySystemPropertyNames = Collections.unmodifiableSet(
-			objectEntrySystemPropertyNames);
-
-		return _objectEntrySystemPropertyNames;
 	}
 
 	private static HeadlessApplicationProvider.OpenAPIDocument
@@ -436,135 +349,6 @@ public class ToolSetUtil {
 		return restrictFieldsMap.get(getToolKey(toolName, toolSetName));
 	}
 
-	private static boolean _isObjectEntrySchema(JSONObject schemaJSONObject) {
-		if (schemaJSONObject == null) {
-			return false;
-		}
-
-		return Objects.equals(
-			JSONUtil.getValueAsString(
-				schemaJSONObject, "JSONObject/properties",
-				"JSONObject/x-class-name", "Object/default"),
-			ObjectEntry.class.getName());
-	}
-
-	private static Map<String, Object> _removeObjectEntrySystemProperties(
-		Map<String, Object> schema) {
-
-		Map<String, Object> properties = (Map<String, Object>)schema.get(
-			"properties");
-
-		Map<String, Object> customProperties = new LinkedHashMap<>(properties);
-
-		Set<String> keys = customProperties.keySet();
-
-		keys.removeAll(_getObjectEntrySystemPropertyNames());
-
-		return HashMapBuilder.<String, Object>putAll(
-			schema
-		).put(
-			"properties", customProperties
-		).build();
-	}
-
-	private static Map<String, Object> _toRequiredInputSchema(
-		Map<String, ?> inputSchema, boolean objectToolSet) {
-
-		Map<String, Object> requiredInputSchema = _toRequiredSchema(
-			0, objectToolSet, inputSchema);
-
-		if (requiredInputSchema == null) {
-			requiredInputSchema = HashMapBuilder.<String, Object>put(
-				"properties", new HashMap<String, Object>()
-			).put(
-				"type", "object"
-			).build();
-		}
-
-		Map<String, ?> properties = (Map<String, ?>)inputSchema.get(
-			"properties");
-
-		if (properties.containsKey("fields")) {
-			Map<String, Object> requiredProperties =
-				(Map<String, Object>)requiredInputSchema.get("properties");
-
-			requiredProperties.put("fields", properties.get("fields"));
-		}
-
-		return requiredInputSchema;
-	}
-
-	private static Map<String, Object> _toRequiredPropertySchema(
-		int depth, boolean objectToolSet, Map<String, Object> propertySchema) {
-
-		Map<String, Object> requiredSchema = _toRequiredSchema(
-			depth + 1, objectToolSet, propertySchema);
-
-		if (requiredSchema != null) {
-			Object description = propertySchema.get("description");
-
-			if (description != null) {
-				requiredSchema.put("description", description);
-			}
-
-			return requiredSchema;
-		}
-
-		if (!propertySchema.containsKey("properties")) {
-			return propertySchema;
-		}
-
-		if (objectToolSet && (depth == 0)) {
-			propertySchema = _removeObjectEntrySystemProperties(propertySchema);
-		}
-
-		return _collapseNestedProperties(propertySchema);
-	}
-
-	private static Map<String, Object> _toRequiredSchema(
-		int depth, boolean objectToolSet, Map<String, ?> schema) {
-
-		if ((schema == null) || (depth > 4)) {
-			return null;
-		}
-
-		List<String> requiredPropertyNames = (List<String>)schema.get(
-			"required");
-
-		Map<String, Object> properties = (Map<String, Object>)schema.get(
-			"properties");
-
-		if (ListUtil.isEmpty(requiredPropertyNames) || (properties == null)) {
-			return null;
-		}
-
-		Map<String, Object> requiredPropertySchemas = new LinkedHashMap<>();
-
-		for (String requiredPropertyName : requiredPropertyNames) {
-			if (properties.get(requiredPropertyName) instanceof
-					Map<?, ?> propertySchema) {
-
-				requiredPropertySchemas.put(
-					requiredPropertyName,
-					_toRequiredPropertySchema(
-						depth, objectToolSet,
-						(Map<String, Object>)propertySchema));
-			}
-		}
-
-		if (requiredPropertySchemas.isEmpty()) {
-			return null;
-		}
-
-		return HashMapBuilder.<String, Object>put(
-			"properties", requiredPropertySchemas
-		).put(
-			"required", new ArrayList<>(requiredPropertySchemas.keySet())
-		).put(
-			"type", schema.get("type")
-		).build();
-	}
-
 	private static final String _MCP_SERVER_TOOL_SET_NAME = "mcp-server-v1.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(ToolSetUtil.class);
@@ -572,7 +356,6 @@ public class ToolSetUtil {
 	private static final Snapshot<HeadlessApplicationProvider>
 		_headlessApplicationProviderSnapshot = new Snapshot<>(
 			ToolSetUtil.class, HeadlessApplicationProvider.class);
-	private static volatile Set<String> _objectEntrySystemPropertyNames;
 	private static final Map<String, JSONObject> _openAPIJSONObjects =
 		new ConcurrentHashMap<>();
 	private static final Snapshot<VulcanRequestForwarder>

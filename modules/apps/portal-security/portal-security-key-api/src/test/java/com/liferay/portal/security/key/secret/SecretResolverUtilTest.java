@@ -8,6 +8,8 @@ package com.liferay.portal.security.key.secret;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.security.key.KeyReference;
+import com.liferay.portal.security.key.KeyReferenceUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;
@@ -46,7 +48,7 @@ public class SecretResolverUtilTest {
 	public void testResolve() {
 		long companyId = RandomTestUtil.randomLong();
 		String resolvedValue = RandomTestUtil.randomString();
-		String value = RandomTestUtil.randomString();
+		String value = _randomKeyReferenceString();
 
 		SecretResolver secretResolver = Mockito.mock(SecretResolver.class);
 
@@ -60,6 +62,17 @@ public class SecretResolverUtilTest {
 
 		Assert.assertSame(
 			resolvedValue, SecretResolverUtil.resolve(companyId, value));
+
+		String plainValue = RandomTestUtil.randomString();
+
+		Assert.assertSame(
+			plainValue, SecretResolverUtil.resolve(companyId, plainValue));
+
+		Mockito.verify(
+			secretResolver, Mockito.never()
+		).resolve(
+			companyId, plainValue
+		);
 	}
 
 	@Test
@@ -69,7 +82,24 @@ public class SecretResolverUtilTest {
 		Assert.assertThrows(
 			IllegalStateException.class,
 			() -> SecretResolverUtil.resolve(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString()));
+				RandomTestUtil.randomLong(), _randomKeyReferenceString()));
+
+		String plainValue = RandomTestUtil.randomString();
+
+		Assert.assertSame(
+			plainValue,
+			SecretResolverUtil.resolve(
+				RandomTestUtil.randomLong(), plainValue));
+
+		Assert.assertNull(
+			SecretResolverUtil.resolve(RandomTestUtil.randomLong(), null));
+	}
+
+	private String _randomKeyReferenceString() {
+		return KeyReferenceUtil.toKeyReferenceString(
+			new KeyReference(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				KeyReference.Type.SECRET));
 	}
 
 	private void _setUpSecretResolverSnapshot(SecretResolver secretResolver) {

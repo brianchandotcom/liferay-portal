@@ -73,12 +73,6 @@ public class CMISAtomPubRepositoryTest {
 		_secretResolver = Mockito.mock(SecretResolver.class);
 
 		Mockito.when(
-			_secretResolver.resolve(Mockito.anyLong(), Mockito.any())
-		).thenAnswer(
-			invocationOnMock -> invocationOnMock.getArgument(1)
-		);
-
-		Mockito.when(
 			_secretResolver.resolve(CompanyConstants.SYSTEM, keyReferenceString)
 		).thenReturn(
 			password

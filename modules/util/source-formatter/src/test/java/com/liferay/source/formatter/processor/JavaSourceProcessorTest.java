@@ -654,6 +654,26 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJavaRecordPatterns() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"JavaRecordPatterns.testjava"
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 17
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 17
+			).addExpectedMessage(
+				"Do not use record patterns", 18
+			).addExpectedMessage(
+				"Do not use record patterns", 19
+			).addExpectedMessage(
+				"Do not use record patterns", 25
+			).addExpectedMessage(
+				"Do not use record patterns", 30
+			));
+	}
+
+	@Test
 	public void testJavaTermDividers() throws Exception {
 		test("JavaTermDividers.testjava");
 	}

@@ -176,6 +176,56 @@ describe('FieldTimePicker', () => {
 		).toHaveAccessibleDescription('This field is required.');
 	});
 
+	it('follows a value replaced from outside', () => {
+		const {rerender} = render(
+			<FieldTimePicker
+				id="time"
+				label="Time of Day"
+				name="time"
+				value="17:03"
+			/>
+		);
+
+		rerender(
+			<FieldTimePicker
+				id="time"
+				label="Time of Day"
+				name="time"
+				value="09:45"
+			/>
+		);
+
+		expect(screen.getByLabelText('hours')).toHaveValue('09');
+		expect(screen.getByLabelText('minutes')).toHaveValue('45');
+		expect(screen.getByLabelText('am-pm')).toHaveValue('AM');
+	});
+
+	it('keeps the remaining segments while a cleared one is echoed back as empty', () => {
+		const {rerender} = render(
+			<FieldTimePicker
+				id="time"
+				label="Time of Day"
+				name="time"
+				value="17:03"
+			/>
+		);
+
+		fireEvent.keyDown(screen.getByLabelText('hours'), {key: 'Backspace'});
+
+		rerender(
+			<FieldTimePicker
+				id="time"
+				label="Time of Day"
+				name="time"
+				value=""
+			/>
+		);
+
+		expect(screen.getByLabelText('hours')).toHaveValue('--');
+		expect(screen.getByLabelText('minutes')).toHaveValue('03');
+		expect(screen.getByLabelText('am-pm')).toHaveValue('PM');
+	});
+
 	it('has no accessibility violations', async () => {
 		const {container} = render(
 			<FieldTimePicker

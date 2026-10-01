@@ -30,15 +30,18 @@ const (
 	ReasonDelivered              = "Delivered"
 	ReasonDeliveryNotPermitted   = "DeliveryNotPermitted"
 	ReasonDxpNamespaceNotFound   = "DxpNamespaceNotFound"
+	ReasonExtInitMissing         = "ExtInitMissing"
 	ReasonNamespaceNotPermitted  = "NamespaceNotPermitted"
+	ReasonNoExtInitRequired      = "NoExtInitRequired"
+	ReasonProvisioned            = "Provisioned"
 	ReasonServiceIDConflict      = "ServiceIDConflict"
 	ReasonUnknownVirtualInstance = "UnknownVirtualInstance"
 )
 
 const deliveryClusterRoleName = "client-extension-delivery-cluster-role"
 
-// RoleBindings, and ConfigMaps without a metadataType label, are not watched,
-// so a refusal that one of them can lift is retried on a timer.
+const extInitGracePeriod = 30 * time.Second
+
 const refusalRequeueInterval = time.Minute
 
 // +kubebuilder:rbac:groups="",resources=configmaps,verbs=get;list;watch
@@ -68,8 +71,11 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 
 	if refusedReason != "" {
 		return controllerruntime.Result{}, clientExtensionReconciler.updateStatus(
-			&clientExtension, metav1.ConditionFalse, context,
-			refusalMessage(&clientExtension, dxpNamespace, refusedReason), refusedReason,
+			&clientExtension, context,
+			newCondition(
+				metav1.ConditionFalse, refusalMessage(&clientExtension, dxpNamespace, refusedReason), refusedReason,
+			),
+			nil,
 		)
 	}
 
@@ -86,8 +92,12 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 
 	if apierrors.IsNotFound(error) {
 		return controllerruntime.Result{}, clientExtensionReconciler.updateStatus(
-			&clientExtension, metav1.ConditionFalse, context,
-			unknownVirtualInstanceMessage(&clientExtension, dxpNamespace), ReasonUnknownVirtualInstance,
+			&clientExtension, context,
+			newCondition(
+				metav1.ConditionFalse, unknownVirtualInstanceMessage(&clientExtension, dxpNamespace),
+				ReasonUnknownVirtualInstance,
+			),
+			nil,
 		)
 	}
 
@@ -108,12 +118,16 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 	if apierrors.IsForbidden(error) {
 		return controllerruntime.Result{RequeueAfter: refusalRequeueInterval},
 			clientExtensionReconciler.updateStatus(
-				&clientExtension, metav1.ConditionFalse, context,
-				fmt.Sprintf(
-					"The DXP operator is not permitted to write ConfigMaps in namespace %q. DXP grants that by binding ClusterRole %q to ServiceAccount %q there.",
-					dxpNamespace, deliveryClusterRoleName, clientExtensionReconciler.ServiceAccount,
+				&clientExtension, context,
+				newCondition(
+					metav1.ConditionFalse,
+					fmt.Sprintf(
+						"The DXP operator is not permitted to write ConfigMaps in namespace %q. DXP grants that by binding ClusterRole %q to ServiceAccount %q there.",
+						dxpNamespace, deliveryClusterRoleName, clientExtensionReconciler.ServiceAccount,
+					),
+					ReasonDeliveryNotPermitted,
 				),
-				ReasonDeliveryNotPermitted,
+				nil,
 			)
 	}
 
@@ -123,9 +137,12 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 
 	if conflictingConfigMap != nil {
 		return controllerruntime.Result{RequeueAfter: refusalRequeueInterval}, clientExtensionReconciler.updateStatus(
-			&clientExtension, metav1.ConditionFalse, context,
-			serviceIDConflictMessage(&clientExtension, conflictingConfigMap),
-			ReasonServiceIDConflict,
+			&clientExtension, context,
+			newCondition(
+				metav1.ConditionFalse, serviceIDConflictMessage(&clientExtension, conflictingConfigMap),
+				ReasonServiceIDConflict,
+			),
+			nil,
 		)
 	}
 
@@ -158,9 +175,25 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 		)
 	}
 
-	return controllerruntime.Result{}, clientExtensionReconciler.updateStatus(
-		&clientExtension, metav1.ConditionTrue, context, message, ReasonDelivered,
+	provisionedCondition, error := clientExtensionReconciler.provisionedCondition(
+		&clientExtension, context, dxpNamespace,
 	)
+
+	if error != nil {
+		return controllerruntime.Result{}, error
+	}
+
+	if error := clientExtensionReconciler.updateStatus(
+		&clientExtension, context,
+		newCondition(metav1.ConditionTrue, message, ReasonDelivered),
+		&provisionedCondition,
+	); error != nil {
+		return controllerruntime.Result{}, error
+	}
+
+	return controllerruntime.Result{
+		RequeueAfter: extInitGraceRemaining(clientExtension.Status.Conditions),
+	}, nil
 }
 
 func (clientExtensionReconciler *ClientExtensionReconciler) SetupWithManager(
@@ -271,9 +304,6 @@ func (clientExtensionReconciler *ClientExtensionReconciler) deleteStaleExtProvis
 
 		error := clientExtensionReconciler.Delete(context, configMap)
 
-		// Reported in status rather than as an event, which would repeat on every
-		// reconcile for as long as the namespace refuses the delete.
-
 		if apierrors.IsForbidden(error) {
 			undeletedConfigMapNames = append(
 				undeletedConfigMapNames, fmt.Sprintf("%q", client.ObjectKeyFromObject(configMap).String()),
@@ -290,6 +320,16 @@ func (clientExtensionReconciler *ClientExtensionReconciler) deleteStaleExtProvis
 	slices.Sort(undeletedConfigMapNames)
 
 	return undeletedConfigMapNames, nil
+}
+
+func extInitGraceRemaining(conditions []metav1.Condition) time.Duration {
+	provisioned := meta.FindStatusCondition(conditions, cxv1alpha1.ConditionProvisioned)
+
+	if (provisioned == nil) || (provisioned.Reason != ReasonExtInitMissing) {
+		return 0
+	}
+
+	return max(time.Until(provisioned.LastTransitionTime.Add(extInitGracePeriod)), 0)
 }
 
 func (clientExtensionReconciler *ClientExtensionReconciler) listOwnedExtProvisions(
@@ -309,6 +349,51 @@ func (clientExtensionReconciler *ClientExtensionReconciler) listOwnedExtProvisio
 	}
 
 	return configMapList.Items, nil
+}
+
+func newCondition(conditionStatus metav1.ConditionStatus, message string, reason string) metav1.Condition {
+	return metav1.Condition{Message: message, Reason: reason, Status: conditionStatus}
+}
+
+func (clientExtensionReconciler *ClientExtensionReconciler) provisionedCondition(
+	clientExtension *cxv1alpha1.ClientExtension,
+	context context.Context,
+	dxpNamespace string,
+) (metav1.Condition, error) {
+	if !requiresExtInit(clientExtension) {
+		return newCondition(
+			metav1.ConditionTrue,
+			"The configs declare no OAuth2 application, so they require no ext-init ConfigMap from DXP.",
+			ReasonNoExtInitRequired,
+		), nil
+	}
+
+	var extInitConfigMap corev1.ConfigMap
+
+	extInitConfigMapName := types.NamespacedName{Name: extInitName(clientExtension), Namespace: dxpNamespace}
+
+	error := clientExtensionReconciler.Get(context, extInitConfigMapName, &extInitConfigMap)
+
+	if apierrors.IsNotFound(error) {
+		return newCondition(
+			metav1.ConditionFalse,
+			fmt.Sprintf(
+				"DXP has not written ConfigMap %q in namespace %q, which the OAuth2 applications in the configs require.",
+				extInitConfigMapName.Name, extInitConfigMapName.Namespace,
+			),
+			ReasonExtInitMissing,
+		), nil
+	}
+
+	if error != nil {
+		return metav1.Condition{}, error
+	}
+
+	return newCondition(
+		metav1.ConditionTrue,
+		fmt.Sprintf("DXP wrote ConfigMap %q in namespace %q.", extInitConfigMapName.Name, extInitConfigMapName.Namespace),
+		ReasonProvisioned,
+	), nil
 }
 
 func refusalMessage(
@@ -336,7 +421,9 @@ func (clientExtensionReconciler *ClientExtensionReconciler) requestsForConfigMap
 
 	metadataType := labels[LabelMetadataType]
 
-	if (metadataType != MetadataTypeDxp) && (metadataType != MetadataTypeExtProvision) {
+	if (metadataType != MetadataTypeDxp) && (metadataType != MetadataTypeExtInit) &&
+		(metadataType != MetadataTypeExtProvision) {
+
 		return nil
 	}
 
@@ -363,8 +450,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) requestsForConfigMap
 			continue
 		}
 
-		if (metadataType == MetadataTypeExtProvision) &&
-			(clientExtension.Spec.ServiceID != labels[LabelServiceID]) {
+		if (metadataType != MetadataTypeDxp) && (clientExtension.Spec.ServiceID != labels[LabelServiceID]) {
 
 			continue
 		}
@@ -449,10 +535,6 @@ func serviceIDConflictMessage(clientExtension *cxv1alpha1.ClientExtension, confi
 		)
 	}
 
-	// The name joins serviceId and virtualInstanceId with a dash, and both can
-	// contain dashes, so a different pair can arrive at the same name. DXP names
-	// its credentials ConfigMap the same way, so the two still cannot coexist.
-
 	serviceID := configMap.Labels[LabelServiceID]
 	virtualInstanceID := configMap.Labels[LabelVirtualInstance]
 
@@ -483,28 +565,46 @@ func unknownVirtualInstanceMessage(clientExtension *cxv1alpha1.ClientExtension, 
 
 func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 	clientExtension *cxv1alpha1.ClientExtension,
-	conditionStatus metav1.ConditionStatus,
 	context context.Context,
-	message string,
-	reason string,
+	delivered metav1.Condition,
+	provisioned *metav1.Condition,
 ) error {
 	status := clientExtension.Status.DeepCopy()
 
-	for _, conditionType := range []string{cxv1alpha1.ConditionDelivered, cxv1alpha1.ConditionReady} {
-		meta.SetStatusCondition(&status.Conditions, metav1.Condition{
-			Message:            message,
-			ObservedGeneration: clientExtension.Generation,
-			Reason:             reason,
-			Status:             conditionStatus,
-			Type:               conditionType,
-		})
+	delivered.Type = cxv1alpha1.ConditionDelivered
+
+	conditions := []metav1.Condition{delivered}
+
+	if provisioned == nil {
+		meta.RemoveStatusCondition(&status.Conditions, cxv1alpha1.ConditionProvisioned)
+	} else {
+		provisionedCondition := *provisioned
+
+		provisionedCondition.Type = cxv1alpha1.ConditionProvisioned
+
+		conditions = append(conditions, provisionedCondition)
+	}
+
+	ready := conditions[len(conditions)-1]
+
+	ready.Type = cxv1alpha1.ConditionReady
+
+	conditions = append(conditions, ready)
+
+	for _, condition := range conditions {
+		condition.ObservedGeneration = clientExtension.Generation
+
+		meta.SetStatusCondition(&status.Conditions, condition)
 	}
 
 	status.ObservedGeneration = clientExtension.Generation
-	status.Phase = cxv1alpha1.PhaseDegraded
 
-	if conditionStatus == metav1.ConditionTrue {
+	if extInitGraceRemaining(status.Conditions) > 0 {
+		status.Phase = cxv1alpha1.PhasePending
+	} else if ready.Status == metav1.ConditionTrue {
 		status.Phase = cxv1alpha1.PhaseReady
+	} else {
+		status.Phase = cxv1alpha1.PhaseDegraded
 	}
 
 	if equality.Semantic.DeepEqual(status, &clientExtension.Status) {
@@ -518,7 +618,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 	}
 
 	if status.Phase == cxv1alpha1.PhaseDegraded {
-		clientExtensionReconciler.Recorder.Event(clientExtension, corev1.EventTypeWarning, reason, message)
+		clientExtensionReconciler.Recorder.Event(clientExtension, corev1.EventTypeWarning, ready.Reason, ready.Message)
 	}
 
 	return nil

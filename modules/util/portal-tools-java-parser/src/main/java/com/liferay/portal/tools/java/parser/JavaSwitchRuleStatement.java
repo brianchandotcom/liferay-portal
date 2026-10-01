@@ -58,7 +58,7 @@ public class JavaSwitchRuleStatement extends BaseJavaTerm {
 		}
 
 		if (_lambdaActionJavaExpression != null) {
-			sb.append(_lambdaActionJavaExpression.toString());
+			sb.append(toSingleLineString(_lambdaActionJavaExpression, indent));
 			sb.append(";");
 		}
 		else if (_lambdaActionJavaTerm != null) {

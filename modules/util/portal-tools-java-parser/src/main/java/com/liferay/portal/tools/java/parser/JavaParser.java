@@ -725,6 +725,12 @@ public class JavaParser {
 					new Position(
 						lastChildDetailAST.getLineNo(),
 						lastChildDetailAST.getColumnNo()));
+
+				// Switch rules are parsed as separate terms, so the curly
+				// braces nested inside them belong to those terms
+
+				return _getCurlyBracePositionList(
+					curlyBracePositionList, detailAST.getNextSibling());
 			}
 		}
 

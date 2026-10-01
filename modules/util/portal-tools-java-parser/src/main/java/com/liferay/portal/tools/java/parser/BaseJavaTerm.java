@@ -633,6 +633,13 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return lineLength;
 	}
 
+	protected String toSingleLineString(JavaTerm javaTerm, String indent) {
+		return StringUtil.trimLeading(
+			javaTerm.toString(
+				indent, StringPool.BLANK, StringPool.BLANK,
+				_FORCE_SINGLE_LINE));
+	}
+
 	protected String trimTrailingSpaces(String s) {
 		if (s.length() == 0) {
 			return s;

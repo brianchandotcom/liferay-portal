@@ -12,6 +12,7 @@ import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ExternalChildT
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ExternalChildTestEntity2;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ExternalScopedTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ExternalTestEntity1;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ExternalTestEntity2;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ReferencingTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.scope.Scope;
 
@@ -36,7 +37,7 @@ public class ReferencingTestEntityResourceTest
 
 	@Override
 	@Test
-	@TestInfo({"LPD-105194", "LPD-105650"})
+	@TestInfo({"LPD-105194", "LPD-105650", "LPD-107224"})
 	public void testPostReferencingTestEntity() throws Exception {
 		super.testPostReferencingTestEntity();
 
@@ -45,7 +46,10 @@ public class ReferencingTestEntityResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalScopedTestEntity", "externalTestEntity1"};
+		return new String[] {
+			"externalScopedTestEntity", "externalTestEntity1",
+			"externalTestEntity2"
+		};
 	}
 
 	@Override
@@ -74,6 +78,13 @@ public class ReferencingTestEntityResourceTest
 			ExternalTestEntity1.Type.EXTERNAL_CHILD_TEST_ENTITY1);
 
 		referencingTestEntity.setExternalTestEntity1(externalChildTestEntity1);
+
+		ExternalTestEntity2 externalTestEntity2 = new ExternalTestEntity2();
+
+		externalTestEntity2.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
+		referencingTestEntity.setExternalTestEntity2(externalTestEntity2);
 
 		return referencingTestEntity;
 	}

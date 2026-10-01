@@ -177,94 +177,8 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 		);
 
 		_testGetToolSetToolSetNameToolWithObjectFieldDescription();
-	}
-
-	@Test
-	public void testGetToolSetToolSetNameToolWithRequiredInputSchemaOnly()
-		throws Exception {
-
-		JSONObject bodySchemaJSONObject = JSONUtil.getValueAsJSONObject(
-			JSONFactoryUtil.createJSONObject(
-				String.valueOf(
-					toolResource.getToolSetToolSetNameTool(
-						"headless-delivery-v1.0", "postSiteStructuredContent",
-						null))),
-			"JSONObject/inputSchema", "JSONObject/properties",
-			"JSONObject/body");
-
-		JSONObject propertiesJSONObject = bodySchemaJSONObject.getJSONObject(
-			"properties");
-
-		Set<String> requiredPropertyNames = SetUtil.fromArray(
-			JSONUtil.toStringArray(
-				bodySchemaJSONObject.getJSONArray("required")));
-
-		Assert.assertTrue(
-			String.valueOf(propertiesJSONObject),
-			propertiesJSONObject.length() > requiredPropertyNames.size());
-
-		JSONObject requiredPropertiesJSONObject = JSONUtil.getValueAsJSONObject(
-			_getRequiredInputSchemaJSONObject(
-				"headless-delivery-v1.0", "postSiteStructuredContent"),
-			"JSONObject/properties", "JSONObject/body",
-			"JSONObject/properties");
-
-		Assert.assertEquals(
-			requiredPropertyNames, requiredPropertiesJSONObject.keySet());
-	}
-
-	@Test
-	public void testGetToolSetToolSetNameToolWithRequiredInputSchemaOnlyForAnObject()
-		throws Exception {
-
-		String objectFieldName = "a" + RandomTestUtil.randomString(8);
-
-		ObjectDefinition objectDefinition = _publishObjectDefinition(
-			null, ObjectDefinitionTestUtil.getRandomName(), objectFieldName,
-			TestPropsValues.getUserId());
-
-		JSONObject propertiesJSONObject = JSONUtil.put(
-			"readOnly", false
-		).put(
-			"type", "string"
-		);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				objectFieldName, propertiesJSONObject
-			).put(
-				"able", propertiesJSONObject
-			).toString(),
-			JSONUtil.getValueAsString(
-				_getRequiredInputSchemaJSONObject(
-					_getToolSetName(objectDefinition),
-					"post" + objectDefinition.getShortName()),
-				"JSONObject/properties", "JSONObject/body",
-				"JSONObject/properties"),
-			true);
-
-		String requiredObjectFieldName = "a" + RandomTestUtil.randomString(8);
-
-		_objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(requiredObjectFieldName), false,
-			requiredObjectFieldName, null, null, true, false,
-			Collections.emptyList());
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				requiredObjectFieldName, propertiesJSONObject
-			).toString(),
-			JSONUtil.getValueAsString(
-				_getRequiredInputSchemaJSONObject(
-					_getToolSetName(objectDefinition),
-					"post" + objectDefinition.getShortName()),
-				"JSONObject/properties", "JSONObject/body",
-				"JSONObject/properties"),
-			true);
+		_testGetToolSetToolSetNameToolWithRequiredInputSchemaOnly();
+		_testGetToolSetToolSetNameToolWithRequiredInputSchemaOnlyForAnObject();
 	}
 
 	@Override
@@ -411,6 +325,92 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 				"JSONObject/inputSchema", "JSONObject/properties",
 				"JSONObject/body", "JSONObject/properties"),
 			false);
+	}
+
+	private void _testGetToolSetToolSetNameToolWithRequiredInputSchemaOnly()
+		throws Exception {
+
+		JSONObject bodySchemaJSONObject = JSONUtil.getValueAsJSONObject(
+			JSONFactoryUtil.createJSONObject(
+				String.valueOf(
+					toolResource.getToolSetToolSetNameTool(
+						"headless-delivery-v1.0", "postSiteStructuredContent",
+						null))),
+			"JSONObject/inputSchema", "JSONObject/properties",
+			"JSONObject/body");
+
+		JSONObject propertiesJSONObject = bodySchemaJSONObject.getJSONObject(
+			"properties");
+
+		Set<String> requiredPropertyNames = SetUtil.fromArray(
+			JSONUtil.toStringArray(
+				bodySchemaJSONObject.getJSONArray("required")));
+
+		Assert.assertTrue(
+			String.valueOf(propertiesJSONObject),
+			propertiesJSONObject.length() > requiredPropertyNames.size());
+
+		JSONObject requiredPropertiesJSONObject = JSONUtil.getValueAsJSONObject(
+			_getRequiredInputSchemaJSONObject(
+				"headless-delivery-v1.0", "postSiteStructuredContent"),
+			"JSONObject/properties", "JSONObject/body",
+			"JSONObject/properties");
+
+		Assert.assertEquals(
+			requiredPropertyNames, requiredPropertiesJSONObject.keySet());
+	}
+
+	private void _testGetToolSetToolSetNameToolWithRequiredInputSchemaOnlyForAnObject()
+		throws Exception {
+
+		String objectFieldName = "a" + RandomTestUtil.randomString(8);
+
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			null, ObjectDefinitionTestUtil.getRandomName(), objectFieldName,
+			TestPropsValues.getUserId());
+
+		JSONObject propertiesJSONObject = JSONUtil.put(
+			"readOnly", false
+		).put(
+			"type", "string"
+		);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				objectFieldName, propertiesJSONObject
+			).put(
+				"able", propertiesJSONObject
+			).toString(),
+			JSONUtil.getValueAsString(
+				_getRequiredInputSchemaJSONObject(
+					_getToolSetName(objectDefinition),
+					"post" + objectDefinition.getShortName()),
+				"JSONObject/properties", "JSONObject/body",
+				"JSONObject/properties"),
+			true);
+
+		String requiredObjectFieldName = "a" + RandomTestUtil.randomString(8);
+
+		_objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			LocalizedMapUtil.getLocalizedMap(requiredObjectFieldName), false,
+			requiredObjectFieldName, null, null, true, false,
+			Collections.emptyList());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				requiredObjectFieldName, propertiesJSONObject
+			).toString(),
+			JSONUtil.getValueAsString(
+				_getRequiredInputSchemaJSONObject(
+					_getToolSetName(objectDefinition),
+					"post" + objectDefinition.getShortName()),
+				"JSONObject/properties", "JSONObject/body",
+				"JSONObject/properties"),
+			true);
 	}
 
 	@Inject

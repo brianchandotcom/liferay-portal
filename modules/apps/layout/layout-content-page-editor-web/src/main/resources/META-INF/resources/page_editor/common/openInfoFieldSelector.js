@@ -14,6 +14,7 @@ export function openInfoFieldSelector({
 	onCancel,
 	onSave,
 	segmentsExperienceId,
+	selectedFields = [],
 }) {
 	const url = new URL(config.infoFieldItemSelectorURL);
 
@@ -34,11 +35,43 @@ export function openInfoFieldSelector({
 
 	openSelectionModal({
 		buttonAddLabel: Liferay.Language.get('save'),
+		getSelectedItemsOnly: false,
 		height: '70vh',
 		multiple: true,
 		onClose: onCancel,
-		onSelect: (items) =>
-			onSave(items.map((item) => JSON.parse(item.value))),
+		onSelect: (items) => {
+			const fields = [];
+			const uniqueIds = new Set();
+
+			for (const item of items) {
+				if (!item.value) {
+					continue;
+				}
+
+				let field;
+
+				try {
+					field = JSON.parse(item.value);
+				}
+				catch {
+					field = {uniqueId: item.value};
+				}
+
+				uniqueIds.add(field.uniqueId);
+
+				if (item.checked) {
+					fields.push(field);
+				}
+			}
+
+			for (const uniqueId of selectedFields) {
+				if (!uniqueIds.has(uniqueId)) {
+					fields.push({uniqueId});
+				}
+			}
+
+			onSave(fields);
+		},
 		size: 'lg',
 		title: Liferay.Language.get('manage-form-fields'),
 		url: url.toString(),

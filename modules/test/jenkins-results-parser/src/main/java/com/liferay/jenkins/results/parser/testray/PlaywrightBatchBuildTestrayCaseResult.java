@@ -16,6 +16,8 @@ import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightSegmentTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 
 import java.io.IOException;
 
@@ -23,6 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -165,7 +168,16 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		PlaywrightTestClassMethod playwrightTestClassMethod =
 			getTestClassMethod();
 
-		return playwrightTestClassMethod.getName();
+		String projectSpecFilePath = _getProjectSpecFilePath(
+			playwrightJUnitTestClass.getSpecFilePath());
+
+		if (projectSpecFilePath == null) {
+			return playwrightTestClassMethod.getName();
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			projectSpecFilePath, " > ",
+			playwrightTestClassMethod.getTestName());
 	}
 
 	@Override
@@ -233,7 +245,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			String fullTestName = JenkinsResultsParserUtil.combine(
 				testReport.getTestClassName(), " > ", testReport.getTestName());
 
-			if (fullTestName.equals(getName())) {
+			if (fullTestName.equals(playwrightTestClassMethod.getName())) {
 				return testReport;
 			}
 		}
@@ -315,6 +327,79 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		}
 
 		super.initBuildReport();
+	}
+
+	private String _getProjectName() {
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		SegmentTestClassGroup segmentTestClassGroup =
+			axisTestClassGroup.getSegmentTestClassGroup();
+
+		if (!(segmentTestClassGroup instanceof
+				PlaywrightSegmentTestClassGroup)) {
+
+			return null;
+		}
+
+		PlaywrightSegmentTestClassGroup playwrightSegmentTestClassGroup =
+			(PlaywrightSegmentTestClassGroup)segmentTestClassGroup;
+
+		return playwrightSegmentTestClassGroup.getProjectName();
+	}
+
+	private String _getProjectSpecFilePath(String specFilePath) {
+		String projectName = _getProjectName();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(projectName) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(specFilePath)) {
+
+			return null;
+		}
+
+		int specFileIndex = specFilePath.lastIndexOf("/");
+
+		if (specFileIndex == -1) {
+			return null;
+		}
+
+		String projectPath = projectName.replace(".", "/");
+
+		int projectIndex = projectPath.lastIndexOf("/");
+
+		String projectLeafName = projectPath.substring(projectIndex + 1);
+
+		String specDirPath = specFilePath.substring(0, specFileIndex);
+
+		List<String> specDirNames = Arrays.asList(specDirPath.split("/"));
+
+		if (specDirNames.contains(projectLeafName)) {
+			return null;
+		}
+
+		String projectParentPath = projectPath.substring(0, projectIndex + 1);
+
+		if (specFilePath.startsWith(projectParentPath)) {
+			String relativeSpecFilePath = specFilePath.substring(
+				projectParentPath.length());
+
+			int relativeSpecDirIndex = relativeSpecFilePath.indexOf("/");
+
+			if (relativeSpecDirIndex == -1) {
+				return JenkinsResultsParserUtil.combine(
+					projectParentPath, projectLeafName, "/",
+					relativeSpecFilePath);
+			}
+
+			return JenkinsResultsParserUtil.combine(
+				projectParentPath, projectLeafName,
+				relativeSpecFilePath.substring(relativeSpecDirIndex));
+		}
+
+		int specDirIndex = specDirPath.lastIndexOf("/");
+
+		return JenkinsResultsParserUtil.combine(
+			specDirPath.substring(0, specDirIndex + 1), projectLeafName,
+			specFilePath.substring(specFileIndex));
 	}
 
 	private static final Pattern _traceZipPattern = Pattern.compile(

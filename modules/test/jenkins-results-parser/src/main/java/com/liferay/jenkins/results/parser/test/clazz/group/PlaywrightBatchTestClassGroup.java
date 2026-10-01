@@ -16,6 +16,7 @@ import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
 import com.liferay.jenkins.results.parser.test.clazz.PlaywrightJUnitTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
@@ -365,9 +366,11 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		Map<String, Map<File, TestClass>> testClassesByProjectMap =
 			new HashMap<>();
 
-		_parsePlaywrightJSONObjects(
-			rootDir, _playwrightJSONObject.optJSONArray("suites"),
-			testClassesByProjectMap);
+		synchronized (_playwrightJSONObjectsLoaded) {
+			_parsePlaywrightJSONObjects(
+				rootDir, _playwrightJSONObject.optJSONArray("suites"),
+				testClassesByProjectMap);
+		}
 
 		for (String projectName : _projectNames) {
 			List<TestClass> testClasses = _getTestClasses(
@@ -727,6 +730,27 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		return _hasRunPlaywrightGradleTask;
 	}
 
+	private boolean _hasTestClassMethod(TestClass testClass, String testName) {
+		for (TestClassMethod testClassMethod :
+				testClass.getTestClassMethods()) {
+
+			if (!(testClassMethod instanceof PlaywrightTestClassMethod)) {
+				continue;
+			}
+
+			PlaywrightTestClassMethod playwrightTestClassMethod =
+				(PlaywrightTestClassMethod)testClassMethod;
+
+			if (Objects.equals(
+					playwrightTestClassMethod.getTestName(), testName)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isPlaywrightInYarnWorkspace() throws IOException {
 		File packageJSONFile = new File(_getModulesDir(), "package.json");
 
@@ -1035,6 +1059,10 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 				TestClass testClass = testClassesMap.computeIfAbsent(
 					specFile, k -> TestClassFactory.newTestClass(this, k));
+
+				if (_hasTestClassMethod(testClass, specTitle)) {
+					continue;
+				}
 
 				if (tags != null) {
 					testClass.addTestClassMethod(

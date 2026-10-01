@@ -16,10 +16,9 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -50,12 +49,9 @@ public class OrderBatchEngineTaskItemDelegateTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_batchEngineTaskItemDelegate, "contextCompany",
-			CompanyLocalServiceUtil.getCompany(TestPropsValues.getCompanyId()));
-		ReflectionTestUtil.setFieldValue(
-			_batchEngineTaskItemDelegate, "contextUser",
-			TestPropsValues.getUser());
+		_batchEngineTaskItemDelegate.setContextCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		_batchEngineTaskItemDelegate.setContextUser(TestPropsValues.getUser());
 
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 		_user = UserTestUtil.addUser();
@@ -114,6 +110,9 @@ public class OrderBatchEngineTaskItemDelegateTest {
 		filter = "component.name=com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.OrderBatchEngineTaskItemDelegate"
 	)
 	private BatchEngineTaskItemDelegate<Order> _batchEngineTaskItemDelegate;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private PermissionChecker _permissionChecker;
 

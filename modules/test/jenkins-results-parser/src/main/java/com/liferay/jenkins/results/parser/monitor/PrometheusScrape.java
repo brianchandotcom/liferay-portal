@@ -24,6 +24,36 @@ public class PrometheusScrape {
 		_samplesMap = _newSamplesMap(content);
 	}
 
+	public Sample getSample(
+		String labelName, String labelValuePrefix, String name) {
+
+		List<Sample> samples = _samplesMap.get(name);
+
+		if (samples == null) {
+			return null;
+		}
+
+		Sample matchedSample = null;
+
+		for (Sample sample : samples) {
+			String labelValue = sample.getLabelValue(labelName);
+
+			if ((labelValue == null) ||
+				!labelValue.startsWith(labelValuePrefix)) {
+
+				continue;
+			}
+
+			if (matchedSample != null) {
+				return null;
+			}
+
+			matchedSample = sample;
+		}
+
+		return matchedSample;
+	}
+
 	public Double getValue(String labelName, String labelValue, String name) {
 		List<Sample> samples = _samplesMap.get(name);
 
@@ -42,10 +72,40 @@ public class PrometheusScrape {
 				return null;
 			}
 
-			value = sample._getValue();
+			value = sample.getValue();
 		}
 
 		return value;
+	}
+
+	public static class Sample {
+
+		public String getLabelValue(String labelName) {
+			return _labels.get(labelName);
+		}
+
+		public Double getValue() {
+			return _value;
+		}
+
+		private Sample(Map<String, String> labels, Double value) {
+			_labels = labels;
+			_value = value;
+		}
+
+		private boolean _hasLabel(String labelName, String labelValue) {
+			String value = getLabelValue(labelName);
+
+			if (value == null) {
+				return false;
+			}
+
+			return value.equals(labelValue);
+		}
+
+		private final Map<String, String> _labels;
+		private final Double _value;
+
 	}
 
 	private Map<String, String> _newLabels(String labelsString) {
@@ -164,31 +224,5 @@ public class PrometheusScrape {
 			"(?<value>[^ \\t]+)([ \\t]+[^ \\t]+)?");
 
 	private final Map<String, List<Sample>> _samplesMap;
-
-	private static class Sample {
-
-		private Sample(Map<String, String> labels, Double value) {
-			_labels = labels;
-			_value = value;
-		}
-
-		private Double _getValue() {
-			return _value;
-		}
-
-		private boolean _hasLabel(String labelName, String labelValue) {
-			String value = _labels.get(labelName);
-
-			if (value == null) {
-				return false;
-			}
-
-			return value.equals(labelValue);
-		}
-
-		private final Map<String, String> _labels;
-		private final Double _value;
-
-	}
 
 }

@@ -22,7 +22,7 @@ interface ISortableChipProps
 
 const SortableChip = React.forwardRef<HTMLDivElement, ISortableChipProps>(
 	({index, onMove, ...otherProps}, ref) => {
-		const {chipRef, containerRef, dragRef, dragState, hoverPosition} =
+		const {chipRef, containerRef, dragState, hoverPosition} =
 			useSortableChip({index, onMove});
 
 		return (
@@ -36,7 +36,7 @@ const SortableChip = React.forwardRef<HTMLDivElement, ISortableChipProps>(
 					{...otherProps}
 					dragState={dragState}
 					handle={
-						<span className="drag-handle pl-2" ref={dragRef}>
+						<span className="drag-handle pl-2">
 							<ClayIcon symbol="drag" />
 						</span>
 					}

@@ -34,6 +34,10 @@
 
 	.drag-handle {
 		color: $mainLighten52;
+	}
+
+	&.condition-chip-draggable,
+	&.condition-chip-draggable .condition-chip-content {
 		cursor: grab;
 	}
 

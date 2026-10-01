@@ -127,16 +127,24 @@
 	}
 
 	.attribute-chip-container {
-		&.hover-left {
-			box-shadow:
-				inset 1px 0 $primary,
-				-1px 0 $primary;
+		position: relative;
+
+		&.hover-bottom::after,
+		&.hover-top::before {
+			background-color: $primary;
+			content: '';
+			height: 2px;
+			left: 0;
+			position: absolute;
+			right: 0;
 		}
 
-		&.hover-right {
-			box-shadow:
-				inset -1px 0 0 0 $primary,
-				1px 0 $primary;
+		&.hover-bottom::after {
+			bottom: -5px;
+		}
+
+		&.hover-top::before {
+			top: -5px;
 		}
 	}
 }

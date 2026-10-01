@@ -2502,6 +2502,7 @@ test(
 		await dragAndDropElement({
 			dragTarget: breakdownChips.nth(1).locator('.drag-handle'),
 			dropTarget: breakdownChips.nth(0),
+			offset: {y: 8},
 		});
 
 		await expectOrder(['pageTitle', 'category', 'url']);
@@ -2511,6 +2512,7 @@ test(
 		await dragAndDropElement({
 			dragTarget: breakdownChips.nth(1).locator('.drag-handle'),
 			dropTarget: breakdownChips.nth(0),
+			offset: {y: 8},
 		});
 
 		await expectOrder(['category', 'pageTitle', 'url']);
@@ -4018,6 +4020,7 @@ test(
 		await dragAndDropElement({
 			dragTarget: breakdownChips.nth(1).locator('.drag-handle'),
 			dropTarget: breakdownChips.nth(0),
+			offset: {y: 8},
 		});
 
 		// Grouped by color then page (color totals C1=6, C2=4): the rows re-sort

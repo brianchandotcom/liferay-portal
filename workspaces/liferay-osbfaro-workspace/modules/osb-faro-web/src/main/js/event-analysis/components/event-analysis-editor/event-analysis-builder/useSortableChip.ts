@@ -9,8 +9,8 @@ export enum DragStates {
 }
 
 export enum HoverTypes {
-	Left = 'left',
-	Right = 'right',
+	Bottom = 'bottom',
+	Top = 'top',
 }
 
 interface DragItem {
@@ -38,13 +38,17 @@ const useSortableChip = ({
 			isOver: monitor.isOver(),
 		}),
 		drop: ({index: dragIndex}: DragItem) => {
+			if (!hoverPosition) {
+				return;
+			}
+
 			let dropIndex = index;
 
-			if (hoverPosition === HoverTypes.Left && dragIndex < index) {
+			if (hoverPosition === HoverTypes.Top && dragIndex < index) {
 				dropIndex = index - 1;
 			}
 			else if (
-				hoverPosition === HoverTypes.Right &&
+				hoverPosition === HoverTypes.Bottom &&
 				dragIndex > index
 			) {
 				dropIndex = index + 1;
@@ -57,17 +61,17 @@ const useSortableChip = ({
 				return;
 			}
 
-			const {right, width} = containerRef.current.getBoundingClientRect();
+			const {height, top} = containerRef.current.getBoundingClientRect();
 
-			const {x} = monitor.getClientOffset() ?? {x: 0};
+			const {y} = monitor.getClientOffset() ?? {y: 0};
 
-			const hoverLeft = x < right - width / 2;
+			const hoverTop = y < top + height / 2;
 
-			if ((hoverLeft ? index - 1 : index + 1) === dragIndex) {
+			if ((hoverTop ? index - 1 : index + 1) === dragIndex) {
 				setHoverPosition(null);
 			}
 			else {
-				setHoverPosition(hoverLeft ? HoverTypes.Left : HoverTypes.Right);
+				setHoverPosition(hoverTop ? HoverTypes.Top : HoverTypes.Bottom);
 			}
 		},
 	});
@@ -94,6 +98,7 @@ const useSortableChip = ({
 	}, [isDragging]);
 
 	useEffect(() => {
+		drag(chipRef);
 		drop(containerRef);
 		preview(chipRef, {captureDraggingState: true});
 	}, []);
@@ -107,7 +112,6 @@ const useSortableChip = ({
 	return {
 		chipRef,
 		containerRef,
-		dragRef: drag,
 		dragState,
 		hoverPosition: isOver && canDrop ? hoverPosition : null,
 	};

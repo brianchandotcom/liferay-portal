@@ -35,7 +35,10 @@ const ConditionChip = React.forwardRef<HTMLDivElement, IConditionChipProps>(
 		<div
 			className={getCN(
 				'align-items-center condition-chip d-flex rounded-lg',
-				{[`condition-chip-${dragState}`]: dragState}
+				{
+					'condition-chip-draggable': !!handle,
+					[`condition-chip-${dragState}`]: dragState,
+				}
 			)}
 			ref={ref}
 		>

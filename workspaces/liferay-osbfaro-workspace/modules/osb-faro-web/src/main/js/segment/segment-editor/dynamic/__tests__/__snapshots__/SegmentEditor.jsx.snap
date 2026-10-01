@@ -9,7 +9,7 @@ exports[`SegmentEditor should render 1`] = `
       class="form-root contributor-builder-root d-flex editing flex-column"
     >
       <nav
-        class="align-items-center bg-white tbar component-tbar"
+        class="align-items-center bg-white sticky-top toolbar-root tbar component-tbar"
       >
         <ul
           class="align-items-center mx-3 tbar-nav"

@@ -7,7 +7,7 @@ exports[`Data Privacy Overview should render 1`] = `
   >
     <nav
       aria-hidden="true"
-      class="align-items-center bg-white mb-4 tbar component-tbar"
+      class="align-items-center bg-white sticky-top toolbar-root mb-4 tbar component-tbar"
       data-aria-hidden="true"
     >
       <ul

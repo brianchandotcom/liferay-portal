@@ -66,6 +66,28 @@ describe('BaseEditPage.Toolbar', () => {
 		).toHaveAttribute('type', 'submit');
 	});
 
+	it('submits the form Save names even when the toolbar is outside it', () => {
+		const onSubmit = jest.fn((event) => event.preventDefault());
+
+		render(
+			<MemoryRouter>
+				<Toolbar backURL="/back" title="Title">
+					<Toolbar.Save
+						form="analysisForm"
+						label="Save Analysis"
+						type="submit"
+					/>
+				</Toolbar>
+
+				<form id="analysisForm" onSubmit={onSubmit} />
+			</MemoryRouter>
+		);
+
+		fireEvent.click(screen.getByRole('button', {name: 'Save Analysis'}));
+
+		expect(onSubmit).toHaveBeenCalledTimes(1);
+	});
+
 	it('disables Save and calls onClick only when enabled', () => {
 		const onClick = jest.fn();
 

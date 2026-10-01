@@ -6,7 +6,7 @@ exports[`AttributeView should render 1`] = `
     class="settings-root"
   >
     <nav
-      class="align-items-center bg-white mb-4 tbar component-tbar"
+      class="align-items-center bg-white sticky-top toolbar-root mb-4 tbar component-tbar"
     >
       <ul
         class="align-items-center mx-3 tbar-nav"

@@ -53,6 +53,8 @@ const ERRORS = {
 	},
 };
 
+const FORM_ID = 'eventAnalysisForm';
+
 interface IBaseEventAnalysisPageProps
 	extends React.HTMLAttributes<HTMLElement> {
 	breakdowns?: Breakdowns;
@@ -277,7 +279,51 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 
 					return (
 						<>
-							<Form.Form onSubmit={handleSubmit}>
+							<BaseEditPage.Toolbar
+								backURL={listURL}
+								title={
+									eventAnalysisId
+										? Liferay.Language.get(
+												'edit-event-analysis'
+											)
+										: Liferay.Language.get(
+												'new-event-analysis'
+											)
+								}
+							>
+								<BaseEditPage.Toolbar.Item>
+									<DownloadPDFReport
+										disabled={!!dataSourceStates.empty}
+										infoMessage={Liferay.Language.get(
+											'the-report-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
+										)}
+										subtitle={selectedChannel?.name}
+										title={Liferay.Language.get(
+											'event-analysis-report'
+										)}
+									/>
+								</BaseEditPage.Toolbar.Item>
+
+								<BaseEditPage.Toolbar.Divider />
+
+								<BaseEditPage.Toolbar.Cancel href={listURL} />
+
+								<BaseEditPage.Toolbar.Save
+									disabled={
+										!name ||
+										!event?.id ||
+										!hasChanges ||
+										isSubmitting
+									}
+									form={FORM_ID}
+									label={Liferay.Language.get(
+										'save-analysis'
+									)}
+									type="submit"
+								/>
+							</BaseEditPage.Toolbar>
+
+							<Form.Form id={FORM_ID} onSubmit={handleSubmit}>
 								<NavigationWarning
 									when={
 										!submitted &&
@@ -285,51 +331,6 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 										!isSubmitting
 									}
 								/>
-
-								<BaseEditPage.Toolbar
-									backURL={listURL}
-									title={
-										eventAnalysisId
-											? Liferay.Language.get(
-													'edit-event-analysis'
-												)
-											: Liferay.Language.get(
-													'new-event-analysis'
-												)
-									}
-								>
-									<BaseEditPage.Toolbar.Item>
-										<DownloadPDFReport
-											disabled={!!dataSourceStates.empty}
-											infoMessage={Liferay.Language.get(
-												'the-report-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
-											)}
-											subtitle={selectedChannel?.name}
-											title={Liferay.Language.get(
-												'event-analysis-report'
-											)}
-										/>
-									</BaseEditPage.Toolbar.Item>
-
-									<BaseEditPage.Toolbar.Divider />
-
-									<BaseEditPage.Toolbar.Cancel
-										href={listURL}
-									/>
-
-									<BaseEditPage.Toolbar.Save
-										disabled={
-											!name ||
-											!event?.id ||
-											!hasChanges ||
-											isSubmitting
-										}
-										label={Liferay.Language.get(
-											'save-analysis'
-										)}
-										type="submit"
-									/>
-								</BaseEditPage.Toolbar>
 
 								<ClayLayout.ContainerFluid
 									className="pb-4 pt-4"

@@ -4,10 +4,8 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import classnames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -22,6 +20,7 @@ import {
 	toTimeParts,
 	toWallClockDateTime,
 } from '../../../../utils/dateTime';
+import DatePartGrid from './DatePartGrid';
 import {toCustomCronExpression} from './cron';
 import {getScheduleSummary} from './summary';
 import {
@@ -35,17 +34,17 @@ import {
 } from './types';
 import {
 	MONTHS,
+	MONTH_MAX_DAYS,
+	MONTH_VALUES,
 	REPEAT_OPTIONS,
 	REPEAT_TYPE_OPTIONS,
 	WEEKDAY_ORDINAL_OPTIONS,
 	getIntervalText,
+	getSelectedMonthDays,
+	getSelectedMonths,
 	getWeekdayName,
 	isRepeatingUnit,
 } from './utils';
-
-const MONTH_MAX_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-const MONTH_VALUES = MONTHS.map((month) => month.value);
 
 function getStartDefaultTime(date: string, timeZoneId: string): string {
 	const [today, time] = toWallClockDateTime(
@@ -94,18 +93,6 @@ export default function PublishScheduler({
 	const set = (partialScheduleValues: Partial<ScheduleValues>) =>
 		onChange({...value, ...partialScheduleValues});
 
-	const toggleIn = (list: number[], item: number) => {
-		if (!list.includes(item)) {
-			return [...list, item];
-		}
-
-		if (list.length === 1) {
-			return list;
-		}
-
-		return list.filter((value) => value !== item);
-	};
-
 	const repeatsOnDayOfWeek = value.repeatType === RepeatType.DayOfWeek;
 
 	const startTime = isCompleteDateTime(value.startDateTime)
@@ -114,10 +101,8 @@ export default function PublishScheduler({
 
 	const scheduleSummary = getScheduleSummary(value);
 
-	const selectedMonthDays = value.monthDays.length
-		? value.monthDays
-		: MONTH_DAYS;
-	const selectedMonths = value.months.length ? value.months : MONTH_VALUES;
+	const selectedMonthDays = getSelectedMonthDays(value);
+	const selectedMonths = getSelectedMonths(value);
 
 	const yearMonth = selectedMonths[0];
 
@@ -149,29 +134,6 @@ export default function PublishScheduler({
 			options={yearIntervalOptions}
 			value={String(value.yearInterval)}
 		/>
-	);
-
-	const toggleButtonGrid = (
-		className: string,
-		items: number[],
-		selected: number[],
-		getLabel: (item: number) => string,
-		onToggle: (items: number[]) => void
-	) => (
-		<div className={classnames('date-part-grid', className)}>
-			{items.map((item) => (
-				<ClayButton
-					aria-pressed={selected.includes(item)}
-					displayType={
-						selected.includes(item) ? 'primary' : 'secondary'
-					}
-					key={item}
-					onClick={() => onToggle(toggleIn(selected, item))}
-				>
-					{getLabel(item)}
-				</ClayButton>
-			))}
-		</div>
 	);
 
 	return (
@@ -331,14 +293,14 @@ export default function PublishScheduler({
 										{Liferay.Language.get('repeat-on')}
 									</label>
 
-									{toggleButtonGrid(
-										'',
-										WEEKDAYS,
-										value.weekdays,
-										(weekday) =>
-											getWeekdayName(weekday, locale),
-										(weekdays) => set({weekdays})
-									)}
+									<DatePartGrid
+										getLabel={(weekday) =>
+											getWeekdayName(weekday, locale)
+										}
+										items={WEEKDAYS}
+										onToggle={(weekdays) => set({weekdays})}
+										selected={value.weekdays}
+									/>
 								</ClayForm.Group>
 							</ClayLayout.Col>
 						</ClayLayout.Row>
@@ -354,13 +316,15 @@ export default function PublishScheduler({
 										)}
 									</label>
 
-									{toggleButtonGrid(
-										'month-grid',
-										MONTH_VALUES,
-										selectedMonths,
-										(month) => MONTHS[month - 1].label,
-										(months) => set({months})
-									)}
+									<DatePartGrid
+										className="month-grid"
+										getLabel={(month) =>
+											MONTHS[month - 1].label
+										}
+										items={MONTH_VALUES}
+										onToggle={(months) => set({months})}
+										selected={selectedMonths}
+									/>
 								</ClayForm.Group>
 							</ClayLayout.Col>
 						</ClayLayout.Row>
@@ -375,13 +339,14 @@ export default function PublishScheduler({
 											{Liferay.Language.get('repeat-on')}
 										</label>
 
-										{toggleButtonGrid(
-											'',
-											MONTH_DAYS,
-											selectedMonthDays,
-											String,
-											(monthDays) => set({monthDays})
-										)}
+										<DatePartGrid
+											getLabel={String}
+											items={MONTH_DAYS}
+											onToggle={(monthDays) =>
+												set({monthDays})
+											}
+											selected={selectedMonthDays}
+										/>
 									</ClayForm.Group>
 								</ClayLayout.Col>
 							</ClayLayout.Row>

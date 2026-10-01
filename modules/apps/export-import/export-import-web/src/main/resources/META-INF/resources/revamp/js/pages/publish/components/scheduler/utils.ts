@@ -11,6 +11,7 @@ import {
 import {
 	IntervalUnit,
 	LAST_WEEKDAY_ORDINAL,
+	MONTH_DAYS,
 	RepeatType,
 	ScheduleValues,
 	ScheduleValuesErrors,
@@ -32,6 +33,10 @@ export const MONTHS = [
 	{label: Liferay.Language.get('november'), value: 11},
 	{label: Liferay.Language.get('december'), value: 12},
 ];
+
+export const MONTH_MAX_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+export const MONTH_VALUES = MONTHS.map((month) => month.value);
 
 export const REPEAT_OPTIONS = [
 	{label: Liferay.Language.get('never'), value: IntervalUnit.Never},
@@ -165,6 +170,16 @@ export function getScheduleValuesErrors(
 	}
 
 	return scheduleValuesErrors;
+}
+
+export function getSelectedMonthDays(scheduleValues: ScheduleValues): number[] {
+	return scheduleValues.monthDays.length
+		? scheduleValues.monthDays
+		: MONTH_DAYS;
+}
+
+export function getSelectedMonths(scheduleValues: ScheduleValues): number[] {
+	return scheduleValues.months.length ? scheduleValues.months : MONTH_VALUES;
 }
 
 export function getWeekdayName(weekday: number, locale: string): string {

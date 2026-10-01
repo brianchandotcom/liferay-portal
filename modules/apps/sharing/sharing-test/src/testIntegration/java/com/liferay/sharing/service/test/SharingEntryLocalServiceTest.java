@@ -1429,6 +1429,24 @@ public class SharingEntryLocalServiceTest {
 		Assert.assertNull(sharingEntry.getExpirationDate());
 	}
 
+	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@TestInfo("LPD-102180")
+	public void testUpdateSharingEntryWithChangedActionsAndUnchangedExpirationDateInThePast()
+		throws Exception {
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, 0, _toUser.getUserId(),
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		_expireSharingEntry(sharingEntry);
+
+		_sharingEntryLocalService.updateSharingEntry(
+			_fromUser.getUserId(), sharingEntry.getSharingEntryId(),
+			Arrays.asList(SharingEntryAction.VIEW, SharingEntryAction.UPDATE),
+			true, sharingEntry.getExpirationDate(), _serviceContext);
+	}
+
 	@Test(expected = InvalidSharingEntryActionException.class)
 	public void testUpdateSharingEntryWithEmptySharingEntryActions()
 		throws Exception {
@@ -1460,6 +1478,78 @@ public class SharingEntryLocalServiceTest {
 			_fromUser.getUserId(), sharingEntry.getSharingEntryId(),
 			Arrays.asList(SharingEntryAction.VIEW), true, expirationDate,
 			_serviceContext);
+	}
+
+	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@TestInfo("LPD-102180")
+	public void testUpdateSharingEntryWithFullSecondExpirationDateChange()
+		throws Exception {
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, 0, _toUser.getUserId(),
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		_expireSharingEntry(sharingEntry);
+
+		Date currentExpirationDate = sharingEntry.getExpirationDate();
+
+		Instant instant = currentExpirationDate.toInstant();
+
+		Date expirationDate = Date.from(instant.plusMillis(1000));
+
+		_sharingEntryLocalService.updateSharingEntry(
+			_fromUser.getUserId(), sharingEntry.getSharingEntryId(),
+			Arrays.asList(SharingEntryAction.VIEW), true, expirationDate,
+			_serviceContext);
+	}
+
+	@Test
+	@TestInfo("LPD-102180")
+	public void testUpdateSharingEntryWithMillisecondExpirationDateChange()
+		throws Exception {
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, 0, _toUser.getUserId(),
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		_expireSharingEntry(sharingEntry);
+
+		Date currentExpirationDate = sharingEntry.getExpirationDate();
+
+		Instant instant = currentExpirationDate.toInstant();
+
+		Date expirationDate = Date.from(instant.plusMillis(500));
+
+		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
+			_fromUser.getUserId(), sharingEntry.getSharingEntryId(),
+			Arrays.asList(SharingEntryAction.VIEW), true, expirationDate,
+			_serviceContext);
+
+		Assert.assertEquals(expirationDate, sharingEntry.getExpirationDate());
+	}
+
+	@Test
+	@TestInfo("LPD-102180")
+	public void testUpdateSharingEntryWithNoChangesAndExpirationDateInThePast()
+		throws Exception {
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, 0, _toUser.getUserId(),
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		_expireSharingEntry(sharingEntry);
+
+		Date expirationDate = sharingEntry.getExpirationDate();
+
+		sharingEntry = _sharingEntryLocalService.updateSharingEntry(
+			_fromUser.getUserId(), sharingEntry.getSharingEntryId(),
+			Arrays.asList(SharingEntryAction.VIEW), true, expirationDate,
+			_serviceContext);
+
+		Assert.assertEquals(expirationDate, sharingEntry.getExpirationDate());
 	}
 
 	@Test(expected = InvalidSharingEntryActionException.class)

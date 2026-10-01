@@ -28,6 +28,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
@@ -40,6 +41,7 @@ import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Creator;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Diagram;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.GroupedProduct;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductAccountGroup;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductChannel;
@@ -441,6 +443,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		_testPostProductVirtualWithLazyReferencingEnabled();
 		_testPostProductWithCreator();
 		_testPostProductWithDiagramImageExternalReferenceCode();
+		_testPostProductWithGroupedProducts();
+		_testPostProductWithLazyReferencedGroupedProduct();
 		_testPostProductWithLazyReferencingDisabled();
 		_testPostProductWithLazyReferencingEnabled();
 		_testPostProductWithProductAccountGroupExternalReferenceCode();
@@ -456,6 +460,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	public void testPutProductByExternalReferenceCode() throws Exception {
 		_testPutProductByExternalReferenceCodeBatch();
 		_testPutProductByExternalReferenceCodeWithFutureDisplayDate();
+		_testPutProductByExternalReferenceCodeWithGroupedProducts();
 
 		_testPutProductByExternalReferenceCodeWithURLsWhenImportInProcess();
 	}
@@ -1572,6 +1577,85 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		Assert.assertEquals(_DIAGRAM_TYPE_DEFAULT, diagram.getType());
 	}
 
+	private void _testPostProductWithGroupedProducts() throws Exception {
+		Product randomProduct = randomProduct();
+
+		Product entryProduct = productResource.postProduct(randomProduct());
+
+		GroupedProduct groupedProduct = new GroupedProduct() {
+			{
+				entryProductExternalReferenceCode =
+					entryProduct.getExternalReferenceCode();
+				priority = RandomTestUtil.randomDouble();
+				quantity = RandomTestUtil.randomInt();
+			}
+		};
+
+		randomProduct.setGroupedProducts(new GroupedProduct[] {groupedProduct});
+
+		randomProduct.setProductType(GroupedCPTypeConstants.NAME);
+
+		User adminUser = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		ProductResource productResource = ProductResource.builder(
+		).authentication(
+			adminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "groupedProducts"
+		).build();
+
+		Product postProduct = productResource.postProduct(randomProduct);
+
+		GroupedProduct[] postGroupedProducts = postProduct.getGroupedProducts();
+
+		GroupedProduct postGroupedProduct = postGroupedProducts[0];
+
+		Assert.assertEquals(
+			entryProduct.getExternalReferenceCode(),
+			postGroupedProduct.getEntryProductExternalReferenceCode());
+		Assert.assertEquals(
+			groupedProduct.getPriority(), postGroupedProduct.getPriority());
+		Assert.assertEquals(
+			groupedProduct.getQuantity(), postGroupedProduct.getQuantity());
+	}
+
+	private void _testPostProductWithLazyReferencedGroupedProduct()
+		throws Exception {
+
+		Product randomProduct = randomProduct();
+
+		GroupedProduct groupedProduct = new GroupedProduct() {
+			{
+				entryProductExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				entryProductType = SimpleCPTypeConstants.NAME;
+				quantity = RandomTestUtil.randomInt();
+			}
+		};
+
+		randomProduct.setGroupedProducts(new GroupedProduct[] {groupedProduct});
+
+		randomProduct.setProductType(GroupedCPTypeConstants.NAME);
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
+					true)) {
+
+			productResource.postProduct(randomProduct);
+		}
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.
+				getCPDefinitionByCProductExternalReferenceCode(
+					groupedProduct.getEntryProductExternalReferenceCode(),
+					testCompany.getCompanyId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EMPTY, cpDefinition.getStatus());
+	}
+
 	private void _testPostProductWithLazyReferencingDisabled()
 		throws Exception {
 
@@ -1880,6 +1964,56 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		Assert.assertEquals(
 			String.valueOf(putProduct), putProduct.getName(),
 			getProduct.getName());
+	}
+
+	private void _testPutProductByExternalReferenceCodeWithGroupedProducts()
+		throws Exception {
+
+		Product randomProduct = randomProduct();
+
+		Product entryProduct = productResource.postProduct(randomProduct());
+
+		GroupedProduct groupedProduct = new GroupedProduct() {
+			{
+				entryProductExternalReferenceCode =
+					entryProduct.getExternalReferenceCode();
+				quantity = RandomTestUtil.randomInt();
+			}
+		};
+
+		randomProduct.setGroupedProducts(new GroupedProduct[] {groupedProduct});
+
+		randomProduct.setProductType(GroupedCPTypeConstants.NAME);
+
+		User adminUser = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		ProductResource productResource = ProductResource.builder(
+		).authentication(
+			adminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "groupedProducts"
+		).build();
+
+		productResource.putProductByExternalReferenceCode(
+			randomProduct.getExternalReferenceCode(), randomProduct);
+
+		groupedProduct.setQuantity(
+			GetterUtil.getInteger(groupedProduct.getQuantity()) + 1);
+
+		Product putProduct = productResource.putProductByExternalReferenceCode(
+			randomProduct.getExternalReferenceCode(), randomProduct);
+
+		GroupedProduct[] putGroupedProducts = putProduct.getGroupedProducts();
+
+		Assert.assertEquals(
+			Arrays.toString(putGroupedProducts), 1, putGroupedProducts.length);
+
+		GroupedProduct putGroupedProduct = putGroupedProducts[0];
+
+		Assert.assertEquals(
+			groupedProduct.getQuantity(), putGroupedProduct.getQuantity());
 	}
 
 	private void _testPutProductByExternalReferenceCodeWithURLsWhenImportInProcess()

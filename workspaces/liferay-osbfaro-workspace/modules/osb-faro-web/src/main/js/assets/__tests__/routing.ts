@@ -1,7 +1,7 @@
 import {matchRoutes} from 'react-router-dom';
 
 /**
- * Mirrors the two asset routes declared in `shared/pages/AppSidebarRoutes`.
+ * Mirrors the two asset routes declared in `shared/components/WorkspaceLayout`.
  * The dashboard path carries a dynamic `:assetType` where five literal
  * branches used to sit, so it now overlaps the list's splat and only React
  * Router's ranking keeps them apart. Keep these in step with that file.

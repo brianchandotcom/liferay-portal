@@ -14,6 +14,9 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
@@ -35,6 +38,7 @@ import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelect
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -115,9 +119,11 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
-		SearchContext searchContext = _getSearchContext();
-
 		try {
+			long[] groupIds = _getGroupIds(assetEntry);
+
+			SearchContext searchContext = _getSearchContext(groupIds);
+
 			BooleanFilter assetCategoryIdsBooleanFilter =
 				_getAssetCategoryIdsBooleanFilter(
 					assetEntry, collectionQuery, searchContext);
@@ -139,7 +145,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				});
 
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
-				collectionQuery);
+				collectionQuery, groupIds);
 
 			Hits hits = _assetHelper.search(
 				searchContext, assetEntryQuery, assetEntryQuery.getStart(),
@@ -444,12 +450,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(
-		CollectionQuery collectionQuery) {
+		CollectionQuery collectionQuery, long[] groupIds) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
 
 		assetEntryQuery.setClassNameIds(_getClassNameIds(collectionQuery));
 		assetEntryQuery.setEnablePermissions(true);
@@ -460,8 +463,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
 
-		assetEntryQuery.setGroupIds(
-			new long[] {serviceContext.getScopeGroupId()});
+		assetEntryQuery.setGroupIds(groupIds);
 		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
 		assetEntryQuery.setOrderByType1("DESC");
 
@@ -517,6 +519,30 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		return AssetRendererFactoryRegistryUtil.getIndexableClassNameIds(
 			serviceContext.getCompanyId(), true);
+	}
+
+	private long[] _getGroupIds(AssetEntry assetEntry) throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		long scopeGroupId = serviceContext.getScopeGroupId();
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			assetEntry.getGroupId());
+
+		if ((depotEntry == null) ||
+			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+
+			return new long[] {scopeGroupId};
+		}
+
+		return ArrayUtil.append(
+			new long[] {scopeGroupId},
+			ListUtil.toLongArray(
+				_depotEntryLocalService.getGroupConnectedDepotEntries(
+					scopeGroupId, DepotConstants.TYPE_SPACE, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				DepotEntry::getGroupId));
 	}
 
 	private String _getItemSelectorURL() {
@@ -607,13 +633,13 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return finalStep.build();
 	}
 
-	private SearchContext _getSearchContext() {
+	private SearchContext _getSearchContext(long[] groupIds) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		return SearchContextFactory.getInstance(
+		SearchContext searchContext = SearchContextFactory.getInstance(
 			new long[0], new String[0],
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
@@ -622,6 +648,10 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			).build(),
 			serviceContext.getCompanyId(), null, themeDisplay.getLayout(), null,
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
+
+		searchContext.setGroupIds(groupIds);
+
+		return searchContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -636,6 +666,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Reference
 	private AssetSearcherFactory _assetSearcherFactory;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;

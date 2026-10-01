@@ -4,45 +4,35 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import '../../../../../css/utilities.scss';
 import FieldDatePicker from '../../../../components/forms/FieldDatePicker';
 import {FieldRadio} from '../../../../components/forms/FieldRadio';
 import FieldSelectWithOption from '../../../../components/forms/FieldSelectWithOption';
-import FieldText from '../../../../components/forms/FieldText';
-import FieldTimePicker from '../../../../components/forms/FieldTimePicker';
-import {
-	isCompleteDateTime,
-	toTimeParts,
-	toWallClockDateTime,
-} from '../../../../utils/dateTime';
-import DatePartGrid from './DatePartGrid';
+import {toTimeParts, toWallClockDateTime} from '../../../../utils/dateTime';
 import {toCustomCronExpression} from './cron';
+import {
+	CustomCronFields,
+	EndDateFields,
+	MonthlyFields,
+	RepeatAtFields,
+	WeeklyFields,
+	YearlyFields,
+} from './fields';
 import {getScheduleSummary} from './summary';
 import {
 	IntervalUnit,
-	MONTH_DAYS,
 	RepeatType,
 	ScheduleValues,
 	TimeZoneOption,
-	WEEKDAYS,
-	YEAR_INTERVALS,
 } from './types';
 import {
-	MONTHS,
-	MONTH_MAX_DAYS,
-	MONTH_VALUES,
 	REPEAT_OPTIONS,
 	REPEAT_TYPE_OPTIONS,
-	WEEKDAY_ORDINAL_OPTIONS,
-	getIntervalText,
 	getSelectedMonthDays,
 	getSelectedMonths,
-	getWeekdayName,
 	isRepeatingUnit,
 } from './utils';
 
@@ -86,55 +76,15 @@ export default function PublishScheduler({
 	timeZones: TimeZoneOption[];
 	value: ScheduleValues;
 }) {
-	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
-
 	const currentYear = new Date().getFullYear();
 
 	const set = (partialScheduleValues: Partial<ScheduleValues>) =>
 		onChange({...value, ...partialScheduleValues});
 
-	const repeatsOnDayOfWeek = value.repeatType === RepeatType.DayOfWeek;
-
-	const startTime = isCompleteDateTime(value.startDateTime)
-		? value.startDateTime.split(' ')[1]
-		: '';
+	const repeatsMonthlyOrYearly =
+		value.unit === IntervalUnit.Month || value.unit === IntervalUnit.Year;
 
 	const scheduleSummary = getScheduleSummary(value);
-
-	const selectedMonthDays = getSelectedMonthDays(value);
-	const selectedMonths = getSelectedMonths(value);
-
-	const yearMonth = selectedMonths[0];
-
-	const yearIntervalOptions = YEAR_INTERVALS.map((yearInterval) => ({
-		label: getIntervalText(yearInterval, IntervalUnit.Year, locale),
-		value: yearInterval,
-	}));
-
-	const monthDayOptions = MONTH_DAYS.slice(
-		0,
-		MONTH_MAX_DAYS[yearMonth - 1]
-	).map((monthDay) => ({
-		label: sub(Liferay.Language.get('day-x'), String(monthDay)),
-		value: monthDay,
-	}));
-
-	const weekdayOptions = WEEKDAYS.map((weekday) => ({
-		label: getWeekdayName(weekday, locale),
-		value: weekday,
-	}));
-
-	const repeatEverySelect = (
-		<FieldSelectWithOption
-			label={Liferay.Language.get('repeat-every')}
-			name="publishScheduleRepeatEvery"
-			onChange={(event) =>
-				set({yearInterval: Number(event.target.value)})
-			}
-			options={yearIntervalOptions}
-			value={String(value.yearInterval)}
-		/>
-	);
 
 	return (
 		<ClayLayout.Sheet className="mt-4 option-group">
@@ -218,9 +168,15 @@ export default function PublishScheduler({
 										...(unit === IntervalUnit.Year
 											? {
 													monthDays: [
-														selectedMonthDays[0],
+														getSelectedMonthDays(
+															value
+														)[0],
 													],
-													months: [yearMonth],
+													months: [
+														getSelectedMonths(
+															value
+														)[0],
+													],
 												}
 											: {months: []}),
 										...(unit === IntervalUnit.Custom
@@ -240,8 +196,7 @@ export default function PublishScheduler({
 							/>
 						</ClayLayout.Col>
 
-						{(value.unit === IntervalUnit.Month ||
-							value.unit === IntervalUnit.Year) && (
+						{repeatsMonthlyOrYearly && (
 							<ClayLayout.Col md={6} size={12}>
 								<FieldSelectWithOption
 									label={Liferay.Language.get('repeat-type')}
@@ -260,300 +215,42 @@ export default function PublishScheduler({
 					</ClayLayout.Row>
 
 					{value.unit === IntervalUnit.Custom && (
-						<ClayLayout.Row>
-							<ClayLayout.Col size={12}>
-								<FieldText
-									errorMessage={cronExpressionErrorMessage}
-									helpMessage={sub(
-										Liferay.Language.get('for-example-x'),
-										'0 30 15 ? * MON-FRI *'
-									)}
-									label={Liferay.Language.get(
-										'cron-expression'
-									)}
-									name="publishScheduleCronExpression"
-									onBlur={onCronExpressionBlur}
-									onChange={(event) =>
-										set({
-											cronExpression: event.target.value,
-										})
-									}
-									required
-									value={value.cronExpression}
-								/>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+						<CustomCronFields
+							errorMessage={cronExpressionErrorMessage}
+							onBlur={onCronExpressionBlur}
+							onChange={set}
+							value={value}
+						/>
 					)}
 
 					{value.unit === IntervalUnit.Week && (
-						<ClayLayout.Row>
-							<ClayLayout.Col size={12}>
-								<ClayForm.Group>
-									<label>
-										{Liferay.Language.get('repeat-on')}
-									</label>
-
-									<DatePartGrid
-										getLabel={(weekday) =>
-											getWeekdayName(weekday, locale)
-										}
-										items={WEEKDAYS}
-										onToggle={(weekdays) => set({weekdays})}
-										selected={value.weekdays}
-									/>
-								</ClayForm.Group>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+						<WeeklyFields onChange={set} value={value} />
 					)}
 
 					{value.unit === IntervalUnit.Month && (
-						<ClayLayout.Row>
-							<ClayLayout.Col size={12}>
-								<ClayForm.Group>
-									<label>
-										{Liferay.Language.get(
-											'repeat-on-month'
-										)}
-									</label>
-
-									<DatePartGrid
-										className="month-grid"
-										getLabel={(month) =>
-											MONTHS[month - 1].label
-										}
-										items={MONTH_VALUES}
-										onToggle={(months) => set({months})}
-										selected={selectedMonths}
-									/>
-								</ClayForm.Group>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+						<MonthlyFields onChange={set} value={value} />
 					)}
 
-					{value.unit === IntervalUnit.Month &&
-						!repeatsOnDayOfWeek && (
-							<ClayLayout.Row>
-								<ClayLayout.Col size={12}>
-									<ClayForm.Group>
-										<label>
-											{Liferay.Language.get('repeat-on')}
-										</label>
-
-										<DatePartGrid
-											getLabel={String}
-											items={MONTH_DAYS}
-											onToggle={(monthDays) =>
-												set({monthDays})
-											}
-											selected={selectedMonthDays}
-										/>
-									</ClayForm.Group>
-								</ClayLayout.Col>
-							</ClayLayout.Row>
-						)}
-
-					{value.unit === IntervalUnit.Year &&
-						!repeatsOnDayOfWeek && (
-							<ClayLayout.Row>
-								<ClayLayout.Col md={6} size={12}>
-									<FieldSelectWithOption
-										label={Liferay.Language.get(
-											'repeat-on-day'
-										)}
-										name="publishScheduleRepeatOnDay"
-										onChange={(event) =>
-											set({
-												monthDays: [
-													Number(event.target.value),
-												],
-											})
-										}
-										options={monthDayOptions}
-										value={String(selectedMonthDays[0])}
-									/>
-								</ClayLayout.Col>
-
-								<ClayLayout.Col md={6} size={12}>
-									<FieldSelectWithOption
-										label={Liferay.Language.get(
-											'repeat-on-month'
-										)}
-										name="publishScheduleRepeatOnMonth"
-										onChange={(event) => {
-											const month = Number(
-												event.target.value
-											);
-
-											set({
-												monthDays: [
-													Math.min(
-														selectedMonthDays[0],
-														MONTH_MAX_DAYS[
-															month - 1
-														]
-													),
-												],
-												months: [month],
-											});
-										}}
-										options={MONTHS}
-										value={String(yearMonth)}
-									/>
-								</ClayLayout.Col>
-							</ClayLayout.Row>
-						)}
-
-					{(value.unit === IntervalUnit.Month ||
-						value.unit === IntervalUnit.Year) &&
-						repeatsOnDayOfWeek && (
-							<ClayLayout.Row>
-								<ClayLayout.Col md={6} size={12}>
-									<FieldSelectWithOption
-										label={Liferay.Language.get(
-											'repeat-on'
-										)}
-										name="publishScheduleWeekdayOrdinal"
-										onChange={(event) =>
-											set({
-												weekdayOrdinal:
-													event.target.value,
-											})
-										}
-										options={WEEKDAY_ORDINAL_OPTIONS}
-										value={value.weekdayOrdinal}
-									/>
-								</ClayLayout.Col>
-
-								<ClayLayout.Col md={6} size={12}>
-									<FieldSelectWithOption
-										label={Liferay.Language.get('weekday')}
-										name="publishScheduleWeekday"
-										onChange={(event) =>
-											set({
-												weekday: Number(
-													event.target.value
-												),
-											})
-										}
-										options={weekdayOptions}
-										value={String(value.weekday)}
-									/>
-								</ClayLayout.Col>
-
-								{value.unit === IntervalUnit.Year && (
-									<ClayLayout.Col md={6} size={12}>
-										<FieldSelectWithOption
-											label={Liferay.Language.get(
-												'repeat-on-month'
-											)}
-											name="publishScheduleRepeatOnMonth"
-											onChange={(event) =>
-												set({
-													months: [
-														Number(
-															event.target.value
-														),
-													],
-												})
-											}
-											options={MONTHS}
-											value={String(yearMonth)}
-										/>
-									</ClayLayout.Col>
-								)}
-							</ClayLayout.Row>
-						)}
-
 					{value.unit === IntervalUnit.Year && (
-						<ClayLayout.Row>
-							<ClayLayout.Col md={6} size={12}>
-								{repeatEverySelect}
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+						<YearlyFields onChange={set} value={value} />
 					)}
 
 					{isRepeatingUnit(value.unit) && (
-						<>
-							<ClayLayout.Row>
-								<ClayLayout.Col md={6} size={12}>
-									<FieldTimePicker
-										disabled={value.repeatOnTimeSynced}
-										errorMessage={repeatOnTimeErrorMessage}
-										id="publishScheduleRepeatOnTime"
-										label={Liferay.Language.get(
-											'repeat-at'
-										)}
-										name="publishScheduleRepeatOnTime"
-										onBlur={onRepeatOnTimeBlur}
-										onChange={(repeatOnTime) =>
-											set({repeatOnTime})
-										}
-										required={!value.repeatOnTimeSynced}
-										value={
-											value.repeatOnTimeSynced
-												? startTime
-												: value.repeatOnTime
-										}
-									/>
-								</ClayLayout.Col>
-							</ClayLayout.Row>
-
-							<ClayCheckbox
-								checked={value.repeatOnTimeSynced}
-								label={Liferay.Language.get(
-									'sync-with-start-date-time'
-								)}
-								onChange={() =>
-									set(
-										value.repeatOnTimeSynced
-											? {
-													repeatOnTime: startTime,
-													repeatOnTimeSynced: false,
-												}
-											: {repeatOnTimeSynced: true}
-									)
-								}
-							/>
-						</>
+						<RepeatAtFields
+							errorMessage={repeatOnTimeErrorMessage}
+							onBlur={onRepeatOnTimeBlur}
+							onChange={set}
+							value={value}
+						/>
 					)}
 
 					{value.unit !== IntervalUnit.Never && (
-						<>
-							<ClayLayout.Row>
-								<ClayLayout.Col md={6} size={12}>
-									<FieldDatePicker
-										defaultTime="23:59"
-										disabled={value.neverEnd}
-										errorMessage={endDateTimeErrorMessage}
-										id="publishScheduleEndDateTime"
-										label={Liferay.Language.get('end-date')}
-										name="publishScheduleEndDateTime"
-										onBlur={onEndDateTimeBlur}
-										onChange={(endDateTime) =>
-											set({
-												endDateTime:
-													endDateTime as string,
-											})
-										}
-										required={!value.neverEnd}
-										time
-										value={value.endDateTime}
-										years={{
-											end: currentYear + 10,
-											start: currentYear,
-										}}
-									/>
-								</ClayLayout.Col>
-							</ClayLayout.Row>
-
-							<ClayCheckbox
-								checked={value.neverEnd}
-								label={Liferay.Language.get('never-end')}
-								onChange={() =>
-									set({neverEnd: !value.neverEnd})
-								}
-							/>
-						</>
+						<EndDateFields
+							errorMessage={endDateTimeErrorMessage}
+							onBlur={onEndDateTimeBlur}
+							onChange={set}
+							value={value}
+						/>
 					)}
 
 					{scheduleSummary && (

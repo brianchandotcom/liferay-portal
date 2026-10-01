@@ -49,26 +49,36 @@ export default function YearlyFields({
 		value: yearInterval,
 	}));
 
+	const monthSelect = (
+		<ClayLayout.Col md={6} size={12}>
+			<FieldSelectWithOption
+				label={Liferay.Language.get('repeat-on-month')}
+				name="publishScheduleRepeatOnMonth"
+				onChange={(event) => {
+					const month = Number(event.target.value);
+
+					onChange({
+						monthDays: [
+							Math.min(
+								selectedMonthDay,
+								MONTH_MAX_DAYS[month - 1]
+							),
+						],
+						months: [month],
+					});
+				}}
+				options={MONTHS}
+				value={String(selectedMonth)}
+			/>
+		</ClayLayout.Col>
+	);
+
 	return (
 		<>
-			{value.repeatType === RepeatType.DayOfWeek ? (
-				<ClayLayout.Row>
+			<ClayLayout.Row>
+				{value.repeatType === RepeatType.DayOfWeek ? (
 					<WeekdayOrdinalFields onChange={onChange} value={value} />
-
-					<ClayLayout.Col md={6} size={12}>
-						<FieldSelectWithOption
-							label={Liferay.Language.get('repeat-on-month')}
-							name="publishScheduleRepeatOnMonth"
-							onChange={(event) =>
-								onChange({months: [Number(event.target.value)]})
-							}
-							options={MONTHS}
-							value={String(selectedMonth)}
-						/>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			) : (
-				<ClayLayout.Row>
+				) : (
 					<ClayLayout.Col md={6} size={12}>
 						<FieldSelectWithOption
 							label={Liferay.Language.get('repeat-on-day')}
@@ -82,30 +92,10 @@ export default function YearlyFields({
 							value={String(selectedMonthDay)}
 						/>
 					</ClayLayout.Col>
+				)}
 
-					<ClayLayout.Col md={6} size={12}>
-						<FieldSelectWithOption
-							label={Liferay.Language.get('repeat-on-month')}
-							name="publishScheduleRepeatOnMonth"
-							onChange={(event) => {
-								const month = Number(event.target.value);
-
-								onChange({
-									monthDays: [
-										Math.min(
-											selectedMonthDay,
-											MONTH_MAX_DAYS[month - 1]
-										),
-									],
-									months: [month],
-								});
-							}}
-							options={MONTHS}
-							value={String(selectedMonth)}
-						/>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			)}
+				{monthSelect}
+			</ClayLayout.Row>
 
 			<ClayLayout.Row>
 				<ClayLayout.Col md={6} size={12}>

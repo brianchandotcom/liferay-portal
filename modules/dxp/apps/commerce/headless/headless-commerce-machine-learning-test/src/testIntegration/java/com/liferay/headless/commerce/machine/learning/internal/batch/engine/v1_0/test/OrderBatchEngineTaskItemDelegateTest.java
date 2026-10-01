@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -54,7 +53,6 @@ public class OrderBatchEngineTaskItemDelegateTest {
 		_batchEngineTaskItemDelegate.setContextUser(TestPropsValues.getUser());
 
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
-		_user = UserTestUtil.addUser();
 	}
 
 	@After
@@ -94,7 +92,7 @@ public class OrderBatchEngineTaskItemDelegateTest {
 	}
 
 	private void _testReadWithRegularUser() throws Exception {
-		UserTestUtil.setUser(_user);
+		UserTestUtil.setUser(UserTestUtil.addUser());
 
 		try {
 			_read();
@@ -118,9 +116,6 @@ public class OrderBatchEngineTaskItemDelegateTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

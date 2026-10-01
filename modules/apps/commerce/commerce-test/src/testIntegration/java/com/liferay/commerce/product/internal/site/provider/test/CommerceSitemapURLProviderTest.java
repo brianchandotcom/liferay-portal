@@ -228,6 +228,10 @@ public class CommerceSitemapURLProviderTest {
 
 		String translatedAssetCategoryFriendlyURL = sitemapURLs.get(0);
 
+		Assert.assertNotEquals(
+			_getAssetCategoryFriendlyURL(translatedURLTitle),
+			translatedAssetCategoryFriendlyURL);
+
 		String assetCategoryURLSeparator =
 			_cpFriendlyURL.getAssetCategoryURLSeparator(
 				_themeDisplay.getCompanyId());
@@ -237,15 +241,9 @@ public class CommerceSitemapURLProviderTest {
 			translatedAssetCategoryFriendlyURL.endsWith(
 				assetCategoryURLSeparator + translatedURLTitle));
 
-		Assert.assertNotEquals(
-			_getAssetCategoryFriendlyURL(translatedURLTitle),
-			translatedAssetCategoryFriendlyURL);
-
 		for (Element urlElement : element.elements()) {
 			List<String> hrefLangs = _getHrefLangs(urlElement);
 
-			Assert.assertTrue(
-				hrefLangs.toString(), hrefLangs.contains("x-default"));
 			Assert.assertTrue(
 				hrefLangs.toString(),
 				hrefLangs.contains(
@@ -254,6 +252,8 @@ public class CommerceSitemapURLProviderTest {
 				hrefLangs.toString(),
 				hrefLangs.contains(
 					LocaleUtil.toW3cLanguageId(translatedLocale)));
+			Assert.assertTrue(
+				hrefLangs.toString(), hrefLangs.contains("x-default"));
 		}
 	}
 

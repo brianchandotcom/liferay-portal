@@ -22,12 +22,12 @@ const EventSection: React.FC<IEventSectionProps> = ({event, onEventChange}) => {
 	};
 
 	return (
-		<div className="event-section-root d-flex align-items-center">
+		<div className="event-section-root d-flex flex-column">
 			<div className="section-header">
 				{Liferay.Language.get('analyze')}
 			</div>
 
-			<div className="event-container d-flex justify-content-between">
+			<div className="event-container d-flex flex-column align-items-start">
 				<div className="event-list">
 					{event && (
 						<EventChip

@@ -120,6 +120,108 @@
 	}
 }
 
+.event-analysis-builder-root {
+	color: $secondary;
+
+	.event-section-root {
+		padding: 0 20px 0 24px;
+
+		.add-event-button {
+			margin: 8px;
+			padding: 8px;
+		}
+
+		.event-list {
+			padding: 4px 0;
+
+			.event-chip-root {
+				line-height: 24px;
+				max-height: 42px;
+				padding: 8px 0 8px 8px;
+
+				.event-name {
+					color: $secondary;
+					font-weight: $fontWeightSemiBold;
+					white-space: nowrap;
+				}
+			}
+		}
+	}
+
+	.attribute-breakdown-section-root,
+	.attribute-filter-section-root {
+		padding: 0 20px 0 24px;
+
+		.add-attribute {
+			color: $mainLighten28;
+			margin: 8px;
+			padding: 8px;
+		}
+
+		.attribute-list {
+			padding: 4px 0;
+
+			.attribute-chip-container {
+				padding-bottom: 4px;
+				padding-top: 4px;
+
+				&.hover-left {
+					box-shadow:
+						inset 1px 0 $primary,
+						-1px 0 $primary;
+				}
+
+				&.hover-right {
+					box-shadow:
+						inset -1px 0 0 0 $primary,
+						1px 0 $primary;
+				}
+
+				.attribute-chip-root {
+					&.dragging:hover {
+						.edit-attribute-button,
+						.remove-button {
+							color: $mainLighten52;
+						}
+					}
+
+					.attribute-label {
+						font-size: 10px;
+						text-transform: uppercase;
+						white-space: nowrap;
+					}
+
+					.attribute-value {
+						font-size: $fontSizeSmall;
+						font-weight: $fontWeightSemiBold;
+						white-space: nowrap;
+					}
+
+					.drag-handle {
+						color: $mainLighten65;
+						cursor: grab;
+					}
+
+					.edit-attribute-button {
+						color: $secondary;
+					}
+
+					.sticker {
+						background-color: $lightBackground;
+						margin: 4px 16px 4px 4px;
+					}
+				}
+			}
+		}
+	}
+
+	.section-header {
+		color: $secondary;
+		font-weight: $fontWeightSemiBold;
+		margin: 16px 0 8px;
+	}
+}
+
 .event-analysis-editor-root {
 	color: $secondary;
 
@@ -129,140 +231,8 @@
 		}
 	}
 
-	.event-analysis-builder-root {
-		background-color: $lightBackground;
-		border: 1px solid $mainLighten74;
-		border-radius: 4px;
-		margin: 16px;
-
-		.event-section-root {
-			padding: 0 20px 0 24px;
-
-			.add-event-button {
-				margin: 8px;
-				padding: 8px;
-			}
-
-			.event-container {
-				width: 90%;
-
-				.event-list {
-					margin: 0 16px;
-					padding: 4px 0;
-
-					.event-chip-root {
-						line-height: 24px;
-						max-height: 42px;
-						padding: 8px 0 8px 8px;
-
-						.event-name {
-							color: $secondary;
-							font-weight: $fontWeightSemiBold;
-							white-space: nowrap;
-						}
-					}
-				}
-			}
-		}
-
-		.attribute-breakdown-section-root {
-			background-color: $secondaryHover;
-
-			.add-attribute {
-				background-color: $secondaryHover;
-
-				&:active,
-				&:hover,
-				&:focus {
-					background-color: $lightBackground;
-				}
-			}
-		}
-
-		.attribute-breakdown-section-root,
-		.attribute-filter-section-root {
-			overflow-x: hidden;
-			padding: 0 20px 0 24px;
-
-			.add-attribute {
-				color: $mainLighten28;
-				margin: 8px;
-				padding: 8px;
-			}
-
-			.attribute-container {
-				width: 90%;
-
-				.attribute-list {
-					margin: 0 4px;
-					overflow-x: auto;
-					padding: 4px;
-
-					.attribute-chip-container {
-						padding-left: 8px;
-						padding-right: 8px;
-
-						&.hover-left {
-							box-shadow:
-								inset 1px 0 $primary,
-								-1px 0 $primary;
-						}
-
-						&.hover-right {
-							box-shadow:
-								inset -1px 0 0 0 $primary,
-								1px 0 $primary;
-						}
-
-						.attribute-chip-root {
-							&.dragging:hover {
-								.edit-attribute-button,
-								.remove-button {
-									color: $mainLighten52;
-								}
-							}
-
-							.attribute-label {
-								font-size: 10px;
-								text-transform: uppercase;
-								white-space: nowrap;
-							}
-
-							.attribute-value {
-								font-size: $fontSizeSmall;
-								font-weight: $fontWeightSemiBold;
-								white-space: nowrap;
-							}
-
-							.drag-handle {
-								color: $mainLighten65;
-								cursor: grab;
-							}
-
-							.edit-attribute-button {
-								color: $secondary;
-							}
-
-							.sticker {
-								background-color: $lightBackground;
-								margin: 4px 16px 4px 4px;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		.section-header {
-			color: $secondary;
-			font-weight: $fontWeightSemiBold;
-			margin: 16px 0 16px 8px;
-			width: 10%;
-		}
-	}
-
 	.options-container {
-		margin: 0 16px 24px;
+		margin: 24px 16px;
 	}
 }
 

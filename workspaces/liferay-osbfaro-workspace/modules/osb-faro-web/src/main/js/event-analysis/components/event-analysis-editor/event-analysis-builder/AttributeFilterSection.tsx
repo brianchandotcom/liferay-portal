@@ -21,15 +21,15 @@ const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 	const uneditableIds = Object.keys(attributes);
 
 	return (
-		<div className="attribute-filter-section-root d-flex align-items-center">
+		<div className="attribute-filter-section-root d-flex flex-column">
 			<div className="section-header">
 				{Liferay.Language.get('filter')}
 			</div>
 
 			{!!eventId && (
-				<div className="attribute-container d-flex align-items-center justify-content-between">
+				<div className="attribute-container d-flex flex-column align-items-start">
 					<DndProvider backend={HTML5Backend}>
-						<div className="attribute-list d-flex align-items-center">
+						<div className="attribute-list d-flex flex-column w-100">
 							{filterOrder.map((id, i) => (
 								<AttributeFilterChip
 									attribute={

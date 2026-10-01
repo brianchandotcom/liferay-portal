@@ -96,6 +96,26 @@ describe('Event Analysis Create', () => {
 		expect(getByLabelText(/^title/i)).toBeInTheDocument();
 	});
 
+	it('should render the conditions in a side panel outside the editor', async () => {
+		const {container, getByRole} = render(<WrappedComponent />);
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(
+			getByRole('heading', {name: /conditions.library/i})
+		).toBeInTheDocument();
+		expect(
+			container.querySelector(
+				'.event-analysis-conditions-panel .event-analysis-builder-root'
+			)
+		).toBeInTheDocument();
+		expect(
+			container.querySelector(
+				'.event-analysis-editor-root .event-analysis-builder-root'
+			)
+		).toBeNull();
+	});
+
 	it('should render empty state', async () => {
 		const {container, getByPlaceholderText, getByText} = render(
 			<WrappedComponent />

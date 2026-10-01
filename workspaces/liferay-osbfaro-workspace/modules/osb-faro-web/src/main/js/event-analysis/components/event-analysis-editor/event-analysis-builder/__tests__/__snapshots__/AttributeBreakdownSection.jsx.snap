@@ -3,7 +3,7 @@
 exports[`AttributeBreakdownSection renders 1`] = `
 <div>
   <div
-    class="attribute-breakdown-section-root d-flex align-items-center"
+    class="attribute-breakdown-section-root d-flex flex-column"
   >
     <div
       class="section-header"
@@ -17,7 +17,7 @@ exports[`AttributeBreakdownSection renders 1`] = `
 exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
 <div>
   <div
-    class="attribute-breakdown-section-root d-flex align-items-center"
+    class="attribute-breakdown-section-root d-flex flex-column"
   >
     <div
       class="section-header"
@@ -25,10 +25,10 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
       Breakdown
     </div>
     <div
-      class="attribute-container d-flex align-items-center justify-content-between"
+      class="attribute-container d-flex flex-column align-items-start"
     >
       <div
-        class="attribute-list d-flex align-items-center"
+        class="attribute-list d-flex flex-column w-100"
       >
         <div
           class="dropdown"

@@ -1,5 +1,6 @@
 import BaseEditPage from 'shared/components/base-edit-page';
 import ClayLayout from '@clayui/layout';
+import ConditionsPanel from '../components/event-analysis-editor/event-analysis-builder/ConditionsPanel';
 import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
 import EventAnalysisEditor from '../components/event-analysis-editor';
 import Form from 'shared/components/form';
@@ -257,7 +258,10 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 	};
 
 	return (
-		<BaseEditPage documentTitle={Liferay.Language.get('event-analysis')}>
+		<BaseEditPage
+			className="event-analysis-page"
+			documentTitle={Liferay.Language.get('event-analysis')}
+		>
 			<Form
 				initialValues={{
 					name: initialName,
@@ -344,6 +348,11 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				}}
 			</Form>
 
+			<ConditionsPanel
+				event={event ?? undefined}
+				onEventChange={onEventChange}
+			/>
+
 			<ClayLayout.ContainerFluid
 				className="page-container pb-4"
 				size="xl"
@@ -353,7 +362,6 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					compareToPrevious={compareToPrevious}
 					event={event!}
 					onCompareToPreviousChange={onCompareToPreviousChange}
-					onEventChange={onEventChange}
 					onRangeSelectorsChange={onRangeSelectorsChange}
 					onTypeChange={onTypeChange}
 					rangeSelectors={rangeSelectors!}

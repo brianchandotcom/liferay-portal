@@ -6,7 +6,7 @@ exports[`Event Analysis Builder render 1`] = `
     class="event-analysis-builder-root d-flex flex-column"
   >
     <div
-      class="event-section-root d-flex align-items-center"
+      class="event-section-root d-flex flex-column"
     >
       <div
         class="section-header"
@@ -14,7 +14,7 @@ exports[`Event Analysis Builder render 1`] = `
         Analyze
       </div>
       <div
-        class="event-container d-flex justify-content-between"
+        class="event-container d-flex flex-column align-items-start"
       >
         <div
           class="event-list"
@@ -42,7 +42,7 @@ exports[`Event Analysis Builder render 1`] = `
       </div>
     </div>
     <div
-      class="attribute-breakdown-section-root d-flex align-items-center"
+      class="attribute-breakdown-section-root d-flex flex-column"
     >
       <div
         class="section-header"
@@ -51,7 +51,7 @@ exports[`Event Analysis Builder render 1`] = `
       </div>
     </div>
     <div
-      class="attribute-filter-section-root d-flex align-items-center"
+      class="attribute-filter-section-root d-flex flex-column"
     >
       <div
         class="section-header"
@@ -69,7 +69,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
     class="event-analysis-builder-root d-flex flex-column"
   >
     <div
-      class="event-section-root d-flex align-items-center"
+      class="event-section-root d-flex flex-column"
     >
       <div
         class="section-header"
@@ -77,7 +77,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
         Analyze
       </div>
       <div
-        class="event-container d-flex justify-content-between"
+        class="event-container d-flex flex-column align-items-start"
       >
         <div
           class="event-list"
@@ -114,7 +114,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
       </div>
     </div>
     <div
-      class="attribute-breakdown-section-root d-flex align-items-center"
+      class="attribute-breakdown-section-root d-flex flex-column"
     >
       <div
         class="section-header"
@@ -122,10 +122,10 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
         Breakdown
       </div>
       <div
-        class="attribute-container d-flex align-items-center justify-content-between"
+        class="attribute-container d-flex flex-column align-items-start"
       >
         <div
-          class="attribute-list d-flex align-items-center"
+          class="attribute-list d-flex flex-column w-100"
         />
         <div
           class="dropdown"
@@ -150,7 +150,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
       </div>
     </div>
     <div
-      class="attribute-filter-section-root d-flex align-items-center"
+      class="attribute-filter-section-root d-flex flex-column"
     >
       <div
         class="section-header"
@@ -158,10 +158,10 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
         Filter
       </div>
       <div
-        class="attribute-container d-flex align-items-center justify-content-between"
+        class="attribute-container d-flex flex-column align-items-start"
       >
         <div
-          class="attribute-list d-flex align-items-center"
+          class="attribute-list d-flex flex-column w-100"
         />
         <div
           class="dropdown"

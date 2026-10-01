@@ -45,15 +45,15 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 	};
 
 	return (
-		<div className="attribute-breakdown-section-root d-flex align-items-center">
+		<div className="attribute-breakdown-section-root d-flex flex-column">
 			<div className="section-header">
 				{Liferay.Language.get('breakdown')}
 			</div>
 
 			{!!eventId && (
-				<div className="attribute-container d-flex align-items-center justify-content-between">
+				<div className="attribute-container d-flex flex-column align-items-start">
 					<DndProvider backend={HTML5Backend}>
-						<div className="attribute-list d-flex align-items-center">
+						<div className="attribute-list d-flex flex-column w-100">
 							{breakdownOrder.map((id, i) => (
 								<AttributeBreakdownChip
 									attribute={

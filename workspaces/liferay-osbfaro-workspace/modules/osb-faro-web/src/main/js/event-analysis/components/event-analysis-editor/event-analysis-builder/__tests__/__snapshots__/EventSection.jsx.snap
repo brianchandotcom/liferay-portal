@@ -3,7 +3,7 @@
 exports[`EventSection render 1`] = `
 <div>
   <div
-    class="event-section-root d-flex align-items-center"
+    class="event-section-root d-flex flex-column"
   >
     <div
       class="section-header"
@@ -11,7 +11,7 @@ exports[`EventSection render 1`] = `
       Analyze
     </div>
     <div
-      class="event-container d-flex justify-content-between"
+      class="event-container d-flex flex-column align-items-start"
     >
       <div
         class="event-list"
@@ -44,7 +44,7 @@ exports[`EventSection render 1`] = `
 exports[`EventSection render with event 1`] = `
 <div>
   <div
-    class="event-section-root d-flex align-items-center"
+    class="event-section-root d-flex flex-column"
   >
     <div
       class="section-header"
@@ -52,7 +52,7 @@ exports[`EventSection render with event 1`] = `
       Analyze
     </div>
     <div
-      class="event-container d-flex justify-content-between"
+      class="event-container d-flex flex-column align-items-start"
     >
       <div
         class="event-list"

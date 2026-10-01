@@ -1,0 +1,34 @@
+$event-analysis-toolbar-height: map-get($cadmin-component-tbar, height);
+
+.event-analysis-page {
+	display: grid;
+	grid-template-areas:
+		'toolbar toolbar'
+		'panel title'
+		'panel editor';
+	grid-template-columns: $criteriaSidebarWidth minmax(0, 1fr);
+	grid-template-rows: auto auto 1fr;
+	min-height: 100vh;
+
+	> .toolbar-root {
+		grid-area: toolbar;
+	}
+
+	> form {
+		grid-area: title;
+	}
+
+	> .event-analysis-conditions-panel {
+		grid-area: panel;
+	}
+
+	> .page-container {
+		grid-area: editor;
+	}
+}
+
+.event-analysis-conditions-panel .event-analysis-conditions-panel-content {
+	max-height: calc(100vh - #{$event-analysis-toolbar-height});
+	position: sticky;
+	top: $event-analysis-toolbar-height;
+}

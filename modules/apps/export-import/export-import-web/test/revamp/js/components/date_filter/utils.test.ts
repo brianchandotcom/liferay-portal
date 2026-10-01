@@ -211,6 +211,43 @@ describe('getValidation', () => {
 			isValid: false,
 		});
 	});
+
+	it('rejects a range whose bounds are equal', () => {
+		expect(
+			getValidation(
+				{
+					endDate: '2026-01-01 08:00',
+					last: LastRange.H12,
+					range: Range.DateRange,
+					startDate: '2026-01-01 08:00',
+				},
+				'UTC'
+			)
+		).toEqual({
+			errors: {
+				endDate: 'date-range-is-invalid',
+				startDate: 'date-range-is-invalid',
+			},
+			isValid: false,
+		});
+	});
+
+	it('flags only the malformed bound of a range', () => {
+		expect(
+			getValidation(
+				{
+					endDate: '2026-01-01 8:00',
+					last: LastRange.H12,
+					range: Range.DateRange,
+					startDate: '2026-01-01 08:00',
+				},
+				'UTC'
+			)
+		).toEqual({
+			errors: {endDate: 'please-enter-a-valid-date'},
+			isValid: false,
+		});
+	});
 });
 
 describe('dateFilterToEditingState', () => {

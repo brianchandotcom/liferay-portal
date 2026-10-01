@@ -31,10 +31,12 @@ function ControlledDateFilter({
 	appliedValue: initialAppliedValue,
 	lastPublishDate,
 	onApplyFilter,
+	timeZoneId = 'UTC',
 }: {
 	appliedValue?: DateFilterValues;
 	lastPublishDate?: string;
 	onApplyFilter: (dateFilterValues: DateFilterValues) => void;
+	timeZoneId?: string;
 }) {
 	const [appliedValue, setAppliedValue] = useState<DateFilterValues>(
 		initialAppliedValue ?? {range: Range.All}
@@ -48,7 +50,7 @@ function ControlledDateFilter({
 				setAppliedValue(dateFilterValues);
 				onApplyFilter(dateFilterValues);
 			}}
-			timeZoneId="UTC"
+			timeZoneId={timeZoneId}
 		/>
 	);
 }
@@ -62,10 +64,12 @@ describe('DateFilter', () => {
 		appliedValue,
 		lastPublishDate,
 		onApplyFilter = jest.fn(),
+		timeZoneId,
 	}: {
 		appliedValue?: DateFilterValues;
 		lastPublishDate?: string;
 		onApplyFilter?: jest.Mock;
+		timeZoneId?: string;
 	} = {}) => {
 		const user = userEvent.setup({delay: null});
 
@@ -74,6 +78,7 @@ describe('DateFilter', () => {
 				appliedValue={appliedValue}
 				lastPublishDate={lastPublishDate}
 				onApplyFilter={onApplyFilter}
+				timeZoneId={timeZoneId}
 			/>
 		);
 
@@ -218,6 +223,25 @@ describe('DateFilter', () => {
 		expect(screen.getByText('show-results')).toBeDisabled();
 	});
 
+	it('flags both bounds as soon as the range is complete and equal', async () => {
+		const {user} = renderDateFilter();
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		await user.click(screen.getByLabelText('from'));
+
+		await user.paste('01/01/2026 08:00 AM');
+		await user.click(screen.getByLabelText('to[date-time]'));
+
+		await user.paste('01/01/2026 08:00 AM');
+
+		expect(screen.getAllByText('date-range-is-invalid')).toHaveLength(2);
+		expect(screen.getByText('show-results')).toBeDisabled();
+	});
+
 	it('flags a future day picked from the calendar', async () => {
 		const {user} = renderDateFilter();
 
@@ -250,6 +274,29 @@ describe('DateFilter', () => {
 
 		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
 			'01/15/2026 10:30 AM'
+		);
+		expect(
+			screen.queryByText('dates-must-not-be-in-the-future')
+		).not.toBeInTheDocument();
+		expect(screen.getByText('show-results')).toBeEnabled();
+	});
+
+	it('fills the current time of the given time zone when its today is picked as the To bound', async () => {
+		jest.useFakeTimers().setSystemTime(Date.UTC(2026, 0, 15, 10, 30));
+
+		const {user} = renderDateFilter({timeZoneId: 'Pacific/Kiritimati'});
+
+		await user.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.DateRange
+		);
+
+		fireEvent.change(screen.getByLabelText('to[date-time]'), {
+			target: {value: '01/16/2026 --:-- --'},
+		});
+
+		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
+			'01/16/2026 12:30 AM'
 		);
 		expect(
 			screen.queryByText('dates-must-not-be-in-the-future')

@@ -1,0 +1,21 @@
+components:
+    schemas:
+        ExternalTestEntity2:
+            properties:
+                external2Property:
+                    type: string
+            type: object
+        SecondExternalTestEntity:
+            properties:
+                name:
+                    type: string
+            type: object
+info:
+    description:
+        "A second REST API referenced from another OpenAPI document that defines a schema with the same name as the first one."
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Portal Tools REST Builder Test External 2
+    version: v1.0
+openapi: 3.0.1

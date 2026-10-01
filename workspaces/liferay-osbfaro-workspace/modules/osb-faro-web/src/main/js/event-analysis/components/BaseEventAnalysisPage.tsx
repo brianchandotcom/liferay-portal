@@ -4,10 +4,9 @@ import DownloadPDFReport from 'shared/components/download-report/DownloadPDFRepo
 import EventAnalysisEditor from '../components/event-analysis-editor';
 import Form from 'shared/components/form';
 import NavigationWarning from 'shared/components/NavigationWarning';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert, RangeSelectors} from 'shared/types';
-import {AttributesContext} from '../components/event-analysis-editor/context/attributes';
 import {
 	Breakdowns,
 	CalculationTypes,
@@ -26,6 +25,7 @@ import {getSafeRangeSelectors} from 'shared/util/util';
 import {hasChanges} from 'shared/util/react';
 import {omit} from 'lodash';
 import {Routes, toRoute} from 'shared/util/router';
+import {useAttributes} from '../components/event-analysis-editor/context/attributes';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSources} from 'shared/context/dataSources';
@@ -124,7 +124,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 		changed: attributesContextChanged,
 		filterOrder,
 		filters,
-	} = useContext(AttributesContext);
+	} = useAttributes();
 
 	const Mutation = eventAnalysisId
 		? UpdateEventAnalysisMutation

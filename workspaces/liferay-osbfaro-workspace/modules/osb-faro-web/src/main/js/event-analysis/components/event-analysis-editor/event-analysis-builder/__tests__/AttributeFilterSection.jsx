@@ -1,6 +1,7 @@
+import AttributeFilterSection from '../AttributeFilterSection';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {AttributeFilterSection} from '../AttributeFilterSection';
+import {AttributesContext} from '../../context/attributes';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
@@ -11,7 +12,7 @@ import {Routes} from 'shared/util/router';
 
 jest.unmock('react-dom');
 
-const WrappedComponent = props => (
+const WrappedComponent = ({eventId, ...attributes}) => (
 	<Provider store={mockStore()}>
 		<MemoryRouter initialEntries={['/workspace/23/event-analysis']}>
 			<RouterRoutes>
@@ -19,12 +20,16 @@ const WrappedComponent = props => (
 					element={
 						<MockedProvider freezeResults={false}>
 							<DndProvider backend={HTML5Backend}>
-								<AttributeFilterSection
-									attributes={[]}
-									filterOrder={[]}
-									filters={[]}
-									{...props}
-								/>
+								<AttributesContext.Provider
+									value={{
+										attributes: {},
+										filterOrder: [],
+										filters: {},
+										...attributes
+									}}
+								>
+									<AttributeFilterSection eventId={eventId} />
+								</AttributesContext.Provider>
 							</DndProvider>
 						</MockedProvider>
 					}

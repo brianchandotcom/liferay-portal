@@ -245,8 +245,8 @@ const AttributeBreakdownDropdown: React.FC<
 									attributeOwnerType={attributeOwnerType}
 									breakdownId={breakdownId ?? undefined}
 									onActiveChange={setActive}
-									onAttributeChange={(params: Attribute) => {
-										setSelectedAttribute(params);
+									onAttributeChange={(attribute) => {
+										setSelectedAttribute(attribute ?? null);
 									}}
 									onEditClick={
 										uneditableIds &&

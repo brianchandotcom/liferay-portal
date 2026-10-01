@@ -4,23 +4,17 @@ import EventChip from './EventChip';
 import EventDropdown from './EventDropdown';
 import React from 'react';
 import {Align} from '@clayui/drop-down';
-import {
-	DeleteAllAttributes,
-	withAttributesConsumer,
-} from '../context/attributes';
 import {Event} from 'event-analysis/utils/types';
+import {useAttributes} from '../context/attributes';
 
 interface IEventSectionProps {
-	deleteAllAttributes: DeleteAllAttributes;
-	event: Event;
+	event?: Event;
 	onEventChange: (event: Event | null) => void;
 }
 
-const EventSection: React.FC<IEventSectionProps> = ({
-	deleteAllAttributes,
-	event,
-	onEventChange,
-}) => {
+const EventSection: React.FC<IEventSectionProps> = ({event, onEventChange}) => {
+	const {deleteAllAttributes} = useAttributes();
+
 	const handleEventChange = (event: Event | null): void => {
 		onEventChange(event);
 
@@ -63,4 +57,4 @@ const EventSection: React.FC<IEventSectionProps> = ({
 	);
 };
 
-export default withAttributesConsumer(EventSection);
+export default EventSection;

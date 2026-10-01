@@ -1,4 +1,4 @@
-import React, {createContext, useMemo, useReducer} from 'react';
+import React, {createContext, useContext, useMemo, useReducer} from 'react';
 import {Attribute, Breakdown, Filter} from 'event-analysis/utils/types';
 import {deletePropertyFromObject} from 'shared/util/object';
 import {isEqual} from 'lodash';
@@ -74,27 +74,38 @@ export type AttributesState = {
 	filters: Filters;
 };
 
-export const AttributesContext = createContext<
-	AttributesState & {
-		addBreakdown?: AddBreakdown;
-		addFilter?: AddFilter;
-		changed: boolean;
-		deleteAllAttributes?: DeleteAllAttributes;
-		deleteBreakdown?: DeleteBreakdown;
-		deleteFilter?: DeleteFilter;
-		editBreakdown?: EditBreakdown;
-		editFilter?: EditFilter;
-		moveBreakdown?: MoveBreakdown;
-		moveFilter?: MoveFilter;
-	}
->({
+export type AttributesContextValue = AttributesState & {
+	addBreakdown: AddBreakdown;
+	addFilter: AddFilter;
+	changed: boolean;
+	deleteAllAttributes: DeleteAllAttributes;
+	deleteBreakdown: DeleteBreakdown;
+	deleteFilter: DeleteFilter;
+	editBreakdown: EditBreakdown;
+	editFilter: EditFilter;
+	moveBreakdown: MoveBreakdown;
+	moveFilter: MoveFilter;
+};
+
+export const AttributesContext = createContext<AttributesContextValue>({
+	addBreakdown: () => {},
+	addFilter: () => {},
 	attributes: {},
 	breakdownOrder: [],
 	breakdowns: {},
 	changed: false,
+	deleteAllAttributes: () => {},
+	deleteBreakdown: () => {},
+	deleteFilter: () => {},
+	editBreakdown: () => {},
+	editFilter: () => {},
 	filterOrder: [],
 	filters: {},
+	moveBreakdown: () => {},
+	moveFilter: () => {},
 });
+
+export const useAttributes = () => useContext(AttributesContext);
 
 type Action = {
 	payload: {
@@ -388,23 +399,7 @@ export const AttributesProvider: React.FC<IAttributesProviderProps> = ({
 		[initialFilters, filters]
 	);
 
-	const contextValue: {
-		addBreakdown: AddBreakdown;
-		addFilter: AddFilter;
-		attributes: {[key: string]: Attribute};
-		breakdownOrder: string[];
-		breakdowns: Breakdowns;
-		changed: boolean;
-		deleteAllAttributes: DeleteAllAttributes;
-		deleteBreakdown: DeleteBreakdown;
-		deleteFilter: DeleteFilter;
-		editBreakdown: EditBreakdown;
-		editFilter: EditFilter;
-		filterOrder: string[];
-		filters: Filters;
-		moveBreakdown: MoveBreakdown;
-		moveFilter: MoveFilter;
-	} = {
+	const contextValue: AttributesContextValue = {
 		addBreakdown: (payload) =>
 			attributesDispatch({
 				payload,
@@ -456,19 +451,3 @@ export const AttributesProvider: React.FC<IAttributesProviderProps> = ({
 		</AttributesContext.Provider>
 	);
 };
-
-export const withAttributesProvider =
-	(WrappedComponent: React.ComponentType<any>) =>
-	(props: Record<string, any>) => (
-		<AttributesProvider>
-			<WrappedComponent {...props} />
-		</AttributesProvider>
-	);
-
-export const withAttributesConsumer =
-	(WrappedComponent: React.ComponentType<any>) =>
-	(props: Record<string, any>) => (
-		<AttributesContext.Consumer>
-			{(attributes) => <WrappedComponent {...props} {...attributes} />}
-		</AttributesContext.Consumer>
-	);

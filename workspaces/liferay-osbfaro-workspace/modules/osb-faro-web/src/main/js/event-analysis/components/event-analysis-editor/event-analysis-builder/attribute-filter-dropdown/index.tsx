@@ -204,8 +204,8 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 									eventId={eventId}
 									filterId={filterId ?? undefined}
 									onActiveChange={setActive}
-									onAttributeChange={(params: Attribute) => {
-										setSelectedAttribute(params);
+									onAttributeChange={(attribute) => {
+										setSelectedAttribute(attribute ?? null);
 									}}
 									onEditClick={
 										uneditableIds &&
@@ -214,7 +214,7 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 												uneditableAttributeId ===
 												selectedAttribute.id
 										)
-											? null
+											? undefined
 											: () => {
 													open(
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,

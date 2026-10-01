@@ -8,17 +8,12 @@ import NumberFilter from './NumberFilter';
 import React from 'react';
 import StringFilter from './StringFilter';
 import {
-	AddFilter,
-	EditFilter,
-	withAttributesConsumer,
-} from '../../../context/attributes';
-import {
 	Attribute,
 	AttributeOwnerTypes,
 	DataTypes,
 	Filter,
-	Filters,
 } from 'event-analysis/utils/types';
+import {useAttributes} from '../../../context/attributes';
 
 const FILTERS_MAP = {
 	[DataTypes.Boolean]: BooleanFilter,
@@ -29,30 +24,26 @@ const FILTERS_MAP = {
 };
 
 interface IFilterOptionsProps extends React.HTMLAttributes<HTMLDivElement> {
-	addFilter: AddFilter;
 	attribute: Attribute;
 	attributeOwnerType: AttributeOwnerTypes;
-	editFilter: EditFilter;
 	eventId: string;
 	filterId?: string;
-	filters: Filters;
 	onActiveChange: (active: boolean) => void;
 	onAttributeChange: (attribute?: Attribute) => void;
 	onEditClick?: (id: string) => void;
 }
 
 const FilterOptions: React.FC<IFilterOptionsProps> = ({
-	addFilter,
 	attribute,
 	attributeOwnerType,
-	editFilter,
 	eventId,
 	filterId,
-	filters,
 	onActiveChange,
 	onAttributeChange,
 	onEditClick,
 }) => {
+	const {addFilter, editFilter, filters} = useAttributes();
+
 	const {
 		dataType,
 		description,
@@ -124,4 +115,4 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 	);
 };
 
-export default withAttributesConsumer(FilterOptions);
+export default FilterOptions;

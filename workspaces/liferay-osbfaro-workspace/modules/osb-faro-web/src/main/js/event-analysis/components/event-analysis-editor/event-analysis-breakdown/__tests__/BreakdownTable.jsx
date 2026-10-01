@@ -1,9 +1,6 @@
 import BreakdownTable from '../index';
 import React from 'react';
-import {
-	AttributesContext,
-	withAttributesProvider
-} from '../../context/attributes';
+import {AttributesContext, AttributesProvider} from '../../context/attributes';
 import {cleanup, render} from '@testing-library/react';
 import {MockedProvider} from '@apollo/client/testing';
 import {mockEventAnalysisResultReq} from 'test/graphql-data';
@@ -124,8 +121,6 @@ describe('BreakdownTable', () => {
 	});
 
 	it('render with single event', async () => {
-		const BreakdownWithProvider = withAttributesProvider(BreakdownTable);
-
 		const {container} = render(
 			<MemoryRouter>
 				<MockedProvider
@@ -136,15 +131,17 @@ describe('BreakdownTable', () => {
 						})
 					]}
 				>
-					<BreakdownWithProvider
-						channelId='123'
-						compareToPrevious
-						event={event}
-						rangeSelectors={{
-							rangeKey: '30'
-						}}
-						type='TOTAL'
-					/>
+					<AttributesProvider>
+						<BreakdownTable
+							channelId='123'
+							compareToPrevious
+							event={event}
+							rangeSelectors={{
+								rangeKey: '30'
+							}}
+							type='TOTAL'
+						/>
+					</AttributesProvider>
 				</MockedProvider>
 			</MemoryRouter>
 		);

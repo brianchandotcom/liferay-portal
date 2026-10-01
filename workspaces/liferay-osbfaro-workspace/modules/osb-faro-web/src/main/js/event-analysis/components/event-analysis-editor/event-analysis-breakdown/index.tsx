@@ -8,7 +8,6 @@ import PercentOfCell from './PercentOfCell';
 import React, {useEffect, useRef} from 'react';
 import Table from 'shared/components/table';
 import TextTruncate from 'shared/components/TextTruncate';
-import WithEmptyState from './hoc/WithEmptyState';
 import {
 	Attributes,
 	Breakdown,
@@ -21,8 +20,7 @@ import {
 	ParsedBreakdownData,
 	ParsedBreakdownItem,
 } from 'event-analysis/utils/types';
-import {compose} from 'redux';
-import {EditBreakdown, withAttributesConsumer} from '../context/attributes';
+import {EditBreakdown, useAttributes} from '../context/attributes';
 import {get, isNil, omit} from 'lodash';
 import {getMaxEventValue, parseBreakdownData} from 'event-analysis/utils/utils';
 import {
@@ -37,13 +35,19 @@ import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {withPaginationBar} from 'shared/hoc';
 import {WithRangeKeyProps} from 'shared/hoc/WithRangeKey';
 
-export interface IBreakdownTableWithSafeResultsProps
-	extends IBreakdownTableProps {
+interface IBreakdownWithSafeResultsProps extends WithRangeKeyProps {
 	channelId: string;
-	filterOrder: string[];
+	compareToPrevious: boolean;
+	event: Event;
+	type: CalculationTypes;
 }
 
-export interface IBreakdownTableProps
+interface IEventAnalysisBreakdownProps
+	extends Omit<IBreakdownWithSafeResultsProps, 'event'> {
+	event?: Event | null;
+}
+
+interface IBreakdownTableProps
 	extends WithRangeKeyProps,
 		React.HTMLAttributes<HTMLElement> {
 	attributes: Attributes;
@@ -214,21 +218,22 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 	);
 };
 
-const BreakdownWithSafeResults: React.FC<
-	IBreakdownTableWithSafeResultsProps
-> = ({
-	attributes,
-	breakdownOrder,
-	breakdowns,
+const BreakdownWithSafeResults: React.FC<IBreakdownWithSafeResultsProps> = ({
 	channelId,
 	compareToPrevious,
-	editBreakdown,
 	event,
-	filterOrder,
-	filters,
 	rangeSelectors,
 	type,
 }) => {
+	const {
+		attributes,
+		breakdownOrder,
+		breakdowns,
+		editBreakdown,
+		filterOrder,
+		filters,
+	} = useAttributes();
+
 	const {delta, onDeltaChange, onPageChange, page} = useStatefulPagination();
 
 	const result = useQuery<
@@ -472,7 +477,19 @@ const getColumns = ({
 	return columns;
 };
 
-export default compose<React.ComponentType<any>>(
-	withAttributesConsumer,
-	WithEmptyState
-)(BreakdownWithSafeResults);
+const EventAnalysisBreakdown: React.FC<IEventAnalysisBreakdownProps> = ({
+	event,
+	...otherProps
+}) => {
+	if (!event) {
+		return (
+			<div className="breakdown-empty">
+				{Liferay.Language.get('add-an-event-to-analyze')}
+			</div>
+		);
+	}
+
+	return <BreakdownWithSafeResults {...otherProps} event={event} />;
+};
+
+export default EventAnalysisBreakdown;

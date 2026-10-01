@@ -1,10 +1,10 @@
 import React from 'react';
 import {
 	ActionTypes,
+	AttributesProvider,
 	attributesReducer,
 	isAttributeInUse,
-	withAttributesConsumer,
-	withAttributesProvider
+	useAttributes
 } from '../attributes';
 import {isBoolean} from 'lodash';
 import {render} from '@testing-library/react';
@@ -659,25 +659,27 @@ describe('attributes', () => {
 		});
 	});
 
-	describe('withAttributesConsumer', () => {
-		it('should pass the WrappedComponent', () => {
-			const ChildComponent = ({
-				addBreakdown,
-				addFilter,
-				attributes,
-				breakdownOrder,
-				breakdowns,
-				changed,
-				deleteAllAttributes,
-				deleteBreakdown,
-				deleteFilter,
-				editBreakdown,
-				editFilter,
-				filterOrder,
-				filters,
-				moveBreakdown,
-				moveFilter
-			}) => {
+	describe('useAttributes', () => {
+		it('should return the provided state and actions', () => {
+			const ChildComponent = () => {
+				const {
+					addBreakdown,
+					addFilter,
+					attributes,
+					breakdownOrder,
+					breakdowns,
+					changed,
+					deleteAllAttributes,
+					deleteBreakdown,
+					deleteFilter,
+					editBreakdown,
+					editFilter,
+					filterOrder,
+					filters,
+					moveBreakdown,
+					moveFilter
+				} = useAttributes();
+
 				if (
 					addBreakdown &&
 					addFilter &&
@@ -701,30 +703,13 @@ describe('attributes', () => {
 				return <div>{'missing some'}</div>;
 			};
 
-			const WrappedComponent = withAttributesProvider(() => {
-				const WrappedChildComponent =
-					withAttributesConsumer(ChildComponent);
-
-				return <WrappedChildComponent />;
-			});
-
-			const {container} = render(<WrappedComponent />);
-
-			jest.runAllTimers();
+			const {container} = render(
+				<AttributesProvider>
+					<ChildComponent />
+				</AttributesProvider>
+			);
 
 			expect(container).toHaveTextContent('contains all');
-		});
-	});
-
-	describe('withAttributesProvider', () => {
-		it('should pass the WrappedComponent', () => {
-			const WrappedComponent = withAttributesProvider(() => (
-				<div>{'foo'}</div>
-			));
-
-			const {container} = render(<WrappedComponent />);
-
-			expect(container).toHaveTextContent('foo');
 		});
 	});
 });

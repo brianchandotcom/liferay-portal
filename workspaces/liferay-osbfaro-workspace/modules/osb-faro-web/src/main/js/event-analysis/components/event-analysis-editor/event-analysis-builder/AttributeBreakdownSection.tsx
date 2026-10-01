@@ -7,41 +7,31 @@ import React from 'react';
 import {
 	AddBreakdown,
 	AddBreakdownParams,
-	DeleteBreakdown,
 	EditBreakdown,
-	MoveBreakdown,
-	withAttributesConsumer,
+	useAttributes,
 } from '../context/attributes';
 import {Align} from '@clayui/drop-down';
-import {Attributes, Breakdowns, Filters} from 'event-analysis/utils/types';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 const MAX_ATTRIBUTES = 5;
 
 interface IAttributeBreakdownSectionProps {
-	addBreakdown: AddBreakdown;
-	attributes: Attributes;
-	breakdownOrder: string[];
-	breakdowns: Breakdowns;
-	deleteBreakdown: DeleteBreakdown;
-	editBreakdown: EditBreakdown;
-	eventId: string;
-	filters: Filters;
-	moveBreakdown: MoveBreakdown;
+	eventId?: string;
 }
 
-export const AttributeBreakdownSection: React.FC<
-	IAttributeBreakdownSectionProps
-> = ({
-	addBreakdown,
-	attributes,
-	breakdownOrder,
-	breakdowns,
-	deleteBreakdown,
-	editBreakdown,
+const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 	eventId,
-	moveBreakdown,
 }) => {
+	const {
+		addBreakdown,
+		attributes,
+		breakdownOrder,
+		breakdowns,
+		deleteBreakdown,
+		editBreakdown,
+		moveBreakdown,
+	} = useAttributes();
+
 	const disabledIds = breakdownOrder.map(
 		(breakdownId) => breakdowns[breakdownId].attributeId
 	);
@@ -112,4 +102,4 @@ export const AttributeBreakdownSection: React.FC<
 	);
 };
 
-export default withAttributesConsumer(AttributeBreakdownSection);
+export default AttributeBreakdownSection;

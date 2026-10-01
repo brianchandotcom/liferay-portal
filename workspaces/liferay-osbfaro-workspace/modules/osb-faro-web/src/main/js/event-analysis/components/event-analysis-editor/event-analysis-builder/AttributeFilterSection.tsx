@@ -5,33 +5,19 @@ import ClayIcon from '@clayui/icon';
 import DndProvider from 'shared/components/DndProvider';
 import React from 'react';
 import {Align} from '@clayui/drop-down';
-import {Attributes, Breakdowns, Filters} from 'event-analysis/utils/types';
-import {
-	DeleteFilter,
-	MoveFilter,
-	withAttributesConsumer,
-} from '../context/attributes';
 import {HTML5Backend} from 'react-dnd-html5-backend';
+import {useAttributes} from '../context/attributes';
 
 interface IAttributeFilterSectionProps {
-	attributes: Attributes;
-	breakdownOrder: string[];
-	breakdowns: Breakdowns;
-	deleteFilter: DeleteFilter;
-	eventId: string;
-	filterOrder: string[];
-	filters: Filters;
-	moveFilter: MoveFilter;
+	eventId?: string;
 }
 
-export const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
-	attributes,
-	deleteFilter,
+const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 	eventId,
-	filterOrder,
-	filters,
-	moveFilter,
 }) => {
+	const {attributes, deleteFilter, filterOrder, filters, moveFilter} =
+		useAttributes();
+
 	const uneditableIds = Object.keys(attributes);
 
 	return (
@@ -83,4 +69,4 @@ export const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 	);
 };
 
-export default withAttributesConsumer(AttributeFilterSection);
+export default AttributeFilterSection;

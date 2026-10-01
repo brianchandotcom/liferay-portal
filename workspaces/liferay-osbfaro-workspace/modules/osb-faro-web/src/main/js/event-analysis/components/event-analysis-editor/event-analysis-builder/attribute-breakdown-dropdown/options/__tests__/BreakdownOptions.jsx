@@ -1,26 +1,26 @@
-import FilterOptions from '../index';
+import BreakdownOptions from '../index';
 import React from 'react';
+import {AttributesProvider} from 'event-analysis/components/event-analysis-editor/context/attributes';
 import {render} from '@testing-library/react';
-import {withAttributesProvider} from 'event-analysis/components/event-analysis-editor/context/attributes';
 
 jest.unmock('react-dom');
 
 describe('FilterOptions', () => {
 	it('should render', () => {
-		const WrappedFilterOptions = withAttributesProvider(FilterOptions);
-
 		const {container} = render(
-			<WrappedFilterOptions
-				attribute={{
-					dataType: 'DATE',
-					displayName: 'Filed Ticket',
-					id: '4',
-					name: 'filedTicket'
-				}}
-				onActiveChange={jest.fn()}
-				onAttributeChange={jest.fn()}
-				onEditClick={jest.fn()}
-			/>
+			<AttributesProvider>
+				<BreakdownOptions
+					attribute={{
+						dataType: 'DATE',
+						displayName: 'Filed Ticket',
+						id: '4',
+						name: 'filedTicket'
+					}}
+					onActiveChange={jest.fn()}
+					onAttributeChange={jest.fn()}
+					onEditClick={jest.fn()}
+				/>
+			</AttributesProvider>
 		);
 
 		expect(container).toMatchSnapshot();

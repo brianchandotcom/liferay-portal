@@ -1,6 +1,7 @@
+import AttributeBreakdownSection from '../AttributeBreakdownSection';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {AttributeBreakdownSection} from '../AttributeBreakdownSection';
+import {AttributesContext} from '../../context/attributes';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {InMemoryCache} from '@apollo/client';
@@ -12,7 +13,7 @@ import {Routes} from 'shared/util/router';
 
 jest.unmock('react-dom');
 
-const WrappedComponent = props => (
+const WrappedComponent = ({eventId, ...attributes}) => (
 	<Provider store={mockStore()}>
 		<MemoryRouter initialEntries={['/workspace/23/event-analysis']}>
 			<RouterRoutes>
@@ -27,12 +28,16 @@ const WrappedComponent = props => (
 							}
 						>
 							<DndProvider backend={HTML5Backend}>
-								<AttributeBreakdownSection
-									attributes={[]}
-									breakdownOrder={[]}
-									breakdowns={[]}
-									{...props}
-								/>
+								<AttributesContext.Provider
+									value={{
+										attributes: {},
+										breakdownOrder: [],
+										breakdowns: {},
+										...attributes
+									}}
+								>
+									<AttributeBreakdownSection eventId={eventId} />
+								</AttributesContext.Provider>
 							</DndProvider>
 						</MockedProvider>
 					}

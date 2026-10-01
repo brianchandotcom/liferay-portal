@@ -6,16 +6,11 @@ import FilterInfo from '../../FilterInfo';
 import NumberBreakdown from './NumberBreakdown';
 import React from 'react';
 import {
-	AddBreakdown,
-	EditBreakdown,
-	withAttributesConsumer,
-} from '../../../context/attributes';
-import {
 	Attribute,
 	AttributeOwnerTypes,
-	Breakdowns,
 	DataTypes,
 } from 'event-analysis/utils/types';
+import {useAttributes} from '../../../context/attributes';
 
 import {IBreakdownProps} from 'event-analysis/utils/types';
 
@@ -26,28 +21,24 @@ const BREAKDOWNS_MAP: Partial<Record<DataTypes, React.FC<IBreakdownProps>>> = {
 };
 
 interface IBreakdownOptionsProps extends React.HTMLAttributes<HTMLDivElement> {
-	addBreakdown: AddBreakdown;
 	attribute: Attribute;
 	attributeOwnerType: AttributeOwnerTypes;
 	breakdownId?: string;
-	breakdowns: Breakdowns;
-	editBreakdown: EditBreakdown;
 	onActiveChange: (active: boolean) => void;
 	onAttributeChange: (attribute?: Attribute) => void;
 	onEditClick?: (id: string) => void;
 }
 
 const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
-	addBreakdown,
 	attribute,
 	attributeOwnerType,
 	breakdownId,
-	breakdowns,
-	editBreakdown,
 	onActiveChange,
 	onAttributeChange,
 	onEditClick,
 }) => {
+	const {addBreakdown, breakdowns, editBreakdown} = useAttributes();
+
 	const {
 		dataType,
 		description,
@@ -122,4 +113,4 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 	);
 };
 
-export default withAttributesConsumer(BreakdownOptions);
+export default BreakdownOptions;

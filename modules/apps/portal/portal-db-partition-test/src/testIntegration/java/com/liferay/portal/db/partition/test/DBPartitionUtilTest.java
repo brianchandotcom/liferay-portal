@@ -634,6 +634,16 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	@TestInfo("LPD-105887")
+	public void testGetConfigurationPids() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
+		_assertConnectionClosed(
+			getPartitionName(companyId),
+			() -> DBPartitionUtil.getConfigurationPids(companyId));
+	}
+
+	@Test
+	@TestInfo("LPD-105887")
 	public void testGetConfigurations() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
 

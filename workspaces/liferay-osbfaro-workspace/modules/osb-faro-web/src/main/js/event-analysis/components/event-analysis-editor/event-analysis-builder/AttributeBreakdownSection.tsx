@@ -2,6 +2,7 @@ import AttributeBreakdownChip from './AttributeBreakdownChip';
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
 import ConditionsSection from './ConditionsSection';
 import React, {useRef} from 'react';
+import useKeyboardReorder from './useKeyboardReorder';
 import {
 	AddBreakdown,
 	AddBreakdownParams,
@@ -32,6 +33,17 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 	} = useAttributes();
 
 	const sectionRef = useRef<HTMLElement>(null);
+
+	const getKeyboardProps = useKeyboardReorder({
+		count: breakdownOrder.length,
+		getName: (index) => {
+			const attribute =
+				attributes[breakdowns[breakdownOrder[index]].attributeId];
+
+			return attribute?.displayName || attribute?.name || '';
+		},
+		onMove: moveBreakdown,
+	});
 
 	if (!eventId) {
 		return null;
@@ -101,6 +113,7 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 							eventId={eventId}
 							index={i}
 							key={id}
+							keyboard={getKeyboardProps(i)}
 							onCloseClick={onRemove}
 							onEditSubmit={editBreakdown}
 							onMove={moveBreakdown}

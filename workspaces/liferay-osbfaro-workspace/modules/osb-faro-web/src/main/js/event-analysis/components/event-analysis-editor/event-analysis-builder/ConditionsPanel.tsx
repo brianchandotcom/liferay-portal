@@ -1,6 +1,7 @@
 import EventAnalysisBuilder from './index';
 import React from 'react';
 import useConditionAnnouncements from './useConditionAnnouncements';
+import {AnnounceContext, useAnnouncement} from './AnnounceContext';
 import {Event} from 'event-analysis/utils/types';
 import {Heading} from '@clayui/core';
 
@@ -13,7 +14,9 @@ const ConditionsPanel: React.FC<IConditionsPanelProps> = ({
 	event,
 	onEventChange,
 }) => {
-	const announcement = useConditionAnnouncements(event);
+	const {announce, announcement} = useAnnouncement();
+
+	useConditionAnnouncements(event, announce);
 
 	return (
 		<aside className="bg-white border-right event-analysis-conditions-panel">
@@ -28,10 +31,12 @@ const ConditionsPanel: React.FC<IConditionsPanelProps> = ({
 				</div>
 
 				<div className="flex-grow-1 overflow-auto" data-report-expand>
-					<EventAnalysisBuilder
-						event={event}
-						onEventChange={onEventChange}
-					/>
+					<AnnounceContext.Provider value={announce}>
+						<EventAnalysisBuilder
+							event={event}
+							onEventChange={onEventChange}
+						/>
+					</AnnounceContext.Provider>
 				</div>
 			</div>
 

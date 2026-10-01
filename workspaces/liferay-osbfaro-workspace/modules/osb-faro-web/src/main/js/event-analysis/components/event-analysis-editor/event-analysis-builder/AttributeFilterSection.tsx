@@ -2,6 +2,7 @@ import AttributeFilterChip from './AttributeFilterChip';
 import AttributeFilterDropdown from './attribute-filter-dropdown';
 import ConditionsSection from './ConditionsSection';
 import React, {useRef} from 'react';
+import useKeyboardReorder from './useKeyboardReorder';
 import {Align} from '@clayui/drop-down';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {DeleteFilter, useAttributes} from '../context/attributes';
@@ -17,6 +18,17 @@ const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 		useAttributes();
 
 	const sectionRef = useRef<HTMLElement>(null);
+
+	const getKeyboardProps = useKeyboardReorder({
+		count: filterOrder.length,
+		getName: (index) => {
+			const attribute =
+				attributes[filters[filterOrder[index]].attributeId];
+
+			return attribute?.displayName || attribute?.name || '';
+		},
+		onMove: moveFilter,
+	});
 
 	if (!eventId) {
 		return null;
@@ -63,6 +75,7 @@ const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 							filter={filters[id]}
 							index={i}
 							key={id}
+							keyboard={getKeyboardProps(i)}
 							onCloseClick={onRemove}
 							onMove={moveFilter}
 							uneditableIds={uneditableIds}

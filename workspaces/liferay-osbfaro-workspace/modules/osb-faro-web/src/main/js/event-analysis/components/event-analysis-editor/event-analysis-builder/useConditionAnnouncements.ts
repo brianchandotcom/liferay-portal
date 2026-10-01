@@ -1,7 +1,7 @@
 import {Attribute, Event} from 'event-analysis/utils/types';
 import {sub} from 'shared/util/lang';
 import {useAttributes} from '../context/attributes';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 
 type Conditions = {
 	attributes: {[key: string]: Attribute};
@@ -84,10 +84,11 @@ const getMessages = (previous: Conditions, current: Conditions): string[] => {
 	return messages;
 };
 
-const useConditionAnnouncements = (event?: Event): string => {
+const useConditionAnnouncements = (
+	event: Event | undefined,
+	announce: (message: string) => void
+) => {
 	const {attributes, breakdowns, filters} = useAttributes();
-
-	const [message, setMessage] = useState('');
 
 	const previousRef = useRef<Conditions>({
 		attributes,
@@ -104,11 +105,9 @@ const useConditionAnnouncements = (event?: Event): string => {
 		previousRef.current = current;
 
 		if (messages.length) {
-			setMessage(messages.join('. '));
+			announce(messages.join('. '));
 		}
 	}, [attributes, breakdowns, event, filters]);
-
-	return message;
 };
 
 export default useConditionAnnouncements;

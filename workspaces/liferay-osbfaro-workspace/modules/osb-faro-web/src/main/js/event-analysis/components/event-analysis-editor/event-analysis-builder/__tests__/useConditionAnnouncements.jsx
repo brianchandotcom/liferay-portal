@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import useConditionAnnouncements from '../useConditionAnnouncements';
 import {AttributesContext} from '../../context/attributes';
 import {render} from '@testing-library/react';
@@ -12,7 +12,13 @@ const attributes = {
 
 const event = {displayName: '', id: '10', name: 'assetClicked'};
 
-const Announcement = ({event}) => <div>{useConditionAnnouncements(event)}</div>;
+const Announcement = ({event}) => {
+	const [message, setMessage] = useState('');
+
+	useConditionAnnouncements(event, setMessage);
+
+	return <div>{message}</div>;
+};
 
 const WrappedComponent = ({breakdowns = {}, event, filters = {}}) => (
 	<AttributesContext.Provider value={{attributes, breakdowns, filters}}>

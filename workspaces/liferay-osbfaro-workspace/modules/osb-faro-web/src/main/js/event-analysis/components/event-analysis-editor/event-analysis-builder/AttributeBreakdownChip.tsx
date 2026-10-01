@@ -7,6 +7,7 @@ import {
 	getBreakdownDisplay,
 } from 'event-analysis/utils/utils';
 import {DeleteBreakdown, EditBreakdown} from '../context/attributes';
+import {IKeyboardReorderProps} from './useKeyboardReorder';
 import {SortableChipTypes} from './useSortableChip';
 
 type MoveBreakdown = (params: {from: number; to: number}) => void;
@@ -17,6 +18,7 @@ const AttributeBreakdownChip: React.FC<{
 	disabledIds: string[];
 	eventId: string;
 	index: number;
+	keyboard?: IKeyboardReorderProps;
 	onCloseClick: DeleteBreakdown;
 	onEditSubmit: EditBreakdown;
 	onMove: MoveBreakdown;
@@ -27,6 +29,7 @@ const AttributeBreakdownChip: React.FC<{
 	disabledIds,
 	eventId,
 	index,
+	keyboard,
 	onCloseClick,
 	onEditSubmit,
 	onMove,
@@ -51,6 +54,7 @@ const AttributeBreakdownChip: React.FC<{
 					dragType={SortableChipTypes.Breakdown}
 					icon={DATA_TYPE_ICONS_MAP[dataType]}
 					index={index}
+					keyboard={keyboard}
 					label={label}
 					name={
 						displayName || attribute.displayName || attribute.name

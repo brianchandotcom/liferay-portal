@@ -34,10 +34,15 @@
 
 	.drag-handle {
 		color: $mainLighten52;
+
+		&:focus-visible {
+			box-shadow: 0 0 0 2px $primaryLighten23;
+		}
 	}
 
 	&.condition-chip-draggable,
-	&.condition-chip-draggable .condition-chip-content {
+	&.condition-chip-draggable .condition-chip-content,
+	&.condition-chip-draggable .drag-handle {
 		cursor: grab;
 	}
 

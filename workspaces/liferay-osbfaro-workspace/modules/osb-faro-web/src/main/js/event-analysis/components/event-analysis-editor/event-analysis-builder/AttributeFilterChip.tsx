@@ -8,6 +8,7 @@ import {
 } from 'event-analysis/utils/utils';
 import {DeleteFilter} from '../context/attributes';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
+import {IKeyboardReorderProps} from './useKeyboardReorder';
 import {SortableChipTypes} from './useSortableChip';
 
 const AttributeFilterChip: React.FC<{
@@ -15,6 +16,7 @@ const AttributeFilterChip: React.FC<{
 	eventId: string;
 	filter: Filter;
 	index: number;
+	keyboard?: IKeyboardReorderProps;
 	onCloseClick: DeleteFilter;
 	onMove: (params: {from: number; to: number}) => void;
 	uneditableIds: string[];
@@ -23,6 +25,7 @@ const AttributeFilterChip: React.FC<{
 	eventId,
 	filter,
 	index,
+	keyboard,
 	onCloseClick,
 	onMove,
 	uneditableIds,
@@ -41,6 +44,7 @@ const AttributeFilterChip: React.FC<{
 					dragType={SortableChipTypes.Filter}
 					icon={DATA_TYPE_ICONS_MAP[dataType]}
 					index={index}
+					keyboard={keyboard}
 					label={getSafeDecodedURIComponent(label)}
 					name={
 						displayName || attribute.displayName || attribute.name

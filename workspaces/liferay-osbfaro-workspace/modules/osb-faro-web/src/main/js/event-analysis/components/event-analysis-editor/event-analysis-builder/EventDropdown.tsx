@@ -11,10 +11,9 @@ import React, {useState} from 'react';
 import {Align} from '@clayui/drop-down';
 import {Attribute, Event, EventTypes} from 'event-analysis/utils/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
-import {connect} from 'react-redux';
 import {DISPLAY_NAME} from 'shared/util/pagination';
-import {Modal} from 'shared/types';
 import {SafeResults} from 'shared/hoc/util';
+import {useDispatch} from 'react-redux';
 import {useQuery} from '@apollo/client';
 
 const {
@@ -23,21 +22,19 @@ const {
 
 interface IAnalysisDropdownProps {
 	alignmentPosition?: (typeof Align)[keyof typeof Align];
-	close: Modal.close;
 	eventId?: string;
 	onEventChange: (event: Event) => void;
-	open: Modal.open;
 	trigger: React.ReactElement;
 }
 
 const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 	alignmentPosition = Align.RightTop,
-	close,
 	eventId,
 	onEventChange,
-	open,
 	trigger,
 }) => {
+	const dispatch = useDispatch();
+
 	const [query, setQuery] = useState('');
 	const [eventType, setEventType] = useState<EventTypes>(EventTypes.All);
 
@@ -99,20 +96,23 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 										return;
 									}
 
-									open(
-										modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
-										{
-											id: item.id,
-											mutation: UPDATE_EVENT_DEFINITION,
-											onClose: (save: boolean) => {
-												if (save) {
-													result.refetch();
-												}
+									dispatch(
+										open(
+											modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
+											{
+												id: item.id,
+												mutation:
+													UPDATE_EVENT_DEFINITION,
+												onClose: (save: boolean) => {
+													if (save) {
+														result.refetch();
+													}
 
-												close();
-											},
-											query: EVENT_DEFINITION_QUERY,
-										}
+													dispatch(close());
+												},
+												query: EVENT_DEFINITION_QUERY,
+											}
+										)
 									);
 
 									setActive(false);
@@ -139,4 +139,4 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 	);
 };
 
-export default connect(null, {close, open})(AnalysisDropdown);
+export default AnalysisDropdown;

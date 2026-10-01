@@ -278,7 +278,7 @@ describe('NewPublish', () => {
 
 		await user.type(
 			screen.getByRole('textbox', {name: /start-date/}),
-			FUTURE_DATE_TIME.slice(0, 4)
+			FUTURE_DISPLAY_DATE.slice(0, 5)
 		);
 
 		expect(
@@ -305,11 +305,9 @@ describe('NewPublish', () => {
 		});
 
 		await user.click(startDateField);
-		await user.type(startDateField, `${FUTURE_DATE_TIME.split(' ')[0]} 1`);
+		await user.type(startDateField, `${FUTURE_DISPLAY_DATE} 1`);
 
-		expect(startDateField).toHaveValue(
-			`${FUTURE_DATE_TIME.split(' ')[0]} 1`
-		);
+		expect(startDateField).toHaveValue(`${FUTURE_DISPLAY_DATE} 1`);
 	});
 
 	it('defaults the start date time to midnight when a day is picked from the calendar', async () => {

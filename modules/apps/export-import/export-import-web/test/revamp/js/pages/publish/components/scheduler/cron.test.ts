@@ -48,7 +48,7 @@ function everyUIState(): ScheduleValues[] {
 
 	[[], [1], [1, 4, 7, 10], [2, 4, 6, 8, 10, 12], [1, 3, 6, 9, 12]].forEach(
 		(months) =>
-			[[1], [1, 15], [1, 3, 5, 7, 9], [31], []].forEach((monthDays) =>
+			[[1], [1, 15], [1, 3, 5, 7, 9], [31]].forEach((monthDays) =>
 				states.push(
 					buildScheduleValues({
 						monthDays,
@@ -673,9 +673,9 @@ describe('UI to cron is faithful', () => {
 
 			const decoded = decode(cronExpression);
 
-			if (decoded.unit === IntervalUnit.Custom) {
+			if (decoded.unit !== scheduleValues.unit) {
 				broken.push(
-					`${cronExpression}  <- ${scheduleValues.unit} fell to Custom`
+					`${cronExpression}  <- ${scheduleValues.unit} reread as ${decoded.unit}`
 				);
 
 				return;

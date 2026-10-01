@@ -28,6 +28,7 @@ exports[`EventSection render 1`] = `
           aria-haspopup="true"
           aria-label="Add Event"
           class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
+          data-html2canvas-ignore="true"
           title="Add Event"
           type="button"
         >
@@ -115,6 +116,7 @@ exports[`EventSection render with event 1`] = `
           <button
             aria-label="Remove View Article"
             class="condition-chip-remove flex-shrink-0 mr-1 btn btn-monospaced btn-sm btn-unstyled"
+            data-html2canvas-ignore="true"
             title="Remove View Article"
             type="button"
           >

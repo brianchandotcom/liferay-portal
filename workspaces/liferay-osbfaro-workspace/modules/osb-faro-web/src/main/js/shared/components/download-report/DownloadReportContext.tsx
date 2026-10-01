@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useReducer} from 'react';
+import React, {createContext, useContext, useEffect, useReducer} from 'react';
 import {ReportContainer} from './DownloadPDFReport';
 
 export const Context = createContext<{
@@ -85,3 +85,16 @@ export const DownloadReportProvider = ({
 Context.displayName = 'DownloadReportContext';
 
 export const useDownloadReportContext = () => useContext(Context);
+
+export const useReportContainer = (reportContainer?: ReportContainer) => {
+	const {clearReportContainers, setReportContainer} =
+		useDownloadReportContext();
+
+	useEffect(() => {
+		if (reportContainer) {
+			setReportContainer(reportContainer);
+		}
+
+		return clearReportContainers;
+	}, [reportContainer]);
+};

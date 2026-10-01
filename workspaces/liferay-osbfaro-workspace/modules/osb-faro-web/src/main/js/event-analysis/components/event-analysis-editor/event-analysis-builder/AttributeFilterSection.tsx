@@ -38,6 +38,7 @@ const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 					trigger={
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('add-filter')}
+							data-html2canvas-ignore
 							displayType="secondary"
 							monospaced
 							size="sm"

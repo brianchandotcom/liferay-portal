@@ -211,6 +211,33 @@ describe('JSPDFExtension', () => {
 		expect(jsPDFExtension.doc.getNumberOfPages()).toBe(1);
 	});
 
+	it('should size each container image from its captured dimensions', () => {
+		const jsPDFExtension = new JSPDFExtension({
+			containers: [
+				{
+					height: 2000,
+					imageData: 'data:image/jpeg;base64,',
+					layout: 1,
+					width: 1000,
+				},
+			],
+			date: new Date(0),
+			fontFamily: 'Helvetica',
+			name: 'test',
+		});
+
+		const addImage = jest
+			.spyOn(jsPDFExtension.doc, 'addImage')
+			.mockImplementation(() => jsPDFExtension.doc);
+
+		jsPDFExtension.renderContainers(0);
+
+		const [, , , , imageWidth, imageHeight] = addImage.mock
+			.calls[0] as unknown[];
+
+		expect(imageHeight).toBe(Math.round((imageWidth as number) * 2));
+	});
+
 	it('should render the PDF', () => {
 		const containers: any[] = [];
 		const fontFamily = 'Helvetica';

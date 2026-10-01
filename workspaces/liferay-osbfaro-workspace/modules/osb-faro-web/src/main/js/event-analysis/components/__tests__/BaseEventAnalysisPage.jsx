@@ -3,10 +3,13 @@ jest.mock('../event-analysis-editor', () => ({
 	default: jest.fn(() => 'event analysis editor')
 }));
 
-jest.mock(
-	'shared/components/download-report/DownloadPDFReport',
-	() => () => null
-);
+jest.mock('shared/components/download-report/DownloadPDFReport', () => ({
+	__esModule: true,
+	ReportContainer: jest.requireActual(
+		'shared/components/download-report/DownloadPDFReport'
+	).ReportContainer,
+	default: () => null
+}));
 
 jest.mock('shared/components/NavigationWarning', () => () => null);
 

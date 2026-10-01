@@ -46,9 +46,10 @@ interface FloatText extends Text {
 }
 
 export type JSPDFExtensionContainer = {
-	containerElement: HTMLElement;
+	height: number;
 	imageData: string;
 	layout: 1 | 2 | 3;
+	width: number;
 };
 
 export const fontMapper: {
@@ -295,14 +296,13 @@ export class JSPDFExtension {
 		let previousContainerX = this.config.container.padding;
 
 		this.config.container.list.forEach(
-			({containerElement, imageData, layout}) => {
+			({height, imageData, layout, width}) => {
 				const containerWidth =
 					(this.config.pageWidth -
 						(layout + 1) * this.config.container.padding) /
 					layout;
 				const containerHeight = Math.round(
-					(containerElement.clientHeight * containerWidth) /
-						containerElement.clientWidth
+					(height * containerWidth) / width
 				);
 
 				let containerX = this.config.container.padding;

@@ -301,6 +301,29 @@ export const inlineSVGIcons = (clonedDoc: Document, sprite: Element) => {
 	});
 };
 
+export const expandReportContent = (clonedDoc: Document) => {
+	clonedDoc
+		.querySelectorAll<HTMLElement>('[data-report-expand]')
+		.forEach(({style}) => {
+			style.height = 'auto';
+			style.maxHeight = 'none';
+			style.overflow = 'visible';
+			style.position = 'static';
+		});
+};
+
+export const fitInlineInputs = (clonedDoc: Document) => {
+	clonedDoc
+		.querySelectorAll<HTMLElement>('.form-control-inline')
+		.forEach(({style}) => {
+			style.height = 'auto';
+			style.lineHeight = 'normal';
+		});
+};
+
+export const isToolbar = (element: Element) =>
+	element.classList.contains('toolbar-root');
+
 const getContainers = async (
 	containers: TransformedContainer[]
 ): Promise<JSPDFExtensionContainer[]> => {
@@ -317,14 +340,25 @@ const getContainers = async (
 
 		const promise = html2canvas(containerElement, {
 			backgroundColor: '#F1F2F5',
+			ignoreElements: isToolbar,
 			logging: false,
-			onclone: sprite
-				? (clonedDoc) => inlineSVGIcons(clonedDoc, sprite)
-				: undefined,
+			onclone: (clonedDoc) => {
+				if (sprite) {
+					inlineSVGIcons(clonedDoc, sprite);
+				}
+
+				expandReportContent(clonedDoc);
+				fitInlineInputs(clonedDoc);
+			},
 		}).then((canvas) => {
 			const imageData = canvas.toDataURL('image/jpeg', 1.0);
 
-			containerArr.push({containerElement, imageData, layout});
+			containerArr.push({
+				height: canvas.height,
+				imageData,
+				layout,
+				width: canvas.width,
+			});
 		});
 
 		promises.push(promise);

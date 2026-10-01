@@ -35,6 +35,7 @@ const EventSection: React.FC<IEventSectionProps> = ({event, onEventChange}) => {
 						trigger={
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('add-event')}
+								data-html2canvas-ignore
 								displayType="secondary"
 								monospaced
 								size="sm"

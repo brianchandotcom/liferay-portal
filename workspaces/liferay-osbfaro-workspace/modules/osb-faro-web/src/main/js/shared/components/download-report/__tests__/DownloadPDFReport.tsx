@@ -1,7 +1,10 @@
 import {
+	expandReportContent,
 	fetchSprite,
+	fitInlineInputs,
 	getProductName,
 	inlineSVGIcons,
+	isToolbar,
 	resetSpriteCache,
 } from '../DownloadPDFReport';
 
@@ -203,5 +206,56 @@ describe('inlineSVGIcons', () => {
 
 		expect(svg.querySelector('use')).toBeNull();
 		expect(svg.querySelector('path')).not.toBeNull();
+	});
+});
+
+describe('expandReportContent', () => {
+	it('removes the height limits and clipping of the marked elements', () => {
+		document.body.innerHTML =
+			'<div data-report-expand style="max-height: 100vh; overflow: auto; position: sticky"></div>' +
+			'<div id="unmarked" style="overflow: auto"></div>';
+
+		expandReportContent(document);
+
+		const marked = document.querySelector<HTMLElement>(
+			'[data-report-expand]'
+		)!;
+
+		expect(marked.style.height).toBe('auto');
+		expect(marked.style.maxHeight).toBe('none');
+		expect(marked.style.overflow).toBe('visible');
+		expect(marked.style.position).toBe('static');
+		expect(document.getElementById('unmarked')!.style.overflow).toBe(
+			'auto'
+		);
+	});
+});
+
+describe('fitInlineInputs', () => {
+	it('lets inline inputs grow to fit their text', () => {
+		document.body.innerHTML =
+			'<input class="form-control form-control-inline" style="height: 40px">' +
+			'<input class="form-control" id="regular" style="height: 40px">';
+
+		fitInlineInputs(document);
+
+		const inlineInput = document.querySelector<HTMLElement>(
+			'.form-control-inline'
+		)!;
+
+		expect(inlineInput.style.height).toBe('auto');
+		expect(inlineInput.style.lineHeight).toBe('normal');
+		expect(document.getElementById('regular')!.style.height).toBe('40px');
+	});
+});
+
+describe('isToolbar', () => {
+	it('leaves the page toolbar out of the report', () => {
+		document.body.innerHTML =
+			'<nav class="sticky-top toolbar-root tbar"></nav>' +
+			'<aside class="event-analysis-conditions-panel"></aside>';
+
+		expect(isToolbar(document.querySelector('nav')!)).toBe(true);
+		expect(isToolbar(document.querySelector('aside')!)).toBe(false);
 	});
 });

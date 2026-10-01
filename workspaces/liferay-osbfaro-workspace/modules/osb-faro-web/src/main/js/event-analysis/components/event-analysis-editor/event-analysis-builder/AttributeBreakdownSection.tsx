@@ -77,6 +77,7 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 								aria-label={Liferay.Language.get(
 									'add-breakdown'
 								)}
+								data-html2canvas-ignore
 								displayType="secondary"
 								monospaced
 								size="sm"

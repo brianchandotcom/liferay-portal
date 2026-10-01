@@ -36,7 +36,10 @@ const SortableChip = React.forwardRef<HTMLDivElement, ISortableChipProps>(
 					{...otherProps}
 					dragState={dragState}
 					handle={
-						<span className="drag-handle pl-2">
+						<span
+							className="drag-handle pl-2"
+							data-html2canvas-ignore
+						>
 							<ClayIcon symbol="drag" />
 						</span>
 					}

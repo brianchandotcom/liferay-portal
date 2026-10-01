@@ -31,6 +31,7 @@ exports[`Event Analysis Builder render 1`] = `
             aria-haspopup="true"
             aria-label="Add Event"
             class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
+            data-html2canvas-ignore="true"
             title="Add Event"
             type="button"
           >
@@ -122,6 +123,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
             <button
               aria-label="Remove Article Views"
               class="condition-chip-remove flex-shrink-0 mr-1 btn btn-monospaced btn-sm btn-unstyled"
+              data-html2canvas-ignore="true"
               title="Remove Article Views"
               type="button"
             >
@@ -164,6 +166,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
             aria-haspopup="true"
             aria-label="Add Breakdown"
             class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
+            data-html2canvas-ignore="true"
             title="Add Breakdown"
             type="button"
           >
@@ -205,6 +208,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
             aria-haspopup="true"
             aria-label="Add Filter"
             class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
+            data-html2canvas-ignore="true"
             title="Add Filter"
             type="button"
           >

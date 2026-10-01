@@ -17,14 +17,17 @@ const ConditionsPanel: React.FC<IConditionsPanelProps> = ({
 
 	return (
 		<aside className="bg-white border-right event-analysis-conditions-panel">
-			<div className="d-flex event-analysis-conditions-panel-content flex-column">
+			<div
+				className="d-flex event-analysis-conditions-panel-content flex-column"
+				data-report-expand
+			>
 				<div className="flex-shrink-0 px-4 py-3">
 					<Heading fontSize={6} level={2} weight="semi-bold">
 						{Liferay.Language.get('conditions-library')}
 					</Heading>
 				</div>
 
-				<div className="flex-grow-1 overflow-auto">
+				<div className="flex-grow-1 overflow-auto" data-report-expand>
 					<EventAnalysisBuilder
 						event={event}
 						onEventChange={onEventChange}

@@ -81,6 +81,7 @@ const ConditionChip = React.forwardRef<HTMLDivElement, IConditionChipProps>(
 					sub(Liferay.Language.get('remove-x'), [name]) as string
 				}
 				className="condition-chip-remove flex-shrink-0 mr-1"
+				data-html2canvas-ignore
 				displayType="unstyled"
 				monospaced
 				onClick={onRemove}

@@ -1,7 +1,7 @@
 import getCN from 'classnames';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {ReportContainer} from './download-report/DownloadPDFReport';
-import {useDownloadReportContext} from './download-report/DownloadReportContext';
+import {useReportContainer} from './download-report/DownloadReportContext';
 
 interface ICardBodyProps extends React.HTMLAttributes<HTMLElement> {
 	alignCenter?: boolean;
@@ -61,16 +61,7 @@ const Card: React.FC<ICardProps> & {
 	reportContainer,
 	testId,
 }) => {
-	const {clearReportContainers, setReportContainer} =
-		useDownloadReportContext();
-
-	useEffect(() => {
-		if (reportContainer) {
-			setReportContainer(reportContainer);
-		}
-
-		return clearReportContainers;
-	}, [reportContainer]);
+	useReportContainer(reportContainer);
 
 	const classes = getCN('card', 'card-root', className, {
 		horizontal,

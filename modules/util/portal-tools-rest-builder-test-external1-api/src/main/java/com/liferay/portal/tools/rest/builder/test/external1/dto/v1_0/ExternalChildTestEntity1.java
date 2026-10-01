@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.tools.rest.builder.test.external.dto.v1_0;
+package com.liferay.portal.tools.rest.builder.test.external1.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -157,7 +157,7 @@ public class ExternalChildTestEntity1
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.external.dto.v1_0.ExternalChildTestEntity1",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.external1.dto.v1_0.ExternalChildTestEntity1",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -272,4 +272,4 @@ public class ExternalChildTestEntity1
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2016619207
+// LIFERAY-REST-BUILDER-HASH:-900508625

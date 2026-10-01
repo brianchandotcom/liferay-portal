@@ -98,6 +98,30 @@ public class ReferencingTestEntity implements Cloneable, Serializable {
 
 	protected ExternalTestEntity2 externalTestEntity2;
 
+	public ExternalTestEntity3 getExternalTestEntity3() {
+		return externalTestEntity3;
+	}
+
+	public void setExternalTestEntity3(
+		ExternalTestEntity3 externalTestEntity3) {
+
+		this.externalTestEntity3 = externalTestEntity3;
+	}
+
+	public void setExternalTestEntity3(
+		UnsafeSupplier<ExternalTestEntity3, Exception>
+			externalTestEntity3UnsafeSupplier) {
+
+		try {
+			externalTestEntity3 = externalTestEntity3UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ExternalTestEntity3 externalTestEntity3;
+
 	@Override
 	public ReferencingTestEntity clone() throws CloneNotSupportedException {
 		return (ReferencingTestEntity)super.clone();
@@ -131,4 +155,4 @@ public class ReferencingTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-896499469
+// LIFERAY-REST-BUILDER-HASH:-1079013868

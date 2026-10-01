@@ -118,4 +118,4 @@ public abstract class ExternalTestEntity1 implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:431290543
+// LIFERAY-REST-BUILDER-HASH:1943202889

@@ -78,4 +78,4 @@ public class ExternalTestEntity2 implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:801749367
+// LIFERAY-REST-BUILDER-HASH:-1067185647

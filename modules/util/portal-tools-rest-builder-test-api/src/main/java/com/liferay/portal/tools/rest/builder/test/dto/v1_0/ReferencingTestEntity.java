@@ -13,9 +13,10 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.rest.builder.test.external.dto.v1_0.ExternalScopedTestEntity;
-import com.liferay.portal.tools.rest.builder.test.external.dto.v1_0.ExternalTestEntity1;
-import com.liferay.portal.tools.rest.builder.test.external.dto.v1_0.ExternalTestEntity2;
+import com.liferay.portal.tools.rest.builder.test.external1.dto.v1_0.ExternalScopedTestEntity;
+import com.liferay.portal.tools.rest.builder.test.external1.dto.v1_0.ExternalTestEntity1;
+import com.liferay.portal.tools.rest.builder.test.external1.dto.v1_0.ExternalTestEntity2;
+import com.liferay.portal.tools.rest.builder.test.external2.dto.v1_0.ExternalTestEntity3;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -191,6 +192,51 @@ public class ReferencingTestEntity implements Serializable {
 	@JsonIgnore
 	private Supplier<ExternalTestEntity2> _externalTestEntity2Supplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public ExternalTestEntity3 getExternalTestEntity3() {
+		if (_externalTestEntity3Supplier != null) {
+			externalTestEntity3 = _externalTestEntity3Supplier.get();
+
+			_externalTestEntity3Supplier = null;
+		}
+
+		return externalTestEntity3;
+	}
+
+	public void setExternalTestEntity3(
+		ExternalTestEntity3 externalTestEntity3) {
+
+		this.externalTestEntity3 = externalTestEntity3;
+
+		_externalTestEntity3Supplier = null;
+	}
+
+	@JsonIgnore
+	public void setExternalTestEntity3(
+		UnsafeSupplier<ExternalTestEntity3, Exception>
+			externalTestEntity3UnsafeSupplier) {
+
+		_externalTestEntity3Supplier = () -> {
+			try {
+				return externalTestEntity3UnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ExternalTestEntity3 externalTestEntity3;
+
+	@JsonIgnore
+	private Supplier<ExternalTestEntity3> _externalTestEntity3Supplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -254,6 +300,18 @@ public class ReferencingTestEntity implements Serializable {
 			sb.append("\"externalTestEntity2\": ");
 
 			sb.append(externalTestEntity2);
+		}
+
+		ExternalTestEntity3 externalTestEntity3 = getExternalTestEntity3();
+
+		if (externalTestEntity3 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalTestEntity3\": ");
+
+			sb.append(externalTestEntity3);
 		}
 
 		sb.append("}");
@@ -378,4 +436,4 @@ public class ReferencingTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:657015260
+// LIFERAY-REST-BUILDER-HASH:1582231236

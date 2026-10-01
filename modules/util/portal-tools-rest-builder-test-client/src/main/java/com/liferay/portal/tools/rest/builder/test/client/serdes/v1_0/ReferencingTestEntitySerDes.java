@@ -77,6 +77,16 @@ public class ReferencingTestEntitySerDes {
 			sb.append(referencingTestEntity.getExternalTestEntity2());
 		}
 
+		if (referencingTestEntity.getExternalTestEntity3() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalTestEntity3\": ");
+
+			sb.append(referencingTestEntity.getExternalTestEntity3());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +136,15 @@ public class ReferencingTestEntitySerDes {
 				String.valueOf(referencingTestEntity.getExternalTestEntity2()));
 		}
 
+		if (referencingTestEntity.getExternalTestEntity3() == null) {
+			map.put("externalTestEntity3", null);
+		}
+		else {
+			map.put(
+				"externalTestEntity3",
+				String.valueOf(referencingTestEntity.getExternalTestEntity3()));
+		}
+
 		return map;
 	}
 
@@ -156,6 +175,11 @@ public class ReferencingTestEntitySerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "externalTestEntity2")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalTestEntity3")) {
 
 				return false;
 			}
@@ -192,6 +216,15 @@ public class ReferencingTestEntitySerDes {
 				if (jsonParserFieldValue != null) {
 					referencingTestEntity.setExternalTestEntity2(
 						ExternalTestEntity2SerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalTestEntity3")) {
+
+				if (jsonParserFieldValue != null) {
+					referencingTestEntity.setExternalTestEntity3(
+						ExternalTestEntity3SerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
@@ -282,4 +315,4 @@ public class ReferencingTestEntitySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2088097346
+// LIFERAY-REST-BUILDER-HASH:1310783649

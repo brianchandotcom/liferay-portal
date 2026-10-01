@@ -13,15 +13,9 @@ Create a GitHub PR for the current branch, transition the linked Jira tickets to
 
 ## Repository Settings
 
-These settings describe this repository. The `pr` skill of another repository may follow this document with settings of its own, and each value it supplies replaces the one below.
+The base branch is `master` in `liferay/liferay-portal` and `master-private` in `liferay/liferay-portal-ee`. Use the one for the repository that a remote of this checkout points at (check `git remote --verbose`).
 
-| Setting | Value |
-| --- | --- |
-| **Base Branch** | `master` |
-| **Repository** | `liferay/liferay-portal` |
-| **Team Forks** | `liferay-ac`, `liferay-appsec`, `liferay-bpm`, `liferay-commerce`, `liferay-content-management`, `liferay-core-infra`, `liferay-database-infra`, `liferay-devtools`, `liferay-frontend`, `liferay-headless`, `liferay-page-management`, `liferay-platform-experience`, `liferay-search`, `liferay-site-management` |
-
-Below, `${BASE_BRANCH}` stands for the **Base Branch** setting, and `<repository>` stands for the **Repository** setting without its organization, such as `liferay-portal`.
+Below, `${BASE_BRANCH}` stands for that base branch, and `<repository>` stands for that repository without its organization, such as `liferay-portal`.
 
 ## Preconditions
 
@@ -47,7 +41,22 @@ Collect every distinct ticket key from the subjects of the branch's commits rela
 
 ### Target Repository
 
-The target repository defaults to `<fork-owner>/<repository>`. When `${ARGUMENTS}` names a different `org/repo`, use that; when it matches an alias below, expand the alias; otherwise, ask the user to choose `<fork-owner>` from the **Team Forks** setting.
+The target repository defaults to `<fork-owner>/<repository>`. When `${ARGUMENTS}` names a different `org/repo`, use that; when it matches an alias below, expand the alias; otherwise, ask the user to choose `<fork-owner>` from the teams below, leaving out any that has no fork of `<repository>`:
+
+- `liferay-ac`
+- `liferay-appsec`
+- `liferay-bpm`
+- `liferay-commerce`
+- `liferay-content-management`
+- `liferay-core-infra`
+- `liferay-database-infra`
+- `liferay-devtools`
+- `liferay-frontend`
+- `liferay-headless`
+- `liferay-page-management`
+- `liferay-platform-experience`
+- `liferay-search`
+- `liferay-site-management`
 
 The following short aliases resolve to a target repository:
 

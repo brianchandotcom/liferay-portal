@@ -12,19 +12,20 @@ Run premerge checks against the current branch. The skill iterates through the v
 
 ## Repository Settings
 
-These settings describe this repository. The `pr-check` skill of another repository may follow this document with settings of its own, and each value it supplies replaces the one below.
+Use the column for the repository that a remote of this checkout points at (check `git remote --verbose`).
 
-| Setting | Value |
-| --- | --- |
-| **Base Branch** | `master` |
-| **Repository** | `liferay/liferay-portal` |
-| **Scopes** | branch, portal, workspaces |
-| **Skipped Validations** | Workspace Source Format |
-| **Rules Commit** | `HEAD` |
+| Setting | `liferay/liferay-portal` | `liferay/liferay-portal-ee` |
+| --- | --- | --- |
+| **Base Branch** | `master` | `master-private` |
+| **Scopes** | branch, portal, workspaces | branch, workspaces |
+| **Skipped Validations** | Workspace Source Format | Source Format |
+| **Rules Commit** | `HEAD` | `master` |
 
-Workspace Source Format is skipped here because Source Format already formats every changed file in this repository, workspace files included.
+`liferay-portal` skips Workspace Source Format because Source Format already formats every changed file, workspace files included. `liferay-portal-ee` skips Source Format because the repository has no `portal-impl` to run the formatter from, and Workspace Source Format formats each workspace instead.
 
-`${BASE_BRANCH}` below stands for the base branch, and `${SOURCE_SHA}` stands for the rules commit, which is the commit this document and its validations were read from. A repository that fetches them from another repository supplies that commit.
+In `liferay-portal-ee`, this skill and its validations are copied from local `master`, so local `master` is the rules commit there.
+
+`${BASE_BRANCH}` below stands for the **Base Branch** setting, and `${SOURCE_SHA}` stands for the **Rules Commit** setting, which is the commit this document and its validations were read from.
 
 ## Preconditions
 
@@ -32,13 +33,15 @@ Workspace Source Format is skipped here because Source Format already formats ev
 
 - **Working tree clean.** `git status --porcelain` must return empty. When dirty, abort and ask the developer to commit first.
 
-- **Rebased on the latest `${BASE_BRANCH}`.** Resolve the remote. Prefer `upstream`, otherwise the remote whose URL points at the repository in the settings (check `git remote --verbose`). When none resolves, compare `git merge-base HEAD ${BASE_BRANCH}` to `git rev-parse ${BASE_BRANCH}`. Abort and tell the developer to rebase when the two differ, and warn that the branch was not checked against a remote. Otherwise run these steps.
+- **Rebased on the latest `${BASE_BRANCH}`.** Resolve the remote. Prefer `upstream`, otherwise the remote whose URL points at the repository named by the column in use (check `git remote --verbose`). When none resolves, compare `git merge-base HEAD ${BASE_BRANCH}` to `git rev-parse ${BASE_BRANCH}`. Abort and tell the developer to rebase when the two differ, and warn that the branch was not checked against a remote. Otherwise run these steps.
 
 	1. `git fetch <remote> ${BASE_BRANCH}`.
 
 	1. Fast forward local `${BASE_BRANCH}` to the fetched tip. When `${BASE_BRANCH}` is checked out in another worktree, fast forward it there with `git -C <worktree> merge --ff-only <remote>/${BASE_BRANCH}`. Otherwise update it in place with `git fetch <remote> ${BASE_BRANCH}:${BASE_BRANCH}`, which also creates `${BASE_BRANCH}` when it does not exist. Both are fast forward only. When the command fails for any reason, such as a diverged `${BASE_BRANCH}`, a worktree that is not clean, or a denied permission, warn the developer and stop the run. Never continue against a stale base, since every validation would then compare the branch with a base that lacks the latest commits.
 
 	1. `git rebase <remote>/${BASE_BRANCH}`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer asks you to resolve them, fix the conflicts, `git add` the files, and run `git rebase --continue`. In every other case (the developer resolves them, the conflicts cannot be resolved, or the rebase fails otherwise) run `git rebase --abort` and stop the run.
+
+- **Skills current in `liferay-portal-ee`.** Run `git fetch <remote> master`. When `git rev-parse master` differs from `git rev-parse FETCH_HEAD`, the skills are stale copies, so stop the run and tell the developer to copy them again from the latest `master`.
 
 - **Diff baseline is local `${BASE_BRANCH}`.** After the rebase, the three dot diff against local `${BASE_BRANCH}` is the baseline.
 

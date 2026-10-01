@@ -345,9 +345,9 @@ public class OpenAPIParserUtil {
 		Map<String, String> javaDataTypeMap = new TreeMap<>();
 
 		String baseDir = configYAML.getBaseDir();
-		List<String> externalReferences = getExternalReferences(openAPIYAML);
 		Map<String, Map<String, String>> externalJavaDataTypeMaps =
 			new HashMap<>();
+		List<String> externalReferences = getExternalReferences(openAPIYAML);
 		Set<String> visitedPaths = new HashSet<>();
 
 		try {

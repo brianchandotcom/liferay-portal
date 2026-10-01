@@ -23,10 +23,7 @@ import {
 	ScheduleValues,
 } from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/types';
 import {getInitialScheduleValues} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/publish/components/scheduler/utils';
-import {
-	toWallClockDate,
-	toWallClockDateTime,
-} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
+import {toWallClockDateTime} from '../../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
 
 const user = userEvent.setup({delay: null});
 
@@ -56,6 +53,10 @@ function renderPublishScheduler(
 }
 
 describe('PublishScheduler', () => {
+	afterEach(() => {
+		jest.useRealTimers();
+	});
+
 	it('shows the summary once the start date is set', () => {
 		renderPublishScheduler({
 			enabled: true,
@@ -69,26 +70,35 @@ describe('PublishScheduler', () => {
 		).toBeInTheDocument();
 	});
 
-	it('fills a start date picked for today with a time still ahead', () => {
+	it('fills a start date picked for today with the next full hour', () => {
+		jest.useFakeTimers().setSystemTime(Date.UTC(2026, 0, 15, 10, 30));
+
 		const onChange = jest.fn();
 
 		renderPublishScheduler({enabled: true}, onChange);
 
-		const today = new Date().toLocaleDateString('en-US', {
-			day: '2-digit',
-			month: '2-digit',
-			timeZone: 'UTC',
-			year: 'numeric',
+		fireEvent.change(screen.getByLabelText(/start-date/), {
+			target: {value: '01/15/2026 --:-- --'},
 		});
+
+		expect(onChange).toHaveBeenCalledWith(
+			expect.objectContaining({startDateTime: '2026-01-15 11:00'})
+		);
+	});
+
+	it('fills a start date picked for today with the end of the day once no full hour is left', () => {
+		jest.useFakeTimers().setSystemTime(Date.UTC(2026, 0, 15, 23, 30));
+
+		const onChange = jest.fn();
+
+		renderPublishScheduler({enabled: true}, onChange);
 
 		fireEvent.change(screen.getByLabelText(/start-date/), {
-			target: {value: `${today} --:-- --`},
+			target: {value: '01/15/2026 --:-- --'},
 		});
 
-		const {startDateTime} = onChange.mock.calls[0][0];
-
-		expect(toWallClockDate(startDateTime).getTime()).toBeGreaterThan(
-			Date.now()
+		expect(onChange).toHaveBeenCalledWith(
+			expect.objectContaining({startDateTime: '2026-01-15 23:59'})
 		);
 	});
 

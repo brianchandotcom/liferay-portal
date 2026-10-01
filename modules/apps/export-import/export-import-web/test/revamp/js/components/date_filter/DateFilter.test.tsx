@@ -54,6 +54,10 @@ function ControlledDateFilter({
 }
 
 describe('DateFilter', () => {
+	afterEach(() => {
+		jest.useRealTimers();
+	});
+
 	const renderDateFilter = ({
 		appliedValue,
 		lastPublishDate,
@@ -231,6 +235,8 @@ describe('DateFilter', () => {
 	});
 
 	it('fills the current time when today is picked as the To bound', async () => {
+		jest.useFakeTimers().setSystemTime(Date.UTC(2026, 0, 15, 10, 30));
+
 		const {user} = renderDateFilter();
 
 		await user.selectOptions(
@@ -238,14 +244,12 @@ describe('DateFilter', () => {
 			Range.DateRange
 		);
 
-		const todayString = new Date().toISOString().slice(0, 10);
-
 		fireEvent.change(screen.getByLabelText('to[date-time]'), {
-			target: {value: `${toDisplayDateString(todayString)} --:-- --`},
+			target: {value: '01/15/2026 --:-- --'},
 		});
 
-		expect(screen.getByLabelText('to[date-time]')).not.toHaveValue(
-			`${toDisplayDateString(todayString)} 11:59 PM`
+		expect(screen.getByLabelText('to[date-time]')).toHaveValue(
+			'01/15/2026 10:30 AM'
 		);
 		expect(
 			screen.queryByText('dates-must-not-be-in-the-future')

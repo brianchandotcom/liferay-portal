@@ -67,13 +67,11 @@ export default function FieldMappingRow({
 
 					<ClaySelect
 						aria-label={Liferay.Language.get('source')}
-						disabled={fixedValue}
 						onChange={(event) =>
 							onChange(index, {
 								...fieldMapping,
 								sourceClassName: event.target.value,
 								sourceFieldName: '',
-								type: TYPE_DYNAMIC_VALUE,
 							})
 						}
 						value={fieldMapping.sourceClassName}

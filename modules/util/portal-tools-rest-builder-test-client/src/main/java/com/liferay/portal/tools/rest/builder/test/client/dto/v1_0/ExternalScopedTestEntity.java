@@ -107,4 +107,4 @@ public class ExternalScopedTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1166069868
+// LIFERAY-REST-BUILDER-HASH:-70218284

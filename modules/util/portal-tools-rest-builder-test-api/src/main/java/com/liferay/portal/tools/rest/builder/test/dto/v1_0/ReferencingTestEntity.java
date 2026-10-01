@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.test.external.dto.v1_0.ExternalScopedTestEntity;
 import com.liferay.portal.tools.rest.builder.test.external.dto.v1_0.ExternalTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.external.dto.v1_0.ExternalTestEntity2;
+import com.liferay.portal.tools.rest.builder.test.external2.dto.v1_0.SecondExternalTestEntity;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -191,6 +192,52 @@ public class ReferencingTestEntity implements Serializable {
 	@JsonIgnore
 	private Supplier<ExternalTestEntity2> _externalTestEntity2Supplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public SecondExternalTestEntity getSecondExternalTestEntity() {
+		if (_secondExternalTestEntitySupplier != null) {
+			secondExternalTestEntity = _secondExternalTestEntitySupplier.get();
+
+			_secondExternalTestEntitySupplier = null;
+		}
+
+		return secondExternalTestEntity;
+	}
+
+	public void setSecondExternalTestEntity(
+		SecondExternalTestEntity secondExternalTestEntity) {
+
+		this.secondExternalTestEntity = secondExternalTestEntity;
+
+		_secondExternalTestEntitySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSecondExternalTestEntity(
+		UnsafeSupplier<SecondExternalTestEntity, Exception>
+			secondExternalTestEntityUnsafeSupplier) {
+
+		_secondExternalTestEntitySupplier = () -> {
+			try {
+				return secondExternalTestEntityUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SecondExternalTestEntity secondExternalTestEntity;
+
+	@JsonIgnore
+	private Supplier<SecondExternalTestEntity>
+		_secondExternalTestEntitySupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -254,6 +301,19 @@ public class ReferencingTestEntity implements Serializable {
 			sb.append("\"externalTestEntity2\": ");
 
 			sb.append(externalTestEntity2);
+		}
+
+		SecondExternalTestEntity secondExternalTestEntity =
+			getSecondExternalTestEntity();
+
+		if (secondExternalTestEntity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"secondExternalTestEntity\": ");
+
+			sb.append(secondExternalTestEntity);
 		}
 
 		sb.append("}");
@@ -378,4 +438,4 @@ public class ReferencingTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:657015260
+// LIFERAY-REST-BUILDER-HASH:-1868201626

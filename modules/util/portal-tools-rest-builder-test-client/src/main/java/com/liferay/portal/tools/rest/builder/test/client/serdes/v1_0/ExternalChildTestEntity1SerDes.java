@@ -245,4 +245,4 @@ public class ExternalChildTestEntity1SerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:408086694
+// LIFERAY-REST-BUILDER-HASH:588492198

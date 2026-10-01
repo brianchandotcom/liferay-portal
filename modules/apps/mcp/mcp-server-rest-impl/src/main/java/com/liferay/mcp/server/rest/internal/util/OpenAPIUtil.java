@@ -918,6 +918,8 @@ public class OpenAPIUtil {
 			return _objectEntrySystemPropertyNames;
 		}
 
+		Set<String> objectEntrySystemPropertyNames = new HashSet<>();
+
 		ObjectMapper objectMapper = ObjectMapperProviderUtil.getObjectMapper();
 
 		SerializationConfig serializationConfig =
@@ -925,8 +927,6 @@ public class OpenAPIUtil {
 
 		BeanDescription beanDescription = serializationConfig.introspect(
 			serializationConfig.constructType(ObjectEntry.class));
-
-		Set<String> objectEntrySystemPropertyNames = new HashSet<>();
 
 		for (BeanPropertyDefinition beanPropertyDefinition :
 				beanDescription.findProperties()) {
@@ -1679,13 +1679,12 @@ public class OpenAPIUtil {
 			return null;
 		}
 
+		Map<String, Object> properties = (Map<String, Object>)schema.get(
+			"properties");
 		List<String> requiredPropertyNames = (List<String>)schema.get(
 			"required");
 
-		Map<String, Object> properties = (Map<String, Object>)schema.get(
-			"properties");
-
-		if (ListUtil.isEmpty(requiredPropertyNames) || (properties == null)) {
+		if ((properties == null) || ListUtil.isEmpty(requiredPropertyNames)) {
 			return null;
 		}
 

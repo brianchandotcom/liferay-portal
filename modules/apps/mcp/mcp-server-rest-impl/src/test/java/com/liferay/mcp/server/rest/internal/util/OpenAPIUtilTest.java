@@ -586,16 +586,13 @@ public class OpenAPIUtilTest {
 			JSONObject expectedInputSchemaJSONObject, String toolName)
 		throws Exception {
 
+		ObjectMapper objectMapper = new ObjectMapper();
 		Tool tool = OpenAPIUtil.getTool(
 			true, _openAPIJSONObject, true, null, toolName);
 
 		JSONAssert.assertEquals(
 			expectedInputSchemaJSONObject.toString(),
-			new ObjectMapper(
-			).writeValueAsString(
-				tool.getInputSchema()
-			),
-			true);
+			objectMapper.writeValueAsString(tool.getInputSchema()), true);
 	}
 
 	private FileItem _getFileItem(List<FileItem> fileItems, String fieldName) {

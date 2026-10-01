@@ -181,10 +181,10 @@ describe('AttributeBreakdownSection', () => {
 		);
 
 		expect(
-			container.querySelectorAll('.attribute-list .attribute-chip-container')
+			container.querySelectorAll('.attribute-list .condition-chip')
 		).toHaveLength(2);
 
-		fireEvent.click(container.querySelector('.remove-button'));
+		fireEvent.click(container.querySelector('.condition-chip-remove'));
 
 		jest.runAllTimers();
 

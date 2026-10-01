@@ -81,21 +81,52 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
           class="dropdown"
         >
           <div
-            class="chip-root d-flex align-items-center justify-content-between event-chip-root"
+            class="align-items-center condition-chip d-flex rounded-lg"
           >
             <button
-              class="button-root event-name btn btn-unstyled"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="align-items-center condition-chip-content d-flex flex-grow-1 px-2 py-2 text-left text-wrap dropdown-toggle btn btn-unstyled"
               type="button"
             >
-              Article Views
+              <span
+                class="sticker condition-chip-sticker flex-shrink-0 mr-2 sticker-primary"
+              >
+                <span
+                  class="sticker-overlay"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-click"
+                    role="presentation"
+                  >
+                    <use
+                      href="#click"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <span
+                class="condition-chip-text d-flex flex-column text-break"
+              >
+                <span
+                  class="d-block"
+                >
+                  <span
+                    class="text-3 font-weight-semi-bold"
+                  >
+                    Article Views
+                  </span>
+                </span>
+              </span>
             </button>
             <button
-              aria-label="Close"
-              class="button-root remove-button btn btn-unstyled"
+              aria-label="Remove Article Views"
+              class="condition-chip-remove flex-shrink-0 mr-1 btn btn-monospaced btn-sm btn-unstyled"
+              title="Remove Article Views"
               type="button"
             >
               <svg
-                class="lexicon-icon lexicon-icon-times-circle icon-root"
+                class="lexicon-icon lexicon-icon-times-circle"
                 role="presentation"
               >
                 <use

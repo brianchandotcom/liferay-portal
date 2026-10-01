@@ -76,7 +76,7 @@ describe('EventSection', () => {
 			/>
 		);
 
-		fireEvent.click(container.querySelector('.remove-button'));
+		fireEvent.click(container.querySelector('.condition-chip-remove'));
 
 		expect(onEventChange).toHaveBeenCalledTimes(1);
 		expect(onEventChange).toHaveBeenCalledWith(null);

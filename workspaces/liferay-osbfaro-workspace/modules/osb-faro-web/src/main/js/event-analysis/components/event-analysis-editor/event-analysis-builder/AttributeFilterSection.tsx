@@ -1,12 +1,10 @@
 import AttributeFilterChip from './AttributeFilterChip';
 import AttributeFilterDropdown from './attribute-filter-dropdown';
 import ConditionsSection from './ConditionsSection';
-import DndProvider from 'shared/components/DndProvider';
 import React, {useRef} from 'react';
 import {Align} from '@clayui/drop-down';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {DeleteFilter, useAttributes} from '../context/attributes';
-import {HTML5Backend} from 'react-dnd-html5-backend';
 
 interface IAttributeFilterSectionProps {
 	eventId?: string;
@@ -15,8 +13,7 @@ interface IAttributeFilterSectionProps {
 const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 	eventId,
 }) => {
-	const {attributes, deleteFilter, filterOrder, filters, moveFilter} =
-		useAttributes();
+	const {attributes, deleteFilter, filterOrder, filters} = useAttributes();
 
 	const sectionRef = useRef<HTMLElement>(null);
 
@@ -56,22 +53,18 @@ const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 			title={Liferay.Language.get('filter-by')}
 		>
 			{!!filterOrder.length && (
-				<DndProvider backend={HTML5Backend}>
-					<div className="attribute-container attribute-list d-flex flex-column mt-3">
-						{filterOrder.map((id, i) => (
-							<AttributeFilterChip
-								attribute={attributes[filters[id].attributeId]}
-								eventId={eventId}
-								filter={filters[id]}
-								index={i}
-								key={id}
-								onCloseClick={onRemove}
-								onMove={moveFilter}
-								uneditableIds={uneditableIds}
-							/>
-						))}
-					</div>
-				</DndProvider>
+				<div className="attribute-container attribute-list d-flex flex-column mt-3">
+					{filterOrder.map((id) => (
+						<AttributeFilterChip
+							attribute={attributes[filters[id].attributeId]}
+							eventId={eventId}
+							filter={filters[id]}
+							key={id}
+							onCloseClick={onRemove}
+							uneditableIds={uneditableIds}
+						/>
+					))}
+				</div>
 			)}
 		</ConditionsSection>
 	);

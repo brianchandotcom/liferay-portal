@@ -261,21 +261,21 @@ export async function removeAttribute({
 	if (section === 'Event') {
 		await page
 			.locator('.event-section-root')
-			.getByRole('button', {name: 'Close'})
+			.getByRole('button', {name: /^Remove /})
 			.click();
 	}
 
 	if (section === 'Breakdown') {
 		await page
 			.locator('.attribute-breakdown-section-root')
-			.getByRole('button', {name: 'Close'})
+			.getByRole('button', {name: /^Remove /})
 			.click();
 	}
 
 	if (section === 'Filter') {
 		await page
 			.locator('.attribute-filter-section-root')
-			.getByRole('button', {name: 'Close'})
+			.getByRole('button', {name: /^Remove /})
 			.click();
 	}
 }

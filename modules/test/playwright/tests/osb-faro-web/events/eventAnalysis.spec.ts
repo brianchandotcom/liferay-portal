@@ -455,17 +455,19 @@ test(
 			).toBeVisible();
 
 			await page
-				.locator('div')
+				.locator('.attribute-filter-section-root .condition-chip')
 				.filter({
-					hasText: /^FilterEvent \| citycontains "rio de janeiro"$/,
+					hasText: /^Event \| citycontains "rio de janeiro"$/,
 				})
-				.getByLabel('Close')
+				.getByRole('button', {name: /^Remove /})
 				.click();
 
 			await expect(
-				page.locator('div').filter({
-					hasText: /^FilterEvent \| citycontains "rio de janeiro"$/,
-				})
+				page
+					.locator('.attribute-filter-section-root .condition-chip')
+					.filter({
+						hasText: /^Event \| citycontains "rio de janeiro"$/,
+					})
 			).toHaveCount(0);
 		});
 	}
@@ -594,19 +596,20 @@ test(
 			).toBeVisible();
 
 			await page
-				.locator('div')
+				.locator('.attribute-filter-section-root .condition-chip')
 				.filter({
-					hasText:
-						/^FilterEvent \| citydoes not contain "rio de janeiro"$/,
+					hasText: /^Event \| citydoes not contain "rio de janeiro"$/,
 				})
-				.getByLabel('Close')
+				.getByRole('button', {name: /^Remove /})
 				.click();
 
 			await expect(
-				page.locator('div').filter({
-					hasText:
-						/^FilterEvent \| citydoes not contain "rio de janeiro"$/,
-				})
+				page
+					.locator('.attribute-filter-section-root .condition-chip')
+					.filter({
+						hasText:
+							/^Event \| citydoes not contain "rio de janeiro"$/,
+					})
 			).toHaveCount(0);
 		});
 	}
@@ -735,15 +738,17 @@ test(
 			).toBeVisible();
 
 			await page
-				.locator('div')
-				.filter({hasText: /^FilterEvent \| cityis "rio de janeiro"$/})
-				.getByLabel('Close')
+				.locator('.attribute-filter-section-root .condition-chip')
+				.filter({hasText: /^Event \| cityis "rio de janeiro"$/})
+				.getByRole('button', {name: /^Remove /})
 				.click();
 
 			await expect(
-				page.locator('div').filter({
-					hasText: /^FilterEvent \| cityis "rio de janeiro"$/,
-				})
+				page
+					.locator('.attribute-filter-section-root .condition-chip')
+					.filter({
+						hasText: /^Event \| cityis "rio de janeiro"$/,
+					})
 			).toHaveCount(0);
 		});
 	}
@@ -872,17 +877,19 @@ test(
 			).toBeVisible();
 
 			await page
-				.locator('div')
+				.locator('.attribute-filter-section-root .condition-chip')
 				.filter({
-					hasText: /^FilterEvent \| cityis not "rio de janeiro"$/,
+					hasText: /^Event \| cityis not "rio de janeiro"$/,
 				})
-				.getByLabel('Close')
+				.getByRole('button', {name: /^Remove /})
 				.click();
 
 			await expect(
-				page.locator('div').filter({
-					hasText: /^FilterEvent \| cityis not "rio de janeiro"$/,
-				})
+				page
+					.locator('.attribute-filter-section-root .condition-chip')
+					.filter({
+						hasText: /^Event \| cityis not "rio de janeiro"$/,
+					})
 			).toHaveCount(0);
 		});
 	}
@@ -1011,17 +1018,19 @@ test(
 			).toBeVisible();
 
 			await page
-				.locator('div')
+				.locator('.attribute-filter-section-root .condition-chip')
 				.filter({
-					hasText: /^FilterEvent \| citycontains "rio de janeiro"$/,
+					hasText: /^Event \| citycontains "rio de janeiro"$/,
 				})
-				.getByLabel('Close')
+				.getByRole('button', {name: /^Remove /})
 				.click();
 
 			await expect(
-				page.locator('div').filter({
-					hasText: /^FilterEvent \| citycontains "rio de janeiro"$/,
-				})
+				page
+					.locator('.attribute-filter-section-root .condition-chip')
+					.filter({
+						hasText: /^Event \| citycontains "rio de janeiro"$/,
+					})
 			).toHaveCount(0);
 		});
 
@@ -1069,19 +1078,20 @@ test(
 			).toBeVisible();
 
 			await page
-				.locator('div')
+				.locator('.attribute-filter-section-root .condition-chip')
 				.filter({
-					hasText:
-						/^FilterEvent \| citydoes not contain "rio de janeiro"$/,
+					hasText: /^Event \| citydoes not contain "rio de janeiro"$/,
 				})
-				.getByLabel('Close')
+				.getByRole('button', {name: /^Remove /})
 				.click();
 
 			await expect(
-				page.locator('div').filter({
-					hasText:
-						/^FilterEvent \| citydoes not contain "rio de janeiro"$/,
-				})
+				page
+					.locator('.attribute-filter-section-root .condition-chip')
+					.filter({
+						hasText:
+							/^Event \| citydoes not contain "rio de janeiro"$/,
+					})
 			).toHaveCount(0);
 		});
 	}

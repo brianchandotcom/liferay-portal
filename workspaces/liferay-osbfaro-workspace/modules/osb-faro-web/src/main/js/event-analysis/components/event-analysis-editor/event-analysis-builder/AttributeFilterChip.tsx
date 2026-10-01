@@ -1,57 +1,39 @@
-import AttributeChip, {DragTypes} from './AttributeChip';
 import AttributeFilterDropdown from './attribute-filter-dropdown';
+import ConditionChip from './ConditionChip';
 import React from 'react';
 import {Attribute, Filter} from 'event-analysis/utils/types';
+import {
+	DATA_TYPE_ICONS_MAP,
+	getFilterDisplay,
+} from 'event-analysis/utils/utils';
 import {DeleteFilter} from '../context/attributes';
-import {getFilterDisplay} from 'event-analysis/utils/utils';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 
 const AttributeFilterChip: React.FC<{
 	attribute: Attribute;
 	eventId: string;
 	filter: Filter;
-	index: number;
 	onCloseClick: DeleteFilter;
-	onMove: (params: {from: number; to: number}) => void;
 	uneditableIds: string[];
-}> = ({
-	attribute,
-	eventId,
-	filter,
-	index,
-	onCloseClick,
-	onMove,
-	uneditableIds,
-}) => {
-	const [label, value] = getFilterDisplay(attribute, filter);
+}> = ({attribute, eventId, filter, onCloseClick, uneditableIds}) => {
+	const [overline, label] = getFilterDisplay(attribute, filter);
 
 	const {dataType, description, displayName} = filter;
 
-	const modifiedAttribute = {
-		...attribute,
-		dataType,
-		description,
-		displayName,
-	};
-
 	return (
 		<AttributeFilterDropdown
-			attribute={modifiedAttribute}
+			attribute={{...attribute, dataType, description, displayName}}
 			eventId={eventId}
 			filter={filter}
 			trigger={
-				<AttributeChip
-					dataType={dataType}
-					description={description}
-					displayName={displayName}
-					draggable={false}
-					dragType={DragTypes.AttributeFilterChip}
-					id={filter.id ?? ''}
-					index={index}
-					label={label}
-					onCloseClick={onCloseClick}
-					onMove={onMove}
-					value={getSafeDecodedURIComponent(value)}
+				<ConditionChip
+					icon={DATA_TYPE_ICONS_MAP[dataType]}
+					label={getSafeDecodedURIComponent(label)}
+					name={
+						displayName || attribute.displayName || attribute.name
+					}
+					onRemove={() => onCloseClick({id: filter.id ?? ''})}
+					overline={overline}
 				/>
 			}
 			uneditableIds={uneditableIds}

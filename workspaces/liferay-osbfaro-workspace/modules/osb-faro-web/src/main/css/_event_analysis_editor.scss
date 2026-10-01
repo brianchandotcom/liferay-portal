@@ -6,7 +6,8 @@
 	width: 268px;
 
 	.filter-name {
-		line-height: 32px;
+		min-height: 32px;
+		overflow-wrap: anywhere;
 	}
 }
 
@@ -121,69 +122,21 @@
 }
 
 .event-analysis-builder-root {
-	.event-chip-root {
-		line-height: 24px;
-		max-height: 42px;
-		padding: 8px 0 8px 8px;
-
-		.event-name {
-			color: $secondary;
-			font-weight: $fontWeightSemiBold;
-			white-space: nowrap;
-		}
+	.attribute-list > * + * {
+		margin-top: 8px;
 	}
 
-	.attribute-list {
-		.attribute-chip-container {
-			padding-bottom: 4px;
-			padding-top: 4px;
+	.attribute-chip-container {
+		&.hover-left {
+			box-shadow:
+				inset 1px 0 $primary,
+				-1px 0 $primary;
+		}
 
-			&.hover-left {
-				box-shadow:
-					inset 1px 0 $primary,
-					-1px 0 $primary;
-			}
-
-			&.hover-right {
-				box-shadow:
-					inset -1px 0 0 0 $primary,
-					1px 0 $primary;
-			}
-
-			.attribute-chip-root {
-				&.dragging:hover {
-					.edit-attribute-button,
-					.remove-button {
-						color: $mainLighten52;
-					}
-				}
-
-				.attribute-label {
-					font-size: 10px;
-					text-transform: uppercase;
-					white-space: nowrap;
-				}
-
-				.attribute-value {
-					font-size: $fontSizeSmall;
-					font-weight: $fontWeightSemiBold;
-					white-space: nowrap;
-				}
-
-				.drag-handle {
-					color: $mainLighten65;
-					cursor: grab;
-				}
-
-				.edit-attribute-button {
-					color: $secondary;
-				}
-
-				.sticker {
-					background-color: $lightBackground;
-					margin: 4px 16px 4px 4px;
-				}
-			}
+		&.hover-right {
+			box-shadow:
+				inset -1px 0 0 0 $primary,
+				1px 0 $primary;
 		}
 	}
 }

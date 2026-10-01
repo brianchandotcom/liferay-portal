@@ -1,0 +1,79 @@
+.condition-chip {
+	background-color: $white;
+	border: 1px solid $mainLighten74;
+
+	.condition-chip-content {
+		color: inherit;
+		min-width: 0;
+
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
+	.condition-chip-remove {
+		color: $secondary;
+
+		&:focus,
+		&:hover {
+			color: $dark;
+		}
+
+		&:focus-visible {
+			box-shadow: 0 0 0 2px $primaryLighten23;
+		}
+	}
+
+	.condition-chip-sticker {
+		background-color: $primaryLighten45;
+	}
+
+	.condition-chip-text {
+		min-width: 0;
+	}
+
+	.drag-handle {
+		color: $mainLighten52;
+		cursor: grab;
+	}
+
+	&:focus-within,
+	&:hover {
+		background-color: $primaryLighten45;
+		border-color: $primaryLighten23;
+		box-shadow: 0 0 0 1px $primaryLighten23;
+
+		.condition-chip-sticker {
+			background-color: transparent;
+			color: $dark;
+		}
+	}
+
+	&.condition-chip-placeholder,
+	&.condition-chip-preview {
+		border-color: $cadmin-secondary-l2;
+		box-shadow: none;
+
+		.condition-chip-content,
+		.drag-handle {
+			opacity: 0.4;
+		}
+
+		.condition-chip-remove {
+			visibility: hidden;
+		}
+
+		.condition-chip-sticker {
+			background-color: transparent;
+			color: inherit;
+		}
+	}
+
+	&.condition-chip-placeholder {
+		background-color: $white;
+	}
+
+	&.condition-chip-preview {
+		background-color: $lightBackground;
+	}
+}

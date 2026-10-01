@@ -1,9 +1,51 @@
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
-import AttributeChip, {DragTypes} from './AttributeChip';
+import ClayIcon from '@clayui/icon';
+import ConditionChip from './ConditionChip';
+import getCN from 'classnames';
 import React from 'react';
+import useSortableChip from './useSortableChip';
 import {Attribute, Breakdown} from 'event-analysis/utils/types';
+import {
+	DATA_TYPE_ICONS_MAP,
+	getBreakdownDisplay,
+} from 'event-analysis/utils/utils';
 import {DeleteBreakdown, EditBreakdown} from '../context/attributes';
-import {getBreakdownDisplay} from 'event-analysis/utils/utils';
+import {mergeRef} from 'shared/util/util';
+
+type MoveBreakdown = (params: {from: number; to: number}) => void;
+
+interface ISortableChipProps
+	extends React.ComponentProps<typeof ConditionChip> {
+	index: number;
+	onMove: MoveBreakdown;
+}
+
+const SortableChip = React.forwardRef<HTMLDivElement, ISortableChipProps>(
+	({index, onMove, ...otherProps}, ref) => {
+		const {chipRef, containerRef, dragRef, dragState, hoverPosition} =
+			useSortableChip({index, onMove});
+
+		return (
+			<div
+				className={getCN('attribute-chip-container', {
+					[`hover-${hoverPosition}`]: hoverPosition,
+				})}
+				ref={containerRef}
+			>
+				<ConditionChip
+					{...otherProps}
+					dragState={dragState}
+					handle={
+						<span className="drag-handle pl-2" ref={dragRef}>
+							<ClayIcon symbol="drag" />
+						</span>
+					}
+					ref={mergeRef(ref, chipRef)}
+				/>
+			</div>
+		);
+	}
+);
 
 const AttributeBreakdownChip: React.FC<{
 	attribute: Attribute;
@@ -13,7 +55,7 @@ const AttributeBreakdownChip: React.FC<{
 	index: number;
 	onCloseClick: DeleteBreakdown;
 	onEditSubmit: EditBreakdown;
-	onMove: (params: {from: number; to: number}) => void;
+	onMove: MoveBreakdown;
 	uneditableIds: string[];
 }> = ({
 	attribute,
@@ -26,39 +68,31 @@ const AttributeBreakdownChip: React.FC<{
 	onMove,
 	uneditableIds,
 }) => {
-	const [label, value] = getBreakdownDisplay(
+	const [overline, label] = getBreakdownDisplay(
 		attribute,
 		breakdown.attributeType
 	);
 
 	const {dataType, description, displayName} = breakdown;
 
-	const modifiedAttribute = {
-		...attribute,
-		dataType,
-		description,
-		displayName,
-	};
-
 	return (
 		<AttributeBreakdownDropdown
-			attribute={modifiedAttribute}
+			attribute={{...attribute, dataType, description, displayName}}
 			breakdown={breakdown}
 			disabledIds={disabledIds}
 			eventId={eventId}
 			onAttributeSelect={onEditSubmit}
 			trigger={
-				<AttributeChip
-					dataType={dataType}
-					description={description}
-					displayName={displayName}
-					dragType={DragTypes.AttributeBreakdownChip}
-					id={breakdown.id ?? ''}
+				<SortableChip
+					icon={DATA_TYPE_ICONS_MAP[dataType]}
 					index={index}
 					label={label}
-					onCloseClick={onCloseClick}
+					name={
+						displayName || attribute.displayName || attribute.name
+					}
 					onMove={onMove}
-					value={value}
+					onRemove={() => onCloseClick({id: breakdown.id ?? ''})}
+					overline={overline}
 				/>
 			}
 			uneditableIds={uneditableIds}

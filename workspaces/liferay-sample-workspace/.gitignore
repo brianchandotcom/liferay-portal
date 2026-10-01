@@ -4,6 +4,7 @@
 /poshi/poshi-ext.properties
 /poshi/test-results
 /poshi/tests
+TEST-frontend-js.xml
 bin
 build
 dist

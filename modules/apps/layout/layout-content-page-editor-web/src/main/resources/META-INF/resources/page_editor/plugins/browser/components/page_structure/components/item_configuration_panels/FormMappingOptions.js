@@ -20,6 +20,7 @@ import {
 	useSelectorRef,
 } from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
+import {findSelectedFormFields} from '../../../../../../app/utils/findSelectedFormFields';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
 import {hasLocalizationSelect} from '../../../../../../app/utils/hasLocalizationSelect';
 import {openAddLocalizationSelect} from '../../../../../../app/utils/openAddLocalizationSelect';
@@ -47,6 +48,8 @@ export default function FormMappingOptions({
 	const fragmentEntryLinksRef = useSelectorRef(
 		(state) => state.fragmentEntryLinks
 	);
+
+	const stateRef = useSelectorRef((state) => state);
 
 	const selectedType = formTypes.find(({value}) => value === classNameId);
 
@@ -95,6 +98,14 @@ export default function FormMappingOptions({
 						}
 					},
 					segmentsExperienceId,
+					selectedFields:
+						classNameId === item.config.classNameId &&
+						classTypeId === item.config.classTypeId
+							? findSelectedFormFields(
+									stateRef.current,
+									item.itemId
+								)
+							: [],
 				});
 			}
 			else {
@@ -110,6 +121,7 @@ export default function FormMappingOptions({
 			setClassNameId,
 			setClassTypeId,
 			segmentsExperienceId,
+			stateRef,
 		]
 	);
 

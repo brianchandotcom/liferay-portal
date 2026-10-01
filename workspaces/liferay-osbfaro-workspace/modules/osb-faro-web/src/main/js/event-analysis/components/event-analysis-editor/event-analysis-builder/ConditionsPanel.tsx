@@ -1,5 +1,6 @@
 import EventAnalysisBuilder from './index';
 import React from 'react';
+import useConditionAnnouncements from './useConditionAnnouncements';
 import {Event} from 'event-analysis/utils/types';
 import {Heading} from '@clayui/core';
 
@@ -11,23 +12,31 @@ interface IConditionsPanelProps {
 const ConditionsPanel: React.FC<IConditionsPanelProps> = ({
 	event,
 	onEventChange,
-}) => (
-	<aside className="bg-white border-right event-analysis-conditions-panel">
-		<div className="d-flex event-analysis-conditions-panel-content flex-column">
-			<div className="flex-shrink-0 px-4 py-3">
-				<Heading fontSize={6} level={2} weight="semi-bold">
-					{Liferay.Language.get('conditions-library')}
-				</Heading>
+}) => {
+	const announcement = useConditionAnnouncements(event);
+
+	return (
+		<aside className="bg-white border-right event-analysis-conditions-panel">
+			<div className="d-flex event-analysis-conditions-panel-content flex-column">
+				<div className="flex-shrink-0 px-4 py-3">
+					<Heading fontSize={6} level={2} weight="semi-bold">
+						{Liferay.Language.get('conditions-library')}
+					</Heading>
+				</div>
+
+				<div className="flex-grow-1 overflow-auto">
+					<EventAnalysisBuilder
+						event={event}
+						onEventChange={onEventChange}
+					/>
+				</div>
 			</div>
 
-			<div className="flex-grow-1 overflow-auto">
-				<EventAnalysisBuilder
-					event={event}
-					onEventChange={onEventChange}
-				/>
+			<div aria-live="polite" className="sr-only" role="status">
+				{announcement}
 			</div>
-		</div>
-	</aside>
-);
+		</aside>
+	);
+};
 
 export default ConditionsPanel;

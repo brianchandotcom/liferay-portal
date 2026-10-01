@@ -5,32 +5,37 @@ exports[`Event Analysis Builder render 1`] = `
   <div
     class="event-analysis-builder-root d-flex flex-column"
   >
-    <div
-      class="event-section-root d-flex flex-column"
+    <section
+      aria-labelledby=":r0:"
+      class="event-section-root border-bottom px-4 py-3"
+      tabindex="-1"
     >
       <div
-        class="section-header"
+        class="align-items-center d-flex justify-content-between"
       >
-        Analyze
-      </div>
-      <div
-        class="event-container d-flex flex-column align-items-start"
-      >
-        <div
-          class="event-list"
-        />
+        <h3
+          class="text-8 font-weight-normal"
+        >
+          <span
+            class="text-4"
+            id=":r0:"
+          >
+            Analyze
+          </span>
+        </h3>
         <div
           class="dropdown"
         >
           <button
             aria-expanded="false"
             aria-haspopup="true"
-            aria-label="Add"
-            class="dropdown-toggle button-root add-event-button btn btn-sm btn-primary"
+            aria-label="Add Event"
+            class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
+            title="Add Event"
             type="button"
           >
             <svg
-              class="lexicon-icon lexicon-icon-plus icon-root"
+              class="lexicon-icon lexicon-icon-plus"
               role="presentation"
             >
               <use
@@ -40,25 +45,7 @@ exports[`Event Analysis Builder render 1`] = `
           </button>
         </div>
       </div>
-    </div>
-    <div
-      class="attribute-breakdown-section-root d-flex flex-column"
-    >
-      <div
-        class="section-header"
-      >
-        Breakdown
-      </div>
-    </div>
-    <div
-      class="attribute-filter-section-root d-flex flex-column"
-    >
-      <div
-        class="section-header"
-      >
-        Filter
-      </div>
-    </div>
+    </section>
   </div>
 </div>
 `;
@@ -68,77 +55,89 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
   <div
     class="event-analysis-builder-root d-flex flex-column"
   >
-    <div
-      class="event-section-root d-flex flex-column"
+    <section
+      aria-labelledby=":r1:"
+      class="event-section-root border-bottom px-4 py-3"
+      tabindex="-1"
     >
       <div
-        class="section-header"
+        class="align-items-center d-flex justify-content-between"
       >
-        Analyze
+        <h3
+          class="text-8 font-weight-normal"
+        >
+          <span
+            class="text-4"
+            id=":r1:"
+          >
+            Analyze
+          </span>
+        </h3>
       </div>
       <div
-        class="event-container d-flex flex-column align-items-start"
+        class="event-container event-list mt-3"
       >
         <div
-          class="event-list"
+          class="dropdown"
         >
           <div
-            class="dropdown"
+            class="chip-root d-flex align-items-center justify-content-between event-chip-root"
           >
-            <div
-              class="chip-root d-flex align-items-center justify-content-between event-chip-root"
+            <button
+              class="button-root event-name btn btn-unstyled"
+              type="button"
             >
-              <button
-                class="button-root event-name btn btn-unstyled"
-                type="button"
+              Article Views
+            </button>
+            <button
+              aria-label="Close"
+              class="button-root remove-button btn btn-unstyled"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-times-circle icon-root"
+                role="presentation"
               >
-                Article Views
-              </button>
-              <button
-                aria-label="Close"
-                class="button-root remove-button btn btn-unstyled"
-                type="button"
-              >
-                <svg
-                  class="lexicon-icon lexicon-icon-times-circle icon-root"
-                  role="presentation"
-                >
-                  <use
-                    href="#times-circle"
-                  />
-                </svg>
-              </button>
-            </div>
+                <use
+                  href="#times-circle"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="attribute-breakdown-section-root d-flex flex-column"
+    </section>
+    <section
+      aria-labelledby=":r2:"
+      class="attribute-breakdown-section-root border-bottom px-4 py-3"
+      tabindex="-1"
     >
       <div
-        class="section-header"
+        class="align-items-center d-flex justify-content-between"
       >
-        Breakdown
-      </div>
-      <div
-        class="attribute-container d-flex flex-column align-items-start"
-      >
-        <div
-          class="attribute-list d-flex flex-column w-100"
-        />
+        <h3
+          class="text-8 font-weight-normal"
+        >
+          <span
+            class="text-4"
+            id=":r2:"
+          >
+            Breakdown By
+          </span>
+        </h3>
         <div
           class="dropdown"
         >
           <button
             aria-expanded="false"
             aria-haspopup="true"
-            aria-label="Add"
-            class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
+            aria-label="Add Breakdown"
+            class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
+            title="Add Breakdown"
             type="button"
           >
             <svg
-              class="lexicon-icon lexicon-icon-plus icon-root"
+              class="lexicon-icon lexicon-icon-plus"
               role="presentation"
             >
               <use
@@ -148,33 +147,38 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
           </button>
         </div>
       </div>
-    </div>
-    <div
-      class="attribute-filter-section-root d-flex flex-column"
+    </section>
+    <section
+      aria-labelledby=":r3:"
+      class="attribute-filter-section-root border-bottom px-4 py-3"
+      tabindex="-1"
     >
       <div
-        class="section-header"
+        class="align-items-center d-flex justify-content-between"
       >
-        Filter
-      </div>
-      <div
-        class="attribute-container d-flex flex-column align-items-start"
-      >
-        <div
-          class="attribute-list d-flex flex-column w-100"
-        />
+        <h3
+          class="text-8 font-weight-normal"
+        >
+          <span
+            class="text-4"
+            id=":r3:"
+          >
+            Filter By
+          </span>
+        </h3>
         <div
           class="dropdown"
         >
           <button
             aria-expanded="false"
             aria-haspopup="true"
-            aria-label="Add"
-            class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
+            aria-label="Add Filter"
+            class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
+            title="Add Filter"
             type="button"
           >
             <svg
-              class="lexicon-icon lexicon-icon-plus icon-root"
+              class="lexicon-icon lexicon-icon-plus"
               role="presentation"
             >
               <use
@@ -184,7 +188,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
           </button>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </div>
 `;

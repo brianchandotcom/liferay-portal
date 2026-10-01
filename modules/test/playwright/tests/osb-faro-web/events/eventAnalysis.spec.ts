@@ -414,7 +414,7 @@ test(
 		await test.step('Add a filter to the analysis', async () => {
 			await page
 				.locator('.attribute-filter-section-root')
-				.getByRole('button')
+				.getByLabel('Add Filter')
 				.click();
 
 			await page
@@ -553,7 +553,7 @@ test(
 		await test.step('Add a filter to the analysis', async () => {
 			await page
 				.locator('.attribute-filter-section-root')
-				.getByRole('button')
+				.getByLabel('Add Filter')
 				.click();
 
 			await page
@@ -694,7 +694,7 @@ test(
 		await test.step('Add a filter to the analysis', async () => {
 			await page
 				.locator('.attribute-filter-section-root')
-				.getByRole('button')
+				.getByLabel('Add Filter')
 				.click();
 
 			await page
@@ -831,7 +831,7 @@ test(
 		await test.step('Add a filter to the analysis', async () => {
 			await page
 				.locator('.attribute-filter-section-root')
-				.getByRole('button')
+				.getByLabel('Add Filter')
 				.click();
 
 			await page
@@ -970,7 +970,7 @@ test(
 		await test.step('Add a filter to the analysis', async () => {
 			await page
 				.locator('.attribute-filter-section-root')
-				.getByRole('button')
+				.getByLabel('Add Filter')
 				.click();
 
 			await page
@@ -1028,7 +1028,7 @@ test(
 		await test.step('Add a filter to the analysis', async () => {
 			await page
 				.locator('.attribute-filter-section-root')
-				.getByRole('button')
+				.getByLabel('Add Filter')
 				.click();
 
 			await page
@@ -1561,17 +1561,21 @@ test(
 		// The event section offers an add control
 
 		await expect(
-			page.locator('.event-section-root').getByLabel('Add')
+			page.locator('.event-section-root').getByLabel('Add Event')
 		).toBeVisible();
 
 		// The breakdown and filter sections do not offer an add control yet
 
 		await expect(
-			page.locator('.attribute-breakdown-section-root').getByLabel('Add')
+			page
+				.locator('.attribute-breakdown-section-root')
+				.getByLabel('Add Breakdown')
 		).toHaveCount(0);
 
 		await expect(
-			page.locator('.attribute-filter-section-root').getByLabel('Add')
+			page
+				.locator('.attribute-filter-section-root')
+				.getByLabel('Add Filter')
 		).toHaveCount(0);
 	}
 );
@@ -1633,7 +1637,7 @@ test(
 			page,
 		});
 
-		await page.getByLabel('Add').click();
+		await page.getByLabel('Add Event').click();
 
 		const defaultEvent = page.getByRole('menuitem', {name: 'pageViewed'});
 
@@ -1708,7 +1712,7 @@ test(
 
 		await page
 			.locator('.attribute-breakdown-section-root')
-			.getByLabel('Add')
+			.getByLabel('Add Breakdown')
 			.click();
 
 		await page
@@ -1990,7 +1994,7 @@ test(
 		// Only one event can be analyzed, so the event add control is gone
 
 		await expect(
-			page.locator('.event-section-root').getByLabel('Add')
+			page.locator('.event-section-root').getByLabel('Add Event')
 		).toHaveCount(0);
 
 		await addBreakdown({breakdownName: 'pageTitle', page, tab: 'Event'});
@@ -2082,7 +2086,7 @@ test(
 
 		const breakdownAddButton = page
 			.locator('.attribute-breakdown-section-root')
-			.getByLabel('Add');
+			.getByLabel('Add Breakdown');
 
 		// The add control is still offered after four breakdowns
 
@@ -2402,7 +2406,7 @@ test(
 
 		await page
 			.locator('.attribute-filter-section-root')
-			.getByLabel('Add')
+			.getByLabel('Add Filter')
 			.click();
 
 		await page
@@ -2559,7 +2563,7 @@ test(
 
 		await page
 			.locator('.attribute-breakdown-section-root')
-			.getByLabel('Add')
+			.getByLabel('Add Breakdown')
 			.click();
 
 		await page.getByRole('menuitem', {exact: true, name: 'color'}).hover();
@@ -2574,7 +2578,7 @@ test(
 
 		await page
 			.locator('.attribute-breakdown-section-root')
-			.getByLabel('Add')
+			.getByLabel('Add Breakdown')
 			.click();
 
 		await expect(
@@ -3251,7 +3255,7 @@ test(
 		]);
 
 		async function addEventFromTab(eventName: string, tab: string) {
-			await page.getByLabel('Add').click();
+			await page.getByLabel('Add Event').click();
 
 			await page
 				.locator('.card-tab')
@@ -3542,7 +3546,10 @@ test(
 				page,
 			});
 
-			await page.locator('.event-section-root').getByLabel('Add').click();
+			await page
+				.locator('.event-section-root')
+				.getByLabel('Add Event')
+				.click();
 
 			// They appear under the Default tab
 
@@ -3777,7 +3784,7 @@ test(
 
 			await page.getByRole('link', {name: 'Create Analysis'}).click();
 
-			await page.getByLabel('Add').click();
+			await page.getByLabel('Add Event').click();
 
 			await page
 				.locator('.card-tab')
@@ -3874,7 +3881,7 @@ test(
 
 		await page.getByRole('link', {name: 'Create Analysis'}).click();
 
-		await page.getByLabel('Add').click();
+		await page.getByLabel('Add Event').click();
 
 		await page
 			.locator('.card-tab')

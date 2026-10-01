@@ -7,7 +7,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {render} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 
 jest.unmock('react-dom');
@@ -41,20 +41,31 @@ const WrappedComponent = ({eventId, ...attributes}) => (
 );
 
 describe('AttributeFilterSection', () => {
-	it('renders', () => {
+	jest.useFakeTimers();
+
+	it('does not render without an event', () => {
 		const {container} = render(<WrappedComponent />);
 
-		expect(container.querySelector('.add-attribute')).toBeNull();
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.attribute-filter-section-root')
+		).toBeNull();
 	});
 
-	it('renders w/ add attribute button', () => {
+	it('renders only the title and the add button without filters', () => {
 		const {container} = render(<WrappedComponent eventId='1' />);
 
-		expect(container.querySelector('.add-attribute')).toBeTruthy();
+		expect(
+			screen.getByRole('heading', {name: /filter.by/i})
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole('button', {name: /add.filter/i})
+		).toBeInTheDocument();
+		expect(container.querySelector('.attribute-list')).toBeNull();
 	});
 
-	it('renders w/ filter', () => {
+	it('renders the filters and focuses the section when one is removed', () => {
+		const deleteFilter = jest.fn();
+
 		const {container} = render(
 			<WrappedComponent
 				attributes={{
@@ -65,20 +76,33 @@ describe('AttributeFilterSection', () => {
 						name: 'jobTitle'
 					}
 				}}
+				deleteFilter={deleteFilter}
 				eventId='1'
 				filterOrder={['123123']}
 				filters={{
 					123123: {
 						attributeId: '123123',
 						dataType: 'STRING',
+						id: '123123',
 						operator: 'eq',
 						type: 'event',
-						value: ['Stuff']
+						values: ['Stuff']
 					}
 				}}
 			/>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelectorAll('.attribute-list .attribute-chip-container')
+		).toHaveLength(1);
+
+		fireEvent.click(container.querySelector('.remove-button'));
+
+		jest.runAllTimers();
+
+		expect(deleteFilter).toHaveBeenCalledWith({id: '123123'});
+		expect(document.activeElement).toBe(
+			container.querySelector('.attribute-filter-section-root')
+		);
 	});
 });

@@ -8,7 +8,7 @@ import {InMemoryCache} from '@apollo/client';
 import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
-import {render} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 
 jest.unmock('react-dom');
@@ -49,21 +49,30 @@ const WrappedComponent = ({eventId, ...attributes}) => (
 );
 
 describe('AttributeBreakdownSection', () => {
-	it('renders', () => {
+	jest.useFakeTimers();
+
+	it('does not render without an event', () => {
 		const {container} = render(<WrappedComponent />);
 
-		expect(container.querySelector('.add-attribute')).toBeNull();
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelector('.attribute-breakdown-section-root')
+		).toBeNull();
 	});
 
-	it('renders w/ add breakdown button', () => {
+	it('renders only the title and the add button without breakdowns', () => {
 		const {container} = render(<WrappedComponent eventId='1' />);
 
-		expect(container.querySelector('.add-attribute')).toBeTruthy();
+		expect(
+			screen.getByRole('heading', {name: /breakdown.by/i})
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole('button', {name: /add.breakdown/i})
+		).toBeInTheDocument();
+		expect(container.querySelector('.attribute-list')).toBeNull();
 	});
 
-	it('renders w/o add breakdown button if 5 breakdowns exists', () => {
-		const {container} = render(
+	it('hides the add button when there are 5 breakdowns', () => {
+		render(
 			<WrappedComponent
 				attributes={{
 					1: {
@@ -129,10 +138,14 @@ describe('AttributeBreakdownSection', () => {
 			/>
 		);
 
-		expect(container.querySelector('.add-attribute')).toBeNull();
+		expect(
+			screen.queryByRole('button', {name: /add.breakdown/i})
+		).toBeNull();
 	});
 
-	it('renders w/ breakdowns', () => {
+	it('renders the breakdowns and focuses the section when one is removed', () => {
+		const deleteBreakdown = jest.fn();
+
 		const {container} = render(
 			<WrappedComponent
 				attributes={{
@@ -152,18 +165,32 @@ describe('AttributeBreakdownSection', () => {
 					123123: {
 						attributeId: '123123',
 						dataType: 'STRING',
+						id: '123123',
 						type: 'event'
 					},
 					321321: {
 						attributeId: '321321',
 						dataType: 'STRING',
+						id: '321321',
 						type: 'event'
 					}
 				}}
+				deleteBreakdown={deleteBreakdown}
 				eventId='2'
 			/>
 		);
 
-		expect(container).toMatchSnapshot();
+		expect(
+			container.querySelectorAll('.attribute-list .attribute-chip-container')
+		).toHaveLength(2);
+
+		fireEvent.click(container.querySelector('.remove-button'));
+
+		jest.runAllTimers();
+
+		expect(deleteBreakdown).toHaveBeenCalledWith({id: '321321'});
+		expect(document.activeElement).toBe(
+			container.querySelector('.attribute-breakdown-section-root')
+		);
 	});
 });

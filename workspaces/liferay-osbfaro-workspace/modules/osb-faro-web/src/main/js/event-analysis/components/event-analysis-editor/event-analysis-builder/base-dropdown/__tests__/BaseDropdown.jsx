@@ -42,4 +42,40 @@ describe('BaseDropdown', () => {
 
 		expect(dropdownMenu).toMatchSnapshot();
 	});
+
+	it('should return the focus to the trigger when it closes', () => {
+		const {getByTestId, getByText} = render(
+			<BaseDropdown
+				trigger={<button data-testid='target'>{'click me'}</button>}
+			>
+				{({setActive}) => (
+					<button onClick={() => setActive(false)}>{'close'}</button>
+				)}
+			</BaseDropdown>
+		);
+
+		const trigger = getByTestId('target');
+
+		trigger.focus();
+
+		fireEvent.click(trigger);
+
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
+
+		const closeButton = getByText('close');
+
+		closeButton.focus();
+
+		fireEvent.click(closeButton);
+
+		closeButton.blur();
+
+		act(() => {
+			jest.advanceTimersByTime(250);
+		});
+
+		expect(document.activeElement).toBe(trigger);
+	});
 });

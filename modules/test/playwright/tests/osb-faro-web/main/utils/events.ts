@@ -21,7 +21,7 @@ export async function addAttributeFilter({
 }) {
 	await page
 		.locator('.attribute-filter-section-root')
-		.getByLabel('Add')
+		.getByLabel('Add Filter')
 		.click();
 
 	await page
@@ -69,7 +69,7 @@ export async function addBooleanFilter({
 }) {
 	await page
 		.locator('.attribute-filter-section-root')
-		.getByLabel('Add')
+		.getByLabel('Add Filter')
 		.click();
 
 	await page
@@ -101,7 +101,7 @@ export async function addBreakdown({
 }) {
 	await page
 		.locator('.attribute-breakdown-section-root')
-		.getByLabel('Add')
+		.getByLabel('Add Breakdown')
 		.click();
 
 	await page.locator('.card-tab').filter({hasText: tab}).first().click();
@@ -124,7 +124,7 @@ export async function addCustomEvent({
 	customEventName: string;
 	page: Page;
 }) {
-	await page.getByLabel('Add').click();
+	await page.getByLabel('Add Event').click();
 
 	await page.locator('.card-tab').filter({hasText: 'Custom'}).click();
 
@@ -150,7 +150,7 @@ export async function addDateFilter({
 }) {
 	await page
 		.locator('.attribute-filter-section-root')
-		.getByLabel('Add')
+		.getByLabel('Add Filter')
 		.click();
 
 	await page
@@ -186,7 +186,7 @@ export async function addFilter({
 }) {
 	await page
 		.locator('.attribute-filter-section-root')
-		.getByRole('button')
+		.getByLabel('Add Filter')
 		.click();
 
 	await page.getByRole('menuitem', {exact: true, name: filterName}).click();
@@ -205,7 +205,13 @@ export async function addFilter({
 		.first()
 		.fill(input);
 
-	await page.keyboard.press('Enter');
+	const dropdown = page.locator(
+		'.event-analysis-editor-attribute-dropdown-root.show'
+	);
+
+	await dropdown.getByText('Condition', {exact: true}).click();
+
+	await dropdown.getByRole('button', {name: 'Apply'}).click();
 
 	await expect(
 		page

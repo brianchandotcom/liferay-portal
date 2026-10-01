@@ -1,7 +1,7 @@
 import ClayDropdown, {Align} from '@clayui/drop-down';
 import getCN from 'classnames';
 import Header from './Header';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import SearchableList from './SearchableList';
 
 interface IBaseDropdownProps {
@@ -24,10 +24,41 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 }) => {
 	const [active, setActive] = useState(false);
 
+	const triggerElementRef = useRef<HTMLElement | null>(null);
+
+	const handleActiveChange = (value: boolean) => {
+		if (value) {
+			triggerElementRef.current = document.activeElement as HTMLElement;
+		}
+
+		setActive(value);
+	};
+
 	useEffect(() => {
 		if (onActiveChange) {
 			onActiveChange(active);
 		}
+
+		const triggerElement = triggerElementRef.current;
+
+		if (active || !triggerElement) {
+			return;
+		}
+
+		triggerElementRef.current = null;
+
+		setTimeout(() => {
+			const {activeElement} = document;
+
+			if (
+				triggerElement.isConnected &&
+				(!activeElement ||
+					activeElement === document.body ||
+					activeElement.closest('.base-dropdown-menu-root'))
+			) {
+				triggerElement.focus();
+			}
+		});
 	}, [active]);
 
 	return (
@@ -37,7 +68,7 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 			menuElementAttrs={{
 				className: getCN('base-dropdown-menu-root', className),
 			}}
-			onActiveChange={setActive}
+			onActiveChange={handleActiveChange}
 			trigger={trigger}
 		>
 			{children({active, setActive})}

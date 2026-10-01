@@ -1,16 +1,17 @@
 import AttributeBreakdownChip from './AttributeBreakdownChip';
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
+import ConditionsSection from './ConditionsSection';
 import DndProvider from 'shared/components/DndProvider';
-import React from 'react';
+import React, {useRef} from 'react';
 import {
 	AddBreakdown,
 	AddBreakdownParams,
+	DeleteBreakdown,
 	EditBreakdown,
 	useAttributes,
 } from '../context/attributes';
 import {Align} from '@clayui/drop-down';
+import {ClayButtonWithIcon} from '@clayui/button';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 const MAX_ATTRIBUTES = 5;
@@ -32,73 +33,88 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 		moveBreakdown,
 	} = useAttributes();
 
+	const sectionRef = useRef<HTMLElement>(null);
+
+	if (!eventId) {
+		return null;
+	}
+
 	const disabledIds = breakdownOrder.map(
 		(breakdownId) => breakdowns[breakdownId].attributeId
 	);
 
 	const uneditableIds = Object.keys(attributes);
 
+	const focusSection = () => setTimeout(() => sectionRef.current?.focus());
+
 	const onAttributeSelect: AddBreakdown | EditBreakdown = (
 		params: AddBreakdownParams
 	) => {
 		addBreakdown(params);
+
+		if (breakdownOrder.length + 1 === MAX_ATTRIBUTES) {
+			focusSection();
+		}
+	};
+
+	const onRemove: DeleteBreakdown = (params) => {
+		deleteBreakdown(params);
+
+		focusSection();
 	};
 
 	return (
-		<div className="attribute-breakdown-section-root d-flex flex-column">
-			<div className="section-header">
-				{Liferay.Language.get('breakdown')}
-			</div>
-
-			{!!eventId && (
-				<div className="attribute-container d-flex flex-column align-items-start">
-					<DndProvider backend={HTML5Backend}>
-						<div className="attribute-list d-flex flex-column w-100">
-							{breakdownOrder.map((id, i) => (
-								<AttributeBreakdownChip
-									attribute={
-										attributes[breakdowns[id].attributeId]
-									}
-									breakdown={breakdowns[id]}
-									disabledIds={disabledIds}
-									eventId={eventId}
-									index={i}
-									key={id}
-									onCloseClick={deleteBreakdown}
-									onEditSubmit={editBreakdown}
-									onMove={moveBreakdown}
-									uneditableIds={uneditableIds}
-								/>
-							))}
-						</div>
-					</DndProvider>
-
-					{breakdownOrder.length < MAX_ATTRIBUTES && (
-						<AttributeBreakdownDropdown
-							alignmentPosition={Align.LeftTop}
-							disabledIds={disabledIds}
-							eventId={eventId}
-							onAttributeSelect={onAttributeSelect}
-							trigger={
-								<ClayButton
-									aria-label={Liferay.Language.get('add')}
-									borderless
-									className="button-root add-attribute"
-									displayType="secondary"
-									size="sm"
-								>
-									<ClayIcon
-										className="icon-root"
-										symbol="plus"
-									/>
-								</ClayButton>
-							}
-							uneditableIds={uneditableIds}
-						/>
-					)}
-				</div>
+		<ConditionsSection
+			action={
+				breakdownOrder.length < MAX_ATTRIBUTES && (
+					<AttributeBreakdownDropdown
+						alignmentPosition={Align.RightTop}
+						disabledIds={disabledIds}
+						eventId={eventId}
+						onAttributeSelect={onAttributeSelect}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'add-breakdown'
+								)}
+								displayType="secondary"
+								monospaced
+								size="sm"
+								symbol="plus"
+								title={Liferay.Language.get('add-breakdown')}
+							/>
+						}
+						uneditableIds={uneditableIds}
+					/>
+				)
+			}
+			className="attribute-breakdown-section-root"
+			ref={sectionRef}
+			title={Liferay.Language.get('breakdown-by')}
+		>
+			{!!breakdownOrder.length && (
+				<DndProvider backend={HTML5Backend}>
+					<div className="attribute-container attribute-list d-flex flex-column mt-3">
+						{breakdownOrder.map((id, i) => (
+							<AttributeBreakdownChip
+								attribute={
+									attributes[breakdowns[id].attributeId]
+								}
+								breakdown={breakdowns[id]}
+								disabledIds={disabledIds}
+								eventId={eventId}
+								index={i}
+								key={id}
+								onCloseClick={onRemove}
+								onEditSubmit={editBreakdown}
+								onMove={moveBreakdown}
+								uneditableIds={uneditableIds}
+							/>
+						))}
+					</div>
+				</DndProvider>
 			)}
-		</div>
+		</ConditionsSection>
 	);
 };
 

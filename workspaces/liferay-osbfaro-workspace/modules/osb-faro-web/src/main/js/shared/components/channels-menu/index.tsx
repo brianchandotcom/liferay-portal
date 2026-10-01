@@ -43,6 +43,12 @@ export const getDefaultChannel = (
 	return null;
 };
 
+export const isValidChannel = (
+	channelId: string | undefined,
+	channels: Channel[]
+) =>
+	!channelId || !channels.length || channels.some(({id}) => id === channelId);
+
 /**
  * Built on `Picker` (`@clayui/core`) with `searchable`, the same idiomatic
  * pattern `StageConditionRow.renderFieldPicker` uses for "pick one item from

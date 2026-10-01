@@ -27,7 +27,7 @@ type SidebarNavEntry = ISidebarNavItem | ISidebarNavSection;
 
 interface ISidebarProps {
 	activePathname: string;
-	channelId: string;
+	channelId?: string;
 	channels: Channel[];
 	className?: string;
 	collapsed: boolean;

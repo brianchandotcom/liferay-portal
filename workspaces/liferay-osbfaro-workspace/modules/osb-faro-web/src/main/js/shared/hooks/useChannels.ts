@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import {ActionType, useChannelContext} from 'shared/context/channel';
 import {Channel, getDefaultChannel} from 'shared/components/channels-menu';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useRequest} from 'shared/hooks/useRequest';
 
 export const useChannels = ({
@@ -11,9 +11,9 @@ export const useChannels = ({
 	channelId?: string;
 	groupId: string;
 }) => {
-	const {channelDispatch, selectedChannel} = useChannelContext();
+	const {channelDispatch} = useChannelContext();
 
-	const {data, error, loading} = useRequest<
+	const {data, error, loading, refetch} = useRequest<
 		{groupId: string},
 		{items: Channel[]}
 	>({
@@ -28,6 +28,33 @@ export const useChannels = ({
 		[channelId, channels]
 	);
 
+	const [refetched, setRefetched] = useState(false);
+
+	/**
+	 * Only the first sync of the channel context holds the page back. Later
+	 * channel switches update the context in place, so the page stays mounted.
+	 */
+	const [synced, setSynced] = useState(false);
+
+	/**
+	 * A channel missing from the list may have been created after the list
+	 * loaded, as the onboarding does, so the list is reloaded once.
+	 */
+	const missingChannel =
+		!loading &&
+		!error &&
+		!!channelId &&
+		!!channels.length &&
+		!channels.some(({id}) => id === channelId);
+
+	useEffect(() => {
+		if (missingChannel && !refetched) {
+			setRefetched(true);
+
+			refetch();
+		}
+	}, [missingChannel, refetch, refetched]);
+
 	useEffect(() => {
 		if (loading || error) {
 			return;
@@ -39,14 +66,14 @@ export const useChannels = ({
 			payload: channel,
 			type: ActionType.setSelectedChannel,
 		});
+
+		setSynced(true);
 	}, [channel, channelDispatch, channels, error, loading]);
 
 	return {
 		channel,
 		channels,
 		error,
-		loading:
-			loading ||
-			(!error && !!channel && selectedChannel?.id !== channel.id),
+		loading: loading || (!error && !synced),
 	};
 };

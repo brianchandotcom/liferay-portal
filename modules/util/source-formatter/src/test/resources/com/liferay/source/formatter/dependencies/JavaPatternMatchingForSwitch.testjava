@@ -40,6 +40,7 @@ public class JavaPatternMatchingForSwitch {
 				break;
 			case null,
 				default:
+
 				break;
 		}
 	}

@@ -5,21 +5,35 @@
 
 package com.liferay.source.formatter.processor;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.java.parser.JavaParser;
+import com.liferay.source.formatter.SourceFormatterArgs;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import java.net.URL;
+
+import org.apache.commons.io.IOUtils;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Hugo Huijser
  */
-public class JavaParserTest extends BaseSourceProcessorTestCase {
+public class JavaParserTest {
 
 	@Test
 	public void testJavaAnnotation() throws Exception {
-		test("JavaAnnotation.testjava");
+		_test("JavaAnnotation");
 	}
 
 	@Test
 	public void testJavaArray() throws Exception {
-		test("JavaArray.testjava");
+		_test("JavaArray");
 	}
 
 	@Test
@@ -29,64 +43,59 @@ public class JavaParserTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testJavaModifierStrictfp() throws Exception {
-		test("JavaModifierStrictfp.testjava");
+		_test("JavaModifierStrictfp");
 	}
 
 	@Test
 	public void testJavaNestedSwitchExpressions() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"JavaNestedSwitchExpressions.testjava"
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 14
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 15
-			));
+		_test("JavaNestedSwitchExpressions");
 	}
 
 	@Test
 	public void testJavaPatternMatchingForInstanceof() throws Exception {
-		test("JavaPatternMatchingForInstanceof.testjava");
+		_test("JavaPatternMatchingForInstanceof");
 	}
 
 	@Test
 	public void testJavaPatternMatchingForSwitch() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"JavaPatternMatchingForSwitch.testjava"
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 14
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 14
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 24
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 24
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 33
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 33
-			));
+		_test("JavaPatternMatchingForSwitch");
 	}
 
 	@Test
 	public void testJavaRecordPatterns() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"JavaRecordPatterns.testjava"
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 17
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 17
-			).addExpectedMessage(
-				"Do not use record patterns", 18
-			).addExpectedMessage(
-				"Do not use record patterns", 19
-			).addExpectedMessage(
-				"Do not use record patterns", 25
-			).addExpectedMessage(
-				"Do not use record patterns", 30
-			));
+		_test("JavaRecordPatterns");
 	}
+
+	private String _read(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		URL url = classLoader.getResource(fileName);
+
+		if (url == null) {
+			throw new FileNotFoundException(fileName);
+		}
+
+		return StringUtil.replace(
+			IOUtils.toString(url, StringPool.UTF8), StringPool.RETURN_NEW_LINE,
+			StringPool.NEW_LINE);
+	}
+
+	private void _test(String className) throws Exception {
+		String content = _read(
+			StringBundler.concat(_DIR_NAME, "/", className, ".testjava"));
+
+		Assert.assertEquals(
+			_read(
+				StringBundler.concat(
+					_DIR_NAME, "/expected/", className, ".testjava")),
+			JavaParser.parse(
+				new File(_DIR_NAME, className + ".java"), content,
+				SourceFormatterArgs.MAX_LINE_LENGTH, false));
+	}
+
+	private static final String _DIR_NAME =
+		"com/liferay/source/formatter/dependencies";
 
 }

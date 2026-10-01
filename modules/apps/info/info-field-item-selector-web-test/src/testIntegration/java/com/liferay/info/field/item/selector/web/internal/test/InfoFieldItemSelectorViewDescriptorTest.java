@@ -30,6 +30,7 @@ import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -109,6 +110,24 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 					ObjectFieldConstants.DB_TYPE_STRING, "myRichText",
 					"myRichText", false)),
 			false);
+	}
+
+	@Test
+	public void testGetKeyProperty() throws Exception {
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(new MockHttpServletRequest());
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
+
+		for (Object object : searchContainer.getResults()) {
+			InfoField<?> infoField = (InfoField<?>)object;
+
+			Assert.assertEquals(
+				infoField.getUniqueId(),
+				BeanPropertiesUtil.getObjectSilent(
+					infoField, itemSelectorViewDescriptor.getKeyProperty()));
+		}
 	}
 
 	@Test

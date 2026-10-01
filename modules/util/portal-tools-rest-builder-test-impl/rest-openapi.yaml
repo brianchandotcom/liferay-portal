@@ -283,11 +283,13 @@ components:
         ReferencingTestEntity:
             properties:
                 externalScopedTestEntity:
-                    $ref: ../portal-tools-rest-builder-test-external-impl/rest-openapi.yaml#ExternalScopedTestEntity
+                    $ref: ../portal-tools-rest-builder-test-external1-impl/rest-openapi.yaml#ExternalScopedTestEntity
                 externalTestEntity1:
-                    $ref: ../portal-tools-rest-builder-test-external-impl/rest-openapi.yaml#ExternalTestEntity1
+                    $ref: ../portal-tools-rest-builder-test-external1-impl/rest-openapi.yaml#ExternalTestEntity1
                 externalTestEntity2:
-                    $ref: ../portal-tools-rest-builder-test-external-impl/rest-openapi.yaml#ExternalTestEntity2
+                    $ref: ../portal-tools-rest-builder-test-external1-impl/rest-openapi.yaml#ExternalTestEntity2
+                externalTestEntity3:
+                    $ref: ../portal-tools-rest-builder-test-external2-impl/rest-openapi.yaml#ExternalTestEntity3
             type: object
         Schema:
             properties:

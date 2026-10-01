@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.monitor;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.RandomTestUtil;
 import com.liferay.jenkins.results.parser.UrlReader;
 
@@ -43,9 +44,8 @@ public class ResourceThresholdMonitorTest
 
 	@Test
 	public void testExecuteDisk() throws Exception {
-		Properties monitorProperties = _newScrapeProperties(
-			"disk", _newFileStoreScrape("3.7194141696E10", "7.7849452544E10"),
-			"file.store", MonitorTestUtil.FILE_STORE);
+		Properties monitorProperties = _newDiskProperties(
+			_newFileStoreScrape("3.7194141696E10", "7.7849452544E10"));
 
 		monitorProperties.setProperty("monitor[a].threshold[warn]", "90");
 
@@ -63,20 +63,74 @@ public class ResourceThresholdMonitorTest
 
 		Assert.assertTrue(message, message.contains("52.2%"));
 		Assert.assertTrue(message, message.contains("within its thresholds"));
-		Assert.assertTrue(
-			message, message.contains(MonitorTestUtil.FILE_STORE));
+		Assert.assertTrue(message, message.contains(MonitorTestUtil.MOUNT));
+	}
+
+	@Test
+	public void testExecuteDiskDeviceMismatch() throws Exception {
+		Properties monitorProperties = _newDiskProperties(
+			MonitorTestUtil.newScrape(
+				MonitorTestUtil.newSample(
+					"file_store", MonitorTestUtil.MOUNT + " (/dev/root)",
+					"default_jenkins_file_store_capacity_bytes",
+					"7.7849452544E10")));
+
+		monitorProperties.setProperty("monitor[a].threshold[warn]", "90");
+
+		MonitorResult monitorResult = _execute(monitorProperties);
+
+		testEquals(MonitorResult.Status.CRITICAL, monitorResult.getStatus());
+
+		Map<String, String> metrics = monitorResult.getMetrics();
+
+		Assert.assertTrue(metrics.isEmpty());
+
+		testEquals(
+			JenkinsResultsParserUtil.combine(
+				"The file store mounted at ", MonitorTestUtil.MOUNT, " on ",
+				monitorProperties.getProperty(
+					"monitor[a].parameter[master.name]"),
+				" is on /dev/root, expected ", MonitorTestUtil.DEVICE),
+			monitorResult.getMessage());
 	}
 
 	@Test
 	public void testExecuteDiskImplausibleCapacity() throws Exception {
-		Properties monitorProperties = _newScrapeProperties(
-			"disk",
-			_newFileStoreScrape("3.7194141696E10", "9.223372036853727E18"),
-			"file.store", MonitorTestUtil.FILE_STORE);
+		Properties monitorProperties = _newDiskProperties(
+			_newFileStoreScrape("3.7194141696E10", "9.223372036853727E18"));
 
 		monitorProperties.setProperty("monitor[a].threshold[warn]", "1");
 
 		_assertUnknown(monitorProperties);
+	}
+
+	@Test
+	public void testExecuteDiskMountAbsent() throws Exception {
+		Properties monitorProperties = _newDiskProperties(
+			MonitorTestUtil.newScrape(
+				MonitorTestUtil.newSample(
+					"file_store",
+					MonitorTestUtil.newFileStore(
+						MonitorTestUtil.MOUNT + "/userContent"),
+					"default_jenkins_file_store_capacity_bytes",
+					"7.7849452544E10")));
+
+		monitorProperties.setProperty("monitor[a].threshold[warn]", "90");
+
+		MonitorResult monitorResult = _execute(monitorProperties);
+
+		testEquals(MonitorResult.Status.CRITICAL, monitorResult.getStatus());
+
+		Map<String, String> metrics = monitorResult.getMetrics();
+
+		Assert.assertTrue(metrics.isEmpty());
+
+		testEquals(
+			JenkinsResultsParserUtil.combine(
+				"No file store is mounted at ", MonitorTestUtil.MOUNT, " on ",
+				monitorProperties.getProperty(
+					"monitor[a].parameter[master.name]")),
+			monitorResult.getMessage());
 	}
 
 	@Test
@@ -125,14 +179,12 @@ public class ResourceThresholdMonitorTest
 		String label = RandomTestUtil.randomString();
 
 		_assertUnknownWithThreshold(
-			_newScrapeProperties(
-				"disk",
+			_newDiskProperties(
 				MonitorTestUtil.newScrape(
 					MonitorTestUtil.newSample(
 						"file_store", MonitorTestUtil.FILE_STORE,
 						"default_jenkins_file_store_capacity_bytes",
-						"7.7849452544E10")),
-				"file.store", MonitorTestUtil.FILE_STORE));
+						"7.7849452544E10"))));
 		_assertUnknownWithThreshold(
 			_newScrapeProperties(
 				"executor.utilization",
@@ -259,11 +311,17 @@ public class ResourceThresholdMonitorTest
 
 	@Test
 	public void testExecuteReadFailure() throws Exception {
-		_testExecuteReadFailure("java.io.IOException", new IOException());
+		_testExecuteReadFailure(
+			"java.io.IOException", new IOException(), "queue.depth",
+			"queue depth metric");
 
 		String message = RandomTestUtil.randomString();
 
-		_testExecuteReadFailure(message, new IOException(message));
+		_testExecuteReadFailure(
+			message, new IOException(message), "disk", "disk metric");
+		_testExecuteReadFailure(
+			message, new IOException(message), "queue.depth",
+			"queue depth metric");
 	}
 
 	@Test
@@ -315,9 +373,7 @@ public class ResourceThresholdMonitorTest
 	@Test
 	public void testExecuteZeroDenominator() throws Exception {
 		_assertUnknownWithThreshold(
-			_newScrapeProperties(
-				"disk", _newFileStoreScrape("0.0", "0.0"), "file.store",
-				MonitorTestUtil.FILE_STORE));
+			_newDiskProperties(_newFileStoreScrape("0.0", "0.0")));
 
 		String label = RandomTestUtil.randomString();
 
@@ -352,8 +408,13 @@ public class ResourceThresholdMonitorTest
 	}
 
 	@Test
+	public void testNewMonitorMissingDiskParameter() {
+		_testNewMonitorMissingDiskParameter("device");
+		_testNewMonitorMissingDiskParameter("mount");
+	}
+
+	@Test
 	public void testNewMonitorMissingProperty() {
-		_testNewMonitorMissingProperty("disk", "file.store");
 		_testNewMonitorMissingProperty("executor.utilization", "label");
 		_testNewMonitorMissingProperty("queue.depth", "label");
 		_testNewMonitorMissingProperty("ram", "master.name");
@@ -431,6 +492,16 @@ public class ResourceThresholdMonitorTest
 		setShellCommandOutput("cat /proc/meminfo", mockShell(), memoryInfo);
 	}
 
+	private Properties _newDiskProperties(String scrape) throws Exception {
+		Properties monitorProperties = _newScrapeProperties(
+			"disk", scrape, "mount", MonitorTestUtil.MOUNT);
+
+		monitorProperties.setProperty(
+			"monitor[a].parameter[device]", MonitorTestUtil.DEVICE);
+
+		return monitorProperties;
+	}
+
 	private String _newFileStoreScrape(String available, String capacity) {
 		return MonitorTestUtil.newScrape(
 			MonitorTestUtil.newSample(
@@ -483,9 +554,8 @@ public class ResourceThresholdMonitorTest
 			String capacity, MonitorResult.Status expectedStatus)
 		throws Exception {
 
-		Properties monitorProperties = _newScrapeProperties(
-			"disk", _newFileStoreScrape("1.0E15", capacity), "file.store",
-			MonitorTestUtil.FILE_STORE);
+		Properties monitorProperties = _newDiskProperties(
+			_newFileStoreScrape("1.0E15", capacity));
 
 		monitorProperties.setProperty("monitor[a].threshold[warn]", "99");
 
@@ -521,7 +591,8 @@ public class ResourceThresholdMonitorTest
 	}
 
 	private void _testExecuteReadFailure(
-			String expectedMessage, IOException ioException)
+			String expectedMessage, IOException ioException, String metric,
+			String metricDescription)
 		throws Exception {
 
 		UrlReader urlReader = mockUrlReader();
@@ -531,10 +602,14 @@ public class ResourceThresholdMonitorTest
 		String masterName = MonitorTestUtil.newJenkinsMasterName();
 
 		Properties monitorProperties = _newMonitorProperties(
-			masterName, "queue.depth");
+			masterName, metric);
 
 		monitorProperties.setProperty(
+			"monitor[a].parameter[device]", MonitorTestUtil.DEVICE);
+		monitorProperties.setProperty(
 			"monitor[a].parameter[label]", RandomTestUtil.randomString());
+		monitorProperties.setProperty(
+			"monitor[a].parameter[mount]", MonitorTestUtil.MOUNT);
 		monitorProperties.setProperty("monitor[a].threshold[warn]", "25");
 
 		MonitorResult monitorResult = _execute(monitorProperties);
@@ -547,9 +622,9 @@ public class ResourceThresholdMonitorTest
 
 		String message = monitorResult.getMessage();
 
-		Assert.assertTrue(message, message.contains("queue depth metric"));
 		Assert.assertTrue(message, message.contains(expectedMessage));
 		Assert.assertTrue(message, message.contains(masterName));
+		Assert.assertTrue(message, message.contains(metricDescription));
 	}
 
 	private void _testExecuteThresholds(
@@ -612,6 +687,32 @@ public class ResourceThresholdMonitorTest
 			"monitor[a].threshold[" + name + "]", value);
 
 		_testNewMonitorExpectedIllegalArgumentException(monitorProperties);
+	}
+
+	private void _testNewMonitorMissingDiskParameter(String name) {
+		Properties monitorProperties = _newMonitorProperties(
+			MonitorTestUtil.newJenkinsMasterName(), "disk");
+
+		monitorProperties.setProperty(
+			"monitor[a].parameter[device]", MonitorTestUtil.DEVICE);
+		monitorProperties.setProperty(
+			"monitor[a].parameter[mount]", MonitorTestUtil.MOUNT);
+		monitorProperties.setProperty("monitor[a].threshold[warn]", "80");
+
+		monitorProperties.remove("monitor[a].parameter[" + name + "]");
+
+		try {
+			_newMonitor(monitorProperties);
+
+			Assert.fail("Expected IllegalArgumentException");
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			String message = illegalArgumentException.getMessage();
+
+			Assert.assertTrue(
+				message,
+				message.contains("monitor[a].parameter[" + name + "]"));
+		}
 	}
 
 	private void _testNewMonitorMissingProperty(String metric, String name) {

@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser.monitor;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.RandomTestUtil;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -15,6 +16,65 @@ import org.junit.Test;
  */
 public class PrometheusScrapeTest
 	extends com.liferay.jenkins.results.parser.Test {
+
+	@Test
+	public void testGetSample() {
+		String name = MonitorTestUtil.newMetricName();
+
+		PrometheusScrape prometheusScrape = new PrometheusScrape(
+			MonitorTestUtil.newScrape(
+				MonitorTestUtil.newSample(
+					"file_store", MonitorTestUtil.FILE_STORE, name, "3.0")));
+
+		PrometheusScrape.Sample sample = prometheusScrape.getSample(
+			"file_store", MonitorTestUtil.MOUNT + " (", name);
+
+		testEquals(
+			MonitorTestUtil.FILE_STORE, sample.getLabelValue("file_store"));
+		testEquals(3.0D, sample.getValue());
+	}
+
+	@Test
+	public void testGetSampleAbsent() {
+		String name = MonitorTestUtil.newMetricName();
+
+		PrometheusScrape prometheusScrape = new PrometheusScrape(
+			MonitorTestUtil.newScrape(
+				MonitorTestUtil.newSample(
+					"file_store",
+					MonitorTestUtil.newFileStore(
+						MonitorTestUtil.MOUNT + "/userContent"),
+					name, "4.0")));
+
+		Assert.assertNull(
+			prometheusScrape.getSample(
+				"file_store", MonitorTestUtil.MOUNT + " (", name));
+		Assert.assertNull(
+			prometheusScrape.getSample(
+				"file_store", MonitorTestUtil.MOUNT + "/userContent (",
+				MonitorTestUtil.newMetricName()));
+		Assert.assertNull(
+			prometheusScrape.getSample(
+				"label", MonitorTestUtil.MOUNT + "/userContent (", name));
+	}
+
+	@Test
+	public void testGetSampleAmbiguous() {
+		String name = MonitorTestUtil.newMetricName();
+
+		PrometheusScrape prometheusScrape = new PrometheusScrape(
+			MonitorTestUtil.newScrape(
+				MonitorTestUtil.newSample(
+					"file_store", MonitorTestUtil.FILE_STORE, name, "3.0"),
+				MonitorTestUtil.newSample(
+					"file_store",
+					MonitorTestUtil.newFileStore(MonitorTestUtil.MOUNT), name,
+					"4.0")));
+
+		Assert.assertNull(
+			prometheusScrape.getSample(
+				"file_store", MonitorTestUtil.MOUNT + " (", name));
+	}
 
 	@Test
 	public void testGetValue() {

@@ -14,7 +14,17 @@ import com.liferay.jenkins.results.parser.RandomTestUtil;
  */
 public class MonitorTestUtil {
 
-	public static final String FILE_STORE = "/opt/java/jenkins (/dev/root)";
+	public static final String DEVICE = "/dev/nvme2n1";
+
+	public static final String FILE_STORE = JenkinsResultsParserUtil.combine(
+		MonitorTestUtil.MOUNT, " (", DEVICE, ")");
+
+	public static final String MOUNT = "/opt/java/jenkins";
+
+	public static String newFileStore(String mount) {
+		return JenkinsResultsParserUtil.combine(
+			mount, " (", RandomTestUtil.randomString(), ")");
+	}
 
 	public static String newJenkinsMasterName() {
 		String masterName = RandomTestUtil.randomString();

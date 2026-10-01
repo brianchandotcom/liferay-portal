@@ -10,6 +10,8 @@ import '@testing-library/jest-dom';
 import {State} from '@liferay/frontend-js-state-web';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 
+import {FRAGMENT_ENTRY_TYPES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/fragmentEntryTypes';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {config} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
@@ -103,6 +105,7 @@ const UNMAPPED_FORM_ITEM = {
 
 const renderComponent = ({
 	item = MAPPED_FORM_ITEM,
+	items,
 	successMessage,
 	fragmentEntryLinks,
 } = {}) => {
@@ -122,6 +125,7 @@ const renderComponent = ({
 		languageId: 'en_US',
 		layoutData: {
 			items: {
+				...items,
 				[item.itemId]: layoutDataItem,
 			},
 		},
@@ -395,6 +399,44 @@ describe('FormGeneralPanel', () => {
 		expect(openInfoFieldSelector).toBeCalledWith(
 			expect.objectContaining({
 				itemType: '11111-className',
+			})
+		);
+	});
+
+	it('opens field selection modal with the mapped fields', async () => {
+		await act(async () => {
+			renderComponent({
+				fragmentEntryLinks: {
+					1: {
+						editableValues: {
+							[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
+								inputFieldId: 'field1',
+							},
+						},
+						fragmentEntryLinkId: '1',
+						fragmentEntryType: FRAGMENT_ENTRY_TYPES.input,
+					},
+				},
+				item: {...MAPPED_FORM_ITEM, children: ['input-item']},
+				items: {
+					'input-item': {
+						children: [],
+						config: {fragmentEntryLinkId: '1'},
+						itemId: 'input-item',
+						parentId: MAPPED_FORM_ITEM.itemId,
+						type: LAYOUT_DATA_ITEM_TYPES.fragment,
+					},
+				},
+			});
+		});
+
+		const button = screen.getByText('manage-form-fields');
+
+		await fireEvent.click(button);
+
+		expect(openInfoFieldSelector).toBeCalledWith(
+			expect.objectContaining({
+				selectedFields: ['field1'],
 			})
 		);
 	});

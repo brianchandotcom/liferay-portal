@@ -13,7 +13,8 @@ interface IAttributeFilterSectionProps {
 const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 	eventId,
 }) => {
-	const {attributes, deleteFilter, filterOrder, filters} = useAttributes();
+	const {attributes, deleteFilter, filterOrder, filters, moveFilter} =
+		useAttributes();
 
 	const sectionRef = useRef<HTMLElement>(null);
 
@@ -55,13 +56,15 @@ const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 		>
 			{!!filterOrder.length && (
 				<div className="attribute-container attribute-list d-flex flex-column mt-3">
-					{filterOrder.map((id) => (
+					{filterOrder.map((id, i) => (
 						<AttributeFilterChip
 							attribute={attributes[filters[id].attributeId]}
 							eventId={eventId}
 							filter={filters[id]}
+							index={i}
 							key={id}
 							onCloseClick={onRemove}
+							onMove={moveFilter}
 							uneditableIds={uneditableIds}
 						/>
 					))}

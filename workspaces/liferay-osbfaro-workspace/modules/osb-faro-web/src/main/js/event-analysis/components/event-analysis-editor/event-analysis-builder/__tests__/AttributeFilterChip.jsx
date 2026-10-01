@@ -18,7 +18,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('AttributeFilterChip', () => {
-	it('renders the filter condition without a drag handle', () => {
+	it('renders a draggable filter condition', () => {
 		const {container} = render(
 			<ApolloProvider client={client}>
 				<Provider store={mockStore()}>
@@ -37,13 +37,15 @@ describe('AttributeFilterChip', () => {
 								type: 'event',
 								values: ['Stuff']
 							}}
+							index={0}
+							onMove={jest.fn()}
 						/>
 					</DndProvider>
 				</Provider>
 			</ApolloProvider>
 		);
 
-		expect(container.querySelector('.drag-handle')).toBeNull();
+		expect(container.querySelector('.drag-handle')).toBeInTheDocument();
 		expect(container.querySelector('.condition-chip')).toHaveTextContent(
 			/stuff/i
 		);

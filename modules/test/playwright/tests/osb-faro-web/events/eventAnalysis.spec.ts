@@ -2520,6 +2520,60 @@ test(
 );
 
 test(
+	'Event Analysis reorders filters by dragging them',
+	{
+		tag: '@LPD-107807',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		await sendCustomEventWithAttributes({
+			apiHelpers,
+			channelId: channel.id,
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		for (const filterName of ['price', 'temp']) {
+			await addFilter({
+				filterName,
+				input: '1',
+				operator: 'is greater than',
+				page,
+			});
+		}
+
+		const filterChips = page.locator(
+			'.attribute-filter-section-root .attribute-chip-container'
+		);
+
+		await expect(filterChips.nth(0)).toContainText('price');
+		await expect(filterChips.nth(1)).toContainText('temp');
+
+		await dragAndDropElement({
+			dragTarget: filterChips.nth(1).locator('.drag-handle'),
+			dropTarget: filterChips.nth(0),
+			offset: {y: 8},
+		});
+
+		await expect(filterChips.nth(0)).toContainText('temp');
+		await expect(filterChips.nth(1)).toContainText('price');
+	}
+);
+
+test(
 	'Event Analysis can edit an attribute display name from the breakdown picker',
 	{
 		tag: '@LRAC-10304',

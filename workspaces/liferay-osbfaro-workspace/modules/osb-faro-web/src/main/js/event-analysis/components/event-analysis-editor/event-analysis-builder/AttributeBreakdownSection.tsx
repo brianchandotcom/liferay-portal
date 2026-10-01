@@ -1,7 +1,6 @@
 import AttributeBreakdownChip from './AttributeBreakdownChip';
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
 import ConditionsSection from './ConditionsSection';
-import DndProvider from 'shared/components/DndProvider';
 import React, {useRef} from 'react';
 import {
 	AddBreakdown,
@@ -12,7 +11,6 @@ import {
 } from '../context/attributes';
 import {Align} from '@clayui/drop-down';
 import {ClayButtonWithIcon} from '@clayui/button';
-import {HTML5Backend} from 'react-dnd-html5-backend';
 
 const MAX_ATTRIBUTES = 5;
 
@@ -94,26 +92,22 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 			title={Liferay.Language.get('breakdown-by')}
 		>
 			{!!breakdownOrder.length && (
-				<DndProvider backend={HTML5Backend}>
-					<div className="attribute-container attribute-list d-flex flex-column mt-3">
-						{breakdownOrder.map((id, i) => (
-							<AttributeBreakdownChip
-								attribute={
-									attributes[breakdowns[id].attributeId]
-								}
-								breakdown={breakdowns[id]}
-								disabledIds={disabledIds}
-								eventId={eventId}
-								index={i}
-								key={id}
-								onCloseClick={onRemove}
-								onEditSubmit={editBreakdown}
-								onMove={moveBreakdown}
-								uneditableIds={uneditableIds}
-							/>
-						))}
-					</div>
-				</DndProvider>
+				<div className="attribute-container attribute-list d-flex flex-column mt-3">
+					{breakdownOrder.map((id, i) => (
+						<AttributeBreakdownChip
+							attribute={attributes[breakdowns[id].attributeId]}
+							breakdown={breakdowns[id]}
+							disabledIds={disabledIds}
+							eventId={eventId}
+							index={i}
+							key={id}
+							onCloseClick={onRemove}
+							onEditSubmit={editBreakdown}
+							onMove={moveBreakdown}
+							uneditableIds={uneditableIds}
+						/>
+					))}
+				</div>
 			)}
 		</ConditionsSection>
 	);

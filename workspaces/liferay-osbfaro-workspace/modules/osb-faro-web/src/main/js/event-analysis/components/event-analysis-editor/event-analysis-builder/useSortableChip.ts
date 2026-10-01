@@ -1,7 +1,10 @@
 import {DropTargetMonitor, useDrag, useDrop} from 'react-dnd';
 import {useEffect, useRef, useState} from 'react';
 
-const DRAG_TYPE = 'breakdown-condition-chip';
+export enum SortableChipTypes {
+	Breakdown = 'breakdown-condition-chip',
+	Filter = 'filter-condition-chip',
+}
 
 export enum DragStates {
 	Placeholder = 'placeholder',
@@ -21,9 +24,11 @@ interface DragItem {
 const useSortableChip = ({
 	index,
 	onMove,
+	type,
 }: {
 	index: number;
 	onMove: (params: {from: number; to: number}) => void;
+	type: SortableChipTypes;
 }) => {
 	const chipRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -31,7 +36,7 @@ const useSortableChip = ({
 	const [hoverPosition, setHoverPosition] = useState<HoverTypes | null>(null);
 
 	const [{canDrop, isOver}, drop] = useDrop({
-		accept: DRAG_TYPE,
+		accept: type,
 		canDrop: ({index: dragIndex}: DragItem) => dragIndex !== index,
 		collect: (monitor: DropTargetMonitor) => ({
 			canDrop: monitor.canDrop(),
@@ -80,7 +85,7 @@ const useSortableChip = ({
 		collect: (monitor: any) => ({
 			isDragging: monitor.isDragging(),
 		}),
-		item: {index, type: DRAG_TYPE},
+		item: {index, type},
 	});
 
 	const [placeholder, setPlaceholder] = useState(false);

@@ -1,54 +1,15 @@
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
-import ClayIcon from '@clayui/icon';
-import ConditionChip from './ConditionChip';
-import getCN from 'classnames';
 import React from 'react';
-import useSortableChip from './useSortableChip';
+import SortableConditionChip from './SortableConditionChip';
 import {Attribute, Breakdown} from 'event-analysis/utils/types';
 import {
 	DATA_TYPE_ICONS_MAP,
 	getBreakdownDisplay,
 } from 'event-analysis/utils/utils';
 import {DeleteBreakdown, EditBreakdown} from '../context/attributes';
-import {mergeRef} from 'shared/util/util';
+import {SortableChipTypes} from './useSortableChip';
 
 type MoveBreakdown = (params: {from: number; to: number}) => void;
-
-interface ISortableChipProps
-	extends React.ComponentProps<typeof ConditionChip> {
-	index: number;
-	onMove: MoveBreakdown;
-}
-
-const SortableChip = React.forwardRef<HTMLDivElement, ISortableChipProps>(
-	({index, onMove, ...otherProps}, ref) => {
-		const {chipRef, containerRef, dragState, hoverPosition} =
-			useSortableChip({index, onMove});
-
-		return (
-			<div
-				className={getCN('attribute-chip-container', {
-					[`hover-${hoverPosition}`]: hoverPosition,
-				})}
-				ref={containerRef}
-			>
-				<ConditionChip
-					{...otherProps}
-					dragState={dragState}
-					handle={
-						<span
-							className="drag-handle pl-2"
-							data-html2canvas-ignore
-						>
-							<ClayIcon symbol="drag" />
-						</span>
-					}
-					ref={mergeRef(ref, chipRef)}
-				/>
-			</div>
-		);
-	}
-);
 
 const AttributeBreakdownChip: React.FC<{
 	attribute: Attribute;
@@ -86,7 +47,8 @@ const AttributeBreakdownChip: React.FC<{
 			eventId={eventId}
 			onAttributeSelect={onEditSubmit}
 			trigger={
-				<SortableChip
+				<SortableConditionChip
+					dragType={SortableChipTypes.Breakdown}
 					icon={DATA_TYPE_ICONS_MAP[dataType]}
 					index={index}
 					label={label}

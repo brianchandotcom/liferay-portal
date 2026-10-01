@@ -59,6 +59,8 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
+import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
+import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
@@ -82,6 +84,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
@@ -103,6 +106,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.Pr
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.DiagramUtil;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.GroupedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.PinUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductConfigurationUtil;
@@ -413,8 +417,8 @@ public class ProductResourceImpl
 			@Override
 			public List<String> getNestedFields() {
 				return List.of(
-					"attachments", "creator", "diagram", "images",
-					"mappedProducts", "pins", "productAccountGroups",
+					"attachments", "creator", "diagram", "groupedProducts",
+					"images", "mappedProducts", "pins", "productAccountGroups",
 					"productChannels", "productConfiguration", "productGroups",
 					"productOptions", "productOptions.productOptionValues",
 					"productSpecifications", "productVirtualSettings",
@@ -1335,7 +1339,7 @@ public class ProductResourceImpl
 
 		serviceContext.setExpandoBridgeAttributes(null);
 
-		// Product configuration
+		// Configuration
 
 		ProductConfiguration productConfiguration =
 			product.getProductConfiguration();
@@ -1438,8 +1442,6 @@ public class ProductResourceImpl
 				productConfiguration, cpDefinition.getCPDefinitionId());
 		}
 
-		// Product shipping configuration
-
 		ProductShippingConfiguration productShippingConfiguration =
 			product.getShippingConfiguration();
 
@@ -1449,8 +1451,6 @@ public class ProductResourceImpl
 					_cpDefinitionService, productShippingConfiguration,
 					cpDefinition, serviceContext);
 		}
-
-		// Product subscription configuration
 
 		ProductSubscriptionConfiguration productSubscriptionConfiguration =
 			product.getSubscriptionConfiguration();
@@ -1463,8 +1463,6 @@ public class ProductResourceImpl
 						cpDefinition, serviceContext);
 		}
 
-		// Product tax configuration
-
 		ProductTaxConfiguration productTaxConfiguration =
 			product.getTaxConfiguration();
 
@@ -1475,29 +1473,7 @@ public class ProductResourceImpl
 					productTaxConfiguration);
 		}
 
-		// Product specifications
-
-		ProductSpecification[] productSpecifications =
-			product.getProductSpecifications();
-
-		if (productSpecifications != null) {
-			_cpDefinitionSpecificationOptionValueService.
-				deleteCPDefinitionSpecificationOptionValues(
-					cpDefinition.getCPDefinitionId());
-
-			for (ProductSpecification productSpecification :
-					productSpecifications) {
-
-				ProductSpecificationUtil.
-					addCPDefinitionSpecificationOptionValue(
-						_cpDefinitionSpecificationOptionValueService,
-						_cpOptionCategoryService, _cpSpecificationOptionService,
-						cpDefinition.getCPDefinitionId(), productSpecification,
-						serviceContext);
-			}
-		}
-
-		// Product options
+		// Options
 
 		ProductOption[] productOptions = product.getProductOptions();
 
@@ -1532,212 +1508,6 @@ public class ProductResourceImpl
 								serviceContext);
 					}
 				}
-			}
-		}
-
-		// Related products
-
-		RelatedProduct[] relatedProducts = product.getRelatedProducts();
-
-		if (relatedProducts != null) {
-			for (RelatedProduct relatedProduct : relatedProducts) {
-				RelatedProductUtil.addOrUpdateCPDefinitionLink(
-					_cpDefinitionLinkService, _cpDefinitionService,
-					relatedProduct, cpDefinition.getCPDefinitionId(),
-					_serviceContextHelper.getServiceContext(
-						cpDefinition.getGroupId()));
-			}
-		}
-
-		// Skus
-
-		Sku[] skus = product.getSkus();
-
-		if (skus != null) {
-			for (Sku sku : skus) {
-				serviceContext.setExpandoBridgeAttributes(
-					_getExpandoBridgeAttributes(
-						CPInstance.class.getName(), sku.getCustomFields()));
-
-				CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
-					cpDefinition, _cpDefinitionOptionRelService,
-					_cpDefinitionOptionValueRelService, _cpDefinitionService,
-					_cpInstanceService, _cpOptionService,
-					sku.getExternalReferenceCode(), serviceContext, sku);
-
-				serviceContext.setExpandoBridgeAttributes(null);
-
-				if (ArrayUtil.isEmpty(sku.getSkuUnitOfMeasures())) {
-					SkuUtil.updateCommercePriceEntries(
-						_commercePriceEntryLocalService,
-						_commercePriceListLocalService, _configurationProvider,
-						cpInstance,
-						(BigDecimal)GetterUtil.get(
-							sku.getPrice(), cpInstance.getPrice()),
-						(BigDecimal)GetterUtil.get(
-							sku.getPromoPrice(), cpInstance.getPromoPrice()),
-						StringPool.BLANK, serviceContext);
-				}
-				else {
-					for (SkuUnitOfMeasure skuUnitOfMeasure :
-							sku.getSkuUnitOfMeasures()) {
-
-						SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure(
-							_cpInstanceUnitOfMeasureService,
-							_commercePriceEntryService,
-							_commercePriceListLocalService, cpInstance,
-							skuUnitOfMeasure, serviceContext);
-					}
-				}
-			}
-		}
-
-		// Images
-
-		Attachment[] images = product.getImages();
-
-		if (images != null) {
-			for (Attachment attachment : images) {
-				serviceContext.setAssetTagNames(attachment.getTags());
-				serviceContext.setExpandoBridgeAttributes(
-					_getExpandoBridgeAttributes(
-						CPAttachmentFileEntry.class.getName(),
-						attachment.getCustomFields()));
-
-				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
-					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
-					_cpDefinitionOptionRelService,
-					_cpDefinitionOptionValueRelService, _cpOptionService,
-					_dlAppLocalService, _dlFileEntryModelResourcePermission,
-					_groupLocalService, _uniqueFileNameProvider, attachment,
-					_classNameLocalService.getClassNameId(
-						cpDefinition.getModelClassName()),
-					cpDefinition.getCPDefinitionId(),
-					CPAttachmentFileEntryConstants.TYPE_IMAGE, serviceContext);
-			}
-		}
-
-		// Attachments
-
-		Attachment[] attachments = product.getAttachments();
-
-		if (attachments != null) {
-			for (Attachment attachment : attachments) {
-				serviceContext.setAssetTagNames(attachment.getTags());
-				serviceContext.setExpandoBridgeAttributes(
-					_getExpandoBridgeAttributes(
-						CPAttachmentFileEntry.class.getName(),
-						attachment.getCustomFields()));
-
-				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
-					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
-					_cpDefinitionOptionRelService,
-					_cpDefinitionOptionValueRelService, _cpOptionService,
-					_dlAppLocalService, _dlFileEntryModelResourcePermission,
-					_groupLocalService, _uniqueFileNameProvider, attachment,
-					_classNameLocalService.getClassNameId(
-						cpDefinition.getModelClassName()),
-					cpDefinition.getCPDefinitionId(),
-					CPAttachmentFileEntryConstants.TYPE_OTHER, serviceContext);
-			}
-		}
-
-		// Channels visibility
-
-		_cpDefinitionService.updateCPDefinitionChannelFilter(
-			cpDefinition.getCPDefinitionId(),
-			GetterUtil.getBoolean(
-				product.getProductChannelFilter(),
-				cpDefinition.isChannelFilterEnabled()));
-
-		ProductChannel[] productChannels = product.getProductChannels();
-
-		if (productChannels != null) {
-			_commerceChannelRelService.deleteCommerceChannelRels(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
-
-			for (ProductChannel productChannel : productChannels) {
-				CommerceChannel commerceChannel = null;
-
-				String externalReferenceCode = GetterUtil.getString(
-					productChannel.getExternalReferenceCode());
-
-				if (Validator.isNull(externalReferenceCode)) {
-					commerceChannel =
-						_commerceChannelService.fetchCommerceChannel(
-							GetterUtil.getLong(productChannel.getChannelId()));
-				}
-				else if (LazyReferencingThreadLocal.isEnabled()) {
-					commerceChannel =
-						_commerceChannelService.getOrAddEmptyCommerceChannel(
-							externalReferenceCode);
-				}
-				else {
-					commerceChannel =
-						_commerceChannelService.
-							fetchCommerceChannelByExternalReferenceCode(
-								externalReferenceCode,
-								contextCompany.getCompanyId());
-				}
-
-				if (commerceChannel == null) {
-					continue;
-				}
-
-				_commerceChannelRelService.addCommerceChannelRel(
-					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(),
-					commerceChannel.getCommerceChannelId(), serviceContext);
-			}
-		}
-
-		// Account groups visibility
-
-		ProductAccountGroup[] productAccountGroups =
-			product.getProductAccountGroups();
-
-		if (productAccountGroups != null) {
-			_accountGroupRelLocalService.deleteAccountGroupRels(
-				CPDefinition.class.getName(),
-				new long[] {cpDefinition.getCPDefinitionId()});
-
-			for (ProductAccountGroup productAccountGroup :
-					productAccountGroups) {
-
-				AccountGroup accountGroup = null;
-
-				String externalReferenceCode = GetterUtil.getString(
-					productAccountGroup.getExternalReferenceCode());
-
-				if (Validator.isNull(externalReferenceCode)) {
-					accountGroup = _accountGroupService.fetchAccountGroup(
-						GetterUtil.getLong(
-							productAccountGroup.getAccountGroupId()));
-				}
-				else if (LazyReferencingThreadLocal.isEnabled()) {
-					accountGroup =
-						_accountGroupService.getOrAddEmptyAccountGroup(
-							externalReferenceCode,
-							GetterUtil.getString(
-								productAccountGroup.getName(),
-								externalReferenceCode));
-				}
-				else {
-					accountGroup =
-						_accountGroupService.
-							fetchAccountGroupByExternalReferenceCode(
-								externalReferenceCode,
-								contextCompany.getCompanyId());
-				}
-
-				if (accountGroup == null) {
-					continue;
-				}
-
-				_accountGroupRelService.addAccountGroupRel(
-					accountGroup.getAccountGroupId(),
-					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId());
 			}
 		}
 
@@ -1797,88 +1567,331 @@ public class ProductResourceImpl
 			}
 		}
 
+		// Product media
+
+		Attachment[] attachments = product.getAttachments();
+
+		if (attachments != null) {
+			for (Attachment attachment : attachments) {
+				serviceContext.setAssetTagNames(attachment.getTags());
+				serviceContext.setExpandoBridgeAttributes(
+					_getExpandoBridgeAttributes(
+						CPAttachmentFileEntry.class.getName(),
+						attachment.getCustomFields()));
+
+				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
+					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
+					_cpDefinitionOptionRelService,
+					_cpDefinitionOptionValueRelService, _cpOptionService,
+					_dlAppLocalService, _dlFileEntryModelResourcePermission,
+					_groupLocalService, _uniqueFileNameProvider, attachment,
+					_classNameLocalService.getClassNameId(
+						cpDefinition.getModelClassName()),
+					cpDefinition.getCPDefinitionId(),
+					CPAttachmentFileEntryConstants.TYPE_OTHER, serviceContext);
+			}
+		}
+
+		Attachment[] images = product.getImages();
+
+		if (images != null) {
+			for (Attachment attachment : images) {
+				serviceContext.setAssetTagNames(attachment.getTags());
+				serviceContext.setExpandoBridgeAttributes(
+					_getExpandoBridgeAttributes(
+						CPAttachmentFileEntry.class.getName(),
+						attachment.getCustomFields()));
+
+				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
+					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
+					_cpDefinitionOptionRelService,
+					_cpDefinitionOptionValueRelService, _cpOptionService,
+					_dlAppLocalService, _dlFileEntryModelResourcePermission,
+					_groupLocalService, _uniqueFileNameProvider, attachment,
+					_classNameLocalService.getClassNameId(
+						cpDefinition.getModelClassName()),
+					cpDefinition.getCPDefinitionId(),
+					CPAttachmentFileEntryConstants.TYPE_IMAGE, serviceContext);
+			}
+		}
+
+		serviceContext.setExpandoBridgeAttributes(null);
+
+		// Product skus
+
+		Sku[] skus = product.getSkus();
+
+		if (skus != null) {
+			for (Sku sku : skus) {
+				serviceContext.setExpandoBridgeAttributes(
+					_getExpandoBridgeAttributes(
+						CPInstance.class.getName(), sku.getCustomFields()));
+
+				CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
+					cpDefinition, _cpDefinitionOptionRelService,
+					_cpDefinitionOptionValueRelService, _cpDefinitionService,
+					_cpInstanceService, _cpOptionService,
+					sku.getExternalReferenceCode(), serviceContext, sku);
+
+				serviceContext.setExpandoBridgeAttributes(null);
+
+				if (ArrayUtil.isEmpty(sku.getSkuUnitOfMeasures())) {
+					SkuUtil.updateCommercePriceEntries(
+						_commercePriceEntryLocalService,
+						_commercePriceListLocalService, _configurationProvider,
+						cpInstance,
+						(BigDecimal)GetterUtil.get(
+							sku.getPrice(), cpInstance.getPrice()),
+						(BigDecimal)GetterUtil.get(
+							sku.getPromoPrice(), cpInstance.getPromoPrice()),
+						StringPool.BLANK, serviceContext);
+				}
+				else {
+					for (SkuUnitOfMeasure skuUnitOfMeasure :
+							sku.getSkuUnitOfMeasures()) {
+
+						SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure(
+							_cpInstanceUnitOfMeasureService,
+							_commercePriceEntryService,
+							_commercePriceListLocalService, cpInstance,
+							skuUnitOfMeasure, serviceContext);
+					}
+				}
+			}
+		}
+
+		// Product specifications
+
+		ProductSpecification[] productSpecifications =
+			product.getProductSpecifications();
+
+		if (productSpecifications != null) {
+			_cpDefinitionSpecificationOptionValueService.
+				deleteCPDefinitionSpecificationOptionValues(
+					cpDefinition.getCPDefinitionId());
+
+			for (ProductSpecification productSpecification :
+					productSpecifications) {
+
+				ProductSpecificationUtil.
+					addCPDefinitionSpecificationOptionValue(
+						_cpDefinitionSpecificationOptionValueService,
+						_cpOptionCategoryService, _cpSpecificationOptionService,
+						cpDefinition.getCPDefinitionId(), productSpecification,
+						serviceContext);
+			}
+		}
+
+		// Product types
+
+		CPType cpType = _cpTypeRegistry.getCPType(
+			cpDefinition.getProductTypeName());
+
+		if (cpType != null) {
+			Diagram diagram = product.getDiagram();
+			MappedProduct[] mappedProducts = product.getMappedProducts();
+			Pin[] pins = product.getPins();
+
+			if ((diagram != null) || (mappedProducts != null) ||
+				(pins != null)) {
+
+				if (CSDiagramCPTypeConstants.NAME.equals(cpType.getName())) {
+					if (diagram != null) {
+						DiagramUtil.addOrUpdateCSDiagramSetting(
+							contextCompany.getCompanyId(),
+							_cpAttachmentFileEntryService,
+							cpDefinition.getCPDefinitionId(),
+							_cpDefinitionOptionRelService,
+							_cpDefinitionOptionValueRelService,
+							_cpOptionService, _csDiagramSettingService, diagram,
+							cpDefinition.getGroupId(),
+							contextAcceptLanguage.getPreferredLocale(),
+							_serviceContextHelper, _uniqueFileNameProvider);
+					}
+
+					if (mappedProducts != null) {
+						_csDiagramEntryService.deleteCSDiagramEntries(
+							cpDefinition.getCPDefinitionId());
+
+						for (MappedProduct mappedProduct : mappedProducts) {
+							MappedProductUtil.addOrUpdateCSDiagramEntry(
+								contextCompany.getCompanyId(),
+								cpDefinition.getCPDefinitionId(),
+								_cpDefinitionService, _cpInstanceService,
+								_csDiagramEntryService,
+								cpDefinition.getGroupId(),
+								contextAcceptLanguage.getPreferredLocale(),
+								mappedProduct, _serviceContextHelper);
+						}
+					}
+
+					if (pins != null) {
+						_csDiagramPinService.deleteCSDiagramPins(
+							cpDefinition.getCPDefinitionId());
+
+						for (Pin pin : pins) {
+							PinUtil.addOrUpdateCSDiagramPin(
+								cpDefinition.getCPDefinitionId(),
+								_csDiagramPinService, pin);
+						}
+					}
+				}
+				else {
+					throw new CPDefinitionProductTypeNameException();
+				}
+			}
+
+			GroupedProduct[] groupedProducts = product.getGroupedProducts();
+
+			if (groupedProducts != null) {
+				if (GroupedCPTypeConstants.NAME.equals(cpType.getName())) {
+					for (GroupedProduct groupedProduct : groupedProducts) {
+						GroupedProductUtil.addOrUpdateCPDefinitionGroupedEntry(
+							cpDefinition, _cpDefinitionGroupedEntryService,
+							_cpDefinitionService, groupedProduct,
+							_serviceContextHelper.getServiceContext(
+								cpDefinition.getGroupId()));
+					}
+				}
+				else {
+					throw new CPDefinitionProductTypeNameException();
+				}
+			}
+
+			ProductVirtualSettings productVirtualSettings =
+				product.getProductVirtualSettings();
+
+			if (productVirtualSettings != null) {
+				if (VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
+					ProductVirtualSettingsUtil.
+						addOrUpdateProductVirtualSettings(
+							cpDefinition, productVirtualSettings,
+							_cpDefinitionVirtualSettingService,
+							_cpdVirtualSettingFileEntryService, _dlAppService,
+							_groupService, _journalArticleService,
+							_repositoryLocalService, _uniqueFileNameProvider,
+							serviceContext);
+				}
+				else {
+					throw new CPDefinitionProductTypeNameException();
+				}
+			}
+		}
+
+		// Product visibility
+
 		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
 			cpDefinition.getCPDefinitionId(),
 			GetterUtil.getBoolean(
 				product.getProductAccountGroupFilter(),
 				cpDefinition.isAccountGroupFilterEnabled()));
 
-		CPType cpType = _cpTypeRegistry.getCPType(
-			cpDefinition.getProductTypeName());
+		ProductAccountGroup[] productAccountGroups =
+			product.getProductAccountGroups();
 
-		if (cpType == null) {
-			return cpDefinition;
-		}
+		if (productAccountGroups != null) {
+			_accountGroupRelLocalService.deleteAccountGroupRels(
+				CPDefinition.class.getName(),
+				new long[] {cpDefinition.getCPDefinitionId()});
 
-		// Diagram
+			for (ProductAccountGroup productAccountGroup :
+					productAccountGroups) {
 
-		Diagram diagram = product.getDiagram();
-		MappedProduct[] mappedProducts = product.getMappedProducts();
-		Pin[] pins = product.getPins();
+				AccountGroup accountGroup = null;
 
-		if ((diagram != null) || (mappedProducts != null) || (pins != null)) {
-			if (CSDiagramCPTypeConstants.NAME.equals(cpType.getName())) {
-				if (diagram != null) {
-					DiagramUtil.addOrUpdateCSDiagramSetting(
-						contextCompany.getCompanyId(),
-						_cpAttachmentFileEntryService,
-						cpDefinition.getCPDefinitionId(),
-						_cpDefinitionOptionRelService,
-						_cpDefinitionOptionValueRelService, _cpOptionService,
-						_csDiagramSettingService, diagram,
-						cpDefinition.getGroupId(),
-						contextAcceptLanguage.getPreferredLocale(),
-						_serviceContextHelper, _uniqueFileNameProvider);
+				String externalReferenceCode = GetterUtil.getString(
+					productAccountGroup.getExternalReferenceCode());
+
+				if (Validator.isNull(externalReferenceCode)) {
+					accountGroup = _accountGroupService.fetchAccountGroup(
+						GetterUtil.getLong(
+							productAccountGroup.getAccountGroupId()));
+				}
+				else if (LazyReferencingThreadLocal.isEnabled()) {
+					accountGroup =
+						_accountGroupService.getOrAddEmptyAccountGroup(
+							externalReferenceCode,
+							GetterUtil.getString(
+								productAccountGroup.getName(),
+								externalReferenceCode));
+				}
+				else {
+					accountGroup =
+						_accountGroupService.
+							fetchAccountGroupByExternalReferenceCode(
+								externalReferenceCode,
+								contextCompany.getCompanyId());
 				}
 
-				if (mappedProducts != null) {
-					_csDiagramEntryService.deleteCSDiagramEntries(
-						cpDefinition.getCPDefinitionId());
-
-					for (MappedProduct mappedProduct : mappedProducts) {
-						MappedProductUtil.addOrUpdateCSDiagramEntry(
-							contextCompany.getCompanyId(),
-							cpDefinition.getCPDefinitionId(),
-							_cpDefinitionService, _cpInstanceService,
-							_csDiagramEntryService, cpDefinition.getGroupId(),
-							contextAcceptLanguage.getPreferredLocale(),
-							mappedProduct, _serviceContextHelper);
-					}
+				if (accountGroup == null) {
+					continue;
 				}
 
-				if (pins != null) {
-					_csDiagramPinService.deleteCSDiagramPins(
-						cpDefinition.getCPDefinitionId());
-
-					for (Pin pin : pins) {
-						PinUtil.addOrUpdateCSDiagramPin(
-							cpDefinition.getCPDefinitionId(),
-							_csDiagramPinService, pin);
-					}
-				}
-			}
-			else {
-				throw new CPDefinitionProductTypeNameException();
+				_accountGroupRelService.addAccountGroupRel(
+					accountGroup.getAccountGroupId(),
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId());
 			}
 		}
 
-		// Virtual
+		_cpDefinitionService.updateCPDefinitionChannelFilter(
+			cpDefinition.getCPDefinitionId(),
+			GetterUtil.getBoolean(
+				product.getProductChannelFilter(),
+				cpDefinition.isChannelFilterEnabled()));
 
-		ProductVirtualSettings productVirtualSettings =
-			product.getProductVirtualSettings();
+		ProductChannel[] productChannels = product.getProductChannels();
 
-		if (productVirtualSettings != null) {
-			if (VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
-				ProductVirtualSettingsUtil.addOrUpdateProductVirtualSettings(
-					cpDefinition, productVirtualSettings,
-					_cpDefinitionVirtualSettingService,
-					_cpdVirtualSettingFileEntryService, _dlAppService,
-					_groupService, _journalArticleService,
-					_repositoryLocalService, _uniqueFileNameProvider,
-					serviceContext);
+		if (productChannels != null) {
+			_commerceChannelRelService.deleteCommerceChannelRels(
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
+			for (ProductChannel productChannel : productChannels) {
+				CommerceChannel commerceChannel = null;
+
+				String externalReferenceCode = GetterUtil.getString(
+					productChannel.getExternalReferenceCode());
+
+				if (Validator.isNull(externalReferenceCode)) {
+					commerceChannel =
+						_commerceChannelService.fetchCommerceChannel(
+							GetterUtil.getLong(productChannel.getChannelId()));
+				}
+				else if (LazyReferencingThreadLocal.isEnabled()) {
+					commerceChannel =
+						_commerceChannelService.getOrAddEmptyCommerceChannel(
+							externalReferenceCode);
+				}
+				else {
+					commerceChannel =
+						_commerceChannelService.
+							fetchCommerceChannelByExternalReferenceCode(
+								externalReferenceCode,
+								contextCompany.getCompanyId());
+				}
+
+				if (commerceChannel == null) {
+					continue;
+				}
+
+				_commerceChannelRelService.addCommerceChannelRel(
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId(),
+					commerceChannel.getCommerceChannelId(), serviceContext);
 			}
-			else {
-				throw new CPDefinitionProductTypeNameException();
+		}
+
+		// Related products
+
+		RelatedProduct[] relatedProducts = product.getRelatedProducts();
+
+		if (relatedProducts != null) {
+			for (RelatedProduct relatedProduct : relatedProducts) {
+				RelatedProductUtil.addOrUpdateCPDefinitionLink(
+					_cpDefinitionLinkService, _cpDefinitionService,
+					relatedProduct, cpDefinition.getCPDefinitionId(),
+					_serviceContextHelper.getServiceContext(
+						cpDefinition.getGroupId()));
 			}
 		}
 
@@ -2180,6 +2193,9 @@ public class ProductResourceImpl
 
 	@Reference
 	private CPConfigurationEntryService _cpConfigurationEntryService;
+
+	@Reference
+	private CPDefinitionGroupedEntryService _cpDefinitionGroupedEntryService;
 
 	@Reference
 	private CPDefinitionInventoryService _cpDefinitionInventoryService;

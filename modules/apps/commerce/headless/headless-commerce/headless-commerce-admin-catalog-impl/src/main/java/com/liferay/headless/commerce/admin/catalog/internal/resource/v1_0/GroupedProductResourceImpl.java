@@ -6,21 +6,24 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
-import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.GroupedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.core.helper.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,7 +36,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/grouped-product.properties",
-	scope = ServiceScope.PROTOTYPE, service = GroupedProductResource.class
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
+	service = GroupedProductResource.class
 )
 @CTAware
 public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
@@ -66,9 +70,11 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 			cpDefinition.getCPDefinitionId(), pagination);
 	}
 
+	@NestedField(parentClass = Product.class, value = "groupedProducts")
 	@Override
 	public Page<GroupedProduct> getProductIdGroupedProductsPage(
-			Long productId, Pagination pagination)
+			@NestedFieldId(value = "productId") Long productId,
+			Pagination pagination)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -78,6 +84,12 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
 				"Unable to find product with ID " + productId);
+		}
+
+		if (!GroupedCPTypeConstants.NAME.equals(
+				cpDefinition.getProductTypeName())) {
+
+			return null;
 		}
 
 		return _getGroupedProductsPage(
@@ -124,7 +136,10 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 		}
 
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-			_addCPDefinitionGroupedEntry(cpDefinition, groupedProduct);
+			GroupedProductUtil.addCPDefinitionGroupedEntry(
+				cpDefinition, _cpDefinitionGroupedEntryService,
+				_cpDefinitionService, groupedProduct,
+				_serviceContextHelper.getServiceContext(contextUser));
 
 		return _toGroupedProduct(
 			cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId());
@@ -144,55 +159,13 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 		}
 
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-			_addCPDefinitionGroupedEntry(cpDefinition, groupedProduct);
+			GroupedProductUtil.addCPDefinitionGroupedEntry(
+				cpDefinition, _cpDefinitionGroupedEntryService,
+				_cpDefinitionService, groupedProduct,
+				_serviceContextHelper.getServiceContext(contextUser));
 
 		return _toGroupedProduct(
 			cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId());
-	}
-
-	private CPDefinitionGroupedEntry _addCPDefinitionGroupedEntry(
-			CPDefinition cpDefinition, GroupedProduct groupedProduct)
-		throws Exception {
-
-		CPDefinition entryCPDefinition = null;
-
-		String entryProductExternalReferenceCode =
-			groupedProduct.getEntryProductExternalReferenceCode();
-
-		if (Validator.isNotNull(entryProductExternalReferenceCode)) {
-			entryCPDefinition =
-				_cpDefinitionService.
-					fetchCPDefinitionByCProductExternalReferenceCode(
-						entryProductExternalReferenceCode,
-						contextCompany.getCompanyId(), false);
-		}
-
-		if (entryCPDefinition == null) {
-			entryCPDefinition =
-				_cpDefinitionService.fetchCPDefinitionByCProductId(
-					groupedProduct.getEntryProductId(), false);
-		}
-
-		if (entryCPDefinition == null) {
-			if (Validator.isNull(entryProductExternalReferenceCode)) {
-				throw new NoSuchCProductException(
-					"Unable to find entry product with external reference " +
-						"code " + entryProductExternalReferenceCode);
-			}
-
-			entryCPDefinition =
-				ProductUtil.getCPDefinitionByCProductExternalReferenceCode(
-					contextCompany.getCompanyId(), _cpDefinitionService,
-					entryProductExternalReferenceCode,
-					cpDefinition.getGroupId(),
-					groupedProduct.getEntryProductType());
-		}
-
-		return _cpDefinitionGroupedEntryService.addCPDefinitionGroupedEntry(
-			cpDefinition.getCPDefinitionId(), entryCPDefinition.getCProductId(),
-			GetterUtil.getDouble(groupedProduct.getPriority()),
-			GetterUtil.getInteger(groupedProduct.getQuantity()),
-			_serviceContextHelper.getServiceContext(contextUser));
 	}
 
 	private Page<GroupedProduct> _getGroupedProductsPage(

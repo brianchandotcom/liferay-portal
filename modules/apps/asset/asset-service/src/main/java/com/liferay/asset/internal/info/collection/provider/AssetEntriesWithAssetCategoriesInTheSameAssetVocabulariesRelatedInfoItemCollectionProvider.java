@@ -14,6 +14,9 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
@@ -28,6 +31,7 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -98,10 +102,10 @@ public class
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
-		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
-			assetCategories, collectionQuery);
-
 		try {
+			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
+				assetCategories, collectionQuery, _getGroupIds(assetEntry));
+
 			SearchContext searchContext = _getSearchContext(assetEntry);
 
 			Hits hits = _assetHelper.search(
@@ -193,7 +197,7 @@ public class
 
 	private AssetEntryQuery _getAssetEntryQuery(
 		List<AssetCategory> assetEntryAssetCategories,
-		CollectionQuery collectionQuery) {
+		CollectionQuery collectionQuery, long[] groupIds) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -208,11 +212,7 @@ public class
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		assetEntryQuery.setGroupIds(
-			new long[] {serviceContext.getScopeGroupId()});
+		assetEntryQuery.setGroupIds(groupIds);
 
 		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
 		assetEntryQuery.setOrderByType1("DESC");
@@ -251,6 +251,30 @@ public class
 
 		return AssetRendererFactoryRegistryUtil.getIndexableClassNameIds(
 			serviceContext.getCompanyId(), true);
+	}
+
+	private long[] _getGroupIds(AssetEntry assetEntry) throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		long scopeGroupId = serviceContext.getScopeGroupId();
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			assetEntry.getGroupId());
+
+		if ((depotEntry == null) ||
+			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+
+			return new long[] {scopeGroupId};
+		}
+
+		return ArrayUtil.append(
+			new long[] {scopeGroupId},
+			ListUtil.toLongArray(
+				_depotEntryLocalService.getGroupConnectedDepotEntries(
+					scopeGroupId, DepotConstants.TYPE_SPACE, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				DepotEntry::getGroupId));
 	}
 
 	private InfoField _getItemTypesInfoField() {
@@ -334,6 +358,9 @@ public class
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private Language _language;

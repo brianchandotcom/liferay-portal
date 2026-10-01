@@ -2,7 +2,6 @@ export {compose} from 'redux';
 
 export {default as withPolling} from './WithPolling';
 
-export {default as checkProjectState} from './CheckProjectState';
 export {default as optional} from './Optional';
 export {default as redirectIf} from './RedirectIf';
 export {default as withAction} from './WithAction';
@@ -14,7 +13,6 @@ export {default as withHelpWidget} from './WithHelpWidget';
 export {default as withHistory} from './WithHistory';
 export {default as withIndividual} from './WithIndividual';
 export {default as withInterval} from './WithInterval';
-export {default as withOnboarding} from './WithOnboarding';
 export {default as withPaginationBar} from './WithPaginationBar';
 export {default as withPermission, withAdminPermission} from './WithPermission';
 export {default as withProject} from './WithProject';

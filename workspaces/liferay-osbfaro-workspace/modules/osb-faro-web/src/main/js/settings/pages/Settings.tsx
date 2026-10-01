@@ -1,13 +1,12 @@
 import BundleRouter from 'route-middleware/BundleRouter';
-import checkProjectState from 'shared/hoc/CheckProjectState';
 import ErrorPage from 'shared/pages/ErrorPage';
 import Loading from 'shared/components/Loading';
+import ProjectGate from 'shared/components/workspaces/ProjectGate';
 import React, {Fragment, lazy, Suspense} from 'react';
-import {compose} from 'shared/hoc';
 import {Route, Routes as RouterRoutes, useParams} from 'react-router-dom';
 import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
+import {useOnboardingModal} from 'shared/hooks/useOnboardingModal';
 import {useStore} from 'react-redux';
-import {withOnboarding} from 'shared/hoc';
 
 // APIS
 
@@ -127,6 +126,8 @@ export const Settings = () => {
 	const {groupId = ''} = useParams();
 	const store = useStore();
 	const isLDP = useLDPEnabled({groupId});
+
+	useOnboardingModal({groupId});
 
 	const project = store.getState().getIn(['projects', groupId, 'data']);
 	const recommendationsEnabled = store
@@ -263,4 +264,14 @@ export const Settings = () => {
 	);
 };
 
-export default compose<any>(checkProjectState, withOnboarding)(Settings);
+const SettingsPage = () => {
+	const {groupId = ''} = useParams();
+
+	return (
+		<ProjectGate groupId={groupId}>
+			<Settings />
+		</ProjectGate>
+	);
+};
+
+export default SettingsPage;

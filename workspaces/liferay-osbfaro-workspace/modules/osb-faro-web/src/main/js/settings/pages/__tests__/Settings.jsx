@@ -3,7 +3,10 @@ import * as data from 'test/data';
 import mockStore, {mockStoreData, mockStoreDataLDP} from 'test/mock-store';
 import React from 'react';
 import {fromJS} from 'immutable';
+import {InMemoryCache} from '@apollo/client';
 import {MemoryRouter, Route, Routes as RouterRoutes} from 'react-router-dom';
+import {mockDataSourcesReq} from 'test/graphql-data';
+import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {render, screen} from '@testing-library/react';
 import {Routes, toRoute} from 'shared/util/router';
@@ -27,11 +30,25 @@ const mockStoreDataSaaS = mockStoreData.setIn(
 const renderSettingsAt = store =>
 	render(
 		<Provider store={store}>
-			<MemoryRouter initialEntries={[usagePath]}>
-				<RouterRoutes>
-					<Route element={<Settings />} path={`${Routes.SETTINGS}/*`} />
-				</RouterRoutes>
-			</MemoryRouter>
+			<MockedProvider
+				cache={new InMemoryCache({addTypename: false})}
+				mocks={[
+					mockDataSourcesReq([
+						{
+							__typename: 'DataSource',
+							id: '123',
+							name: 'foo datasource',
+							url: 'foo.url'
+						}
+					])
+				]}
+			>
+				<MemoryRouter initialEntries={[usagePath]}>
+					<RouterRoutes>
+						<Route element={<Settings />} path={`${Routes.SETTINGS}/*`} />
+					</RouterRoutes>
+				</MemoryRouter>
+			</MockedProvider>
 		</Provider>
 	);
 

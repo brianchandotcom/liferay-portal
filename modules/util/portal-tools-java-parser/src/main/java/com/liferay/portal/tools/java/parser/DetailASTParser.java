@@ -47,6 +47,7 @@ public class DetailASTParser {
 			commonTokenStream, _CLEAR_DFA_LIMIT);
 
 		javaLanguageParser.removeErrorListeners();
+
 		javaLanguageParser.addErrorListener(new ParserErrorListener());
 		javaLanguageParser.setErrorHandler(new CheckstyleParserErrorStrategy());
 

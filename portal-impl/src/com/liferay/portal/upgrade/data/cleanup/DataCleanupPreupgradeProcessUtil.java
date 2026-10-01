@@ -59,8 +59,13 @@ public class DataCleanupPreupgradeProcessUtil {
 			Connection connection, DBInspector dbInspector, String tableName)
 		throws Exception {
 
+		String cacheKey = StringBundler.concat(
+			Objects.toString(dbInspector.getCatalog(), StringPool.BLANK), ".",
+			Objects.toString(dbInspector.getSchema(), StringPool.BLANK), ".",
+			tableName);
+
 		if (_cacheEnabled) {
-			String primaryKeyColumnName = _primaryKeyColumnNames.get(tableName);
+			String primaryKeyColumnName = _primaryKeyColumnNames.get(cacheKey);
 
 			if (primaryKeyColumnName != null) {
 				if (primaryKeyColumnName.equals(
@@ -86,7 +91,7 @@ public class DataCleanupPreupgradeProcessUtil {
 		if (primaryKeyColumnNames.size() != 1) {
 			if (_cacheEnabled) {
 				_primaryKeyColumnNames.putIfAbsent(
-					tableName, _PRIMARY_KEY_COLUMN_NAME_NOT_FOUND);
+					cacheKey, _PRIMARY_KEY_COLUMN_NAME_NOT_FOUND);
 			}
 
 			return null;
@@ -95,7 +100,7 @@ public class DataCleanupPreupgradeProcessUtil {
 		String primaryKeyColumnName = primaryKeyColumnNames.get(0);
 
 		if (_cacheEnabled) {
-			_primaryKeyColumnNames.putIfAbsent(tableName, primaryKeyColumnName);
+			_primaryKeyColumnNames.putIfAbsent(cacheKey, primaryKeyColumnName);
 		}
 
 		return primaryKeyColumnName;

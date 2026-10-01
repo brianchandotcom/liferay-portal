@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Category;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.GroupedProduct;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.LinkedProduct;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Pin;
@@ -344,6 +345,26 @@ public class ProductSerDes {
 			sb.append(_escape(product.getExternalReferenceCode()));
 
 			sb.append("\"");
+		}
+
+		if (product.getGroupedProducts() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"groupedProducts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < product.getGroupedProducts().length; i++) {
+				sb.append(String.valueOf(product.getGroupedProducts()[i]));
+
+				if ((i + 1) < product.getGroupedProducts().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (product.getId() != null) {
@@ -1037,6 +1058,15 @@ public class ProductSerDes {
 				String.valueOf(product.getExternalReferenceCode()));
 		}
 
+		if (product.getGroupedProducts() == null) {
+			map.put("groupedProducts", null);
+		}
+		else {
+			map.put(
+				"groupedProducts",
+				String.valueOf(product.getGroupedProducts()));
+		}
+
 		if (product.getId() == null) {
 			map.put("id", null);
 		}
@@ -1415,6 +1445,9 @@ public class ProductSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "groupedProducts")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -1714,6 +1747,22 @@ public class ProductSerDes {
 				if (jsonParserFieldValue != null) {
 					product.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "groupedProducts")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					GroupedProduct[] groupedProductsArray =
+						new GroupedProduct[jsonParserFieldValues.length];
+
+					for (int i = 0; i < groupedProductsArray.length; i++) {
+						groupedProductsArray[i] = GroupedProductSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					product.setGroupedProducts(groupedProductsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -2146,4 +2195,4 @@ public class ProductSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:937987306
+// LIFERAY-REST-BUILDER-HASH:223042506

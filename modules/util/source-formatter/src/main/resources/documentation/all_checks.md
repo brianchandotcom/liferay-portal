@@ -438,6 +438,7 @@ PackageinfoBNDExportPackageCheck | [Bug Prevention](bug_prevention_checks.md#bug
 PackageinfoBreakingChangeCommitMessageCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | packageinfo | Checks that commit message should contain the schematized breaking changes. |
 [ParameterNameCheck](https://checkstyle.sourceforge.io/checks/naming/parametername.html) | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that method parameter names conform to a specified pattern. |
 ParsePrimitiveTypeCheck | [Performance](performance_checks.md#performance-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible. |
+PatternMatchingForSwitchCheck | [Performance](performance_checks.md#performance-checks) | .java | Finds usage of pattern matching for `switch`. |
 PersistenceCallCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds illegal persistence calls across component boundaries. |
 [PersistenceUpdateCheck](check/persistence_update_check.md#persistenceupdatecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that there are no stale references in service code from persistence updates. |
 PlusStatementCheck | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Performs several checks to statements where `+` is used for concatenation. |
@@ -495,6 +496,7 @@ PythonStylingCheck | [Styling](styling_checks.md#styling-checks) | .py | Applies
 PythonWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | .py | Finds missing and unnecessary whitespace. |
 RESTDTOSetCallCheck | [Performance](performance_checks.md#performance-checks) | .java | Ensures using set calls with `UnsafeSupplier` parameter for REST DTO. |
 RecordClassCheck | [Performance](performance_checks.md#performance-checks) | .java | Finds usage of `record`. |
+RecordPatternCheck | [Performance](performance_checks.md#performance-checks) | .java | Finds usage of record patterns. |
 RedundantBranchingStatementCheck | [Performance](performance_checks.md#performance-checks) | .java | Finds unnecessary branching (`break`, `continue` or `return`) statements. |
 [RedundantLogCheck](check/redundant_log_check.md#redundantlogcheck) | [Performance](performance_checks.md#performance-checks) | .java | Finds unnecessary logs. |
 ReferenceAnnotationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on classes with @Reference annotation. |

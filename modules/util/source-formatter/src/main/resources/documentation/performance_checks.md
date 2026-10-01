@@ -25,9 +25,11 @@ LocalPatternCheck | .java | Checks that a `java.util.Pattern` variable is declar
 LocalVariableTypeInferenceCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds usage of `var` in local variable declaration. |
 [MapIterationCheck](check/map_iteration_check.md#mapiterationcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that there are no unnecessary map iterations. |
 ParsePrimitiveTypeCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible. |
+PatternMatchingForSwitchCheck | .java | Finds usage of pattern matching for `switch`. |
 [PoshiPauseUsageCheck](check/poshi_pause_usage_check.md#poshipauseusagecheck) | .function, .jar, .lar, .macro, .path, .testcase, .war, or .zip | Finds missing comment with JIRA project when using `Pause`. |
 RESTDTOSetCallCheck | .java | Ensures using set calls with `UnsafeSupplier` parameter for REST DTO. |
 RecordClassCheck | .java | Finds usage of `record`. |
+RecordPatternCheck | .java | Finds usage of record patterns. |
 RedundantBranchingStatementCheck | .java | Finds unnecessary branching (`break`, `continue` or `return`) statements. |
 [RedundantLogCheck](check/redundant_log_check.md#redundantlogcheck) | .java | Finds unnecessary logs. |
 [ResourcePermissionFactoryCheck](check/resource_permission_factory_check.md#resourcepermissionfactorycheck) | .java | Checks usage of `*ResourcePermissionFactory` classes. |

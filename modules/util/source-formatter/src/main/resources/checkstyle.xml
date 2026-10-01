@@ -752,6 +752,11 @@
 			<property name="description" value="Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible." />
 			<message key="getter.util.method.use" value="Use &quot;GetterUtil.{0}&quot; or properly catch &quot;NumberFormatException&quot; when calling &quot;{1}.{2}&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.PatternMatchingForSwitchCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds usage of pattern matching for `switch`." />
+			<message key="pattern.matching.for.switch.avoid" value="Do not use pattern matching for switch" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.PersistenceCallCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds illegal persistence calls across component boundaries." />
@@ -790,6 +795,11 @@
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds usage of `record`." />
 			<message key="record.class.avoid" value="Do not declare record class" />
+		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.RecordPatternCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds usage of record patterns." />
+			<message key="record.pattern.avoid" value="Do not use record patterns" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.RedundantBranchingStatementCheck">
 			<property name="category" value="Performance" />

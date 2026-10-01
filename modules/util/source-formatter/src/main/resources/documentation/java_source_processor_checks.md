@@ -267,6 +267,7 @@ OperatorOrderCheck | [Styling](styling_checks.md#styling-checks) | Verifies that
 [PackageNameCheck](https://checkstyle.sourceforge.io/checks/naming/packagename.html) | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | Checks that package names conform to a specified pattern. |
 [ParameterNameCheck](https://checkstyle.sourceforge.io/checks/naming/parametername.html) | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | Checks that method parameter names conform to a specified pattern. |
 ParsePrimitiveTypeCheck | [Performance](performance_checks.md#performance-checks) | Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible. |
+PatternMatchingForSwitchCheck | [Performance](performance_checks.md#performance-checks) | Finds usage of pattern matching for `switch`. |
 PersistenceCallCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds illegal persistence calls across component boundaries. |
 [PersistenceUpdateCheck](check/persistence_update_check.md#persistenceupdatecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that there are no stale references in service code from persistence updates. |
 PlusStatementCheck | [Styling](styling_checks.md#styling-checks) | Performs several checks to statements where `+` is used for concatenation. |
@@ -275,6 +276,7 @@ PrimitiveWrapperInstantiationCheck | [Bug Prevention](bug_prevention_checks.md#b
 PrincipalExceptionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds calls to `PrincipalException.class.getName()` (use `PrincipalException.getNestedClasses()` instead). |
 RESTDTOSetCallCheck | [Performance](performance_checks.md#performance-checks) | Ensures using set calls with `UnsafeSupplier` parameter for REST DTO. |
 RecordClassCheck | [Performance](performance_checks.md#performance-checks) | Finds usage of `record`. |
+RecordPatternCheck | [Performance](performance_checks.md#performance-checks) | Finds usage of record patterns. |
 RedundantBranchingStatementCheck | [Performance](performance_checks.md#performance-checks) | Finds unnecessary branching (`break`, `continue` or `return`) statements. |
 [RedundantLogCheck](check/redundant_log_check.md#redundantlogcheck) | [Performance](performance_checks.md#performance-checks) | Finds unnecessary logs. |
 ReferenceAnnotationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on classes with @Reference annotation. |

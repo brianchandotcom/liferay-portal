@@ -43,9 +43,15 @@ public class JavaParserTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"JavaPatternMatchingForSwitch.testjava"
 			).addExpectedMessage(
+				"Do not use pattern matching for switch", 14
+			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 14
 			).addExpectedMessage(
+				"Do not use pattern matching for switch", 24
+			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 24
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 33
 			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 33
 			));
@@ -54,8 +60,21 @@ public class JavaParserTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testJavaRecordPatterns() throws Exception {
 		test(
-			"JavaRecordPatterns.testjava",
-			"Use \"if/else\" statement instead of \"switch\"", 17);
+			SourceProcessorTestParameters.create(
+				"JavaRecordPatterns.testjava"
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 17
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 17
+			).addExpectedMessage(
+				"Do not use record patterns", 18
+			).addExpectedMessage(
+				"Do not use record patterns", 19
+			).addExpectedMessage(
+				"Do not use record patterns", 25
+			).addExpectedMessage(
+				"Do not use record patterns", 30
+			));
 	}
 
 }

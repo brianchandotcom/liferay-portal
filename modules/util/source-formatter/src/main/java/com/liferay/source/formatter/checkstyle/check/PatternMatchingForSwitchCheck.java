@@ -1,0 +1,62 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.checkstyle.check;
+
+import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+
+import java.util.List;
+
+/**
+ * @author Alan Huang
+ */
+public class PatternMatchingForSwitchCheck extends BaseCheck {
+
+	@Override
+	public int[] getDefaultTokens() {
+		return new int[] {TokenTypes.LITERAL_SWITCH};
+	}
+
+	@Override
+	protected void doVisitToken(DetailAST detailAST) {
+		List<DetailAST> caseDetailASTs = getAllChildTokens(
+			detailAST, false, TokenTypes.CASE_GROUP, TokenTypes.SWITCH_RULE);
+
+		for (DetailAST caseDetailAST : caseDetailASTs) {
+			List<DetailAST> literalCaseDetailASTs = getAllChildTokens(
+				caseDetailAST, false, TokenTypes.LITERAL_CASE);
+
+			for (DetailAST literalCaseDetailAST : literalCaseDetailASTs) {
+				if (_hasPatternLabel(literalCaseDetailAST)) {
+					log(detailAST, _MSG_AVOID_PATTERN_MATCHING_FOR_SWITCH);
+
+					return;
+				}
+			}
+		}
+	}
+
+	private boolean _hasPatternLabel(DetailAST literalCaseDetailAST) {
+		DetailAST childDetailAST = literalCaseDetailAST.getFirstChild();
+
+		while (childDetailAST != null) {
+			if ((childDetailAST.getType() == TokenTypes.PATTERN_DEF) ||
+				(childDetailAST.getType() == TokenTypes.PATTERN_VARIABLE_DEF) ||
+				(childDetailAST.getType() == TokenTypes.RECORD_PATTERN_DEF)) {
+
+				return true;
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
+		}
+
+		return false;
+	}
+
+	private static final String _MSG_AVOID_PATTERN_MATCHING_FOR_SWITCH =
+		"pattern.matching.for.switch.avoid";
+
+}

@@ -913,6 +913,26 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testPatternMatchingForSwitch() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"PatternMatchingForSwitch.testjava"
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 14
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 14
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 22
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 30
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 32
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 32
+			));
+	}
+
+	@Test
 	public void testProxyUsage() throws Exception {
 		test(
 			"ProxyUsage.testjava",
@@ -938,6 +958,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testRecordClass() throws Exception {
 		test("RecordClass.testjava", "Do not declare record class", 11);
+	}
+
+	@Test
+	public void testRecordPattern() throws Exception {
+		test("RecordPattern.testjava", "Do not use record patterns", 18);
 	}
 
 	@Test

@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.jaxrs.extension;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import com.liferay.portal.kernel.log.Log;
@@ -26,6 +27,7 @@ import java.util.Set;
 /**
  * @author Javier de Arcos
  */
+@JsonFilter("Liferay.Vulcan")
 public class ExtendedEntity {
 
 	public static ExtendedEntity extend(

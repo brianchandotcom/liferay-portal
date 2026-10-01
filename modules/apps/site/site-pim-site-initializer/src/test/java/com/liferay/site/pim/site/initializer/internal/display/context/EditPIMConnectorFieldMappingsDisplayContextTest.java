@@ -83,6 +83,12 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 					invocationOnMock.getArgument(2)
 		);
 
+		Mockito.when(
+			language.get(Mockito.eq(LocaleUtil.US), Mockito.anyString())
+		).thenAnswer(
+			invocationOnMock -> invocationOnMock.getArgument(1)
+		);
+
 		languageUtil.setLanguage(language);
 
 		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
@@ -299,7 +305,7 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 		PIMConnector pimConnector = Mockito.mock(PIMConnector.class);
 
 		Mockito.when(
-			pimConnector.getPIMConnectorChannelFields(LocaleUtil.US)
+			pimConnector.getPIMConnectorChannelFields()
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField(

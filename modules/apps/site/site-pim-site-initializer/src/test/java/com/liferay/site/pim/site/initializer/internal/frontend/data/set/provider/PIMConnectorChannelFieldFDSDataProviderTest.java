@@ -280,6 +280,23 @@ public class PIMConnectorChannelFieldFDSDataProviderTest {
 			Collections.singletonList("PIM Base SKU/Code"),
 			pimConnectorChannelFieldDisplay.getSourceAttributes());
 
+		_mockPIMConnectorFieldMappingObjectEntries(
+			_mockPIMConnectorFieldMappingObjectEntry(
+				"skus[].sku", 1, 0, _OBJECT_DEFINITION_CLASS_NAME,
+				StringPool.BLANK, "fixedValue", "ABC-1"));
+
+		pimConnectorChannelFieldDisplays =
+			_pimConnectorChannelFieldFDSDataProvider.getItems(
+				_mockFDSKeywords(StringPool.BLANK), _mockFDSPagination(0, 20),
+				_httpServletRequest, null);
+
+		pimConnectorChannelFieldDisplay = pimConnectorChannelFieldDisplays.get(
+			1);
+
+		Assert.assertEquals(
+			Collections.singletonList("PIM Base SKU/ABC-1"),
+			pimConnectorChannelFieldDisplay.getSourceAttributes());
+
 		pimConnectorChannelFieldDisplays =
 			_pimConnectorChannelFieldFDSDataProvider.getItems(
 				_mockFDSKeywords("sku"), _mockFDSPagination(0, 20),
@@ -342,7 +359,7 @@ public class PIMConnectorChannelFieldFDSDataProviderTest {
 		PIMConnector pimConnector = Mockito.mock(PIMConnector.class);
 
 		Mockito.when(
-			pimConnector.getPIMConnectorChannelFields(LocaleUtil.US)
+			pimConnector.getPIMConnectorChannelFields()
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField("Tags", true, "tags", false))
@@ -454,7 +471,7 @@ public class PIMConnectorChannelFieldFDSDataProviderTest {
 		PIMConnector pimConnector = Mockito.mock(PIMConnector.class);
 
 		Mockito.when(
-			pimConnector.getPIMConnectorChannelFields(LocaleUtil.US)
+			pimConnector.getPIMConnectorChannelFields()
 		).thenReturn(
 			Arrays.asList(
 				new PIMConnectorChannelField("Name", false, "name", true),

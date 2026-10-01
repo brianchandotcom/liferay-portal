@@ -1891,6 +1891,160 @@ func TestReconcileKeepsLowerCeilingAfterProvisioningGracePeriod(t *testing.T) {
 	)
 }
 
+func TestReconcileOfflineAppliesLastKnownLicense(t *testing.T) {
+	testCases := map[string]struct {
+		bundle                 string
+		expectedPhase          string
+		expectedReplicaCeiling *int32
+		expectedReplicas       int32
+		licensed               bool
+		validUntil             time.Duration
+	}{
+		"a missing bundle file drops an expired license to zero": {
+			bundle:                 "missing",
+			expectedPhase:          "Degraded",
+			expectedReplicaCeiling: pointerInt32(0),
+			expectedReplicas:       0,
+			licensed:               true,
+			validUntil:             -100 * 24 * time.Hour,
+		},
+		"a missing bundle file keeps a valid license": {
+			bundle:                 "missing",
+			expectedPhase:          "Pending",
+			expectedReplicaCeiling: pointerInt32(3),
+			expectedReplicas:       3,
+			licensed:               true,
+			validUntil:             365 * 24 * time.Hour,
+		},
+		"an invalid bundle caps a license expired within the grace period": {
+			bundle:                 "invalid",
+			expectedPhase:          "Degraded",
+			expectedReplicaCeiling: pointerInt32(1),
+			expectedReplicas:       1,
+			licensed:               true,
+			validUntil:             -24 * time.Hour,
+		},
+		"an invalid bundle drops an expired license to zero": {
+			bundle:                 "invalid",
+			expectedPhase:          "Degraded",
+			expectedReplicaCeiling: pointerInt32(0),
+			expectedReplicas:       0,
+			licensed:               true,
+			validUntil:             -100 * 24 * time.Hour,
+		},
+		"an invalid bundle keeps a valid license": {
+			bundle:                 "invalid",
+			expectedPhase:          "Degraded",
+			expectedReplicaCeiling: pointerInt32(3),
+			expectedReplicas:       3,
+			licensed:               true,
+			validUntil:             365 * 24 * time.Hour,
+		},
+		"an unset bundle drops an expired license to zero": {
+			bundle:                 "unset",
+			expectedPhase:          "Degraded",
+			expectedReplicaCeiling: pointerInt32(0),
+			expectedReplicas:       0,
+			licensed:               true,
+			validUntil:             -100 * 24 * time.Hour,
+		},
+		"an unset bundle enforces nothing before a license is known": {
+			bundle:                 "unset",
+			expectedPhase:          "Pending",
+			expectedReplicaCeiling: nil,
+			expectedReplicas:       3,
+			licensed:               false,
+		},
+	}
+
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			marketplaceMountPath := t.TempDir()
+
+			environment := activatedEnvironment()
+			environment.Spec.DesiredReplicas = pointerInt32(3)
+			environment.Spec.Offline = true
+
+			if testCase.bundle != "unset" {
+				environment.Spec.OfflineActivationBundle = "bundle.zip"
+			}
+
+			if testCase.bundle == "invalid" {
+				writeOfflineActivationBundle(
+					map[string]string{
+						"add-ons/app.lpkg": "PK-fake-lpkg",
+					},
+					filepath.Join(marketplaceMountPath, "liferay-dev", "bundle.zip"),
+					t,
+				)
+			}
+
+			if testCase.licensed {
+				validUntil := metav1.NewTime(time.Now().Add(testCase.validUntil))
+
+				environment.Status.License.MaxClusterNodes = pointerInt32(3)
+				environment.Status.License.ValidUntil = &validUntil
+				environment.Status.ReplicaCeiling = pointerInt32(3)
+			}
+
+			liferayEnvironmentReconciler, _ := reconcileOfflineActivationBundle(
+				marketplaceMountPath, t,
+				&appsv1.StatefulSet{
+					ObjectMeta: metav1.ObjectMeta{
+						Name:      "dev-liferay",
+						Namespace: "liferay-dev",
+					},
+					Spec: appsv1.StatefulSetSpec{
+						Replicas: pointerInt32(3),
+					},
+				},
+				&corev1.Namespace{
+					ObjectMeta: metav1.ObjectMeta{
+						Name: "liferay-dev",
+						UID:  "dev-namespace-uid",
+					},
+				},
+				environment,
+			)
+
+			assertReplicasEqual(
+				getStatefulSet(liferayEnvironmentReconciler, t).Spec.Replicas,
+				&testCase.expectedReplicas,
+				"statefulSet.spec.replicas",
+				t,
+			)
+
+			liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+			assertReplicasEqual(
+				liferayEnvironment.Status.ReplicaCeiling,
+				testCase.expectedReplicaCeiling,
+				"status.replicaCeiling",
+				t,
+			)
+
+			if liferayEnvironment.Status.Phase != testCase.expectedPhase {
+				t.Errorf(
+					"Phase = %q, want %q",
+					liferayEnvironment.Status.Phase, testCase.expectedPhase,
+				)
+			}
+
+			if !testCase.licensed || testCase.validUntil > 0 {
+				return
+			}
+
+			condition := meta.FindStatusCondition(
+				liferayEnvironment.Status.Conditions, conditionLicenseValid,
+			)
+
+			if condition == nil || condition.Reason != "Expired" {
+				t.Errorf("LicenseValid condition = %v, want reason Expired", condition)
+			}
+		})
+	}
+}
+
 func TestReconcileOfflineAwaitsMissingBundleFile(t *testing.T) {
 	environment := pendingEnvironment()
 	environment.Spec.Offline = true

@@ -45,6 +45,12 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) awaitOfflineAc
 
 	liferayEnvironment.Status.Phase = "Pending"
 
+	if error := liferayEnvironmentReconciler.enforceLastKnownLicense(
+		context, liferayEnvironment,
+	); error != nil {
+		return controllerruntime.Result{}, error
+	}
+
 	return liferayEnvironmentReconciler.finishAfter(
 		context, liferayEnvironment, 15*time.Second,
 	)
@@ -148,6 +154,12 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) handleOfflineA
 		)
 
 		liferayEnvironment.Status.Phase = "Degraded"
+
+		if error := liferayEnvironmentReconciler.enforceLastKnownLicense(
+			context, liferayEnvironment,
+		); error != nil {
+			return nil, controllerruntime.Result{}, error
+		}
 
 		result, error := liferayEnvironmentReconciler.finishAfter(
 			context, liferayEnvironment, 15*time.Second,

@@ -15,6 +15,10 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
@@ -28,6 +32,19 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -35,6 +52,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
@@ -56,6 +74,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -499,6 +518,156 @@ public class
 	}
 
 	@Test
+	public void testGetCollectionInfoPageWithSameAssetCategoryInConnectedSpaceDepotEntry()
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		ServiceContext depotServiceContext =
+			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), depotEntry.getGroupId(),
+				RandomTestUtil.randomString(), depotServiceContext);
+
+		AssetCategory assetCategory = _addAssetCategory(
+			depotEntry.getGroup(), depotServiceContext, assetVocabulary);
+
+		ObjectDefinition objectDefinition = _publishCMSObjectDefinition();
+
+		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			assetCategoryIds, depotEntry.getGroupId(), objectDefinition);
+		ObjectEntry relatedObjectEntry = _addObjectEntry(
+			assetCategoryIds, depotEntry.getGroupId(), objectDefinition);
+
+		_reindex(objectDefinition, objectEntry, relatedObjectEntry);
+
+		CollectionQuery collectionQuery = new CollectionQuery();
+
+		collectionQuery.setRelatedItemObject(
+			_getAssetEntry(
+				objectDefinition.getClassName(),
+				relatedObjectEntry.getObjectEntryId()));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			_assertInfoPage(
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery),
+				_getAssetEntry(
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId()));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testGetCollectionInfoPageWithSameAssetCategoryInSiteAndConnectedSpaceDepotEntry()
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_group.getCompanyId());
+
+		ServiceContext companyServiceContext =
+			ServiceContextTestUtil.getServiceContext(companyGroup.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), companyGroup.getGroupId(),
+				RandomTestUtil.randomString(), companyServiceContext);
+
+		AssetCategory assetCategory = _addAssetCategory(
+			companyGroup, companyServiceContext, assetVocabulary);
+
+		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		JournalArticle journalArticle = _addJournalArticle(
+			assetCategoryIds, serviceContext);
+
+		ObjectDefinition objectDefinition = _publishCMSObjectDefinition();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			assetCategoryIds, depotEntry.getGroupId(), objectDefinition);
+		ObjectEntry relatedObjectEntry = _addObjectEntry(
+			assetCategoryIds, depotEntry.getGroupId(), objectDefinition);
+
+		JournalArticle relatedJournalArticle = _addJournalArticle(
+			assetCategoryIds, serviceContext);
+
+		_reindex();
+		_reindex(objectDefinition, objectEntry, relatedObjectEntry);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			CollectionQuery collectionQuery = new CollectionQuery();
+
+			collectionQuery.setRelatedItemObject(
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					relatedJournalArticle.getResourcePrimKey()));
+
+			_assertInfoPage(
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()));
+
+			collectionQuery.setRelatedItemObject(
+				_getAssetEntry(
+					objectDefinition.getClassName(),
+					relatedObjectEntry.getObjectEntryId()));
+
+			_assertInfoPage(
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					relatedJournalArticle.getResourcePrimKey()),
+				_getAssetEntry(
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId()));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
 	public void testGetCollectionInfoPageWithSameAssetCategoryLatestVersionInDraftStatus()
 		throws Exception {
 
@@ -676,6 +845,26 @@ public class
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
+	private ObjectEntry _addObjectEntry(
+			long[] assetCategoryIds, long groupId,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+
+		return _objectEntryLocalService.addObjectEntry(
+			groupId, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			Collections.singletonMap(
+				"textObjectFieldName", RandomTestUtil.randomString()),
+			serviceContext);
+	}
+
 	private void _assertInfoField(
 		InfoField<?> infoField, Class<?> infoFieldTypeClass, String label,
 		String name) {
@@ -757,11 +946,55 @@ public class
 		return mockHttpServletRequest;
 	}
 
+	private ObjectDefinition _publishCMSObjectDefinition() throws Exception {
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.getOrAddEmptyObjectFolder(
+				ObjectFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"textObjectFieldName"
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build()),
+				objectFolder.getObjectFolderId(),
+				ObjectDefinitionConstants.SCOPE_DEPOT,
+				TestPropsValues.getUserId());
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
+		return objectDefinition;
+	}
+
 	private void _reindex() throws Exception {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			AssetEntry.class.getName());
 
 		indexer.reindexCompany(_group.getCompanyId());
+	}
+
+	private void _reindex(
+			ObjectDefinition objectDefinition, ObjectEntry... objectEntries)
+		throws Exception {
+
+		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			objectDefinition.getClassName());
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			indexer.reindex(objectEntry);
+		}
 	}
 
 	@Inject
@@ -773,11 +1006,30 @@ public class
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private Language _language;
+
+	@Inject
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.asset.internal.info.collection.provider.AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider"

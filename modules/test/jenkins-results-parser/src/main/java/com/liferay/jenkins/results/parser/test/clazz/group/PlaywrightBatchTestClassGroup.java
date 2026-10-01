@@ -605,6 +605,42 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 	}
 
+	private JSONObject _getPlaywrightJSONObject(
+		String playwrightArgs, File playwrightBaseDir) {
+
+		File playwrightReportFile = null;
+
+		try {
+			playwrightReportFile = File.createTempFile(
+				"playwright.report.", ".json");
+
+			Map<String, String> environmentVariables = new HashMap<>();
+
+			environmentVariables.put(
+				"PLAYWRIGHT_JSON_OUTPUT_NAME",
+				JenkinsResultsParserUtil.getCanonicalPath(
+					playwrightReportFile));
+
+			_callGradleCommand(
+				playwrightBaseDir,
+				JenkinsResultsParserUtil.combine(
+					"runPlaywright -Pplaywright.args=\"", playwrightArgs, "\""),
+				environmentVariables, 1000 * 60 * 30);
+
+			String result = JenkinsResultsParserUtil.read(playwrightReportFile);
+
+			return new JSONObject(result.trim());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+		finally {
+			if (playwrightReportFile != null) {
+				JenkinsResultsParserUtil.delete(playwrightReportFile);
+			}
+		}
+	}
+
 	private JobProperty _getPlaywrightProjectsIncludesJobProperty() {
 		JobProperty playwrightProjectsIncludesJobProperty = getJobProperty(
 			"playwright.test.project", testSuiteName, batchName);
@@ -803,41 +839,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 					@Override
 					public JSONObject execute() {
-						File playwrightReportFile = null;
-
-						try {
-							playwrightReportFile = File.createTempFile(
-								"playwright.report.", ".json");
-
-							Map<String, String> environmentVariables =
-								new HashMap<>();
-
-							environmentVariables.put(
-								"PLAYWRIGHT_JSON_OUTPUT_NAME",
-								JenkinsResultsParserUtil.getCanonicalPath(
-									playwrightReportFile));
-
-							_callGradleCommand(
-								playwrightBaseDir,
-								JenkinsResultsParserUtil.combine(
-									"runPlaywright -Pplaywright.args=\"",
-									playwrightArgs, "\""),
-								environmentVariables, 1000 * 60 * 30);
-
-							String result = JenkinsResultsParserUtil.read(
-								playwrightReportFile);
-
-							return new JSONObject(result.trim());
-						}
-						catch (IOException ioException) {
-							throw new RuntimeException(ioException);
-						}
-						finally {
-							if (playwrightReportFile != null) {
-								JenkinsResultsParserUtil.delete(
-									playwrightReportFile);
-							}
-						}
+						return _getPlaywrightJSONObject(
+							playwrightArgs, playwrightBaseDir);
 					}
 
 				};

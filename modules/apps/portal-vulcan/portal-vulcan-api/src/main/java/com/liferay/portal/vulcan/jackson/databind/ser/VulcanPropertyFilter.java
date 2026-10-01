@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.UnwrappingBeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.std.MapProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
@@ -44,7 +45,9 @@ public class VulcanPropertyFilter
 			return;
 		}
 
-		if (_shouldWrite(jsonGenerator, propertyWriter)) {
+		if ((propertyWriter instanceof UnwrappingBeanPropertyWriter) ||
+			_shouldWrite(jsonGenerator, propertyWriter)) {
+
 			propertyWriter.serializeAsField(
 				object, jsonGenerator, serializerProvider);
 		}

@@ -111,6 +111,11 @@ public class InfoFieldItemSelectorViewDescriptor
 	}
 
 	@Override
+	public String getKeyPropertyName() {
+		return "uniqueId";
+	}
+
+	@Override
 	public ResultRowSplitter getResultRowSplitter() {
 		return resultRows -> {
 			Map<InfoFieldSet, List<ResultRow>> resultRowsMap =

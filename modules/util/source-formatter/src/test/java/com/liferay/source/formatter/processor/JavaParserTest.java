@@ -33,6 +33,18 @@ public class JavaParserTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJavaNestedSwitchExpressions() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"JavaNestedSwitchExpressions.testjava"
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 14
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 15
+			));
+	}
+
+	@Test
 	public void testJavaPatternMatchingForInstanceof() throws Exception {
 		test("JavaPatternMatchingForInstanceof.testjava");
 	}

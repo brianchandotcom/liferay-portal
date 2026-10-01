@@ -12,13 +12,19 @@ import {
 	UNSET_TIME,
 	getLocaleDateFormat,
 	is12HourLocale,
+	isCompleteDate,
+	isCompleteDateTime,
 	toDisplayDateTime,
 	toStorageDateTime,
 } from '../../utils/dateTime';
 
 import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+function appendUnsetTime(storageDateTime: string): string {
+	return isCompleteDate(storageDateTime)
+		? `${storageDateTime} ${UNSET_TIME}`
+		: storageDateTime;
+}
 
 function applyDefaultTime(
 	value: string,
@@ -30,13 +36,21 @@ function applyDefaultTime(
 
 	const [datePart, timePart] = value.split(' ');
 
-	if (!DATE_PATTERN.test(datePart) || timePart !== UNSET_TIME) {
+	if (!isCompleteDate(datePart) || timePart !== UNSET_TIME) {
 		return value;
 	}
 
 	return `${datePart} ${
 		typeof defaultTime === 'function' ? defaultTime(datePart) : defaultTime
 	}`;
+}
+
+function isValidStorageDateTime(storageDateTime: string): boolean {
+	return (
+		!storageDateTime ||
+		isCompleteDate(storageDateTime) ||
+		isCompleteDateTime(storageDateTime)
+	);
 }
 
 export type FieldDatePickerProps = {
@@ -94,40 +108,35 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 			use12Hours
 		);
 
-		const val = applyDefaultTime(
-			time && DATE_PATTERN.test(storageDateTime)
-				? `${storageDateTime} ${UNSET_TIME}`
-				: storageDateTime,
+		const nextValue = applyDefaultTime(
+			time ? appendUnsetTime(storageDateTime) : storageDateTime,
 			defaultTime
 		);
 
 		setDraft(null);
 
 		setInternalErrorMessage(
-			val && !dateUtils.isValid(val)
-				? Liferay.Language.get('the-field-value-is-invalid')
-				: ''
+			isValidStorageDateTime(nextValue)
+				? ''
+				: Liferay.Language.get('please-enter-a-valid-date')
 		);
 
-		if (val !== value) {
-			onChange?.(val);
+		if (nextValue !== value) {
+			onChange?.(nextValue);
 		}
 
 		onBlur?.(event);
 	};
 
-	const handleOnChange = (val: string) => {
+	const handleOnChange = (displayDateTime: string) => {
 		const storageDateTime = applyDefaultTime(
-			toStorageDateTime(val, dateFormat, use12Hours),
+			toStorageDateTime(displayDateTime, dateFormat, use12Hours),
 			defaultTime
 		);
 
-		setDraft(val);
+		setDraft(displayDateTime);
 
-		if (
-			internalErrorMessage &&
-			(!storageDateTime || dateUtils.isValid(storageDateTime))
-		) {
+		if (internalErrorMessage && isValidStorageDateTime(storageDateTime)) {
 			setInternalErrorMessage('');
 		}
 

@@ -58,22 +58,30 @@ export function is12HourLocale(locale: string): boolean {
 	);
 }
 
+export function isCompleteDate(date: string): boolean {
+	if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+		return false;
+	}
+
+	const {day, month, year} = toDateTimeParts(date);
+
+	const utcDate = new Date(Date.UTC(year, month - 1, day));
+
+	return (
+		utcDate.getUTCDate() === day &&
+		utcDate.getUTCFullYear() === year &&
+		utcDate.getUTCMonth() === month - 1
+	);
+}
+
 export function isCompleteDateTime(dateTime: string): boolean {
 	if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateTime)) {
 		return false;
 	}
 
-	const {day, hour, minute, month, year} = toDateTimeParts(dateTime);
+	const [date, time] = dateTime.split(' ');
 
-	const date = new Date(Date.UTC(year, month - 1, day, hour, minute));
-
-	return (
-		date.getUTCDate() === day &&
-		date.getUTCFullYear() === year &&
-		date.getUTCHours() === hour &&
-		date.getUTCMinutes() === minute &&
-		date.getUTCMonth() === month - 1
-	);
+	return isCompleteDate(date) && isCompleteTime(time);
 }
 
 export function isCompleteTime(time: string): boolean {

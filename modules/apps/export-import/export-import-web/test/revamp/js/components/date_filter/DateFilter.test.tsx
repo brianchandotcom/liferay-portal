@@ -273,7 +273,7 @@ describe('DateFilter', () => {
 		await user.tab();
 
 		expect(
-			screen.getByText('the-field-value-is-invalid')
+			screen.getByText('please-enter-a-valid-date')
 		).toBeInTheDocument();
 	});
 

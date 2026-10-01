@@ -141,7 +141,7 @@ describe('FieldDatePicker', () => {
 
 		expect(onChange).not.toHaveBeenCalled();
 		expect(
-			screen.queryByText('the-field-value-is-invalid')
+			screen.queryByText('please-enter-a-valid-date')
 		).not.toBeInTheDocument();
 	});
 
@@ -187,7 +187,7 @@ describe('FieldDatePicker', () => {
 		fireEvent.blur(screen.getByLabelText('Start Date'));
 
 		expect(
-			screen.getByText('the-field-value-is-invalid')
+			screen.getByText('please-enter-a-valid-date')
 		).toBeInTheDocument();
 
 		fireEvent.change(screen.getByLabelText('Start Date'), {
@@ -195,7 +195,7 @@ describe('FieldDatePicker', () => {
 		});
 
 		expect(
-			screen.queryByText('the-field-value-is-invalid')
+			screen.queryByText('please-enter-a-valid-date')
 		).not.toBeInTheDocument();
 	});
 
@@ -540,7 +540,48 @@ describe('FieldDatePicker', () => {
 		fireEvent.blur(screen.getByLabelText('Start Date'));
 
 		expect(
-			screen.getByText('the-field-value-is-invalid')
+			screen.getByText('please-enter-a-valid-date')
+		).toBeInTheDocument();
+	});
+
+	it('reports a day the calendar does not hold as invalid', () => {
+		render(
+			<ControlledFieldDatePicker
+				dateFormat="yyyy-MM-dd"
+				label="Start Date"
+				name="startDate"
+				time
+			/>
+		);
+
+		fireEvent.change(screen.getByLabelText('Start Date'), {
+			target: {value: '2026-02-30 10:00'},
+		});
+
+		fireEvent.blur(screen.getByLabelText('Start Date'));
+
+		expect(
+			screen.getByText('please-enter-a-valid-date')
+		).toBeInTheDocument();
+	});
+
+	it('reports a day the calendar does not hold as invalid without a time', () => {
+		render(
+			<ControlledFieldDatePicker
+				dateFormat="yyyy-MM-dd"
+				label="Start Date"
+				name="startDate"
+			/>
+		);
+
+		fireEvent.change(screen.getByLabelText('Start Date'), {
+			target: {value: '2026-02-30'},
+		});
+
+		fireEvent.blur(screen.getByLabelText('Start Date'));
+
+		expect(
+			screen.getByText('please-enter-a-valid-date')
 		).toBeInTheDocument();
 	});
 
@@ -633,7 +674,7 @@ describe('FieldDatePicker', () => {
 		fireEvent.blur(input);
 
 		expect(
-			screen.getByText('the-field-value-is-invalid')
+			screen.getByText('please-enter-a-valid-date')
 		).toBeInTheDocument();
 	});
 

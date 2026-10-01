@@ -6,6 +6,8 @@
 import {
 	getLocaleDateFormat,
 	is12HourLocale,
+	isCompleteDate,
+	isCompleteDateTime,
 	to12HourTime,
 	to24HourTime,
 	toDisplayDateTime,
@@ -53,6 +55,51 @@ describe('is12HourLocale', () => {
 				rendersDayPeriod(locale),
 			]);
 		});
+	});
+});
+
+describe('isCompleteDate', () => {
+	it('accepts a day the calendar holds', () => {
+		expect(isCompleteDate('2026-02-28')).toBe(true);
+		expect(isCompleteDate('2028-02-29')).toBe(true);
+		expect(isCompleteDate('9999-12-31')).toBe(true);
+	});
+
+	it('rejects a day the calendar does not hold', () => {
+		expect(isCompleteDate('2026-02-30')).toBe(false);
+		expect(isCompleteDate('2027-02-29')).toBe(false);
+		expect(isCompleteDate('2026-04-31')).toBe(false);
+		expect(isCompleteDate('2026-13-01')).toBe(false);
+	});
+
+	it('rejects anything but a four digit year and two digit fields', () => {
+		expect(isCompleteDate('2026-1-01')).toBe(false);
+		expect(isCompleteDate('0099-01-01')).toBe(false);
+		expect(isCompleteDate('2026-02-28 10:00')).toBe(false);
+		expect(isCompleteDate('')).toBe(false);
+	});
+});
+
+describe('isCompleteDateTime', () => {
+	it('accepts a calendar day with a time on the 24 hour clock', () => {
+		expect(isCompleteDateTime('2026-12-12 00:00')).toBe(true);
+		expect(isCompleteDateTime('2026-12-12 23:59')).toBe(true);
+	});
+
+	it('rejects a day the calendar does not hold', () => {
+		expect(isCompleteDateTime('2026-02-30 10:00')).toBe(false);
+	});
+
+	it('rejects a time off the 24 hour clock', () => {
+		expect(isCompleteDateTime('2026-12-12 24:00')).toBe(false);
+		expect(isCompleteDateTime('2026-12-12 23:60')).toBe(false);
+	});
+
+	it('rejects a date without a complete time', () => {
+		expect(isCompleteDateTime('2026-12-12')).toBe(false);
+		expect(isCompleteDateTime('2026-12-12 --:--')).toBe(false);
+		expect(isCompleteDateTime('2026-12-12 1:00')).toBe(false);
+		expect(isCompleteDateTime('')).toBe(false);
 	});
 });
 

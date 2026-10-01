@@ -6,6 +6,7 @@
 			import {ExternalScopedTestEntity} from './ExternalScopedTestEntity';
 			import {ExternalTestEntity1} from './ExternalTestEntity1';
 			import {ExternalTestEntity2} from './ExternalTestEntity2';
+			import {ExternalTestEntity3} from './ExternalTestEntity3';
 
 /**
  * @author Alejandro Tardín
@@ -16,6 +17,7 @@
 			"externalScopedTestEntity"?: ExternalScopedTestEntity;
 			"externalTestEntity1"?: ExternalTestEntity1;
 			"externalTestEntity2"?: ExternalTestEntity2;
+			"externalTestEntity3"?: ExternalTestEntity3;
 
 		static "discriminator": string | undefined = undefined;
 
@@ -38,6 +40,11 @@
 			baseName: "externalTestEntity2",
 			name: "externalTestEntity2",
 			type: "ExternalTestEntity2",
+		},
+		{
+			baseName: "externalTestEntity3",
+			name: "externalTestEntity3",
+			type: "ExternalTestEntity3",
 		},
 		];
 

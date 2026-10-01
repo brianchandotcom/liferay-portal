@@ -80,4 +80,4 @@ public class ExternalChildTestEntity1
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-280265678
+// LIFERAY-REST-BUILDER-HASH:-1234377524

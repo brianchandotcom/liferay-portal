@@ -338,6 +338,16 @@ public abstract class BaseReferencingTestEntityResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalTestEntity3", additionalAssertFieldName)) {
+
+				if (referencingTestEntity.getExternalTestEntity3() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -498,6 +508,19 @@ public abstract class BaseReferencingTestEntityResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalTestEntity3", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						referencingTestEntity1.getExternalTestEntity3(),
+						referencingTestEntity2.getExternalTestEntity3())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -617,6 +640,11 @@ public abstract class BaseReferencingTestEntityResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalTestEntity2")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("externalTestEntity3")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -899,4 +927,4 @@ public abstract class BaseReferencingTestEntityResourceTestCase {
 		ReferencingTestEntityResource _referencingTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:149254371
+// LIFERAY-REST-BUILDER-HASH:904902118

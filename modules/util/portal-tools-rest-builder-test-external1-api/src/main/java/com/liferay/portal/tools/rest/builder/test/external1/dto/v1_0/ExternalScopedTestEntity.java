@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.tools.rest.builder.test.external.dto.v1_0;
+package com.liferay.portal.tools.rest.builder.test.external1.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -199,7 +199,7 @@ public class ExternalScopedTestEntity implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.external.dto.v1_0.ExternalScopedTestEntity",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.external1.dto.v1_0.ExternalScopedTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -314,4 +314,4 @@ public class ExternalScopedTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-554939116
+// LIFERAY-REST-BUILDER-HASH:1360499998

@@ -306,6 +306,41 @@ describe('PublishScheduler', () => {
 		);
 	});
 
+	it('leaves the repeat at field unset while a synced start date time is still being typed', () => {
+		renderPublishScheduler({
+			enabled: true,
+			startDateTime: '09/08/2026 03:30 P',
+			unit: IntervalUnit.Week,
+		});
+
+		expect(screen.getByLabelText('hours')).toHaveValue('--');
+		expect(screen.getByLabelText('minutes')).toHaveValue('--');
+	});
+
+	it('seeds no repeat at time when the sync is unchecked while the start date time is still being typed', async () => {
+		const onChange = jest.fn();
+
+		renderPublishScheduler(
+			{
+				enabled: true,
+				startDateTime: '09/08/2026 03:30 P',
+				unit: IntervalUnit.Week,
+			},
+			onChange
+		);
+
+		await user.click(
+			screen.getByRole('checkbox', {name: 'sync-with-start-date-time'})
+		);
+
+		expect(onChange).toHaveBeenCalledWith(
+			expect.objectContaining({
+				repeatOnTime: '',
+				repeatOnTimeSynced: false,
+			})
+		);
+	});
+
 	it('resyncs to the start date time when the checkbox is checked again', async () => {
 		const onChange = jest.fn();
 

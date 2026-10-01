@@ -17,7 +17,11 @@ import {FieldRadio} from '../../../../components/forms/FieldRadio';
 import FieldSelectWithOption from '../../../../components/forms/FieldSelectWithOption';
 import FieldText from '../../../../components/forms/FieldText';
 import FieldTimePicker from '../../../../components/forms/FieldTimePicker';
-import {toTimeParts, toWallClockDateTime} from '../../../../utils/dateTime';
+import {
+	isCompleteDateTime,
+	toTimeParts,
+	toWallClockDateTime,
+} from '../../../../utils/dateTime';
 import {toCustomCronExpression} from './cron';
 import {getScheduleSummary} from './summary';
 import {
@@ -104,7 +108,9 @@ export default function PublishScheduler({
 
 	const repeatsOnDayOfWeek = value.repeatType === RepeatType.DayOfWeek;
 
-	const [, startTime = ''] = value.startDateTime.split(' ');
+	const startTime = isCompleteDateTime(value.startDateTime)
+		? value.startDateTime.split(' ')[1]
+		: '';
 
 	const scheduleSummary = getScheduleSummary(value);
 

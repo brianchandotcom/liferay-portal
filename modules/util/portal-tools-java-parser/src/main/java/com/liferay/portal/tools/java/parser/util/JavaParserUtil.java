@@ -1614,8 +1614,8 @@ public class JavaParserUtil {
 			DetailAST patternDetailAST = firstChildDetailAST.getFirstChild();
 
 			return new JavaGuardedPattern(
-				_parseJavaPattern(patternDetailAST),
-				_parseJavaExpression(patternDetailAST.getNextSibling()));
+				_parseJavaExpression(patternDetailAST.getNextSibling()),
+				_parseJavaPattern(patternDetailAST));
 		}
 
 		if (detailAST.getType() == TokenTypes.RECORD_PATTERN_DEF) {

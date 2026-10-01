@@ -13,10 +13,10 @@ import com.liferay.petra.string.StringBundler;
 public class JavaGuardedPattern extends BaseJavaExpression {
 
 	public JavaGuardedPattern(
-		JavaTerm patternJavaTerm, JavaExpression guardJavaExpression) {
+		JavaExpression guardJavaExpression, JavaTerm patternJavaTerm) {
 
-		_patternJavaTerm = patternJavaTerm;
 		_guardJavaExpression = guardJavaExpression;
+		_patternJavaTerm = patternJavaTerm;
 	}
 
 	@Override

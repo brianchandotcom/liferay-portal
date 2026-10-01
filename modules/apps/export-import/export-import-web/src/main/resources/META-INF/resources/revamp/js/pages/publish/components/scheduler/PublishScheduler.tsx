@@ -11,7 +11,10 @@ import '../../../../../css/utilities.scss';
 import FieldDatePicker from '../../../../components/forms/FieldDatePicker';
 import {FieldRadio} from '../../../../components/forms/FieldRadio';
 import FieldSelectWithOption from '../../../../components/forms/FieldSelectWithOption';
-import {toTimeParts, toWallClockDateTime} from '../../../../utils/dateTime';
+import {
+	getCurrentWallClockDateTime,
+	toTimeParts,
+} from '../../../../utils/dateTime';
 import {toCustomCronExpression} from './cron';
 import {
 	CustomCronFields,
@@ -37,10 +40,7 @@ import {
 } from './utils';
 
 function getStartDefaultTime(date: string, timeZoneId: string): string {
-	const [today, time] = toWallClockDateTime(
-		new Date().toISOString(),
-		timeZoneId
-	).split(' ');
+	const [today, time] = getCurrentWallClockDateTime(timeZoneId).split(' ');
 
 	if (date !== today) {
 		return '00:00';

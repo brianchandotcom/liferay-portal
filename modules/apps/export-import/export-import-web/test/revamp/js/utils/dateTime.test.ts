@@ -4,6 +4,7 @@
  */
 
 import {
+	getCurrentWallClockDateTime,
 	getLocaleDateFormat,
 	is12HourLocale,
 	isCompleteDate,
@@ -15,6 +16,21 @@ import {
 	toWallClockDateTime,
 	toZonedDate,
 } from '../../../../src/main/resources/META-INF/resources/revamp/js/utils/dateTime';
+
+describe('getCurrentWallClockDateTime', () => {
+	afterEach(() => {
+		jest.useRealTimers();
+	});
+
+	it('reads the current wall clock of the given time zone', () => {
+		jest.useFakeTimers().setSystemTime(Date.UTC(2026, 0, 15, 10, 30));
+
+		expect(getCurrentWallClockDateTime('UTC')).toBe('2026-01-15 10:30');
+		expect(getCurrentWallClockDateTime('Pacific/Kiritimati')).toBe(
+			'2026-01-16 00:30'
+		);
+	});
+});
 
 describe('getLocaleDateFormat', () => {
 	it('follows the order the locale writes a date in', () => {

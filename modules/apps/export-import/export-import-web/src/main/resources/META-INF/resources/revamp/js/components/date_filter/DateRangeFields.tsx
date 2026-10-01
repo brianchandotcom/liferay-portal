@@ -6,7 +6,10 @@
 import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
 
-import {isCompleteDateTime, toWallClockDateTime} from '../../utils/dateTime';
+import {
+	getCurrentWallClockDateTime,
+	isCompleteDateTime,
+} from '../../utils/dateTime';
 import FieldDatePicker from '../forms/FieldDatePicker';
 import {EditingState, YEARS_OFFSET} from './types';
 import {getValidation} from './utils';
@@ -19,10 +22,7 @@ type Props = {
 };
 
 function getEndDefaultTime(date: string, timeZoneId: string): string {
-	const [today, time] = toWallClockDateTime(
-		new Date().toISOString(),
-		timeZoneId
-	).split(' ');
+	const [today, time] = getCurrentWallClockDateTime(timeZoneId).split(' ');
 
 	return date === today ? time : '23:59';
 }

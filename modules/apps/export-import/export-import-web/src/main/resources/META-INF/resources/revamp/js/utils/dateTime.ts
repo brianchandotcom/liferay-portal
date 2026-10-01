@@ -19,6 +19,10 @@ type DateTimeParts = {
 	year: number;
 };
 
+export function getCurrentWallClockDateTime(timeZoneId: string): string {
+	return toWallClockDateTime(new Date().toISOString(), timeZoneId);
+}
+
 export function getLocaleDateFormat(locale: string): string {
 	return new Intl.DateTimeFormat(locale, {
 		day: '2-digit',

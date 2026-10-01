@@ -100,7 +100,7 @@ public class ViewPIMConnectorsDisplayContext {
 				"fieldMappings"
 			),
 			FDSActionDropdownItemBuilder.setHref(
-				PIMURLUtil.getExportToLiferayCommerceURL()
+				PIMURLUtil.getExportURL("{id}")
 			).setIcon(
 				"download"
 			).setLabel(

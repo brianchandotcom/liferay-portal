@@ -48,8 +48,8 @@ public class PIMURLUtil {
 		return _getURL("/edit-field-mappings", objectEntryId, themeDisplay);
 	}
 
-	public static String getExportToLiferayCommerceURL() {
-		return "/o/pim/export-to-liferay-commerce";
+	public static String getExportURL(String objectEntryId) {
+		return "/o/pim/export?objectEntryId=" + objectEntryId;
 	}
 
 	public static String getFieldMappingsURL(

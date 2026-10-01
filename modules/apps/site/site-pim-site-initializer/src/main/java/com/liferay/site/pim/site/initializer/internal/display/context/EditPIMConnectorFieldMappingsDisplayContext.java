@@ -112,13 +112,13 @@ public class EditPIMConnectorFieldMappingsDisplayContext {
 		}
 
 		for (PIMConnectorChannelField pimConnectorChannelField :
-				pimConnector.getPIMConnectorChannelFields(
-					_themeDisplay.getLocale())) {
+				pimConnector.getPIMConnectorChannelFields()) {
 
 			if (Objects.equals(
 					pimConnectorChannelField.getName(), _channelField)) {
 
-				return pimConnectorChannelField.getLabel();
+				return pimConnectorChannelField.getLabel(
+					_themeDisplay.getLocale());
 			}
 		}
 

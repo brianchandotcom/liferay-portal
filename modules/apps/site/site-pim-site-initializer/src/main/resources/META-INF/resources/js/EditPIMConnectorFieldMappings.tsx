@@ -103,9 +103,7 @@ export default function EditPIMConnectorFieldMappings({
 					const body: {[key: string]: unknown} = {
 						channelFieldName: channelField,
 						priority: index,
-						sourceClassName: fixedValue
-							? ''
-							: fieldMapping.sourceClassName,
+						sourceClassName: fieldMapping.sourceClassName,
 						sourceFieldName: fixedValue
 							? ''
 							: fieldMapping.sourceFieldName,

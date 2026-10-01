@@ -5,6 +5,10 @@
 
 package com.liferay.site.pim.site.initializer.connector;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Locale;
+
 /**
  * @author Andrea Sbarra
  * @author Stefano Motta
@@ -12,16 +16,16 @@ package com.liferay.site.pim.site.initializer.connector;
 public class PIMConnectorChannelField {
 
 	public PIMConnectorChannelField(
-		String label, boolean multiple, String name, boolean required) {
+		String labelKey, boolean multiple, String name, boolean required) {
 
-		_label = label;
+		_labelKey = labelKey;
 		_multiple = multiple;
 		_name = name;
 		_required = required;
 	}
 
-	public String getLabel() {
-		return _label;
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, _labelKey);
 	}
 
 	public String getName() {
@@ -36,7 +40,7 @@ public class PIMConnectorChannelField {
 		return _required;
 	}
 
-	private final String _label;
+	private final String _labelKey;
 	private final boolean _multiple;
 	private final String _name;
 	private final boolean _required;

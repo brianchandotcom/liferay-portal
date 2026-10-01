@@ -55,14 +55,41 @@ export const WEEKDAY_ORDINAL_OPTIONS = [
 	{label: Liferay.Language.get('last'), value: LAST_WEEKDAY_ORDINAL},
 ];
 
-export function hasEndDate(scheduleValues: ScheduleValues): boolean {
-	return (
-		scheduleValues.unit !== IntervalUnit.Never && !scheduleValues.neverEnd
-	);
+export function getInitialScheduleValues(
+	timeZoneId: string,
+	enabled = false
+): ScheduleValues {
+	return {
+		cronExpression: '',
+		enabled,
+		endDateTime: '',
+		monthDays: [1],
+		months: [],
+		neverEnd: true,
+		repeatOnTime: '',
+		repeatOnTimeSynced: true,
+		repeatType: RepeatType.DayOfMonth,
+		startDateTime: '',
+		storedCronExpression: '',
+		timeZoneId,
+		unit: IntervalUnit.Never,
+		weekday: 2,
+		weekdayOrdinal: '1',
+		weekdays: [2],
+		yearInterval: 1,
+	};
 }
 
-export function isRepeatingUnit(unit: IntervalUnit): boolean {
-	return unit !== IntervalUnit.Custom && unit !== IntervalUnit.Never;
+export function getIntervalText(
+	interval: number,
+	unit: IntervalUnit,
+	locale: string
+): string {
+	return new Intl.NumberFormat(locale, {
+		style: 'unit',
+		unit,
+		unitDisplay: 'long',
+	}).format(interval);
 }
 
 export function getScheduleValuesErrors(
@@ -140,47 +167,20 @@ export function getScheduleValuesErrors(
 	return scheduleValuesErrors;
 }
 
-export function getInitialScheduleValues(
-	timeZoneId: string,
-	enabled = false
-): ScheduleValues {
-	return {
-		cronExpression: '',
-		enabled,
-		endDateTime: '',
-		monthDays: [1],
-		months: [],
-		neverEnd: true,
-		repeatOnTime: '',
-		repeatOnTimeSynced: true,
-		repeatType: RepeatType.DayOfMonth,
-		startDateTime: '',
-		storedCronExpression: '',
-		timeZoneId,
-		unit: IntervalUnit.Never,
-		weekday: 2,
-		weekdayOrdinal: '1',
-		weekdays: [2],
-		yearInterval: 1,
-	};
-}
-
-export function getIntervalText(
-	interval: number,
-	unit: IntervalUnit,
-	locale: string
-): string {
-	return new Intl.NumberFormat(locale, {
-		style: 'unit',
-		unit,
-		unitDisplay: 'long',
-	}).format(interval);
-}
-
 export function getWeekdayName(weekday: number, locale: string): string {
 	return new Date(
 		2026,
 		0,
 		FIRST_SUNDAY_OF_JANUARY_2026 + weekday - 1
 	).toLocaleDateString(locale, {weekday: 'long'});
+}
+
+export function hasEndDate(scheduleValues: ScheduleValues): boolean {
+	return (
+		scheduleValues.unit !== IntervalUnit.Never && !scheduleValues.neverEnd
+	);
+}
+
+export function isRepeatingUnit(unit: IntervalUnit): boolean {
+	return unit !== IntervalUnit.Custom && unit !== IntervalUnit.Never;
 }

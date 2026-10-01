@@ -488,6 +488,28 @@ public class Product implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public GroupedProduct[] getGroupedProducts() {
+		return groupedProducts;
+	}
+
+	public void setGroupedProducts(GroupedProduct[] groupedProducts) {
+		this.groupedProducts = groupedProducts;
+	}
+
+	public void setGroupedProducts(
+		UnsafeSupplier<GroupedProduct[], Exception>
+			groupedProductsUnsafeSupplier) {
+
+		try {
+			groupedProducts = groupedProductsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected GroupedProduct[] groupedProducts;
+
 	public Long getId() {
 		return id;
 	}
@@ -1304,4 +1326,4 @@ public class Product implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1788814151
+// LIFERAY-REST-BUILDER-HASH:-636597727

@@ -1046,6 +1046,53 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Child products bundled into a product whose `productType` is grouped; written through the grouped-product sub-resource and, when sent with the product, added or updated by matching the entry product."
+	)
+	@Valid
+	public GroupedProduct[] getGroupedProducts() {
+		if (_groupedProductsSupplier != null) {
+			groupedProducts = _groupedProductsSupplier.get();
+
+			_groupedProductsSupplier = null;
+		}
+
+		return groupedProducts;
+	}
+
+	public void setGroupedProducts(GroupedProduct[] groupedProducts) {
+		this.groupedProducts = groupedProducts;
+
+		_groupedProductsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setGroupedProducts(
+		UnsafeSupplier<GroupedProduct[], Exception>
+			groupedProductsUnsafeSupplier) {
+
+		_groupedProductsSupplier = () -> {
+			try {
+				return groupedProductsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Child products bundled into a product whose `productType` is grouped; written through the grouped-product sub-resource and, when sent with the product, added or updated by matching the entry product."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected GroupedProduct[] groupedProducts;
+
+	@JsonIgnore
+	private Supplier<GroupedProduct[]> _groupedProductsSupplier;
+
 	@DecimalMin("0")
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Primary key of the product row; read-only; filterable and sortable via the OData query parameter.",
@@ -3071,6 +3118,28 @@ public class Product implements Serializable {
 			sb.append("\"");
 		}
 
+		GroupedProduct[] groupedProducts = getGroupedProducts();
+
+		if (groupedProducts != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"groupedProducts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < groupedProducts.length; i++) {
+				sb.append(String.valueOf(groupedProducts[i]));
+
+				if ((i + 1) < groupedProducts.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Long id = getId();
 
 		if (id != null) {
@@ -3773,4 +3842,4 @@ public class Product implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1361733506
+// LIFERAY-REST-BUILDER-HASH:-1247558741

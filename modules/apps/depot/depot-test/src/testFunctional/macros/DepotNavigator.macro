@@ -71,7 +71,7 @@ definition {
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
 				value1 = ${depotName});
 
-			AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
+			AssertElementNotPresent(locator1 = "//*[@data-qa-id='productMenu']");
 		}
 		else {
 			AssertTextEquals(

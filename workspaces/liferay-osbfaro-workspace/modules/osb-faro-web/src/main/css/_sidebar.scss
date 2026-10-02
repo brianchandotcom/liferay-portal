@@ -9,6 +9,13 @@
 	}
 }
 
+// The toolbar above stays in the page flow, so a page next to the sidebar
+// fills the viewport below the toolbar rather than the whole viewport.
+
+.c-slideout:has(> .sidebar-root) + .c-slideout-container .index-root {
+	min-height: calc(100vh - #{$toolbarHeight});
+}
+
 .sidebar-root {
 	background-color: $lightL1;
 	border-right: 1px solid $cadmin-secondary-l2;

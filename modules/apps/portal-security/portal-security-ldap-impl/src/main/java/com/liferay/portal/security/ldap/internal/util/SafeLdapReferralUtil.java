@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.ldap.internal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.constants.LDAPReferralModes;
@@ -18,9 +20,11 @@ import java.util.Objects;
 import java.util.Queue;
 
 import javax.naming.Context;
+import javax.naming.LimitExceededException;
 import javax.naming.Name;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
+import javax.naming.PartialResultException;
 import javax.naming.ReferralException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
@@ -68,14 +72,32 @@ public class SafeLdapReferralUtil {
 							_isAllowedReferralURL((String)referralInfo) &&
 							(referralCount < _MAX_REFERRAL_COUNT)) {
 
-							dirContexts.add(
-								(DirContext)
-									referralException.getReferralContext());
+							try {
+								dirContexts.add(
+									(DirContext)
+										referralException.getReferralContext());
 
-							referralCount++;
+								referralCount++;
+							}
+							catch (NamingException namingException) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(
+										"Unable to follow referral " +
+											referralInfo,
+										namingException);
+								}
+							}
 						}
 
 						skipReferral = referralException.skipReferral();
+					}
+				}
+				catch (LimitExceededException | PartialResultException
+							exception) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to read all search results", exception);
 					}
 				}
 				finally {
@@ -137,6 +159,9 @@ public class SafeLdapReferralUtil {
 	}
 
 	private static final int _MAX_REFERRAL_COUNT = 10;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SafeLdapReferralUtil.class);
 
 	private static class ListNamingEnumeration
 		implements NamingEnumeration<SearchResult> {

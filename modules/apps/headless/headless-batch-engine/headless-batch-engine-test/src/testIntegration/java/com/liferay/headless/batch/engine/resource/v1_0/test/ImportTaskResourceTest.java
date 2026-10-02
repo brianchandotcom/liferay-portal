@@ -234,6 +234,26 @@ public class ImportTaskResourceTest {
 		Assert.assertEquals(1, (int)importTask.getProcessedItemsCount());
 	}
 
+	@Test
+	public void testPutImportTaskWithUnsupportedUpdate() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			ImportTask importTask = ExportImportTaskUtil.putImportTask(
+				JSONUtil.putAll(
+					JSONUtil.put("title", RandomTestUtil.randomString())
+				).toString(),
+				"com.liferay.headless.delivery.dto.v1_0.SitePage", "FAILED",
+				Collections.emptyMap());
+
+			Assert.assertEquals(
+				"This method needs to be implemented",
+				importTask.getErrorMessage());
+		}
+	}
+
 	private void _testPostImportTaskWithExternalReferenceCodes(
 			String batchExternalReferenceCode, String externalReferenceCode,
 			UnsafeTriConsumer<String, String, ImportTask, Exception>

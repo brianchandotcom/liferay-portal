@@ -9,12 +9,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstance;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstanceSubmit;
+import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.ObjectReviewedTestUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowInstanceTestUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Map;
 
@@ -40,6 +45,14 @@ public class WorkflowInstanceResourceTest
 
 		_workflowDefinition =
 			WorkflowDefinitionTestUtil.addWorkflowDefinition();
+	}
+
+	@Override
+	@Test
+	public void testDeleteWorkflowInstance() throws Exception {
+		super.testDeleteWorkflowInstance();
+
+		_testDeleteWorkflowInstanceWithoutPermission();
 	}
 
 	@Override
@@ -176,6 +189,38 @@ public class WorkflowInstanceResourceTest
 
 		return testGetWorkflowInstancesPage_addWorkflowInstance(
 			workflowInstance);
+	}
+
+	private void _testDeleteWorkflowInstanceWithoutPermission()
+		throws Exception {
+
+		String password = RandomTestUtil.randomString();
+
+		User user = UserTestUtil.addUser(testCompany, password);
+
+		WorkflowInstanceResource userWorkflowInstanceResource =
+			WorkflowInstanceResource.builder(
+			).authentication(
+				user.getEmailAddress(), password
+			).endpoint(
+				testCompany.getVirtualHostname(),
+				PortalUtil.getPortalServerPort(false), "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		WorkflowInstance workflowInstance =
+			testDeleteWorkflowInstance_addWorkflowInstance();
+
+		assertHttpResponseStatusCode(
+			403,
+			userWorkflowInstanceResource.deleteWorkflowInstanceHttpResponse(
+				workflowInstance.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			workflowInstanceResource.getWorkflowInstanceHttpResponse(
+				workflowInstance.getId()));
 	}
 
 	private WorkflowDefinition _workflowDefinition;

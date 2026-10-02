@@ -13,7 +13,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -57,8 +56,6 @@ public class AssetListTypePropertiesUtilTest {
 	public static void setUpClass() {
 		_setUpJSONFactoryUtil();
 
-		_featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
-			FeatureFlagManagerUtil.class);
 		_listTypeEntryLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			ListTypeEntryLocalServiceUtil.class);
 		_objectDefinitionLocalServiceUtilMockedStatic = Mockito.mockStatic(
@@ -68,7 +65,6 @@ public class AssetListTypePropertiesUtilTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		_featureFlagManagerUtilMockedStatic.close();
 		_listTypeEntryLocalServiceUtilMockedStatic.close();
 		_objectDefinitionLocalServiceUtilMockedStatic.close();
 		_portalUtilMockedStatic.close();
@@ -76,17 +72,9 @@ public class AssetListTypePropertiesUtilTest {
 
 	@Before
 	public void setUp() {
-		_featureFlagManagerUtilMockedStatic.reset();
 		_listTypeEntryLocalServiceUtilMockedStatic.reset();
 		_objectDefinitionLocalServiceUtilMockedStatic.reset();
 		_portalUtilMockedStatic.reset();
-
-		_featureFlagManagerUtilMockedStatic.when(
-			() -> FeatureFlagManagerUtil.isEnabled(
-				Mockito.anyLong(), Mockito.eq("LPD-74731"))
-		).thenReturn(
-			true
-		);
 
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getClassName(Mockito.anyLong())
@@ -599,8 +587,6 @@ public class AssetListTypePropertiesUtilTest {
 
 	private static final String _LABEL_2 = RandomTestUtil.randomString();
 
-	private static MockedStatic<FeatureFlagManagerUtil>
-		_featureFlagManagerUtilMockedStatic;
 	private static MockedStatic<ListTypeEntryLocalServiceUtil>
 		_listTypeEntryLocalServiceUtilMockedStatic;
 	private static MockedStatic<ObjectDefinitionLocalServiceUtil>

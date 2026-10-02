@@ -87,14 +87,16 @@ public class DataCleanupPreupgradeProcessUtilTest
 
 	@Test
 	public void testGetPrimaryKeyColumnName() throws Exception {
+		_runSQL(COMPANY_IDS[0], getCreateTableSQL(_tableName));
+
 		String createTableSQL = StringBundler.concat(
 			"create table ", _tableName,
 			" (testColumn bigint, companyId bigint)");
 
+		_runSQL(COMPANY_IDS[1], createTableSQL);
+
 		long defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
 
-		_runSQL(COMPANY_IDS[0], getCreateTableSQL(_tableName));
-		_runSQL(COMPANY_IDS[1], createTableSQL);
 		_runSQL(defaultCompanyId, createTableSQL);
 
 		DataCleanupPreupgradeProcessUtil.enableCache();

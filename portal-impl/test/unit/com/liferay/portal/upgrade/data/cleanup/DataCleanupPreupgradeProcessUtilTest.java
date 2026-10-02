@@ -72,13 +72,13 @@ public class DataCleanupPreupgradeProcessUtilTest {
 			);
 
 			String catalog1 = RandomTestUtil.randomString();
-			String catalog2 = RandomTestUtil.randomString();
 			String schema1 = RandomTestUtil.randomString();
-			String schema2 = RandomTestUtil.randomString();
 
 			DBInspector dbInspector1 = _mockDBInspector(catalog1, schema1);
+
+			String catalog2 = RandomTestUtil.randomString();
+
 			DBInspector dbInspector2 = _mockDBInspector(catalog2, schema1);
-			DBInspector dbInspector3 = _mockDBInspector(catalog1, schema2);
 
 			_testGetPrimaryKeyColumnName(
 				connection1, connection2, db, dbInspector1, dbInspector2, null,
@@ -86,6 +86,11 @@ public class DataCleanupPreupgradeProcessUtilTest {
 			_testGetPrimaryKeyColumnName(
 				connection2, connection1, db, dbInspector2, dbInspector1,
 				primaryKeyColumnName, null, tableName);
+
+			String schema2 = RandomTestUtil.randomString();
+
+			DBInspector dbInspector3 = _mockDBInspector(catalog1, schema2);
+
 			_testGetPrimaryKeyColumnName(
 				connection1, connection2, db, dbInspector1, dbInspector3, null,
 				primaryKeyColumnName, tableName);
@@ -147,20 +152,21 @@ public class DataCleanupPreupgradeProcessUtilTest {
 			expectedPrimaryKeyColumnName1,
 			DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
 				connection1, dbInspector1, tableName));
-		Assert.assertEquals(
-			expectedPrimaryKeyColumnName2,
-			DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
-				connection2, dbInspector2, tableName));
-		Assert.assertEquals(
-			expectedPrimaryKeyColumnName2,
-			DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
-				connection2, dbInspector2, tableName));
 
 		Mockito.verify(
 			db, Mockito.times(1)
 		).getPrimaryKeyColumnNames(
 			connection1, tableName
 		);
+
+		Assert.assertEquals(
+			expectedPrimaryKeyColumnName2,
+			DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
+				connection2, dbInspector2, tableName));
+		Assert.assertEquals(
+			expectedPrimaryKeyColumnName2,
+			DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
+				connection2, dbInspector2, tableName));
 
 		Mockito.verify(
 			db, Mockito.times(1)

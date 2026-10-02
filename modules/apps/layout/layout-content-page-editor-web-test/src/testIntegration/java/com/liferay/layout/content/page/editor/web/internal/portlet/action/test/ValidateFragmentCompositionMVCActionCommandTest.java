@@ -15,6 +15,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.content.page.editor.web.internal.portlet.constants.LayoutContentPageEditorWebPortletKeys;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -129,13 +130,21 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 	}
 
 	@Test
-	@TestInfo("LPD-77498")
+	@TestInfo({"LPD-77498", "LPD-107935"})
 	public void testValidateFragmentCompositionValid() throws Exception {
 		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
 			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _draftLayout,
 			_layoutStructureProvider, _segmentsExperienceId);
 
 		String containerItemId = addItemJSONObject.getString("addedItemId");
+
+		ContentLayoutTestUtil.addPortletToLayout(
+			_draftLayout, containerItemId,
+			LayoutContentPageEditorWebPortletKeys.
+				LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+			_segmentsExperienceId);
+
+		_testValidateFragmentComposition(containerItemId, true);
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			StringPool.BLANK, _draftLayout, containerItemId, 0,

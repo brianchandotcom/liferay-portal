@@ -73,10 +73,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String externalReferenceCode, String commentExternalReferenceCode)
 		throws Exception {
 
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
-
 		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
@@ -97,10 +93,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey, String externalReferenceCode,
 			String commentExternalReferenceCode)
 		throws Exception {
-
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, scopeKey);
@@ -193,10 +185,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String externalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
-
 		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
 
 		return _addComment(
@@ -210,10 +198,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String externalReferenceCode, String commentExternalReferenceCode,
 			Comment comment)
 		throws Exception {
-
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
 
@@ -238,10 +222,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey, String externalReferenceCode, Comment comment)
 		throws Exception {
 
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
-
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, scopeKey);
 
@@ -255,10 +235,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey, String externalReferenceCode,
 			String commentExternalReferenceCode, Comment comment)
 		throws Exception {
-
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, scopeKey);
@@ -284,10 +260,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Comment comment)
 		throws Exception {
 
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
-
 		ObjectEntry objectEntry = _getObjectEntry(externalReferenceCode, null);
 
 		long groupId = _getNonzeroGroupId(objectEntry.getId());
@@ -311,10 +283,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey, String externalReferenceCode,
 			String commentExternalReferenceCode, Comment comment)
 		throws Exception {
-
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, scopeKey);
@@ -419,10 +387,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String scopeKey)
 		throws Exception {
 
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
-
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, scopeKey);
 
@@ -444,10 +408,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String externalReferenceCode, Pagination pagination,
 			String scopeKey, String search, Sort[] sorts)
 		throws Exception {
-
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, scopeKey);
@@ -496,10 +456,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			Aggregation aggregation, String externalReferenceCode,
 			Pagination pagination, String scopeKey, String search, Sort[] sorts)
 		throws Exception {
-
-		if (!_isEnabled()) {
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, scopeKey);
@@ -582,6 +538,10 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	private ObjectEntry _getObjectEntry(
 			String objectEntryExternalReferenceCode, String scopeKey)
 		throws Exception {
+
+		if (!_isEnabled()) {
+			throw new UnsupportedOperationException();
+		}
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(

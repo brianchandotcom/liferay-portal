@@ -31,7 +31,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CannotExceedStorageQuotaWhenUsingMultipleUpload {
-		property custom.properties = "data.limit.dl.storage.max.size=1048576${line.separator}dl.actions.visible=true";
+		property custom.properties = "data.limit.dl.storage.max.size=4194304${line.separator}dl.actions.visible=true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -59,7 +59,7 @@ definition {
 
 		DMDocument.addMultiplePG(
 			dmDocumentFileList = "Document_2.txt,high_resolution_photo.jpg",
-			storageQuota = "1 MB",
+			storageQuota = "4 MB",
 			validateStorageQuota = "true");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -73,7 +73,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CannotExceedStorageQuotaWhenUsingSingleUpload {
-		property custom.properties = "data.limit.dl.storage.max.size=1048576";
+		property custom.properties = "data.limit.dl.storage.max.size=4194304";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -101,7 +101,7 @@ definition {
 			dmDocumentTitle = "DM Document Title2",
 			groupName = "Guest",
 			siteURLKey = "guest",
-			storageQuota = "1 MB",
+			storageQuota = "4 MB",
 			validateStorageQuota = "true");
 	}
 

@@ -62,6 +62,10 @@ definition {
 
 		DMDocument.viewPG(dmDocumentTitle = "Document_1.doc");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentFile = "Document_1.jpg",

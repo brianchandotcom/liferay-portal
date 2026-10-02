@@ -359,7 +359,7 @@ func TestReconcileGivesDxpAGracePeriodToWriteExtInit(t *testing.T) {
 			t.Fatalf("%s = %v, want False / %s", conditionType, condition, ReasonExtInitMissing)
 		}
 
-		want := `DXP has not written ConfigMap "able-liferay.com-lxc-ext-init-metadata" in namespace "liferay-dev", which the OAuth2 applications in the configs require.`
+		want := `DXP has not written the OAuth2 applications "able-oauth-application-user-agent" to ConfigMap "able-liferay.com-lxc-ext-init-metadata" in namespace "liferay-dev".`
 
 		if condition.Message != want {
 			t.Errorf("%s message = %q, want %q", conditionType, condition.Message, want)
@@ -426,7 +426,7 @@ func TestReconcileProvisionsOnceDxpWritesExtInit(t *testing.T) {
 		t.Fatalf("phase = %q, want %q", phase, cxv1alpha1.PhasePending)
 	}
 
-	if error := clientExtensionReconciler.Create(context.Background(), newExtInit()); error != nil {
+	if error := clientExtensionReconciler.Create(context.Background(), newExtInit("able-oauth-application-user-agent")); error != nil {
 		t.Fatal(error)
 	}
 
@@ -605,7 +605,7 @@ func TestReconcileRemovesProvisionedWhenUndelivered(t *testing.T) {
 
 	clientExtensionReconciler := newReconciler(
 		nil, t, clientExtension, dxpMetadata, newDxpNamespace("able"),
-		newExtInit(),
+		newExtInit("able-oauth-application-user-agent"),
 	)
 
 	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhaseReady {
@@ -734,6 +734,45 @@ func TestReconcileReportsExtInitMissingAfterGracePeriod(t *testing.T) {
 
 	if len(recorder.Events) != 0 {
 		t.Errorf("Expected the warning event not to repeat, got %d more", len(recorder.Events))
+	}
+}
+
+func TestReconcileReportsExtInitMissingForEachApplication(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "able")
+
+	addOAuth2Application(clientExtension, "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oauth-application-user-agent")
+
+	clientExtensionReconciler := newReconciler(
+		nil, t, clientExtension, newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("able"),
+		newExtInit("able-oauth-application-user-agent"),
+	)
+
+	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhaseReady {
+		t.Fatalf("phase = %q, want %q", phase, cxv1alpha1.PhaseReady)
+	}
+
+	updatedClientExtension := getClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	addOAuth2Application(updatedClientExtension, "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~able-oauth-application-headless-server")
+
+	if error := clientExtensionReconciler.Update(context.Background(), updatedClientExtension); error != nil {
+		t.Fatal(error)
+	}
+
+	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhasePending {
+		t.Errorf("phase = %q, want %q", phase, cxv1alpha1.PhasePending)
+	}
+
+	provisioned := getCondition(clientExtension, clientExtensionReconciler, cxv1alpha1.ConditionProvisioned, t)
+
+	if (provisioned == nil) || (provisioned.Status != metav1.ConditionFalse) || (provisioned.Reason != ReasonExtInitMissing) {
+		t.Fatalf("Provisioned = %v, want False / %s: ext-init holds no keys for the added application", provisioned, ReasonExtInitMissing)
+	}
+
+	want := `DXP has not written the OAuth2 applications "able-oauth-application-headless-server" to ConfigMap "able-liferay.com-lxc-ext-init-metadata" in namespace "liferay-dev".`
+
+	if provisioned.Message != want {
+		t.Errorf("Provisioned message = %q, want %q", provisioned.Message, want)
 	}
 }
 
@@ -1151,8 +1190,15 @@ func newDxpNamespace(allowedNamespaces string) *corev1.Namespace {
 	}
 }
 
-func newExtInit() *corev1.ConfigMap {
+func newExtInit(externalReferenceCodes ...string) *corev1.ConfigMap {
+	data := map[string]string{}
+
+	for _, externalReferenceCode := range externalReferenceCodes {
+		data[externalReferenceCode+".oauth2.token.uri"] = "/o/oauth2/token"
+	}
+
 	return &corev1.ConfigMap{
+		Data: data,
 		ObjectMeta: metav1.ObjectMeta{
 			Labels: map[string]string{
 				LabelMetadataType:    MetadataTypeExtInit,

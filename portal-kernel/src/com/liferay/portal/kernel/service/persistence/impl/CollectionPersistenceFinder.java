@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.CountFinderPathRegistry;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -51,6 +52,10 @@ public class CollectionPersistenceFinder
 		_defaultOrderByJpql = defaultOrderByJpql;
 		_orderByEntityAlias = orderByEntityAlias;
 		_uniquePersistenceFinder = uniquePersistenceFinder;
+
+		if (countFinderPath.isCountResult()) {
+			CountFinderPathRegistry.register(countFinderPath);
+		}
 
 		List<Integer> arrayableIndexes = new ArrayList<>();
 

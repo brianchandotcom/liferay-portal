@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
+import com.liferay.portal.kernel.dao.orm.CountFinderPathRegistry;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -260,7 +261,9 @@ public class FinderCacheImpl
 			}
 		}
 
-		_addFinderPath(finderPath);
+		if (!finderPath.isCountResult()) {
+			_addFinderPath(finderPath);
+		}
 
 		Serializable cacheKey = _encodeCacheKey(finderPath, args);
 
@@ -332,7 +335,7 @@ public class FinderCacheImpl
 		}
 
 		for (FinderPath finderPath :
-				_getFinderPaths(_getCountCacheName(className))) {
+				CountFinderPathRegistry.getCountFinderPaths(className)) {
 
 			_removeResult(
 				finderPath,
@@ -428,7 +431,8 @@ public class FinderCacheImpl
 
 		finderPaths.addAll(
 			_getFinderPaths(_getCacheNameWithoutPagination(className)));
-		finderPaths.addAll(_getFinderPaths(_getCountCacheName(className)));
+		finderPaths.addAll(
+			CountFinderPathRegistry.getCountFinderPaths(className));
 		finderPaths.addAll(_getFinderPaths(className));
 
 		ArgumentsResolver argumentsResolver =

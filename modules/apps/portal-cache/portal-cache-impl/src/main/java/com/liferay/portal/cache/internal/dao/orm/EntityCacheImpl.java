@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.dao.orm.CountFinderPathRegistry;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.db.partition.DBPartition;
@@ -253,6 +254,8 @@ public class EntityCacheImpl
 
 	@Override
 	public void removeCache(String className) {
+		CountFinderPathRegistry.unregister(className);
+
 		FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
 
 		if (finderCacheImpl == null) {

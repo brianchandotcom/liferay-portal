@@ -383,12 +383,6 @@ public class CacheReplicatorEntryTest implements Serializable {
 
 		Assert.assertEquals(
 			list2FinderPaths.toString(), 1, list2FinderPaths.size());
-
-		Map<String, FinderPath> countFinderPaths = finderPathsMap.get(
-			_ENTITY_CLASS_NAME + ".Count");
-
-		Assert.assertEquals(
-			countFinderPaths.toString(), 1, countFinderPaths.size());
 	}
 
 	private List<PortalCache<Serializable, Serializable>>

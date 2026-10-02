@@ -61,7 +61,7 @@ describe('getScheduleSummary', () => {
 		expect(
 			getScheduleSummary(buildScheduleValues({unit: IntervalUnit.Day}))
 		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-x-at-x'
+			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-day-at-x'
 		);
 	});
 
@@ -75,7 +75,7 @@ describe('getScheduleSummary', () => {
 				})
 			)
 		).toBe(
-			'the-process-is-active-from-x-at-x-and-ends-on-x-at-x the-process-repeats-every-x-at-x'
+			'the-process-is-active-from-x-at-x-and-ends-on-x-at-x the-process-repeats-every-day-at-x'
 		);
 	});
 
@@ -135,7 +135,7 @@ describe('getScheduleSummary', () => {
 				})
 			)
 		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-x-at-x'
+			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-day-at-x'
 		);
 	});
 
@@ -143,13 +143,13 @@ describe('getScheduleSummary', () => {
 		expect(
 			getScheduleSummary(buildScheduleValues({unit: IntervalUnit.Week}))
 		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-x-on-x-at-x'
+			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-week-on-x-at-x'
 		);
 
 		expect(
 			getScheduleSummary(buildScheduleValues({unit: IntervalUnit.Month}))
 		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-x-on-x-at-x'
+			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-month-on-x-at-x'
 		);
 
 		expect(
@@ -160,7 +160,7 @@ describe('getScheduleSummary', () => {
 				})
 			)
 		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-x-on-the-x-at-x'
+			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-month-on-the-x-x-at-x'
 		);
 	});
 });
@@ -174,27 +174,32 @@ describe('schedule summary wording', () => {
 		'repeat-last': 'last',
 		'repeat-second': 'second',
 		'repeat-third': 'third',
-		'repeat-unit-day': 'day',
-		'repeat-unit-month': 'month',
-		'repeat-unit-week': 'week',
-		'repeat-unit-year': 'year',
 		'the-process-is-active-from-x-at-x-and-ends-on-x-at-x':
 			'The process is active from {0} at {1} and ends on {2} at {3}.',
 		'the-process-is-active-from-x-at-x-and-never-ends':
 			'The process is active from {0} at {1} and never ends.',
-		'the-process-repeats-every-x-at-x':
-			'The process repeats every {0} at {1}.',
-		'the-process-repeats-every-x-in-x-on-the-x-at-x':
-			'The process repeats every {0} in {1} on the {2} at {3}.',
-		'the-process-repeats-every-x-in-x-on-x-at-x':
-			'The process repeats every {0} in {1} on {2} at {3}.',
-		'the-process-repeats-every-x-on-the-x-at-x':
-			'The process repeats every {0} on the {1} at {2}.',
-		'the-process-repeats-every-x-on-x-at-x':
-			'The process repeats every {0} on {1} at {2}.',
-		'the-process-repeats-in-x-at-x': 'The process repeats in {0} at {1}.',
-		'the-process-repeats-in-x-on-the-x-at-x':
-			'The process repeats in {0} on the {1} at {2}.',
+		'the-process-repeats-every-day-at-x':
+			'The process repeats every day at {0}.',
+		'the-process-repeats-every-day-in-x-at-x':
+			'The process repeats every day in {0} at {1}.',
+		'the-process-repeats-every-month-at-x':
+			'The process repeats every month at {0}.',
+		'the-process-repeats-every-month-on-the-x-x-at-x':
+			'The process repeats every month on the {0} {1} at {2}.',
+		'the-process-repeats-every-month-on-x-at-x':
+			'The process repeats every month on {0} at {1}.',
+		'the-process-repeats-every-week-on-x-at-x':
+			'The process repeats every week on {0} at {1}.',
+		'the-process-repeats-every-x-years-in-x-on-the-x-x-at-x':
+			'The process repeats every {0} years in {1} on the {2} {3} at {4}.',
+		'the-process-repeats-every-x-years-in-x-on-x-at-x':
+			'The process repeats every {0} years in {1} on {2} at {3}.',
+		'the-process-repeats-every-year-in-x-on-the-x-x-at-x':
+			'The process repeats every year in {0} on the {1} {2} at {3}.',
+		'the-process-repeats-every-year-in-x-on-x-at-x':
+			'The process repeats every year in {0} on {1} at {2}.',
+		'the-process-repeats-in-x-on-the-x-x-at-x':
+			'The process repeats in {0} on the {1} {2} at {3}.',
 		'the-process-repeats-in-x-on-x-at-x':
 			'The process repeats in {0} on {1} at {2}.',
 	};
@@ -312,6 +317,42 @@ describe('schedule summary wording', () => {
 				unit: IntervalUnit.Year,
 			})
 		).toBe('The process repeats every year in july on day 4 at 3:05 PM.');
+	});
+
+	it('describes a yearly repetition with an interval', () => {
+		expect(
+			getRepeatSentence({
+				monthDays: [4],
+				months: [7],
+				unit: IntervalUnit.Year,
+				yearInterval: 2,
+			})
+		).toBe(
+			'The process repeats every 2 years in july on day 4 at 3:05 PM.'
+		);
+
+		expect(
+			getRepeatSentence({
+				months: [7],
+				repeatType: RepeatType.DayOfWeek,
+				unit: IntervalUnit.Year,
+				weekday: 6,
+				weekdayOrdinal: '3',
+				yearInterval: 2,
+			})
+		).toBe(
+			'The process repeats every 2 years in july on the third Friday at 3:05 PM.'
+		);
+	});
+
+	it('says every day in the selected months when every day is selected', () => {
+		expect(
+			getRepeatSentence({
+				monthDays: [],
+				months: [1, 7],
+				unit: IntervalUnit.Month,
+			})
+		).toBe('The process repeats every day in january and july at 3:05 PM.');
 	});
 
 	it('lowercases the day unit in a daily repetition', () => {

@@ -65,7 +65,7 @@ public class ObjectEntryAssetRenderer
 	public ObjectEntryAssetRenderer(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		ObjectEntry objectEntry,
 		ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
 		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService) {
@@ -74,7 +74,6 @@ public class ObjectEntryAssetRenderer
 			assetDisplayPageFriendlyURLProvider;
 		_dlAppLocalService = dlAppLocalService;
 		_dlURLHelper = dlURLHelper;
-		_objectDefinition = objectDefinition;
 		_objectEntry = objectEntry;
 		_objectEntryDisplayContextFactory = objectEntryDisplayContextFactory;
 		_objectEntryService = objectEntryService;
@@ -102,6 +101,12 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return ObjectEntryAssetRendererFactory.getIconCssClass(
+			_objectEntry.getObjectDefinition());
+	}
+
+	@Override
 	public String getJspPath(
 		HttpServletRequest httpServletRequest, String template) {
 
@@ -116,7 +121,9 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		return _objectDefinition.getPortletId();
+		ObjectDefinition objectDefinition = _objectEntry.getObjectDefinition();
+
+		return objectDefinition.getPortletId();
 	}
 
 	@Override
@@ -124,7 +131,9 @@ public class ObjectEntryAssetRenderer
 			boolean editable, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		if (_objectDefinition.isCMS()) {
+		ObjectDefinition objectDefinition = _objectEntry.getObjectDefinition();
+
+		if (objectDefinition.isCMS()) {
 			return getURLSharingNotification(editable, themeDisplay);
 		}
 
@@ -155,17 +164,21 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public String getType() {
-		return _objectDefinition.getName();
+		ObjectDefinition objectDefinition = _objectEntry.getObjectDefinition();
+
+		return objectDefinition.getName();
 	}
 
 	@Override
 	public String getURLDownload(ThemeDisplay themeDisplay) {
-		if (!_objectDefinition.isCMS()) {
+		ObjectDefinition objectDefinition = _objectEntry.getObjectDefinition();
+
+		if (!objectDefinition.isCMS()) {
 			return null;
 		}
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(), "file");
+			objectDefinition.getObjectDefinitionId(), "file");
 
 		if ((objectField == null) ||
 			!objectField.compareBusinessType(
@@ -181,7 +194,7 @@ public class ObjectEntryAssetRenderer
 					MapUtil.getLong(
 						_objectEntry.getValues(), objectField.getName())),
 				_objectEntry.getGroupId(),
-				_objectDefinition.getExternalReferenceCode(), _objectEntry,
+				objectDefinition.getExternalReferenceCode(), _objectEntry,
 				_objectEntryService, objectField,
 				_getPermissionChecker(themeDisplay), themeDisplay);
 		}
@@ -207,7 +220,9 @@ public class ObjectEntryAssetRenderer
 			group = themeDisplay.getScopeGroup();
 		}
 
-		if (_objectDefinition.isCMS()) {
+		ObjectDefinition objectDefinition = _objectEntry.getObjectDefinition();
+
+		if (objectDefinition.isCMS()) {
 			return PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(
 					httpServletRequest, group,
@@ -222,7 +237,7 @@ public class ObjectEntryAssetRenderer
 
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				httpServletRequest, group, _objectDefinition.getPortletId(), 0,
+				httpServletRequest, group, objectDefinition.getPortletId(), 0,
 				0, PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/object_entries/edit_object_entry"
@@ -251,7 +266,9 @@ public class ObjectEntryAssetRenderer
 			return null;
 		}
 
-		if (!_objectDefinition.isCMS()) {
+		ObjectDefinition objectDefinition = _objectEntry.getObjectDefinition();
+
+		if (!objectDefinition.isCMS()) {
 			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
@@ -374,7 +391,8 @@ public class ObjectEntryAssetRenderer
 		throws Exception {
 
 		httpServletRequest.setAttribute(
-			ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
+			ObjectWebKeys.OBJECT_DEFINITION,
+			_objectEntry.getObjectDefinition());
 		httpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_ENTRY_EXTERNAL_REFERENCE_CODE,
 			_objectEntry.getExternalReferenceCode());
@@ -393,7 +411,9 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public boolean isCommentable() {
-		return _objectDefinition.isEnableComments();
+		ObjectDefinition objectDefinition = _objectEntry.getObjectDefinition();
+
+		return objectDefinition.isEnableComments();
 	}
 
 	private PermissionChecker _getPermissionChecker(ThemeDisplay themeDisplay) {
@@ -414,7 +434,6 @@ public class ObjectEntryAssetRenderer
 		_assetDisplayPageFriendlyURLProvider;
 	private final DLAppLocalService _dlAppLocalService;
 	private final DLURLHelper _dlURLHelper;
-	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntry _objectEntry;
 	private final ObjectEntryDisplayContextFactory
 		_objectEntryDisplayContextFactory;

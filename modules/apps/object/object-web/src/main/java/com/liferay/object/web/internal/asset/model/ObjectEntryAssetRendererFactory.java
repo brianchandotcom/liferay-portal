@@ -85,13 +85,10 @@ public class ObjectEntryAssetRendererFactory
 			return null;
 		}
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			classPK);
-
 		ObjectEntryAssetRenderer objectEntryAssetRenderer =
 			new ObjectEntryAssetRenderer(
 				_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
-				_dlURLHelper, objectEntry.getObjectDefinition(), objectEntry,
+				_dlURLHelper, _objectEntryLocalService.getObjectEntry(classPK),
 				_objectEntryDisplayContextFactory, _objectEntryService,
 				_objectFieldLocalService);
 
@@ -102,16 +99,9 @@ public class ObjectEntryAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		ObjectDefinition objectDefinition =
+		return getIconCssClass(
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				_objectDefinitionId);
-
-		if (!objectDefinition.isCMS()) {
-			return StringPool.BLANK;
-		}
-
-		return _icons.getOrDefault(
-			objectDefinition.getExternalReferenceCode(), "forms");
+				_objectDefinitionId));
 	}
 
 	@Override
@@ -186,6 +176,15 @@ public class ObjectEntryAssetRendererFactory
 		}
 
 		return false;
+	}
+
+	protected static String getIconCssClass(ObjectDefinition objectDefinition) {
+		if (!objectDefinition.isCMS()) {
+			return StringPool.BLANK;
+		}
+
+		return _icons.getOrDefault(
+			objectDefinition.getExternalReferenceCode(), "forms");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

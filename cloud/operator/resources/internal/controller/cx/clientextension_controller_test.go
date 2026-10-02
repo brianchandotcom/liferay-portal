@@ -17,6 +17,7 @@ import (
 	meta "k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
+	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	types "k8s.io/apimachinery/pkg/types"
 	record "k8s.io/client-go/tools/record"
 	controllerruntime "sigs.k8s.io/controller-runtime"
@@ -880,15 +881,9 @@ func TestReconcileRestartsGracePeriodWhenPayloadChanges(t *testing.T) {
 
 	<-recorder.Events
 
-	updatedClientExtension := getClientExtension(clientExtension, clientExtensionReconciler, t)
+	beforeProvisioned := getCondition(clientExtension, clientExtensionReconciler, cxv1alpha1.ConditionProvisioned, t)
 
-	updatedClientExtension.Spec.Configs["com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oauth-application-user-agent"] = cxv1alpha1.Configuration{
-		JSON: apiextensionsv1.JSON{Raw: []byte(`{"name": "Fixed OAuth2 Application"}`)},
-	}
-
-	if error := clientExtensionReconciler.Update(context.Background(), updatedClientExtension); error != nil {
-		t.Fatal(error)
-	}
+	fixOAuth2Application(clientExtension, clientExtensionReconciler, t)
 
 	result, error := clientExtensionReconciler.Reconcile(
 		context.Background(),
@@ -905,6 +900,72 @@ func TestReconcileRestartsGracePeriodWhenPayloadChanges(t *testing.T) {
 
 	if phase := getClientExtension(clientExtension, clientExtensionReconciler, t).Status.Phase; phase != cxv1alpha1.PhasePending {
 		t.Errorf("phase = %q, want %q: DXP has only just received the new payload", phase, cxv1alpha1.PhasePending)
+	}
+
+	if len(recorder.Events) != 0 {
+		t.Errorf("Expected no event for a payload DXP has only just received, got %d", len(recorder.Events))
+	}
+
+	if afterProvisioned := getCondition(clientExtension, clientExtensionReconciler, cxv1alpha1.ConditionProvisioned, t); !afterProvisioned.LastTransitionTime.Equal(&beforeProvisioned.LastTransitionTime) {
+		t.Errorf("Provisioned lastTransitionTime = %v, want %v: the status did not change", afterProvisioned.LastTransitionTime, beforeProvisioned.LastTransitionTime)
+	}
+}
+
+func TestReconcileRestartsGracePeriodWhenStatusUpdateFailsAfterPayloadChanges(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "able")
+
+	addOAuth2Application(clientExtension, "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oauth-application-user-agent")
+
+	failStatusUpdate := false
+
+	clientExtensionReconciler := newReconciler(
+		&interceptor.Funcs{
+			SubResourceUpdate: func(
+				context context.Context, client client.Client, subResourceName string, object client.Object,
+				options ...client.SubResourceUpdateOption,
+			) error {
+				if failStatusUpdate {
+					failStatusUpdate = false
+
+					return apierrors.NewConflict(
+						schema.GroupResource{Group: "cx.liferay.com", Resource: "clientextensions"}, object.GetName(),
+						errors.New("the object has been modified"),
+					)
+				}
+
+				return client.SubResource(subResourceName).Update(context, object, options...)
+			},
+		},
+		t, clientExtension, newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("able"),
+	)
+
+	recorder := record.NewFakeRecorder(10)
+
+	clientExtensionReconciler.Recorder = recorder
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	expireExtInitGracePeriod(clientExtension, clientExtensionReconciler, t)
+
+	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhaseDegraded {
+		t.Fatalf("phase = %q, want %q", phase, cxv1alpha1.PhaseDegraded)
+	}
+
+	<-recorder.Events
+
+	fixOAuth2Application(clientExtension, clientExtensionReconciler, t)
+
+	failStatusUpdate = true
+
+	if _, error := clientExtensionReconciler.Reconcile(
+		context.Background(),
+		controllerruntime.Request{NamespacedName: client.ObjectKeyFromObject(clientExtension)},
+	); !apierrors.IsConflict(error) {
+		t.Fatalf("Reconcile() error = %v, want Conflict so the request is retried", error)
+	}
+
+	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhasePending {
+		t.Errorf("phase = %q, want %q: the retry must still see the payload DXP has only just received", phase, cxv1alpha1.PhasePending)
 	}
 
 	if len(recorder.Events) != 0 {
@@ -1043,9 +1104,31 @@ func expireExtInitGracePeriod(
 		t.Fatalf("Provisioned = %v, want reason %s", provisioned, ReasonExtInitMissing)
 	}
 
-	provisioned.LastTransitionTime = metav1.NewTime(time.Now().Add(-extInitGracePeriod - time.Second))
+	expiredTime := metav1.NewTime(time.Now().Add(-extInitGracePeriod - time.Second))
+
+	provisioned.LastTransitionTime = expiredTime
+
+	updatedClientExtension.Status.ExtProvisionObservedTime = &expiredTime
 
 	if error := clientExtensionReconciler.Status().Update(context.Background(), updatedClientExtension); error != nil {
+		t.Fatal(error)
+	}
+}
+
+func fixOAuth2Application(
+	clientExtension *cxv1alpha1.ClientExtension,
+	clientExtensionReconciler *ClientExtensionReconciler,
+	t *testing.T,
+) {
+	t.Helper()
+
+	updatedClientExtension := getClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	updatedClientExtension.Spec.Configs["com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oauth-application-user-agent"] = cxv1alpha1.Configuration{
+		JSON: apiextensionsv1.JSON{Raw: []byte(`{"name": "Fixed OAuth2 Application"}`)},
+	}
+
+	if error := clientExtensionReconciler.Update(context.Background(), updatedClientExtension); error != nil {
 		t.Fatal(error)
 	}
 }

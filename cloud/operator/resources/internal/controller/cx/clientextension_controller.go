@@ -76,7 +76,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 			newCondition(
 				metav1.ConditionFalse, refusalMessage(&clientExtension, dxpNamespace, refusedReason), refusedReason,
 			),
-			false, nil,
+			"", nil,
 		)
 	}
 
@@ -98,7 +98,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 				metav1.ConditionFalse, unknownVirtualInstanceMessage(&clientExtension, dxpNamespace),
 				ReasonUnknownVirtualInstance,
 			),
-			false, nil,
+			"", nil,
 		)
 	}
 
@@ -112,7 +112,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 		return controllerruntime.Result{}, error
 	}
 
-	conflictingConfigMap, operationResult, error := clientExtensionReconciler.applyExtProvision(
+	conflictingConfigMap, extProvisionResourceVersion, error := clientExtensionReconciler.applyExtProvision(
 		&clientExtension, context, dxpNamespace, string(payload),
 	)
 
@@ -128,7 +128,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 					),
 					ReasonDeliveryNotPermitted,
 				),
-				false, nil,
+				"", nil,
 			)
 	}
 
@@ -143,7 +143,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 				metav1.ConditionFalse, serviceIDConflictMessage(&clientExtension, conflictingConfigMap),
 				ReasonServiceIDConflict,
 			),
-			false, nil,
+			"", nil,
 		)
 	}
 
@@ -187,13 +187,13 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 	if error := clientExtensionReconciler.updateStatus(
 		&clientExtension, context,
 		newCondition(metav1.ConditionTrue, message, ReasonDelivered),
-		operationResult != controllerutil.OperationResultNone, &provisionedCondition,
+		extProvisionResourceVersion, &provisionedCondition,
 	); error != nil {
 		return controllerruntime.Result{}, error
 	}
 
 	return controllerruntime.Result{
-		RequeueAfter: extInitGraceRemaining(clientExtension.Status.Conditions),
+		RequeueAfter: extInitGraceRemaining(&clientExtension.Status),
 	}, nil
 }
 
@@ -223,7 +223,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 	context context.Context,
 	dxpNamespace string,
 	payload string,
-) (*corev1.ConfigMap, controllerutil.OperationResult, error) {
+) (*corev1.ConfigMap, string, error) {
 	configMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      extProvisionName(clientExtension),
@@ -231,7 +231,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 		},
 	}
 
-	operationResult, error := controllerutil.CreateOrUpdate(
+	_, error := controllerutil.CreateOrUpdate(
 		context, clientExtensionReconciler.Client, configMap,
 		func() error {
 			if (configMap.ResourceVersion != "") && !ownsExtProvision(clientExtension, configMap) {
@@ -269,7 +269,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 	)
 
 	if errors.Is(error, errExtProvisionOwnedElsewhere) {
-		return configMap, controllerutil.OperationResultNone, nil
+		return configMap, "", nil
 	}
 
 	if apierrors.IsAlreadyExists(error) {
@@ -278,15 +278,19 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 		if getError := clientExtensionReconciler.APIReader.Get(
 			context, client.ObjectKeyFromObject(configMap), &existingConfigMap,
 		); getError != nil {
-			return nil, controllerutil.OperationResultNone, getError
+			return nil, "", getError
 		}
 
 		if !ownsExtProvision(clientExtension, &existingConfigMap) {
-			return &existingConfigMap, controllerutil.OperationResultNone, nil
+			return &existingConfigMap, "", nil
 		}
 	}
 
-	return nil, operationResult, error
+	if error != nil {
+		return nil, "", error
+	}
+
+	return nil, configMap.ResourceVersion, nil
 }
 
 func (clientExtensionReconciler *ClientExtensionReconciler) deleteStaleExtProvisions(
@@ -323,14 +327,20 @@ func (clientExtensionReconciler *ClientExtensionReconciler) deleteStaleExtProvis
 	return undeletedConfigMapNames, nil
 }
 
-func extInitGraceRemaining(conditions []metav1.Condition) time.Duration {
-	provisioned := meta.FindStatusCondition(conditions, cxv1alpha1.ConditionProvisioned)
+func extInitGraceRemaining(status *cxv1alpha1.ClientExtensionStatus) time.Duration {
+	provisioned := meta.FindStatusCondition(status.Conditions, cxv1alpha1.ConditionProvisioned)
 
 	if (provisioned == nil) || (provisioned.Reason != ReasonExtInitMissing) {
 		return 0
 	}
 
-	return max(time.Until(provisioned.LastTransitionTime.Add(extInitGracePeriod)), 0)
+	graceStartTime := provisioned.LastTransitionTime.Time
+
+	if (status.ExtProvisionObservedTime != nil) && status.ExtProvisionObservedTime.After(graceStartTime) {
+		graceStartTime = status.ExtProvisionObservedTime.Time
+	}
+
+	return max(time.Until(graceStartTime.Add(extInitGracePeriod)), 0)
 }
 
 func (clientExtensionReconciler *ClientExtensionReconciler) listOwnedExtProvisions(
@@ -591,7 +601,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 	clientExtension *cxv1alpha1.ClientExtension,
 	context context.Context,
 	delivered metav1.Condition,
-	extProvisionWritten bool,
+	extProvisionResourceVersion string,
 	provisioned *metav1.Condition,
 ) error {
 	status := clientExtension.Status.DeepCopy()
@@ -622,17 +632,18 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 		meta.SetStatusCondition(&status.Conditions, condition)
 	}
 
-	if extProvisionWritten {
-		if provisionedCondition := meta.FindStatusCondition(
-			status.Conditions, cxv1alpha1.ConditionProvisioned,
-		); (provisionedCondition != nil) && (provisionedCondition.Reason == ReasonExtInitMissing) {
-			provisionedCondition.LastTransitionTime = metav1.Now()
-		}
+	if (extProvisionResourceVersion != "") &&
+		(extProvisionResourceVersion != status.ExtProvisionResourceVersion) {
+
+		now := metav1.Now()
+
+		status.ExtProvisionObservedTime = &now
+		status.ExtProvisionResourceVersion = extProvisionResourceVersion
 	}
 
 	status.ObservedGeneration = clientExtension.Generation
 
-	if extInitGraceRemaining(status.Conditions) > 0 {
+	if extInitGraceRemaining(status) > 0 {
 		status.Phase = cxv1alpha1.PhasePending
 	} else if ready.Status == metav1.ConditionTrue {
 		status.Phase = cxv1alpha1.PhaseReady

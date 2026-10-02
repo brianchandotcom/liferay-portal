@@ -31,12 +31,16 @@ describe('reviewDateStatus', () => {
 			expect(isReviewDateOverdue('2026-04-20T10:00:00Z')).toBe(true);
 		});
 
-		it('returns true at the start of today in UTC', () => {
-			expect(isReviewDateOverdue('2026-04-21T00:00:00Z')).toBe(true);
+		it('returns true at the exact current instant', () => {
+			expect(isReviewDateOverdue('2026-04-21T10:00:00Z')).toBe(true);
 		});
 
-		it('returns true at the end of today in UTC', () => {
-			expect(isReviewDateOverdue('2026-04-21T23:59:59Z')).toBe(true);
+		it('returns false when the review date is later the same day in UTC', () => {
+			expect(isReviewDateOverdue('2026-04-21T23:59:59Z')).toBe(false);
+		});
+
+		it('returns false when the review date is 30 minutes in the future', () => {
+			expect(isReviewDateOverdue('2026-04-21T10:30:00Z')).toBe(false);
 		});
 
 		it('returns false at the start of tomorrow in UTC', () => {

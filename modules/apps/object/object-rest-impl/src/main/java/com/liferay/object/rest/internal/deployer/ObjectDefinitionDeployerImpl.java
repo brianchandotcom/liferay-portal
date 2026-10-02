@@ -597,7 +597,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					key2 -> Arrays.asList(
 						_bundleContext.registerService(
 							DTOConverter.class,
-							new ObjectEntryDTOConverter(objectDefinition),
+							new ObjectEntryDTOConverter(
+								objectDefinition.getClassName()),
 							HashMapDictionaryBuilder.put(
 								"dto.class.name",
 								objectDefinition.getClassName()

@@ -143,8 +143,8 @@ public class ObjectEntryDTOConverter
 	public ObjectEntryDTOConverter() {
 	}
 
-	public ObjectEntryDTOConverter(ObjectDefinition objectDefinition) {
-		_objectDefinition = objectDefinition;
+	public ObjectEntryDTOConverter(String className) {
+		_className = className;
 	}
 
 	@Override
@@ -154,8 +154,8 @@ public class ObjectEntryDTOConverter
 
 	@Override
 	public String getDTOClassName() {
-		if (_objectDefinition != null) {
-			return _objectDefinition.getClassName();
+		if (_className != null) {
+			return _className;
 		}
 
 		return DTOConverter.super.getDTOClassName();
@@ -163,10 +163,9 @@ public class ObjectEntryDTOConverter
 
 	@Override
 	public String getExternalDTOClassName() {
-		if (_objectDefinition != null) {
+		if (_className != null) {
 			return StringUtil.replace(
-				_objectDefinition.getClassName(),
-				ObjectDefinition.class.getName(),
+				_className, ObjectDefinition.class.getName(),
 				com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition.class.
 					getName());
 		}
@@ -178,8 +177,9 @@ public class ObjectEntryDTOConverter
 	public ObjectEntry toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _getObjectDefinition(
-			dtoConverterContext);
+		ObjectDefinition objectDefinition =
+			(ObjectDefinition)dtoConverterContext.getAttribute(
+				"objectDefinition");
 
 		ObjectEntry objectEntry = ObjectEntry.unsafeToDTO(
 			(String)dtoConverterContext.getAttribute("payload"));
@@ -891,24 +891,9 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectDefinition _getObjectDefinition(
-		DTOConverterContext dtoConverterContext) {
-
-		if (_objectDefinition != null) {
-			return _objectDefinition;
-		}
-
-		return (ObjectDefinition)dtoConverterContext.getAttribute(
-			"objectDefinition");
-	}
-
-	private ObjectDefinition _getObjectDefinition(
 			DTOConverterContext dtoConverterContext,
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
-
-		if (_objectDefinition != null) {
-			return _objectDefinition;
-		}
 
 		ObjectDefinition objectDefinition =
 			(ObjectDefinition)dtoConverterContext.getAttribute(
@@ -1417,6 +1402,8 @@ public class ObjectEntryDTOConverter
 	@Reference
 	private AuditEventLocalService _auditEventLocalService;
 
+	private String _className;
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -1437,8 +1424,6 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private Language _language;
-
-	private ObjectDefinition _objectDefinition;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

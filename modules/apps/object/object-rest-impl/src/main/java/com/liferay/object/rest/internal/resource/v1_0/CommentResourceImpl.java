@@ -16,6 +16,7 @@ import com.liferay.object.rest.internal.odata.entity.v1_0.provider.CommentEntity
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -57,15 +58,19 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionPermission discussionPermission,
 		DTOConverterRegistry dtoConverterRegistry,
 		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry) {
 
 		_commentManager = commentManager;
 		_discussionPermission = discussionPermission;
 		_dtoConverterRegistry = dtoConverterRegistry;
-		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+
+		_className = objectDefinition.getClassName();
+		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
 	}
 
 	@Override
@@ -77,8 +82,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				_objectDefinition.getClassName(), objectEntry.getId(),
-				commentExternalReferenceCode,
+				_className, objectEntry.getId(), commentExternalReferenceCode,
 				_getNonzeroGroupId(objectEntry.getId()));
 
 		if (serviceBuilderComment == null) {
@@ -99,8 +103,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				_objectDefinition.getClassName(), objectEntry.getId(),
-				commentExternalReferenceCode, objectEntry.getScopeId());
+				_className, objectEntry.getId(), commentExternalReferenceCode,
+				objectEntry.getScopeId());
 
 		if (serviceBuilderComment == null) {
 			throw new NotFoundException();
@@ -203,8 +207,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				_objectDefinition.getClassName(), objectEntry.getId(),
-				commentExternalReferenceCode,
+				_className, objectEntry.getId(), commentExternalReferenceCode,
 				_getNonzeroGroupId(objectEntry.getId()));
 
 		if (serviceBuilderComment == null) {
@@ -241,8 +244,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				_objectDefinition.getClassName(), objectEntry.getId(),
-				commentExternalReferenceCode, objectEntry.getScopeId());
+				_className, objectEntry.getId(), commentExternalReferenceCode,
+				objectEntry.getScopeId());
 
 		if (serviceBuilderComment == null) {
 			throw new NotFoundException();
@@ -266,8 +269,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				_objectDefinition.getClassName(), objectEntry.getId(),
-				commentExternalReferenceCode, groupId);
+				_className, objectEntry.getId(), commentExternalReferenceCode,
+				groupId);
 
 		if (serviceBuilderComment != null) {
 			return _updateComment(comment, serviceBuilderComment);
@@ -289,8 +292,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		com.liferay.portal.kernel.comment.Comment serviceBuilderComment =
 			_fetchComment(
-				_objectDefinition.getClassName(), objectEntry.getId(),
-				commentExternalReferenceCode, objectEntry.getScopeId());
+				_className, objectEntry.getId(), commentExternalReferenceCode,
+				objectEntry.getScopeId());
 
 		if (serviceBuilderComment != null) {
 			return _updateComment(comment, serviceBuilderComment);
@@ -322,16 +325,15 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		_discussionPermission.checkAddPermission(
 			PermissionThreadLocal.getPermissionChecker(),
-			contextCompany.getCompanyId(), groupId,
-			_objectDefinition.getClassName(), objectEntryId);
+			contextCompany.getCompanyId(), groupId, _className, objectEntryId);
 
 		if (parentCommentId != null) {
 			return CommentUtil.toComment(
 				() -> _commentManager.fetchComment(
 					_commentManager.addComment(
 						externalReferenceCode, PrincipalThreadLocal.getUserId(),
-						_objectDefinition.getClassName(), objectEntryId,
-						StringPool.BLANK, parentCommentId, StringPool.BLANK,
+						_className, objectEntryId, StringPool.BLANK,
+						parentCommentId, StringPool.BLANK,
 						StringBundler.concat("<p>", text, "</p>"),
 						_createServiceContextFunction())),
 				_commentManager, PortalUtil.getPortal());
@@ -341,9 +343,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			() -> _commentManager.fetchComment(
 				_commentManager.addComment(
 					externalReferenceCode, PrincipalThreadLocal.getUserId(),
-					groupId, _objectDefinition.getClassName(), objectEntryId,
-					StringPool.BLANK, StringPool.BLANK,
-					StringBundler.concat("<p>", text, "</p>"),
+					groupId, _className, objectEntryId, StringPool.BLANK,
+					StringPool.BLANK, StringBundler.concat("<p>", text, "</p>"),
 					_createServiceContextFunction())),
 			_commentManager, PortalUtil.getPortal());
 	}
@@ -433,8 +434,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 						"postScopeScopeKeyByExternalReferenceCodeComment" +
 							"ChildComment"
 					},
-					creator.getId(), _objectDefinition.getClassName(), scopeKey,
-					groupId)
+					creator.getId(), _className, scopeKey, groupId)
 			).put(
 				"get",
 				_addAction(
@@ -444,8 +444,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 						"getScopeScopeKeyByExternalReferenceCodeCommentChild" +
 							"CommentsPage"
 					},
-					creator.getId(), _objectDefinition.getClassName(), scopeKey,
-					groupId)
+					creator.getId(), _className, scopeKey, groupId)
 			).build(),
 			serviceBuilderComment.getCommentId(), contextCompany.getCompanyId(),
 			_commentManager, search, aggregation, null, pagination,
@@ -469,9 +468,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		Discussion discussion = _commentManager.getDiscussion(
-			PrincipalThreadLocal.getUserId(), groupId,
-			_objectDefinition.getClassName(), objectEntry.getId(),
-			_createServiceContextFunction());
+			PrincipalThreadLocal.getUserId(), groupId, _className,
+			objectEntry.getId(), _createServiceContextFunction());
 
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();
@@ -485,8 +483,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 						"postByExternalReferenceCodeComment",
 						"postScopeScopeKeyByExternalReferenceCodeComment"
 					},
-					creator.getId(), _objectDefinition.getClassName(), scopeKey,
-					groupId)
+					creator.getId(), _className, scopeKey, groupId)
 			).put(
 				"get",
 				_addAction(
@@ -495,8 +492,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 						"getByExternalReferenceCodeCommentsPage",
 						"getScopeScopeKeyByExternalReferenceCodeCommentsPage"
 					},
-					creator.getId(), _objectDefinition.getClassName(), scopeKey,
-					groupId)
+					creator.getId(), _className, scopeKey, groupId)
 			).build(),
 			rootDiscussionComment.getCommentId(), contextCompany.getCompanyId(),
 			_commentManager, search, aggregation, null, pagination,
@@ -539,35 +535,39 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			String objectEntryExternalReferenceCode, String scopeKey)
 		throws Exception {
 
-		if (!_isEnabled()) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				_objectDefinitionId);
+
+		if (!_isEnabled(objectDefinition)) {
 			throw new UnsupportedOperationException();
 		}
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType()));
+					objectDefinition.getCompanyId(),
+					objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.getObjectEntry(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
-			objectEntryExternalReferenceCode, _objectDefinition, scopeKey);
+			objectEntryExternalReferenceCode, objectDefinition, scopeKey);
 	}
 
-	private boolean _isEnabled() {
-		if (!_objectDefinition.isEnableComments()) {
+	private boolean _isEnabled(ObjectDefinition objectDefinition) {
+		if (!objectDefinition.isEnableComments()) {
 			return false;
 		}
 
 		if (Objects.equals(
-				_objectDefinition.getScope(),
+				objectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_SITE)) {
 
 			return true;
 		}
 
 		return FeatureFlagManagerUtil.isEnabled(
-			_objectDefinition.getCompanyId(), "LPD-43996");
+			objectDefinition.getCompanyId(), "LPD-43996");
 	}
 
 	private Comment _updateComment(
@@ -582,8 +582,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		return CommentUtil.toComment(
 			() -> _commentManager.fetchComment(
 				_commentManager.updateComment(
-					PrincipalThreadLocal.getUserId(),
-					_objectDefinition.getClassName(),
+					PrincipalThreadLocal.getUserId(), _className,
 					serviceBuilderComment.getClassPK(),
 					serviceBuilderComment.getCommentId(), StringPool.BLANK,
 					StringBundler.concat("<p>", comment.getText(), "</p>"),
@@ -591,10 +590,12 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			_commentManager, PortalUtil.getPortal());
 	}
 
+	private final String _className;
 	private final CommentManager _commentManager;
 	private final DiscussionPermission _discussionPermission;
 	private final DTOConverterRegistry _dtoConverterRegistry;
-	private final ObjectDefinition _objectDefinition;
+	private final long _objectDefinitionId;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 

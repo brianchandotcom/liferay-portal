@@ -227,8 +227,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		return new CommentResourceImpl(
 			_commentManager, _discussionPermission, _dtoConverterRegistry,
-			objectDefinition, _objectEntryLocalService,
-			_objectEntryManagerRegistry);
+			objectDefinition, _objectDefinitionLocalService,
+			_objectEntryLocalService, _objectEntryManagerRegistry);
 	}
 
 	private ObjectEntryResourceImpl _createObjectEntryResourceImpl(

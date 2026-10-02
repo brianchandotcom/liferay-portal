@@ -5,6 +5,8 @@
 
 package com.liferay.dynamic.data.mapping.internal.webdav;
 
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -14,7 +16,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
@@ -168,37 +169,56 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 				String typeId = pathArray[3];
 
 				if (type.equals(TYPE_STRUCTURES)) {
-					DDMStructure structure =
-						_ddmStructureLocalService.fetchStructure(
-							GetterUtil.getLong(typeId));
-
-					if (structure == null) {
-						structure = _ddmStructureLocalService.fetchStructure(
-							webDAVRequest.getGroupId(), classNameId, typeId);
+					try {
+						return toResource(
+							webDAVRequest,
+							_ddmStructureService.getStructure(
+								GetterUtil.getLong(typeId)),
+							rootPath, false);
 					}
+					catch (NoSuchStructureException noSuchStructureException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(noSuchStructureException);
+						}
 
-					if (structure == null) {
-						return null;
+						DDMStructure structure =
+							_ddmStructureService.fetchStructure(
+								webDAVRequest.getGroupId(), classNameId,
+								typeId);
+
+						if (structure == null) {
+							return null;
+						}
+
+						return toResource(
+							webDAVRequest, structure, rootPath, false);
 					}
-
-					return toResource(
-						webDAVRequest, structure, rootPath, false);
 				}
 				else if (type.equals(TYPE_TEMPLATES)) {
-					DDMTemplate template =
-						_ddmTemplateLocalService.fetchDDMTemplate(
-							GetterUtil.getLong(typeId));
-
-					if (template == null) {
-						template = _ddmTemplateLocalService.fetchTemplate(
-							webDAVRequest.getGroupId(), classNameId, typeId);
+					try {
+						return toResource(
+							webDAVRequest,
+							_ddmTemplateService.getTemplate(
+								GetterUtil.getLong(typeId)),
+							rootPath, false);
 					}
+					catch (NoSuchTemplateException noSuchTemplateException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(noSuchTemplateException);
+						}
 
-					if (template == null) {
-						return null;
+						DDMTemplate template =
+							_ddmTemplateService.fetchTemplate(
+								webDAVRequest.getGroupId(), classNameId,
+								typeId);
+
+						if (template == null) {
+							return null;
+						}
+
+						return toResource(
+							webDAVRequest, template, rootPath, false);
 					}
-
-					return toResource(webDAVRequest, template, rootPath, false);
 				}
 			}
 
@@ -357,9 +377,6 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
-
-	@Reference
-	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;

@@ -463,20 +463,9 @@ public class ContentLayoutTestUtil {
 	public static JSONObject addPortletToLayout(Layout layout, String portletId)
 		throws Exception {
 
-		MVCActionCommand addPortletMVCActionCommand = getMVCActionCommand(
-			"/layout_content_page_editor/add_portlet");
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			getMockLiferayPortletActionRequest(
-				CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
-				GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
-
 		long segmentsExperienceId =
 			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
-
-		mockLiferayPortletActionRequest.setParameter(
-			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -486,10 +475,29 @@ public class ContentLayoutTestUtil {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-		mockLiferayPortletActionRequest.setParameter(
-			"parentItemId", layoutStructure.getMainItemId());
+		return addPortletToLayout(
+			layout, layoutStructure.getMainItemId(), portletId,
+			segmentsExperienceId);
+	}
 
+	public static JSONObject addPortletToLayout(
+			Layout layout, String parentItemId, String portletId,
+			long segmentsExperienceId)
+		throws Exception {
+
+		MVCActionCommand addPortletMVCActionCommand = getMVCActionCommand(
+			"/layout_content_page_editor/add_portlet");
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			getMockLiferayPortletActionRequest(
+				CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
+				GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
+
+		mockLiferayPortletActionRequest.setParameter(
+			"parentItemId", parentItemId);
 		mockLiferayPortletActionRequest.setParameter("portletId", portletId);
+		mockLiferayPortletActionRequest.setParameter(
+			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 
 		return ReflectionTestUtil.invoke(
 			addPortletMVCActionCommand, "_processAddPortlet",

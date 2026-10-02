@@ -65,6 +65,12 @@ public class ObjectEntryRowInfoItemRendererTest {
 			RandomTestUtil.randomString()
 		);
 
+		Mockito.when(
+			_objectEntry.getObjectDefinition()
+		).thenReturn(
+			_objectDefinition
+		);
+
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 			new com.liferay.object.rest.dto.v1_0.ObjectEntry();
 

@@ -69,24 +69,26 @@ public class ObjectEntryRowInfoItemRenderer
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
-		_objectDefinition = objectDefinition;
 		_objectEntryManager = objectEntryManager;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_servletContext = servletContext;
+
+		_className = objectDefinition.getClassName();
+		_key = StringBundler.concat(
+			ObjectEntryRowInfoItemRenderer.class.getName(),
+			StringPool.UNDERLINE, objectDefinition.getCompanyId(),
+			StringPool.UNDERLINE, objectDefinition.getName());
 	}
 
 	@Override
 	public String getItemClassName() {
-		return _objectDefinition.getClassName();
+		return _className;
 	}
 
 	@Override
 	public String getKey() {
-		return StringBundler.concat(
-			ObjectEntryRowInfoItemRenderer.class.getName(),
-			StringPool.UNDERLINE, _objectDefinition.getCompanyId(),
-			StringPool.UNDERLINE, _objectDefinition.getName());
+		return _key;
 	}
 
 	@Override
@@ -100,18 +102,21 @@ public class ObjectEntryRowInfoItemRenderer
 		HttpServletResponse httpServletResponse) {
 
 		try {
+			ObjectDefinition objectDefinition =
+				objectEntry.getObjectDefinition();
+
 			httpServletRequest.setAttribute(
 				AssetDisplayPageFriendlyURLProvider.class.getName(),
 				_assetDisplayPageFriendlyURLProvider);
 			httpServletRequest.setAttribute(
-				ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
+				ObjectWebKeys.OBJECT_DEFINITION, objectDefinition);
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY, objectEntry);
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY_VALUES,
 				_getValues(
 					objectEntry.getExternalReferenceCode(),
-					objectEntry.getGroupId(),
+					objectEntry.getGroupId(), objectDefinition,
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY)));
 
@@ -128,7 +133,7 @@ public class ObjectEntryRowInfoItemRenderer
 
 	private Map<String, Serializable> _getValues(
 			String externalReferenceCode, long groupId,
-			ThemeDisplay themeDisplay)
+			ObjectDefinition objectDefinition, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry;
@@ -139,9 +144,9 @@ public class ObjectEntryRowInfoItemRenderer
 				new DefaultDTOConverterContext(
 					false, null, null, null, null, themeDisplay.getLocale(),
 					null, themeDisplay.getUser()),
-				externalReferenceCode, _objectDefinition,
+				externalReferenceCode, objectDefinition,
 				ObjectEntryInfoItemUtil.getScopeKey(
-					groupId, _objectDefinition, _objectScopeProviderRegistry));
+					groupId, objectDefinition, _objectScopeProviderRegistry));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -155,7 +160,7 @@ public class ObjectEntryRowInfoItemRenderer
 
 		List<ObjectField> objectFields = ListUtil.filter(
 			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId()),
+				objectDefinition.getObjectDefinitionId()),
 			objectField -> !objectField.isMetadata());
 
 		for (ObjectField objectField :
@@ -236,7 +241,8 @@ public class ObjectEntryRowInfoItemRenderer
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final ObjectDefinition _objectDefinition;
+	private final String _className;
+	private final String _key;
 	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;

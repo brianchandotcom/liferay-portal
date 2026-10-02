@@ -550,6 +550,6 @@ portal-kernel/test/unit/com/liferay/portal/kernel/dao/db/    @liferay-database-i
 portal-kernel/test/unit/com/liferay/portal/kernel/upgrade/    @liferay-database-infra
 util-taglib/    @liferay-frontend
 workspaces/liferay-marketplace-workspace/    @liferay-commerce
+workspaces/liferay-testray-workspace    @liferay-release
 workspaces/liferay-testray-workspace/client-extensions/liferay-testray-custom-element    @liferay-release
 workspaces/liferay-testray-workspace/client-extensions/liferay-testray-etc-jira    @liferay-release
-workspaces/liferay-testray-workspace    @liferay-release

@@ -11,25 +11,30 @@ import {DataSetPage} from '../../../site-cms-site-initializer/main/pages/DataSet
 export class FieldMappingsPage {
 	readonly channelField: (channelField: string) => Locator;
 	readonly dataSetFragmentPage: DataSetPage;
+	readonly getRow: (channelField: string) => Locator;
 	readonly page: Page;
 	readonly sourceAttributes: (channelField: string) => Locator;
 	readonly status: (channelField: string) => Locator;
 
 	constructor(page: Page) {
 		this.dataSetFragmentPage = new DataSetPage(page);
+		this.getRow = (channelField) =>
+			this.dataSetFragmentPage.table.bodyRows.filter({
+				has: page.getByRole('link', {
+					exact: true,
+					name: channelField,
+				}),
+			});
 		this.channelField = (channelField) =>
-			this.dataSetFragmentPage
-				.getRow(channelField)
-				.getByRole('link', {name: channelField});
+			this.getRow(channelField).getByRole('link', {
+				exact: true,
+				name: channelField,
+			});
 		this.page = page;
 		this.sourceAttributes = (channelField) =>
-			this.dataSetFragmentPage
-				.getRow(channelField)
-				.locator('.cell-sourceAttributes');
+			this.getRow(channelField).locator('.cell-sourceAttributes');
 		this.status = (channelField) =>
-			this.dataSetFragmentPage
-				.getRow(channelField)
-				.locator('.cell-status .label');
+			this.getRow(channelField).locator('.cell-status .label');
 	}
 
 	async clearMapping(channelField: string) {

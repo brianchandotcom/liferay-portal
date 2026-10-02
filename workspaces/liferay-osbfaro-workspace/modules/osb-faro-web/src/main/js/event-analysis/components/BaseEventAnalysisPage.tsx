@@ -344,7 +344,10 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				}}
 			</Form>
 
-			<ClayLayout.ContainerFluid className="pb-4" size="xl">
+			<ClayLayout.ContainerFluid
+				className="page-container pb-4"
+				size="xl"
+			>
 				<EventAnalysisEditor
 					channelId={channelId}
 					compareToPrevious={compareToPrevious}

@@ -65,6 +65,8 @@ const renderPage = () =>
 describe('BaseEventAnalysisPage', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
+
+		EventAnalysisEditor.mockImplementation(() => 'event analysis editor');
 	});
 
 	it('shows the creating title while saving a new analysis', async () => {
@@ -104,5 +106,17 @@ describe('BaseEventAnalysisPage', () => {
 		await waitFor(() => expect(title).toHaveValue('My'));
 
 		expect(EventAnalysisEditor.mock.calls.length).toBe(editorRenders);
+	});
+
+	it('lets the report download wait for the editor to load', () => {
+		EventAnalysisEditor.mockImplementation(() => (
+			<span className="loading-animation" />
+		));
+
+		renderPage();
+
+		expect(
+			document.querySelector('.page-container .loading-animation')
+		).toBeInTheDocument();
 	});
 });

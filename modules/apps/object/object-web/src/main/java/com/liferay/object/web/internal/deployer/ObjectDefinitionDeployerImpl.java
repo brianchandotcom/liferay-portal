@@ -302,7 +302,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				InfoItemActionExecutor.class,
 				new ObjectEntryInfoItemActionExecutor(
 					infoItemFormProvider, _objectActionLocalService,
-					objectDefinition, _objectEntryManagerRegistry),
+					objectDefinition.getObjectDefinitionId(),
+					_objectDefinitionLocalService, _objectEntryManagerRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

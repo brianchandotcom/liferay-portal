@@ -20,6 +20,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -37,12 +38,14 @@ public class ObjectEntryInfoItemActionExecutor
 	public ObjectEntryInfoItemActionExecutor(
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider,
 		ObjectActionLocalService objectActionLocalService,
-		ObjectDefinition objectDefinition,
+		long objectDefinitionId,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry) {
 
 		_infoItemFormProvider = infoItemFormProvider;
 		_objectActionLocalService = objectActionLocalService;
-		_objectDefinition = objectDefinition;
+		_objectDefinitionId = objectDefinitionId;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 	}
 
@@ -79,22 +82,26 @@ public class ObjectEntryInfoItemActionExecutor
 				throw new InfoItemActionExecutionException();
 			}
 
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					_objectDefinitionId);
+
 			DefaultObjectEntryManager defaultObjectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
 					_objectEntryManagerRegistry.getObjectEntryManager(
-						_objectDefinition.getCompanyId(),
-						_objectDefinition.getStorageType()));
+						objectDefinition.getCompanyId(),
+						objectDefinition.getStorageType()));
 
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			DTOConverterContext dtoConverterContext =
 				new DefaultDTOConverterContext(
-					null, _objectDefinition.getObjectDefinitionId(),
+					null, objectDefinition.getObjectDefinitionId(),
 					themeDisplay.getLocale(), null, themeDisplay.getUser());
 
 			ObjectAction objectAction =
 				_objectActionLocalService.getObjectAction(
-					_objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getObjectDefinitionId(),
 					infoField.getName(),
 					ObjectActionTriggerConstants.KEY_STANDALONE);
 
@@ -105,7 +112,7 @@ public class ObjectEntryInfoItemActionExecutor
 				(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 			defaultObjectEntryManager.executeObjectAction(
-				dtoConverterContext, infoField.getName(), _objectDefinition,
+				dtoConverterContext, infoField.getName(), objectDefinition,
 				classPKInfoItemIdentifier.getClassPK());
 		}
 		catch (Exception exception) {
@@ -126,7 +133,8 @@ public class ObjectEntryInfoItemActionExecutor
 
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
 	private final ObjectActionLocalService _objectActionLocalService;
-	private final ObjectDefinition _objectDefinition;
+	private final long _objectDefinitionId;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 }

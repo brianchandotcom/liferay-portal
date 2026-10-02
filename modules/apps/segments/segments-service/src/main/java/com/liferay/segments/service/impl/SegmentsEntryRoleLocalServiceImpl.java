@@ -190,6 +190,17 @@ public class SegmentsEntryRoleLocalServiceImpl
 		_addSiteRoles(segmentsEntryId, newSiteRoleIdsSet, serviceContext);
 	}
 
+	private void _addSiteRoles(
+			long segmentsEntryId, Set<Long> siteRoleIdsSet,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		for (long siteRoleId : siteRoleIdsSet) {
+			segmentsEntryRoleLocalService.addSegmentsEntryRole(
+				segmentsEntryId, siteRoleId, serviceContext);
+		}
+	}
+
 	private void _checkSiteRoleIds(long segmentsEntryId, long[] siteRoleIds)
 		throws PortalException {
 
@@ -208,17 +219,6 @@ public class SegmentsEntryRoleLocalServiceImpl
 				throw new RoleAssignmentException(
 					"Role " + siteRoleId + " is not assignable to segments");
 			}
-		}
-	}
-
-	private void _addSiteRoles(
-			long segmentsEntryId, Set<Long> siteRoleIdsSet,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		for (long siteRoleId : siteRoleIdsSet) {
-			segmentsEntryRoleLocalService.addSegmentsEntryRole(
-				segmentsEntryId, siteRoleId, serviceContext);
 		}
 	}
 

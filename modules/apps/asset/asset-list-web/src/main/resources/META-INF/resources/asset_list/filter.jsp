@@ -40,54 +40,26 @@
 
 	<div id="<portlet:namespace />ConditionForm"></div>
 
-	<c:choose>
-		<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-74731") %>'>
-			<div>
-				<react:component
-					module="{CollectionFilterBuilder} from asset-list-web"
-					props='<%=
-						HashMapBuilder.<String, Object>put(
-							"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
-						).put(
-							"groupIds", ListUtil.fromArray(editAssetListDisplayContext.getReferencedModelsGroupIds())
-						).put(
-							"initialConditions", editAssetListDisplayContext.getFilters()
-						).put(
-							"namespace", liferayPortletResponse.getNamespace()
-						).put(
-							"properties", editAssetListDisplayContext.getTypePropertiesJSONArray()
-						).put(
-							"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
-						).put(
-							"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()
-						).build()
-					%>'
-				/>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div>
-				<react:component
-					module="{AssetFilterBuilder} from asset-list-web"
-					props='<%=
-						HashMapBuilder.<String, Object>put(
-							"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
-						).put(
-							"disabled", editAssetListDisplayContext.isLiveGroup()
-						).put(
-							"groupIds", ListUtil.fromArray(editAssetListDisplayContext.getReferencedModelsGroupIds())
-						).put(
-							"namespace", liferayPortletResponse.getNamespace()
-						).put(
-							"rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray()
-						).put(
-							"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
-						).put(
-							"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()
-						).build()
-					%>'
-				/>
-			</div>
-		</c:otherwise>
-	</c:choose>
+	<div>
+		<react:component
+			module="{CollectionFilterBuilder} from asset-list-web"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
+				).put(
+					"groupIds", ListUtil.fromArray(editAssetListDisplayContext.getReferencedModelsGroupIds())
+				).put(
+					"initialConditions", editAssetListDisplayContext.getFilters()
+				).put(
+					"namespace", liferayPortletResponse.getNamespace()
+				).put(
+					"properties", editAssetListDisplayContext.getTypePropertiesJSONArray()
+				).put(
+					"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
+				).put(
+					"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()
+				).build()
+			%>'
+		/>
+	</div>
 </liferay-frontend:fieldset>

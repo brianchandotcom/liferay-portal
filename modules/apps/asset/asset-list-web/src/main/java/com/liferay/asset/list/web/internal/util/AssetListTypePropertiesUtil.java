@@ -12,9 +12,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -37,13 +35,7 @@ public class AssetListTypePropertiesUtil {
 		long[] classNameIds, long[] classTypeIds, long companyId,
 		Locale locale) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-74731")) {
-			return jsonArray;
-		}
-
-		jsonArray.put(
+		JSONArray jsonArray = JSONUtil.put(
 			JSONUtil.put(
 				"items", _getCommonFieldsItemsJSONArray(locale)
 			).put(

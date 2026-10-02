@@ -172,11 +172,15 @@ public class CTAwarePortalCache
 		portalCache.removeAll();
 
 		if (CTCollectionThreadLocal.isProductionMode()) {
-			for (PortalCache<Serializable, Serializable> ctPortalCache :
-					_ctPortalCaches.values()) {
+			removeAllFromCTPortalCaches();
+		}
+	}
 
-				ctPortalCache.removeAll();
-			}
+	public void removeAllFromCTPortalCaches() {
+		for (PortalCache<Serializable, Serializable> ctPortalCache :
+				_ctPortalCaches.values()) {
+
+			ctPortalCache.removeAll();
 		}
 	}
 

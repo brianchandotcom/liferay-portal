@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>SELECT_BUTTON_2</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form')]//button[normalize-space()='Select'])[2]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//button[normalize-space()='Select'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD_TRIGGER</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div/button[contains(@class, 'select')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//button[contains(@class, 'select')]</td>
 	<td></td>
 </tr>
 <tr>

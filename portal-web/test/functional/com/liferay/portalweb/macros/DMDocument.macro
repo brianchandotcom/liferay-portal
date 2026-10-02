@@ -3194,7 +3194,7 @@ definition {
 		}
 
 		if (${indexNumber} == 2) {
-			Click(locator1 = "Button#DUPLICATE");
+			Button.click(button = "Add Option");
 
 			Type(
 				key_fieldLabel = "Mime Type",

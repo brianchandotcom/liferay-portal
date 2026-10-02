@@ -100,7 +100,6 @@ public class ObjectEntryInfoItemFormProviderUtil {
 							currentObjectDefinition,
 							objectDefinitionLocalService,
 							objectFieldInfoFieldConverter,
-							objectFieldLocalService,
 							objectRelationshipLocalService, null));
 				}
 			}
@@ -271,7 +270,6 @@ public class ObjectEntryInfoItemFormProviderUtil {
 							relatedObjectDefinition,
 							objectDefinitionLocalService,
 							objectFieldInfoFieldConverter,
-							objectFieldLocalService,
 							objectRelationshipLocalService, objectDefinition));
 				}
 			}
@@ -335,7 +333,6 @@ public class ObjectEntryInfoItemFormProviderUtil {
 		String name, String namespace, ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
-		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectDefinition parentObjectDefinition) {
 
@@ -519,7 +516,6 @@ public class ObjectEntryInfoItemFormProviderUtil {
 							relatedObjectDefinition,
 							objectDefinitionLocalService,
 							objectFieldInfoFieldConverter,
-							objectFieldLocalService,
 							objectRelationshipLocalService, objectDefinition));
 				}
 			}

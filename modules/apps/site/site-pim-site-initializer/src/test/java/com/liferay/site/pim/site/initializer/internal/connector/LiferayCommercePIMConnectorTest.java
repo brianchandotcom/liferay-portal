@@ -189,6 +189,13 @@ public class LiferayCommercePIMConnectorTest {
 					return pimConnectorChannelField.getName();
 				}));
 		Assert.assertEquals(
+			Arrays.asList(
+				"LongInteger", "Decimal", "Text", "Decimal", "Text", "Integer",
+				"Text", "Text", "Text", "Text", "Text", "Text", "Text",
+				"Decimal", "Decimal"),
+			TransformUtil.transform(
+				pimConnectorChannelFields, PIMConnectorChannelField::getType));
+		Assert.assertEquals(
 			Arrays.asList("productOptions", "productSpecifications", "tags"),
 			TransformUtil.transform(
 				pimConnectorChannelFields,
@@ -334,7 +341,7 @@ public class LiferayCommercePIMConnectorTest {
 				"SKU-1", Collections.<String, Serializable>emptyMap()));
 
 		Assert.assertTrue(jsonObject.getBoolean("active"));
-		Assert.assertEquals("1", jsonObject.getString("catalogId"));
+		Assert.assertEquals(1, jsonObject.getLong("catalogId"));
 		Assert.assertEquals(
 			"SKU-1", jsonObject.getString("externalReferenceCode"));
 		Assert.assertEquals("simple", jsonObject.getString("productType"));

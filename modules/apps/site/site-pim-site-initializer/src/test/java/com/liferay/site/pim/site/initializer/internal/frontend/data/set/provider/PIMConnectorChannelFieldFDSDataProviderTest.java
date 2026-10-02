@@ -7,6 +7,7 @@ package com.liferay.site.pim.site.initializer.internal.frontend.data.set.provide
 
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -362,7 +363,9 @@ public class PIMConnectorChannelFieldFDSDataProviderTest {
 			pimConnector.getPIMConnectorChannelFields()
 		).thenReturn(
 			Collections.singletonList(
-				new PIMConnectorChannelField("Tags", true, "tags", false))
+				new PIMConnectorChannelField(
+					"Tags", true, "tags", false,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT))
 		);
 
 		Mockito.when(
@@ -474,8 +477,12 @@ public class PIMConnectorChannelFieldFDSDataProviderTest {
 			pimConnector.getPIMConnectorChannelFields()
 		).thenReturn(
 			Arrays.asList(
-				new PIMConnectorChannelField("Name", false, "name", true),
-				new PIMConnectorChannelField("SKU", false, "skus[].sku", false))
+				new PIMConnectorChannelField(
+					"Name", false, "name", true,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT),
+				new PIMConnectorChannelField(
+					"SKU", false, "skus[].sku", false,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT))
 		);
 
 		Mockito.when(

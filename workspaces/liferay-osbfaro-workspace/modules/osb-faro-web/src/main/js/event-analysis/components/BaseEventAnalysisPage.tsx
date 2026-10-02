@@ -147,8 +147,8 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 						'this-will-only-take-a-moment'
 					),
 					title: eventAnalysisId
-						? Liferay.Language.get('creating')
-						: Liferay.Language.get('updating'),
+						? Liferay.Language.get('updating')
+						: Liferay.Language.get('creating'),
 				},
 				{closeOnBlur: false}
 			)

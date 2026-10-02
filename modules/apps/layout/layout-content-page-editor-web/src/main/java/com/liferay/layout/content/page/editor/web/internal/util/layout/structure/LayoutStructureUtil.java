@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -177,6 +178,10 @@ public class LayoutStructureUtil {
 
 			if (fragmentEntryLink == null) {
 				return true;
+			}
+
+			if (fragmentEntryLink.getType() == FragmentConstants.TYPE_PORTLET) {
+				continue;
 			}
 
 			FragmentEntry fragmentEntry = getFragmentEntry(fragmentEntryLink);

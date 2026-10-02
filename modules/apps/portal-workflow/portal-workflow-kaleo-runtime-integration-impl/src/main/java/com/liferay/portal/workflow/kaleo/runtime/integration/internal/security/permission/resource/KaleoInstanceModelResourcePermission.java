@@ -60,6 +60,10 @@ public class KaleoInstanceModelResourcePermission
 			String actionId)
 		throws PortalException {
 
+		if (kaleoInstance.getCompanyId() != permissionChecker.getCompanyId()) {
+			return false;
+		}
+
 		return GetterUtil.getBoolean(
 			WorkflowPermissionUtil.hasPermission(
 				permissionChecker, kaleoInstance.getGroupId(),

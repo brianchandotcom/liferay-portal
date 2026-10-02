@@ -322,6 +322,15 @@ public class FinderCacheImpl
 
 		_markPendingFlush(className, argumentsResolver.getTableName());
 
+		PortalCache<Serializable, Serializable> portalCache = _portalCaches.get(
+			_getCountCacheName(className));
+
+		if (CTCollectionThreadLocal.isProductionMode() &&
+			(portalCache instanceof CTAwarePortalCache ctAwarePortalCache)) {
+
+			ctAwarePortalCache.removeAllFromCTPortalCaches();
+		}
+
 		for (FinderPath finderPath :
 				_getFinderPaths(_getCountCacheName(className))) {
 

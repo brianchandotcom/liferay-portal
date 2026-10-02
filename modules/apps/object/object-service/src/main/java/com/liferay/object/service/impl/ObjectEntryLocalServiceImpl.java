@@ -451,8 +451,7 @@ public class ObjectEntryLocalServiceImpl
 
 		defaultLanguageId = _getDefaultLanguageId(defaultLanguageId, groupId);
 
-		_fillDefaultValue(
-			defaultLanguageId, groupId, objectDefinitionId, values);
+		_fillDefaultValue(defaultLanguageId, groupId, objectDefinition, values);
 
 		_contributeValues(groupId, objectDefinition, userId, values);
 
@@ -869,7 +868,7 @@ public class ObjectEntryLocalServiceImpl
 			0, objectDefinition.getObjectDefinitionId(), primaryKey);
 
 		_deleteFileEntries(
-			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(), objectDefinition,
 			extensionDynamicObjectDefinitionTableValues);
 	}
 
@@ -3797,12 +3796,12 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _deleteFileEntries(
-		Map<String, Serializable> newValues, long objectDefinitionId,
+		Map<String, Serializable> newValues, ObjectDefinition objectDefinition,
 		Map<String, Serializable> oldValues) {
 
 		List<ObjectField> objectFields =
 			_objectFieldPersistence.findByObjectDefinitionId(
-				objectDefinitionId);
+				objectDefinition.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isSystem() ||
@@ -4151,12 +4150,12 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _fillDefaultValue(
-		String defaultLanguageId, long groupId, long objectDefinitionId,
-		Map<String, Serializable> values) {
+		String defaultLanguageId, long groupId,
+		ObjectDefinition objectDefinition, Map<String, Serializable> values) {
 
 		for (ObjectField objectField :
 				_objectFieldPersistence.findByObjectDefinitionId(
-					objectDefinitionId)) {
+					objectDefinition.getObjectDefinitionId())) {
 
 			Map<String, Object> localizedValues =
 				(Map<String, Object>)values.getOrDefault(
@@ -7874,7 +7873,7 @@ public class ObjectEntryLocalServiceImpl
 		if (!partialUpdate) {
 			_fillDefaultValue(
 				objectEntry.getDefaultLanguageId(), objectEntry.getGroupId(),
-				objectDefinition.getObjectDefinitionId(), values);
+				objectDefinition, values);
 		}
 
 		_contributeValues(
@@ -8043,8 +8042,7 @@ public class ObjectEntryLocalServiceImpl
 
 		if (!objectDefinition.isEnableObjectEntryVersioning()) {
 			_deleteFileEntries(
-				objectEntry.getValues(), objectEntry.getObjectDefinitionId(),
-				transientValues);
+				objectEntry.getValues(), objectDefinition, transientValues);
 		}
 
 		_deleteTempFileEntries(dlFileEntriesMap);

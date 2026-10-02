@@ -14,18 +14,5 @@ export function isReviewDateOverdue(reviewDate?: string | Date): boolean {
 		return false;
 	}
 
-	const now = new Date();
-
-	const reviewDay = Date.UTC(
-		review.getUTCFullYear(),
-		review.getUTCMonth(),
-		review.getUTCDate()
-	);
-	const todayDay = Date.UTC(
-		now.getUTCFullYear(),
-		now.getUTCMonth(),
-		now.getUTCDate()
-	);
-
-	return reviewDay <= todayDay;
+	return review.getTime() <= Date.now();
 }

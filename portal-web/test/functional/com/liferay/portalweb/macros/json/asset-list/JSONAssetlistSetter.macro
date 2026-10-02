@@ -75,14 +75,14 @@ definition {
 		}
 
 		var classNameIds = ListUtil.toString(${list});
-		var googleDriveShortcutClassTypeId = JSONDLfileentrytype._getFileEntryTypeKey(
+		var googleDriveShortcutClassTypeId = JSONDLfileentrytype._getFileEntryTypeId(
 			fileEntryTypeName = "Google Drive Shortcut",
 			groupId = ${globalGroupId});
-		var externalVideoShortcutClassTypeId = JSONDLfileentrytype._getFileEntryTypeKey(
+		var externalVideoShortcutClassTypeId = JSONDLfileentrytype._getFileEntryTypeId(
 			fileEntryTypeName = "External Video Shortcut",
 			groupId = ${globalGroupId});
 		var basicDocumentClassTypeId = 0;
-		var classTypeIdsDLFileEntry = JSONDLfileentrytype._getFileEntryTypeKeys(groupId = ${groupId});
+		var classTypeIdsDLFileEntry = JSONDLfileentrytype._getFileEntryTypeIds(groupId = ${groupId});
 
 		if (${classTypeIdsDLFileEntry} == "") {
 			var classTypeIdsDLFileEntry = ${basicDocumentClassTypeId};
@@ -309,7 +309,7 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 					var classTypeId = ${googleDriveShortcutClassTypeId};
 				}
 				else {
-					var classTypeId = JSONDLfileentrytype._getFileEntryTypeKey(
+					var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
 						fileEntryTypeName = ${itemSubtype},
 						groupId = ${groupId});
 				}

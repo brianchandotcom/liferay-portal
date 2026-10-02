@@ -3264,8 +3264,8 @@ definition {
 		}
 
 		if (isSet(guestWithoutViewPermission)) {
-			if (contains(${responseHeader}, 302)) {
-				echo("The guest user will be redirected to the login page when the user doesn't have view permissions.");
+			if (contains(${responseHeader}, 404)) {
+				echo("The guest user gets a not found response when the user doesn't have view permissions.");
 			}
 			else {
 				fail("FAIL!");

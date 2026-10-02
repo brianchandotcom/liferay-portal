@@ -339,6 +339,80 @@ test(
 );
 
 test(
+	'Font colors are kept when saving a rich text editable',
+	{tag: ['@LPD-107921']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		const fragmentId = getRandomString();
+
+		const editable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId,
+		});
+
+		await test.step('Create a page with a paragraph fragment and go to edit mode', async () => {
+			const fragment = getFragmentDefinition({
+				id: fragmentId,
+				key: 'BASIC_COMPONENT-paragraph',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([fragment]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		});
+
+		await test.step('Apply a font color and a font background color to the text', async () => {
+			await pageEditorPage.selectEditable(fragmentId, 'element-text');
+
+			await editable.click();
+
+			await editable.locator('[contenteditable="true"]').click();
+
+			await page.keyboard.press('ControlOrMeta+KeyA');
+
+			const toolbar = page.locator('.ck-toolbar', {
+				hasText: 'Font Color',
+			});
+
+			await toolbar.waitFor();
+
+			await toolbar.getByLabel('Font Color', {exact: true}).click();
+			await page
+				.locator('.ck-dropdown__panel-visible .ck-color-grid')
+				.getByLabel('Red', {exact: true})
+				.click();
+
+			await toolbar
+				.getByLabel('Font Background Color', {exact: true})
+				.click();
+			await page
+				.locator('.ck-dropdown__panel-visible .ck-color-grid')
+				.getByLabel('Yellow', {exact: true})
+				.click();
+
+			await page.keyboard.press('Escape');
+
+			await pageEditorPage.waitForChangesSaved();
+		});
+
+		await test.step('Check that both colors survive the sanitization after a reload', async () => {
+			await page.reload();
+
+			const span = editable.locator('span[style]').first();
+
+			await expect(span).toHaveCSS('color', 'rgb(230, 76, 76)');
+			await expect(span).toHaveCSS(
+				'background-color',
+				'rgb(230, 230, 76)'
+			);
+		});
+	}
+);
+
+test(
 	'Value of editable field should be reset when the mapped content is missing',
 	{
 		tag: '@LPS-110462',

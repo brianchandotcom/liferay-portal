@@ -45,8 +45,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -116,7 +114,6 @@ public class AssetListAssetEntryProviderOrderByTest {
 				titleObjectField.getObjectFieldId());
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageOrderedByCommonFieldDisplayDate()
 		throws Exception {
@@ -142,7 +139,6 @@ public class AssetListAssetEntryProviderOrderByTest {
 			"displayDate", "DESC", objectEntry1, objectEntry3, objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageOrderedByCommonFieldExpirationDate()
 		throws Exception {
@@ -168,7 +164,6 @@ public class AssetListAssetEntryProviderOrderByTest {
 			"expirationDate", "DESC", objectEntry1, objectEntry3, objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageOrderedByCommonFieldReviewDate()
 		throws Exception {
@@ -194,7 +189,6 @@ public class AssetListAssetEntryProviderOrderByTest {
 			"reviewDate", "DESC", objectEntry1, objectEntry3, objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageOrderedByCommonFieldUserName()
 		throws Exception {
@@ -221,7 +215,6 @@ public class AssetListAssetEntryProviderOrderByTest {
 			Field.USER_NAME, "DESC", objectEntry1, objectEntry3, objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageOrderedByCommonFieldViewCount()
 		throws Exception {
@@ -249,7 +242,6 @@ public class AssetListAssetEntryProviderOrderByTest {
 			"viewCount", "DESC", objectEntry1, objectEntry3, objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageOrderedByObjectFieldDate()
 		throws Exception {
@@ -275,7 +267,6 @@ public class AssetListAssetEntryProviderOrderByTest {
 			objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageOrderedByObjectFieldInteger()
 		throws Exception {
@@ -301,7 +292,6 @@ public class AssetListAssetEntryProviderOrderByTest {
 			objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageOrderedByObjectFieldText()
 		throws Exception {

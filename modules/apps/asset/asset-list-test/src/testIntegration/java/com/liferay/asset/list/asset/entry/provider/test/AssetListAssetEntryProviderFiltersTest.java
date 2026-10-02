@@ -68,8 +68,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -211,7 +209,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 				titleObjectField.getObjectFieldId());
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithAssetCategoryFilters()
 		throws Exception {
@@ -270,7 +267,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			journalArticle2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithAssetTagFilters()
 		throws Exception {
@@ -318,7 +314,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			journalArticle2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithCommonFieldEqualityFilters()
 		throws Exception {
@@ -394,7 +389,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithCommonFieldFilters()
 		throws Exception {
@@ -480,7 +474,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 					journalArticle.getResourcePrimKey())));
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithDateRangeFilters()
 		throws Exception {
@@ -515,7 +508,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithEqualityFilters()
 		throws Exception {
@@ -601,7 +593,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			String.valueOf(precisionDecimal), objectEntry1, objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithExternalReferenceCodeFilters()
 		throws Exception {
@@ -639,7 +630,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithKeywordsFilter()
 		throws Exception {
@@ -703,7 +693,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry1, objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithKeywordsPhraseFilter()
 		throws Exception {
@@ -731,7 +720,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry1);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithMixedCaseUserNameFilters()
 		throws Exception {
@@ -752,7 +740,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithMultipleFiltersJoinedWithMust()
 		throws Exception {
@@ -791,7 +778,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry1);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithNegationFiltersIncludeFieldAbsentEntries()
 		throws Exception {
@@ -828,7 +814,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry1, objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithNumericRangeFilters()
 		throws Exception {
@@ -887,7 +872,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry3);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithPicklistFilters()
 		throws Exception {
@@ -958,7 +942,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry4);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithTextContainsAllFilters()
 		throws Exception {
@@ -983,7 +966,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry1);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithTextContainsFilters()
 		throws Exception {
@@ -1013,7 +995,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithTextPhraseFilters()
 		throws Exception {
@@ -1074,7 +1055,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry3);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntriesInfoPageWithUserNamePhraseFilters()
 		throws Exception {
@@ -1136,39 +1116,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry3);
 	}
 
-	@FeatureFlag(enable = false, value = "LPD-74731")
 	@Test
-	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagDisabled()
-		throws Exception {
-
-		JSONArray filtersJSONArray = JSONUtil.putAll(
-			JSONUtil.put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classTypeId", _objectDefinition.getObjectDefinitionId()
-			).put(
-				"propertyName", _OBJECT_FIELD_NAME_TEXT
-			).put(
-				"value", RandomTestUtil.randomString()
-			));
-
-		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			filtersJSONArray.toString());
-
-		AssetEntryQuery assetEntryQuery =
-			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				null);
-
-		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
-	@Test
-	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagEnabled()
-		throws Exception {
-
+	public void testGetAssetEntryQueryWithFilters() throws Exception {
 		String propertyName = RandomTestUtil.randomString();
 		String value = RandomTestUtil.randomString();
 
@@ -1221,7 +1170,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 		Assert.assertEquals(value, jsonObject.getString("value"));
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntryQueryWithInvalidFilters() throws Exception {
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
@@ -1235,7 +1183,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testGetAssetEntryQueryWithoutFilters() throws Exception {
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(

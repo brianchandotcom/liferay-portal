@@ -196,6 +196,11 @@ spec:
                                 type: array
                             extInitSecretName:
                                 type: string
+                            extProvisionObservedTime:
+                                format: date-time
+                                type: string
+                            extProvisionResourceVersion:
+                                type: string
                             observedGeneration:
                                 format: int64
                                 type: integer

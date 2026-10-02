@@ -17,6 +17,7 @@ import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.info.item.handler.ObjectEntryInfoItemExceptionRequestHandler;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
@@ -41,13 +42,15 @@ public class ObjectEntryInfoItemCreator
 
 	public ObjectEntryInfoItemCreator(
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider,
-		ObjectDefinition objectDefinition,
+		long objectDefinitionId,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		_infoItemFormProvider = infoItemFormProvider;
-		_objectDefinition = objectDefinition;
+		_objectDefinitionId = objectDefinitionId;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
@@ -60,13 +63,17 @@ public class ObjectEntryInfoItemCreator
 		throws InfoFormException {
 
 		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					_objectDefinitionId);
+
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyy-MM-dd HH:mm");
 
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
-					_objectDefinition.getStorageType());
+					objectDefinition.getCompanyId(),
+					objectDefinition.getStorageType());
 
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
@@ -74,14 +81,14 @@ public class ObjectEntryInfoItemCreator
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			Map<String, Object> curProperties = _getProperties(
-				infoItemFieldValues, themeDisplay);
+				infoItemFieldValues, objectDefinition, themeDisplay);
 
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				objectEntryManager.addObjectEntry(
 					new DefaultDTOConverterContext(
 						false, null, null, null, null, themeDisplay.getLocale(),
 						null, themeDisplay.getUser()),
-					_objectDefinition,
+					objectDefinition,
 					new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
 						{
 							setDisplayDate(
@@ -117,7 +124,7 @@ public class ObjectEntryInfoItemCreator
 						}
 					},
 					ObjectEntryInfoItemUtil.getScopeKey(
-						groupId, _objectDefinition,
+						groupId, objectDefinition,
 						_objectScopeProviderRegistry));
 
 			ObjectEntry serviceBuilderObjectEntry =
@@ -127,28 +134,28 @@ public class ObjectEntryInfoItemCreator
 			serviceBuilderObjectEntry.setExternalReferenceCode(
 				objectEntry.getExternalReferenceCode());
 			serviceBuilderObjectEntry.setObjectDefinitionId(
-				_objectDefinition.getObjectDefinitionId());
+				objectDefinition.getObjectDefinitionId());
 
 			return serviceBuilderObjectEntry;
 		}
 		catch (Exception exception) {
 			ObjectEntryInfoItemExceptionRequestHandler.handleInfoFormException(
-				exception, groupId, _infoItemFormProvider,
-				_objectDefinition.getObjectDefinitionId());
+				exception, groupId, _infoItemFormProvider, _objectDefinitionId);
 		}
 
 		return null;
 	}
 
 	private Map<String, Object> _getProperties(
-		InfoItemFieldValues infoItemFieldValues, ThemeDisplay themeDisplay) {
+		InfoItemFieldValues infoItemFieldValues,
+		ObjectDefinition objectDefinition, ThemeDisplay themeDisplay) {
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
 
 			if (infoFieldValue.getValue() instanceof RelatedInfoFieldValue) {
 				return ObjectEntryUtil.toProperties(
-					infoItemFieldValues, _objectDefinition, null);
+					infoItemFieldValues, objectDefinition, null);
 			}
 		}
 
@@ -157,7 +164,8 @@ public class ObjectEntryInfoItemCreator
 	}
 
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
-	private final ObjectDefinition _objectDefinition;
+	private final long _objectDefinitionId;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;

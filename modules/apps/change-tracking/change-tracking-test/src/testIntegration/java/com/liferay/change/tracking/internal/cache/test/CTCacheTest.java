@@ -331,6 +331,54 @@ public class CTCacheTest {
 	}
 
 	@Test
+	public void testDeleteClearsCollectionCounts() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		FinderPath finderPath = new FinderPath(
+			LayoutPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByGroupId", new String[] {Long.class.getName()},
+			new String[] {"groupId"}, false);
+
+		Object[] finderArgs = {RandomTestUtil.randomLong()};
+
+		BasePersistence<?> basePersistence =
+			_layoutLocalService.getBasePersistence();
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_ctCollections.add(ctCollection);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			Assert.assertNull(
+				FinderCacheUtil.getResult(
+					finderPath, finderArgs, basePersistence));
+
+			FinderCacheUtil.putResult(finderPath, finderArgs, 1L);
+
+			Assert.assertEquals(
+				1L,
+				FinderCacheUtil.getResult(
+					finderPath, finderArgs, basePersistence));
+		}
+
+		_layoutLocalService.deleteLayout(layout);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			Assert.assertNull(
+				FinderCacheUtil.getResult(
+					finderPath, finderArgs, basePersistence));
+		}
+	}
+
+	@Test
 	public void testWithoutCTAwareDSLQueryCacheResults() throws Exception {
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 			ContactTable.INSTANCE

@@ -124,6 +124,12 @@ type ClientExtensionStatus struct {
 	ExtInitSecretName string `json:"extInitSecretName,omitempty"`
 
 	// +optional
+	ExtProvisionObservedTime *metav1.Time `json:"extProvisionObservedTime,omitempty"`
+
+	// +optional
+	ExtProvisionResourceVersion string `json:"extProvisionResourceVersion,omitempty"`
+
+	// +optional
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 
 	// +kubebuilder:validation:Enum=Degraded;Pending;Ready

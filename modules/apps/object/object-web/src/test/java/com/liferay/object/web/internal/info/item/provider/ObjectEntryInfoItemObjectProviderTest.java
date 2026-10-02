@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -58,7 +59,7 @@ public class ObjectEntryInfoItemObjectProviderTest {
 	}
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_groupLocalService = Mockito.mock(GroupLocalService.class);
 
 		_group = Mockito.mock(Group.class);
@@ -70,6 +71,16 @@ public class ObjectEntryInfoItemObjectProviderTest {
 		);
 
 		_objectDefinition = Mockito.mock(ObjectDefinition.class);
+
+		_objectDefinitionLocalService = Mockito.mock(
+			ObjectDefinitionLocalService.class);
+
+		Mockito.when(
+			_objectDefinitionLocalService.getObjectDefinition(Mockito.anyLong())
+		).thenReturn(
+			_objectDefinition
+		);
+
 		_objectEntryLocalService = Mockito.mock(ObjectEntryLocalService.class);
 
 		_objectEntryManager = Mockito.mock(ObjectEntryManager.class);
@@ -483,7 +494,8 @@ public class ObjectEntryInfoItemObjectProviderTest {
 
 		ObjectEntryInfoItemObjectProvider objectEntryInfoItemObjectProvider =
 			new ObjectEntryInfoItemObjectProvider(
-				_groupLocalService, _objectDefinition, _objectEntryLocalService,
+				_groupLocalService, _objectDefinition,
+				_objectDefinitionLocalService, _objectEntryLocalService,
 				_objectEntryManagerRegistry, _userLocalService);
 
 		try {
@@ -685,6 +697,7 @@ public class ObjectEntryInfoItemObjectProviderTest {
 	private Group _group;
 	private GroupLocalService _groupLocalService;
 	private ObjectDefinition _objectDefinition;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private ObjectEntryLocalService _objectEntryLocalService;
 	private ObjectEntryManager _objectEntryManager;
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;

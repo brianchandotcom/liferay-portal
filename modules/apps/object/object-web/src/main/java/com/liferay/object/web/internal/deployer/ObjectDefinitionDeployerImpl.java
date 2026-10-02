@@ -407,8 +407,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				InfoItemObjectProvider.class,
 				new ObjectEntryInfoItemObjectProvider(
 					_groupLocalService, objectDefinition,
-					_objectEntryLocalService, _objectEntryManagerRegistry,
-					_userLocalService),
+					_objectDefinitionLocalService, _objectEntryLocalService,
+					_objectEntryManagerRegistry, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					Constants.SERVICE_RANKING, 100
 				).put(

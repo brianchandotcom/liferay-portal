@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.string.StringBundler;
@@ -41,15 +42,20 @@ public class ObjectEntryInfoItemObjectProvider
 
 	public ObjectEntryInfoItemObjectProvider(
 		GroupLocalService groupLocalService, ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		UserLocalService userLocalService) {
 
 		_groupLocalService = groupLocalService;
-		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_userLocalService = userLocalService;
+
+		_companyId = objectDefinition.getCompanyId();
+		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
+		_storageType = objectDefinition.getStorageType();
 	}
 
 	@Override
@@ -126,10 +132,13 @@ public class ObjectEntryInfoItemObjectProvider
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getCompanyId(),
-				_objectDefinition.getStorageType());
+				_companyId, _storageType);
 
 		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					_objectDefinitionId);
+
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				objectEntryManager.getObjectEntry(
 					group.getCompanyId(),
@@ -138,12 +147,12 @@ public class ObjectEntryInfoItemObjectProvider
 						serviceContext.getLocale(), null,
 						_userLocalService.getUser(serviceContext.getUserId())),
 					ercInfoItemIdentifier.getExternalReferenceCode(),
-					_objectDefinition, group.getGroupKey());
+					objectDefinition, group.getGroupKey());
 
 			if (objectEntry != null) {
 				ObjectEntry serviceBuilderObjectEntry =
 					ObjectEntryUtil.toObjectEntry(
-						_objectDefinition, objectEntry);
+						objectDefinition, objectEntry);
 
 				objectEntries.put(
 					ercInfoItemIdentifier, serviceBuilderObjectEntry);
@@ -217,10 +226,13 @@ public class ObjectEntryInfoItemObjectProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemObjectProvider.class);
 
+	private final long _companyId;
 	private final GroupLocalService _groupLocalService;
-	private final ObjectDefinition _objectDefinition;
+	private final long _objectDefinitionId;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final String _storageType;
 	private final UserLocalService _userLocalService;
 
 }

@@ -5,6 +5,7 @@
 
 package com.liferay.site.pim.site.initializer.internal.display.context;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -309,7 +310,8 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField(
-					"SKU", false, _CHANNEL_FIELD, true))
+					"SKU", false, _CHANNEL_FIELD, true,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT))
 		);
 
 		Mockito.when(

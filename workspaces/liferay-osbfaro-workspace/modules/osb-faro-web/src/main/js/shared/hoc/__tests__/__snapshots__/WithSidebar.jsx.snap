@@ -18,59 +18,83 @@ exports[`withSidebar should render with the sidebar 1`] = `
     >
       <div
         aria-label="Menu"
-        class="sidebar shadow-none sidebar-root sidebar-light c-slideout-show"
+        class="sidebar shadow-none sidebar-root sidebar-light c-slideout-transition c-slideout-transition-out"
         id="clay-id-1"
+        inert=""
         style="width: 280px;"
         tabindex="-1"
       >
         <div
           class="c-focus-trap"
         >
-          <span
-            data-focus-scope-start="true"
-          />
           <div
-            class="my-4 px-3 py-0 sidebar-header"
+            class="sidebar-header my-4 px-3 py-0"
           >
             <div
-              class="channels-menu-root"
+              class="autofit-row"
             >
               <div
-                class="channels-menu-label"
+                class="autofit-col autofit-col-expand"
               >
-                Property
+                <div
+                  class="channels-menu-root"
+                >
+                  <div
+                    class="channels-menu-label"
+                  >
+                    Property
+                  </div>
+                  <button
+                    aria-activedescendant=""
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-label="Property"
+                    class="rounded-lg d-flex justify-content-between align-items-center btn btn-block btn-secondary"
+                    role="combobox"
+                    tabindex="0"
+                    type="button"
+                  >
+                    Channel 1
+                    <svg
+                      class="lexicon-icon lexicon-icon-caret-double inline-item inline-item-after"
+                      role="presentation"
+                    >
+                      <use
+                        href="#caret-double"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    class="channels-menu-icon"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-sites icon-root"
+                      role="presentation"
+                    >
+                      <use
+                        href="#sites"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </div>
-              <button
-                aria-activedescendant=""
-                aria-expanded="false"
-                aria-haspopup="listbox"
-                aria-label="Property"
-                class="rounded-lg d-flex justify-content-between align-items-center btn btn-block btn-secondary"
-                role="combobox"
-                tabindex="0"
-                type="button"
-              >
-                Channel 1
-                <svg
-                  class="lexicon-icon lexicon-icon-caret-double inline-item inline-item-after"
-                  role="presentation"
-                >
-                  <use
-                    href="#caret-double"
-                  />
-                </svg>
-              </button>
               <div
-                class="channels-menu-icon"
+                class="autofit-col"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-sites icon-root"
-                  role="presentation"
+                <button
+                  aria-label="Close"
+                  class="close"
+                  type="button"
                 >
-                  <use
-                    href="#sites"
-                  />
-                </svg>
+                  <svg
+                    class="lexicon-icon lexicon-icon-times"
+                    role="presentation"
+                  >
+                    <use
+                      href="#times"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -416,16 +440,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
               </ul>
             </nav>
           </div>
-          <span
-            data-focus-scope-end="true"
-          />
         </div>
       </div>
     </div>
     <div
-      aria-hidden="true"
-      class="c-slideout-push-start c-slideout-container"
-      data-aria-hidden="true"
+      class="c-slideout-transition c-slideout-transition-out c-slideout-container"
     >
       <p>
         bizbaz

@@ -1,10 +1,11 @@
 import ChannelsMenu, {Channel} from '../channels-menu';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {ACCOUNTS, Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {Map} from 'immutable';
 import {matchPath} from 'react-router-dom';
+import {useIsMobile} from 'shared/hooks/useIsMobile';
 import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
 import {SidePanel, VerticalNav} from '@clayui/core';
 
@@ -78,7 +79,19 @@ const Sidebar: React.FC<ISidebarProps> = ({
 	onCollapsedChange,
 	onSectionToggle,
 }) => {
+	const isMobile = useIsMobile();
+
 	const LDPEnabled = useLDPEnabled({groupId});
+
+	/**
+	 * On mobile the panel overlays the page and traps focus while it is open,
+	 * so it starts closed and closes again after every navigation.
+	 */
+	useLayoutEffect(() => {
+		if (isMobile) {
+			onCollapsedChange(true);
+		}
+	}, [activePathname, isMobile]);
 
 	const sidebarSections: ISidebarNavSection[] = [
 		{
@@ -212,6 +225,14 @@ const Sidebar: React.FC<ISidebarProps> = ({
 		}
 	};
 
+	const channelsMenu = (
+		<ChannelsMenu
+			channels={channels}
+			defaultChannelId={channelId}
+			groupId={groupId}
+		/>
+	);
+
 	return (
 		<SidePanel
 			aria-label={Liferay.Language.get('menu')}
@@ -224,13 +245,18 @@ const Sidebar: React.FC<ISidebarProps> = ({
 			panelWidth={280}
 			position="fixed"
 		>
-			<div className="my-4 px-3 py-0 sidebar-header">
-				<ChannelsMenu
-					channels={channels}
-					defaultChannelId={channelId}
-					groupId={groupId}
-				/>
-			</div>
+			{isMobile ? (
+				<SidePanel.Header
+					className="my-4 px-3 py-0"
+					messages={{closeAriaLabel: Liferay.Language.get('close')}}
+				>
+					{channelsMenu}
+				</SidePanel.Header>
+			) : (
+				<div className="my-4 px-3 py-0 sidebar-header">
+					{channelsMenu}
+				</div>
+			)}
 
 			<SidePanel.Body className="p-0">
 				<VerticalNav<SidebarNavEntry>

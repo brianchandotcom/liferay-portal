@@ -19,48 +19,74 @@ exports[`Sidebar should render 1`] = `
           data-focus-scope-start="true"
         />
         <div
-          class="my-4 px-3 py-0 sidebar-header"
+          class="sidebar-header my-4 px-3 py-0"
         >
           <div
-            class="channels-menu-root"
+            class="autofit-row"
           >
             <div
-              class="channels-menu-label"
+              class="autofit-col autofit-col-expand"
             >
-              Property
+              <div
+                class="channels-menu-root"
+              >
+                <div
+                  class="channels-menu-label"
+                >
+                  Property
+                </div>
+                <button
+                  aria-activedescendant=""
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-label="Property"
+                  class="rounded-lg d-flex justify-content-between align-items-center btn btn-block btn-secondary"
+                  disabled=""
+                  role="combobox"
+                  tabindex="0"
+                  type="button"
+                >
+                  No Properties
+                  <svg
+                    class="lexicon-icon lexicon-icon-caret-double inline-item inline-item-after"
+                    role="presentation"
+                  >
+                    <use
+                      href="#caret-double"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="channels-menu-icon"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-sites icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#sites"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
-            <button
-              aria-activedescendant=""
-              aria-expanded="false"
-              aria-haspopup="listbox"
-              aria-label="Property"
-              class="rounded-lg d-flex justify-content-between align-items-center btn btn-block btn-secondary"
-              disabled=""
-              role="combobox"
-              tabindex="0"
-              type="button"
-            >
-              No Properties
-              <svg
-                class="lexicon-icon lexicon-icon-caret-double inline-item inline-item-after"
-                role="presentation"
-              >
-                <use
-                  href="#caret-double"
-                />
-              </svg>
-            </button>
             <div
-              class="channels-menu-icon"
+              class="autofit-col"
             >
-              <svg
-                class="lexicon-icon lexicon-icon-sites icon-root"
-                role="presentation"
+              <button
+                aria-label="Close"
+                class="close"
+                type="button"
               >
-                <use
-                  href="#sites"
-                />
-              </svg>
+                <svg
+                  class="lexicon-icon lexicon-icon-times"
+                  role="presentation"
+                >
+                  <use
+                    href="#times"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>

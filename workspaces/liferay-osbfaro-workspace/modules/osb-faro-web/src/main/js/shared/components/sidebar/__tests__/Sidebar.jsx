@@ -10,12 +10,26 @@ const defaultProps = {
 	activePathname: '',
 	channelId: '123',
 	containerRef: React.createRef(),
-	groupId: '23'
+	groupId: '23',
+	onCollapsedChange: jest.fn()
 };
+
+const renderSidebar = (props = {}) =>
+	render(
+		<Provider store={mockStore(mockStoreDataLDP)}>
+			<MemoryRouter>
+				<Sidebar {...defaultProps} {...props} />
+			</MemoryRouter>
+		</Provider>
+	);
 
 jest.unmock('react-dom');
 
 describe('Sidebar', () => {
+	afterEach(() => {
+		delete document.body.clientWidth;
+	});
+
 	it('should render', () => {
 		const {container} = render(
 			<Provider store={mockStore(mockStoreDataLDP)}>
@@ -163,5 +177,61 @@ describe('Sidebar', () => {
 		fireEvent.click(screen.getByRole('menuitem', {name: 'Touchpoints'}));
 
 		expect(onSectionToggle).toHaveBeenCalledWith('touchpoints', true);
+	});
+
+	it('should close on mobile when it mounts', () => {
+		const onCollapsedChange = jest.fn();
+
+		renderSidebar({onCollapsedChange});
+
+		expect(onCollapsedChange).toHaveBeenCalledWith(true);
+	});
+
+	it('should close on mobile after navigating', () => {
+		const onCollapsedChange = jest.fn();
+
+		const {rerender} = renderSidebar({onCollapsedChange});
+
+		onCollapsedChange.mockClear();
+
+		rerender(
+			<Provider store={mockStore(mockStoreDataLDP)}>
+				<MemoryRouter>
+					<Sidebar
+						{...defaultProps}
+						activePathname="/workspace/23/123/sites"
+						onCollapsedChange={onCollapsedChange}
+					/>
+				</MemoryRouter>
+			</Provider>
+		);
+
+		expect(onCollapsedChange).toHaveBeenCalledWith(true);
+	});
+
+	it('should close from its close button on mobile', () => {
+		const onCollapsedChange = jest.fn();
+
+		renderSidebar({onCollapsedChange});
+
+		onCollapsedChange.mockClear();
+
+		fireEvent.click(screen.getByRole('button', {name: 'Close'}));
+
+		expect(onCollapsedChange).toHaveBeenCalledWith(true);
+	});
+
+	it('should keep its state and have no close button on desktop', () => {
+		Object.defineProperty(document.body, 'clientWidth', {
+			configurable: true,
+			value: 1024
+		});
+
+		const onCollapsedChange = jest.fn();
+
+		renderSidebar({onCollapsedChange});
+
+		expect(onCollapsedChange).not.toHaveBeenCalled();
+		expect(screen.queryByRole('button', {name: 'Close'})).toBeNull();
 	});
 });

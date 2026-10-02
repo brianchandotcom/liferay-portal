@@ -6075,9 +6075,7 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition, _objectFieldLocalService),
 			objectFieldBag, objectEntry.getObjectEntryId(), values);
 		_addObjectRelationshipERCFieldValue(
-			_objectFieldPersistence.findByObjectDefinitionId(
-				objectEntry.getObjectDefinitionId()),
-			values);
+			objectFieldBag.getObjectFields(), values);
 
 		return values;
 	}

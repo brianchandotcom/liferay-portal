@@ -37,6 +37,13 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 
 	@Override
+	public void deleteWorkflowInstance(long workflowInstanceId)
+		throws PortalException {
+
+		_workflowEngine.deleteWorkflowInstance(workflowInstanceId);
+	}
+
+	@Override
 	public void deleteWorkflowInstance(long companyId, long workflowInstanceId)
 		throws WorkflowException {
 

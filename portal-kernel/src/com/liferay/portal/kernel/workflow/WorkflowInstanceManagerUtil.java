@@ -24,6 +24,15 @@ import java.util.Map;
  */
 public class WorkflowInstanceManagerUtil {
 
+	public static void deleteWorkflowInstance(long workflowInstanceId)
+		throws PortalException {
+
+		WorkflowInstanceManager workflowInstanceManager =
+			_workflowInstanceManagerSnapshot.get();
+
+		workflowInstanceManager.deleteWorkflowInstance(workflowInstanceId);
+	}
+
 	public static void deleteWorkflowInstance(
 			long companyId, long workflowInstanceId)
 		throws WorkflowException {

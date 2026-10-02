@@ -130,6 +130,13 @@ public class DefaultWorkflowEngineImpl
 	}
 
 	@Override
+	public void deleteWorkflowInstance(long workflowInstanceId)
+		throws PortalException {
+
+		_kaleoInstanceService.deleteKaleoInstance(workflowInstanceId);
+	}
+
+	@Override
 	public void deleteWorkflowInstance(
 			long workflowInstanceId, ServiceContext serviceContext)
 		throws WorkflowException {

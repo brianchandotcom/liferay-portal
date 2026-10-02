@@ -33,6 +33,9 @@ public interface WorkflowEngine {
 			String name, int version, ServiceContext serviceContext)
 		throws WorkflowException;
 
+	public void deleteWorkflowInstance(long workflowInstanceId)
+		throws PortalException;
+
 	public void deleteWorkflowInstance(
 			long workflowInstanceId, ServiceContext serviceContext)
 		throws WorkflowException;

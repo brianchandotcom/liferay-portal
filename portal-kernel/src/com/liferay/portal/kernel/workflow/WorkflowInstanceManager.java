@@ -22,6 +22,12 @@ import java.util.Map;
  */
 public interface WorkflowInstanceManager {
 
+	public default void deleteWorkflowInstance(long workflowInstanceId)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public void deleteWorkflowInstance(long companyId, long workflowInstanceId)
 		throws WorkflowException;
 

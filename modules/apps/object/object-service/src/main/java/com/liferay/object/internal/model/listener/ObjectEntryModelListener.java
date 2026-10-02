@@ -25,6 +25,7 @@ import com.liferay.object.model.ObjectFieldTable;
 import com.liferay.object.model.ObjectRelationshipTable;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.object.model.ObjectViewFilterColumnTable;
+import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.object.rest.dto.v1_0.Location;
@@ -325,10 +326,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		String defaultLanguageId = _getDefaultLanguageId(objectEntry);
 
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId())) {
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
 
+		for (ObjectField objectField : objectFieldBag.getObjectFields()) {
 			Map<String, Serializable> values = objectEntry.getValues();
 
 			if (objectField.isLocalized()) {
@@ -535,10 +535,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		List<Attribute> attributes = new ArrayList<>();
 
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId())) {
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
 
+		for (ObjectField objectField : objectFieldBag.getObjectFields()) {
 			if (objectField.isLocalized() &&
 				_addModifiedLocalizedAttributes(
 					attributes, defaultLanguageId, objectField, originalValues,
@@ -567,9 +566,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry objectEntry)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
 		if (!objectDefinition.isEnableObjectEntryHistory()) {
 			return;

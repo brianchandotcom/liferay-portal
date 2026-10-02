@@ -15,10 +15,14 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.naming.CommunicationException;
 import javax.naming.Context;
 import javax.naming.Name;
 import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.PartialResultException;
 import javax.naming.ReferralException;
+import javax.naming.SizeLimitExceededException;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
@@ -80,6 +84,168 @@ public class SafeLdapReferralUtilTest {
 
 	@Test
 	public void testSearch() throws Exception {
+		_testSearch();
+		_testSearchWhenReferralContextIsUnavailable();
+		_testSearchWhenResultIsPartial();
+		_testSearchWhenSizeLimitIsExceeded();
+	}
+
+	@Test
+	public void testSetProperties() {
+		Map<String, String> environment = new HashMap<>();
+
+		SafeLdapReferralUtil.setProperties(
+			environment, LDAPReferralModes.FOLLOW);
+
+		Assert.assertEquals(
+			LDAPReferralModes.THROW, environment.get(Context.REFERRAL));
+		_assertTrustURLCodebaseDisabled(environment);
+
+		SafeLdapReferralUtil.setProperties(
+			environment, LDAPReferralModes.IGNORE);
+
+		Assert.assertEquals(
+			LDAPReferralModes.IGNORE, environment.get(Context.REFERRAL));
+		_assertTrustURLCodebaseDisabled(environment);
+
+		SafeLdapReferralUtil.setProperties(
+			environment, LDAPReferralModes.THROW);
+
+		Assert.assertEquals(
+			LDAPReferralModes.THROW, environment.get(Context.REFERRAL));
+		_assertTrustURLCodebaseDisabled(environment);
+	}
+
+	private void _assertSearchReturnsCollectedEntries(
+			NamingException namingException)
+		throws Exception {
+
+		SearchResult searchResult = new SearchResult(
+			"cn=" + RandomTestUtil.randomString(), null, new BasicAttributes());
+
+		NamingEnumeration<SearchResult> resultEnumeration =
+			SafeLdapReferralUtil.search(
+				"(cn=*)", new Object[0], Mockito.mock(Name.class),
+				_mockRootDirContext(namingException, searchResult),
+				new SearchControls());
+
+		Assert.assertTrue(resultEnumeration.hasMore());
+		Assert.assertSame(searchResult, resultEnumeration.next());
+		Assert.assertFalse(resultEnumeration.hasMore());
+	}
+
+	private void _assertTrustURLCodebaseDisabled(
+		Map<String, String> environment) {
+
+		Assert.assertEquals(
+			StringPool.FALSE,
+			environment.get("com.sun.jndi.cosnaming.object.trustURLCodebase"));
+		Assert.assertEquals(
+			StringPool.FALSE,
+			environment.get("com.sun.jndi.ldap.object.trustURLCodebase"));
+		Assert.assertEquals(
+			StringPool.FALSE,
+			environment.get("com.sun.jndi.rmi.object.trustURLCodebase"));
+	}
+
+	private ReferralException _mockReferralException(
+			DirContext dirContext, String referralInfo)
+		throws Exception {
+
+		ReferralException referralException = Mockito.mock(
+			ReferralException.class);
+
+		if (dirContext != null) {
+			Mockito.when(
+				referralException.getReferralContext()
+			).thenReturn(
+				dirContext
+			);
+		}
+
+		Mockito.when(
+			referralException.getReferralInfo()
+		).thenReturn(
+			referralInfo
+		);
+
+		Mockito.when(
+			referralException.skipReferral()
+		).thenReturn(
+			false
+		);
+
+		return referralException;
+	}
+
+	private DirContext _mockRootDirContext(
+			NamingException namingException, SearchResult searchResult)
+		throws Exception {
+
+		DirContext rootDirContext = Mockito.mock(DirContext.class);
+
+		NamingEnumeration<SearchResult> enumeration = Mockito.mock(
+			NamingEnumeration.class);
+
+		Mockito.when(
+			enumeration.hasMore()
+		).thenReturn(
+			true
+		).thenThrow(
+			namingException
+		);
+
+		Mockito.when(
+			enumeration.next()
+		).thenReturn(
+			searchResult
+		);
+
+		Mockito.when(
+			rootDirContext.search(
+				Mockito.any(Name.class), Mockito.anyString(),
+				Mockito.any(Object[].class), Mockito.any(SearchControls.class))
+		).thenReturn(
+			enumeration
+		);
+
+		return rootDirContext;
+	}
+
+	private DirContext _mockRootDirContext(ReferralException referralException)
+		throws Exception {
+
+		DirContext rootDirContext = Mockito.mock(DirContext.class);
+
+		NamingEnumeration<SearchResult> enumeration = Mockito.mock(
+			NamingEnumeration.class);
+
+		Mockito.when(
+			enumeration.hasMore()
+		).thenThrow(
+			referralException
+		);
+
+		Mockito.when(
+			rootDirContext.search(
+				Mockito.any(Name.class), Mockito.anyString(),
+				Mockito.any(Object[].class), Mockito.any(SearchControls.class))
+		).thenReturn(
+			enumeration
+		);
+
+		return rootDirContext;
+	}
+
+	private void _testIsAllowedReferralURL(boolean expected, String urlString) {
+		Assert.assertEquals(
+			expected,
+			ReflectionTestUtil.invoke(
+				SafeLdapReferralUtil.class, "_isAllowedReferralURL",
+				new Class<?>[] {String.class}, urlString));
+	}
+
+	private void _testSearch() throws Exception {
 		NamingEnumeration<SearchResult> enumeration = Mockito.mock(
 			NamingEnumeration.class);
 
@@ -90,7 +256,7 @@ public class SafeLdapReferralUtilTest {
 		);
 
 		SearchResult searchResult = new SearchResult(
-			"cn=test", null, new BasicAttributes());
+			"cn=" + RandomTestUtil.randomString(), null, new BasicAttributes());
 
 		Mockito.when(
 			enumeration.next()
@@ -138,107 +304,29 @@ public class SafeLdapReferralUtilTest {
 		).getReferralContext();
 	}
 
-	@Test
-	public void testSetProperties() {
-		Map<String, String> environment = new HashMap<>();
-
-		SafeLdapReferralUtil.setProperties(
-			environment, LDAPReferralModes.FOLLOW);
-
-		Assert.assertEquals(
-			LDAPReferralModes.THROW, environment.get(Context.REFERRAL));
-		_assertTrustURLCodebaseDisabled(environment);
-
-		SafeLdapReferralUtil.setProperties(
-			environment, LDAPReferralModes.IGNORE);
-
-		Assert.assertEquals(
-			LDAPReferralModes.IGNORE, environment.get(Context.REFERRAL));
-		_assertTrustURLCodebaseDisabled(environment);
-
-		SafeLdapReferralUtil.setProperties(
-			environment, LDAPReferralModes.THROW);
-
-		Assert.assertEquals(
-			LDAPReferralModes.THROW, environment.get(Context.REFERRAL));
-		_assertTrustURLCodebaseDisabled(environment);
-	}
-
-	private void _assertTrustURLCodebaseDisabled(
-		Map<String, String> environment) {
-
-		Assert.assertEquals(
-			StringPool.FALSE,
-			environment.get("com.sun.jndi.cosnaming.object.trustURLCodebase"));
-		Assert.assertEquals(
-			StringPool.FALSE,
-			environment.get("com.sun.jndi.ldap.object.trustURLCodebase"));
-		Assert.assertEquals(
-			StringPool.FALSE,
-			environment.get("com.sun.jndi.rmi.object.trustURLCodebase"));
-	}
-
-	private ReferralException _mockReferralException(
-			DirContext dirContext, String referralInfo)
+	private void _testSearchWhenReferralContextIsUnavailable()
 		throws Exception {
 
-		ReferralException referralException = Mockito.mock(
-			ReferralException.class);
-
-		if (dirContext != null) {
-			Mockito.when(
-				referralException.getReferralContext()
-			).thenReturn(
-				dirContext
-			);
-		}
+		ReferralException referralException = _mockReferralException(
+			null, "ldap://" + RandomTestUtil.randomString());
 
 		Mockito.when(
-			referralException.getReferralInfo()
-		).thenReturn(
-			referralInfo
-		);
-
-		Mockito.when(
-			referralException.skipReferral()
-		).thenReturn(
-			false
-		);
-
-		return referralException;
-	}
-
-	private DirContext _mockRootDirContext(ReferralException referralException)
-		throws Exception {
-
-		DirContext rootDirContext = Mockito.mock(DirContext.class);
-
-		NamingEnumeration<SearchResult> enumeration = Mockito.mock(
-			NamingEnumeration.class);
-
-		Mockito.when(
-			enumeration.hasMore()
+			referralException.getReferralContext()
 		).thenThrow(
-			referralException
+			new CommunicationException(RandomTestUtil.randomString())
 		);
 
-		Mockito.when(
-			rootDirContext.search(
-				Mockito.any(Name.class), Mockito.anyString(),
-				Mockito.any(Object[].class), Mockito.any(SearchControls.class))
-		).thenReturn(
-			enumeration
-		);
-
-		return rootDirContext;
+		_assertSearchReturnsCollectedEntries(referralException);
 	}
 
-	private void _testIsAllowedReferralURL(boolean expected, String urlString) {
-		Assert.assertEquals(
-			expected,
-			ReflectionTestUtil.invoke(
-				SafeLdapReferralUtil.class, "_isAllowedReferralURL",
-				new Class<?>[] {String.class}, urlString));
+	private void _testSearchWhenResultIsPartial() throws Exception {
+		_assertSearchReturnsCollectedEntries(
+			new PartialResultException(RandomTestUtil.randomString()));
+	}
+
+	private void _testSearchWhenSizeLimitIsExceeded() throws Exception {
+		_assertSearchReturnsCollectedEntries(
+			new SizeLimitExceededException(RandomTestUtil.randomString()));
 	}
 
 }

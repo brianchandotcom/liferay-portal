@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -47,6 +49,8 @@ import com.liferay.scim.rest.client.resource.v1_0.UserResource;
 import com.liferay.scim.rest.resource.v1_0.test.util.ScimTestUtil;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -97,11 +101,11 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
-		com.liferay.portal.kernel.model.User user = _userLocalService.getUser(
-			TestPropsValues.getUserId());
+		com.liferay.portal.kernel.model.User portalUser =
+			_userLocalService.getUser(TestPropsValues.getUserId());
 
 		_userResource = builder.authentication(
-			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			portalUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			company.getVirtualHostname(), PortalUtil.getPortalServerPort(false),
 			"http"
@@ -195,6 +199,24 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		assertValid(getGroup);
 		Assert.assertNull(getGroup.getMembers());
+
+		com.liferay.portal.kernel.model.User portalUser1 =
+			UserTestUtil.addUser();
+
+		ScimTestUtil.saveSCIMClientId(
+			com.liferay.portal.kernel.model.User.class.getName(),
+			portalUser1.getUserId(), portalUser1.getCompanyId());
+
+		com.liferay.portal.kernel.model.User portalUser2 =
+			UserTestUtil.addUser();
+
+		_userLocalService.addUserGroupUsers(
+			GetterUtil.getLong(group2.getId()),
+			new long[] {portalUser1.getUserId(), portalUser2.getUserId()});
+
+		getGroup = _getGroup(GetterUtil.getLong(group2.getId()));
+
+		Assert.assertEquals(1, ArrayUtil.getLength(getGroup.getMembers()));
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
@@ -380,6 +402,24 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		patchGroup = _patchGroup(patchOp, userGroup.getUserGroupId());
 
 		Assert.assertEquals(2, ArrayUtil.getLength(patchGroup.getMembers()));
+
+		Map<String, String> members = new HashMap<>();
+
+		for (MultiValuedAttribute multiValuedAttribute :
+				patchGroup.getMembers()) {
+
+			members.put(
+				multiValuedAttribute.getValue(),
+				multiValuedAttribute.getDisplay());
+		}
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				user1.getId(), user1.getUserName()
+			).put(
+				user2.getId(), user2.getUserName()
+			).build(),
+			members);
 
 		User user3 = _addUser();
 

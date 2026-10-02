@@ -211,6 +211,10 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 		}
 
 		return JSONUtil.put(
+			"fieldType", "select"
+		).put(
+			"key", sourceFieldName
+		).put(
 			"name",
 			JSONUtil.put(
 				"en_US",
@@ -218,6 +222,8 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 					objectDefinition, objectEntry))
 		).put(
 			"optionExternalReferenceCode", sourceFieldName
+		).put(
+			"optionId", 0
 		).put(
 			"priority", priority
 		).put(

@@ -27,6 +27,7 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -88,7 +89,7 @@ public class ObjectEntryInfoItemFormProviderUtil {
 					unsafeConsumer.accept(categorizationInfoFieldSet);
 				}
 			}
-		).<NoSuchFormVariationException>infoFieldSetEntry(
+		).infoFieldSetEntry(
 			unsafeConsumer -> {
 				if (objectDefinitionId != 0) {
 					unsafeConsumer.accept(
@@ -105,9 +106,15 @@ public class ObjectEntryInfoItemFormProviderUtil {
 			}
 		).infoFieldSetEntry(
 			unsafeConsumer -> {
+				if (currentObjectDefinition == null) {
+					return;
+				}
+
+				ObjectFieldBag objectFieldBag =
+					currentObjectDefinition.getObjectFieldBag();
+
 				for (ObjectField objectField :
-						objectFieldLocalService.getObjectFields(
-							objectDefinitionId)) {
+						objectFieldBag.getObjectFields()) {
 
 					if (!objectField.compareBusinessType(
 							ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
@@ -335,9 +342,11 @@ public class ObjectEntryInfoItemFormProviderUtil {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			unsafeConsumer -> {
+				ObjectFieldBag objectFieldBag =
+					objectDefinition.getObjectFieldBag();
+
 				for (ObjectField objectField :
-						objectFieldLocalService.getObjectFields(
-							objectDefinition.getObjectDefinitionId())) {
+						objectFieldBag.getObjectFields()) {
 
 					if (objectField.isMetadata()) {
 						continue;

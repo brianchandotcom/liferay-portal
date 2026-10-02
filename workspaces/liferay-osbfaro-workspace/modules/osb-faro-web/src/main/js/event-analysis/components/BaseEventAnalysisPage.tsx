@@ -339,31 +339,24 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 									<EventAnalysisTitle />
 								</ClayLayout.ContainerFluid>
 							</Form.Form>
-
-							<ClayLayout.ContainerFluid
-								className="pb-4"
-								size="xl"
-							>
-								<EventAnalysisEditor
-									channelId={channelId}
-									compareToPrevious={compareToPrevious}
-									event={event!}
-									onCompareToPreviousChange={
-										onCompareToPreviousChange
-									}
-									onEventChange={onEventChange}
-									onRangeSelectorsChange={
-										onRangeSelectorsChange
-									}
-									onTypeChange={onTypeChange}
-									rangeSelectors={rangeSelectors!}
-									type={type}
-								/>
-							</ClayLayout.ContainerFluid>
 						</>
 					);
 				}}
 			</Form>
+
+			<ClayLayout.ContainerFluid className="pb-4" size="xl">
+				<EventAnalysisEditor
+					channelId={channelId}
+					compareToPrevious={compareToPrevious}
+					event={event!}
+					onCompareToPreviousChange={onCompareToPreviousChange}
+					onEventChange={onEventChange}
+					onRangeSelectorsChange={onRangeSelectorsChange}
+					onTypeChange={onTypeChange}
+					rangeSelectors={rangeSelectors!}
+					type={type}
+				/>
+			</ClayLayout.ContainerFluid>
 		</BaseEditPage>
 	);
 };

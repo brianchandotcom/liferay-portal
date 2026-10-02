@@ -90,4 +90,19 @@ describe('BaseEventAnalysisPage', () => {
 			await screen.findByText('event analysis list')
 		).toBeInTheDocument();
 	});
+
+	it('does not rerender the editor while typing the title', async () => {
+		renderPage();
+
+		const editorRenders = EventAnalysisEditor.mock.calls.length;
+
+		const title = screen.getByLabelText(/^title/i);
+
+		fireEvent.change(title, {target: {value: 'M'}});
+		fireEvent.change(title, {target: {value: 'My'}});
+
+		await waitFor(() => expect(title).toHaveValue('My'));
+
+		expect(EventAnalysisEditor.mock.calls.length).toBe(editorRenders);
+	});
 });

@@ -29,7 +29,7 @@ test(
 
 				await expect(
 					fieldMappingsPage.dataSetFragmentPage.table.bodyRows
-				).toHaveCount(5);
+				).toHaveCount(15);
 			});
 
 			await test.step('Every channel field of a new connector is unmapped', async () => {
@@ -42,12 +42,21 @@ test(
 				await expect(fieldMappingsPage.status('Name')).toHaveText(
 					'Required - Not Mapped'
 				);
+				await expect(
+					fieldMappingsPage.status('Product Options[]')
+				).toHaveText('Not Mapped');
+				await expect(
+					fieldMappingsPage.status('Product Type')
+				).toHaveText('Required - Not Mapped');
 				await expect(fieldMappingsPage.status('SKU')).toHaveText(
 					'Required - Not Mapped'
 				);
 				await expect(fieldMappingsPage.status('Tags[]')).toHaveText(
 					'Not Mapped'
 				);
+				await expect(
+					fieldMappingsPage.status('Unit of Measure Name')
+				).toHaveText('Not Mapped');
 			});
 
 			await test.step('Search the channel fields', async () => {

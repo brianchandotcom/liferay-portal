@@ -1,6 +1,7 @@
 import ChannelProvider from 'shared/context/channel';
 import client from 'shared/apollo/client';
 import React, {useEffect, useState} from 'react';
+import RouterLink from 'shared/components/RouterLink';
 import store from 'shared/store';
 import UnassignedSegmentsProvider from 'shared/context/unassignedSegments';
 import {
@@ -11,7 +12,7 @@ import {
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayLinkContext} from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {Link, RouterProvider} from 'react-router-dom';
+import {RouterProvider} from 'react-router-dom';
 import {OnboardingContext} from 'shared/context/onboarding';
 import {Provider} from 'react-redux';
 import {router} from './routes';
@@ -30,32 +31,7 @@ const App = () => {
 			<ApolloProviderHooks client={client}>
 				<Provider store={store}>
 					<ClayIconSpriteContext.Provider value="/o/osb-faro-web/dist/sprite.svg">
-						<ClayLinkContext.Provider
-							value={({
-								children,
-								externalLink = false,
-								href,
-								...otherProps
-							}: {
-								children?: React.ReactNode;
-								externalLink?: boolean;
-								href?: string;
-							}) => {
-								if (href?.startsWith('http') || externalLink) {
-									return (
-										<a {...otherProps} href={href}>
-											{children}
-										</a>
-									);
-								}
-
-								return (
-									<Link {...otherProps} to={href || ''}>
-										{children}
-									</Link>
-								);
-							}}
-						>
+						<ClayLinkContext.Provider value={RouterLink}>
 							<UnassignedSegmentsProvider>
 								<OnboardingContext.Provider
 									value={{

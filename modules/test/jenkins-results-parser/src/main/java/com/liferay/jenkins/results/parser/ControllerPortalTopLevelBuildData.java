@@ -50,7 +50,7 @@ public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 	public String getTestrayProjectName() {
 		String testrayProjectName = Environment.get("TESTRAY_PROJECT_NAME");
 
-		if ((testrayProjectName != null) && !testrayProjectName.isEmpty()) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
 			return testrayProjectName;
 		}
 
@@ -62,6 +62,18 @@ public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 
 		if (testrayProjectName == null) {
 			return null;
+		}
+
+		String testrayRoutineName = Environment.get("TESTRAY_ROUTINE_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
+			return testrayRoutineName;
+		}
+
+		String testrayBuildType = Environment.get("TESTRAY_BUILD_TYPE");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildType)) {
+			return testrayBuildType;
 		}
 
 		return JenkinsResultsParserUtil.combine(
@@ -80,7 +92,7 @@ public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 
 		String jenkinsGitHubURL = getBuildParameter("JENKINS_GITHUB_URL");
 
-		if ((jenkinsGitHubURL != null) && !jenkinsGitHubURL.isEmpty()) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jenkinsGitHubURL)) {
 			setJenkinsGitHubURL(jenkinsGitHubURL);
 		}
 	}
@@ -95,7 +107,7 @@ public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 	private String _getPortalGitHubURL() {
 		String portalGitHubURL = Environment.get("PORTAL_GITHUB_URL");
 
-		if ((portalGitHubURL != null) && !portalGitHubURL.isEmpty()) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalGitHubURL)) {
 			return portalGitHubURL;
 		}
 

@@ -133,7 +133,8 @@ public class ObjectEntryInfoItemCreator
 		}
 		catch (Exception exception) {
 			ObjectEntryInfoItemExceptionRequestHandler.handleInfoFormException(
-				exception, groupId, _infoItemFormProvider, _objectDefinition);
+				exception, groupId, _infoItemFormProvider,
+				_objectDefinition.getObjectDefinitionId());
 		}
 
 		return null;

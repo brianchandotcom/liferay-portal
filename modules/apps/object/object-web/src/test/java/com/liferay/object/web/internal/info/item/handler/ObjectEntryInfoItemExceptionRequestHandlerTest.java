@@ -12,7 +12,6 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.object.exception.ObjectEntryValuesException;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -92,7 +91,7 @@ public class ObjectEntryInfoItemExceptionRequestHandlerTest {
 				new AssetCategoryException(
 					assetVocabulary,
 					AssetCategoryException.AT_LEAST_ONE_CATEGORY),
-				0, null, null);
+				0, null, 0);
 
 			Assert.fail();
 		}
@@ -115,7 +114,7 @@ public class ObjectEntryInfoItemExceptionRequestHandlerTest {
 				new AssetCategoryException(
 					assetVocabulary,
 					AssetCategoryException.TOO_MANY_CATEGORIES),
-				0, null, null);
+				0, null, 0);
 
 			Assert.fail();
 		}
@@ -137,8 +136,7 @@ public class ObjectEntryInfoItemExceptionRequestHandlerTest {
 				ObjectEntryInfoItemExceptionRequestHandler.
 					handleInfoFormException(
 						new DuplicateExternalReferenceCodeException(), 0,
-						_mockInfoItemFormProvider(),
-						Mockito.mock(ObjectDefinition.class)));
+						_mockInfoItemFormProvider(), 0));
 	}
 
 	private void _testHandleInfoFormExceptionWhenDuplicateFriendlyURL()
@@ -152,8 +150,7 @@ public class ObjectEntryInfoItemExceptionRequestHandlerTest {
 						new ModelListenerException(
 							new GroupFriendlyURLException(
 								GroupFriendlyURLException.DUPLICATE)),
-						0, _mockInfoItemFormProvider(),
-						Mockito.mock(ObjectDefinition.class)));
+						0, _mockInfoItemFormProvider(), 0));
 	}
 
 	private void _testHandleInfoFormExceptionWhenInvalidValue()
@@ -166,8 +163,7 @@ public class ObjectEntryInfoItemExceptionRequestHandlerTest {
 					handleInfoFormException(
 						new ObjectEntryValuesException.InvalidValue(
 							RandomTestUtil.randomString()),
-						0, _mockInfoItemFormProvider(),
-						Mockito.mock(ObjectDefinition.class)));
+						0, _mockInfoItemFormProvider(), 0));
 	}
 
 	private void _testHandleInfoFormExceptionWhenRequiredLanguageId()
@@ -181,8 +177,7 @@ public class ObjectEntryInfoItemExceptionRequestHandlerTest {
 						new ObjectEntryValuesException.RequiredLanguageId(
 							RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()),
-						0, _mockInfoItemFormProvider(),
-						Mockito.mock(ObjectDefinition.class)));
+						0, _mockInfoItemFormProvider(), 0));
 	}
 
 }

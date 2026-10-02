@@ -247,7 +247,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		catch (Exception exception) {
 			ObjectEntryInfoItemExceptionRequestHandler.handleInfoFormException(
 				exception, objectEntry.getGroupId(), _infoItemFormProvider,
-				_objectDefinition);
+				_objectDefinition.getObjectDefinitionId());
 		}
 
 		return null;

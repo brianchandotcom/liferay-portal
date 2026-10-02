@@ -63,4 +63,26 @@ describe('BaseEditPage.Title', () => {
 
 		expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 	});
+
+	it('confirms the title on Enter without submitting the form', () => {
+		renderTitle();
+
+		const input = screen.getByLabelText(/title/i);
+
+		input.focus();
+
+		expect(fireEvent.keyDown(input, {key: 'Enter'})).toBe(false);
+		expect(input).not.toHaveFocus();
+	});
+
+	it('leaves the other keys alone', () => {
+		renderTitle();
+
+		const input = screen.getByLabelText(/title/i);
+
+		input.focus();
+
+		expect(fireEvent.keyDown(input, {key: 'a'})).toBe(true);
+		expect(input).toHaveFocus();
+	});
 });

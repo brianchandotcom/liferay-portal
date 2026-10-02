@@ -15,6 +15,17 @@ interface ITitleProps {
 	value: string;
 }
 
+/**
+ * Enter only confirms the title, so it does not submit the editor's form.
+ */
+const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+	if (event.key === 'Enter') {
+		event.preventDefault();
+
+		event.currentTarget.blur();
+	}
+};
+
 const Title: React.FC<ITitleProps> = ({
 	errorMessage,
 	id,
@@ -42,6 +53,7 @@ const Title: React.FC<ITitleProps> = ({
 			name={name}
 			onBlur={onBlur}
 			onChange={onChange}
+			onKeyDown={handleKeyDown}
 			placeholder={placeholder}
 			required={required}
 			type="text"

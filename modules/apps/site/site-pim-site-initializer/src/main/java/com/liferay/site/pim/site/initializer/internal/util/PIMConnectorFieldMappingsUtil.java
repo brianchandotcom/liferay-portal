@@ -17,10 +17,13 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -116,11 +119,22 @@ public class PIMConnectorFieldMappingsUtil {
 			return null;
 		}
 
+		String type = pimConnectorChannelField.getType();
+
 		if (pimConnectorChannelField.isMultiple()) {
-			return JSONUtil.putAll(channelFieldValues.toArray());
+			return JSONUtil.putAll(
+				TransformUtil.transformToArray(
+					channelFieldValues,
+					channelFieldValue -> _toObject(
+						pimConnectorChannelField, channelFieldValue),
+					Object.class));
 		}
 
-		return StringUtil.merge(channelFieldValues, StringPool.SPACE);
+		if (Objects.equals(type, ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+			return StringUtil.merge(channelFieldValues, StringPool.SPACE);
+		}
+
+		return _toObject(pimConnectorChannelField, channelFieldValues.get(0));
 	}
 
 	public static String getLabel(
@@ -201,5 +215,47 @@ public class PIMConnectorFieldMappingsUtil {
 			MapUtil.getString(objectEntry.getValues(), "type"),
 			TYPE_FIXED_VALUE);
 	}
+
+	private static Object _toObject(
+		PIMConnectorChannelField pimConnectorChannelField, String value) {
+
+		String type = pimConnectorChannelField.getType();
+
+		try {
+			if (Objects.equals(
+					type, ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
+
+				return Boolean.valueOf(value);
+			}
+
+			if (Objects.equals(
+					type, ObjectFieldConstants.BUSINESS_TYPE_DECIMAL)) {
+
+				return Double.valueOf(value);
+			}
+
+			if (Objects.equals(
+					type, ObjectFieldConstants.BUSINESS_TYPE_INTEGER) ||
+				Objects.equals(
+					type, ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER)) {
+
+				return Long.valueOf(value);
+			}
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to convert ",
+						pimConnectorChannelField.getName(), " to ", type),
+					numberFormatException);
+			}
+		}
+
+		return value;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PIMConnectorFieldMappingsUtil.class);
 
 }

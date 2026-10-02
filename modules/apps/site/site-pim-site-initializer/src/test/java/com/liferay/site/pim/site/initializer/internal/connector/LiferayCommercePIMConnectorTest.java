@@ -560,8 +560,12 @@ public class LiferayCommercePIMConnectorTest {
 		JSONObject productOptionJSONObject = jsonArray.getJSONObject(0);
 
 		Assert.assertEquals(
+			"select", productOptionJSONObject.getString("fieldType"));
+		Assert.assertEquals("color", productOptionJSONObject.getString("key"));
+		Assert.assertEquals(
 			"color",
 			productOptionJSONObject.getString("optionExternalReferenceCode"));
+		Assert.assertEquals(0, productOptionJSONObject.getLong("optionId"));
 		Assert.assertTrue(productOptionJSONObject.getBoolean("skuContributor"));
 
 		JSONObject nameJSONObject = productOptionJSONObject.getJSONObject(

@@ -5,12 +5,14 @@
 
 package com.liferay.ai.creator.openai.web.internal.upload;
 
+import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIWebKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletSession;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -56,6 +59,15 @@ public class AICreatorOpenAIUploadFileEntryHandler
 
 		if (Validator.isNull(urlPath)) {
 			return null;
+		}
+
+		PortletSession portletSession = portletRequest.getPortletSession();
+
+		Set<String> generations = (Set<String>)portletSession.getAttribute(
+			AICreatorOpenAIWebKeys.GENERATIONS);
+
+		if ((generations == null) || !generations.contains(urlPath)) {
+			throw new PrincipalException("URL path is not a generated image");
 		}
 
 		URL url = new URL(urlPath);

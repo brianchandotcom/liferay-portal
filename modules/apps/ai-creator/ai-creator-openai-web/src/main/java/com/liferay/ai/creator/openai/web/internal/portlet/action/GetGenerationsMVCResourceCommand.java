@@ -6,15 +6,18 @@
 package com.liferay.ai.creator.openai.web.internal.portlet.action;
 
 import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortletKeys;
+import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIWebKeys;
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import jakarta.portlet.PortletSession;
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
@@ -69,18 +72,21 @@ public class GetGenerationsMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		try {
+			String[] generations = aiCreatorOpenAIClient.getGenerations(
+				apiKey, prompt,
+				ParamUtil.getString(resourceRequest, "size", "256x256"),
+				ParamUtil.getInteger(resourceRequest, "numberOfImages", 1));
+
+			PortletSession portletSession = resourceRequest.getPortletSession();
+
+			portletSession.setAttribute(
+				AICreatorOpenAIWebKeys.GENERATIONS,
+				SetUtil.fromArray(generations));
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
-					"generations",
-					JSONUtil.put(
-						"content",
-						aiCreatorOpenAIClient.getGenerations(
-							apiKey, prompt,
-							ParamUtil.getString(
-								resourceRequest, "size", "256x256"),
-							ParamUtil.getInteger(
-								resourceRequest, "numberOfImages", 1)))));
+					"generations", JSONUtil.put("content", generations)));
 		}
 		catch (AICreatorOpenAIClientException aiCreatorOpenAIClientException) {
 			handleAICreatorOpenAIClientExceptionMessages(

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -247,6 +248,51 @@ public class FinderCacheTest {
 		}
 
 		Assert.assertNull(_finderCache.getResult(finderPath, finderArgs, null));
+
+		FinderPath countFinderPath = new FinderPath(
+			"com.liferay.portal.model.impl.TicketImpl.List2", "countByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK", "type_"},
+			false);
+
+		Object[] countFinderArgs = ArrayUtil.append(
+			finderArgs, TicketConstants.TYPE_PASSWORD);
+
+		TransactionInvokerUtil.invoke(
+			TransactionConfig.Factory.create(
+				Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+			(Callable<Void>)() -> {
+				_addTicket(classPK, serviceContext);
+
+				try {
+					TransactionInvokerUtil.invoke(
+						TransactionConfig.Factory.create(
+							Propagation.NOT_SUPPORTED,
+							new Class<?>[] {Exception.class}),
+						(Callable<Void>)() -> {
+							Assert.assertNull(
+								_finderCache.getResult(
+									countFinderPath, countFinderArgs,
+									_ticketPersistence));
+
+							return null;
+						});
+				}
+				catch (Throwable throwable) {
+					throw new Exception(throwable);
+				}
+
+				return null;
+			});
+
+		_finderCache.putResult(countFinderPath, countFinderArgs, 0L);
+
+		Assert.assertNull(
+			_finderCache.getResult(
+				countFinderPath, countFinderArgs, _ticketPersistence));
 	}
 
 	@Test

@@ -493,6 +493,7 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setUserName(user.getFullName());
 		objectEntry.setCreateDate(new Date());
 		objectEntry.setHeadObjectEntryId(objectEntryId);
+		objectEntry.setObjectDefinition(objectDefinition);
 		objectEntry.setObjectDefinitionId(objectDefinitionId);
 		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
 		objectEntry.setDefaultLanguageId(defaultLanguageId);
@@ -7864,6 +7865,8 @@ public class ObjectEntryLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
+
+		objectEntry.setObjectDefinition(objectDefinition);
 
 		if (!partialUpdate) {
 			_fillDefaultValue(

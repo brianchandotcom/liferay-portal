@@ -37,7 +37,11 @@ export async function navigateTo({
 	page: Page;
 	pageName: string;
 }) {
-	await page.getByRole('link', {name: pageName}).first().click();
+	await page
+		.getByRole('link', {name: pageName})
+		.or(page.getByRole('menuitem', {name: pageName}))
+		.first()
+		.click();
 
 	await waitForLoading(page);
 }

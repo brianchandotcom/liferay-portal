@@ -1419,9 +1419,6 @@ definition {
 			else if (isSet(copyToStagingSite)) {
 				Alert.viewErrorMessage(errorMessage = "Cannot copy to the live version of a site. Make your changes in staging and publish them to Live afterwards to make them public.");
 			}
-			else if (isSet(copyWithRequiredField)) {
-				Alert.viewErrorMessage(errorMessage = "No value defined for field name");
-			}
 			else if (isSet(copyExceedsSizeLimit)) {
 				Alert.viewErrorMessage(errorMessage = " Item cannot be copied because it exceeds the limit set in the destination site's site settings. The total size of all items to copy must not exceed ${copyExceedsSizeLimit}.");
 			}

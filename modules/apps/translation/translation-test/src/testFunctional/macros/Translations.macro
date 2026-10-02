@@ -519,13 +519,9 @@ definition {
 		}
 
 		if (isSet(webContentSourceHtml)) {
-			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON_2");
-
-			Type.typeCodeMirrorEditorNoError(
-				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-				value1 = ${webContentSourceHtml});
-
-			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON_2");
+			CKEditor.addSourceContent(
+				content = ${webContentSourceHtml},
+				fieldLabel = "Rich Text");
 		}
 
 		if (isSet(webContentText)) {
@@ -905,13 +901,10 @@ definition {
 		}
 
 		if (isSet(webContentHtml)) {
-			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "CKEditor#BODY",
-				value1 = ${webContentHtml});
-
-			SelectFrame(value1 = "relative=top");
+			CKEditor.assertContentInEitherEditor(
+				content = ${webContentHtml},
+				fieldLabel = "Rich Text",
+				iframeLocator = "CKEditor#BODY_FIELD_IFRAME_2");
 		}
 
 		if (isSet(webContentText)) {

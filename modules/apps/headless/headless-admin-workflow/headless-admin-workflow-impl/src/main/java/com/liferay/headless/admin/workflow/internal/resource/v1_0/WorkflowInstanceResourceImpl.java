@@ -11,7 +11,7 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.ObjectReviewedUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -57,20 +57,8 @@ public class WorkflowInstanceResourceImpl
 	public WorkflowInstance getWorkflowInstance(Long workflowInstanceId)
 		throws Exception {
 
-		try {
-			return _toWorkflowInstance(
-				_workflowInstanceManager.getWorkflowInstance(
-					contextCompany.getCompanyId(), workflowInstanceId));
-		}
-		catch (WorkflowException workflowException) {
-			Throwable throwable = workflowException.getCause();
-
-			if (throwable instanceof NoSuchModelException) {
-				throw (NoSuchModelException)throwable;
-			}
-
-			throw workflowException;
-		}
+		return _toWorkflowInstance(
+			_workflowInstanceManager.getWorkflowInstance(workflowInstanceId));
 	}
 
 	@Override
@@ -107,8 +95,8 @@ public class WorkflowInstanceResourceImpl
 		throws Exception {
 
 		return _toWorkflowInstance(
-			_workflowInstanceManager.updateWorkflowContext(
-				contextCompany.getCompanyId(), workflowInstanceId,
+			_workflowInstanceManager.updateContext(
+				workflowInstanceId,
 				_getWorkflowContext(
 					workflowInstance.getContext(), workflowInstanceId)));
 	}
@@ -118,11 +106,22 @@ public class WorkflowInstanceResourceImpl
 			Long workflowInstanceId, ChangeTransition changeTransition)
 		throws Exception {
 
-		return _toWorkflowInstance(
-			_workflowInstanceManager.signalWorkflowInstance(
-				contextCompany.getCompanyId(), contextUser.getUserId(),
-				workflowInstanceId, changeTransition.getTransitionName(),
-				null));
+		try {
+			return _toWorkflowInstance(
+				_workflowInstanceManager.signalWorkflowInstance(
+					contextCompany.getCompanyId(), contextUser.getUserId(),
+					workflowInstanceId, changeTransition.getTransitionName(),
+					null));
+		}
+		catch (WorkflowException workflowException) {
+			Throwable throwable = workflowException.getCause();
+
+			if (throwable instanceof PrincipalException) {
+				throw (PrincipalException)throwable;
+			}
+
+			throw workflowException;
+		}
 	}
 
 	@Override

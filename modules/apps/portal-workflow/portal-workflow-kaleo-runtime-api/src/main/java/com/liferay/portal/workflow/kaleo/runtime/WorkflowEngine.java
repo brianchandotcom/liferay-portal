@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -54,6 +55,9 @@ public interface WorkflowEngine {
 	public List<WorkflowTransition> getNextWorkflowTransitions(
 			long workflowInstanceId, ServiceContext serviceContext)
 		throws WorkflowException;
+
+	public WorkflowInstance getWorkflowInstance(long workflowInstanceId)
+		throws PortalException;
 
 	public WorkflowInstance getWorkflowInstance(
 			long workflowInstanceId, ServiceContext serviceContext)
@@ -157,6 +161,10 @@ public interface WorkflowEngine {
 			String transitionName, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext, boolean waitForCompletion)
 		throws WorkflowException;
+
+	public WorkflowInstance updateContext(
+			long workflowInstanceId, Map<String, Serializable> workflowContext)
+		throws PortalException;
 
 	public WorkflowInstance updateContext(
 			long workflowInstanceId, Map<String, Serializable> workflowContext,

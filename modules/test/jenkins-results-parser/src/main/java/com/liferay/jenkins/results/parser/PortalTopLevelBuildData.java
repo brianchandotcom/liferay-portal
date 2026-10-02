@@ -71,6 +71,14 @@ public class PortalTopLevelBuildData
 		return getGitHubUsername(getPortalGitHubURL());
 	}
 
+	public RemoteGitRef getPortalRemoteGitRef() {
+		if (_portalRemoteGitRef == null) {
+			_portalRemoteGitRef = GitUtil.getRemoteGitRef(getPortalGitHubURL());
+		}
+
+		return _portalRemoteGitRef;
+	}
+
 	@Override
 	public String getPortalUpstreamBranchName() {
 		return getString("portal_upstream_branch_name");
@@ -96,8 +104,8 @@ public class PortalTopLevelBuildData
 
 		super(runId, jobName, buildURL);
 
-		setPortalBranchSHA(_getPortalBranchSHA());
 		setPortalGitHubURL(_getPortalGitHubURL());
+		setPortalRemoteGitRef(GitUtil.getRemoteGitRef(_getPortalGitHubURL()));
 		setPortalUpstreamBranchName(_getPortalUpstreamBranchName());
 
 		validateKeys(_REQUIRED_KEYS);
@@ -108,11 +116,10 @@ public class PortalTopLevelBuildData
 		return _TYPE;
 	}
 
-	private String _getPortalBranchSHA() {
-		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-			_getPortalGitHubURL());
+	protected void setPortalRemoteGitRef(RemoteGitRef portalRemoteGitRef) {
+		_portalRemoteGitRef = portalRemoteGitRef;
 
-		return remoteGitRef.getSHA();
+		setPortalBranchSHA(portalRemoteGitRef.getSHA());
 	}
 
 	private String _getPortalGitHubURL() {
@@ -168,5 +175,7 @@ public class PortalTopLevelBuildData
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"[^\\(]+\\((?<upstreamBranchName>[^_\\)]+)" +
 			"(_(?<testSuiteName>[^\\)]+))?\\)");
+
+	private RemoteGitRef _portalRemoteGitRef;
 
 }

@@ -74,8 +74,8 @@ public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 
 		super(runId, jobName, buildURL);
 
-		setPortalBranchSHA(_getPortalBranchSHA());
 		setPortalGitHubURL(_getPortalGitHubURL());
+		setPortalRemoteGitRef(GitUtil.getRemoteGitRef(_getPortalGitHubURL()));
 		setPortalUpstreamBranchName(_getPortalUpstreamBranchName());
 
 		String jenkinsGitHubURL = getBuildParameter("JENKINS_GITHUB_URL");
@@ -83,13 +83,6 @@ public class ControllerPortalTopLevelBuildData extends PortalTopLevelBuildData {
 		if ((jenkinsGitHubURL != null) && !jenkinsGitHubURL.isEmpty()) {
 			setJenkinsGitHubURL(jenkinsGitHubURL);
 		}
-	}
-
-	private String _getPortalBranchSHA() {
-		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-			_getPortalGitHubURL());
-
-		return remoteGitRef.getSHA();
 	}
 
 	private String _getPortalGitHubURL() {

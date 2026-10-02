@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(service = ProblemMapper.class)
-public class FragmentEntryFieldTypesExceptionProblemMapper
+public class FragmentFieldTypesExceptionProblemMapper
 	implements ProblemMapper<FragmentEntryFieldTypesException> {
 
 	@Override

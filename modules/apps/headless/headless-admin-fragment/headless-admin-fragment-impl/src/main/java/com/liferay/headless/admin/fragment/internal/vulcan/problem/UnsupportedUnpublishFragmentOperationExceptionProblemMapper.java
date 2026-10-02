@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.fragment.internal.vulcan.problem;
 
-import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
+import com.liferay.fragment.exception.UnsupportedUnpublishFragmentEntryOperationException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemMapper;
@@ -19,41 +19,38 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(service = ProblemMapper.class)
-public class DuplicateFragmentCollectionKeyExceptionProblemMapper
-	implements ProblemMapper<DuplicateFragmentCollectionKeyException> {
+public class UnsupportedUnpublishFragmentOperationExceptionProblemMapper
+	implements ProblemMapper
+		<UnsupportedUnpublishFragmentEntryOperationException> {
 
 	@Override
 	public Problem getProblem(
-		DuplicateFragmentCollectionKeyException
-			duplicateFragmentCollectionKeyException) {
-
-		String fragmentCollectionKey =
-			duplicateFragmentCollectionKeyException.getFragmentCollectionKey();
+		UnsupportedUnpublishFragmentEntryOperationException
+			unsupportedUnpublishFragmentEntryOperationException) {
 
 		return new Problem() {
 
 			@Override
 			public String getDetail(Locale locale) {
-				return _language.format(
-					locale, "a-fragment-set-with-the-key-x-already-exists",
-					fragmentCollectionKey);
+				return _language.get(
+					locale, "unpublishing-a-fragment-entry-is-not-supported");
 			}
 
 			@Override
 			public Status getStatus() {
-				return Status.CONFLICT;
+				return Status.BAD_REQUEST;
 			}
 
 			@Override
 			public String getTitle(Locale locale) {
-				return _language.format(
-					locale, "a-fragment-set-with-the-key-x-already-exists",
-					fragmentCollectionKey);
+				return _language.get(
+					locale, "unpublishing-a-fragment-entry-is-not-supported");
 			}
 
 			@Override
 			public String getType() {
-				return DuplicateFragmentCollectionKeyException.class.getName();
+				return UnsupportedUnpublishFragmentEntryOperationException.
+					class.getName();
 			}
 
 		};

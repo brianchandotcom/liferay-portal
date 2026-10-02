@@ -297,6 +297,14 @@ public class DefaultWorkflowEngineImpl
 	}
 
 	@Override
+	public WorkflowInstance getWorkflowInstance(long workflowInstanceId)
+		throws PortalException {
+
+		return _kaleoWorkflowModelConverter.toWorkflowInstance(
+			_kaleoInstanceService.getKaleoInstance(workflowInstanceId));
+	}
+
+	@Override
 	public WorkflowInstance getWorkflowInstance(
 			long workflowInstanceId, ServiceContext serviceContext)
 		throws WorkflowException {
@@ -582,8 +590,9 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			KaleoInstance kaleoInstance = _updateContext(
-				workflowInstanceId, workflowContext);
+			KaleoInstance kaleoInstance =
+				_kaleoInstanceService.updateKaleoInstance(
+					workflowInstanceId, workflowContext);
 
 			KaleoInstanceToken kaleoInstanceToken =
 				kaleoInstance.getRootKaleoInstanceToken(serviceContext);
@@ -663,6 +672,16 @@ public class DefaultWorkflowEngineImpl
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
+	}
+
+	@Override
+	public WorkflowInstance updateContext(
+			long workflowInstanceId, Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		return _kaleoWorkflowModelConverter.toWorkflowInstance(
+			_kaleoInstanceService.updateKaleoInstance(
+				workflowInstanceId, workflowContext));
 	}
 
 	@Override

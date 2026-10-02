@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.fragment.internal.vulcan.problem;
 
-import com.liferay.fragment.exception.UnsupportedUnpublishFragmentEntryOperationException;
+import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemMapper;
@@ -19,21 +19,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(service = ProblemMapper.class)
-public class UnsupportedUnpublishFragmentEntryOperationExceptionProblemMapper
-	implements ProblemMapper
-		<UnsupportedUnpublishFragmentEntryOperationException> {
+public class FragmentNameExceptionProblemMapper
+	implements ProblemMapper<FragmentEntryNameException> {
 
 	@Override
 	public Problem getProblem(
-		UnsupportedUnpublishFragmentEntryOperationException
-			unsupportedUnpublishFragmentEntryOperationException) {
+		FragmentEntryNameException fragmentEntryNameException) {
 
 		return new Problem() {
 
 			@Override
 			public String getDetail(Locale locale) {
-				return _language.get(
-					locale, "unpublishing-a-fragment-entry-is-not-supported");
+				return _language.get(locale, "fragment-name-is-invalid");
 			}
 
 			@Override
@@ -43,14 +40,12 @@ public class UnsupportedUnpublishFragmentEntryOperationExceptionProblemMapper
 
 			@Override
 			public String getTitle(Locale locale) {
-				return _language.get(
-					locale, "unpublishing-a-fragment-entry-is-not-supported");
+				return _language.get(locale, "fragment-name-is-invalid");
 			}
 
 			@Override
 			public String getType() {
-				return UnsupportedUnpublishFragmentEntryOperationException.
-					class.getName();
+				return FragmentEntryNameException.class.getName();
 			}
 
 		};

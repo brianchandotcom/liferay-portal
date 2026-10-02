@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.json.JSONArray;
 
@@ -13,6 +14,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.mockito.InOrder;
 import org.mockito.Mockito;
 
 /**
@@ -63,6 +65,26 @@ public class UpstreamPortalTopLevelBuildTest
 
 		_testGetWorkspace(branchName, null);
 		_testGetWorkspace(branchName + "-private", branchName);
+	}
+
+	@Test
+	public void testGetWorkspaceWithPortalBase() {
+		BuildDatabaseUtil.setBuildDatabase(Mockito.mock(BuildDatabase.class));
+
+		ReflectionTestUtil.setFieldValue(
+			JenkinsResultsParserUtil.class, "_gitDirectoriesJSONArray",
+			new JSONArray());
+		ReflectionTestUtil.setFieldValue(
+			JenkinsResultsParserUtil.class, "_gitWorkingDirectoriesJSONArray",
+			new JSONArray());
+
+		String branchName = RandomTestUtil.randomString();
+
+		_testGetWorkspaceWithPortalBase(branchName, false, "build");
+		_testGetWorkspaceWithPortalBase(branchName + "-private", false, null);
+		_testGetWorkspaceWithPortalBase(branchName + "-private", true, "build");
+		_testGetWorkspaceWithPortalBase(
+			branchName + "-private", true, "controller");
 	}
 
 	private UpstreamPortalTopLevelBuild _getUpstreamPortalTopLevelBuild(
@@ -137,6 +159,103 @@ public class UpstreamPortalTopLevelBuildTest
 			portalWorkspace
 		).setPortalUpstreamBranchName(
 			expectedPortalUpstreamBranchName
+		);
+	}
+
+	private void _testGetWorkspaceWithPortalBase(
+		String branchName, boolean expectedConfigured, String parameterSource) {
+
+		Map<String, Workspace> workspaces = ReflectionTestUtil.getFieldValue(
+			WorkspaceFactory.class, "_workspaces");
+
+		String gitRepositoryName = RandomTestUtil.randomString();
+		PortalWorkspace portalWorkspace = Mockito.mock(PortalWorkspace.class);
+
+		workspaces.put(gitRepositoryName, portalWorkspace);
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			Mockito.mock(PortalWorkspaceGitRepository.class);
+
+		Mockito.doReturn(
+			portalWorkspaceGitRepository
+		).when(
+			portalWorkspace
+		).getPortalWorkspaceGitRepository();
+
+		UpstreamPortalTopLevelBuild upstreamPortalTopLevelBuild =
+			_getUpstreamPortalTopLevelBuild(branchName);
+
+		Mockito.doCallRealMethod(
+		).when(
+			upstreamPortalTopLevelBuild
+		).getWorkspace();
+
+		Mockito.doReturn(
+			gitRepositoryName
+		).when(
+			upstreamPortalTopLevelBuild
+		).getBaseGitRepositoryName();
+
+		BaseBuild parameterBuild = null;
+
+		if (Objects.equals(parameterSource, "build")) {
+			parameterBuild = upstreamPortalTopLevelBuild;
+		}
+		else if (Objects.equals(parameterSource, "controller")) {
+			parameterBuild = Mockito.mock(BaseBuild.class);
+
+			Mockito.doReturn(
+				parameterBuild
+			).when(
+				upstreamPortalTopLevelBuild
+			).getControllerBuild();
+		}
+
+		String portalBaseGitCommit = RandomTestUtil.randomSHA();
+		String portalBaseGitHubURL =
+			"https://github.com/liferay/liferay-portal/tree/" +
+				RandomTestUtil.randomString();
+
+		if (parameterBuild != null) {
+			Mockito.doReturn(
+				portalBaseGitHubURL
+			).when(
+				parameterBuild
+			).getParameterValue(
+				"PORTAL_BASE_GITHUB_URL"
+			);
+
+			Mockito.doReturn(
+				portalBaseGitCommit
+			).when(
+				parameterBuild
+			).getParameterValue(
+				"PORTAL_BASE_GIT_COMMIT"
+			);
+		}
+
+		upstreamPortalTopLevelBuild.getWorkspace();
+
+		if (!expectedConfigured) {
+			Mockito.verify(
+				portalWorkspace, Mockito.never()
+			).getPortalWorkspaceGitRepository();
+
+			return;
+		}
+
+		InOrder inOrder = Mockito.inOrder(portalWorkspaceGitRepository);
+
+		inOrder.verify(
+			portalWorkspaceGitRepository
+		).setGitHubURL(
+			portalBaseGitHubURL
+		);
+
+		inOrder.verify(
+			portalWorkspaceGitRepository
+		).setSenderBranchSHA(
+			portalBaseGitCommit
 		);
 	}
 

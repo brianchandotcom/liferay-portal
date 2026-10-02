@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(service = ProblemMapper.class)
-public class FragmentCollectionNameExceptionProblemMapper
+public class FragmentSetNameExceptionProblemMapper
 	implements ProblemMapper<FragmentCollectionNameException> {
 
 	@Override
@@ -30,7 +30,7 @@ public class FragmentCollectionNameExceptionProblemMapper
 
 			@Override
 			public String getDetail(Locale locale) {
-				return _language.get(locale, "name-is-invalid");
+				return _language.get(locale, "fragment-set-name-is-invalid");
 			}
 
 			@Override
@@ -40,7 +40,7 @@ public class FragmentCollectionNameExceptionProblemMapper
 
 			@Override
 			public String getTitle(Locale locale) {
-				return _language.get(locale, "name-is-invalid");
+				return _language.get(locale, "fragment-set-name-is-invalid");
 			}
 
 			@Override

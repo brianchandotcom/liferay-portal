@@ -177,7 +177,9 @@ public class ScimUtil {
 		}
 	}
 
-	public static Group toGroup(List<ScimUser> scimUsers, UserGroup userGroup)
+	public static Group toGroup(
+			List<com.liferay.portal.kernel.model.User> portalUsers,
+			UserGroup userGroup)
 		throws Exception {
 
 		Group group = new Group();
@@ -201,8 +203,18 @@ public class ScimUtil {
 					SCIMConstants.GROUP_ENDPOINT),
 				CharPool.FORWARD_SLASH, userGroup.getPrimaryKey()));
 
-		for (ScimUser scimUser : scimUsers) {
-			group.setMember(toUser(Collections.emptyList(), scimUser));
+		for (com.liferay.portal.kernel.model.User portalUser : portalUsers) {
+			User user = new User();
+
+			user.setId(String.valueOf(portalUser.getUserId()));
+			user.setLocation(
+				StringBundler.concat(
+					AbstractResourceManager.getResourceEndpointURL(
+						SCIMConstants.USER_ENDPOINT),
+					CharPool.FORWARD_SLASH, portalUser.getUserId()));
+			user.setUserName(portalUser.getScreenName());
+
+			group.setMember(user);
 		}
 
 		group.setResourceType(SCIMConstants.GROUP);

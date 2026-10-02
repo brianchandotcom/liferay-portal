@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupTable;
 import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -81,9 +82,11 @@ import com.liferay.scim.rest.util.ScimClientUtil;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiConsumer;
 
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -253,7 +256,7 @@ public class UserManagerImpl implements UserManager {
 				CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(groupId));
 
 			return ScimUtil.toGroup(
-				_getScimUsers(
+				_getPortalUsers(
 					CompanyThreadLocal.getCompanyId(),
 					userGroup.getUserGroupId()),
 				userGroup);
@@ -343,7 +346,7 @@ public class UserManagerImpl implements UserManager {
 				}
 
 				return ScimUtil.toGroup(
-					_getScimUsers(
+					_getPortalUsers(
 						userGroup.getCompanyId(), userGroup.getUserGroupId()),
 					userGroup);
 			});
@@ -503,7 +506,7 @@ public class UserManagerImpl implements UserManager {
 					UserGroup userGroup = _addOrUpdateUserGroup(company, group);
 
 					return ScimUtil.toGroup(
-						_getScimUsers(
+						_getPortalUsers(
 							userGroup.getCompanyId(),
 							userGroup.getUserGroupId()),
 						userGroup);
@@ -1103,6 +1106,50 @@ public class UserManagerImpl implements UserManager {
 		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 	}
 
+	private List<com.liferay.portal.kernel.model.User> _getPortalUsers(
+		long companyId, long userGroupId) {
+
+		String scimClientId = _getScimClientId(
+			UserGroup.class.getName(), userGroupId, companyId);
+
+		if (Validator.isNull(scimClientId)) {
+			return Collections.emptyList();
+		}
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+			companyId, com.liferay.portal.kernel.model.User.class.getName(),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME, "scimClientId");
+
+		if (expandoColumn == null) {
+			return Collections.emptyList();
+		}
+
+		return _userLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				UserTable.INSTANCE
+			).from(
+				UserTable.INSTANCE
+			).innerJoinON(
+				ExpandoValueTable.INSTANCE,
+				ExpandoValueTable.INSTANCE.classPK.eq(UserTable.INSTANCE.userId)
+			).innerJoinON(
+				Users_UserGroupsTable.INSTANCE,
+				Users_UserGroupsTable.INSTANCE.userId.eq(
+					UserTable.INSTANCE.userId)
+			).where(
+				DSLFunctionFactoryUtil.castClobText(
+					ExpandoValueTable.INSTANCE.data
+				).eq(
+					scimClientId
+				).and(
+					ExpandoValueTable.INSTANCE.columnId.eq(
+						expandoColumn.getColumnId())
+				).and(
+					Users_UserGroupsTable.INSTANCE.userGroupId.eq(userGroupId)
+				)
+			));
+	}
+
 	private String _getScimClientId(
 		String className, long classPK, long companyId) {
 
@@ -1170,25 +1217,6 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		return ScimUtil.toScimUser(portalUser);
-	}
-
-	private List<ScimUser> _getScimUsers(long companyId, long userGroupId) {
-		String userGroupScimClientId = _getScimClientId(
-			UserGroup.class.getName(), userGroupId, companyId);
-
-		return TransformUtil.transform(
-			_userLocalService.getUserGroupUsers(userGroupId),
-			user -> {
-				String userScimClientId = _getScimClientId(
-					com.liferay.portal.kernel.model.User.class.getName(),
-					user.getUserId(), user.getCompanyId());
-
-				if (!Objects.equals(userGroupScimClientId, userScimClientId)) {
-					return null;
-				}
-
-				return ScimUtil.toScimUser(user);
-			});
 	}
 
 	private UserGroup _getUserGroup(long companyId, long userGroupId)
@@ -1352,6 +1380,11 @@ public class UserManagerImpl implements UserManager {
 			long companyId, Group group, long userGroupId)
 		throws Exception {
 
+		Set<Long> portalUserIds = new HashSet<>(
+			TransformUtil.transform(
+				_getPortalUsers(companyId, userGroupId),
+				com.liferay.portal.kernel.model.User::getUserId));
+
 		String userGroupScimClientId = _getScimClientId(
 			UserGroup.class.getName(), userGroupId, companyId);
 
@@ -1360,6 +1393,10 @@ public class UserManagerImpl implements UserManager {
 			TransformUtil.transformToLongArray(
 				group.getMembers(),
 				userId -> {
+					if (portalUserIds.contains(GetterUtil.getLong(userId))) {
+						return GetterUtil.getLong(userId);
+					}
+
 					String userScimClientId = _getScimClientId(
 						com.liferay.portal.kernel.model.User.class.getName(),
 						GetterUtil.getLong(userId), companyId);

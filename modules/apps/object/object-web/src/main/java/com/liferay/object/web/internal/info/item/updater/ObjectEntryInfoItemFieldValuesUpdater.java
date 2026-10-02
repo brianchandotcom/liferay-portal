@@ -67,12 +67,10 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 	public ObjectEntryInfoItemFieldValuesUpdater(
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider,
-		ObjectDefinition objectDefinition,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		_infoItemFormProvider = infoItemFormProvider;
-		_objectDefinition = objectDefinition;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 	}
@@ -93,10 +91,12 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 			int statusInt)
 		throws InfoFormException {
 
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getCompanyId(),
-				_objectDefinition.getStorageType());
+				objectDefinition.getCompanyId(),
+				objectDefinition.getStorageType());
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -112,10 +112,10 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 						_objectScopeProviderRegistry, serviceContext);
 
 			Map<String, Object> curProperties = _getProperties(
-				objectEntry, infoItemFieldValues);
+				infoItemFieldValues, objectDefinition, objectEntry);
 
 			String scopeKey = ObjectEntryInfoItemUtil.getScopeKey(
-				objectEntry.getGroupId(), _objectDefinition,
+				objectEntry.getGroupId(), objectDefinition,
 				_objectScopeProviderRegistry);
 
 			DTOConverterContext dtoConverterContext =
@@ -133,17 +133,17 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 					DefaultObjectEntryManager defaultObjectEntryManager) {
 
 				dtoObjectEntry = defaultObjectEntryManager.getObjectEntry(
-					dtoConverterContext, _objectDefinition, objectEntry);
+					dtoConverterContext, objectDefinition, objectEntry);
 			}
 			else {
 				dtoObjectEntry = objectEntryManager.getObjectEntry(
 					objectEntry.getCompanyId(), dtoConverterContext,
-					objectEntry.getExternalReferenceCode(), _objectDefinition,
+					objectEntry.getExternalReferenceCode(), objectDefinition,
 					scopeKey);
 			}
 
 			dtoObjectEntry = ObjectEntryManagerUtil.partialUpdateObjectEntry(
-				dtoObjectEntry, _objectDefinition.getObjectDefinitionId(),
+				dtoObjectEntry, objectDefinition.getObjectDefinitionId(),
 				new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
 					{
 						setFriendlyUrlPath(
@@ -221,21 +221,21 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 					DefaultObjectEntryManager defaultObjectEntryManager) {
 
 				dtoObjectEntry = defaultObjectEntryManager.updateObjectEntry(
-					updateDTOConverterContext, _objectDefinition,
-					dtoObjectEntry, scopeKey, objectEntry);
+					updateDTOConverterContext, objectDefinition, dtoObjectEntry,
+					scopeKey, objectEntry);
 			}
 			else {
 				dtoObjectEntry = objectEntryManager.updateObjectEntry(
 					objectEntry.getCompanyId(), updateDTOConverterContext,
-					dtoObjectEntry.getExternalReferenceCode(),
-					_objectDefinition, dtoObjectEntry, scopeKey);
+					dtoObjectEntry.getExternalReferenceCode(), objectDefinition,
+					dtoObjectEntry, scopeKey);
 			}
 
 			ObjectEntry updatedObjectEntry = ObjectEntryUtil.toObjectEntry(
-				_objectDefinition, dtoObjectEntry);
+				objectDefinition, dtoObjectEntry);
 
 			_relateMainObjectEntry(
-				infoItemFieldValues, _objectDefinition, updatedObjectEntry,
+				infoItemFieldValues, objectDefinition, updatedObjectEntry,
 				serviceContext, themeDisplay.getUserId());
 
 			_relateNestedObjectEntries(
@@ -247,7 +247,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		catch (Exception exception) {
 			ObjectEntryInfoItemExceptionRequestHandler.handleInfoFormException(
 				exception, objectEntry.getGroupId(), _infoItemFormProvider,
-				_objectDefinition.getObjectDefinitionId());
+				objectDefinition.getObjectDefinitionId());
 		}
 
 		return null;
@@ -310,14 +310,15 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 	}
 
 	private Map<String, Object> _getProperties(
-		ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues) {
+		InfoItemFieldValues infoItemFieldValues,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
 
 			if (infoFieldValue.getValue() instanceof RelatedInfoFieldValue) {
 				return ObjectEntryUtil.toProperties(
-					infoItemFieldValues, _objectDefinition,
+					infoItemFieldValues, objectDefinition,
 					objectEntry.getValues());
 			}
 		}
@@ -555,7 +556,6 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
-	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 

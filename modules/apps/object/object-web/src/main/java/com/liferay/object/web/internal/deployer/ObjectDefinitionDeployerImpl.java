@@ -380,8 +380,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemFieldValuesUpdater.class,
 				new ObjectEntryInfoItemFieldValuesUpdater(
-					infoItemFormProvider, objectDefinition,
-					_objectEntryManagerRegistry, _objectScopeProviderRegistry),
+					infoItemFormProvider, _objectEntryManagerRegistry,
+					_objectScopeProviderRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

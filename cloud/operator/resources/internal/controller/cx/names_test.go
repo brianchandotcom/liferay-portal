@@ -67,41 +67,48 @@ func TestEffectiveDxpNamespaceDefaultsToClientExtensionNamespace(t *testing.T) {
 	}
 }
 
-func TestRequiresExtInitForOAuth2Applications(t *testing.T) {
+func TestExtInitApplicationERCsReadsOAuth2PIDs(t *testing.T) {
 	testCases := map[string]struct {
 		pids []string
-		want bool
+		want []string
 	}{
-		"a CET configuration beside a user agent application requires ext-init": {
+		"a CET configuration beside a user agent application yields the application": {
 			pids: []string{
 				"com.liferay.client.extension.type.configuration.CETConfiguration~able",
 				"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oua",
 			},
-			want: true,
+			want: []string{"able-oua"},
 		},
-		"a CET configuration requires no ext-init": {
+		"a CET configuration yields no application": {
 			pids: []string{"com.liferay.client.extension.type.configuration.CETConfiguration~able"},
 		},
-		"a PID without a separator requires no ext-init": {
+		"a PID without a separator yields no application": {
 			pids: []string{"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration"},
 		},
-		"a headless server application requires ext-init": {
+		"a headless server application yields its external reference code": {
 			pids: []string{
 				"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~able-ohs",
 			},
-			want: true,
+			want: []string{"able-ohs"},
 		},
-		"a user agent application requires ext-init": {
+		"a slash ends the external reference code": {
 			pids: []string{
-				"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~able-oua",
+				"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~able-ohs/able.liferay.cloud",
 			},
-			want: true,
+			want: []string{"able-ohs"},
 		},
 		"an underscore separates the name when there is no tilde": {
 			pids: []string{
 				"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration_able-oua",
 			},
-			want: true,
+			want: []string{"able-oua"},
+		},
+		"every application yields its external reference code in order": {
+			pids: []string{
+				"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration~baker-oua",
+				"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~able-ohs",
+			},
+			want: []string{"able-ohs", "baker-oua"},
 		},
 	}
 
@@ -115,8 +122,8 @@ func TestRequiresExtInitForOAuth2Applications(t *testing.T) {
 				clientExtension.Spec.Configs[pid] = cxv1alpha1.Configuration{JSON: apiextensionsv1.JSON{Raw: []byte(`{}`)}}
 			}
 
-			if got := requiresExtInit(clientExtension); got != testCase.want {
-				t.Errorf("requiresExtInit() = %t, want %t", got, testCase.want)
+			if got := extInitApplicationERCs(clientExtension); !slices.Equal(got, testCase.want) {
+				t.Errorf("extInitApplicationERCs() = %v, want %v", got, testCase.want)
 			}
 		})
 	}

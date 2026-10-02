@@ -361,7 +361,9 @@ func (clientExtensionReconciler *ClientExtensionReconciler) provisionedCondition
 	context context.Context,
 	dxpNamespace string,
 ) (metav1.Condition, error) {
-	if !requiresExtInit(clientExtension) {
+	externalReferenceCodes := extInitApplicationERCs(clientExtension)
+
+	if len(externalReferenceCodes) == 0 {
 		return newCondition(
 			metav1.ConditionTrue,
 			"The configs declare no OAuth2 application, so they require no ext-init ConfigMap from DXP.",
@@ -373,21 +375,32 @@ func (clientExtensionReconciler *ClientExtensionReconciler) provisionedCondition
 
 	extInitConfigMapName := types.NamespacedName{Name: extInitName(clientExtension), Namespace: dxpNamespace}
 
-	error := clientExtensionReconciler.Get(context, extInitConfigMapName, &extInitConfigMap)
+	if error := clientExtensionReconciler.Get(
+		context, extInitConfigMapName, &extInitConfigMap,
+	); client.IgnoreNotFound(error) != nil {
+		return metav1.Condition{}, error
+	}
 
-	if apierrors.IsNotFound(error) {
+	var missingExternalReferenceCodes []string
+
+	for _, externalReferenceCode := range externalReferenceCodes {
+		if _, ok := extInitConfigMap.Data[externalReferenceCode+".oauth2.token.uri"]; !ok {
+			missingExternalReferenceCodes = append(
+				missingExternalReferenceCodes, fmt.Sprintf("%q", externalReferenceCode),
+			)
+		}
+	}
+
+	if len(missingExternalReferenceCodes) > 0 {
 		return newCondition(
 			metav1.ConditionFalse,
 			fmt.Sprintf(
-				"DXP has not written ConfigMap %q in namespace %q, which the OAuth2 applications in the configs require.",
-				extInitConfigMapName.Name, extInitConfigMapName.Namespace,
+				"DXP has not written the OAuth2 applications %s to ConfigMap %q in namespace %q.",
+				strings.Join(missingExternalReferenceCodes, ", "), extInitConfigMapName.Name,
+				extInitConfigMapName.Namespace,
 			),
 			ReasonExtInitMissing,
 		), nil
-	}
-
-	if error != nil {
-		return metav1.Condition{}, error
 	}
 
 	return newCondition(

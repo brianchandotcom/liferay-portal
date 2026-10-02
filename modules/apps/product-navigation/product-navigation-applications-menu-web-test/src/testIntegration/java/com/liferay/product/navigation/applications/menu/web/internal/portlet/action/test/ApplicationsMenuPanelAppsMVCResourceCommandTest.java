@@ -270,7 +270,8 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	private void _setRecentGroupsValue(
 		HttpServletRequest httpServletRequest, String value) {
 
-		SessionClicks.put(httpServletRequest, _KEY_RECENT_GROUPS, value);
+		SessionClicks.put(
+			httpServletRequest.getSession(), _KEY_RECENT_GROUPS, value);
 	}
 
 	private void _setUser() throws Exception {

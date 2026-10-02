@@ -398,10 +398,10 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 
 		JSONObject sitesJSONObject = _jsonFactory.createJSONObject();
 
+		User user = themeDisplay.getUser();
+
 		List<Group> recentGroups = _recentGroupManager.getRecentGroups(
 			httpServletRequest);
-
-		User user = themeDisplay.getUser();
 
 		List<Group> mySiteGroups = ListUtil.filter(
 			user.getMySiteGroups(

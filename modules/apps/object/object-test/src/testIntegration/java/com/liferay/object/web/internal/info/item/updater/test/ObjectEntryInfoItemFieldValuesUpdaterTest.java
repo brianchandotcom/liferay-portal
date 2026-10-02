@@ -34,6 +34,7 @@ import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuil
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -102,6 +103,38 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 			objectEntry2);
 
 		assertObjectEntryValues(name1, name2);
+
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"baker"
+			).objectDefinitionId(
+				objectDefinition2.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		String value = RandomTestUtil.randomString();
+
+		objectEntryLocalService.partialUpdateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
+			objectEntry2.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"baker", value
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_updateFromInfoItemFieldValues(
+			geInfoItemFieldValues(name1, name2), objectDefinition2,
+			objectEntryLocalService.getObjectEntry(
+				objectEntry2.getObjectEntryId()));
+
+		Map<String, Serializable> values = objectEntryLocalService.getValues(
+			objectEntry2.getObjectEntryId());
+
+		Assert.assertEquals(values.toString(), value, values.get("baker"));
 	}
 
 	@Test

@@ -22,14 +22,12 @@ const {
 
 interface IAnalysisDropdownProps {
 	alignmentPosition?: (typeof Align)[keyof typeof Align];
-	eventId?: string;
 	onEventChange: (event: Event) => void;
 	trigger: React.ReactElement;
 }
 
 const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 	alignmentPosition = Align.RightTop,
-	eventId,
 	onEventChange,
 	trigger,
 }) => {
@@ -89,7 +87,6 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 							eventDefinitions: {eventDefinitions: Event[]};
 						}) => (
 							<BaseDropdown.SearchableList
-								activeId={eventId}
 								items={eventDefinitions}
 								onEditClick={(item?: Attribute | Event) => {
 									if (!item) {
@@ -118,15 +115,11 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 									setActive(false);
 								}}
 								onItemClick={(item: Attribute | Event) => {
-									const event = item as Event;
+									onEventChange(item as Event);
 
-									if (event.id !== eventId) {
-										onEventChange(event);
-
-										setActive(false);
-										setEventType(EventTypes.All);
-										setQuery('');
-									}
+									setActive(false);
+									setEventType(EventTypes.All);
+									setQuery('');
 								}}
 								onQueryChange={setQuery}
 								query={query}

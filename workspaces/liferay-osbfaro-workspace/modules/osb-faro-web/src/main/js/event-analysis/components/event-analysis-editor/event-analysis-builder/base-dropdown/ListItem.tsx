@@ -9,7 +9,6 @@ import {Attribute, Event} from 'event-analysis/utils/types';
 import {DATA_TYPE_ICONS_MAP, isAttribute} from 'event-analysis/utils/utils';
 
 interface IListItemProps {
-	active?: boolean;
 	disabled?: boolean;
 	editable?: boolean;
 	item: Attribute | Event;
@@ -20,7 +19,6 @@ interface IListItemProps {
 }
 
 const ListItem: React.FC<IListItemProps> = ({
-	active,
 	disabled,
 	editable = true,
 	item,
@@ -43,7 +41,6 @@ const ListItem: React.FC<IListItemProps> = ({
 		>
 			<ClayDropdown.Item
 				className={getCN('d-flex justify-content-between', {
-					active,
 					disabled,
 				})}
 				key={id}

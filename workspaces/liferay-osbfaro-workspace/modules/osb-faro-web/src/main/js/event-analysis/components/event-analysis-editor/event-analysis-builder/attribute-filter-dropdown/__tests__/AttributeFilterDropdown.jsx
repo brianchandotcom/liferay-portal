@@ -91,37 +91,6 @@ describe('AttributeFilterDropdown', () => {
 		).toHaveLength(0);
 	});
 
-	it('render w/ selected attribute', async () => {
-		const {getByTestId} = render(
-			<WrappedComponent
-				attribute={{
-					dataType: 'STRING',
-					displayName: 'Filed Ticket',
-					id: '4',
-					name: 'filedTicket'
-				}}
-				filter={{
-					id: '4'
-				}}
-			/>
-		);
-
-		fireEvent.click(getByTestId('target'));
-
-		await waitFor(() =>
-			expect(document.body.querySelector('.loading-root')).toBeNull()
-		);
-
-		act(() => {
-			jest.advanceTimersByTime(250);
-		});
-
-		// When a filter is provided, it should show FilterOptions directly
-		expect(
-			document.body.querySelector('.attribute-options')
-		).toBeInTheDocument();
-	});
-
 	it('render w/ disabled attributes', async () => {
 		const {getByTestId} = render(
 			<WrappedComponent disabledIds={['1', '2']} />

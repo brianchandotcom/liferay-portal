@@ -61,23 +61,4 @@ describe('BaseDropdownListItem', () => {
 
 		expect(container.querySelector('.disabled')).toBeTruthy();
 	});
-
-	it('should render as active', () => {
-		const {container} = render(
-			<ListItem
-				active
-				item={{
-					dataType: 'string',
-					displayName: 'Filed Ticket',
-					id: '4',
-					name: 'filedTicket'
-				}}
-				onClick={jest.fn()}
-				onEditClick={jest.fn()}
-				onOptionsClick={jest.fn()}
-			/>
-		);
-
-		expect(container.querySelector('.active')).toBeTruthy();
-	});
 });

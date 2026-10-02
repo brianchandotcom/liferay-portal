@@ -13,17 +13,24 @@ const defaultProps = {
 };
 
 describe('ConditionChip', () => {
-	it('renders the overline and the label inside the edit button', () => {
+	it('renders the overline and the label in a labeled, focusable chip', () => {
 		render(<ConditionChip {...defaultProps} />);
 
-		const editButton = screen.getByRole('button', {
-			name: /individual.*job title.*manager/i
-		});
+		const chip = screen.getByRole('group', {name: /job title/i});
 
-		expect(editButton).toHaveTextContent(/contains "manager"/i);
-		expect(editButton.querySelector('.text-uppercase')).toHaveTextContent(
+		expect(chip).toHaveAttribute('tabindex', '0');
+		expect(chip).toHaveTextContent(/contains "manager"/i);
+		expect(chip.querySelector('.text-uppercase')).toHaveTextContent(
 			/individual/i
 		);
+	});
+
+	it('has no edit action', () => {
+		render(<ConditionChip {...defaultProps} />);
+
+		expect(
+			screen.queryByRole('button', {name: /manager/i})
+		).not.toBeInTheDocument();
 	});
 
 	it('wraps long labels instead of truncating them', () => {
@@ -45,30 +52,6 @@ describe('ConditionChip', () => {
 		expect(onRemove).toHaveBeenCalledTimes(1);
 	});
 
-	it('passes the dropdown trigger props to the edit button', () => {
-		const onClick = jest.fn();
-		const onKeyDown = jest.fn();
-
-		render(
-			<ConditionChip
-				{...defaultProps}
-				aria-expanded={false}
-				aria-haspopup="true"
-				onClick={onClick}
-				onKeyDown={onKeyDown}
-			/>
-		);
-
-		const editButton = screen.getByRole('button', {name: /manager/i});
-
-		fireEvent.click(editButton);
-		fireEvent.keyDown(editButton, {key: 'ArrowDown'});
-
-		expect(editButton).toHaveAttribute('aria-haspopup', 'true');
-		expect(onClick).toHaveBeenCalledTimes(1);
-		expect(onKeyDown).toHaveBeenCalledTimes(1);
-	});
-
 	it('renders the drag handle only when one is given', () => {
 		const {container, rerender} = render(
 			<ConditionChip {...defaultProps} />
@@ -84,5 +67,46 @@ describe('ConditionChip', () => {
 		);
 
 		expect(container.querySelector('.drag-handle')).toBeInTheDocument();
+	});
+
+	it('enters the chip with Space or Enter, moves between its controls with the arrows and leaves with Escape', () => {
+		render(
+			<ConditionChip
+				{...defaultProps}
+				handle={
+					<button aria-label="drag" data-chip-control tabIndex={-1} />
+				}
+			/>
+		);
+
+		const chip = screen.getByRole('group', {name: /job title/i});
+		const dragButton = screen.getByRole('button', {name: 'drag'});
+		const removeButton = screen.getByRole('button', {
+			name: /remove.job title/i
+		});
+
+		expect(removeButton).toHaveAttribute('tabindex', '-1');
+
+		chip.focus();
+
+		fireEvent.keyDown(chip, {key: ' '});
+
+		expect(document.activeElement).toBe(dragButton);
+
+		fireEvent.keyDown(dragButton, {key: 'ArrowRight'});
+
+		expect(document.activeElement).toBe(removeButton);
+
+		fireEvent.keyDown(removeButton, {key: 'ArrowLeft'});
+
+		expect(document.activeElement).toBe(dragButton);
+
+		fireEvent.keyDown(dragButton, {key: 'Escape'});
+
+		expect(document.activeElement).toBe(chip);
+
+		fireEvent.keyDown(chip, {key: 'Enter'});
+
+		expect(document.activeElement).toBe(dragButton);
 	});
 });

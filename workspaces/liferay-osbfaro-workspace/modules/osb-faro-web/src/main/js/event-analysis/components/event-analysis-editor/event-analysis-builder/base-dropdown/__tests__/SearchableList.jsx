@@ -45,13 +45,6 @@ describe('BaseDropdownSearchableList', () => {
 		expect(queryByText('Test 0')).toBeNull();
 	});
 
-	it('should render with an active item', () => {
-		const {container} = render(<WrappedComponent activeId='0' />);
-
-		expect(container.querySelector('.disabled')).toBeNull();
-		expect(container.querySelector('.active')).toBeTruthy();
-	});
-
 	it('should render with 2 disabled items', () => {
 		const {container} = render(
 			<WrappedComponent disabledIds={['0', '1']} />

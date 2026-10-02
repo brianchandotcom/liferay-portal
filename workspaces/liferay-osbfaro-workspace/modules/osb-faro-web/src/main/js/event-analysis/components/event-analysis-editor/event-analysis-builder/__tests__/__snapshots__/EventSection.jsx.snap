@@ -72,64 +72,62 @@ exports[`EventSection render with event 1`] = `
       class="event-container event-list mt-3"
     >
       <div
-        class="dropdown"
+        aria-label="View Article"
+        class="align-items-center condition-chip d-flex rounded-lg"
+        role="group"
+        tabindex="0"
       >
         <div
-          class="align-items-center condition-chip d-flex rounded-lg"
+          class="align-items-center condition-chip-content d-flex flex-grow-1 px-2 py-2"
         >
-          <button
-            aria-expanded="false"
-            aria-haspopup="true"
-            class="align-items-center condition-chip-content d-flex flex-grow-1 px-2 py-2 text-left text-wrap dropdown-toggle btn btn-unstyled"
-            type="button"
+          <span
+            class="sticker condition-chip-sticker flex-shrink-0 mr-2 sticker-primary"
           >
             <span
-              class="sticker condition-chip-sticker flex-shrink-0 mr-2 sticker-primary"
+              class="sticker-overlay"
             >
-              <span
-                class="sticker-overlay"
+              <svg
+                class="lexicon-icon lexicon-icon-click"
+                role="presentation"
               >
-                <svg
-                  class="lexicon-icon lexicon-icon-click"
-                  role="presentation"
-                >
-                  <use
-                    href="#click"
-                  />
-                </svg>
-              </span>
+                <use
+                  href="#click"
+                />
+              </svg>
             </span>
-            <span
-              class="condition-chip-text d-flex flex-column text-break"
-            >
-              <span
-                class="d-block"
-              >
-                <span
-                  class="text-3 font-weight-semi-bold"
-                >
-                  View Article
-                </span>
-              </span>
-            </span>
-          </button>
-          <button
-            aria-label="Remove View Article"
-            class="condition-chip-remove flex-shrink-0 mr-1 btn btn-monospaced btn-sm btn-unstyled"
-            data-html2canvas-ignore="true"
-            title="Remove View Article"
-            type="button"
+          </span>
+          <span
+            class="condition-chip-text d-flex flex-column text-break"
           >
-            <svg
-              class="lexicon-icon lexicon-icon-times-circle"
-              role="presentation"
+            <span
+              class="d-block"
             >
-              <use
-                href="#times-circle"
-              />
-            </svg>
-          </button>
+              <span
+                class="text-3 font-weight-semi-bold"
+              >
+                View Article
+              </span>
+            </span>
+          </span>
         </div>
+        <button
+          aria-label="Remove View Article"
+          class="condition-chip-remove flex-shrink-0 mr-1 btn btn-monospaced btn-sm btn-unstyled"
+          data-chip-control="true"
+          data-html2canvas-ignore="true"
+          tabindex="-1"
+          title="Remove View Article"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-times-circle"
+            role="presentation"
+          >
+            <use
+              href="#times-circle"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   </section>

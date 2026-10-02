@@ -52,11 +52,13 @@ const SortableConditionChip = React.forwardRef<
 							]) as string
 						}
 						className="drag-handle flex-shrink-0 ml-1"
+						data-chip-control
 						data-html2canvas-ignore
 						displayType="unstyled"
 						monospaced
 						size="xs"
 						symbol="drag"
+						tabIndex={-1}
 					/>
 				}
 				ref={mergeRef(ref, chipRef)}

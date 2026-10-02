@@ -7,7 +7,6 @@ import {
 	AddBreakdown,
 	AddBreakdownParams,
 	DeleteBreakdown,
-	EditBreakdown,
 	useAttributes,
 } from '../context/attributes';
 import {Align} from '@clayui/drop-down';
@@ -28,7 +27,6 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 		breakdownOrder,
 		breakdowns,
 		deleteBreakdown,
-		editBreakdown,
 		moveBreakdown,
 	} = useAttributes();
 
@@ -57,9 +55,7 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 
 	const focusSection = () => setTimeout(() => sectionRef.current?.focus());
 
-	const onAttributeSelect: AddBreakdown | EditBreakdown = (
-		params: AddBreakdownParams
-	) => {
+	const onAttributeSelect: AddBreakdown = (params: AddBreakdownParams) => {
 		addBreakdown(params);
 
 		if (breakdownOrder.length + 1 === MAX_ATTRIBUTES) {
@@ -109,15 +105,11 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 						<AttributeBreakdownChip
 							attribute={attributes[breakdowns[id].attributeId]}
 							breakdown={breakdowns[id]}
-							disabledIds={disabledIds}
-							eventId={eventId}
 							index={i}
 							key={id}
 							keyboard={getKeyboardProps(i)}
 							onCloseClick={onRemove}
-							onEditSubmit={editBreakdown}
 							onMove={moveBreakdown}
-							uneditableIds={uneditableIds}
 						/>
 					))}
 				</div>

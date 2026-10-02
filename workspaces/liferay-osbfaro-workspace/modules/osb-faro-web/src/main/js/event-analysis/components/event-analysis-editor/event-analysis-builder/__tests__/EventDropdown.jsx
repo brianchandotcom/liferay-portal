@@ -83,19 +83,4 @@ describe('EventDropdown', () => {
 		).toHaveLength(0);
 	});
 
-	it('render with selected event', async () => {
-		const {getByTestId} = render(<WrappedComponent eventId='3' />);
-
-		fireEvent.click(getByTestId('target'));
-
-		await waitFor(() =>
-			expect(document.body.querySelector('.dropdown-menu')).toBeTruthy()
-		);
-
-		await waitForLoadingToBeRemoved(document.body);
-
-		expect(
-			document.body.querySelectorAll('.dropdown-item.active')
-		).toHaveLength(1);
-	});
 });

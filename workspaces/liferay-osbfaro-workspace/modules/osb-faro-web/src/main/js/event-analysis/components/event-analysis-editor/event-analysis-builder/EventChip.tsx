@@ -1,5 +1,4 @@
 import ConditionChip from './ConditionChip';
-import EventDropdown from './EventDropdown';
 import React from 'react';
 import {Event} from 'event-analysis/utils/types';
 
@@ -12,17 +11,11 @@ const EventChip: React.FC<IEventChipProps> = ({event, onEventChange}) => {
 	const name = event.displayName || event.name;
 
 	return (
-		<EventDropdown
-			eventId={event.id}
-			onEventChange={onEventChange}
-			trigger={
-				<ConditionChip
-					icon="click"
-					label={name}
-					name={name}
-					onRemove={() => onEventChange(null)}
-				/>
-			}
+		<ConditionChip
+			icon="click"
+			label={name}
+			name={name}
+			onRemove={() => onEventChange(null)}
 		/>
 	);
 };

@@ -8,13 +8,12 @@ import EventAttributeDefinitionsQuery, {
 	EventAttributeDefinitionsVariables,
 } from 'event-analysis/queries/EventAttributeDefinitionsQuery';
 import React, {useState} from 'react';
-import {AddBreakdown, EditBreakdown} from '../../context/attributes';
+import {AddBreakdown} from '../../context/attributes';
 import {Align} from '@clayui/drop-down';
 import {
 	Attribute,
 	AttributeOwnerTypes,
 	AttributeTypes,
-	Breakdown,
 	DataTypes,
 } from 'event-analysis/utils/types';
 import {
@@ -32,11 +31,9 @@ import {useQuery} from '@apollo/client';
 
 interface IAttributeBreakdownDropdownProps {
 	alignmentPosition?: (typeof Align)[keyof typeof Align];
-	attribute?: Attribute;
-	breakdown?: Breakdown;
 	disabledIds: string[];
 	eventId: string;
-	onAttributeSelect: AddBreakdown | EditBreakdown;
+	onAttributeSelect: AddBreakdown;
 	trigger: React.ReactElement;
 	uneditableIds: string[];
 }
@@ -45,8 +42,6 @@ const AttributeBreakdownDropdown: React.FC<
 	IAttributeBreakdownDropdownProps
 > = ({
 	alignmentPosition = Align.RightTop,
-	attribute,
-	breakdown,
 	disabledIds,
 	eventId,
 	onAttributeSelect,
@@ -59,7 +54,7 @@ const AttributeBreakdownDropdown: React.FC<
 		useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
 	const [query, setQuery] = useState('');
 	const [selectedAttribute, setSelectedAttribute] =
-		useState<Attribute | null>(breakdown && attribute ? attribute : null);
+		useState<Attribute | null>(null);
 
 	const result = useQuery<
 		EventAttributeDefinitionsData,
@@ -78,9 +73,6 @@ const AttributeBreakdownDropdown: React.FC<
 			type: AttributeTypes.All,
 		},
 	});
-
-	const attributeId = attribute ? attribute.id : null;
-	const breakdownId = breakdown ? breakdown.id : null;
 
 	const hasOptions = (attribute: Attribute) =>
 		[DataTypes.Date, DataTypes.Duration, DataTypes.Number].includes(
@@ -105,9 +97,7 @@ const AttributeBreakdownDropdown: React.FC<
 				if (!active) {
 					setAttributeOwnerType(AttributeOwnerTypes.Event);
 					setQuery('');
-					setSelectedAttribute(
-						breakdown && attribute ? attribute : null
-					);
+					setSelectedAttribute(null);
 				}
 			}}
 			trigger={trigger}
@@ -143,7 +133,6 @@ const AttributeBreakdownDropdown: React.FC<
 										const modifiedEventAttributeDefinitions =
 											getModifiedEventAttributeDefinitions(
 												{
-													attribute: attribute!,
 													attributeOwnerType,
 													eventAttributeDefinitions,
 												}
@@ -151,9 +140,6 @@ const AttributeBreakdownDropdown: React.FC<
 
 										return (
 											<BaseDropdown.SearchableList
-												activeId={
-													attributeId ?? undefined
-												}
 												disabledIds={disabledIds}
 												items={
 													modifiedEventAttributeDefinitions
@@ -207,7 +193,6 @@ const AttributeBreakdownDropdown: React.FC<
 																displayName ??
 																'',
 														}),
-														id: breakdownId ?? '',
 													});
 
 													setActive(false);
@@ -242,7 +227,6 @@ const AttributeBreakdownDropdown: React.FC<
 								<BreakdownOptions
 									attribute={selectedAttribute!}
 									attributeOwnerType={attributeOwnerType}
-									breakdownId={breakdownId ?? undefined}
 									onActiveChange={setActive}
 									onAttributeChange={(attribute) => {
 										setSelectedAttribute(attribute ?? null);

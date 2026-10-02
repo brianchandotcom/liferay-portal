@@ -71,14 +71,12 @@ const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 					{filterOrder.map((id, i) => (
 						<AttributeFilterChip
 							attribute={attributes[filters[id].attributeId]}
-							eventId={eventId}
 							filter={filters[id]}
 							index={i}
 							key={id}
 							keyboard={getKeyboardProps(i)}
 							onCloseClick={onRemove}
 							onMove={moveFilter}
-							uneditableIds={uneditableIds}
 						/>
 					))}
 				</div>

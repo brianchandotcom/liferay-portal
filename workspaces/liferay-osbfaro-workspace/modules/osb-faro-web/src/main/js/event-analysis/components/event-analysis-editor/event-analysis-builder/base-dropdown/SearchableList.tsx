@@ -5,7 +5,6 @@ import React from 'react';
 import {Attribute, Breakdown, Event, Filter} from 'event-analysis/utils/types';
 
 interface ISearchableListProps {
-	activeId?: string;
 	disabledIds?: string[];
 	items: (Attribute | Event)[];
 	onEditClick: (item?: Attribute | Event) => void;
@@ -23,7 +22,6 @@ interface ISearchableListProps {
 }
 
 const SearchableList: React.FC<ISearchableListProps> = ({
-	activeId,
 	disabledIds,
 	items,
 	onEditClick,
@@ -58,23 +56,17 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 			{!noResults && (
 				<ClayDropdown.ItemList className="base-dropdown-list">
 					{filteredItems.map((item) => {
-						const active = activeId === item.id;
-
 						const disabled =
 							disabledIds &&
-							disabledIds.some(
-								(id) => id === item.id && id !== activeId
-							);
+							disabledIds.some((id) => id === item.id);
 
-						const editable =
-							!(
-								uneditableIds &&
-								uneditableIds.some((id) => id === item.id)
-							) && !active;
+						const editable = !(
+							uneditableIds &&
+							uneditableIds.some((id) => id === item.id)
+						);
 
 						return (
 							<ListItem
-								active={active}
 								disabled={disabled}
 								editable={editable}
 								item={item}

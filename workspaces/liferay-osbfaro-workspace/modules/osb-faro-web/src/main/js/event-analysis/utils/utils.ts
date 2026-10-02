@@ -509,26 +509,16 @@ export const getMaxEventValue = (
 	);
 
 export function getModifiedEventAttributeDefinitions({
-	attribute,
 	attributeOwnerType,
 	eventAttributeDefinitions,
 }: {
-	attribute: Attribute;
 	attributeOwnerType: AttributeOwnerTypes;
 	eventAttributeDefinitions: Attribute[];
 }): Attribute[] {
 	let modifiedEventAttributeDefinitions: Attribute[] = [];
 
 	if (attributeOwnerType === AttributeOwnerTypes.Event) {
-		modifiedEventAttributeDefinitions = attribute
-			? eventAttributeDefinitions.map((eventAttributeDefinition) => {
-					if (attribute.id === eventAttributeDefinition.id) {
-						return attribute;
-					}
-
-					return eventAttributeDefinition;
-				})
-			: eventAttributeDefinitions;
+		modifiedEventAttributeDefinitions = eventAttributeDefinitions;
 	}
 	else if (attributeOwnerType === AttributeOwnerTypes.Individual) {
 		modifiedEventAttributeDefinitions = [

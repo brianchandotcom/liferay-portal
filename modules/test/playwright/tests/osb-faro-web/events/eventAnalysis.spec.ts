@@ -215,10 +215,12 @@ test(
 
 			for (const attributeName of attributeNameList) {
 				await expect(
-					page.getByRole('button', {
-						exact: true,
-						name: `Event ${attributeName}`,
-					})
+					page
+						.getByRole('region', {name: 'Breakdown By'})
+						.getByRole('group', {
+							exact: true,
+							name: attributeName,
+						})
 				).toBeVisible();
 			}
 
@@ -307,10 +309,12 @@ test(
 		await test.step('Check the analysis result appears', async () => {
 			for (const attributeName of attributeNameList) {
 				await expect(
-					page.getByRole('button', {
-						exact: true,
-						name: `Event ${attributeName}`,
-					})
+					page
+						.getByRole('region', {name: 'Breakdown By'})
+						.getByRole('group', {
+							exact: true,
+							name: attributeName,
+						})
 				).toBeVisible();
 			}
 
@@ -326,7 +330,9 @@ test(
 
 		await test.step('Check that the attributes used have not had the attribute type changed', async () => {
 			await expect(
-				page.getByRole('button', {name: 'Event | temp is greater than'})
+				page
+					.locator('.attribute-filter-section-root .condition-chip')
+					.filter({hasText: /^Event \| temp.*is greater than/})
 			).toBeVisible();
 		});
 	}

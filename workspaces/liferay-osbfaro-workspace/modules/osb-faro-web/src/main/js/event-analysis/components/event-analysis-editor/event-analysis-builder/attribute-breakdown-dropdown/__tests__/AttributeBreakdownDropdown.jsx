@@ -72,33 +72,6 @@ describe('AttributeBreakdownDropdown', () => {
 		).toHaveLength(0);
 	});
 
-	it('render w/ selected attribute', async () => {
-		const {getByTestId} = render(
-			<WrappedComponent
-				attribute={{
-					dataType: 'STRING',
-					displayName: 'Filed Ticket',
-					id: '4',
-					name: 'filedTicket'
-				}}
-			/>
-		);
-
-		fireEvent.click(getByTestId('target'));
-
-		await waitFor(() =>
-			expect(document.body.querySelector('.loading-animation')).toBeNull()
-		);
-
-		act(() => {
-			jest.advanceTimersByTime(250);
-		});
-
-		expect(
-			document.body.querySelectorAll('.dropdown-item.active')
-		).toHaveLength(1);
-	});
-
 	it('render w/ disabled attributes', async () => {
 		const {getByTestId} = render(
 			<WrappedComponent disabledIds={['1', '2']} />

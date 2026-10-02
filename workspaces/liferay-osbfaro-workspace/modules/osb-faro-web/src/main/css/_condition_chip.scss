@@ -2,13 +2,12 @@
 	background-color: $white;
 	border: 1px solid $mainLighten74;
 
-	.condition-chip-content {
-		color: inherit;
-		min-width: 0;
+	&:focus {
+		outline: 0;
+	}
 
-		&:focus {
-			box-shadow: none;
-		}
+	.condition-chip-content {
+		min-width: 0;
 	}
 
 	.condition-chip-remove {

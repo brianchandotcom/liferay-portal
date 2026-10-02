@@ -14,6 +14,7 @@ import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.web.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
@@ -34,12 +35,16 @@ public class ObjectEntryInfoItemPermissionProvider
 
 	public ObjectEntryInfoItemPermissionProvider(
 		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryManager objectEntryManager,
 		ObjectEntryService objectEntryService) {
 
-		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManager = objectEntryManager;
 		_objectEntryService = objectEntryService;
+
+		_defaultStorageType = objectDefinition.isDefaultStorageType();
+		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
 	}
 
 	@Override
@@ -83,6 +88,10 @@ public class ObjectEntryInfoItemPermissionProvider
 				return false;
 			}
 
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					_objectDefinitionId);
+
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				_objectEntryManager.getObjectEntry(
 					themeDisplay.getCompanyId(),
@@ -90,13 +99,13 @@ public class ObjectEntryInfoItemPermissionProvider
 						false, null, null, null, null, themeDisplay.getLocale(),
 						null, themeDisplay.getUser()),
 					ercInfoItemIdentifier.getExternalReferenceCode(),
-					_objectDefinition, null);
+					objectDefinition, null);
 
 			if (objectEntry != null) {
 				return hasPermission(
 					permissionChecker,
 					ObjectEntryUtil.toObjectEntry(
-						_objectDefinition, objectEntry),
+						objectDefinition, objectEntry),
 					actionId);
 			}
 		}
@@ -122,8 +131,8 @@ public class ObjectEntryInfoItemPermissionProvider
 		try {
 			return ObjectDefinitionResourcePermissionUtil.
 				hasModelResourcePermission(
-					_objectDefinition, objectEntryId, _objectEntryService,
-					actionId);
+					_defaultStorageType, _objectDefinitionId, objectEntryId,
+					_objectEntryService, actionId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -137,7 +146,9 @@ public class ObjectEntryInfoItemPermissionProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemPermissionProvider.class);
 
-	private final ObjectDefinition _objectDefinition;
+	private final boolean _defaultStorageType;
+	private final long _objectDefinitionId;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectEntryService _objectEntryService;
 

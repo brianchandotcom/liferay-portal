@@ -425,7 +425,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemPermissionProvider.class,
 				new ObjectEntryInfoItemPermissionProvider(
-					objectDefinition,
+					objectDefinition, _objectDefinitionLocalService,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getCompanyId(),
 						objectDefinition.getStorageType()),

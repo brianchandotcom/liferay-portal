@@ -72,23 +72,26 @@ public class ObjectEntryLayoutDisplayPageProvider
 		_assetHelper = assetHelper;
 		_groupLocalService = groupLocalService;
 		_infoItemFriendlyURLProvider = infoItemFriendlyURLProvider;
-		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManager = objectEntryManager;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_userLocalService = userLocalService;
+
+		_className = objectDefinition.getClassName();
+		_defaultURLSeparator = StringUtil.quote(
+			objectDefinition.getFriendlyURLSeparator(), CharPool.SLASH);
+		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
 	}
 
 	@Override
 	public String getClassName() {
-		return _objectDefinition.getClassName();
+		return _className;
 	}
 
 	@Override
 	public String getDefaultURLSeparator() {
-		return StringUtil.quote(
-			_objectDefinition.getFriendlyURLSeparator(), CharPool.SLASH);
+		return _defaultURLSeparator;
 	}
 
 	@Override
@@ -108,17 +111,25 @@ public class ObjectEntryLayoutDisplayPageProvider
 			}
 		}
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_objectDefinitionId);
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			groupId, _objectDefinition, urlTitle);
+			groupId, objectDefinition, urlTitle);
 
 		if (objectEntry != null) {
 			return new ObjectEntryLayoutDisplayPageObjectProvider(
-				_assetHelper, _infoItemFriendlyURLProvider, _objectDefinition,
+				_assetHelper, _infoItemFriendlyURLProvider, objectDefinition,
 				_objectDefinitionLocalService, objectEntry,
 				_objectEntryLocalService, _objectRelationshipLocalService);
 		}
 
-		if (!_objectDefinition.isDefaultStorageType()) {
+		if (!objectDefinition.isDefaultStorageType()) {
 			return getLayoutDisplayPageObjectProvider(
 				new InfoItemReference(
 					ObjectEntry.class.getName(),
@@ -195,12 +206,16 @@ public class ObjectEntryLayoutDisplayPageProvider
 				userId = PrincipalThreadLocal.getUserId();
 			}
 
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					_objectDefinitionId);
+
 			String scopeKey =
 				ercInfoItemIdentifier.getScopeExternalReferenceCode();
 
 			if (Validator.isNull(scopeKey) &&
 				!Objects.equals(
-					_objectDefinition.getScope(),
+					objectDefinition.getScope(),
 					ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
 				Group group = _groupLocalService.getGroup(groupId);
@@ -216,14 +231,14 @@ public class ObjectEntryLayoutDisplayPageProvider
 						serviceContext.getLocale(), null,
 						_userLocalService.fetchUser(userId)),
 					ercInfoItemIdentifier.getExternalReferenceCode(),
-					_objectDefinition, scopeKey);
+					objectDefinition, scopeKey);
 
 			if (objectEntry != null) {
 				return new ObjectEntryLayoutDisplayPageObjectProvider(
 					_assetHelper, _infoItemFriendlyURLProvider,
-					_objectDefinition, _objectDefinitionLocalService,
+					objectDefinition, _objectDefinitionLocalService,
 					ObjectEntryUtil.toObjectEntry(
-						_objectDefinition, objectEntry),
+						objectDefinition, objectEntry),
 					_objectEntryLocalService, _objectRelationshipLocalService);
 			}
 		}
@@ -295,10 +310,12 @@ public class ObjectEntryLayoutDisplayPageProvider
 		ObjectEntryLayoutDisplayPageProvider.class);
 
 	private final AssetHelper _assetHelper;
+	private final String _className;
+	private final String _defaultURLSeparator;
 	private final GroupLocalService _groupLocalService;
 	private final InfoItemFriendlyURLProvider<ObjectEntry>
 		_infoItemFriendlyURLProvider;
-	private final ObjectDefinition _objectDefinition;
+	private final long _objectDefinitionId;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManager _objectEntryManager;

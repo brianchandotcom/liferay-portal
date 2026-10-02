@@ -45,12 +45,21 @@ public class ObjectEntryLayoutDisplayPageProviderTest {
 		_objectDefinition = Mockito.mock(ObjectDefinition.class);
 		_objectEntryLocalService = Mockito.mock(ObjectEntryLocalService.class);
 
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			Mockito.mock(ObjectDefinitionLocalService.class);
+
+		Mockito.when(
+			objectDefinitionLocalService.fetchObjectDefinition(
+				Mockito.anyLong())
+		).thenReturn(
+			_objectDefinition
+		);
+
 		_objectEntryLayoutDisplayPageProvider =
 			new ObjectEntryLayoutDisplayPageProvider(
 				Mockito.mock(AssetHelper.class), _groupLocalService,
 				Mockito.mock(InfoItemFriendlyURLProvider.class),
-				_objectDefinition,
-				Mockito.mock(ObjectDefinitionLocalService.class),
+				_objectDefinition, objectDefinitionLocalService,
 				_objectEntryLocalService,
 				Mockito.mock(ObjectEntryManager.class),
 				Mockito.mock(ObjectRelationshipLocalService.class),

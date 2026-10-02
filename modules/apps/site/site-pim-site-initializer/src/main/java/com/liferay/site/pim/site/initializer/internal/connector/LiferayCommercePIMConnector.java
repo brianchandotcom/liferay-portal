@@ -5,6 +5,7 @@
 
 package com.liferay.site.pim.site.initializer.internal.connector;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.function.UnsafeTriFunction;
@@ -397,58 +398,79 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 	}
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_CATALOG_ID =
-		new PIMConnectorChannelField("catalog-id", false, "catalogId", true);
+		new PIMConnectorChannelField(
+			"catalog-id", false, "catalogId", true,
+			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_DEPTH =
-		new PIMConnectorChannelField("depth", false, "skus[].depth", false);
+		new PIMConnectorChannelField(
+			"depth", false, "skus[].depth", false,
+			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_DESCRIPTION =
 		new PIMConnectorChannelField(
-			"description", false, "description", false);
+			"description", false, "description", false,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_HEIGHT =
-		new PIMConnectorChannelField("height", false, "skus[].height", false);
+		new PIMConnectorChannelField(
+			"height", false, "skus[].height", false,
+			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_NAME =
-		new PIMConnectorChannelField("name", false, "name", true);
+		new PIMConnectorChannelField(
+			"name", false, "name", true,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_PRECISION =
 		new PIMConnectorChannelField(
-			"precision", false, "skus[].skuUnitOfMeasures[].precision", false);
+			"precision", false, "skus[].skuUnitOfMeasures[].precision", false,
+			ObjectFieldConstants.BUSINESS_TYPE_INTEGER);
 
 	private static final PIMConnectorChannelField
 		_CHANNEL_FIELD_PRODUCT_OPTIONS = new PIMConnectorChannelField(
-			"product-options", true, "productOptions", false);
+			"product-options", true, "productOptions", false,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_CHANNEL_FIELD_PRODUCT_SPECIFICATIONS = new PIMConnectorChannelField(
-			"product-specifications", true, "productSpecifications", false);
+			"product-specifications", true, "productSpecifications", false,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_PRODUCT_TYPE =
 		new PIMConnectorChannelField(
-			"product-type", false, "productType", true);
+			"product-type", false, "productType", true,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_SKU =
-		new PIMConnectorChannelField("sku", false, "skus[].sku", true);
+		new PIMConnectorChannelField(
+			"sku", false, "skus[].sku", true,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_TAGS =
-		new PIMConnectorChannelField("tags", true, "tags", false);
+		new PIMConnectorChannelField(
+			"tags", true, "tags", false,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_CHANNEL_FIELD_UNIT_OF_MEASURE_KEY = new PIMConnectorChannelField(
 			"unit-of-measure-key", false, "skus[].skuUnitOfMeasures[].key",
-			false);
+			false, ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_CHANNEL_FIELD_UNIT_OF_MEASURE_NAME = new PIMConnectorChannelField(
 			"unit-of-measure-name", false, "skus[].skuUnitOfMeasures[].name",
-			false);
+			false, ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_WEIGHT =
-		new PIMConnectorChannelField("weight", false, "skus[].weight", false);
+		new PIMConnectorChannelField(
+			"weight", false, "skus[].weight", false,
+			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
 
 	private static final PIMConnectorChannelField _CHANNEL_FIELD_WIDTH =
-		new PIMConnectorChannelField("width", false, "skus[].width", false);
+		new PIMConnectorChannelField(
+			"width", false, "skus[].width", false,
+			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;

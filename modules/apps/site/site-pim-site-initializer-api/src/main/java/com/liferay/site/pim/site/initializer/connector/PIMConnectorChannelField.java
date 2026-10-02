@@ -16,12 +16,14 @@ import java.util.Locale;
 public class PIMConnectorChannelField {
 
 	public PIMConnectorChannelField(
-		String labelKey, boolean multiple, String name, boolean required) {
+		String labelKey, boolean multiple, String name, boolean required,
+		String type) {
 
 		_labelKey = labelKey;
 		_multiple = multiple;
 		_name = name;
 		_required = required;
+		_type = type;
 	}
 
 	public String getLabel(Locale locale) {
@@ -30,6 +32,10 @@ public class PIMConnectorChannelField {
 
 	public String getName() {
 		return _name;
+	}
+
+	public String getType() {
+		return _type;
 	}
 
 	public boolean isMultiple() {
@@ -44,5 +50,6 @@ public class PIMConnectorChannelField {
 	private final boolean _multiple;
 	private final String _name;
 	private final boolean _required;
+	private final String _type;
 
 }

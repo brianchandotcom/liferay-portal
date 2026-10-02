@@ -2516,6 +2516,15 @@ test(
 		});
 
 		await expectOrder(['category', 'pageTitle', 'url']);
+
+		// Dropping a breakdown outside the side panel leaves the order unchanged
+
+		await dragAndDropElement({
+			dragTarget: breakdownChips.nth(0).locator('.drag-handle'),
+			dropTarget: page.locator('.event-analysis-editor-root'),
+		});
+
+		await expectOrder(['category', 'pageTitle', 'url']);
 	}
 );
 

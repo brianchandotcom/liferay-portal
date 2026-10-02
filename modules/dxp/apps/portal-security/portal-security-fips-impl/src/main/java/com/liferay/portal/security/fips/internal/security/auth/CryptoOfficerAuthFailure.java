@@ -5,8 +5,8 @@
 
 package com.liferay.portal.security.fips.internal.security.auth;
 
-import com.liferay.portal.kernel.audit.AuditRequest;
-import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
+import com.liferay.portal.kernel.audit.AuditRequestContext;
+import com.liferay.portal.kernel.audit.AuditRequestContextThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -69,14 +69,14 @@ public class CryptoOfficerAuthFailure implements AuthFailure {
 				failureReason = "locked";
 			}
 
-			AuditRequest auditRequest =
-				AuditRequestThreadLocal.getAuditRequest();
+			AuditRequestContext auditRequestContext =
+				AuditRequestContextThreadLocal.getAuditRequestContext();
 
 			FIPSAuditUtil.write(
 				FIPSAuditEventFactory.createAuthAttemptFailure(
 					String.valueOf(user.getUserId()), "local",
-					auditRequest.getClientIP(), user.getFailedLoginAttempts(),
-					failureReason));
+					auditRequestContext.getClientIP(),
+					user.getFailedLoginAttempts(), failureReason));
 		}
 		catch (Throwable throwable) {
 			_log.error(

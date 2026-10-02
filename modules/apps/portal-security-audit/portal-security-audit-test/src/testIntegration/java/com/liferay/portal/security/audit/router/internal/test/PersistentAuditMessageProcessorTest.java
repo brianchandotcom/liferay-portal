@@ -11,8 +11,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRequest;
-import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
+import com.liferay.portal.kernel.audit.AuditRequestContext;
+import com.liferay.portal.kernel.audit.AuditRequestContextThreadLocal;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -79,16 +79,16 @@ public class PersistentAuditMessageProcessorTest {
 
 			String correlationId = RandomTestUtil.randomString();
 
-			AuditRequest auditRequest =
-				AuditRequestThreadLocal.getAuditRequest();
+			AuditRequestContext auditRequestContext =
+				AuditRequestContextThreadLocal.getAuditRequestContext();
 
-			auditRequest.setCorrelationId(correlationId);
+			auditRequestContext.setCorrelationId(correlationId);
 
 			String eventType1 = _createEventType();
 
 			_route(_company1.getCompanyId(), eventType1);
 
-			auditRequest.setCorrelationId(null);
+			auditRequestContext.setCorrelationId(null);
 
 			Assert.assertEquals(
 				0, _getAuditEventsCount(_company1.getCompanyId(), eventType1));
@@ -106,7 +106,7 @@ public class PersistentAuditMessageProcessorTest {
 			Assert.assertEquals(
 				StringPool.BLANK, auditEvent2.getCorrelationId());
 
-			AuditRequestThreadLocal.removeAuditRequest();
+			AuditRequestContextThreadLocal.removeAuditRequestContext();
 		}
 	}
 

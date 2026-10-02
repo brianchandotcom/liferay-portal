@@ -8,8 +8,8 @@ package com.liferay.portal.security.audit.wiring.internal.servlet.filter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.audit.AuditRequest;
-import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
+import com.liferay.portal.kernel.audit.AuditRequestContext;
+import com.liferay.portal.kernel.audit.AuditRequestContextThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -67,7 +67,7 @@ public class AuditFilterTest {
 
 	@After
 	public void tearDown() throws Exception {
-		AuditRequestThreadLocal.removeAuditRequest();
+		AuditRequestContextThreadLocal.removeAuditRequestContext();
 	}
 
 	@Test
@@ -85,21 +85,23 @@ public class AuditFilterTest {
 
 		httpSession.setAttribute(WebKeys.USER_ID, TestPropsValues.getUserId());
 
-		AuditRequest auditRequest = _testDoFilter(mockHttpServletRequest);
+		AuditRequestContext auditRequestContext = _testDoFilter(
+			mockHttpServletRequest);
 
-		Assert.assertEquals(auditSessionId, auditRequest.getSessionID());
+		Assert.assertEquals(auditSessionId, auditRequestContext.getSessionID());
 		Assert.assertNotEquals(
-			httpSession.getId(), auditRequest.getSessionID());
+			httpSession.getId(), auditRequestContext.getSessionID());
 	}
 
 	@Test
 	public void testDoFilterCapturesNoAuditSessionIdBeforeAuthentication()
 		throws Exception {
 
-		AuditRequest auditRequest = _testDoFilter(new MockHttpServletRequest());
+		AuditRequestContext auditRequestContext = _testDoFilter(
+			new MockHttpServletRequest());
 
-		Assert.assertNotNull(auditRequest.getRequestURL());
-		Assert.assertNull(auditRequest.getSessionID());
+		Assert.assertNotNull(auditRequestContext.getRequestURL());
+		Assert.assertNull(auditRequestContext.getSessionID());
 	}
 
 	@FeatureFlag(enable = false, value = "LPD-6417")
@@ -107,32 +109,34 @@ public class AuditFilterTest {
 	public void testDoFilterDoesNotResolveRequestIdWhenFeatureFlagIsDisabled()
 		throws Exception {
 
-		AuditRequest auditRequest = _testDoFilter(PortalUUIDUtil.generate());
+		AuditRequestContext auditRequestContext = _testDoFilter(
+			PortalUUIDUtil.generate());
 
-		Assert.assertNull(auditRequest.getRequestId());
-		Assert.assertFalse(auditRequest.isRequestIdGenerated());
+		Assert.assertNull(auditRequestContext.getRequestId());
+		Assert.assertFalse(auditRequestContext.isRequestIdGenerated());
 	}
 
 	@FeatureFlag("LPD-6417")
 	@Test
 	public void testDoFilterResolvesRequestId() throws Exception {
-		AuditRequest auditRequest = _testDoFilter(new MockHttpServletRequest());
+		AuditRequestContext auditRequestContext = _testDoFilter(
+			new MockHttpServletRequest());
 
-		Assert.assertNotNull(auditRequest.getRequestId());
-		Assert.assertTrue(auditRequest.isRequestIdGenerated());
+		Assert.assertNotNull(auditRequestContext.getRequestId());
+		Assert.assertTrue(auditRequestContext.isRequestIdGenerated());
 
-		auditRequest = _testDoFilter("invalid");
+		auditRequestContext = _testDoFilter("invalid");
 
-		Assert.assertNotEquals("invalid", auditRequest.getRequestId());
-		Assert.assertNotNull(auditRequest.getRequestId());
-		Assert.assertTrue(auditRequest.isRequestIdGenerated());
+		Assert.assertNotEquals("invalid", auditRequestContext.getRequestId());
+		Assert.assertNotNull(auditRequestContext.getRequestId());
+		Assert.assertTrue(auditRequestContext.isRequestIdGenerated());
 
 		String xRequestId = PortalUUIDUtil.generate();
 
-		auditRequest = _testDoFilter(xRequestId);
+		auditRequestContext = _testDoFilter(xRequestId);
 
-		Assert.assertEquals(xRequestId, auditRequest.getRequestId());
-		Assert.assertFalse(auditRequest.isRequestIdGenerated());
+		Assert.assertEquals(xRequestId, auditRequestContext.getRequestId());
+		Assert.assertFalse(auditRequestContext.isRequestIdGenerated());
 	}
 
 	@FeatureFlag("LPD-6417")
@@ -203,7 +207,7 @@ public class AuditFilterTest {
 		}
 	}
 
-	private AuditRequest _testDoFilter(
+	private AuditRequestContext _testDoFilter(
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
 
@@ -221,14 +225,17 @@ public class AuditFilterTest {
 				mockHttpServletRequest, new MockHttpServletResponse());
 		}
 
-		AuditRequest auditRequest = AuditRequestThreadLocal.getAuditRequest();
+		AuditRequestContext auditRequestContext =
+			AuditRequestContextThreadLocal.getAuditRequestContext();
 
-		AuditRequestThreadLocal.removeAuditRequest();
+		AuditRequestContextThreadLocal.removeAuditRequestContext();
 
-		return auditRequest;
+		return auditRequestContext;
 	}
 
-	private AuditRequest _testDoFilter(String xRequestId) throws Exception {
+	private AuditRequestContext _testDoFilter(String xRequestId)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 

@@ -8,8 +8,8 @@ package com.liferay.portal.security.audit.event.generators.internal.events.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.audit.AuditRequest;
-import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
+import com.liferay.portal.kernel.audit.AuditRequestContext;
+import com.liferay.portal.kernel.audit.AuditRequestContextThreadLocal;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.model.User;
@@ -87,7 +87,7 @@ public class LoginPostActionTest {
 
 	@After
 	public void tearDown() throws Exception {
-		AuditRequestThreadLocal.removeAuditRequest();
+		AuditRequestContextThreadLocal.removeAuditRequestContext();
 
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
@@ -138,9 +138,10 @@ public class LoginPostActionTest {
 
 		_testDoFilter(mockHttpServletRequest2);
 
-		AuditRequest auditRequest = AuditRequestThreadLocal.getAuditRequest();
+		AuditRequestContext auditRequestContext =
+			AuditRequestContextThreadLocal.getAuditRequestContext();
 
-		Assert.assertEquals(auditSessionId, auditRequest.getSessionID());
+		Assert.assertEquals(auditSessionId, auditRequestContext.getSessionID());
 	}
 
 	@Test

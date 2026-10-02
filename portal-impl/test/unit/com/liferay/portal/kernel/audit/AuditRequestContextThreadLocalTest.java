@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * @author Christian Moura
  */
-public class AuditRequestThreadLocalTest {
+public class AuditRequestContextThreadLocalTest {
 
 	@ClassRule
 	@Rule
@@ -23,18 +23,21 @@ public class AuditRequestThreadLocalTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetAuditRequest() {
-		AuditRequest auditRequest = AuditRequestThreadLocal.getAuditRequest();
+	public void testGetAuditRequestContext() {
+		AuditRequestContext auditRequestContext =
+			AuditRequestContextThreadLocal.getAuditRequestContext();
 
 		Assert.assertSame(
-			auditRequest, AuditRequestThreadLocal.getAuditRequest());
+			auditRequestContext,
+			AuditRequestContextThreadLocal.getAuditRequestContext());
 
-		AuditRequestThreadLocal.removeAuditRequest();
+		AuditRequestContextThreadLocal.removeAuditRequestContext();
 
 		Assert.assertNotSame(
-			auditRequest, AuditRequestThreadLocal.getAuditRequest());
+			auditRequestContext,
+			AuditRequestContextThreadLocal.getAuditRequestContext());
 
-		AuditRequestThreadLocal.removeAuditRequest();
+		AuditRequestContextThreadLocal.removeAuditRequestContext();
 	}
 
 }

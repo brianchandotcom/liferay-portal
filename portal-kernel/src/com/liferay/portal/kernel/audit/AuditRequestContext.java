@@ -8,7 +8,7 @@ package com.liferay.portal.kernel.audit;
 /**
  * @author Michael C. Han
  */
-public class AuditRequest {
+public class AuditRequestContext {
 
 	public String getClientHost() {
 		return _clientHost;

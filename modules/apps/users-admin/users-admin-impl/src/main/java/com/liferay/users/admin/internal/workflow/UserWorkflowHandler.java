@@ -5,8 +5,8 @@
 
 package com.liferay.users.admin.internal.workflow;
 
-import com.liferay.portal.kernel.audit.AuditRequest;
-import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
+import com.liferay.portal.kernel.audit.AuditRequestContext;
+import com.liferay.portal.kernel.audit.AuditRequestContextThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -97,7 +97,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 
 			_userLocalService.completeUserRegistration(user, serviceContext);
 
-			_updateAuditRequestThreadLocal(workflowContext);
+			_updateAuditRequestContextThreadLocal(workflowContext);
 
 			user = _userLocalService.getUser(userId);
 		}
@@ -105,22 +105,23 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 		return _userLocalService.updateStatus(user, status, serviceContext);
 	}
 
-	private void _updateAuditRequestThreadLocal(
+	private void _updateAuditRequestContextThreadLocal(
 		Map<String, Serializable> workflowContext) {
 
-		AuditRequest auditRequest = AuditRequestThreadLocal.getAuditRequest();
+		AuditRequestContext auditRequestContext =
+			AuditRequestContextThreadLocal.getAuditRequestContext();
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-		auditRequest.setClientHost(serviceContext.getRemoteHost());
-		auditRequest.setClientIP(serviceContext.getRemoteAddr());
+		auditRequestContext.setClientHost(serviceContext.getRemoteHost());
+		auditRequestContext.setClientIP(serviceContext.getRemoteAddr());
 
 		long userId = GetterUtil.getLong(
 			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 
 		if (userId != 0) {
-			auditRequest.setRealUserId(userId);
+			auditRequestContext.setRealUserId(userId);
 		}
 
 		Serializable serverName = serviceContext.getAttribute("serverName");
@@ -129,8 +130,8 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 			return;
 		}
 
-		auditRequest.setServerName((String)serverName);
-		auditRequest.setServerPort(
+		auditRequestContext.setServerName((String)serverName);
+		auditRequestContext.setServerPort(
 			(int)serviceContext.getAttribute("serverPort"));
 
 		Serializable sessionId = serviceContext.getAttribute("sessionId");
@@ -139,7 +140,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 			return;
 		}
 
-		auditRequest.setSessionID((String)sessionId);
+		auditRequestContext.setSessionID((String)sessionId);
 	}
 
 	@Reference

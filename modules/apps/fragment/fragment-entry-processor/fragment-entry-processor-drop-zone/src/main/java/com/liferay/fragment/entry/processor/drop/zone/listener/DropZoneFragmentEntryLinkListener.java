@@ -522,10 +522,6 @@ public class DropZoneFragmentEntryLinkListener
 		return null;
 	}
 
-	private Document _getDocument(String html) {
-		return FragmentHtmlParserUtil.parseBodyFragment(html);
-	}
-
 	private Elements _getDropZoneElements(
 			FragmentEntryLink fragmentEntryLink,
 			HttpServletRequest httpServletRequest,
@@ -542,7 +538,7 @@ public class DropZoneFragmentEntryLinkListener
 
 		defaultFragmentEntryProcessorContext.setDisablePortletRender(true);
 
-		Document document = _getDocument(
+		Document document = FragmentHtmlParserUtil.parseBodyFragment(
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 

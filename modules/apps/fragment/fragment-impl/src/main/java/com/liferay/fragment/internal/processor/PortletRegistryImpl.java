@@ -220,7 +220,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 		}
 
 		if (document == null) {
-			document = _getDocument(html);
+			document = FragmentHtmlParserUtil.parseBodyFragment(html);
 		}
 
 		for (Element element : document.select("*")) {
@@ -322,10 +322,6 @@ public class PortletRegistryImpl implements PortletRegistry {
 		}
 
 		return null;
-	}
-
-	private Document _getDocument(String html) {
-		return FragmentHtmlParserUtil.parseBodyFragment(html);
 	}
 
 	private int _getMacroEndIndex(String html, int index) {

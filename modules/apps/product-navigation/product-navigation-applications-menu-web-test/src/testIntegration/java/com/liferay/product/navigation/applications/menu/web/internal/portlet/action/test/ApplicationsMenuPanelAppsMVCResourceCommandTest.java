@@ -145,112 +145,43 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testGetSitesJSONObjectWhenMySitesHas1Site() throws Exception {
+	public void testGetSitesJSONObjectWithMySites() throws Exception {
 		_addMySiteGroups(1);
 
-		JSONObject jsonObject = _getSitesJSONObject();
-
-		Assert.assertFalse(jsonObject.has("mySites"));
-		Assert.assertFalse(jsonObject.has("recentSites"));
-		Assert.assertFalse(jsonObject.has("viewAllURL"));
-	}
-
-	@Test
-	public void testGetSitesJSONObjectWhenMySitesHas2SitesAndRecentSitesHas1Site()
-		throws Exception {
+		_testGetSitesJSONObjectWithMySitesAnd1Site();
 
 		_addMySiteGroups(2);
 
-		List<Group> recentGroups = _addRecentGroups(1);
+		_testGetSitesJSONObjectWithMySitesAndMaxSites();
 
-		JSONObject jsonObject = _getSitesJSONObject();
+		_addMySiteGroups(1);
 
-		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
-
-		Assert.assertEquals(2, mySitesJSONArray.length());
-
-		Assert.assertFalse(jsonObject.has("viewAllURL"));
-
-		_assertGroupKeys(recentGroups, jsonObject.getJSONArray("recentSites"));
+		_testGetSitesJSONObjectWithMySitesAndMaxPlus1Sites();
 	}
 
 	@Test
-	public void testGetSitesJSONObjectWhenMySitesHas2SitesAndRecentSitesHas2Sites()
+	public void testGetSitesJSONObjectWithMySitesAndRecentSites()
 		throws Exception {
 
 		_addMySiteGroups(2);
+		_addRecentGroups(1);
 
-		List<Group> recentGroups = _addRecentGroups(2);
+		_testGetSitesJSONObjectWithMySitesAndRecentSitesAndMaxSites();
 
-		JSONObject jsonObject = _getSitesJSONObject();
+		_addRecentGroups(1);
 
-		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
-
-		Assert.assertEquals(1, mySitesJSONArray.length());
-
-		Assert.assertTrue(jsonObject.has("viewAllURL"));
-
-		_assertGroupKeys(recentGroups, jsonObject.getJSONArray("recentSites"));
+		_testGetSitesJSONObjectWithMySitesAndRecentSitesAndMaxPlus1Sites();
 	}
 
 	@Test
-	public void testGetSitesJSONObjectWhenMySitesHas3Sites() throws Exception {
-		_addMySiteGroups(3);
+	public void testGetSitesJSONObjectWithRecentSites() throws Exception {
+		_addRecentGroups(3);
 
-		JSONObject jsonObject = _getSitesJSONObject();
+		_testGetSitesJSONObjectWithRecentSitesAndMaxSites();
 
-		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
+		_addRecentGroups(1);
 
-		Assert.assertEquals(_MAX_SITES, mySitesJSONArray.length());
-
-		Assert.assertFalse(jsonObject.has("recentSites"));
-		Assert.assertFalse(jsonObject.has("viewAllURL"));
-	}
-
-	@Test
-	public void testGetSitesJSONObjectWhenMySitesHasMoreThan3Sites()
-		throws Exception {
-
-		_addMySiteGroups(4);
-
-		JSONObject jsonObject = _getSitesJSONObject();
-
-		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
-
-		Assert.assertEquals(_MAX_SITES, mySitesJSONArray.length());
-
-		Assert.assertFalse(jsonObject.has("recentSites"));
-		Assert.assertTrue(jsonObject.has("viewAllURL"));
-	}
-
-	@Test
-	public void testGetSitesJSONObjectWhenRecentSitesHas3Sites()
-		throws Exception {
-
-		List<Group> recentGroups = _addRecentGroups(3);
-
-		JSONObject jsonObject = _getSitesJSONObject();
-
-		Assert.assertFalse(jsonObject.has("mySites"));
-		Assert.assertFalse(jsonObject.has("viewAllURL"));
-
-		_assertGroupKeys(recentGroups, jsonObject.getJSONArray("recentSites"));
-	}
-
-	@Test
-	public void testGetSitesJSONObjectWhenRecentSitesHasMoreThan3Sites()
-		throws Exception {
-
-		List<Group> recentGroups = _addRecentGroups(4);
-
-		JSONObject jsonObject = _getSitesJSONObject();
-
-		Assert.assertFalse(jsonObject.has("mySites"));
-		Assert.assertTrue(jsonObject.has("viewAllURL"));
-
-		_assertGroupKeys(
-			recentGroups.subList(0, _MAX_SITES),
-			jsonObject.getJSONArray("recentSites"));
+		_testGetSitesJSONObjectWithRecentSitesAndMaxPlus1Sites();
 	}
 
 	private void _addMySiteGroups(int max) throws Exception {
@@ -266,9 +197,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 		}
 	}
 
-	private List<Group> _addRecentGroups(int max) throws Exception {
-		List<Group> recentGroups = new ArrayList<>();
-
+	private void _addRecentGroups(int max) throws Exception {
 		for (int i = 0; i < max; i++) {
 			Group group = GroupTestUtil.addGroup();
 
@@ -276,7 +205,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 
 			_groups.add(group);
 
-			recentGroups.add(group);
+			_recentGroups.add(group);
 
 			_userLocalService.setGroupUsers(
 				group.getGroupId(), new long[] {_user.getUserId()});
@@ -284,9 +213,8 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 
 		_setRecentGroupsValue(
 			_mockHttpServletRequest,
-			StringUtil.merge(ListUtil.toList(recentGroups, Group::getGroupId)));
-
-		return recentGroups;
+			StringUtil.merge(
+				ListUtil.toList(_recentGroups, Group::getGroupId)));
 	}
 
 	private User _addUser() throws Exception {
@@ -363,6 +291,80 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 		_setRecentGroupsValue(_mockHttpServletRequest, StringPool.BLANK);
 	}
 
+	private void _testGetSitesJSONObjectWithMySitesAnd1Site() {
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		Assert.assertFalse(jsonObject.has("mySites"));
+		Assert.assertFalse(jsonObject.has("recentSites"));
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+	}
+
+	private void _testGetSitesJSONObjectWithMySitesAndMaxPlus1Sites() {
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
+
+		Assert.assertEquals(_MAX_SITES, mySitesJSONArray.length());
+
+		Assert.assertFalse(jsonObject.has("recentSites"));
+		Assert.assertTrue(jsonObject.has("viewAllURL"));
+	}
+
+	private void _testGetSitesJSONObjectWithMySitesAndMaxSites() {
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
+
+		Assert.assertEquals(_MAX_SITES, mySitesJSONArray.length());
+
+		Assert.assertFalse(jsonObject.has("recentSites"));
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+	}
+
+	private void _testGetSitesJSONObjectWithMySitesAndRecentSitesAndMaxPlus1Sites() {
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
+
+		Assert.assertEquals(1, mySitesJSONArray.length());
+
+		Assert.assertTrue(jsonObject.has("viewAllURL"));
+
+		_assertGroupKeys(_recentGroups, jsonObject.getJSONArray("recentSites"));
+	}
+
+	private void _testGetSitesJSONObjectWithMySitesAndRecentSitesAndMaxSites() {
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
+
+		Assert.assertEquals(2, mySitesJSONArray.length());
+
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+
+		_assertGroupKeys(_recentGroups, jsonObject.getJSONArray("recentSites"));
+	}
+
+	private void _testGetSitesJSONObjectWithRecentSitesAndMaxPlus1Sites() {
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		Assert.assertFalse(jsonObject.has("mySites"));
+		Assert.assertTrue(jsonObject.has("viewAllURL"));
+
+		_assertGroupKeys(
+			_recentGroups.subList(0, _MAX_SITES),
+			jsonObject.getJSONArray("recentSites"));
+	}
+
+	private void _testGetSitesJSONObjectWithRecentSitesAndMaxSites() {
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		Assert.assertFalse(jsonObject.has("mySites"));
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+
+		_assertGroupKeys(_recentGroups, jsonObject.getJSONArray("recentSites"));
+	}
+
 	private static final String _KEY_RECENT_GROUPS =
 		"com.liferay.site.util_recentGroups";
 
@@ -389,6 +391,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	@Inject
 	private RecentGroupManager _recentGroupManager;
 
+	private final List<Group> _recentGroups = new ArrayList<>();
 	private ThemeDisplay _themeDisplay;
 	private User _user;
 

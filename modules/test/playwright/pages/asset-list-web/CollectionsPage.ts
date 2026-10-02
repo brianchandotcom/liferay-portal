@@ -238,9 +238,7 @@ export class CollectionsPage {
 
 	/**
 	 * On a collection's edit page, picks one of the two ordering columns. Call
-	 * `save` to persist it. Only available with the LPD-74731 feature flag
-	 * enabled, which replaces the ordering selects with pickers fed by the item
-	 * type's properties.
+	 * `save` to persist it.
 	 */
 	async setOrderByColumn({
 		column,
@@ -274,9 +272,7 @@ export class CollectionsPage {
 
 	/**
 	 * On a collection's edit page, adds one condition per entry to the Filter
-	 * section. Call `save` to persist them. Only available with the LPD-74731
-	 * feature flag enabled, which replaces the tags and categories rules with
-	 * the condition builder.
+	 * section. Call `save` to persist them.
 	 */
 	async addFilterConditions(conditions: Array<FilterCondition>) {
 		await this.openFilterSection();

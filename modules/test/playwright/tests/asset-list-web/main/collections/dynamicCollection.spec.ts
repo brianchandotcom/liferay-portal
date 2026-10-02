@@ -29,7 +29,6 @@ const test = mergeTests(
 const testWithEnhancedFiltering = mergeTests(
 	loginTest(),
 	featureFlagsTest({
-		'LPD-74731': {enabled: true}, // Enhanced Filtering
 		'LPS-178052': {enabled: true}, // CMS Objects
 	}),
 	isolatedSiteTest,

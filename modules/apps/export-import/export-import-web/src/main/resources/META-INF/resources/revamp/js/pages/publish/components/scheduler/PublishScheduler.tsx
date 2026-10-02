@@ -259,7 +259,9 @@ export default function PublishScheduler({
 							displayType="info"
 							title={`${Liferay.Language.get('summary')}:`}
 						>
-							{scheduleSummary}
+							{scheduleSummary.map((sentence) => (
+								<div key={sentence}>{sentence}</div>
+							))}
 						</ClayAlert>
 					)}
 				</div>

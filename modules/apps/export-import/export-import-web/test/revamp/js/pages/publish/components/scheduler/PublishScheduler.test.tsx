@@ -70,6 +70,22 @@ describe('PublishScheduler', () => {
 		).toBeInTheDocument();
 	});
 
+	it('shows each summary sentence on its own', () => {
+		renderPublishScheduler({
+			enabled: true,
+			startDateTime: START_DATE_TIME,
+			unit: IntervalUnit.Day,
+		});
+
+		expect(
+			screen.getByText('the-process-is-active-from-x-at-x-and-never-ends')
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByText('the-process-repeats-every-day-at-x')
+		).toBeInTheDocument();
+	});
+
 	it('fills a start date picked for today with the next full hour', () => {
 		jest.useFakeTimers().setSystemTime(Date.UTC(2026, 0, 15, 10, 30));
 

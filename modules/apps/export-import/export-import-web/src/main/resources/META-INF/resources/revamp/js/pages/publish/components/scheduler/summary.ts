@@ -25,7 +25,7 @@ import {MONTHS, getWeekdayName, hasEndDate} from './utils';
 
 export function getScheduleSummary(
 	scheduleValues: ScheduleValues
-): string | null {
+): string[] | null {
 	if (!scheduleValues.enabled || !scheduleValues.startDateTime) {
 		return null;
 	}
@@ -52,13 +52,15 @@ export function getScheduleSummary(
 	const startTimeText = toTimeText(startDate, locale);
 
 	if (scheduleValues.unit === IntervalUnit.Never) {
-		return sub(
-			Liferay.Language.get(
-				'the-process-runs-once-on-x-at-x-and-does-not-repeat'
+		return [
+			sub(
+				Liferay.Language.get(
+					'the-process-runs-once-on-x-at-x-and-does-not-repeat'
+				),
+				startDateText,
+				startTimeText
 			),
-			startDateText,
-			startTimeText
-		);
+		];
 	}
 
 	if (
@@ -77,23 +79,25 @@ export function getScheduleSummary(
 			return null;
 		}
 
-		return endDate
-			? sub(
-					Liferay.Language.get(
-						'the-process-starts-on-x-at-x-and-ends-on-x-at-x'
+		return [
+			endDate
+				? sub(
+						Liferay.Language.get(
+							'the-process-starts-on-x-at-x-and-ends-on-x-at-x'
+						),
+						startDateText,
+						startTimeText,
+						toDateText(endDate, locale),
+						toTimeText(endDate, locale)
+					)
+				: sub(
+						Liferay.Language.get(
+							'the-process-starts-on-x-at-x-and-never-ends'
+						),
+						startDateText,
+						startTimeText
 					),
-					startDateText,
-					startTimeText,
-					toDateText(endDate, locale),
-					toTimeText(endDate, locale)
-				)
-			: sub(
-					Liferay.Language.get(
-						'the-process-starts-on-x-at-x-and-never-ends'
-					),
-					startDateText,
-					startTimeText
-				);
+		];
 	}
 
 	if (
@@ -132,7 +136,7 @@ export function getScheduleSummary(
 				startTimeText
 			);
 
-	return `${activeFromText} ${getRepeatText(scheduleValues, locale, timeText)}`;
+	return [activeFromText, getRepeatText(scheduleValues, locale, timeText)];
 }
 
 function getListText(labels: string[], locale: string): string {

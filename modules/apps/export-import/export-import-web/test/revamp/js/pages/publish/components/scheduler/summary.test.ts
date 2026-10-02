@@ -54,15 +54,16 @@ describe('getScheduleSummary', () => {
 	it('describes a one time publication', () => {
 		expect(
 			getScheduleSummary(buildScheduleValues({unit: IntervalUnit.Never}))
-		).toBe('the-process-runs-once-on-x-at-x-and-does-not-repeat');
+		).toEqual(['the-process-runs-once-on-x-at-x-and-does-not-repeat']);
 	});
 
 	it('describes a repetition without an end date', () => {
 		expect(
 			getScheduleSummary(buildScheduleValues({unit: IntervalUnit.Day}))
-		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-day-at-x'
-		);
+		).toEqual([
+			'the-process-is-active-from-x-at-x-and-never-ends',
+			'the-process-repeats-every-day-at-x',
+		]);
 	});
 
 	it('describes a repetition with an end date', () => {
@@ -74,9 +75,10 @@ describe('getScheduleSummary', () => {
 					unit: IntervalUnit.Day,
 				})
 			)
-		).toBe(
-			'the-process-is-active-from-x-at-x-and-ends-on-x-at-x the-process-repeats-every-day-at-x'
-		);
+		).toEqual([
+			'the-process-is-active-from-x-at-x-and-ends-on-x-at-x',
+			'the-process-repeats-every-day-at-x',
+		]);
 	});
 
 	it('returns null while an end date is required but incomplete', () => {
@@ -134,23 +136,26 @@ describe('getScheduleSummary', () => {
 					unit: IntervalUnit.Day,
 				})
 			)
-		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-day-at-x'
-		);
+		).toEqual([
+			'the-process-is-active-from-x-at-x-and-never-ends',
+			'the-process-repeats-every-day-at-x',
+		]);
 	});
 
 	it('describes the repetition target per unit', () => {
 		expect(
 			getScheduleSummary(buildScheduleValues({unit: IntervalUnit.Week}))
-		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-week-on-x-at-x'
-		);
+		).toEqual([
+			'the-process-is-active-from-x-at-x-and-never-ends',
+			'the-process-repeats-every-week-on-x-at-x',
+		]);
 
 		expect(
 			getScheduleSummary(buildScheduleValues({unit: IntervalUnit.Month}))
-		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-month-on-x-at-x'
-		);
+		).toEqual([
+			'the-process-is-active-from-x-at-x-and-never-ends',
+			'the-process-repeats-every-month-on-x-at-x',
+		]);
 
 		expect(
 			getScheduleSummary(
@@ -159,9 +164,10 @@ describe('getScheduleSummary', () => {
 					unit: IntervalUnit.Month,
 				})
 			)
-		).toBe(
-			'the-process-is-active-from-x-at-x-and-never-ends the-process-repeats-every-month-on-the-x-x-at-x'
-		);
+		).toEqual([
+			'the-process-is-active-from-x-at-x-and-never-ends',
+			'the-process-repeats-every-month-on-the-x-x-at-x',
+		]);
 	});
 });
 
@@ -209,9 +215,9 @@ describe('schedule summary wording', () => {
 	): string {
 		const summary = getScheduleSummary(
 			buildScheduleValues(partialScheduleValues)
-		) as string;
+		) as string[];
 
-		return summary.slice(0, summary.indexOf(' The process repeats'));
+		return summary[0];
 	}
 
 	function getRepeatSentence(
@@ -219,9 +225,9 @@ describe('schedule summary wording', () => {
 	): string {
 		const summary = getScheduleSummary(
 			buildScheduleValues(partialScheduleValues)
-		) as string;
+		) as string[];
 
-		return summary.slice(summary.indexOf('The process repeats'));
+		return summary[1];
 	}
 
 	const getLanguageKey = Liferay.Language.get as jest.Mock;

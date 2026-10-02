@@ -69,6 +69,16 @@ public class ObjectEntryInfoItemFormProviderUtil {
 			TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider)
 		throws NoSuchFormVariationException {
 
+		ObjectDefinition currentObjectDefinition;
+
+		if (objectDefinitionId == 0) {
+			currentObjectDefinition = null;
+		}
+		else {
+			currentObjectDefinition = _getObjectDefinition(
+				objectDefinitionId, objectDefinitionLocalService);
+		}
+
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			basicInformationInfoFieldSet
@@ -81,16 +91,6 @@ public class ObjectEntryInfoItemFormProviderUtil {
 		).<NoSuchFormVariationException>infoFieldSetEntry(
 			unsafeConsumer -> {
 				if (objectDefinitionId != 0) {
-					ObjectDefinition currentObjectDefinition =
-						objectDefinitionLocalService.fetchObjectDefinition(
-							objectDefinitionId);
-
-					if (currentObjectDefinition == null) {
-						throw new NoSuchFormVariationException(
-							String.valueOf(objectDefinitionId),
-							new NoSuchObjectDefinitionException());
-					}
-
 					unsafeConsumer.accept(
 						_getInfoFieldSet(
 							true, false, currentObjectDefinition.getLabelMap(),
@@ -527,6 +527,24 @@ public class ObjectEntryInfoItemFormProviderUtil {
 		).relationship(
 			parentObjectDefinition != null
 		).build();
+	}
+
+	private static ObjectDefinition _getObjectDefinition(
+			long objectDefinitionId,
+			ObjectDefinitionLocalService objectDefinitionLocalService)
+		throws NoSuchFormVariationException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				objectDefinitionId);
+
+		if (objectDefinition == null) {
+			throw new NoSuchFormVariationException(
+				String.valueOf(objectDefinitionId),
+				new NoSuchObjectDefinitionException());
+		}
+
+		return objectDefinition;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

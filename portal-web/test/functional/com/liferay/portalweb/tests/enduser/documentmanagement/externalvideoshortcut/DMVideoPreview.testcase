@@ -165,10 +165,6 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 
 		WebContent.publishWithPermissions();
@@ -193,10 +189,6 @@ definition {
 			videoShortcutTitle = "DM Video Title In Depot",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title In Depot");
-
-		AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 

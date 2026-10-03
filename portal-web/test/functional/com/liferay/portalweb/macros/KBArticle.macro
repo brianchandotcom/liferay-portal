@@ -538,13 +538,20 @@ definition {
 		if (isSet(suggestionReceived)) {
 			MenuBar.click(menuBar = "Suggestion Received Email");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME");
+			if (IsElementPresent(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME")) {
+				SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME");
 
-			Type(
-				locator1 = "CKEditor#BODY",
-				value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your received suggestion here</a>");
+				Type(
+					locator1 = "CKEditor#BODY",
+					value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your received suggestion here</a>");
 
-			SelectFrame(value1 = "relative=top");
+				SelectFrame(value1 = "relative=top");
+			}
+			else {
+				Type(
+					locator1 = "CKEditor#BODY_FIELD_CONTENTEDITABLE",
+					value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your received suggestion here</a>");
+			}
 
 			PortletEntry.save();
 		}
@@ -552,13 +559,20 @@ definition {
 		if (isSet(suggestionInProgress)) {
 			MenuBar.click(menuBar = "Suggestion in Progress Email");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_EDITOR_IFRAME");
+			if (IsElementPresent(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_EDITOR_IFRAME")) {
+				SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_EDITOR_IFRAME");
 
-			Type(
-				locator1 = "CKEditor#BODY",
-				value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your suggestion that is in progress here</a>");
+				Type(
+					locator1 = "CKEditor#BODY",
+					value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your suggestion that is in progress here</a>");
 
-			SelectFrame(value1 = "relative=top");
+				SelectFrame(value1 = "relative=top");
+			}
+			else {
+				Type(
+					locator1 = "CKEditor#BODY_FIELD_CONTENTEDITABLE",
+					value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your suggestion that is in progress here</a>");
+			}
 
 			PortletEntry.save();
 		}
@@ -566,13 +580,20 @@ definition {
 		if (isSet(suggestionResolved)) {
 			MenuBar.click(menuBar = "Suggestion Resolved Email");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_EDITOR_IFRAME");
+			if (IsElementPresent(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_EDITOR_IFRAME")) {
+				SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_EDITOR_IFRAME");
 
-			Type(
-				locator1 = "CKEditor#BODY",
-				value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your resolved suggestion here</a>");
+				Type(
+					locator1 = "CKEditor#BODY",
+					value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your resolved suggestion here</a>");
 
-			SelectFrame(value1 = "relative=top");
+				SelectFrame(value1 = "relative=top");
+			}
+			else {
+				Type(
+					locator1 = "CKEditor#BODY_FIELD_CONTENTEDITABLE",
+					value1 = "[$COMMENT_CREATE_DATE$] <a href=\"[$ARTICLE_URL$]\">View your resolved suggestion here</a>");
+			}
 
 			PortletEntry.save();
 		}

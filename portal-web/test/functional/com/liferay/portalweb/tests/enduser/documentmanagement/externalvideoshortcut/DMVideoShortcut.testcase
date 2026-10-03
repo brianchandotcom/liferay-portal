@@ -856,14 +856,14 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		VideoShortcut.addPG(
-			extractedVideoShortcutTitle = "RONALDINHO vs NEYMAR. ¿A quién eliges? Los disfrutamos. #MundoMaldini",
+			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutPreview = "https://www.youtube.com",
-			videoURL = "https://www.youtube.com/watch?v=2ewB-7_VMGU");
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		VideoShortcut.viewPG(
 			videoShortcutDescription = "Video Shortcut Description",
-			videoShortcutTitle = "RONALDINHO vs NEYMAR. ¿A quién eliges? Los disfrutamos. #MundoMaldini");
+			videoShortcutTitle = "Liferay Digital Experience Platform");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",

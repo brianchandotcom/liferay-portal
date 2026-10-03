@@ -1828,7 +1828,7 @@ definition {
 
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video Name",
-			videoURL = "https://www.youtube.com/watch?v=2ewB-7_VMGU");
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 

@@ -409,6 +409,10 @@ definition {
 				layoutName = "Test Page Name",
 				type = "content");
 
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -536,6 +540,10 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
 				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

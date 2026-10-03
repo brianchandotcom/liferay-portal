@@ -85,7 +85,7 @@ definition {
 
 				Click(
 					key_nodeName = ${assetTitle},
-					locator1 = "Treeview#NODE_UNSELECTED");
+					locator1 = "Treeview#NODE_UNSELECTED_TREEITEM");
 			}
 
 			SelectFrameTop();

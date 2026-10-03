@@ -684,8 +684,8 @@ definition {
 
 		task ("Select the None via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
-				assetTitle = "-- None --",
-				item = "-- None --");
+				assetTitle = "None",
+				item = "None");
 		}
 
 		task ("View Go Somewhere shown in Card fragment") {
@@ -728,8 +728,8 @@ definition {
 			Close.closeWindow();
 
 			DisplayPageTemplate.selectPreviewItem(
-				assetTitle = "-- None --",
-				item = "-- None --");
+				assetTitle = "None",
+				item = "None");
 		}
 
 		task ("View Go Somewhere shown in Card fragment") {
@@ -772,8 +772,8 @@ definition {
 
 		task ("Select the None via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
-				assetTitle = "-- None --",
-				item = "-- None --");
+				assetTitle = "None",
+				item = "None");
 		}
 
 		task ("View Go Somewhere shown in Card fragment") {
@@ -818,8 +818,8 @@ definition {
 			Close.closeWindow();
 
 			DisplayPageTemplate.selectPreviewItem(
-				assetTitle = "-- None --",
-				item = "-- None --");
+				assetTitle = "None",
+				item = "None");
 		}
 
 		task ("View the subcategory name shown in Card fragment") {

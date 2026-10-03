@@ -82,23 +82,47 @@ definition {
 
 	@summary = "Default summary"
 	macro addEntryExternalURL(entryExternalURL = null, displayText = null, fieldLabel = null) {
-		Click(
-			key_fieldLabel = ${fieldLabel},
-			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
+		if (IsElementPresent(key_fieldLabel = ${fieldLabel}, locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE")) {
+			Click(
+				key_fieldLabel = ${fieldLabel},
+				locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
 
-		if (isSet(displayText)) {
+			if (isSet(displayText)) {
+				Type(
+					key_text = "Display Text",
+					locator1 = "TextInput#ANY",
+					value1 = ${displayText});
+			}
+
 			Type(
-				key_text = "Display Text",
-				locator1 = "TextInput#ANY",
-				value1 = ${displayText});
+				key_text = "URL",
+				locator1 = "TextInput#ANY_SPECIFIC",
+				value1 = ${entryExternalURL});
+
+			Click(locator1 = "CKEditor#OK_BUTTON");
 		}
+		else {
+			if (isSet(displayText)) {
+				Type(
+					key_fieldLabel = ${fieldLabel},
+					locator1 = "CKEditor#BODY_FIELD_CONTENTEDITABLE_WEB_CONTENT_ARTICLE",
+					value1 = ${displayText});
 
-		Type(
-			key_text = "URL",
-			locator1 = "TextInput#ANY_SPECIFIC",
-			value1 = ${entryExternalURL});
+				SelectFieldText(
+					key_fieldLabel = ${fieldLabel},
+					locator1 = "CKEditor#BODY_FIELD_CONTENTEDITABLE_WEB_CONTENT_ARTICLE");
+			}
 
-		Click(locator1 = "CKEditor#OK_BUTTON");
+			Click(
+				key_fieldLabel = ${fieldLabel},
+				locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
+
+			Type(
+				locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT",
+				value1 = ${entryExternalURL});
+
+			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_LINK_INPUT_CONFIRM");
+		}
 	}
 
 	@summary = "Default summary"

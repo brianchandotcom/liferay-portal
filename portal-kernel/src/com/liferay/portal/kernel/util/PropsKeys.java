@@ -2897,6 +2897,10 @@ public interface PropsKeys {
 		VALUE_OBJECT_FINDER_CACHE_COUNT_CLUSTER_TIME_TO_LIVE =
 			"value.object.finder.cache.count.cluster.time.to.live";
 
+	public static final String
+		VALUE_OBJECT_FINDER_CACHE_COUNT_MAINTENANCE_ENABLED =
+			"value.object.finder.cache.count.maintenance.enabled";
+
 	public static final String VALUE_OBJECT_FINDER_CACHE_ENABLED =
 		"value.object.finder.cache.enabled";
 

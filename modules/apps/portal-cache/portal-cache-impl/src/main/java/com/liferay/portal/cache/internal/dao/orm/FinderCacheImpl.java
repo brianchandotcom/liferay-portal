@@ -566,7 +566,12 @@ public class FinderCacheImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_countMaintenanceEnabled = !DBInitUtil.isReadWriteDataSource();
+		_countMaintenanceEnabled =
+			!DBInitUtil.isReadWriteDataSource() &&
+			GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						VALUE_OBJECT_FINDER_CACHE_COUNT_MAINTENANCE_ENABLED));
 
 		if (PropsValues.CLUSTER_LINK_ENABLED) {
 			_countTimeToLive = GetterUtil.getInteger(

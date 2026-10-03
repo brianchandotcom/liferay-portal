@@ -482,8 +482,6 @@ definition {
 			Portlet.enableScopeConfiguration();
 		}
 
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page2");
@@ -547,7 +545,7 @@ definition {
 
 		BlogsNavigator.gotoConfigurationScopePG();
 
-		BlogsConfiguration.viewScopeSelection(scopeSelection = ${siteName});
+		BlogsConfiguration.viewScopeSelection(scopeSelection = "Liferay DXP Site");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

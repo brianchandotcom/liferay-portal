@@ -13,6 +13,8 @@ definition {
 
 		User.firstLoginPG();
 
+		MessageboardsPortlet.enableMessageBoards();
+
 		WikiPortlet.enableWiki();
 
 		HeadlessSite.addSite(siteName = "Site Name");

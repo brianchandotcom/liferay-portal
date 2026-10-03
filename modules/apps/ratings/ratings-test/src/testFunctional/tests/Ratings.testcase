@@ -446,6 +446,10 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanRateMBThreadAndReply {
+		task ("Enable Message Boards") {
+			MessageboardsPortlet.enableMessageBoards();
+		}
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Message Boards Page");
@@ -848,6 +852,10 @@ definition {
 	@priority = 5
 	test CanRevokeStarsFromMB {
 		property portal.acceptance = "true";
+
+		task ("Enable Message Boards") {
+			MessageboardsPortlet.enableMessageBoards();
+		}
 
 		Ratings.configureRatingType(
 			applications = "MBMessage",

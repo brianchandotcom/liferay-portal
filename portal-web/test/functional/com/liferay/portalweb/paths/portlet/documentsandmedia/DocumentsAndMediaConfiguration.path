@@ -63,12 +63,12 @@
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
-	<td>xpath=(//div[contains(@class,'btn-group-vertical')]/button)[1]</td>
+	<td>xpath=(//div[contains(@class,'btn-group-vertical')]/button[contains(@aria-label,'from In Use to Available')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
-	<td>xpath=(//div[contains(@class,'btn-group-vertical')]/button)[2]</td>
+	<td>xpath=(//div[contains(@class,'btn-group-vertical')]/button[contains(@aria-label,'from Available to In Use')])[1]</td>
 	<td></td>
 </tr>
 </tbody>

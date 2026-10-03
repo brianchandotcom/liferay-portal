@@ -91,7 +91,7 @@ definition {
 
 		FormFields.disableCheckbox(fieldName = "enable");
 
-		PortletEntry.update();
+		SystemSettings.saveConfiguration();
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enable");
 

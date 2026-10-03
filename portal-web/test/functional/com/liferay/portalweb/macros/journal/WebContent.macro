@@ -695,7 +695,9 @@ definition {
 				key_fieldFieldLabel = ${webContentSelectFromListFieldLabel},
 				locator1 = "WCEditWebContent#SELECT_FIELD_TRIGGER");
 
-			DropdownMenuItem.click(menuItem = ${webContentSelectFromList});
+			Click.javaScriptClick(
+				key_menuItem = ${webContentSelectFromList},
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
 
 		if (isSet(webContentSingleSelection)) {

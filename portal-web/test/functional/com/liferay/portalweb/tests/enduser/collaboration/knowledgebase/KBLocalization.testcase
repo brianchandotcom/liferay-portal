@@ -35,14 +35,13 @@ definition {
 	@refactorneeded
 	test ViewUnchangedKBArticleTitleViaLocalizedPage {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Site.openSitesAdmin();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = ${siteName});
+			site = "Guest");
 
 		PagesAdmin.addChildPage(
 			childPageName = "Knowledge Base Display Page",

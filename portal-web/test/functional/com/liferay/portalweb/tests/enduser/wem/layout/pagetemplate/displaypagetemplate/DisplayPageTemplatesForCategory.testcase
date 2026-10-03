@@ -564,13 +564,6 @@ definition {
 				imageName = "Document_1.jpg");
 		}
 
-		task ("Get the categoryId") {
-			var categoryId = JSONCategory.getCategoryId(
-				categoryName = "Category Name",
-				groupName = "Test Site Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
 		task ("View the mapped content in display page template") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -590,7 +583,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
 				id = "link",
-				text = "${baseURL}/web/test-site-name/v/${categoryId}");
+				text = "${baseURL}/web/test-site-name/v/vocabulary%20name/category-name");
 
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",

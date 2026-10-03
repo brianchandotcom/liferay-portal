@@ -569,6 +569,10 @@ definition {
 				webContentTitle = "WC WebContent Title");
 		}
 
+		task ("Enable the Staging Page Variations deprecation feature flag") {
+			Staging.enablePageVariationsFeatureFlag();
+		}
+
 		task ("Activate Staging with page versioning") {
 			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
 

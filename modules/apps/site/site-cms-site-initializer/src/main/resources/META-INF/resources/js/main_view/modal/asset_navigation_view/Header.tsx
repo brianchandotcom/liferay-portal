@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
+import {getAssetTitle} from '../../../common/utils/getAssetTitle';
 import {PANELS} from './AssetNavigationModalContent';
 
 export default function Header({
@@ -27,7 +28,7 @@ export default function Header({
 	showCommentsPanel: boolean;
 	showInfoPanel: boolean;
 }) {
-	const headerName = item.embedded?.title || item.embedded?.file?.name;
+	const headerName = getAssetTitle(item) || item.embedded?.file?.name;
 
 	const file = item.embedded?.file;
 	const link = file?.link;

@@ -14,6 +14,7 @@ import React from 'react';
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
+import {getAssetTitle} from '../../common/utils/getAssetTitle';
 import {getFormattedLabel} from '../../common/utils/getFormattedText';
 import {openCMSModal} from '../../common/utils/openCMSModal';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
@@ -78,7 +79,7 @@ export default function getDashboardAssetListFDSProps({
 		customRenderers: {
 			tableCell: [
 				{
-					component: ({actions, itemData, options, value}) => (
+					component: ({actions, itemData, options}) => (
 						<AssetRenderer
 							actions={actions}
 							additionalProps={additionalProps}
@@ -98,7 +99,7 @@ export default function getDashboardAssetListFDSProps({
 							}}
 							options={options}
 							renderSubtitle={renderSubtitle}
-							value={value}
+							value={getAssetTitle(itemData)}
 						/>
 					),
 					name: 'assetRenderer',
@@ -342,7 +343,7 @@ export default function getDashboardAssetListFDSProps({
 					creator: itemData.embedded.creator,
 					entryClassName: itemData.entryClassName,
 					itemId: itemData.embedded.id,
-					title: itemData.embedded.title,
+					title: getAssetTitle(itemData),
 				});
 			}
 		},

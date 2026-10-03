@@ -6,6 +6,7 @@
 import {fetch, sub} from 'frontend-js-web';
 
 import SpaceService from '../../../common/services/SpaceService';
+import {getAssetTitle} from '../../../common/utils/getAssetTitle';
 import {getFormattedLabel} from '../../../common/utils/getFormattedText';
 import {getScopeExternalReferenceCode} from '../../../common/utils/getScopeExternalReferenceCode';
 import {
@@ -103,7 +104,8 @@ export default async function deleteItemAction(
 
 				showSuccessToast(
 					actions.get.href,
-					embedded.title || Liferay.Language.get('untitled-asset'),
+					getAssetTitle(itemData) ||
+						Liferay.Language.get('untitled-asset'),
 					loadData,
 					actions.get.method
 				);

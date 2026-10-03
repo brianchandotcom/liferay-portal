@@ -15,6 +15,7 @@ import {
 	OBJECT_ENTRY_FOLDER_CLASS_NAME,
 } from '../../common/utils/constants';
 import {openGenericFDSDeleteConfirmationModal} from '../../common/utils/genericOpenModalUtil';
+import {getAssetTitle} from '../../common/utils/getAssetTitle';
 import {getFormattedLabel} from '../../common/utils/getFormattedText';
 import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
 import {displayDeleteSuccessToast} from '../../common/utils/toastUtil';
@@ -62,6 +63,7 @@ export default function RecycleBinFDSPropsTransformer({
 							systemIconLabel: Liferay.Language.get(
 								'system-default-structure'
 							),
+							value: getAssetTitle(props.itemData),
 						}),
 					name: 'simpleActionLinkTableCellRenderer',
 					type: 'internal',
@@ -104,7 +106,7 @@ export default function RecycleBinFDSPropsTransformer({
 			loadData: () => {};
 		}) {
 			const title =
-				itemData.embedded?.title ||
+				getAssetTitle(itemData) ||
 				Liferay.Language.get('untitled-asset');
 
 			if (action.data.id === 'delete') {
@@ -157,7 +159,7 @@ export default function RecycleBinFDSPropsTransformer({
 				if (selectedData?.items?.length === 1) {
 					const item = selectedData.items[0];
 					const title =
-						item.embedded?.title ||
+						getAssetTitle(item) ||
 						Liferay.Language.get('untitled-asset');
 
 					await restoreItemAction(

@@ -9,6 +9,7 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import dateFormat from '../../../common/utils/dateFormat';
+import {getAssetTitle} from '../../../common/utils/getAssetTitle';
 
 import '../../../../css/props_transformer/TransformViewsItemProps.scss';
 import {
@@ -94,7 +95,7 @@ const getThumbnailProps = (item: any) => {
 		if (videoId) {
 			return {
 				imgProps: {
-					alt: item.embedded?.title || item.title,
+					alt: getAssetTitle(item),
 					src: `https://img.youtube.com/vi/${videoId}/0.jpg`,
 				},
 			};
@@ -291,7 +292,7 @@ export function transformItemCardView(
 				/>
 			),
 		},
-		title: props.title || Liferay.Language.get('untitled-asset'),
+		title: getAssetTitle(item) || Liferay.Language.get('untitled-asset'),
 		...getThumbnailProps(item),
 	};
 }

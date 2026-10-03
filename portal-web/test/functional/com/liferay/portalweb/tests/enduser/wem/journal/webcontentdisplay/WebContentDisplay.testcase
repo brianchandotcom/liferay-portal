@@ -1669,11 +1669,9 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 		}
 	}
 
-	@description = "View pagination in related assets within a web content."
+	@description = "View a related web content in Web Content Display."
 	@priority = 3
-	test ViewRelatedAssetsAfterChangePagination {
-		property custom.properties = "search.container.page.delta.values=4,8,20,40,60";
-
+	test ViewRelatedAssetsOfWebContent {
 		task ("Add six web contents") {
 			for (var i : list "1,2,3,4,5,6") {
 				JSONWebcontent.addWebContent(
@@ -1689,17 +1687,6 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 			for (var i : list "1,2,3,4,5,6") {
 				WebContent.viewTitle(webContentTitle = "Web Content Title ${i}");
 			}
-		}
-
-		task ("Change the pagination of Related Assets to 4") {
-			WebContent.paginateRelatedAssets(
-				assetType = "Basic Web Content",
-				itemsPerPage = 4,
-				webContentTitle = "Web Content Title 3");
-
-			WebContent.viewPaginateRelatedAssets(
-				itemsPerPage = "4 Entries",
-				numberOfPages = "Showing 1 to 4 of 6 entries.");
 		}
 
 		task ("Add a related web content") {

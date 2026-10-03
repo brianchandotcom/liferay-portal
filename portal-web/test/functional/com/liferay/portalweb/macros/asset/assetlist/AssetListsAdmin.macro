@@ -494,6 +494,19 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro openSelectAssetTypeFilter() {
+		Button.clickSelect();
+
+		WaitForVisible(locator1 = "ItemSelector#INLINE_MODAL");
+
+		Click(locator1 = "ItemSelector#INLINE_MODAL_FILTER_BUTTON");
+
+		Click(
+			key_filterOption = "Type",
+			locator1 = "ItemSelector#INLINE_MODAL_FILTER_OPTION");
+	}
+
+	@summary = "Default summary"
 	macro openViewItems(personalizedVariation = null, assetListTitle = null) {
 		if (isSet(assetListTitle)) {
 			LexiconEntry.gotoEntry(rowEntry = ${assetListTitle});
@@ -658,10 +671,12 @@ definition {
 				PortletEntry.save();
 			}
 
-			Button.clickSelect();
+			AssetListsAdmin.openSelectAssetTypeFilter();
 
 			for (var assetType : list ${assetTypeList}) {
-				MenuItem.viewPresent(menuItem = ${assetType});
+				AssertElementPresent(
+					key_filterItem = ${assetType},
+					locator1 = "ItemSelector#INLINE_MODAL_FILTER_ITEM");
 			}
 		}
 
@@ -720,12 +735,12 @@ definition {
 					locator1 = "Button#ANY");
 			}
 			else {
-				Button.clickSelect();
+				AssetListsAdmin.openSelectAssetTypeFilter();
 
 				for (var assetType : list ${assetType}) {
 					AssertElementNotPresent(
-						key_assetType = ${assetType},
-						locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_OPTION");
+						key_filterItem = ${assetType},
+						locator1 = "ItemSelector#INLINE_MODAL_FILTER_ITEM");
 				}
 			}
 		}

@@ -569,7 +569,7 @@ definition {
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
-			assetTypeList = "Web Content Folder,Basic Web Content,WC Structure Name",
+			assetTypeList = "Web Content Article,Web Content Folder",
 			itemType = "All Types",
 			manualSelection = "true");
 

@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ASSET_LIST_ENTRY_TITLE</td>
-	<td>//*[contains(@class,'name-column')]//a[contains(.,'${key_title}')] | //*[contains(@class,'list-group-item')]//p[contains(.,'${key_title}')]</td>
+	<td>//*[contains(@class,'name-column')]//a[contains(.,'${key_title}')] | //*[contains(@class,'list-group-item')]//p[contains(.,'${key_title}')] | //*[contains(@class,'list-group-item')]//div[contains(@class,'h5')]/a[contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>

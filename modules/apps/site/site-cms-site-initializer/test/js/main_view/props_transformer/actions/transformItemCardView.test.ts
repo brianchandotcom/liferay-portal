@@ -229,6 +229,35 @@ describe('transformItemCardView', () => {
 		expect(cardView.title).toBe('untitled-asset');
 	});
 
+	it('Shows the search title if the title field has another name', () => {
+		const cardView = transformItemCardView(
+			{
+				embedded: {id: 1, specName: 'Real Spec Title Value'},
+				title: 'Real Spec Title Value',
+			},
+			mockFileMimeTypeCssClasses,
+			mockFileMimeTypeIcons,
+			mockObjectDefinitionCssClasses,
+			mockObjectDefinitionIcons,
+			baseMockProps
+		);
+
+		expect(cardView.title).toBe('Real Spec Title Value');
+	});
+
+	it('Shows Untitled Asset if the search title falls back to the ID', () => {
+		const cardView = transformItemCardView(
+			{embedded: {id: 1, specName: ''}, title: '1'},
+			mockFileMimeTypeCssClasses,
+			mockFileMimeTypeIcons,
+			mockObjectDefinitionCssClasses,
+			mockObjectDefinitionIcons,
+			baseMockProps
+		);
+
+		expect(cardView.title).toBe('untitled-asset');
+	});
+
 	describe('External Video Thumbnail', () => {
 		it('External Video should show a thumbnail if it is a YouTube video (Standard URL)', () => {
 			const result = transformItemCardView(

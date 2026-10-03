@@ -980,3 +980,76 @@ test(
 		}
 	}
 );
+
+test(
+	'Shows the title of custom structure contents whose title field has another name',
+	{tag: '@LPD-106249'},
+	async ({apiHelpers, assetsPage}) => {
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: `Space ${getRandomString()}`,
+			type: 'Space',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectDefinitionSettings: [
+					{
+						name: 'acceptedGroupExternalReferenceCodes',
+						value: space.externalReferenceCode as unknown as object,
+					},
+				],
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						externalReferenceCode: getRandomString(),
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: 'en_US',
+						label: {en_US: 'Spec Name'},
+						localized: true,
+						name: 'specName',
+						required: false,
+					},
+				],
+				objectFolderExternalReferenceCode: 'L_CMS_CONTENT_STRUCTURES',
+				scope: 'depot',
+				status: {code: 0},
+				titleObjectFieldName: 'specName',
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName = objectDefinition.restContextPath.replace(
+			/^\/o\//,
+			''
+		);
+		const specName = `Spec ${getRandomString()}`;
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{objectEntryFolderExternalReferenceCode: 'L_CONTENTS', specName},
+			applicationName,
+			space.name
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				specName: '',
+			},
+			applicationName,
+			space.name
+		);
+
+		await assetsPage.gotoContents(space.name);
+
+		await expect(
+			assetsPage.getItem(specName).getByRole('link', {name: specName})
+		).toBeVisible();
+
+		await expect(assetsPage.getItem('Untitled Asset')).toHaveCount(1);
+	}
+);

@@ -485,7 +485,6 @@ func (clientExtensionReconciler *ClientExtensionReconciler) requestsForConfigMap
 		}
 
 		if (metadataType != MetadataTypeDxp) && (clientExtension.Spec.ServiceID != labels[LabelServiceID]) {
-
 			continue
 		}
 

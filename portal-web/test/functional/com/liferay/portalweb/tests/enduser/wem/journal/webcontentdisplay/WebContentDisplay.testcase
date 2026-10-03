@@ -521,9 +521,9 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-			WebContent.uploadAudio(
-				dmDocumentURL = ${dmDocumentURL},
-				navTab = "URL");
+			CKEditor.addSourceContent(
+				content = "<audio controls><source src='${dmDocumentURL}?audioPreview=1&type=mp3' type='audio/mpeg'></audio>",
+				fieldLabel = "Content");
 
 			WebContent.publishExistingWCArticleWithPermissions();
 

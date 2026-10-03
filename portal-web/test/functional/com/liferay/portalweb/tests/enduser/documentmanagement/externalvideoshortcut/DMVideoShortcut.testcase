@@ -321,15 +321,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
-
-		WaitForVisible(locator1 = "IFrame#MODAL_BODY");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertVisible(
-			key_service = "twitch",
-			locator1 = "BlogsEntry#CONTENT_VIDEO");
+		WebContent.viewVideoPreview(
+			service = "https://player.twitch.tv",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This test ensures that a YouTube video added via item selector can be embedded when adding a WC."

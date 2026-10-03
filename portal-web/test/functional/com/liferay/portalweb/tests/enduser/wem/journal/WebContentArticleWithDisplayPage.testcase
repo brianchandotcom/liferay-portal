@@ -172,8 +172,9 @@ definition {
 
 			User.firstLoginUI(
 				password = PropsUtil.get("default.admin.password"),
-				specificURL = ${url},
 				userEmailAddress = "userea@liferay.com");
+
+			Navigator.openSpecificURL(url = ${url});
 		}
 
 		task ("View the content is in published version") {

@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>VIDEO_TITLE</td>
-	<td>//div/a[contains(@class,'ytp-title-link')]</td>
+	<td>//div/a[contains(@class,'ytp-title-link')] | //a[contains(@class,'ytmVideoInfoVideoTitle')]</td>
 	<td></td>
 </tr>
 </tbody>

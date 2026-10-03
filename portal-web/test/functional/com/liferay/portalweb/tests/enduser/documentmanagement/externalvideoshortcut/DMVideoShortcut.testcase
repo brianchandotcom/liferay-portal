@@ -751,6 +751,10 @@ definition {
 			layoutName = "Content Page Name",
 			type = "content");
 
+		JSONLayout.publishLayout(
+			groupName = "Guest",
+			layoutName = "Content Page Name");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.addCP(

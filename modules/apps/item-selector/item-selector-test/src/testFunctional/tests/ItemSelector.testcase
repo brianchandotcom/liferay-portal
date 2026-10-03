@@ -266,14 +266,9 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 	}
 
-	@description = "The user should see horizontal nav tabs when less than and equal 5 nav items appear on item selector modal."
+	@description = "The user should see horizontal nav tabs when less than and equal 5 nav items appear on item selector modal, and vertical nav items when there are more."
 	@priority = 4
 	test HorizontalNavItemsShowsWhenNotMoreThan5Items {
-		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.document.library.item.selector.web\" ]";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -287,31 +282,39 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content Display");
+			fragmentName = "Collection Display");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display",
+			targetFragmentName = "Collection Display");
+
+		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		Click(
+			key_fieldLabel = "Collection",
+			key_text = "plus",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			key_tab = "Collection Providers",
+			locator1 = "NavTab#TAB_LINK");
+
+		AssertElementNotPresent(locator1 = "MenuBar#MENU_BAR_VERTICAL");
+
+		SelectFrame(value1 = "relative=top");
+
+		IFrame.closeFrame();
 
 		PageEditor.editContentDisplay(
 			fragmentName = "Content Display",
-			navItemStyle = "horizontal",
-			navTab = "Web Content");
-
-		OSGiConfig.deployOSGiConfigFile(
-			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
-			osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.knowledge.base.web\" ]");
-
-		OSGiConfig.waitForOSGiConfig();
-
-		WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.knowledge.base.web");
-
-		Navigator.openURL();
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Site Name");
-
-		PageEditor.editContentDisplay(
-			fragmentName = "Content Display",
-			navItemStyle = "horizontal",
-			navTab = "Web Content");
+			navItemStyle = "vertical");
 	}
 
 	@description = "This test covers LPS-96564. It ensures that a private site cannot be viewed by a non-site member in calendar widget."

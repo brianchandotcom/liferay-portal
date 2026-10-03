@@ -40,10 +40,17 @@ definition {
 		}
 
 		if (isSet(notificationsBody)) {
-			Type.typeEditor(
-				bodyFieldId = ${fieldName},
-				locator1 = "CKEditor#BODY_FIELD_ID",
-				value1 = ${notificationsBody});
+			if (IsElementPresent(bodyFieldId = ${fieldName}, locator1 = "CKEditor#BODY_FIELD_ID")) {
+				Type.typeEditor(
+					bodyFieldId = ${fieldName},
+					locator1 = "CKEditor#BODY_FIELD_ID",
+					value1 = ${notificationsBody});
+			}
+			else {
+				Type(
+					locator1 = "CKEditor#BODY_FIELD_CONTENTEDITABLE",
+					value1 = ${notificationsBody});
+			}
 		}
 
 		PortletEntry.save();

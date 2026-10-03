@@ -13,6 +13,8 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import java.util.Set;
+
 /**
  * @author Shuyang Zhou
  */
@@ -27,6 +29,13 @@ public class SessionWrapper implements Session {
 		throws ORMException {
 
 		session.apply(unsafeConsumer);
+	}
+
+	@Override
+	public boolean autoFlushIfRequired(Set<String> querySpaces)
+		throws ORMException {
+
+		return session.autoFlushIfRequired(querySpaces);
 	}
 
 	@Override

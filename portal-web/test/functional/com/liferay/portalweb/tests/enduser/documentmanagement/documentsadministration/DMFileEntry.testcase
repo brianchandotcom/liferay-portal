@@ -109,10 +109,10 @@ definition {
 			groupName = "Guest",
 			site = "true");
 
-		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/this+is+an+image.jpg");
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/This+is+an+image.jpg");
 
 		AssertVisible(
-			key_imageSourceURL = "this+is+an+image.jpg",
+			key_imageSourceURL = "This+is+an+image.jpg",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 

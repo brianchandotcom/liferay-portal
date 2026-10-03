@@ -260,24 +260,9 @@ definition {
 
 	@summary = "Default summary"
 	macro viewLocale(locale = null, portletName = null) {
-		if (${portletName} == "Web Content") {
-			AssertElementPresent(
-				key_locale = ${locale},
-				locator1 = "Translation#CURRENT_LOCALE_TITLE");
-
-			AssertElementPresent(
-				key_locale = ${locale},
-				locator1 = "Translation#CURRENT_LOCALE_CONTENT");
-
-			AssertElementPresent(
-				key_locale = ${locale},
-				locator1 = "Translation#CURRENT_LOCALE_DESCRIPTION");
-		}
-		else {
-			AssertElementPresent(
-				key_locale = ${locale},
-				locator1 = "Translation#CURRENT_LOCALE");
-		}
+		AssertElementPresent(
+			key_locale = ${locale},
+			locator1 = "Translation#CURRENT_LOCALE");
 	}
 
 	@summary = "Default summary"

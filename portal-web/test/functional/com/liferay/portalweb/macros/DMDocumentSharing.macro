@@ -40,7 +40,7 @@ definition {
 			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
 			value1 = ${selectPermission});
 
-		Button.clickSave();
+		Button.click(button = "Save");
 
 		SelectFrame(value1 = "relative=top");
 

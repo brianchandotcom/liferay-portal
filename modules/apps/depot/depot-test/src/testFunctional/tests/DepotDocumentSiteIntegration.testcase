@@ -263,7 +263,7 @@ definition {
 			dmDocumentTitle = "DM Document Title 2",
 			groupName = "Test Depot Name",
 			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
+			sourceFileName = "Document_2.doc");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

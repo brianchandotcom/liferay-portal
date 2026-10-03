@@ -197,7 +197,7 @@ definition {
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		KBArticle.viewSourceURLPG(
-			kbArticleSourceURL = "https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.md",
+			kbArticleSourceURL = "https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.markdown",
 			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 	}
 

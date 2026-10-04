@@ -10,6 +10,7 @@ import com.liferay.document.library.helper.DLURLHelper;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -47,14 +48,12 @@ public class ObjectEntryAssetRendererFactoryTest {
 
 		languageUtil.setLanguage(new LanguageImpl());
 
-		_objectEntryAssetRendererFactory = new ObjectEntryAssetRendererFactory(
-			_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
-			_dlURLHelper, _objectDefinition,
-			_objectEntryDisplayContextFactoryImpl, _objectEntryLocalService,
-			_objectEntryService, _objectFieldLocalService, _servletContext);
-
-		_objectEntryAssetRendererFactory.setClassName(
-			RandomTestUtil.randomString());
+		Mockito.when(
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				Mockito.anyLong())
+		).thenReturn(
+			_objectDefinition
+		);
 
 		_resourceActionsUtilMockedStatic.when(
 			ResourceActionsUtil::getModelResourceNamePrefix
@@ -70,13 +69,16 @@ public class ObjectEntryAssetRendererFactoryTest {
 
 	@Test
 	public void testGetTypeName() {
+		ObjectEntryAssetRendererFactory objectEntryAssetRendererFactory =
+			_getObjectEntryAssetRendererFactory();
+
 		Mockito.when(
 			_objectDefinition.isCMS()
 		).thenReturn(
 			false
 		);
 
-		String typeName1 = _objectEntryAssetRendererFactory.getTypeName(
+		String typeName1 = objectEntryAssetRendererFactory.getTypeName(
 			LocaleUtil.getDefault());
 
 		Assert.assertFalse(typeName1.contains("(CMS)"));
@@ -87,7 +89,7 @@ public class ObjectEntryAssetRendererFactoryTest {
 			true
 		);
 
-		String typeName2 = _objectEntryAssetRendererFactory.getTypeName(
+		String typeName2 = objectEntryAssetRendererFactory.getTypeName(
 			LocaleUtil.getDefault());
 
 		Assert.assertEquals(typeName1 + " (CMS)", typeName2);
@@ -95,16 +97,6 @@ public class ObjectEntryAssetRendererFactoryTest {
 
 	@Test
 	public void testIsActive() {
-		Mockito.when(
-			_objectDefinition.getCompanyId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
-		Assert.assertFalse(
-			_objectEntryAssetRendererFactory.isActive(
-				RandomTestUtil.randomLong()));
-
 		long companyId = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -113,7 +105,13 @@ public class ObjectEntryAssetRendererFactoryTest {
 			companyId
 		);
 
-		Assert.assertTrue(_objectEntryAssetRendererFactory.isActive(companyId));
+		ObjectEntryAssetRendererFactory objectEntryAssetRendererFactory =
+			_getObjectEntryAssetRendererFactory();
+
+		Assert.assertFalse(
+			objectEntryAssetRendererFactory.isActive(
+				RandomTestUtil.randomLong()));
+		Assert.assertTrue(objectEntryAssetRendererFactory.isActive(companyId));
 	}
 
 	@Test
@@ -124,7 +122,10 @@ public class ObjectEntryAssetRendererFactoryTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY
 		);
 
-		Assert.assertFalse(_objectEntryAssetRendererFactory.isSelectable());
+		ObjectEntryAssetRendererFactory objectEntryAssetRendererFactory1 =
+			_getObjectEntryAssetRendererFactory();
+
+		Assert.assertFalse(objectEntryAssetRendererFactory1.isSelectable());
 
 		Mockito.when(
 			_objectDefinition.getScope()
@@ -132,7 +133,26 @@ public class ObjectEntryAssetRendererFactoryTest {
 			ObjectDefinitionConstants.SCOPE_SITE
 		);
 
-		Assert.assertTrue(_objectEntryAssetRendererFactory.isSelectable());
+		ObjectEntryAssetRendererFactory objectEntryAssetRendererFactory2 =
+			_getObjectEntryAssetRendererFactory();
+
+		Assert.assertTrue(objectEntryAssetRendererFactory2.isSelectable());
+	}
+
+	private ObjectEntryAssetRendererFactory
+		_getObjectEntryAssetRendererFactory() {
+
+		ObjectEntryAssetRendererFactory objectEntryAssetRendererFactory =
+			new ObjectEntryAssetRendererFactory(
+				_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
+				_dlURLHelper, _objectDefinition, _objectDefinitionLocalService,
+				_objectEntryDisplayContextFactoryImpl, _objectEntryLocalService,
+				_objectEntryService, _objectFieldLocalService, _servletContext);
+
+		objectEntryAssetRendererFactory.setClassName(
+			RandomTestUtil.randomString());
+
+		return objectEntryAssetRendererFactory;
 	}
 
 	private final AssetDisplayPageFriendlyURLProvider
@@ -143,7 +163,8 @@ public class ObjectEntryAssetRendererFactoryTest {
 	private final DLURLHelper _dlURLHelper = Mockito.mock(DLURLHelper.class);
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
-	private ObjectEntryAssetRendererFactory _objectEntryAssetRendererFactory;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
+		Mockito.mock(ObjectDefinitionLocalService.class);
 	private final ObjectEntryDisplayContextFactoryImpl
 		_objectEntryDisplayContextFactoryImpl = Mockito.mock(
 			ObjectEntryDisplayContextFactoryImpl.class);

@@ -30,24 +30,14 @@ public class ObjectDefinitionResourcePermissionUtil {
 	}
 
 	public static boolean hasModelResourcePermission(
-			ObjectDefinition objectDefinition, Long objectEntryId,
-			ObjectEntryService objectEntryService, String actionId)
-		throws PortalException {
-
-		return hasModelResourcePermission(
-			objectDefinition.isDefaultStorageType(),
-			objectDefinition.getObjectDefinitionId(), objectEntryId,
-			objectEntryService, actionId);
-	}
-
-	public static boolean hasModelResourcePermission(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			ObjectEntryService objectEntryService, String actionId)
 		throws PortalException {
 
 		return hasModelResourcePermission(
-			objectDefinition, objectEntry.getId(), objectEntryService,
-			actionId);
+			objectDefinition.isDefaultStorageType(),
+			objectDefinition.getObjectDefinitionId(), objectEntry.getId(),
+			objectEntryService, actionId);
 	}
 
 }

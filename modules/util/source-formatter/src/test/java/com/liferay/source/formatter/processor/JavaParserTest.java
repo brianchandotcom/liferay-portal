@@ -37,11 +37,6 @@ public class JavaParserTest {
 	}
 
 	@Test
-	public void testJavaLogVariableDefinition() throws Exception {
-		test("JavaLogVariableDefinition.testjava");
-	}
-
-	@Test
 	public void testJavaModifierStrictfp() throws Exception {
 		_test("JavaModifierStrictfp");
 	}

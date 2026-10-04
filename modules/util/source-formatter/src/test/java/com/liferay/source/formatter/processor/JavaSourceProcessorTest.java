@@ -612,6 +612,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJavaLogVariableDefinition() throws Exception {
+		test("JavaLogVariableDefinition.testjava");
+	}
+
+	@Test
 	public void testJavaNestedSwitchExpressions() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(

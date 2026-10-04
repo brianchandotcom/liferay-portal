@@ -180,8 +180,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 			}
 
 			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectEntry.getObjectDefinitionId());
+				objectEntry.getObjectDefinition();
 
 			return new ObjectEntryLayoutDisplayPageObjectProvider(
 				_assetHelper, _infoItemFriendlyURLProvider, objectDefinition,

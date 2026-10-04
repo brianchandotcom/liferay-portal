@@ -42,6 +42,11 @@ public class JavaParserTest {
 	}
 
 	@Test
+	public void testJavaArrayConstructorReference() throws Exception {
+		_test("JavaArrayConstructorReference");
+	}
+
+	@Test
 	public void testJavaModifierStrictfp() throws Exception {
 		_test("JavaModifierStrictfp");
 	}

@@ -1502,10 +1502,43 @@ public class JavaParserUtil {
 	private static JavaMethodReference _parseJavaMethodReference(
 		DetailAST methodReferenceDetailAST) {
 
+		DetailAST firstChildDetailAST =
+			methodReferenceDetailAST.getFirstChild();
 		DetailAST lastChildDetailAST = methodReferenceDetailAST.getLastChild();
 
+		DetailAST typeArgumentsDetailAST =
+			methodReferenceDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
+
+		int arrayDimension = _getArrayDimension(methodReferenceDetailAST);
+
+		if (arrayDimension > 0) {
+			List<JavaExpression> dimensionValueJavaExpressions =
+				new ArrayList<>();
+
+			for (int i = 0; i < arrayDimension; i++) {
+				dimensionValueJavaExpressions.add(
+					new JavaSimpleValue(StringPool.BLANK));
+			}
+
+			JavaArrayDeclarator javaArrayDeclarator = new JavaArrayDeclarator(
+				DetailASTUtil.getBaseTypeName(firstChildDetailAST),
+				dimensionValueJavaExpressions);
+
+			if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+				typeArgumentsDetailAST = firstChildDetailAST.findFirstToken(
+					TokenTypes.TYPE_ARGUMENTS);
+			}
+
+			javaArrayDeclarator.setGenericJavaTypes(
+				_parseGenericJavaTypes(
+					typeArgumentsDetailAST, TokenTypes.TYPE_ARGUMENT));
+
+			return new JavaMethodReference(
+				null, lastChildDetailAST.getText(), javaArrayDeclarator);
+		}
+
 		JavaExpression referenceJavaExpression = _parseJavaExpression(
-			methodReferenceDetailAST.getFirstChild(), true);
+			firstChildDetailAST, true);
 
 		if (referenceJavaExpression instanceof JavaTypeCast) {
 			referenceJavaExpression.setHasSurroundingParentheses(true);
@@ -1513,9 +1546,7 @@ public class JavaParserUtil {
 
 		return new JavaMethodReference(
 			_parseGenericJavaTypes(
-				methodReferenceDetailAST.findFirstToken(
-					TokenTypes.TYPE_ARGUMENTS),
-				TokenTypes.TYPE_ARGUMENT),
+				typeArgumentsDetailAST, TokenTypes.TYPE_ARGUMENT),
 			lastChildDetailAST.getText(), referenceJavaExpression);
 	}
 

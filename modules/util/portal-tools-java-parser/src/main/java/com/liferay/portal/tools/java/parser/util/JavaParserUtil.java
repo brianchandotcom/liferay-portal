@@ -229,6 +229,22 @@ public class JavaParserUtil {
 		return arrayDeclaratorDetailASTs.size();
 	}
 
+	private static String _getArrayTypeName(DetailAST dotDetailAST) {
+		DetailAST arrayDeclaratorDetailAST = dotDetailAST.findFirstToken(
+			TokenTypes.ARRAY_DECLARATOR);
+
+		DetailAST identDetailAST =
+			arrayDeclaratorDetailAST.getPreviousSibling();
+
+		String arrayTypeName = identDetailAST.getText();
+
+		for (int i = 0; i < _getArrayDimension(dotDetailAST); i++) {
+			arrayTypeName += "[]";
+		}
+
+		return arrayTypeName;
+	}
+
 	private static Tuple _getChainTuple(DetailAST dotDetailAST) {
 		String name = StringPool.BLANK;
 
@@ -238,11 +254,19 @@ public class JavaParserUtil {
 			if (detailAST.getType() == TokenTypes.DOT) {
 				DetailAST lastChildDetailAST = detailAST.getLastChild();
 
+				String lastName = lastChildDetailAST.getText();
+
+				if (lastChildDetailAST.getType() ==
+						TokenTypes.ARRAY_DECLARATOR) {
+
+					lastName = _getArrayTypeName(detailAST);
+				}
+
 				if (Validator.isNull(name)) {
-					name = lastChildDetailAST.getText();
+					name = lastName;
 				}
 				else {
-					name = lastChildDetailAST.getText() + "." + name;
+					name = lastName + "." + name;
 				}
 
 				detailAST = detailAST.getFirstChild();

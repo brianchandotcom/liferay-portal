@@ -37,6 +37,11 @@ public class JavaParserTest {
 	}
 
 	@Test
+	public void testJavaArrayClassLiteral() throws Exception {
+		_test("JavaArrayClassLiteral");
+	}
+
+	@Test
 	public void testJavaModifierStrictfp() throws Exception {
 		_test("JavaModifierStrictfp");
 	}

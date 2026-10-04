@@ -927,6 +927,8 @@ definition {
 
 			MenuItem.click(menuItem = "Expire");
 
+			Alert.viewSuccessMessage();
+
 			LexiconList.checkListCheckbox(listEntry = "Web Content Title Version 3");
 
 			ManagementBar.clickInfo();

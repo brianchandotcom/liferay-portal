@@ -120,8 +120,8 @@ describe('FieldMappingsSection', () => {
 			'fixedValue'
 		);
 
+		expect(screen.getByLabelText('source')).toBeEnabled();
 		expect(screen.getByLabelText('value')).toBeInTheDocument();
-		expect(screen.getByLabelText('source')).toBeDisabled();
 	});
 
 	it('keeps the typed fixed value', async () => {

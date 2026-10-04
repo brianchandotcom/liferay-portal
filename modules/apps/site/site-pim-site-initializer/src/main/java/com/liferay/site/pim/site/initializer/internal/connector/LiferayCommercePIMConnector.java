@@ -93,34 +93,16 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 				_CHANNEL_FIELD_CATALOG_ID, values)
 		).put(
 			"description",
-			() -> {
-				Object description =
-					PIMConnectorFieldMappingsUtil.getChannelFieldValue(
-						objectDefinition, pimFieldMappingObjectEntriesMap,
-						_CHANNEL_FIELD_DESCRIPTION, values);
-
-				if (description == null) {
-					return null;
-				}
-
-				return JSONUtil.put("en_US", description);
-			}
+			() -> _createLocalizedJSONObject(
+				objectDefinition, pimFieldMappingObjectEntriesMap,
+				_CHANNEL_FIELD_DESCRIPTION, values)
 		).put(
 			"externalReferenceCode", objectEntry.getExternalReferenceCode()
 		).put(
 			"name",
-			() -> {
-				Object name =
-					PIMConnectorFieldMappingsUtil.getChannelFieldValue(
-						objectDefinition, pimFieldMappingObjectEntriesMap,
-						_CHANNEL_FIELD_NAME, values);
-
-				if (name == null) {
-					return null;
-				}
-
-				return JSONUtil.put("en_US", name);
-			}
+			() -> _createLocalizedJSONObject(
+				objectDefinition, pimFieldMappingObjectEntriesMap,
+				_CHANNEL_FIELD_NAME, values)
 		).put(
 			"productOptions",
 			() -> _toJSONArray(
@@ -172,6 +154,23 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 				objectDefinition, pimFieldMappingObjectEntriesMap,
 				_CHANNEL_FIELD_TAGS, values)
 		);
+	}
+
+	private JSONObject _createLocalizedJSONObject(
+		ObjectDefinition objectDefinition,
+		Map<String, List<ObjectEntry>> objectEntriesMap,
+		PIMConnectorChannelField pimConnectorChannelField,
+		Map<String, Serializable> values) {
+
+		Object value = PIMConnectorFieldMappingsUtil.getChannelFieldValue(
+			objectDefinition, objectEntriesMap, pimConnectorChannelField,
+			values);
+
+		if (value == null) {
+			return null;
+		}
+
+		return JSONUtil.put("en_US", value);
 	}
 
 	private JSONObject _createProductOptionJSONObject(

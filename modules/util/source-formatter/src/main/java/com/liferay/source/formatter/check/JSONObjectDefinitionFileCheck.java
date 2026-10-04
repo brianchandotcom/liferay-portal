@@ -175,16 +175,16 @@ public class JSONObjectDefinitionFileCheck extends BaseFileCheck {
 
 		DetailAST rootDetailAST = JavaParser.parse(fileContents);
 
-		DetailAST nextSiblingDetailAST = rootDetailAST.getFirstChild();
+		DetailAST childDetailAST = rootDetailAST.getFirstChild();
 
-		while (nextSiblingDetailAST != null) {
-			if (nextSiblingDetailAST.getType() != TokenTypes.CLASS_DEF) {
-				nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+		while (childDetailAST != null) {
+			if (childDetailAST.getType() != TokenTypes.CLASS_DEF) {
+				childDetailAST = childDetailAST.getNextSibling();
 
 				continue;
 			}
 
-			DetailAST objBlockDetailAST = nextSiblingDetailAST.findFirstToken(
+			DetailAST objBlockDetailAST = childDetailAST.findFirstToken(
 				TokenTypes.OBJBLOCK);
 
 			List<DetailAST> variableDefinitionDetailASTs =

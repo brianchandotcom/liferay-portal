@@ -41,18 +41,18 @@ public class LegacyPropertiesUtil {
 
 		DetailAST rootDetailAST = JavaParser.parse(fileContents);
 
-		DetailAST nextSiblingDetailAST = rootDetailAST.getFirstChild();
+		DetailAST childDetailAST = rootDetailAST.getFirstChild();
 
 		while (true) {
-			if (nextSiblingDetailAST.getType() != TokenTypes.CLASS_DEF) {
-				nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+			if (childDetailAST.getType() != TokenTypes.CLASS_DEF) {
+				childDetailAST = childDetailAST.getNextSibling();
 
 				continue;
 			}
 
 			List<DetailAST> variableDefinitionDetailASTs =
 				DetailASTUtil.getAllChildTokens(
-					nextSiblingDetailAST, true, TokenTypes.VARIABLE_DEF);
+					childDetailAST, true, TokenTypes.VARIABLE_DEF);
 
 			for (DetailAST variableDefinitionDetailAST :
 					variableDefinitionDetailASTs) {

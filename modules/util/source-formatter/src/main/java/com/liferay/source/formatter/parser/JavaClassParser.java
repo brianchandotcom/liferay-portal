@@ -56,29 +56,29 @@ public class JavaClassParser {
 			}
 		}
 
-		DetailAST siblingDetailAST = detailAST.getFirstChild();
+		DetailAST childDetailAST = detailAST.getFirstChild();
 
-		while ((siblingDetailAST != null) &&
+		while ((childDetailAST != null) &&
 			   !TokenUtil.isOfType(
-				   siblingDetailAST, TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF,
+				   childDetailAST, TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF,
 				   TokenTypes.INTERFACE_DEF)) {
 
-			siblingDetailAST = siblingDetailAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 
-		if (siblingDetailAST == null) {
+		if (childDetailAST == null) {
 			return Collections.emptyList();
 		}
 
 		List<JavaClass> anonymousClasses = new ArrayList<>();
 
 		List<DetailAST> leteralNewDetailASTs = DetailASTUtil.getAllChildTokens(
-			siblingDetailAST, true, TokenTypes.LITERAL_NEW);
+			childDetailAST, true, TokenTypes.LITERAL_NEW);
 
 		JavaClass parentJavaClass = null;
 
 		if (!leteralNewDetailASTs.isEmpty() &&
-			(siblingDetailAST.getType() == TokenTypes.CLASS_DEF)) {
+			(childDetailAST.getType() == TokenTypes.CLASS_DEF)) {
 
 			parentJavaClass = parseJavaClass(content, detailAST, fileContents);
 		}
@@ -118,18 +118,18 @@ public class JavaClassParser {
 			String content, DetailAST detailAST, FileContents fileContents)
 		throws IOException, ParseException {
 
-		DetailAST siblingDetailAST = detailAST.getFirstChild();
+		DetailAST childDetailAST = detailAST.getFirstChild();
 
-		while ((siblingDetailAST != null) &&
+		while ((childDetailAST != null) &&
 			   !TokenUtil.isOfType(
-				   siblingDetailAST, TokenTypes.ANNOTATION_DEF,
+				   childDetailAST, TokenTypes.ANNOTATION_DEF,
 				   TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF,
 				   TokenTypes.INTERFACE_DEF, TokenTypes.RECORD_DEF)) {
 
-			siblingDetailAST = siblingDetailAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 
-		if (siblingDetailAST == null) {
+		if (childDetailAST == null) {
 			throw new ParseException(
 				"Parsing error at line \"" + detailAST.getLineNo() + "\"");
 		}
@@ -140,7 +140,7 @@ public class JavaClassParser {
 
 		boolean isInterface = false;
 
-		if (siblingDetailAST.getType() == TokenTypes.INTERFACE_DEF) {
+		if (childDetailAST.getType() == TokenTypes.INTERFACE_DEF) {
 			isInterface = true;
 		}
 
@@ -148,7 +148,7 @@ public class JavaClassParser {
 		boolean nonsealed = false;
 		boolean sealed = false;
 
-		DetailAST modifiersDetailAST = siblingDetailAST.findFirstToken(
+		DetailAST modifiersDetailAST = childDetailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 
 		if (modifiersDetailAST != null) {
@@ -189,26 +189,24 @@ public class JavaClassParser {
 			}
 		}
 
-		DetailAST nameDetailAST = siblingDetailAST.findFirstToken(
+		DetailAST nameDetailAST = childDetailAST.findFirstToken(
 			TokenTypes.IDENT);
 
-		String classContent = _getJavaTermContent(
-			fileContents, siblingDetailAST);
+		String classContent = _getJavaTermContent(fileContents, childDetailAST);
 
 		if (classContent == null) {
 			throw new ParseException(
-				"Parsing error at line \"" + siblingDetailAST.getLineNo() +
-					"\"");
+				"Parsing error at line \"" + childDetailAST.getLineNo() + "\"");
 		}
 
 		JavaClass javaClass = _parseJavaClass(
-			accessModifier, false, classContent, siblingDetailAST.getLineNo(),
+			accessModifier, false, classContent, childDetailAST.getLineNo(),
 			nameDetailAST.getText(), JavaSourceUtil.getImportNames(content),
 			isAbstract, isFinal, isInterface, false, isStrictfp, nonsealed,
 			JavaSourceUtil.getPackageName(content), sealed, fileContents,
-			siblingDetailAST, null);
+			childDetailAST, null);
 
-		_parseExtendsImplementsPermits(javaClass, siblingDetailAST);
+		_parseExtendsImplementsPermits(javaClass, childDetailAST);
 
 		return javaClass;
 	}

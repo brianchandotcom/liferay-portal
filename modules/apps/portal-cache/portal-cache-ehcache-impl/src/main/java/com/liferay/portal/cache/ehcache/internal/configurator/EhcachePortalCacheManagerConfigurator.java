@@ -221,7 +221,7 @@ public class EhcachePortalCacheManagerConfigurator {
 
 			CacheConfiguration<?, ?> cacheConfiguration = entry.getValue();
 
-			fluentConfigurationBuilder.updateCache(
+			fluentConfigurationBuilder = fluentConfigurationBuilder.updateCache(
 				entry.getKey(),
 				fluentCacheConfigurationBuilder ->
 					fluentCacheConfigurationBuilder.withExpiry(

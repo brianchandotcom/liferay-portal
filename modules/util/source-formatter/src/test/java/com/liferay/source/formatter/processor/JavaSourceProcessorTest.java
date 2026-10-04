@@ -943,19 +943,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 23
 			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 31
+				"Use \"if/else\" statement instead of \"switch\"", 25
 			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 33
+				"Do not use pattern matching for switch", 26
 			).addExpectedMessage(
-				"Do not use pattern matching for switch", 34
+				"Use \"if/else\" statement instead of \"switch\"", 35
 			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 43
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 44
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 52
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 53
+				"Do not use pattern matching for switch", 36
 			));
 	}
 

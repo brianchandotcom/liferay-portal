@@ -19,14 +19,6 @@ public class PatternMatchingForSwitch {
 		};
 	}
 
-	public String getName(int type) {
-		return switch (type) {
-			case 1 -> "one";
-			case 2 -> "two";
-			default -> "other";
-		};
-	}
-
 	public String getNestedLabel(int type, Object object) {
 		switch (type) {
 			case 1:
@@ -40,15 +32,6 @@ public class PatternMatchingForSwitch {
 	}
 
 	public void print(Object object) {
-		switch (object) {
-			case String string -> {
-				System.out.println(string);
-			}
-
-			default -> {
-			}
-		}
-
 		switch (object) {
 			case Integer integer:
 				System.out.println(integer);

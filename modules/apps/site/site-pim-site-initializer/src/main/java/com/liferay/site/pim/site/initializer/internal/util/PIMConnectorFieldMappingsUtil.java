@@ -221,13 +221,11 @@ public class PIMConnectorFieldMappingsUtil {
 
 		String type = pimConnectorChannelField.getType();
 
+		if (Objects.equals(type, ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
+			return Boolean.valueOf(value);
+		}
+
 		try {
-			if (Objects.equals(
-					type, ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
-
-				return Boolean.valueOf(value);
-			}
-
 			if (Objects.equals(
 					type, ObjectFieldConstants.BUSINESS_TYPE_DECIMAL)) {
 

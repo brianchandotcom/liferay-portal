@@ -12,8 +12,19 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class PIMConnectorException extends PortalException {
 
-	public PIMConnectorException(String messageKey) {
-		super(messageKey);
+	public PIMConnectorException() {
+	}
+
+	public PIMConnectorException(String msg) {
+		super(msg);
+	}
+
+	public PIMConnectorException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	public PIMConnectorException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

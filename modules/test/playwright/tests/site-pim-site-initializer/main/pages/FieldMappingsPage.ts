@@ -11,30 +11,30 @@ import {DataSetPage} from '../../../site-cms-site-initializer/main/pages/DataSet
 export class FieldMappingsPage {
 	readonly channelField: (channelField: string) => Locator;
 	readonly dataSetFragmentPage: DataSetPage;
-	readonly getRow: (channelField: string) => Locator;
 	readonly page: Page;
+	readonly row: (channelField: string) => Locator;
 	readonly sourceAttributes: (channelField: string) => Locator;
 	readonly status: (channelField: string) => Locator;
 
 	constructor(page: Page) {
+		this.channelField = (channelField) =>
+			this.row(channelField).getByRole('link', {
+				exact: true,
+				name: channelField,
+			});
 		this.dataSetFragmentPage = new DataSetPage(page);
-		this.getRow = (channelField) =>
+		this.page = page;
+		this.row = (channelField) =>
 			this.dataSetFragmentPage.table.bodyRows.filter({
 				has: page.getByRole('link', {
 					exact: true,
 					name: channelField,
 				}),
 			});
-		this.channelField = (channelField) =>
-			this.getRow(channelField).getByRole('link', {
-				exact: true,
-				name: channelField,
-			});
-		this.page = page;
 		this.sourceAttributes = (channelField) =>
-			this.getRow(channelField).locator('.cell-sourceAttributes');
+			this.row(channelField).locator('.cell-sourceAttributes');
 		this.status = (channelField) =>
-			this.getRow(channelField).locator('.cell-status .label');
+			this.row(channelField).locator('.cell-status .label');
 	}
 
 	async clearMapping(channelField: string) {
@@ -59,9 +59,9 @@ export class FieldMappingsPage {
 				exact: true,
 				name: 'Clear',
 			}),
-			trigger: this.dataSetFragmentPage
-				.getRow(channelField)
-				.getByRole('button', {name: `${channelField} Actions`}),
+			trigger: this.row(channelField).getByRole('button', {
+				name: `${channelField} Actions`,
+			}),
 		});
 
 		await this.page.keyboard.press('Escape');

@@ -369,20 +369,22 @@ public class LiferayCommercePIMConnectorTest {
 	private void _testCreateProductJSONObjectWithBooleanProductType()
 		throws Exception {
 
+		List<ObjectEntry> objectEntries = ListUtil.fromArray(
+			_mockFieldMapping(
+				"catalogId", StringPool.BLANK, StringPool.BLANK,
+				PIMConnectorFieldMappingsUtil.TYPE_FIXED_VALUE, "1"),
+			_mockFieldMapping(
+				"name", StringPool.BLANK, "name", "dynamicValue",
+				StringPool.BLANK),
+			_mockFieldMapping(
+				"productType", StringPool.BLANK, "virtual", "dynamicValue",
+				StringPool.BLANK),
+			_mockFieldMapping(
+				"skus[].sku", StringPool.BLANK, "code", "dynamicValue",
+				StringPool.BLANK));
+
 		JSONObject jsonObject = _createProductJSONObject(
-			ListUtil.fromArray(
-				_mockFieldMapping(
-					"catalogId", StringPool.BLANK, StringPool.BLANK,
-					PIMConnectorFieldMappingsUtil.TYPE_FIXED_VALUE, "1"),
-				_mockFieldMapping(
-					"name", StringPool.BLANK, "name", "dynamicValue",
-					StringPool.BLANK),
-				_mockFieldMapping(
-					"productType", StringPool.BLANK, "virtual", "dynamicValue",
-					StringPool.BLANK),
-				_mockFieldMapping(
-					"skus[].sku", StringPool.BLANK, "code", "dynamicValue",
-					StringPool.BLANK)),
+			objectEntries,
 			_mockProductObjectEntry(
 				"SKU-1",
 				HashMapBuilder.<String, Serializable>put(
@@ -392,19 +394,7 @@ public class LiferayCommercePIMConnectorTest {
 		Assert.assertEquals("simple", jsonObject.getString("productType"));
 
 		jsonObject = _createProductJSONObject(
-			ListUtil.fromArray(
-				_mockFieldMapping(
-					"catalogId", StringPool.BLANK, StringPool.BLANK,
-					PIMConnectorFieldMappingsUtil.TYPE_FIXED_VALUE, "1"),
-				_mockFieldMapping(
-					"name", StringPool.BLANK, "name", "dynamicValue",
-					StringPool.BLANK),
-				_mockFieldMapping(
-					"productType", StringPool.BLANK, "virtual", "dynamicValue",
-					StringPool.BLANK),
-				_mockFieldMapping(
-					"skus[].sku", StringPool.BLANK, "code", "dynamicValue",
-					StringPool.BLANK)),
+			objectEntries,
 			_mockProductObjectEntry(
 				"SKU-2",
 				HashMapBuilder.<String, Serializable>put(

@@ -12,11 +12,14 @@ public class JavaNestedSwitchExpressions {
 
 	public String getLabel(int type, int subtype) {
 		return switch (type) {
-			case 1 -> switch (subtype) {
-				case 1 -> "first";
-				default -> "other";
+			case 1 -> switch (
+				subtype) {
+					case 1 ->
+						"first";
+				default
+					-> "other";
 };
-			default -> "other";
+				default -> "other";
 		};
 	}
 

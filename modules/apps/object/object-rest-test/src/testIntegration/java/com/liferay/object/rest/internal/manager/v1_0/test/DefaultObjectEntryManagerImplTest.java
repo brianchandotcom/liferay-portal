@@ -2390,6 +2390,9 @@ public class DefaultObjectEntryManagerImplTest
 			null, "COUNT", _objectDefinition1.getObjectDefinitionId(),
 			"countAggregationObjectFieldName2", objectRelationship.getName());
 
+		_objectDefinition1 = objectDefinitionLocalService.getObjectDefinition(
+			_objectDefinition1.getObjectDefinitionId());
+
 		ObjectEntry parentObjectEntry2 =
 			_defaultObjectEntryManager.addObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1,

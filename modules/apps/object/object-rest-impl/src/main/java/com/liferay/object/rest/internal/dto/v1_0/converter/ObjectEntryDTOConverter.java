@@ -28,6 +28,7 @@ import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.model.ObjectEntryVersionModel;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.AuditEvent;
@@ -1162,11 +1163,9 @@ public class ObjectEntryDTOConverter
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
 
-		for (ObjectField objectField : objectFields) {
+		for (ObjectField objectField : objectFieldBag.getObjectFields()) {
 			if (objectField.isMetadata()) {
 				continue;
 			}

@@ -22,12 +22,12 @@ public class PatternMatchingForSwitchCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> caseDetailASTs = getAllChildTokens(
+		List<DetailAST> childDetailASTs = getAllChildTokens(
 			detailAST, false, TokenTypes.CASE_GROUP, TokenTypes.SWITCH_RULE);
 
-		for (DetailAST caseDetailAST : caseDetailASTs) {
+		for (DetailAST childDetailAST : childDetailASTs) {
 			List<DetailAST> literalCaseDetailASTs = getAllChildTokens(
-				caseDetailAST, false, TokenTypes.LITERAL_CASE);
+				childDetailAST, false, TokenTypes.LITERAL_CASE);
 
 			for (DetailAST literalCaseDetailAST : literalCaseDetailASTs) {
 				if (_hasPatternLabel(literalCaseDetailAST)) {

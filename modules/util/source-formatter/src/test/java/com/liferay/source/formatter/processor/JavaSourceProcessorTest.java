@@ -935,25 +935,27 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"PatternMatchingForSwitch.testjava"
 			).addExpectedMessage(
-				"Do not use pattern matching for switch", 14
-			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 14
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 16
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 17
 			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 23
 			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 31
 			).addExpectedMessage(
-				"Do not use pattern matching for switch", 33
-			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 33
 			).addExpectedMessage(
-				"Do not use pattern matching for switch", 43
+				"Do not use pattern matching for switch", 34
 			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 43
 			).addExpectedMessage(
-				"Do not use pattern matching for switch", 52
+				"Do not use pattern matching for switch", 44
 			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 52
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 53
 			));
 	}
 
@@ -993,11 +995,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"Do not use record patterns", 18
 			).addExpectedMessage(
-				"Do not use pattern matching for switch", 35
-			).addExpectedMessage(
 				"Use \"if/else\" statement instead of \"switch\"", 35
 			).addExpectedMessage(
+				"Do not use pattern matching for switch", 36
+			).addExpectedMessage(
 				"Do not use record patterns", 36
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 37
 			).addExpectedMessage(
 				"Do not use record patterns", 37
 			).addExpectedMessage(

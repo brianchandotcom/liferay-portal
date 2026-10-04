@@ -32,9 +32,9 @@ public class PatternMatchingForSwitchCheck extends BaseCheck {
 
 			for (DetailAST literalCaseDetailAST : literalCaseDetailASTs) {
 				if (_hasPatternLabel(literalCaseDetailAST)) {
-					log(detailAST, _MSG_AVOID_PATTERN_MATCHING_FOR_SWITCH);
-
-					return;
+					log(
+						literalCaseDetailAST,
+						_MSG_AVOID_PATTERN_MATCHING_FOR_SWITCH);
 				}
 			}
 		}

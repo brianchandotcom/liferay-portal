@@ -18,7 +18,6 @@ import com.liferay.object.info.item.provider.util.ObjectEntryInfoItemFormProvide
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectEntry;
 import com.liferay.petra.string.StringBundler;
@@ -40,7 +39,6 @@ public class SystemObjectEntryInfoItemFormProvider
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
-		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider) {
 
@@ -53,7 +51,6 @@ public class SystemObjectEntryInfoItemFormProvider
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldInfoFieldConverter = objectFieldInfoFieldConverter;
-		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_templateInfoItemFieldSetProvider = templateInfoItemFieldSetProvider;
 	}
@@ -141,8 +138,8 @@ public class SystemObjectEntryInfoItemFormProvider
 			null, displayPageInfoFieldSet, _infoItemFieldReaderFieldSetProvider,
 			_itemClassName, _objectActionLocalService, _objectDefinition,
 			objectDefinitionId, _objectDefinitionLocalService,
-			_objectFieldInfoFieldConverter, _objectFieldLocalService,
-			_objectRelationshipLocalService, _templateInfoItemFieldSetProvider);
+			_objectFieldInfoFieldConverter, _objectRelationshipLocalService,
+			_templateInfoItemFieldSetProvider);
 	}
 
 	private final DisplayPageInfoItemFieldSetProvider
@@ -154,7 +151,6 @@ public class SystemObjectEntryInfoItemFormProvider
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldInfoFieldConverter _objectFieldInfoFieldConverter;
-	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final TemplateInfoItemFieldSetProvider

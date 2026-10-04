@@ -291,7 +291,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					_infoItemFieldReaderFieldSetProvider, itemClassName,
 					_objectActionLocalService, objectDefinition,
 					_objectDefinitionLocalService,
-					objectFieldInfoFieldConverter, _objectFieldLocalService,
+					objectFieldInfoFieldConverter,
 					_objectRelationshipLocalService,
 					_templateInfoItemFieldSetProvider),
 				HashMapDictionaryBuilder.<String, Object>put(

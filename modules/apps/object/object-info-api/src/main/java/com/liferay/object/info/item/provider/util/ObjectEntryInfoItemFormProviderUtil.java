@@ -30,7 +30,6 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -65,7 +64,6 @@ public class ObjectEntryInfoItemFormProviderUtil {
 			ObjectDefinition objectDefinition, long objectDefinitionId,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
-			ObjectFieldLocalService objectFieldLocalService,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider)
 		throws NoSuchFormVariationException {

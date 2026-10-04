@@ -22,7 +22,6 @@ import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
@@ -49,7 +48,6 @@ public class ObjectEntryInfoItemFormProvider
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
-		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
@@ -69,7 +67,6 @@ public class ObjectEntryInfoItemFormProvider
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldInfoFieldConverter = objectFieldInfoFieldConverter;
-		_objectFieldLocalService = objectFieldLocalService;
 		_objectFieldSettingLocalService = objectFieldSettingLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
@@ -170,7 +167,7 @@ public class ObjectEntryInfoItemFormProvider
 				_objectDefinition.getClassName(), _objectActionLocalService,
 				_objectDefinition, _objectDefinition.getObjectDefinitionId(),
 				_objectDefinitionLocalService, _objectFieldInfoFieldConverter,
-				_objectFieldLocalService, _objectRelationshipLocalService,
+				_objectRelationshipLocalService,
 				_templateInfoItemFieldSetProvider);
 		}
 		catch (PortalException portalException) {
@@ -190,7 +187,6 @@ public class ObjectEntryInfoItemFormProvider
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldInfoFieldConverter _objectFieldInfoFieldConverter;
-	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFieldSettingLocalService
 		_objectFieldSettingLocalService;
 	private final ObjectRelationshipLocalService

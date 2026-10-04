@@ -7,6 +7,7 @@ package com.liferay.portal.cache.ehcache.internal.management;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cache.ehcache.internal.expiry.EhcacheExpiryValue;
 
 import java.time.Duration;
 
@@ -72,10 +73,12 @@ public class CacheMBeanImpl extends StandardMBean implements CacheMBean {
 
 	@Override
 	public long getTimeToIdle() {
-		ExpiryPolicy<?, ?> expiryPolicy =
-			_cacheRuntimeConfiguration.getExpiryPolicy();
+		ExpiryPolicy<Object, Object> expiryPolicy =
+			(ExpiryPolicy<Object, Object>)
+				_cacheRuntimeConfiguration.getExpiryPolicy();
 
-		Duration duration = expiryPolicy.getExpiryForAccess(null, null);
+		Duration duration = expiryPolicy.getExpiryForAccess(
+			null, () -> new EhcacheExpiryValue(null, ExpiryPolicy.INFINITE));
 
 		return duration.getSeconds();
 	}

@@ -30,21 +30,24 @@ public class ResourcePermissionCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String className = getName(detailAST);
 
-		if (className.endsWith("ModelResourcePermission")) {
-			_checkModelResourcePermission(detailAST);
-		}
-	}
+		if (!className.endsWith("ModelResourcePermission") ||
+			!isDirectChildOfCompilationUnit(detailAST)) {
 
-	private void _checkModelResourcePermission(DetailAST detailAST) {
+			return;
+		}
+
 		List<String> importNames = getImportNames(detailAST);
 
-		if (!isDirectChildOfCompilationUnit(detailAST) ||
-			!importNames.contains(
+		if (!importNames.contains(
 				"org.osgi.service.component.annotations.Component")) {
 
 			return;
 		}
 
+		_checkModelResourcePermission(detailAST);
+	}
+
+	private void _checkModelResourcePermission(DetailAST detailAST) {
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Component");
 
@@ -64,11 +67,11 @@ public class ResourcePermissionCheck extends BaseCheck {
 			return;
 		}
 
+		List<DetailAST> expressionDetailASTs = new ArrayList<>();
+
 		DetailAST annotationArrayInitDetailAST =
 			propertyAnnotationMemberValuePairDetailAST.findFirstToken(
 				TokenTypes.ANNOTATION_ARRAY_INIT);
-
-		List<DetailAST> expressionDetailASTs = new ArrayList<>();
 
 		if (annotationArrayInitDetailAST != null) {
 			expressionDetailASTs.addAll(
@@ -92,13 +95,8 @@ public class ResourcePermissionCheck extends BaseCheck {
 
 			String value = StringUtil.unquote(firstChildDetailAST.getText());
 
-			if (value.startsWith("service.ranking:")) {
-				log(
-					expressionDetailAST, _MSG_REMOVE_SERVICE_RANKING_PROPERTY,
-					value);
-			}
-			else if (value.startsWith("model.class.name=") &&
-					 isAttributeValue(_CHECK_MODEL_CLASS_NAME_KEY)) {
+			if (value.startsWith("model.class.name=") &&
+				isAttributeValue(_CHECK_MODEL_CLASS_NAME_KEY)) {
 
 				hasModelClassName = true;
 
@@ -108,13 +106,20 @@ public class ResourcePermissionCheck extends BaseCheck {
 				String modelResourcePermissionTypeArgument =
 					_getModelResourcePermissionTypeArgument(detailAST);
 
-				if (!Objects.equals(
+				if (Objects.equals(
 						modelClassName, modelResourcePermissionTypeArgument)) {
 
-					log(
-						expressionDetailAST, _MSG_MODEL_CLASS_NAME_MISMATCH,
-						modelResourcePermissionTypeArgument, modelClassName);
+					continue;
 				}
+
+				log(
+					expressionDetailAST, _MSG_MODEL_CLASS_NAME_MISMATCH,
+					modelResourcePermissionTypeArgument, modelClassName);
+			}
+			else if (value.startsWith("service.ranking:")) {
+				log(
+					expressionDetailAST, _MSG_REMOVE_SERVICE_RANKING_PROPERTY,
+					value);
 			}
 		}
 

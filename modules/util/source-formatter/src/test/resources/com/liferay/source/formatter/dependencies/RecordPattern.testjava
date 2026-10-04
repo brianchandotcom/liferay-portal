@@ -31,4 +31,20 @@ public class RecordPattern {
 		return 0;
 	}
 
+	public int getSum(Object object) {
+		return switch (object) {
+			case Point(int x, int y) -> x + y;
+			case Line(Point(int x, int y), Point end) -> x + y + getSum(end);
+			default -> 0;
+		};
+	}
+
+	public int getTaxicabDistance(Object object) {
+		if (object instanceof Point(int x, int y)) {
+			return Math.abs(x) + Math.abs(y);
+		}
+
+		return 0;
+	}
+
 }

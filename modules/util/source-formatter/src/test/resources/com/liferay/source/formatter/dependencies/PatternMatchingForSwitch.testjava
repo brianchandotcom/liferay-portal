@@ -12,6 +12,7 @@ public class PatternMatchingForSwitch {
 
 	public String getLabel(Object object) {
 		return switch (object) {
+			case null -> "null";
 			case Integer integer when integer > 0 -> "positive";
 			case String string -> string;
 			default -> "other";
@@ -35,6 +36,27 @@ public class PatternMatchingForSwitch {
 				};
 			default:
 				return "other";
+		}
+	}
+
+	public void print(Object object) {
+		switch (object) {
+			case String string -> {
+				System.out.println(string);
+			}
+
+			default -> {
+			}
+		}
+
+		switch (object) {
+			case Integer integer:
+				System.out.println(integer);
+
+				break;
+			case null, default:
+
+				break;
 		}
 	}
 

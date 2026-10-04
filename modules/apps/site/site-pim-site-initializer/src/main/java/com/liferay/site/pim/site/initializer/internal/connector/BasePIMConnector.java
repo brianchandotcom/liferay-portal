@@ -148,7 +148,7 @@ public abstract class BasePIMConnector implements PIMConnector {
 						GetterUtil.getLong(
 							document.getLong(Field.ENTRY_CLASS_PK)))));
 
-			if (documents.size() < _SIZE) {
+			if (documents.size() < _SEARCH_SIZE) {
 				break;
 			}
 
@@ -261,7 +261,7 @@ public abstract class BasePIMConnector implements PIMConnector {
 			).emptySearchEnabled(
 				true
 			).size(
-				_SIZE
+				_SEARCH_SIZE
 			).sorts(
 				sorts.field(Field.ENTRY_CLASS_PK, SortOrder.ASC)
 			).build());
@@ -299,6 +299,6 @@ public abstract class BasePIMConnector implements PIMConnector {
 		}
 	}
 
-	private static final int _SIZE = 1000;
+	private static final int _SEARCH_SIZE = 1000;
 
 }

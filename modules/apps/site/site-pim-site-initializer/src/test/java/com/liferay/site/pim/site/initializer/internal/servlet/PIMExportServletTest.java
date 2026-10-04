@@ -7,6 +7,7 @@ package com.liferay.site.pim.site.initializer.internal.servlet;
 
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -123,6 +124,24 @@ public class PIMExportServletTest {
 		_testDoGetWithUnexpectedException();
 	}
 
+	private void _assertError(
+			String errorMessage,
+			MockHttpServletResponse mockHttpServletResponse, int status)
+		throws Exception {
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"error", errorMessage
+			).toString(),
+			mockHttpServletResponse.getContentAsString());
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_JSON,
+			mockHttpServletResponse.getContentType());
+		Assert.assertNull(
+			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_DISPOSITION));
+		Assert.assertEquals(status, mockHttpServletResponse.getStatus());
+	}
+
 	private MockHttpServletResponse _getMockHttpServletResponse()
 		throws Exception {
 
@@ -177,18 +196,9 @@ public class PIMExportServletTest {
 			true
 		);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			_getMockHttpServletResponse();
-
-		Assert.assertEquals(
-			JSONUtil.put(
-				"error",
-				"you-do-not-have-permission-to-access-the-requested-resource"
-			).toString(),
-			mockHttpServletResponse.getContentAsString());
-		Assert.assertEquals(
-			HttpServletResponse.SC_UNAUTHORIZED,
-			mockHttpServletResponse.getStatus());
+		_assertError(
+			"you-do-not-have-permission-to-access-the-requested-resource",
+			_getMockHttpServletResponse(), HttpServletResponse.SC_UNAUTHORIZED);
 
 		Mockito.when(
 			_user.isGuestUser()
@@ -204,17 +214,9 @@ public class PIMExportServletTest {
 			null
 		);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			_getMockHttpServletResponse();
-
-		Assert.assertEquals(
-			JSONUtil.put(
-				"error", "unable-to-get-a-pim-connector-with-the-given-key"
-			).toString(),
-			mockHttpServletResponse.getContentAsString());
-		Assert.assertEquals(
-			HttpServletResponse.SC_BAD_REQUEST,
-			mockHttpServletResponse.getStatus());
+		_assertError(
+			"unable-to-get-a-pim-connector-with-the-given-key",
+			_getMockHttpServletResponse(), HttpServletResponse.SC_BAD_REQUEST);
 
 		Mockito.when(
 			_pimConnectorRegistry.getPIMConnector(_KEY)
@@ -232,17 +234,17 @@ public class PIMExportServletTest {
 			_objectEntry
 		);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			_getMockHttpServletResponse();
+		_assertError(
+			"a-required-channel-field-is-not-mapped",
+			_getMockHttpServletResponse(), HttpServletResponse.SC_BAD_REQUEST);
 
-		Assert.assertEquals(
-			JSONUtil.put(
-				"error", "a-required-channel-field-is-not-mapped"
-			).toString(),
-			mockHttpServletResponse.getContentAsString());
-		Assert.assertEquals(
-			HttpServletResponse.SC_BAD_REQUEST,
-			mockHttpServletResponse.getStatus());
+		Mockito.doReturn(
+			StringPool.BLANK
+		).when(
+			_pimConnector
+		).export(
+			_objectEntry
+		);
 	}
 
 	private void _testDoGetWithUnexpectedException() throws Exception {
@@ -254,22 +256,9 @@ public class PIMExportServletTest {
 			_OBJECT_ENTRY_ID
 		);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			_getMockHttpServletResponse();
-
-		Assert.assertEquals(
-			JSONUtil.put(
-				"error", "an-unexpected-error-occurred"
-			).toString(),
-			mockHttpServletResponse.getContentAsString());
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON,
-			mockHttpServletResponse.getContentType());
-		Assert.assertNull(
-			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_DISPOSITION));
-		Assert.assertEquals(
-			HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-			mockHttpServletResponse.getStatus());
+		_assertError(
+			"an-unexpected-error-occurred", _getMockHttpServletResponse(),
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
 		Mockito.doReturn(
 			_objectEntry
@@ -280,7 +269,7 @@ public class PIMExportServletTest {
 		);
 	}
 
-	private static final String _KEY = "liferay-commerce";
+	private static final String _KEY = RandomTestUtil.randomString();
 
 	private static final long _OBJECT_ENTRY_ID = RandomTestUtil.randomLong();
 

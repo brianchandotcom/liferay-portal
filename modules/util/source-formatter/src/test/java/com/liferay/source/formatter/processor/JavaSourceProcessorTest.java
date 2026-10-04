@@ -617,18 +617,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testJavaNestedSwitchExpressions() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"JavaNestedSwitchExpressions.testjava"
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 14
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 15
-			));
-	}
-
-	@Test
 	public void testJavaNewProblemInstantiationParameters() throws Exception {
 		test("JavaNewProblemInstantiationParameters.testjava");
 	}
@@ -636,46 +624,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testJavaParameterAnnotations() throws Exception {
 		test("JavaParameterAnnotations.testjava");
-	}
-
-	@Test
-	public void testJavaPatternMatchingForSwitch() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"JavaPatternMatchingForSwitch.testjava"
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 14
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 14
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 24
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 24
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 33
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 33
-			));
-	}
-
-	@Test
-	public void testJavaRecordPatterns() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"JavaRecordPatterns.testjava"
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 17
-			).addExpectedMessage(
-				"Use \"if/else\" statement instead of \"switch\"", 17
-			).addExpectedMessage(
-				"Do not use record patterns", 18
-			).addExpectedMessage(
-				"Do not use record patterns", 19
-			).addExpectedMessage(
-				"Do not use record patterns", 25
-			).addExpectedMessage(
-				"Do not use record patterns", 30
-			));
 	}
 
 	@Test
@@ -937,6 +885,18 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testNestedSwitchExpressions() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"NestedSwitchExpressions.testjava"
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 14
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 15
+			));
+	}
+
+	@Test
 	public void testNullAssertionInIfStatement() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
@@ -990,6 +950,26 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testPatternMatchingForSwitchLabels() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"PatternMatchingForSwitchLabels.testjava"
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 14
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 14
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 24
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 24
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 33
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 33
+			));
+	}
+
+	@Test
 	public void testProxyUsage() throws Exception {
 		test(
 			"ProxyUsage.testjava",
@@ -1020,6 +1000,26 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testRecordPattern() throws Exception {
 		test("RecordPattern.testjava", "Do not use record patterns", 18);
+	}
+
+	@Test
+	public void testRecordPatterns() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"RecordPatterns.testjava"
+			).addExpectedMessage(
+				"Do not use pattern matching for switch", 17
+			).addExpectedMessage(
+				"Use \"if/else\" statement instead of \"switch\"", 17
+			).addExpectedMessage(
+				"Do not use record patterns", 18
+			).addExpectedMessage(
+				"Do not use record patterns", 19
+			).addExpectedMessage(
+				"Do not use record patterns", 25
+			).addExpectedMessage(
+				"Do not use record patterns", 30
+			));
 	}
 
 	@Test

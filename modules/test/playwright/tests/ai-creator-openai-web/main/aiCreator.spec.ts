@@ -67,15 +67,17 @@ test(
 		try {
 			await aiCreatorInstanceSettingsPage.disableChatGPTCreateContent();
 
-			await siteSettingsPage.goToSiteSetting(
-				'AI Creator',
-				'OpenAI',
-				site.friendlyUrlPath
-			);
+			await expect(async () => {
+				await siteSettingsPage.goToSiteSetting(
+					'AI Creator',
+					'OpenAI',
+					site.friendlyUrlPath
+				);
 
-			await expect(
-				page.getByLabel('Enable ChatGPT to Create Content')
-			).toBeDisabled();
+				await expect(
+					page.getByLabel('Enable ChatGPT to Create Content')
+				).toBeDisabled({timeout: 3000});
+			}).toPass({timeout: 30000});
 
 			await expect(
 				page.getByText(

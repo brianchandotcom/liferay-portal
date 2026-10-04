@@ -57,8 +57,8 @@ test(
 			).toBeVisible({timeout: 3000});
 			await expect(
 				page.getByRole('menuitem', {name: 'Create AI Image'})
-			).toBeHidden();
-		}).toPass();
+			).toBeHidden({timeout: 3000});
+		}).toPass({timeout: 30000});
 
 		await aiCreatorInstanceSettingsPage.enableDalleCreateImages();
 	}

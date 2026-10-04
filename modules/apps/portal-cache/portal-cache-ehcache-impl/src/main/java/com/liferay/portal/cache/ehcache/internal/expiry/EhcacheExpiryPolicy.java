@@ -37,7 +37,13 @@ public class EhcacheExpiryPolicy implements ExpiryPolicy<Object, Object> {
 	public Duration getExpiryForCreation(Object key, Object value) {
 		EhcacheExpiryValue ehcacheExpiryValue = (EhcacheExpiryValue)value;
 
-		return ehcacheExpiryValue.getTimeToLive();
+		Duration timeToLive = ehcacheExpiryValue.getTimeToLive();
+
+		if (timeToLive.equals(ExpiryPolicy.INFINITE)) {
+			return _expiryPolicy.getExpiryForCreation(key, value);
+		}
+
+		return timeToLive;
 	}
 
 	@Override
@@ -46,7 +52,13 @@ public class EhcacheExpiryPolicy implements ExpiryPolicy<Object, Object> {
 
 		EhcacheExpiryValue ehcacheExpiryValue = (EhcacheExpiryValue)newValue;
 
-		return ehcacheExpiryValue.getTimeToLive();
+		Duration timeToLive = ehcacheExpiryValue.getTimeToLive();
+
+		if (timeToLive.equals(ExpiryPolicy.INFINITE)) {
+			return _expiryPolicy.getExpiryForCreation(key, newValue);
+		}
+
+		return timeToLive;
 	}
 
 	private final ExpiryPolicy<Object, Object> _expiryPolicy;

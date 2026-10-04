@@ -97,6 +97,20 @@ public class EhcacheExpiryPolicyTest {
 	}
 
 	@Test
+	public void testGetExpiryForCreation() {
+		_cache.put(
+			"key", new EhcacheExpiryValue("value", ExpiryPolicy.INFINITE));
+
+		_timeMillis = 599000;
+
+		Assert.assertTrue(_cache.containsKey("key"));
+
+		_timeMillis = 601000;
+
+		Assert.assertNull(_cache.get("key"));
+	}
+
+	@Test
 	public void testGetExpiryForUpdate() {
 		_cache.put(
 			"key", new EhcacheExpiryValue("value", Duration.ofSeconds(10)));
@@ -113,6 +127,32 @@ public class EhcacheExpiryPolicyTest {
 		_timeMillis = 20000;
 
 		Assert.assertNull(_cache.get("key"));
+
+		_cache.put(
+			"key", new EhcacheExpiryValue("value", Duration.ofSeconds(10)));
+
+		_timeMillis = 29000;
+
+		_cache.put(
+			"key", new EhcacheExpiryValue("value", ExpiryPolicy.INFINITE));
+
+		_timeMillis = 31000;
+
+		Assert.assertTrue(_cache.containsKey("key"));
+
+		_timeMillis = 630000;
+
+		Assert.assertNull(_cache.get("key"));
+
+		EhcacheExpiryPolicy ehcacheExpiryPolicy = new EhcacheExpiryPolicy(
+			ExpiryPolicyBuilder.noExpiration());
+
+		Assert.assertEquals(
+			ExpiryPolicy.INFINITE,
+			ehcacheExpiryPolicy.getExpiryForUpdate(
+				"key",
+				() -> new EhcacheExpiryValue("value", Duration.ofSeconds(10)),
+				new EhcacheExpiryValue("value", ExpiryPolicy.INFINITE)));
 	}
 
 	private Cache<String, EhcacheExpiryValue> _cache;

@@ -23,6 +23,12 @@ public class JavaMethodReference extends BaseJavaExpression {
 		_referenceJavaExpression = referenceJavaExpression;
 	}
 
+	public void setMethodGenericJavaTypes(
+		List<JavaType> methodGenericJavaTypes) {
+
+		_methodGenericJavaTypes = methodGenericJavaTypes;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -45,12 +51,18 @@ public class JavaMethodReference extends BaseJavaExpression {
 				sb, _referenceJavaExpression, indent, "", "::", maxLineLength);
 		}
 
+		if (_methodGenericJavaTypes != null) {
+			append(
+				sb, _methodGenericJavaTypes, indent, "<", ">", maxLineLength);
+		}
+
 		append(sb, _methodName, indent, "", suffix, maxLineLength);
 
 		return sb.toString();
 	}
 
 	private final List<JavaType> _genericJavaTypes;
+	private List<JavaType> _methodGenericJavaTypes;
 	private final JavaSimpleValue _methodName;
 	private final JavaExpression _referenceJavaExpression;
 

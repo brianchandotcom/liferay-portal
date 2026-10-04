@@ -47,6 +47,11 @@ public class JavaParserTest {
 	}
 
 	@Test
+	public void testJavaMethodReferenceTypeArguments() throws Exception {
+		_test("JavaMethodReferenceTypeArguments");
+	}
+
+	@Test
 	public void testJavaModifierStrictfp() throws Exception {
 		_test("JavaModifierStrictfp");
 	}

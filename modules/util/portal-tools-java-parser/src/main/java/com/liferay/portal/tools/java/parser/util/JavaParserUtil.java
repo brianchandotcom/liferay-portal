@@ -337,6 +337,22 @@ public class JavaParserUtil {
 		return false;
 	}
 
+	private static boolean _isMethodTypeArguments(
+		DetailAST methodReferenceDetailAST, DetailAST typeArgumentsDetailAST) {
+
+		if ((typeArgumentsDetailAST.getLineNo() >
+				methodReferenceDetailAST.getLineNo()) ||
+			((typeArgumentsDetailAST.getLineNo() ==
+				methodReferenceDetailAST.getLineNo()) &&
+			 (typeArgumentsDetailAST.getColumnNo() >
+				 methodReferenceDetailAST.getColumnNo()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static List<JavaExpression>
 		_parseArrayDimensionValueJavaExpressions(
 			DetailAST literalNewDetailAST) {
@@ -1506,8 +1522,23 @@ public class JavaParserUtil {
 			methodReferenceDetailAST.getFirstChild();
 		DetailAST lastChildDetailAST = methodReferenceDetailAST.getLastChild();
 
-		DetailAST typeArgumentsDetailAST =
-			methodReferenceDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
+		DetailAST methodTypeArgumentsDetailAST = null;
+		DetailAST typeArgumentsDetailAST = null;
+
+		for (DetailAST childDetailAST :
+				DetailASTUtil.getAllChildTokens(
+					methodReferenceDetailAST, false,
+					TokenTypes.TYPE_ARGUMENTS)) {
+
+			if (_isMethodTypeArguments(
+					methodReferenceDetailAST, childDetailAST)) {
+
+				methodTypeArgumentsDetailAST = childDetailAST;
+			}
+			else {
+				typeArgumentsDetailAST = childDetailAST;
+			}
+		}
 
 		int arrayDimension = _getArrayDimension(methodReferenceDetailAST);
 
@@ -1544,10 +1575,16 @@ public class JavaParserUtil {
 			referenceJavaExpression.setHasSurroundingParentheses(true);
 		}
 
-		return new JavaMethodReference(
+		JavaMethodReference javaMethodReference = new JavaMethodReference(
 			_parseGenericJavaTypes(
 				typeArgumentsDetailAST, TokenTypes.TYPE_ARGUMENT),
 			lastChildDetailAST.getText(), referenceJavaExpression);
+
+		javaMethodReference.setMethodGenericJavaTypes(
+			_parseGenericJavaTypes(
+				methodTypeArgumentsDetailAST, TokenTypes.TYPE_ARGUMENT));
+
+		return javaMethodReference;
 	}
 
 	private static JavaNewArrayInstantiation _parseJavaNewArrayInstantiation(

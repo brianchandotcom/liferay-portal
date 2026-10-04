@@ -994,12 +994,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Do not use pattern matching for switch", 36
 			).addExpectedMessage(
 				"Do not use record patterns", 36
-			).addExpectedMessage(
-				"Do not use pattern matching for switch", 37
-			).addExpectedMessage(
-				"Do not use record patterns", 37
-			).addExpectedMessage(
-				"Do not use record patterns", 43
 			));
 	}
 

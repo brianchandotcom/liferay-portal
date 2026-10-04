@@ -8,6 +8,7 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -187,8 +188,8 @@ public abstract class BaseUnnecessaryStatementCheck extends BaseCheck {
 
 		parentDetailAST = parentDetailAST.getParent();
 
-		if ((parentDetailAST.getType() != TokenTypes.ASSIGN) &&
-			(parentDetailAST.getType() != TokenTypes.EXPR)) {
+		if (!TokenUtil.isOfType(
+				parentDetailAST, TokenTypes.ASSIGN, TokenTypes.EXPR)) {
 
 			return;
 		}

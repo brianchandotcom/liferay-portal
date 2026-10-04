@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class StringIndexOfCallCheck extends BaseCheck {
 		}
 
 		if (nextSiblingDetailAST.getType() == TokenTypes.NUM_INT) {
-			if ((parentDetailAST.getType() != TokenTypes.GE) &&
-				(parentDetailAST.getType() != TokenTypes.LT)) {
+			if (!TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.GE, TokenTypes.LT)) {
 
 				return;
 			}
@@ -63,8 +64,8 @@ public class StringIndexOfCallCheck extends BaseCheck {
 		}
 
 		if (nextSiblingDetailAST.getType() == TokenTypes.UNARY_MINUS) {
-			if ((parentDetailAST.getType() != TokenTypes.EQUAL) &&
-				(parentDetailAST.getType() != TokenTypes.NOT_EQUAL)) {
+			if (!TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.EQUAL, TokenTypes.NOT_EQUAL)) {
 
 				return;
 			}

@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * @author Hugo Huijser
@@ -24,8 +25,8 @@ public class InstanceofOrderCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentDetailAST.getType() != TokenTypes.LAND) &&
-			(parentDetailAST.getType() != TokenTypes.LOR)) {
+		if (!TokenUtil.isOfType(
+				parentDetailAST, TokenTypes.LAND, TokenTypes.LOR)) {
 
 			return;
 		}

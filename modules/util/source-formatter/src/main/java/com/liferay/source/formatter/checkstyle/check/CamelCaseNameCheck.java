@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -179,8 +180,8 @@ public class CamelCaseNameCheck extends BaseCheck {
 	private boolean _containsMatchingTypeName(
 		DetailAST detailAST, String name, Pattern pattern) {
 
-		if ((detailAST.getType() == TokenTypes.PARAMETER_DEF) ||
-			(detailAST.getType() == TokenTypes.VARIABLE_DEF)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.PARAMETER_DEF, TokenTypes.VARIABLE_DEF)) {
 
 			Matcher matcher = pattern.matcher(
 				getVariableTypeName(detailAST, name, false));

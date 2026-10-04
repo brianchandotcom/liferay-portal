@@ -8,6 +8,7 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -114,8 +115,8 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 
 		parentDetailAST = exprDetailAST.getParent();
 
-		if ((parentDetailAST.getType() == TokenTypes.LITERAL_THROW) ||
-			(parentDetailAST.getType() == TokenTypes.SLIST)) {
+		if (TokenUtil.isOfType(
+				parentDetailAST, TokenTypes.LITERAL_THROW, TokenTypes.SLIST)) {
 
 			log(detailAST, _MSG_UNPROCESSED_EXCEPTION, exceptionVariableName);
 		}

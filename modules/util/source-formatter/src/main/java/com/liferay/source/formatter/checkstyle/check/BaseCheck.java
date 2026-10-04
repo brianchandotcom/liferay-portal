@@ -38,6 +38,7 @@ import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.io.File;
 
@@ -566,8 +567,8 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected List<DetailAST> getParameterDefs(DetailAST detailAST) {
-		if ((detailAST.getType() != TokenTypes.CTOR_DEF) &&
-			(detailAST.getType() != TokenTypes.METHOD_DEF)) {
+		if (!TokenUtil.isOfType(
+				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
 
 			return new ArrayList<>();
 		}
@@ -617,8 +618,8 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected String getSignature(DetailAST detailAST) {
-		if ((detailAST.getType() != TokenTypes.CTOR_DEF) &&
-			(detailAST.getType() != TokenTypes.METHOD_DEF)) {
+		if (!TokenUtil.isOfType(
+				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
 
 			return StringPool.BLANK;
 		}
@@ -677,8 +678,8 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected DetailAST getTopLevelMethodCallDetailAST(DetailAST detailAST) {
-		if ((detailAST.getType() != TokenTypes.DOT) &&
-			(detailAST.getType() != TokenTypes.METHOD_CALL)) {
+		if (!TokenUtil.isOfType(
+				detailAST, TokenTypes.DOT, TokenTypes.METHOD_CALL)) {
 
 			return null;
 		}
@@ -707,8 +708,9 @@ public abstract class BaseCheck extends AbstractCheck {
 	protected DetailAST getTypeArgumentsDetailAST(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentDetailAST.getType() == TokenTypes.EXTENDS_CLAUSE) ||
-			(parentDetailAST.getType() == TokenTypes.IMPLEMENTS_CLAUSE)) {
+		if (TokenUtil.isOfType(
+				parentDetailAST, TokenTypes.EXTENDS_CLAUSE,
+				TokenTypes.IMPLEMENTS_CLAUSE)) {
 
 			if (detailAST.getType() == TokenTypes.DOT) {
 				return detailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
@@ -754,8 +756,8 @@ public abstract class BaseCheck extends AbstractCheck {
 
 		DetailAST typeDetailAST = detailAST;
 
-		if ((detailAST.getType() != TokenTypes.TYPE) &&
-			(detailAST.getType() != TokenTypes.TYPE_ARGUMENT)) {
+		if (!TokenUtil.isOfType(
+				detailAST, TokenTypes.TYPE, TokenTypes.TYPE_ARGUMENT)) {
 
 			typeDetailAST = detailAST.findFirstToken(TokenTypes.TYPE);
 		}
@@ -926,9 +928,9 @@ public abstract class BaseCheck extends AbstractCheck {
 			rangeDetailAST = parentDetailAST.getLastChild();
 		}
 
-		if ((rangeDetailAST.getType() != TokenTypes.LITERAL_FOR) &&
-			(rangeDetailAST.getType() != TokenTypes.OBJBLOCK) &&
-			(rangeDetailAST.getType() != TokenTypes.SLIST)) {
+		if (!TokenUtil.isOfType(
+				rangeDetailAST, TokenTypes.LITERAL_FOR, TokenTypes.OBJBLOCK,
+				TokenTypes.SLIST)) {
 
 			return variableCallerDetailASTs;
 		}
@@ -943,9 +945,9 @@ public abstract class BaseCheck extends AbstractCheck {
 
 			parentDetailAST = nameDetailAST.getParent();
 
-			if ((parentDetailAST.getType() == TokenTypes.METHOD_CALL) ||
-				(parentDetailAST.getType() == TokenTypes.PARAMETER_DEF) ||
-				(parentDetailAST.getType() == TokenTypes.VARIABLE_DEF)) {
+			if (TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.METHOD_CALL,
+					TokenTypes.PARAMETER_DEF, TokenTypes.VARIABLE_DEF)) {
 
 				continue;
 			}
@@ -979,9 +981,9 @@ public abstract class BaseCheck extends AbstractCheck {
 
 		while (true) {
 			if (includeGlobalVariables &&
-				((previousDetailAST.getType() == TokenTypes.CLASS_DEF) ||
-				 (previousDetailAST.getType() == TokenTypes.ENUM_DEF) ||
-				 (previousDetailAST.getType() == TokenTypes.INTERFACE_DEF))) {
+				TokenUtil.isOfType(
+					previousDetailAST, TokenTypes.CLASS_DEF,
+					TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF)) {
 
 				DetailAST objBlockDetailAST = previousDetailAST.findFirstToken(
 					TokenTypes.OBJBLOCK);
@@ -1000,9 +1002,9 @@ public abstract class BaseCheck extends AbstractCheck {
 					}
 				}
 			}
-			else if ((previousDetailAST.getType() ==
-						TokenTypes.FOR_EACH_CLAUSE) ||
-					 (previousDetailAST.getType() == TokenTypes.FOR_INIT)) {
+			else if (TokenUtil.isOfType(
+						previousDetailAST, TokenTypes.FOR_EACH_CLAUSE,
+						TokenTypes.FOR_INIT)) {
 
 				List<DetailAST> variableDefinitionDetailASTs =
 					getAllChildTokens(
@@ -1018,9 +1020,9 @@ public abstract class BaseCheck extends AbstractCheck {
 					}
 				}
 			}
-			else if ((previousDetailAST.getType() ==
-						TokenTypes.LITERAL_CATCH) ||
-					 (previousDetailAST.getType() == TokenTypes.PARAMETERS)) {
+			else if (TokenUtil.isOfType(
+						previousDetailAST, TokenTypes.LITERAL_CATCH,
+						TokenTypes.PARAMETERS)) {
 
 				List<DetailAST> parameterDefinitionDetailASTs =
 					getAllChildTokens(
@@ -1687,8 +1689,8 @@ public abstract class BaseCheck extends AbstractCheck {
 		}
 
 		while (true) {
-			if ((parentDetailAST.getType() != TokenTypes.DOT) &&
-				(parentDetailAST.getType() != TokenTypes.EXPR)) {
+			if (!TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.DOT, TokenTypes.EXPR)) {
 
 				break;
 			}
@@ -1730,12 +1732,10 @@ public abstract class BaseCheck extends AbstractCheck {
 
 		if (ArrayUtil.contains(
 				ASSIGNMENT_OPERATOR_TOKEN_TYPES, parentDetailAST.getType()) ||
-			(parentDetailAST.getType() == TokenTypes.DEC) ||
-			(parentDetailAST.getType() == TokenTypes.ELIST) ||
-			(parentDetailAST.getType() == TokenTypes.INC) ||
-			(parentDetailAST.getType() == TokenTypes.POST_DEC) ||
-			(parentDetailAST.getType() == TokenTypes.POST_INC) ||
-			(parentDetailAST.getType() == TokenTypes.VARIABLE_DEF)) {
+			TokenUtil.isOfType(
+				parentDetailAST, TokenTypes.DEC, TokenTypes.ELIST,
+				TokenTypes.INC, TokenTypes.POST_DEC, TokenTypes.POST_INC,
+				TokenTypes.VARIABLE_DEF)) {
 
 			return true;
 		}

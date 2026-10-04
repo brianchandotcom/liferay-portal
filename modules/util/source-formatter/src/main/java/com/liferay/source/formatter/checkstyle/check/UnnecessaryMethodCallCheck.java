@@ -7,6 +7,7 @@ package com.liferay.source.formatter.checkstyle.check;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,8 +85,9 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 
 		DetailAST previousDetailAST = methodCallDetailAST.getParent();
 
-		while ((previousDetailAST.getType() != TokenTypes.METHOD_DEF) &&
-			   (previousDetailAST.getType() != TokenTypes.CTOR_DEF)) {
+		while (!TokenUtil.isOfType(
+					previousDetailAST, TokenTypes.METHOD_DEF,
+					TokenTypes.CTOR_DEF)) {
 
 			if ((previousDetailAST.getType() == TokenTypes.VARIABLE_DEF) &&
 				(previousDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||

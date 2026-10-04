@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -41,8 +42,9 @@ public class SelfReferenceCheck extends BaseCheck {
 
 			DetailAST firstChildDetailAST = dotDetailAST.getFirstChild();
 
-			if ((firstChildDetailAST.getType() != TokenTypes.IDENT) &&
-				(firstChildDetailAST.getType() != TokenTypes.LITERAL_THIS)) {
+			if (!TokenUtil.isOfType(
+					firstChildDetailAST, TokenTypes.IDENT,
+					TokenTypes.LITERAL_THIS)) {
 
 				continue;
 			}
@@ -105,9 +107,9 @@ public class SelfReferenceCheck extends BaseCheck {
 		DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
 		while (true) {
-			if ((parentDetailAST.getType() == TokenTypes.CLASS_DEF) ||
-				(parentDetailAST.getType() == TokenTypes.ENUM_DEF) ||
-				(parentDetailAST.getType() == TokenTypes.INTERFACE_DEF)) {
+			if (TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF,
+					TokenTypes.INTERFACE_DEF)) {
 
 				return !className.equals(getName(parentDetailAST));
 			}

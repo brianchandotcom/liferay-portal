@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -175,12 +176,10 @@ public class ReturnVariableDeclarationAsUsedCheck extends BaseCheck {
 
 		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if ((firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) ||
-			(firstChildDetailAST.getType() == TokenTypes.NUM_DOUBLE) ||
-			(firstChildDetailAST.getType() == TokenTypes.NUM_FLOAT) ||
-			(firstChildDetailAST.getType() == TokenTypes.NUM_INT) ||
-			(firstChildDetailAST.getType() == TokenTypes.NUM_LONG) ||
-			(firstChildDetailAST.getType() == TokenTypes.STRING_LITERAL)) {
+		if (TokenUtil.isOfType(
+				firstChildDetailAST, TokenTypes.LITERAL_NULL,
+				TokenTypes.NUM_DOUBLE, TokenTypes.NUM_FLOAT, TokenTypes.NUM_INT,
+				TokenTypes.NUM_LONG, TokenTypes.STRING_LITERAL)) {
 
 			log(
 				returnVariableDefinitionDetailAST,

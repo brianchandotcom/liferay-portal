@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -109,8 +110,9 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 			parentDetailAST = parentDetailAST.getParent();
 
 			if ((parentDetailAST == null) ||
-				((parentDetailAST.getType() != TokenTypes.LITERAL_NEW) &&
-				 (parentDetailAST.getType() != TokenTypes.METHOD_CALL))) {
+				!TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.LITERAL_NEW,
+					TokenTypes.METHOD_CALL)) {
 
 				continue;
 			}

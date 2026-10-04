@@ -8,6 +8,7 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -64,8 +65,9 @@ public class FullyQualifiedNameCheck extends BaseCheck {
 				return false;
 			}
 
-			if ((siblingDetailAST.getType() != TokenTypes.IMPORT) &&
-				(siblingDetailAST.getType() != TokenTypes.STATIC_IMPORT)) {
+			if (!TokenUtil.isOfType(
+					siblingDetailAST, TokenTypes.IMPORT,
+					TokenTypes.STATIC_IMPORT)) {
 
 				continue;
 			}

@@ -19,6 +19,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -492,9 +493,9 @@ public abstract class BaseAPICheck extends BaseCheck {
 				return false;
 			}
 
-			if (((parentDetailAST.getType() == TokenTypes.CTOR_DEF) ||
-				 (parentDetailAST.getType() == TokenTypes.METHOD_DEF) ||
-				 (parentDetailAST.getType() == TokenTypes.VARIABLE_DEF)) &&
+			if (TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF,
+					TokenTypes.VARIABLE_DEF) &&
 				AnnotationUtil.containsAnnotation(
 					parentDetailAST, "Deprecated")) {
 
@@ -698,9 +699,9 @@ public abstract class BaseAPICheck extends BaseCheck {
 			return "char";
 		}
 
-		if ((detailAST.getType() == TokenTypes.LITERAL_FALSE) ||
-			(detailAST.getType() == TokenTypes.LITERAL_TRUE) ||
-			(detailAST.getType() == TokenTypes.LNOT)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.LITERAL_FALSE, TokenTypes.LITERAL_TRUE,
+				TokenTypes.LNOT)) {
 
 			return "boolean";
 		}
@@ -809,13 +810,11 @@ public abstract class BaseAPICheck extends BaseCheck {
 			return "long";
 		}
 
-		if ((detailAST.getType() == TokenTypes.LITERAL_BOOLEAN) ||
-			(detailAST.getType() == TokenTypes.LITERAL_BYTE) ||
-			(detailAST.getType() == TokenTypes.LITERAL_DOUBLE) ||
-			(detailAST.getType() == TokenTypes.LITERAL_FLOAT) ||
-			(detailAST.getType() == TokenTypes.LITERAL_INT) ||
-			(detailAST.getType() == TokenTypes.LITERAL_LONG) ||
-			(detailAST.getType() == TokenTypes.LITERAL_SHORT)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.LITERAL_BOOLEAN, TokenTypes.LITERAL_BYTE,
+				TokenTypes.LITERAL_DOUBLE, TokenTypes.LITERAL_FLOAT,
+				TokenTypes.LITERAL_INT, TokenTypes.LITERAL_LONG,
+				TokenTypes.LITERAL_SHORT)) {
 
 			return detailAST.getText();
 		}

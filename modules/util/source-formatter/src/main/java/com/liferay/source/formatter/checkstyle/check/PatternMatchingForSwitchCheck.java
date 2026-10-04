@@ -7,6 +7,7 @@ package com.liferay.source.formatter.checkstyle.check;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -43,9 +44,10 @@ public class PatternMatchingForSwitchCheck extends BaseCheck {
 		DetailAST childDetailAST = literalCaseDetailAST.getFirstChild();
 
 		while (childDetailAST != null) {
-			if ((childDetailAST.getType() == TokenTypes.PATTERN_DEF) ||
-				(childDetailAST.getType() == TokenTypes.PATTERN_VARIABLE_DEF) ||
-				(childDetailAST.getType() == TokenTypes.RECORD_PATTERN_DEF)) {
+			if (TokenUtil.isOfType(
+					childDetailAST, TokenTypes.PATTERN_DEF,
+					TokenTypes.PATTERN_VARIABLE_DEF,
+					TokenTypes.RECORD_PATTERN_DEF)) {
 
 				return true;
 			}

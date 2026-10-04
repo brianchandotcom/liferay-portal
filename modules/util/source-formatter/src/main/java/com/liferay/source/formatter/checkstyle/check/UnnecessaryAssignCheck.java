@@ -7,6 +7,7 @@ package com.liferay.source.formatter.checkstyle.check;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -122,8 +123,9 @@ public class UnnecessaryAssignCheck extends BaseUnnecessaryStatementCheck {
 
 		parentDetailAST = variableDefinitionDetailAST.getParent();
 
-		if ((parentDetailAST.getType() != TokenTypes.FOR_EACH_CLAUSE) &&
-			(parentDetailAST.getType() != TokenTypes.SLIST)) {
+		if (!TokenUtil.isOfType(
+				parentDetailAST, TokenTypes.FOR_EACH_CLAUSE,
+				TokenTypes.SLIST)) {
 
 			return;
 		}

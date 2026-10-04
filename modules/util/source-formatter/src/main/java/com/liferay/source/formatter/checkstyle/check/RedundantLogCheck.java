@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,8 +66,8 @@ public class RedundantLogCheck extends BaseCheck {
 		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
 
 		while (nextSiblingDetailAST != null) {
-			if ((nextSiblingDetailAST.getType() != TokenTypes.RCURLY) &&
-				(nextSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+			if (!TokenUtil.isOfType(
+					nextSiblingDetailAST, TokenTypes.RCURLY, TokenTypes.SEMI)) {
 
 				return;
 			}

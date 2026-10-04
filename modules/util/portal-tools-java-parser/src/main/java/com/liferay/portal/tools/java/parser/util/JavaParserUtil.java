@@ -72,6 +72,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,11 +98,10 @@ public class JavaParserUtil {
 	public static JavaTerm parseJavaTerm(DetailAST detailAST) {
 		JavaTerm javaTerm = null;
 
-		if ((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
-			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
-			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
-			(detailAST.getType() == TokenTypes.INTERFACE_DEF) ||
-			(detailAST.getType() == TokenTypes.RECORD_DEF)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.ANNOTATION_DEF, TokenTypes.CLASS_DEF,
+				TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF,
+				TokenTypes.RECORD_DEF)) {
 
 			javaTerm = _parseJavaClassDefinition(detailAST);
 		}
@@ -114,8 +114,9 @@ public class JavaParserUtil {
 		else if (detailAST.getType() == TokenTypes.COMPACT_CTOR_DEF) {
 			javaTerm = _parseJavaConstructorDefinition(detailAST, true);
 		}
-		else if ((detailAST.getType() == TokenTypes.CTOR_CALL) ||
-				 (detailAST.getType() == TokenTypes.SUPER_CTOR_CALL)) {
+		else if (TokenUtil.isOfType(
+					detailAST, TokenTypes.CTOR_CALL,
+					TokenTypes.SUPER_CTOR_CALL)) {
 
 			javaTerm = _parseJavaConstructorCall(detailAST);
 		}
@@ -291,8 +292,8 @@ public class JavaParserUtil {
 			return StringPool.BLANK;
 		}
 
-		if ((closingDetailAST.getType() == TokenTypes.LCURLY) ||
-			(closingDetailAST.getType() == TokenTypes.SLIST)) {
+		if (TokenUtil.isOfType(
+				closingDetailAST, TokenTypes.LCURLY, TokenTypes.SLIST)) {
 
 			return " {";
 		}
@@ -504,9 +505,9 @@ public class JavaParserUtil {
 				return genericBoundJavaTypes;
 			}
 
-			if ((childDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) &&
-				(childDetailAST.getType() != TokenTypes.TYPE_ARGUMENTS) &&
-				(childDetailAST.getType() != TokenTypes.TYPE_EXTENSION_AND)) {
+			if (!TokenUtil.isOfType(
+					childDetailAST, TokenTypes.ARRAY_DECLARATOR,
+					TokenTypes.TYPE_ARGUMENTS, TokenTypes.TYPE_EXTENSION_AND)) {
 
 				genericBoundJavaTypes.add(
 					_parseGenericBoundJavaType(childDetailAST, arrayDimension));
@@ -743,8 +744,8 @@ public class JavaParserUtil {
 			else if (childDetailAST.getType() == TokenTypes.LITERAL_DEFAULT) {
 				javaTerms.add(new JavaSimpleValue("default"));
 			}
-			else if ((childDetailAST.getType() != TokenTypes.COLON) &&
-					 (childDetailAST.getType() != TokenTypes.COMMA)) {
+			else if (!TokenUtil.isOfType(
+						childDetailAST, TokenTypes.COLON, TokenTypes.COMMA)) {
 
 				javaTerms.add(_parseJavaPattern(childDetailAST));
 			}
@@ -1094,8 +1095,9 @@ public class JavaParserUtil {
 		if (detailAST.getType() == TokenTypes.ANNOTATION) {
 			javaExpression = _parseJavaAnnotation(detailAST);
 		}
-		else if ((detailAST.getType() == TokenTypes.ANNOTATION_ARRAY_INIT) ||
-				 (detailAST.getType() == TokenTypes.ARRAY_INIT)) {
+		else if (TokenUtil.isOfType(
+					detailAST, TokenTypes.ANNOTATION_ARRAY_INIT,
+					TokenTypes.ARRAY_INIT)) {
 
 			javaExpression = _parseJavaArray(detailAST);
 		}
@@ -2066,8 +2068,9 @@ public class JavaParserUtil {
 				return modifiers;
 			}
 
-			if ((childDetailAST.getType() != TokenTypes.ANNOTATION) &&
-				(childDetailAST.getType() != TokenTypes.STRICTFP)) {
+			if (!TokenUtil.isOfType(
+					childDetailAST, TokenTypes.ANNOTATION,
+					TokenTypes.STRICTFP)) {
 
 				modifiers.add(new JavaSimpleValue(childDetailAST.getText()));
 			}

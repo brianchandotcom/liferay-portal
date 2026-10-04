@@ -13,6 +13,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +85,9 @@ public class DetailASTUtil {
 		}
 
 		if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
-			while ((detailAST.getType() == TokenTypes.COMMA) ||
-				   (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF)) {
+			while (TokenUtil.isOfType(
+						detailAST, TokenTypes.COMMA,
+						TokenTypes.ENUM_CONSTANT_DEF)) {
 
 				detailAST = detailAST.getNextSibling();
 			}
@@ -127,9 +129,9 @@ public class DetailASTUtil {
 			return emptyStatDetailAST;
 		}
 
-		if ((detailAST.getType() == TokenTypes.LITERAL_FOR) ||
-			(detailAST.getType() == TokenTypes.LITERAL_IF) ||
-			(detailAST.getType() == TokenTypes.LITERAL_WHILE)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
+				TokenTypes.LITERAL_WHILE)) {
 
 			return null;
 		}
@@ -194,9 +196,9 @@ public class DetailASTUtil {
 			rparenDetailAST = firstChildDetailAST.findFirstToken(
 				TokenTypes.RPAREN);
 		}
-		else if ((detailAST.getType() == TokenTypes.LITERAL_FOR) ||
-				 (detailAST.getType() == TokenTypes.LITERAL_IF) ||
-				 (detailAST.getType() == TokenTypes.LITERAL_WHILE)) {
+		else if (TokenUtil.isOfType(
+					detailAST, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
+					TokenTypes.LITERAL_WHILE)) {
 
 			rparenDetailAST = detailAST.findFirstToken(TokenTypes.RPAREN);
 		}

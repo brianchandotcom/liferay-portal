@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -70,8 +71,8 @@ public class ThreadLocalVariableNameCheck extends BaseCheck {
 
 		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if ((firstChildDetailAST.getType() != TokenTypes.DOT) &&
-			(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
+		if (!TokenUtil.isOfType(
+				firstChildDetailAST, TokenTypes.DOT, TokenTypes.METHOD_CALL)) {
 
 			return;
 		}

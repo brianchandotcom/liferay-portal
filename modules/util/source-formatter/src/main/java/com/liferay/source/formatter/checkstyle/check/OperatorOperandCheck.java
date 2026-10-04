@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * @author Hugo Huijser
@@ -95,8 +96,9 @@ public class OperatorOperandCheck extends BaseCheck {
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
 		while (true) {
-			if ((firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) &&
-				(firstChildDetailAST.getType() != TokenTypes.DOT)) {
+			if (!TokenUtil.isOfType(
+					firstChildDetailAST, TokenTypes.METHOD_CALL,
+					TokenTypes.DOT)) {
 
 				break;
 			}
@@ -142,15 +144,16 @@ public class OperatorOperandCheck extends BaseCheck {
 				return false;
 			}
 
-			if ((parentDetailAST.getType() == TokenTypes.CLASS_DEF) ||
-				(parentDetailAST.getType() == TokenTypes.ENUM_DEF) ||
-				(parentDetailAST.getType() == TokenTypes.INTERFACE_DEF)) {
+			if (TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF,
+					TokenTypes.INTERFACE_DEF)) {
 
 				return true;
 			}
 
-			if ((parentDetailAST.getType() == TokenTypes.CTOR_DEF) ||
-				(parentDetailAST.getType() == TokenTypes.METHOD_DEF)) {
+			if (TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.CTOR_DEF,
+					TokenTypes.METHOD_DEF)) {
 
 				return false;
 			}

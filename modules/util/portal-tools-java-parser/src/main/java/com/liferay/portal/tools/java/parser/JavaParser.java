@@ -30,6 +30,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -661,8 +662,9 @@ public class JavaParser {
 			return curlyBracePositionList;
 		}
 
-		if ((detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) ||
-			(detailAST.getType() == TokenTypes.LITERAL_NEW)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.ENUM_CONSTANT_DEF,
+				TokenTypes.LITERAL_NEW)) {
 
 			DetailAST objblockDetailAST = detailAST.findFirstToken(
 				TokenTypes.OBJBLOCK);
@@ -734,8 +736,8 @@ public class JavaParser {
 			}
 		}
 
-		if ((detailAST.getType() != TokenTypes.OBJBLOCK) &&
-			(detailAST.getType() != TokenTypes.SLIST)) {
+		if (!TokenUtil.isOfType(
+				detailAST, TokenTypes.OBJBLOCK, TokenTypes.SLIST)) {
 
 			curlyBracePositionList = _getCurlyBracePositionList(
 				curlyBracePositionList, detailAST.getFirstChild());
@@ -757,10 +759,10 @@ public class JavaParser {
 				break;
 			}
 
-			if ((parentDetailAST.getType() == TokenTypes.ELIST) ||
-				(parentDetailAST.getType() == TokenTypes.LITERAL_SWITCH) ||
-				(parentDetailAST.getType() == TokenTypes.OBJBLOCK) ||
-				(parentDetailAST.getType() == TokenTypes.SLIST)) {
+			if (TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.ELIST,
+					TokenTypes.LITERAL_SWITCH, TokenTypes.OBJBLOCK,
+					TokenTypes.SLIST)) {
 
 				indent += StringPool.TAB;
 			}
@@ -825,27 +827,24 @@ public class JavaParser {
 				continue;
 			}
 
-			if ((parentDetailAST.getType() != TokenTypes.LITERAL_ELSE) &&
-				(parentDetailAST.getType() != TokenTypes.LITERAL_IF) &&
-				(parentDetailAST.getType() != TokenTypes.SLIST)) {
+			if (!TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.LITERAL_ELSE,
+					TokenTypes.LITERAL_IF, TokenTypes.SLIST)) {
 
 				DetailAST grandParentDetailAST = parentDetailAST.getParent();
 
 				if ((grandParentDetailAST != null) &&
-					((grandParentDetailAST.getType() ==
-						TokenTypes.LITERAL_ELSE) ||
-					 (grandParentDetailAST.getType() ==
-						 TokenTypes.LITERAL_IF) ||
-					 (grandParentDetailAST.getType() ==
-						 TokenTypes.LITERAL_WHILE))) {
+					TokenUtil.isOfType(
+						grandParentDetailAST, TokenTypes.LITERAL_ELSE,
+						TokenTypes.LITERAL_IF, TokenTypes.LITERAL_WHILE)) {
 
 					indent += "\t";
 				}
 			}
 
-			if (((parentDetailAST.getType() == TokenTypes.LITERAL_FOR) ||
-				 (parentDetailAST.getType() == TokenTypes.LITERAL_IF) ||
-				 (parentDetailAST.getType() == TokenTypes.LITERAL_WHILE)) &&
+			if (TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.LITERAL_FOR,
+					TokenTypes.LITERAL_IF, TokenTypes.LITERAL_WHILE) &&
 				(parentDetailAST.findFirstToken(TokenTypes.SLIST) == null)) {
 
 				indent += "\t";
@@ -1214,9 +1213,9 @@ public class JavaParser {
 			}
 		}
 
-		if (((detailAST.getType() == TokenTypes.LITERAL_FOR) ||
-			 (detailAST.getType() == TokenTypes.LITERAL_IF) ||
-			 (detailAST.getType() == TokenTypes.LITERAL_WHILE)) &&
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
+				TokenTypes.LITERAL_WHILE) &&
 			(detailAST.findFirstToken(TokenTypes.SLIST) == null)) {
 
 			DetailAST rparentDetailAST = detailAST.findFirstToken(
@@ -1281,29 +1280,27 @@ public class JavaParser {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if (((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
-			 (detailAST.getType() == TokenTypes.CLASS_DEF) ||
-			 (detailAST.getType() == TokenTypes.ENUM_DEF) ||
-			 (detailAST.getType() == TokenTypes.INTERFACE_DEF) ||
-			 (detailAST.getType() == TokenTypes.RECORD_DEF)) &&
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.ANNOTATION_DEF, TokenTypes.CLASS_DEF,
+				TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF,
+				TokenTypes.RECORD_DEF) &&
 			((parentDetailAST == null) ||
 			 (parentDetailAST.getType() != TokenTypes.OBJBLOCK))) {
 
 			parsedJavaClass = _parseDetailAST(
 				parsedJavaClass, detailAST, fileContents, maxLineLength);
 		}
-		else if ((detailAST.getType() == TokenTypes.IMPORT) ||
-				 (detailAST.getType() == TokenTypes.PACKAGE_DEF) ||
-				 (detailAST.getType() == TokenTypes.STATIC_IMPORT) ||
-				 (detailAST.getType() == TokenTypes.SWITCH_RULE)) {
+		else if (TokenUtil.isOfType(
+					detailAST, TokenTypes.IMPORT, TokenTypes.PACKAGE_DEF,
+					TokenTypes.STATIC_IMPORT, TokenTypes.SWITCH_RULE)) {
 
 			parsedJavaClass = _parseDetailAST(
 				parsedJavaClass, detailAST, fileContents, maxLineLength);
 		}
 
 		if ((parentDetailAST != null) &&
-			((parentDetailAST.getType() == TokenTypes.OBJBLOCK) ||
-			 (parentDetailAST.getType() == TokenTypes.SLIST))) {
+			TokenUtil.isOfType(
+				parentDetailAST, TokenTypes.OBJBLOCK, TokenTypes.SLIST)) {
 
 			parsedJavaClass = _parseDetailAST(
 				parsedJavaClass, detailAST, fileContents, maxLineLength);

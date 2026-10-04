@@ -27,6 +27,7 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,8 +52,9 @@ public class GenericTypeCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if ((detailAST.getType() == TokenTypes.EXTENDS_CLAUSE) ||
-			(detailAST.getType() == TokenTypes.IMPLEMENTS_CLAUSE)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.EXTENDS_CLAUSE,
+				TokenTypes.IMPLEMENTS_CLAUSE)) {
 
 			List<DetailAST> childDetailASTs = getAllChildTokens(
 				detailAST, false, TokenTypes.DOT, TokenTypes.IDENT);
@@ -221,8 +223,8 @@ public class GenericTypeCheck extends BaseCheck {
 	}
 
 	private String _getTypeName(DetailAST detailAST) {
-		if ((detailAST.getType() == TokenTypes.TYPE) ||
-			(detailAST.getType() == TokenTypes.TYPE_ARGUMENT)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.TYPE, TokenTypes.TYPE_ARGUMENT)) {
 
 			return getTypeName(detailAST, false);
 		}

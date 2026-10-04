@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * @author Hugo Huijser
@@ -55,8 +56,8 @@ public class OperatorOrderCheck extends BaseCheck {
 	}
 
 	private String _getStringValue(DetailAST detailAST) {
-		if ((detailAST.getType() == TokenTypes.UNARY_MINUS) ||
-			(detailAST.getType() == TokenTypes.UNARY_PLUS)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.UNARY_MINUS, TokenTypes.UNARY_PLUS)) {
 
 			DetailAST firstChildDetailAST = detailAST.getFirstChild();
 

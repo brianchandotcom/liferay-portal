@@ -8,6 +8,7 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,8 +49,8 @@ public class FetchContractCatchCheck extends BaseCheck {
 		DetailAST firstChildDetailAST = typeDetailAST.getFirstChild();
 
 		if ((firstChildDetailAST == null) ||
-			((firstChildDetailAST.getType() != TokenTypes.DOT) &&
-			 (firstChildDetailAST.getType() != TokenTypes.IDENT))) {
+			!TokenUtil.isOfType(
+				firstChildDetailAST, TokenTypes.DOT, TokenTypes.IDENT)) {
 
 			return;
 		}
@@ -253,13 +254,9 @@ public class FetchContractCatchCheck extends BaseCheck {
 
 			DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
-			if ((firstChildDetailAST.getType() == TokenTypes.LITERAL_FALSE) ||
-				(firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL)) {
-
-				return true;
-			}
-
-			return false;
+			return TokenUtil.isOfType(
+				firstChildDetailAST, TokenTypes.LITERAL_FALSE,
+				TokenTypes.LITERAL_NULL);
 		}
 
 		return false;

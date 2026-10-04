@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -62,8 +63,9 @@ public class ValidatorIsNullCheck extends BaseCheck {
 			childDetailAST = typeDetailAST.getFirstChild();
 
 			if ((childDetailAST != null) &&
-				((childDetailAST.getType() == TokenTypes.LITERAL_INT) ||
-				 (childDetailAST.getType() == TokenTypes.LITERAL_LONG))) {
+				TokenUtil.isOfType(
+					childDetailAST, TokenTypes.LITERAL_INT,
+					TokenTypes.LITERAL_LONG)) {
 
 				log(
 					methodCallDetailAST, _MSG_INVALID_METHOD_NAME,

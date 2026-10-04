@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,9 +164,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 			if ((nextSiblingDetailAST == null) ||
 				hasPrecedingPlaceholder(nextSiblingDetailAST) ||
-				((nextSiblingDetailAST.getType() != TokenTypes.EXPR) &&
-				 (nextSiblingDetailAST.getType() != TokenTypes.RESOURCE) &&
-				 (nextSiblingDetailAST.getType() != TokenTypes.VARIABLE_DEF))) {
+				!TokenUtil.isOfType(
+					nextSiblingDetailAST, TokenTypes.EXPR, TokenTypes.RESOURCE,
+					TokenTypes.VARIABLE_DEF)) {
 
 				return;
 			}
@@ -766,8 +767,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				return firstChildDetailAST.getText();
 			}
 		}
-		else if ((parentDetailAST.getType() == TokenTypes.RESOURCE) ||
-				 (parentDetailAST.getType() == TokenTypes.VARIABLE_DEF)) {
+		else if (TokenUtil.isOfType(
+					parentDetailAST, TokenTypes.RESOURCE,
+					TokenTypes.VARIABLE_DEF)) {
 
 			DetailAST nameDetailAST = parentDetailAST.findFirstToken(
 				TokenTypes.IDENT);

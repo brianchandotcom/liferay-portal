@@ -19,6 +19,7 @@ import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,9 +59,9 @@ public class JavaClassParser {
 		DetailAST siblingDetailAST = detailAST.getFirstChild();
 
 		while ((siblingDetailAST != null) &&
-			   (siblingDetailAST.getType() != TokenTypes.CLASS_DEF) &&
-			   (siblingDetailAST.getType() != TokenTypes.ENUM_DEF) &&
-			   (siblingDetailAST.getType() != TokenTypes.INTERFACE_DEF)) {
+			   !TokenUtil.isOfType(
+				   siblingDetailAST, TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF,
+				   TokenTypes.INTERFACE_DEF)) {
 
 			siblingDetailAST = siblingDetailAST.getNextSibling();
 		}
@@ -120,11 +121,10 @@ public class JavaClassParser {
 		DetailAST siblingDetailAST = detailAST.getFirstChild();
 
 		while ((siblingDetailAST != null) &&
-			   (siblingDetailAST.getType() != TokenTypes.ANNOTATION_DEF) &&
-			   (siblingDetailAST.getType() != TokenTypes.CLASS_DEF) &&
-			   (siblingDetailAST.getType() != TokenTypes.ENUM_DEF) &&
-			   (siblingDetailAST.getType() != TokenTypes.INTERFACE_DEF) &&
-			   (siblingDetailAST.getType() != TokenTypes.RECORD_DEF)) {
+			   !TokenUtil.isOfType(
+				   siblingDetailAST, TokenTypes.ANNOTATION_DEF,
+				   TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF,
+				   TokenTypes.INTERFACE_DEF, TokenTypes.RECORD_DEF)) {
 
 			siblingDetailAST = siblingDetailAST.getNextSibling();
 		}
@@ -237,12 +237,10 @@ public class JavaClassParser {
 	}
 
 	private static Position _getEndPosition(DetailAST detailAST) {
-		if ((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
-			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
-			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
-			(detailAST.getType() == TokenTypes.INTERFACE_DEF) ||
-			(detailAST.getType() == TokenTypes.LITERAL_NEW) ||
-			(detailAST.getType() == TokenTypes.RECORD_DEF)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.ANNOTATION_DEF, TokenTypes.CLASS_DEF,
+				TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF,
+				TokenTypes.LITERAL_NEW, TokenTypes.RECORD_DEF)) {
 
 			DetailAST objBlockDetailAST = detailAST.findFirstToken(
 				TokenTypes.OBJBLOCK);
@@ -272,8 +270,8 @@ public class JavaClassParser {
 				lastChildDetailAST.getLineNo());
 		}
 
-		if ((detailAST.getType() == TokenTypes.CTOR_DEF) ||
-			(detailAST.getType() == TokenTypes.METHOD_DEF)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
 
 			DetailAST lastChildDetailAST = detailAST.getLastChild();
 
@@ -408,11 +406,10 @@ public class JavaClassParser {
 			}
 		}
 
-		if ((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
-			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
-			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
-			(detailAST.getType() == TokenTypes.INTERFACE_DEF) ||
-			(detailAST.getType() == TokenTypes.RECORD_DEF)) {
+		if (TokenUtil.isOfType(
+				detailAST, TokenTypes.ANNOTATION_DEF, TokenTypes.CLASS_DEF,
+				TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF,
+				TokenTypes.RECORD_DEF)) {
 
 			DetailAST nameDetailAST = detailAST.findFirstToken(
 				TokenTypes.IDENT);

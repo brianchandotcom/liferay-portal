@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * @author Alan Huang
@@ -39,9 +40,9 @@ public class BrandNameCheck extends BaseCheck {
 		for (String brandName : _BRAND_NAMES) {
 			String lowerCaseBrandName = StringUtil.toLowerCase(brandName);
 
-			if ((detailAST.getType() == TokenTypes.PARAMETER_DEF) ||
-				(detailAST.getType() == TokenTypes.RESOURCE) ||
-				(detailAST.getType() == TokenTypes.VARIABLE_DEF)) {
+			if (TokenUtil.isOfType(
+					detailAST, TokenTypes.PARAMETER_DEF, TokenTypes.RESOURCE,
+					TokenTypes.VARIABLE_DEF)) {
 
 				String lowerCaseTypeName = StringUtil.toLowerCase(
 					getTypeName(detailAST, false));

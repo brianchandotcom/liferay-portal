@@ -8,6 +8,7 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.List;
 
@@ -46,8 +47,9 @@ public class LocalPatternCheck extends BaseCheck {
 			expressionDetailAST, true, ALL_TYPES);
 
 		for (DetailAST childDetailAST : childDetailASTs) {
-			if ((childDetailAST.getType() != TokenTypes.PLUS) &&
-				(childDetailAST.getType() != TokenTypes.STRING_LITERAL)) {
+			if (!TokenUtil.isOfType(
+					childDetailAST, TokenTypes.PLUS,
+					TokenTypes.STRING_LITERAL)) {
 
 				return;
 			}

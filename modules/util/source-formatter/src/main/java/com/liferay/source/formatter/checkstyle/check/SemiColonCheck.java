@@ -7,6 +7,7 @@ package com.liferay.source.formatter.checkstyle.check;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * @author Hugo Huijser
@@ -36,12 +37,11 @@ public class SemiColonCheck extends BaseCheck {
 			return;
 		}
 
-		if ((previousSiblingDetailAST.getType() == TokenTypes.CLASS_DEF) ||
-			(previousSiblingDetailAST.getType() == TokenTypes.CTOR_DEF) ||
-			(previousSiblingDetailAST.getType() == TokenTypes.ENUM_DEF) ||
-			(previousSiblingDetailAST.getType() == TokenTypes.INTERFACE_DEF) ||
-			(previousSiblingDetailAST.getType() == TokenTypes.METHOD_DEF) ||
-			(previousSiblingDetailAST.getType() == TokenTypes.STATIC_INIT)) {
+		if (TokenUtil.isOfType(
+				previousSiblingDetailAST, TokenTypes.CLASS_DEF,
+				TokenTypes.CTOR_DEF, TokenTypes.ENUM_DEF,
+				TokenTypes.INTERFACE_DEF, TokenTypes.METHOD_DEF,
+				TokenTypes.STATIC_INIT)) {
 
 			log(detailAST, _MSG_UNNECESSARY_SEMI_COLON);
 		}

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,8 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentDetailAST.getType() != TokenTypes.EXPR) &&
-			(parentDetailAST.getType() != TokenTypes.VARIABLE_DEF)) {
+		if (!TokenUtil.isOfType(
+				parentDetailAST, TokenTypes.EXPR, TokenTypes.VARIABLE_DEF)) {
 
 			return;
 		}

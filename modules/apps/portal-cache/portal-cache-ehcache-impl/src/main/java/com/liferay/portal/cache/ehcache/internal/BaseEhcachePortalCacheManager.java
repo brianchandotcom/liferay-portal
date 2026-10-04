@@ -512,8 +512,12 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 			extServiceCreationConfigurations =
 				extConfiguration.getServiceCreationConfigurations();
 
-		extServiceCreationConfigurations.forEach(
-			fluentConfigurationBuilder::withService);
+		for (ServiceCreationConfiguration<?, ?> serviceCreationConfiguration :
+				extServiceCreationConfigurations) {
+
+			fluentConfigurationBuilder = fluentConfigurationBuilder.withService(
+				serviceCreationConfiguration);
+		}
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
 			configurationObjectValuePair.getValue();
@@ -538,15 +542,19 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 		Map<String, CacheConfiguration<?, ?>> extCacheConfigurationsMap =
 			extConfiguration.getCacheConfigurations();
 
-		extCacheConfigurationsMap.forEach(
-			(portalCacheName, cacheConfiguration) -> {
-				fluentConfigurationBuilder.withCache(
-					portalCacheName, cacheConfiguration);
-				portalCacheManagerConfiguration.putPortalCacheConfiguration(
-					portalCacheName,
-					extPortalCacheManagerConfiguration.
-						getPortalCacheConfiguration(portalCacheName));
-			});
+		for (Map.Entry<String, CacheConfiguration<?, ?>> entry :
+				extCacheConfigurationsMap.entrySet()) {
+
+			String portalCacheName = entry.getKey();
+
+			fluentConfigurationBuilder = fluentConfigurationBuilder.withCache(
+				portalCacheName, entry.getValue());
+
+			portalCacheManagerConfiguration.putPortalCacheConfiguration(
+				portalCacheName,
+				extPortalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName));
+		}
 
 		configurationObjectValuePair.setKey(fluentConfigurationBuilder.build());
 	}

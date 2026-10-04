@@ -288,7 +288,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getCompanyId(),
+					objectDefinition.getCompanyId(),
 					objectDefinition.getStorageType());
 
 			String externalReferenceCode = split[1];

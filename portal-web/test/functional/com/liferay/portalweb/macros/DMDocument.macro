@@ -2625,6 +2625,8 @@ definition {
 			key_oldFriendlyURL = ${oldFriendlyURL},
 			locator1 = "DocumentsAndMediaDocument#FRIENDLY_URL_HISTORY_ITEM");
 
+		WaitForVisible(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
+
 		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
 
 		AssertVisible(

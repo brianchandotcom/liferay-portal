@@ -86,8 +86,8 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 		DetailAST previousDetailAST = methodCallDetailAST.getParent();
 
 		while (!TokenUtil.isOfType(
-					previousDetailAST, TokenTypes.METHOD_DEF,
-					TokenTypes.CTOR_DEF)) {
+					previousDetailAST, TokenTypes.CTOR_DEF,
+					TokenTypes.METHOD_DEF)) {
 
 			if ((previousDetailAST.getType() == TokenTypes.VARIABLE_DEF) &&
 				(previousDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||

@@ -97,8 +97,8 @@ public class OperatorOperandCheck extends BaseCheck {
 
 		while (true) {
 			if (!TokenUtil.isOfType(
-					firstChildDetailAST, TokenTypes.METHOD_CALL,
-					TokenTypes.DOT)) {
+					firstChildDetailAST, TokenTypes.DOT,
+					TokenTypes.METHOD_CALL)) {
 
 				break;
 			}

@@ -49,8 +49,8 @@ public class SizeIsZeroCheck extends BaseCheck {
 
 		if (((compareCount != 0) ||
 			 !TokenUtil.isOfType(
-				 parentDetailAST, TokenTypes.EQUAL, TokenTypes.NOT_EQUAL,
-				 TokenTypes.GT)) &&
+				 parentDetailAST, TokenTypes.EQUAL, TokenTypes.GT,
+				 TokenTypes.NOT_EQUAL)) &&
 			((compareCount != 1) ||
 			 !TokenUtil.isOfType(
 				 parentDetailAST, TokenTypes.GE, TokenTypes.LT))) {

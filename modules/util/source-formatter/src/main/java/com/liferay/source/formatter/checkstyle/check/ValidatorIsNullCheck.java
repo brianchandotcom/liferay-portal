@@ -62,8 +62,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 
 			childDetailAST = typeDetailAST.getFirstChild();
 
-			if ((childDetailAST != null) &&
-				TokenUtil.isOfType(
+			if (TokenUtil.isOfType(
 					childDetailAST, TokenTypes.LITERAL_INT,
 					TokenTypes.LITERAL_LONG)) {
 

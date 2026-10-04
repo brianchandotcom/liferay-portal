@@ -109,8 +109,7 @@ public class TestClassDBConnectionCheck extends BaseCheck {
 
 			parentDetailAST = parentDetailAST.getParent();
 
-			if ((parentDetailAST == null) ||
-				!TokenUtil.isOfType(
+			if (!TokenUtil.isOfType(
 					parentDetailAST, TokenTypes.LITERAL_NEW,
 					TokenTypes.METHOD_CALL)) {
 

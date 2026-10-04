@@ -833,8 +833,7 @@ public class JavaParser {
 
 				DetailAST grandParentDetailAST = parentDetailAST.getParent();
 
-				if ((grandParentDetailAST != null) &&
-					TokenUtil.isOfType(
+				if (TokenUtil.isOfType(
 						grandParentDetailAST, TokenTypes.LITERAL_ELSE,
 						TokenTypes.LITERAL_IF, TokenTypes.LITERAL_WHILE)) {
 
@@ -1298,8 +1297,7 @@ public class JavaParser {
 				parsedJavaClass, detailAST, fileContents, maxLineLength);
 		}
 
-		if ((parentDetailAST != null) &&
-			TokenUtil.isOfType(
+		if (TokenUtil.isOfType(
 				parentDetailAST, TokenTypes.OBJBLOCK, TokenTypes.SLIST)) {
 
 			parsedJavaClass = _parseDetailAST(

@@ -1007,8 +1007,7 @@ public abstract class BaseBuilderCheck extends BaseChainedMethodCheck {
 		int endLineNumber = -1;
 
 		while (true) {
-			if ((detailAST == null) ||
-				!TokenUtil.isOfType(
+			if (!TokenUtil.isOfType(
 					detailAST, TokenTypes.LITERAL_ELSE,
 					TokenTypes.LITERAL_IF)) {
 

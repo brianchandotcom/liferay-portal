@@ -48,8 +48,7 @@ public class FetchContractCatchCheck extends BaseCheck {
 
 		DetailAST firstChildDetailAST = typeDetailAST.getFirstChild();
 
-		if ((firstChildDetailAST == null) ||
-			!TokenUtil.isOfType(
+		if (!TokenUtil.isOfType(
 				firstChildDetailAST, TokenTypes.DOT, TokenTypes.IDENT)) {
 
 			return;

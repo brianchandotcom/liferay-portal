@@ -98,9 +98,6 @@ test(
 	'Can get unpublished status in response after unpublish',
 	{tag: '@LPD-106934'},
 	async ({apiHelpers, headlessBuilderPage, page}) => {
-
-		// Add a published application
-
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				applicationStatus: 'published',
@@ -112,8 +109,6 @@ test(
 
 		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
-		// Unpublish it from the applications list
-
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.openApplicationActions(application.title);
 
@@ -123,8 +118,6 @@ test(
 		await page
 			.getByRole('button', {exact: true, name: 'Unpublish'})
 			.click();
-
-		// Check the status in the response
 
 		await expect(async () => {
 			const updatedApplication =

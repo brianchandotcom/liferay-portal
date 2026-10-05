@@ -22,9 +22,6 @@ test(
 	'can list API applications and filter them by excluding a status',
 	{tag: '@LPD-106934'},
 	async ({apiHelpers, headlessBuilderPage, page}) => {
-
-		// Add applications
-
 		const applications = [];
 
 		for (const applicationStatus of [
@@ -45,8 +42,6 @@ test(
 
 			applications.push(application);
 		}
-
-		// Check that the applications are listed with their status
 
 		const failedResponses: string[] = [];
 
@@ -76,16 +71,12 @@ test(
 			).toContainText('Unpublished');
 		}
 
-		// Exclude the published status
-
 		await applyFDSSelectionFilter(page, {
 			exclude: true,
 			filter: 'Status',
 			multiple: false,
 			value: 'Published',
 		});
-
-		// Check that only the unpublished applications are listed
 
 		for (const unpublishedApplication of unpublishedApplications) {
 			await expect(

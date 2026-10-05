@@ -20,9 +20,6 @@ test(
 	'cannot create an API application with an existing base URL or title',
 	{tag: '@LPD-106934'},
 	async ({apiHelpers, headlessBuilderPage, page}) => {
-
-		// Add an application
-
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				applicationStatus: 'unpublished',
@@ -33,8 +30,6 @@ test(
 		);
 
 		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
-
-		// Try to create an application with the existing base URL
 
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.addNewApplicationButton.click();
@@ -62,8 +57,6 @@ test(
 			);
 
 		expect(applicationsWithBaseURL.totalCount).toBe(1);
-
-		// Try to create an application with the existing title
 
 		await headlessBuilderPage.newApplicationTitleBox.fill(
 			application.title

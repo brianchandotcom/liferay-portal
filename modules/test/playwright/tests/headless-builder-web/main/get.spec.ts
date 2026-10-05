@@ -364,9 +364,6 @@ test(
 		page,
 		uiElementsPage,
 	}) => {
-
-		// Add an application
-
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				applicationStatus: 'unpublished',
@@ -378,8 +375,6 @@ test(
 
 		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
-		// Create the endpoint
-
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.goToEditApplication(application.title);
 		await applicationPage.createCollectionEndpoint(
@@ -388,8 +383,6 @@ test(
 		);
 
 		await expect(uiElementsPage.anySuccessAlert).toBeVisible();
-
-		// Check that the endpoint is listed with its path
 
 		await headlessBuilderPage.goto();
 		await headlessBuilderPage.goToEditApplication(application.title);

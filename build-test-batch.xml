@@ -76,7 +76,7 @@
 				select="\1"
 			/>
 
-			<fail message="Unable to find jdbc.default.url in @{workspace.dir}/configs/local/portal-env.properties." unless="workspace.database.type" />
+			<fail message="Unable to find &quot;jdbc.default.url&quot; in @{workspace.dir}/configs/local/portal-env.properties." unless="workspace.database.type" />
 
 			<fail message="Unable to run the @{workspace.name} workspace on a @{database.type} batch because it runs on ${workspace.database.type}.">
 				<condition>

@@ -96,8 +96,6 @@ public interface DDMContentLocalService
 
 	public void deleteContent(DDMContent content);
 
-	public void deleteContents(long groupId);
-
 	/**
 	 * Deletes the ddm content from the database. Also notifies the appropriate model listeners.
 	 *
@@ -227,15 +225,6 @@ public interface DDMContentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMContent> getContents();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMContent> getContents(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMContent> getContents(long groupId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getContentsCount(long groupId);
-
 	/**
 	 * Returns the ddm content with the primary key.
 	 *
@@ -362,4 +351,4 @@ public interface DDMContentLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1438210059
+// LIFERAY-SERVICE-BUILDER-HASH:-433493161

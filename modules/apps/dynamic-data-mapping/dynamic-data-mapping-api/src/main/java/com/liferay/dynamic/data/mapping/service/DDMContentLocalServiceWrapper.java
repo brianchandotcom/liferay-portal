@@ -84,11 +84,6 @@ public class DDMContentLocalServiceWrapper
 		_ddmContentLocalService.deleteContent(content);
 	}
 
-	@Override
-	public void deleteContents(long groupId) {
-		_ddmContentLocalService.deleteContents(groupId);
-	}
-
 	/**
 	 * Deletes the ddm content from the database. Also notifies the appropriate model listeners.
 	 *
@@ -272,23 +267,6 @@ public class DDMContentLocalServiceWrapper
 	@Override
 	public java.util.List<DDMContent> getContents() {
 		return _ddmContentLocalService.getContents();
-	}
-
-	@Override
-	public java.util.List<DDMContent> getContents(long groupId) {
-		return _ddmContentLocalService.getContents(groupId);
-	}
-
-	@Override
-	public java.util.List<DDMContent> getContents(
-		long groupId, int start, int end) {
-
-		return _ddmContentLocalService.getContents(groupId, start, end);
-	}
-
-	@Override
-	public int getContentsCount(long groupId) {
-		return _ddmContentLocalService.getContentsCount(groupId);
 	}
 
 	/**
@@ -485,4 +463,4 @@ public class DDMContentLocalServiceWrapper
 	private DDMContentLocalService _ddmContentLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1484047661
+// LIFERAY-SERVICE-BUILDER-HASH:578986731

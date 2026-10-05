@@ -806,22 +806,6 @@ public class DDMStructureLocalServiceWrapper
 			groupId, classNameId, structureKey, includeAncestorStructures);
 	}
 
-	/**
-	 * Returns all the structures matching the group, name, and description.
-	 *
-	 * @param groupId the primary key of the structure's group
-	 * @param name the structure's name
-	 * @param description the structure's description
-	 * @return the matching structures
-	 */
-	@Override
-	public java.util.List<DDMStructure> getStructure(
-		long groupId, String name, String description) {
-
-		return _ddmStructureLocalService.getStructure(
-			groupId, name, description);
-	}
-
 	@Override
 	public DDMStructure getStructureByExternalReferenceCode(
 			String externalReferenceCode, long groupId, long classNameId)
@@ -984,14 +968,6 @@ public class DDMStructureLocalServiceWrapper
 			orderByComparator);
 	}
 
-	@Override
-	public java.util.List<DDMStructure> getStructures(
-		long groupId, String name, String description) {
-
-		return _ddmStructureLocalService.getStructures(
-			groupId, name, description);
-	}
-
 	/**
 	 * Returns all the structures belonging to the groups.
 	 *
@@ -1056,43 +1032,6 @@ public class DDMStructureLocalServiceWrapper
 
 		return _ddmStructureLocalService.getStructures(
 			groupIds, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the structures matching the group, class
-	 * name ID, name, and description.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param groupIds the primary keys of the groups
-	 * @param classNameId the primary key of the class name for the structure's
-	 related model
-	 * @param name the name keywords
-	 * @param description the description keywords
-	 * @param start the lower bound of the range of structures to return
-	 * @param end the upper bound of the range of structures to return (not
-	 inclusive)
-	 * @param orderByComparator the comparator to order the structures
-	 (optionally <code>null</code>)
-	 * @return the range of matching structures ordered by the comparator
-	 */
-	@Override
-	public java.util.List<DDMStructure> getStructures(
-		long[] groupIds, long classNameId, String name, String description,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
-			orderByComparator) {
-
-		return _ddmStructureLocalService.getStructures(
-			groupIds, classNameId, name, description, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -1442,4 +1381,4 @@ public class DDMStructureLocalServiceWrapper
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1016351825
+// LIFERAY-SERVICE-BUILDER-HASH:-49152977

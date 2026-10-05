@@ -519,16 +519,6 @@ public class DDMStructureLayoutLocalServiceWrapper
 
 	@Override
 	public java.util.List<DDMStructureLayout> getStructureLayouts(
-		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLayout>
-			orderByComparator) {
-
-		return _ddmStructureLayoutLocalService.getStructureLayouts(
-			groupId, classNameId, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<DDMStructureLayout> getStructureLayouts(
 		long groupId, long classNameId, long structureVersionId) {
 
 		return _ddmStructureLayoutLocalService.getStructureLayouts(
@@ -551,12 +541,6 @@ public class DDMStructureLayoutLocalServiceWrapper
 	public int getStructureLayoutsCount(long groupId) {
 		return _ddmStructureLayoutLocalService.getStructureLayoutsCount(
 			groupId);
-	}
-
-	@Override
-	public int getStructureLayoutsCount(long groupId, long classNameId) {
-		return _ddmStructureLayoutLocalService.getStructureLayoutsCount(
-			groupId, classNameId);
 	}
 
 	@Override
@@ -672,4 +656,4 @@ public class DDMStructureLayoutLocalServiceWrapper
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1551073653
+// LIFERAY-SERVICE-BUILDER-HASH:1963654023

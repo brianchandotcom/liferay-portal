@@ -383,11 +383,6 @@ public interface DDMStructureLayoutLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructureLayout> getStructureLayouts(
-		long groupId, long classNameId, int start, int end,
-		OrderByComparator<DDMStructureLayout> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMStructureLayout> getStructureLayouts(
 		long groupId, long classNameId, long structureVersionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -397,9 +392,6 @@ public interface DDMStructureLayoutLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructureLayoutsCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getStructureLayoutsCount(long groupId, long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructureLayoutsCount(
@@ -459,4 +451,4 @@ public interface DDMStructureLayoutLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1398355995
+// LIFERAY-SERVICE-BUILDER-HASH:-1717338195

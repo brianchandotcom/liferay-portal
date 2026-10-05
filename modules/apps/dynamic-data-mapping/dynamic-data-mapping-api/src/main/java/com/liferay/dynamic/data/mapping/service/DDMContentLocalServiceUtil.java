@@ -84,10 +84,6 @@ public class DDMContentLocalServiceUtil {
 		getService().deleteContent(content);
 	}
 
-	public static void deleteContents(long groupId) {
-		getService().deleteContents(groupId);
-	}
-
 	/**
 	 * Deletes the ddm content from the database. Also notifies the appropriate model listeners.
 	 *
@@ -245,20 +241,6 @@ public class DDMContentLocalServiceUtil {
 		return getService().getContents();
 	}
 
-	public static List<DDMContent> getContents(long groupId) {
-		return getService().getContents(groupId);
-	}
-
-	public static List<DDMContent> getContents(
-		long groupId, int start, int end) {
-
-		return getService().getContents(groupId, start, end);
-	}
-
-	public static int getContentsCount(long groupId) {
-		return getService().getContentsCount(groupId);
-	}
-
 	/**
 	 * Returns the ddm content with the primary key.
 	 *
@@ -407,4 +389,4 @@ public class DDMContentLocalServiceUtil {
 			DDMContentLocalServiceUtil.class, DDMContentLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1421593038
+// LIFERAY-SERVICE-BUILDER-HASH:-246344050

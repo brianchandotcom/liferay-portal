@@ -365,9 +365,14 @@ public abstract class BaseBundlePersistentResource
 				}
 
 				producerBuildURL = queueItem.getExecutableURL();
-			}
 
-			if (!JenkinsResultsParserUtil.isURL(producerBuildURL)) {
+				if (!JenkinsResultsParserUtil.isURL(producerBuildURL)) {
+					_queueItemWhy = queueItem.getWhy();
+
+					return;
+				}
+			}
+			else {
 				producerBuildURL = JenkinsResultsParserUtil.getBuildURL(
 					_JOB_NAME, producerJenkinsMaster, producerQueueId);
 			}

@@ -148,8 +148,12 @@ test(
 
 		await contentsPage.fillData([
 			{label: 'Title', value: contentTitle},
-			{label: 'Date', value: '2025-08-08'},
-			{label: 'Date and Time', value: '2025-08-07T13:49'},
+			{label: 'Date', type: 'Date', value: '08/08/2025'},
+			{
+				label: 'Date and Time',
+				type: 'Date',
+				value: '08/07/2025 01:49 PM',
+			},
 			{label: 'Long Text', value: 'Papa'},
 			{label: 'Rich Text', type: 'Rich Text', value: 'Pepe'},
 			{label: 'Decimal', value: '1.2'},
@@ -267,8 +271,12 @@ test(
 
 		await contentsPage.fillData([
 			{label: 'Title', value: contentTitle},
-			{label: 'Date', value: '2025-08-08'},
-			{label: 'Date and Time', value: '2025-08-07T13:49'},
+			{label: 'Date', type: 'Date', value: '08/08/2025'},
+			{
+				label: 'Date and Time',
+				type: 'Date',
+				value: '08/07/2025 01:49 PM',
+			},
 			{label: 'Long Text', value: 'Papa'},
 			{label: 'Rich Text', type: 'Rich Text', value: 'Pepe'},
 		]);

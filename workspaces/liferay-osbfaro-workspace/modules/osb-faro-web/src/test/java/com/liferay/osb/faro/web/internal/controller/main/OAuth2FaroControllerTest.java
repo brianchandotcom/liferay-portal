@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Date;
 
@@ -54,15 +55,14 @@ public class OAuth2FaroControllerTest {
 		Mockito.when(
 			_localOAuthClient.requestTokens(_mockOAuth2Application(), 100L)
 		).thenReturn(
-			"{\"access_token\": \"abc\"}"
+			"{\"access_token\": \"" + _ACCESS_TOKEN + "\"}"
 		);
 
-		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization(
-			"abc");
+		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization();
 
 		Mockito.when(
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent("abc")
+				fetchOAuth2AuthorizationByAccessTokenContent(_ACCESS_TOKEN)
 		).thenReturn(
 			oAuth2Authorization
 		);
@@ -70,23 +70,22 @@ public class OAuth2FaroControllerTest {
 		TokenDisplay tokenDisplay = _oAuth2FaroController.newToken(
 			1, null, "demandbase", null);
 
-		Assert.assertEquals("abc", tokenDisplay.getToken());
+		Assert.assertEquals(_ACCESS_TOKEN, tokenDisplay.getToken());
 	}
 
 	@Test
 	public void testNewTokenSetsAccessTokenContent() throws Exception {
-		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization(
-			"abc");
+		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization();
 
 		Mockito.when(
 			_localOAuthClient.requestTokens(_mockOAuth2Application(), 100L)
 		).thenReturn(
-			"{\"access_token\": \"abc\"}"
+			"{\"access_token\": \"" + _ACCESS_TOKEN + "\"}"
 		);
 
 		Mockito.when(
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent("abc")
+				fetchOAuth2AuthorizationByAccessTokenContent(_ACCESS_TOKEN)
 		).thenReturn(
 			oAuth2Authorization
 		);
@@ -104,25 +103,24 @@ public class OAuth2FaroControllerTest {
 
 		String accessTokenContent = argumentCaptor.getValue();
 
-		Assert.assertNotEquals("abc", accessTokenContent);
+		Assert.assertNotEquals(_ACCESS_TOKEN, accessTokenContent);
 		Assert.assertTrue(
 			accessTokenContent, accessTokenContent.matches("[0-9a-f]+"));
 	}
 
 	@Test
 	public void testNewTokenSetsAccessTokenExpirationDate() throws Exception {
-		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization(
-			"abc");
+		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization();
 
 		Mockito.when(
 			_localOAuthClient.requestTokens(_mockOAuth2Application(), 100L)
 		).thenReturn(
-			"{\"access_token\": \"abc\"}"
+			"{\"access_token\": \"" + _ACCESS_TOKEN + "\"}"
 		);
 
 		Mockito.when(
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent("abc")
+				fetchOAuth2AuthorizationByAccessTokenContent(_ACCESS_TOKEN)
 		).thenReturn(
 			oAuth2Authorization
 		);
@@ -144,8 +142,7 @@ public class OAuth2FaroControllerTest {
 
 	@Test
 	public void testNewTokenSetsRefreshTokenExpirationDate() throws Exception {
-		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization(
-			"abc");
+		OAuth2Authorization oAuth2Authorization = _mockOAuth2Authorization();
 
 		Mockito.when(
 			oAuth2Authorization.getRefreshTokenCreateDate()
@@ -156,12 +153,12 @@ public class OAuth2FaroControllerTest {
 		Mockito.when(
 			_localOAuthClient.requestTokens(_mockOAuth2Application(), 100L)
 		).thenReturn(
-			"{\"access_token\": \"abc\"}"
+			"{\"access_token\": \"" + _ACCESS_TOKEN + "\"}"
 		);
 
 		Mockito.when(
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent("abc")
+				fetchOAuth2AuthorizationByAccessTokenContent(_ACCESS_TOKEN)
 		).thenReturn(
 			oAuth2Authorization
 		);
@@ -193,12 +190,12 @@ public class OAuth2FaroControllerTest {
 		Mockito.when(
 			_localOAuthClient.requestTokens(_mockOAuth2Application(), 100L)
 		).thenReturn(
-			"{\"access_token\": \"abc\"}"
+			"{\"access_token\": \"" + _ACCESS_TOKEN + "\"}"
 		);
 
 		Mockito.when(
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent("abc")
+				fetchOAuth2AuthorizationByAccessTokenContent(_ACCESS_TOKEN)
 		).thenReturn(
 			null
 		);
@@ -213,12 +210,12 @@ public class OAuth2FaroControllerTest {
 
 		Mockito.when(
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent("abc")
+				fetchOAuth2AuthorizationByAccessTokenContent(_ACCESS_TOKEN)
 		).thenReturn(
 			oAuth2Authorization
 		);
 
-		_oAuth2FaroController.revokeToken(1, "abc");
+		_oAuth2FaroController.revokeToken(1, _ACCESS_TOKEN);
 
 		Mockito.verify(
 			_oAuth2AuthorizationLocalService
@@ -252,14 +249,14 @@ public class OAuth2FaroControllerTest {
 		return oAuth2Application;
 	}
 
-	private OAuth2Authorization _mockOAuth2Authorization(String accessToken) {
+	private OAuth2Authorization _mockOAuth2Authorization() {
 		OAuth2Authorization oAuth2Authorization = Mockito.mock(
 			OAuth2Authorization.class);
 
 		Mockito.when(
 			oAuth2Authorization.getAccessTokenContent()
 		).thenReturn(
-			accessToken
+			_ACCESS_TOKEN
 		);
 
 		Mockito.when(
@@ -308,6 +305,8 @@ public class OAuth2FaroControllerTest {
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
+
+	private static final String _ACCESS_TOKEN = RandomTestUtil.randomString();
 
 	private static final long _ACCESS_TOKEN_CREATE_TIME = 1000000000000L;
 

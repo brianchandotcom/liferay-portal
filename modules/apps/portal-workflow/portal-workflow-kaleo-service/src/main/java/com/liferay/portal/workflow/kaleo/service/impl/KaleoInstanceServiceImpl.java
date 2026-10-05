@@ -153,6 +153,16 @@ public class KaleoInstanceServiceImpl extends KaleoInstanceServiceBaseImpl {
 	}
 
 	@Override
+	public KaleoInstance deleteKaleoInstance(long kaleoInstanceId)
+		throws PortalException {
+
+		_kaleoInstanceModelResourcePermission.check(
+			getPermissionChecker(), kaleoInstanceId, ActionKeys.DELETE);
+
+		return kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstanceId);
+	}
+
+	@Override
 	public KaleoInstance getKaleoInstance(long kaleoInstanceId)
 		throws PortalException {
 

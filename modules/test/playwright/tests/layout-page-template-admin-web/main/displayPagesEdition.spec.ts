@@ -1749,7 +1749,7 @@ test.describe('Object Display page', () => {
 
 			await page
 				.getByRole('textbox', {name: 'Release Date'})
-				.fill('2020-03-02T05:15');
+				.fill('03/02/2020 05:15 AM');
 
 			await page.getByRole('button', {name: 'Submit'}).click();
 
@@ -1775,7 +1775,7 @@ test.describe('Object Display page', () => {
 
 			await expect(
 				page.getByRole('textbox', {name: 'Release Date'})
-			).toHaveValue('2020-03-02T05:15');
+			).toHaveValue('03/02/2020 05:15 AM');
 		}
 	);
 

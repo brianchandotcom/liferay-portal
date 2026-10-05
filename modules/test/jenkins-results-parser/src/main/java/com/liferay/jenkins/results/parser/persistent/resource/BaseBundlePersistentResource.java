@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -366,15 +367,25 @@ public abstract class BaseBundlePersistentResource
 		if (status == Status.IN_QUEUE) {
 			JenkinsMaster producerJenkinsMaster = getProducerJenkinsMaster();
 
+			List<JenkinsMaster.QueueItem> queueItems;
+
+			try {
+				queueItems = producerJenkinsMaster.getQueueItems();
+			}
+			catch (RuntimeException runtimeException) {
+				_recordLookupFailure("queue items", runtimeException);
+
+				return;
+			}
+
 			long producerQueueId = getProducerQueueId();
 
-			for (JenkinsMaster.QueueItem queueItem :
-					producerJenkinsMaster.getQueueItems()) {
-
+			for (JenkinsMaster.QueueItem queueItem : queueItems) {
 				if (queueItem.getId() != producerQueueId) {
 					continue;
 				}
 
+				_lookupFailuresCount = 0;
 				_missingCount = 0;
 				_queueItemWhy = queueItem.getWhy();
 
@@ -390,9 +401,25 @@ public abstract class BaseBundlePersistentResource
 			}
 
 			String producerBuildURL = null;
+			JenkinsMaster.QueueItem queueItem = null;
 
-			JenkinsMaster.QueueItem queueItem =
-				producerJenkinsMaster.getQueueItem(producerQueueId);
+			try {
+				queueItem = producerJenkinsMaster.fetchQueueItem(
+					producerQueueId);
+
+				if (queueItem == null) {
+					producerBuildURL = JenkinsResultsParserUtil.fetchBuildURL(
+						_JOB_NAME, producerJenkinsMaster, producerQueueId);
+				}
+			}
+			catch (Exception exception) {
+				_recordLookupFailure(
+					"queue item " + producerQueueId, exception);
+
+				return;
+			}
+
+			_lookupFailuresCount = 0;
 
 			if (queueItem != null) {
 				if (queueItem.isCancelled()) {
@@ -409,10 +436,6 @@ public abstract class BaseBundlePersistentResource
 
 					return;
 				}
-			}
-			else {
-				producerBuildURL = JenkinsResultsParserUtil.getBuildURL(
-					_JOB_NAME, producerJenkinsMaster, producerQueueId);
 			}
 
 			if (JenkinsResultsParserUtil.isURL(producerBuildURL)) {
@@ -719,6 +742,26 @@ public abstract class BaseBundlePersistentResource
 		return false;
 	}
 
+	private void _recordLookupFailure(String lookupName, Exception exception) {
+		_lookupFailuresCount++;
+
+		print(
+			JenkinsResultsParserUtil.combine(
+				"WARNING: Unable to look up ", lookupName, " at ",
+				_getProducerJobURL(), " (",
+				String.valueOf(_lookupFailuresCount), " of ",
+				String.valueOf(_MAX_LOOKUP_FAILURES_COUNT), "): ",
+				exception.getMessage()));
+
+		if (_lookupFailuresCount >= _MAX_LOOKUP_FAILURES_COUNT) {
+			print("No lookup attempts remaining");
+
+			setStatus(Status.FAILED);
+
+			save();
+		}
+	}
+
 	private void _redispatchBuild(JSONObject cachedDataJSONObject) {
 		_redispatchHistoryJSONArray.put(
 			new JSONObject(
@@ -922,6 +965,8 @@ public abstract class BaseBundlePersistentResource
 
 	private static final int _MAX_FAILED_INVOCATIONS_COUNT = 5;
 
+	private static final int _MAX_LOOKUP_FAILURES_COUNT = 10;
+
 	private static final int _MAX_MISSING_COUNT = 2;
 
 	private static final long _MAX_QUEUE_DURATION = 1000 * 60 * 30;
@@ -941,6 +986,7 @@ public abstract class BaseBundlePersistentResource
 	private int _cancelledReinvocationsCount;
 	private int _failCount;
 	private int _failedInvocationsCount;
+	private int _lookupFailuresCount;
 	private int _missingCount;
 	private String _queueItemWhy;
 	private int _queueReinvocationsCount;

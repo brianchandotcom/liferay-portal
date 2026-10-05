@@ -798,6 +798,50 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static String fetchBuildURL(
+			String jenkinsJobName, JenkinsMaster jenkinsMaster,
+			long jenkinsQueueId)
+		throws IOException {
+
+		if (isNullOrEmpty(jenkinsJobName) || (jenkinsMaster == null) ||
+			(jenkinsQueueId < 0)) {
+
+			return null;
+		}
+
+		Class<?> clazz = JenkinsResultsParserUtil.class;
+
+		String script;
+
+		try {
+			script = readInputStream(
+				clazz.getResourceAsStream("dependencies/get-build-url.groovy"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to load groovy script", ioException);
+		}
+
+		script = script.replace("${jenkinsJobName}", jenkinsJobName);
+		script = script.replace(
+			"${jenkinsQueueId}", String.valueOf(jenkinsQueueId));
+
+		String response = executeJenkinsScript(
+			jenkinsMaster.getName(), script, true);
+
+		if (response == null) {
+			throw new IOException(
+				"Unable to execute Jenkins script on " +
+					jenkinsMaster.getName());
+		}
+
+		if (isURL(response)) {
+			return response;
+		}
+
+		return null;
+	}
+
 	public static List<File> findDirs(File baseDir, String regex) {
 		List<File> dirs = new ArrayList<>();
 
@@ -1425,38 +1469,8 @@ public class JenkinsResultsParserUtil {
 		String jenkinsJobName, JenkinsMaster jenkinsMaster,
 		long jenkinsQueueId) {
 
-		if (isNullOrEmpty(jenkinsJobName) || (jenkinsMaster == null) ||
-			(jenkinsQueueId < 0)) {
-
-			return null;
-		}
-
-		Class<?> clazz = JenkinsResultsParserUtil.class;
-
-		String script;
-
 		try {
-			script = readInputStream(
-				clazz.getResourceAsStream("dependencies/get-build-url.groovy"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to load groovy script", ioException);
-		}
-
-		script = script.replace("${jenkinsJobName}", jenkinsJobName);
-		script = script.replace(
-			"${jenkinsQueueId}", String.valueOf(jenkinsQueueId));
-
-		try {
-			String response = executeJenkinsScript(
-				jenkinsMaster.getName(), script, true);
-
-			if (isURL(response)) {
-				return response;
-			}
-
-			return null;
+			return fetchBuildURL(jenkinsJobName, jenkinsMaster, jenkinsQueueId);
 		}
 		catch (Exception exception) {
 			return null;

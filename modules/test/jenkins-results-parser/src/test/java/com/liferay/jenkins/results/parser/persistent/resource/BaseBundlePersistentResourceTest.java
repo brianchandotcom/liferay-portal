@@ -63,7 +63,7 @@ public class BaseBundlePersistentResourceTest
 	}
 
 	@Test
-	public void testUpdateCancelledQueueItem() {
+	public void testUpdateCancelledQueueItem() throws Exception {
 		JenkinsMaster jenkinsMaster = Mockito.mock(JenkinsMaster.class);
 		long queueId = RandomTestUtil.randomLong();
 
@@ -83,7 +83,7 @@ public class BaseBundlePersistentResourceTest
 			queueItem
 		).when(
 			jenkinsMaster
-		).getQueueItem(
+		).fetchQueueItem(
 			queueId
 		);
 
@@ -274,7 +274,7 @@ public class BaseBundlePersistentResourceTest
 	}
 
 	@Test
-	public void testUpdateStartedQueueItem() {
+	public void testUpdateStartedQueueItem() throws Exception {
 		JenkinsMaster jenkinsMaster = Mockito.mock(JenkinsMaster.class);
 		long queueId = RandomTestUtil.randomLong();
 
@@ -296,7 +296,7 @@ public class BaseBundlePersistentResourceTest
 			queueItem
 		).when(
 			jenkinsMaster
-		).getQueueItem(
+		).fetchQueueItem(
 			queueId
 		);
 

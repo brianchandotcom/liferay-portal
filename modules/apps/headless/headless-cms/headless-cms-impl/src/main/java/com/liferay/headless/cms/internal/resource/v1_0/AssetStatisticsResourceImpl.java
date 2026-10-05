@@ -16,6 +16,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -27,9 +28,12 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceTokenTable;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,21 +68,27 @@ public class AssetStatisticsResourceImpl
 			return _toAssetStatistics();
 		}
 
-		Long[] objectDefinitionIds = transformToArray(
+		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionService.getCMSObjectDefinitions(
 				contextCompany.getCompanyId(),
 				new String[] {
 					ObjectFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
-				}),
-			ObjectDefinition::getObjectDefinitionId, Long.class);
+				});
+
+		Long[] objectDefinitionIds = transformToArray(
+			objectDefinitions, ObjectDefinition::getObjectDefinitionId,
+			Long.class);
 
 		if (ArrayUtil.isEmpty(objectDefinitionIds)) {
 			return _toAssetStatistics();
 		}
 
 		Date date = new Date();
+
+		String[] classNames = transformToArray(
+			objectDefinitions, ObjectDefinition::getClassName, String.class);
 
 		return new AssetStatistics() {
 			{
@@ -123,6 +133,15 @@ public class AssetStatisticsResourceImpl
 									date.getTime() -
 										(Time.DAY * _LONG_STANDING_DRAFT_DAYS)))
 						)));
+				setOverdueWorkflowTaskCount(
+					() -> _getWorkflowTaskCount(
+						classNames, selectedSpaceGroupIds,
+						KaleoTaskInstanceTokenTable.INSTANCE.completed.eq(
+							false
+						).and(
+							KaleoTaskInstanceTokenTable.INSTANCE.dueDate.lt(
+								date)
+						)));
 				setPendingCount(
 					() -> _getCount(
 						selectedSpaceGroupIds, objectDefinitionIds,
@@ -161,6 +180,9 @@ public class AssetStatisticsResourceImpl
 							ObjectEntryTable.INSTANCE.status.in(
 								CMSWorkflowConstants.STATUSES)
 						)));
+				setWorkflowTaskCount(
+					() -> _getWorkflowTaskCount(
+						classNames, selectedSpaceGroupIds, null));
 			}
 		};
 	}
@@ -220,6 +242,27 @@ public class AssetStatisticsResourceImpl
 		}
 	}
 
+	private long _getWorkflowTaskCount(
+		String[] classNames, Long[] groupIds, Predicate predicate) {
+
+		return _kaleoTaskInstanceTokenLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				KaleoTaskInstanceTokenTable.INSTANCE
+			).where(
+				KaleoTaskInstanceTokenTable.INSTANCE.companyId.eq(
+					contextCompany.getCompanyId()
+				).and(
+					KaleoTaskInstanceTokenTable.INSTANCE.groupId.in(groupIds)
+				).and(
+					KaleoTaskInstanceTokenTable.INSTANCE.className.in(
+						classNames)
+				).and(
+					predicate
+				)
+			));
+	}
+
 	private AssetStatistics _toAssetStatistics() {
 		return new AssetStatistics() {
 			{
@@ -229,11 +272,13 @@ public class AssetStatisticsResourceImpl
 				setExpiringSoonCount(() -> 0L);
 				setInDraftCount(() -> 0L);
 				setLongStandingDraftCount(() -> 0L);
+				setOverdueWorkflowTaskCount(() -> 0L);
 				setPendingCount(() -> 0L);
 				setReviewDateOverdueCount(() -> 0L);
 				setScheduledCount(() -> 0L);
 				setTotalCount(() -> 0L);
 				setUpcomingReviewCount(() -> 0L);
+				setWorkflowTaskCount(() -> 0L);
 			}
 		};
 	}
@@ -252,6 +297,10 @@ public class AssetStatisticsResourceImpl
 
 	@Reference
 	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;

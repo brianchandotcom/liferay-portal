@@ -89,6 +89,12 @@ rules:
     -   apiGroups:
             -   cx.liferay.com
         resources:
+            -   clientextensions/finalizers
+        verbs:
+            -   update
+    -   apiGroups:
+            -   cx.liferay.com
+        resources:
             -   clientextensions/status
         verbs:
             -   get

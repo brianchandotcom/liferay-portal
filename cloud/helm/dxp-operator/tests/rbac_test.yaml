@@ -60,6 +60,10 @@ tests:
                         -   list
                         -   watch
             -   equal:
+                    path: rules[?(@.resources[0]=="clientextensions/finalizers")].verbs
+                    value:
+                        -   update
+            -   equal:
                     path: rules[?(@.resources[0]=="clientextensions/status")].verbs
                     value:
                         -   get
@@ -136,7 +140,7 @@ tests:
         it: Omits the service account annotations by default
     -   asserts:
             -   lengthEqual:
-                    count: 14
+                    count: 15
                     path: rules
             -   contains:
                     content:

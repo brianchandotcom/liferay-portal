@@ -15,6 +15,7 @@ const AnnotationAllowedClientExtensionNamespaces = "cx.liferay.com/allowed-clien
 const (
 	ConditionConfigurationAccepted = "ConfigurationAccepted"
 	ConditionDelivered             = "Delivered"
+	ConditionMirrored              = "Mirrored"
 	ConditionProvisioned           = "Provisioned"
 	ConditionReady                 = "Ready"
 	ConditionWorkloadAccepted      = "WorkloadAccepted"

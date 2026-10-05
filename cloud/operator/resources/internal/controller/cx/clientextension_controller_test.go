@@ -124,7 +124,7 @@ func TestReconcileAllowedNamespaces(t *testing.T) {
 				t.Fatal(error)
 			}
 
-			if updatedClientExtension.Status.Phase != testCase.wantPhase {
+			if testCase.wantPhase != updatedClientExtension.Status.Phase {
 				t.Errorf("phase = %q, want %q", updatedClientExtension.Status.Phase, testCase.wantPhase)
 			}
 
@@ -1237,7 +1237,7 @@ func hideFromCache(name string) *interceptor.Funcs {
 
 func newClientExtension(dxpNamespace string, name string, namespace string) *cxv1alpha1.ClientExtension {
 	return &cxv1alpha1.ClientExtension{
-		ObjectMeta: metav1.ObjectMeta{Name: name, Namespace: namespace},
+		ObjectMeta: metav1.ObjectMeta{Name: name, Namespace: namespace, UID: types.UID(namespace + "-" + name)},
 		Spec: cxv1alpha1.ClientExtensionSpec{
 			Configs: map[string]cxv1alpha1.Configuration{
 				"com.liferay.client.extension.type.configuration.CETConfiguration~" + name: {

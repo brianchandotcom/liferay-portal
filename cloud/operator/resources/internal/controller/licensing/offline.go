@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
 	licensingv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/licensing/v1alpha1"
@@ -183,16 +182,6 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) handleOfflineA
 	return entitlements, controllerruntime.Result{}, nil
 }
 
-func hasAddOns(zipReader *zip.Reader) bool {
-	for _, file := range zipReader.File {
-		if strings.HasPrefix(file.Name, addon.AddOnsPrefix) {
-			return true
-		}
-	}
-
-	return false
-}
-
 func isOfflineActivationBundleNotFound(error error) bool {
 	return errors.Is(error, errOfflineActivationBundleNotFound)
 }
@@ -317,10 +306,6 @@ func readOfflineActivationBundle(path string) (*provisioning.Entitlements, error
 
 	if error != nil {
 		return nil, fmt.Errorf("offline activation bundle: open zip: %w", error)
-	}
-
-	if !hasAddOns(zipReader) {
-		return nil, fmt.Errorf("offline activation bundle: missing %q directory", addon.AddOnsPrefix)
 	}
 
 	manifestFile := findManifest(zipReader)

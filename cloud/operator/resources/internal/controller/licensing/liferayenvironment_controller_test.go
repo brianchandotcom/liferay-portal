@@ -1503,7 +1503,6 @@ func TestReconcileOfflineLicensesFromBundle(t *testing.T) {
 
 	writeOfflineActivationBundle(
 		map[string]string{
-			"add-ons/app.lpkg": "PK-fake-lpkg",
 			"manifest.json": fmt.Sprintf(
 				`{
 					"add-ons": [],
@@ -1631,6 +1630,88 @@ func TestReconcileOfflineRejectsInvalidBundle(t *testing.T) {
 	}
 }
 
+func TestReconcileOfflineReportsAddOnsNotReadyWhenBundleLacksAddOn(t *testing.T) {
+	marketplaceMountPath := t.TempDir()
+
+	licenseXML := virtualClusterLicenseXML(
+		"Friday, March 2, 2029 12:00:00 AM GMT", 3, "dev-namespace-uid",
+	)
+
+	writeOfflineActivationBundle(
+		map[string]string{
+			"manifest.json": fmt.Sprintf(
+				`{
+					"add-ons": [
+						{
+							"productId": "app-1",
+							"productName": "App One",
+							"virtualEntryId": 42,
+							"sha256Checksum": "0000"
+						}
+					],
+					"licenseXML": %q,
+					"maxClusterNodes": 3
+				}`,
+				base64.StdEncoding.EncodeToString([]byte(licenseXML)),
+			),
+		},
+		filepath.Join(marketplaceMountPath, "liferay-dev", "bundle.zip"),
+		t,
+	)
+
+	environment := pendingEnvironment()
+	environment.Spec.Offline = true
+	environment.Spec.OfflineActivationBundle = "bundle.zip"
+
+	liferayEnvironmentReconciler, _ := reconcileOfflineActivationBundle(
+		marketplaceMountPath, t,
+		&corev1.Namespace{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "liferay-dev",
+				UID:  "dev-namespace-uid",
+			},
+		},
+		&appsv1.StatefulSet{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "dev-liferay",
+				Namespace: "liferay-dev",
+			},
+			Spec: appsv1.StatefulSetSpec{
+				Replicas: pointerInt32(3),
+			},
+		},
+		environment,
+	)
+
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+	if liferayEnvironment.Status.Phase != "Ready" {
+		t.Errorf("Phase = %q, want Ready despite the missing add-on", liferayEnvironment.Status.Phase)
+	}
+
+	if activated := meta.FindStatusCondition(
+		liferayEnvironment.Status.Conditions, conditionActivated,
+	); activated == nil || activated.Status != metav1.ConditionTrue {
+		t.Errorf("Activated condition = %v, want True", activated)
+	}
+
+	if addOnsReady := meta.FindStatusCondition(
+		liferayEnvironment.Status.Conditions, conditionAddOnsReady,
+	); addOnsReady == nil || addOnsReady.Status != metav1.ConditionFalse ||
+		addOnsReady.Reason != "DownloadsFailing" {
+
+		t.Errorf("AddOnsReady condition = %v, want False/DownloadsFailing", addOnsReady)
+	}
+
+	if length := len(liferayEnvironment.Status.Apps); length != 1 {
+		t.Fatalf("Apps length = %d, want 1", length)
+	}
+
+	if state := liferayEnvironment.Status.Apps[0].State; state != "Failed" {
+		t.Errorf("App state = %q, want Failed", state)
+	}
+}
+
 func TestReconcileOfflineRequestIsWriteOnce(t *testing.T) {
 	environment := pendingEnvironment()
 	environment.Spec.Offline = true
@@ -1679,7 +1760,6 @@ func TestReconcileOfflineRestoresCeilingAfterOwnerMatches(t *testing.T) {
 
 	writeOfflineActivationBundle(
 		map[string]string{
-			"add-ons/app.lpkg": "PK-fake-lpkg",
 			"manifest.json": fmt.Sprintf(
 				`{
 					"add-ons": [],

@@ -9,6 +9,56 @@ import (
 	"testing"
 )
 
+func TestReadOfflineActivationBundleParsesALicenseOnlyBundle(t *testing.T) {
+	licenseXML := "<licenses>ok</licenses>"
+
+	testCases := map[string]string{
+		"with an empty add-ons array": fmt.Sprintf(
+			`{
+				"add-ons": [],
+				"licenseXML": %q,
+				"maxClusterNodes": 1
+			}`,
+			base64.StdEncoding.EncodeToString([]byte(licenseXML)),
+		),
+		"without an add-ons key": fmt.Sprintf(
+			`{
+				"licenseXML": %q,
+				"maxClusterNodes": 1
+			}`,
+			base64.StdEncoding.EncodeToString([]byte(licenseXML)),
+		),
+	}
+
+	for name, manifest := range testCases {
+		t.Run(name, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "bundle.zip")
+
+			writeOfflineActivationBundle(
+				map[string]string{"manifest.json": manifest}, path, t,
+			)
+
+			entitlements, error := readOfflineActivationBundle(path)
+
+			if error != nil {
+				t.Fatalf("Unexpected error: %v", error)
+			}
+
+			if string(entitlements.LicenseXML) != licenseXML {
+				t.Errorf("LicenseXML = %q, want %q", entitlements.LicenseXML, licenseXML)
+			}
+
+			if entitlements.MaxClusterNodes != 1 {
+				t.Errorf("MaxClusterNodes = %d, want 1", entitlements.MaxClusterNodes)
+			}
+
+			if length := len(entitlements.AddOns); length != 0 {
+				t.Errorf("AddOns length = %d, want 0", length)
+			}
+		})
+	}
+}
+
 func TestReadOfflineActivationBundleParsesAWellFormedBundle(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "bundle.zip")
 
@@ -70,31 +120,18 @@ func TestReadOfflineActivationBundleRejectsANonZipFile(t *testing.T) {
 }
 
 func TestReadOfflineActivationBundleRejectsMalformedBundles(t *testing.T) {
-	validManifest := fmt.Sprintf(
-		`{
-				"licenseXML": %q,
-				"maxClusterNodes": 1
-			}`,
-		base64.StdEncoding.EncodeToString([]byte("<licenses/>")),
-	)
-
 	testCases := map[string]map[string]string{
-		"missing add-ons directory": {
-			"manifest.json": validManifest,
-		},
 		"missing manifest": {
 			"add-ons/app.lpkg": "PK-fake",
 		},
 		"undecodable license": {
-			"add-ons/app.lpkg": "PK-fake",
 			"manifest.json": `{
 					"licenseXML": "@@not-base64@@",
 					"maxClusterNodes": 1
 				}`,
 		},
 		"unparsable manifest json": {
-			"add-ons/app.lpkg": "PK-fake",
-			"manifest.json":    "{not-json",
+			"manifest.json": "{not-json",
 		},
 	}
 

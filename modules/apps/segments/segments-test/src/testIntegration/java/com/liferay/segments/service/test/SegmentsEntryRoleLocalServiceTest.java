@@ -53,7 +53,7 @@ public class SegmentsEntryRoleLocalServiceTest {
 	}
 
 	@Test
-	public void testSegmentsEntryRole() throws Exception {
+	public void testCRUDSegmentsEntryRole() throws Exception {
 		_testAddSegmentsEntryRole();
 		_testAddSegmentsEntryRoleWithInvalidRoleId();
 		_testAddSegmentsEntryRoleWithInvalidSegmentsEntryId();

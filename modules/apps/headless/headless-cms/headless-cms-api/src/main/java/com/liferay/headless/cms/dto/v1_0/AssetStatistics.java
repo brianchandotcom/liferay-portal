@@ -255,6 +255,47 @@ public class AssetStatistics implements Serializable {
 	private Supplier<Long> _inDraftCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getLongStandingDraftCount() {
+		if (_longStandingDraftCountSupplier != null) {
+			longStandingDraftCount = _longStandingDraftCountSupplier.get();
+
+			_longStandingDraftCountSupplier = null;
+		}
+
+		return longStandingDraftCount;
+	}
+
+	public void setLongStandingDraftCount(Long longStandingDraftCount) {
+		this.longStandingDraftCount = longStandingDraftCount;
+
+		_longStandingDraftCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLongStandingDraftCount(
+		UnsafeSupplier<Long, Exception> longStandingDraftCountUnsafeSupplier) {
+
+		_longStandingDraftCountSupplier = () -> {
+			try {
+				return longStandingDraftCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long longStandingDraftCount;
+
+	@JsonIgnore
+	private Supplier<Long> _longStandingDraftCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getPendingCount() {
 		if (_pendingCountSupplier != null) {
 			pendingCount = _pendingCountSupplier.get();
@@ -546,6 +587,18 @@ public class AssetStatistics implements Serializable {
 			sb.append(inDraftCount);
 		}
 
+		Long longStandingDraftCount = getLongStandingDraftCount();
+
+		if (longStandingDraftCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"longStandingDraftCount\": ");
+
+			sb.append(longStandingDraftCount);
+		}
+
 		Long pendingCount = getPendingCount();
 
 		if (pendingCount != null) {
@@ -728,4 +781,4 @@ public class AssetStatistics implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1836060076
+// LIFERAY-REST-BUILDER-HASH:1786824747

@@ -130,6 +130,27 @@ public class AssetStatistics implements Cloneable, Serializable {
 
 	protected Long inDraftCount;
 
+	public Long getLongStandingDraftCount() {
+		return longStandingDraftCount;
+	}
+
+	public void setLongStandingDraftCount(Long longStandingDraftCount) {
+		this.longStandingDraftCount = longStandingDraftCount;
+	}
+
+	public void setLongStandingDraftCount(
+		UnsafeSupplier<Long, Exception> longStandingDraftCountUnsafeSupplier) {
+
+		try {
+			longStandingDraftCount = longStandingDraftCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long longStandingDraftCount;
+
 	public Long getPendingCount() {
 		return pendingCount;
 	}
@@ -267,4 +288,4 @@ public class AssetStatistics implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-614999884
+// LIFERAY-REST-BUILDER-HASH:-159856209

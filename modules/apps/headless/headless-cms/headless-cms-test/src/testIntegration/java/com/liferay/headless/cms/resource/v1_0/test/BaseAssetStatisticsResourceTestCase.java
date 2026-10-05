@@ -316,6 +316,16 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"longStandingDraftCount", additionalAssertFieldName)) {
+
+				if (assetStatistics.getLongStandingDraftCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pendingCount", additionalAssertFieldName)) {
 				if (assetStatistics.getPendingCount() == null) {
 					valid = false;
@@ -536,6 +546,19 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"longStandingDraftCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						assetStatistics1.getLongStandingDraftCount(),
+						assetStatistics2.getLongStandingDraftCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pendingCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						assetStatistics1.getPendingCount(),
@@ -728,6 +751,11 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("longStandingDraftCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("pendingCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -805,6 +833,7 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				expiredCount = RandomTestUtil.randomLong();
 				expiringSoonCount = RandomTestUtil.randomLong();
 				inDraftCount = RandomTestUtil.randomLong();
+				longStandingDraftCount = RandomTestUtil.randomLong();
 				pendingCount = RandomTestUtil.randomLong();
 				reviewDateOverdueCount = RandomTestUtil.randomLong();
 				scheduledCount = RandomTestUtil.randomLong();
@@ -1037,4 +1066,4 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 		_assetStatisticsResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1448042726
+// LIFERAY-REST-BUILDER-HASH:-409031756

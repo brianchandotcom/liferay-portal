@@ -97,6 +97,16 @@ public class AssetStatisticsSerDes {
 			sb.append(assetStatistics.getInDraftCount());
 		}
 
+		if (assetStatistics.getLongStandingDraftCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"longStandingDraftCount\": ");
+
+			sb.append(assetStatistics.getLongStandingDraftCount());
+		}
+
 		if (assetStatistics.getPendingCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -211,6 +221,15 @@ public class AssetStatisticsSerDes {
 				String.valueOf(assetStatistics.getInDraftCount()));
 		}
 
+		if (assetStatistics.getLongStandingDraftCount() == null) {
+			map.put("longStandingDraftCount", null);
+		}
+		else {
+			map.put(
+				"longStandingDraftCount",
+				String.valueOf(assetStatistics.getLongStandingDraftCount()));
+		}
+
 		if (assetStatistics.getPendingCount() == null) {
 			map.put("pendingCount", null);
 		}
@@ -288,6 +307,11 @@ public class AssetStatisticsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "inDraftCount")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "longStandingDraftCount")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "pendingCount")) {
 				return false;
 			}
@@ -343,6 +367,14 @@ public class AssetStatisticsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "inDraftCount")) {
 				if (jsonParserFieldValue != null) {
 					assetStatistics.setInDraftCount(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "longStandingDraftCount")) {
+
+				if (jsonParserFieldValue != null) {
+					assetStatistics.setLongStandingDraftCount(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -467,4 +499,4 @@ public class AssetStatisticsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-92025014
+// LIFERAY-REST-BUILDER-HASH:662531196

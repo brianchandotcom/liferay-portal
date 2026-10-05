@@ -804,7 +804,7 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		if (isNullOrEmpty(jenkinsJobName) || (jenkinsMaster == null) ||
-			(jenkinsQueueId < 0)) {
+			(jenkinsQueueId <= 0)) {
 
 			return null;
 		}

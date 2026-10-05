@@ -271,9 +271,7 @@ public abstract class BaseBundlePersistentResource
 			Status status = getStatus();
 
 			if (status == Status.FAILED) {
-				if (_isTransientFailure(_build) ||
-					(_redispatchAttempts < _MAX_REDISPATCH_ATTEMPTS)) {
-
+				if (_redispatchAttempts < _MAX_REDISPATCH_ATTEMPTS) {
 					_redispatchBuild(dataJSONObject);
 				}
 				else {
@@ -287,6 +285,14 @@ public abstract class BaseBundlePersistentResource
 				 (status == Status.IN_QUEUE) ||
 				 (status == Status.IN_PROGRESS)) &&
 				_isControllerBuildFinished()) {
+
+				if (_redispatchAttempts >= _MAX_REDISPATCH_ATTEMPTS) {
+					print("No redispatch attempts remaining");
+
+					setStatus(Status.FAILED);
+
+					return;
+				}
 
 				print(
 					"Redispatching bundles after controller build completed " +
@@ -922,7 +928,7 @@ public abstract class BaseBundlePersistentResource
 
 	private static final int _MAX_QUEUE_REINVOCATIONS_COUNT = 2;
 
-	private static final int _MAX_REDISPATCH_ATTEMPTS = 1;
+	private static final int _MAX_REDISPATCH_ATTEMPTS = 2;
 
 	private static final int _MAX_TRANSIENT_REINVOCATION_COUNT = 2;
 

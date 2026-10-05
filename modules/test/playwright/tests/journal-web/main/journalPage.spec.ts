@@ -285,16 +285,7 @@ test(
 
 		await page.getByRole('button', {name: 'Versions'}).waitFor();
 
-		await page.getByLabel('Select View, Currently').click();
-
-		const tableMenuItem = page.getByRole('menuitem', {name: 'Table'});
-
-		if ((await tableMenuItem.getAttribute('aria-selected')) === 'true') {
-			await page.keyboard.press('Escape');
-		}
-		else {
-			await tableMenuItem.click();
-		}
+		await journalPage.changeView('Table');
 
 		const resultRows = page.locator('tbody tr[data-selectable="true"]');
 

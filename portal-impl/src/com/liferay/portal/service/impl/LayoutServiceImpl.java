@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Plugin;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PluginSettingLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -1860,11 +1862,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			StringUtil.split(
 				clonedLayout.getTypeSettingsProperty(
 					LayoutTypePortletConstants.FULL_PAGE_APPLICATION_PORTLET)));
-		Collections.addAll(
-			portletIds,
-			StringUtil.split(
-				clonedLayout.getTypeSettingsProperty(
-					LayoutTypePortletConstants.PANEL_SELECTED_PORTLETS)));
+
+		for (String portletId :
+				StringUtil.split(
+					clonedLayout.getTypeSettingsProperty(
+						LayoutTypePortletConstants.PANEL_SELECTED_PORTLETS))) {
+
+			Portlet portlet = _portletLocalService.fetchPortletById(
+				layout.getCompanyId(), portletId);
+
+			if (portlet != null) {
+				portletIds.add(portletId);
+			}
+		}
 
 		return portletIds;
 	}
@@ -1935,6 +1945,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@BeanReference(type = PluginSettingLocalService.class)
 	private PluginSettingLocalService _pluginSettingLocalService;
+
+	@BeanReference(type = PortletLocalService.class)
+	private PortletLocalService _portletLocalService;
 
 	@BeanReference(type = UserPersistence.class)
 	private UserPersistence _userPersistence;

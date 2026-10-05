@@ -349,6 +349,17 @@ public abstract class BaseBundlePersistentResource
 			return;
 		}
 
+		String controllerBuildURL = dataJSONObject.optString(
+			"controller_build_url");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(controllerBuildURL) &&
+			!Objects.equals(controllerBuildURL, getControllerBuildURL())) {
+
+			_relinquishControl(controllerBuildURL);
+
+			return;
+		}
+
 		Status status = getStatus();
 
 		if (status == Status.NOT_STARTED) {
@@ -951,6 +962,30 @@ public abstract class BaseBundlePersistentResource
 		}
 
 		start();
+	}
+
+	private void _relinquishControl(String controllerBuildURL) {
+		print(
+			"Following bundles at " + controllerBuildURL +
+				" after another build took control");
+
+		long producerQueueId = getProducerQueueId();
+
+		if ((getStatus() == Status.IN_QUEUE) && (producerQueueId > 0)) {
+			try {
+				JenkinsStopBuildUtil.cancelQueueItem(
+					getProducerJenkinsMaster(), producerQueueId);
+			}
+			catch (Exception exception) {
+				print(
+					JenkinsResultsParserUtil.combine(
+						"WARNING: Unable to cancel queue item ",
+						String.valueOf(producerQueueId), ": ",
+						exception.getMessage()));
+			}
+		}
+
+		setControllerBuildURL(controllerBuildURL);
 	}
 
 	private void _updateBuild(String producerBuildURL) {

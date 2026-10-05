@@ -229,10 +229,6 @@ public class DefaultObjectEntryManagerImpl
 			}
 		}
 
-		validateReadOnlyObjectFields(
-			null, getGroupId(objectDefinition, scopeKey), objectDefinition,
-			objectEntry);
-
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 

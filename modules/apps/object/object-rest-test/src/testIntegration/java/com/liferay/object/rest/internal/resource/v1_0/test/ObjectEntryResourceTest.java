@@ -6069,6 +6069,34 @@ public class ObjectEntryResourceTest {
 				(JSONArray)_userAccountJSONObject.get("permissions")
 			},
 			Type.MANY_TO_MANY);
+
+		// Without fields, many to one relationship
+
+		String relationshipFieldName = String.format(
+			"r_%s_%s", _objectRelationship5.getName(),
+			_userSystemObjectDefinition.getPKObjectFieldName());
+
+		String relationshipFieldNameNestedFieldName = StringUtil.removeLast(
+			relationshipFieldName, "Id");
+
+		_assertNestedFieldsInRelationships(
+			0, 1,
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition4.getRESTContextPath(), "/",
+					_objectEntry4.getObjectEntryId(), "?nestedFields=",
+					relationshipFieldName),
+				Http.Method.GET),
+			relationshipFieldNameNestedFieldName,
+			new String[][] {
+				{
+					_OBJECT_FIELD_NAME_TEXT,
+					String.valueOf(_OBJECT_FIELD_VALUE_4)
+				},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			null, Type.MANY_TO_ONE);
 	}
 
 	@Test

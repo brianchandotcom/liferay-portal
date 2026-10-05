@@ -960,18 +960,19 @@ else {
 		Liferay.Portlet.register('<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>');
 	</c:if>
 
-	Liferay.Portlet.onLoad(
-		{
-			canEditTitle: <%= canEditTitle %>,
-			columnPos: <%= columnPos %>,
-			isAjaxable: <%= portlet.isAjaxable() %>,
-			isStatic: '<%= staticVar %>',
-			namespacedId: 'p_p_id<%= HtmlUtil.escapeJS((PortalUtil.getLiferayPortletResponse(liferayRenderResponse)).getNamespace()) %>',
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
-			refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay, false)) %>',
-			refreshURLData: <%= JSONFactoryUtil.looseSerializeDeep(PortletURLUtil.getRefreshURLParameters(request)) %>
-		}
-	);
+	Liferay.Portlet.onLoad({
+		canEditTitle: <%= canEditTitle %>,
+		columnPos: <%= columnPos %>,
+		isAjaxable: <%= portlet.isAjaxable() %>,
+		isStatic: '<%= staticVar %>',
+		namespacedId:
+			'p_p_id<%= HtmlUtil.escapeJS((PortalUtil.getLiferayPortletResponse(liferayRenderResponse)).getNamespace()) %>',
+		portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
+		refreshURL:
+			'<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay, false)) %>',
+		refreshURLData:
+			<%= JSONFactoryUtil.looseSerializeDeep(PortletURLUtil.getRefreshURLParameters(request)) %>,
+	});
 </aui:script>
 
 <c:if test="<%= renderPortletBoundary %>">
@@ -997,7 +998,8 @@ else {
 		<aui:script position="inline" use="aui-base">
 			if (window.parent) {
 				var data = {
-					portletAjaxable: <%= !(((portletResourcePortlet != null) && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(liferayRenderRequest, portletId + SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE)) %>
+					portletAjaxable:
+						<%= !(((portletResourcePortlet != null) && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(liferayRenderRequest, portletId + SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE)) %>,
 				};
 
 				<c:if test="<%= (refreshPortletData != null) && !refreshPortletData.isEmpty() %>">
@@ -1014,7 +1016,10 @@ else {
 
 				</c:if>
 
-				Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(refreshPortletId) %>_', data);
+				Liferay.Util.getOpener().Liferay.Portlet.refresh(
+					'#p_p_id_<%= HtmlUtil.escapeJS(refreshPortletId) %>_',
+					data
+				);
 			}
 		</aui:script>
 	</c:if>
@@ -1034,24 +1039,21 @@ else {
 
 				dialog.on(
 					'<portlet:namespace />hideRefreshDialog|visibleChange',
-					function(event) {
+					function (event) {
 						if (!event.newVal && event.src !== 'hideLink') {
-							var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
+							var refreshWindow =
+								dialog._refreshWindow || Liferay.Util.getTop();
 
 							var topA = refreshWindow.AUI();
 
-							topA.use(
-								'aui-loading-mask-deprecated',
-								function(A) {
-									new A.LoadingMask(
-										{
-											target: A.getBody()
-										}
-									).show();
-								}
-							);
+							topA.use('aui-loading-mask-deprecated', function (A) {
+								new A.LoadingMask({
+									target: A.getBody(),
+								}).show();
+							});
 
-							refreshWindow.location.href = '<%= HtmlUtil.escapeJS(closeRedirect) %>';
+							refreshWindow.location.href =
+								'<%= HtmlUtil.escapeJS(closeRedirect) %>';
 						}
 						else {
 							dialog.detach(hideDialogSignature);
@@ -1081,13 +1083,14 @@ else {
 
 			dialog.on(
 				'<portlet:namespace />hideRefreshDialog|visibleChange',
-				function(event) {
+				function (event) {
 					if (!event.newVal && event.src !== 'hideLink') {
 						var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
 
 						if (window.parent) {
 							var data = {
-								portletAjaxable: <%= !(((portletResourcePortlet != null) && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(liferayRenderRequest, portletId + SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE)) %>
+								portletAjaxable:
+									<%= !(((portletResourcePortlet != null) && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(liferayRenderRequest, portletId + SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE)) %>,
 							};
 
 							<c:if test="<%= (refreshPortletData != null) && !refreshPortletData.isEmpty() %>">
@@ -1104,7 +1107,10 @@ else {
 
 							</c:if>
 
-							refreshWindow.Liferay.Portlet.refresh('#p_p_id_<%= closeRefreshPortletId %>_', data);
+							refreshWindow.Liferay.Portlet.refresh(
+								'#p_p_id_<%= closeRefreshPortletId %>_',
+								data
+							);
 						}
 					}
 					else {

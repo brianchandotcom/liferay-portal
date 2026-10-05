@@ -1925,9 +1925,11 @@ This affects anyone who triggered one of these operations by saving the correspo
 
 Use the Portal Instances headless API:
 
-- `POST /o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}/copy`
-- `POST /o/headless-portal-instances/v1.0/portal-instances/{portalInstanceId}/export`
+- `POST /o/headless-portal-instances/v1.0/portal-instances/copy`
+- `POST /o/headless-portal-instances/v1.0/portal-instances/export`
 - `POST /o/headless-portal-instances/v1.0/portal-instances/import`
+
+Copy and export take the instance in the request body, as `sourcePortalInstanceId` and `portalInstanceId` respectively.
 
 Copy and export can also be triggered from the Virtual Instances page in the Control Panel. Every endpoint requires an authenticated omniadmin, whereas deploying a configuration file required no credentials, so provisioning scripts that ran before an administrator existed must now authenticate.
 

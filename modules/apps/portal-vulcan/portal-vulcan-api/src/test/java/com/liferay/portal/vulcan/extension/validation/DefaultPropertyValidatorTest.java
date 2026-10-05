@@ -120,6 +120,10 @@ public class DefaultPropertyValidatorTest {
 			propertyDefinition, RandomTestUtil.randomDouble());
 		defaultPropertyValidator.validate(
 			propertyDefinition, RandomTestUtil.randomFloat());
+		defaultPropertyValidator.validate(
+			propertyDefinition, RandomTestUtil.randomInt());
+		defaultPropertyValidator.validate(
+			propertyDefinition, RandomTestUtil.randomLong());
 	}
 
 	@Test

@@ -1,13 +1,13 @@
 {{- $runtimeConfigs := list
-    (dict "cpuRequest" "23m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-backup-config" "provider" "provider-aws-backup" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
-    (dict "cpuRequest" "25m" "memoryLimit" "1Gi" "memoryRequest" "512Mi" "name" "aws-cloudwatchlogs-config" "provider" "provider-aws-cloudwatchlogs" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
-    (dict "cpuRequest" "49m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-ec2-config" "provider" "provider-aws-ec2" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
-    (dict "cpuRequest" "23m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-family-config" "provider" "provider-family-aws" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
-    (dict "cpuRequest" "35m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-iam-config" "provider" "provider-aws-iam" "roleArnKey" "crossplaneIamRoleArn" "serviceAccountName" "crossplane-iam")
-    (dict "cpuRequest" "23m" "memoryLimit" "1Gi" "memoryRequest" "768Mi" "name" "aws-kms-config" "provider" "provider-aws-kms" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
-    (dict "cpuRequest" "23m" "memoryLimit" "1Gi" "memoryRequest" "768Mi" "name" "aws-opensearch-config" "provider" "provider-aws-opensearch" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
-    (dict "cpuRequest" "49m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-rds-config" "provider" "provider-aws-rds" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
-    (dict "cpuRequest" "126m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-s3-config" "provider" "provider-aws-s3" "roleArnKey" "crossplaneDataRoleArn" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "23m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-backup-config" "provider" "provider-aws-backup" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "25m" "memoryLimit" "1Gi" "memoryRequest" "512Mi" "name" "aws-cloudwatchlogs-config" "provider" "provider-aws-cloudwatchlogs" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "49m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-ec2-config" "provider" "provider-aws-ec2" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "23m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-family-config" "provider" "provider-family-aws" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "35m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-iam-config" "provider" "provider-aws-iam" "serviceAccountName" "crossplane-iam")
+    (dict "cpuRequest" "23m" "memoryLimit" "1Gi" "memoryRequest" "768Mi" "name" "aws-kms-config" "provider" "provider-aws-kms" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "23m" "memoryLimit" "1Gi" "memoryRequest" "768Mi" "name" "aws-opensearch-config" "provider" "provider-aws-opensearch" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "49m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-rds-config" "provider" "provider-aws-rds" "serviceAccountName" "crossplane-data")
+    (dict "cpuRequest" "126m" "memoryLimit" "2Gi" "memoryRequest" "768Mi" "name" "aws-s3-config" "provider" "provider-aws-s3" "serviceAccountName" "crossplane-data")
 -}}
 {{- range $runtimeConfig := $runtimeConfigs }}
 ---
@@ -46,9 +46,4 @@ spec:
                             {{- include "crossplane-runtime-configs.containerSecurityContext" $ | nindent 28 }}
                     {{- include "crossplane-runtime-configs.podSecurityContext" $ | nindent 20 }}
                     serviceAccountName: {{ $runtimeConfig.serviceAccountName }}
-    serviceAccountTemplate:
-        metadata:
-            annotations:
-                eks.amazonaws.com/role-arn: {{ index $.Values.deploymentContext $runtimeConfig.roleArnKey | quote }}
-            name: {{ $runtimeConfig.serviceAccountName }}
 {{- end }}

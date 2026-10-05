@@ -112,6 +112,17 @@ public class AssetStatisticsResourceImpl
 						selectedSpaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_DRAFT)));
+				setLongStandingDraftCount(
+					() -> _getCount(
+						selectedSpaceGroupIds, objectDefinitionIds,
+						ObjectEntryTable.INSTANCE.status.eq(
+							WorkflowConstants.STATUS_DRAFT
+						).and(
+							ObjectEntryTable.INSTANCE.modifiedDate.lt(
+								new Date(
+									date.getTime() -
+										(Time.DAY * _LONG_STANDING_DRAFT_DAYS)))
+						)));
 				setPendingCount(
 					() -> _getCount(
 						selectedSpaceGroupIds, objectDefinitionIds,
@@ -217,6 +228,7 @@ public class AssetStatisticsResourceImpl
 				setExpiredCount(() -> 0L);
 				setExpiringSoonCount(() -> 0L);
 				setInDraftCount(() -> 0L);
+				setLongStandingDraftCount(() -> 0L);
 				setPendingCount(() -> 0L);
 				setReviewDateOverdueCount(() -> 0L);
 				setScheduledCount(() -> 0L);
@@ -227,6 +239,8 @@ public class AssetStatisticsResourceImpl
 	}
 
 	private static final int _EXPIRING_SOON_DAYS = 7;
+
+	private static final int _LONG_STANDING_DRAFT_DAYS = 30;
 
 	private static final int _UPCOMING_REVIEW_DAYS = 7;
 

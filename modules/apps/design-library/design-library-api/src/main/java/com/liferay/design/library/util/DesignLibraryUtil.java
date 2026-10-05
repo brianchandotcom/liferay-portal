@@ -35,6 +35,10 @@ import jakarta.servlet.http.HttpServletRequest;
 public class DesignLibraryUtil {
 
 	public static long[] fetchConnectedDesignLibraryGroupIds(long groupId) {
+		if (groupId == 0) {
+			return new long[0];
+		}
+
 		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		if (group == null) {

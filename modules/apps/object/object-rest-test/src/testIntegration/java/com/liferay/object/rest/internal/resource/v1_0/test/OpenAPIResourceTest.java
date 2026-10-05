@@ -22,6 +22,7 @@ import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -648,6 +649,54 @@ public class OpenAPIResourceTest {
 				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
+
+		JSONObject userAccountsJSONObject = JSONUtil.put(
+			"items", JSONUtil.put("$ref", "#/components/schemas/UserAccount")
+		).put(
+			"type", "array"
+		);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"relationMTo1", userAccountsJSONObject
+			).put(
+				"relationMToM", userAccountsJSONObject
+			).toString(),
+			JSONUtil.getValueAsJSONObject(
+				HTTPTestUtil.invokeToJSONObject(
+					null,
+					_objectDefinition.getRESTContextPath() + "/openapi.json",
+					Http.Method.GET),
+				"JSONObject/components", "JSONObject/schemas",
+				"JSONObject/Object1", "JSONObject/properties"
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetOpenAPIWithUnpublishedObjectRelationship()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		_objectDefinitions.add(objectDefinition);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition, objectDefinition,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject propertiesJSONObject = JSONUtil.getValueAsJSONObject(
+			HTTPTestUtil.invokeToJSONObject(
+				null, _objectDefinition.getRESTContextPath() + "/openapi.json",
+				Http.Method.GET),
+			"JSONObject/components", "JSONObject/schemas", "JSONObject/Object1",
+			"JSONObject/properties");
+
+		Assert.assertFalse(
+			propertiesJSONObject.has(objectRelationship.getName()));
 	}
 
 	private ListTypeDefinition _addListTypeDefinition() throws Exception {

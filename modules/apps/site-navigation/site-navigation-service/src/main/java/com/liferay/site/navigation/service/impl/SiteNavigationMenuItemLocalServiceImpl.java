@@ -8,6 +8,7 @@ package com.liferay.site.navigation.service.impl;
 import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -496,6 +497,10 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 	private void _updateSiteNavigationMenuModifiedDate(
 		long siteNavigationMenuId) {
+
+		if (!CTCollectionThreadLocal.isProductionMode()) {
+			return;
+		}
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuPersistence.fetchByPrimaryKey(

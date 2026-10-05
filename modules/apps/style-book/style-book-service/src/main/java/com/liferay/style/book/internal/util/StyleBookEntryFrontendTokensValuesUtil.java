@@ -106,7 +106,7 @@ public class StyleBookEntryFrontendTokensValuesUtil {
 		String themeId) {
 
 		if (customFrontendTokenNames.contains(frontendTokenName)) {
-			return StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID;
+			return StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM;
 		}
 
 		return themeId;

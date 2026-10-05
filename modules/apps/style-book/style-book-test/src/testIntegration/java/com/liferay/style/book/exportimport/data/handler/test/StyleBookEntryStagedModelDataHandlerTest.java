@@ -69,7 +69,7 @@ public class StyleBookEntryStagedModelDataHandlerTest
 				frontendTokenName);
 		String frontendTokensValues = JSONUtil.put(
 			StringBundler.concat(
-				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM,
 				StringPool.COLON, frontendTokenName),
 			JSONUtil.put("value", RandomTestUtil.randomString())
 		).toString();
@@ -186,11 +186,11 @@ public class StyleBookEntryStagedModelDataHandlerTest
 
 		String expectedFrontendTokensValues = JSONUtil.put(
 			StringBundler.concat(
-				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM,
 				StringPool.COLON, customFrontendTokenName),
 			JSONUtil.put(
 				"tokenDefinitionId",
-				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM
 			).put(
 				"value", customValue
 			)

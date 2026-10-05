@@ -613,13 +613,13 @@ public class StyleBookEntryLocalServiceImpl
 				styleBookEntry.getFrontendTokensValues());
 
 		frontendTokensValuesJSONObject.put(
-			StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID +
+			StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM +
 				StringPool.COLON + frontendTokenName,
 			JSONUtil.put(
 				"cssVariableMapping", cssVariableMappingValue
 			).put(
 				"tokenDefinitionId",
-				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM
 			).put(
 				"value", defaultValue
 			));

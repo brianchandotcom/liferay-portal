@@ -6,7 +6,6 @@
 package com.liferay.oauth2.provider.internal.upgrade.v5_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseIndexedColumnSizeUpgradeProcessTestCase;
@@ -21,25 +20,6 @@ public class OAuth2ApplicationIndexedColumnSizeUpgradeProcessTest
 	extends BaseIndexedColumnSizeUpgradeProcessTestCase {
 
 	@Override
-	protected String getColumnName() {
-		return "externalReferenceCode";
-	}
-
-	@Override
-	protected String getIndexName() {
-		return "IX_67BC29B0";
-	}
-
-	@Override
-	protected String getInsertSQL(
-		String columnName, String columnValue, long id, String tableName) {
-
-		return StringBundler.concat(
-			"insert into ", tableName, " (", getPrimaryKeyColumnName(), ", ",
-			columnName, ") values (", id, ", '", columnValue, "')");
-	}
-
-	@Override
 	protected int getNewColumnLength() {
 		return 500;
 	}
@@ -50,13 +30,8 @@ public class OAuth2ApplicationIndexedColumnSizeUpgradeProcessTest
 	}
 
 	@Override
-	protected String getPrimaryKeyColumnName() {
-		return "oAuth2ApplicationId";
-	}
-
-	@Override
-	protected String getTableName() {
-		return "OAuth2Application";
+	protected String[][] getTableAndColumnNames() {
+		return new String[][] {{"OAuth2Application", "externalReferenceCode"}};
 	}
 
 	@Override

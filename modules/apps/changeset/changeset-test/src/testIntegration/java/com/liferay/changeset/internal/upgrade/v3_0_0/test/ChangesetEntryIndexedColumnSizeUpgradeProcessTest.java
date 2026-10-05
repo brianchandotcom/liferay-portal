@@ -6,7 +6,6 @@
 package com.liferay.changeset.internal.upgrade.v3_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseIndexedColumnSizeUpgradeProcessTestCase;
@@ -21,25 +20,6 @@ public class ChangesetEntryIndexedColumnSizeUpgradeProcessTest
 	extends BaseIndexedColumnSizeUpgradeProcessTestCase {
 
 	@Override
-	protected String getColumnName() {
-		return "classExternalReferenceCode";
-	}
-
-	@Override
-	protected String getIndexName() {
-		return "IX_71B99FC2";
-	}
-
-	@Override
-	protected String getInsertSQL(
-		String columnName, String columnValue, long id, String tableName) {
-
-		return StringBundler.concat(
-			"insert into ", tableName, " (", getPrimaryKeyColumnName(), ", ",
-			columnName, ") values (", id, ", '", columnValue, "')");
-	}
-
-	@Override
 	protected int getNewColumnLength() {
 		return 500;
 	}
@@ -50,13 +30,10 @@ public class ChangesetEntryIndexedColumnSizeUpgradeProcessTest
 	}
 
 	@Override
-	protected String getPrimaryKeyColumnName() {
-		return "changesetEntryId";
-	}
-
-	@Override
-	protected String getTableName() {
-		return "ChangesetEntry";
+	protected String[][] getTableAndColumnNames() {
+		return new String[][] {
+			{"ChangesetEntry", "classExternalReferenceCode"}
+		};
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -20,7 +21,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import org.junit.After;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -42,101 +44,35 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 		db = DBManagerUtil.getDB();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		if (_maxValueRowId != 0) {
-			db.runSQL(
-				StringBundler.concat(
-					"delete from ", getTableName(), " where ",
-					getPrimaryKeyColumnName(), " in (", _maxValueRowId, ", ",
-					_oversizedValueRowId, ")"));
-		}
-	}
-
 	@Test
 	public void testUpgrade() throws Exception {
-		try (Connection connection = DataAccess.getConnection()) {
-			db.alterColumnType(
-				connection, getTableName(), getColumnName(),
-				"VARCHAR(" + getOldColumnLength() + ") null");
+		for (String[] tableAndColumnName : getTableAndColumnNames()) {
+			_testUpgrade(tableAndColumnName[1], tableAndColumnName[0]);
 		}
-
-		String maxValue = RandomTestUtil.randomString(getNewColumnLength());
-
-		_maxValueRowId = RandomTestUtil.nextLong();
-
-		db.runSQL(_getInsertSQL(maxValue, _maxValueRowId));
-
-		String oversizedValue = RandomTestUtil.randomString(
-			getNewColumnLength() + 1);
-
-		_oversizedValueRowId = RandomTestUtil.nextLong();
-
-		db.runSQL(_getInsertSQL(oversizedValue, _oversizedValueRowId));
-
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			getUpgradeStepRegistrator(), getUpgradeProcessClassName());
-
-		upgradeProcess.upgrade();
-
-		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
-
-			Assert.assertTrue(
-				dbInspector.hasColumnType(
-					getTableName(), getColumnName(),
-					StringBundler.concat(
-						"VARCHAR(", getNewColumnLength(), ") null")));
-			Assert.assertTrue(
-				dbInspector.hasIndex(getTableName(), getIndexName()));
-		}
-
-		_assertColumnValue(maxValue, _maxValueRowId);
-		_assertColumnValue(
-			oversizedValue.substring(0, getNewColumnLength()),
-			_oversizedValueRowId);
 	}
 
 	@Test
 	public void testUpgradeWithDuplicateUniqueIndexEntries() throws Exception {
-		try (Connection connection = DataAccess.getConnection()) {
-			db.alterColumnType(
-				connection, getTableName(), getColumnName(),
-				"VARCHAR(" + getOldColumnLength() + ") null");
+		for (String[] tableAndColumnName : getTableAndColumnNames()) {
+			_testUpgradeWithDuplicateUniqueIndexEntries(
+				tableAndColumnName[1], tableAndColumnName[0]);
 		}
-
-		String maxValue = RandomTestUtil.randomString(getNewColumnLength());
-
-		_maxValueRowId = RandomTestUtil.nextLong();
-
-		db.runSQL(_getInsertSQL(maxValue, _maxValueRowId));
-
-		String oversizedValue = maxValue + "x";
-
-		_oversizedValueRowId = RandomTestUtil.nextLong();
-
-		db.runSQL(_getInsertSQL(oversizedValue, _oversizedValueRowId));
-
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			getUpgradeStepRegistrator(), getUpgradeProcessClassName());
-
-		Assert.assertThrows(UpgradeException.class, upgradeProcess::upgrade);
 	}
 
-	protected abstract String getColumnName();
+	protected String getInsertSQL(
+		String columnName, String columnValue, long id,
+		String primaryKeyColumnName, String tableName) {
 
-	protected abstract String getIndexName();
-
-	protected abstract String getInsertSQL(
-		String columnName, String columnValue, long id, String tableName);
+		return StringBundler.concat(
+			"insert into ", tableName, " (", primaryKeyColumnName, ", ",
+			columnName, ") values (", id, ", '", columnValue, "')");
+	}
 
 	protected abstract int getNewColumnLength();
 
 	protected abstract int getOldColumnLength();
 
-	protected abstract String getPrimaryKeyColumnName();
-
-	protected abstract String getTableName();
+	protected abstract String[][] getTableAndColumnNames();
 
 	protected abstract String getUpgradeProcessClassName();
 
@@ -144,15 +80,28 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 
 	protected static DB db;
 
-	private void _assertColumnValue(String expectedValue, long id)
+	private void _alterColumnType(
+			int columnLength, String columnName, String tableName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			db.alterColumnType(
+				connection, tableName, columnName,
+				StringBundler.concat("VARCHAR(", columnLength, ") null"));
+		}
+	}
+
+	private void _assertColumnValue(
+			String columnName, String expectedValue, long id,
+			String primaryKeyColumnName, String tableName)
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select ", getColumnName(), " from ", getTableName(),
-					" where ", getPrimaryKeyColumnName(), " = ?"))) {
+					"select ", columnName, " from ", tableName, " where ",
+					primaryKeyColumnName, " = ?"))) {
 
 			preparedStatement.setLong(1, id);
 
@@ -160,16 +109,139 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 				Assert.assertTrue(resultSet.next());
 
 				Assert.assertEquals(
-					expectedValue, resultSet.getString(getColumnName()));
+					expectedValue, resultSet.getString(columnName));
 			}
 		}
 	}
 
-	private String _getInsertSQL(String columnValue, long id) {
-		return getInsertSQL(getColumnName(), columnValue, id, getTableName());
+	private List<IndexMetadata> _getIndexMetadatas(
+			String columnName, String tableName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			return db.getIndexMetadatas(
+				connection, tableName, columnName, false);
+		}
 	}
 
-	private long _maxValueRowId;
-	private long _oversizedValueRowId;
+	private String _getPrimaryKeyColumnName(String tableName) throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
+				connection, tableName);
+
+			return primaryKeyColumnNames[0];
+		}
+	}
+
+	private void _restore(
+			String columnName, long maxValueId, long oversizedValueId,
+			String primaryKeyColumnName, String tableName)
+		throws Exception {
+
+		db.runSQL(
+			StringBundler.concat(
+				"delete from ", tableName, " where ", primaryKeyColumnName,
+				" in (", maxValueId, ", ", oversizedValueId, ")"));
+
+		_alterColumnType(getNewColumnLength(), columnName, tableName);
+	}
+
+	private void _testUpgrade(String columnName, String tableName)
+		throws Exception {
+
+		long maxValueId = RandomTestUtil.nextLong();
+		long oversizedValueId = RandomTestUtil.nextLong();
+		String primaryKeyColumnName = _getPrimaryKeyColumnName(tableName);
+
+		try {
+			List<IndexMetadata> indexMetadatas = _getIndexMetadatas(
+				columnName, tableName);
+
+			_alterColumnType(getOldColumnLength(), columnName, tableName);
+
+			String maxValue = RandomTestUtil.randomString(getNewColumnLength());
+
+			db.runSQL(
+				getInsertSQL(
+					columnName, maxValue, maxValueId, primaryKeyColumnName,
+					tableName));
+
+			String oversizedValue = RandomTestUtil.randomString(
+				getNewColumnLength() + 1);
+
+			db.runSQL(
+				getInsertSQL(
+					columnName, oversizedValue, oversizedValueId,
+					primaryKeyColumnName, tableName));
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				getUpgradeStepRegistrator(), getUpgradeProcessClassName());
+
+			upgradeProcess.upgrade();
+
+			try (Connection connection = DataAccess.getConnection()) {
+				DBInspector dbInspector = new DBInspector(connection);
+
+				Assert.assertTrue(
+					dbInspector.hasColumnType(
+						tableName, columnName,
+						StringBundler.concat(
+							"VARCHAR(", getNewColumnLength(), ") null")));
+
+				for (IndexMetadata indexMetadata : indexMetadatas) {
+					Assert.assertTrue(
+						dbInspector.hasIndex(
+							tableName, indexMetadata.getIndexName()));
+				}
+			}
+
+			_assertColumnValue(
+				columnName, maxValue, maxValueId, primaryKeyColumnName,
+				tableName);
+			_assertColumnValue(
+				columnName, oversizedValue.substring(0, getNewColumnLength()),
+				oversizedValueId, primaryKeyColumnName, tableName);
+		}
+		finally {
+			_restore(
+				columnName, maxValueId, oversizedValueId, primaryKeyColumnName,
+				tableName);
+		}
+	}
+
+	private void _testUpgradeWithDuplicateUniqueIndexEntries(
+			String columnName, String tableName)
+		throws Exception {
+
+		long maxValueId = RandomTestUtil.nextLong();
+		long oversizedValueId = RandomTestUtil.nextLong();
+		String primaryKeyColumnName = _getPrimaryKeyColumnName(tableName);
+
+		try {
+			_alterColumnType(getOldColumnLength(), columnName, tableName);
+
+			String maxValue = RandomTestUtil.randomString(getNewColumnLength());
+
+			db.runSQL(
+				getInsertSQL(
+					columnName, maxValue, maxValueId, primaryKeyColumnName,
+					tableName));
+			db.runSQL(
+				getInsertSQL(
+					columnName, maxValue + "x", oversizedValueId,
+					primaryKeyColumnName, tableName));
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				getUpgradeStepRegistrator(), getUpgradeProcessClassName());
+
+			Assert.assertThrows(
+				UpgradeException.class, upgradeProcess::upgrade);
+		}
+		finally {
+			_restore(
+				columnName, maxValueId, oversizedValueId, primaryKeyColumnName,
+				tableName);
+		}
+	}
 
 }

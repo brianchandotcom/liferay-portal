@@ -21,23 +21,13 @@ public class ObjectEntryIndexedColumnSizeUpgradeProcessTest
 	extends BaseIndexedColumnSizeUpgradeProcessTestCase {
 
 	@Override
-	protected String getColumnName() {
-		return "externalReferenceCode";
-	}
-
-	@Override
-	protected String getIndexName() {
-		return "IX_11E61545";
-	}
-
-	@Override
 	protected String getInsertSQL(
-		String columnName, String columnValue, long id, String tableName) {
+		String columnName, String columnValue, long id,
+		String primaryKeyColumnName, String tableName) {
 
 		return StringBundler.concat(
-			"insert into ", tableName, " (mvccVersion, ",
-			getPrimaryKeyColumnName(), ", ", columnName, ") values (0, ", id,
-			", '", columnValue, "')");
+			"insert into ", tableName, " (mvccVersion, ", primaryKeyColumnName,
+			", ", columnName, ") values (0, ", id, ", '", columnValue, "')");
 	}
 
 	@Override
@@ -51,13 +41,8 @@ public class ObjectEntryIndexedColumnSizeUpgradeProcessTest
 	}
 
 	@Override
-	protected String getPrimaryKeyColumnName() {
-		return "objectEntryId";
-	}
-
-	@Override
-	protected String getTableName() {
-		return "ObjectEntry";
+	protected String[][] getTableAndColumnNames() {
+		return new String[][] {{"ObjectEntry", "externalReferenceCode"}};
 	}
 
 	@Override

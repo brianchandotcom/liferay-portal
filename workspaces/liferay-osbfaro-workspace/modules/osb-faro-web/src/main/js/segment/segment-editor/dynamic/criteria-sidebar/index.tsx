@@ -221,7 +221,7 @@ export default function CriteriaSidebar({
 	return (
 		<div className="criteria-sidebar-root">
 			<div className="sidebar-title">
-				{Liferay.Language.get('segment-criteria')}
+				{Liferay.Language.get('conditions-library')}
 			</div>
 
 			{type !== SegmentTypes.RealTime && (

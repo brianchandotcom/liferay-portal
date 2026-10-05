@@ -8,8 +8,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -146,25 +145,21 @@ public class DigesterUtil {
 	}
 
 	public static byte[] digestRaw(String algorithm, ByteBuffer byteBuffer) {
-		MessageDigest messageDigest = null;
-
 		try {
-			messageDigest = MessageDigest.getInstance(algorithm);
+			MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
 
 			messageDigest.update(byteBuffer);
+
+			return messageDigest.digest();
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-			_log.error(noSuchAlgorithmException);
+			throw new SystemException(noSuchAlgorithmException);
 		}
-
-		return messageDigest.digest();
 	}
 
 	public static byte[] digestRaw(String algorithm, InputStream inputStream1) {
-		MessageDigest messageDigest = null;
-
 		try (InputStream inputStream2 = inputStream1) {
-			messageDigest = MessageDigest.getInstance(algorithm);
+			MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
 
 			byte[] buffer = new byte[StreamUtil.BUFFER_SIZE];
 
@@ -175,22 +170,17 @@ public class DigesterUtil {
 					messageDigest.update(buffer, 0, read);
 				}
 			}
-		}
-		catch (IOException ioException) {
-			_log.error(ioException);
-		}
-		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-			_log.error(noSuchAlgorithmException);
-		}
 
-		return messageDigest.digest();
+			return messageDigest.digest();
+		}
+		catch (IOException | NoSuchAlgorithmException exception) {
+			throw new SystemException(exception);
+		}
 	}
 
 	public static byte[] digestRaw(String algorithm, String... text) {
-		MessageDigest messageDigest = null;
-
 		try {
-			messageDigest = MessageDigest.getInstance(algorithm);
+			MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
 
 			StringBundler sb = new StringBundler((text.length * 2) - 1);
 
@@ -205,15 +195,14 @@ public class DigesterUtil {
 			String s = sb.toString();
 
 			messageDigest.update(s.getBytes(ENCODING));
-		}
-		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-			_log.error(noSuchAlgorithmException);
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			_log.error(unsupportedEncodingException);
-		}
 
-		return messageDigest.digest();
+			return messageDigest.digest();
+		}
+		catch (NoSuchAlgorithmException | UnsupportedEncodingException
+					exception) {
+
+			throw new SystemException(exception);
+		}
 	}
 
 	private static String _getDefaultAlgorithm() {
@@ -226,7 +215,5 @@ public class DigesterUtil {
 
 	private static final boolean _BASE_64 = Objects.equals(
 		PropsUtil.get(PropsKeys.PASSWORDS_DIGEST_ENCODING), "base64");
-
-	private static final Log _log = LogFactoryUtil.getLog(DigesterUtil.class);
 
 }

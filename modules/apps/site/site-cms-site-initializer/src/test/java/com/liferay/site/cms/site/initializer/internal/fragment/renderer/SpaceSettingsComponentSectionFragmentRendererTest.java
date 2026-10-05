@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -56,6 +58,10 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 
 		languageUtil.setLanguage(_language);
 
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(_portal);
+
 		ReflectionTestUtil.setFieldValue(
 			_spaceSettingsComponentSectionFragmentRenderer,
 			"_depotEntryModelResourcePermission",
@@ -79,7 +85,8 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 			Mockito.eq(ActionKeys.UPDATE)
 		);
 
-		_getProps();
+		_spaceSettingsComponentSectionFragmentRenderer.getProps(
+			null, _getMockHttpServletRequest());
 	}
 
 	@Test
@@ -108,7 +115,24 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 			Collections.emptySet()
 		);
 
-		Map<String, Object> props = _getProps();
+		String redirect = "javascript:alert(1)";
+
+		String escapedRedirect = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_portal.escapeRedirect(redirect)
+		).thenReturn(
+			escapedRedirect
+		);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("redirect", redirect);
+
+		Map<String, Object> props =
+			_spaceSettingsComponentSectionFragmentRenderer.getProps(
+				null, mockHttpServletRequest);
 
 		Mockito.verify(
 			_depotEntryModelResourcePermission
@@ -117,12 +141,13 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 			Mockito.eq(ActionKeys.UPDATE)
 		);
 
+		Assert.assertEquals(escapedRedirect, props.get("backURL"));
 		Assert.assertEquals(
 			_EXTERNAL_REFERENCE_CODE, props.get("externalReferenceCode"));
 		Assert.assertEquals(_GROUP_ID, props.get("groupId"));
 	}
 
-	private Map<String, Object> _getProps() throws Exception {
+	private MockHttpServletRequest _getMockHttpServletRequest() {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -160,8 +185,7 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return _spaceSettingsComponentSectionFragmentRenderer.getProps(
-			null, mockHttpServletRequest);
+		return mockHttpServletRequest;
 	}
 
 	private static final long _DEPOT_ENTRY_ID = RandomTestUtil.randomLong();
@@ -186,6 +210,9 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 
 	@Mock
 	private Language _language;
+
+	@Mock
+	private Portal _portal;
 
 	private final SpaceSettingsComponentSectionFragmentRenderer
 		_spaceSettingsComponentSectionFragmentRenderer =

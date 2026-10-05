@@ -151,6 +151,29 @@ public class AssetStatistics implements Cloneable, Serializable {
 
 	protected Long longStandingDraftCount;
 
+	public Long getOverdueWorkflowTaskCount() {
+		return overdueWorkflowTaskCount;
+	}
+
+	public void setOverdueWorkflowTaskCount(Long overdueWorkflowTaskCount) {
+		this.overdueWorkflowTaskCount = overdueWorkflowTaskCount;
+	}
+
+	public void setOverdueWorkflowTaskCount(
+		UnsafeSupplier<Long, Exception>
+			overdueWorkflowTaskCountUnsafeSupplier) {
+
+		try {
+			overdueWorkflowTaskCount =
+				overdueWorkflowTaskCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long overdueWorkflowTaskCount;
+
 	public Long getPendingCount() {
 		return pendingCount;
 	}
@@ -256,6 +279,27 @@ public class AssetStatistics implements Cloneable, Serializable {
 
 	protected Long upcomingReviewCount;
 
+	public Long getWorkflowTaskCount() {
+		return workflowTaskCount;
+	}
+
+	public void setWorkflowTaskCount(Long workflowTaskCount) {
+		this.workflowTaskCount = workflowTaskCount;
+	}
+
+	public void setWorkflowTaskCount(
+		UnsafeSupplier<Long, Exception> workflowTaskCountUnsafeSupplier) {
+
+		try {
+			workflowTaskCount = workflowTaskCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long workflowTaskCount;
+
 	@Override
 	public AssetStatistics clone() throws CloneNotSupportedException {
 		return (AssetStatistics)super.clone();
@@ -288,4 +332,4 @@ public class AssetStatistics implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-159856209
+// LIFERAY-REST-BUILDER-HASH:-1604735261

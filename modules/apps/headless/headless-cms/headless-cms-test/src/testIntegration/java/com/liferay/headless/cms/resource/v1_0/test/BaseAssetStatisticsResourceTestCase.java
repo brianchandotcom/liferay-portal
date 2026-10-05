@@ -326,6 +326,16 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"overdueWorkflowTaskCount", additionalAssertFieldName)) {
+
+				if (assetStatistics.getOverdueWorkflowTaskCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pendingCount", additionalAssertFieldName)) {
 				if (assetStatistics.getPendingCount() == null) {
 					valid = false;
@@ -364,6 +374,16 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 					"upcomingReviewCount", additionalAssertFieldName)) {
 
 				if (assetStatistics.getUpcomingReviewCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowTaskCount", additionalAssertFieldName)) {
+
+				if (assetStatistics.getWorkflowTaskCount() == null) {
 					valid = false;
 				}
 
@@ -559,6 +579,19 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"overdueWorkflowTaskCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						assetStatistics1.getOverdueWorkflowTaskCount(),
+						assetStatistics2.getOverdueWorkflowTaskCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pendingCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						assetStatistics1.getPendingCount(),
@@ -611,6 +644,19 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				if (!Objects.deepEquals(
 						assetStatistics1.getUpcomingReviewCount(),
 						assetStatistics2.getUpcomingReviewCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowTaskCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						assetStatistics1.getWorkflowTaskCount(),
+						assetStatistics2.getWorkflowTaskCount())) {
 
 					return false;
 				}
@@ -756,6 +802,11 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("overdueWorkflowTaskCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("pendingCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -777,6 +828,11 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 		}
 
 		if (entityFieldName.equals("upcomingReviewCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("workflowTaskCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -834,11 +890,13 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				expiringSoonCount = RandomTestUtil.randomLong();
 				inDraftCount = RandomTestUtil.randomLong();
 				longStandingDraftCount = RandomTestUtil.randomLong();
+				overdueWorkflowTaskCount = RandomTestUtil.randomLong();
 				pendingCount = RandomTestUtil.randomLong();
 				reviewDateOverdueCount = RandomTestUtil.randomLong();
 				scheduledCount = RandomTestUtil.randomLong();
 				totalCount = RandomTestUtil.randomLong();
 				upcomingReviewCount = RandomTestUtil.randomLong();
+				workflowTaskCount = RandomTestUtil.randomLong();
 			}
 		};
 	}
@@ -1066,4 +1124,4 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 		_assetStatisticsResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-409031756
+// LIFERAY-REST-BUILDER-HASH:522231754

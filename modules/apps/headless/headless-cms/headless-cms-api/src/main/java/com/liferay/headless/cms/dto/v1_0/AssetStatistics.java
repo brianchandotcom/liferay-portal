@@ -296,6 +296,48 @@ public class AssetStatistics implements Serializable {
 	private Supplier<Long> _longStandingDraftCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getOverdueWorkflowTaskCount() {
+		if (_overdueWorkflowTaskCountSupplier != null) {
+			overdueWorkflowTaskCount = _overdueWorkflowTaskCountSupplier.get();
+
+			_overdueWorkflowTaskCountSupplier = null;
+		}
+
+		return overdueWorkflowTaskCount;
+	}
+
+	public void setOverdueWorkflowTaskCount(Long overdueWorkflowTaskCount) {
+		this.overdueWorkflowTaskCount = overdueWorkflowTaskCount;
+
+		_overdueWorkflowTaskCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOverdueWorkflowTaskCount(
+		UnsafeSupplier<Long, Exception>
+			overdueWorkflowTaskCountUnsafeSupplier) {
+
+		_overdueWorkflowTaskCountSupplier = () -> {
+			try {
+				return overdueWorkflowTaskCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long overdueWorkflowTaskCount;
+
+	@JsonIgnore
+	private Supplier<Long> _overdueWorkflowTaskCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getPendingCount() {
 		if (_pendingCountSupplier != null) {
 			pendingCount = _pendingCountSupplier.get();
@@ -500,6 +542,47 @@ public class AssetStatistics implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _upcomingReviewCountSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getWorkflowTaskCount() {
+		if (_workflowTaskCountSupplier != null) {
+			workflowTaskCount = _workflowTaskCountSupplier.get();
+
+			_workflowTaskCountSupplier = null;
+		}
+
+		return workflowTaskCount;
+	}
+
+	public void setWorkflowTaskCount(Long workflowTaskCount) {
+		this.workflowTaskCount = workflowTaskCount;
+
+		_workflowTaskCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setWorkflowTaskCount(
+		UnsafeSupplier<Long, Exception> workflowTaskCountUnsafeSupplier) {
+
+		_workflowTaskCountSupplier = () -> {
+			try {
+				return workflowTaskCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long workflowTaskCount;
+
+	@JsonIgnore
+	private Supplier<Long> _workflowTaskCountSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -599,6 +682,18 @@ public class AssetStatistics implements Serializable {
 			sb.append(longStandingDraftCount);
 		}
 
+		Long overdueWorkflowTaskCount = getOverdueWorkflowTaskCount();
+
+		if (overdueWorkflowTaskCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"overdueWorkflowTaskCount\": ");
+
+			sb.append(overdueWorkflowTaskCount);
+		}
+
 		Long pendingCount = getPendingCount();
 
 		if (pendingCount != null) {
@@ -657,6 +752,18 @@ public class AssetStatistics implements Serializable {
 			sb.append("\"upcomingReviewCount\": ");
 
 			sb.append(upcomingReviewCount);
+		}
+
+		Long workflowTaskCount = getWorkflowTaskCount();
+
+		if (workflowTaskCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowTaskCount\": ");
+
+			sb.append(workflowTaskCount);
 		}
 
 		sb.append("}");
@@ -781,4 +888,4 @@ public class AssetStatistics implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1786824747
+// LIFERAY-REST-BUILDER-HASH:-1872052303

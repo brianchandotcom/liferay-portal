@@ -71,7 +71,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetStatistics(assetLibraryId: ___){approvedCount, brokenLinksCount, expiredCount, expiringSoonCount, inDraftCount, longStandingDraftCount, pendingCount, reviewDateOverdueCount, scheduledCount, totalCount, upcomingReviewCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetStatistics(assetLibraryId: ___){approvedCount, brokenLinksCount, expiredCount, expiringSoonCount, inDraftCount, longStandingDraftCount, overdueWorkflowTaskCount, pendingCount, reviewDateOverdueCount, scheduledCount, totalCount, upcomingReviewCount, workflowTaskCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AssetStatistics assetStatistics(
@@ -333,4 +333,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:656429851
+// LIFERAY-REST-BUILDER-HASH:-621410669

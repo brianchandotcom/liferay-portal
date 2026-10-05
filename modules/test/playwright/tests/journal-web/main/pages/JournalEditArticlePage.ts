@@ -271,6 +271,8 @@ export class JournalEditArticlePage {
 		await this.propertiesTab.waitFor();
 
 		await this.page.locator('body').click();
+
+		await this.expandFieldsPanel();
 	}
 
 	async editURL(title: string, url: string) {
@@ -281,6 +283,16 @@ export class JournalEditArticlePage {
 		await this.page.getByRole('button', {name: 'Edit link'}).click();
 		await this.page.getByRole('textbox', {name: 'Link URL'}).fill(url);
 		await this.page.getByRole('button', {name: 'Update'}).click();
+	}
+
+	async expandFieldsPanel() {
+
+		// The Fields panel remembers being collapsed per user and may
+		// re-collapse while it finishes initializing, so retry the expand
+
+		await expect(async () => {
+			await openFieldset(this.page, 'Fields');
+		}).toPass();
 	}
 
 	async fillContent(content: string) {
@@ -336,9 +348,7 @@ export class JournalEditArticlePage {
 
 		await this.propertiesTab.waitFor();
 
-		// The Fields panel remembers being collapsed per user, so expand it
-
-		await openFieldset(this.page, 'Fields');
+		await this.expandFieldsPanel();
 	}
 
 	async openDMItemSelectorForImages() {

@@ -106,6 +106,14 @@ function getTranslation(languageId: string) {
 }
 
 describe('DateInput', () => {
+	beforeAll(() => {
+		(Liferay.Language as {direction: Record<string, string>}).direction = {
+			ar_SA: 'rtl',
+			en_US: 'ltr',
+			es_ES: 'ltr',
+		};
+	});
+
 	describe('Date', () => {
 		it('submits a typed date in server format', async () => {
 			renderDateInput();
@@ -257,6 +265,16 @@ describe('DateInput', () => {
 			expect(getCalendarButton()).toBeDisabled();
 		});
 
+		it('follows the text direction of the language on screen', () => {
+			renderDateInput({value: '2026-07-09'});
+
+			expect(getInput()).toHaveAttribute('dir', 'ltr');
+
+			fireLocalizationEvent('localeChanged', {languageId: 'ar_SA'});
+
+			expect(getInput()).toHaveAttribute('dir', 'rtl');
+		});
+
 		it('opens the calendar again on the default language', async () => {
 			renderDateInput({
 				unlocalizedFieldsState: 'read-only',
@@ -302,6 +320,16 @@ describe('DateInput', () => {
 
 			expect(getInput()).toHaveValue('12/25/2026');
 			expect(getSubmittedValue()).toBe('2026-12-25');
+		});
+
+		it('follows the text direction of the language on screen', () => {
+			renderLocalized({en_US: '2026-12-25'});
+
+			expect(getInput()).toHaveAttribute('dir', 'ltr');
+
+			fireLocalizationEvent('localeChanged', {languageId: 'ar_SA'});
+
+			expect(getInput()).toHaveAttribute('dir', 'rtl');
 		});
 
 		it('shows the translation of a translated language', () => {

@@ -108,6 +108,15 @@ export function DateInput({
 
 	const formats = useMemo(() => getFormats(time, locale), [locale, time]);
 
+	const [dir, setDir] = useState(
+		() =>
+			Liferay.Language.direction[
+				availableLanguageIds?.includes(locale)
+					? locale
+					: defaultLanguageId
+			]
+	);
+
 	const [displayValue, setDisplayValue] = useState(() =>
 		toDisplayValue(value, formats, locale)
 	);
@@ -146,8 +155,14 @@ export function DateInput({
 				customLocaleChangeHandler: true,
 				defaultLanguageId,
 				inputElement: document.getElementById(id) as HTMLInputElement,
-				onLocaleChange: (languageId) =>
-					setUnlocalized(languageId !== defaultLanguageId),
+				onLocaleChange: (languageId) => {
+					setDir(
+						Liferay.Language.direction[
+							languageId as Liferay.Language.Locale
+						]
+					);
+					setUnlocalized(languageId !== defaultLanguageId);
+				},
 				readOnlyInputLabel: document.getElementById(
 					readOnlyLabelId
 				) as HTMLSpanElement,
@@ -204,6 +219,12 @@ export function DateInput({
 
 			onLocaleChange: ({languageId, value}) => {
 				currentLanguageId = languageId;
+
+				setDir(
+					Liferay.Language.direction[
+						languageId as Liferay.Language.Locale
+					]
+				);
 
 				setValue(value);
 			},
@@ -268,6 +289,7 @@ export function DateInput({
 				selectYear: Liferay.Language.get('select-a-year'),
 			}}
 			dateFormat={formats.clayFormat}
+			dir={dir}
 			disabled={inputDisabled}
 			expanded={inputReadOnly ? false : expanded}
 			firstDayOfWeek={dateUtils.getFirstDayOfWeek(

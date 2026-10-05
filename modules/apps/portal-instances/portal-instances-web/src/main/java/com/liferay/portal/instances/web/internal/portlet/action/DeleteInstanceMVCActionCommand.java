@@ -58,6 +58,8 @@ public class DeleteInstanceMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {

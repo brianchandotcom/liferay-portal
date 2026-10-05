@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
@@ -197,12 +198,20 @@ public class DBPartitionMigrationValidator {
 
 		PrintWriter printWriter = new PrintWriter(byteArrayOutputStream);
 
+		printWriter.println();
+
 		helpFormatter.printWrapped(
 			printWriter, _HELP_WIDTH,
 			"Liferay Database Partition Migration Validator Tool.\n\n");
+
+		String scriptName = "./db_partition_migration_validator.sh";
+
+		if (OSDetector.isWindows()) {
+			scriptName = "db_partition_migration_validator.bat";
+		}
+
 		helpFormatter.printUsage(
-			printWriter, _HELP_WIDTH,
-			"./db_partition_migration_validator.sh <command> [parameters]");
+			printWriter, _HELP_WIDTH, scriptName + " <command> [parameters]");
 		helpFormatter.printWrapped(printWriter, _HELP_WIDTH, "\nCommands:");
 		helpFormatter.printOptions(
 			printWriter, _HELP_WIDTH, _getMainOptions(), _HELP_LEFT_PAD,
@@ -225,7 +234,7 @@ public class DBPartitionMigrationValidator {
 		helpMessage = StringUtil.replace(helpMessage, "--export", "export");
 		helpMessage = StringUtil.replace(helpMessage, "--validate", "validate");
 
-		System.out.println(helpMessage);
+		System.out.print(helpMessage);
 	}
 
 	private static LiferayDatabase _read(String path) throws IOException {

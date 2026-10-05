@@ -441,6 +441,26 @@ public class LayoutServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-108338")
+	public void testUpdateTypeSettingsWithPortletCategory() throws Exception {
+		Layout layout = _addTypePortletLayout(
+			RandomTestUtil.randomString(), false, StringPool.BLANK);
+
+		String panelSelectedPortlets =
+			"root--category-collaboration," + FragmentPortletKeys.FRAGMENT;
+
+		layout = _layoutService.updateTypeSettings(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			LayoutTypePortletConstants.PANEL_SELECTED_PORTLETS +
+				StringPool.EQUAL + panelSelectedPortlets);
+
+		Assert.assertEquals(
+			panelSelectedPortlets,
+			layout.getTypeSettingsProperty(
+				LayoutTypePortletConstants.PANEL_SELECTED_PORTLETS));
+	}
+
+	@Test
 	@TestInfo("LPD-106870")
 	public void testUpdateTypeSettingsWithoutPermissions() throws Exception {
 		Layout layout = _addTypePortletLayout(

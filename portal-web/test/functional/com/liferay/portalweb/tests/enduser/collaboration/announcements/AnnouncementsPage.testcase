@@ -295,21 +295,11 @@ definition {
 	test CanViewAnnouncementsPagination {
 		property custom.properties = "announcements.entry.page.delta.values=4,8,20,40,60${line.separator}search.container.page.delta.values=4,8,20,40,60";
 
-		var expirationDate = DateUtil.getDateOffsetByDays(30, "yyyy-MM-dd");
-
 		for (var entryCount : list "1,2,3,4,5,6,7") {
-			var displayDateOffset = ${entryCount} - 8;
-
-			var displayDateOffset = StringUtil.valueOf(${displayDateOffset});
-
-			var displayDate = DateUtil.getDateOffsetByDays(${displayDateOffset}, "yyyy-MM-dd");
-
 			JSONAnnouncement.addAnnouncement(
 				announcementContent = "Announcements Entry Content ${entryCount}",
 				announcementTitle = "Announcements Entry Title ${entryCount}",
 				announcementURL = "http://www.liferay.com",
-				displayDate = ${displayDate},
-				expirationDate = ${expirationDate},
 				userEmailAddress = "test@liferay.com",
 				userPassword = PropsUtil.get("default.admin.password"));
 		}

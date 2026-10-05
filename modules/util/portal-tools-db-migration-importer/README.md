@@ -12,8 +12,16 @@ the same network.
 
 ## Usage
 
+On Unix:
+
 ```
 ./db_migration_importer.sh <parameters>
+```
+
+On Windows:
+
+```
+db_migration_importer.bat <parameters>
 ```
 
 Import parameters:
@@ -30,7 +38,16 @@ Import parameters:
 
 ## Examples
 
+On Unix:
+
 ```
 ./db_migration_importer.sh --path "/directory/" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
 ./db_migration_importer.sh --jdbc-batch-size 600 --jdbc-fetch-size 1600 --path "/directory/" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
+```
+
+On Windows:
+
+```
+db_migration_importer.bat --path "C:\directory" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
+db_migration_importer.bat --jdbc-batch-size 600 --jdbc-fetch-size 1600 --path "C:\directory" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
 ```

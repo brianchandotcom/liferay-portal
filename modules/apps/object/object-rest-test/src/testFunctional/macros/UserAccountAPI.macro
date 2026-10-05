@@ -339,51 +339,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getUpdatedFieldOfUserAccountWithPatchRequest(fieldName = null, UserAccountId = null, updatedFieldValue = null) {
-		Variables.assertDefined(parameterList = "${fieldName},${updatedFieldValue}");
-
-		if (!(isSet(userAccountId))) {
-			var userAccountId = ${UserAccountId};
-		}
-
-		var curl = UserAccountAPI._curlUserAccount(userAccountId = ${userAccountId});
-		var body = '''-d {"${fieldName}":"${updatedFieldValue}"}''';
-
-		var curl = StringUtil.add(${curl}, ${body}, "");
-
-		var valueOfField = JSONCurlUtil.patch(${curl}, "$.${fieldName}");
-
-		return ${valueOfField};
-	}
-
-	@summary = "Default summary"
-	macro getUpdatedFieldOfUserAccountWithPutRequest(emailAddress = null, fieldName = null, UserAccountId = null, familyName = null, givenName = null, alternateName = null, updatedFieldValue = null) {
-		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName},${fieldName},${updatedFieldValue}");
-
-		if (!(isSet(userAccountId))) {
-			var userAccountId = ${UserAccountId};
-		}
-
-		var curl = UserAccountAPI._curlUserAccount(userAccountId = ${userAccountId});
-		var body = '''
-			-d {
-				"alternateName": "${alternateName}",
-				"emailAddress": "${emailAddress}",
-				"familyName": "${familyName}",
-				"givenName": "${givenName}",
-				"status": "Active",
-				"${fieldName}":"${updatedFieldValue}"
-			}
-		''';
-
-		var curl = StringUtil.add(${curl}, ${body}, "");
-
-		var valueOfField = JSONCurlUtil.put(${curl}, "$.${fieldName}");
-
-		return ${valueOfField};
-	}
-
-	@summary = "Default summary"
 	macro getUserFieldWithFilter(filter = null, jsonPath = null) {
 		Variables.assertDefined(parameterList = "${filter},${jsonPath}");
 

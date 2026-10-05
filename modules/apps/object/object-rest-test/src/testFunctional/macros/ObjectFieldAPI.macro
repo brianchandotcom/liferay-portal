@@ -55,13 +55,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteObjectField(staticObjectFieldId = null) {
-		var curl = ObjectFieldAPI._curlObjectField(objectFieldId = ${staticObjectFieldId});
-
-		JSONCurlUtil.delete(${curl});
-	}
-
-	@summary = "Default summary"
 	macro getIdOfCreatedObjectField(objectDefinitionId = null, name = null, dbType = null) {
 		var response = ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
 			dbType = ${dbType},
@@ -99,18 +92,6 @@ definition {
 		static var staticObjectFieldErc = ${objectFieldErc};
 
 		return ${staticObjectFieldErc};
-	}
-
-	@summary = "Default summary"
-	macro setUpGlobalObjectFieldId(objectDefinitionId = null, name = null, dbType = null) {
-		var objectFieldId = ObjectFieldAPI.getIdOfCreatedObjectField(
-			dbType = ${dbType},
-			name = ${name},
-			objectDefinitionId = ${objectDefinitionId});
-
-		static var staticObjectFieldId = ${objectFieldId};
-
-		return ${staticObjectFieldId};
 	}
 
 	@summary = "Default summary"

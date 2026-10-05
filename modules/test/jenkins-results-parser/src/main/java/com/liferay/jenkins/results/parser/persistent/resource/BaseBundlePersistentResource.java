@@ -406,15 +406,15 @@ public abstract class BaseBundlePersistentResource
 		}
 
 		if (status == Status.IN_QUEUE) {
-			JenkinsMaster producerJenkinsMaster = getProducerJenkinsMaster();
-
 			List<JenkinsMaster.QueueItem> queueItems;
+
+			JenkinsMaster producerJenkinsMaster = getProducerJenkinsMaster();
 
 			try {
 				queueItems = producerJenkinsMaster.getQueueItems();
 			}
 			catch (RuntimeException runtimeException) {
-				_recordLookupFailure("queue items", runtimeException);
+				_recordLookupFailure(runtimeException, "queue items");
 
 				return;
 			}
@@ -455,7 +455,7 @@ public abstract class BaseBundlePersistentResource
 			}
 			catch (Exception exception) {
 				_recordLookupFailure(
-					"queue item " + producerQueueId, exception);
+					exception, "queue item " + producerQueueId);
 
 				return;
 			}
@@ -783,7 +783,7 @@ public abstract class BaseBundlePersistentResource
 		return false;
 	}
 
-	private void _recordLookupFailure(String lookupName, Exception exception) {
+	private void _recordLookupFailure(Exception exception, String lookupName) {
 		_lookupFailuresCount++;
 
 		print(

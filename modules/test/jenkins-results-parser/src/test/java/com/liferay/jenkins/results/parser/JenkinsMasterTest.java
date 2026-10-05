@@ -213,19 +213,6 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 				RandomTestUtil.randomString() + "/1/";
 
 		_testFetchQueueItem(
-			true, executableURL,
-			new JSONObject(
-			).put(
-				"cancelled", true
-			).put(
-				"executable",
-				new JSONObject(
-				).put(
-					"url", executableURL
-				)
-			),
-			urlReader);
-		_testFetchQueueItem(
 			false, executableURL,
 			new JSONObject(
 			).put(
@@ -244,6 +231,19 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 			new JSONObject(
 			).put(
 				"why", RandomTestUtil.randomString()
+			),
+			urlReader);
+		_testFetchQueueItem(
+			true, executableURL,
+			new JSONObject(
+			).put(
+				"cancelled", true
+			).put(
+				"executable",
+				new JSONObject(
+				).put(
+					"url", executableURL
+				)
 			),
 			urlReader);
 
@@ -667,9 +667,9 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 		JenkinsMaster.QueueItem queueItem = _jenkinsMaster.fetchQueueItem(
 			queueId);
 
-		Assert.assertEquals(queueId, queueItem.getId());
-		Assert.assertEquals(executableURL, queueItem.getExecutableURL());
 		Assert.assertEquals(cancelled, queueItem.isCancelled());
+		Assert.assertEquals(executableURL, queueItem.getExecutableURL());
+		Assert.assertEquals(queueId, queueItem.getId());
 	}
 
 	private static final String _BUILD_URL_FLYWEIGHT =

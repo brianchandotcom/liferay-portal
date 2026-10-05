@@ -809,9 +809,9 @@ public class JenkinsResultsParserUtil {
 			return null;
 		}
 
-		Class<?> clazz = JenkinsResultsParserUtil.class;
-
 		String script;
+
+		Class<?> clazz = JenkinsResultsParserUtil.class;
 
 		try {
 			script = readInputStream(

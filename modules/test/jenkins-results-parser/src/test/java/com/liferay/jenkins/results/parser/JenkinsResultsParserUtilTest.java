@@ -136,9 +136,9 @@ public class JenkinsResultsParserUtilTest
 		}
 
 		Assert.assertNull(
-			JenkinsResultsParserUtil.fetchBuildURL(jobName, null, 1));
-		Assert.assertNull(
 			JenkinsResultsParserUtil.fetchBuildURL("", jenkinsMaster, 1));
+		Assert.assertNull(
+			JenkinsResultsParserUtil.fetchBuildURL(jobName, null, 1));
 
 		Mockito.verify(
 			jenkinsMaster, Mockito.never()

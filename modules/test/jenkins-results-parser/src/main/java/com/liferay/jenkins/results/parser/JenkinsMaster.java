@@ -224,12 +224,12 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public QueueItem fetchQueueItem(long queueId) throws IOException {
+		String response;
+
 		String queueItemAPIURL = JenkinsResultsParserUtil.combine(
 			getURL(), "/queue/item/", String.valueOf(queueId),
 			"/api/json?tree=actions[parameters[name,value]],cancelled,",
 			"executable[url],id,inQueueSince,task[name,url],url,why");
-
-		String response;
 
 		try {
 			response = JenkinsResultsParserUtil.toString(

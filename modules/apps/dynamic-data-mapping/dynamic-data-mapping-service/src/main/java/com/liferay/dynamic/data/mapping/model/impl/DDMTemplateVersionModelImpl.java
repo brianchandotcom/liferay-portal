@@ -133,26 +133,20 @@ public class DDMTemplateVersionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 1L;
+	public static final long TEMPLATEID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TEMPLATEID_COLUMN_BITMASK = 2L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 4L;
+	public static final long VERSION_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TEMPLATEVERSIONID_COLUMN_BITMASK = 8L;
+	public static final long TEMPLATEVERSIONID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -927,16 +921,6 @@ public class DDMTemplateVersionModelImpl
 		_status = status;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public int getOriginalStatus() {
-		return GetterUtil.getInteger(
-			this.<Integer>getColumnOriginalValue("status"));
-	}
-
 	@JSON
 	@Override
 	public long getStatusByUserId() {
@@ -1665,4 +1649,4 @@ public class DDMTemplateVersionModelImpl
 	private DDMTemplateVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1095399085
+// LIFERAY-SERVICE-BUILDER-HASH:-576170485

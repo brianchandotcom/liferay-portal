@@ -137,26 +137,20 @@ public class DDMStructureVersionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 1L;
+	public static final long STRUCTUREID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STRUCTUREID_COLUMN_BITMASK = 2L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 4L;
+	public static final long VERSION_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STRUCTUREVERSIONID_COLUMN_BITMASK = 8L;
+	public static final long STRUCTUREVERSIONID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -910,16 +904,6 @@ public class DDMStructureVersionModelImpl
 		}
 
 		_status = status;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public int getOriginalStatus() {
-		return GetterUtil.getInteger(
-			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON
@@ -1744,4 +1728,4 @@ public class DDMStructureVersionModelImpl
 	private DDMStructureVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1092328706
+// LIFERAY-SERVICE-BUILDER-HASH:312466520

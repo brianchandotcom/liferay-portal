@@ -240,14 +240,6 @@ public class DDMStructureVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByS_S() throws Exception {
-		_persistence.countByS_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByS_S(0L, 0);
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
@@ -624,4 +616,4 @@ public class DDMStructureVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2062373413
+// LIFERAY-SERVICE-BUILDER-HASH:-1768480986

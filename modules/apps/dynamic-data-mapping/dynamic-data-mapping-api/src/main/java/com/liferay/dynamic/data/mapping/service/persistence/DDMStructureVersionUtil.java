@@ -262,86 +262,6 @@ public class DDMStructureVersionUtil {
 	}
 
 	/**
-	 * Returns an ordered range of all the ddm structure versions where structureId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm structure versions
-	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ddm structure versions
-	 */
-	public static List<DDMStructureVersion> findByS_S(
-		long structureId, int status, int start, int end,
-		OrderByComparator<DDMStructureVersion> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByS_S(
-			structureId, status, start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ddm structure version
-	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
-	 */
-	public static DDMStructureVersion findByS_S_First(
-			long structureId, int status,
-			OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.dynamic.data.mapping.exception.
-			NoSuchStructureVersionException {
-
-		return getPersistence().findByS_S_First(
-			structureId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the first ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
-	 */
-	public static DDMStructureVersion fetchByS_S_First(
-		long structureId, int status,
-		OrderByComparator<DDMStructureVersion> orderByComparator) {
-
-		return getPersistence().fetchByS_S_First(
-			structureId, status, orderByComparator);
-	}
-
-	/**
-	 * Removes all the ddm structure versions where structureId = &#63; and status = &#63; from the database.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 */
-	public static void removeByS_S(long structureId, int status) {
-		getPersistence().removeByS_S(structureId, status);
-	}
-
-	/**
-	 * Returns the number of ddm structure versions where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @return the number of matching ddm structure versions
-	 */
-	public static int countByS_S(long structureId, int status) {
-		return getPersistence().countByS_S(structureId, status);
-	}
-
-	/**
 	 * Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
 	 *
 	 * @param structureVersionId the primary key for the new ddm structure version
@@ -461,60 +381,6 @@ public class DDMStructureVersionUtil {
 			structureId, start, end, orderByComparator);
 	}
 
-	/**
-	 * Returns all the ddm structure versions where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @return the matching ddm structure versions
-	 */
-	public static List<DDMStructureVersion> findByS_S(
-		long structureId, int status) {
-
-		return getPersistence().findByS_S(structureId, status);
-	}
-
-	/**
-	 * Returns a range of all the ddm structure versions where structureId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm structure versions
-	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
-	 * @return the range of matching ddm structure versions
-	 */
-	public static List<DDMStructureVersion> findByS_S(
-		long structureId, int status, int start, int end) {
-
-		return getPersistence().findByS_S(structureId, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm structure versions where structureId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm structure versions
-	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm structure versions
-	 */
-	public static List<DDMStructureVersion> findByS_S(
-		long structureId, int status, int start, int end,
-		OrderByComparator<DDMStructureVersion> orderByComparator) {
-
-		return getPersistence().findByS_S(
-			structureId, status, start, end, orderByComparator);
-	}
-
 	public static DDMStructureVersionPersistence getPersistence() {
 		return _persistence;
 	}
@@ -528,4 +394,4 @@ public class DDMStructureVersionUtil {
 	private static volatile DDMStructureVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1292203054
+// LIFERAY-SERVICE-BUILDER-HASH:2114900074

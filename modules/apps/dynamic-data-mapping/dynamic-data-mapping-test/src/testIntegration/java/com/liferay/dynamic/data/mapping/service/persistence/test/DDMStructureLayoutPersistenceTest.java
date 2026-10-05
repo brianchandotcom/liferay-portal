@@ -238,27 +238,10 @@ public class DDMStructureLayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByStructureLayoutKey() throws Exception {
-		_persistence.countByStructureLayoutKey("");
-
-		_persistence.countByStructureLayoutKey("null");
-
-		_persistence.countByStructureLayoutKey((String)null);
-	}
-
-	@Test
 	public void testCountByStructureVersionId() throws Exception {
 		_persistence.countByStructureVersionId(RandomTestUtil.nextLong());
 
 		_persistence.countByStructureVersionId(0L);
-	}
-
-	@Test
-	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
@@ -664,4 +647,4 @@ public class DDMStructureLayoutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2113502191
+// LIFERAY-SERVICE-BUILDER-HASH:2141118031

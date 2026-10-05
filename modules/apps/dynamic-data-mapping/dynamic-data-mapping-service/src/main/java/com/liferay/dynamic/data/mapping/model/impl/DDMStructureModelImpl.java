@@ -158,50 +158,38 @@ public class DDMStructureModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long DESCRIPTION_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long PARENTSTRUCTUREID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 32L;
+	public static final long STRUCTUREKEY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PARENTSTRUCTUREID_COLUMN_BITMASK = 64L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long STRUCTUREKEY_COLUMN_BITMASK = 128L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STRUCTUREID_COLUMN_BITMASK = 512L;
+	public static final long STRUCTUREID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -947,15 +935,6 @@ public class DDMStructureModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalName() {
-		return getColumnOriginalValue("name");
-	}
-
 	@JSON
 	@Override
 	public String getDescription() {
@@ -1066,15 +1045,6 @@ public class DDMStructureModelImpl
 			LocalizationUtil.updateLocalization(
 				descriptionMap, getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalDescription() {
-		return getColumnOriginalValue("description");
 	}
 
 	@JSON
@@ -1978,4 +1948,4 @@ public class DDMStructureModelImpl
 	private DDMStructure _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1779353037
+// LIFERAY-SERVICE-BUILDER-HASH:331168305

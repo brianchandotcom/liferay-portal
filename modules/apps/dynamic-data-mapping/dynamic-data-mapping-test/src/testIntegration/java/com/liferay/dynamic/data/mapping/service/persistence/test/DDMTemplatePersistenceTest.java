@@ -326,24 +326,6 @@ public class DDMTemplatePersistenceTest {
 	}
 
 	@Test
-	public void testCountByType() throws Exception {
-		_persistence.countByType("");
-
-		_persistence.countByType("null");
-
-		_persistence.countByType((String)null);
-	}
-
-	@Test
-	public void testCountByLanguage() throws Exception {
-		_persistence.countByLanguage("");
-
-		_persistence.countByLanguage("null");
-
-		_persistence.countByLanguage((String)null);
-	}
-
-	@Test
 	public void testCountBySmallImageId() throws Exception {
 		_persistence.countBySmallImageId(RandomTestUtil.nextLong());
 
@@ -874,4 +856,4 @@ public class DDMTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1782269124
+// LIFERAY-SERVICE-BUILDER-HASH:-1333941000

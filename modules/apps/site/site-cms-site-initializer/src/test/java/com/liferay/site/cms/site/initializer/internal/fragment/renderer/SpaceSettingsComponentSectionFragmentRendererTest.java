@@ -84,13 +84,6 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 
 	@Test
 	public void testGetPropsWhenUserHasPermission() throws Exception {
-		Mockito.verify(
-			_depotEntryModelResourcePermission
-		).check(
-			Mockito.any(), Mockito.eq(_DEPOT_ENTRY_ID),
-			Mockito.eq(ActionKeys.UPDATE)
-		);
-
 		Mockito.when(
 			_group.getExternalReferenceCode()
 		).thenReturn(
@@ -116,6 +109,13 @@ public class SpaceSettingsComponentSectionFragmentRendererTest {
 		);
 
 		Map<String, Object> props = _getProps();
+
+		Mockito.verify(
+			_depotEntryModelResourcePermission
+		).check(
+			Mockito.any(), Mockito.eq(_DEPOT_ENTRY_ID),
+			Mockito.eq(ActionKeys.UPDATE)
+		);
 
 		Assert.assertEquals(
 			_EXTERNAL_REFERENCE_CODE, props.get("externalReferenceCode"));

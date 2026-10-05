@@ -8,11 +8,13 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
@@ -31,6 +34,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
@@ -196,6 +200,42 @@ public class WorkflowInstanceManagerImplTest
 		Assert.assertEquals(0, notCompletedCount);
 		Assert.assertEquals(
 			workflowInstances.toString(), 1, workflowInstances.size());
+	}
+
+	@Test
+	public void testGetWorkflowInstance() throws Exception {
+		try (ServiceRegistrationHolder serviceRegistrationHolder =
+				registryWorkflowHandler()) {
+
+			Class<?> clazz = getClass();
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+				clazz.getName(), 1, null, new ServiceContext());
+
+			WorkflowInstanceLink workflowInstanceLink =
+				workflowInstanceLinkLocalService.getWorkflowInstanceLink(
+					TestPropsValues.getCompanyId(), 0, clazz.getName(), 1);
+
+			WorkflowInstance workflowInstance =
+				workflowInstanceManager.getWorkflowInstance(
+					workflowInstanceLink.getCompanyId(),
+					workflowInstanceLink.getWorkflowInstanceId());
+
+			Assert.assertEquals(
+				workflowInstanceLink.getWorkflowInstanceId(),
+				workflowInstance.getWorkflowInstanceId());
+
+			AssertUtils.assertFailure(
+				WorkflowException.class,
+				StringBundler.concat(
+					NoSuchInstanceException.class.getName(),
+					": No KaleoInstance exists with the primary key ",
+					workflowInstanceLink.getWorkflowInstanceId()),
+				() -> workflowInstanceManager.getWorkflowInstance(
+					RandomTestUtil.randomLong(),
+					workflowInstanceLink.getWorkflowInstanceId()));
+		}
 	}
 
 	@Test

@@ -490,16 +490,6 @@ public class BasePIMConnectorTest {
 		}
 	}
 
-	private static final PIMConnectorChannelField _CHANNEL_FIELD_NAME =
-		new PIMConnectorChannelField(
-			"name", false, "name", true,
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
-
-	private static final PIMConnectorChannelField _CHANNEL_FIELD_TAGS =
-		new PIMConnectorChannelField(
-			"tags", true, "tags", false,
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
-
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
@@ -508,6 +498,16 @@ public class BasePIMConnectorTest {
 
 	private static final long _OBJECT_RELATIONSHIP_ID =
 		RandomTestUtil.randomLong();
+
+	private static final PIMConnectorChannelField
+		_PIM_CONNECTOR_CHANNEL_FIELD_NAME = new PIMConnectorChannelField(
+			"name", false, "name", true,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
+
+	private static final PIMConnectorChannelField
+		_PIM_CONNECTOR_CHANNEL_FIELD_TAGS = new PIMConnectorChannelField(
+			"tags", true, "tags", false,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final int _SEARCH_SIZE = 1000;
 
@@ -556,7 +556,9 @@ public class BasePIMConnectorTest {
 
 		@Override
 		public List<PIMConnectorChannelField> getPIMConnectorChannelFields() {
-			return ListUtil.fromArray(_CHANNEL_FIELD_NAME, _CHANNEL_FIELD_TAGS);
+			return ListUtil.fromArray(
+				_PIM_CONNECTOR_CHANNEL_FIELD_NAME,
+				_PIM_CONNECTOR_CHANNEL_FIELD_TAGS);
 		}
 
 		@Override

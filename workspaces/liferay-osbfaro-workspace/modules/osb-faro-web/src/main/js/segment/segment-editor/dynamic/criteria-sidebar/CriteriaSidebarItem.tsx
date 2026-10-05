@@ -12,8 +12,10 @@ import {DragTypes} from '../utils/drag-types';
 import {generateRowId} from '../utils/utils';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 import {getStickerStyle} from './stickerColors';
+import {KeyboardMovementContext} from '../context/keyboardMovement';
 import {Property} from 'shared/util/records';
 import {PropertyTypes} from '../utils/constants';
+import {sub} from 'shared/util/lang';
 
 const TYPE_ICON_MAP = {
 	[PropertyTypes.Behavior]: 'click',
@@ -150,6 +152,14 @@ interface ICriteriaSidebarItemProps {
 }
 
 export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemProps> {
+	static contextType = KeyboardMovementContext;
+
+	constructor(props: ICriteriaSidebarItemProps) {
+		super(props);
+
+		this.handleKeyDown = this.handleKeyDown.bind(this);
+	}
+
 	componentDidMount() {
 		const {connectDragPreview} = this.props;
 
@@ -158,24 +168,68 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 		}
 	}
 
+	declare context: React.ContextType<typeof KeyboardMovementContext>;
+
+	handleKeyDown(event: React.KeyboardEvent<HTMLLIElement>) {
+		const {startMovement} = this.context;
+
+		if (
+			!startMovement ||
+			event.target !== event.currentTarget ||
+			(event.key !== 'Enter' && event.key !== ' ')
+		) {
+			return;
+		}
+
+		event.preventDefault();
+
+		const {defaultValue, name, property, type} = this.props;
+
+		startMovement(
+			beginDrag({
+				defaultValue,
+				name,
+				property,
+				type: type as PropertyTypes,
+			})
+		);
+	}
+
 	render() {
 		const {
 			className,
 			connectDragSource,
 			dragging,
 			label,
+			name,
 			propertyKey,
 			type,
 		} = this.props;
 
+		const {source} = this.context;
+
+		const movementSource =
+			!!source &&
+			source.criterion.propertyName === name &&
+			source.property.propertyKey === propertyKey;
+
 		const classes = getCN(
 			'align-items-center c-gap-3 criteria-sidebar-item-root d-flex mb-1 mx-4 px-2 py-1 text-3',
-			{dragging},
+			{dragging: dragging || movementSource},
 			className
 		);
 
 		return connectDragSource(
-			<li className={classes} data-testid={`criteria-item-${label}`}>
+			<li
+				aria-label={
+					sub(Liferay.Language.get('add-x'), [label]) as string
+				}
+				className={classes}
+				data-testid={`criteria-item-${label}`}
+				onKeyDown={this.handleKeyDown}
+				role="menuitem"
+				tabIndex={-1}
+			>
 				<ClaySticker
 					className="criteria-sidebar-item-sticker flex-shrink-0"
 					size="sm"
@@ -185,6 +239,12 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 				</ClaySticker>
 
 				<span className="autofit-col-expand">{label}</span>
+
+				<ClayIcon
+					aria-hidden="true"
+					className="criteria-sidebar-item-add flex-shrink-0 mr-2 text-secondary"
+					symbol="plus"
+				/>
 			</li>
 		);
 	}

@@ -1,0 +1,241 @@
+import React, {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
+import {
+	addCriterionAtIndex,
+	findPropertyByCriterion,
+	isCriterionGroup,
+} from '../utils/utils';
+import {
+	applyMoveTarget,
+	getMoveTargets,
+	MovePosition,
+	MoveTarget,
+} from '../utils/keyboardMovement';
+import {Criterion, CriterionGroup} from '../utils/types';
+import {Property} from 'shared/util/records';
+import {ReferencedObjectsContext} from './referencedObjects';
+import {sub} from 'shared/util/lang';
+
+export interface MovementSource {
+	criterion: Criterion;
+	property: Property;
+}
+
+interface IKeyboardMovementContext {
+	source: MovementSource | null;
+	startMovement: ((source: MovementSource) => void) | null;
+	target: MoveTarget | null;
+}
+
+export const KeyboardMovementContext = createContext<IKeyboardMovementContext>({
+	source: null,
+	startMovement: null,
+	target: null,
+});
+
+export const useKeyboardMovement = () => useContext(KeyboardMovementContext);
+
+const POSITION_LABELS: Record<MovePosition, string> = {
+	bottom: Liferay.Language.get('bottom'),
+	middle: Liferay.Language.get('group'),
+	top: Liferay.Language.get('top'),
+};
+
+interface IKeyboardMovementProviderProps {
+	children: React.ReactNode;
+	criteria: CriterionGroup | null;
+	onChange: (criteria: CriterionGroup) => void;
+	sequential: boolean;
+}
+
+/**
+ * Lets keyboard users drop a condition from the library anywhere on the
+ * canvas, like the Audience Builder: Enter picks the condition, the arrow
+ * keys move through the drop targets, Enter drops it, and Esc cancels.
+ */
+export function KeyboardMovementProvider({
+	children,
+	criteria,
+	onChange,
+	sequential,
+}: IKeyboardMovementProviderProps) {
+	const {addProperty, referencedProperties} = useContext(
+		ReferencedObjectsContext
+	);
+
+	const [announcement, setAnnouncement] = useState('');
+	const [source, setSource] = useState<MovementSource | null>(null);
+	const [targetIndex, setTargetIndex] = useState(0);
+
+	const targets = useMemo(
+		() => getMoveTargets(criteria, sequential),
+		[criteria, sequential]
+	);
+
+	const latestRef = useRef({
+		addProperty,
+		criteria,
+		onChange,
+		referencedProperties,
+		sequential,
+		targets,
+	});
+
+	latestRef.current = {
+		addProperty,
+		criteria,
+		onChange,
+		referencedProperties,
+		sequential,
+		targets,
+	};
+
+	const drop = useCallback(
+		(newCriteria: CriterionGroup, property: Property) => {
+			latestRef.current.addProperty?.(property);
+
+			latestRef.current.onChange(newCriteria);
+
+			setAnnouncement(
+				sub(
+					Liferay.Language.get('x-was-added-to-the-segment-criteria'),
+					[property.label]
+				) as string
+			);
+
+			setSource(null);
+		},
+		[]
+	);
+
+	const startMovement = useCallback(
+		(movementSource: MovementSource) => {
+			const {criteria, targets} = latestRef.current;
+
+			if (!targets.length) {
+				drop(
+					addCriterionAtIndex(criteria, 0, movementSource.criterion),
+					movementSource.property
+				);
+
+				return;
+			}
+
+			setSource(movementSource);
+			setTargetIndex(targets.length - 1);
+
+			setAnnouncement(
+				sub(
+					Liferay.Language.get(
+						'use-the-arrow-keys-to-choose-where-to-add-x-and-press-enter-to-confirm-or-esc-to-cancel'
+					),
+					[movementSource.property.label]
+				) as string
+			);
+		},
+		[drop]
+	);
+
+	const target = source ? targets[targetIndex] ?? null : null;
+
+	useEffect(() => {
+		if (!source) {
+			return;
+		}
+
+		document
+			.querySelector('.keyboard-movement-target')
+			?.scrollIntoView?.({behavior: 'smooth', block: 'nearest'});
+	}, [source, targetIndex]);
+
+	useEffect(() => {
+		if (!source) {
+			return;
+		}
+
+		let currentIndex = latestRef.current.targets.length - 1;
+
+		const moveTo = (index: number) => {
+			const {referencedProperties, targets} = latestRef.current;
+
+			currentIndex = Math.min(Math.max(index, 0), targets.length - 1);
+
+			const {node, position} = targets[currentIndex];
+
+			setTargetIndex(currentIndex);
+
+			setAnnouncement(
+				sub(Liferay.Language.get('targeting-x-of-x'), [
+					POSITION_LABELS[position],
+					isCriterionGroup(node)
+						? Liferay.Language.get('group')
+						: findPropertyByCriterion(node, referencedProperties)
+								?.label ??
+							node.propertyName ??
+							'',
+				]) as string
+			);
+		};
+
+		const handleKeyDown = (event: KeyboardEvent) => {
+			event.preventDefault();
+			event.stopPropagation();
+
+			if (event.key === 'ArrowDown') {
+				moveTo(currentIndex + 1);
+			}
+			else if (event.key === 'ArrowUp') {
+				moveTo(currentIndex - 1);
+			}
+			else if (event.key === 'End') {
+				moveTo(Infinity);
+			}
+			else if (event.key === 'Home') {
+				moveTo(0);
+			}
+			else if (event.key === 'Enter' || event.key === ' ') {
+				const {criteria, sequential, targets} = latestRef.current;
+
+				drop(
+					applyMoveTarget(
+						criteria!,
+						targets[currentIndex],
+						source.criterion,
+						sequential
+					),
+					source.property
+				);
+			}
+			else if (event.key === 'Escape') {
+				setAnnouncement('');
+				setSource(null);
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown, true);
+
+		return () => window.removeEventListener('keydown', handleKeyDown, true);
+	}, [drop, source]);
+
+	const value = useMemo(
+		() => ({source, startMovement, target}),
+		[source, startMovement, target]
+	);
+
+	return (
+		<KeyboardMovementContext.Provider value={value}>
+			<div aria-live="assertive" className="sr-only">
+				{announcement}
+			</div>
+
+			{children}
+		</KeyboardMovementContext.Provider>
+	);
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import {beginDrag, CriteriaSidebarItem} from '../CriteriaSidebarItem';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {KeyboardMovementContext} from '../../context/keyboardMovement';
 import {every} from 'lodash';
 import {PropertyTypes} from '../../utils/constants';
 import {validateSegmentInputs} from '../../utils/utils';
@@ -54,6 +55,80 @@ describe('CriteriaSidebarItem', () => {
 		expect(
 			container.querySelector('.criteria-sidebar-item-root.dragging')
 		).toBeTruthy();
+	});
+
+	it('exposes the item as a menu item labelled with its add action', () => {
+		render(
+			<CriteriaSidebarItem
+				connectDragSource={connectDnd}
+				label='Click'
+				propertyKey='event'
+				type={PropertyTypes.Event}
+			/>
+		);
+
+		const item = screen.getByRole('menuitem', {name: 'Add Click'});
+
+		expect(item).toHaveAttribute('tabindex', '-1');
+	});
+
+	it.each(['Enter', ' '])(
+		'starts moving the criterion with the keyboard when "%s" is pressed',
+		key => {
+			const startMovement = jest.fn();
+
+			render(
+				<KeyboardMovementContext.Provider
+					value={{source: null, startMovement, target: null}}
+				>
+					<CriteriaSidebarItem
+						connectDragSource={connectDnd}
+						defaultValue={{}}
+						label='Click'
+						name='click'
+						property={{label: 'Click'}}
+						propertyKey='event'
+						type={PropertyTypes.Event}
+					/>
+				</KeyboardMovementContext.Provider>
+			);
+
+			fireEvent.keyDown(screen.getByRole('menuitem'), {key});
+
+			expect(startMovement).toHaveBeenCalledTimes(1);
+
+			const [{criterion, property}] = startMovement.mock.calls[0];
+
+			expect(criterion.propertyName).toBe('click');
+			expect(criterion.type).toBe(PropertyTypes.Event);
+			expect(property).toEqual({label: 'Click'});
+		}
+	);
+
+	it('fades the item while it is being moved with the keyboard', () => {
+		render(
+			<KeyboardMovementContext.Provider
+				value={{
+					source: {
+						criterion: {propertyName: 'click'},
+						property: {propertyKey: 'event'}
+					},
+					startMovement: jest.fn(),
+					target: null
+				}}
+			>
+				<CriteriaSidebarItem
+					connectDragSource={connectDnd}
+					label='Click'
+					name='click'
+					propertyKey='event'
+					type={PropertyTypes.Event}
+				/>
+			</KeyboardMovementContext.Provider>
+		);
+
+		expect(screen.getByRole('menuitem')).toHaveClass('dragging');
+		expect(screen.queryByRole('button')).toBeNull();
 	});
 
 	it('replaces the native drag image with an empty image', () => {

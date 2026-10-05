@@ -62,7 +62,7 @@ async function signIn(page: Page, emailPrefix: string, screenName: string) {
 
 test.describe.serial('View portlets permissions upgrade', () => {
 	test(
-		'Can view the portlet permissions the first user kept after upgrade',
+		'Can view first user portlet permissions after upgrade',
 		{tag: ['@LPD-104389']},
 		async ({page, searchAdminPage}) => {
 			await test.step('Reindex all search indexes', async () => {
@@ -136,7 +136,7 @@ test.describe.serial('View portlets permissions upgrade', () => {
 	);
 
 	test(
-		'Can view the portlet permissions the second user kept after upgrade',
+		'Can view second user portlet permissions after upgrade',
 		{tag: ['@LPD-104389']},
 		async ({page}) => {
 			await test.step('Sign in as the second upgraded user', async () => {

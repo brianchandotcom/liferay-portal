@@ -61,7 +61,7 @@ function assertsCustomObjects() {
 
 test.describe.serial('View virtual instances upgrade', () => {
 	test(
-		'Can view upgraded content on the default instance',
+		'Can view default instance content after upgrade',
 		{tag: ['@LPD-104392']},
 		async ({page, searchAdminPage, usersAndOrganizationsPage}) => {
 
@@ -94,7 +94,7 @@ test.describe.serial('View virtual instances upgrade', () => {
 	);
 
 	test(
-		'Can view upgraded content on the second instance',
+		'Can view second instance content after upgrade',
 		{tag: ['@LPD-104392']},
 		async ({page, usersAndOrganizationsPage}) => {
 			const instanceURL = `http://${SECOND_INSTANCE.webId}:${liferayConfig.environment.port}`;
@@ -126,7 +126,7 @@ test.describe.serial('View virtual instances upgrade', () => {
 	);
 
 	test(
-		'Can view upgraded content on the third instance',
+		'Can view third instance content after upgrade',
 		{tag: ['@LPD-104392']},
 		async ({page, usersAndOrganizationsPage}) => {
 			const instanceURL = `http://${THIRD_INSTANCE.webId}:${liferayConfig.environment.port}`;

@@ -50,7 +50,7 @@ public class AssetTagsItemSelectorViewDescriptor
 	}
 
 	@Override
-	public String getKeyProperty() {
+	public String getKeyPropertyName() {
 		return "name";
 	}
 

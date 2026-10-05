@@ -157,7 +157,7 @@ public class StyleBookScopedCSSVariablesProvider
 
 			if (Objects.equals(
 					tokenDefinitionId,
-					StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID)) {
+					StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM)) {
 
 				priorities.put(
 					key, FrontendTokenDefinitionConstants.PRIORITY_CUSTOM);

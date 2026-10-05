@@ -121,7 +121,7 @@ public class EditStyleBookEntryDisplayContext {
 					_themeDisplay.getLocale(), _getStyleBookEntry())
 		).put(
 			"customTokenDefinitionId",
-			StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID
+			StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM
 		).put(
 			"customTokenDefinitionPriority",
 			FrontendTokenDefinitionConstants.PRIORITY_CUSTOM
@@ -377,7 +377,7 @@ public class EditStyleBookEntryDisplayContext {
 		FrontendTokenDefinition globalFrontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				styleBookEntry.getCompanyId(),
-				StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID);
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_GLOBAL);
 
 		if (globalFrontendTokenDefinition != null) {
 			jsonArray.put(

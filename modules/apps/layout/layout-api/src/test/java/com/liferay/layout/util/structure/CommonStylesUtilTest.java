@@ -75,7 +75,7 @@ public class CommonStylesUtilTest {
 	}
 
 	private String _getCustomFrontendTokenKey(String name) {
-		return StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID +
+		return StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM +
 			StringPool.COLON + name;
 	}
 

@@ -371,16 +371,16 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 		throws Exception {
 
 		String clayFrontendTokenName = _getFrontendTokenName(
-			StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID);
+			StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_GLOBAL);
 		String themeFrontendTokenName = _getFrontendTokenName(
 			_THEME_ID_CLASSIC);
 
 		_testExportImportSingleStyleBookEntryWithFrontendTokensValues(
 			StringBundler.concat(
-				StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID,
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_GLOBAL,
 				StringPool.COLON, clayFrontendTokenName),
 			StringBundler.concat(
-				StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID,
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_GLOBAL,
 				StringPool.COLON, clayFrontendTokenName),
 			true);
 		_testExportImportSingleStyleBookEntryWithFrontendTokensValues(
@@ -417,7 +417,7 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 				false, StringPool.BLANK,
 				JSONUtil.put(
 					StringBundler.concat(
-						StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+						StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM,
 						StringPool.COLON, frontendTokenName),
 					JSONUtil.put("value", RandomTestUtil.randomString())
 				).toString(),

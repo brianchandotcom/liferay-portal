@@ -185,7 +185,7 @@ public class AddStyleBookEntryFrontendTokenMVCActionCommandTest {
 			responseJSONObject.getJSONObject("customFrontendTokenDefinition");
 
 		Assert.assertEquals(
-			StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+			StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM,
 			customFrontendTokenDefinitionJSONObject.getString("id"));
 		Assert.assertEquals(
 			FrontendTokenDefinitionConstants.PRIORITY_CUSTOM,
@@ -200,7 +200,7 @@ public class AddStyleBookEntryFrontendTokenMVCActionCommandTest {
 
 			Assert.assertTrue(
 				frontendTokensValuesJSONObject.has(
-					StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID +
+					StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM +
 						StringPool.COLON + frontendTokenName));
 		}
 

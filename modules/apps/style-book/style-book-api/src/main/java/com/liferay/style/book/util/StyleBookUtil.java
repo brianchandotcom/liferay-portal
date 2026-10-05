@@ -103,7 +103,7 @@ public class StyleBookUtil {
 		for (String themeId :
 				new String[] {
 					styleBookEntry.getThemeId(),
-					StyleBookConstants.GLOBAL_FRONTEND_TOKEN_DEFINITION_ID
+					StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_GLOBAL
 				}) {
 
 			FrontendTokenDefinition frontendTokenDefinition =
@@ -121,7 +121,7 @@ public class StyleBookUtil {
 
 		frontendTokensValuesKeys.addAll(
 			_getFrontendTokensValuesKeys(
-				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID,
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM,
 				FrontendTokenDefinitionUtil.
 					parseFrontendTokenDefinitionJSONObject(
 						styleBookEntry.getFrontendTokenDefinition())));

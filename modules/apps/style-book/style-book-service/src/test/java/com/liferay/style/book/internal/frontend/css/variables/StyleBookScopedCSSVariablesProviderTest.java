@@ -79,7 +79,7 @@ public class StyleBookScopedCSSVariablesProviderTest {
 			"custom:secondaryColor",
 			_createTokenValueJSONObject(
 				"--secondary-color",
-				StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID, "#0f0")
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM, "#0f0")
 		).put(
 			"theme:primaryColor",
 			_createTokenValueJSONObject("--primary-color", "theme", "#000")

@@ -31,7 +31,7 @@ public class StyleBookFrontendTokenDefinitionUtil {
 		}
 
 		return customFrontendTokenDefinitionJSONObject.put(
-			"id", StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID
+			"id", StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM
 		).put(
 			"name", LanguageUtil.get(locale, "custom")
 		).put(

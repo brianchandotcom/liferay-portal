@@ -349,7 +349,7 @@ public class CommonStylesUtil {
 			JSONFactoryUtil.createJSONObject();
 
 		String prefix =
-			StyleBookConstants.CUSTOM_FRONTEND_TOKEN_DEFINITION_ID +
+			StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM +
 				StringPool.COLON;
 
 		for (String key : frontendTokenValuesJSONObject.keySet()) {

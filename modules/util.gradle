@@ -9,6 +9,7 @@ import java.nio.file.Files
 
 import java.util.regex.Matcher
 
+import org.gradle.api.attributes.java.TargetJvmEnvironment
 import org.gradle.util.GUtil
 
 buildscript {
@@ -374,6 +375,10 @@ private void _createSetUpPortalToolTasks() {
 		File portalToolDir = ivyXmlFile.parentFile
 
 		CopyIvyDependenciesTask copyIvyDependenciesTask = tasks.create(name: "setUp" + _camelCase(portalToolDir.name), type: CopyIvyDependenciesTask) {
+			configuration.attributes {
+				attribute TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE, objects.named(TargetJvmEnvironment, TargetJvmEnvironment.STANDARD_JVM)
+			}
+
 			configuration.exclude group: "com.liferay.portal"
 
 			dependencyTransformClosure = {

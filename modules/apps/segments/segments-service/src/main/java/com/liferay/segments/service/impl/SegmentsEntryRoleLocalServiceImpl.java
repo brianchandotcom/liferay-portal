@@ -217,7 +217,8 @@ public class SegmentsEntryRoleLocalServiceImpl
 				ArrayUtil.contains(excludedRoleNames, role.getName())) {
 
 				throw new RoleAssignmentException(
-					"Role " + siteRoleId + " is not assignable to segments");
+					"Unable to assign site role ID " + siteRoleId +
+						" to segments");
 			}
 		}
 	}

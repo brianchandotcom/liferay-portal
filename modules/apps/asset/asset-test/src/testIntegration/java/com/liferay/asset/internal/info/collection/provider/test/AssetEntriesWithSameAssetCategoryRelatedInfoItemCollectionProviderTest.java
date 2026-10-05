@@ -544,51 +544,10 @@ public class
 
 		long[] assetCategoryIds = {assetCategory.getCategoryId()};
 
-		ObjectEntry objectEntry = _addObjectEntry(
+		ObjectEntry objectEntry1 = _addObjectEntry(
 			assetCategoryIds, depotEntry.getGroupId(), objectDefinition);
-		ObjectEntry relatedObjectEntry = _addObjectEntry(
+		ObjectEntry relatedObjectEntry1 = _addObjectEntry(
 			assetCategoryIds, depotEntry.getGroupId(), objectDefinition);
-
-		_reindex(objectDefinition, objectEntry, relatedObjectEntry);
-
-		CollectionQuery collectionQuery = new CollectionQuery();
-
-		collectionQuery.setRelatedItemObject(
-			_getAssetEntry(
-				objectDefinition.getClassName(),
-				relatedObjectEntry.getObjectEntryId()));
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setRequest(_getHttpServletRequest());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		try {
-			_assertInfoPage(
-				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
-					collectionQuery),
-				_getAssetEntry(
-					objectDefinition.getClassName(),
-					objectEntry.getObjectEntryId()));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-	}
-
-	@Test
-	public void testGetCollectionInfoPageWithSameAssetCategoryInSiteAndConnectedSpaceDepotEntry()
-		throws Exception {
-
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext());
-
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), _group.getGroupId());
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			_group.getCompanyId());
@@ -596,15 +555,14 @@ public class
 		ServiceContext companyServiceContext =
 			ServiceContextTestUtil.getServiceContext(companyGroup.getGroupId());
 
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), companyGroup.getGroupId(),
-				RandomTestUtil.randomString(), companyServiceContext);
+		assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), companyGroup.getGroupId(),
+			RandomTestUtil.randomString(), companyServiceContext);
 
-		AssetCategory assetCategory = _addAssetCategory(
+		assetCategory = _addAssetCategory(
 			companyGroup, companyServiceContext, assetVocabulary);
 
-		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+		assetCategoryIds = new long[] {assetCategory.getCategoryId()};
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -614,23 +572,35 @@ public class
 		JournalArticle journalArticle = _addJournalArticle(
 			assetCategoryIds, serviceContext);
 
-		ObjectDefinition objectDefinition = _publishCMSObjectDefinition();
-
-		ObjectEntry objectEntry = _addObjectEntry(
+		ObjectEntry objectEntry2 = _addObjectEntry(
 			assetCategoryIds, depotEntry.getGroupId(), objectDefinition);
-		ObjectEntry relatedObjectEntry = _addObjectEntry(
+		ObjectEntry relatedObjectEntry2 = _addObjectEntry(
 			assetCategoryIds, depotEntry.getGroupId(), objectDefinition);
 
 		JournalArticle relatedJournalArticle = _addJournalArticle(
 			assetCategoryIds, serviceContext);
 
 		_reindex();
-		_reindex(objectDefinition, objectEntry, relatedObjectEntry);
+		_reindex(
+			objectDefinition, objectEntry1, objectEntry2, relatedObjectEntry1,
+			relatedObjectEntry2);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
 			CollectionQuery collectionQuery = new CollectionQuery();
+
+			collectionQuery.setRelatedItemObject(
+				_getAssetEntry(
+					objectDefinition.getClassName(),
+					relatedObjectEntry1.getObjectEntryId()));
+
+			_assertInfoPage(
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery),
+				_getAssetEntry(
+					objectDefinition.getClassName(),
+					objectEntry1.getObjectEntryId()));
 
 			collectionQuery.setRelatedItemObject(
 				_getAssetEntry(
@@ -647,7 +617,7 @@ public class
 			collectionQuery.setRelatedItemObject(
 				_getAssetEntry(
 					objectDefinition.getClassName(),
-					relatedObjectEntry.getObjectEntryId()));
+					relatedObjectEntry2.getObjectEntryId()));
 
 			_assertInfoPage(
 				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
@@ -660,7 +630,7 @@ public class
 					relatedJournalArticle.getResourcePrimKey()),
 				_getAssetEntry(
 					objectDefinition.getClassName(),
-					objectEntry.getObjectEntryId()));
+					objectEntry2.getObjectEntryId()));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

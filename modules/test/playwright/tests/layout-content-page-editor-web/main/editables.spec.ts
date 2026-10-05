@@ -11,7 +11,6 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -473,18 +472,22 @@ test(
 
 		// Enable multiselect
 
-		await page.keyboard.down('Control');
+		await page.keyboard.down('ControlOrMeta');
 
 		// Check editable is deselected if we select the heading
 
-		await clickAndExpectToBeHidden({
-			target: page.locator('.breadcrumb-link', {
-				hasText: '02-title',
+		await clickAndExpectToBeVisible({
+			target: page.locator('.page-editor__topper__title', {
+				hasText: 'Heading',
 			}),
 			trigger: page.locator('.page-editor__page-structure__tree-node', {
 				hasText: 'Heading',
 			}),
 		});
+
+		await expect(
+			page.locator('.breadcrumb-link', {hasText: '02-title'})
+		).toBeHidden();
 
 		await expect(page.getByText('2 Items Selected')).not.toBeVisible();
 

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -46,11 +47,14 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -262,6 +266,7 @@ public class AssetStatisticsResourceTest
 		_testGetAssetStatisticsBrokenLinksCount();
 		_testGetAssetStatisticsByAssetLibrary();
 		_testGetAssetStatisticsWithFreeTier();
+		_testGetAssetStatisticsWorkflowTaskCounts();
 	}
 
 	@Override
@@ -394,6 +399,27 @@ public class AssetStatisticsResourceTest
 			Assert.assertEquals(
 				expectedBrokenLinksCount,
 				GetterUtil.getLong(assetStatistics.getBrokenLinksCount()));
+		}
+	}
+
+	private void _assertWorkflowTaskCounts(
+			Long assetLibraryId, long expectedOverdueWorkflowTaskCount,
+			long expectedWorkflowTaskCount)
+		throws Exception {
+
+		for (AssetStatisticsResource assetStatisticsResource :
+				_assetStatisticsResources) {
+
+			AssetStatistics assetStatistics =
+				assetStatisticsResource.getAssetStatistics(assetLibraryId);
+
+			Assert.assertEquals(
+				expectedOverdueWorkflowTaskCount,
+				GetterUtil.getLong(
+					assetStatistics.getOverdueWorkflowTaskCount()));
+			Assert.assertEquals(
+				expectedWorkflowTaskCount,
+				GetterUtil.getLong(assetStatistics.getWorkflowTaskCount()));
 		}
 	}
 
@@ -548,12 +574,103 @@ public class AssetStatisticsResourceTest
 		}
 	}
 
+	private void _testGetAssetStatisticsWorkflowTaskCounts() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DepotEntry depotEntry1 = _addSpaceDepotEntry(serviceContext);
+		DepotEntry depotEntry2 = _addSpaceDepotEntry(serviceContext);
+
+		ObjectDefinition objectDefinition =
+			_getBasicWebContentObjectDefinition();
+
+		for (DepotEntry depotEntry :
+				new DepotEntry[] {depotEntry1, depotEntry2}) {
+
+			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				depotEntry.getGroupId(), objectDefinition.getClassName(), 0, 0,
+				"Single Approver", 1);
+		}
+
+		Date date = new Date();
+
+		// Add object entry with overdue workflow task
+
+		_updateKaleoTaskInstanceToken(
+			false, new Date(date.getTime() - Time.DAY), objectDefinition,
+			_addObjectEntry(depotEntry1, objectDefinition));
+
+		_assertWorkflowTaskCounts(depotEntry1.getGroupId(), 1, 1);
+
+		// Add object entry with workflow task due in the future
+
+		_updateKaleoTaskInstanceToken(
+			false, new Date(date.getTime() + Time.DAY), objectDefinition,
+			_addObjectEntry(depotEntry1, objectDefinition));
+
+		_assertWorkflowTaskCounts(depotEntry1.getGroupId(), 1, 2);
+
+		// Add object entry with workflow task without due date
+
+		_addObjectEntry(depotEntry1, objectDefinition);
+
+		_assertWorkflowTaskCounts(depotEntry1.getGroupId(), 1, 3);
+
+		// Add object entry with completed workflow task past its due date
+
+		_updateKaleoTaskInstanceToken(
+			true, new Date(date.getTime() - Time.DAY), objectDefinition,
+			_addObjectEntry(depotEntry1, objectDefinition));
+
+		_assertWorkflowTaskCounts(depotEntry1.getGroupId(), 1, 4);
+
+		// Add object entry with overdue workflow task on another space
+
+		_updateKaleoTaskInstanceToken(
+			false, new Date(date.getTime() - Time.DAY), objectDefinition,
+			_addObjectEntry(depotEntry2, objectDefinition));
+
+		_assertWorkflowTaskCounts(depotEntry1.getGroupId(), 1, 4);
+		_assertWorkflowTaskCounts(depotEntry1.getDepotEntryId(), 1, 4);
+
+		_assertWorkflowTaskCounts(depotEntry2.getGroupId(), 1, 1);
+		_assertWorkflowTaskCounts(depotEntry2.getDepotEntryId(), 1, 1);
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry1.getDepotEntryId());
+		_depotEntryLocalService.deleteDepotEntry(depotEntry2.getDepotEntryId());
+	}
+
+	private void _updateKaleoTaskInstanceToken(
+			boolean completed, Date dueDate, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
+			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
+				objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId());
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			kaleoTaskInstanceTokens.get(0);
+
+		kaleoTaskInstanceToken.setCompleted(completed);
+		kaleoTaskInstanceToken.setDueDate(dueDate);
+
+		_kaleoTaskInstanceTokenLocalService.updateKaleoTaskInstanceToken(
+			kaleoTaskInstanceToken);
+	}
+
 	private AssetStatisticsResource[] _assetStatisticsResources;
 	private User _cmsAdministratorUser;
 	private User _companyAdminUser;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -569,5 +686,9 @@ public class AssetStatisticsResourceTest
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

@@ -3289,24 +3289,19 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		const minium2 = await miniumSetUp(
-			apiHelpers,
-			'Minium-' + getRandomInt()
-		);
-		const site2 = minium2.site;
+		const otherChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Other Channel ' + getRandomInt(),
+			});
 
-		const {account: account1} = await createAccountWithBuyerUser(
+		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
 		);
-		const {buyerUser: buyer2} = await createAccountWithBuyerUser(
-			apiHelpers,
-			site2.id
-		);
 
-		const billingAddress1 =
+		const billingAddress =
 			await apiHelpers.headlessCommerceAdminAccount.postAddress(
-				account1.id,
+				account.id,
 				{
 					defaultBilling: false,
 					defaultShipping: false,
@@ -3315,11 +3310,11 @@ test(
 				}
 			);
 
-		apiHelpers.data.push({id: billingAddress1.id, type: 'address'});
+		apiHelpers.data.push({id: billingAddress.id, type: 'address'});
 
-		const shippingAddress1 =
+		const shippingAddress =
 			await apiHelpers.headlessCommerceAdminAccount.postAddress(
-				account1.id,
+				account.id,
 				{
 					defaultBilling: false,
 					defaultShipping: false,
@@ -3328,21 +3323,21 @@ test(
 				}
 			);
 
-		apiHelpers.data.push({id: shippingAddress1.id, type: 'address'});
+		apiHelpers.data.push({id: shippingAddress.id, type: 'address'});
 
 		await accountsPage.gotoAccountAdmin();
 
-		await accountsPage.accountsTable.search(account1.name);
-		await accountsPage.accountNameLink(account1.name).click();
+		await accountsPage.accountsTable.search(account.name);
+		await accountsPage.accountNameLink(account.name).click();
 		await editAccountPage.channelDefaultsLink.click();
 
 		await expect(async () => {
 			await editAccountChannelDefaultsPage.addDefaultBillingAddressButton.click();
 			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
-				channel.name
+				otherChannel.name
 			);
 			await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
-				billingAddress1.name
+				billingAddress.name
 			);
 			await editAccountChannelDefaultsPage.modalSaveButton.click();
 
@@ -3350,7 +3345,7 @@ test(
 				await editAccountChannelDefaultsPage.addressTableRowColumn(
 					1,
 					'Billing',
-					billingAddress1.name
+					billingAddress.name
 				)
 			).toBeVisible({timeout: 5000});
 		}).toPass({timeout: 20000});
@@ -3358,10 +3353,10 @@ test(
 		await expect(async () => {
 			await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
 			await editAccountChannelDefaultsPage.setDefaultAddressFrameChannelDropdownMenu.selectOption(
-				channel.name
+				otherChannel.name
 			);
 			await editAccountChannelDefaultsPage.setDefaultShippingAddressFrameBillingAddressDropdownMenu.selectOption(
-				shippingAddress1.name
+				shippingAddress.name
 			);
 			await editAccountChannelDefaultsPage.modalSaveButton.click();
 
@@ -3369,14 +3364,14 @@ test(
 				await editAccountChannelDefaultsPage.addressTableRowColumn(
 					1,
 					'Shipping',
-					shippingAddress1.name
+					shippingAddress.name
 				)
 			).toBeVisible({timeout: 5000});
 		}).toPass({timeout: 20000});
 
-		await performUserSwitch(page, buyer2.alternateName);
+		await performUserSwitch(page, buyerUser.alternateName);
 
-		await page.goto(`/web${site2.friendlyUrlPath}/catalog`);
+		await page.goto(`/web${site.friendlyUrlPath}/catalog`);
 
 		await commerceMiniCartPage.quickAddToCart('MIN55861');
 		await commerceMiniCartPage.submitButton.click();

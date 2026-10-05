@@ -18,6 +18,7 @@ jest.mock('shared/apollo/client', () => ({
 
 const mockLiferayLanguage = key => {
 	const messages = {
+		'conditions-library': 'Conditions Library',
 		custom: 'Custom',
 		default: 'Default',
 		event: 'event',
@@ -133,6 +134,7 @@ describe('CriteriaSidebar', () => {
 			</DndProvider>
 		);
 
+		expect(screen.getByText('Conditions Library')).toBeInTheDocument();
 		expect(
 			screen.getByText('Interests', {selector: '[role="combobox"]'})
 		).toBeInTheDocument();

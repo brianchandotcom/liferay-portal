@@ -11,7 +11,9 @@ import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashProviderFactory;
 import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProviderFactory;
+import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
+import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -22,6 +24,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -108,6 +114,11 @@ public class CryptoHashGeneratorTest {
 
 	@Test
 	public void testGenerate() throws Exception {
+		_testGenerate();
+		_testGenerateConcurrently();
+	}
+
+	private void _testGenerate() throws Exception {
 		for (CryptoHashGenerator cryptoHashGenerator : _cryptoHashGenerators) {
 			CryptoHashResponse cryptoHashResponse =
 				cryptoHashGenerator.generate(_INPUT);
@@ -144,6 +155,65 @@ public class CryptoHashGeneratorTest {
 			_cryptoHashVerifierImpl.verify(
 				_INPUT, hash, cryptoHashVerificationContexts));
 	}
+
+	private void _testGenerateConcurrently() throws Exception {
+		List<Callable<CryptoHashResponse>> callables = new ArrayList<>(
+			_INITIAL_CAPACITY);
+
+		MessageDigestCryptoHashProviderFactory
+			messageDigestCryptoHashProviderFactory =
+				new MessageDigestCryptoHashProviderFactory();
+
+		CryptoHashGenerator cryptoHashGenerator = new CryptoHashGeneratorImpl(
+			messageDigestCryptoHashProviderFactory.create(
+				Collections.emptyMap()));
+
+		List<byte[]> inputs = new ArrayList<>(_INITIAL_CAPACITY);
+
+		for (int i = 0; i < _INITIAL_CAPACITY; i++) {
+			byte[] input = RandomTestUtil.randomBytes();
+
+			callables.add(() -> cryptoHashGenerator.generate(input));
+
+			inputs.add(input);
+		}
+
+		Runtime runtime = Runtime.getRuntime();
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			runtime.availableProcessors());
+
+		try {
+			List<Future<CryptoHashResponse>> futures =
+				executorService.invokeAll(callables);
+
+			CryptoHashProvider cryptoHashProvider =
+				messageDigestCryptoHashProviderFactory.create(
+					Collections.emptyMap());
+
+			for (int i = 0; i < futures.size(); i++) {
+				Future<CryptoHashResponse> future = futures.get(i);
+
+				CryptoHashResponse cryptoHashResponse = future.get();
+
+				CryptoHashVerificationContext cryptoHashVerificationContext =
+					cryptoHashResponse.getCryptoHashVerificationContext();
+
+				CryptoHashProviderResponse cryptoHashProviderResponse =
+					cryptoHashProvider.generate(
+						cryptoHashVerificationContext.getSalt(), inputs.get(i));
+
+				Assert.assertArrayEquals(
+					cryptoHashProviderResponse.getHash(),
+					cryptoHashResponse.getHash());
+			}
+		}
+		finally {
+			executorService.shutdownNow();
+		}
+	}
+
+	private static final int _INITIAL_CAPACITY = 1000;
 
 	private static final byte[] _INPUT = RandomTestUtil.randomBytes();
 

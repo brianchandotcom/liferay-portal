@@ -842,11 +842,22 @@ public abstract class BaseBundlePersistentResource
 
 		_invokeBuild();
 
-		print(
-			JenkinsResultsParserUtil.combine(
-				"Redispatching bundles (", String.valueOf(_redispatchAttempts),
-				" of ", String.valueOf(_MAX_REDISPATCH_ATTEMPTS), ") at ",
-				_getProducerJobURL()));
+		if (getStatus() == Status.IN_QUEUE) {
+			print(
+				JenkinsResultsParserUtil.combine(
+					"Redispatching bundles (",
+					String.valueOf(_redispatchAttempts), " of ",
+					String.valueOf(_MAX_REDISPATCH_ATTEMPTS), ") at ",
+					_getProducerJobURL()));
+		}
+		else {
+			print(
+				JenkinsResultsParserUtil.combine(
+					"WARNING: Unable to redispatch bundles (",
+					String.valueOf(_redispatchAttempts), " of ",
+					String.valueOf(_MAX_REDISPATCH_ATTEMPTS), ") at ",
+					_getProducerJobURL()));
+		}
 	}
 
 	private void _reinvokeCancelledQueueItem() {

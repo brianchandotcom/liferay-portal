@@ -69,24 +69,34 @@ public class MessageDigestCryptoHashProviderFactory
 
 			_cryptoHashProviderProperties = cryptoHashProviderProperties;
 
-			String algorithm = MapUtil.getString(
+			_algorithm = MapUtil.getString(
 				cryptoHashProviderProperties, "message.digest.algorithm",
 				DigesterUtil.SHA_256);
 
-			FIPSModeValidator.validateAlgorithm(algorithm);
+			FIPSModeValidator.validateAlgorithm(_algorithm);
 
-			_messageDigest = MessageDigest.getInstance(algorithm);
+			MessageDigest.getInstance(_algorithm);
 
 			_saltSize = MapUtil.getInteger(
 				cryptoHashProviderProperties, "message.digest.salt.size", 32);
 		}
 
 		@Override
-		public CryptoHashProviderResponse generate(byte[] salt, byte[] input) {
-			return new CryptoHashProviderResponse(
-				_CRYPTO_HASH_PROVIDER_FACTORY_NAME,
-				Collections.unmodifiableMap(_cryptoHashProviderProperties),
-				_messageDigest.digest(ArrayUtil.append(salt, input)));
+		public CryptoHashProviderResponse generate(byte[] salt, byte[] input)
+			throws CryptoHashException {
+
+			try {
+				MessageDigest messageDigest = MessageDigest.getInstance(
+					_algorithm);
+
+				return new CryptoHashProviderResponse(
+					_CRYPTO_HASH_PROVIDER_FACTORY_NAME,
+					Collections.unmodifiableMap(_cryptoHashProviderProperties),
+					messageDigest.digest(ArrayUtil.append(salt, input)));
+			}
+			catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+				throw new CryptoHashException(noSuchAlgorithmException);
+			}
 		}
 
 		@Override
@@ -100,8 +110,8 @@ public class MessageDigestCryptoHashProviderFactory
 			return salt;
 		}
 
+		private final String _algorithm;
 		private final Map<String, ?> _cryptoHashProviderProperties;
-		private final MessageDigest _messageDigest;
 		private final int _saltSize;
 
 	}

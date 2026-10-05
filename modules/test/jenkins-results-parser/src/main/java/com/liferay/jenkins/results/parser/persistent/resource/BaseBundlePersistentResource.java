@@ -212,7 +212,9 @@ public abstract class BaseBundlePersistentResource
 
 		_invokeBuild();
 
-		print("Start building bundles at " + _getProducerJobURL());
+		if (getStatus() == Status.IN_QUEUE) {
+			print("Start building bundles at " + _getProducerJobURL());
+		}
 	}
 
 	@Override
@@ -313,6 +315,30 @@ public abstract class BaseBundlePersistentResource
 		Status status = getStatus();
 
 		if (status == Status.NOT_STARTED) {
+			if (getProducerQueueId() <= 0) {
+				if (_failedInvocationsCount >= _MAX_FAILED_INVOCATIONS_COUNT) {
+					print("No invocation attempts remaining");
+
+					setStatus(Status.FAILED);
+
+					save();
+
+					return;
+				}
+
+				_failedInvocationsCount++;
+
+				print(
+					JenkinsResultsParserUtil.combine(
+						"Retrying bundles invocation (",
+						String.valueOf(_failedInvocationsCount), " of ",
+						String.valueOf(_MAX_FAILED_INVOCATIONS_COUNT), ")"));
+
+				start();
+
+				return;
+			}
+
 			if (_transientReinvocationCount <
 					_MAX_TRANSIENT_REINVOCATION_COUNT) {
 
@@ -620,11 +646,29 @@ public abstract class BaseBundlePersistentResource
 		buildParameters.put("PARENT_BUILD_URL", getCurrentTopLevelBuildURL());
 		buildParameters.put("SLAVE_LABEL", "slave-bundle-builder");
 
-		setProducerQueueId(
-			JenkinsResultsParserUtil.invokeJenkinsBuild(
-				producerJenkinsMaster, _JOB_NAME, buildParameters));
+		long producerQueueId = 0;
 
-		setStatus(Status.IN_QUEUE);
+		try {
+			producerQueueId = JenkinsResultsParserUtil.invokeJenkinsBuild(
+				producerJenkinsMaster, _JOB_NAME, buildParameters);
+		}
+		catch (RuntimeException runtimeException) {
+			print(
+				JenkinsResultsParserUtil.combine(
+					"WARNING: Unable to invoke bundles at ",
+					_getProducerJobURL(), ": ", runtimeException.getMessage()));
+		}
+
+		setProducerQueueId(producerQueueId);
+
+		if (producerQueueId > 0) {
+			_failedInvocationsCount = 0;
+
+			setStatus(Status.IN_QUEUE);
+		}
+		else {
+			setStatus(Status.NOT_STARTED);
+		}
 
 		save();
 	}
@@ -866,6 +910,8 @@ public abstract class BaseBundlePersistentResource
 
 	private static final int _MAX_FAIL_COUNT = 2;
 
+	private static final int _MAX_FAILED_INVOCATIONS_COUNT = 5;
+
 	private static final int _MAX_MISSING_COUNT = 2;
 
 	private static final long _MAX_QUEUE_DURATION = 1000 * 60 * 30;
@@ -884,6 +930,7 @@ public abstract class BaseBundlePersistentResource
 	private Build _build;
 	private int _cancelledReinvocationsCount;
 	private int _failCount;
+	private int _failedInvocationsCount;
 	private int _missingCount;
 	private String _queueItemWhy;
 	private int _queueReinvocationsCount;

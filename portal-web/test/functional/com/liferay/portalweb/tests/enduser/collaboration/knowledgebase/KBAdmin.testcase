@@ -219,7 +219,7 @@ definition {
 
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "Knowledge Base Article Title",
-			tableColumnContents = "Knowledge Base Article Title,--,0,0,Seconds Ago,Approved",
+			tableColumnContents = "Knowledge Base Article Title,--,0,0,Second,Approved",
 			tableColumnNames = "title,num-of-folders,num-of-articles,views,modified-date,status");
 
 		LexiconTable.clickTableEntryTitle(tableEntry = "Knowledge Base Article Title");
@@ -234,7 +234,7 @@ definition {
 
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "Knowledge Base Article Title",
-			tableColumnContents = "Knowledge Base Article Title,--,1,1,Seconds Ago,Approved",
+			tableColumnContents = "Knowledge Base Article Title,--,1,1,Second,Approved",
 			tableColumnNames = "title,num-of-folders,num-of-articles,views,modified-date,status");
 	}
 
@@ -254,7 +254,7 @@ definition {
 
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "KB Folder",
-			tableColumnContents = "KB Folder,--,0,0,--,Seconds Ago,",
+			tableColumnContents = "KB Folder,--,0,0,--,Second,",
 			tableColumnNames = "title,status,num-of-folders,num-of-articles,views,modified-date");
 
 		JSONKnowledgeBase.addkBArticle(
@@ -273,7 +273,7 @@ definition {
 
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "KB Folder",
-			tableColumnContents = "KB Folder,,1,1,--,Seconds Ago,--",
+			tableColumnContents = "KB Folder,,1,1,--,Second,--",
 			tableColumnNames = "title,status,num-of-folders,num-of-articles,views,modified-date,status");
 	}
 

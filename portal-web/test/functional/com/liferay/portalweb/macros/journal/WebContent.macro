@@ -1680,29 +1680,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro paginateRelatedAssets(webContentTitle = null, itemsPerPage = null, assetType = null) {
-		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
-
-		Panel.expandPanel(panel = "Related Assets");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		AssertClick(
-			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
-			value1 = "Select");
-
-		MenuItem.click(menuItem = ${assetType});
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "20 Entries");
-
-		MenuItem.click(menuItem = ${itemsPerPage});
-	}
-
-	@summary = "Default summary"
 	macro previewDisplayPageTemplate(webContentContent = null) {
 		Panel.expandPanel(panel = "Display Page");
 
@@ -2107,23 +2084,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadAudio(navTab = null, dmDocumentURL = null) {
-		Click(locator1 = "CKEditor#TOOLBAR_AUDIO_BUTTON");
-
-		ItemSelector.addAudioFromURL(
-			audioSourceURL = ${dmDocumentURL},
-			navTab = ${navTab});
-
-		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "Content",
-			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-		AssertElementPresent(locator1 = "CKEditor#CONTENT_AUDIO_LINK_IMAGE");
-
-		IFrame.selectTopFrame();
-	}
-
-	@summary = "Default summary"
 	macro uploadVideo(navTab = null, videoShortcutTitle = null, dmDocumentURL = null, videoShortcutPreview = null) {
 		Click(locator1 = "WCEditWebContent#VIDEO_BUTTON");
 
@@ -2524,17 +2484,6 @@ definition {
 	@summary = "Default summary"
 	macro viewNotPresentCP() {
 		AssertElementNotPresent(locator1 = "TextInput#TITLE");
-	}
-
-	@summary = "Default summary"
-	macro viewPaginateRelatedAssets(numberOfPages = null, itemsPerPage = null) {
-		AssertTextEquals.assertPartialText(
-			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = ${itemsPerPage});
-
-		AssertTextEquals(
-			locator1 = "Pagination#CURRENT_PAGE_SELECT",
-			value1 = ${numberOfPages});
 	}
 
 	@summary = "Default summary"

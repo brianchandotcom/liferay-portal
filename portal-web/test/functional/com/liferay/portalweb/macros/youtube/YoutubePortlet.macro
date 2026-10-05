@@ -21,25 +21,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro playEmbeddedVideo(videoPlayNode = null, videoDuration = null, progressBarInitialization = null) {
-		SelectFrame(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
-
-		WaitForElementPresent(
-			key_value = ${progressBarInitialization},
-			locator1 = "YoutubePortlet#VIDEO_PROGRESS_BAR");
-
-		Click(locator1 = "Button#YOUTUBE_PLAY");
-
-		MouseOver(
-			key_value = ${videoDuration},
-			locator1 = "YoutubePortlet#VIDEO_PROGRESS_BAR");
-
-		WaitForElementPresent(
-			key_value = ${videoPlayNode},
-			locator1 = "YoutubePortlet#VIDEO_PROGRESS_BAR");
-	}
-
-	@summary = "Default summary"
 	macro viewPortletConfiguration(videoId = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

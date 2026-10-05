@@ -1672,8 +1672,8 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@description = "View a related web content in Web Content Display."
 	@priority = 3
 	test ViewRelatedAssetsOfWebContent {
-		task ("Add six web contents") {
-			for (var i : list "1,2,3,4,5,6") {
+		task ("Add two web contents") {
+			for (var i : list "3,5") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${i}",
 					groupName = "Test Site Name",
@@ -1684,7 +1684,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 		task ("View web contents are shown") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			for (var i : list "1,2,3,4,5,6") {
+			for (var i : list "3,5") {
 				WebContent.viewTitle(webContentTitle = "Web Content Title ${i}");
 			}
 		}

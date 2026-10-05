@@ -24,7 +24,6 @@ import java.io.FileFilter;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -439,13 +438,16 @@ public class DBMigrationImportProcess {
 	}
 
 	private void _validateSQLFiles() {
-		if (!Files.exists(Paths.get(_path, "indexes.sql"))) {
-			throw new IllegalStateException(
-				"Missing " + _path + "/indexes.sql");
+		File indexesSQLFile = new File(_path, "indexes.sql");
+
+		if (!indexesSQLFile.exists()) {
+			throw new IllegalStateException("Missing " + indexesSQLFile);
 		}
 
-		if (!Files.exists(Paths.get(_path, "tables.sql"))) {
-			throw new IllegalStateException("Missing " + _path + "/tables.sql");
+		File tablesSQLFile = new File(_path, "tables.sql");
+
+		if (!tablesSQLFile.exists()) {
+			throw new IllegalStateException("Missing " + tablesSQLFile);
 		}
 	}
 

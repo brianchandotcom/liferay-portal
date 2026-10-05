@@ -25,6 +25,19 @@ definition {
 			key_menuItem = ${structureName},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
+		// LPD-108348 The first click on the menu item is sometimes dropped and
+		// the editor never opens, so click it once more
+
+		WaitForElementPresent(locator1 = "TextInput#TITLE");
+
+		if (IsElementNotPresent(locator1 = "TextInput#TITLE")) {
+			Portlet.clickPortletPlusIconPG(portletName = ${portletName});
+
+			Click(
+				key_menuItem = ${structureName},
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+
 		AssertVisible(locator1 = "TextInput#TITLE");
 
 		WaitForVisible(locator1 = "WCEditWebContent#SIDEBAR");
@@ -63,6 +76,17 @@ definition {
 		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = ${webContentTitle});
 
 		MenuItem.click(menuItem = ${menuItem});
+
+		// LPD-108348 The first click on the menu item is sometimes dropped and
+		// the editor never opens, so click it once more
+
+		WaitForElementPresent(locator1 = "TextInput#TITLE");
+
+		if (IsElementNotPresent(locator1 = "TextInput#TITLE")) {
+			WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = ${webContentTitle});
+
+			MenuItem.click(menuItem = ${menuItem});
+		}
 
 		AssertVisible(locator1 = "TextInput#TITLE");
 	}

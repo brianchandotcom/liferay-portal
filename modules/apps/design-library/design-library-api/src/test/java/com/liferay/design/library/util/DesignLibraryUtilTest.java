@@ -121,6 +121,15 @@ public class DesignLibraryUtilTest {
 		Assert.assertArrayEquals(
 			new long[0],
 			DesignLibraryUtil.fetchConnectedDesignLibraryGroupIds(groupId));
+
+		Assert.assertArrayEquals(
+			new long[0],
+			DesignLibraryUtil.fetchConnectedDesignLibraryGroupIds(
+				RandomTestUtil.randomLong()));
+
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.getGroup(Mockito.anyLong()),
+			Mockito.never());
 	}
 
 	@Test

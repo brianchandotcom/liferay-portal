@@ -6,10 +6,6 @@ templates:
     -   templates/deployment-runtime-configs.yaml
 tests:
     -   asserts:
-            -   notExists:
-                    path: spec.serviceAccountTemplate
-        it: Omits the service account template so Crossplane never manages a shared service account
-    -   asserts:
             -   documentIndex: 8
                 equal:
                     path: spec.deploymentTemplate.spec.template.spec.containers[0].resources
@@ -24,6 +20,10 @@ tests:
                     path: spec.deploymentTemplate.spec.template.spec.securityContext.runAsNonRoot
                     value: true
         it: Keeps the per provider resource tuning and the restricted security context
+    -   asserts:
+            -   notExists:
+                    path: spec.serviceAccountTemplate
+        it: Omits the service account template so Crossplane never manages a shared service account
     -   asserts:
             -   hasDocuments:
                     count: 9

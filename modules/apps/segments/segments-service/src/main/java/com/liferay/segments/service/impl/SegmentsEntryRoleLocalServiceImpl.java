@@ -5,6 +5,7 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
@@ -217,7 +218,9 @@ public class SegmentsEntryRoleLocalServiceImpl
 				ArrayUtil.contains(excludedRoleNames, role.getName())) {
 
 				throw new RoleAssignmentException(
-					"Role " + siteRoleId + " is not assignable to segments");
+					StringBundler.concat(
+						"Unable to assign site role ID ", siteRoleId,
+						" to segments entry ID ", segmentsEntryId));
 			}
 		}
 	}

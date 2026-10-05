@@ -17,8 +17,6 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -86,8 +84,6 @@ public class LiferayCommercePIMConnectorTest {
 		ReflectionTestUtil.setFieldValue(
 			_liferayCommercePIMConnector, "_friendlyURLNormalizer",
 			_friendlyURLNormalizer);
-		ReflectionTestUtil.setFieldValue(
-			_liferayCommercePIMConnector, "jsonFactory", _jsonFactory);
 		ReflectionTestUtil.setFieldValue(
 			_liferayCommercePIMConnector, "language", _language);
 		ReflectionTestUtil.setFieldValue(
@@ -656,7 +652,6 @@ public class LiferayCommercePIMConnectorTest {
 
 	private final FriendlyURLNormalizer _friendlyURLNormalizer = Mockito.mock(
 		FriendlyURLNormalizer.class);
-	private final JSONFactory _jsonFactory = JSONFactoryUtil.getJSONFactory();
 	private final Language _language = Mockito.mock(Language.class);
 	private final LiferayCommercePIMConnector _liferayCommercePIMConnector =
 		new LiferayCommercePIMConnector();

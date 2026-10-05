@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -180,36 +181,38 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 	}
 
 	private JSONObject _createProductOptionJSONObject(
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-		int priority, String sourceFieldName,
-		List<Map<String, Serializable>> valuesList) {
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			int priority, String sourceFieldName,
+			List<Map<String, Serializable>> valuesList)
+		throws Exception {
 
-		JSONArray jsonArray = jsonFactory.createJSONArray();
+		AtomicInteger atomicInteger = new AtomicInteger();
 		Set<String> valueKeys = new HashSet<>();
 
-		for (Map<String, Serializable> values : valuesList) {
-			String value = PIMConnectorFieldMappingsUtil.getValue(
-				objectDefinition, objectEntry, values);
+		JSONArray jsonArray = JSONUtil.toJSONArray(
+			valuesList,
+			values -> {
+				String value = PIMConnectorFieldMappingsUtil.getValue(
+					objectDefinition, objectEntry, values);
 
-			if (Validator.isNull(value)) {
-				continue;
-			}
+				if (Validator.isNull(value)) {
+					return null;
+				}
 
-			String valueKey = _friendlyURLNormalizer.normalize(value);
+				String valueKey = _friendlyURLNormalizer.normalize(value);
 
-			if (!valueKeys.add(valueKey)) {
-				continue;
-			}
+				if (!valueKeys.add(valueKey)) {
+					return null;
+				}
 
-			jsonArray.put(
-				JSONUtil.put(
+				return JSONUtil.put(
 					"key", valueKey
 				).put(
 					"name", JSONUtil.put("en_US", value)
 				).put(
-					"priority", jsonArray.length()
-				));
-		}
+					"priority", atomicInteger.getAndIncrement()
+				);
+			});
 
 		if (jsonArray.length() == 0) {
 			return null;
@@ -371,38 +374,42 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 	}
 
 	private JSONArray _toJSONArray(
-		ObjectDefinition objectDefinition, List<ObjectEntry> objectEntries,
-		UnsafeTriFunction
-			<ObjectEntry, String, Integer, JSONObject, RuntimeException>
-				unsafeTriFunction) {
+			ObjectDefinition objectDefinition, List<ObjectEntry> objectEntries,
+			UnsafeTriFunction
+				<ObjectEntry, String, Integer, JSONObject, Exception>
+					unsafeTriFunction)
+		throws Exception {
 
-		JSONArray jsonArray = jsonFactory.createJSONArray();
+		AtomicInteger atomicInteger = new AtomicInteger();
 		Set<String> sourceFieldNames = new HashSet<>();
 
-		for (ObjectEntry objectEntry :
-				PIMConnectorFieldMappingsUtil.filterObjectEntries(
-					objectDefinition, objectEntries)) {
+		JSONArray jsonArray = JSONUtil.toJSONArray(
+			PIMConnectorFieldMappingsUtil.filterObjectEntries(
+				objectDefinition, objectEntries),
+			objectEntry -> {
+				if (PIMConnectorFieldMappingsUtil.isFixedValue(objectEntry)) {
+					return null;
+				}
 
-			if (PIMConnectorFieldMappingsUtil.isFixedValue(objectEntry)) {
-				continue;
-			}
+				String sourceFieldName = _friendlyURLNormalizer.normalize(
+					MapUtil.getString(
+						objectEntry.getValues(), "sourceFieldName"));
 
-			String sourceFieldName = _friendlyURLNormalizer.normalize(
-				MapUtil.getString(objectEntry.getValues(), "sourceFieldName"));
+				if (!sourceFieldNames.add(sourceFieldName)) {
+					return null;
+				}
 
-			if (!sourceFieldNames.add(sourceFieldName)) {
-				continue;
-			}
+				JSONObject jsonObject = unsafeTriFunction.apply(
+					objectEntry, sourceFieldName, atomicInteger.get());
 
-			JSONObject jsonObject = unsafeTriFunction.apply(
-				objectEntry, sourceFieldName, jsonArray.length());
+				if (jsonObject == null) {
+					return null;
+				}
 
-			if (jsonObject == null) {
-				continue;
-			}
+				atomicInteger.incrementAndGet();
 
-			jsonArray.put(jsonObject);
-		}
+				return jsonObject;
+			});
 
 		if (jsonArray.length() == 0) {
 			return null;

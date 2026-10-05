@@ -6,7 +6,6 @@
 package com.liferay.site.pim.site.initializer.connector;
 
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 import java.util.Locale;
@@ -20,7 +19,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PIMConnector {
 
-	public String export(ObjectEntry objectEntry) throws PortalException;
+	public String export(ObjectEntry objectEntry) throws Exception;
 
 	public String getKey();
 

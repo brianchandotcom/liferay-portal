@@ -8,7 +8,6 @@ package com.liferay.site.pim.site.initializer.internal.servlet;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -115,7 +114,7 @@ public class PIMExportServlet extends HttpServlet {
 	}
 
 	private byte[] _export(HttpServletRequest httpServletRequest)
-		throws IOException, PortalException {
+		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
 			ParamUtil.getLong(httpServletRequest, "objectEntryId"));

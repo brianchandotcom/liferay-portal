@@ -121,8 +121,6 @@ public class BasePIMConnectorTest {
 			_complexQueryPartBuilderFactory);
 		ReflectionTestUtil.setFieldValue(
 			_pimConnector, "filterFactory", _filterFactory);
-		ReflectionTestUtil.setFieldValue(
-			_pimConnector, "jsonFactory", _jsonFactory);
 		ReflectionTestUtil.setFieldValue(_pimConnector, "language", _language);
 		ReflectionTestUtil.setFieldValue(
 			_pimConnector, "objectDefinitionLocalService",

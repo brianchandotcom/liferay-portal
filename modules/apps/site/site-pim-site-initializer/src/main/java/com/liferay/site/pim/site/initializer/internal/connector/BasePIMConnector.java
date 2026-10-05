@@ -17,9 +17,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -59,9 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BasePIMConnector implements PIMConnector {
 
 	@Override
-	public String export(ObjectEntry pimConnectorObjectEntry)
-		throws PortalException {
-
+	public String export(ObjectEntry pimConnectorObjectEntry) throws Exception {
 		Map<String, List<ObjectEntry>> objectEntriesMap = new HashMap<>();
 
 		for (ObjectEntry objectEntry :
@@ -77,17 +74,12 @@ public abstract class BasePIMConnector implements PIMConnector {
 
 		_validate(objectEntriesMap);
 
-		JSONArray jsonArray = jsonFactory.createJSONArray();
-
-		for (List<ObjectEntry> objectEntries :
+		return String.valueOf(
+			JSONUtil.toJSONArray(
 				_getPIMProductObjectEntriesList(
-					pimConnectorObjectEntry.getCompanyId())) {
-
-			jsonArray.put(
-				createProductJSONObject(objectEntriesMap, objectEntries));
-		}
-
-		return jsonArray.toString();
+					pimConnectorObjectEntry.getCompanyId()),
+				objectEntries -> createProductJSONObject(
+					objectEntriesMap, objectEntries)));
 	}
 
 	@Override
@@ -107,9 +99,6 @@ public abstract class BasePIMConnector implements PIMConnector {
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
 	protected FilterFactory<Predicate> filterFactory;
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected Language language;
@@ -163,7 +152,7 @@ public abstract class BasePIMConnector implements PIMConnector {
 
 	private List<List<ObjectEntry>> _getPIMProductObjectEntriesList(
 			long companyId)
-		throws PortalException {
+		throws Exception {
 
 		Map<String, List<ObjectEntry>> objectEntriesMap = new LinkedHashMap<>();
 
@@ -205,7 +194,7 @@ public abstract class BasePIMConnector implements PIMConnector {
 
 	private Map<String, String> _getVariantPIMLinkClusterKeys(
 			long companyId, long groupId, ObjectDefinition objectDefinition)
-		throws PortalException {
+		throws Exception {
 
 		Map<String, String> clusterKeys = new HashMap<>();
 
@@ -270,7 +259,7 @@ public abstract class BasePIMConnector implements PIMConnector {
 	}
 
 	private void _validate(Map<String, List<ObjectEntry>> objectEntriesMap)
-		throws PIMConnectorException {
+		throws Exception {
 
 		for (PIMConnectorChannelField pimConnectorChannelField :
 				getPIMConnectorChannelFields()) {

@@ -268,15 +268,11 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).apply(
 			() -> {
-				for (String path :
-						new String[] {
-							"applications", "endpoints", "filters",
-							"properties", "schemas", "sorts"
-						}) {
-
-					assertSuccessfulJSONObject(
-						null, "headless-builder/" + path, Http.Method.GET);
-				}
+				_assertEndpoints(
+					"headless-builder/applications",
+					"headless-builder/endpoints", "headless-builder/filters",
+					"headless-builder/properties", "headless-builder/schemas",
+					"headless-builder/sorts");
 
 				try (LogCapture logCapture =
 						LoggerTestUtil.configureLog4JLogger(
@@ -3722,6 +3718,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"file",
 				() -> FileUtil.createTempFile(TestDataConstants.TEST_BYTE_ARRAY)
 			).build());
+	}
+
+	private void _assertEndpoints(String... endpoints) throws Exception {
+		for (String endpoint : endpoints) {
+			assertSuccessfulJSONObject(null, endpoint, Http.Method.GET);
+		}
 	}
 
 	private void _assertFilterString(

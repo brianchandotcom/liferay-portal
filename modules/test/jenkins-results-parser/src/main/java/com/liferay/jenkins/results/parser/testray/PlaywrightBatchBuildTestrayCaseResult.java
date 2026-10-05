@@ -362,11 +362,11 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			return null;
 		}
 
-		String projectPath = projectName.replace(".", "/");
+		String projectDirPath = projectName.replace(".", "/");
 
-		int y = projectPath.lastIndexOf("/");
+		int y = projectDirPath.lastIndexOf("/");
 
-		String variantName = projectPath.substring(y + 1);
+		String variantName = projectDirPath.substring(y + 1);
 
 		String specDirPath = specFilePath.substring(0, x);
 
@@ -376,21 +376,25 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			return null;
 		}
 
-		String projectParentPath = projectPath.substring(0, y + 1);
+		if (y == -1) {
+			return JenkinsResultsParserUtil.combine(
+				variantName, specFilePath.substring(specFilePath.indexOf("/")));
+		}
 
-		if (specFilePath.startsWith(projectParentPath)) {
-			String relativeSpecFilePath = specFilePath.substring(
-				projectParentPath.length());
+		String parentDirPath = projectDirPath.substring(0, y);
+
+		if (specFilePath.startsWith(parentDirPath + "/")) {
+			String relativeSpecFilePath = specFilePath.substring(y + 1);
 
 			int z = relativeSpecFilePath.indexOf("/");
 
 			if (z == -1) {
 				return JenkinsResultsParserUtil.combine(
-					projectParentPath, variantName, "/", relativeSpecFilePath);
+					parentDirPath, "/", variantName, "/", relativeSpecFilePath);
 			}
 
 			return JenkinsResultsParserUtil.combine(
-				projectParentPath, variantName,
+				parentDirPath, "/", variantName,
 				relativeSpecFilePath.substring(z));
 		}
 

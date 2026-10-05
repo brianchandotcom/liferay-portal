@@ -504,6 +504,8 @@ definition {
 		Click(
 			key_filterOption = "Type",
 			locator1 = "ItemSelector#INLINE_MODAL_FILTER_OPTION");
+
+		AssertElementPresent(locator1 = "ItemSelector#INLINE_MODAL_FILTER_ITEMS");
 	}
 
 	@summary = "Default summary"

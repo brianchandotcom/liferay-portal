@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_MODAL_FILTER_ITEMS</td>
+	<td>//div[contains(@class,'filter-dropdown-menu')]//span[contains(@class,'custom-control-label-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INLINE_MODAL_FILTER_OPTION</td>
 	<td>//div[contains(@class,'filter-dropdown-menu')]//button[contains(@class,'dropdown-item') and normalize-space()='${key_filterOption}']</td>
 	<td></td>

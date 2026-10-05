@@ -304,17 +304,47 @@ public abstract class BaseBundlePersistentResource
 				return;
 			}
 
-			if (isMissing()) {
-				_missingCount++;
-
-				if (_missingCount >= _MAX_MISSING_COUNT) {
-					start();
-
-					_missingCount = 0;
-
-					return;
-				}
+			if (status != Status.SUCCESS) {
+				return;
 			}
+
+			if (!isMissing()) {
+				_missingArtifactsCount = 0;
+
+				touch();
+
+				return;
+			}
+
+			_missingArtifactsCount++;
+
+			if (_missingArtifactsCount < _MAX_MISSING_COUNT) {
+				print(
+					JenkinsResultsParserUtil.combine(
+						"WARNING: Unable to find bundle artifacts (",
+						String.valueOf(_missingArtifactsCount), " of ",
+						String.valueOf(_MAX_MISSING_COUNT), ")"));
+
+				setStatus(Status.IN_PROGRESS);
+
+				return;
+			}
+
+			_missingArtifactsCount = 0;
+
+			if (_redispatchAttempts >= _MAX_REDISPATCH_ATTEMPTS) {
+				print("No redispatch attempts remaining");
+
+				setStatus(Status.FAILED);
+
+				return;
+			}
+
+			print(
+				"Redispatching bundles after artifacts went missing from " +
+					getControllerBuildURL());
+
+			_redispatchBuild(dataJSONObject);
 
 			return;
 		}
@@ -998,6 +1028,7 @@ public abstract class BaseBundlePersistentResource
 	private int _failCount;
 	private int _failedInvocationsCount;
 	private int _lookupFailuresCount;
+	private int _missingArtifactsCount;
 	private int _missingCount;
 	private String _queueItemWhy;
 	private int _queueReinvocationsCount;

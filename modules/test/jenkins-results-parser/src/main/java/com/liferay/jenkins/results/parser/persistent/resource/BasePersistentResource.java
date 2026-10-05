@@ -136,22 +136,8 @@ public abstract class BasePersistentResource implements PersistentResource {
 						ioException.getMessage());
 			}
 
-			for (Artifact artifact : getArtifacts()) {
-				if (!artifact.isAvailable()) {
-					continue;
-				}
-
-				try {
-					CloudBucketUtil.touchS3File(artifact.getS3ObjectPath());
-				}
-				catch (IOException ioException) {
-					allSucceeded = false;
-
-					System.out.println(
-						"WARNING: Unable to touch " + getType() +
-							" S3 artifact " + artifact.getName() + ": " +
-								ioException.getMessage());
-				}
+			if (!_touchArtifacts()) {
+				allSucceeded = false;
 			}
 
 			_attempts++;
@@ -399,6 +385,8 @@ public abstract class BasePersistentResource implements PersistentResource {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+
+		_touchArtifacts();
 	}
 
 	protected void setControllerBuildURL(String controllerBuildURL) {
@@ -442,6 +430,29 @@ public abstract class BasePersistentResource implements PersistentResource {
 	private String _getDataS3ObjectPath() {
 		return JenkinsResultsParserUtil.combine(
 			getBaseS3ObjectPath(), "/data.json.gz");
+	}
+
+	private boolean _touchArtifacts() {
+		boolean allSucceeded = true;
+
+		for (Artifact artifact : getArtifacts()) {
+			if (!artifact.isAvailable()) {
+				continue;
+			}
+
+			try {
+				CloudBucketUtil.touchS3File(artifact.getS3ObjectPath());
+			}
+			catch (IOException ioException) {
+				allSucceeded = false;
+
+				System.out.println(
+					"WARNING: Unable to touch " + getType() + " S3 artifact " +
+						artifact.getName() + ": " + ioException.getMessage());
+			}
+		}
+
+		return allSucceeded;
 	}
 
 	private static final int _MAX_TOUCH_ATTEMPTS = 2;

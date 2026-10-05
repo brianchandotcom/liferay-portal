@@ -873,86 +873,66 @@ export class UsersAndOrganizationsPage {
 
 	async goToOrganizations(forceReload?: boolean) {
 		await this.goto(forceReload);
-		await Promise.all([
-			this.organizationsLink.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp
-						.url()
-						.includes('screenNavigationCategoryKey=organizations')
-			),
-		]);
+
+		await this.organizationsLink.click();
+
+		await this.page.waitForURL((url) =>
+			url.href.includes('screenNavigationCategoryKey=organizations')
+		);
 	}
 
 	async goToOrganizationsWithLimitedAccess() {
 		await this.globalMenuPage.goToControlPanel('Users and Organizations');
-		await Promise.all([
-			this.organizationsLink.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp
-						.url()
-						.includes('screenNavigationCategoryKey=organizations')
-			),
-		]);
+
+		await this.organizationsLink.click();
+
+		await this.page.waitForURL((url) =>
+			url.href.includes('screenNavigationCategoryKey=organizations')
+		);
 	}
 
 	async goToOrganizationChart(forceReload?: boolean) {
 		await this.goto(forceReload);
-		await Promise.all([
-			this.organizationChartLink.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp
-						.url()
-						.includes(
-							'screenNavigationCategoryKey=commerce-organization'
-						)
-			),
-		]);
+
+		await this.organizationChartLink.click();
+
+		await this.page.waitForURL((url) =>
+			url.href.includes(
+				'screenNavigationCategoryKey=commerce-organization'
+			)
+		);
 	}
 
 	async goToMyOrganizations() {
-		await Promise.all([
-			this.userPersonalMenuButton.click(),
-			this.myOrganizationsMenuItem.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp
-						.url()
-						.includes(
-							'id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet'
-						)
-			),
-		]);
+		await this.userPersonalMenuButton.click();
+
+		await this.myOrganizationsMenuItem.click();
+
+		await this.page.waitForURL((url) =>
+			url.href.includes(
+				'id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet'
+			)
+		);
 	}
 
 	async goToUsers(forceReload?: boolean) {
 		await this.goto(forceReload);
-		await Promise.all([
-			this.usersLink.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp.url().includes('screenNavigationCategoryKey=users')
-			),
-		]);
+
+		await this.usersLink.click();
+
+		await this.page.waitForURL((url) =>
+			url.href.includes('screenNavigationCategoryKey=users')
+		);
 	}
 
 	async goToUsersWithLimitedAccess() {
 		await this.globalMenuPage.goToControlPanel('Users and Organizations');
-		await Promise.all([
-			this.usersLink.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp.url().includes('screenNavigationCategoryKey=users')
-			),
-		]);
+
+		await this.usersLink.click();
+
+		await this.page.waitForURL((url) =>
+			url.href.includes('screenNavigationCategoryKey=users')
+		);
 	}
 
 	async openOptionsMenu() {

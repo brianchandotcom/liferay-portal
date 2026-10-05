@@ -387,7 +387,6 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 
 								return (
 									<CriteriaSidebarItem
-										className={`color--${propertyKey}`}
 										defaultValue={getDefaultValue(property)}
 										key={`${name}-${i}`}
 										label={label}

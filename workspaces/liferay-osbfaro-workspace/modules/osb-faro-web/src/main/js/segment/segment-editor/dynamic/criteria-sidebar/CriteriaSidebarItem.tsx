@@ -1,10 +1,17 @@
 import ClayIcon from '@clayui/icon';
+import ClaySticker from '@clayui/sticker';
 import getCN from 'classnames';
 import React from 'react';
-import {ConnectDragSource, DragSource as dragSource} from 'react-dnd';
+import {
+	ConnectDragPreview,
+	ConnectDragSource,
+	DragSource as dragSource,
+} from 'react-dnd';
 import {Criterion} from '../utils/types';
 import {DragTypes} from '../utils/drag-types';
 import {generateRowId} from '../utils/utils';
+import {getEmptyImage} from 'react-dnd-html5-backend';
+import {getStickerStyle} from './stickerColors';
 import {Property} from 'shared/util/records';
 import {PropertyTypes} from '../utils/constants';
 
@@ -37,6 +44,9 @@ const TYPE_ICON_MAP = {
 	[PropertyTypes.Tag]: 'text',
 	[PropertyTypes.Text]: 'text',
 };
+
+export const getTypeIcon = (type: string): string =>
+	TYPE_ICON_MAP[type as keyof typeof TYPE_ICON_MAP] || 'text';
 
 /**
  * Passes the required values to the drop target.
@@ -127,7 +137,8 @@ export const beginDrag = ({
 };
 
 interface ICriteriaSidebarItemProps {
-	className: string;
+	className?: string;
+	connectDragPreview?: ConnectDragPreview;
 	connectDragSource: ConnectDragSource;
 	defaultValue: any;
 	dragging: boolean;
@@ -139,36 +150,41 @@ interface ICriteriaSidebarItemProps {
 }
 
 export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemProps> {
+	componentDidMount() {
+		const {connectDragPreview} = this.props;
+
+		if (connectDragPreview) {
+			connectDragPreview(getEmptyImage(), {captureDraggingState: true});
+		}
+	}
+
 	render() {
-		const {className, connectDragSource, dragging, label, type} =
-			this.props;
+		const {
+			className,
+			connectDragSource,
+			dragging,
+			label,
+			propertyKey,
+			type,
+		} = this.props;
 
 		const classes = getCN(
-			'criteria-sidebar-item-root',
+			'align-items-center c-gap-3 criteria-sidebar-item-root d-flex mb-1 mx-4 px-2 py-1 text-3',
 			{dragging},
 			className
 		);
 
 		return connectDragSource(
 			<li className={classes} data-testid={`criteria-item-${label}`}>
-				<span className="inline-item">
-					<ClayIcon className="icon-root" symbol="drag" />
-				</span>
+				<ClaySticker
+					className="criteria-sidebar-item-sticker flex-shrink-0"
+					size="sm"
+					style={getStickerStyle(propertyKey)}
+				>
+					<ClayIcon symbol={getTypeIcon(type)} />
+				</ClaySticker>
 
-				<span className="criteria-sidebar-item-type sticker">
-					<span className="inline-item">
-						<ClayIcon
-							className="icon-root"
-							symbol={
-								TYPE_ICON_MAP[
-									type as keyof typeof TYPE_ICON_MAP
-								] || 'text'
-							}
-						/>
-					</span>
-				</span>
-
-				<span className="criteria-sidebar-item-label">{label}</span>
+				<span className="autofit-col-expand">{label}</span>
 			</li>
 		);
 	}
@@ -180,6 +196,7 @@ export default dragSource(
 		beginDrag,
 	},
 	(connect, monitor) => ({
+		connectDragPreview: connect.dragPreview(),
 		connectDragSource: connect.dragSource(),
 		dragging: monitor.isDragging(),
 	})

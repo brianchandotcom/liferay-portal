@@ -25,41 +25,38 @@
 		will-change: max-height, min-height;
 
 		.criteria-sidebar-item-root {
-			align-items: center;
-			border-left: 3px solid $chartBlue;
-			cursor: grabbing;
-			display: flex;
-			font-size: 14px;
-			margin: 4px 0;
-			padding: 8px 16px 8px 8px;
+			border-radius: 0.5rem;
+			cursor: grab;
+			min-height: 34px;
+			transition: transform ease 0.3s;
 
-			@include generatePropertyGroupLoop(
-				$propertyGroupsColors,
-				'border-left-color',
-				'color--'
-			);
-
-			.criteria-sidebar-item-type {
-				flex-shrink: 0;
-				margin: 0 8px;
-			}
-
-			.lexicon-icon-drag {
-				color: $mainLighten52;
-			}
-
-			.criteria-sidebar-item-label {
-				flex: 1;
-				min-width: 0;
-				overflow-wrap: anywhere;
-			}
-
-			&.dragging {
-				opacity: 0.4;
-			}
-
+			&:focus-visible,
 			&:hover {
-				cursor: grab;
+				--criteria-sticker-state-bg: transparent;
+				--criteria-sticker-state-color: #{$cadmin-gray-900};
+
+				background-color: $cadmin-primary-l3;
+				box-shadow: unquote(
+					'inset 0 0 0 2px #{$white}, 0 0 0 2px #{$cadmin-primary-l0}, 0 0 12px hsl(from #{$cadmin-gray-900} h s l / 0.1)'
+				);
+				outline: 0;
+				transform: translateX(-4px);
+			}
+
+			&:active {
+				cursor: grabbing;
+			}
+
+			&.dragging,
+			&.dragging:focus-visible,
+			&.dragging:hover {
+				--criteria-sticker-state-bg: #{$cadmin-light-l1};
+				--criteria-sticker-state-color: #{$cadmin-secondary-l0};
+
+				background-color: $white;
+				box-shadow: 0 0 0 2px $cadmin-secondary-l2;
+				color: $cadmin-secondary-l0;
+				transform: none;
 			}
 		}
 
@@ -76,7 +73,7 @@
 	.properties-list {
 		list-style: none;
 		margin: 0;
-		padding: 0;
+		padding: 4px 0;
 	}
 
 	.events-criteria-tabs {
@@ -166,6 +163,34 @@
 
 	.sidebar-search {
 		padding: 16px 24px;
+	}
+}
+
+.criteria-sidebar-item-sticker {
+	background-color: var(
+		--criteria-sticker-state-bg,
+		var(--criteria-sticker-bg)
+	);
+	border-radius: 0.5rem;
+	color: var(--criteria-sticker-state-color, var(--criteria-sticker-color));
+}
+
+.criteria-drag-preview {
+	left: 0;
+	pointer-events: none;
+	top: 0;
+	z-index: 1051;
+
+	.criteria-drag-preview-content {
+		--criteria-sticker-state-bg: transparent;
+		--criteria-sticker-state-color: #{$cadmin-secondary};
+
+		border-radius: 0.5rem;
+		box-shadow: unquote(
+			'0 0 0 2px #{$cadmin-secondary-l2}, 0 0 12px hsl(from #{$cadmin-gray-900} h s l / 0.1)'
+		);
+		color: $cadmin-secondary;
+		max-width: 240px;
 	}
 }
 

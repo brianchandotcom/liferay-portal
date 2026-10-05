@@ -24,6 +24,57 @@ describe('CriteriaSidebarItem', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('renders the property type icon inside a sticker without a drag handle', () => {
+		const {container} = render(
+			<CriteriaSidebarItem
+				connectDragSource={connectDnd}
+				label='Click'
+				propertyKey='event'
+				type={PropertyTypes.Event}
+			/>
+		);
+
+		const sticker = container.querySelector('.sticker');
+
+		expect(sticker.querySelector('.lexicon-icon-click')).toBeTruthy();
+		expect(container.querySelector('.lexicon-icon-drag')).toBeNull();
+	});
+
+	it('marks the item as dragging while it is being dragged', () => {
+		const {container} = render(
+			<CriteriaSidebarItem
+				connectDragSource={connectDnd}
+				dragging
+				label='Click'
+				propertyKey='event'
+				type={PropertyTypes.Event}
+			/>
+		);
+
+		expect(
+			container.querySelector('.criteria-sidebar-item-root.dragging')
+		).toBeTruthy();
+	});
+
+	it('replaces the native drag image with an empty image', () => {
+		const connectDragPreview = jest.fn();
+
+		render(
+			<CriteriaSidebarItem
+				connectDragPreview={connectDragPreview}
+				connectDragSource={connectDnd}
+				label='Click'
+				propertyKey='event'
+				type={PropertyTypes.Event}
+			/>
+		);
+
+		expect(connectDragPreview).toHaveBeenCalledWith(
+			expect.any(Image),
+			{captureDraggingState: true}
+		);
+	});
+
 	describe('beginDrag', () => {
 		it('should not seed an invalid attributeValue flag for an Event criterion', () => {
 			const {criterion} = beginDrag({

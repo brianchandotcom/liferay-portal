@@ -6,6 +6,7 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayPopover from '@clayui/popover';
 import CriteriaBuilder from './criteria-builder';
+import CriteriaDragPreview from './criteria-sidebar/CriteriaDragPreview';
 import CriteriaSidebar from './criteria-sidebar';
 import DndProvider from 'shared/components/DndProvider';
 import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
@@ -407,6 +408,8 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 
 		return (
 			<DndProvider backend={HTML5Backend}>
+				<CriteriaDragPreview />
+
 				<div className="segment-edit-page-root">
 					<Form
 						initialValues={{

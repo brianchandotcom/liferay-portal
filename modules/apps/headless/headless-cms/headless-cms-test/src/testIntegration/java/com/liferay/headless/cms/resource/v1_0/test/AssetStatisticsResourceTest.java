@@ -127,7 +127,7 @@ public class AssetStatisticsResourceTest
 			irrelevantObjectEntry.getObjectEntryId(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertAssetStatistics(groupId, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		_assertAssetStatistics(groupId, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 		ObjectDefinition objectDefinition =
 			_getBasicWebContentObjectDefinition();
@@ -144,7 +144,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry1);
 
-		_assertAssetStatistics(groupId, 1, 0, 0, 0, 0, 0, 0, 1, 0);
+		_assertAssetStatistics(groupId, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0);
 
 		// Add object entry with future review date
 
@@ -155,7 +155,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry2);
 
-		_assertAssetStatistics(groupId, 2, 0, 0, 0, 0, 0, 0, 2, 1);
+		_assertAssetStatistics(groupId, 2, 0, 0, 0, 0, 0, 0, 0, 2, 1);
 
 		// Add object entry with imminent expiration date
 
@@ -167,7 +167,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry3);
 
-		_assertAssetStatistics(groupId, 3, 0, 1, 0, 0, 0, 0, 3, 1);
+		_assertAssetStatistics(groupId, 3, 0, 1, 0, 0, 0, 0, 0, 3, 1);
 
 		// Add object entry with already passed expiration date
 
@@ -179,7 +179,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry4);
 
-		_assertAssetStatistics(groupId, 4, 0, 2, 0, 0, 0, 0, 4, 1);
+		_assertAssetStatistics(groupId, 4, 0, 2, 0, 0, 0, 0, 0, 4, 1);
 
 		// Add object entry with overdue review date
 
@@ -190,7 +190,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry5);
 
-		_assertAssetStatistics(groupId, 5, 0, 2, 0, 0, 1, 0, 5, 1);
+		_assertAssetStatistics(groupId, 5, 0, 2, 0, 0, 0, 1, 0, 5, 1);
 
 		// Add object entry with status draft
 
@@ -201,7 +201,7 @@ public class AssetStatisticsResourceTest
 			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertAssetStatistics(groupId, 5, 0, 2, 1, 0, 1, 0, 6, 1);
+		_assertAssetStatistics(groupId, 5, 0, 2, 1, 0, 0, 1, 0, 6, 1);
 
 		// Add object entry with status expired
 
@@ -212,7 +212,7 @@ public class AssetStatisticsResourceTest
 			TestPropsValues.getUserId(), objectEntry7.getObjectEntryId(),
 			WorkflowConstants.STATUS_EXPIRED, serviceContext);
 
-		_assertAssetStatistics(groupId, 5, 1, 2, 1, 0, 1, 0, 7, 1);
+		_assertAssetStatistics(groupId, 5, 1, 2, 1, 0, 0, 1, 0, 7, 1);
 
 		// Add object entry in a status that is not visible in the All view
 
@@ -223,7 +223,36 @@ public class AssetStatisticsResourceTest
 			TestPropsValues.getUserId(), objectEntry8.getObjectEntryId(),
 			WorkflowConstants.STATUS_DENIED, serviceContext);
 
-		_assertAssetStatistics(groupId, 5, 1, 2, 1, 0, 1, 0, 7, 1);
+		_assertAssetStatistics(groupId, 5, 1, 2, 1, 0, 0, 1, 0, 7, 1);
+
+		// Add object entry with status draft not modified for more than 30 days
+
+		ObjectEntry objectEntry9 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		objectEntry9 = _objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry9.getObjectEntryId(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		objectEntry9.setModifiedDate(
+			new Date(date.getTime() - (31 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry9);
+
+		_assertAssetStatistics(groupId, 5, 1, 2, 2, 1, 0, 1, 0, 8, 1);
+
+		// Add object entry with status approved not modified for more than 30
+		// days
+
+		ObjectEntry objectEntry10 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		objectEntry10.setModifiedDate(
+			new Date(date.getTime() - (31 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry10);
+
+		_assertAssetStatistics(groupId, 6, 1, 2, 2, 1, 0, 1, 0, 9, 1);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			irrelevantObjectDefinition);
@@ -305,9 +334,10 @@ public class AssetStatisticsResourceTest
 	private void _assertAssetStatistics(
 			Long assetLibraryId, long expectedApprovedCount,
 			long expectedExpiredCount, long expectedExpiringSoonCount,
-			long expectedInDraftCount, long expectedPendingCount,
-			long expectedReviewDateOverdueCount, long expectedScheduledCount,
-			long expectedTotalCount, long expectedUpcomingReviewCount)
+			long expectedInDraftCount, long expectedLongStandingDraftCount,
+			long expectedPendingCount, long expectedReviewDateOverdueCount,
+			long expectedScheduledCount, long expectedTotalCount,
+			long expectedUpcomingReviewCount)
 		throws Exception {
 
 		for (AssetStatisticsResource assetStatisticsResource :
@@ -328,6 +358,10 @@ public class AssetStatisticsResourceTest
 			Assert.assertEquals(
 				expectedInDraftCount,
 				GetterUtil.getLong(assetStatistics.getInDraftCount()));
+			Assert.assertEquals(
+				expectedLongStandingDraftCount,
+				GetterUtil.getLong(
+					assetStatistics.getLongStandingDraftCount()));
 			Assert.assertEquals(
 				expectedPendingCount,
 				GetterUtil.getLong(assetStatistics.getPendingCount()));
@@ -478,15 +512,29 @@ public class AssetStatisticsResourceTest
 			TestPropsValues.getUserId(), pendingObjectEntry.getObjectEntryId(),
 			WorkflowConstants.STATUS_PENDING, serviceContext);
 
-		_assertAssetStatistics(
-			depotEntry1.getGroupId(), 2, 0, 0, 0, 0, 0, 0, 2, 1);
-		_assertAssetStatistics(
-			depotEntry1.getDepotEntryId(), 2, 0, 0, 0, 0, 0, 0, 2, 1);
+		ObjectEntry longStandingDraftObjectEntry = _addObjectEntry(
+			depotEntry2, objectDefinition);
+
+		longStandingDraftObjectEntry = _objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(),
+			longStandingDraftObjectEntry.getObjectEntryId(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		longStandingDraftObjectEntry.setModifiedDate(
+			new Date(date.getTime() - (31 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(
+			longStandingDraftObjectEntry);
 
 		_assertAssetStatistics(
-			depotEntry2.getGroupId(), 1, 0, 0, 0, 1, 0, 0, 2, 0);
+			depotEntry1.getGroupId(), 2, 0, 0, 0, 0, 0, 0, 0, 2, 1);
 		_assertAssetStatistics(
-			depotEntry2.getDepotEntryId(), 1, 0, 0, 0, 1, 0, 0, 2, 0);
+			depotEntry1.getDepotEntryId(), 2, 0, 0, 0, 0, 0, 0, 0, 2, 1);
+
+		_assertAssetStatistics(
+			depotEntry2.getGroupId(), 1, 0, 0, 1, 1, 1, 0, 0, 3, 0);
+		_assertAssetStatistics(
+			depotEntry2.getDepotEntryId(), 1, 0, 0, 1, 1, 1, 0, 0, 3, 0);
 
 		_depotEntryLocalService.deleteDepotEntry(depotEntry1.getDepotEntryId());
 		_depotEntryLocalService.deleteDepotEntry(depotEntry2.getDepotEntryId());

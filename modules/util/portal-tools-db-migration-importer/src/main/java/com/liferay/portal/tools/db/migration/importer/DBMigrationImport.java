@@ -7,6 +7,7 @@ package com.liferay.portal.tools.db.migration.importer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.migration.importer.jdbc.ConnectionConfigUtil;
 import com.liferay.portal.tools.db.migration.importer.jdbc.DataSourceFactoryUtil;
@@ -146,13 +147,37 @@ public class DBMigrationImport {
 	}
 
 	private static void _printHelpAndExit(Options options) {
-		new HelpFormatter(
-		).printHelp(
-			"Liferay Portal Tools Database Migration Importer", options
-		);
+		HelpFormatter helpFormatter = new HelpFormatter();
+
+		PrintWriter printWriter = new PrintWriter(System.out);
+
+		printWriter.println("Liferay Portal Tools Database Migration Importer");
+		printWriter.println();
+
+		String scriptName = "./db_migration_importer.sh";
+
+		if (OSDetector.isWindows()) {
+			scriptName = "db_migration_importer.bat";
+		}
+
+		helpFormatter.printUsage(
+			printWriter, _HELP_WIDTH, scriptName + " <parameters>");
+
+		printWriter.println();
+
+		helpFormatter.printOptions(
+			printWriter, _HELP_WIDTH, options, _HELP_LEFT_PAD, _HELP_DESC_PAD);
+
+		printWriter.flush();
 
 		System.exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 	}
+
+	private static final int _HELP_DESC_PAD = 5;
+
+	private static final int _HELP_LEFT_PAD = 2;
+
+	private static final int _HELP_WIDTH = 80;
 
 	/**
 	 * https://github.com/liferay/liferay-docker/blob/master/_liferay_common.sh

@@ -43,6 +43,13 @@ public class KaleoInstanceServiceWrapper
 	}
 
 	@Override
+	public KaleoInstance deleteKaleoInstance(long kaleoInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoInstanceService.deleteKaleoInstance(kaleoInstanceId);
+	}
+
+	@Override
 	public KaleoInstance getKaleoInstance(long kaleoInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -82,4 +89,4 @@ public class KaleoInstanceServiceWrapper
 	private KaleoInstanceService _kaleoInstanceService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:608162959
+// LIFERAY-SERVICE-BUILDER-HASH:-1597047231

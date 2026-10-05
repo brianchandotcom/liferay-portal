@@ -90,13 +90,55 @@ public class KaleoInstanceServiceHttp {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoInstance
+			deleteKaleoInstance(
+				HttpPrincipal httpPrincipal, long kaleoInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoInstanceServiceUtil.class, "deleteKaleoInstance",
+				_deleteKaleoInstanceParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, kaleoInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.workflow.kaleo.model.KaleoInstance)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoInstance
 			getKaleoInstance(HttpPrincipal httpPrincipal, long kaleoInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				KaleoInstanceServiceUtil.class, "getKaleoInstance",
-				_getKaleoInstanceParameterTypes1);
+				_getKaleoInstanceParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, kaleoInstanceId);
@@ -139,7 +181,7 @@ public class KaleoInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				KaleoInstanceServiceUtil.class, "updateKaleoInstance",
-				_updateKaleoInstanceParameterTypes2);
+				_updateKaleoInstanceParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, kaleoInstanceId, workflowContext);
@@ -182,10 +224,12 @@ public class KaleoInstanceServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class,
 			boolean.class
 		};
-	private static final Class<?>[] _getKaleoInstanceParameterTypes1 =
+	private static final Class<?>[] _deleteKaleoInstanceParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateKaleoInstanceParameterTypes2 =
+	private static final Class<?>[] _getKaleoInstanceParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateKaleoInstanceParameterTypes3 =
 		new Class[] {long.class, java.util.Map.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1136246755
+// LIFERAY-SERVICE-BUILDER-HASH:-820391361

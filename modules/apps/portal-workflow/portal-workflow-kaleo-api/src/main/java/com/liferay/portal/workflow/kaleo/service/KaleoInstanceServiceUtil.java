@@ -44,6 +44,12 @@ public class KaleoInstanceServiceUtil {
 			workflowContext, serviceContext, waitForCompletion);
 	}
 
+	public static KaleoInstance deleteKaleoInstance(long kaleoInstanceId)
+		throws PortalException {
+
+		return getService().deleteKaleoInstance(kaleoInstanceId);
+	}
+
 	public static KaleoInstance getKaleoInstance(long kaleoInstanceId)
 		throws PortalException {
 
@@ -76,4 +82,4 @@ public class KaleoInstanceServiceUtil {
 			KaleoInstanceServiceUtil.class, KaleoInstanceService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1225747297
+// LIFERAY-SERVICE-BUILDER-HASH:-263926069

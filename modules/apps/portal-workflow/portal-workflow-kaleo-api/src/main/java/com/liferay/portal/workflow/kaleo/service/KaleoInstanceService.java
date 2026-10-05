@@ -53,6 +53,9 @@ public interface KaleoInstanceService extends BaseService {
 			ServiceContext serviceContext, boolean waitForCompletion)
 		throws PortalException;
 
+	public KaleoInstance deleteKaleoInstance(long kaleoInstanceId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoInstance getKaleoInstance(long kaleoInstanceId)
 		throws PortalException;
@@ -69,4 +72,4 @@ public interface KaleoInstanceService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1598118701
+// LIFERAY-SERVICE-BUILDER-HASH:-226547061

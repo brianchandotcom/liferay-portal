@@ -379,6 +379,18 @@ public class DesignLibraryUtilTest {
 			companyId
 		);
 
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		_groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.fetchGroup(groupId)
+		).thenReturn(
+			group
+		);
+
 		_groupLocalServiceUtilMockedStatic.when(
 			() -> GroupLocalServiceUtil.getGroup(groupId)
 		).thenReturn(

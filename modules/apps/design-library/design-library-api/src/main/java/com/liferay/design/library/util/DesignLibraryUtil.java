@@ -35,8 +35,14 @@ import jakarta.servlet.http.HttpServletRequest;
 public class DesignLibraryUtil {
 
 	public static long[] fetchConnectedDesignLibraryGroupIds(long groupId) {
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
+			return new long[0];
+		}
+
 		try {
-			return getConnectedDesignLibraryGroupIds(groupId);
+			return _getConnectedDesignLibraryGroupIds(group);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -50,26 +56,8 @@ public class DesignLibraryUtil {
 	public static long[] getConnectedDesignLibraryGroupIds(long groupId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-57283")) {
-
-			return new long[0];
-		}
-
-		DepotEntryLocalService depotEntryLocalService =
-			_depotEntryLocalServiceSnapshot.get();
-
-		if (depotEntryLocalService == null) {
-			return new long[0];
-		}
-
-		return ListUtil.toLongArray(
-			depotEntryLocalService.getGroupConnectedDepotEntries(
-				groupId, DepotConstants.TYPE_DESIGN_LIBRARY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS),
-			DepotEntry::getGroupId);
+		return _getConnectedDesignLibraryGroupIds(
+			GroupLocalServiceUtil.getGroup(groupId));
 	}
 
 	public static String getDesignLibraryResourcesURL(
@@ -151,6 +139,29 @@ public class DesignLibraryUtil {
 		}
 
 		return depotEntryLocalService.fetchGroupDepotEntry(groupId);
+	}
+
+	private static long[] _getConnectedDesignLibraryGroupIds(Group group)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-57283")) {
+
+			return new long[0];
+		}
+
+		DepotEntryLocalService depotEntryLocalService =
+			_depotEntryLocalServiceSnapshot.get();
+
+		if (depotEntryLocalService == null) {
+			return new long[0];
+		}
+
+		return ListUtil.toLongArray(
+			depotEntryLocalService.getGroupConnectedDepotEntries(
+				group.getGroupId(), DepotConstants.TYPE_DESIGN_LIBRARY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			DepotEntry::getGroupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

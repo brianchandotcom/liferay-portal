@@ -43,6 +43,7 @@ import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.definition.deployment.WorkflowDeployer;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowValidator;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -320,6 +321,14 @@ public class DefaultWorkflowEngineImpl
 			else {
 				kaleoInstance = kaleoInstanceLocalService.getKaleoInstance(
 					workflowInstanceId);
+
+				if (kaleoInstance.getCompanyId() !=
+						serviceContext.getCompanyId()) {
+
+					throw new NoSuchInstanceException(
+						"No KaleoInstance exists with the primary key " +
+							workflowInstanceId);
+				}
 			}
 
 			if (kaleoInstance != null) {

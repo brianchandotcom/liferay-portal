@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
@@ -43,6 +44,11 @@ public class URLUtil {
 
 		try (InputStream inputStream = Files.newInputStream(path)) {
 			digest = DigesterUtil.digestHex(DigesterUtil.SHA_1, inputStream);
+		}
+		catch (SystemException systemException) {
+			Files.delete(path);
+
+			throw systemException;
 		}
 
 		if (!StringUtil.equalsIgnoreCase(sha1, digest)) {

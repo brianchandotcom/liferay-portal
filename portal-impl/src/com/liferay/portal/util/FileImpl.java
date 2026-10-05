@@ -13,6 +13,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -406,6 +407,9 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public String getMD5Checksum(File file) throws IOException {
 		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			return DigesterUtil.digestHex(DigesterUtil.MD5, fileInputStream);
+		}
+		catch (SystemException systemException) {
+			throw new IOException(systemException);
 		}
 	}
 

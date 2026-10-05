@@ -7,6 +7,7 @@ package com.liferay.portal.url.builder.internal.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -133,13 +134,13 @@ public class CacheHelper {
 
 			return digest;
 		}
-		catch (IOException ioException) {
+		catch (IOException | SystemException exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Unable to digest resource ", path, " inside bundle ",
 						bundle.getSymbolicName()),
-					ioException);
+					exception);
 			}
 
 			digests.put(cacheKey, _NULL_HOLDER);

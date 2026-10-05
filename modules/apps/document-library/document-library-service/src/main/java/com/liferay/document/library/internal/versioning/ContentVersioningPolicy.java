@@ -12,6 +12,7 @@ import com.liferay.document.library.versioning.VersioningPolicy;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -78,7 +79,7 @@ public class ContentVersioningPolicy implements VersioningPolicy {
 
 			return dlFileVersion.getChecksum();
 		}
-		catch (IOException | PortalException exception) {
+		catch (IOException | PortalException | SystemException exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
 			}

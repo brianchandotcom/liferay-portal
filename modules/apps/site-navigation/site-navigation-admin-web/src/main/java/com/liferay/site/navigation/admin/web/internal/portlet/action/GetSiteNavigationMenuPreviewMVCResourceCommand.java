@@ -92,9 +92,18 @@ public class GetSiteNavigationMenuPreviewMVCResourceCommand
 			httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
 			false);
 
-		int bodyTagEndIndex =
-			html.indexOf(StringPool.GREATER_THAN, html.indexOf("<body")) + 1;
 		int bodyCloseTagIndex = html.lastIndexOf("</body>");
+		int bodyTagIndex = html.indexOf("<body", html.indexOf("</head>"));
+
+		if ((bodyCloseTagIndex == -1) || (bodyTagIndex == -1)) {
+			ServletResponseUtil.write(
+				httpServletResponse, unsyncStringWriter.toString());
+
+			return;
+		}
+
+		int bodyTagEndIndex =
+			html.indexOf(StringPool.GREATER_THAN, bodyTagIndex) + 1;
 
 		StringBundler sb = new StringBundler(3);
 

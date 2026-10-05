@@ -335,6 +335,10 @@ export class JournalEditArticlePage {
 		await this.journalPage.goToCreateArticle(structureName);
 
 		await this.propertiesTab.waitFor();
+
+		// The Fields panel remembers being collapsed per user, so expand it
+
+		await openFieldset(this.page, 'Fields');
 	}
 
 	async openDMItemSelectorForImages() {

@@ -12,6 +12,7 @@ import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
 import {liferayConfig} from '../../../liferay.config';
+import {GlobalMenuPage} from '../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import performLogin from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {zipFolder} from '../../../utils/zip';
@@ -322,18 +323,27 @@ test(
 				baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${liferayConfig.environment.port}`,
 			});
 
+			await expect(async () => {
+				const response = await newPage.goto('/');
+
+				expect(response.status()).toBe(200);
+			}).toPass({timeout: 120 * 1000});
+
 			await performLogin(
 				newPage,
 				'test',
-				'',
+				'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
+					'p_p_state=maximized',
 				`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
 			);
 
-			await globalMenuPage.goToControlPanel();
+			const newInstanceGlobalMenuPage = new GlobalMenuPage(newPage);
+
+			await newInstanceGlobalMenuPage.goToControlPanel();
 
 			for (const link of links) {
 				await expect(
-					page.getByRole('menuitem', {
+					newPage.getByRole('menuitem', {
 						exact: true,
 						name: link,
 					})

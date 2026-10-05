@@ -3,8 +3,11 @@
 exports[`CriteriaSidebarItem should render 1`] = `
 <div>
   <li
+    aria-label="Add Page Views"
     class="align-items-center c-gap-3 criteria-sidebar-item-root d-flex mb-1 mx-4 px-2 py-1 text-3"
     data-testid="criteria-item-Page Views"
+    role="menuitem"
+    tabindex="-1"
   >
     <span
       class="sticker criteria-sidebar-item-sticker flex-shrink-0 sticker-sm"
@@ -28,6 +31,15 @@ exports[`CriteriaSidebarItem should render 1`] = `
     >
       Page Views
     </span>
+    <svg
+      aria-hidden="true"
+      class="lexicon-icon lexicon-icon-plus criteria-sidebar-item-add flex-shrink-0 mr-2 text-secondary"
+      role="presentation"
+    >
+      <use
+        href="#plus"
+      />
+    </svg>
   </li>
 </div>
 `;

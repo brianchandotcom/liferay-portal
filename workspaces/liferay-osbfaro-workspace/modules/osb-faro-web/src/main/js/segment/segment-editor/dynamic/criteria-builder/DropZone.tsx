@@ -12,6 +12,8 @@ import {
 } from 'react-dnd';
 import {DragTypes} from '../utils/drag-types';
 import {OnCriterionAdd, OnMove} from '../utils/types';
+import {useKeyboardMovement} from '../context/keyboardMovement';
+import {isKeyboardTarget} from '../utils/keyboardMovement';
 
 const acceptedDragTypes = [
 	DragTypes.CriteriaGroup,
@@ -119,6 +121,7 @@ interface IDropZoneProps {
 	disabled?: boolean;
 	dropIndex: number;
 	hover?: boolean;
+	keyboardAnchor?: boolean;
 	onCriterionAdd: OnCriterionAdd;
 	onMove: OnMove;
 }
@@ -127,20 +130,34 @@ const DropZone: React.FC<IDropZoneProps> = ({
 	before,
 	canDrop,
 	connectDropTarget,
+	criteriaGroupId,
+	dropIndex,
 	hover,
-}) => (
-	<div className="drop-zone-root">
-		{connectDropTarget(
-			<div
-				className={getCN('drop-zone-target', {
-					'drop-zone-target-before': before,
-				})}
-			>
-				{canDrop && hover && <div className="drop-zone-indicator" />}
-			</div>
-		)}
-	</div>
-);
+	keyboardAnchor,
+}) => {
+	const {target} = useKeyboardMovement();
+
+	const keyboardTarget =
+		!!keyboardAnchor &&
+		isKeyboardTarget(target, criteriaGroupId, dropIndex, false);
+
+	return (
+		<div className="drop-zone-root">
+			{connectDropTarget(
+				<div
+					className={getCN('drop-zone-target', {
+						'drop-zone-target-before': before,
+						'keyboard-movement-target': keyboardTarget,
+					})}
+				>
+					{((canDrop && hover) || keyboardTarget) && (
+						<div className="drop-zone-indicator" />
+					)}
+				</div>
+			)}
+		</div>
+	);
+};
 
 export default compose<React.ComponentType<any>>(
 	withReferencedObjectsConsumer,

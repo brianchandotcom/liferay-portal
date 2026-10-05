@@ -4,8 +4,9 @@ import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
 import EventsCriteriaTabs from './EventsCriteriaTabs';
 import Loading from 'shared/components/Loading';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import SidebarPagination from './SidebarPagination';
+import useCriteriaItemsNavigation from './useCriteriaItemsNavigation';
 import {extractRemoteCriterionEntries} from '../criterion-types/extract';
 import {FieldOwnerTypes, SegmentTypes} from 'shared/util/constants';
 import {getPaginatedSection} from './paginatedSections';
@@ -66,12 +67,16 @@ export default function CriteriaSidebar({
 	propertyGroupsIList,
 	type,
 }: ICriteriaSidebarProps) {
+	const itemsRef = useRef<HTMLDivElement>(null);
+
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedPropertyKey, setSelectedPropertyKey] = useState<
 		string | null
 	>(() => propertyGroupsIList.first()?.propertyKey ?? null);
 
 	const {addProperty} = useContext(ReferencedObjectsContext);
+
+	const navigation = useCriteriaItemsNavigation(itemsRef);
 
 	const selectedRemoteCriterionType =
 		getPaginatedSection(selectedPropertyKey);
@@ -256,7 +261,14 @@ export default function CriteriaSidebar({
 				/>
 			</div>
 
-			<div className="sidebar-collapse">{renderCriteria()}</div>
+			<div
+				className="sidebar-collapse"
+				onFocus={navigation.handleFocus}
+				onKeyDown={navigation.handleKeyDown}
+				ref={itemsRef}
+			>
+				{renderCriteria()}
+			</div>
 
 			{isRemoteSection && (
 				<SidebarPagination

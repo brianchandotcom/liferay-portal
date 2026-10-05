@@ -222,6 +222,7 @@ interface ICriteriaRowProps extends PropsFromRedux {
 	id?: string;
 	hover?: boolean;
 	index: number;
+	keyboardTarget?: boolean;
 	onAdd: (index: number, criterion: Criterion) => void;
 	onChange: (criterion: Criterion | Criterion[]) => void;
 	onDelete: (index: number) => void;
@@ -523,6 +524,7 @@ class CriteriaRow extends React.Component<
 				connectDropTarget,
 				dragging,
 				hover,
+				keyboardTarget,
 				stepNumber,
 			},
 			state: {selectedProperty},
@@ -530,7 +532,8 @@ class CriteriaRow extends React.Component<
 
 		const classes = getCN('criterion-row-root', {
 			'dnd-drag': dragging,
-			'dnd-hover': hover && canDrop,
+			'dnd-hover': (hover && canDrop) || keyboardTarget,
+			'keyboard-movement-target': keyboardTarget,
 		});
 
 		return connectDropTarget(

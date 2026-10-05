@@ -168,6 +168,10 @@ exports[`SegmentEditor should render 1`] = `
         </ul>
       </nav>
       <div
+        aria-live="assertive"
+        class="sr-only"
+      />
+      <div
         class="form-body"
       >
         <div

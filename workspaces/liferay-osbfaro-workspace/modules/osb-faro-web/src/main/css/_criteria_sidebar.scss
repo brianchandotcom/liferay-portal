@@ -43,6 +43,10 @@
 				transform: translateX(-4px);
 			}
 
+			&:focus-visible .criteria-sidebar-item-add {
+				opacity: 1;
+			}
+
 			&:active {
 				cursor: grabbing;
 			}
@@ -57,6 +61,15 @@
 				box-shadow: 0 0 0 2px $cadmin-secondary-l2;
 				color: $cadmin-secondary-l0;
 				transform: none;
+
+				.criteria-sidebar-item-add {
+					opacity: 0;
+				}
+			}
+
+			.criteria-sidebar-item-add {
+				opacity: 0;
+				pointer-events: none;
 			}
 		}
 

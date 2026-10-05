@@ -18,6 +18,7 @@ jest.mock('shared/apollo/client', () => ({
 
 const mockLiferayLanguage = key => {
 	const messages = {
+		'add-x': 'Add {0}',
 		'conditions-library': 'Conditions Library',
 		custom: 'Custom',
 		default: 'Default',
@@ -140,6 +141,38 @@ describe('CriteriaSidebar', () => {
 		).toBeInTheDocument();
 		expect(screen.getByText('Page Views')).toBeInTheDocument();
 		expect(screen.getByText('DXP Custom Fields')).toBeInTheDocument();
+	});
+
+	it('keeps a single tab stop and moves focus between items with the arrow keys', () => {
+		render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaSidebar
+					propertyGroupsIList={fullPropertyGroupList}
+					type={SegmentTypes.Batch}
+				/>
+			</DndProvider>
+		);
+
+		const [pageViews, pageActions] = screen.getAllByRole('menuitem');
+
+		expect(pageViews).toHaveAttribute('tabindex', '0');
+		expect(pageActions).toHaveAttribute('tabindex', '-1');
+
+		pageViews.focus();
+
+		fireEvent.keyDown(pageViews, {key: 'ArrowDown'});
+
+		expect(pageActions).toHaveFocus();
+		expect(pageActions).toHaveAttribute('tabindex', '0');
+		expect(pageViews).toHaveAttribute('tabindex', '-1');
+
+		fireEvent.keyDown(pageActions, {key: 'Home'});
+
+		expect(pageViews).toHaveFocus();
+
+		fireEvent.keyDown(pageViews, {key: 'End'});
+
+		expect(pageActions).toHaveFocus();
 	});
 
 	it('should render w/ "No results were found." when propertyGroupsIList is empty', () => {

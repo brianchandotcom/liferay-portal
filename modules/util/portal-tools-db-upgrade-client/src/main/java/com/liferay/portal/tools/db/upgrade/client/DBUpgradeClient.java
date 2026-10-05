@@ -6,6 +6,7 @@
 package com.liferay.portal.tools.db.upgrade.client;
 
 import com.liferay.gogo.shell.client.GogoShellClient;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.tools.db.upgrade.client.util.Properties;
 import com.liferay.portal.tools.db.upgrade.client.util.TeePrintStream;
 
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -71,10 +73,7 @@ public class DBUpgradeClient {
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
 			if (commandLine.hasOption("help")) {
-				new HelpFormatter(
-				).printHelp(
-					"Liferay Portal Tools Database Upgrade Client", options
-				);
+				_printUsage(options);
 
 				return;
 			}
@@ -150,10 +149,7 @@ public class DBUpgradeClient {
 
 			parseException.printStackTrace();
 
-			new HelpFormatter(
-			).printHelp(
-				"Liferay Portal Tools Database Upgrade Client", options
-			);
+			_printUsage(options);
 		}
 		catch (Exception exception) {
 			System.err.println("Error running upgrade:");
@@ -383,6 +379,35 @@ public class DBUpgradeClient {
 				"s", "shell", false, "Automatically connect to GoGo shell."));
 
 		return options;
+	}
+
+	private static boolean _isWindows() {
+		return File.pathSeparator.equals(StringPool.SEMICOLON);
+	}
+
+	private static void _printUsage(Options options) {
+		HelpFormatter helpFormatter = new HelpFormatter();
+
+		PrintWriter printWriter = new PrintWriter(System.out);
+
+		printWriter.println("Liferay Portal Tools Database Upgrade Client");
+		printWriter.println();
+
+		String scriptName = "./db_upgrade_client.sh";
+
+		if (_isWindows()) {
+			scriptName = "db_upgrade_client.bat";
+		}
+
+		helpFormatter.printUsage(
+			printWriter, _HELP_WIDTH, scriptName + " [parameters]");
+
+		printWriter.println();
+
+		helpFormatter.printOptions(
+			printWriter, _HELP_WIDTH, options, _HELP_LEFT_PAD, _HELP_DESC_PAD);
+
+		printWriter.flush();
 	}
 
 	private void _appendClassPath(StringBuilder sb, File dir)
@@ -1210,6 +1235,12 @@ public class DBUpgradeClient {
 	};
 
 	private static final String _GOGO_SHELL_PREFIX = "g! ";
+
+	private static final int _HELP_DESC_PAD = 5;
+
+	private static final int _HELP_LEFT_PAD = 2;
+
+	private static final int _HELP_WIDTH = 80;
 
 	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");
 

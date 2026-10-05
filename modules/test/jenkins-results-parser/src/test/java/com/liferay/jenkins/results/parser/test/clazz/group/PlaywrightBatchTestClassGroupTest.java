@@ -45,7 +45,7 @@ public class PlaywrightBatchTestClassGroupTest
 
 		File rootDir = new File(RandomTestUtil.randomString());
 
-		Map<String, Map<File, TestClass>> testClassesMaps =
+		Map<String, Map<File, TestClass>> testClassesMapMap =
 			_parsePlaywrightJSONObjects(
 				rootDir,
 				new JSONArray(
@@ -82,7 +82,8 @@ public class PlaywrightBatchTestClassGroupTest
 					)
 				));
 
-		Map<File, TestClass> testClassesMap = testClassesMaps.get(projectName);
+		Map<File, TestClass> testClassesMap = testClassesMapMap.get(
+			projectName);
 
 		PlaywrightJUnitTestClass playwrightJUnitTestClass =
 			(PlaywrightJUnitTestClass)testClassesMap.get(
@@ -122,10 +123,11 @@ public class PlaywrightBatchTestClassGroupTest
 
 		_parsePlaywrightJSONObjects(rootDir, suitesJSONArray);
 
-		Map<String, Map<File, TestClass>> testClassesMaps =
+		Map<String, Map<File, TestClass>> testClassesMapMap =
 			_parsePlaywrightJSONObjects(rootDir, suitesJSONArray);
 
-		Map<File, TestClass> testClassesMap = testClassesMaps.get(projectName);
+		Map<File, TestClass> testClassesMap = testClassesMapMap.get(
+			projectName);
 
 		Assert.assertEquals(
 			Arrays.asList(title1, title2),
@@ -142,7 +144,7 @@ public class PlaywrightBatchTestClassGroupTest
 
 		File rootDir = new File(RandomTestUtil.randomString());
 
-		Map<String, Map<File, TestClass>> testClassesMaps =
+		Map<String, Map<File, TestClass>> testClassesMapMap =
 			_parsePlaywrightJSONObjects(
 				rootDir,
 				new JSONArray(
@@ -167,7 +169,7 @@ public class PlaywrightBatchTestClassGroupTest
 
 		File specFile = new File(rootDir, specFilePath);
 
-		Map<File, TestClass> testClassesMap1 = testClassesMaps.get(
+		Map<File, TestClass> testClassesMap1 = testClassesMapMap.get(
 			projectName1);
 
 		PlaywrightJUnitTestClass playwrightJUnitTestClass =
@@ -177,7 +179,7 @@ public class PlaywrightBatchTestClassGroupTest
 			Arrays.asList(title1, title2),
 			_getTestNames(playwrightJUnitTestClass));
 
-		Map<File, TestClass> testClassesMap2 = testClassesMaps.get(
+		Map<File, TestClass> testClassesMap2 = testClassesMapMap.get(
 			projectName2);
 
 		Assert.assertSame(
@@ -266,14 +268,14 @@ public class PlaywrightBatchTestClassGroupTest
 			playwrightBatchTestClassGroup
 		).getPortalGitWorkingDirectory();
 
-		Map<String, Map<File, TestClass>> testClassesMaps = new HashMap<>();
+		Map<String, Map<File, TestClass>> testClassesMapMap = new HashMap<>();
 
 		ReflectionTestUtil.invoke(
 			playwrightBatchTestClassGroup, "_parsePlaywrightJSONObjects",
 			new Class<?>[] {File.class, JSONArray.class, Map.class}, rootDir,
-			suitesJSONArray, testClassesMaps);
+			suitesJSONArray, testClassesMapMap);
 
-		return testClassesMaps;
+		return testClassesMapMap;
 	}
 
 }

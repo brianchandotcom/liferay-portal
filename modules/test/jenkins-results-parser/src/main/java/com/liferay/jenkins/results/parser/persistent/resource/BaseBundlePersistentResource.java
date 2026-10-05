@@ -348,6 +348,10 @@ public abstract class BaseBundlePersistentResource
 			}
 			else {
 				print("No transient reinvocation attempts remaining");
+
+				setStatus(Status.FAILED);
+
+				save();
 			}
 
 			return;

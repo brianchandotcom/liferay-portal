@@ -53,7 +53,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (_isAnnotationParameter(content, trimmedLine) ||
-					_isInsideTextBlock(
+					isInsideTextBlock(
 						content, getLineStartPos(content, lineNumber))) {
 
 					continue;
@@ -120,20 +120,6 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 		}
 
 		return false;
-	}
-
-	private boolean _isInsideTextBlock(String content, int pos) {
-		String s = content.substring(pos);
-
-		int x = s.indexOf("\"\"\";");
-
-		if (x == -1) {
-			return false;
-		}
-
-		s = s.substring(0, x);
-
-		return !s.contains("\"\"\"");
 	}
 
 	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";

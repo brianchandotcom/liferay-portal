@@ -11,9 +11,7 @@ package com.liferay.source.formatter.dependencies;
 public class TextBlock {
 
 	public void method1() {
-		String colors
-			=
-				"""
+		String colors = """
          red
          green
          blue""";
@@ -22,14 +20,13 @@ public class TextBlock {
 	}
 
 	public String method2() {
-		return
-			"""
+		return """
 
 	Hello""";
 	}
 
 	public String method3() {
-		return     """
+		return """
 
 	rm font.ttf
 }
@@ -42,9 +39,7 @@ function _get_resources {""";
 	}
 
 	public String method4() {
-		return
-
-			"""
+		return """
 
 function _has_flag {
 	local flag_name=${1}

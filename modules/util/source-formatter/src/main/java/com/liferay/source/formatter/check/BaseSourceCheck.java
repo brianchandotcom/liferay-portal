@@ -844,6 +844,20 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			_baseDirName);
 	}
 
+	protected boolean isInsideTextBlock(String content, int pos) {
+		String s = content.substring(pos);
+
+		int x = s.indexOf("\"\"\";");
+
+		if (x == -1) {
+			return false;
+		}
+
+		s = s.substring(0, x);
+
+		return !s.contains("\"\"\"");
+	}
+
 	protected boolean isModulesApp(String absolutePath, boolean privateOnly) {
 		if (absolutePath.contains("/modules/dxp/apps") ||
 			absolutePath.contains("/modules/private/apps/") ||

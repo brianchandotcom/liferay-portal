@@ -16,6 +16,15 @@ import java.util.regex.Pattern;
 public class JavaEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 	@Override
+	public boolean isJavaSource(String content, int pos) {
+		if (isInsideTextBlock(content, pos)) {
+			return false;
+		}
+
+		return super.isJavaSource(content, pos);
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

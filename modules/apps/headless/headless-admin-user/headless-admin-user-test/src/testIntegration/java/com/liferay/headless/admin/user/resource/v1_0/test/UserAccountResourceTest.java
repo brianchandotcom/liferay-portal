@@ -2327,6 +2327,18 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_assertListEntries(
 			jsonObject.getJSONArray(objectFieldName), listTypeEntryKey1);
 
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			_jsonFactory.createJSONObject(
+				randomUserAccount().toString()
+			).put(
+				objectFieldName, JSONUtil.putAll(listTypeEntryKey2)
+			).toString(),
+			"headless-admin-user/v1.0/user-accounts/" + user.getUserId(),
+			Http.Method.PUT);
+
+		_assertListEntries(
+			jsonObject.getJSONArray(objectFieldName), listTypeEntryKey2);
+
 		JSONObject openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
 			null, "headless-admin-user/v1.0/openapi.json", Http.Method.GET);
 

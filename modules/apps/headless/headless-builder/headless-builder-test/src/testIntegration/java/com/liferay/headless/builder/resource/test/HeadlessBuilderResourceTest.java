@@ -295,7 +295,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 				assertSuccessfulJSONObject(
 					JSONUtil.put(
-						"applicationStatus", "published"
+						"applicationStatus", "unpublished"
 					).put(
 						"baseURL", _BASE_URL_1
 					).put(
@@ -304,6 +304,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						"title", "test-app"
 					).toString(),
 					"headless-builder/applications", Http.Method.POST);
+
+				Assert.assertFalse(
+					HTTPTestUtil.invokeToJSONObject(
+						null, "openapi", Http.Method.GET
+					).has(
+						"/c/" + _BASE_URL_1
+					));
+
+				_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 				Assert.assertTrue(
 					HTTPTestUtil.invokeToJSONObject(
@@ -3722,7 +3731,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private void _assertEndpoints(String... endpoints) throws Exception {
 		for (String endpoint : endpoints) {
-			assertSuccessfulJSONObject(null, endpoint, Http.Method.GET);
+			Assert.assertEquals(
+				200,
+				HTTPTestUtil.invokeToHttpCode(null, endpoint, Http.Method.GET));
+			Assert.assertEquals(
+				200,
+				HTTPTestUtil.invokeToHttpCode(
+					null, endpoint + "/openapi.json", Http.Method.GET));
 		}
 	}
 

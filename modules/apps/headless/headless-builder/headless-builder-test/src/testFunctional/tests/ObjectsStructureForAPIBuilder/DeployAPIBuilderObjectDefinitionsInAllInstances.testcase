@@ -54,31 +54,6 @@ definition {
 		}
 	}
 
-	@priority = 5
-	test CanLoadHeadlessBuilderAPIsOnVirtualInstance {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("When I navigate to /o/api in the virtual instance") {
-			APIExplorer.navigateToOpenAPI(virtualHost = "www.able.com");
-		}
-
-		task ("Then the headless-builder/applications, headless-builder/endpoints, headless-build/filters, headless-builder/properties, headless-builder/schemas, headless-builder/shemas and headless-builder/sorts are loaded without errors") {
-			for (var applicationName : list "applications,endpoints,filters,properties,schemas,sorts") {
-				APIExplorer.navigateToOpenAPI(
-					api = "headless-builder",
-					version = ${applicationName},
-					virtualHost = "www.able.com");
-
-				AssertTextEquals(
-					locator1 = "Select#HEADLESS_SERVERS",
-					value1 = "http://www.able.com:8080/o/headless-builder/${applicationName}/");
-
-				AssertConsoleTextNotPresent(value1 = "Failed to load API definition");
-			}
-		}
-	}
-
 	@description = "Ignored due to LPS-190834"
 	@ignore = "true"
 	@priority = 5

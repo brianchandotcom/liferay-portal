@@ -165,11 +165,11 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			return super.getName();
 		}
 
-		PlaywrightTestClassMethod playwrightTestClassMethod =
-			getTestClassMethod();
-
 		String variantSpecFilePath = _getVariantSpecFilePath(
 			playwrightJUnitTestClass.getSpecFilePath());
+
+		PlaywrightTestClassMethod playwrightTestClassMethod =
+			getTestClassMethod();
 
 		if (variantSpecFilePath == null) {
 			return playwrightTestClassMethod.getName();

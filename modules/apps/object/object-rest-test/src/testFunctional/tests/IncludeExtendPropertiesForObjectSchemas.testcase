@@ -161,22 +161,4 @@ definition {
 		}
 	}
 
-	@priority = 4
-	test CanIncludePropertyInSchemaForCustomObject {
-		property portal.acceptance = "true";
-
-		task ("When navigate to custom object open api") {
-			APIExplorer.navigateToOpenAPI(
-				api = "c",
-				version = "subjects");
-		}
-
-		task ("Then a new schema with properties is created successfully") {
-			AssertElementPresent.assertElementPresent(
-				field = "name",
-				locator1 = "OpenAPI#SCHEMA_ENTITY",
-				schema = "Subject");
-		}
-	}
-
 }

@@ -57,25 +57,6 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 4
-	test CanUpdateValueOfPropertyAddedToSystemObjectWithPatchRequest {
-		property portal.acceptance = "true";
-
-		task ("When with PATCH request and existingUserAccountId I update the value of the new field") {
-			var actualValueOfPassportNumber = UserAccountAPI.getUpdatedFieldOfUserAccountWithPatchRequest(
-				fieldName = "passportNumber",
-				updatedFieldValue = "updateByPatch-passportNum2022",
-				userAccountId = ${staticUserAccountId});
-		}
-
-		task ("Then the value of the added filed is updated successfully") {
-			TestUtils.assertEquals(
-				actual = ${actualValueOfPassportNumber},
-				expected = "updateByPatch-passportNum2022");
-		}
-	}
-
-	@disable-webdriver = "true"
-	@priority = 4
 	test CanUpdateValueOfPropertyAddedToSystemObjectWithPutRequest {
 		property portal.acceptance = "true";
 

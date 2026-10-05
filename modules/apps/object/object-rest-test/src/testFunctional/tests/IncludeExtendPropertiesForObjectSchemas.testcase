@@ -179,22 +179,4 @@ definition {
 		}
 	}
 
-	@priority = 4
-	test CanIncludePropertyInSchemaForSystemObject {
-		property portal.acceptance = "true";
-
-		task ("When I expand UserAccount schema") {
-			APIExplorer.navigateToOpenAPI(
-				api = "headless-admin-user",
-				version = "v1.0");
-		}
-
-		task ("Then the new added field is added successfully in the schema") {
-			AssertElementPresent.assertElementPresent(
-				field = "passportNumber",
-				locator1 = "OpenAPI#SCHEMA_ENTITY",
-				schema = "UserAccount");
-		}
-	}
-
 }

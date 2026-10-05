@@ -149,12 +149,13 @@ test(
 				name: {en_US: `Test Order Type Run${randomString}`},
 			});
 
-		await apiHelpers.headlessCommerceAdminPricing.postPriceList({
-			catalogId: catalog.id,
-			currencyCode: 'USD',
-			name: promotionName,
-			type: 'promotion',
-		});
+		const promotion =
+			await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+				catalogId: catalog.id,
+				currencyCode: 'USD',
+				name: promotionName,
+				type: 'promotion',
+			});
 
 		const gotoEligibilityTab = async () => {
 			await commerceAdminPromotionsPage.goto();
@@ -174,7 +175,10 @@ test(
 		const eligibilities = [
 			{
 				entryName: channel.name,
-				errorMessage: 'The channel relation already exists.',
+				getRelations: () =>
+					apiHelpers.headlessCommerceAdminPricing.getPriceListChannels(
+						promotion.id
+					),
 				label: 'Channel',
 				placeholder: 'Find a Channel',
 				radio: commerceAdminPriceListDetailsPage.specificChannelsRadio,
@@ -189,7 +193,10 @@ test(
 			},
 			{
 				entryName: orderType.name.en_US,
-				errorMessage: 'The order type relation already exists.',
+				getRelations: () =>
+					apiHelpers.headlessCommerceAdminPricing.getPriceListOrderTypes(
+						promotion.id
+					),
 				label: 'Order type',
 				placeholder: 'Find an Order Type',
 				radio: commerceAdminPriceListDetailsPage.specificOrderTypesRadio,
@@ -243,12 +250,12 @@ test(
 			});
 		}
 
-		const guardedEligibilities = eligibilities.filter(
-			({errorMessage}) => errorMessage
+		const persistedEligibilities = eligibilities.filter(
+			({getRelations}) => getRelations
 		);
 
-		for (const eligibility of guardedEligibilities) {
-			await test.step(`Server rejects a duplicate ${eligibility.label.toLowerCase()} once the selection is cleared`, async () => {
+		for (const eligibility of persistedEligibilities) {
+			await test.step(`Selecting the same ${eligibility.label.toLowerCase()} again replaces the existing link`, async () => {
 				await gotoEligibilityTab();
 
 				await eligibility.radio.check();
@@ -263,11 +270,11 @@ test(
 					.eligibilityRowSelectButton(eligibility.entryName)
 					.click();
 
-				await expect(
-					commerceAdminPriceListDetailsPage.errorAlert(
-						eligibility.errorMessage
-					)
-				).toBeVisible();
+				await expect(async () => {
+					const {totalCount} = await eligibility.getRelations();
+
+					expect(totalCount).toBe(1);
+				}).toPass({timeout: 30000});
 			});
 		}
 	}

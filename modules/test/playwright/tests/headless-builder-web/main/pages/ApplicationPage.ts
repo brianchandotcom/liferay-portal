@@ -110,24 +110,32 @@ export class ApplicationPage {
 	async createEndpoint(
 		method: 'GET' | 'POST',
 		scope: 'Company' | 'Site',
-		path: string
+		path: string,
+		options: {
+			pathParameter?: string;
+			type?: 'Collection' | 'Single Element';
+		} = {}
 	) {
 		await this.goToEndpointsTab();
 		await this.addEndpointButton.click();
 		await this.setEndpointMethod(method);
+
+		if (options.type) {
+			await this.setEndpointType(options.type);
+		}
+
 		await this.setEndpointScope(scope);
 		await this.endpointPathTextBox.fill(path);
+
+		if (options.pathParameter) {
+			await this.pathParameterTextBox.fill(options.pathParameter);
+		}
+
 		await this.createButton.click();
 	}
 
 	async createCollectionEndpoint(scope: 'Company' | 'Site', path: string) {
-		await this.goToEndpointsTab();
-		await this.addEndpointButton.click();
-		await this.setEndpointMethod('GET');
-		await this.setEndpointType('Collection');
-		await this.setEndpointScope(scope);
-		await this.endpointPathTextBox.fill(path);
-		await this.createButton.click();
+		await this.createEndpoint('GET', scope, path, {type: 'Collection'});
 	}
 
 	async createSingleElementEndpoint(
@@ -135,13 +143,9 @@ export class ApplicationPage {
 		path: string,
 		pathParameter: string
 	) {
-		await this.goToEndpointsTab();
-		await this.addEndpointButton.click();
-		await this.setEndpointMethod('GET');
-		await this.setEndpointType('Single Element');
-		await this.setEndpointScope(scope);
-		await this.endpointPathTextBox.fill(path);
-		await this.pathParameterTextBox.fill(pathParameter);
-		await this.createButton.click();
+		await this.createEndpoint('GET', scope, path, {
+			pathParameter,
+			type: 'Single Element',
+		});
 	}
 }

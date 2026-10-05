@@ -104,10 +104,6 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			journalArticle.getResourcePrimKey());
-
 		RelatedInfoItemCollectionProvider<AssetEntry, AssetCategory>
 			relatedInfoItemCollectionProvider =
 				_infoItemServiceRegistry.getInfoItemService(
@@ -122,7 +118,10 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProviderTest {
 
 		CollectionQuery collectionQuery = new CollectionQuery();
 
-		collectionQuery.setRelatedItemObject(assetEntry);
+		collectionQuery.setRelatedItemObject(
+			_assetEntryLocalService.fetchEntry(
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getResourcePrimKey()));
 
 		InfoPage<AssetCategory> relatedItemsInfoPage =
 			relatedInfoItemCollectionProvider.getCollectionInfoPage(
@@ -134,11 +133,8 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProviderTest {
 			relatedItemsInfoPage.getPageItems();
 
 		Assert.assertEquals(pageItems.toString(), 2, pageItems.size());
-	}
-
-	@Test
-	public void testGetRelatedItemsInfoPageWithCMSObjectEntry()
-		throws Exception {
+		Assert.assertTrue(pageItems.contains(assetCategory1));
+		Assert.assertTrue(pageItems.contains(assetCategory2));
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -148,20 +144,18 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProviderTest {
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry.getDepotEntryId(), _group.getGroupId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				depotEntry.getGroupId(), TestPropsValues.getUserId());
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			depotEntry.getGroupId(), TestPropsValues.getUserId());
 
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), depotEntry.getGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
+		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), depotEntry.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
 
-		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+		assetCategory1 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), depotEntry.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
-		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+		assetCategory2 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), depotEntry.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
@@ -208,29 +202,18 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProviderTest {
 				"textObjectFieldName", RandomTestUtil.randomString()),
 			serviceContext);
 
-		RelatedInfoItemCollectionProvider<AssetEntry, AssetCategory>
-			relatedInfoItemCollectionProvider =
-				_infoItemServiceRegistry.getInfoItemService(
-					RelatedInfoItemCollectionProvider.class,
-					StringBundler.concat(
-						"com.liferay.asset.categories.admin.web.internal.info.",
-						"collection.provider.",
-						"AssetCategoriesForAssetEntryRelatedInfoItemCollection",
-						"Provider"));
-
-		CollectionQuery collectionQuery = new CollectionQuery();
+		collectionQuery = new CollectionQuery();
 
 		collectionQuery.setRelatedItemObject(
 			_assetEntryLocalService.fetchEntry(
 				objectDefinition.getClassName(),
 				objectEntry.getObjectEntryId()));
 
-		InfoPage<AssetCategory> relatedItemsInfoPage =
+		relatedItemsInfoPage =
 			relatedInfoItemCollectionProvider.getCollectionInfoPage(
 				collectionQuery);
 
-		List<? extends AssetCategory> pageItems =
-			relatedItemsInfoPage.getPageItems();
+		pageItems = relatedItemsInfoPage.getPageItems();
 
 		Assert.assertEquals(pageItems.toString(), 2, pageItems.size());
 		Assert.assertTrue(pageItems.contains(assetCategory1));

@@ -127,6 +127,34 @@ public class
 		JournalArticle journalArticle = _addJournalArticle(
 			assetCategory, serviceContext);
 
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		ServiceContext depotServiceContext =
+			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId());
+
+		assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), depotEntry.getGroupId(),
+			RandomTestUtil.randomString(), depotServiceContext);
+
+		ObjectDefinition objectDefinition = _publishCMSObjectDefinition();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_addAssetCategory(
+				depotEntry.getGroup(), depotServiceContext, assetVocabulary),
+			depotEntry.getGroupId(), objectDefinition);
+		ObjectEntry relatedObjectEntry = _addObjectEntry(
+			_addAssetCategory(
+				depotEntry.getGroup(), depotServiceContext, assetVocabulary),
+			depotEntry.getGroupId(), objectDefinition);
+
+		_reindex(objectDefinition, objectEntry, relatedObjectEntry);
+
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
@@ -147,70 +175,21 @@ public class
 			AssetEntry assetEntry = pageItems.get(0);
 
 			Assert.assertEquals(_getAssetEntry(journalArticle), assetEntry);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
-	}
-
-	@Test
-	public void testGetCollectionInfoPageWithDifferentAssetCategorySameAssetVocabularyInConnectedSpaceDepotEntry()
-		throws Exception {
-
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext());
-
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			depotEntry.getDepotEntryId(), _group.getGroupId());
-
-		ServiceContext depotServiceContext =
-			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId());
-
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), depotEntry.getGroupId(),
-				RandomTestUtil.randomString(), depotServiceContext);
-
-		ObjectDefinition objectDefinition = _publishCMSObjectDefinition();
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			_addAssetCategory(
-				depotEntry.getGroup(), depotServiceContext, assetVocabulary),
-			depotEntry.getGroupId(), objectDefinition);
-		ObjectEntry relatedObjectEntry = _addObjectEntry(
-			_addAssetCategory(
-				depotEntry.getGroup(), depotServiceContext, assetVocabulary),
-			depotEntry.getGroupId(), objectDefinition);
-
-		_reindex(objectDefinition, objectEntry, relatedObjectEntry);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setRequest(_getHttpServletRequest());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		try {
-			CollectionQuery collectionQuery = new CollectionQuery();
 
 			collectionQuery.setRelatedItemObject(
 				_getAssetEntry(
 					objectDefinition.getClassName(),
 					relatedObjectEntry.getObjectEntryId()));
 
-			InfoPage<AssetEntry> collectionInfoPage =
+			collectionInfoPage =
 				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
 					collectionQuery);
 
-			List<? extends AssetEntry> pageItems =
-				collectionInfoPage.getPageItems();
+			pageItems = collectionInfoPage.getPageItems();
 
 			Assert.assertEquals(pageItems.toString(), 1, pageItems.size());
 
-			AssetEntry assetEntry = pageItems.get(0);
+			assetEntry = pageItems.get(0);
 
 			Assert.assertEquals(
 				_getAssetEntry(

@@ -7,8 +7,13 @@ package com.liferay.portal.kernel.theme;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import jakarta.portlet.PortletPreferences;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,6 +69,43 @@ public class PortletDisplayTest {
 		portletDisplay.setThemeDisplay(_themeDisplay);
 
 		Assert.assertFalse(portletDisplay.isShowPortletTitle());
+	}
+
+	@Test
+	public void testIsWebDAVEnabled() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(ProxyFactory.newDummyInstance(Portal.class));
+
+		AtomicInteger atomicInteger = new AtomicInteger();
+
+		PortletDisplay portletDisplay = new PortletDisplay();
+
+		portletDisplay.setWebDAVEnabledSupplier(
+			() -> {
+				atomicInteger.incrementAndGet();
+
+				return true;
+			});
+
+		PortletDisplay copyPortletDisplay = new PortletDisplay();
+
+		portletDisplay.copyTo(copyPortletDisplay);
+
+		portletDisplay.recycle();
+
+		portletDisplay.copyFrom(copyPortletDisplay);
+
+		Assert.assertEquals(0, atomicInteger.get());
+
+		Assert.assertTrue(portletDisplay.isWebDAVEnabled());
+		Assert.assertTrue(portletDisplay.isWebDAVEnabled());
+		Assert.assertEquals(1, atomicInteger.get());
+
+		copyPortletDisplay.recycle();
+
+		Assert.assertFalse(copyPortletDisplay.isWebDAVEnabled());
+		Assert.assertEquals(1, atomicInteger.get());
 	}
 
 	private Layout _layout;

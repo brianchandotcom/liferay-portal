@@ -92,6 +92,8 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
+		Segmentation.enableDXPSegments();
+
 		JSONSegmentsentry.addSegment(
 			fieldName = "Email Address",
 			groupName = "Test Site Name",

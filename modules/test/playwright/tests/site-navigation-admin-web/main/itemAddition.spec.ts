@@ -403,7 +403,7 @@ test(
 
 		await page.getByRole('link', {name: 'Sites'}).click();
 
-		await page.getByRole('button', {name: 'Add'}).click();
+		await page.getByRole('button', {exact: true, name: 'Add'}).click();
 
 		await page
 			.frameLocator('iframe[title="Select Site"]')
@@ -451,7 +451,14 @@ test(
 
 		// Assert that the Vocabulary Navigation Menu item was successfully created
 
-		await expect(page.getByText(vocabularyName)).toBeVisible();
+		await waitForAlert(
+			page,
+			'Success:1 Vocabulary was added to this menu.'
+		);
+
+		await expect(
+			await navigationMenusPage.getMenuItemCard(vocabularyName)
+		).toBeVisible();
 
 		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(
 			depot.depotEntryId

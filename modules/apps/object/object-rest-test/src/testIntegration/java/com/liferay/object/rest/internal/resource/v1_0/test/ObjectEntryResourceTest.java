@@ -17491,12 +17491,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition.getCompanyId()));
 			objectEntryResource.setContextUser(user);
 
-			Class<?> clazz = objectEntryResource.getClass();
-
-			Method method = clazz.getMethod(
-				"setObjectDefinition", ObjectDefinition.class);
-
-			method.invoke(objectEntryResource, objectDefinition);
+			_setObjectDefinition(objectDefinition, objectEntryResource);
 
 			return objectEntryResource;
 		}
@@ -17944,6 +17939,19 @@ public class ObjectEntryResourceTest {
 			});
 
 		objectEntry.setProperties(properties);
+	}
+
+	private void _setObjectDefinition(
+			ObjectDefinition objectDefinition,
+			ObjectEntryResource objectEntryResource)
+		throws Exception {
+
+		Class<?> clazz = objectEntryResource.getClass();
+
+		Method method = clazz.getMethod(
+			"setObjectDefinition", ObjectDefinition.class);
+
+		method.invoke(objectEntryResource, objectDefinition);
 	}
 
 	private void _setUpPermissionThreadLocal(User user) {

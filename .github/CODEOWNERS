@@ -556,3 +556,6 @@ workspaces/liferay-customer-workspace/    @liferay-one
 workspaces/liferay-marketplace-workspace/    @liferay-one
 workspaces/liferay-one-workspace/    @liferay-one
 workspaces/liferay-sample-workspace/    @liferay-devtools
+workspaces/liferay-testray-workspace    @liferay-release
+workspaces/liferay-testray-workspace/client-extensions/liferay-testray-custom-element    @liferay-release
+workspaces/liferay-testray-workspace/client-extensions/liferay-testray-etc-jira    @liferay-release

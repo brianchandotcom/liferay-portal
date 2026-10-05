@@ -26,15 +26,6 @@
 		<column localized="true" name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="data" type="String" />
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 	</entity>
 	<entity local-service="true" name="DDMDataProviderInstance" remote-service="true" uuid="true">
 
@@ -479,13 +470,6 @@
 		<finder name="ParentStructureId" return-type="Collection">
 			<finder-column name="parentStructureId" />
 		</finder>
-		<finder name="StructureKey" return-type="Collection">
-			<finder-column name="structureKey" />
-		</finder>
-		<finder name="G_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="parentStructureId" />
-		</finder>
 		<finder name="G_C" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="classNameId" />
@@ -503,17 +487,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="structureKey" />
-		</finder>
-		<finder db-index="false" name="G_N_D" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="name" />
-			<finder-column name="description" />
-		</finder>
-		<finder db-index="false" name="G_C_N_D" return-type="Collection">
-			<finder-column arrayable-operator="OR" name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="name" />
-			<finder-column name="description" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="DDMStructureLayout" remote-service="true" uuid="true">
@@ -548,15 +521,8 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="StructureLayoutKey" return-type="Collection">
-			<finder-column name="structureLayoutKey" />
-		</finder>
 		<finder name="StructureVersionId" return-type="DDMStructureLayout">
 			<finder-column name="structureVersionId" />
-		</finder>
-		<finder name="G_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
 		</finder>
 		<finder name="G_C_S" return-type="DDMStructureLayout" unique="true">
 			<finder-column name="groupId" />
@@ -641,10 +607,6 @@
 			<finder-column name="structureId" />
 			<finder-column name="version" />
 		</finder>
-		<finder name="S_S" return-type="Collection">
-			<finder-column name="structureId" />
-			<finder-column name="status" />
-		</finder>
 	</entity>
 	<entity external-reference-code="group" local-service="true" name="DDMTemplate" remote-service="true" uuid="true">
 
@@ -695,12 +657,6 @@
 		</finder>
 		<finder name="TemplateKey" return-type="Collection">
 			<finder-column name="templateKey" />
-		</finder>
-		<finder name="Type" return-type="Collection">
-			<finder-column name="type" />
-		</finder>
-		<finder name="Language" return-type="Collection">
-			<finder-column name="language" />
 		</finder>
 		<finder name="SmallImageId" return-type="DDMTemplate">
 			<finder-column name="smallImageId" />
@@ -808,10 +764,6 @@
 		<finder name="T_V" return-type="DDMTemplateVersion" unique="true">
 			<finder-column name="templateId" />
 			<finder-column name="version" />
-		</finder>
-		<finder name="T_S" return-type="Collection">
-			<finder-column name="templateId" />
-			<finder-column name="status" />
 		</finder>
 	</entity>
 	<exceptions>

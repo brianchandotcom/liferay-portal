@@ -82,6 +82,8 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
+		SelectFrameTop();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(

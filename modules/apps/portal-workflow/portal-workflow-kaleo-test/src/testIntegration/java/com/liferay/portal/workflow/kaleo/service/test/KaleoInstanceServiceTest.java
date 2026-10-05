@@ -185,6 +185,40 @@ public class KaleoInstanceServiceTest {
 	}
 
 	@Test
+	public void testDeleteKaleoInstance() throws Exception {
+		KaleoInstance kaleoInstance = _addKaleoInstance();
+
+		User user = UserTestUtil.addUser();
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", user.getUserId(), " must have ", ActionKeys.DELETE,
+					" permission for ", WorkflowInstance.class.getName(),
+					StringPool.SPACE, kaleoInstance.getKaleoInstanceId()),
+				() -> _kaleoInstanceService.deleteKaleoInstance(
+					kaleoInstance.getKaleoInstanceId()));
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				UserTestUtil.addCompanyUser(
+					_companyLocalService.getCompany(
+						TestPropsValues.getCompanyId()),
+					RoleConstants.PORTAL_CONTENT_REVIEWER))) {
+
+			_kaleoInstanceService.deleteKaleoInstance(
+				kaleoInstance.getKaleoInstanceId());
+		}
+
+		Assert.assertNull(
+			_kaleoInstanceLocalService.fetchKaleoInstance(
+				kaleoInstance.getKaleoInstanceId()));
+	}
+
+	@Test
 	public void testGetKaleoInstance() throws Exception {
 		KaleoInstance kaleoInstance = _addKaleoInstance();
 

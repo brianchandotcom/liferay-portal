@@ -11,6 +11,7 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -46,7 +47,9 @@ public class EditFolderComponentSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return HashMapBuilder.<String, Object>put(
-			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
+			"backURL",
+			PortalUtil.escapeRedirect(
+				ParamUtil.getString(httpServletRequest, "redirect"))
 		).put(
 			"folderId",
 			() -> {

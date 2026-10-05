@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
@@ -100,7 +101,9 @@ public class SpaceSettingsComponentSectionFragmentRenderer
 		Group group = _groupLocalService.getGroup(groupId);
 
 		return HashMapBuilder.<String, Object>put(
-			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
+			"backURL",
+			PortalUtil.escapeRedirect(
+				ParamUtil.getString(httpServletRequest, "redirect"))
 		).put(
 			"companyAvailableLanguages", jsonArray
 		).put(

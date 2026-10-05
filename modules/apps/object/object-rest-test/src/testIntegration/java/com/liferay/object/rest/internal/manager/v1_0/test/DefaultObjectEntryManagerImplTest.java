@@ -12103,13 +12103,13 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _testAddObjectEntryWithDefaultLanguageId(
-			ObjectDefinition objectDefinition)
+			ObjectDefinition publishedObjectDefinition)
 		throws Exception {
 
 		String scopeKey;
 
 		if (StringUtil.equals(
-				objectDefinition.getScope(),
+				publishedObjectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
 			scopeKey = ObjectDefinitionConstants.SCOPE_COMPANY;
@@ -12126,7 +12126,7 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectEntryDefaultLanguageIdException.class,
 			"Language ID " + invalidLanguageId + " is not available",
 			() -> _defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, objectDefinition,
+				_simpleDTOConverterContext, publishedObjectDefinition,
 				new ObjectEntry() {
 					{
 						defaultLanguageId = invalidLanguageId;
@@ -12144,12 +12144,16 @@ public class DefaultObjectEntryManagerImplTest
 			).name(
 				"requiredLocalizedLongInteger"
 			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
+				publishedObjectDefinition.getObjectDefinitionId()
 			).required(
 				true
 			).userId(
 				TestPropsValues.getUserId()
 			).build());
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.getObjectDefinition(
+				publishedObjectDefinition.getObjectDefinitionId());
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.RequiredLanguageId.class,

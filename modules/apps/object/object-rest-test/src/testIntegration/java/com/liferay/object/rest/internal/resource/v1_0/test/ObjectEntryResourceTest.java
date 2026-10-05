@@ -21784,6 +21784,11 @@ public class ObjectEntryResourceTest {
 							"true"
 						).build()));
 
+			_setObjectDefinition(
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinition.getObjectDefinitionId()),
+				objectEntryResource);
+
 			validationResponse = _validate(
 				scopeKey, objectEntryResource,
 				_getValidationRequest(Collections.emptyMap()));
@@ -21836,6 +21841,11 @@ public class ObjectEntryResourceTest {
 
 			_objectFieldLocalService.deleteObjectField(
 				objectField2.getObjectFieldId());
+
+			_setObjectDefinition(
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinition.getObjectDefinitionId()),
+				objectEntryResource);
 
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 				_testGroupId, TestPropsValues.getUserId(),

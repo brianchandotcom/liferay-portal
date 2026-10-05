@@ -307,6 +307,9 @@ public abstract class BaseSectionDisplayContextTestCase
 			"defaultPermissionAdditionalProps",
 			_getDefaultPermissionAdditionalProps()
 		).put(
+			"editableImageMIMETypes",
+			PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES)
+		).put(
 			"objectDefinitionCssClasses",
 			HashMapBuilder.put(
 				"default", "content-icon-custom-structure"

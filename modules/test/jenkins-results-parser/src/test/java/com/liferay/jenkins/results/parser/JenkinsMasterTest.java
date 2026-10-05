@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import java.util.List;
@@ -204,6 +205,103 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 	}
 
 	@Test
+	public void testFetchQueueItem() throws Exception {
+		UrlReader urlReader = mockUrlReader();
+
+		String executableURL =
+			"https://" + RandomTestUtil.randomString() + "/job/" +
+				RandomTestUtil.randomString() + "/1/";
+
+		_testFetchQueueItem(
+			true, executableURL,
+			new JSONObject(
+			).put(
+				"cancelled", true
+			).put(
+				"executable",
+				new JSONObject(
+				).put(
+					"url", executableURL
+				)
+			),
+			urlReader);
+		_testFetchQueueItem(
+			false, executableURL,
+			new JSONObject(
+			).put(
+				"cancelled", false
+			).put(
+				"executable",
+				new JSONObject(
+				).put(
+					"url", executableURL
+				)
+			),
+			urlReader);
+
+		_testFetchQueueItem(
+			false, null,
+			new JSONObject(
+			).put(
+				"why", RandomTestUtil.randomString()
+			),
+			urlReader);
+
+		long queueId = _getQueueId();
+
+		String queueItemAPIURL = _getQueueItemAPIURL(queueId);
+
+		setUrlReaderOutput("", queueItemAPIURL, urlReader);
+
+		Assert.assertNull(_jenkinsMaster.fetchQueueItem(queueId));
+
+		queueId = _getQueueId();
+
+		queueItemAPIURL = _getQueueItemAPIURL(queueId);
+
+		setUrlReaderOutput(
+			new JSONObject(
+			).put(
+				"why", RandomTestUtil.randomString()
+			).toString(),
+			queueItemAPIURL, urlReader);
+
+		Assert.assertNull(_jenkinsMaster.fetchQueueItem(queueId));
+
+		queueId = _getQueueId();
+
+		queueItemAPIURL = _getQueueItemAPIURL(queueId);
+
+		setUrlReaderException(
+			new FileNotFoundException(queueItemAPIURL), queueItemAPIURL,
+			urlReader);
+
+		Assert.assertNull(_jenkinsMaster.fetchQueueItem(queueId));
+	}
+
+	@Test
+	public void testFetchQueueItemFailure() throws Exception {
+		UrlReader urlReader = mockUrlReader();
+
+		long queueId = _getQueueId();
+
+		String queueItemAPIURL = _getQueueItemAPIURL(queueId);
+
+		IOException ioException1 = new IOException(
+			RandomTestUtil.randomString());
+
+		setUrlReaderException(ioException1, queueItemAPIURL, urlReader);
+
+		IOException ioException2 = Assert.assertThrows(
+			IOException.class, () -> _jenkinsMaster.fetchQueueItem(queueId));
+
+		Assert.assertEquals(
+			ioException1.getMessage(), ioException2.getMessage());
+
+		Assert.assertNull(_jenkinsMaster.getQueueItem(queueId));
+	}
+
+	@Test
 	public void testGetAvailableSlavesCount() {
 		int availableSlavesCount = _jenkinsMaster.getAvailableSlavesCount(null);
 
@@ -289,6 +387,51 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 		}
 
 		Assert.assertEquals("", byteArrayOutputStream.toString());
+	}
+
+	@Test
+	public void testGetQueueItems() throws Exception {
+		UrlReader urlReader = mockUrlReader();
+
+		_setQueueItemIds(urlReader, _getQueueId(), _getQueueId());
+
+		List<JenkinsMaster.QueueItem> queueItems =
+			_jenkinsMaster.getQueueItems();
+
+		Assert.assertEquals(queueItems.toString(), 2, queueItems.size());
+
+		queueItems.clear();
+
+		List<JenkinsMaster.QueueItem> cachedQueueItems =
+			_jenkinsMaster.getQueueItems();
+
+		Assert.assertEquals(
+			cachedQueueItems.toString(), 2, cachedQueueItems.size());
+
+		_setQueueItemIds(urlReader, _getQueueId());
+
+		List<JenkinsMaster.QueueItem> refreshedQueueItems =
+			_jenkinsMaster.getQueueItems();
+
+		Assert.assertEquals(
+			cachedQueueItems.toString(), 2, cachedQueueItems.size());
+		Assert.assertEquals(
+			refreshedQueueItems.toString(), 1, refreshedQueueItems.size());
+	}
+
+	@Test
+	public void testGetQueueItemsFailure() throws Exception {
+		UrlReader urlReader = mockUrlReader();
+
+		ReflectionTestUtil.setFieldValue(
+			_jenkinsMaster, "_queueUpdateTime", null);
+
+		setUrlReaderException(
+			new IOException(RandomTestUtil.randomString()),
+			"http://test-9-1/queue/api/json", urlReader);
+
+		Assert.assertThrows(
+			RuntimeException.class, _jenkinsMaster::getQueueItems);
 	}
 
 	@Test
@@ -408,6 +551,16 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 		return argumentCaptor.getValue();
 	}
 
+	private long _getQueueId() {
+		return Math.abs(RandomTestUtil.randomLong() % 1000000) + 1;
+	}
+
+	private String _getQueueItemAPIURL(long queueId) {
+		return JenkinsResultsParserUtil.combine(
+			"http://test-9-1/queue/item/", String.valueOf(queueId),
+			"/api/json");
+	}
+
 	private JenkinsMaster.RunningBuild _getRunningBuild(
 		String buildURL, List<JenkinsMaster.RunningBuild> runningBuilds) {
 
@@ -452,6 +605,30 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 		return executionRequest.getCommands()[0];
 	}
 
+	private void _setQueueItemIds(UrlReader urlReader, long... queueIds)
+		throws Exception {
+
+		JSONArray itemsJSONArray = new JSONArray();
+
+		for (long queueId : queueIds) {
+			itemsJSONArray.put(
+				new JSONObject(
+				).put(
+					"id", queueId
+				));
+		}
+
+		setUrlReaderOutput(
+			new JSONObject(
+			).put(
+				"items", itemsJSONArray
+			).toString(),
+			"http://test-9-1/queue/api/json", urlReader);
+
+		ReflectionTestUtil.setFieldValue(
+			_jenkinsMaster, "_queueUpdateTime", null);
+	}
+
 	private void _setUpMaster(
 			String masterName, String computerAPIJSON, UrlReader urlReader)
 		throws Exception {
@@ -472,6 +649,27 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 			masterURL + "/api/json?tree=mode", urlReader);
 		setUrlReaderOutput(
 			computerAPIJSON, masterURL + "/computer/api/json", urlReader);
+	}
+
+	private void _testFetchQueueItem(
+			boolean cancelled, String executableURL,
+			JSONObject queueItemJSONObject, UrlReader urlReader)
+		throws Exception {
+
+		long queueId = _getQueueId();
+
+		setUrlReaderOutput(
+			queueItemJSONObject.put(
+				"id", queueId
+			).toString(),
+			_getQueueItemAPIURL(queueId), urlReader);
+
+		JenkinsMaster.QueueItem queueItem = _jenkinsMaster.fetchQueueItem(
+			queueId);
+
+		Assert.assertEquals(queueId, queueItem.getId());
+		Assert.assertEquals(executableURL, queueItem.getExecutableURL());
+		Assert.assertEquals(cancelled, queueItem.isCancelled());
 	}
 
 	private static final String _BUILD_URL_FLYWEIGHT =

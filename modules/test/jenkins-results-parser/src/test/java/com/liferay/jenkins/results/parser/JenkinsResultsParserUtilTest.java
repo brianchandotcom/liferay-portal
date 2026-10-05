@@ -5,10 +5,14 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.sun.net.httpserver.HttpServer;
+
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 
 import java.util.HashMap;
@@ -109,6 +113,59 @@ public class JenkinsResultsParserUtilTest
 				"cloud-10-50-0-2,cloud-10-50-0-49,cloud-10-50-0-50",
 			JenkinsResultsParserUtil.expandSlaveRange(
 				"cloud-10-50-0-47, cloud-10-50-0-0..2, cloud-10-50-0-49..50"));
+	}
+
+	@Test
+	public void testFetchBuildURL() throws Exception {
+		String buildURL =
+			"https://" + RandomTestUtil.randomString() + "/job/" +
+				RandomTestUtil.randomString() + "/1/";
+
+		_testFetchBuildURL(buildURL, buildURL);
+
+		_testFetchBuildURL(null, "");
+		_testFetchBuildURL(null, RandomTestUtil.randomString());
+
+		JenkinsMaster jenkinsMaster = Mockito.mock(JenkinsMaster.class);
+		String jobName = RandomTestUtil.randomString();
+
+		for (long queueId : new long[] {0, -1, Long.MIN_VALUE}) {
+			Assert.assertNull(
+				JenkinsResultsParserUtil.fetchBuildURL(
+					jobName, jenkinsMaster, queueId));
+		}
+
+		Assert.assertNull(
+			JenkinsResultsParserUtil.fetchBuildURL(jobName, null, 1));
+		Assert.assertNull(
+			JenkinsResultsParserUtil.fetchBuildURL("", jenkinsMaster, 1));
+
+		Mockito.verify(
+			jenkinsMaster, Mockito.never()
+		).getName();
+	}
+
+	@Test
+	public void testFetchBuildURLFailure() throws Exception {
+		JenkinsMaster jenkinsMaster = Mockito.mock(JenkinsMaster.class);
+
+		try (ServerSocket serverSocket = _createServerSocket()) {
+			Mockito.doReturn(
+				"localhost:" + serverSocket.getLocalPort()
+			).when(
+				jenkinsMaster
+			).getName();
+		}
+
+		String jobName = RandomTestUtil.randomString();
+
+		Assert.assertThrows(
+			IOException.class,
+			() -> JenkinsResultsParserUtil.fetchBuildURL(
+				jobName, jenkinsMaster, 1));
+
+		Assert.assertNull(
+			JenkinsResultsParserUtil.getBuildURL(jobName, jenkinsMaster, 1));
 	}
 
 	@Test
@@ -747,6 +804,52 @@ public class JenkinsResultsParserUtilTest
 			buildAwsPropertiesFile.exists());
 
 		return JenkinsResultsParserUtil.getProperties(buildAwsPropertiesFile);
+	}
+
+	private void _testFetchBuildURL(
+			String expectedBuildURL, String scriptOutput)
+		throws Exception {
+
+		HttpServer httpServer = HttpServer.create(
+			new InetSocketAddress(InetAddress.getByName("localhost"), 0), 0);
+
+		httpServer.createContext(
+			"/script",
+			httpExchange -> {
+				byte[] bytes = JenkinsResultsParserUtil.combine(
+					"<pre>", scriptOutput, "</pre>"
+				).getBytes();
+
+				httpExchange.sendResponseHeaders(200, bytes.length);
+
+				try (OutputStream outputStream =
+						httpExchange.getResponseBody()) {
+
+					outputStream.write(bytes);
+				}
+			});
+
+		httpServer.start();
+
+		try {
+			JenkinsMaster jenkinsMaster = Mockito.mock(JenkinsMaster.class);
+
+			InetSocketAddress inetSocketAddress = httpServer.getAddress();
+
+			Mockito.doReturn(
+				"localhost:" + inetSocketAddress.getPort()
+			).when(
+				jenkinsMaster
+			).getName();
+
+			Assert.assertEquals(
+				expectedBuildURL,
+				JenkinsResultsParserUtil.fetchBuildURL(
+					RandomTestUtil.randomString(), jenkinsMaster, 1));
+		}
+		finally {
+			httpServer.stop(0);
+		}
 	}
 
 	private void _testGetJobVariant(

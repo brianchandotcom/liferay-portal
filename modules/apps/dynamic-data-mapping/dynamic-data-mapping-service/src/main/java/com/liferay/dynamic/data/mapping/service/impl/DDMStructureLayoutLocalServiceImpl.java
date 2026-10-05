@@ -228,15 +228,6 @@ public class DDMStructureLayoutLocalServiceImpl
 
 	@Override
 	public List<DDMStructureLayout> getStructureLayouts(
-		long groupId, long classNameId, int start, int end,
-		OrderByComparator<DDMStructureLayout> orderByComparator) {
-
-		return ddmStructureLayoutPersistence.findByG_C(
-			groupId, classNameId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<DDMStructureLayout> getStructureLayouts(
 		long groupId, long classNameId, long structureVersionId) {
 
 		return ddmStructureLayoutPersistence.findByG_C_SV(
@@ -256,11 +247,6 @@ public class DDMStructureLayoutLocalServiceImpl
 	@Override
 	public int getStructureLayoutsCount(long groupId) {
 		return ddmStructureLayoutPersistence.countByGroupId(groupId);
-	}
-
-	@Override
-	public int getStructureLayoutsCount(long groupId, long classNameId) {
-		return ddmStructureLayoutPersistence.countByG_C(groupId, classNameId);
 	}
 
 	@Override

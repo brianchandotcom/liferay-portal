@@ -63,16 +63,6 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteContents(long groupId) {
-		List<DDMContent> contents = ddmContentPersistence.findByGroupId(
-			groupId);
-
-		for (DDMContent content : contents) {
-			deleteContent(content);
-		}
-	}
-
-	@Override
 	public DDMContent getContent(long contentId) throws PortalException {
 		return ddmContentPersistence.findByPrimaryKey(contentId);
 	}
@@ -80,21 +70,6 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 	@Override
 	public List<DDMContent> getContents() {
 		return ddmContentPersistence.findAll();
-	}
-
-	@Override
-	public List<DDMContent> getContents(long groupId) {
-		return ddmContentPersistence.findByGroupId(groupId);
-	}
-
-	@Override
-	public List<DDMContent> getContents(long groupId, int start, int end) {
-		return ddmContentPersistence.findByGroupId(groupId, start, end);
-	}
-
-	@Override
-	public int getContentsCount(long groupId) {
-		return ddmContentPersistence.countByGroupId(groupId);
 	}
 
 	@Override

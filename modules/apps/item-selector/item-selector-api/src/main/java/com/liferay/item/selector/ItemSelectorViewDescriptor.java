@@ -48,7 +48,7 @@ public interface ItemSelectorViewDescriptor<T> {
 
 	public ItemSelectorReturnType getItemSelectorReturnType();
 
-	public default String getKeyProperty() {
+	public default String getKeyPropertyName() {
 		return "primaryKeyObj";
 	}
 

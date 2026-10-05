@@ -37,6 +37,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                longStandingDraftCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 pendingCount:
                     format: int64
                     readOnly: true

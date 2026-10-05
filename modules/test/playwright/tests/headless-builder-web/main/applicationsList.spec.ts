@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {applyFDSSelectionFilter} from '../../../utils/applyFDSSelectionFilter';
 import getRandomString from '../../../utils/getRandomString';
+import {setFDSItemsPerPage} from '../../../utils/setFDSItemsPerPage';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 const test = mergeTests(
@@ -47,7 +48,17 @@ test(
 
 		// Check that the applications are listed with their status
 
+		const failedResponses: string[] = [];
+
+		page.on('response', (response) => {
+			if (response.status() >= 400 && response.url().includes('/o/')) {
+				failedResponses.push(`${response.status()} ${response.url()}`);
+			}
+		});
+
 		await headlessBuilderPage.goto();
+
+		await setFDSItemsPerPage(page, 50);
 
 		const [publishedApplication, ...unpublishedApplications] = applications;
 
@@ -89,5 +100,7 @@ test(
 				hasText: publishedApplication.title,
 			})
 		).toHaveCount(0);
+
+		expect(failedResponses).toEqual([]);
 	}
 );

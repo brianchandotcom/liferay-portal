@@ -574,9 +574,7 @@ definition {
 
 			WebContentNavigator.gotoAddCP();
 
-			PortletEntry.viewLocale(
-				locale = "es-ES",
-				portletName = "Web Content");
+			PortletEntry.viewLocale(locale = "es-ES");
 
 			WebContent.addCP(
 				webContentContent = "Web Content Content 3",

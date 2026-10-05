@@ -259,7 +259,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLocale(locale = null, portletName = null) {
+	macro viewLocale(locale = null) {
 		AssertElementPresent(
 			key_locale = ${locale},
 			locator1 = "Translation#CURRENT_LOCALE");

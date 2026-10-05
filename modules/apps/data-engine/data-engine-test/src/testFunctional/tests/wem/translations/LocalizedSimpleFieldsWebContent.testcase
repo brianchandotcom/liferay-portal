@@ -918,9 +918,7 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		PortletEntry.viewLocale(
-			locale = "en-US",
-			portletName = "Web Content");
+		PortletEntry.viewLocale(locale = "en-US");
 
 		WebContent.addWithStructureCP(
 			webContentText = "This is a Text field",

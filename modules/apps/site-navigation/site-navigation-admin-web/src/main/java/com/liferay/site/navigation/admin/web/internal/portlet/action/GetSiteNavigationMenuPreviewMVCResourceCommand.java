@@ -6,6 +6,7 @@
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -27,10 +28,6 @@ import jakarta.portlet.ResourceResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,20 +87,22 @@ public class GetSiteNavigationMenuPreviewMVCResourceCommand
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		Document document = Jsoup.parse(
-			ThemeUtil.include(
-				ServletContextPool.get(StringPool.BLANK), httpServletRequest,
-				httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
-				false));
+		String html = ThemeUtil.include(
+			ServletContextPool.get(StringPool.BLANK), httpServletRequest,
+			httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
+			false);
 
-		Element bodyElement = document.body();
+		int bodyTagEndIndex =
+			html.indexOf(StringPool.GREATER_THAN, html.indexOf("<body")) + 1;
+		int bodyCloseTagIndex = html.lastIndexOf("</body>");
 
-		bodyElement.html(unsyncStringWriter.toString());
+		StringBundler sb = new StringBundler(3);
 
-		ServletResponseUtil.write(httpServletResponse, document.html());
+		sb.append(html.substring(0, bodyTagEndIndex));
+		sb.append(unsyncStringWriter.toString());
+		sb.append(html.substring(bodyCloseTagIndex));
 
-		ServletResponseUtil.write(
-			httpServletResponse, unsyncStringWriter.toString());
+		ServletResponseUtil.write(httpServletResponse, sb.toString());
 	}
 
 	@Reference

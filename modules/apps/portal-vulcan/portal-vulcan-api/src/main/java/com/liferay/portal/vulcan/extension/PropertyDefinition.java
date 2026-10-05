@@ -125,7 +125,9 @@ public class PropertyDefinition {
 			PropertyType.DECIMAL,
 			SetUtil.fromArray(Float.class, Integer.class, Long.class)
 		).<PropertyType, Set<Class<?>>>put(
-			PropertyType.DOUBLE, SetUtil.fromArray(Double.class, Float.class)
+			PropertyType.DOUBLE,
+			SetUtil.fromArray(
+				Double.class, Float.class, Integer.class, Long.class)
 		).<PropertyType, Set<Class<?>>>put(
 			PropertyType.INTEGER, SetUtil.fromArray(Integer.class)
 		).<PropertyType, Set<Class<?>>>put(

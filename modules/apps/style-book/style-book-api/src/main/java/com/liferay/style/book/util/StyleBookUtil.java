@@ -26,6 +26,7 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -100,25 +101,14 @@ public class StyleBookUtil {
 
 		List<String> frontendTokensValuesKeys = new ArrayList<>();
 
-		for (String themeId :
-				new String[] {
-					styleBookEntry.getThemeId(),
-					StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_GLOBAL
-				}) {
-
-			FrontendTokenDefinition frontendTokenDefinition =
-				_getFrontendTokenDefinition(
-					styleBookEntry.getCompanyId(), themeId);
-
-			if (frontendTokenDefinition == null) {
-				continue;
-			}
-
-			frontendTokensValuesKeys.addAll(
-				_getFrontendTokensValuesKeys(
-					themeId, frontendTokenDefinition.getJSONObject(locale)));
-		}
-
+		frontendTokensValuesKeys.addAll(
+			_getFrontendTokensValuesKeys(
+				styleBookEntry.getCompanyId(), locale,
+				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_GLOBAL));
+		frontendTokensValuesKeys.addAll(
+			_getFrontendTokensValuesKeys(
+				styleBookEntry.getCompanyId(), locale,
+				styleBookEntry.getThemeId()));
 		frontendTokensValuesKeys.addAll(
 			_getFrontendTokensValuesKeys(
 				StyleBookConstants.FRONTEND_TOKEN_DEFINITION_ID_CUSTOM,
@@ -220,6 +210,20 @@ public class StyleBookUtil {
 
 		return frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 			companyId, themeId);
+	}
+
+	private static List<String> _getFrontendTokensValuesKeys(
+		long companyId, Locale locale, String themeId) {
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			_getFrontendTokenDefinition(companyId, themeId);
+
+		if (frontendTokenDefinition == null) {
+			return Collections.emptyList();
+		}
+
+		return _getFrontendTokensValuesKeys(
+			themeId, frontendTokenDefinition.getJSONObject(locale));
 	}
 
 	private static List<String> _getFrontendTokensValuesKeys(

@@ -10,6 +10,7 @@ package com.liferay.ai.creator.openai.web.internal.constants;
  */
 public class AICreatorOpenAIWebKeys {
 
-	public static final String GENERATIONS = "AI_CREATOR_OPENAI_GENERATIONS";
+	public static final String AI_CREATOR_OPENAI_GENERATIONS =
+		"AI_CREATOR_OPENAI_GENERATIONS";
 
 }

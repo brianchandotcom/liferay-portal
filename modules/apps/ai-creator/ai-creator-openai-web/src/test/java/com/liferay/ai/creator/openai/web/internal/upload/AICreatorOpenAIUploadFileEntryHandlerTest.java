@@ -134,7 +134,8 @@ public class AICreatorOpenAIUploadFileEntryHandlerTest {
 		PortletSession portletSession = Mockito.mock(PortletSession.class);
 
 		Mockito.when(
-			portletSession.getAttribute(AICreatorOpenAIWebKeys.GENERATIONS)
+			portletSession.getAttribute(
+				AICreatorOpenAIWebKeys.AI_CREATOR_OPENAI_GENERATIONS)
 		).thenReturn(
 			generations
 		);

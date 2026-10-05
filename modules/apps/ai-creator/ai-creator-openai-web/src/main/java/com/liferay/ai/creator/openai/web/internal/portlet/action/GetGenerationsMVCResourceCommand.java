@@ -80,7 +80,7 @@ public class GetGenerationsMVCResourceCommand extends BaseMVCResourceCommand {
 			PortletSession portletSession = resourceRequest.getPortletSession();
 
 			portletSession.setAttribute(
-				AICreatorOpenAIWebKeys.GENERATIONS,
+				AICreatorOpenAIWebKeys.AI_CREATOR_OPENAI_GENERATIONS,
 				SetUtil.fromArray(generations));
 
 			JSONPortletResponseUtil.writeJSON(

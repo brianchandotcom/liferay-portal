@@ -64,7 +64,7 @@ public class AICreatorOpenAIUploadFileEntryHandler
 		PortletSession portletSession = portletRequest.getPortletSession();
 
 		Set<String> generations = (Set<String>)portletSession.getAttribute(
-			AICreatorOpenAIWebKeys.GENERATIONS);
+			AICreatorOpenAIWebKeys.AI_CREATOR_OPENAI_GENERATIONS);
 
 		if ((generations == null) || !generations.contains(urlPath)) {
 			throw new PrincipalException("URL path is not a generated image");

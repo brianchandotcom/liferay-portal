@@ -1,0 +1,226 @@
+{{- $accessControl := .Values.accessControl }}
+{{- $envoyGatewayNamespace := .Values.operatorApplications.envoyGateway.namespace }}
+{{- $gateways := list
+    (dict "name" "argo-workflows" "namespace" .Values.operatorApplications.argoWorkflows.namespace "port" 2746 "product" "Argo Workflows" "values" .Values.argoWorkflows.gateway "valuesPath" "argoWorkflows.gateway")
+    (dict "name" "argocd" "namespace" .Release.Namespace "port" 80 "product" "ArgoCD" "values" .Values.argocd.gateway "valuesPath" "argocd.gateway")
+-}}
+{{- range $gateway := $gateways }}
+{{- if $gateway.values.enabled }}
+{{- $envoyProxy := $gateway.values.envoyProxy }}
+{{- $hostname := required (printf "The value %q is required to route traffic to %s" (printf "%s.hostname" $gateway.valuesPath) $gateway.product) $gateway.values.hostname }}
+{{- $tlsEnabled := ne $gateway.values.tls.externalSecretKey "" }}
+
+{{- if and $accessControl.enabled (not $accessControl.allowedCIDRs) }}
+{{- fail (printf "The value %q must not be empty when %q is true" "accessControl.allowedCIDRs" "accessControl.enabled") }}
+{{- end }}
+
+{{- if $tlsEnabled }}
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+        app.kubernetes.io/name: {{ $gateway.name }}-server-tls
+    name: {{ $gateway.name }}-server-tls
+    namespace: {{ $gateway.namespace }}
+spec:
+    dataFrom:
+        -   extract:
+                decodingStrategy: Auto
+                key: {{ $gateway.values.tls.externalSecretKey }}
+    secretStoreRef:
+        kind: ClusterSecretStore
+        name: {{ include "liferay-platform.clusterSecretStoreName" $ | quote }}
+    target:
+        name: {{ $gateway.name }}-server-tls
+        template:
+            metadata:
+                labels:
+                    app.kubernetes.io/name: {{ $gateway.name }}-server-tls
+            type: kubernetes.io/tls
+{{- end }}
+{{- with $gateway.values.clientTrafficPolicySpec }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+        app.kubernetes.io/name: {{ $gateway.name }}-gateway-client-traffic-policy
+    name: {{ $gateway.name }}-gateway-client-traffic-policy
+    namespace: {{ $gateway.namespace }}
+spec:
+    {{- toYaml . | nindent 4 }}
+    targetRefs:
+        -   group: gateway.networking.k8s.io
+            kind: Gateway
+            name: {{ $gateway.name }}-gateway
+{{- end }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+        app.kubernetes.io/name: {{ $gateway.name }}-gateway-proxy-config
+    name: {{ $gateway.name }}-gateway-proxy-config
+    namespace: {{ $envoyGatewayNamespace }}
+spec:
+    provider:
+        kubernetes:
+            envoyDeployment:
+                {{- with $envoyProxy.podAnnotations }}
+                pod:
+                    annotations:
+                        {{- toYaml . | nindent 24 }}
+                {{- end }}
+                replicas: {{ $envoyProxy.replicas }}
+            {{- with $envoyProxy.serviceAnnotations }}
+            envoyService:
+                annotations:
+                    {{- toYaml . | nindent 20 }}
+            {{- end }}
+        type: Kubernetes
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+        app.kubernetes.io/name: {{ $gateway.name }}-gateway-security-policy
+    name: {{ $gateway.name }}-gateway-security-policy
+    namespace: {{ $gateway.namespace }}
+spec:
+    authorization:
+        {{- if $accessControl.enabled }}
+        defaultAction: Deny
+        rules:
+            -   action: Allow
+                name: allowed-cidrs
+                principal:
+                    clientCIDRs:
+                        {{- range $accessControl.allowedCIDRs }}
+                        -   {{ . | quote }}
+                        {{- end }}
+        {{- else }}
+        defaultAction: Allow
+        {{- end }}
+    targetRefs:
+        -   group: gateway.networking.k8s.io
+            kind: Gateway
+            name: {{ $gateway.name }}-gateway
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+        app.kubernetes.io/name: {{ $gateway.name }}-gateway
+    name: {{ $gateway.name }}-gateway
+    namespace: {{ $gateway.namespace }}
+spec:
+    gatewayClassName: {{ $gateway.name }}-gateway-class
+    listeners:
+    -   allowedRoutes:
+            namespaces:
+                from: Same
+        hostname: {{ $hostname }}
+        name: http
+        port: 80
+        protocol: HTTP
+    {{- if $tlsEnabled }}
+    -   allowedRoutes:
+            namespaces:
+                from: Same
+        hostname: {{ $hostname }}
+        name: https
+        port: 443
+        protocol: HTTPS
+        tls:
+            certificateRefs:
+                -   name: {{ $gateway.name }}-server-tls
+    {{- end }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+        app.kubernetes.io/name: {{ $gateway.name }}-gateway-class
+    name: {{ $gateway.name }}-gateway-class
+spec:
+    controllerName: gateway.envoyproxy.io/gatewayclass-controller
+    parametersRef:
+        group: gateway.envoyproxy.io
+        kind: EnvoyProxy
+        name: {{ $gateway.name }}-gateway-proxy-config
+        namespace: {{ $envoyGatewayNamespace }}
+{{- if $tlsEnabled }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+        app.kubernetes.io/name: {{ $gateway.name }}-redirect-route
+    name: {{ $gateway.name }}-redirect-route
+    namespace: {{ $gateway.namespace }}
+spec:
+    hostnames:
+        -   {{ $hostname }}
+    parentRefs:
+        -   name: {{ $gateway.name }}-gateway
+            sectionName: http
+    rules:
+        -   filters:
+                -   requestRedirect:
+                        scheme: https
+                        statusCode: 301
+                    type: RequestRedirect
+{{- end }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "-90"
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+        app.kubernetes.io/name: {{ $gateway.name }}-server-route
+    name: {{ $gateway.name }}-server-route
+    namespace: {{ $gateway.namespace }}
+spec:
+    hostnames:
+        -   {{ $hostname }}
+    parentRefs:
+        -   name: {{ $gateway.name }}-gateway
+            sectionName: {{ $tlsEnabled | ternary "https" "http" }}
+    rules:
+        -   backendRefs:
+                -   name: {{ $gateway.name }}-server
+                    port: {{ $gateway.port }}
+{{- end }}
+{{- end }}

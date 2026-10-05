@@ -56,17 +56,11 @@ spec:
                 -   {{- include "liferay-platform.chartSource" .Values.liferay | nindent 20 }}
                     helm:
                         parameters:
-                            -   name: global.deploymentName
-                                value: {{ .Values.deploymentContext.deploymentName | quote }}
                             -   name: global.liferayServiceAccount.create
                                 value: "false"
                             -   name: global.liferayServiceAccount.name
                                 value: liferay-default
-                            -   name: global.projectId
-                                value: {{ $layout.projectId | quote }}
-                            -   name: liferay-default.environmentId
-                                value: {{ $layout.environmentId | quote }}
-                            -   name: liferay-default.network.gatewayName
+                            -   name: {{ printf "%snetwork.gatewayName" .Values.liferay.valuesPrefix }}
                                 value: {{ printf "%s-%s-gateway" $layout.projectId $layout.environmentId | quote }}
                             {{- with .Values.liferay.parameters }}
                             {{- toYaml . | nindent 28 }}

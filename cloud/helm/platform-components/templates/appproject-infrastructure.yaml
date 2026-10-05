@@ -23,6 +23,8 @@ spec:
     destinations:
         -   namespace: liferay-*
             server: https://kubernetes.default.svc
+        -   namespace: {{ .Release.Namespace }}
+            server: https://kubernetes.default.svc
         -   namespace: {{ .Values.operatorApplications.crossplane.namespace }}
             server: https://kubernetes.default.svc
         -   namespace: {{ .Values.operatorApplications.envoyGateway.namespace }}

@@ -36,4 +36,4 @@ roleRef:
 subjects:
     -   kind: ServiceAccount
         name: provider-kubernetes
-        namespace: {{ .Values.crossplaneNamespace }}
+        namespace: {{ .Release.Namespace }}

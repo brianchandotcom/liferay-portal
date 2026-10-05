@@ -1,4 +1,3 @@
-crossplaneNamespace: crossplane-system
 deploymentContext:
     crossplaneDataClientId: ""
     crossplaneIamClientId: ""

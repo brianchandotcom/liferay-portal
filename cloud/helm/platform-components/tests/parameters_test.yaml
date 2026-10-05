@@ -52,14 +52,8 @@ tests:
     -   asserts:
             -   contains:
                     content:
-                        name: global.projectId
-                        value: "{{path[2]}}"
-                    path: spec.template.spec.sources[0].helm.parameters
-                template: templates/applicationset-liferay.yaml
-            -   contains:
-                    content:
-                        name: liferay-default.environmentId
-                        value: "{{path[4]}}"
+                        name: liferay-default.network.gatewayName
+                        value: "{{path[2]}}-{{path[4]}}-gateway"
                     path: spec.template.spec.sources[0].helm.parameters
                 template: templates/applicationset-liferay.yaml
         it: Computes parameters for the Liferay applications

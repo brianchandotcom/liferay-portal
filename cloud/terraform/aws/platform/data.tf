@@ -428,6 +428,22 @@ data "aws_iam_policy_document" "external_secrets" {
 		]
 	}
 }
+data "aws_iam_policy_document" "external_secrets_marketplace_registry" {
+	statement {
+		actions=["ecr:GetAuthorizationToken"]
+		effect="Allow"
+		resources=["*"]
+	}
+	statement {
+		actions=[
+			"ecr:BatchCheckLayerAvailability",
+			"ecr:BatchGetImage",
+			"ecr:GetDownloadUrlForLayer",
+		]
+		effect="Allow"
+		resources=["arn:${local.partition}:ecr:us-east-1:709825985650:repository/*"]
+	}
+}
 data "aws_iam_policy_document" "irsa" {
 	for_each=local.irsa_service_accounts
 	statement {

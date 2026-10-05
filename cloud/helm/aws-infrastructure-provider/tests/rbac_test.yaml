@@ -10,6 +10,6 @@ tests:
                 equal:
                     path: subjects[0].namespace
                     value: custom-system
-        it: Follows the Crossplane namespace override
-        set:
-            crossplaneNamespace: custom-system
+        it: Follows the release namespace
+        release:
+            namespace: custom-system

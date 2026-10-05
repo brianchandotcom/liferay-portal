@@ -1,8 +1,20 @@
 accessControl:
     allowedCIDRs: []
     enabled: false
+argoWorkflows:
+    gateway:
+        clientTrafficPolicySpec: {}
+        enabled: false
+        envoyProxy:
+            podAnnotations: {}
+            replicas: 2
+            serviceAnnotations: {}
+        hostname: ""
+        tls:
+            externalSecretKey: ""
 argocd:
     gateway:
+        clientTrafficPolicySpec: {}
         enabled: false
         envoyProxy:
             podAnnotations: {}
@@ -91,6 +103,7 @@ liferay:
     path: ""
     repoURL: ""
     targetRevision: ""
+    valuesPrefix: liferay-default.
 observability:
     enabled: false
     namespace: observability

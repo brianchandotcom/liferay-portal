@@ -1,4 +1,3 @@
-crossplaneNamespace: crossplane-system
 deploymentContext:
     accountId: ""
     clusterSecurityGroupId: ""
@@ -14,5 +13,7 @@ deploymentContext:
     vpcId: ""
 liferay-subchart-backup-restore:
     enabled: true
+marketplace:
+    enabled: false
 providers:
     enabled: true

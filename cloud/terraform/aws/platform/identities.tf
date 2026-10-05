@@ -47,6 +47,11 @@ resource "aws_iam_role_policy" "external_secrets" {
 	policy=data.aws_iam_policy_document.external_secrets.json
 	role=aws_iam_role.external_secrets.id
 }
+resource "aws_iam_role_policy" "external_secrets_marketplace_registry" {
+	name="marketplace-registry"
+	policy=data.aws_iam_policy_document.external_secrets_marketplace_registry.json
+	role=aws_iam_role.external_secrets.id
+}
 resource "aws_iam_role_policy" "keda" {
 	count=local.keda_enabled ? 1 : 0
 	name="amp-query"

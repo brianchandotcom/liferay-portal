@@ -318,6 +318,21 @@ run "should_inject_an_external_secret_store_provider" {
 		}
 	}
 }
+run "should_let_external_secrets_pull_from_the_marketplace_registry" {
+	assert {
+		condition=aws_iam_role_policy.external_secrets_marketplace_registry.name == "marketplace-registry"
+		error_message="The External Secrets role must carry the Marketplace registry policy, so its ECR generator can mint the ArgoCD repository token"
+	}
+	assert {
+		condition=one([for statement in data.aws_iam_policy_document.external_secrets_marketplace_registry.statement : statement if contains(statement.actions, "ecr:GetAuthorizationToken")]).resources == toset(["*"])
+		error_message="ecr:GetAuthorizationToken takes no resource type, so it must be granted on all resources"
+	}
+	assert {
+		condition=alltrue([for statement in data.aws_iam_policy_document.external_secrets_marketplace_registry.statement : contains(statement.actions, "ecr:GetAuthorizationToken") || alltrue([for resource in statement.resources : startswith(resource, "arn:aws:ecr:us-east-1:709825985650:repository/")])])
+		error_message="Image pulls must be limited to the AWS Marketplace registry"
+	}
+	command=plan
+}
 run "should_limit_what_bounded_principals_can_do" {
 	assert {
 		condition=join(",", one([for statement in data.aws_iam_policy_document.crossplane_data_backup.statement : statement if contains(statement.actions, "iam:PassRole")]).resources) == "arn:aws:iam::123456789012:role/crossplane/liferay-test/*"

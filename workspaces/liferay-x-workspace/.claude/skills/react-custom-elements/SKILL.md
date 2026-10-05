@@ -1,1 +1,0 @@
-../../../.agents/skills/react-custom-elements/SKILL.md

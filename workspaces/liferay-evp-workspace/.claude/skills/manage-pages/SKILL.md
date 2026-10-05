@@ -1,1 +1,0 @@
-../../../.agents/skills/manage-pages/SKILL.md

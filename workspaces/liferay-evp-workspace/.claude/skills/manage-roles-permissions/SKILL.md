@@ -1,1 +1,0 @@
-../../../.agents/skills/manage-roles-permissions/SKILL.md

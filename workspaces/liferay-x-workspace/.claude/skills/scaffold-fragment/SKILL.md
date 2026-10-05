@@ -1,1 +1,0 @@
-../../../.agents/skills/scaffold-fragment/SKILL.md

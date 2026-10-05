@@ -1,1 +1,0 @@
-../../../.agents/skills/production-standards/SKILL.md

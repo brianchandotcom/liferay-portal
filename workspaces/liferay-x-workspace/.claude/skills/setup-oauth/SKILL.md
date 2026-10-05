@@ -1,1 +1,0 @@
-../../../.agents/skills/setup-oauth/SKILL.md

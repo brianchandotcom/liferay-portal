@@ -1,1 +1,0 @@
-../../../.agents/skills/deploy-and-verify/SKILL.md

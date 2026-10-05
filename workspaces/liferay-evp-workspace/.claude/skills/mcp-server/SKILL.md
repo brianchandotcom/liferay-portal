@@ -1,1 +1,0 @@
-../../../.agents/skills/mcp-server/SKILL.md

@@ -1,1 +1,0 @@
-../../../.agents/skills/initial-setup-guide/SKILL.md

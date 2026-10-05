@@ -1,1 +1,0 @@
-../../../.agents/skills/workspace-init/SKILL.md

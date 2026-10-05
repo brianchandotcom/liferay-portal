@@ -1,1 +1,0 @@
-../../.agents/rules/object-actions-catalog.md

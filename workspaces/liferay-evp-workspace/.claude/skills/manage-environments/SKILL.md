@@ -1,1 +1,0 @@
-../../../.agents/skills/manage-environments/SKILL.md

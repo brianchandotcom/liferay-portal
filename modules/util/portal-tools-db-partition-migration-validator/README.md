@@ -14,6 +14,12 @@ for a partition migration.
 ./db_partition_migration_validator.sh <command> <parameters>
 ```
 
+On Windows:
+
+```
+db_partition_migration_validator.bat <command> <parameters>
+```
+
 Commands:
 
 - `export` Export validation file.
@@ -39,4 +45,12 @@ Validate parameters:
 ./db_partition_migration_validator.sh export --jdbc-url "jdbc:mysql://localhost:3306/defaultSchema" --company-id 1234 --password xyz123 --user xyz123 --schema-name lpartition_1234
 ./db_partition_migration_validator.sh export --jdbc-url "jdbc:mysql://localhost:3306/defaultSchema" --company-id 1234 --password xyz123 --user xyz123
 ./db_partition_migration_validator.sh validate --source-file source.json --target-file target.json
+```
+
+On Windows:
+
+```
+db_partition_migration_validator.bat export --jdbc-url "jdbc:mysql://localhost:3306/defaultSchema" --company-id 1234 --password xyz123 --user xyz123 --schema-name lpartition_1234
+db_partition_migration_validator.bat export --jdbc-url "jdbc:mysql://localhost:3306/defaultSchema" --company-id 1234 --password xyz123 --user xyz123
+db_partition_migration_validator.bat validate --source-file source.json --target-file target.json
 ```

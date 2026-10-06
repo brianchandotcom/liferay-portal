@@ -72,7 +72,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			addDocument(
 				DocumentCreationHelpers.singleKeyword(
-					Field.EXPIRATION_DATE, "text"));
+					Field.EXPIRATION_DATE, _INVALID_DATE));
 
 			String expectedMessage =
 				"failed to parse field [expirationDate] of type [date] in " +
@@ -94,7 +94,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			Document document = new DocumentImpl();
 
-			document.addKeyword(Field.EXPIRATION_DATE, "text");
+			document.addKeyword(Field.EXPIRATION_DATE, _INVALID_DATE);
 
 			IndexWriter indexWriter = getIndexWriter();
 
@@ -115,7 +115,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			Document document = new DocumentImpl();
 
-			document.addKeyword(Field.EXPIRATION_DATE, "text");
+			document.addKeyword(Field.EXPIRATION_DATE, _INVALID_DATE);
 
 			IndexWriter indexWriter = getIndexWriter();
 
@@ -352,7 +352,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			Document document = new DocumentImpl();
 
-			document.addKeyword(Field.EXPIRATION_DATE, "text");
+			document.addKeyword(Field.EXPIRATION_DATE, _INVALID_DATE);
 			document.addKeyword(Field.UID, _UID);
 
 			IndexWriter indexWriter = getIndexWriter();
@@ -373,7 +373,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			Document document = new DocumentImpl();
 
-			document.addKeyword(Field.EXPIRATION_DATE, "text");
+			document.addKeyword(Field.EXPIRATION_DATE, _INVALID_DATE);
 			document.addKeyword(Field.UID, _UID);
 
 			IndexWriter indexWriter = getIndexWriter();
@@ -400,7 +400,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			Document document = new DocumentImpl();
 
-			document.addKeyword(Field.EXPIRATION_DATE, "text");
+			document.addKeyword(Field.EXPIRATION_DATE, _INVALID_DATE);
 			document.addKeyword(Field.UID, _UID);
 
 			IndexWriter indexWriter = getIndexWriter();
@@ -422,7 +422,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			Document document = new DocumentImpl();
 
-			document.addKeyword(Field.EXPIRATION_DATE, "text");
+			document.addKeyword(Field.EXPIRATION_DATE, _INVALID_DATE);
 			document.addKeyword(Field.UID, _UID);
 
 			IndexWriter indexWriter = getIndexWriter();
@@ -475,6 +475,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private static final String _INVALID_DATE = "text";
 
 	private static final String _UID = "1";
 

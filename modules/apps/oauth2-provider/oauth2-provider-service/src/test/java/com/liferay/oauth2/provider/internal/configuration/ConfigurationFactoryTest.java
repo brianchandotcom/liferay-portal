@@ -295,11 +295,6 @@ public class ConfigurationFactoryTest {
 		Assert.assertEquals(
 			"ext-init", _labels.get("lxc.liferay.com/metadataType"));
 		Assert.assertFalse(_featuresList.contains("upstream.token.forwarding"));
-	}
-
-	@Test
-	public void testOAuth2ProviderApplicationHeadlessServerConfigurationFactoryWithForwardUpstreamToken()
-		throws Exception {
 
 		_activateHeadlessServerConfigurationFactory(true);
 

@@ -33,16 +33,16 @@ public class OAuthClientEntryLocalServiceImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test(expected = OAuthClientEntryAuthRequestParametersJSONException.class)
-	public void testValidateAuthRequestParametersJSONWithUpstreamTokenForwarding()
-		throws Exception {
+	@Test
+	public void testValidateAuthRequestParametersJSON() throws Exception {
+		_validateAuthRequestParametersJSON("{}");
 
-		ReflectionTestUtil.invoke(
-			new OAuthClientEntryLocalServiceImpl(),
-			"_validateAuthRequestParametersJSON", new Class<?>[] {String.class},
-			JSONUtil.put(
-				"allow_upstream_token_forwarding", true
-			).toString());
+		Assert.assertThrows(
+			OAuthClientEntryAuthRequestParametersJSONException.class,
+			() -> _validateAuthRequestParametersJSON(
+				JSONUtil.put(
+					"allow_upstream_token_forwarding", true
+				).toString()));
 	}
 
 	@Test
@@ -94,9 +94,7 @@ public class OAuthClientEntryLocalServiceImplTest {
 	}
 
 	@Test
-	public void testValidateTokenRequestParametersJSONWithUpstreamTokenForwarding()
-		throws Exception {
-
+	public void testValidateTokenRequestParametersJSON() throws Exception {
 		_validateTokenRequestParametersJSON(
 			JSONUtil.put(
 				"allow_upstream_token_forwarding", false
@@ -106,16 +104,24 @@ public class OAuthClientEntryLocalServiceImplTest {
 				"allow_upstream_token_forwarding", true
 			).toString());
 		_validateTokenRequestParametersJSON("{}");
+
+		Assert.assertThrows(
+			OAuthClientEntryTokenRequestParametersJSONException.class,
+			() -> _validateTokenRequestParametersJSON(
+				JSONUtil.put(
+					"allow_upstream_token_forwarding",
+					RandomTestUtil.randomString()
+				).toString()));
 	}
 
-	@Test(expected = OAuthClientEntryTokenRequestParametersJSONException.class)
-	public void testValidateTokenRequestParametersJSONWithUpstreamTokenForwardingInvalidValue()
+	private void _validateAuthRequestParametersJSON(
+			String authRequestParametersJSON)
 		throws Exception {
 
-		_validateTokenRequestParametersJSON(
-			JSONUtil.put(
-				"allow_upstream_token_forwarding", "yes"
-			).toString());
+		ReflectionTestUtil.invoke(
+			new OAuthClientEntryLocalServiceImpl(),
+			"_validateAuthRequestParametersJSON", new Class<?>[] {String.class},
+			authRequestParametersJSON);
 	}
 
 	private void _validateTokenRequestParametersJSON(

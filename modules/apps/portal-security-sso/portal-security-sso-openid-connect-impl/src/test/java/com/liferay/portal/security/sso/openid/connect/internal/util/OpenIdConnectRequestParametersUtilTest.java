@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.oauth2.sdk.ParseException;
@@ -28,25 +30,33 @@ public class OpenIdConnectRequestParametersUtilTest {
 	@Test
 	public void testIsUpstreamTokenForwardingAllowed() throws Exception {
 		Assert.assertFalse(
-			OpenIdConnectRequestParametersUtil.isUpstreamTokenForwardingAllowed(
-				JSONObjectUtils.parse("{}")));
-		Assert.assertFalse(
-			OpenIdConnectRequestParametersUtil.isUpstreamTokenForwardingAllowed(
-				JSONObjectUtils.parse(
-					"{\"allow_upstream_token_forwarding\": false}")));
+			_isUpstreamTokenForwardingAllowed(
+				JSONUtil.put(
+					"allow_upstream_token_forwarding", false
+				).toString()));
+		Assert.assertFalse(_isUpstreamTokenForwardingAllowed("{}"));
 		Assert.assertTrue(
-			OpenIdConnectRequestParametersUtil.isUpstreamTokenForwardingAllowed(
-				JSONObjectUtils.parse(
-					"{\"allow_upstream_token_forwarding\": true}")));
+			_isUpstreamTokenForwardingAllowed(
+				JSONUtil.put(
+					"allow_upstream_token_forwarding", true
+				).toString()));
+
+		Assert.assertThrows(
+			ParseException.class,
+			() -> _isUpstreamTokenForwardingAllowed(
+				JSONUtil.put(
+					"allow_upstream_token_forwarding",
+					RandomTestUtil.randomString()
+				).toString()));
 	}
 
-	@Test(expected = ParseException.class)
-	public void testIsUpstreamTokenForwardingAllowedWithInvalidValue()
-		throws Exception {
+	private boolean _isUpstreamTokenForwardingAllowed(
+			String requestParametersJSON)
+		throws ParseException {
 
-		OpenIdConnectRequestParametersUtil.isUpstreamTokenForwardingAllowed(
-			JSONObjectUtils.parse(
-				"{\"allow_upstream_token_forwarding\": \"yes\"}"));
+		return OpenIdConnectRequestParametersUtil.
+			isUpstreamTokenForwardingAllowed(
+				JSONObjectUtils.parse(requestParametersJSON));
 	}
 
 }

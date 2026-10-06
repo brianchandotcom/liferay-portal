@@ -90,6 +90,49 @@ public class BrokenLinkAsset implements Cloneable, Serializable {
 
 	protected Long brokenLinksCount;
 
+	public Long getDraftBrokenLinksCount() {
+		return draftBrokenLinksCount;
+	}
+
+	public void setDraftBrokenLinksCount(Long draftBrokenLinksCount) {
+		this.draftBrokenLinksCount = draftBrokenLinksCount;
+	}
+
+	public void setDraftBrokenLinksCount(
+		UnsafeSupplier<Long, Exception> draftBrokenLinksCountUnsafeSupplier) {
+
+		try {
+			draftBrokenLinksCount = draftBrokenLinksCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long draftBrokenLinksCount;
+
+	public Long getExpiredBrokenLinksCount() {
+		return expiredBrokenLinksCount;
+	}
+
+	public void setExpiredBrokenLinksCount(Long expiredBrokenLinksCount) {
+		this.expiredBrokenLinksCount = expiredBrokenLinksCount;
+	}
+
+	public void setExpiredBrokenLinksCount(
+		UnsafeSupplier<Long, Exception> expiredBrokenLinksCountUnsafeSupplier) {
+
+		try {
+			expiredBrokenLinksCount =
+				expiredBrokenLinksCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long expiredBrokenLinksCount;
+
 	public String getHref() {
 		return href;
 	}
@@ -127,6 +170,28 @@ public class BrokenLinkAsset implements Cloneable, Serializable {
 	}
 
 	protected Long id;
+
+	public Long getInTrashBrokenLinksCount() {
+		return inTrashBrokenLinksCount;
+	}
+
+	public void setInTrashBrokenLinksCount(Long inTrashBrokenLinksCount) {
+		this.inTrashBrokenLinksCount = inTrashBrokenLinksCount;
+	}
+
+	public void setInTrashBrokenLinksCount(
+		UnsafeSupplier<Long, Exception> inTrashBrokenLinksCountUnsafeSupplier) {
+
+		try {
+			inTrashBrokenLinksCount =
+				inTrashBrokenLinksCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long inTrashBrokenLinksCount;
 
 	public String getObjectDefinitionExternalReferenceCode() {
 		return objectDefinitionExternalReferenceCode;
@@ -207,4 +272,4 @@ public class BrokenLinkAsset implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-335853638
+// LIFERAY-REST-BUILDER-HASH:-1563250787

@@ -177,6 +177,88 @@ public class BrokenLinkAsset implements Serializable {
 	private Supplier<Long> _brokenLinksCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getDraftBrokenLinksCount() {
+		if (_draftBrokenLinksCountSupplier != null) {
+			draftBrokenLinksCount = _draftBrokenLinksCountSupplier.get();
+
+			_draftBrokenLinksCountSupplier = null;
+		}
+
+		return draftBrokenLinksCount;
+	}
+
+	public void setDraftBrokenLinksCount(Long draftBrokenLinksCount) {
+		this.draftBrokenLinksCount = draftBrokenLinksCount;
+
+		_draftBrokenLinksCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDraftBrokenLinksCount(
+		UnsafeSupplier<Long, Exception> draftBrokenLinksCountUnsafeSupplier) {
+
+		_draftBrokenLinksCountSupplier = () -> {
+			try {
+				return draftBrokenLinksCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long draftBrokenLinksCount;
+
+	@JsonIgnore
+	private Supplier<Long> _draftBrokenLinksCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getExpiredBrokenLinksCount() {
+		if (_expiredBrokenLinksCountSupplier != null) {
+			expiredBrokenLinksCount = _expiredBrokenLinksCountSupplier.get();
+
+			_expiredBrokenLinksCountSupplier = null;
+		}
+
+		return expiredBrokenLinksCount;
+	}
+
+	public void setExpiredBrokenLinksCount(Long expiredBrokenLinksCount) {
+		this.expiredBrokenLinksCount = expiredBrokenLinksCount;
+
+		_expiredBrokenLinksCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExpiredBrokenLinksCount(
+		UnsafeSupplier<Long, Exception> expiredBrokenLinksCountUnsafeSupplier) {
+
+		_expiredBrokenLinksCountSupplier = () -> {
+			try {
+				return expiredBrokenLinksCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long expiredBrokenLinksCount;
+
+	@JsonIgnore
+	private Supplier<Long> _expiredBrokenLinksCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getHref() {
 		if (_hrefSupplier != null) {
 			href = _hrefSupplier.get();
@@ -253,6 +335,47 @@ public class BrokenLinkAsset implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getInTrashBrokenLinksCount() {
+		if (_inTrashBrokenLinksCountSupplier != null) {
+			inTrashBrokenLinksCount = _inTrashBrokenLinksCountSupplier.get();
+
+			_inTrashBrokenLinksCountSupplier = null;
+		}
+
+		return inTrashBrokenLinksCount;
+	}
+
+	public void setInTrashBrokenLinksCount(Long inTrashBrokenLinksCount) {
+		this.inTrashBrokenLinksCount = inTrashBrokenLinksCount;
+
+		_inTrashBrokenLinksCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setInTrashBrokenLinksCount(
+		UnsafeSupplier<Long, Exception> inTrashBrokenLinksCountUnsafeSupplier) {
+
+		_inTrashBrokenLinksCountSupplier = () -> {
+			try {
+				return inTrashBrokenLinksCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long inTrashBrokenLinksCount;
+
+	@JsonIgnore
+	private Supplier<Long> _inTrashBrokenLinksCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionExternalReferenceCode() {
@@ -409,6 +532,30 @@ public class BrokenLinkAsset implements Serializable {
 			sb.append(brokenLinksCount);
 		}
 
+		Long draftBrokenLinksCount = getDraftBrokenLinksCount();
+
+		if (draftBrokenLinksCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"draftBrokenLinksCount\": ");
+
+			sb.append(draftBrokenLinksCount);
+		}
+
+		Long expiredBrokenLinksCount = getExpiredBrokenLinksCount();
+
+		if (expiredBrokenLinksCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"expiredBrokenLinksCount\": ");
+
+			sb.append(expiredBrokenLinksCount);
+		}
+
 		String href = getHref();
 
 		if (href != null) {
@@ -435,6 +582,18 @@ public class BrokenLinkAsset implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		Long inTrashBrokenLinksCount = getInTrashBrokenLinksCount();
+
+		if (inTrashBrokenLinksCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"inTrashBrokenLinksCount\": ");
+
+			sb.append(inTrashBrokenLinksCount);
 		}
 
 		String objectDefinitionExternalReferenceCode =
@@ -592,4 +751,4 @@ public class BrokenLinkAsset implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1962179641
+// LIFERAY-REST-BUILDER-HASH:516525534

@@ -81,6 +81,26 @@ public class BrokenLinkAssetSerDes {
 			sb.append(brokenLinkAsset.getBrokenLinksCount());
 		}
 
+		if (brokenLinkAsset.getDraftBrokenLinksCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"draftBrokenLinksCount\": ");
+
+			sb.append(brokenLinkAsset.getDraftBrokenLinksCount());
+		}
+
+		if (brokenLinkAsset.getExpiredBrokenLinksCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"expiredBrokenLinksCount\": ");
+
+			sb.append(brokenLinkAsset.getExpiredBrokenLinksCount());
+		}
+
 		if (brokenLinkAsset.getHref() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -103,6 +123,16 @@ public class BrokenLinkAssetSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(brokenLinkAsset.getId());
+		}
+
+		if (brokenLinkAsset.getInTrashBrokenLinksCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"inTrashBrokenLinksCount\": ");
+
+			sb.append(brokenLinkAsset.getInTrashBrokenLinksCount());
 		}
 
 		if (brokenLinkAsset.getObjectDefinitionExternalReferenceCode() !=
@@ -182,6 +212,24 @@ public class BrokenLinkAssetSerDes {
 				String.valueOf(brokenLinkAsset.getBrokenLinksCount()));
 		}
 
+		if (brokenLinkAsset.getDraftBrokenLinksCount() == null) {
+			map.put("draftBrokenLinksCount", null);
+		}
+		else {
+			map.put(
+				"draftBrokenLinksCount",
+				String.valueOf(brokenLinkAsset.getDraftBrokenLinksCount()));
+		}
+
+		if (brokenLinkAsset.getExpiredBrokenLinksCount() == null) {
+			map.put("expiredBrokenLinksCount", null);
+		}
+		else {
+			map.put(
+				"expiredBrokenLinksCount",
+				String.valueOf(brokenLinkAsset.getExpiredBrokenLinksCount()));
+		}
+
 		if (brokenLinkAsset.getHref() == null) {
 			map.put("href", null);
 		}
@@ -194,6 +242,15 @@ public class BrokenLinkAssetSerDes {
 		}
 		else {
 			map.put("id", String.valueOf(brokenLinkAsset.getId()));
+		}
+
+		if (brokenLinkAsset.getInTrashBrokenLinksCount() == null) {
+			map.put("inTrashBrokenLinksCount", null);
+		}
+		else {
+			map.put(
+				"inTrashBrokenLinksCount",
+				String.valueOf(brokenLinkAsset.getInTrashBrokenLinksCount()));
 		}
 
 		if (brokenLinkAsset.getObjectDefinitionExternalReferenceCode() ==
@@ -243,10 +300,25 @@ public class BrokenLinkAssetSerDes {
 			else if (Objects.equals(jsonParserFieldName, "brokenLinksCount")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "draftBrokenLinksCount")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "expiredBrokenLinksCount")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "href")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "inTrashBrokenLinksCount")) {
+
 				return false;
 			}
 			else if (Objects.equals(
@@ -285,6 +357,22 @@ public class BrokenLinkAssetSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "draftBrokenLinksCount")) {
+
+				if (jsonParserFieldValue != null) {
+					brokenLinkAsset.setDraftBrokenLinksCount(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "expiredBrokenLinksCount")) {
+
+				if (jsonParserFieldValue != null) {
+					brokenLinkAsset.setExpiredBrokenLinksCount(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "href")) {
 				if (jsonParserFieldValue != null) {
 					brokenLinkAsset.setHref((String)jsonParserFieldValue);
@@ -293,6 +381,14 @@ public class BrokenLinkAssetSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					brokenLinkAsset.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "inTrashBrokenLinksCount")) {
+
+				if (jsonParserFieldValue != null) {
+					brokenLinkAsset.setInTrashBrokenLinksCount(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -397,4 +493,4 @@ public class BrokenLinkAssetSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2039364581
+// LIFERAY-REST-BUILDER-HASH:231228203

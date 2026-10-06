@@ -6,7 +6,7 @@ const criterion = {
 	propertyName: 'click',
 	touched: false,
 	type: PropertyTypes.Event,
-	valid: true
+	valid: true,
 };
 
 describe('addCriterionAtIndex', () => {
@@ -19,7 +19,7 @@ describe('addCriterionAtIndex', () => {
 		expect(group.items[0]).toMatchObject({
 			propertyName: 'click',
 			type: PropertyTypes.Event,
-			value: 'default'
+			value: 'default',
 		});
 		expect(group.items[0].rowId).toMatch(/^row_/);
 	});
@@ -28,23 +28,23 @@ describe('addCriterionAtIndex', () => {
 		const existing = {
 			conjunctionName: Conjunctions.Or,
 			criteriaGroupId: 'group_1',
-			items: [{rowId: 'row_a'}, {rowId: 'row_b'}]
+			items: [{rowId: 'row_a'}, {rowId: 'row_b'}],
 		};
 
 		const group = addCriterionAtIndex(existing, 2, criterion);
 
 		expect(group.conjunctionName).toBe(Conjunctions.Or);
 		expect(group.criteriaGroupId).toBe('group_1');
-		expect(group.items.map(({propertyName, rowId}) => propertyName ?? rowId)).toEqual(
-			['row_a', 'row_b', 'click']
-		);
+		expect(
+			group.items.map(({propertyName, rowId}) => propertyName ?? rowId)
+		).toEqual(['row_a', 'row_b', 'click']);
 		expect(existing.items).toHaveLength(2);
 	});
 
 	it('keeps a valid value over the default value', () => {
 		const group = addCriterionAtIndex(null, 0, {
 			...criterion,
-			value: 'chosen'
+			value: 'chosen',
 		});
 
 		expect(group.items[0].value).toBe('chosen');

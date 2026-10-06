@@ -558,20 +558,18 @@ public class FinderCacheImpl
 		CacheKeyGenerator cacheKeyGenerator = _getCacheKeyGenerator(
 			finderPath.isBaseModelResult());
 
-		String[] keys = new String[arguments.length * 2];
+		String[] keys = new String[(arguments.length * 2) + 1];
+
+		keys[0] = finderPath.getCacheKeyPrefix();
 
 		for (int i = 0; i < arguments.length; i++) {
-			int index = i * 2;
+			int index = (i * 2) + 1;
 
 			keys[index] = StringPool.PERIOD;
 			keys[index + 1] = StringUtil.toHexString(arguments[i]);
 		}
 
-		return cacheKeyGenerator.getCacheKey(
-			new String[] {
-				finderPath.getCacheKeyPrefix(),
-				StringUtil.toHexString(cacheKeyGenerator.getCacheKey(keys))
-			});
+		return cacheKeyGenerator.getCacheKey(keys);
 	}
 
 	private PortalCache<Serializable, Serializable> _getCTPortalCache(

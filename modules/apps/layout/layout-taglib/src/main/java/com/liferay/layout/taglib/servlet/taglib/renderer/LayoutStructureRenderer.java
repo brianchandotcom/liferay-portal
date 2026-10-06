@@ -1611,8 +1611,9 @@ public class LayoutStructureRenderer {
 
 		if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() > 0) {
 			FragmentEntryLink fragmentEntryLink =
-				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+				_fragmentEntryLinks.computeIfAbsent(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+					FragmentEntryLinkLocalServiceUtil::fetchFragmentEntryLink);
 
 			if (fragmentEntryLink != null) {
 				DefaultFragmentRendererContext defaultFragmentRendererContext =
@@ -2047,6 +2048,8 @@ public class LayoutStructureRenderer {
 
 	private static final String _INITIAL_UUID_PREFIX = "0000";
 
+	private final Map<Long, FragmentEntryLink> _fragmentEntryLinks =
+		new HashMap<>();
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;
 	private final List<LayoutStructureItemRenderTime>

@@ -79,7 +79,7 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 
 								<Text size={4}>
 									{Liferay.Language.get(
-										'drag-and-drop-criterion-from-the-right-to-add-rules'
+										'drag-and-drop-criterion-from-the-left-to-add-rules'
 									)}
 								</Text>
 							</div>

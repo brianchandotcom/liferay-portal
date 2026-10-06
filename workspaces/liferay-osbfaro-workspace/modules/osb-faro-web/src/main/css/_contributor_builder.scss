@@ -14,6 +14,7 @@
 
 		.contributor-container {
 			height: 100%;
+			left: 0;
 			overflow: auto;
 			position: absolute;
 			width: 100%;
@@ -41,9 +42,9 @@
 
 	.criteria-builder-section-sidebar {
 		height: 100%;
+		left: 0;
 		overflow: hidden;
 		position: absolute;
-		right: 0;
 		top: 0;
 		visibility: hidden;
 		width: 0;
@@ -71,10 +72,10 @@
 
 	&.editing {
 		.criteria-builder-section-main {
-			padding-right: $criteriaSidebarWidth;
+			padding-left: $criteriaSidebarWidth;
 
 			.contributor-container .container-fluid {
-				padding-right: $criteriaSidebarWidth;
+				padding-left: $criteriaSidebarWidth;
 
 				.content-wrapper {
 					height: 100%;
@@ -85,13 +86,13 @@
 
 			@media (min-width: $maxPageWidth) {
 				.contributor-container .container-fluid {
-					padding-right: calc(
+					padding-left: calc(
 						#{$criteriaSidebarWidth} - ((100% - #{$maxPageWidth}) /
 									2)
 					);
 
 					.content-wrapper {
-						padding-right: 32px;
+						padding-left: 32px;
 					}
 				}
 			}

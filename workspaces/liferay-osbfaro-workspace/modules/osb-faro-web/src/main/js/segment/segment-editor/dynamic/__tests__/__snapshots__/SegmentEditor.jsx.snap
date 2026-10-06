@@ -350,7 +350,7 @@ exports[`SegmentEditor should render 1`] = `
                           <span
                             class="text-4"
                           >
-                            Drag and drop criterion from the right to add rules.
+                            Drag and drop criterion from the left to add rules.
                           </span>
                         </div>
                         <div>

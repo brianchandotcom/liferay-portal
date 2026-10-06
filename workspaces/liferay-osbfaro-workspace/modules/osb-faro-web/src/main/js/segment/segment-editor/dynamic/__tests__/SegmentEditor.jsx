@@ -122,7 +122,7 @@ describe('SegmentEditor', () => {
 
 		expect(
 			screen.getByText(
-				'Drag and drop criterion from the right to add rules.'
+				'Drag and drop criterion from the left to add rules.'
 			)
 		).toBeInTheDocument();
 		expect(
@@ -161,7 +161,7 @@ describe('SegmentEditor', () => {
 		await waitFor(() => {
 			expect(
 				screen.queryByText(
-					'Drag and drop criterion from the right to add rules.'
+					'Drag and drop criterion from the left to add rules.'
 				)
 			).toBeInTheDocument();
 

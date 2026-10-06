@@ -25,6 +25,11 @@ spec:
         {{- .Values.overlayAccess | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId | quote }}
     region: {{ .Values.region | quote }}
+    {{- if eq .Values.search.engine "opensearch" }}
+    search:
+        opensearch:
+            {{- .Values.search.opensearch | toYaml | nindent 12 }}
+    {{- end }}
     storage:
         {{- .Values.storage | toYaml | nindent 8 }}
 {{- end -}}

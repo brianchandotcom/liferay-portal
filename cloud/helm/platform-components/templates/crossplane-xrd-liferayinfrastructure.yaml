@@ -157,6 +157,28 @@ spec:
                                     x-kubernetes-validations:
                                         -   message: retainedDataPlanes keys must be blue or green, optionally followed by a hyphen and six hexadecimal digits
                                             rule: self.all(key, key.matches('^(blue|green)(-[0-9a-f]{6})?$'))
+                                search:
+                                    properties:
+                                        opensearch:
+                                            properties:
+                                                autoSoftwareUpdateEnabled:
+                                                    type: boolean
+                                                engineVersion:
+                                                    type: string
+                                                instanceCount:
+                                                    type: integer
+                                                instanceType:
+                                                    type: string
+                                                volumeSizeGB:
+                                                    type: integer
+                                            required:
+                                                -   autoSoftwareUpdateEnabled
+                                                -   engineVersion
+                                                -   instanceCount
+                                                -   instanceType
+                                                -   volumeSizeGB
+                                            type: object
+                                    type: object
                                 storage:
                                     properties:
                                         enableVersioning:

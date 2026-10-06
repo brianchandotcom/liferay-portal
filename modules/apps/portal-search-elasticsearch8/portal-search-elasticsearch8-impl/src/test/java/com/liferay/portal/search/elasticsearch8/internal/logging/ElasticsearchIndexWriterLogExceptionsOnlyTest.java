@@ -382,7 +382,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			String expectedMessage = StringBundler.concat(
 				"failed to parse field [expirationDate] of type [date] in ",
-				"document with id '", _UID, "'.");
+				"document with id '", _UID, "'. Preview of field's value: '",
+				_INVALID_DATE, "'");
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -432,7 +433,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			String expectedMessage = StringBundler.concat(
 				"failed to parse field [expirationDate] of type [date] in ",
-				"document with id '", _UID, "'.");
+				"document with id '", _UID, "'. Preview of field's value: '",
+				_INVALID_DATE, "'");
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(

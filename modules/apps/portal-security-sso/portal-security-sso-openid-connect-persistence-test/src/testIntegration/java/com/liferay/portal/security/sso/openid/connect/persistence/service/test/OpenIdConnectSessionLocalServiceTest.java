@@ -10,6 +10,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
@@ -18,7 +19,9 @@ import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenId
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -182,8 +185,13 @@ public class OpenIdConnectSessionLocalServiceTest {
 		openIdConnectSession.setIssuer(issuer);
 		openIdConnectSession.setSessionId(sessionId);
 
-		return _openIdConnectSessionLocalService.addOpenIdConnectSession(
-			openIdConnectSession);
+		openIdConnectSession =
+			_openIdConnectSessionLocalService.addOpenIdConnectSession(
+				openIdConnectSession);
+
+		_openIdConnectSessions.add(openIdConnectSession);
+
+		return openIdConnectSession;
 	}
 
 	@Inject
@@ -191,5 +199,9 @@ public class OpenIdConnectSessionLocalServiceTest {
 
 	@Inject
 	private OpenIdConnectSessionLocalService _openIdConnectSessionLocalService;
+
+	@DeleteAfterTestRun
+	private final List<OpenIdConnectSession> _openIdConnectSessions =
+		new ArrayList<>();
 
 }

@@ -11,6 +11,7 @@ import com.liferay.osb.faro.web.internal.util.AccessTokenExpiresInUtil;
 import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -88,7 +89,16 @@ public class AnalyticsCloudBearerTokenProvider implements BearerTokenProvider {
 			return TimeUnit.DAYS.toSeconds(30);
 		}
 
-		return AccessTokenExpiresInUtil.getExpiresIn();
+		long expiresIn = AccessTokenExpiresInUtil.getExpiresIn();
+
+		if ((expiresIn > 0) ||
+			((oAuth2Application != null) &&
+			 StringUtil.startsWith(oAuth2Application.getName(), "app-"))) {
+
+			return expiresIn;
+		}
+
+		return TimeUnit.MINUTES.toSeconds(10);
 	}
 
 }

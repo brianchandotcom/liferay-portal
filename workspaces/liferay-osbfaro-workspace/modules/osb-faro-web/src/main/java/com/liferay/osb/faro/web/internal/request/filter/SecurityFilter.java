@@ -5,6 +5,7 @@
 
 package com.liferay.osb.faro.web.internal.request.filter;
 
+import com.liferay.oauth2.provider.scope.liferay.constants.OAuth2ProviderScopeLiferayConstants;
 import com.liferay.osb.faro.constants.FaroUserConstants;
 import com.liferay.osb.faro.engine.client.model.ErrorResponse;
 import com.liferay.osb.faro.model.FaroProject;
@@ -45,6 +46,8 @@ import jakarta.ws.rs.core.UriInfo;
 
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
+
 /**
  * @author Matthew Kong
  */
@@ -66,7 +69,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser()) {
+		if (user.isDefaultUser() || !_isOAuth2AuthenticationAllowed(method)) {
 			containerRequestContext.abortWith(
 				_getResponse(
 					Response.Status.UNAUTHORIZED, "You are not authenticated"));
@@ -183,6 +186,27 @@ public class SecurityFilter implements ContainerRequestFilter {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isOAuth2AuthenticationAllowed(Method method) {
+		if (!StringUtil.equals(
+				_httpServletRequest.getAuthType(),
+				OAuth2ProviderScopeLiferayConstants.
+					AUTH_VERIFIER_OAUTH2_TYPE)) {
+
+			return true;
+		}
+
+		RolesAllowed rolesAllowed = method.getAnnotation(RolesAllowed.class);
+
+		if ((rolesAllowed != null) &&
+			Arrays.equals(
+				rolesAllowed.value(), new String[] {StringPool.BLANK})) {
+
+			return true;
 		}
 
 		return false;

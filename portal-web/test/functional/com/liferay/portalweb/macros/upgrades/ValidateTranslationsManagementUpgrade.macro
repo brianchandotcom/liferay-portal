@@ -83,7 +83,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
 
-		PortletEntry.changeLocaleSummary(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		WaitForElementPresent(
 			key_text = "Contenidoweb",
@@ -99,7 +101,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Side By Side");
 
-		PortletEntry.changeLocaleSummary(locale = "ja-JP");
+		PortletEntry.changeLocale(
+			locale = "ja-JP",
+			translated = "true");
 
 		WebContent.viewCP(
 			upgradedFieldLabel = "true",

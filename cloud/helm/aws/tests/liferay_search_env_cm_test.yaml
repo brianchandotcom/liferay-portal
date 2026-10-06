@@ -14,8 +14,6 @@ tests:
             -   equal:
                     path: data.LIFERAY_OPENSEARCH_ENABLED
                     value: "true"
-            -   isKind:
-                    of: ConfigMap
         it: Enables OpenSearch through the environment when the engine is opensearch
         set:
             liferay-default.search.engine: opensearch

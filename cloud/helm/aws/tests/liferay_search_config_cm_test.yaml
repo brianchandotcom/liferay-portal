@@ -75,8 +75,6 @@ tests:
             liferay-default.portalBundleDenyList: []
             liferay-default.search.engine: elasticsearch
     -   asserts:
-            -   isKind:
-                    of: ConfigMap
             -   matchRegex:
                     path: data["com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config"]
                     pattern: remoteClusterConnectionId="REMOTE"

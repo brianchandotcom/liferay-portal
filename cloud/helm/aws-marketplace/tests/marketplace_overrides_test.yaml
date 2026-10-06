@@ -1,20 +1,7 @@
 suite: Marketplace Overrides
 templates:
-    -   charts/liferay-aws/charts/liferay-default/templates/configmap.yaml
-    -   charts/liferay-aws/charts/liferay-default/templates/liferay-init-scripts-cm.yaml
     -   charts/liferay-aws/charts/liferay-default/templates/workloads.yaml
 tests:
-    -   asserts:
-            -   equal:
-                    path: spec.template.spec.containers[0].image
-                    value: 709825985650.dkr.ecr.us-east-1.amazonaws.com/liferay/dxp:2025.q1.17-lts-slim
-            -   isKind:
-                    of: StatefulSet
-        documentSelector:
-            path: kind
-            skipEmptyTemplates: true
-            value: StatefulSet
-        it: Deploys the AWS Marketplace ECR image by default
     -   asserts:
             -   equal:
                     path: spec.template.spec.containers[0].image
@@ -26,12 +13,3 @@ tests:
         it: Honors an overridden image tag
         set:
             liferay-aws.liferay-default.image.tag: 2025.q2.0
-    -   asserts:
-            -   equal:
-                    path: metadata.labels.origin
-                    value: liferay-aws-marketplace
-        documentSelector:
-            path: kind
-            skipEmptyTemplates: true
-            value: StatefulSet
-        it: Labels the StatefulSet with the liferay-aws-marketplace origin

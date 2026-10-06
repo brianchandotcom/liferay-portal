@@ -64,7 +64,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testAddDocument() throws SearchException {
+	public void testAddDocument() {
 		try {
 			addDocument(
 				DocumentCreationHelpers.singleKeyword(

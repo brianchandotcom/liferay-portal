@@ -26,6 +26,14 @@ func TestReconcileDeletesMirrorsWhenRefused(t *testing.T) {
 		refuse     func(clientExtensionReconciler *ClientExtensionReconciler)
 		wantReason string
 	}{
+		"the DXP namespace no longer exists": {
+			refuse: func(clientExtensionReconciler *ClientExtensionReconciler) {
+				if error := clientExtensionReconciler.Delete(context.Background(), newDxpNamespace("able")); error != nil {
+					t.Fatal(error)
+				}
+			},
+			wantReason: ReasonDxpNamespaceNotFound,
+		},
 		"the DXP namespace no longer permits it": {
 			refuse: func(clientExtensionReconciler *ClientExtensionReconciler) {
 				dxpNamespace := newDxpNamespace("")
@@ -35,14 +43,6 @@ func TestReconcileDeletesMirrorsWhenRefused(t *testing.T) {
 				}
 			},
 			wantReason: ReasonNamespaceNotPermitted,
-		},
-		"the DXP namespace no longer exists": {
-			refuse: func(clientExtensionReconciler *ClientExtensionReconciler) {
-				if error := clientExtensionReconciler.Delete(context.Background(), newDxpNamespace("able")); error != nil {
-					t.Fatal(error)
-				}
-			},
-			wantReason: ReasonDxpNamespaceNotFound,
 		},
 	}
 

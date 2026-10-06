@@ -254,6 +254,25 @@ func (clientExtensionReconciler *ClientExtensionReconciler) SetupWithManager(
 	)
 }
 
+func appendOptionalCondition(
+	conditions []metav1.Condition,
+	condition *metav1.Condition,
+	conditionType string,
+	status *cxv1alpha1.ClientExtensionStatus,
+) []metav1.Condition {
+	if condition == nil {
+		meta.RemoveStatusCondition(&status.Conditions, conditionType)
+
+		return conditions
+	}
+
+	optionalCondition := *condition
+
+	optionalCondition.Type = conditionType
+
+	return append(conditions, optionalCondition)
+}
+
 func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 	clientExtension *cxv1alpha1.ClientExtension,
 	context context.Context,
@@ -327,25 +346,6 @@ func (clientExtensionReconciler *ClientExtensionReconciler) applyExtProvision(
 	}
 
 	return nil, configMap.ResourceVersion, nil
-}
-
-func appendOptionalCondition(
-	conditions []metav1.Condition,
-	condition *metav1.Condition,
-	conditionType string,
-	status *cxv1alpha1.ClientExtensionStatus,
-) []metav1.Condition {
-	if condition == nil {
-		meta.RemoveStatusCondition(&status.Conditions, conditionType)
-
-		return conditions
-	}
-
-	optionalCondition := *condition
-
-	optionalCondition.Type = conditionType
-
-	return append(conditions, optionalCondition)
 }
 
 func (clientExtensionReconciler *ClientExtensionReconciler) cleanUpStaleExtProvisions(

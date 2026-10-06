@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -47,6 +48,20 @@ public class ElasticsearchIndexWriterExceptionsTest
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		IndexWriter indexWriter = getIndexWriter();
+
+		if (indexWriter == null) {
+			return;
+		}
+
+		indexWriter.deleteDocument(createSearchContext(), _UID);
+	}
 
 	@Test
 	public void testAddDocument() throws SearchException {

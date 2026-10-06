@@ -17,6 +17,7 @@ const questionsTest = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPD-82301': {enabled: true},
+		'LPD-105225': {enabled: true},
 	}),
 	isolatedLayoutTest({publish: false, type: 'portlet'}),
 	isolatedSiteTest,

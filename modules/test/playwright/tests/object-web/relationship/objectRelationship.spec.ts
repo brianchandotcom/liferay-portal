@@ -2942,24 +2942,24 @@ test.describe('Manage object relationships with system objects', () => {
 
 				await page.getByText('Relationship Tab', {exact: true}).click();
 
-				await page.getByLabel('Select Existing One').first().click();
-				await page
-					.frameLocator('iframe[title="Select"]')
-					.getByText(String(userAccount1.id), {exact: true})
-					.first()
-					.click();
+				for (const userAccount of [userAccount1, userAccount2]) {
+					await page
+						.getByLabel('Select Existing One')
+						.first()
+						.click();
+					await page
+						.frameLocator('iframe[title="Select"]')
+						.getByText(String(userAccount.id), {exact: true})
+						.first()
+						.click();
 
-				await page.reload();
-
-				await page
-					.getByRole('link', {exact: true, name: 'Relationship Tab'})
-					.click();
-
-				await page.getByLabel('Select Existing One').first().click();
-				await page
-					.frameLocator('iframe[title="Select"]')
-					.getByText(String(userAccount2.id), {exact: true})
-					.click();
+					await expect(
+						page.getByRole('cell', {
+							exact: true,
+							name: String(userAccount.id),
+						})
+					).toBeVisible();
+				}
 			};
 
 			const deleteAllRelationsFromEntry = async (entryLabel: string) => {
@@ -2973,17 +2973,22 @@ test.describe('Manage object relationships with system objects', () => {
 
 				await page.getByText('Relationship Tab', {exact: true}).click();
 
-				const rowActions = page.getByRole('button', {name: 'Actions'});
+				const deleteLinks = page.getByRole('link', {
+					exact: true,
+					name: 'Delete',
+				});
 
-				const initialCount = await rowActions.count();
+				await expect(deleteLinks).toHaveCount(2);
 
-				for (let i = 0; i < initialCount; i++) {
-					await rowActions.first().click();
-					await page.getByRole('menuitem', {name: 'Delete'}).click();
-					await page.getByRole('button', {name: 'Delete'}).click();
+				await deleteLinks.first().click();
 
-					await expect(rowActions).toHaveCount(initialCount - i - 1);
-				}
+				await expect(deleteLinks).toHaveCount(1);
+
+				await deleteLinks.first().click();
+
+				await expect(
+					page.getByText('No Results Found', {exact: true})
+				).toBeVisible();
 			};
 
 			await test.step('relate Entry A to both users', () =>

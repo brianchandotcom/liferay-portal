@@ -1,7 +1,11 @@
 import {applyMoveTarget, getMoveTargets} from '../keyboardMovement';
 import {Conjunctions, PropertyTypes} from '../constants';
 
-const row = rowId => ({propertyName: rowId, rowId, type: PropertyTypes.Event});
+const row = (rowId) => ({
+	propertyName: rowId,
+	rowId,
+	type: PropertyTypes.Event,
+});
 
 const criteria = {
 	conjunctionName: Conjunctions.And,
@@ -11,18 +15,18 @@ const criteria = {
 		{
 			conjunctionName: Conjunctions.Or,
 			criteriaGroupId: 'nested',
-			items: [row('row_b')]
-		}
-	]
+			items: [row('row_b')],
+		},
+	],
 };
 
 const criterion = {
 	defaultValue: 'default',
 	propertyName: 'click',
-	type: PropertyTypes.Event
+	type: PropertyTypes.Event,
 };
 
-const describeTargets = targets =>
+const describeTargets = (targets) =>
 	targets.map(
 		({groupId, index, node, position}) =>
 			`${groupId}:${index}:${node.rowId ?? node.criteriaGroupId}:${position}`
@@ -41,7 +45,7 @@ describe('getMoveTargets', () => {
 			'nested:0:row_b:top',
 			'nested:0:row_b:middle',
 			'nested:1:row_b:bottom',
-			'root:2:nested:bottom'
+			'root:2:nested:bottom',
 		]);
 	});
 
@@ -56,7 +60,12 @@ describe('applyMoveTarget', () => {
 	it('inserts the criterion at the targeted position', () => {
 		const newCriteria = applyMoveTarget(
 			criteria,
-			{groupId: 'nested', index: 1, node: row('row_b'), position: 'bottom'},
+			{
+				groupId: 'nested',
+				index: 1,
+				node: row('row_b'),
+				position: 'bottom',
+			},
 			criterion,
 			false
 		);
@@ -80,7 +89,7 @@ describe('applyMoveTarget', () => {
 		expect(group.conjunctionName).toBe(Conjunctions.And);
 		expect(group.items.map(({propertyName}) => propertyName)).toEqual([
 			'row_a',
-			'click'
+			'click',
 		]);
 	});
 

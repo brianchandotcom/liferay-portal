@@ -32,7 +32,7 @@ public class ElasticsearchExceptionHandlerTest {
 
 	@Test
 	public void testDeleteIndexNotFoundLogExceptionsOnlyFalse()
-		throws Throwable {
+		throws SearchException {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchExceptionHandlerTest.class.getName(),
@@ -54,7 +54,7 @@ public class ElasticsearchExceptionHandlerTest {
 
 	@Test
 	public void testDeleteIndexNotFoundLogExceptionsOnlyTrue()
-		throws Throwable {
+		throws SearchException {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchExceptionHandlerTest.class.getName(),
@@ -94,7 +94,7 @@ public class ElasticsearchExceptionHandlerTest {
 	}
 
 	@Test
-	public void testDeleteLogExceptionsOnlyTrue() throws Throwable {
+	public void testDeleteLogExceptionsOnlyTrue() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchExceptionHandlerTest.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -132,7 +132,7 @@ public class ElasticsearchExceptionHandlerTest {
 	}
 
 	@Test
-	public void testLogExceptionsOnlyTrue() throws Throwable {
+	public void testLogExceptionsOnlyTrue() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchExceptionHandlerTest.class.getName(),
 				LoggerTestUtil.ERROR)) {

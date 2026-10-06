@@ -134,96 +134,98 @@ public class AssetStatisticsResourceTest
 
 		Date date = new Date();
 
-		// Add object entry with distant expiration date
+		// Add object entry in a status that is not visible in the All view
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		objectEntry1.setExpirationDate(
-			new Date(date.getTime() + (10 * Time.DAY)));
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			WorkflowConstants.STATUS_DENIED, serviceContext);
 
-		_objectEntryLocalService.updateObjectEntry(objectEntry1);
+		_assertAssetStatistics(groupId, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-		_assertAssetStatistics(groupId, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0);
-
-		// Add object entry with future review date
+		// Add object entry with already passed expiration date
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		objectEntry2.setReviewDate(new Date(date.getTime() + (5 * Time.DAY)));
+		objectEntry2.setExpirationDate(
+			new Date(date.getTime() - (2 * Time.DAY)));
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry2);
 
-		_assertAssetStatistics(groupId, 2, 0, 0, 0, 0, 0, 0, 0, 2, 1);
+		_assertAssetStatistics(groupId, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0);
 
-		// Add object entry with imminent expiration date
+		// Add object entry with distant expiration date
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
 		objectEntry3.setExpirationDate(
-			new Date(date.getTime() + (3 * Time.DAY)));
+			new Date(date.getTime() + (10 * Time.DAY)));
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry3);
 
-		_assertAssetStatistics(groupId, 3, 0, 1, 0, 0, 0, 0, 0, 3, 1);
+		_assertAssetStatistics(groupId, 2, 0, 1, 0, 0, 0, 0, 0, 2, 0);
 
-		// Add object entry with already passed expiration date
+		// Add object entry with future review date
 
 		ObjectEntry objectEntry4 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		objectEntry4.setExpirationDate(
-			new Date(date.getTime() - (2 * Time.DAY)));
+		objectEntry4.setReviewDate(new Date(date.getTime() + (5 * Time.DAY)));
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry4);
+
+		_assertAssetStatistics(groupId, 3, 0, 1, 0, 0, 0, 0, 0, 3, 1);
+
+		// Add object entry with imminent expiration date
+
+		ObjectEntry objectEntry5 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		objectEntry5.setExpirationDate(
+			new Date(date.getTime() + (3 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry5);
 
 		_assertAssetStatistics(groupId, 4, 0, 2, 0, 0, 0, 0, 0, 4, 1);
 
 		// Add object entry with overdue review date
 
-		ObjectEntry objectEntry5 = _addObjectEntry(
-			depotEntry, objectDefinition);
-
-		objectEntry5.setReviewDate(new Date(date.getTime() - (2 * Time.DAY)));
-
-		_objectEntryLocalService.updateObjectEntry(objectEntry5);
-
-		_assertAssetStatistics(groupId, 5, 0, 2, 0, 0, 0, 1, 0, 5, 1);
-
-		// Add object entry with status draft
-
 		ObjectEntry objectEntry6 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		_objectEntryLocalService.updateStatus(
-			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+		objectEntry6.setReviewDate(new Date(date.getTime() - (2 * Time.DAY)));
 
-		_assertAssetStatistics(groupId, 5, 0, 2, 1, 0, 0, 1, 0, 6, 1);
+		_objectEntryLocalService.updateObjectEntry(objectEntry6);
 
-		// Add object entry with status expired
+		_assertAssetStatistics(groupId, 5, 0, 2, 0, 0, 0, 1, 0, 5, 1);
+
+		// Add object entry with status approved not modified for more than 30
+		// days
 
 		ObjectEntry objectEntry7 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		_objectEntryLocalService.updateStatus(
-			TestPropsValues.getUserId(), objectEntry7.getObjectEntryId(),
-			WorkflowConstants.STATUS_EXPIRED, serviceContext);
+		objectEntry7.setModifiedDate(
+			new Date(date.getTime() - (31 * Time.DAY)));
 
-		_assertAssetStatistics(groupId, 5, 1, 2, 1, 0, 0, 1, 0, 7, 1);
+		_objectEntryLocalService.updateObjectEntry(objectEntry7);
 
-		// Add object entry in a status that is not visible in the All view
+		_assertAssetStatistics(groupId, 6, 0, 2, 0, 0, 0, 1, 0, 6, 1);
+
+		// Add object entry with status draft
 
 		ObjectEntry objectEntry8 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
 		_objectEntryLocalService.updateStatus(
 			TestPropsValues.getUserId(), objectEntry8.getObjectEntryId(),
-			WorkflowConstants.STATUS_DENIED, serviceContext);
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertAssetStatistics(groupId, 5, 1, 2, 1, 0, 0, 1, 0, 7, 1);
+		_assertAssetStatistics(groupId, 6, 0, 2, 1, 0, 0, 1, 0, 7, 1);
 
 		// Add object entry with status draft not modified for more than 30 days
 
@@ -239,18 +241,16 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry9);
 
-		_assertAssetStatistics(groupId, 5, 1, 2, 2, 1, 0, 1, 0, 8, 1);
+		_assertAssetStatistics(groupId, 6, 0, 2, 2, 1, 0, 1, 0, 8, 1);
 
-		// Add object entry with status approved not modified for more than 30
-		// days
+		// Add object entry with status expired
 
 		ObjectEntry objectEntry10 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		objectEntry10.setModifiedDate(
-			new Date(date.getTime() - (31 * Time.DAY)));
-
-		_objectEntryLocalService.updateObjectEntry(objectEntry10);
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry10.getObjectEntryId(),
+			WorkflowConstants.STATUS_EXPIRED, serviceContext);
 
 		_assertAssetStatistics(groupId, 6, 1, 2, 2, 1, 0, 1, 0, 9, 1);
 

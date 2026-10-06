@@ -5,11 +5,8 @@ import DurationBreakdown from './DurationBreakdown';
 import FilterInfo from '../../FilterInfo';
 import NumberBreakdown from './NumberBreakdown';
 import React from 'react';
-import {
-	Attribute,
-	AttributeOwnerTypes,
-	DataTypes,
-} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {Attribute, AttributeOwnerTypes} from 'event-analysis/utils/types';
 import {useAttributes} from '../../../context/attributes';
 
 import {IBreakdownProps} from 'event-analysis/utils/types';

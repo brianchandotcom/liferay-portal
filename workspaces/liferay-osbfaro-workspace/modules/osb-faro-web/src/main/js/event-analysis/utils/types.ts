@@ -1,3 +1,4 @@
+import {DataTypes} from 'shared/types/DataTypes';
 import {OrderByDirections} from 'shared/util/constants';
 
 export enum AttributeOwnerTypes {
@@ -17,14 +18,6 @@ export enum CalculationTypes {
 	Average = 'AVERAGE',
 	Total = 'TOTAL',
 	Unique = 'UNIQUE',
-}
-
-export enum DataTypes {
-	Boolean = 'BOOLEAN',
-	Date = 'DATE',
-	Duration = 'DURATION',
-	Number = 'NUMBER',
-	String = 'STRING',
 }
 
 export enum DateGroupings {

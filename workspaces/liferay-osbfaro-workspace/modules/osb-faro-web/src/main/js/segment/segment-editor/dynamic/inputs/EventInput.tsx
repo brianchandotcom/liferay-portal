@@ -9,7 +9,8 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import RealTimePeriodInput, {
 	DEFAULT_OPTIONS,
 } from './components/RealTimePeriodInput';
-import {Attribute, DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {Attribute} from 'event-analysis/utils/types';
 import {
 	AttributeConjunctionChangeParams,
 	Criterion,

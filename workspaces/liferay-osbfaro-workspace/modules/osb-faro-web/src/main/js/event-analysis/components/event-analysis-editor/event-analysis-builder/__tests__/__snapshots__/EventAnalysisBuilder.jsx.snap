@@ -88,7 +88,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
             class="align-items-center condition-chip-content d-flex flex-grow-1 px-2 py-2"
           >
             <span
-              class="sticker condition-chip-sticker flex-shrink-0 mr-2 sticker-primary"
+              class="sticker condition-sticker flex-shrink-0 mr-2 sticker-primary"
             >
               <span
                 class="sticker-overlay"

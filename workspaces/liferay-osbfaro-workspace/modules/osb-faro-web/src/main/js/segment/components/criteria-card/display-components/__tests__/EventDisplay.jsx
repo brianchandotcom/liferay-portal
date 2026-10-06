@@ -8,7 +8,8 @@ import {
 	RelationalOperators,
 	TimeSpans
 } from 'segment/segment-editor/dynamic/utils/constants';
-import {DataTypes, EventTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {EventTypes} from 'event-analysis/utils/types';
 import {List, Map} from 'immutable';
 import {render} from '@testing-library/react';
 import {Segment} from 'shared/util/records';

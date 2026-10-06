@@ -1,4 +1,5 @@
 import moment from 'moment';
+import {DataTypes} from 'shared/types/DataTypes';
 import {
 	Attribute,
 	AttributeOwnerTypes,
@@ -6,7 +7,6 @@ import {
 	Breakdown,
 	BreakdownData,
 	BreakdownDataItem,
-	DataTypes,
 	DateGroupings,
 	Filter,
 	Operators,
@@ -62,14 +62,6 @@ export const STRING_OPTIONS = [
 export const BOOLEAN_LABELS_MAP: Record<string, string> = {
 	false: Liferay.Language.get('false'),
 	true: Liferay.Language.get('true'),
-};
-
-export const DATA_TYPE_ICONS_MAP = {
-	[DataTypes.Boolean]: 'check',
-	[DataTypes.Date]: 'date',
-	[DataTypes.Duration]: 'time',
-	[DataTypes.Number]: 'integer',
-	[DataTypes.String]: 'text',
 };
 
 export const DATA_TYPE_LABELS_MAP = {

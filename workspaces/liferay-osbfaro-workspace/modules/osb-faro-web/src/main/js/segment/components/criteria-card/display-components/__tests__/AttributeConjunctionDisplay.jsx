@@ -1,7 +1,7 @@
 import * as data from 'test/data';
 import AttributeConjunctionDisplay from '../AttributeConjunctionDisplay';
 import React from 'react';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {encodeAttributeId} from 'segment/segment-editor/dynamic/inputs/components/attribute-conjunction-input/utils';
 import {
 	FunctionalOperators,

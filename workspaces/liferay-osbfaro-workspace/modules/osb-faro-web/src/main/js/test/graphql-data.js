@@ -37,11 +37,8 @@ import {
 	SitesMetricQuery,
 	SitesTabsQuery,
 } from 'shared/components/metric-card/queries';
-import {
-	AttributeTypes,
-	DataTypes,
-	DateGroupings,
-} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {AttributeTypes, DateGroupings} from 'event-analysis/utils/types';
 import {
 	CompositionTypes,
 	DATA_RETENTION_PERIOD_KEY,

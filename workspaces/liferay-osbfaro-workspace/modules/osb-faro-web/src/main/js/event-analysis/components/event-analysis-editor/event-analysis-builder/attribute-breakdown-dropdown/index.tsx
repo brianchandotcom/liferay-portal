@@ -10,11 +10,11 @@ import EventAttributeDefinitionsQuery, {
 import React, {useState} from 'react';
 import {AddBreakdown} from '../../context/attributes';
 import {Align} from '@clayui/drop-down';
+import {DataTypes} from 'shared/types/DataTypes';
 import {
 	Attribute,
 	AttributeOwnerTypes,
 	AttributeTypes,
-	DataTypes,
 } from 'event-analysis/utils/types';
 import {
 	BREAKDOWN_FNS_MAP,

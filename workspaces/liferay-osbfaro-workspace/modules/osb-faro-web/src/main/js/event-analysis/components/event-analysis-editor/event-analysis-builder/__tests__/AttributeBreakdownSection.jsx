@@ -1,7 +1,7 @@
 import AttributeBreakdownSection from '../AttributeBreakdownSection';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {AnnounceContext} from '../AnnounceContext';
+import {AnnounceContext} from 'shared/components/condition-chip/AnnounceContext';
 import {AttributesContext, AttributesProvider} from '../../context/attributes';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';

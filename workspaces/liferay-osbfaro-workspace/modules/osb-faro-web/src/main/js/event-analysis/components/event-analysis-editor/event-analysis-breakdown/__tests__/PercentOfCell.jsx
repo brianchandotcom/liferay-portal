@@ -1,6 +1,6 @@
 import PercentOfCell from '../PercentOfCell';
 import React from 'react';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {mockBreakdownData} from 'test/data';
 import {parseBreakdownData} from 'event-analysis/utils/utils';
 import {render} from '@testing-library/react';

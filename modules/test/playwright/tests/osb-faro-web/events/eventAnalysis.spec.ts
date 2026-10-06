@@ -2488,7 +2488,7 @@ test(
 		}
 
 		const breakdownChips = page.locator(
-			'.attribute-breakdown-section-root .attribute-chip-container'
+			'.attribute-breakdown-section-root .sortable-condition-chip'
 		);
 
 		const expectOrder = async (order: string[]) => {
@@ -2571,7 +2571,7 @@ test(
 		}
 
 		const filterChips = page.locator(
-			'.attribute-filter-section-root .attribute-chip-container'
+			'.attribute-filter-section-root .sortable-condition-chip'
 		);
 
 		await expect(filterChips.nth(0)).toContainText('price');
@@ -4083,7 +4083,7 @@ test(
 		// Move the color breakdown ahead of the page breakdown
 
 		const breakdownChips = page.locator(
-			'.attribute-breakdown-section-root .attribute-chip-container'
+			'.attribute-breakdown-section-root .sortable-condition-chip'
 		);
 
 		await dragAndDropElement({

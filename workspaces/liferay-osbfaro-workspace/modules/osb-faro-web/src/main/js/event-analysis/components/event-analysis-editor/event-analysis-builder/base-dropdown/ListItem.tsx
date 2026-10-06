@@ -6,7 +6,8 @@ import InfoCardPopover from '../InfoCardPopover';
 import Overlay from 'shared/components/Overlay';
 import React, {useRef} from 'react';
 import {Attribute, Event} from 'event-analysis/utils/types';
-import {DATA_TYPE_ICONS_MAP, isAttribute} from 'event-analysis/utils/utils';
+import {DATA_TYPE_ICONS_MAP} from 'shared/types/DataTypes';
+import {isAttribute} from 'event-analysis/utils/utils';
 
 interface IListItemProps {
 	disabled?: boolean;

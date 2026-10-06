@@ -1,5 +1,4 @@
-import ClayIcon from '@clayui/icon';
-import ClaySticker from '@clayui/sticker';
+import ConditionSticker, {ConditionStickerType} from './ConditionSticker';
 import getCN from 'classnames';
 import React, {useRef} from 'react';
 import {ClayButtonWithIcon} from '@clayui/button';
@@ -10,17 +9,17 @@ import {Text} from '@clayui/core';
 interface IConditionChipProps {
 	dragState?: string;
 	handle?: React.ReactNode;
-	icon: string;
 	label: React.ReactNode;
 	name: string;
 	onRemove: () => void;
 	overline?: React.ReactNode;
+	sticker: ConditionStickerType;
 }
 
 const CONTROL_SELECTOR = '[data-chip-control]';
 
 const ConditionChip = React.forwardRef<HTMLDivElement, IConditionChipProps>(
-	({dragState, handle, icon, label, name, onRemove, overline}, ref) => {
+	({dragState, handle, label, name, onRemove, overline, sticker}, ref) => {
 		const chipRef = useRef<HTMLDivElement>(null);
 
 		const getControls = () =>
@@ -92,12 +91,7 @@ const ConditionChip = React.forwardRef<HTMLDivElement, IConditionChipProps>(
 				{handle}
 
 				<div className="align-items-center condition-chip-content d-flex flex-grow-1 px-2 py-2">
-					<ClaySticker
-						className="condition-chip-sticker flex-shrink-0 mr-2"
-						displayType="primary"
-					>
-						<ClayIcon symbol={icon} />
-					</ClaySticker>
+					<ConditionSticker className="mr-2" {...sticker} />
 
 					<span className="condition-chip-text d-flex flex-column text-break">
 						{overline && (

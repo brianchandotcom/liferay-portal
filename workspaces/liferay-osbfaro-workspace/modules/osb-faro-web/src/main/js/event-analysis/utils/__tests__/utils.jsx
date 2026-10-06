@@ -1,10 +1,6 @@
 import * as utils from '../utils';
-import {
-	AttributeOwnerTypes,
-	DataTypes,
-	DateGroupings,
-	Operators
-} from '../types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {AttributeOwnerTypes, DateGroupings, Operators} from '../types';
 
 describe('utils', () => {
 	describe('formatDateName', () => {

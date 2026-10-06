@@ -1,11 +1,6 @@
 import {DropTargetMonitor, useDrag, useDrop} from 'react-dnd';
 import {useEffect, useRef, useState} from 'react';
 
-export enum SortableChipTypes {
-	Breakdown = 'breakdown-condition-chip',
-	Filter = 'filter-condition-chip',
-}
-
 export enum DragStates {
 	Placeholder = 'placeholder',
 	Preview = 'preview',
@@ -28,7 +23,7 @@ const useSortableChip = ({
 }: {
 	index: number;
 	onMove: (params: {from: number; to: number}) => void;
-	type: SortableChipTypes;
+	type: string;
 }) => {
 	const chipRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);

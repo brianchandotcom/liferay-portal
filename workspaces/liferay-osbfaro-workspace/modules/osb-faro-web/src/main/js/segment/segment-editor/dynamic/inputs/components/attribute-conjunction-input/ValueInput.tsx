@@ -10,7 +10,7 @@ import {BetweenNumber} from '../BetweenNumberInput';
 import {BOOLEAN_OPTIONS} from 'event-analysis/utils/utils';
 import {createOption, validateAttributeValue} from './utils';
 import {Criterion} from '../../../utils/types';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {FunctionalOperators} from '../../../utils/constants';
 import {isValid} from '../../../utils/utils';
 import {Icon, Option, Picker} from '@clayui/core';

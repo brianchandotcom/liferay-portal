@@ -1,5 +1,5 @@
 import * as UTILS from '../utils';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {
 	FunctionalOperators,
 	NotOperators,

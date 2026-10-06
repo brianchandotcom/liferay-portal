@@ -4,7 +4,8 @@ import Form, {
 	validateRequired,
 } from 'shared/components/form';
 import React from 'react';
-import {DataTypes, IFilterProps, Operators} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {IFilterProps, Operators} from 'event-analysis/utils/types';
 import {
 	NUMBER_OPERATOR_LONGHAND_LABELS_MAP,
 	NUMBER_OPTIONS,

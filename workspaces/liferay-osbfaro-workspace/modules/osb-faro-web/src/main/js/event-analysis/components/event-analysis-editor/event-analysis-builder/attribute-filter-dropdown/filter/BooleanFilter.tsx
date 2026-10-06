@@ -2,7 +2,8 @@ import ClayButton from '@clayui/button';
 import Form from 'shared/components/form';
 import React from 'react';
 import {BOOLEAN_LABELS_MAP, BOOLEAN_OPTIONS} from 'event-analysis/utils/utils';
-import {DataTypes, IFilterProps, Operators} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {IFilterProps, Operators} from 'event-analysis/utils/types';
 
 const BooleanFilter: React.FC<IFilterProps> = ({
 	attributeId,

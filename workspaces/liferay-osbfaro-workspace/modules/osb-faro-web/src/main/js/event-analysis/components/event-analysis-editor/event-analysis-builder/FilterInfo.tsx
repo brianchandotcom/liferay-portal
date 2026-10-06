@@ -3,7 +3,7 @@ import ClayIcon from '@clayui/icon';
 import Label from 'shared/components/Label';
 import React from 'react';
 import {DATA_TYPE_LABELS_MAP} from 'event-analysis/utils/utils';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 
 interface IFilterInfoProps {
 	dataType?: DataTypes;

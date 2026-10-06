@@ -1,0 +1,33 @@
+import ConditionSticker from '../ConditionSticker';
+import React from 'react';
+import {DataTypes} from 'shared/types/DataTypes';
+import {render} from '@testing-library/react';
+
+jest.unmock('react-dom');
+
+describe('ConditionSticker', () => {
+	it('shows the same icon for every condition of a data type', () => {
+		const {container} = render(
+			<>
+				<ConditionSticker dataType={DataTypes.String} />
+				<ConditionSticker dataType={DataTypes.String} />
+				<ConditionSticker dataType={DataTypes.Number} />
+			</>
+		);
+
+		expect(container.querySelectorAll('.lexicon-icon-text')).toHaveLength(
+			2
+		);
+		expect(
+			container.querySelectorAll('.lexicon-icon-integer')
+		).toHaveLength(1);
+	});
+
+	it('shows the given symbol when there is no data type', () => {
+		const {container} = render(<ConditionSticker symbol="click" />);
+
+		expect(
+			container.querySelector('.lexicon-icon-click')
+		).toBeInTheDocument();
+	});
+});

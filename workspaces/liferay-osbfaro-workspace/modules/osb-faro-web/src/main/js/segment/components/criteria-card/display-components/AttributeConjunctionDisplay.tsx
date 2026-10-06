@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {BOOLEAN_LABELS_MAP} from 'event-analysis/utils/utils';
 import {Criterion} from 'segment/segment-editor/dynamic/utils/types';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {
 	EntityType,
 	ReferencedObjectsContext,

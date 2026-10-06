@@ -1,7 +1,8 @@
 import OperatorSelect from '../OperatorSelect';
 import React from 'react';
 import {ATTRIBUTES_NUMBER_OPERATOR_LONGHAND_LABELS_MAP} from '../utils';
-import {DataTypes, Operators} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {Operators} from 'event-analysis/utils/types';
 import {fireEvent, render} from '@testing-library/react';
 
 jest.unmock('react-dom');

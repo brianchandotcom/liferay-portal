@@ -1,13 +1,10 @@
 import React from 'react';
-import SortableConditionChip from './SortableConditionChip';
+import SortableConditionChip from 'shared/components/condition-chip/SortableConditionChip';
 import {Attribute, Breakdown} from 'event-analysis/utils/types';
-import {
-	DATA_TYPE_ICONS_MAP,
-	getBreakdownDisplay,
-} from 'event-analysis/utils/utils';
+import {getBreakdownDisplay} from 'event-analysis/utils/utils';
 import {DeleteBreakdown} from '../context/attributes';
-import {IKeyboardReorderProps} from './useKeyboardReorder';
-import {SortableChipTypes} from './useSortableChip';
+import {IKeyboardReorderProps} from 'shared/components/condition-chip/useKeyboardReorder';
+import {SortableChipTypes} from './SortableChipTypes';
 
 const AttributeBreakdownChip: React.FC<{
 	attribute: Attribute;
@@ -25,7 +22,6 @@ const AttributeBreakdownChip: React.FC<{
 	return (
 		<SortableConditionChip
 			dragType={SortableChipTypes.Breakdown}
-			icon={DATA_TYPE_ICONS_MAP[breakdown.dataType]}
 			index={index}
 			keyboard={keyboard}
 			label={label}
@@ -35,6 +31,7 @@ const AttributeBreakdownChip: React.FC<{
 			onMove={onMove}
 			onRemove={() => onCloseClick({id: breakdown.id ?? ''})}
 			overline={overline}
+			sticker={{dataType: breakdown.dataType}}
 		/>
 	);
 };

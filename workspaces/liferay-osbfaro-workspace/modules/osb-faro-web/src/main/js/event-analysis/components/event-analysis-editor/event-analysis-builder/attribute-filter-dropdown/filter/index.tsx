@@ -7,10 +7,10 @@ import FilterInfo from '../../FilterInfo';
 import NumberFilter from './NumberFilter';
 import React from 'react';
 import StringFilter from './StringFilter';
+import {DataTypes} from 'shared/types/DataTypes';
 import {
 	Attribute,
 	AttributeOwnerTypes,
-	DataTypes,
 	Filter,
 } from 'event-analysis/utils/types';
 import {useAttributes} from '../../../context/attributes';

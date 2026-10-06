@@ -2,7 +2,7 @@ import Form from 'shared/components/form';
 import getCN from 'classnames';
 import React from 'react';
 import {Criterion} from '../../../utils/types';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {
 	FunctionalOperators,
 	RelationalOperators,

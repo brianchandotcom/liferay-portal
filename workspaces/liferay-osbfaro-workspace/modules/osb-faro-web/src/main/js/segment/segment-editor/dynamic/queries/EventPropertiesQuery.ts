@@ -1,4 +1,4 @@
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {gql} from '@apollo/client';
 import {Sort} from 'shared/types';
 

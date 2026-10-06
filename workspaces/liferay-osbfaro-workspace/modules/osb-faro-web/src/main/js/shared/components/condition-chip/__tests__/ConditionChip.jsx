@@ -1,15 +1,16 @@
 import ConditionChip from '../ConditionChip';
 import React from 'react';
+import {DataTypes} from 'shared/types/DataTypes';
 import {fireEvent, render, screen} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
 const defaultProps = {
-	icon: 'text',
 	label: 'contains "manager"',
 	name: 'Job Title',
 	onRemove: jest.fn(),
-	overline: 'Individual | Job Title'
+	overline: 'Individual | Job Title',
+	sticker: {dataType: DataTypes.String}
 };
 
 describe('ConditionChip', () => {

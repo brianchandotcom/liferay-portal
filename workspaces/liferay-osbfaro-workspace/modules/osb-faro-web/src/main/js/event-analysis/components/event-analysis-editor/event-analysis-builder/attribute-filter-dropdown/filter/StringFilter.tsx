@@ -2,7 +2,8 @@ import ClayButton from '@clayui/button';
 import EventAttributeValuesQuery from 'event-analysis/queries/EventAttributeValuesQuery';
 import Form, {validateRequired} from 'shared/components/form';
 import React from 'react';
-import {DataTypes, IFilterProps, Operators} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {IFilterProps, Operators} from 'event-analysis/utils/types';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {
 	STRING_OPERATOR_LABELS_MAP,

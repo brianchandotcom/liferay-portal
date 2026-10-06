@@ -1,10 +1,7 @@
 import ConditionChip from './ConditionChip';
 import getCN from 'classnames';
 import React from 'react';
-import useSortableChip, {
-	DragStates,
-	SortableChipTypes,
-} from './useSortableChip';
+import useSortableChip, {DragStates} from './useSortableChip';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {IKeyboardReorderProps} from './useKeyboardReorder';
 import {mergeRef} from 'shared/util/util';
@@ -12,7 +9,7 @@ import {sub} from 'shared/util/lang';
 
 interface ISortableConditionChipProps
 	extends React.ComponentProps<typeof ConditionChip> {
-	dragType: SortableChipTypes;
+	dragType: string;
 	index: number;
 	keyboard?: IKeyboardReorderProps;
 	onMove: (params: {from: number; to: number}) => void;
@@ -32,7 +29,7 @@ const SortableConditionChip = React.forwardRef<
 
 	return (
 		<div
-			className={getCN('attribute-chip-container', {
+			className={getCN('sortable-condition-chip', {
 				[`hover-${indicator}`]: indicator,
 			})}
 			ref={containerRef}

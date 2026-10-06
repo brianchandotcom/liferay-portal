@@ -3,7 +3,7 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import ValueInput from '../ValueInput';
 import {ApolloProvider} from '@apollo/client';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {fireEvent, render} from '@testing-library/react';
 import {
 	FunctionalOperators,

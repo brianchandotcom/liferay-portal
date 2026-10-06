@@ -1,6 +1,6 @@
 import BarComparisonCell from '../BarComparisonCell';
 import React from 'react';
-import {DataTypes} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
 import {getMaxEventValue, parseBreakdownData} from 'event-analysis/utils/utils';
 import {mockBreakdownData} from 'test/data';
 import {render} from '@testing-library/react';

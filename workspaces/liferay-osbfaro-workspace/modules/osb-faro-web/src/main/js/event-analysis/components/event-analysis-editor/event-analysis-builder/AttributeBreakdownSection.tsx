@@ -2,7 +2,7 @@ import AttributeBreakdownChip from './AttributeBreakdownChip';
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
 import ConditionsSection from './ConditionsSection';
 import React, {useRef} from 'react';
-import useKeyboardReorder from './useKeyboardReorder';
+import useKeyboardReorder from 'shared/components/condition-chip/useKeyboardReorder';
 import {
 	AddBreakdown,
 	AddBreakdownParams,

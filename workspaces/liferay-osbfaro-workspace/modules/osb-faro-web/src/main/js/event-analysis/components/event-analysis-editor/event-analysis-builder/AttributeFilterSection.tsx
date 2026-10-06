@@ -2,7 +2,7 @@ import AttributeFilterChip from './AttributeFilterChip';
 import AttributeFilterDropdown from './attribute-filter-dropdown';
 import ConditionsSection from './ConditionsSection';
 import React, {useRef} from 'react';
-import useKeyboardReorder from './useKeyboardReorder';
+import useKeyboardReorder from 'shared/components/condition-chip/useKeyboardReorder';
 import {Align} from '@clayui/drop-down';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {DeleteFilter, useAttributes} from '../context/attributes';

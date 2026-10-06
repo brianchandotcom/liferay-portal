@@ -1,14 +1,11 @@
 import React from 'react';
-import SortableConditionChip from './SortableConditionChip';
+import SortableConditionChip from 'shared/components/condition-chip/SortableConditionChip';
 import {Attribute, Filter} from 'event-analysis/utils/types';
-import {
-	DATA_TYPE_ICONS_MAP,
-	getFilterDisplay,
-} from 'event-analysis/utils/utils';
+import {getFilterDisplay} from 'event-analysis/utils/utils';
 import {DeleteFilter} from '../context/attributes';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
-import {IKeyboardReorderProps} from './useKeyboardReorder';
-import {SortableChipTypes} from './useSortableChip';
+import {IKeyboardReorderProps} from 'shared/components/condition-chip/useKeyboardReorder';
+import {SortableChipTypes} from './SortableChipTypes';
 
 const AttributeFilterChip: React.FC<{
 	attribute: Attribute;
@@ -23,7 +20,6 @@ const AttributeFilterChip: React.FC<{
 	return (
 		<SortableConditionChip
 			dragType={SortableChipTypes.Filter}
-			icon={DATA_TYPE_ICONS_MAP[filter.dataType]}
 			index={index}
 			keyboard={keyboard}
 			label={getSafeDecodedURIComponent(label)}
@@ -31,6 +27,7 @@ const AttributeFilterChip: React.FC<{
 			onMove={onMove}
 			onRemove={() => onCloseClick({id: filter.id ?? ''})}
 			overline={overline}
+			sticker={{dataType: filter.dataType}}
 		/>
 	);
 };

@@ -19,7 +19,7 @@ import {
 	AttributeFilterState,
 	Criterion,
 } from '../../../utils/types';
-import {DATA_TYPE_ICONS_MAP} from 'event-analysis/utils/utils';
+import {DATA_TYPE_ICONS_MAP} from 'shared/types/DataTypes';
 import {
 	FunctionalOperators,
 	RelationalOperators,

@@ -2,11 +2,14 @@ import DndProvider from 'shared/components/DndProvider';
 import EventAnalysisBuilder from './index';
 import React, {useEffect, useRef} from 'react';
 import useConditionAnnouncements from './useConditionAnnouncements';
-import {AnnounceContext, useAnnouncement} from './AnnounceContext';
+import {
+	AnnounceContext,
+	useAnnouncement,
+} from 'shared/components/condition-chip/AnnounceContext';
 import {Event} from 'event-analysis/utils/types';
 import {Heading} from '@clayui/core';
 import {HTML5Backend} from 'react-dnd-html5-backend';
-import {SortableChipTypes} from './useSortableChip';
+import {SortableChipTypes} from './SortableChipTypes';
 import {useDragLayer, useDrop} from 'react-dnd';
 import {mergeRef} from 'shared/util/util';
 

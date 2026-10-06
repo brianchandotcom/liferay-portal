@@ -1,6 +1,7 @@
 import {BetweenNumber} from '../BetweenNumberInput';
 import {BOOLEAN_LABELS_MAP} from 'event-analysis/utils/utils';
-import {DataTypes, Operators} from 'event-analysis/utils/types';
+import {DataTypes} from 'shared/types/DataTypes';
+import {Operators} from 'event-analysis/utils/types';
 import {DateRange} from 'shared/components/DateRangeInput';
 import {
 	FunctionalOperators,

@@ -214,42 +214,42 @@ public class AssetListEntrySegmentsEntryRelTypeSettingsUpgradeProcessTest {
 		Assert.assertEquals(
 			filtersJSONArray.toString(), 12, filtersJSONArray.length());
 
-		_assertAssetFilter(
+		_assertFilter(
 			filtersJSONArray.getJSONObject(0), "contains", "assetCategories",
 			"all", assetCategoryId1, assetCategoryId2);
-		_assertAssetFilter(
+		_assertFilter(
 			filtersJSONArray.getJSONObject(1), "contains", "assetCategories",
 			"any", assetCategoryId2, assetCategoryId3);
-		_assertAssetFilter(
+		_assertFilter(
 			filtersJSONArray.getJSONObject(2), "not-contains",
 			"assetCategories", "all", assetCategoryId3, assetCategoryId4);
-		_assertAssetFilter(
+		_assertFilter(
 			filtersJSONArray.getJSONObject(3), "not-contains",
 			"assetCategories", "any", assetCategoryId4, assetCategoryId1);
-		_assertAssetFilter(
+		_assertFilter(
 			filtersJSONArray.getJSONObject(4), "contains", "assetTags", "all",
 			assetTagName1, assetTagName2);
-		_assertAssetFilter(
+		_assertFilter(
 			filtersJSONArray.getJSONObject(5), "contains", "assetTags", "any",
 			assetTagName2, assetTagName3);
-		_assertAssetFilter(
+		_assertFilter(
 			filtersJSONArray.getJSONObject(6), "not-contains", "assetTags",
 			"all", assetTagName3, assetTagName4);
-		_assertAssetFilter(
+		_assertFilter(
 			filtersJSONArray.getJSONObject(7), "not-contains", "assetTags",
 			"any", assetTagName4, assetTagName1);
-		_assertKeywordsFilter(
-			filtersJSONArray.getJSONObject(8), "contains", "all",
+		_assertFilter(
+			filtersJSONArray.getJSONObject(8), "contains", "keywords", "all",
 			keyword1 + StringPool.SPACE + keyword2);
-		_assertKeywordsFilter(
-			filtersJSONArray.getJSONObject(9), "contains", "any",
+		_assertFilter(
+			filtersJSONArray.getJSONObject(9), "contains", "keywords", "any",
 			keyword2 + StringPool.SPACE + keyword3);
-		_assertKeywordsFilter(
-			filtersJSONArray.getJSONObject(10), "not-contains", "all",
-			keyword3 + StringPool.SPACE + keyword4);
-		_assertKeywordsFilter(
-			filtersJSONArray.getJSONObject(11), "not-contains", "any",
-			keyword4 + StringPool.SPACE + keyword1);
+		_assertFilter(
+			filtersJSONArray.getJSONObject(10), "not-contains", "keywords",
+			"all", keyword3 + StringPool.SPACE + keyword4);
+		_assertFilter(
+			filtersJSONArray.getJSONObject(11), "not-contains", "keywords",
+			"any", keyword4 + StringPool.SPACE + keyword1);
 	}
 
 	@Test
@@ -288,10 +288,10 @@ public class AssetListEntrySegmentsEntryRelTypeSettingsUpgradeProcessTest {
 			unicodeProperties);
 	}
 
-	private void _assertAssetFilter(
+	private void _assertFilter(
 		JSONObject filterJSONObject, String expectedOperatorName,
 		String expectedPropertyName, String expectedQuantifier,
-		String expectedValue1, String expectedValue2) {
+		String... expectedValues) {
 
 		Assert.assertEquals(
 			expectedOperatorName, filterJSONObject.getString("operatorName"));
@@ -300,31 +300,17 @@ public class AssetListEntrySegmentsEntryRelTypeSettingsUpgradeProcessTest {
 		Assert.assertEquals(
 			expectedQuantifier, filterJSONObject.getString("quantifier"));
 
-		JSONArray valueJSONArray = filterJSONObject.getJSONArray("value");
+		Object value = filterJSONObject.get("value");
 
-		Assert.assertEquals(
-			valueJSONArray.toString(), 2, valueJSONArray.length());
-		Assert.assertEquals(
-			expectedValue1,
-			JSONUtil.getValueAsString(
-				valueJSONArray, "JSONObject/0", "Object/value"));
-		Assert.assertEquals(
-			expectedValue2,
-			JSONUtil.getValueAsString(
-				valueJSONArray, "JSONObject/1", "Object/value"));
-	}
-
-	private void _assertKeywordsFilter(
-		JSONObject filterJSONObject, String expectedOperatorName,
-		String expectedQuantifier, String expectedValue) {
-
-		Assert.assertEquals(
-			expectedOperatorName, filterJSONObject.getString("operatorName"));
-		Assert.assertEquals(
-			"keywords", filterJSONObject.getString("propertyName"));
-		Assert.assertEquals(
-			expectedQuantifier, filterJSONObject.getString("quantifier"));
-		Assert.assertEquals(expectedValue, filterJSONObject.getString("value"));
+		if (value instanceof JSONArray) {
+			Assert.assertArrayEquals(
+				expectedValues,
+				JSONUtil.toStringArray((JSONArray)value, "value"));
+		}
+		else {
+			Assert.assertArrayEquals(
+				expectedValues, new String[] {String.valueOf(value)});
+		}
 	}
 
 	private UnicodeProperties _getTypeSettingsUnicodeProperties(

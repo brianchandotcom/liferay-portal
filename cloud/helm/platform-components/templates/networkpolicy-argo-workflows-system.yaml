@@ -1,0 +1,69 @@
+{{- $argoWorkflows := .Values.operatorApplications.argoWorkflows -}}
+{{- if $argoWorkflows.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: default-deny-ingress
+    namespace: {{ $argoWorkflows.namespace }}
+spec:
+    podSelector: {}
+    policyTypes:
+        -   Ingress
+{{- if .Values.observability.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: argo-workflows-metrics-ingress
+    namespace: {{ $argoWorkflows.namespace }}
+spec:
+    ingress:
+        -   from:
+                -   namespaceSelector:
+                        matchLabels:
+                            kubernetes.io/metadata.name: {{ .Values.observability.namespace }}
+            ports:
+                -   port: metrics
+                    protocol: TCP
+    podSelector:
+        matchLabels:
+            app.kubernetes.io/instance: {{ $argoWorkflows.name }}
+            app.kubernetes.io/name: argo-workflows-workflow-controller
+    policyTypes:
+        -   Ingress
+{{- end }}
+{{- if .Values.argoWorkflows.gateway.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: argo-workflows-server-ingress
+    namespace: {{ $argoWorkflows.namespace }}
+spec:
+    ingress:
+        -   from:
+                -   namespaceSelector:
+                        matchLabels:
+                            kubernetes.io/metadata.name: {{ .Values.operatorApplications.envoyGateway.namespace }}
+                    podSelector:
+                        matchLabels:
+                            app.kubernetes.io/managed-by: envoy-gateway
+                            app.kubernetes.io/name: envoy
+                            gateway.envoyproxy.io/owning-gateway-namespace: {{ $argoWorkflows.namespace }}
+            ports:
+                -   port: 2746
+                    protocol: TCP
+    podSelector:
+        matchLabels:
+            app.kubernetes.io/instance: {{ $argoWorkflows.name }}
+            app.kubernetes.io/name: argo-workflows-server
+    policyTypes:
+        -   Ingress
+{{- end }}
+{{- end -}}

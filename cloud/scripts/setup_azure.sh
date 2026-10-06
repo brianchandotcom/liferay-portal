@@ -443,6 +443,22 @@ function _install_liferay_platform_chart {
 					liferay: {
 						parameters: $liferay_parameters
 					},
+					networkPolicy: {
+						apiServerSources: [
+							{
+								namespaceSelector: {
+									matchLabels: {
+										"kubernetes.io/metadata.name": "kube-system"
+									}
+								},
+								podSelector: {
+									matchLabels: {
+										"k8s-app": "konnectivity-agent"
+									}
+								}
+							}
+						]
+					},
 					observability: {
 						parameters: $observability_parameters
 					},

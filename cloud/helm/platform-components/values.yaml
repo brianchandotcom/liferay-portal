@@ -103,7 +103,9 @@ liferay:
     path: ""
     repoURL: ""
     targetRevision: ""
-    valuesPrefix: liferay-default.
+	valuesPrefix: liferay-default.
+networkPolicy:
+    apiServerSources: []
 observability:
     enabled: false
     namespace: observability
@@ -276,7 +278,6 @@ operatorApplications:
     eckOperator:
         chart: eck-operator
         enabled: true
-        masterIpv4CidrBlock: 172.16.0.0/28
         name: eck-operator
         namespace: elastic-system
         namespaceLabels:

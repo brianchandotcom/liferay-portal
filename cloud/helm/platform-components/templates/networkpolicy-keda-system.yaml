@@ -1,0 +1,79 @@
+{{- $keda := .Values.operatorApplications.keda -}}
+{{- if $keda.enabled -}}
+{{- if not .Values.networkPolicy.apiServerSources -}}
+{{- fail "The value \"networkPolicy.apiServerSources\" must not be empty when \"operatorApplications.keda.enabled\" is true" -}}
+{{- end -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: default-deny-ingress
+    namespace: {{ $keda.namespace }}
+spec:
+    podSelector: {}
+    policyTypes:
+        -   Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: keda-admission-webhooks-ingress
+    namespace: {{ $keda.namespace }}
+spec:
+    ingress:
+        -   from:
+                {{- toYaml .Values.networkPolicy.apiServerSources | nindent 16 }}
+            ports:
+                -   port: 9443
+                    protocol: TCP
+    podSelector:
+        matchLabels:
+            app: keda-admission-webhooks
+    policyTypes:
+        -   Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: keda-operator-ingress
+    namespace: {{ $keda.namespace }}
+spec:
+    ingress:
+        -   from:
+                -   podSelector:
+                        matchLabels:
+                            app: keda-operator-metrics-apiserver
+            ports:
+                -   port: metricsservice
+                    protocol: TCP
+    podSelector:
+        matchLabels:
+            app: keda-operator
+    policyTypes:
+        -   Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: keda-operator-metrics-apiserver-ingress
+    namespace: {{ $keda.namespace }}
+spec:
+    ingress:
+        -   from:
+                {{- toYaml .Values.networkPolicy.apiServerSources | nindent 16 }}
+            ports:
+                -   port: 6443
+                    protocol: TCP
+    podSelector:
+        matchLabels:
+            app: keda-operator-metrics-apiserver
+    policyTypes:
+        -   Ingress
+{{- end -}}

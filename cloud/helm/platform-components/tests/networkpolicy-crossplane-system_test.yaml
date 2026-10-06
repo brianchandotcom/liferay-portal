@@ -1,0 +1,81 @@
+release:
+    name: my-release
+    namespace: argocd-system
+set:
+    networkPolicy.apiServerSources:
+        -   ipBlock:
+                cidr: 10.0.0.0/16
+suite: Crossplane System NetworkPolicies
+templates:
+    -   templates/networkpolicy-crossplane-system.yaml
+tests:
+    -   asserts:
+            -   documentSelector:
+                    path: metadata.name
+                    value: crossplane-provider-webhook-ingress
+                equal:
+                    path: spec.ingress[0].from
+                    value:
+                        -   ipBlock:
+                                cidr: 10.0.0.0/16
+            -   documentSelector:
+                    path: metadata.name
+                    value: crossplane-webhook-ingress
+                equal:
+                    path: spec.ingress[0].from
+                    value:
+                        -   ipBlock:
+                                cidr: 10.0.0.0/16
+        it: Admits the API server sources to the Crossplane and provider webhooks
+    -   asserts:
+            -   equal:
+                    path: spec.ingress[0].from[0].namespaceSelector.matchLabels["kubernetes.io/metadata.name"]
+                    value: monitoring
+        documentSelector:
+            path: metadata.name
+            value: crossplane-metrics-ingress
+        it: Admits the observability namespace to the metrics port when observability is enabled
+        set:
+            observability.enabled: true
+            observability.namespace: monitoring
+    -   asserts:
+            -   failedTemplate:
+                    errorMessage: The value "networkPolicy.apiServerSources" must not be empty when "operatorApplications.crossplane.enabled" is true
+        it: Fails without API server sources rather than admitting everyone
+        set:
+            networkPolicy.apiServerSources: []
+    -   asserts:
+            -   documentSelector:
+                    path: metadata.name
+                    value: crossplane-function-grpc-ingress
+                equal:
+                    path: spec.ingress[0].from[0].podSelector.matchLabels.release
+                    value: xp
+            -   documentSelector:
+                    path: metadata.name
+                    value: crossplane-webhook-ingress
+                equal:
+                    path: spec.podSelector.matchLabels.release
+                    value: xp
+            -   documentSelector:
+                    path: metadata.name
+                    value: default-deny-ingress
+                equal:
+                    path: metadata.namespace
+                    value: xp-system
+        it: Follows the Crossplane application's name and namespace
+        set:
+            operatorApplications.crossplane.name: xp
+            operatorApplications.crossplane.namespace: xp-system
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: Omits every NetworkPolicy when Crossplane is disabled
+        set:
+            networkPolicy.apiServerSources: []
+            operatorApplications.crossplane.enabled: false
+    -   asserts:
+            -   notEqual:
+                    path: metadata.name
+                    value: crossplane-metrics-ingress
+        it: Omits the metrics policy when observability is disabled

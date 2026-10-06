@@ -1,28 +1,25 @@
-{{- if .Values.operatorApplications.eckOperator.enabled -}}
+{{- $eckOperator := .Values.operatorApplications.eckOperator -}}
+{{- if $eckOperator.enabled -}}
+{{- if not .Values.networkPolicy.apiServerSources -}}
+{{- fail "The value \"networkPolicy.apiServerSources\" must not be empty when \"operatorApplications.eckOperator.enabled\" is true" -}}
+{{- end -}}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
     labels:
         {{- include "liferay-platform.labels" $ | nindent 8 }}
     name: elastic-operator-webhook-ingress
-    namespace: elastic-system
+    namespace: {{ $eckOperator.namespace }}
 spec:
     ingress:
         -   from:
-                -   ipBlock:
-                        cidr: {{ .Values.operatorApplications.eckOperator.masterIpv4CidrBlock }}
-                -   namespaceSelector:
-                        matchLabels:
-                            kubernetes.io/metadata.name: kube-system
-                    podSelector:
-                        matchLabels:
-                            k8s-app: konnectivity-agent
+                {{- toYaml .Values.networkPolicy.apiServerSources | nindent 16 }}
             ports:
                 -   port: https-webhook
                     protocol: TCP
     podSelector:
         matchLabels:
-            app.kubernetes.io/instance: eck-operator
+            app.kubernetes.io/instance: {{ $eckOperator.name }}
             app.kubernetes.io/name: elastic-operator
     policyTypes:
         -   Ingress
@@ -33,7 +30,7 @@ metadata:
     labels:
         {{- include "liferay-platform.labels" $ | nindent 8 }}
     name: default-deny-ingress
-    namespace: elastic-system
+    namespace: {{ $eckOperator.namespace }}
 spec:
     podSelector: {}
     policyTypes:

@@ -24,3 +24,7 @@ infrastructureProvider:
 liferay:
     repoURL: oci://example-registry/liferay-helm-chart/liferay-azure
     targetRevision: 1.0.0
+networkPolicy:
+    apiServerSources:
+        -   ipBlock:
+                cidr: 10.0.0.0/16

@@ -1,0 +1,51 @@
+release:
+    name: my-release
+    namespace: argocd-system
+suite: Argo Workflows System NetworkPolicies
+templates:
+    -   templates/networkpolicy-argo-workflows-system.yaml
+tests:
+    -   asserts:
+            -   equal:
+                    path: spec.ingress[0].from[0].namespaceSelector.matchLabels["kubernetes.io/metadata.name"]
+                    value: gateways
+            -   equal:
+                    path: spec.ingress[0].from[0].podSelector.matchLabels["gateway.envoyproxy.io/owning-gateway-namespace"]
+                    value: workflows
+            -   equal:
+                    path: spec.podSelector.matchLabels["app.kubernetes.io/instance"]
+                    value: workflows-app
+        documentSelector:
+            path: metadata.name
+            value: argo-workflows-server-ingress
+        it: Admits the Argo Workflows gateway's Envoy proxies to the server when the gateway is enabled
+        set:
+            argoWorkflows.gateway.enabled: true
+            operatorApplications.argoWorkflows.name: workflows-app
+            operatorApplications.argoWorkflows.namespace: workflows
+            operatorApplications.envoyGateway.namespace: gateways
+    -   asserts:
+            -   equal:
+                    path: spec.ingress[0].from[0].namespaceSelector.matchLabels["kubernetes.io/metadata.name"]
+                    value: monitoring
+        documentSelector:
+            path: metadata.name
+            value: argo-workflows-metrics-ingress
+        it: Admits the observability namespace to the controller metrics when observability is enabled
+        set:
+            observability.enabled: true
+            observability.namespace: monitoring
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: Omits every NetworkPolicy when Argo Workflows is disabled
+        set:
+            operatorApplications.argoWorkflows.enabled: false
+    -   asserts:
+            -   notEqual:
+                    path: metadata.name
+                    value: argo-workflows-metrics-ingress
+            -   notEqual:
+                    path: metadata.name
+                    value: argo-workflows-server-ingress
+        it: Omits the metrics and server policies without observability or the gateway

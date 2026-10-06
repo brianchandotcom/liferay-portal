@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '5ab01b2e0a33ddeeafb12cd3a7a371b58f6d39edfbbe2b3f90ba96c87d9c74c1',
+	hash: 'ec71090165593bf951a9d87018e966c8e1536fe46226be6fd1ce8dc68a2ff7f6',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -164,7 +164,6 @@ module.exports = {
 			'qrcode',
 			'react-dropzone',
 			'react-transition-group',
-			'uuid',
 			'react-flow-renderer',
 			'react-helmet',
 			'axe-core',

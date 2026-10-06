@@ -8,8 +8,7 @@
 	"dependencies": {
 		"browser-tabs-lock": "1.2.8",
 		"core-js": "2.6.12",
-		"hash.js": "1.1.7",
-		"uuid": "9.0.0"
+		"hash.js": "1.1.7"
 	},
 	"description": "Javascript client to capture and send analytics data to server",
 	"devDependencies": {

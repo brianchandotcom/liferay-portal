@@ -14,7 +14,6 @@ module.exports = {
 		'qrcode',
 		'react-dropzone',
 		'react-transition-group',
-		'uuid',
 		'react-flow-renderer',
 		'react-helmet',
 		'axe-core',

@@ -17,8 +17,7 @@
 		"item-selector-taglib": "*",
 		"prop-types": "15.7.2",
 		"react": "18.2.0",
-		"react-dom": "18.2.0",
-		"uuid": "9.0.0"
+		"react-dom": "18.2.0"
 	},
 	"main": "js/index.js",
 	"name": "@liferay/document-library-web",

@@ -1,4 +1,4 @@
-{{- if $searchSpec.enabled }}
+{{- if $opensearchSpec }}
 {{- $clusterSubnetIdsCount := len $clusterSubnetIds }}
 
 apiVersion: opensearch.aws.m.upbound.io/v1beta1
@@ -25,8 +25,8 @@ spec:
                     key: password
                     name: liferay-search-password
         clusterConfig:
-            instanceCount: {{ $searchSpec.instanceCount }}
-            instanceType: {{ $searchSpec.instanceType }}
+            instanceCount: {{ $opensearchSpec.instanceCount }}
+            instanceType: {{ $opensearchSpec.instanceType }}
             zoneAwarenessConfig:
                 availabilityZoneCount: {{ $clusterSubnetIdsCount }}
             zoneAwarenessEnabled: {{ gt $clusterSubnetIdsCount 1 }}
@@ -36,7 +36,7 @@ spec:
         domainName: {{ $searchName }}
         ebsOptions:
             ebsEnabled: true
-            volumeSize: {{ $searchSpec.volumeSizeGB }}
+            volumeSize: {{ $opensearchSpec.volumeSizeGB }}
             volumeType: gp3
         encryptAtRest:
             enabled: true
@@ -48,7 +48,7 @@ spec:
                     environmentId: {{ $environmentId }}
                     projectId: {{ $projectId }}
             {{- end }}
-        engineVersion: {{ $searchSpec.engineVersion | quote }}
+        engineVersion: {{ $opensearchSpec.engineVersion | quote }}
         logPublishingOptions:
             -   cloudwatchLogGroupArn: arn:{{ $env.partition }}:logs:{{ $env.region }}:{{ $env.accountId }}:log-group:{{ $searchName }}-audit-logs
                 enabled: true
@@ -60,7 +60,7 @@ spec:
             enabled: true
         region: {{ $env.region }}
         softwareUpdateOptions:
-            autoSoftwareUpdateEnabled: {{ $searchSpec.autoSoftwareUpdateEnabled }}
+            autoSoftwareUpdateEnabled: {{ $opensearchSpec.autoSoftwareUpdateEnabled }}
         tags:
             Name: {{ $searchName }}
         vpcOptions:

@@ -10,10 +10,10 @@
 {{- $forceDestroy := $xr.spec.forceDestroy -}}
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $namespace := $xr.metadata.namespace -}}
+{{- $opensearchSpec := dig "search" "opensearch" dict $xr.spec -}}
 {{- $overlayAccess := $xr.spec.overlayAccess | default dict -}}
 {{- $projectId := $xr.spec.projectId -}}
 {{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
-{{- $searchSpec := $xr.spec.search.opensearch -}}
 {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
 
 {{- $activeDataPlane := eq $restorePhase "provisioning" | ternary (eq $targetActiveDataPlane "blue" | ternary "green" "blue") $targetActiveDataPlane -}}

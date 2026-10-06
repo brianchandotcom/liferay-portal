@@ -110,7 +110,7 @@ spec:
     managementPolicies: {{ $managementPolicies }}
 {{- end }}
 {{- end }}
-{{- if $searchSpec.enabled }}
+{{- if $opensearchSpec }}
 ---
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
@@ -186,7 +186,7 @@ spec:
             type: Opaque
     managementPolicies: {{ $managementPolicies }}
 {{- end }}
-{{- if and $searchEndpoint $searchPassword $searchSpec.enabled }}
+{{- if and $searchEndpoint $searchPassword }}
 ---
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
@@ -313,4 +313,4 @@ spec:
 apiVersion: aws.liferay.com/v1alpha1
 kind: LiferayInfrastructure
 status:
-    managedServiceDetailsReady: {{ and (and $databaseAddress $databasePassword $databasePort | empty | not) (or (not $searchSpec.enabled) (and $searchEndpoint $searchPassword) | empty | not) (not (empty $doclibBucketName)) }}
+    managedServiceDetailsReady: {{ and (and $databaseAddress $databasePassword $databasePort | empty | not) (or (not $opensearchSpec) (and $searchEndpoint $searchPassword) | empty | not) (not (empty $doclibBucketName)) }}

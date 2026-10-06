@@ -121,18 +121,21 @@ public class ObjectFieldInfoFieldConverter {
 	public InfoField<?> addRelationshipInfoFieldAttributes(
 		InfoField.FinalStep finalStep, ObjectRelationship objectRelationship) {
 
+		ObjectDefinition relatedObjectDefinition =
+			_fetchRelatedObjectDefinition(objectRelationship);
+
 		return finalStep.attribute(
 			RelationshipInfoFieldType.INHERITANCE, objectRelationship.isEdge()
 		).attribute(
 			RelationshipInfoFieldType.LABEL_FIELD_NAME,
-			_getRelationshipLabelFieldName(objectRelationship)
+			_getRelationshipLabelFieldName(relatedObjectDefinition)
 		).attribute(
 			RelationshipInfoFieldType.MULTIPLE,
 			objectRelationship.compareType(
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)
 		).attribute(
 			RelationshipInfoFieldType.URL,
-			_getRelationshipURL(objectRelationship)
+			_getRelationshipURL(relatedObjectDefinition)
 		).attribute(
 			RelationshipInfoFieldType.VALUE_FIELD_NAME, "id"
 		).build();
@@ -318,6 +321,20 @@ public class ObjectFieldInfoFieldConverter {
 		}
 
 		return finalStep.build();
+	}
+
+	private ObjectDefinition _fetchRelatedObjectDefinition(
+		ObjectRelationship objectRelationship) {
+
+		if (objectRelationship.compareType(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			return _objectDefinitionLocalService.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+		}
+
+		return _objectDefinitionLocalService.fetchObjectDefinition(
+			objectRelationship.getObjectDefinitionId1());
 	}
 
 	private String _getAcceptedFileExtensions(ObjectField objectField) {
@@ -584,22 +601,7 @@ public class ObjectFieldInfoFieldConverter {
 	}
 
 	private String _getRelationshipLabelFieldName(
-		ObjectRelationship objectRelationship) {
-
-		ObjectDefinition relatedObjectDefinition = null;
-
-		if (objectRelationship.compareType(
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
-
-			relatedObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
-		}
-		else {
-			relatedObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
-		}
+		ObjectDefinition relatedObjectDefinition) {
 
 		if (relatedObjectDefinition == null) {
 			return "id";
@@ -622,30 +624,15 @@ public class ObjectFieldInfoFieldConverter {
 		return titleObjectField.getName();
 	}
 
-	private String _getRelationshipURL(ObjectRelationship objectRelationship) {
+	private String _getRelationshipURL(
+		ObjectDefinition relatedObjectDefinition) {
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if ((serviceContext == null) || (serviceContext.getRequest() == null)) {
-			return StringPool.BLANK;
-		}
+		if ((serviceContext == null) || (serviceContext.getRequest() == null) ||
+			(relatedObjectDefinition == null)) {
 
-		ObjectDefinition relatedObjectDefinition = null;
-
-		if (objectRelationship.compareType(
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
-
-			relatedObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
-		}
-		else {
-			relatedObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
-		}
-
-		if (relatedObjectDefinition == null) {
 			return StringPool.BLANK;
 		}
 

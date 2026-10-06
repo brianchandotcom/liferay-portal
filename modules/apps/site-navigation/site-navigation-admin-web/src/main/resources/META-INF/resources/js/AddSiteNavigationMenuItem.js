@@ -19,6 +19,8 @@ export default function ({namespace, order, parentSiteNavigationMenuItemId}) {
 			return;
 		}
 
+		addButton.disabled = true;
+
 		const form = document.getElementById(`${namespace}fm`);
 		const formData = new FormData(form);
 
@@ -41,6 +43,7 @@ export default function ({namespace, order, parentSiteNavigationMenuItemId}) {
 					});
 				}
 				else {
+					addButton.disabled = false;
 					openToast({
 						message: response.errorMessage,
 						type: 'danger',

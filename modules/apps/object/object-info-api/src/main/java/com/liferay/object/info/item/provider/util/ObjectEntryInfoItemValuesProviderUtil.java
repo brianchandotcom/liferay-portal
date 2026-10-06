@@ -406,6 +406,29 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 				}
 			).build();
 		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			Locale finalLocale = locale;
+
+			UnsafeSupplierValue<Object, RuntimeException> unsafeSupplierValue =
+				new UnsafeSupplierValue<>(
+					() -> GetterUtil.getObject(
+						_parseValue(
+							listTypeEntryLocalService, finalLocale,
+							objectEntryLocalService, objectField,
+							objectRelationshipLocalService, themeDisplay,
+							value),
+						StringPool.BLANK));
+
+			infoFieldValues.add(
+				new InfoFieldValue<>(
+					objectFieldInfoFieldConverter.getInfoField(
+						false, objectFieldNamespace, objectField),
+					unsafeSupplierValue::getValue));
+
+			return;
+		}
 		else {
 			infoFieldValue = _parseValue(
 				listTypeEntryLocalService, locale, objectEntryLocalService,

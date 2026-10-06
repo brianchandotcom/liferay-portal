@@ -131,11 +131,6 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		long classNameId = _portal.getClassNameId(
 			infoItemReference.getClassName());
 
-		Group group = themeDisplay.getScopeGroup();
-
-		String groupFriendlyURL = _portal.getGroupFriendlyURL(
-			group.getPublicLayoutSet(), themeDisplay, false, false);
-
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				_getGroupIds(themeDisplay.getScopeGroupId()), classNameId,
@@ -144,6 +139,15 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 					themeDisplay.getScopeGroupId()),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				WorkflowConstants.STATUS_APPROVED);
+
+		if (layoutPageTemplateEntries.isEmpty()) {
+			return infoFieldValues;
+		}
+
+		Group group = themeDisplay.getScopeGroup();
+
+		String groupFriendlyURL = _portal.getGroupFriendlyURL(
+			group.getPublicLayoutSet(), themeDisplay, false, false);
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {

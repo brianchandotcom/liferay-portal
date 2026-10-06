@@ -9,6 +9,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.cms.dto.v1_0.BrokenLinkAsset;
 import com.liferay.headless.cms.internal.links.BrokenLinkAssetSearcher;
+import com.liferay.headless.cms.internal.links.BrokenLinkTarget;
 import com.liferay.headless.cms.internal.util.CMSGroupUtil;
 import com.liferay.headless.cms.resource.v1_0.BrokenLinkAssetResource;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.search.document.Document;
@@ -44,7 +46,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -111,19 +113,19 @@ public class BrokenLinkAssetResourceImpl
 				_objectEntryLocalService, _searcher,
 				_searchRequestBuilderFactory);
 
-		Map<String, Long> expiredAssetObjectEntryIdsMap =
-			brokenLinkAssetSearcher.getExpiredAssetObjectEntryIdsMap(
+		Map<String, BrokenLinkTarget> brokenLinkTargetsMap =
+			brokenLinkAssetSearcher.getBrokenLinkTargetsMap(
 				contextCompany.getCompanyId(), objectDefinitionIds,
 				spaceGroupIds);
 
-		if (expiredAssetObjectEntryIdsMap.isEmpty()) {
+		if (brokenLinkTargetsMap.isEmpty()) {
 			return Page.of(Collections.emptyList());
 		}
 
 		SearchResponse searchResponse = brokenLinkAssetSearcher.search(
 			contextCompany.getCompanyId(), selectedSpaceGroupIds,
 			contextAcceptLanguage.getPreferredLanguageId(),
-			expiredAssetObjectEntryIdsMap.keySet(), pagination, search, sorts);
+			brokenLinkTargetsMap.keySet(), pagination, search, sorts);
 
 		Map<Long, String> externalReferenceCodes = new HashMap<>();
 
@@ -137,8 +139,7 @@ public class BrokenLinkAssetResourceImpl
 			transform(
 				searchResponse.getDocuments(),
 				document -> _toBrokenLinkAsset(
-					document, expiredAssetObjectEntryIdsMap,
-					externalReferenceCodes)),
+					brokenLinkTargetsMap, document, externalReferenceCodes)),
 			pagination, searchResponse.getCount());
 	}
 
@@ -165,6 +166,20 @@ public class BrokenLinkAssetResourceImpl
 		return null;
 	}
 
+	private long _getBrokenLinksCount(
+		Map<Long, Integer> brokenLinkStatuses, int status) {
+
+		long brokenLinksCount = 0;
+
+		for (int brokenLinkStatus : brokenLinkStatuses.values()) {
+			if (brokenLinkStatus == status) {
+				brokenLinksCount++;
+			}
+		}
+
+		return brokenLinksCount;
+	}
+
 	private String _getTitle(Document document) {
 		String title = document.getString(
 			Field.getLocalizedName(
@@ -179,17 +194,19 @@ public class BrokenLinkAssetResourceImpl
 	}
 
 	private BrokenLinkAsset _toBrokenLinkAsset(
-		Document document, Map<String, Long> expiredAssetObjectEntryIdsMap,
+		Map<String, BrokenLinkTarget> brokenLinkTargetsMap, Document document,
 		Map<Long, String> externalReferenceCodes) {
 
-		Set<Long> brokenLinkObjectEntryIds = new LinkedHashSet<>();
+		Map<Long, Integer> brokenLinkStatuses = new LinkedHashMap<>();
 
 		for (String outboundLink : document.getStrings("outboundLinks")) {
-			Long brokenLinkObjectEntryId = expiredAssetObjectEntryIdsMap.get(
+			BrokenLinkTarget brokenLinkTarget = brokenLinkTargetsMap.get(
 				outboundLink);
 
-			if (brokenLinkObjectEntryId != null) {
-				brokenLinkObjectEntryIds.add(brokenLinkObjectEntryId);
+			if (brokenLinkTarget != null) {
+				brokenLinkStatuses.put(
+					brokenLinkTarget.getObjectEntryId(),
+					brokenLinkTarget.getStatus());
 			}
 		}
 
@@ -210,10 +227,15 @@ public class BrokenLinkAssetResourceImpl
 							_objectEntryService.getModelResourcePermission(
 								objectDefinitionId))
 					).build());
-				setBrokenLinksCount(
-					() -> (long)brokenLinkObjectEntryIds.size());
+				setBrokenLinksCount(() -> (long)brokenLinkStatuses.size());
 				setBrokenLinkTitle(
-					() -> _getBrokenLinkTitle(brokenLinkObjectEntryIds));
+					() -> _getBrokenLinkTitle(brokenLinkStatuses.keySet()));
+				setDraftBrokenLinksCount(
+					() -> _getBrokenLinksCount(
+						brokenLinkStatuses, WorkflowConstants.STATUS_DRAFT));
+				setExpiredBrokenLinksCount(
+					() -> _getBrokenLinksCount(
+						brokenLinkStatuses, WorkflowConstants.STATUS_EXPIRED));
 				setHref(
 					() -> StringBundler.concat(
 						_portal.getPortalURL(contextHttpServletRequest),
@@ -222,6 +244,9 @@ public class BrokenLinkAssetResourceImpl
 						LiferayWindowState.POP_UP, "&objectEntryId=",
 						objectEntryId));
 				setId(() -> objectEntryId);
+				setInTrashBrokenLinksCount(
+					() -> _getBrokenLinksCount(
+						brokenLinkStatuses, WorkflowConstants.STATUS_IN_TRASH));
 				setObjectDefinitionExternalReferenceCode(
 					() -> externalReferenceCodes.get(objectDefinitionId));
 				setTitle(() -> _getTitle(document));

@@ -9,6 +9,7 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersionTable;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -48,6 +49,29 @@ public class BrokenLinkAssetSearcher {
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
 
+	public Map<String, BrokenLinkTarget> getBrokenLinkTargetsMap(
+		long companyId, Long[] objectDefinitionIds, Long[] spaceGroupIds) {
+
+		Map<String, BrokenLinkTarget> brokenLinkTargetsMap =
+			new LinkedHashMap<>();
+
+		_putBrokenLinkTargets(
+			brokenLinkTargetsMap, companyId, objectDefinitionIds,
+			_getDraftPredicate(), spaceGroupIds,
+			WorkflowConstants.STATUS_DRAFT);
+		_putBrokenLinkTargets(
+			brokenLinkTargetsMap, companyId, objectDefinitionIds,
+			_getExpiredPredicate(), spaceGroupIds,
+			WorkflowConstants.STATUS_EXPIRED);
+		_putBrokenLinkTargets(
+			brokenLinkTargetsMap, companyId, objectDefinitionIds,
+			ObjectEntryTable.INSTANCE.status.eq(
+				WorkflowConstants.STATUS_IN_TRASH),
+			spaceGroupIds, WorkflowConstants.STATUS_IN_TRASH);
+
+		return brokenLinkTargetsMap;
+	}
+
 	public long getCount(
 		long companyId, Long[] groupIds, Set<String> outboundLinkTokens) {
 
@@ -57,29 +81,6 @@ public class BrokenLinkAssetSearcher {
 			).build());
 
 		return searchResponse.getCount();
-	}
-
-	public Map<String, Long> getExpiredAssetObjectEntryIdsMap(
-		long companyId, Long[] objectDefinitionIds, Long[] spaceGroupIds) {
-
-		Map<String, Long> objectEntryIdsMap = new LinkedHashMap<>();
-
-		for (Object[] objects :
-				_getObjectEntryObjectsList(
-					companyId, objectDefinitionIds, spaceGroupIds)) {
-
-			long objectEntryId = GetterUtil.getLong(objects[1]);
-
-			objectEntryIdsMap.put(
-				CMSOutboundLinksUtil.getObjectEntryExternalReferenceCodeToken(
-					GetterUtil.getString(objects[0])),
-				objectEntryId);
-			objectEntryIdsMap.put(
-				CMSOutboundLinksUtil.getObjectEntryIdToken(objectEntryId),
-				objectEntryId);
-		}
-
-		return objectEntryIdsMap;
 	}
 
 	public SearchResponse search(
@@ -126,6 +127,36 @@ public class BrokenLinkAssetSearcher {
 		return _searcher.search(searchRequestBuilder.build());
 	}
 
+	private Predicate _getDraftPredicate() {
+		return ObjectEntryTable.INSTANCE.status.eq(
+			WorkflowConstants.STATUS_DRAFT
+		).and(
+			ObjectEntryTable.INSTANCE.objectEntryId.notIn(
+				_getObjectEntryIdsDSLQuery(WorkflowConstants.STATUS_APPROVED))
+		).and(
+			ObjectEntryTable.INSTANCE.objectEntryId.notIn(
+				_getObjectEntryIdsDSLQuery(WorkflowConstants.STATUS_EXPIRED))
+		);
+	}
+
+	private Predicate _getExpiredPredicate() {
+		return ObjectEntryTable.INSTANCE.status.eq(
+			WorkflowConstants.STATUS_EXPIRED
+		).or(
+			ObjectEntryTable.INSTANCE.status.eq(
+				WorkflowConstants.STATUS_DRAFT
+			).and(
+				ObjectEntryTable.INSTANCE.objectEntryId.in(
+					_getObjectEntryIdsDSLQuery(
+						WorkflowConstants.STATUS_EXPIRED))
+			).and(
+				ObjectEntryTable.INSTANCE.objectEntryId.notIn(
+					_getObjectEntryIdsDSLQuery(
+						WorkflowConstants.STATUS_APPROVED))
+			)
+		);
+	}
+
 	private DSLQuery _getObjectEntryIdsDSLQuery(int status) {
 		return DSLQueryFactoryUtil.select(
 			ObjectEntryVersionTable.INSTANCE.objectEntryId
@@ -141,7 +172,8 @@ public class BrokenLinkAssetSearcher {
 	}
 
 	private List<Object[]> _getObjectEntryObjectsList(
-		long companyId, Long[] objectDefinitionIds, Long[] spaceGroupIds) {
+		long companyId, Long[] objectDefinitionIds, Predicate predicate,
+		Long[] spaceGroupIds) {
 
 		return _objectEntryLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -155,24 +187,13 @@ public class BrokenLinkAssetSearcher {
 				).and(
 					ObjectEntryTable.INSTANCE.groupId.in(spaceGroupIds)
 				).and(
+					ObjectEntryTable.INSTANCE.headObjectEntryId.eq(
+						ObjectEntryTable.INSTANCE.objectEntryId)
+				).and(
 					ObjectEntryTable.INSTANCE.objectDefinitionId.in(
 						objectDefinitionIds)
 				).and(
-					ObjectEntryTable.INSTANCE.status.eq(
-						WorkflowConstants.STATUS_EXPIRED
-					).or(
-						ObjectEntryTable.INSTANCE.status.eq(
-							WorkflowConstants.STATUS_DRAFT
-						).and(
-							ObjectEntryTable.INSTANCE.objectEntryId.in(
-								_getObjectEntryIdsDSLQuery(
-									WorkflowConstants.STATUS_EXPIRED))
-						).and(
-							ObjectEntryTable.INSTANCE.objectEntryId.notIn(
-								_getObjectEntryIdsDSLQuery(
-									WorkflowConstants.STATUS_APPROVED))
-						)
-					).withParentheses()
+					predicate.withParentheses()
 				)
 			));
 	}
@@ -234,6 +255,30 @@ public class BrokenLinkAssetSearcher {
 		termsQuery.addValues(values);
 
 		return termsQuery;
+	}
+
+	private void _putBrokenLinkTargets(
+		Map<String, BrokenLinkTarget> brokenLinkTargetsMap, long companyId,
+		Long[] objectDefinitionIds, Predicate predicate, Long[] spaceGroupIds,
+		int status) {
+
+		for (Object[] objects :
+				_getObjectEntryObjectsList(
+					companyId, objectDefinitionIds, predicate, spaceGroupIds)) {
+
+			long objectEntryId = GetterUtil.getLong(objects[1]);
+
+			BrokenLinkTarget brokenLinkTarget = new BrokenLinkTarget(
+				objectEntryId, status);
+
+			brokenLinkTargetsMap.put(
+				CMSOutboundLinksUtil.getObjectEntryExternalReferenceCodeToken(
+					GetterUtil.getString(objects[0])),
+				brokenLinkTarget);
+			brokenLinkTargetsMap.put(
+				CMSOutboundLinksUtil.getObjectEntryIdToken(objectEntryId),
+				brokenLinkTarget);
+		}
 	}
 
 	private static final int _MAX_RESULT_WINDOW = 10000;

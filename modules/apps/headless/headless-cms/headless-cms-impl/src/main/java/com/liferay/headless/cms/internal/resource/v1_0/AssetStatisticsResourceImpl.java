@@ -9,6 +9,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.cms.dto.v1_0.AssetStatistics;
 import com.liferay.headless.cms.internal.links.BrokenLinkAssetSearcher;
+import com.liferay.headless.cms.internal.links.BrokenLinkTarget;
 import com.liferay.headless.cms.internal.util.CMSGroupUtil;
 import com.liferay.headless.cms.resource.v1_0.AssetStatisticsResource;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -202,18 +203,18 @@ public class AssetStatisticsResourceImpl
 					_objectEntryLocalService, _searcher,
 					_searchRequestBuilderFactory);
 
-			Map<String, Long> expiredAssetObjectEntryIdsMap =
-				brokenLinkAssetSearcher.getExpiredAssetObjectEntryIdsMap(
+			Map<String, BrokenLinkTarget> brokenLinkTargetsMap =
+				brokenLinkAssetSearcher.getBrokenLinkTargetsMap(
 					contextCompany.getCompanyId(), objectDefinitionIds,
 					spaceGroupIds);
 
-			if (expiredAssetObjectEntryIdsMap.isEmpty()) {
+			if (brokenLinkTargetsMap.isEmpty()) {
 				return 0;
 			}
 
 			return brokenLinkAssetSearcher.getCount(
 				contextCompany.getCompanyId(), selectedSpaceGroupIds,
-				expiredAssetObjectEntryIdsMap.keySet());
+				brokenLinkTargetsMap.keySet());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

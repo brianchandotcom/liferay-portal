@@ -311,9 +311,10 @@ public class OpenSearchIndexWriterExceptionsTest extends BaseIndexingTestCase {
 					"Update failed", systemException.getMessage());
 			}
 
-			String expectedMessage =
-				"failed to parse field [expirationDate] of type [date] in " +
-					"document with id";
+			String expectedMessage = StringBundler.concat(
+				"failed to parse field [expirationDate] of type [date] in ",
+				"document with id '", _UID, "'. Preview of field's value: '",
+				_INVALID_DATE, "'");
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -347,9 +348,10 @@ public class OpenSearchIndexWriterExceptionsTest extends BaseIndexingTestCase {
 					"Bulk update failed", systemException.getMessage());
 			}
 
-			String expectedMessage =
-				"failed to parse field [expirationDate] of type [date] in " +
-					"document with id";
+			String expectedMessage = StringBundler.concat(
+				"failed to parse field [expirationDate] of type [date] in ",
+				"document with id '", _UID, "'. Preview of field's value: '",
+				_INVALID_DATE, "'");
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(

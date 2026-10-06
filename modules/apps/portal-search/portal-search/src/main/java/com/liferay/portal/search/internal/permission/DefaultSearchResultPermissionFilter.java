@@ -129,8 +129,18 @@ public class DefaultSearchResultPermissionFilter
 			return hits;
 		}
 
-		if ((start < 0) || (start > end)) {
+		if ((start < 0) || (start > end) ||
+			(start >= PropsValues.INDEX_SEARCH_LIMIT)) {
+
 			return new HitsImpl();
+		}
+
+		if (end > PropsValues.INDEX_SEARCH_LIMIT) {
+			end = PropsValues.INDEX_SEARCH_LIMIT;
+
+			searchContext.setEnd(end);
+
+			_setSearchRequestFromAndSize(searchContext);
 		}
 
 		if (_isGroupAdmin(searchContext)) {
@@ -352,6 +362,15 @@ public class DefaultSearchResultPermissionFilter
 		return false;
 	}
 
+	private void _setSearchRequestFromAndSize(SearchContext searchContext) {
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(searchContext);
+
+		searchRequestBuilder.from(searchContext.getStart());
+		searchRequestBuilder.size(
+			searchContext.getEnd() - searchContext.getStart());
+	}
+
 	private void _updateSearchHits(Hits hits, SearchContext searchContext) {
 		SearchResponseImpl searchResponseImpl =
 			(SearchResponseImpl)searchContext.getAttribute("search.response");
@@ -447,8 +466,9 @@ public class DefaultSearchResultPermissionFilter
 				int remainingDocsNeededCount =
 					totalDocsNeededCount - docsCollectedCount;
 
-				int slidingWindowSize =
-					remainingDocsNeededCount * amplificationFactor;
+				int slidingWindowSize = (int)Math.min(
+					(long)remainingDocsNeededCount * amplificationFactor,
+					Integer.MAX_VALUE - slidingWindowStart);
 
 				int slidingWindowEnd = slidingWindowStart + slidingWindowSize;
 
@@ -688,15 +708,6 @@ public class DefaultSearchResultPermissionFilter
 			}
 		}
 
-		private void _setSearchRequestFromAndSize(SearchContext searchContext) {
-			SearchRequestBuilder searchRequestBuilder =
-				_searchRequestBuilderFactory.builder(searchContext);
-
-			searchRequestBuilder.from(searchContext.getStart());
-			searchRequestBuilder.size(
-				searchContext.getEnd() - searchContext.getStart());
-		}
-
 		private boolean _stopSearching(
 			int docsCollectedCount, int originalHitsSize,
 			Document[] preFilteredDocs, int slidingWindowEnd,
@@ -704,6 +715,7 @@ public class DefaultSearchResultPermissionFilter
 			int totalDocsNeededCount) {
 
 			if ((slidingWindowEnd >= originalHitsSize) ||
+				(slidingWindowSize <= 0) ||
 				(preFilteredDocs.length < slidingWindowSize)) {
 
 				return true;

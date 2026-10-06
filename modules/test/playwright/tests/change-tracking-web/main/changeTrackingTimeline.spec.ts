@@ -486,7 +486,7 @@ test('LPD-26155 Conflict warning is visible when content is edited in more than 
 	const timelineButton = page.locator('.change-tracking-timeline-button svg');
 	await timelineButton.waitFor();
 
-	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 182, 141)');
+	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 192, 153)');
 
 	await timelineButton.click();
 
@@ -566,7 +566,7 @@ test('LPD-37842 Timeline icon is yellow for cross-publication edits.', async ({
 	const timelineButton = page.locator('.change-tracking-timeline-button svg');
 	await timelineButton.waitFor();
 
-	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 182, 141)');
+	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 192, 153)');
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
 		ctCollection2.body.id
@@ -705,7 +705,7 @@ test('LPD-73283 Conflict warning is visible when content is edited in other inco
 		);
 		await timelineButton.waitFor();
 
-		await expect(timelineButton).toHaveCSS('color', 'rgb(255, 182, 141)');
+		await expect(timelineButton).toHaveCSS('color', 'rgb(255, 192, 153)');
 
 		await timelineButton.click();
 

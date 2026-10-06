@@ -58,17 +58,29 @@ public class AnalyticsCloudBearerTokenProviderTest {
 	@Test
 	public void testOnBeforeCreate() {
 		BearerTokenProvider.AccessToken accessToken = _createAccessToken(
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(),
+			"app-" + RandomTestUtil.randomString());
 
 		_analyticsCloudBearerTokenProvider.onBeforeCreate(accessToken);
 
 		Assert.assertEquals(0, accessToken.getExpiresIn());
+
+		accessToken = _createAccessToken(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_analyticsCloudBearerTokenProvider.onBeforeCreate(accessToken);
+
+		Assert.assertEquals(
+			TimeUnit.MINUTES.toSeconds(10), accessToken.getExpiresIn());
+		Assert.assertTrue(
+			_analyticsCloudBearerTokenProvider.isValid(accessToken));
 	}
 
 	@Test
 	public void testOnBeforeCreateWithApplicationAIHubCell() {
 		BearerTokenProvider.AccessToken accessToken = _createAccessToken(
-			_EXTERNAL_REFERENCE_CODE_AI_HUB_CELL);
+			_EXTERNAL_REFERENCE_CODE_AI_HUB_CELL,
+			RandomTestUtil.randomString());
 
 		_analyticsCloudBearerTokenProvider.onBeforeCreate(accessToken);
 
@@ -83,13 +95,15 @@ public class AnalyticsCloudBearerTokenProviderTest {
 		AccessTokenExpiresInUtil.setExpiresIn(_HOUR_IN_SECONDS);
 
 		BearerTokenProvider.AccessToken accessToken = _createAccessToken(
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_analyticsCloudBearerTokenProvider.onBeforeCreate(accessToken);
 
 		Assert.assertEquals(_HOUR_IN_SECONDS, accessToken.getExpiresIn());
 
-		accessToken = _createAccessToken(_EXTERNAL_REFERENCE_CODE_AI_HUB_CELL);
+		accessToken = _createAccessToken(
+			_EXTERNAL_REFERENCE_CODE_AI_HUB_CELL,
+			RandomTestUtil.randomString());
 
 		_analyticsCloudBearerTokenProvider.onBeforeCreate(accessToken);
 
@@ -98,7 +112,7 @@ public class AnalyticsCloudBearerTokenProviderTest {
 	}
 
 	private BearerTokenProvider.AccessToken _createAccessToken(
-		String externalReferenceCode) {
+		String externalReferenceCode, String name) {
 
 		OAuth2Application oAuth2Application = Mockito.mock(
 			OAuth2Application.class);
@@ -107,6 +121,12 @@ public class AnalyticsCloudBearerTokenProviderTest {
 			oAuth2Application.getExternalReferenceCode()
 		).thenReturn(
 			externalReferenceCode
+		);
+
+		Mockito.when(
+			oAuth2Application.getName()
+		).thenReturn(
+			name
 		);
 
 		return new BearerTokenProvider.AccessToken(

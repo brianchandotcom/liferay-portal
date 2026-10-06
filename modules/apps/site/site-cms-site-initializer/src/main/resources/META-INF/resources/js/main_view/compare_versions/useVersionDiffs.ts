@@ -112,7 +112,7 @@ function applyFieldDiffs(
 		}
 
 		const control = field.querySelector(
-			'.form-control:not(.input-group-inset)'
+			'.form-control:not(.input-group-inset):not([id$="-prefix-trigger"])'
 		);
 
 		const container = iframeDocument.createElement('div');

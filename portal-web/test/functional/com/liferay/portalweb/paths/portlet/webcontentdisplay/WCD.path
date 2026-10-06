@@ -86,11 +86,6 @@
 	<td>//div[contains(@class, 'input-localized-palette')]//li//span[contains(@id,'uvlz')]/..//span[contains(text(),'en-US')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>WEB_CONTENT_VIDEO</td>
-	<td>//div[contains(@class,'video-player')][contains(.,'${key_videoShortcutTitle}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

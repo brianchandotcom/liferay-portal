@@ -533,15 +533,10 @@ definition {
 				locator1 = "WCD#WEB_CONTENT_TITLE",
 				value1 = ${webContentTitle});
 
-			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+			// LPD-108628 Assert the embed, not YouTube's own player markup,
+			// which changes without notice and is a bot check on CI
 
-			SelectFrame(locator1 = "IFrame#IFRAME");
-
-			AssertElementPresent(
-				key_videoShortcutTitle = ${videoShortcutTitle},
-				locator1 = "WCD#WEB_CONTENT_VIDEO");
-
-			SelectFrame(value1 = "relative=top");
+			AssertElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 		}
 		else if (isSet(displayText)) {
 			WaitForElementPresent(

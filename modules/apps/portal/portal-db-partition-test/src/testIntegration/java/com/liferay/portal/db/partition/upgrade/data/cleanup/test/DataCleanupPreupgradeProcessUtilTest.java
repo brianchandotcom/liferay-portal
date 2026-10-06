@@ -61,8 +61,6 @@ public class DataCleanupPreupgradeProcessUtilTest
 
 	@Before
 	public void setUp() throws Exception {
-		_tableName = TEST_TABLE_NAME + RandomTestUtil.randomString();
-
 		for (long companyId : COMPANY_IDS) {
 			db.runSQL(
 				dbPartitionDB.getCreatePartitionSQL(
@@ -80,17 +78,17 @@ public class DataCleanupPreupgradeProcessUtilTest
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						PortalInstancePool.getDefaultCompanyId())) {
 
-				dropTable(_tableName);
+				dropTable(_TABLE_NAME);
 			}
 		}
 	}
 
 	@Test
 	public void testGetPrimaryKeyColumnName() throws Exception {
-		_runSQL(COMPANY_IDS[0], getCreateTableSQL(_tableName));
+		_runSQL(COMPANY_IDS[0], getCreateTableSQL(_TABLE_NAME));
 
 		String createTableSQL = StringBundler.concat(
-			"create table ", _tableName,
+			"create table ", _TABLE_NAME,
 			" (testColumn bigint, companyId bigint)");
 
 		_runSQL(COMPANY_IDS[1], createTableSQL);
@@ -121,7 +119,7 @@ public class DataCleanupPreupgradeProcessUtilTest
 			Connection connection = dataSource.getConnection()) {
 
 			return DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
-				connection, new DBInspector(connection), _tableName);
+				connection, new DBInspector(connection), _TABLE_NAME);
 		}
 	}
 
@@ -139,6 +137,7 @@ public class DataCleanupPreupgradeProcessUtilTest
 		}
 	}
 
-	private String _tableName;
+	private static final String _TABLE_NAME =
+		TEST_TABLE_NAME + RandomTestUtil.randomString();
 
 }

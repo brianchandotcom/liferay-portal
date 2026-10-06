@@ -104,12 +104,15 @@ public class ElasticsearchIndexSearcherLogExceptionsOnlyTest
 
 		Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
 
+		String expectedMessage =
+			"[es/search] failed: [search_phase_execution_exception] all " +
+				"shards failed";
+
+		Assert.assertEquals(expectedMessage, logEntry.getMessage());
+
 		Throwable throwable = logEntry.getThrowable();
 
-		Assert.assertEquals(
-			"[es/search] failed: [search_phase_execution_exception] all " +
-				"shards failed",
-			throwable.getMessage());
+		Assert.assertEquals(expectedMessage, throwable.getMessage());
 		Assert.assertSame(ElasticsearchException.class, throwable.getClass());
 	}
 

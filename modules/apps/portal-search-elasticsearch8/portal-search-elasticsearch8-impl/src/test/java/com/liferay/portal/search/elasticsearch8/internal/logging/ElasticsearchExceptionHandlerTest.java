@@ -34,13 +34,22 @@ public class ElasticsearchExceptionHandlerTest {
 	public void testDeleteIndexNotFoundLogExceptionsOnlyFalse()
 		throws Throwable {
 
-		ElasticsearchExceptionHandler elasticsearchExceptionHandler =
-			new ElasticsearchExceptionHandler(_log, false);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ElasticsearchExceptionHandlerTest.class.getName(),
+				LoggerTestUtil.INFO)) {
 
-		elasticsearchExceptionHandler.handleDeleteDocumentException(
-			new SearchException(
+			ElasticsearchExceptionHandler elasticsearchExceptionHandler =
+				new ElasticsearchExceptionHandler(_log, false);
+
+			SearchException searchException = new SearchException(
 				ElasticsearchExceptionHandler.
-					INDEX_NOT_FOUND_EXCEPTION_MESSAGE));
+					INDEX_NOT_FOUND_EXCEPTION_MESSAGE);
+
+			elasticsearchExceptionHandler.handleDeleteDocumentException(
+				searchException);
+
+			_assertLogCapture(logCapture, LoggerTestUtil.INFO, searchException);
+		}
 	}
 
 	@Test

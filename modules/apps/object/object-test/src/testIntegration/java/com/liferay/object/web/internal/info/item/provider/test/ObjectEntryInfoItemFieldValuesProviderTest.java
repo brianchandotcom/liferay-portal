@@ -36,6 +36,7 @@ import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -939,6 +941,25 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				Assert.assertEquals(
 					_listTypeEntryKey, keyLocalizedLabelPair.getKey());
 			}
+
+			InfoFieldValue<Object> userProfileImageInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					ObjectEntryInfoItemFields.userProfileImageInfoField.
+						getName());
+
+			if (themeDisplay == null) {
+				Assert.assertNull(userProfileImageInfoFieldValue.getValue());
+			}
+			else {
+				User user = _userLocalService.getUser(objectEntry.getUserId());
+
+				WebImage webImage =
+					(WebImage)userProfileImageInfoFieldValue.getValue();
+
+				Assert.assertEquals(user.getFullName(), webImage.getAlt());
+				Assert.assertEquals(
+					user.getPortraitURL(themeDisplay), webImage.getURL());
+			}
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -999,5 +1020,8 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _parentObjectDefinition;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

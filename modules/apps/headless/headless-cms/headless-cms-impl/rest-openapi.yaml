@@ -93,10 +93,22 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                draftBrokenLinksCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                expiredBrokenLinksCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 href:
                     readOnly: true
                     type: string
                 id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                inTrashBrokenLinksCount:
                     format: int64
                     readOnly: true
                     type: integer

@@ -2275,7 +2275,13 @@ definition {
 
 		echo("## * Document URL: ${dmDocumentURL}");
 
-		var curl = '''${dmDocumentURL} -I''';
+		// Pass the query string as quoted data: unquoted, its ampersands make
+		// the shell run curl in the background, so its output is not always read
+
+		var dmDocumentBaseURL = StringUtil.extractFirst(${dmDocumentURL}, "?");
+		var dmDocumentQueryString = StringUtil.extractLast(${dmDocumentURL}, "?");
+
+		var curl = '''${dmDocumentBaseURL} -G -d ${dmDocumentQueryString} -D - -o /dev/null''';
 
 		var responseHeader = JSONCurlUtil.post(${curl});
 

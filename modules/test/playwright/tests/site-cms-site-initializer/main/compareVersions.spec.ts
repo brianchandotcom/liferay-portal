@@ -296,11 +296,24 @@ test(
 			await page.keyboard.press('Escape');
 		});
 
-		await test.step('A single version shows its boolean as text', async () => {
-			await expectDiffBoxToShow(
-				page.frameLocator('iframe[title="Version 2"]'),
-				'flag',
-				'Yes'
+		await test.step('A single version shows its boolean, phone number and rich text as text', async () => {
+			const frame = page.frameLocator('iframe[title="Version 2"]');
+
+			await expectDiffBoxToShow(frame, 'flag', 'Yes');
+			await expectDiffBoxToShow(frame, 'line', '600999888');
+			await expectDiffBoxToShow(frame, 'story', 'Rich text version two.');
+
+			await expect(getDiffBox(frame, 'line')).not.toHaveClass(
+				/form-control-select/
+			);
+
+			const textareaHeight = await frame
+				.locator('[data-field-name="ObjectField_essay"] textarea')
+				.evaluate((textarea) => getComputedStyle(textarea).height);
+
+			await expect(getDiffBox(frame, 'story')).toHaveCSS(
+				'min-height',
+				textareaHeight
 			);
 		});
 

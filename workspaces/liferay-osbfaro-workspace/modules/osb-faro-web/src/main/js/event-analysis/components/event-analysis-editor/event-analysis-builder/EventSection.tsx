@@ -1,9 +1,9 @@
+import AddConditionButton from './AddConditionButton';
 import ConditionsSection from './ConditionsSection';
 import EventChip from './EventChip';
 import EventDropdown from './EventDropdown';
 import React, {useRef} from 'react';
 import {Align} from '@clayui/drop-down';
-import {ClayButtonWithIcon} from '@clayui/button';
 import {Event} from 'event-analysis/utils/types';
 import {useAttributes} from '../context/attributes';
 
@@ -21,8 +21,6 @@ const EventSection: React.FC<IEventSectionProps> = ({event, onEventChange}) => {
 		onEventChange(event);
 
 		deleteAllAttributes();
-
-		setTimeout(() => sectionRef.current?.focus());
 	};
 
 	return (
@@ -33,14 +31,8 @@ const EventSection: React.FC<IEventSectionProps> = ({event, onEventChange}) => {
 						alignmentPosition={Align.RightTop}
 						onEventChange={handleEventChange}
 						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('add-event')}
-								data-html2canvas-ignore
-								displayType="secondary"
-								monospaced
-								size="sm"
-								symbol="plus"
-								title={Liferay.Language.get('add-event')}
+							<AddConditionButton
+								label={Liferay.Language.get('add-event')}
 							/>
 						}
 					/>
@@ -54,7 +46,11 @@ const EventSection: React.FC<IEventSectionProps> = ({event, onEventChange}) => {
 				<div className="event-container event-list mt-3">
 					<EventChip
 						event={event}
-						onEventChange={handleEventChange}
+						onEventChange={(event) => {
+							handleEventChange(event);
+
+							setTimeout(() => sectionRef.current?.focus());
+						}}
 					/>
 				</div>
 			)}

@@ -1,16 +1,11 @@
-import AttributeBreakdownChip from './AttributeBreakdownChip';
+import AddConditionButton from './AddConditionButton';
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
-import ConditionsSection from './ConditionsSection';
-import React, {useRef} from 'react';
-import useKeyboardReorder from 'shared/components/condition-chip/useKeyboardReorder';
-import {
-	AddBreakdown,
-	AddBreakdownParams,
-	DeleteBreakdown,
-	useAttributes,
-} from '../context/attributes';
+import AttributeConditionsSection from './AttributeConditionsSection';
+import React from 'react';
 import {Align} from '@clayui/drop-down';
-import {ClayButtonWithIcon} from '@clayui/button';
+import {getBreakdownDisplay} from 'event-analysis/utils/utils';
+import {SortableChipTypes} from './SortableChipTypes';
+import {useAttributes} from '../context/attributes';
 
 const MAX_ATTRIBUTES = 5;
 
@@ -30,91 +25,41 @@ const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 		moveBreakdown,
 	} = useAttributes();
 
-	const sectionRef = useRef<HTMLElement>(null);
-
-	const getKeyboardProps = useKeyboardReorder({
-		count: breakdownOrder.length,
-		getName: (index) => {
-			const attribute =
-				attributes[breakdowns[breakdownOrder[index]].attributeId];
-
-			return attribute?.displayName || attribute?.name || '';
-		},
-		onMove: moveBreakdown,
-	});
-
 	if (!eventId) {
 		return null;
 	}
 
-	const disabledIds = breakdownOrder.map(
-		(breakdownId) => breakdowns[breakdownId].attributeId
-	);
-
-	const uneditableIds = Object.keys(attributes);
-
-	const focusSection = () => setTimeout(() => sectionRef.current?.focus());
-
-	const onAttributeSelect: AddBreakdown = (params: AddBreakdownParams) => {
-		addBreakdown(params);
-
-		if (breakdownOrder.length + 1 === MAX_ATTRIBUTES) {
-			focusSection();
-		}
-	};
-
-	const onRemove: DeleteBreakdown = (params) => {
-		deleteBreakdown(params);
-
-		focusSection();
-	};
-
 	return (
-		<ConditionsSection
+		<AttributeConditionsSection
 			action={
 				breakdownOrder.length < MAX_ATTRIBUTES && (
 					<AttributeBreakdownDropdown
 						alignmentPosition={Align.RightTop}
-						disabledIds={disabledIds}
+						disabledIds={breakdownOrder.map(
+							(breakdownId) => breakdowns[breakdownId].attributeId
+						)}
 						eventId={eventId}
-						onAttributeSelect={onAttributeSelect}
+						onAttributeSelect={addBreakdown}
 						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'add-breakdown'
-								)}
-								data-html2canvas-ignore
-								displayType="secondary"
-								monospaced
-								size="sm"
-								symbol="plus"
-								title={Liferay.Language.get('add-breakdown')}
+							<AddConditionButton
+								label={Liferay.Language.get('add-breakdown')}
 							/>
 						}
-						uneditableIds={uneditableIds}
+						uneditableIds={Object.keys(attributes)}
 					/>
 				)
 			}
 			className="attribute-breakdown-section-root"
-			ref={sectionRef}
+			conditions={breakdowns}
+			dragType={SortableChipTypes.Breakdown}
+			getDisplay={(attribute, breakdown) =>
+				getBreakdownDisplay(attribute, breakdown.attributeType)
+			}
+			onMove={moveBreakdown}
+			onRemove={deleteBreakdown}
+			order={breakdownOrder}
 			title={Liferay.Language.get('breakdown-by')}
-		>
-			{!!breakdownOrder.length && (
-				<div className="attribute-container attribute-list d-flex flex-column mt-3">
-					{breakdownOrder.map((id, i) => (
-						<AttributeBreakdownChip
-							attribute={attributes[breakdowns[id].attributeId]}
-							breakdown={breakdowns[id]}
-							index={i}
-							key={id}
-							keyboard={getKeyboardProps(i)}
-							onCloseClick={onRemove}
-							onMove={moveBreakdown}
-						/>
-					))}
-				</div>
-			)}
-		</ConditionsSection>
+		/>
 	);
 };
 

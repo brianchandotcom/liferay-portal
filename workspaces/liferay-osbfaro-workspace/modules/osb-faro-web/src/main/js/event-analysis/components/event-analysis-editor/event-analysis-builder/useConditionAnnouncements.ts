@@ -1,22 +1,16 @@
 import {Attribute, Event} from 'event-analysis/utils/types';
+import {getConditionName} from 'event-analysis/utils/utils';
 import {sub} from 'shared/util/lang';
 import {useAttributes} from '../context/attributes';
 import {useEffect, useRef} from 'react';
 
+type Condition = {attributeId: string; displayName?: string};
+
 type Conditions = {
 	attributes: {[key: string]: Attribute};
-	breakdowns: {[key: string]: {attributeId: string}};
+	breakdowns: {[key: string]: Condition};
 	event?: Event;
-	filters: {[key: string]: {attributeId: string}};
-};
-
-const getAttributeName = (
-	attributes: Conditions['attributes'],
-	attributeId: string
-): string => {
-	const attribute = attributes[attributeId];
-
-	return attribute ? attribute.displayName || attribute.name : '';
+	filters: {[key: string]: Condition};
 };
 
 const getChangedNames = (
@@ -26,7 +20,9 @@ const getChangedNames = (
 ): string[] =>
 	Object.keys(items)
 		.filter((id) => !previousItems[id])
-		.map((id) => getAttributeName(attributes, items[id].attributeId));
+		.map((id) =>
+			getConditionName(attributes[items[id].attributeId], items[id])
+		);
 
 const getMessages = (previous: Conditions, current: Conditions): string[] => {
 	const messages: string[] = [];

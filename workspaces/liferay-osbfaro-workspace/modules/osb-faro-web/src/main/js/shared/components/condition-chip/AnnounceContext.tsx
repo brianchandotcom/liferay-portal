@@ -1,4 +1,4 @@
-import {createContext, useCallback, useContext, useState} from 'react';
+import React, {createContext, useCallback, useContext, useState} from 'react';
 
 export const AnnounceContext = createContext<(message: string) => void>(
 	() => {}
@@ -18,4 +18,20 @@ export const useAnnouncement = () => {
 	);
 
 	return {announce, announcement};
+};
+
+export const AnnounceProvider: React.FC<{children: React.ReactNode}> = ({
+	children,
+}) => {
+	const {announce, announcement} = useAnnouncement();
+
+	return (
+		<AnnounceContext.Provider value={announce}>
+			{children}
+
+			<div aria-live="polite" className="sr-only" role="status">
+				{announcement}
+			</div>
+		</AnnounceContext.Provider>
+	);
 };

@@ -212,6 +212,12 @@ const FILTER_DISPLAY_MAP = {
 	[DataTypes.String]: getStringDisplay,
 };
 
+export const getConditionName = (
+	attribute?: Attribute,
+	condition?: {displayName?: string}
+): string =>
+	condition?.displayName || attribute?.displayName || attribute?.name || '';
+
 export const getFilterDisplay = (
 	attribute: Attribute,
 	filter: Filter
@@ -507,12 +513,13 @@ export function getModifiedEventAttributeDefinitions({
 	attributeOwnerType: AttributeOwnerTypes;
 	eventAttributeDefinitions: Attribute[];
 }): Attribute[] {
+	if (attributeOwnerType === AttributeOwnerTypes.Event) {
+		return eventAttributeDefinitions;
+	}
+
 	let modifiedEventAttributeDefinitions: Attribute[] = [];
 
-	if (attributeOwnerType === AttributeOwnerTypes.Event) {
-		modifiedEventAttributeDefinitions = eventAttributeDefinitions;
-	}
-	else if (attributeOwnerType === AttributeOwnerTypes.Individual) {
+	if (attributeOwnerType === AttributeOwnerTypes.Individual) {
 		modifiedEventAttributeDefinitions = [
 			{
 				dataType: DataTypes.String,

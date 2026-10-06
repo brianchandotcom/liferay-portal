@@ -1,11 +1,12 @@
-import AttributeFilterChip from './AttributeFilterChip';
+import AddConditionButton from './AddConditionButton';
+import AttributeConditionsSection from './AttributeConditionsSection';
 import AttributeFilterDropdown from './attribute-filter-dropdown';
-import ConditionsSection from './ConditionsSection';
-import React, {useRef} from 'react';
-import useKeyboardReorder from 'shared/components/condition-chip/useKeyboardReorder';
+import React from 'react';
 import {Align} from '@clayui/drop-down';
-import {ClayButtonWithIcon} from '@clayui/button';
-import {DeleteFilter, useAttributes} from '../context/attributes';
+import {getFilterDisplay} from 'event-analysis/utils/utils';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
+import {SortableChipTypes} from './SortableChipTypes';
+import {useAttributes} from '../context/attributes';
 
 interface IAttributeFilterSectionProps {
 	eventId?: string;
@@ -17,71 +18,37 @@ const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 	const {attributes, deleteFilter, filterOrder, filters, moveFilter} =
 		useAttributes();
 
-	const sectionRef = useRef<HTMLElement>(null);
-
-	const getKeyboardProps = useKeyboardReorder({
-		count: filterOrder.length,
-		getName: (index) => {
-			const attribute =
-				attributes[filters[filterOrder[index]].attributeId];
-
-			return attribute?.displayName || attribute?.name || '';
-		},
-		onMove: moveFilter,
-	});
-
 	if (!eventId) {
 		return null;
 	}
 
-	const uneditableIds = Object.keys(attributes);
-
-	const onRemove: DeleteFilter = (params) => {
-		deleteFilter(params);
-
-		setTimeout(() => sectionRef.current?.focus());
-	};
-
 	return (
-		<ConditionsSection
+		<AttributeConditionsSection
 			action={
 				<AttributeFilterDropdown
 					alignmentPosition={Align.RightTop}
 					eventId={eventId}
 					trigger={
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('add-filter')}
-							data-html2canvas-ignore
-							displayType="secondary"
-							monospaced
-							size="sm"
-							symbol="plus"
-							title={Liferay.Language.get('add-filter')}
+						<AddConditionButton
+							label={Liferay.Language.get('add-filter')}
 						/>
 					}
-					uneditableIds={uneditableIds}
+					uneditableIds={Object.keys(attributes)}
 				/>
 			}
 			className="attribute-filter-section-root"
-			ref={sectionRef}
+			conditions={filters}
+			dragType={SortableChipTypes.Filter}
+			getDisplay={(attribute, filter) => {
+				const [overline, label] = getFilterDisplay(attribute, filter);
+
+				return [overline, getSafeDecodedURIComponent(label)];
+			}}
+			onMove={moveFilter}
+			onRemove={deleteFilter}
+			order={filterOrder}
 			title={Liferay.Language.get('filter-by')}
-		>
-			{!!filterOrder.length && (
-				<div className="attribute-container attribute-list d-flex flex-column mt-3">
-					{filterOrder.map((id, i) => (
-						<AttributeFilterChip
-							attribute={attributes[filters[id].attributeId]}
-							filter={filters[id]}
-							index={i}
-							key={id}
-							keyboard={getKeyboardProps(i)}
-							onCloseClick={onRemove}
-							onMove={moveFilter}
-						/>
-					))}
-				</div>
-			)}
-		</ConditionsSection>
+		/>
 	);
 };
 

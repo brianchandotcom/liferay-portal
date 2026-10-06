@@ -1,5 +1,7 @@
 import ConditionSticker, {ConditionStickerType} from './ConditionSticker';
+import {DragStates} from './useSortableChip';
 import getCN from 'classnames';
+import {clamp} from 'lodash';
 import React, {useRef} from 'react';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {mergeRef} from 'shared/util/util';
@@ -7,7 +9,7 @@ import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 
 interface IConditionChipProps {
-	dragState?: string;
+	dragState?: DragStates;
 	handle?: React.ReactNode;
 	label: React.ReactNode;
 	name: string;
@@ -67,9 +69,7 @@ const ConditionChip = React.forwardRef<HTMLDivElement, IConditionChipProps>(
 					controls.indexOf(target) +
 					(event.key === 'ArrowRight' ? 1 : -1);
 
-				controls[
-					Math.min(Math.max(index, 0), controls.length - 1)
-				]?.focus();
+				controls[clamp(index, 0, controls.length - 1)]?.focus();
 			}
 		};
 

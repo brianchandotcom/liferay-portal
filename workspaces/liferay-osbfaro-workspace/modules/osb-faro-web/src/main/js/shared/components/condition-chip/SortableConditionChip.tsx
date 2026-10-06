@@ -4,21 +4,23 @@ import React from 'react';
 import useSortableChip, {DragStates} from './useSortableChip';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {IKeyboardReorderProps} from './useKeyboardReorder';
-import {mergeRef} from 'shared/util/util';
 import {sub} from 'shared/util/lang';
 
 interface ISortableConditionChipProps
-	extends React.ComponentProps<typeof ConditionChip> {
+	extends React.ComponentPropsWithoutRef<typeof ConditionChip> {
 	dragType: string;
 	index: number;
 	keyboard?: IKeyboardReorderProps;
 	onMove: (params: {from: number; to: number}) => void;
 }
 
-const SortableConditionChip = React.forwardRef<
-	HTMLDivElement,
-	ISortableConditionChipProps
->(({dragType, index, keyboard, onMove, ...otherProps}, ref) => {
+const SortableConditionChip: React.FC<ISortableConditionChipProps> = ({
+	dragType,
+	index,
+	keyboard,
+	onMove,
+	...otherProps
+}) => {
 	const {chipRef, containerRef, dragState, hoverPosition} = useSortableChip({
 		index,
 		onMove,
@@ -58,10 +60,10 @@ const SortableConditionChip = React.forwardRef<
 						tabIndex={-1}
 					/>
 				}
-				ref={mergeRef(ref, chipRef)}
+				ref={chipRef}
 			/>
 		</div>
 	);
-});
+};
 
 export default SortableConditionChip;

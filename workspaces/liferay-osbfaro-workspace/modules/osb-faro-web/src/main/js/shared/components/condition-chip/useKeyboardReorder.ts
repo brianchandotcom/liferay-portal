@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {HoverTypes} from './useSortableChip';
+import {clamp} from 'lodash';
 import {sub} from 'shared/util/lang';
 import {useAnnounce} from './AnnounceContext';
 
@@ -67,7 +68,7 @@ const useKeyboardReorder = ({
 	const moveTo = (to: number) => {
 		const currentMovement = movementRef.current!;
 
-		const target = Math.min(Math.max(to, 0), count - 1);
+		const target = clamp(to, 0, count - 1);
 
 		updateMovement({...currentMovement, to: target});
 

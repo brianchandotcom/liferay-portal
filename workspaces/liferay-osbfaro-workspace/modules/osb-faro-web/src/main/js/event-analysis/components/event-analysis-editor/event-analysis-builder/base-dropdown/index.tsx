@@ -24,14 +24,51 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 }) => {
 	const [active, setActive] = useState(false);
 
+	const fallbackElementRef = useRef<HTMLElement | null>(null);
 	const triggerElementRef = useRef<HTMLElement | null>(null);
 
 	const handleActiveChange = (value: boolean) => {
 		if (value) {
 			triggerElementRef.current = document.activeElement as HTMLElement;
+
+			fallbackElementRef.current =
+				triggerElementRef.current?.parentElement?.closest<HTMLElement>(
+					'[tabindex="-1"]'
+				) ?? null;
 		}
 
 		setActive(value);
+	};
+
+	const restoreFocus = () => {
+		const fallbackElement = fallbackElementRef.current;
+		const triggerElement = triggerElementRef.current;
+
+		fallbackElementRef.current = null;
+		triggerElementRef.current = null;
+
+		if (!triggerElement) {
+			return;
+		}
+
+		setTimeout(() => {
+			const {activeElement} = document;
+
+			if (
+				activeElement &&
+				activeElement !== document.body &&
+				!activeElement.closest('.base-dropdown-menu-root')
+			) {
+				return;
+			}
+
+			if (triggerElement.isConnected) {
+				triggerElement.focus();
+			}
+			else {
+				fallbackElement?.focus();
+			}
+		});
 	};
 
 	useEffect(() => {
@@ -39,27 +76,12 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 			onActiveChange(active);
 		}
 
-		const triggerElement = triggerElementRef.current;
-
-		if (active || !triggerElement) {
-			return;
+		if (!active) {
+			restoreFocus();
 		}
-
-		triggerElementRef.current = null;
-
-		setTimeout(() => {
-			const {activeElement} = document;
-
-			if (
-				triggerElement.isConnected &&
-				(!activeElement ||
-					activeElement === document.body ||
-					activeElement.closest('.base-dropdown-menu-root'))
-			) {
-				triggerElement.focus();
-			}
-		});
 	}, [active]);
+
+	useEffect(() => restoreFocus, []);
 
 	return (
 		<ClayDropdown

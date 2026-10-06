@@ -1,11 +1,7 @@
 import DndProvider from 'shared/components/DndProvider';
 import EventAnalysisBuilder from './index';
 import React, {useEffect, useRef} from 'react';
-import useConditionAnnouncements from './useConditionAnnouncements';
-import {
-	AnnounceContext,
-	useAnnouncement,
-} from 'shared/components/condition-chip/AnnounceContext';
+import {AnnounceProvider} from 'shared/components/condition-chip/AnnounceContext';
 import {Event} from 'event-analysis/utils/types';
 import {Heading} from '@clayui/core';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -65,43 +61,30 @@ interface IConditionsPanelProps {
 const ConditionsPanel: React.FC<IConditionsPanelProps> = ({
 	event,
 	onEventChange,
-}) => {
-	const {announce, announcement} = useAnnouncement();
-
-	useConditionAnnouncements(event, announce);
-
-	return (
-		<DndProvider backend={HTML5Backend}>
-			<ConditionsDropArea>
-				<div
-					className="d-flex event-analysis-conditions-panel-content flex-column"
-					data-report-expand
-				>
-					<div className="flex-shrink-0 px-4 py-3">
-						<Heading fontSize={6} level={2} weight="semi-bold">
-							{Liferay.Language.get('conditions-library')}
-						</Heading>
-					</div>
-
-					<div
-						className="flex-grow-1 overflow-auto"
-						data-report-expand
-					>
-						<AnnounceContext.Provider value={announce}>
-							<EventAnalysisBuilder
-								event={event}
-								onEventChange={onEventChange}
-							/>
-						</AnnounceContext.Provider>
-					</div>
+}) => (
+	<DndProvider backend={HTML5Backend}>
+		<ConditionsDropArea>
+			<div
+				className="d-flex event-analysis-conditions-panel-content flex-column"
+				data-report-expand
+			>
+				<div className="flex-shrink-0 px-4 py-3">
+					<Heading fontSize={6} level={2} weight="semi-bold">
+						{Liferay.Language.get('conditions-library')}
+					</Heading>
 				</div>
 
-				<div aria-live="polite" className="sr-only" role="status">
-					{announcement}
+				<div className="flex-grow-1 overflow-auto" data-report-expand>
+					<AnnounceProvider>
+						<EventAnalysisBuilder
+							event={event}
+							onEventChange={onEventChange}
+						/>
+					</AnnounceProvider>
 				</div>
-			</ConditionsDropArea>
-		</DndProvider>
-	);
-};
+			</div>
+		</ConditionsDropArea>
+	</DndProvider>
+);
 
 export default ConditionsPanel;

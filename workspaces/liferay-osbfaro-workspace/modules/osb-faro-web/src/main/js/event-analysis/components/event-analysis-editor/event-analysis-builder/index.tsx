@@ -2,7 +2,9 @@ import AttributeBreakdownSection from './AttributeBreakdownSection';
 import AttributeFilterSection from './AttributeFilterSection';
 import EventSection from './EventSection';
 import React from 'react';
+import useConditionAnnouncements from './useConditionAnnouncements';
 import {Event} from 'event-analysis/utils/types';
+import {useAnnounce} from 'shared/components/condition-chip/AnnounceContext';
 
 interface IEventAnalysisBuilderProps {
 	event?: Event;
@@ -12,14 +14,18 @@ interface IEventAnalysisBuilderProps {
 const EventAnalysisBuilder: React.FC<IEventAnalysisBuilderProps> = ({
 	event,
 	onEventChange,
-}) => (
-	<div className="event-analysis-builder-root d-flex flex-column">
-		<EventSection event={event} onEventChange={onEventChange} />
+}) => {
+	useConditionAnnouncements(event, useAnnounce());
 
-		<AttributeBreakdownSection eventId={event?.id} />
+	return (
+		<div className="event-analysis-builder-root d-flex flex-column">
+			<EventSection event={event} onEventChange={onEventChange} />
 
-		<AttributeFilterSection eventId={event?.id} />
-	</div>
-);
+			<AttributeBreakdownSection eventId={event?.id} />
+
+			<AttributeFilterSection eventId={event?.id} />
+		</div>
+	);
+};
 
 export default EventAnalysisBuilder;

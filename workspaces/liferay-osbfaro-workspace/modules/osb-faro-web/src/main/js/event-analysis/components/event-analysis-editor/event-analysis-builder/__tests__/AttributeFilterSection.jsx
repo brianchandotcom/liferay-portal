@@ -95,6 +95,12 @@ describe('AttributeFilterSection', () => {
 		expect(
 			container.querySelectorAll('.attribute-list .condition-chip')
 		).toHaveLength(1);
+		expect(container.querySelector('.condition-chip')).toHaveTextContent(
+			/stuff/i
+		);
+		expect(
+			screen.getByRole('button', {name: /drag.job title/i})
+		).toBeInTheDocument();
 
 		fireEvent.click(container.querySelector('.condition-chip-remove'));
 

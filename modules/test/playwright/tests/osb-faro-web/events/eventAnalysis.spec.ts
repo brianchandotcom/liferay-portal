@@ -460,13 +460,7 @@ test(
 					.nth(1)
 			).toBeVisible();
 
-			await page
-				.locator('.attribute-filter-section-root .condition-chip')
-				.filter({
-					hasText: /^Event \| citycontains "rio de janeiro"$/,
-				})
-				.getByRole('button', {name: /^Remove /})
-				.click();
+			await removeAttribute({page, section: 'Filter'});
 
 			await expect(
 				page
@@ -601,13 +595,7 @@ test(
 					.first()
 			).toBeVisible();
 
-			await page
-				.locator('.attribute-filter-section-root .condition-chip')
-				.filter({
-					hasText: /^Event \| citydoes not contain "rio de janeiro"$/,
-				})
-				.getByRole('button', {name: /^Remove /})
-				.click();
+			await removeAttribute({page, section: 'Filter'});
 
 			await expect(
 				page
@@ -743,11 +731,7 @@ test(
 					.nth(1)
 			).toBeVisible();
 
-			await page
-				.locator('.attribute-filter-section-root .condition-chip')
-				.filter({hasText: /^Event \| cityis "rio de janeiro"$/})
-				.getByRole('button', {name: /^Remove /})
-				.click();
+			await removeAttribute({page, section: 'Filter'});
 
 			await expect(
 				page
@@ -882,13 +866,7 @@ test(
 					.first()
 			).toBeVisible();
 
-			await page
-				.locator('.attribute-filter-section-root .condition-chip')
-				.filter({
-					hasText: /^Event \| cityis not "rio de janeiro"$/,
-				})
-				.getByRole('button', {name: /^Remove /})
-				.click();
+			await removeAttribute({page, section: 'Filter'});
 
 			await expect(
 				page
@@ -1023,13 +1001,7 @@ test(
 					.nth(1)
 			).toBeVisible();
 
-			await page
-				.locator('.attribute-filter-section-root .condition-chip')
-				.filter({
-					hasText: /^Event \| citycontains "rio de janeiro"$/,
-				})
-				.getByRole('button', {name: /^Remove /})
-				.click();
+			await removeAttribute({page, section: 'Filter'});
 
 			await expect(
 				page
@@ -1083,13 +1055,7 @@ test(
 					.first()
 			).toBeVisible();
 
-			await page
-				.locator('.attribute-filter-section-root .condition-chip')
-				.filter({
-					hasText: /^Event \| citydoes not contain "rio de janeiro"$/,
-				})
-				.getByRole('button', {name: /^Remove /})
-				.click();
+			await removeAttribute({page, section: 'Filter'});
 
 			await expect(
 				page

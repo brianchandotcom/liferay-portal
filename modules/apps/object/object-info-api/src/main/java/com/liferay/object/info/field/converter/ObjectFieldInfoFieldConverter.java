@@ -76,8 +76,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -526,9 +528,20 @@ public class ObjectFieldInfoFieldConverter {
 				listTypeEntryKey);
 		}
 
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.fetchListTypeEntry(
-				objectField.getListTypeDefinitionId(), listTypeEntryKey);
+		ListTypeEntry listTypeEntry = null;
+		Map<Long, ListTypeEntry> listTypeEntries = new HashMap<>();
+
+		for (ListTypeEntry curListTypeEntry :
+				_listTypeEntryLocalService.getListTypeEntries(
+					objectField.getListTypeDefinitionId())) {
+
+			if (Objects.equals(curListTypeEntry.getKey(), listTypeEntryKey)) {
+				listTypeEntry = curListTypeEntry;
+			}
+
+			listTypeEntries.put(
+				curListTypeEntry.getListTypeEntryId(), curListTypeEntry);
+		}
 
 		if (listTypeEntry == null) {
 			return Collections.emptyList();
@@ -550,9 +563,8 @@ public class ObjectFieldInfoFieldConverter {
 				TransformUtil.transform(
 					_objectStateLocalService.getNextObjectStates(
 						objectState.getObjectStateId()),
-					nextObjectState ->
-						_listTypeEntryLocalService.fetchListTypeEntry(
-							nextObjectState.getListTypeEntryId()))));
+					nextObjectState -> listTypeEntries.get(
+						nextObjectState.getListTypeEntryId()))));
 	}
 
 	private List<OptionInfoFieldType> _getOptionInfoFieldTypes(

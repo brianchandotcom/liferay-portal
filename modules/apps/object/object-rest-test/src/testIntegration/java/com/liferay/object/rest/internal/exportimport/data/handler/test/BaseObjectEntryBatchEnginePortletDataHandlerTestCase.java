@@ -101,6 +101,7 @@ public abstract class BaseObjectEntryBatchEnginePortletDataHandlerTestCase
 		throws Exception {
 
 		ObjectDefinition objectDefinition = _getObjectDefinition(groupId);
+
 		long objectEntryGroupId = _getObjectEntryGroupId(groupId);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(

@@ -341,6 +341,7 @@ public abstract class BaseBatchEnginePortletDataHandlerTestCase
 	@Test
 	public void testExportImportWithDateRange() throws Exception {
 		long groupId = _group.getGroupId();
+
 		long time = System.currentTimeMillis();
 
 		String externalReferenceCode1 = addEntry(

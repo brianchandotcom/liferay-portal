@@ -4,8 +4,7 @@ Bundle-Version: 15.0.4
 Export-Package:\
 	com.liferay.portal.search.test.rule,\
 	com.liferay.portal.search.test.util,\
-	com.liferay.portal.search.test.util.exportimport,\
-	com.liferay.portal.search.test.util.logging
+	com.liferay.portal.search.test.util.exportimport
 Import-Package:\
 	!com.liferay.portal.search.internal.*,\
 	\

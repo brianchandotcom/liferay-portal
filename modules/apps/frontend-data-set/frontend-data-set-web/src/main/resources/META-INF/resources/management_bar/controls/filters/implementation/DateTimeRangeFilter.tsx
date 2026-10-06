@@ -121,19 +121,21 @@ export function getDateConfig(dateTime: boolean, locale?: string): DateConfig {
 	return {clayFormat, dateFormat, placeholder, use12Hours};
 }
 
-export function formatDatePartsForClay(
-	dateParts: DateParts,
-	clayFormat: string
-): string {
-	const date = new Date(
+function datePartsToLocalDate(dateParts: DateParts): Date {
+	return new Date(
 		dateParts.year,
 		dateParts.month - 1,
 		dateParts.day,
 		dateParts.hour,
 		dateParts.minute
 	);
+}
 
-	return formatDate(date, clayFormat);
+export function formatDatePartsForClay(
+	dateParts: DateParts,
+	clayFormat: string
+): string {
+	return formatDate(datePartsToLocalDate(dateParts), clayFormat);
 }
 
 export function parseClayValue(
@@ -462,6 +464,10 @@ const DateTimeRangeFilter = ({
 
 	const months = useMemo(() => dateUtils.getMonthsLong(), []);
 
+	const defaultMonth = datePartsToLocalDate(
+		nowInTimeZone(Liferay.ThemeDisplay.getTimeZone())
+	);
+
 	const initialFromDateParts = toViewerDateParts(selectedData?.from);
 	const initialToDateParts = toViewerDateParts(selectedData?.to);
 
@@ -573,6 +579,7 @@ const DateTimeRangeFilter = ({
 							}
 							aria-invalid={fromInvalid || undefined}
 							dateFormat={dateConfig.dateFormat}
+							defaultMonth={defaultMonth}
 							firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
 							id={`from-${id}`}
 							inputName={`from-${id}`}
@@ -598,6 +605,7 @@ const DateTimeRangeFilter = ({
 							}
 							aria-invalid={toInvalid || undefined}
 							dateFormat={dateConfig.dateFormat}
+							defaultMonth={defaultMonth}
 							firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
 							id={`to-${id}`}
 							inputName={`to-${id}`}

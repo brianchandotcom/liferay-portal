@@ -4,13 +4,13 @@ exports[`CriteriaSidebarItem should render 1`] = `
 <div>
   <li
     aria-label="Add Page Views"
-    class="align-items-center c-gap-3 criteria-sidebar-item-root d-flex mb-1 mx-4 px-2 py-1 text-3"
+    class="align-items-center c-gap-3 criteria-sidebar-item-root d-flex mb-1 mx-4 p-2 text-4"
     data-testid="criteria-item-Page Views"
     role="menuitem"
     tabindex="-1"
   >
     <span
-      class="sticker criteria-sidebar-item-sticker flex-shrink-0 sticker-sm"
+      class="sticker criteria-sidebar-item-sticker flex-shrink-0"
       style="--criteria-sticker-bg: var(--cadmin-indigo-l5); --criteria-sticker-color: var(--cadmin-indigo);"
     >
       <span

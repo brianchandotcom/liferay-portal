@@ -214,7 +214,7 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 			source.property.propertyKey === propertyKey;
 
 		const classes = getCN(
-			'align-items-center c-gap-3 criteria-sidebar-item-root d-flex mb-1 mx-4 px-2 py-1 text-3',
+			'align-items-center c-gap-3 criteria-sidebar-item-root d-flex mb-1 mx-4 p-2 text-4',
 			{dragging: dragging || movementSource},
 			className
 		);
@@ -232,7 +232,6 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 			>
 				<ClaySticker
 					className="criteria-sidebar-item-sticker flex-shrink-0"
-					size="sm"
 					style={getStickerStyle(propertyKey)}
 				>
 					<ClayIcon symbol={getTypeIcon(type)} />

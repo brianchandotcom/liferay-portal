@@ -1122,8 +1122,14 @@ public abstract class FileUploadBase {
         }
 
         private long getContentLength(FileItemHeaders pHeaders) {
+            String header = pHeaders.getHeader(CONTENT_LENGTH);
+
+            if ((header == null) || (header.length() == 0)) {
+                return -1;
+            }
+
             try {
-                return Long.parseLong(pHeaders.getHeader(CONTENT_LENGTH));
+                return Long.parseLong(header);
             } catch (Exception e) {
                 return -1;
             }
@@ -1535,3 +1541,4 @@ public abstract class FileUploadBase {
     }
 
 }
+/* @generated */

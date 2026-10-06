@@ -11,7 +11,11 @@
 {{- $doclibBucketName := dig "resource" "metadata" "annotations" "crossplane.io/external-name" "" $storage | toString -}}
 {{- $liferayRoleArn := dig "liferay-role" "resource" "status" "atProvider" "arn" "" $observedResources -}}
 {{- $searchEndpoint := dig "resource" "status" "atProvider" "endpoint" "" $search | toString -}}
-{{- $searchPassword := dig "connectionDetails" "attribute.advanced_security_options.0.master_user_options.0.master_user_password" "" $search | toString | b64dec }}
+{{- $searchPassword := dig "connectionDetails" "attribute.advanced_security_options.0.master_user_options.0.master_user_password" "" $search | toString | b64dec -}}
+
+{{- $isDatabaseReady := and (ne $databaseAddress "") (ne $databasePassword "") (ne $databasePort "") -}}
+{{- $isDoclibReady := ne $doclibBucketName "" -}}
+{{- $isSearchReady := or (not $opensearchSpec) (and (ne $searchEndpoint "") (ne $searchPassword "")) }}
 {{- if $liferayRoleArn }}
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
@@ -313,4 +317,4 @@ spec:
 apiVersion: aws.liferay.com/v1alpha1
 kind: LiferayInfrastructure
 status:
-    managedServiceDetailsReady: {{ and (and $databaseAddress $databasePassword $databasePort | empty | not) (or (not $opensearchSpec) (and $searchEndpoint $searchPassword) | empty | not) (not (empty $doclibBucketName)) }}
+    managedServiceDetailsReady: {{ and $isDatabaseReady $isDoclibReady $isSearchReady }}

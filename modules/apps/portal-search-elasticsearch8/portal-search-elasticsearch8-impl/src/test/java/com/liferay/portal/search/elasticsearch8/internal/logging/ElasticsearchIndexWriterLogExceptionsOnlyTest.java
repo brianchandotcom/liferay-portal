@@ -266,39 +266,73 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 	@Test
 	public void testPartiallyUpdateDocument() throws SearchException {
-		Document document = new DocumentImpl();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ElasticsearchIndexWriter.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-		document.addKeyword(Field.UID, _UID);
+			Document document = new DocumentImpl();
 
-		IndexWriter indexWriter = getIndexWriter();
+			document.addKeyword(Field.UID, _UID);
 
-		indexWriter.partiallyUpdateDocument(createSearchContext(), document);
+			IndexWriter indexWriter = getIndexWriter();
+
+			indexWriter.partiallyUpdateDocument(
+				createSearchContext(), document);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+		}
 	}
 
 	@Test
 	public void testPartiallyUpdateDocuments() throws SearchException {
-		Document document = new DocumentImpl();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ElasticsearchIndexWriter.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-		document.addKeyword(Field.UID, _UID);
+			Document document = new DocumentImpl();
 
-		IndexWriter indexWriter = getIndexWriter();
+			document.addKeyword(Field.UID, _UID);
 
-		indexWriter.partiallyUpdateDocuments(
-			createSearchContext(), Arrays.asList(document));
+			IndexWriter indexWriter = getIndexWriter();
+
+			indexWriter.partiallyUpdateDocuments(
+				createSearchContext(), Arrays.asList(document));
+
+			_assertLogCapture(
+				message -> Assert.assertEquals(
+					"Bulk partial update failed", message),
+				logCapture, LoggerTestUtil.ERROR);
+		}
 	}
 
 	@Test
 	public void testPartiallyUpdateDocumentsBulkExecutor()
 		throws SearchException {
 
-		Document document = new DocumentImpl();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BulkDocumentRequestExecutor.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-		document.addKeyword(Field.UID, _UID);
+			Document document = new DocumentImpl();
 
-		IndexWriter indexWriter = getIndexWriter();
+			document.addKeyword(Field.UID, _UID);
 
-		indexWriter.partiallyUpdateDocuments(
-			createSearchContext(), Arrays.asList(document));
+			IndexWriter indexWriter = getIndexWriter();
+
+			indexWriter.partiallyUpdateDocuments(
+				createSearchContext(), Arrays.asList(document));
+
+			String expectedMessage = StringBundler.concat(
+				"[", _UID, "]: document missing");
+
+			_assertLogCapture(
+				message -> Assert.assertTrue(
+					message + " does not contain " + expectedMessage,
+					message.contains(expectedMessage)),
+				logCapture, LoggerTestUtil.ERROR);
+		}
 	}
 
 	@Test

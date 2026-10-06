@@ -62,6 +62,15 @@ rules:
     -   apiGroups:
             -   apps
         resources:
+            -   deployments
+        verbs:
+            -   get
+            -   list
+            -   patch
+            -   watch
+    -   apiGroups:
+            -   apps
+        resources:
             -   statefulsets
         verbs:
             -   get
@@ -77,6 +86,23 @@ rules:
             -   get
             -   list
             -   patch
+            -   watch
+    -   apiGroups:
+            -   batch
+        resources:
+            -   cronjobs
+        verbs:
+            -   get
+            -   list
+            -   patch
+            -   watch
+    -   apiGroups:
+            -   batch
+        resources:
+            -   jobs
+        verbs:
+            -   get
+            -   list
             -   watch
     -   apiGroups:
             -   cx.liferay.com

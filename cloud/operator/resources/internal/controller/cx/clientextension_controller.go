@@ -27,10 +27,12 @@ import (
 )
 
 const (
+	ReasonConfigurationOnly      = "ConfigurationOnly"
 	ReasonDelivered              = "Delivered"
 	ReasonDeliveryNotPermitted   = "DeliveryNotPermitted"
 	ReasonDxpNamespaceNotFound   = "DxpNamespaceNotFound"
 	ReasonExtInitMissing         = "ExtInitMissing"
+	ReasonInitialized            = "Initialized"
 	ReasonMirrorFailed           = "MirrorFailed"
 	ReasonMirrored               = "Mirrored"
 	ReasonNamespaceNotPermitted  = "NamespaceNotPermitted"
@@ -40,6 +42,8 @@ const (
 	ReasonReady                  = "Ready"
 	ReasonServiceIDConflict      = "ServiceIDConflict"
 	ReasonUnknownVirtualInstance = "UnknownVirtualInstance"
+	ReasonWorkloadMisconfigured  = "WorkloadMisconfigured"
+	ReasonWorkloadNotFound       = "WorkloadNotFound"
 )
 
 const deliveryClusterRoleName = "client-extension-delivery-cluster-role"
@@ -51,6 +55,9 @@ const refusalRequeueInterval = time.Minute
 // +kubebuilder:rbac:groups="",resources=configmaps,verbs=get;list;watch
 // +kubebuilder:rbac:groups="",resources=events,verbs=create;patch
 // +kubebuilder:rbac:groups="",resources=namespaces,verbs=get;list;watch
+// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;patch;watch
+// +kubebuilder:rbac:groups=batch,resources=cronjobs,verbs=get;list;patch;watch
+// +kubebuilder:rbac:groups=batch,resources=jobs,verbs=get;list;watch
 // +kubebuilder:rbac:groups=cx.liferay.com,resources=clientextensions,verbs=get;list;watch
 // +kubebuilder:rbac:groups=cx.liferay.com,resources=clientextensions/finalizers,verbs=update
 // +kubebuilder:rbac:groups=cx.liferay.com,resources=clientextensions/status,verbs=get;patch;update

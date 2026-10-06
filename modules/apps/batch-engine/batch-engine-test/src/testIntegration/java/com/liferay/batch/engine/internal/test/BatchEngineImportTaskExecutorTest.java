@@ -30,6 +30,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -984,6 +985,84 @@ public class BatchEngineImportTaskExecutorTest
 	}
 
 	@Test
+	public void testImportBlogPostingsWithAuditRequestThreadLocal()
+		throws Exception {
+
+		AuditRequestThreadLocal auditRequestThreadLocal =
+			AuditRequestThreadLocal.getAuditThreadLocal();
+
+		String realUserEmailAddress = RandomTestUtil.randomString();
+		long realUserId = RandomTestUtil.randomLong();
+
+		auditRequestThreadLocal.setRealUserEmailAddress(realUserEmailAddress);
+		auditRequestThreadLocal.setRealUserId(realUserId);
+
+		try {
+			_importBlogPostings(
+				BatchEngineTaskOperation.CREATE,
+				_getBlogPostingsJSONCreateContent(
+					TestPropsValues.getGroupId(), FIELD_NAMES),
+				"JSON", null);
+
+			Assert.assertEquals(
+				BatchEngineTaskExecuteStatus.COMPLETED.toString(),
+				_batchEngineImportTask.getExecuteStatus());
+
+			_assertAuditRequestThreadLocal(realUserEmailAddress, realUserId);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(StringPool.OPEN_BRACKET);
+
+			_createJSONRow(
+				sb, FIELD_NAMES[0], _toJSONValue("alternativeHeadline"),
+				FIELD_NAMES[1], _toJSONValue("articleBody"), FIELD_NAMES[2],
+				_toJSONValue(dateFormat.format(new Date(baseDate.getTime()))),
+				FIELD_NAMES[3], _toJSONValue("headline"), FIELD_NAMES[4],
+				String.valueOf(TestPropsValues.getGroupId()), "unknownColumn",
+				_toJSONValue("unknownValue"));
+
+			sb.append(StringPool.CLOSE_BRACKET);
+
+			String content = sb.toString();
+
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+					LoggerTestUtil.ERROR)) {
+
+				_importBlogPostings(
+					BatchEngineTaskOperation.CREATE,
+					_compressContent(
+						content.getBytes(StandardCharsets.UTF_8), "JSON"),
+					"JSON", null);
+			}
+
+			Assert.assertEquals(
+				BatchEngineTaskExecuteStatus.FAILED.toString(),
+				_batchEngineImportTask.getExecuteStatus());
+
+			List<BatchEngineImportTaskError> batchEngineImportTaskErrors =
+				_batchEngineImportTaskErrorLocalService.
+					getBatchEngineImportTaskErrors(
+						_batchEngineImportTask.getBatchEngineImportTaskId());
+
+			Assert.assertEquals(
+				batchEngineImportTaskErrors.toString(), 1,
+				batchEngineImportTaskErrors.size());
+
+			BatchEngineImportTaskError batchEngineImportTaskError =
+				batchEngineImportTaskErrors.get(0);
+
+			Assert.assertEquals(1, batchEngineImportTaskError.getItemIndex());
+
+			_assertAuditRequestThreadLocal(realUserEmailAddress, realUserId);
+		}
+		finally {
+			AuditRequestThreadLocal.removeAuditThreadLocal();
+		}
+	}
+
+	@Test
 	public void testImportBlogPostingsWithCallbackURL() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			BatchEngineImportTaskExecutorTest.class);
@@ -1249,6 +1328,19 @@ public class BatchEngineImportTaskExecutorTest
 
 		Assert.assertEquals(count + 1, testApplication.getCount());
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+	}
+
+	private void _assertAuditRequestThreadLocal(
+		String realUserEmailAddress, long realUserId) {
+
+		AuditRequestThreadLocal auditRequestThreadLocal =
+			AuditRequestThreadLocal.getAuditThreadLocal();
+
+		Assert.assertEquals(
+			realUserEmailAddress,
+			auditRequestThreadLocal.getRealUserEmailAddress());
+		Assert.assertEquals(
+			realUserId, auditRequestThreadLocal.getRealUserId());
 	}
 
 	private void _assertCreatedBlogPostings() throws Exception {

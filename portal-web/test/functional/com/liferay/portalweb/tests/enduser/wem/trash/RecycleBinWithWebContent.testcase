@@ -61,6 +61,17 @@ definition {
 		}
 
 		task ("Expand the Recycle Bin category") {
+			ProductMenuHelper.openProductMenu();
+
+			ProductMenuHelper.expandCategory(category = "Recycle Bin");
+
+			// The list collects its drop targets when the page loads, so reload
+			// with the Recycle Bin link already shown
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			ProductMenuHelper.openProductMenu();
+
 			ProductMenuHelper.expandCategory(category = "Recycle Bin");
 		}
 

@@ -71,7 +71,8 @@ public class ElasticsearchIndexSearcherLogExceptionsOnlyTest
 
 		return ElasticsearchConnectionFixture.builder(
 		).clusterName(
-			ElasticsearchIndexWriterLogExceptionsOnlyTest.class.getSimpleName()
+			ElasticsearchIndexSearcherLogExceptionsOnlyTest.class.
+				getSimpleName()
 		).elasticsearchConfigurationProperties(
 			Collections.singletonMap("logExceptionsOnly", true)
 		).build();

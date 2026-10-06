@@ -134,7 +134,7 @@ export function KeyboardMovementProvider({
 			setAnnouncement(
 				sub(
 					Liferay.Language.get(
-						'use-the-arrow-keys-to-choose-where-to-add-x-and-press-enter-to-confirm-or-esc-to-cancel'
+						'use-the-arrow-keys-to-choose-where-to-add-x-and-press-enter-to-confirm-or-escape-to-cancel'
 					),
 					[movementSource.property.label]
 				) as string

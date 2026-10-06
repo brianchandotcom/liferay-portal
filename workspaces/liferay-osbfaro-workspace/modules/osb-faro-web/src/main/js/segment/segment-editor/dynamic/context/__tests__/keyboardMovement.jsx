@@ -81,7 +81,7 @@ describe('KeyboardMovementProvider', () => {
 			position: 'bottom'
 		});
 		expect(getAnnouncement()).toBe(
-			'Use the arrow keys to choose where to add Download, and press Enter to confirm or Esc to cancel.'
+			'Use the arrow keys to choose where to add Download, and press enter to confirm or escape to cancel.'
 		);
 	});
 

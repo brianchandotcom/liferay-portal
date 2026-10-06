@@ -1,16 +1,5 @@
 {{- $argoWorkflows := .Values.operatorApplications.argoWorkflows -}}
-{{- if $argoWorkflows.enabled -}}
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-    labels:
-        {{- include "liferay-platform.labels" $ | nindent 8 }}
-    name: default-deny-ingress
-    namespace: {{ $argoWorkflows.namespace }}
-spec:
-    podSelector: {}
-    policyTypes:
-        -   Ingress
+{{- if $argoWorkflows.enabled }}
 {{- if .Values.observability.enabled }}
 ---
 apiVersion: networking.k8s.io/v1
@@ -66,4 +55,16 @@ spec:
     policyTypes:
         -   Ingress
 {{- end }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: default-deny-ingress
+    namespace: {{ $argoWorkflows.namespace }}
+spec:
+    podSelector: {}
+    policyTypes:
+        -   Ingress
 {{- end -}}

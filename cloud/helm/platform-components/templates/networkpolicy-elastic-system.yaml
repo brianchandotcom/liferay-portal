@@ -8,6 +8,18 @@ kind: NetworkPolicy
 metadata:
     labels:
         {{- include "liferay-platform.labels" $ | nindent 8 }}
+    name: default-deny-ingress
+    namespace: {{ $eckOperator.namespace }}
+spec:
+    podSelector: {}
+    policyTypes:
+        -   Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    labels:
+        {{- include "liferay-platform.labels" $ | nindent 8 }}
     name: elastic-operator-webhook-ingress
     namespace: {{ $eckOperator.namespace }}
 spec:
@@ -21,18 +33,6 @@ spec:
         matchLabels:
             app.kubernetes.io/instance: {{ $eckOperator.name }}
             app.kubernetes.io/name: elastic-operator
-    policyTypes:
-        -   Ingress
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-    labels:
-        {{- include "liferay-platform.labels" $ | nindent 8 }}
-    name: default-deny-ingress
-    namespace: {{ $eckOperator.namespace }}
-spec:
-    podSelector: {}
     policyTypes:
         -   Ingress
 {{- end -}}

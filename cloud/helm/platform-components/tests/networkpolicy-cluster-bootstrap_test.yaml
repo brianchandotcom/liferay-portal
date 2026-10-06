@@ -24,7 +24,7 @@ tests:
         documentSelector:
             path: metadata.name
             value: default-deny-ingress
-        it: Denies every ingress by default, namespace-wide
+        it: Denies every ingress in the namespace by default
     -   asserts:
             -   hasDocuments:
                     count: 0
@@ -34,4 +34,4 @@ tests:
     -   asserts:
             -   hasDocuments:
                     count: 1
-        it: Renders exactly the namespace-wide default-deny
+        it: Renders only the default deny for the whole namespace

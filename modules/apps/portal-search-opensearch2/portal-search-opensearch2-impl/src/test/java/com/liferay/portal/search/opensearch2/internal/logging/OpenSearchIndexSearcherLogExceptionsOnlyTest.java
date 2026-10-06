@@ -96,12 +96,15 @@ public class OpenSearchIndexSearcherLogExceptionsOnlyTest
 
 		Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
 
+		String expectedMessage =
+			"Request failed: [search_phase_execution_exception] all shards " +
+				"failed";
+
+		Assert.assertEquals(expectedMessage, logEntry.getMessage());
+
 		Throwable throwable = logEntry.getThrowable();
 
-		Assert.assertEquals(
-			"Request failed: [search_phase_execution_exception] all shards " +
-				"failed",
-			throwable.getMessage());
+		Assert.assertEquals(expectedMessage, throwable.getMessage());
 		Assert.assertSame(OpenSearchException.class, throwable.getClass());
 	}
 

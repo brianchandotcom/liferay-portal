@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {v4 as uuidv4} from 'uuid';
-
+import uuidv4 from '../../main/utils/uuidv4';
 import fetch from './../util/fetch.es';
 import isObject from './../util/is_object';
 import RenderState from './RenderState.es';

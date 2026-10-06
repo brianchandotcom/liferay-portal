@@ -4,8 +4,8 @@
  */
 
 import ClayButton from '@clayui/button';
+import {uuidv4} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import {disableFormSubmitButton} from '../../clientExtensionUtil';
 import AttributeFields, {TYPE_BOOLEAN, TYPE_STRING} from './AttributeFields';

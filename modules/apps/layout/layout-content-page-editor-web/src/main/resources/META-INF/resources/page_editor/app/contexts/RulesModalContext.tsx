@@ -4,6 +4,7 @@
  */
 
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+import {uuidv4} from 'frontend-js-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -13,7 +14,6 @@ import React, {
 	useEffect,
 	useState,
 } from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import {AdvancedRule, BasicRule, Rule} from '../../types/Rule';
 import {useSelectItem} from '../js-index';

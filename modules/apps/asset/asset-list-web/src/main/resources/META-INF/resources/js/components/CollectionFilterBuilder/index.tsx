@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {uuidv4} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import useTypeProperties from '../../hooks/useTypeProperties';
 import {ConditionBuilder} from './ConditionBuilder';

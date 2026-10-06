@@ -6,7 +6,7 @@
 import {EConfigInURLBehavior, IView} from '@liferay/frontend-data-set-web';
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {openToast} from 'frontend-js-components-web';
-import {v4 as uuidv4} from 'uuid';
+import {uuidv4} from 'frontend-js-web';
 
 import ObjectEntryLinkService, {
 	ObjectEntryLinkContext,

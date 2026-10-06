@@ -31,6 +31,7 @@ jest.mock('frontend-js-web', () => ({
 	},
 	fetch: (...args: any[]) => (global.fetch as any)(...args),
 	sub: jest.fn((str) => str),
+	uuidv4: (jest.requireActual('frontend-js-web') as any).uuidv4,
 }));
 
 const mockCloseModal = jest.fn();

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {sub} from 'frontend-js-web';
+import {sub, uuidv4} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useContext,
@@ -19,7 +19,6 @@ import ReactFlow, {
 	isEdge,
 	isNode,
 } from 'react-flow-renderer';
-import {v4 as uuidv4} from 'uuid';
 
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
 import {defaultLanguageId} from '../constants';

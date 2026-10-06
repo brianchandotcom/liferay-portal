@@ -9,9 +9,9 @@ import ClayIcon from '@clayui/icon';
 import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import {openToast} from 'frontend-js-components-web';
+import {uuidv4} from 'frontend-js-web';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
-import {v4 as uuidv4} from 'uuid';
 
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';

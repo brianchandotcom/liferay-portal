@@ -7,9 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {uuidv4} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import '../../../document_library/css/file_size_mimetypes.scss';
 

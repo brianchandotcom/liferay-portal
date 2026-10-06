@@ -7,8 +7,8 @@ import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
 import {RowBuilder} from '@liferay/layout-js-components-web';
+import {uuidv4} from 'frontend-js-web';
 import React, {useCallback, useMemo} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import './ConditionBuilder.scss';
 import ValueInput from './ValueInput';

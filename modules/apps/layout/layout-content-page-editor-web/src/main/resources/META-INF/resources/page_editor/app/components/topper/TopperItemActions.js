@@ -7,9 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {openModal, openToast} from 'frontend-js-components-web';
+import {uuidv4} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';

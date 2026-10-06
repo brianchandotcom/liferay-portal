@@ -12,9 +12,8 @@ import {
 	RowBuilder,
 	isNullOrUndefined,
 } from '@liferay/layout-js-components-web';
-import {sub} from 'frontend-js-web';
+import {sub, uuidv4} from 'frontend-js-web';
 import React, {useId, useMemo} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/contexts/StoreContext';

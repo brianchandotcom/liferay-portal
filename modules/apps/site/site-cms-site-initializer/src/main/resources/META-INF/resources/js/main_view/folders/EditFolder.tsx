@@ -8,9 +8,8 @@ import ClayForm from '@clayui/form';
 import ClayToolbar from '@clayui/toolbar';
 import {useFormik} from 'formik';
 import {FieldBase, openToast} from 'frontend-js-components-web';
-import {navigate, sub} from 'frontend-js-web';
+import {navigate, sub, uuidv4} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import {SpaceInput} from '../../common/components/SpaceSelector';
 import {FieldText} from '../../common/components/forms';

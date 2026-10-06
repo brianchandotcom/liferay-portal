@@ -12,8 +12,8 @@ import {
 	getCMSItemSelectorFilters,
 	getCMSItemSelectorGroupedFilters,
 } from '@liferay/frontend-js-item-selector-web';
+import {uuidv4} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import {getSpaceAvatarSrc} from './getSpaceAvatarSrc';
 

@@ -13,6 +13,7 @@ jest.mock('frontend-js-web', () => ({
 
 		return template.content;
 	},
+	uuidv4: (jest.requireActual('frontend-js-web') as any).uuidv4,
 }));
 
 describe('openToast', () => {

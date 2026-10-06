@@ -4,7 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
-import {v4 as uuidv4} from 'uuid';
+import {randomUUID} from 'crypto';
 
 import {dataSetManagerApiHelpersTest} from '../../../fixtures/dataSetManagerApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -26,7 +26,7 @@ const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME =
 
 // @ts-ignore
 
-const PICKLIST_VALUE_KEY = uuidv4().replaceAll('-', '');
+const PICKLIST_VALUE_KEY = randomUUID().replaceAll('-', '');
 const PICKLIST_VALUE_NAME = getRandomString();
 
 const test = mergeTests(

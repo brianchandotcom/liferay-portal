@@ -95,8 +95,6 @@ jest.mock('@liferay/frontend-js-item-selector-web', () => ({
 	getCMSItemSelectorGroupedFilters: jest.fn().mockReturnValue([]),
 }));
 
-jest.mock('uuid', () => ({v4: () => 'test-uuid'}));
-
 (globalThis as any).Liferay = {
 	Language: {
 		get: (key: string) => key,

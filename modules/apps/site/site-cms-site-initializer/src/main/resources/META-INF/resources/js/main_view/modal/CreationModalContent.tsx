@@ -7,9 +7,8 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {FormikHelpers, useFormik} from 'formik';
 import {FieldBase} from 'frontend-js-components-web';
-import {navigate, sub} from 'frontend-js-web';
+import {navigate, sub, uuidv4} from 'frontend-js-web';
 import React, {useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import SpaceSelector from '../../common/components/SpaceSelector';
 import {FieldText} from '../../common/components/forms';

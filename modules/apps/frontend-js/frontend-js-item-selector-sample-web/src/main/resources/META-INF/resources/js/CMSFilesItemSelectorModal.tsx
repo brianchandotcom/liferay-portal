@@ -19,9 +19,8 @@ import {
 	getCMSItemSelectorGroupedFilters,
 } from '@liferay/frontend-js-item-selector-web';
 import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, uuidv4} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';

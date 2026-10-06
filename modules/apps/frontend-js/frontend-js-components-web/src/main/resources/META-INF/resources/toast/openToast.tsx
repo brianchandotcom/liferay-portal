@@ -6,9 +6,8 @@
 import ClayAlert, {DisplayType} from '@clayui/alert';
 import {render} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {buildFragment} from 'frontend-js-web';
+import {buildFragment, uuidv4} from 'frontend-js-web';
 import React, {MouseEvent, ReactNode} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import './notification.scss';
 

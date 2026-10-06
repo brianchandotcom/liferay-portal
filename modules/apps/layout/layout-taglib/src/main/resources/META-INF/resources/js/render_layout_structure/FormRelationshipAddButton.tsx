@@ -6,9 +6,8 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {fetch, runScriptsInElement} from 'frontend-js-web';
+import {fetch, runScriptsInElement, uuidv4} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 export default function FormRelationshipAddButton({
 	contentId,

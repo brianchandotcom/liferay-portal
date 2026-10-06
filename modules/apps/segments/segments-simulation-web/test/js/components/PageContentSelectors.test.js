@@ -43,6 +43,7 @@ const mockProps = {
 jest.mock('frontend-js-web', () => ({
 	debounce: jest.fn(),
 	sub: jest.fn(),
+	uuidv4: jest.requireActual('frontend-js-web').uuidv4,
 }));
 
 describe('PageContentSelectors', () => {

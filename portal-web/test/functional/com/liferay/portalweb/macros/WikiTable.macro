@@ -1,19 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro deleteEntry(wikiPageTitle = null) {
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		var key_wikiPageTitle = ${wikiPageTitle};
-
-		Click(
-			locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS",
-			value1 = ${wikiPageTitle});
-
-		PortletEntry.clickMoveToRecycleBin();
-	}
-
-	@summary = "Default summary"
 	macro viewEntry(entryStatus = null, wikiPageTitle = null, revision = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 

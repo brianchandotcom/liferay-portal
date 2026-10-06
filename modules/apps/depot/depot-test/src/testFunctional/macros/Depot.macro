@@ -973,31 +973,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultLanguagesConfiguration() {
-		AssertChecked.assertCheckedNotVisible(
-			key_languagesOption = "Use the default language options.",
-			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
-
-		AssertNotChecked.assertNotCheckedNotVisible(
-			key_languagesOption = "Define a custom default language and additional active languages for this asset library.",
-			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
-
-		AssertTextEquals.assertPartialText(
-			key_language = "English (United States)",
-			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
-			value1 = "English (United States)");
-
-		for (var language : list "English (United States),Arabic (Saudi Arabia),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden)") {
-			AssertTextEquals.assertPartialText(
-				key_language = ${language},
-				locator1 = "LanguageConfiguration#DEPOT_AVAILABLE_LANGUAGES",
-				value1 = ${language});
-		}
-
-		AssertElementPresent(locator1 = "Button#SAVE");
-	}
-
-	@summary = "Default summary"
 	macro viewDepotConfiguration(configuration = null, toggleSwitchLabel = null) {
 		if (${configuration} == "enabled") {
 			AssertChecked.assertCheckedNotVisible(

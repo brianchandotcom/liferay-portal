@@ -1,13 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro clickBookmarkIcon(socialBookmark = null) {
-		Click(
-			key_socialBookmark = StringUtil.toLowerCase(${socialBookmark}),
-			locator1 = "SocialBookmarks#SOCIAL_BOOKMARK_ICON");
-	}
-
-	@summary = "Default summary"
 	macro viewBookmarkIcons(socialBookmarks = null) {
 		for (var socialBookmark : list ${socialBookmarks}) {
 			AssertElementPresent(

@@ -232,14 +232,35 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testPartiallyUpdateDocuments() throws SearchException {
-		Document document = new DocumentImpl();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BulkDocumentRequestExecutor.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-		document.addKeyword(Field.UID, _UID);
+			Document document = new DocumentImpl();
 
-		IndexWriter indexWriter = getIndexWriter();
+			document.addKeyword(Field.UID, _UID);
 
-		indexWriter.partiallyUpdateDocuments(
-			createSearchContext(), Arrays.asList(document));
+			IndexWriter indexWriter = getIndexWriter();
+
+			try {
+				indexWriter.partiallyUpdateDocuments(
+					createSearchContext(), Arrays.asList(document));
+
+				Assert.fail();
+			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Bulk partial update failed", systemException.getMessage());
+			}
+
+			String expectedMessage = "[" + _UID + "]: document missing";
+
+			_assertLogCapture(
+				message -> Assert.assertTrue(
+					message + " does not contain " + expectedMessage,
+					message.contains(expectedMessage)),
+				logCapture, LoggerTestUtil.ERROR);
+		}
 	}
 
 	@Test

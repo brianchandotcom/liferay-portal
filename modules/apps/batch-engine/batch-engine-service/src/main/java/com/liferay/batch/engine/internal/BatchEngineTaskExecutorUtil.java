@@ -41,31 +41,42 @@ public class BatchEngineTaskExecutorUtil {
 		AuditRequestThreadLocal auditRequestThreadLocal =
 			AuditRequestThreadLocal.getAuditThreadLocal();
 
-		auditRequestThreadLocal.setRealUserEmailAddress(user.getEmailAddress());
-		auditRequestThreadLocal.setRealUserId(user.getUserId());
+		String realUserEmailAddress =
+			auditRequestThreadLocal.getRealUserEmailAddress();
+		long realUserId = auditRequestThreadLocal.getRealUserId();
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (checkPermissions) {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-		}
-		else {
-			PermissionThreadLocal.setPermissionChecker(
-				new LiberalPermissionChecker(user));
-		}
-
 		String name = PrincipalThreadLocal.getName();
 
-		PrincipalThreadLocal.setName(user.getUserId());
+		try {
+			auditRequestThreadLocal.setRealUserEmailAddress(
+				user.getEmailAddress());
+			auditRequestThreadLocal.setRealUserId(user.getUserId());
 
-		try (SafeCloseable safeCloseable =
-				ItemIndexThreadLocal.pushIndexQueueWithSafeCloseable()) {
+			if (checkPermissions) {
+				PermissionThreadLocal.setPermissionChecker(
+					PermissionCheckerFactoryUtil.create(user));
+			}
+			else {
+				PermissionThreadLocal.setPermissionChecker(
+					new LiberalPermissionChecker(user));
+			}
 
-			return unsafeSupplier.get();
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			try (SafeCloseable safeCloseable =
+					ItemIndexThreadLocal.pushIndexQueueWithSafeCloseable()) {
+
+				return unsafeSupplier.get();
+			}
 		}
 		finally {
+			auditRequestThreadLocal.setRealUserEmailAddress(
+				realUserEmailAddress);
+			auditRequestThreadLocal.setRealUserId(realUserId);
+
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			PrincipalThreadLocal.setName(name);
 		}

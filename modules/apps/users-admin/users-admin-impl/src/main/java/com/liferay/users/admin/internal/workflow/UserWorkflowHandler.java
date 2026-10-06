@@ -96,9 +96,32 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 
 			_userLocalService.completeUserRegistration(user, serviceContext);
 
-			_updateAuditRequestThreadLocal(workflowContext);
+			AuditRequestThreadLocal auditRequestThreadLocal =
+				AuditRequestThreadLocal.getAuditThreadLocal();
 
-			user = _userLocalService.getUser(userId);
+			String clientHost = auditRequestThreadLocal.getClientHost();
+			String clientIP = auditRequestThreadLocal.getClientIP();
+			long realUserId = auditRequestThreadLocal.getRealUserId();
+			String serverName = auditRequestThreadLocal.getServerName();
+			int serverPort = auditRequestThreadLocal.getServerPort();
+			String sessionID = auditRequestThreadLocal.getSessionID();
+
+			try {
+				_updateAuditRequestThreadLocal(workflowContext);
+
+				user = _userLocalService.getUser(userId);
+
+				return _userLocalService.updateStatus(
+					user, status, serviceContext);
+			}
+			finally {
+				auditRequestThreadLocal.setClientHost(clientHost);
+				auditRequestThreadLocal.setClientIP(clientIP);
+				auditRequestThreadLocal.setRealUserId(realUserId);
+				auditRequestThreadLocal.setServerName(serverName);
+				auditRequestThreadLocal.setServerPort(serverPort);
+				auditRequestThreadLocal.setSessionID(sessionID);
+			}
 		}
 
 		return _userLocalService.updateStatus(user, status, serviceContext);

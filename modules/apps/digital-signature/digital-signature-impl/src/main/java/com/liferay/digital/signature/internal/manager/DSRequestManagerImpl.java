@@ -1,3 +1,155 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.digital.signature.internal.manager;
+
+import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
+import com.liferay.digital.signature.constants.DSRequestConstants;
+import com.liferay.digital.signature.constants.DSRequestRecipientConstants;
+import com.liferay.digital.signature.manager.DSEnvelopeManager;
+import com.liferay.digital.signature.manager.DSRequestManager;
+import com.liferay.digital.signature.model.DSEnvelope;
+import com.liferay.digital.signature.model.DSRecipient;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Brian I. Kim
+ */
+@Component(service = DSRequestManager.class)
+public class DSRequestManagerImpl implements DSRequestManager {
+
+	@Override
+	public void addDSRequest(
+			long companyId, long groupId, long userId, DSEnvelope dsEnvelope,
+			long[] fileEntryIds)
+		throws PortalException {
+
+		if (!_isEnabled(companyId, groupId)) {
+			return;
+		}
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_addDSRequest(
+						companyId, groupId, userId, dsEnvelope, fileEntryIds);
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			if (throwable instanceof PortalException) {
+				throw (PortalException)throwable;
+			}
+
+			throw new PortalException(
+				"Unable to record the signature request for envelope " +
+					dsEnvelope.getDSEnvelopeId(),
+				throwable);
+		}
+	}
+
+	@Override
+	public void updateDSRequest(
+		long companyId, long groupId, String providerRequestId) {
+
+		if (Validator.isNull(providerRequestId) ||
+			!_isEnabled(companyId, groupId)) {
+
+			return;
+		}
+
+		ObjectDefinition recipientObjectDefinition = _fetchObjectDefinition(
+			companyId, "L_DS_REQUEST_RECIPIENT");
+		ObjectDefinition requestObjectDefinition = _fetchObjectDefinition(
+			companyId, "L_DS_REQUEST");
+
+		if ((recipientObjectDefinition == null) ||
+			(requestObjectDefinition == null)) {
+
+			return;
+		}
+
+		try {
+			Map<String, DSRecipient> dsRecipients = new HashMap<>();
+
+			DSEnvelope dsEnvelope = _dsEnvelopeManager.getDSEnvelope(
+				companyId, groupId, providerRequestId);
+
+			for (DSRecipient dsRecipient : dsEnvelope.getDSRecipients()) {
+				dsRecipients.put(dsRecipient.getDSRecipientId(), dsRecipient);
+			}
+
+			for (Map<String, Serializable> values :
+					_getValuesList(
+						companyId,
+						StringBundler.concat(
+							"(providerRequestId eq '",
+							StringUtil.replace(providerRequestId, '\'', "''"),
+							"')"),
+						requestObjectDefinition)) {
+
+				long dsRequestId = MapUtil.getLong(
+					values, requestObjectDefinition.getPKObjectFieldName());
+
+				_updateRecipientStatuses(
+					companyId, groupId, dsRecipients,
+					dsRequestId, recipientObjectDefinition);
+				_updateRequestStatus(
+					companyId, groupId, dsEnvelope, dsRequestId);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to update the signature request for envelope " +
+					providerRequestId,
+				exception);
+		}
+	}
+
 	private void _addDSRequest(
 			long companyId, long groupId, long userId, DSEnvelope dsEnvelope,
 			long[] fileEntryIds)
@@ -82,171 +234,6 @@
 					"sentDate", _toDate(dsRecipient.getSentLocalDateTime())
 				).build(),
 				serviceContext);
-		}
-
-		for (long fileEntryId : fileEntryIds) {
-			_reindexFileEntry(fileEntryId);
-		}
-	}
-
-/**
- * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
- */
-
-package com.liferay.digital.signature.internal.manager;
-
-import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
-import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
-import com.liferay.digital.signature.constants.DSRequestConstants;
-import com.liferay.digital.signature.constants.DSRequestRecipientConstants;
-import com.liferay.digital.signature.manager.DSEnvelopeManager;
-import com.liferay.digital.signature.manager.DSRequestManager;
-import com.liferay.digital.signature.model.DSEnvelope;
-import com.liferay.digital.signature.model.DSRecipient;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.rest.filter.factory.FilterFactory;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.io.Serializable;
-
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
-/**
- * @author Brian I. Kim
- */
-@Component(service = DSRequestManager.class)
-public class DSRequestManagerImpl implements DSRequestManager {
-
-	@Override
-	public void addDSRequest(
-			long companyId, long groupId, long userId, DSEnvelope dsEnvelope,
-			long[] fileEntryIds)
-		throws PortalException {
-
-		if (!_isEnabled(companyId, groupId)) {
-			return;
-		}
-
-		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_addDSRequest(
-						companyId, groupId, userId, dsEnvelope, fileEntryIds);
-
-					return null;
-				});
-		}
-		catch (Throwable throwable) {
-			if (throwable instanceof PortalException) {
-				throw (PortalException)throwable;
-			}
-
-			throw new PortalException(
-				"Unable to record the signature request for envelope " +
-					dsEnvelope.getDSEnvelopeId(),
-				throwable);
-		}
-	}
-
-	@Override
-	public void updateDSRequest(
-		long companyId, long groupId, String providerRequestId) {
-
-		if (Validator.isNull(providerRequestId) ||
-			!_isEnabled(companyId, groupId)) {
-
-			return;
-		}
-
-		ObjectDefinition documentObjectDefinition = _fetchObjectDefinition(
-			companyId, "L_DS_REQUEST_DOCUMENT");
-		ObjectDefinition recipientObjectDefinition = _fetchObjectDefinition(
-			companyId, "L_DS_REQUEST_RECIPIENT");
-		ObjectDefinition requestObjectDefinition = _fetchObjectDefinition(
-			companyId, "L_DS_REQUEST");
-
-		if ((documentObjectDefinition == null) ||
-			(recipientObjectDefinition == null) ||
-			(requestObjectDefinition == null)) {
-
-			return;
-		}
-
-		try {
-			Map<String, DSRecipient> dsRecipients = new HashMap<>();
-
-			DSEnvelope dsEnvelope = _dsEnvelopeManager.getDSEnvelope(
-				companyId, groupId, providerRequestId);
-
-			for (DSRecipient dsRecipient : dsEnvelope.getDSRecipients()) {
-				dsRecipients.put(dsRecipient.getDSRecipientId(), dsRecipient);
-			}
-
-			for (Map<String, Serializable> values :
-					_getValuesList(
-						companyId,
-						StringBundler.concat(
-							"(providerRequestId eq '",
-							StringUtil.replace(providerRequestId, '\'', "''"),
-							"')"),
-						requestObjectDefinition)) {
-
-				long dsRequestId = MapUtil.getLong(
-					values, requestObjectDefinition.getPKObjectFieldName());
-
-				_updateRecipientStatuses(
-					companyId, groupId, dsRecipients,
-					dsRequestId, recipientObjectDefinition);
-				_updateRequestStatus(
-					companyId, groupId, dsEnvelope, dsRequestId);
-
-				_reindexRequestDocuments(
-					companyId, documentObjectDefinition, dsRequestId);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to update the signature request for envelope " +
-					providerRequestId,
-				exception);
 		}
 	}
 
@@ -337,34 +324,6 @@ public class DSRequestManagerImpl implements DSRequestManager {
 				companyId, groupId);
 
 		return digitalSignatureConfiguration.enabled();
-	}
-
-	private void _reindexFileEntry(long fileEntryId) {
-		try {
-			Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				DLFileEntry.class);
-
-			indexer.reindex(DLFileEntry.class.getName(), fileEntryId);
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to reindex file entry " + fileEntryId, exception);
-		}
-	}
-
-	private void _reindexRequestDocuments(
-			long companyId, ObjectDefinition objectDefinition, long dsRequestId)
-		throws Exception {
-
-		for (Map<String, Serializable> documentValues :
-				_getValuesList(
-					companyId,
-					"(r_dsRequestToDSRequestDocuments_l_dsRequestId eq '" +
-						dsRequestId + "')",
-					objectDefinition)) {
-
-			_reindexFileEntry(MapUtil.getLong(documentValues, "fileEntryId"));
-		}
 	}
 
 	private Date _toDate(LocalDateTime localDateTime) {

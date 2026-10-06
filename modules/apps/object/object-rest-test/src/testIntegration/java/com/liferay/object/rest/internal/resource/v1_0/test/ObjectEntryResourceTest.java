@@ -17491,12 +17491,7 @@ public class ObjectEntryResourceTest {
 					objectDefinition.getCompanyId()));
 			objectEntryResource.setContextUser(user);
 
-			Class<?> clazz = objectEntryResource.getClass();
-
-			Method method = clazz.getMethod(
-				"setObjectDefinition", ObjectDefinition.class);
-
-			method.invoke(objectEntryResource, objectDefinition);
+			_setObjectDefinition(objectDefinition, objectEntryResource);
 
 			return objectEntryResource;
 		}
@@ -17944,6 +17939,19 @@ public class ObjectEntryResourceTest {
 			});
 
 		objectEntry.setProperties(properties);
+	}
+
+	private void _setObjectDefinition(
+			ObjectDefinition objectDefinition,
+			ObjectEntryResource objectEntryResource)
+		throws Exception {
+
+		Class<?> clazz = objectEntryResource.getClass();
+
+		Method method = clazz.getMethod(
+			"setObjectDefinition", ObjectDefinition.class);
+
+		method.invoke(objectEntryResource, objectDefinition);
 	}
 
 	private void _setUpPermissionThreadLocal(User user) {
@@ -21776,6 +21784,11 @@ public class ObjectEntryResourceTest {
 							"true"
 						).build()));
 
+			_setObjectDefinition(
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinition.getObjectDefinitionId()),
+				objectEntryResource);
+
 			validationResponse = _validate(
 				scopeKey, objectEntryResource,
 				_getValidationRequest(Collections.emptyMap()));
@@ -21828,6 +21841,11 @@ public class ObjectEntryResourceTest {
 
 			_objectFieldLocalService.deleteObjectField(
 				objectField2.getObjectFieldId());
+
+			_setObjectDefinition(
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinition.getObjectDefinitionId()),
+				objectEntryResource);
 
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 				_testGroupId, TestPropsValues.getUserId(),

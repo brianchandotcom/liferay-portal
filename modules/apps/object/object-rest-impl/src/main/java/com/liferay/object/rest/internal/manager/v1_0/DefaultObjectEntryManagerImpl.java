@@ -45,6 +45,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectRelationshipModel;
+import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
@@ -228,10 +229,6 @@ public class DefaultObjectEntryManagerImpl
 					dtoConverterContext.getUser());
 			}
 		}
-
-		validateReadOnlyObjectFields(
-			null, getGroupId(objectDefinition, scopeKey), objectDefinition,
-			objectEntry);
 
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
@@ -3950,10 +3947,9 @@ public class DefaultObjectEntryManagerImpl
 
 		relationshipObjectFieldIds.remove(allowedRelationshipObjectFieldId);
 
-		for (ObjectField objectField :
-				objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId())) {
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
 
+		for (ObjectField objectField : objectFieldBag.getObjectFields()) {
 			if (relationshipObjectFieldIds.contains(
 					objectField.getObjectFieldId())) {
 

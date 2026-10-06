@@ -20,6 +20,7 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
@@ -333,10 +334,10 @@ public abstract class BaseObjectEntryManager {
 			serviceBuilderObjectEntry.getValues()
 		).build();
 
+		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
+
 		ObjectFieldUtil.validateReadOnlyObjectFields(
-			ddmExpressionFactory, values,
-			objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId()),
+			ddmExpressionFactory, values, objectFieldBag.getObjectFields(),
 			objectEntry.getProperties());
 	}
 
@@ -347,11 +348,12 @@ public abstract class BaseObjectEntryManager {
 		throws Exception {
 
 		if (externalReferenceCode == null) {
+			ObjectFieldBag objectFieldBag =
+				objectDefinition.getObjectFieldBag();
+
 			ObjectFieldUtil.validateReadOnlyObjectFields(
 				ddmExpressionFactory, new HashMap<>(),
-				objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId()),
-				objectEntry.getProperties());
+				objectFieldBag.getObjectFields(), objectEntry.getProperties());
 
 			return;
 		}

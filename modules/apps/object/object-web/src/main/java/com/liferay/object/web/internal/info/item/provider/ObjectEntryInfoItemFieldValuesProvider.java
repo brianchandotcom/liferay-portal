@@ -43,6 +43,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
+import com.liferay.petra.function.UnsafeSupplierValue;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -251,10 +252,22 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.statusInfoField,
 				WorkflowConstants.getStatusLabel(objectEntry.getStatus())));
+
+		UnsafeSupplierValue<WebImage, Exception> webImageUnsafeSupplierValue =
+			new UnsafeSupplierValue<>(
+				() -> _getWebImage(objectEntry.getUserId()));
+
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.userProfileImageInfoField,
-				_getWebImage(objectEntry.getUserId())));
+				() -> {
+					try {
+						return webImageUnsafeSupplierValue.getValue();
+					}
+					catch (Exception exception) {
+						return ReflectionUtil.throwException(exception);
+					}
+				}));
 
 		if (objectDefinition.isEnableCategorization()) {
 			try {

@@ -511,6 +511,10 @@ public class GetterUtil {
 
 		value = value.trim();
 
+		if (value.isEmpty()) {
+			return defaultValue;
+		}
+
 		if (locale == null) {
 			try {
 				return Double.parseDouble(value);
@@ -550,8 +554,14 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
+		value = value.trim();
+
+		if (value.isEmpty()) {
+			return defaultValue;
+		}
+
 		try {
-			return Float.parseFloat(value.trim());
+			return Float.parseFloat(value);
 		}
 		catch (Exception exception) {
 		}

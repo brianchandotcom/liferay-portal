@@ -91,6 +91,40 @@ public class GetterUtilTest {
 			GetterUtil.DEFAULT_DOUBLE,
 			GetterUtil.getDouble("4.7", LocaleUtil.HUNGARY),
 			GetterUtil.DEFAULT_DOUBLE);
+
+		// Blank
+
+		for (String value :
+				new String[] {StringPool.BLANK, StringPool.DOUBLE_SPACE}) {
+
+			Assert.assertEquals(
+				GetterUtil.DEFAULT_DOUBLE, GetterUtil.getDouble(value),
+				GetterUtil.DEFAULT_DOUBLE);
+			Assert.assertEquals(
+				1.5, GetterUtil.getDouble(value, 1.5),
+				GetterUtil.DEFAULT_DOUBLE);
+			Assert.assertEquals(
+				GetterUtil.DEFAULT_DOUBLE,
+				GetterUtil.getDouble(value, LocaleUtil.US),
+				GetterUtil.DEFAULT_DOUBLE);
+			Assert.assertEquals(
+				1.5, GetterUtil.get(value, 1.5, LocaleUtil.US),
+				GetterUtil.DEFAULT_DOUBLE);
+		}
+	}
+
+	@Test
+	public void testGetFloat() {
+		for (String value :
+				new String[] {StringPool.BLANK, StringPool.DOUBLE_SPACE}) {
+
+			Assert.assertEquals(
+				GetterUtil.DEFAULT_FLOAT, GetterUtil.getFloat(value),
+				GetterUtil.DEFAULT_FLOAT);
+			Assert.assertEquals(
+				1.5F, GetterUtil.getFloat(value, 1.5F),
+				GetterUtil.DEFAULT_FLOAT);
+		}
 	}
 
 	@Test

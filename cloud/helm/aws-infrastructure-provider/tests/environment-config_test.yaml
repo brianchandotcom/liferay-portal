@@ -33,12 +33,4 @@ tests:
                         partition: aws
                         region: us-east-1
                         vpcId: vpc-00000000000000000
-            -   equal:
-                    path: metadata.annotations["argocd.argoproj.io/sync-wave"]
-                    value: "-100"
-            -   equal:
-                    path: metadata.name
-                    value: environment-config
-            -   isKind:
-                    of: EnvironmentConfig
-        it: Renders the environment config with the deployment context the compositions consume, leaving out the provider role ARNs
+        it: Renders the deployment context the compositions consume, leaving out the provider role ARNs

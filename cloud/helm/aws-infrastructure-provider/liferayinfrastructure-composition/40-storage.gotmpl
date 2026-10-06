@@ -49,9 +49,9 @@ spec:
             matchLabels:
                 app: liferay
                 component: storage
+                dataPlane: {{ $dataPlane }}
                 environmentId: {{ $environmentId }}
                 projectId: {{ $projectId }}
-                dataPlane: {{ $dataPlane }}
         region: {{ $storageRegion }}
         rule:
             -   abortIncompleteMultipartUpload:

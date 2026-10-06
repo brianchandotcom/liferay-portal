@@ -24,8 +24,8 @@ spec:
     forProvider:
         allocatedStorage: {{ $databaseSpec.storageGB }}
         applyImmediately: {{ and (eq $dataPlane $targetActiveDataPlane) (ne $restorePhase "none") }}
-        autoMinorVersionUpgrade: {{ $databaseSpec.autoMinorVersionUpgrade }}
         autoGeneratePassword: true
+        autoMinorVersionUpgrade: {{ $databaseSpec.autoMinorVersionUpgrade }}
         backupRetentionPeriod: 7
         copyTagsToSnapshot: true
         databaseInsightsMode: {{ $databaseSpec.databaseInsightsMode | quote }}
@@ -60,6 +60,10 @@ spec:
         storageThroughput: {{ int $databaseSpec.storageThroughput }}
         {{- end }}
         storageType: gp3
+        tags:
+            Active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
+            Backup: "true"
+            Name: {{ $baseName }}-database-{{ $dataPlane }}
         username: {{ $databaseUsername }}
         vpcSecurityGroupIdSelector:
             matchLabels:
@@ -68,10 +72,6 @@ spec:
                 dataPlane: {{ $dataPlane }}
                 environmentId: {{ $environmentId }}
                 projectId: {{ $projectId }}
-        tags:
-            Active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
-            Backup: "true"
-            Name: {{ $baseName }}-database-{{ $dataPlane }}
     managementPolicies: {{ $backupSpec.enabled | ternary ((list "*") | toJson) $managementPolicies }}
     writeConnectionSecretToRef:
         name: liferay-database-{{ $dataPlane }}-credentials

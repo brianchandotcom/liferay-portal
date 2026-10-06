@@ -1294,6 +1294,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
+			UserTestUtil.setUser(adminUser);
+
 			Group newCompanyGroup = GroupTestUtil.addGroup(
 				_company.getCompanyId(), adminUser.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -1319,6 +1321,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				journalArticle.getContent(),
 				importedJournalArticle.getContent());
 		}
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test

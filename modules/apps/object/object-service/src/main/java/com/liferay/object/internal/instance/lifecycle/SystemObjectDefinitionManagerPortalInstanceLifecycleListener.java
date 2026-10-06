@@ -51,7 +51,6 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
@@ -257,8 +256,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				new ObjectFieldInfoFieldConverter(
 					_ddmExpressionFactory, _listTypeEntryLocalService,
 					_objectConfiguration, _objectDefinitionLocalService,
-					_objectFieldLocalService, _objectFieldSettingLocalService,
-					_objectRelationshipLocalService,
+					_objectFieldLocalService, _objectRelationshipLocalService,
 					_objectScopeProviderRegistry, _objectStateFlowLocalService,
 					_objectStateLocalService, _portal,
 					_restContextPathResolverRegistry,
@@ -463,9 +461,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectFolderLocalService _objectFolderLocalService;

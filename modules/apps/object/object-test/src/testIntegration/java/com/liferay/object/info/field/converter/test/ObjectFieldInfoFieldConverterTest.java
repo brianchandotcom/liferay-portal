@@ -34,7 +34,6 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -131,7 +130,7 @@ public class ObjectFieldInfoFieldConverterTest {
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
 			new ObjectFieldInfoFieldConverter(
 				null, null, null, _objectDefinitionLocalService,
-				_objectFieldLocalService, null, _objectRelationshipLocalService,
+				_objectFieldLocalService, _objectRelationshipLocalService,
 				_objectScopeProviderRegistry, null, null, _portal,
 				_restContextPathResolverRegistry, null, null);
 
@@ -213,7 +212,7 @@ public class ObjectFieldInfoFieldConverterTest {
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
 			new ObjectFieldInfoFieldConverter(
 				null, null, null, _objectDefinitionLocalService,
-				_objectFieldLocalService, null, _objectRelationshipLocalService,
+				_objectFieldLocalService, _objectRelationshipLocalService,
 				_objectScopeProviderRegistry, null, null, _portal,
 				_restContextPathResolverRegistry,
 				_systemObjectDefinitionManagerRegistry, null);
@@ -238,9 +237,8 @@ public class ObjectFieldInfoFieldConverterTest {
 	public void testGetInfoField() throws Exception {
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
 			new ObjectFieldInfoFieldConverter(
-				_ddmExpressionFactory, null, null, null, null,
-				_objectFieldSettingLocalService, null, null, null, null, null,
-				null, null, null);
+				_ddmExpressionFactory, null, null, null, null, null, null, null,
+				null, null, null, null, null);
 
 		InfoField<?> infoField = objectFieldInfoFieldConverter.getInfoField(
 			true, ObjectField.class.getSimpleName(), _objectField);
@@ -301,9 +299,8 @@ public class ObjectFieldInfoFieldConverterTest {
 
 			ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
 				new ObjectFieldInfoFieldConverter(
-					_ddmExpressionFactory, null, null, null, null,
-					_objectFieldSettingLocalService, null, null, null, null,
-					null, null, null, null);
+					_ddmExpressionFactory, null, null, null, null, null, null,
+					null, null, null, null, null, null);
 
 			InfoField<?> infoField = objectFieldInfoFieldConverter.getInfoField(
 				true, ObjectField.class.getSimpleName(), _objectField);
@@ -343,9 +340,8 @@ public class ObjectFieldInfoFieldConverterTest {
 
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
 			new ObjectFieldInfoFieldConverter(
-				_ddmExpressionFactory, null, null, null, null,
-				_objectFieldSettingLocalService, null, null, null, null, null,
-				null, null, null);
+				_ddmExpressionFactory, null, null, null, null, null, null, null,
+				null, null, null, null, null);
 
 		InfoField<PhoneNumberInfoFieldType> infoField =
 			(InfoField<PhoneNumberInfoFieldType>)
@@ -468,9 +464,6 @@ public class ObjectFieldInfoFieldConverterTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Inject
-	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

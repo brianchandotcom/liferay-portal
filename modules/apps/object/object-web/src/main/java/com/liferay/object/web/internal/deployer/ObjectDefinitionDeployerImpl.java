@@ -219,9 +219,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			new ObjectFieldInfoFieldConverter(
 				_ddmExpressionFactory, _listTypeEntryLocalService,
 				_objectConfiguration, _objectDefinitionLocalService,
-				_objectFieldLocalService, _objectFieldSettingLocalService,
-				_objectRelationshipLocalService, _objectScopeProviderRegistry,
-				_objectStateFlowLocalService, _objectStateLocalService, _portal,
+				_objectFieldLocalService, _objectRelationshipLocalService,
+				_objectScopeProviderRegistry, _objectStateFlowLocalService,
+				_objectStateLocalService, _portal,
 				_restContextPathResolverRegistry,
 				_systemObjectDefinitionManagerRegistry, _userLocalService);
 

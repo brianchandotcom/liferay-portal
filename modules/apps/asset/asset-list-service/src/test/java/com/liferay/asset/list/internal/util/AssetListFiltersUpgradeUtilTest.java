@@ -37,26 +37,30 @@ public class AssetListFiltersUpgradeUtilTest {
 		String assetCategoryId1 = String.valueOf(RandomTestUtil.randomLong());
 		String assetCategoryId2 = String.valueOf(RandomTestUtil.randomLong());
 
-		_assertAssetFilter(
+		_assertFilter(
 			"assetCategories", "true", "true", "contains", "all",
 			assetCategoryId1, assetCategoryId2);
-		_assertAssetFilter(
+		_assertFilter(
 			"assetCategories", "true", "false", "contains", "any",
 			assetCategoryId1, assetCategoryId2);
-		_assertAssetFilter(
+		_assertFilter(
 			"assetCategories", "false", "true", "not-contains", "all",
 			assetCategoryId1, assetCategoryId2);
-		_assertAssetFilter(
+		_assertFilter(
 			"assetCategories", "false", "false", "not-contains", "any",
 			assetCategoryId1, assetCategoryId2);
 	}
 
 	@Test
 	public void testToUpgradedTypeSettingsKeywords() throws Exception {
-		_assertKeywords("true", "true", "contains", "all");
-		_assertKeywords("true", "false", "contains", "any");
-		_assertKeywords("false", "true", "not-contains", "all");
-		_assertKeywords("false", "false", "not-contains", "any");
+		String keyword = RandomTestUtil.randomString();
+
+		_assertFilter("keywords", "true", "true", "contains", "all", keyword);
+		_assertFilter("keywords", "true", "false", "contains", "any", keyword);
+		_assertFilter(
+			"keywords", "false", "true", "not-contains", "all", keyword);
+		_assertFilter(
+			"keywords", "false", "false", "not-contains", "any", keyword);
 	}
 
 	@Test
@@ -77,7 +81,8 @@ public class AssetListFiltersUpgradeUtilTest {
 				"queryValues0", StringUtil.merge(keywords)
 			).buildString());
 
-		JSONArray filtersJSONArray = _getFiltersJSONArray(unicodeProperties);
+		JSONArray filtersJSONArray = JSONFactoryUtil.createJSONArray(
+			unicodeProperties.getProperty("filters"));
 
 		Assert.assertEquals(
 			filtersJSONArray.toString(), 1, filtersJSONArray.length());
@@ -113,7 +118,8 @@ public class AssetListFiltersUpgradeUtilTest {
 				StringUtil.merge(new String[] {keywordPhrase, keyword})
 			).buildString());
 
-		JSONArray filtersJSONArray = _getFiltersJSONArray(unicodeProperties);
+		JSONArray filtersJSONArray = JSONFactoryUtil.createJSONArray(
+			unicodeProperties.getProperty("filters"));
 
 		Assert.assertEquals(
 			filtersJSONArray.toString(), 1, filtersJSONArray.length());
@@ -162,31 +168,29 @@ public class AssetListFiltersUpgradeUtilTest {
 		String assetTagName1 = RandomTestUtil.randomString();
 		String assetTagName2 = RandomTestUtil.randomString();
 
-		_assertAssetFilter(
+		_assertFilter(
 			"assetTags", "true", "true", "contains", "all", assetTagName1,
 			assetTagName2);
-		_assertAssetFilter(
+		_assertFilter(
 			"assetTags", "true", "false", "contains", "any", assetTagName1,
 			assetTagName2);
-		_assertAssetFilter(
+		_assertFilter(
 			"assetTags", "false", "true", "not-contains", "all", assetTagName1,
 			assetTagName2);
-		_assertAssetFilter(
+		_assertFilter(
 			"assetTags", "false", "false", "not-contains", "any", assetTagName1,
 			assetTagName2);
 	}
 
-	private void _assertAssetFilter(
+	private void _assertFilter(
 			String propertyName, String queryContains, String queryAndOperator,
 			String expectedOperatorName, String expectedQuantifier,
-			String expectedValue1, String expectedValue2)
+			String... expectedValues)
 		throws Exception {
 
-		JSONObject filterJSONObject = _getSingleFilterJSONObject(
+		JSONObject filterJSONObject = _getUpgradedFilterJSONObject(
 			propertyName, queryContains, queryAndOperator,
-			StringUtil.merge(
-				new String[] {expectedValue1, expectedValue2},
-				StringPool.COMMA));
+			StringUtil.merge(expectedValues, StringPool.COMMA));
 
 		Assert.assertEquals(
 			expectedOperatorName, filterJSONObject.getString("operatorName"));
@@ -195,55 +199,24 @@ public class AssetListFiltersUpgradeUtilTest {
 		Assert.assertEquals(
 			expectedQuantifier, filterJSONObject.getString("quantifier"));
 
-		JSONArray valueJSONArray = filterJSONObject.getJSONArray("value");
+		Object value = filterJSONObject.get("value");
 
-		Assert.assertEquals(
-			valueJSONArray.toString(), 2, valueJSONArray.length());
+		if (value instanceof JSONArray) {
+			JSONArray valueJSONArray = (JSONArray)value;
 
-		Assert.assertEquals(
-			expectedValue1,
-			JSONUtil.getValueAsString(
-				valueJSONArray, "JSONObject/0", "Object/value"));
-		Assert.assertNull(
-			JSONUtil.getValue(valueJSONArray, "JSONObject/0", "Object/label"));
-		Assert.assertEquals(
-			expectedValue2,
-			JSONUtil.getValueAsString(
-				valueJSONArray, "JSONObject/1", "Object/value"));
-		Assert.assertNull(
-			JSONUtil.getValue(valueJSONArray, "JSONObject/1", "Object/label"));
+			Assert.assertArrayEquals(
+				new String[0], JSONUtil.toStringArray(valueJSONArray, "label"));
+			Assert.assertArrayEquals(
+				expectedValues,
+				JSONUtil.toStringArray(valueJSONArray, "value"));
+		}
+		else {
+			Assert.assertArrayEquals(
+				expectedValues, new String[] {String.valueOf(value)});
+		}
 	}
 
-	private void _assertKeywords(
-			String queryContains, String queryAndOperator,
-			String expectedOperatorName, String expectedQuantifier)
-		throws Exception {
-
-		String keyword = RandomTestUtil.randomString();
-
-		JSONObject filterJSONObject = _getSingleFilterJSONObject(
-			"keywords", queryContains, queryAndOperator, keyword);
-
-		Assert.assertEquals(
-			expectedOperatorName, filterJSONObject.getString("operatorName"));
-		Assert.assertEquals(
-			"keywords", filterJSONObject.getString("propertyName"));
-		Assert.assertEquals(
-			expectedQuantifier, filterJSONObject.getString("quantifier"));
-		Assert.assertEquals(keyword, filterJSONObject.getString("value"));
-	}
-
-	private JSONArray _getFiltersJSONArray(UnicodeProperties unicodeProperties)
-		throws Exception {
-
-		String filtersJSON = unicodeProperties.getProperty("filters");
-
-		Assert.assertNotNull(filtersJSON);
-
-		return JSONFactoryUtil.createJSONArray(filtersJSON);
-	}
-
-	private JSONObject _getSingleFilterJSONObject(
+	private JSONObject _getUpgradedFilterJSONObject(
 			String queryName, String queryContains, String queryAndOperator,
 			String queryValues)
 		throws Exception {
@@ -259,7 +232,8 @@ public class AssetListFiltersUpgradeUtilTest {
 				"queryValues0", queryValues
 			).buildString());
 
-		JSONArray filtersJSONArray = _getFiltersJSONArray(unicodeProperties);
+		JSONArray filtersJSONArray = JSONFactoryUtil.createJSONArray(
+			unicodeProperties.getProperty("filters"));
 
 		Assert.assertEquals(
 			filtersJSONArray.toString(), 1, filtersJSONArray.length());

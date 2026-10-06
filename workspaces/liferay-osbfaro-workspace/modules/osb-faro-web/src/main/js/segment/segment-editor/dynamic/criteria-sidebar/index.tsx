@@ -232,6 +232,7 @@ export default function CriteriaSidebar({
 			{type !== SegmentTypes.RealTime && (
 				<div className="sidebar-header">
 					<Picker
+						aria-label={Liferay.Language.get('condition-type')}
 						items={pickerItems}
 						onSelectionChange={(key) => {
 							setSelectedPropertyKey(key as string);

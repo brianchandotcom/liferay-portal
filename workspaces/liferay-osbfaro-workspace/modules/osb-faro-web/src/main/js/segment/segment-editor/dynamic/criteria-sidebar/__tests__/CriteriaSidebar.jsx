@@ -143,6 +143,21 @@ describe('CriteriaSidebar', () => {
 		expect(screen.getByText('DXP Custom Fields')).toBeInTheDocument();
 	});
 
+	it('names the property-group picker for assistive technologies', () => {
+		render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaSidebar
+					propertyGroupsIList={fullPropertyGroupList}
+					type={SegmentTypes.Batch}
+				/>
+			</DndProvider>
+		);
+
+		expect(
+			screen.getByRole('combobox', {name: 'condition-type'})
+		).toHaveTextContent('Interests');
+	});
+
 	it('keeps a single tab stop and moves focus between items with the arrow keys', () => {
 		render(
 			<DndProvider backend={HTML5Backend}>

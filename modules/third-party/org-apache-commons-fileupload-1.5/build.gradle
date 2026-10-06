@@ -1,0 +1,24 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "commons-fileupload", name: "commons-fileupload", transitive: false, version: "1.5"
+	compileOnly group: "commons-io", name: "commons-io", version: "2.19.0"
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/commons/fileupload/FileUploadBase.java"
+	originalLibModuleName = "commons-fileupload"
+}

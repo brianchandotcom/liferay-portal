@@ -501,6 +501,22 @@ public class AssetStatisticsResourceTest
 				WorkflowConstants.STATUS_EXPIRED, serviceContext);
 
 			_assertBrokenLinksCount(depotEntry.getGroupId(), 2);
+
+			ObjectEntry trashedObjectEntry = _addObjectEntry(
+				depotEntry, objectDefinition);
+
+			_addObjectEntry(
+				CMSOutboundLinkTestUtil.getImageHTML(
+					trashedObjectEntry.getExternalReferenceCode()),
+				depotEntry, objectDefinition);
+
+			_assertBrokenLinksCount(depotEntry.getGroupId(), 2);
+
+			_objectEntryLocalService.moveObjectEntryToTrash(
+				TestPropsValues.getUserId(), trashedObjectEntry,
+				serviceContext);
+
+			_assertBrokenLinksCount(depotEntry.getGroupId(), 3);
 		}
 		finally {
 			_depotEntryLocalService.deleteDepotEntry(

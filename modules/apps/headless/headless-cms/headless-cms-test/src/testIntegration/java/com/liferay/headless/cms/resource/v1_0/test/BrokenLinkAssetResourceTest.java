@@ -99,14 +99,18 @@ public class BrokenLinkAssetResourceTest
 		_testGetBrokenLinkAssetsPage(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
+		_testGetBrokenLinkAssetsPageWithDraftAsset();
 		_testGetBrokenLinkAssetsPageWithDraftOverApprovedAsset();
 		_testGetBrokenLinkAssetsPageWithDraftOverExpiredAsset();
 		_testGetBrokenLinkAssetsPageWithDuplicateTitles();
 		_testGetBrokenLinkAssetsPageWithExpiredAssetInAnotherSpace();
 		_testGetBrokenLinkAssetsPageWithExpiredAssetInHiddenSpace();
+		_testGetBrokenLinkAssetsPageWithExpiredThenDraftAsset();
 		_testGetBrokenLinkAssetsPageWithFreeTier();
+		_testGetBrokenLinkAssetsPageWithMixedAssets();
 		_testGetBrokenLinkAssetsPageWithoutUpdatePermission();
 		_testGetBrokenLinkAssetsPageWithRelationshipReference();
+		_testGetBrokenLinkAssetsPageWithTrashedAsset();
 	}
 
 	@Override
@@ -220,6 +224,34 @@ public class BrokenLinkAssetResourceTest
 		return objectDefinition;
 	}
 
+	private ObjectEntry _addDraftObjectEntry(
+			DepotEntry depotEntry, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					"L_CONTENTS", depotEntry.getGroupId(),
+					depotEntry.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		return _objectEntryLocalService.addObjectEntry(
+			depotEntry.getGroupId(), depotEntry.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			objectEntryFolder.getObjectEntryFolderId(), "en_US",
+			HashMapBuilder.<String, Serializable>put(
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
+			).build(),
+			serviceContext);
+	}
+
 	private ObjectEntry _addExpiredObjectEntry(
 			DepotEntry depotEntry, ObjectDefinition objectDefinition,
 			ServiceContext serviceContext)
@@ -289,6 +321,36 @@ public class BrokenLinkAssetResourceTest
 		_depotEntries.add(depotEntry);
 
 		return depotEntry;
+	}
+
+	private void _assertBrokenLinksCounts(
+		BrokenLinkAsset brokenLinkAsset, long expectedBrokenLinksCount,
+		long expectedDraftBrokenLinksCount,
+		long expectedExpiredBrokenLinksCount,
+		long expectedInTrashBrokenLinksCount) {
+
+		Assert.assertEquals(
+			expectedBrokenLinksCount,
+			GetterUtil.getLong(brokenLinkAsset.getBrokenLinksCount()));
+		Assert.assertEquals(
+			expectedDraftBrokenLinksCount,
+			GetterUtil.getLong(brokenLinkAsset.getDraftBrokenLinksCount()));
+		Assert.assertEquals(
+			expectedExpiredBrokenLinksCount,
+			GetterUtil.getLong(brokenLinkAsset.getExpiredBrokenLinksCount()));
+		Assert.assertEquals(
+			expectedInTrashBrokenLinksCount,
+			GetterUtil.getLong(brokenLinkAsset.getInTrashBrokenLinksCount()));
+	}
+
+	private void _assertEmptyBrokenLinkAssetsPage(DepotEntry depotEntry)
+		throws Exception {
+
+		Page<BrokenLinkAsset> brokenLinkAssetsPage =
+			brokenLinkAssetResource.getBrokenLinkAssetsPage(
+				depotEntry.getDepotEntryId(), null, null, null);
+
+		Assert.assertEquals(0, brokenLinkAssetsPage.getTotalCount());
 	}
 
 	private void _assertTitleOrder(
@@ -379,24 +441,6 @@ public class BrokenLinkAssetResourceTest
 		).build();
 	}
 
-	private void _saveDraft(ObjectEntry objectEntry) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(),
-			HashMapBuilder.<String, Serializable>put(
-				"title_i18n",
-				HashMapBuilder.put(
-					"en_US", RandomTestUtil.randomString()
-				).build()
-			).build(),
-			serviceContext);
-	}
-
 	private void _testGetBrokenLinkAssetsPage(String... targetTitles)
 		throws Exception {
 
@@ -436,6 +480,10 @@ public class BrokenLinkAssetResourceTest
 			targetTitles.length,
 			GetterUtil.getInteger(brokenLinkAsset.getBrokenLinksCount()));
 		Assert.assertEquals(
+			targetTitles.length,
+			GetterUtil.getInteger(
+				brokenLinkAsset.getExpiredBrokenLinksCount()));
+		Assert.assertEquals(
 			"L_CMS_BASIC_WEB_CONTENT",
 			brokenLinkAsset.getObjectDefinitionExternalReferenceCode());
 		Assert.assertEquals(referencingTitle, brokenLinkAsset.getTitle());
@@ -444,6 +492,30 @@ public class BrokenLinkAssetResourceTest
 			Assert.assertEquals(
 				targetTitles[0], brokenLinkAsset.getBrokenLinkTitle());
 		}
+	}
+
+	private void _testGetBrokenLinkAssetsPageWithDraftAsset() throws Exception {
+		DepotEntry depotEntry = _addSpaceDepotEntry(
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectDefinition objectDefinition =
+			_getBasicWebContentObjectDefinition();
+
+		ObjectEntry draftObjectEntry = _addDraftObjectEntry(
+			depotEntry, objectDefinition);
+
+		_addObjectEntry(
+			CMSOutboundLinkTestUtil.getImageHTML(
+				draftObjectEntry.getExternalReferenceCode()),
+			depotEntry, objectDefinition, RandomTestUtil.randomString());
+
+		_assertBrokenLinksCounts(
+			_getSingleBrokenLinkAsset(brokenLinkAssetResource, depotEntry), 1,
+			1, 0, 0);
+
+		_updateObjectEntry(draftObjectEntry, WorkflowConstants.ACTION_PUBLISH);
+
+		_assertEmptyBrokenLinkAssetsPage(depotEntry);
 	}
 
 	private void _testGetBrokenLinkAssetsPageWithDraftOverApprovedAsset()
@@ -459,7 +531,8 @@ public class BrokenLinkAssetResourceTest
 			RandomTestUtil.randomString(), depotEntry, objectDefinition,
 			RandomTestUtil.randomString());
 
-		_saveDraft(targetObjectEntry);
+		_updateObjectEntry(
+			targetObjectEntry, WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		_addObjectEntry(
 			CMSOutboundLinkTestUtil.getImageHTML(
@@ -488,7 +561,8 @@ public class BrokenLinkAssetResourceTest
 			RandomTestUtil.randomString(), depotEntry, objectDefinition,
 			RandomTestUtil.randomString());
 
-		_saveDraft(targetObjectEntry);
+		_updateObjectEntry(
+			targetObjectEntry, WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		_objectEntryVersionLocalService.expireObjectEntryVersions(
 			TestPropsValues.getUserId(),
@@ -508,6 +582,10 @@ public class BrokenLinkAssetResourceTest
 
 		Assert.assertEquals(
 			1, GetterUtil.getInteger(brokenLinkAsset.getBrokenLinksCount()));
+		Assert.assertEquals(
+			1,
+			GetterUtil.getInteger(
+				brokenLinkAsset.getExpiredBrokenLinksCount()));
 		Assert.assertEquals(referencingTitle, brokenLinkAsset.getTitle());
 	}
 
@@ -598,6 +676,33 @@ public class BrokenLinkAssetResourceTest
 			referencingTitle, spaceMemberBrokenLinkAsset.getTitle());
 	}
 
+	private void _testGetBrokenLinkAssetsPageWithExpiredThenDraftAsset()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
+
+		ObjectDefinition objectDefinition =
+			_getBasicWebContentObjectDefinition();
+
+		ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
+			depotEntry, objectDefinition, serviceContext);
+
+		_updateObjectEntry(
+			expiredObjectEntry, WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		_addObjectEntry(
+			CMSOutboundLinkTestUtil.getImageHTML(
+				expiredObjectEntry.getExternalReferenceCode()),
+			depotEntry, objectDefinition, RandomTestUtil.randomString());
+
+		_assertBrokenLinksCounts(
+			_getSingleBrokenLinkAsset(brokenLinkAssetResource, depotEntry), 1,
+			1, 0, 0);
+	}
+
 	private void _testGetBrokenLinkAssetsPageWithFreeTier() throws Exception {
 		try (AutoCloseable autoCloseable = CMSFreeTierTestUtil.withFreeTier()) {
 			assertHttpResponseStatusCode(
@@ -610,6 +715,44 @@ public class BrokenLinkAssetResourceTest
 			200,
 			brokenLinkAssetResource.getBrokenLinkAssetsPageHttpResponse(
 				null, null, Pagination.of(1, 20), null));
+	}
+
+	private void _testGetBrokenLinkAssetsPageWithMixedAssets()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
+
+		ObjectDefinition objectDefinition =
+			_getBasicWebContentObjectDefinition();
+
+		ObjectEntry draftObjectEntry = _addDraftObjectEntry(
+			depotEntry, objectDefinition);
+		ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
+			depotEntry, objectDefinition, serviceContext);
+
+		ObjectEntry trashedObjectEntry = _addObjectEntry(
+			RandomTestUtil.randomString(), depotEntry, objectDefinition,
+			RandomTestUtil.randomString());
+
+		_objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), trashedObjectEntry, serviceContext);
+
+		_addObjectEntry(
+			StringBundler.concat(
+				CMSOutboundLinkTestUtil.getImageHTML(
+					draftObjectEntry.getExternalReferenceCode()),
+				CMSOutboundLinkTestUtil.getImageHTML(
+					expiredObjectEntry.getExternalReferenceCode()),
+				CMSOutboundLinkTestUtil.getImageHTML(
+					trashedObjectEntry.getExternalReferenceCode())),
+			depotEntry, objectDefinition, RandomTestUtil.randomString());
+
+		_assertBrokenLinksCounts(
+			_getSingleBrokenLinkAsset(brokenLinkAssetResource, depotEntry), 3,
+			1, 1, 1);
 	}
 
 	private void _testGetBrokenLinkAssetsPageWithRelationshipReference()
@@ -655,6 +798,42 @@ public class BrokenLinkAssetResourceTest
 			brokenLinkAsset.getObjectDefinitionExternalReferenceCode());
 	}
 
+	private void _testGetBrokenLinkAssetsPageWithTrashedAsset()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
+
+		ObjectDefinition objectDefinition =
+			_getBasicWebContentObjectDefinition();
+
+		ObjectEntry trashedObjectEntry = _addObjectEntry(
+			RandomTestUtil.randomString(), depotEntry, objectDefinition,
+			RandomTestUtil.randomString());
+
+		_objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), trashedObjectEntry, serviceContext);
+
+		_addObjectEntry(
+			CMSOutboundLinkTestUtil.getImageHTML(
+				trashedObjectEntry.getExternalReferenceCode()),
+			depotEntry, objectDefinition, RandomTestUtil.randomString());
+
+		_assertBrokenLinksCounts(
+			_getSingleBrokenLinkAsset(brokenLinkAssetResource, depotEntry), 1,
+			0, 0, 1);
+
+		_objectEntryLocalService.restoreObjectEntryFromTrash(
+			TestPropsValues.getUserId(),
+			_objectEntryLocalService.getObjectEntry(
+				trashedObjectEntry.getObjectEntryId()),
+			serviceContext);
+
+		_assertEmptyBrokenLinkAssetsPage(depotEntry);
+	}
+
 	private void _testGetBrokenLinkAssetsPageWithoutUpdatePermission()
 		throws Exception {
 
@@ -688,6 +867,26 @@ public class BrokenLinkAssetResourceTest
 			spaceMemberBrokenLinkAsset.getActions();
 
 		Assert.assertNull(spaceMemberActions.get("update"));
+	}
+
+	private void _updateObjectEntry(ObjectEntry objectEntry, int workflowAction)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(workflowAction);
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
+			).build(),
+			serviceContext);
 	}
 
 	@DeleteAfterTestRun

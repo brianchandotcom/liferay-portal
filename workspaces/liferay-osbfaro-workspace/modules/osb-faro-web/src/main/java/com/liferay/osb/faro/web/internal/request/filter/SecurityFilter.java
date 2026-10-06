@@ -5,6 +5,8 @@
 
 package com.liferay.osb.faro.web.internal.request.filter;
 
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.oauth2.provider.scope.liferay.constants.OAuth2ProviderScopeLiferayConstants;
 import com.liferay.osb.faro.constants.FaroUserConstants;
 import com.liferay.osb.faro.engine.client.model.ErrorResponse;
@@ -21,6 +23,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
+import com.liferay.portal.kernel.security.auth.AccessControlContext;
+import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -46,7 +51,7 @@ import jakarta.ws.rs.core.UriInfo;
 
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @author Matthew Kong
@@ -69,7 +74,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 
 		User user = permissionChecker.getUser();
 
-		if (user.isDefaultUser() || !_isOAuth2AuthenticationAllowed(method)) {
+		if (user.isDefaultUser() || !_isOAuth2AuthenticationAllowed()) {
 			containerRequestContext.abortWith(
 				_getResponse(
 					Response.Status.UNAUTHORIZED, "You are not authenticated"));
@@ -191,7 +196,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 		return false;
 	}
 
-	private boolean _isOAuth2AuthenticationAllowed(Method method) {
+	private boolean _isOAuth2AuthenticationAllowed() {
 		if (!StringUtil.equals(
 				_httpServletRequest.getAuthType(),
 				OAuth2ProviderScopeLiferayConstants.
@@ -200,16 +205,32 @@ public class SecurityFilter implements ContainerRequestFilter {
 			return true;
 		}
 
-		RolesAllowed rolesAllowed = method.getAnnotation(RolesAllowed.class);
+		AccessControlContext accessControlContext =
+			AccessControlUtil.getAccessControlContext();
 
-		if ((rolesAllowed != null) &&
-			Arrays.equals(
-				rolesAllowed.value(), new String[] {StringPool.BLANK})) {
+		AuthVerifierResult authVerifierResult =
+			accessControlContext.getAuthVerifierResult();
 
-			return true;
+		Map<String, Object> settings = authVerifierResult.getSettings();
+
+		BearerTokenProvider.AccessToken accessToken =
+			(BearerTokenProvider.AccessToken)settings.get(
+				BearerTokenProvider.AccessToken.class.getName());
+
+		if (accessToken == null) {
+			return false;
 		}
 
-		return false;
+		OAuth2Application oAuth2Application =
+			accessToken.getOAuth2Application();
+
+		if ((oAuth2Application == null) ||
+			StringUtil.startsWith(oAuth2Application.getName(), "app-")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isSiteAdministrator(String roleName) {

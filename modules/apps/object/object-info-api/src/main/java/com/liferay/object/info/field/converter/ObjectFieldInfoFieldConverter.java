@@ -36,7 +36,6 @@ import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
@@ -321,45 +320,37 @@ public class ObjectFieldInfoFieldConverter {
 	}
 
 	private String _getAcceptedFileExtensions(ObjectField objectField) {
-		ObjectFieldSetting acceptedFileExtensionsObjectFieldSetting =
-			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(),
-				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS);
+		String acceptedFileExtensions = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS,
+			objectField);
 
-		if (acceptedFileExtensionsObjectFieldSetting == null) {
+		if (acceptedFileExtensions == null) {
 			return StringPool.BLANK;
 		}
 
-		return acceptedFileExtensionsObjectFieldSetting.getValue();
+		return acceptedFileExtensions;
 	}
 
 	private FileInfoFieldType.FileSourceType _getFileSourceType(
 		ObjectField objectField) {
 
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(),
-				ObjectFieldSettingConstants.NAME_FILE_SOURCE);
-
-		if (objectFieldSetting == null) {
-			return null;
-		}
+		String fileSource = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
 
 		if (Objects.equals(
-				objectFieldSetting.getValue(),
+				fileSource,
 				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT) ||
 			Objects.equals(
-				objectFieldSetting.getValue(),
-				ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
+				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
 			return FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA;
 		}
 		else if (Objects.equals(
-					objectFieldSetting.getValue(),
+					fileSource,
 					ObjectFieldSettingConstants.
 						VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT) ||
 				 Objects.equals(
-					 objectFieldSetting.getValue(),
+					 fileSource,
 					 ObjectFieldSettingConstants.
 						 VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
 
@@ -418,34 +409,24 @@ public class ObjectFieldInfoFieldConverter {
 	}
 
 	private long _getMaxLength(ObjectField objectField, long defaultMaxLength) {
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(),
-				ObjectFieldSettingConstants.NAME_MAX_LENGTH);
-
-		if (objectFieldSetting == null) {
-			return defaultMaxLength;
-		}
-
 		return GetterUtil.getLong(
-			objectFieldSetting.getValue(), defaultMaxLength);
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.NAME_MAX_LENGTH, objectField),
+			defaultMaxLength);
 	}
 
 	private long _getMaximumFileSize(ObjectField objectField) {
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(),
-				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE);
+		String maximumFileSizeValue = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, objectField);
 
 		long maximumFileSizeForGuestUsers =
 			_objectConfiguration.maximumFileSizeForGuestUsers();
 
-		if (objectFieldSetting == null) {
+		if (maximumFileSizeValue == null) {
 			return maximumFileSizeForGuestUsers;
 		}
 
-		long maximumFileSize = GetterUtil.getLong(
-			objectFieldSetting.getValue());
+		long maximumFileSize = GetterUtil.getLong(maximumFileSizeValue);
 
 		if ((maximumFileSizeForGuestUsers < maximumFileSize) &&
 			_isGuestUser()) {

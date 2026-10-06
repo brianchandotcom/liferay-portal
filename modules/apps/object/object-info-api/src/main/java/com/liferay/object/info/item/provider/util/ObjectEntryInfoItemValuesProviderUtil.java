@@ -407,7 +407,11 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 			).build();
 		}
 		else if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+				 objectField.compareBusinessType(
+					 ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) ||
+				 objectField.compareBusinessType(
+					 ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 			Locale finalLocale = locale;
 

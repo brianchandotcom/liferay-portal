@@ -396,7 +396,6 @@ const ALLOWED_NAMED_SCOPE_EXCEPTIONS = [
 	'portal-workflow-web',
 	'portlet-configuration-css-web',
 	'portlet-configuration-web',
-	'poshi-language-support',
 	'product-navigation-applications-menu-web',
 	'product-navigation-control-menu',
 	'product-navigation-control-menu-web',

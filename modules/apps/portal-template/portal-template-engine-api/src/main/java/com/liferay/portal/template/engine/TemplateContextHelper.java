@@ -310,11 +310,16 @@ public class TemplateContextHelper {
 			contextObjects.put("themeDisplay", themeDisplay);
 			contextObjects.put("timeZone", themeDisplay.getTimeZone());
 
-			User user = UserLocalServiceUtil.fetchUser(
-				PrincipalThreadLocal.getUserId());
+			User user = themeDisplay.getUser();
 
-			if (user == null) {
-				user = themeDisplay.getUser();
+			long userId = PrincipalThreadLocal.getUserId();
+
+			if ((user == null) || (user.getUserId() != userId)) {
+				User principalUser = UserLocalServiceUtil.fetchUser(userId);
+
+				if (principalUser != null) {
+					user = principalUser;
+				}
 			}
 
 			contextObjects.put("user", user);

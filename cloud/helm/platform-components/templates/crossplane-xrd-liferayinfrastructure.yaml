@@ -178,9 +178,6 @@ spec:
                                     type: object
                                 storage:
                                     properties:
-                                        enableVersioning:
-                                            default: true
-                                            type: boolean
                                         tags:
                                             additionalProperties:
                                                 type: string

@@ -65,39 +65,46 @@ func (clientExtensionReconciler *ClientExtensionReconciler) putConfigDigest(
 	digest string,
 	workload client.Object,
 ) error {
-	if _, ok := workload.(*batchv1.Job); ok {
+	deployment, ok := workload.(*appsv1.Deployment)
+
+	if !ok {
 		return nil
 	}
 
-	podTemplate := podTemplateOf(workload)
-
-	previousDigest := podTemplate.Annotations[AnnotationConfigDigest]
+	previousDigest := deployment.Spec.Template.Annotations[AnnotationConfigDigest]
 
 	if digest == previousDigest {
 		return nil
 	}
 
-	patch := client.MergeFrom(workload.DeepCopyObject().(client.Object))
+	patch := client.MergeFrom(deployment.DeepCopy())
 
-	if podTemplate.Annotations == nil {
-		podTemplate.Annotations = map[string]string{}
+	if deployment.Spec.Template.Annotations == nil {
+		deployment.Spec.Template.Annotations = map[string]string{}
 	}
 
-	podTemplate.Annotations[AnnotationConfigDigest] = digest
+	deployment.Spec.Template.Annotations[AnnotationConfigDigest] = digest
 
 	if error := clientExtensionReconciler.Patch(
-		context, workload, patch,
+		context, deployment, patch,
 	); error != nil {
 		return error
 	}
 
-	if previousDigest != "" {
-		clientExtensionReconciler.Recorder.Eventf(
-			clientExtension, corev1.EventTypeNormal, "WorkloadUpdated",
-			"Updated %s %q because DXP's metadata changed.",
-			clientExtension.Spec.WorkloadRef.Kind, workload.GetName(),
+	message := fmt.Sprintf(
+		"Updated Deployment %q because DXP's metadata changed.", deployment.Name,
+	)
+
+	if previousDigest == "" {
+		message = fmt.Sprintf(
+			"Updated deployment %q so that its pods restart on DXP's metadata",
+			deployment.Name,
 		)
 	}
+
+	clientExtensionReconciler.Recorder.Event(
+		clientExtension, corev1.EventTypeNormal, "WorkloadUpdated", message,
+	)
 
 	return nil
 }

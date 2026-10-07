@@ -35,6 +35,66 @@ func TestConfigMapDigestStableComparison(t *testing.T) {
 	}
 }
 
+func TestReconcileHoldsConfigDigestUntilProvisioned(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
+
+	addOAuth2Application(clientExtension, userAgentApplicationPID)
+
+	clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able"}
+
+	podTemplate := newInitializedPodTemplate()
+
+	podTemplate.Spec.Containers[0].Env = append(
+		podTemplate.Spec.Containers[0].Env,
+		corev1.EnvVar{Name: "LIFERAY_ROUTES_CLIENT_EXTENSION", Value: MountPathExtInitMetadata},
+	)
+
+	podTemplate.Spec.Containers[0].VolumeMounts = append(
+		podTemplate.Spec.Containers[0].VolumeMounts,
+		corev1.VolumeMount{MountPath: MountPathExtInitMetadata, Name: "ext-init-metadata"},
+	)
+
+	podTemplate.Spec.Volumes = append(
+		podTemplate.Spec.Volumes,
+		corev1.Volume{
+			Name: "ext-init-metadata",
+			VolumeSource: corev1.VolumeSource{
+				ConfigMap: &corev1.ConfigMapVolumeSource{
+					LocalObjectReference: corev1.LocalObjectReference{Name: "able-liferay.com-lxc-ext-init-metadata"},
+				},
+			},
+		},
+	)
+
+	clientExtensionReconciler := newReconciler(
+		nil, t, clientExtension, newDeployment(podTemplate), newDxpMetadata("liferay-dev", "liferay.com"),
+		newDxpNamespace("liferay-cx"),
+	)
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	if digest := getConfigDigest(clientExtensionReconciler, t); digest != "" {
+		t.Fatalf("digest = %q, want none before DXP writes ext-init", digest)
+	}
+
+	if error := clientExtensionReconciler.Create(
+		context.Background(), newExtInit("able-oauth-application-user-agent"),
+	); error != nil {
+		t.Fatal(error)
+	}
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	want := configDigest(
+		getConfigMap(clientExtensionReconciler, "liferay.com-lxc-dxp-metadata", "liferay-dev", t),
+		getConfigMap(clientExtensionReconciler, "able-liferay.com-lxc-ext-init-metadata", "liferay-dev", t),
+	)
+
+	if digest := getConfigDigest(clientExtensionReconciler, t); digest != want {
+		t.Errorf("digest = %q, want %q: the first digest covers the dxp metadata and ext-init", digest, want)
+	}
+}
+
 func TestReconcilePutConfigDigestUpdatesWorkload(t *testing.T) {
 	clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
 
@@ -60,9 +120,11 @@ func TestReconcilePutConfigDigestUpdatesWorkload(t *testing.T) {
 		t.Fatalf("digest = %q, want the digest of the dxp metadata", firstDigest)
 	}
 
-	if len(recorder.Events) != 0 {
-		t.Errorf("Expected no rollout event for the first digest, got %d", len(recorder.Events))
+	if len(recorder.Events) != 1 {
+		t.Fatalf("Expected one workload updated event for the first digest, got %d", len(recorder.Events))
 	}
+
+	<-recorder.Events
 
 	dxpMetadata.Data["com.liferay.lxc.dxp.mainDomain"] = "uat.example.com"
 
@@ -156,10 +218,8 @@ func TestReconcileReportsWorkload(t *testing.T) {
 				cxv1alpha1.ConditionWorkloadAccepted, t,
 			)
 
-			if (testCase.wantReason != workloadAccepted.Reason) ||
-				(testCase.wantStatus != workloadAccepted.Status) ||
-				(workloadAccepted == nil) {
-
+			if (workloadAccepted == nil) || (testCase.wantReason != workloadAccepted.Reason) ||
+				(testCase.wantStatus != workloadAccepted.Status) {
 				t.Errorf(
 					"WorkloadAccepted = %v, want %s / %s", workloadAccepted,
 					testCase.wantReason, testCase.wantStatus,

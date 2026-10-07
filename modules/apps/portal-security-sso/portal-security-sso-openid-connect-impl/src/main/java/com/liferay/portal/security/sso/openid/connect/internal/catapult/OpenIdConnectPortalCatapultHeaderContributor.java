@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge García Jiménez
  */
 @Component(service = PortalCatapultHeaderContributor.class)
-public class UpstreamTokenPortalCatapultHeaderContributor
+public class OpenIdConnectPortalCatapultHeaderContributor
 	implements PortalCatapultHeaderContributor {
 
 	@Override
@@ -223,7 +223,7 @@ public class UpstreamTokenPortalCatapultHeaderContributor
 	private static final long _TOKEN_EXPIRATION_OFFSET = 30 * Time.SECOND;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpstreamTokenPortalCatapultHeaderContributor.class);
+		OpenIdConnectPortalCatapultHeaderContributor.class);
 
 	@Reference
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;

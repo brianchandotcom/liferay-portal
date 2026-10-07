@@ -40,7 +40,7 @@ import org.mockito.Mockito;
  * @author Jorge García Jiménez
  */
 @FeatureFlags(featureFlags = @FeatureFlag("LPD-108193"))
-public class UpstreamTokenPortalCatapultHeaderContributorTest {
+public class OpenIdConnectPortalCatapultHeaderContributorTest {
 
 	@ClassRule
 	@Rule
@@ -50,10 +50,10 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_upstreamTokenPortalCatapultHeaderContributor,
+			_openIdConnectPortalCatapultHeaderContributor,
 			"_oAuthClientEntryLocalService", _oAuthClientEntryLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_upstreamTokenPortalCatapultHeaderContributor,
+			_openIdConnectPortalCatapultHeaderContributor,
 			"_openIdConnectSessionLocalService",
 			_openIdConnectSessionLocalService);
 	}
@@ -106,7 +106,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 
 		Map<String, String> headers = new HashMap<>();
 
-		_upstreamTokenPortalCatapultHeaderContributor.contribute(
+		_openIdConnectPortalCatapultHeaderContributor.contribute(
 			_COMPANY_ID, headers, _HOME_PAGE_URL, location,
 			oAuth2ApplicationFeatures, _USER_ID);
 
@@ -376,13 +376,13 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 		OAuthClientEntry.class);
 	private final OAuthClientEntryLocalService _oAuthClientEntryLocalService =
 		Mockito.mock(OAuthClientEntryLocalService.class);
+	private final OpenIdConnectPortalCatapultHeaderContributor
+		_openIdConnectPortalCatapultHeaderContributor =
+			new OpenIdConnectPortalCatapultHeaderContributor();
 	private final OpenIdConnectSession _openIdConnectSession = Mockito.mock(
 		OpenIdConnectSession.class);
 	private final OpenIdConnectSessionLocalService
 		_openIdConnectSessionLocalService = Mockito.mock(
 			OpenIdConnectSessionLocalService.class);
-	private final UpstreamTokenPortalCatapultHeaderContributor
-		_upstreamTokenPortalCatapultHeaderContributor =
-			new UpstreamTokenPortalCatapultHeaderContributor();
 
 }

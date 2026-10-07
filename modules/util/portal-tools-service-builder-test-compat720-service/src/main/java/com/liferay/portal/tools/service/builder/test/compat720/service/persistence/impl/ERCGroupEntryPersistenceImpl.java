@@ -2090,6 +2090,9 @@ public class ERCGroupEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					ercGroupEntry.getUuid(),
+					ercGroupEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					ercGroupEntryModelImpl.getOriginalExternalReferenceCode(),
 					ercGroupEntry.getExternalReferenceCode())) {
 
@@ -2659,4 +2662,4 @@ public class ERCGroupEntryPersistenceImpl
 		new String[] {"uuid"});
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1797521597
+// LIFERAY-SERVICE-BUILDER-HASH:-1981395572

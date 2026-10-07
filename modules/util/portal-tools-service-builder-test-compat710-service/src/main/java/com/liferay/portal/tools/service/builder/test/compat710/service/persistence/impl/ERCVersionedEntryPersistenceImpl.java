@@ -2117,6 +2117,9 @@ public class ERCVersionedEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					ercVersionedEntry.getUuid(),
+					ercVersionedEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					ercVersionedEntryModelImpl.
 						getOriginalExternalReferenceCode(),
 					ercVersionedEntry.getExternalReferenceCode())) {
@@ -2854,4 +2857,4 @@ public class ERCVersionedEntryPersistenceImpl
 		new String[] {"uuid"});
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1640188193
+// LIFERAY-SERVICE-BUILDER-HASH:1007386664

@@ -13,18 +13,23 @@ import com.liferay.commerce.product.exception.RequiredCPOptionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -213,6 +218,23 @@ public class CPOptionLocalServiceTest {
 			true, RandomTestUtil.randomString(), _serviceContext);
 	}
 
+	@Test
+	public void testDeleteCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		CPOption cpOption = CPTestUtil.addCPOption(company.getGroupId(), false);
+		CPOptionCategory cpOptionCategory = CPTestUtil.addCPOptionCategory(
+			company.getGroupId());
+
+		_companyLocalService.deleteCompany(company.getCompanyId());
+
+		Assert.assertNull(
+			_cpOptionLocalService.fetchCPOption(cpOption.getCPOptionId()));
+		Assert.assertNull(
+			_cpOptionCategoryLocalService.fetchCPOptionCategory(
+				cpOptionCategory.getCPOptionCategoryId()));
+	}
+
 	@Test(expected = RequiredCPOptionException.class)
 	public void testDeleteOptionUsedByProduct() throws Exception {
 		frutillaRule.scenario(
@@ -381,11 +403,17 @@ public class CPOptionLocalServiceTest {
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 
 	private final List<CPDefinitionOptionRel> _cpDefinitionOptionRels =
 		new ArrayList<>();
+
+	@Inject
+	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 	@Inject
 	private CPOptionLocalService _cpOptionLocalService;

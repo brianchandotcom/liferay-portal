@@ -97,8 +97,8 @@ describe('SegmentEditor', () => {
 		expect(screen.getByText('Error:')).not.toBeNull();
 	});
 
-	it('renders the realtime segment with sequential card disabled', () => {
-		render(
+	it('renders the realtime segment with the sequential toggle in the conditions heading', () => {
+		const {container} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<DndProvider backend={HTML5Backend}>
@@ -112,27 +112,28 @@ describe('SegmentEditor', () => {
 			</Provider>
 		);
 
-		expect(screen.getByText('Order')).toBeInTheDocument();
-		expect(screen.getByTestId('toggle-switch-input')).toBeInTheDocument();
+		const toggle = screen.getByRole('switch', {
+			name: 'Enable Sequential Criteria'
+		});
+
+		expect(toggle.closest('.canvas-header')).toBeTruthy();
+		expect(toggle).not.toBeChecked();
+		expect(screen.queryByText('Order')).not.toBeInTheDocument();
+
+		expect(screen.getByText('Segment Conditions')).toBeInTheDocument();
+		expect(screen.getByText('No Conditions Yet')).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				'When this is enabled, the second event must come after the first event, with any number of events in between. When this is disabled, events can be completed in any order.'
+				'To create a new segment, drag items from the Conditions Library and drop them here.'
 			)
 		).toBeInTheDocument();
 
 		expect(
-			screen.getByText(
-				'Drag and drop criterion from the left to add rules.'
-			)
-		).toBeInTheDocument();
-		expect(
-			screen.getByText(
-				'Drag and drop over an existing criteria to form groups.'
-			)
+			container.querySelector('.canvas-header .info-popover-root')
 		).toBeInTheDocument();
 	});
 
-	it('renders the realtime segment with sequential card and user enable it', async () => {
+	it('enables the sequential toggle on a realtime segment', async () => {
 		render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
@@ -147,30 +148,68 @@ describe('SegmentEditor', () => {
 			</Provider>
 		);
 
-		expect(screen.getByText('Order')).toBeInTheDocument();
-		expect(screen.getByTestId('toggle-switch-input')).toBeInTheDocument();
-
-		expect(
-			screen.getByText(
-				'When this is enabled, the second event must come after the first event, with any number of events in between. When this is disabled, events can be completed in any order.'
-			)
-		).toBeInTheDocument();
-
-		fireEvent.click(screen.getByTestId('toggle-switch-input'));
+		fireEvent.click(
+			screen.getByRole('switch', {name: 'Enable Sequential Criteria'})
+		);
 
 		await waitFor(() => {
 			expect(
-				screen.queryByText(
-					'Drag and drop criterion from the left to add rules.'
-				)
-			).toBeInTheDocument();
-
-			expect(
-				screen.queryByText(
-					'Drag and drop over an existing criteria to form groups.'
-				)
-			).not.toBeInTheDocument();
+				screen.getByRole('switch', {name: 'Enable Sequential Criteria'})
+			).toBeChecked();
 		});
+
+		expect(screen.getByText('No Conditions Yet')).toBeInTheDocument();
+	});
+
+	it('explains the sequential order in a popover next to the toggle', () => {
+		const {container} = render(
+			<Provider store={mockStore()}>
+				<BrowserRouter>
+					<DndProvider backend={HTML5Backend}>
+						<SegmentEditor
+							channelId='321'
+							groupId='23'
+							type='REAL_TIME'
+						/>
+					</DndProvider>
+				</BrowserRouter>
+			</Provider>
+		);
+
+		const popover = screen
+			.getByText(
+				'When this is enabled, the second event must come after the first event, with any number of events in between. When this is disabled, events can be completed in any order.'
+			)
+			.closest('.popover');
+
+		expect(popover).toHaveClass('hide');
+
+		fireEvent.mouseOver(
+			container.querySelector('.canvas-header .info-popover-root')
+		);
+
+		expect(popover).not.toHaveClass('hide');
+	});
+
+	it('does not render the sequential toggle on a batch segment', () => {
+		render(
+			<Provider store={mockStore()}>
+				<BrowserRouter>
+					<DndProvider backend={HTML5Backend}>
+						<SegmentEditor
+							channelId='321'
+							groupId='23'
+							type='BATCH'
+						/>
+					</DndProvider>
+				</BrowserRouter>
+			</Provider>
+		);
+
+		expect(screen.getByText('Segment Conditions')).toBeInTheDocument();
+		expect(
+			screen.queryByRole('switch', {name: 'Enable Sequential Criteria'})
+		).not.toBeInTheDocument();
 	});
 
 	it('shows the Segment ERC popover with the description and the slug rule', () => {

@@ -324,49 +324,77 @@ exports[`SegmentEditor should render 1`] = `
                   </div>
                 </div>
                 <div
-                  class="criteria-builder-root"
+                  class="card card-root canvas-root"
                 >
                   <div
-                    class="empty-drop-zone-root"
+                    class="card-header align-items-lg-center align-items-start c-gap-3 canvas-header d-flex flex-column flex-lg-row flex-wrap justify-content-between mb-5 pb-0"
                   >
                     <div
-                      class="empty-drop-zone-target"
+                      class="card-title"
+                    >
+                      <h2
+                        class="text-5 font-weight-semi-bold"
+                      >
+                        Segment Conditions
+                      </h2>
+                    </div>
+                  </div>
+                  <div
+                    class="card-body canvas-body"
+                  >
+                    <div
+                      class="criteria-builder-root"
                     >
                       <div
-                        class="empty-drop-zone-indicator"
-                      />
-                      <div
-                        class="empty-drop-zone-message"
+                        class="empty-drop-zone-root"
                       >
-                        <div>
-                          <svg
-                            class="lexicon-icon lexicon-icon-ac_rule icon-root icon-size-md mr-3"
-                            role="presentation"
+                        <div
+                          class="empty-drop-zone-target"
+                        >
+                          <div
+                            class="align-items-center canvas-empty-state d-flex justify-content-center rounded-lg canvas-empty-state-idle bg-white"
                           >
-                            <use
-                              href="#ac_rule"
-                            />
-                          </svg>
-                          <span
-                            class="text-4"
-                          >
-                            Drag and drop criterion from the left to add rules.
-                          </span>
-                        </div>
-                        <div>
-                          <svg
-                            class="lexicon-icon lexicon-icon-ac_group icon-root icon-size-md mr-3"
-                            role="presentation"
-                          >
-                            <use
-                              href="#ac_group"
-                            />
-                          </svg>
-                          <span
-                            class="text-4"
-                          >
-                            Drag and drop over an existing criteria to form groups.
-                          </span>
+                            <div
+                              class="c-empty-state c-empty-state-animation"
+                            >
+                              <div
+                                class="c-empty-state-image"
+                              >
+                                <div
+                                  class="c-empty-state-aspect-ratio"
+                                >
+                                  <img
+                                    alt=""
+                                    class="aspect-ratio-item aspect-ratio-item-fluid d-none-c-prefers-reduced-motion"
+                                    src="empty_state.svg"
+                                  />
+                                  <img
+                                    alt=""
+                                    class="aspect-ratio-item aspect-ratio-item-fluid d-block-c-prefers-reduced-motion"
+                                    src="empty_state_reduced_motion.svg"
+                                  />
+                                </div>
+                              </div>
+                              <div
+                                class="c-empty-state-title text-dark"
+                              >
+                                <h3
+                                  class="text-5 font-weight-bold"
+                                >
+                                  No Conditions Yet
+                                </h3>
+                              </div>
+                              <div
+                                class="c-empty-state-text"
+                              >
+                                <span
+                                  class="text-4 text-secondary"
+                                >
+                                  To create a new segment, drag items from the Conditions Library and drop them here.
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

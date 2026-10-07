@@ -3,74 +3,59 @@
 exports[`Event Analysis Editor render 1`] = `
 <div>
   <div
-    class="card card-root event-analysis-editor-root"
+    class="card card-root canvas-root event-analysis-editor-root"
   >
     <div
-      class="d-flex flex-column-reverse flex-md-row justify-content-between mx-3 my-4"
+      class="card-header align-items-lg-center align-items-start c-gap-3 canvas-header d-flex flex-column flex-lg-row flex-wrap justify-content-between mb-5 pb-0"
     >
-      <ul
-        class="card-tabs-root type-selector small"
-      >
-        <li
-          class="card-tab active"
-          data-testid="TOTAL"
-        >
-          <button
-            class="button-root btn btn-unstyled"
-            type="button"
-          >
-            <span
-              class="title"
-            >
-              Total
-            </span>
-            <div />
-          </button>
-        </li>
-        <li
-          class="card-tab"
-          data-testid="UNIQUE"
-        >
-          <button
-            class="button-root btn btn-unstyled"
-            type="button"
-          >
-            <span
-              class="title"
-            >
-              Unique
-            </span>
-            <div />
-          </button>
-        </li>
-        <li
-          class="card-tab"
-          data-testid="AVERAGE"
-        >
-          <button
-            class="button-root btn btn-unstyled"
-            type="button"
-          >
-            <span
-              class="title"
-            >
-              Average
-            </span>
-            <div />
-          </button>
-        </li>
-      </ul>
       <div
-        class="d-flex align-items-center mb-3 mb-md-0"
+        class="card-title"
+      >
+        <h2
+          class="text-5 font-weight-semi-bold"
+        >
+          Analysis Insights
+        </h2>
+      </div>
+      <div
+        class="align-items-center c-gap-3 canvas-actions d-flex flex-wrap"
       >
         <div
-          class="custom-control custom-checkbox compare-to-previous-checkbox mb-0 mr-4"
+          class="type-selector btn-group"
+          role="group"
+        >
+          <button
+            aria-pressed="true"
+            class="active btn btn-sm btn-secondary"
+            type="button"
+          >
+            Total
+          </button>
+          <button
+            aria-pressed="false"
+            class="btn btn-sm btn-secondary"
+            type="button"
+          >
+            Unique
+          </button>
+          <button
+            aria-pressed="false"
+            class="btn btn-sm btn-secondary"
+            type="button"
+          >
+            Average
+          </button>
+        </div>
+        <span
+          class="align-self-stretch border-left"
+        />
+        <div
+          class="custom-control custom-checkbox compare-to-previous-checkbox mb-0 custom-control-outside"
         >
           <label>
             <input
               class="custom-control-input"
               type="checkbox"
-              value="false"
             />
             <span
               class="custom-control-label"
@@ -90,9 +75,52 @@ exports[`Event Analysis Editor render 1`] = `
       </div>
     </div>
     <div
-      class="breakdown-empty"
+      class="card-body canvas-body"
     >
-      Add an event to analyze.
+      <div
+        class="align-items-center canvas-empty-state d-flex justify-content-center rounded-lg canvas-empty-state-idle bg-white"
+      >
+        <div
+          class="c-empty-state c-empty-state-animation"
+        >
+          <div
+            class="c-empty-state-image"
+          >
+            <div
+              class="c-empty-state-aspect-ratio"
+            >
+              <img
+                alt=""
+                class="aspect-ratio-item aspect-ratio-item-fluid d-none-c-prefers-reduced-motion"
+                src="empty_state.svg"
+              />
+              <img
+                alt=""
+                class="aspect-ratio-item aspect-ratio-item-fluid d-block-c-prefers-reduced-motion"
+                src="empty_state_reduced_motion.svg"
+              />
+            </div>
+          </div>
+          <div
+            class="c-empty-state-title text-dark"
+          >
+            <h3
+              class="text-5 font-weight-bold"
+            >
+              No Conditions Yet
+            </h3>
+          </div>
+          <div
+            class="c-empty-state-text"
+          >
+            <span
+              class="text-4 text-secondary"
+            >
+              To create a new analysis, select an event, then add filters and breakdowns for more detail.
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

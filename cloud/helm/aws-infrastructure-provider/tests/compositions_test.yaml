@@ -6,6 +6,48 @@ templates:
     -   templates/compositions.yaml
 tests:
     -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "splitList \":\" \\(\\$backup\\.timeOfDay \\| default \"05:00\"\\)"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "printf \"cron\\(%s %s \\* \\* \\? \\*\\)\" \\(index \\$[A-Za-z]+ 1\\) \\(index \\$[A-Za-z]+ 0\\)"
+        it: Builds a daily backup schedule from the time of day
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "if eq \\(\\$backup\\.frequency \\| default \"Daily\"\\) \"Weekly\""
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "printf \"cron\\(%s %s \\? \\* %s \\*\\)\" \\(index \\$[A-Za-z]+ 1\\) \\(index \\$[A-Za-z]+ 0\\) \\(index \\$[A-Za-z]+ \\(\\$backup\\.dayOfWeek \\| default \"Sunday\"\\)\\)"
+        it: Builds a weekly backup schedule on the chosen day of the week
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "dict \"Friday\" \"FRI\" \"Monday\" \"MON\" \"Saturday\" \"SAT\" \"Sunday\" \"SUN\" \"Thursday\" \"THU\" \"Tuesday\" \"TUE\" \"Wednesday\" \"WED\""
+        it: Converts each day of the week to its AWS cron abbreviation
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "deleteAfter: \\{\\{ \\$backup\\.retentionDays \\| default 30 \\}\\}"
+        it: Deletes each recovery point after the retention period
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\{\\{- if and \\$backup\\.enabled \\$cmkEnabled \\}\\}\\s+apiVersion: kms\\.aws\\.m\\.upbound\\.io/v1beta1\\s+kind: Alias"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\{\\{- if \\$cmkEnabled \\}\\}\\s+kmsKeyArnSelector:\\s+matchLabels:\\s+app: liferay\\s+component: backup-vault"
+        it: Encrypts the backup vault with its own key only when customer managed keys are enabled
+    -   asserts:
             -   hasDocuments:
                     count: 2
             -   documentIndex: 0
@@ -37,15 +79,23 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\"cron\\(%s %s \\* \\* \\? \\*\\)\""
-            -   documentIndex: 0
-                matchRegex:
-                    path: spec.pipeline[1].input.inline.template
-                    pattern: "\"cron\\(%s %s \\? \\* %s \\*\\)\""
-        it: Leaves the day of month unset in a weekly backup schedule
+                    pattern: "scheduleExpressionTimezone: \\{\\{ \\$backup\\.timeZone \\| default \"UTC\" \\| quote \\}\\}"
+        it: Passes the backup time zone through to the AWS Backup plan rule
     -   asserts:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "scheduleExpressionTimezone: \\{\\{ \\$[A-Za-z]+\\.timeZone \\|"
-        it: Passes the backup time zone through to the AWS Backup plan rule
+                    pattern: "\\{\\{- if \\$backup\\.enabled \\}\\}(\\s+\\{\\{-[^\\n]*)*\\s+apiVersion: backup\\.aws\\.m\\.upbound\\.io/v1beta1\\s+kind: Plan"
+        it: Provisions the backup plan only once backups are enabled
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "key: aws:ResourceTag/Active\\s+value: \"true\"\\s+-\\s+key: aws:ResourceTag/Backup\\s+value: \"true\"\\s+-\\s+key: aws:ResourceTag/DeploymentName\\s+value: \\{\\{ \\$env\\.deploymentName \\}\\}\\s+-\\s+key: aws:ResourceTag/EnvironmentId\\s+value: \\{\\{ \\$environmentId \\}\\}\\s+-\\s+key: aws:ResourceTag/ProjectId\\s+value: \\{\\{ \\$projectId \\}\\}"
+        it: Selects only the active resources of this environment for backup
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\{\\{- with \\$backup\\.vaultTags \\}\\}\\s+tags:\\s+\\{\\{- \\. \\| toYaml"
+        it: Tags the backup vault with the vault tags

@@ -79,6 +79,7 @@ import java.net.URL;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -240,20 +241,44 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		// Contributed
 
+		Map.Entry<FreeMarkerBundleClassloader, Map<String, TemplateModel>>
+			contributedTemplateModelsEntry = _contributedTemplateModelsEntry;
+
+		if ((contributedTemplateModelsEntry != null) &&
+			(contributedTemplateModelsEntry.getKey() ==
+				freeMarkerBundleClassloader)) {
+
+			contextObjects.putAll(contributedTemplateModelsEntry.getValue());
+
+			return;
+		}
+
+		boolean complete = true;
+		Map<String, TemplateModel> contributedTemplateModels = new HashMap<>();
+
 		for (Map<String, String> map : _taglibMappings.values()) {
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				try {
-					contextObjects.put(
+					contributedTemplateModels.put(
 						entry.getKey(),
 						taglibFactoryWrapper.get(entry.getValue()));
 				}
 				catch (TemplateModelException templateModelException) {
+					complete = false;
+
 					_log.error(
 						"Unable to add taglib " + entry.getKey() +
 							" to context",
 						templateModelException);
 				}
 			}
+		}
+
+		contextObjects.putAll(contributedTemplateModels);
+
+		if (complete) {
+			_contributedTemplateModelsEntry = Map.entry(
+				freeMarkerBundleClassloader, contributedTemplateModels);
 		}
 	}
 
@@ -425,6 +450,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		_templateContextHelper.removeAllHelperUtilities();
 
 		_templateModels.clear();
+
+		_contributedTemplateModelsEntry = null;
 
 		if (_isEnableDebuggerService()) {
 			//DebuggerService.shutdown();
@@ -602,6 +629,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private Bundle _bundle;
 	private BundleTracker<ClassLoader> _bundleTracker;
 	private volatile Configuration _configuration;
+	private volatile Map.Entry
+		<FreeMarkerBundleClassloader, Map<String, TemplateModel>>
+			_contributedTemplateModelsEntry;
 	private volatile BeansWrapper _defaultBeansWrapper;
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private volatile FreeMarkerEngineConfiguration

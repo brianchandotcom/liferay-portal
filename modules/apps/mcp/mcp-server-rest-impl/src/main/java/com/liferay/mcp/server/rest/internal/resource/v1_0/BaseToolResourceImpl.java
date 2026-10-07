@@ -48,23 +48,28 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 	 * curl -X 'GET' 'http://localhost:8080/o/mcp-server/v1.0/tool-sets/{toolSetName}/tools/{toolName}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Use this once you have identified a tool (via `getToolSetToolSetNameToolSummariesPage`) and need its input schema before invoking it. Returns the tool's `inputSchema`, and its `outputSchema` when the tool returns a JSON body. Build an input map matching `inputSchema` and POST it to `invoke` under the same URL to execute the tool."
+		description = "Use this when you have identified a tool, from a `getToolSearchToolSearchResultsPage` result or from `getToolSetToolSetNameToolSummariesPage`, and need its input schema before invoking it. Skip it when a search result already carries a `requiredInputSchema` covering the arguments you need. Returns the tool's `inputSchema`; set `requiredInputSchemaOnly` to receive only the required arguments. Pass an input map matching the schema to `postToolSetToolSetNameToolInvoke` to execute the tool."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "The tool set name returned by `getToolSetsPage`.",
+				description = "The `toolSetName` from a `getToolSearchToolSearchResultsPage` result, or `name` from `getToolSetsPage`.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "toolSetName", required = true
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "The tool name returned by `getToolSetToolSetNameToolSummariesPage`.",
+				description = "The `toolName` from a `getToolSearchToolSearchResultsPage` result, or `name` from `getToolSetToolSetNameToolSummariesPage`.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "toolName", required = true
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "When true, `inputSchema` is trimmed to the tool's required arguments and, within each, their required properties; listing operations keep `fields` as well. Use it when you intend to invoke rather than survey. An operation may underdeclare what it requires, so if the API rejects a body built from the trimmed schema, fetch the full schema instead of retrying.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "requiredInputSchemaOnly"
 			)
 		}
 	)
@@ -83,7 +88,10 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("toolName")
-			String toolName)
+			String toolName,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("requiredInputSchemaOnly")
+			Boolean requiredInputSchemaOnly)
 		throws Exception {
 
 		return new Tool();
@@ -95,19 +103,19 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 	 * curl -X 'POST' 'http://localhost:8080/o/mcp-server/v1.0/tool-sets/{toolSetName}/tools/{toolName}/invoke'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Invokes a tool. ALWAYS call `getToolSetToolSetNameTool` first to fetch the tool's `inputSchema`, then build the request `body` to match it exactly. Skipping `getToolSetToolSetNameTool` leads to malformed input and avoidable failures. Returns the tool's response body unchanged.",
+		description = "Invokes a tool. Build the request `body` only from a schema you have seen: a `requiredInputSchema` from a `getToolSearchToolSearchResultsPage` result, or the `inputSchema` from `getToolSetToolSetNameTool`, trimmed with `requiredInputSchemaOnly` when the required arguments suffice. Scope parameters accept a key as well as a numeric ID, so `siteId` takes `Guest` directly; keys are case sensitive. Returns the tool's response unchanged. A listing is large, since every entity carries its languages, permitted actions and unset fields; pass a `fields` query parameter naming what you need, as in `fields=id,name`. A response naming a disabled feature flag, or reporting an UnsupportedOperationException, is final: the operation is switched off on this instance. Do not retry it, invoke a similarly named operation in another tool set, use its batch form, or search for a way around it; all of them reach the same switch. Tell the user which step could not be done, naming the flag if one was given, and carry on with the rest.",
 		operationId = "postToolSetToolSetNameToolInvoke",
-		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Object.class)), description = "The complete input map for the target tool, matching the `inputSchema` that `getToolSetToolSetNameTool` returns for this `toolName`. Use that schema's properties exactly as named: when the `inputSchema` declares a `body` property, it holds the request payload and must stay nested under `body` here rather than be flattened into this map; pass any path or query parameters as siblings of `body`. For example, a tool whose `inputSchema` has `body` and `itemId` properties is invoked with `{\"body\": {...}, \"itemId\": \"123\"}`.")
+		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Object.class)), description = "The complete input map for the target tool, matching the `inputSchema` that `getToolSetToolSetNameTool` returns for this `toolName`, or the `requiredInputSchema` from a `getToolSearchToolSearchResultsPage` result. Use that schema's properties exactly as named: when the `inputSchema` declares a `body` property, it holds the request payload and must stay nested under `body` here rather than be flattened into this map; pass any path or query parameters as siblings of `body`. For example, a tool whose `inputSchema` has `body` and `itemId` properties is invoked with `{\"body\": {...}, \"itemId\": \"123\"}`.")
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "The tool set name returned by `getToolSetsPage`.",
+				description = "The `toolSetName` from a `getToolSearchToolSearchResultsPage` result, or `name` from `getToolSetsPage`.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "toolSetName", required = true
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "The tool name returned by `getToolSetToolSetNameToolSummariesPage`.",
+				description = "The `toolName` from a `getToolSearchToolSearchResultsPage` result, or `name` from `getToolSetToolSetNameToolSummariesPage`.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "toolName", required = true
 			)
@@ -583,4 +591,4 @@ public abstract class BaseToolResourceImpl implements ToolResource {
 		LogFactoryUtil.getLog(BaseToolResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:873540736
+// LIFERAY-REST-BUILDER-HASH:1033004275

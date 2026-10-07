@@ -32,11 +32,14 @@ public interface ToolResource {
 		return new Builder();
 	}
 
-	public Tool getToolSetToolSetNameTool(String toolSetName, String toolName)
+	public Tool getToolSetToolSetNameTool(
+			String toolSetName, String toolName,
+			Boolean requiredInputSchemaOnly)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getToolSetToolSetNameToolHttpResponse(
-			String toolSetName, String toolName)
+			String toolSetName, String toolName,
+			Boolean requiredInputSchemaOnly)
 		throws Exception;
 
 	public void postToolSetToolSetNameToolInvoke(
@@ -157,11 +160,13 @@ public interface ToolResource {
 	public static class ToolResourceImpl implements ToolResource {
 
 		public Tool getToolSetToolSetNameTool(
-				String toolSetName, String toolName)
+				String toolSetName, String toolName,
+				Boolean requiredInputSchemaOnly)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getToolSetToolSetNameToolHttpResponse(toolSetName, toolName);
+				getToolSetToolSetNameToolHttpResponse(
+					toolSetName, toolName, requiredInputSchemaOnly);
 
 			String content = httpResponse.getContent();
 
@@ -223,7 +228,8 @@ public interface ToolResource {
 		}
 
 		public HttpInvoker.HttpResponse getToolSetToolSetNameToolHttpResponse(
-				String toolSetName, String toolName)
+				String toolSetName, String toolName,
+				Boolean requiredInputSchemaOnly)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -246,6 +252,12 @@ public interface ToolResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (requiredInputSchemaOnly != null) {
+				httpInvoker.parameter(
+					"requiredInputSchemaOnly",
+					String.valueOf(requiredInputSchemaOnly));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -375,4 +387,4 @@ public interface ToolResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1170961807
+// LIFERAY-REST-BUILDER-HASH:2115239122

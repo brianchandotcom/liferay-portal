@@ -79,6 +79,10 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
+		if (name.endsWith("BeanInfo") || name.endsWith("Customizer")) {
+			throw new ClassNotFoundException(name);
+		}
+
 		for (ClassLoader classLoader : _classLoaders) {
 			try {
 				return classLoader.loadClass(name);

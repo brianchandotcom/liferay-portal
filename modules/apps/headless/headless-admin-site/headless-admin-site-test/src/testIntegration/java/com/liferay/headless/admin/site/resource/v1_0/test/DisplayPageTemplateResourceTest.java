@@ -42,6 +42,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecification
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailHttpServer;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.URLFetchSecurityCompanyConfigurationUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -1685,8 +1686,13 @@ public class DisplayPageTemplateResourceTest
 			_getDisplayPageTemplateResource("thumbnailURLReference");
 
 		DisplayPageTemplate postDisplayPageTemplate =
-			displayPageTemplateResource.postSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(), displayPageTemplate);
+			URLFetchSecurityCompanyConfigurationUtil.
+				swapURLLocalNetworkAccessEnabled(
+					true,
+					() ->
+						displayPageTemplateResource.postSiteDisplayPageTemplate(
+							testGroup.getExternalReferenceCode(),
+							displayPageTemplate));
 
 		if (expectedExternalReferenceCode == null) {
 			ThumbnailURLReference postThumbnailURLReference =
@@ -1716,10 +1722,14 @@ public class DisplayPageTemplateResourceTest
 			_getDisplayPageTemplateResource("thumbnailURLReference");
 
 		DisplayPageTemplate putDisplayPageTemplate =
-			displayPageTemplateResource.putSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(),
-				displayPageTemplate.getExternalReferenceCode(),
-				displayPageTemplate);
+			URLFetchSecurityCompanyConfigurationUtil.
+				swapURLLocalNetworkAccessEnabled(
+					true,
+					() ->
+						displayPageTemplateResource.putSiteDisplayPageTemplate(
+							testGroup.getExternalReferenceCode(),
+							displayPageTemplate.getExternalReferenceCode(),
+							displayPageTemplate));
 
 		if (expectedExternalReferenceCode == null) {
 			ThumbnailURLReference putThumbnailURLReference =

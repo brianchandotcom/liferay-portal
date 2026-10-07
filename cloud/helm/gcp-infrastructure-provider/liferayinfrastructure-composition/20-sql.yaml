@@ -14,30 +14,30 @@ metadata:
     name: {{ $databaseInstanceName }}
 spec:
     forProvider:
-        databaseVersion: {{ $databaseSpec.databaseVersion | default "POSTGRES_18" }}
-        deletionProtection: {{ and ($databaseSpec.deletionProtection | default ($xr.spec.deletionProtection | default false)) (eq $dataPlane $activeDataPlane) }}
+        databaseVersion: {{ $database.databaseVersion | default "POSTGRES_18" }}
+        deletionProtection: {{ and ($database.deletionProtection | default ($xr.spec.deletionProtection | default false)) (eq $dataPlane $activeDataPlane) }}
         {{- if $cmkEnabled }}
         encryptionKmsKeyName: {{ $cmkKeyName }}
         {{- end }}
         region: {{ $region }}
         rootPasswordSecretRef:
             key: password
-            name: {{ $databaseSpec.rootPasswordSecretName }}
+            name: {{ $database.rootPasswordSecretName }}
         settings:
             databaseFlags:
                 -   name: cloudsql.iam_authentication
                     value: "on"
-            diskSize: {{ $databaseSpec.storageGB | default 10 }}
+            diskSize: {{ $database.storageGB | default 10 }}
             diskType: PD_SSD
             edition: ENTERPRISE
             insightsConfig:
-                queryInsightsEnabled: {{ $databaseSpec.queryInsightsEnabled | default true }}
+                queryInsightsEnabled: {{ $database.queryInsightsEnabled | default true }}
             ipConfiguration:
                 ipv4Enabled: false
                 privateNetwork: projects/{{ $env.projectId }}/global/networks/{{ $env.vpcName }}
                 sslMode: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
             retainBackupsOnDelete: true
-            tier: {{ $databaseSpec.instanceType | default "db-custom-1-3840" }}
+            tier: {{ $database.instanceType | default "db-custom-1-3840" }}
             userLabels:
                 {{- $backupTargetLabels | toYaml | nindent 16 }}
                 active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}

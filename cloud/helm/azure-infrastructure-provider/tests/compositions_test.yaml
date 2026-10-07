@@ -703,11 +703,11 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "pointInTimeRestoreTimeInUtc: \\{\\{ \\$databaseSpec.restorePointInTime \\}\\}"
+                    pattern: "pointInTimeRestoreTimeInUtc: \\{\\{ \\$database.restorePointInTime \\}\\}"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\$restoreSourceDatabaseServerName := dig \\(\\$databaseSpec.restoreSourceDataPlane \\| default \\(index \\$dataPlaneKeys \\$activeDataPlane\\)\\) \"databaseServer\" \"\" \\$dataPlaneNames"
+                    pattern: "\\$restoreSourceDatabaseServerName := dig \\(\\$database.restoreSourceDataPlane \\| default \\(index \\$dataPlaneKeys \\$activeDataPlane\\)\\) \"databaseServer\" \"\" \\$dataPlaneNames"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template

@@ -1,4 +1,4 @@
-{{- $databaseSpec := $xr.spec.database -}}
+{{- $database := $xr.spec.database -}}
 {{- $observedDatabaseDataPlanes := list -}}
 
 {{- range $dataPlane := list "blue" "green" -}}
@@ -11,7 +11,7 @@
 {{- $databaseServerName := index $databaseServerNames $dataPlane }}
 {{- $isDatabaseRestoreTarget := and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
 {{- $isDemotedDataPlane := eq $dataPlane $demotedDataPlane }}
-{{- $restoreSourceDatabaseServerName := dig ($databaseSpec.restoreSourceDataPlane | default (index $dataPlaneKeys $activeDataPlane)) "databaseServer" "" $dataPlaneNames }}
+{{- $restoreSourceDatabaseServerName := dig ($database.restoreSourceDataPlane | default (index $dataPlaneKeys $activeDataPlane)) "databaseServer" "" $dataPlaneNames }}
 {{- if $i }}
 ---
 {{- end }}
@@ -48,7 +48,7 @@ spec:
             primaryUserAssignedIdentityId: {{ $cmkIdentityId }}
         {{- end }}
         delegatedSubnetId: {{ $env.databaseSubnetId }}
-        {{- if $databaseSpec.highAvailability }}
+        {{- if $database.highAvailability }}
         highAvailability:
             mode: ZoneRedundant
         {{- end }}
@@ -62,16 +62,16 @@ spec:
         privateDnsZoneId: {{ $env.databasePrivateDnsZoneId }}
         publicNetworkAccessEnabled: false
         resourceGroupName: {{ $env.resourceGroupName }}
-        skuName: {{ $databaseSpec.instanceType | default "GP_Standard_D2s_v3" }}
-        storageMb: {{ mul ($databaseSpec.storageGB | default 32) 1024 }}
+        skuName: {{ $database.instanceType | default "GP_Standard_D2s_v3" }}
+        storageMb: {{ mul ($database.storageGB | default 32) 1024 }}
         tags:
             {{- $backupTargetTags | toYaml | nindent 12 }}
             active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
-        version: {{ $databaseSpec.version | default "16" | quote }}
+        version: {{ $database.version | default "16" | quote }}
     {{- if $isDatabaseRestoreTarget }}
     initProvider:
         createMode: PointInTimeRestore
-        pointInTimeRestoreTimeInUtc: {{ $databaseSpec.restorePointInTime }}
+        pointInTimeRestoreTimeInUtc: {{ $database.restorePointInTime }}
         sourceServerId: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{{ $restoreSourceDatabaseServerName }}
     {{- end }}
     managementPolicies: {{ $isDemotedDataPlane | ternary $demotedManagementPolicies $managementPolicies }}

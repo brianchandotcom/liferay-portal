@@ -1,21 +1,21 @@
 {{- $observedResources := .observed.resources | default dict -}}
 
-{{- $database := dig (printf "database-%s" $activeDataPlane) (dict) $observedResources -}}
-{{- $search := dig "search" (dict) $observedResources -}}
-{{- $storage := dig (printf "storage-%s" $activeDataPlane) (dict) $observedResources -}}
+{{- $observedDatabase := dig (printf "database-%s" $activeDataPlane) (dict) $observedResources -}}
+{{- $observedSearch := dig "search" (dict) $observedResources -}}
+{{- $observedStorage := dig (printf "storage-%s" $activeDataPlane) (dict) $observedResources -}}
 
 {{- $backupRestoreRoleArn := dig "backup-restore-role" "resource" "status" "atProvider" "arn" "" $observedResources -}}
-{{- $databaseAddress := dig "resource" "status" "atProvider" "address" "" $database | toString -}}
-{{- $databasePassword := dig "connectionDetails" "password" "" $database | toString | b64dec -}}
-{{- $databasePort := dig "resource" "status" "atProvider" "port" "" $database | toString -}}
-{{- $doclibBucketName := dig "resource" "metadata" "annotations" "crossplane.io/external-name" "" $storage | toString -}}
+{{- $databaseAddress := dig "resource" "status" "atProvider" "address" "" $observedDatabase | toString -}}
+{{- $databasePassword := dig "connectionDetails" "password" "" $observedDatabase | toString | b64dec -}}
+{{- $databasePort := dig "resource" "status" "atProvider" "port" "" $observedDatabase | toString -}}
+{{- $doclibBucketName := dig "resource" "metadata" "annotations" "crossplane.io/external-name" "" $observedStorage | toString -}}
 {{- $liferayRoleArn := dig "liferay-role" "resource" "status" "atProvider" "arn" "" $observedResources -}}
-{{- $searchEndpoint := dig "resource" "status" "atProvider" "endpoint" "" $search | toString -}}
-{{- $searchPassword := dig "connectionDetails" "attribute.advanced_security_options.0.master_user_options.0.master_user_password" "" $search | toString | b64dec -}}
+{{- $searchEndpoint := dig "resource" "status" "atProvider" "endpoint" "" $observedSearch | toString -}}
+{{- $searchPassword := dig "connectionDetails" "attribute.advanced_security_options.0.master_user_options.0.master_user_password" "" $observedSearch | toString | b64dec -}}
 
 {{- $isDatabaseReady := and (ne $databaseAddress "") (ne $databasePassword "") (ne $databasePort "") -}}
 {{- $isDoclibReady := ne $doclibBucketName "" -}}
-{{- $isSearchReady := or (not $opensearchSpec) (and (ne $searchEndpoint "") (ne $searchPassword "")) }}
+{{- $isSearchReady := or (not $opensearch) (and (ne $searchEndpoint "") (ne $searchPassword "")) }}
 {{- if $liferayRoleArn }}
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
@@ -114,7 +114,7 @@ spec:
     managementPolicies: {{ $managementPolicies }}
 {{- end }}
 {{- end }}
-{{- if $opensearchSpec }}
+{{- if $opensearch }}
 ---
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
@@ -253,7 +253,7 @@ spec:
             apiVersion: v1
             data:
                 S3_BUCKET_ID: {{ $doclibBucketName | b64enc | quote }}
-                S3_BUCKET_REGION: {{ dig "resource" "spec" "forProvider" "region" "" $storage | b64enc | quote }}
+                S3_BUCKET_REGION: {{ dig "resource" "spec" "forProvider" "region" "" $observedStorage | b64enc | quote }}
             kind: Secret
             metadata:
                 labels:

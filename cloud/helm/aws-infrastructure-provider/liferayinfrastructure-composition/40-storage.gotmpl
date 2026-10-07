@@ -1,6 +1,6 @@
-{{- $storageSpec := $xr.spec.storage -}}
+{{- $storage := $xr.spec.storage -}}
 
-{{- $storageRegion := $storageSpec.region | default $env.region }}
+{{- $storageRegion := $storage.region | default $env.region }}
 
 {{- range $i, $dataPlane := list "blue" "green" }}
 {{- if $i }}
@@ -28,7 +28,7 @@ spec:
             Active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
             Backup: "true"
             Name: {{ $storageName }}-{{ $dataPlane }}
-            {{- with $storageSpec.tags }}
+            {{- with $storage.tags }}
             {{- . | toYaml | nindent 12 }}
             {{- end }}
     managementPolicies: {{ $managementPolicies }}

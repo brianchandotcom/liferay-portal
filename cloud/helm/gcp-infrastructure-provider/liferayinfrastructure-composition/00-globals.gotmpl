@@ -9,7 +9,7 @@
 {{- $backup := $xr.spec.backup | default dict -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled | default false -}}
 {{- $databaseName := $xr.spec.database.name | default "lportal" -}}
-{{- $databaseSpec := $xr.spec.database -}}
+{{- $database := $xr.spec.database -}}
 {{- $environmentId := $xr.spec.environmentId -}}
 {{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
 {{- $gsaName := printf "%s-sa" $xr.metadata.name -}}
@@ -34,7 +34,7 @@
 {{- $labels := merge ($xr.spec.commonTags | default dict) (dict "app" "liferay" "deployment-name" $env.deploymentName "environment-id" $environmentId "project-id" $projectId) -}}
 
 {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
-{{- $region := $databaseSpec.region | default $xr.spec.region -}}
+{{- $region := $database.region | default $xr.spec.region -}}
 {{- $searchNamespace := printf "%s-elasticsearch" $namespace -}}
 {{- $searchSecretName := printf "%s-es-elastic-user" $searchName -}}
 {{- $targetInactiveDataPlane := (eq $targetActiveDataPlane "blue") | ternary "green" "blue" -}}

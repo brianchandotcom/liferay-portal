@@ -18,7 +18,7 @@ spec:
                     databaseIamUser: {{ $databaseIamUser | toJson }}
                     databaseName: {{ $databaseName | toJson }}
                     databasePort: {{ $databasePort | toJson }}
-                    databaseSpec: {{ $databaseSpec | toJson }}
+                    databaseSpec: {{ $database | toJson }}
                     elasticsearchHealth: {{ $elasticsearchHealth | toJson }}
                     environmentId: {{ $environmentId | toJson }}
                     forceDestroy: {{ $forceDestroy | toJson }}

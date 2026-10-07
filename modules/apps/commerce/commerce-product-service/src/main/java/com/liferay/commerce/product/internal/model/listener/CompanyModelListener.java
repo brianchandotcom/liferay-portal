@@ -7,6 +7,8 @@ package com.liferay.commerce.product.internal.model.listener;
 
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
@@ -34,6 +36,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 			_cpDefinitionLocalService.deleteCPDefinitions(companyId);
 			_cpMeasurementUnitLocalService.deleteCPMeasurementUnits(companyId);
+			_cpOptionCategoryLocalService.deleteCPOptionCategories(companyId);
+			_cpOptionLocalService.deleteCPOptions(companyId);
 			_cpSpecificationOptionLocalService.deleteCPSpecificationOptions(
 				companyId);
 			_cpTaxCategoryLocalService.deleteCPTaxCategories(companyId);
@@ -59,6 +63,12 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+
+	@Reference
+	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
+
+	@Reference
+	private CPOptionLocalService _cpOptionLocalService;
 
 	@Reference
 	private CPSpecificationOptionLocalService

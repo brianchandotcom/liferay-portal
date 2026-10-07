@@ -6,6 +6,7 @@
 package com.liferay.asset.list.internal.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,26 +60,20 @@ public class AssetListFiltersUpgradeUtil {
 				unicodeProperties.getProperty(
 					"queryContains" + i, StringPool.BLANK));
 
-			String queryName = unicodeProperties.getProperty(
-				"queryName" + i, StringPool.BLANK);
-
-			String propertyName = _toPropertyName(queryName);
-
-			String filterKey = StringUtil.merge(
-				new String[] {
-					propertyName, String.valueOf(queryContains),
-					String.valueOf(queryAndOperator)
-				},
-				StringPool.POUND);
+			String propertyName = _toPropertyName(
+				unicodeProperties.getProperty(
+					"queryName" + i, StringPool.BLANK));
 
 			filterJSONObjects.put(
-				filterKey,
+				StringBundler.concat(
+					propertyName, StringPool.POUND, queryContains,
+					StringPool.POUND, queryAndOperator),
 				JSONUtil.put(
-					"operatorName", _toOperatorName(queryContains)
+					"operatorName", queryContains ? "contains" : "not-contains"
 				).put(
 					"propertyName", propertyName
 				).put(
-					"quantifier", _toQuantifier(queryAndOperator)
+					"quantifier", queryAndOperator ? "all" : "any"
 				).put(
 					"value", _toValue(propertyName, queryValues)
 				));
@@ -149,14 +144,6 @@ public class AssetListFiltersUpgradeUtil {
 		}
 	}
 
-	private static String _toOperatorName(boolean queryContains) {
-		if (queryContains) {
-			return "contains";
-		}
-
-		return "not-contains";
-	}
-
 	private static String _toPropertyName(String queryName) {
 		if (Objects.equals(queryName, "assetCategories") ||
 			Objects.equals(queryName, "keywords")) {
@@ -165,14 +152,6 @@ public class AssetListFiltersUpgradeUtil {
 		}
 
 		return "assetTags";
-	}
-
-	private static String _toQuantifier(boolean queryAndOperator) {
-		if (queryAndOperator) {
-			return "all";
-		}
-
-		return "any";
 	}
 
 	private static Object _toValue(String propertyName, String[] queryValues) {

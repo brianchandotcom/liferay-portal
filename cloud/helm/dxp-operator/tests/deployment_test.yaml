@@ -17,6 +17,26 @@ tests:
                 -   name: artifactory-credentials
                 -   name: registry-credentials
     -   asserts:
+            -   contains:
+                    content:
+                        name: HTTPS_PROXY
+                        value: http://proxy.example.com:3128
+                    path: spec.template.spec.containers[0].env
+            -   contains:
+                    content:
+                        name: NO_PROXY
+                        value: .svc,.cluster.local
+                    path: spec.template.spec.containers[0].env
+        it: Adds the custom environment variables and skips emptied entries
+        set:
+            customEnv:
+                x-disabled: null
+                x-proxy:
+                    -   name: HTTPS_PROXY
+                        value: http://proxy.example.com:3128
+                    -   name: NO_PROXY
+                        value: .svc,.cluster.local
+    -   asserts:
             -   equal:
                     path: spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
                     value: kubernetes.io/arch
@@ -98,6 +118,75 @@ tests:
         set:
             serviceAccount.create: false
     -   asserts:
+            -   contains:
+                    content:
+                        mountPath: /etc/ssl/custom
+                        name: custom-ca
+                        readOnly: true
+                    path: spec.template.spec.containers[0].volumeMounts
+            -   contains:
+                    content:
+                        mountPath: /marketplace
+                        name: marketplace
+                    path: spec.template.spec.containers[0].volumeMounts
+            -   contains:
+                    content:
+                        configMap:
+                            name: custom-ca
+                        name: custom-ca
+                    path: spec.template.spec.volumes
+            -   contains:
+                    content:
+                        name: marketplace
+                        persistentVolumeClaim:
+                            claimName: dxp-operator-marketplace
+                    path: spec.template.spec.volumes
+            -   lengthEqual:
+                    count: 2
+                    path: spec.template.spec.containers[0].volumeMounts
+            -   lengthEqual:
+                    count: 2
+                    path: spec.template.spec.volumes
+        it: Mounts the custom volumes alongside the marketplace volume
+        set:
+            customVolumeMounts:
+                x-ca:
+                    -   mountPath: /etc/ssl/custom
+                        name: custom-ca
+                        readOnly: true
+            customVolumes:
+                x-ca:
+                    -   configMap:
+                            name: custom-ca
+                        name: custom-ca
+            marketplace.claimName: dxp-operator-marketplace
+            marketplace.enabled: true
+    -   asserts:
+            -   equal:
+                    path: spec.template.spec.containers[0].volumeMounts
+                    value:
+                        -   mountPath: /etc/ssl/custom
+                            name: custom-ca
+                            readOnly: true
+            -   equal:
+                    path: spec.template.spec.volumes
+                    value:
+                        -   configMap:
+                                name: custom-ca
+                            name: custom-ca
+        it: Mounts the custom volumes without the marketplace volume
+        set:
+            customVolumeMounts:
+                x-ca:
+                    -   mountPath: /etc/ssl/custom
+                        name: custom-ca
+                        readOnly: true
+            customVolumes:
+                x-ca:
+                    -   configMap:
+                            name: custom-ca
+                        name: custom-ca
+    -   asserts:
             -   equal:
                     path: spec.template.spec.serviceAccountName
                     value: my-release-liferay-dxp-operator
@@ -120,6 +209,12 @@ tests:
             -   notExists:
                     path: spec.template.metadata.annotations
         it: Omits the pod annotations by default
+    -   asserts:
+            -   notExists:
+                    path: spec.template.spec.containers[0].volumeMounts
+            -   notExists:
+                    path: spec.template.spec.volumes
+        it: Omits the volumes and volume mounts by default
     -   asserts:
             -   equal:
                     path: spec.template.spec.containers[0].env[?(@.name=="OPERATOR_NAMESPACE")].valueFrom.fieldRef.fieldPath

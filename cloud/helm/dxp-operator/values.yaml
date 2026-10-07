@@ -1,5 +1,8 @@
 affinity: {}
+customEnv: {}
 customLabels: {}
+customVolumeMounts: {}
+customVolumes: {}
 debug: false
 downloadPollInterval: 15s
 expirationGracePeriod: 2160h

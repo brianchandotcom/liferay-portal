@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import BaseEditPage from 'shared/components/base-edit-page';
+import Canvas from 'shared/components/canvas/Canvas';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
@@ -17,6 +18,7 @@ import Form, {
 } from 'shared/components/form';
 import NavigationWarning from 'shared/components/NavigationWarning';
 import React from 'react';
+import SegmentSequentialToggle from 'segment/components/SegmentSequentialToggle';
 import Toolbar from './Toolbar';
 import {AlertTypes} from 'shared/components/Alert';
 import {ClayButtonWithIcon} from '@clayui/button';
@@ -45,7 +47,6 @@ import {
 	getSegmentCategoryLabel,
 	getSegmentTypeLabel,
 } from 'segment/utils/labels';
-import {SegmentEnabledSequentialCard} from 'segment/components/SegmentEnabledSequentialCard';
 import {
 	SegmentCategories,
 	SegmentStates,
@@ -533,11 +534,6 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 																type={type}
 															/>
 
-															{type ===
-																SegmentTypes.RealTime && (
-																<SegmentEnabledSequentialCard />
-															)}
-
 															{segmentState ===
 																SegmentStates.Disabled && (
 																<EmbeddedAlertList
@@ -558,25 +554,42 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 																/>
 															)}
 
-															<CriteriaBuilderForm
-																channelId={
-																	channelId
-																}
-																groupId={
-																	groupId
-																}
-																id={id}
-																name="criteria"
-																segmentCategory={
-																	segmentCategory
-																}
-																segmentType={
-																	type
-																}
-																sequential={
-																	sequential
-																}
-															/>
+															<Canvas>
+																<Canvas.Header
+																	title={Liferay.Language.get(
+																		'segment-conditions'
+																	)}
+																>
+																	{type ===
+																		SegmentTypes.RealTime && (
+																		<Canvas.Actions>
+																			<SegmentSequentialToggle name="sequential" />
+																		</Canvas.Actions>
+																	)}
+																</Canvas.Header>
+
+																<Canvas.Body>
+																	<CriteriaBuilderForm
+																		channelId={
+																			channelId
+																		}
+																		groupId={
+																			groupId
+																		}
+																		id={id}
+																		name="criteria"
+																		segmentCategory={
+																			segmentCategory
+																		}
+																		segmentType={
+																			type
+																		}
+																		sequential={
+																			sequential
+																		}
+																	/>
+																</Canvas.Body>
+															</Canvas>
 														</div>
 													</div>
 												</div>

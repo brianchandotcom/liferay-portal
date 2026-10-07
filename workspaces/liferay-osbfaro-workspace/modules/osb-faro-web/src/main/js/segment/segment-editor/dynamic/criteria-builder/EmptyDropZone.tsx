@@ -1,6 +1,5 @@
-import ClayIcon from '@clayui/icon';
-import getCN from 'classnames';
-import React, {Component} from 'react';
+import Canvas from 'shared/components/canvas/Canvas';
+import React from 'react';
 import {
 	AddProperty,
 	withReferencedObjectsConsumer,
@@ -12,8 +11,8 @@ import {
 	DropTargetMonitor,
 } from 'react-dnd';
 import {DragTypes} from '../utils/drag-types';
+import {DropState} from 'shared/components/canvas/CanvasEmptyState';
 import {OnCriterionAdd} from '../utils/types';
-import {Text} from '@clayui/core';
 
 /**
  * Prevents items from being dropped from other contributors.
@@ -46,65 +45,41 @@ const drop = (
 	onCriterionAdd(0, criterion);
 };
 
-interface IEmptyDropZone extends React.HTMLAttributes<HTMLDivElement> {
+interface IEmptyDropZoneProps {
 	addProperty: AddProperty;
 	canDrop: boolean;
 	connectDropTarget: ConnectDropTarget;
 	hover?: boolean;
 	onCriterionAdd: OnCriterionAdd;
-	sequential: boolean;
 }
 
-class EmptyDropZone extends Component<IEmptyDropZone> {
-	render() {
-		const {canDrop, connectDropTarget, hover, sequential} = this.props;
+export const EmptyDropZone: React.FC<IEmptyDropZoneProps> = ({
+	canDrop,
+	connectDropTarget,
+	hover,
+}) => {
+	let dropState: DropState = 'idle';
 
-		const targetClasses = getCN('empty-drop-zone-target', {
-			'dnd-hover': canDrop && hover,
-			'enable-sequential-segment': sequential,
-		});
-
-		return (
-			<div className="empty-drop-zone-root">
-				{connectDropTarget(
-					<div className={targetClasses}>
-						<div className="empty-drop-zone-indicator" />
-
-						<div className="empty-drop-zone-message">
-							<div>
-								<ClayIcon
-									className="icon-root icon-size-md mr-3"
-									symbol="ac_rule"
-								/>
-
-								<Text size={4}>
-									{Liferay.Language.get(
-										'drag-and-drop-criterion-from-the-left-to-add-rules'
-									)}
-								</Text>
-							</div>
-
-							{!sequential && (
-								<div>
-									<ClayIcon
-										className="icon-root icon-size-md mr-3"
-										symbol="ac_group"
-									/>
-
-									<Text size={4}>
-										{Liferay.Language.get(
-											'drag-and-drop-over-an-existing-criteria-to-form-groups'
-										)}
-									</Text>
-								</div>
-							)}
-						</div>
-					</div>
-				)}
-			</div>
-		);
+	if (canDrop) {
+		dropState = hover ? 'over' : 'dragging';
 	}
-}
+
+	return (
+		<div className="empty-drop-zone-root">
+			{connectDropTarget(
+				<div className="empty-drop-zone-target">
+					<Canvas.EmptyState
+						description={Liferay.Language.get(
+							'to-create-a-new-segment-drag-items-from-the-conditions-library-and-drop-them-here'
+						)}
+						dropState={dropState}
+						title={Liferay.Language.get('no-conditions-yet')}
+					/>
+				</div>
+			)}
+		</div>
+	);
+};
 
 export default compose<React.ComponentType<any>>(
 	withReferencedObjectsConsumer,

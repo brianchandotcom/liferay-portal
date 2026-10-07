@@ -352,7 +352,6 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 				<EmptyDropZone
 					id={id}
 					onCriterionAdd={this.handleCriterionAdd}
-					sequential={sequential}
 				/>
 			);
 		}

@@ -206,7 +206,7 @@ public class PortalCatapultTest {
 
 			Assert.assertEquals(value, headerValues.get(0));
 
-			Assert.assertFalse(redirectClientExtensionHttpServer._hasRequest());
+			Assert.assertFalse(redirectClientExtensionHttpServer._hasHeaders());
 		}
 	}
 
@@ -324,7 +324,7 @@ public class PortalCatapultTest {
 			return _url;
 		}
 
-		private boolean _hasRequest() {
+		private boolean _hasHeaders() {
 			if (_headers != null) {
 				return true;
 			}

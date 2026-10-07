@@ -111,7 +111,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) putConfigDigest(
 
 	if previousDigest == "" {
 		message = fmt.Sprintf(
-			"Updated deployment %q so that its pods restart on DXP's metadata",
+			"Updated deployment %q so that its pods restart on DXP's metadata.",
 			deployment.Name,
 		)
 	}

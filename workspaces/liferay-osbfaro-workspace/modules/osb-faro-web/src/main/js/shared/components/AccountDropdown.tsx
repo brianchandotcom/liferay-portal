@@ -2,6 +2,7 @@ import * as API from 'shared/api';
 import FilterPicker, {IFilterPickerItem} from './FilterPicker';
 import React, {useMemo} from 'react';
 import {getSafeDecodedURIComponent, getSafeTouchpoint} from 'shared/util/util';
+import {IPaginatedDataSourceParams} from 'shared/hooks/usePaginatedRequest';
 import {useParams} from 'react-router-dom';
 
 interface IAccountDropdownProps {
@@ -47,14 +48,15 @@ const AccountDropdown: React.FC<IAccountDropdownProps> = ({
 		[initialAccountId, initialAccountName]
 	);
 
-	return (
-		<FilterPicker
-			className={className}
-			dataSourceFn={API.accounts.searchAccounts}
-			entityLabel={Liferay.Language.get('accounts')}
-			onFilterChange={onFilterChange}
-			selected={selected}
-			variables={{
+	// `account-names` pages from zero and reports its total as `totalCount`.
+
+	const paginatedDataSourceFn = ({
+		page,
+		pageSize,
+		query,
+	}: IPaginatedDataSourceParams) =>
+		API.accounts
+			.searchAccounts({
 				assetId: assetType
 					? assetType === 'page'
 						? getSafeTouchpoint(touchpoint)
@@ -66,7 +68,19 @@ const AccountDropdown: React.FC<IAccountDropdownProps> = ({
 				assetType,
 				channelId,
 				groupId,
-			}}
+				page: page - 1,
+				pageSize,
+				query,
+			})
+			.then(({items, totalCount}) => ({items, total: totalCount}));
+
+	return (
+		<FilterPicker
+			className={className}
+			entityLabel={Liferay.Language.get('accounts')}
+			onFilterChange={onFilterChange}
+			paginatedDataSourceFn={paginatedDataSourceFn}
+			selected={selected}
 		/>
 	);
 };

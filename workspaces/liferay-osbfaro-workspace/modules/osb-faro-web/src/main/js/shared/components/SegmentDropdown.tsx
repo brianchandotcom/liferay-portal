@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import FilterPicker, {IFilterPickerItem} from './FilterPicker';
 import React, {useMemo} from 'react';
+import {IPaginatedDataSourceParams} from 'shared/hooks/usePaginatedRequest';
 import {
 	createOrderIOMap,
 	getDefaultSortOrder,
@@ -69,22 +70,31 @@ const SegmentDropdown: React.FC<ISegmentDropdownProps> = ({
 
 	const hasOwnItems = items !== undefined;
 
+	const paginatedDataSourceFn = ({
+		page,
+		pageSize,
+		query,
+	}: IPaginatedDataSourceParams) =>
+		API.individualSegment.search({
+			channelId,
+			delta: pageSize,
+			groupId,
+			orderIOMap: DEFAULT_ORDER_IO_MAP,
+			page,
+			query,
+		});
+
 	return (
 		<FilterPicker
 			className={className}
-			dataSourceFn={
-				hasOwnItems ? undefined : API.individualSegment.search
-			}
 			entityLabel={Liferay.Language.get('segments')}
 			items={items}
 			loading={loading}
 			onFilterChange={onFilterChange}
+			paginatedDataSourceFn={
+				hasOwnItems ? undefined : paginatedDataSourceFn
+			}
 			selected={selected}
-			variables={{
-				channelId,
-				groupId,
-				orderIOMap: DEFAULT_ORDER_IO_MAP,
-			}}
 		/>
 	);
 };

@@ -3,13 +3,19 @@ import React from 'react';
 import SharedFilterPicker, {
 	IFilterPickerItem,
 } from 'shared/components/FilterPicker';
+import {
+	IPaginatedDataSourceResult,
+	PaginatedDataSourceFn,
+} from 'shared/hooks/usePaginatedRequest';
 import {useLifecycle} from '../context/LifecycleContext';
 import {useParams} from 'react-router-dom';
 
 // Field values are plain strings, so each one is its own id and name.
 
-const normalizeFieldValues = (data: {items?: string[]}): IFilterPickerItem[] =>
-	(data?.items ?? []).map((item) => ({id: item, name: item}));
+const toFilterPickerItem = (item: string): IFilterPickerItem => ({
+	id: item,
+	name: item,
+});
 
 interface IProps {
 	className?: string;
@@ -30,23 +36,36 @@ const FilterPicker = ({
 
 	const selectedValue = filters[filterKey];
 
+	const paginatedDataSourceFn: PaginatedDataSourceFn<IFilterPickerItem> = ({
+		page,
+		pageSize,
+		query,
+	}) =>
+		API.accounts
+			.fetchFieldValues({
+				channelId,
+				delta: pageSize,
+				fieldMappingFieldName,
+				groupId,
+				page,
+				query,
+			})
+			.then(({items = [], total}: IPaginatedDataSourceResult) => ({
+				items: items.map(toFilterPickerItem),
+				total,
+			}));
+
 	return (
 		<SharedFilterPicker
 			className={className}
-			dataSourceFn={API.accounts.fetchFieldValues}
 			entityLabel={entityLabel}
-			normalize={normalizeFieldValues}
 			onFilterChange={(item) =>
 				updateFilters({[filterKey]: item?.id ?? ''})
 			}
+			paginatedDataSourceFn={paginatedDataSourceFn}
 			selected={
 				selectedValue ? {id: selectedValue, name: selectedValue} : null
 			}
-			variables={{
-				channelId,
-				fieldMappingFieldName,
-				groupId,
-			}}
 		/>
 	);
 };

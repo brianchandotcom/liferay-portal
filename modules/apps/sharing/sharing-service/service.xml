@@ -78,10 +78,10 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateSharingEntry</exception>
-		<exception>InvalidSharingEntryAction</exception>
-		<exception>InvalidSharingEntryExpirationDate</exception>
-		<exception>InvalidSharingEntryTicket</exception>
-		<exception>InvalidSharingEntryUser</exception>
-		<exception>InvalidSharingEntryUserGroup</exception>
+		<exception>SharingEntryActionIds</exception>
+		<exception>SharingEntryExpirationDate</exception>
+		<exception>SharingEntryToTicketId</exception>
+		<exception>SharingEntryToUserGroupId</exception>
+		<exception>SharingEntryToUserId</exception>
 	</exceptions>
 </service-builder>

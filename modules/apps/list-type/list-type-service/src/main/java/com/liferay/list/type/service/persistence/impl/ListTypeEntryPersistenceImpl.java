@@ -265,133 +265,6 @@ public class ListTypeEntryPersistenceImpl
 
 	private CollectionPersistenceFinder
 		<ListTypeEntry, NoSuchListTypeEntryException>
-			_collectionPersistenceFinderByListTypeEntryId;
-
-	/**
-	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching list type entries
-	 */
-	@Override
-	public List<ListTypeEntry> findByListTypeEntryId(
-		long listTypeEntryId, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return _collectionPersistenceFinderByListTypeEntryId.find(
-			finderCache, new Object[] {new long[] {listTypeEntryId}}, start,
-			end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first list type entry in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching list type entry
-	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry findByListTypeEntryId_First(
-			long listTypeEntryId,
-			OrderByComparator<ListTypeEntry> orderByComparator)
-		throws NoSuchListTypeEntryException {
-
-		return _collectionPersistenceFinderByListTypeEntryId.findFirst(
-			finderCache, new Object[] {new long[] {listTypeEntryId}},
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the first list type entry in the ordered set where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	@Override
-	public ListTypeEntry fetchByListTypeEntryId_First(
-		long listTypeEntryId,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return _collectionPersistenceFinderByListTypeEntryId.fetchFirst(
-			finderCache, new Object[] {new long[] {listTypeEntryId}},
-			orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryIds the list type entry IDs
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching list type entries
-	 */
-	@Override
-	public List<ListTypeEntry> findByListTypeEntryId(
-		long[] listTypeEntryIds, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return _collectionPersistenceFinderByListTypeEntryId.find(
-			finderCache,
-			new Object[] {ArrayUtil.sortedUnique(listTypeEntryIds)}, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the list type entries where listTypeEntryId = &#63; from the database.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 */
-	@Override
-	public void removeByListTypeEntryId(long listTypeEntryId) {
-		_collectionPersistenceFinderByListTypeEntryId.remove(
-			finderCache, new Object[] {new long[] {listTypeEntryId}});
-	}
-
-	/**
-	 * Returns the number of list type entries where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @return the number of matching list type entries
-	 */
-	@Override
-	public int countByListTypeEntryId(long listTypeEntryId) {
-		return _collectionPersistenceFinderByListTypeEntryId.count(
-			finderCache, new Object[] {new long[] {listTypeEntryId}});
-	}
-
-	/**
-	 * Returns the number of list type entries where listTypeEntryId = any &#63;.
-	 *
-	 * @param listTypeEntryIds the list type entry IDs
-	 * @return the number of matching list type entries
-	 */
-	@Override
-	public int countByListTypeEntryId(long[] listTypeEntryIds) {
-		return _collectionPersistenceFinderByListTypeEntryId.count(
-			finderCache,
-			new Object[] {ArrayUtil.sortedUnique(listTypeEntryIds)});
-	}
-
-	private CollectionPersistenceFinder
-		<ListTypeEntry, NoSuchListTypeEntryException>
 			_collectionPersistenceFinderByListTypeDefinitionId;
 
 	/**
@@ -1078,35 +951,6 @@ public class ListTypeEntryPersistenceImpl
 					"listTypeEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ListTypeEntry::getCompanyId));
 
-		_collectionPersistenceFinderByListTypeEntryId =
-			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					"findByListTypeEntryId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"listTypeEntryId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByListTypeEntryId",
-					new String[] {Long.class.getName()},
-					new String[] {"listTypeEntryId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					"countByListTypeEntryId",
-					new String[] {Long.class.getName()},
-					new String[] {"listTypeEntryId"}, false),
-				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
-				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"", null,
-				new ArrayableFinderColumn<>(
-					"listTypeEntry.", "listTypeEntryId", FinderColumn.Type.LONG,
-					"=", false, true, true, ListTypeEntry::getListTypeEntryId));
-
 		_collectionPersistenceFinderByListTypeDefinitionId =
 			new CollectionPersistenceFinder<>(
 				this,
@@ -1273,4 +1117,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-832712680
+// LIFERAY-SERVICE-BUILDER-HASH:-708948520

@@ -197,10 +197,10 @@ func TestReconcileReadsWorkloadFromTheAPIServer(t *testing.T) {
 
 	if workloadAccepted := getCondition(
 		clientExtension, clientExtensionReconciler, cxv1alpha1.ConditionWorkloadAccepted, t,
-	); (workloadAccepted == nil) || (workloadAccepted.Reason != ReasonInitialized) {
+	); (workloadAccepted == nil) || (workloadAccepted.Reason != ReasonWorkloadAccepted) {
 		t.Errorf(
 			"WorkloadAccepted = %v, want %s: the cache only holds workload metadata, so the workload is read from the API server",
-			workloadAccepted, ReasonInitialized,
+			workloadAccepted, ReasonWorkloadAccepted,
 		)
 	}
 }
@@ -231,7 +231,7 @@ func TestReconcileReportsWorkload(t *testing.T) {
 		"an initialized workload": {
 			objects:     []client.Object{newDeployment(newInitializedPodTemplate())},
 			wantPhase:   cxv1alpha1.PhaseReady,
-			wantReason:  ReasonInitialized,
+			wantReason:  ReasonWorkloadAccepted,
 			wantStatus:  metav1.ConditionTrue,
 			workloadRef: true,
 		},

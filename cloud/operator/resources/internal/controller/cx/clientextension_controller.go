@@ -34,7 +34,6 @@ const (
 	ReasonDeliveryNotPermitted   = "DeliveryNotPermitted"
 	ReasonDxpNamespaceNotFound   = "DxpNamespaceNotFound"
 	ReasonExtInitMissing         = "ExtInitMissing"
-	ReasonInitialized            = "Initialized"
 	ReasonMirrorFailed           = "MirrorFailed"
 	ReasonMirrored               = "Mirrored"
 	ReasonNamespaceNotPermitted  = "NamespaceNotPermitted"
@@ -44,6 +43,7 @@ const (
 	ReasonReady                  = "Ready"
 	ReasonServiceIDConflict      = "ServiceIDConflict"
 	ReasonUnknownVirtualInstance = "UnknownVirtualInstance"
+	ReasonWorkloadAccepted       = "WorkloadAccepted"
 	ReasonWorkloadMisconfigured  = "WorkloadMisconfigured"
 	ReasonWorkloadNotFound       = "WorkloadNotFound"
 )

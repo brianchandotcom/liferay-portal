@@ -111,7 +111,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) putConfigDigest(
 
 	if previousDigest == "" {
 		message = fmt.Sprintf(
-			"Updated deployment %q so that its pods restart on DXP's metadata.",
+			"Updated Deployment %q so that its pods restart when DXP's metadata changes.",
 			deployment.Name,
 		)
 	}
@@ -293,7 +293,8 @@ func (clientExtensionReconciler *ClientExtensionReconciler) workloadCondition(
 			metav1.ConditionFalse,
 			fmt.Sprintf(
 				"%s %q does not exist in namespace %q.", workloadRef.Kind,
-				workloadRef.Name, clientExtension.Namespace),
+				workloadRef.Name, clientExtension.Namespace,
+			),
 			ReasonWorkloadNotFound,
 		), nil, nil
 	}
@@ -340,7 +341,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) workloadCondition(
 
 	return newCondition(
 		metav1.ConditionTrue,
-		fmt.Sprintf("%s %q mounts DXP's metadata.", workloadRef.Kind, workloadRef.Name), ReasonInitialized,
+		fmt.Sprintf("%s %q mounts DXP's metadata.", workloadRef.Kind, workloadRef.Name), ReasonWorkloadAccepted,
 	), nil, nil
 }
 

@@ -5,10 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.upgrade.registry;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -17,21 +13,17 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.cms.site.initializer.internal.upgrade.v1_0_0.CMSDefaultPermissionsUpgradeProcess;
 import com.liferay.site.cms.site.initializer.internal.upgrade.v1_0_0.CMSObjectRelationshipEdgeUpgradeProcess;
 import com.liferay.site.cms.site.initializer.internal.upgrade.v2_0_0.CMSBulkActionTaskTaskResultUpgradeProcess;
 import com.liferay.site.cms.site.initializer.internal.upgrade.v3_0_1.CMSObjectFolderPermissionsUpgradeProcess;
 import com.liferay.site.cms.site.initializer.internal.upgrade.v3_0_2.CMSAdministratorRoleUpgradeProcess;
-import com.liferay.site.cms.site.initializer.internal.upgrade.v3_0_3.CMSFileTypeDisplayPageUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,25 +69,7 @@ public class SiteCMSSiteInitializerUpgradeStepRegistrator
 			"3.0.1", "3.0.2",
 			new CMSAdministratorRoleUpgradeProcess(
 				_companyLocalService, _roleLocalService));
-
-		registry.register(
-			"3.0.2", "3.0.3",
-			new CMSFileTypeDisplayPageUpgradeProcess(
-				_basicComponentFragmentCollectionContributor,
-				_classNameLocalService, _companyLocalService,
-				_fragmentEntryLinkLocalService, _groupLocalService,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService,
-				_layoutPageTemplateStructureLocalService,
-				_objectDefinitionLocalService, _objectFolderLocalService,
-				_segmentsExperienceLocalService));
 	}
-
-	@Reference(target = "(fragment.collection.key=BASIC_COMPONENT)")
-	private FragmentCollectionContributor
-		_basicComponentFragmentCollectionContributor;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
@@ -106,21 +80,7 @@ public class SiteCMSSiteInitializerUpgradeStepRegistrator
 	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -145,8 +105,5 @@ public class SiteCMSSiteInitializerUpgradeStepRegistrator
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

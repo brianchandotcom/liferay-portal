@@ -110,7 +110,7 @@ spec:
                                         storageGB:
                                             type: integer
                                         version:
-                                            minLength: 1
+                                            pattern: ^[0-9]+$
                                             type: string
                                     required:
                                         -   instanceType

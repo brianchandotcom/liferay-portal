@@ -20,7 +20,7 @@ function main {
 		dir=$(dirname "${path}")
 
 		while [[ ${dir} != . ]] &&
-		      [[ ${dir} != / ]]
+			  [[ ${dir} != / ]]
 		do
 			if _has_marker_file "${dir}" "${marker_files}" "${1}"
 			then

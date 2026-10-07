@@ -2,8 +2,12 @@ package cx
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
+	"maps"
 	"slices"
+	"strconv"
 
 	cxv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/cx/v1alpha1"
 	appsv1 "k8s.io/api/apps/v1"
@@ -18,10 +22,26 @@ import (
 	reconcile "sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
 
+const AnnotationConfigDigest = "cx.liferay.com/config-digest"
+
 const (
 	MountPathDxpMetadata     = "/etc/liferay/lxc/dxp-metadata"
 	MountPathExtInitMetadata = "/etc/liferay/lxc/ext-init-metadata"
 )
+
+func configDigest(configMaps ...*corev1.ConfigMap) string {
+	hash := sha256.New()
+
+	for _, configMap := range configMaps {
+		for _, key := range slices.Sorted(maps.Keys(configMap.Data)) {
+			for _, value := range []string{key, configMap.Data[key]} {
+				hash.Write([]byte(strconv.Itoa(len(value)) + ":" + value))
+			}
+		}
+	}
+
+	return hex.EncodeToString(hash.Sum(nil))
+}
 
 func podTemplateOf(object client.Object) *corev1.PodTemplateSpec {
 	if cronJob, ok := object.(*batchv1.CronJob); ok {
@@ -72,6 +92,49 @@ func (clientExtensionReconciler *ClientExtensionReconciler) requestsForWorkload(
 
 		return requests
 	}
+}
+
+func (clientExtensionReconciler *ClientExtensionReconciler) putConfigDigest(
+	clientExtension *cxv1alpha1.ClientExtension,
+	context context.Context,
+	digest string,
+	workload client.Object,
+) error {
+	if _, ok := workload.(*batchv1.Job); ok {
+		return nil
+	}
+
+	podTemplate := podTemplateOf(workload)
+
+	previousDigest := podTemplate.Annotations[AnnotationConfigDigest]
+
+	if digest == previousDigest {
+		return nil
+	}
+
+	patch := client.MergeFrom(workload.DeepCopyObject().(client.Object))
+
+	if podTemplate.Annotations == nil {
+		podTemplate.Annotations = map[string]string{}
+	}
+
+	podTemplate.Annotations[AnnotationConfigDigest] = digest
+
+	if error := clientExtensionReconciler.Patch(
+		context, workload, patch,
+	); error != nil {
+		return error
+	}
+
+	if previousDigest != "" {
+		clientExtensionReconciler.Recorder.Eventf(
+			clientExtension, corev1.EventTypeNormal, "WorkloadUpdated",
+			"Updated %s %q because DXP's metadata changed.",
+			clientExtension.Spec.WorkloadRef.Kind, workload.GetName(),
+		)
+	}
+
+	return nil
 }
 
 func validatePodTemplate(
@@ -134,13 +197,14 @@ func validatePodTemplate(
 
 func (clientExtensionReconciler *ClientExtensionReconciler) workloadCondition(
 	clientExtension *cxv1alpha1.ClientExtension,
+	configMapsWithDigest []*corev1.ConfigMap,
 	context context.Context,
 ) (metav1.Condition, []string, error) {
 	workloadRef := clientExtension.Spec.WorkloadRef
 
 	if workloadRef == nil {
 		return newCondition(
-			metav1.ConditionTrue, "The client extension is configuration only",
+			metav1.ConditionTrue, "The client extension is configuration only.",
 			ReasonConfigurationOnly,
 		), nil, nil
 	}
@@ -182,7 +246,8 @@ func (clientExtensionReconciler *ClientExtensionReconciler) workloadCondition(
 		workloadIssues = append(
 			workloadIssues,
 			validatePodTemplate(
-				extInitName(clientExtension), "LIFERAY_ROUTES_CLIENT_EXTENSION", MountPathExtInitMetadata, podTemplate,
+				extInitName(clientExtension), "LIFERAY_ROUTES_CLIENT_EXTENSION",
+				MountPathExtInitMetadata, podTemplate,
 			)...,
 		)
 	}
@@ -191,11 +256,19 @@ func (clientExtensionReconciler *ClientExtensionReconciler) workloadCondition(
 		return newCondition(
 			metav1.ConditionFalse,
 			fmt.Sprintf(
-				"%s %q does not mount DXP's metadata; see status.workloadIssues",
+				"%s %q does not mount DXP's metadata; see status.workloadIssues.",
 				workloadRef.Kind, workloadRef.Name,
 			),
 			ReasonWorkloadMisconfigured,
 		), workloadIssues, nil
+	}
+
+	if configMapsWithDigest != nil {
+		if error := clientExtensionReconciler.putConfigDigest(
+			clientExtension, context, configDigest(configMapsWithDigest...), workload,
+		); error != nil {
+			return metav1.Condition{}, nil, error
+		}
 	}
 
 	return newCondition(

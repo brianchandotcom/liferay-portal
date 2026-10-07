@@ -225,8 +225,20 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 		result.RequeueAfter = refusalRequeueInterval
 	}
 
+	var configMapsWithDigest []*corev1.ConfigMap
+
+	if mirroredCondition.Status == metav1.ConditionTrue {
+		configMapsWithDigest = []*corev1.ConfigMap{&dxpMetadata}
+
+		if extInitConfigMap != nil {
+			configMapsWithDigest = append(configMapsWithDigest, extInitConfigMap)
+		}
+	} else {
+		result.RequeueAfter = refusalRequeueInterval
+	}
+
 	workloadAcceptedCondition, workloadIssues, error := clientExtensionReconciler.workloadCondition(
-		&clientExtension, context,
+		&clientExtension, configMapsWithDigest, context,
 	)
 
 	if error != nil {

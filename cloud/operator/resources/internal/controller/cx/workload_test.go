@@ -4,6 +4,7 @@ import (
 	"context"
 	"reflect"
 	"slices"
+	"strings"
 	"testing"
 
 	cxv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/cx/v1alpha1"
@@ -11,9 +12,28 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
+	"k8s.io/client-go/tools/record"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 	reconcile "sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
+
+func TestConfigMapDigestStableComparison(t *testing.T) {
+	digest := configDigest(&corev1.ConfigMap{Data: map[string]string{"able": "1", "baker": "2"}})
+
+	if configDigest(&corev1.ConfigMap{Data: map[string]string{"baker": "2", "able": "1"}}) != digest {
+		t.Error("Expected the digest to compare stably")
+	}
+
+	for _, data := range []map[string]string{
+		{"able": "1", "baker": "3"},
+		{"able": "1", "baker": "2", "charlie": ""},
+		{"able1": "", "baker": "2"},
+	} {
+		if configDigest(&corev1.ConfigMap{Data: data}) == digest {
+			t.Errorf("Expected %v to change the digest", data)
+		}
+	}
+}
 
 func TestReconcileReportsWorkload(t *testing.T) {
 	testCases := map[string]struct {
@@ -111,7 +131,7 @@ func TestRequestsForWorkloadMatchesKindAndName(t *testing.T) {
 	baker := newClientExtension("liferay-dev", "baker", "liferay-cx")
 
 	baker.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{
-		Kind: cxv1alpha1.WorkloadKindJob, Name: "baker",
+		Kind: cxv1alpha1.WorkloadKindJob, Name: "able",
 	}
 
 	clientExtensionReconciler := newReconciler(nil, t, able, baker)
@@ -123,11 +143,64 @@ func TestRequestsForWorkloadMatchesKindAndName(t *testing.T) {
 	if want := []reconcile.Request{
 		{NamespacedName: types.NamespacedName{Name: "able", Namespace: "liferay-cx"}},
 	}; !reflect.DeepEqual(got, want) {
-
 		t.Errorf(
 			"requestsForWorkload() = %v, want %v: A Job of the same name is a different workload",
 			got, want,
 		)
+	}
+}
+
+func TestReconcilePutConfigDigestUpdatesWorkload(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
+
+	clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able"}
+
+	dxpMetadata := newDxpMetadata("liferay-dev", "liferay.com")
+
+	dxpMetadata.Data = map[string]string{"com.liferay.lxc.dxp.mainDomain": "liferay.example.com"}
+
+	clientExtensionReconciler := newReconciler(
+		nil, t, clientExtension, dxpMetadata, newDeployment(newInitializedPodTemplate()), newDxpNamespace("liferay-cx"),
+	)
+
+	recorder := record.NewFakeRecorder(10)
+
+	clientExtensionReconciler.Recorder = recorder
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	firstDigest := getConfigDigest(clientExtensionReconciler, t)
+
+	if configDigest(dxpMetadata) != firstDigest {
+		t.Fatalf("digest = %q, want the digest of the dxp metadata", firstDigest)
+	}
+
+	if len(recorder.Events) != 0 {
+		t.Errorf("Expected no rollout event for the first digest, got %d", len(recorder.Events))
+	}
+
+	dxpMetadata.Data["com.liferay.lxc.dxp.mainDomain"] = "uat.example.com"
+
+	if error := clientExtensionReconciler.Update(
+		context.Background(), dxpMetadata,
+	); error != nil {
+		t.Fatal(error)
+	}
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	if secondDigest := getConfigDigest(
+		clientExtensionReconciler, t,
+	); firstDigest == secondDigest {
+		t.Error("Expected a change to the dxp metadata to change the digest")
+	}
+
+	if len(recorder.Events) != 1 {
+		t.Fatalf("Expected one update workload event, got %d", len(recorder.Events))
+	}
+
+	if event := <-recorder.Events; !strings.HasPrefix(event, corev1.EventTypeNormal+" WorkloadUpdated ") {
+		t.Errorf("event = %q, want a workload updated event", event)
 	}
 }
 
@@ -177,6 +250,20 @@ func TestValidatePodTemplate(t *testing.T) {
 			}
 		})
 	}
+}
+
+func getConfigDigest(clientExtensionReconciler *ClientExtensionReconciler, t *testing.T) string {
+	t.Helper()
+
+	var deployment appsv1.Deployment
+
+	if error := clientExtensionReconciler.Get(
+		context.Background(), types.NamespacedName{Name: "able", Namespace: "liferay-cx"}, &deployment,
+	); error != nil {
+		t.Fatal(error)
+	}
+
+	return deployment.Spec.Template.Annotations[AnnotationConfigDigest]
 }
 
 func newDeployment(podTemplate corev1.PodTemplateSpec) *appsv1.Deployment {

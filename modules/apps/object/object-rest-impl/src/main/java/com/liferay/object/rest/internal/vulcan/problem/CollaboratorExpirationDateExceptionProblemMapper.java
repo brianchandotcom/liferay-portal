@@ -8,7 +8,7 @@ package com.liferay.object.rest.internal.vulcan.problem;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemMapper;
-import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
+import com.liferay.sharing.exception.SharingEntryExpirationDateException;
 
 import java.util.Locale;
 
@@ -19,13 +19,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jan Brychta
  */
 @Component(service = ProblemMapper.class)
-public class SharingEntryExpirationDateExceptionProblemMapper
-	implements ProblemMapper<InvalidSharingEntryExpirationDateException> {
+public class CollaboratorExpirationDateExceptionProblemMapper
+	implements ProblemMapper<SharingEntryExpirationDateException> {
 
 	@Override
 	public Problem getProblem(
-		InvalidSharingEntryExpirationDateException
-			invalidSharingEntryExpirationDateException) {
+		SharingEntryExpirationDateException
+			sharingEntryExpirationDateException) {
 
 		return new Problem() {
 
@@ -48,8 +48,7 @@ public class SharingEntryExpirationDateExceptionProblemMapper
 
 			@Override
 			public String getType() {
-				return InvalidSharingEntryExpirationDateException.class.
-					getName();
+				return SharingEntryExpirationDateException.class.getName();
 			}
 
 		};

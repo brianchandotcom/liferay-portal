@@ -1,16 +1,3 @@
-.breakdown-empty {
-	align-items: center;
-	border: 1px solid $mainLighten74;
-	border-radius: 4px;
-	color: $mainLighten52;
-	display: flex;
-	font-size: $fontSizeLarge;
-	font-weight: $fontWeightSemiBold;
-	height: 194px;
-	justify-content: center;
-	margin: 0 16px 24px;
-}
-
 .breakdown-single-event {
 	align-items: center;
 	border: 1px solid $lightBackground;
@@ -21,8 +8,6 @@
 }
 
 .breakdown-table-root {
-	margin: 0 16px 24px;
-
 	.bar-comparison-root .table {
 		margin-top: 10px;
 		table-layout: fixed;

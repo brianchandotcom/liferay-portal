@@ -1,0 +1,21 @@
+.canvas-header h2 {
+	margin-bottom: 0;
+}
+
+.canvas-empty-state {
+	border: 2px dashed transparent;
+	transition: background-color 0.1s ease-in-out;
+
+	&.canvas-empty-state-dragging,
+	&.canvas-empty-state-over {
+		border-color: $primary;
+	}
+
+	&.canvas-empty-state-over {
+		background-color: $primaryLighten45;
+	}
+
+	.c-empty-state-title h3 {
+		margin-bottom: 0;
+	}
+}

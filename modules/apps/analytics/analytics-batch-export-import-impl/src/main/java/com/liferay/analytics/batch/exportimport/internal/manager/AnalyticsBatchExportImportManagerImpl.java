@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
-import com.liferay.portal.security.key.secret.SecretResolverUtil;
+import com.liferay.portal.security.key.secret.SecretResolver;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -443,7 +443,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
 			null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
-			SecretResolverUtil.resolve(
+			_secretResolver.resolve(
 				companyId,
 				analyticsConfiguration.
 					liferayAnalyticsFaroBackendSecuritySignature()),
@@ -617,7 +617,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			new String(
 				Base64.decode(
-					SecretResolverUtil.resolve(
+					_secretResolver.resolve(
 						companyId, analyticsConfiguration.token()))));
 
 		options.setLocation(
@@ -819,7 +819,7 @@ public class AnalyticsBatchExportImportManagerImpl
 			analyticsConfiguration.liferayAnalyticsDataSourceId());
 		options.addHeader(
 			"OSB-Asah-Faro-Backend-Security-Signature",
-			SecretResolverUtil.resolve(
+			_secretResolver.resolve(
 				companyId,
 				analyticsConfiguration.
 					liferayAnalyticsFaroBackendSecuritySignature()));
@@ -981,7 +981,7 @@ public class AnalyticsBatchExportImportManagerImpl
 			analyticsConfiguration.liferayAnalyticsDataSourceId());
 		httpPost.setHeader(
 			"OSB-Asah-Faro-Backend-Security-Signature",
-			SecretResolverUtil.resolve(
+			_secretResolver.resolve(
 				companyId,
 				analyticsConfiguration.
 					liferayAnalyticsFaroBackendSecuritySignature()));
@@ -1236,6 +1236,9 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

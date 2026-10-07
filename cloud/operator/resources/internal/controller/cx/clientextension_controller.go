@@ -252,10 +252,15 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 		return controllerruntime.Result{}, error
 	}
 
-	if graceRemaining := extInitGraceRemaining(&clientExtension.Status); (graceRemaining > 0) &&
-		((result.RequeueAfter == 0) || (graceRemaining < result.RequeueAfter)) {
+	for _, graceRemaining := range []time.Duration{
+		extInitGraceRemaining(&clientExtension.Status),
+		workloadGraceRemaining(&clientExtension.Status),
+	} {
+		if (graceRemaining > 0) && ((result.RequeueAfter == 0) ||
+			(graceRemaining < result.RequeueAfter)) {
 
-		result.RequeueAfter = graceRemaining
+			result.RequeueAfter = graceRemaining
+		}
 	}
 
 	return result, nil
@@ -813,7 +818,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 	}
 
 	if ((ready.Reason == ReasonExtInitMissing) && (extInitGraceRemaining(status) > 0)) ||
-		(ready.Reason == ReasonWorkloadNotFound) {
+		((ready.Reason == ReasonWorkloadNotFound) && (workloadGraceRemaining(status) > 0)) {
 
 		status.Phase = cxv1alpha1.PhasePending
 	} else if ready.Status == metav1.ConditionTrue {

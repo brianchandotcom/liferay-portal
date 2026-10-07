@@ -6,14 +6,17 @@ import (
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	cxv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/cx/v1alpha1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	meta "k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	record "k8s.io/client-go/tools/record"
+	controllerruntime "sigs.k8s.io/controller-runtime"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 	interceptor "sigs.k8s.io/controller-runtime/pkg/client/interceptor"
 	reconcile "sigs.k8s.io/controller-runtime/pkg/reconcile"
@@ -283,6 +286,60 @@ func TestReconcileReportsWorkload(t *testing.T) {
 				t.Errorf("workloadIssues = %q, want %q", workloadIssues, testCase.wantIssues)
 			}
 		})
+	}
+}
+
+func TestReconcileReportsWorkloadNotFoundAfterGracePeriod(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
+
+	clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able"}
+
+	clientExtensionReconciler := newReconciler(
+		nil, t, clientExtension, newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("liferay-cx"),
+	)
+
+	recorder := record.NewFakeRecorder(10)
+
+	clientExtensionReconciler.Recorder = recorder
+
+	result, error := clientExtensionReconciler.Reconcile(
+		context.Background(), controllerruntime.Request{NamespacedName: client.ObjectKeyFromObject(clientExtension)},
+	)
+
+	if error != nil {
+		t.Fatalf("Reconcile() error = %v, want nil", error)
+	}
+
+	if (result.RequeueAfter <= 0) || (result.RequeueAfter > workloadGracePeriod) {
+		t.Errorf("Reconcile() RequeueAfter = %v, want a retry within %v", result.RequeueAfter, workloadGracePeriod)
+	}
+
+	if len(recorder.Events) != 0 {
+		t.Errorf("Expected no event while the chart may still be creating the workload, got %d", len(recorder.Events))
+	}
+
+	updatedClientExtension := getClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	workloadAccepted := meta.FindStatusCondition(
+		updatedClientExtension.Status.Conditions, cxv1alpha1.ConditionWorkloadAccepted,
+	)
+
+	workloadAccepted.LastTransitionTime = metav1.NewTime(time.Now().Add(-workloadGracePeriod - time.Second))
+
+	if error := clientExtensionReconciler.Status().Update(context.Background(), updatedClientExtension); error != nil {
+		t.Fatal(error)
+	}
+
+	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhaseDegraded {
+		t.Errorf("phase = %q, want %q once the grace period has passed", phase, cxv1alpha1.PhaseDegraded)
+	}
+
+	if len(recorder.Events) != 1 {
+		t.Fatalf("Expected one warning event once the grace period has passed, got %d", len(recorder.Events))
+	}
+
+	if event := <-recorder.Events; !strings.HasPrefix(event, corev1.EventTypeWarning+" "+ReasonWorkloadNotFound+" ") {
+		t.Errorf("event = %q, want a %s warning", event, ReasonWorkloadNotFound)
 	}
 }
 

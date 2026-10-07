@@ -8,12 +8,14 @@ import (
 	"maps"
 	"slices"
 	"strconv"
+	"time"
 
 	cxv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/cx/v1alpha1"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	meta "k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	controllerruntime "sigs.k8s.io/controller-runtime"
@@ -28,6 +30,8 @@ const (
 	MountPathDxpMetadata     = "/etc/liferay/lxc/dxp-metadata"
 	MountPathExtInitMetadata = "/etc/liferay/lxc/ext-init-metadata"
 )
+
+const workloadGracePeriod = 2 * time.Minute
 
 func configDigest(configMaps ...*corev1.ConfigMap) string {
 	hash := sha256.New()
@@ -338,4 +342,14 @@ func (clientExtensionReconciler *ClientExtensionReconciler) workloadCondition(
 		metav1.ConditionTrue,
 		fmt.Sprintf("%s %q mounts DXP's metadata.", workloadRef.Kind, workloadRef.Name), ReasonInitialized,
 	), nil, nil
+}
+
+func workloadGraceRemaining(status *cxv1alpha1.ClientExtensionStatus) time.Duration {
+	workloadAccepted := meta.FindStatusCondition(status.Conditions, cxv1alpha1.ConditionWorkloadAccepted)
+
+	if (workloadAccepted == nil) || (workloadAccepted.Reason != ReasonWorkloadNotFound) {
+		return 0
+	}
+
+	return max(time.Until(workloadAccepted.LastTransitionTime.Add(workloadGracePeriod)), 0)
 }

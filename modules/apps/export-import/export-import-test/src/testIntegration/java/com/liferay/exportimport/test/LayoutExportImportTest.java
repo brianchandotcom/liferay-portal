@@ -114,6 +114,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -147,7 +148,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	@Override
@@ -1171,8 +1174,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				_layoutLocalService.getLayoutsCount(group, false),
 				_layoutLocalService.getLayoutsCount(newCompanyGroup, false));
 		}
-
-		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test
@@ -1241,8 +1242,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				journalArticle.getContent(),
 				importedJournalArticle.getContent());
 		}
-
-		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test

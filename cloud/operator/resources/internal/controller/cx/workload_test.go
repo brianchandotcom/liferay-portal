@@ -1,6 +1,8 @@
 package cx
 
 import (
+	"context"
+	"reflect"
 	"slices"
 	"testing"
 
@@ -8,7 +10,9 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	types "k8s.io/apimachinery/pkg/types"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
+	reconcile "sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
 
 func TestReconcileReportsWorkload(t *testing.T) {
@@ -51,7 +55,7 @@ func TestReconcileReportsWorkload(t *testing.T) {
 
 	for name, testCase := range testCases {
 		t.Run(name, func(t *testing.T) {
-			clientExtension := newClientExtension("liferay-dev", "able", "able")
+			clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
 
 			if testCase.workloadRef {
 				clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{
@@ -63,7 +67,7 @@ func TestReconcileReportsWorkload(t *testing.T) {
 				nil, t,
 				append(
 					testCase.objects, clientExtension,
-					newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("able"),
+					newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("liferay-cx"),
 				)...,
 			)
 
@@ -94,6 +98,36 @@ func TestReconcileReportsWorkload(t *testing.T) {
 				t.Errorf("workloadIssues = %q, want %q", workloadIssues, testCase.wantIssues)
 			}
 		})
+	}
+}
+
+func TestRequestsForWorkloadMatchesKindAndName(t *testing.T) {
+	able := newClientExtension("liferay-dev", "able", "liferay-cx")
+
+	able.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{
+		Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able",
+	}
+
+	baker := newClientExtension("liferay-dev", "baker", "liferay-cx")
+
+	baker.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{
+		Kind: cxv1alpha1.WorkloadKindJob, Name: "baker",
+	}
+
+	clientExtensionReconciler := newReconciler(nil, t, able, baker)
+
+	got := clientExtensionReconciler.requestsForWorkload(cxv1alpha1.WorkloadKindDeployment)(
+		context.Background(), newDeployment(corev1.PodTemplateSpec{}),
+	)
+
+	if want := []reconcile.Request{
+		{NamespacedName: types.NamespacedName{Name: "able", Namespace: "liferay-cx"}},
+	}; !reflect.DeepEqual(got, want) {
+
+		t.Errorf(
+			"requestsForWorkload() = %v, want %v: A Job of the same name is a different workload",
+			got, want,
+		)
 	}
 }
 
@@ -147,7 +181,7 @@ func TestValidatePodTemplate(t *testing.T) {
 
 func newDeployment(podTemplate corev1.PodTemplateSpec) *appsv1.Deployment {
 	return &appsv1.Deployment{
-		ObjectMeta: metav1.ObjectMeta{Name: "able", Namespace: "able"},
+		ObjectMeta: metav1.ObjectMeta{Name: "able", Namespace: "liferay-cx"},
 		Spec:       appsv1.DeploymentSpec{Template: podTemplate},
 	}
 }

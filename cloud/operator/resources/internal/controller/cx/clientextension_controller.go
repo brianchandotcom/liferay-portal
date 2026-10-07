@@ -10,6 +10,8 @@ import (
 	"time"
 
 	cxv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/cx/v1alpha1"
+	appsv1 "k8s.io/api/apps/v1"
+	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	equality "k8s.io/apimachinery/pkg/api/equality"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -259,6 +261,18 @@ func (clientExtensionReconciler *ClientExtensionReconciler) SetupWithManager(
 		builder.WithPredicates(predicate.GenerationChangedPredicate{}),
 	).Named(
 		"clientextension",
+	).Watches(
+		&appsv1.Deployment{},
+		handler.EnqueueRequestsFromMapFunc(clientExtensionReconciler.requestsForWorkload(cxv1alpha1.WorkloadKindDeployment)),
+		builder.WithPredicates(predicate.GenerationChangedPredicate{}),
+	).Watches(
+		&batchv1.CronJob{},
+		handler.EnqueueRequestsFromMapFunc(clientExtensionReconciler.requestsForWorkload(cxv1alpha1.WorkloadKindCronJob)),
+		builder.WithPredicates(predicate.GenerationChangedPredicate{}),
+	).Watches(
+		&batchv1.Job{},
+		handler.EnqueueRequestsFromMapFunc(clientExtensionReconciler.requestsForWorkload(cxv1alpha1.WorkloadKindJob)),
+		builder.WithPredicates(predicate.GenerationChangedPredicate{}),
 	).Watches(
 		&corev1.ConfigMap{},
 		handler.EnqueueRequestsFromMapFunc(clientExtensionReconciler.requestsForConfigMap),

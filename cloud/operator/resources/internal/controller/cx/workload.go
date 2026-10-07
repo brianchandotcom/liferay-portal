@@ -12,7 +12,10 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
+	controllerruntime "sigs.k8s.io/controller-runtime"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
+	handler "sigs.k8s.io/controller-runtime/pkg/handler"
+	reconcile "sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
 
 const (
@@ -34,6 +37,41 @@ func podTemplateOf(object client.Object) *corev1.PodTemplateSpec {
 	}
 
 	return nil
+}
+
+func (clientExtensionReconciler *ClientExtensionReconciler) requestsForWorkload(
+	workloadKind cxv1alpha1.WorkloadKind,
+) handler.MapFunc {
+	return func(context context.Context, object client.Object) []reconcile.Request {
+		var clientExtensionList cxv1alpha1.ClientExtensionList
+
+		if error := clientExtensionReconciler.List(
+			context, &clientExtensionList, client.InNamespace(object.GetNamespace()),
+		); error != nil {
+			controllerruntime.LoggerFrom(context).Error(
+				error, "Unable to list client extensions", "kind", workloadKind, "workload",
+				client.ObjectKeyFromObject(object),
+			)
+
+			return nil
+		}
+
+		var requests []reconcile.Request
+
+		for index := range clientExtensionList.Items {
+			workloadRef := clientExtensionList.Items[index].Spec.WorkloadRef
+
+			if (workloadRef == nil) || (workloadKind != workloadRef.Kind) || (object.GetName() != workloadRef.Name) {
+				continue
+			}
+
+			requests = append(requests, reconcile.Request{
+				NamespacedName: client.ObjectKeyFromObject(&clientExtensionList.Items[index]),
+			})
+		}
+
+		return requests
+	}
 }
 
 func validatePodTemplate(

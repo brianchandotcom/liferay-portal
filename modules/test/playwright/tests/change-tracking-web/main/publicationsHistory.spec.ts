@@ -5,12 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 
-const test = mergeTests(apiHelpersTest, changeTrackingPagesTest);
+const test = mergeTests(
+	changeTrackingPagesTest,
+	dataApiHelpersTest,
+	isolatedSiteTest
+);
 
 test(
 	'View publication history for a web content edited on production after publish',
@@ -95,3 +100,54 @@ test(
 		).toContainText('original');
 	}
 );
+
+test('Can view publications history in order', async ({
+	apiHelpers,
+	changeTrackingPage,
+	page,
+	site,
+}) => {
+	const basicWebContentStructureId =
+		await getBasicWebContentStructureId(apiHelpers);
+
+	const prefix = getRandomString();
+
+	const names = [1, 2, 3, 4, 5, 6, 7].map((index) => `${prefix} ${index}`);
+
+	for (const name of names) {
+		const ctCollection =
+			await apiHelpers.headlessChangeTracking.createCTCollection(name);
+
+		await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+			ctCollection.body.id
+		);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: name},
+		});
+
+		await apiHelpers.headlessChangeTracking.publishCTCollection(
+			ctCollection.body.id
+		);
+	}
+
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
+
+	await changeTrackingPage.goToPublicationHistory();
+
+	const searchInput = page
+		.getByTestId('managementToolbar')
+		.getByRole('searchbox', {name: 'Search'});
+
+	await searchInput.fill(prefix);
+	await searchInput.press('Enter');
+
+	await page.getByRole('button', {name: 'Sort by Publication'}).click();
+
+	await expect(
+		page.locator('.fds tbody tr').getByRole('link', {name: prefix})
+	).toHaveText(names);
+	await expect(page.getByText('Showing 1 to 7 of 7 entries.')).toBeVisible();
+});

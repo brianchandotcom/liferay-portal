@@ -23,6 +23,7 @@ import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getDataStructureDefinition from '../../journal-web/main/utils/getDataStructureDefinition';
@@ -1271,6 +1272,60 @@ test('LPD-86809 Web content change details display diff preview', async ({
 			.locator('+ tr')
 			.getByText(editedTitle, {exact: true})
 	).toBeVisible();
+});
+
+test('Can search and sort publication changes', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	const ddmStructureId = await getBasicWebContentStructureId(apiHelpers);
+
+	const titles = ['Alpha', 'Bravo', 'Charlie'];
+
+	for (const title of titles) {
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId,
+			groupId: site.id,
+			titleMap: {en_US: title},
+		});
+	}
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	const changeTitles = page
+		.locator('.fds tbody tr')
+		.filter({hasText: 'Web Content Article'})
+		.getByRole('link');
+	const searchInput = page
+		.getByTestId('managementToolbar')
+		.getByRole('searchbox', {name: 'Search'});
+
+	await searchInput.fill('Alpha');
+	await searchInput.press('Enter');
+
+	await expect(changeTitles).toHaveText(['Alpha']);
+	await expect(changeTitles).not.toHaveText(['Bravo']);
+	await expect(changeTitles).not.toHaveText(['Charlie']);
+
+	await searchInput.clear();
+	await searchInput.press('Enter');
+
+	const sortButton = page.getByRole('button', {name: 'Sort by Title'});
+
+	await sortButton.click();
+
+	await expect(changeTitles).toHaveText(titles);
+
+	await sortButton.click();
+
+	await expect(changeTitles).toHaveText(titles.reverse());
 });
 
 test('LPS-179026 Can preview changes for WikiPages', async ({

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ApiHelper from '../../../common/services/ApiHelper';
+import ApiHelper, {RequestResult} from '../../../common/services/ApiHelper';
 
 export type AssetStatistics = {
 	approvedCount: number;
@@ -19,6 +19,16 @@ export type AssetStatistics = {
 	upcomingReviewCount: number;
 };
 
+export type Contributor = {
+	frequency: number;
+	name: string | null;
+};
+
+export type Contributors = {
+	contributors: Contributor[];
+	totalCount: number;
+};
+
 export type DuplicateTitle = {
 	frequency: number;
 	term: string;
@@ -31,13 +41,17 @@ export type DuplicateTopicAsset = {
 	title: string;
 };
 
-export type StatusFacetBucket = {
+export type FacetBucket = {
 	displayName: string;
 	frequency: number;
 	term: string;
 };
 
+const CONTRIBUTORS_AGGREGATION_NAME = 'contributors';
+
 const DUPLICATE_TITLES_AGGREGATION_NAME = 'duplicateTitles';
+
+const MAX_CONTRIBUTORS = 7;
 
 const MAX_FACET_TERMS = 10000;
 
@@ -79,6 +93,64 @@ async function getAssetStatistics(
 	};
 }
 
+async function getContributors(
+	filter: string,
+	groupId?: number
+): Promise<RequestResult<Contributors>> {
+	const searchParams = new URLSearchParams({
+		filter: getScopedFilter(filter, groupId),
+		pageSize: '1',
+	});
+
+	const {data, error} = await ApiHelper.post<{
+		searchFacets?: Record<string, FacetBucket[]>;
+		totalCount: number;
+	}>(`${SEARCH_URL}?${searchParams}`, {
+		attributes: {'search.empty.search': true},
+		facetConfigurations: [
+			{
+				aggregationName: CONTRIBUTORS_AGGREGATION_NAME,
+				frequencyThreshold: 1,
+				maxTerms: MAX_CONTRIBUTORS,
+				name: 'user',
+			},
+		],
+	});
+
+	if (!data) {
+		return {data: null, error};
+	}
+
+	const buckets = data.searchFacets?.[CONTRIBUTORS_AGGREGATION_NAME] ?? [];
+
+	const userAccounts = await Promise.all(
+		buckets.map(({term}) =>
+			ApiHelper.get<{name: string}>(
+				`/o/headless-admin-user/v1.0/user-accounts/${term}`
+			)
+		)
+	);
+
+	const failedUserAccount = userAccounts.find(
+		({error, status}) => error && status !== 'NOT_FOUND'
+	);
+
+	if (failedUserAccount?.error) {
+		return {data: null, error: failedUserAccount.error};
+	}
+
+	return {
+		data: {
+			contributors: buckets.map(({frequency}, index) => ({
+				frequency,
+				name: userAccounts[index].data?.name ?? null,
+			})),
+			totalCount: data.totalCount,
+		},
+		error: null,
+	};
+}
+
 function getContentProgress(filter: string, groupId?: number) {
 	const searchParams = new URLSearchParams({
 		filter: getScopedFilter(filter, groupId),
@@ -88,7 +160,7 @@ function getContentProgress(filter: string, groupId?: number) {
 	// switch must travel as an attribute (the query parameter is ignored).
 
 	return ApiHelper.post<{
-		searchFacets?: {statusFacet?: StatusFacetBucket[]};
+		searchFacets?: {statusFacet?: FacetBucket[]};
 	}>(`${SEARCH_URL}?${searchParams}`, {
 		attributes: {'search.empty.search': true},
 		facetConfigurations: [
@@ -212,6 +284,7 @@ export default {
 	getAssetStatistics,
 	getCMSEntryClassNames,
 	getContentProgress,
+	getContributors,
 	getDuplicateTitles,
 	getDuplicateTopicsCount,
 	getSearchURL,

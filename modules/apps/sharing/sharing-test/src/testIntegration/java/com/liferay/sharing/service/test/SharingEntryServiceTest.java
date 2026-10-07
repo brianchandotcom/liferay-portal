@@ -717,6 +717,28 @@ public class SharingEntryServiceTest {
 		Assert.assertFalse(sharingEntry.isShareable());
 	}
 
+	@Test(expected = SharingEntryExpirationDateException.class)
+	@TestInfo("LPD-102180")
+	public void testUpdateSharingEntryWithChangedActionsAndUnchangedExpirationDateInThePast()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			SharingEntryAction.UPDATE, SharingEntryAction.VIEW);
+
+		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
+			null, 0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId(),
+			_group.getGroupId(), true,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			_serviceContext);
+
+		_expireSharingEntry(sharingEntry);
+
+		_sharingEntryService.updateSharingEntry(
+			sharingEntry.getSharingEntryId(),
+			Arrays.asList(SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
+			true, sharingEntry.getExpirationDate(), _serviceContext);
+	}
+
 	@Test
 	public void testUpdateSharingEntryWithExpirationDateInTheFuture()
 		throws Exception {
@@ -765,6 +787,32 @@ public class SharingEntryServiceTest {
 			sharingEntry.getSharingEntryId(),
 			Collections.singletonList(SharingEntryAction.VIEW), true,
 			expirationDate, _serviceContext);
+	}
+
+	@Test
+	@TestInfo("LPD-102180")
+	public void testUpdateSharingEntryWithNoChangesAndExpirationDateInThePast()
+		throws Exception {
+
+		_registerSharingPermissionChecker(
+			SharingEntryAction.UPDATE, SharingEntryAction.VIEW);
+
+		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
+			null, 0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId(),
+			_group.getGroupId(), true,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			_serviceContext);
+
+		_expireSharingEntry(sharingEntry);
+
+		Date expirationDate = sharingEntry.getExpirationDate();
+
+		sharingEntry = _sharingEntryService.updateSharingEntry(
+			sharingEntry.getSharingEntryId(),
+			Collections.singletonList(SharingEntryAction.VIEW), true,
+			expirationDate, _serviceContext);
+
+		Assert.assertEquals(expirationDate, sharingEntry.getExpirationDate());
 	}
 
 	@Test
@@ -844,6 +892,15 @@ public class SharingEntryServiceTest {
 			).toString(),
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
+	}
+
+	private void _expireSharingEntry(SharingEntry sharingEntry) {
+		Instant instant = Instant.now();
+
+		sharingEntry.setExpirationDate(
+			Date.from(instant.minus(1, ChronoUnit.DAYS)));
+
+		_sharingEntryLocalService.updateSharingEntry(sharingEntry);
 	}
 
 	private void _registerSharingPermissionChecker(

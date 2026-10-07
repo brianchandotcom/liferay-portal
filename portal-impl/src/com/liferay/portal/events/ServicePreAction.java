@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.LayoutPermissionException;
@@ -954,16 +955,11 @@ public class ServicePreAction extends Action {
 
 		// Cookie support
 
-		try {
-
-			// LEP-4069
-
-			CookiesManagerUtil.validateSupportCookie(httpServletRequest);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+		if (PropsValues.SESSION_TEST_COOKIE_SUPPORT &&
+			Validator.isNull(
+				CookiesManagerUtil.getCookieValue(
+					CookiesConstants.NAME_COOKIE_SUPPORT, httpServletRequest,
+					false))) {
 
 			CookiesManagerUtil.addSupportCookie(
 				httpServletRequest, httpServletResponse);

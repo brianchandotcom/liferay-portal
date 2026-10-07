@@ -43,12 +43,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
-import com.liferay.sharing.exception.InvalidSharingEntryActionException;
-import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
-import com.liferay.sharing.exception.InvalidSharingEntryTicketException;
-import com.liferay.sharing.exception.InvalidSharingEntryUserException;
-import com.liferay.sharing.exception.InvalidSharingEntryUserGroupException;
 import com.liferay.sharing.exception.NoSuchEntryException;
+import com.liferay.sharing.exception.SharingEntryActionIdsException;
+import com.liferay.sharing.exception.SharingEntryExpirationDateException;
+import com.liferay.sharing.exception.SharingEntryToTicketIdException;
+import com.liferay.sharing.exception.SharingEntryToUserGroupIdException;
+import com.liferay.sharing.exception.SharingEntryToUserIdException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -184,7 +184,7 @@ public class SharingEntryLocalServiceTest {
 				_classNameId, _group.getGroupId()));
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testAddOrUpdateSharingEntryWithEmptySharingEntryActions()
 		throws Exception {
 
@@ -194,7 +194,7 @@ public class SharingEntryLocalServiceTest {
 			Collections.emptyList(), null, _serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@Test(expected = SharingEntryExpirationDateException.class)
 	public void testAddOrUpdateSharingEntryWithExpirationDateInThePast()
 		throws Exception {
 
@@ -331,7 +331,7 @@ public class SharingEntryLocalServiceTest {
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
-				exception instanceof InvalidSharingEntryTicketException);
+				exception instanceof SharingEntryToTicketIdException);
 		}
 
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
@@ -347,7 +347,7 @@ public class SharingEntryLocalServiceTest {
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
-				exception instanceof InvalidSharingEntryTicketException);
+				exception instanceof SharingEntryToTicketIdException);
 		}
 		finally {
 			_userGroupLocalService.deleteUserGroup(userGroup);
@@ -393,7 +393,7 @@ public class SharingEntryLocalServiceTest {
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
-				exception instanceof InvalidSharingEntryUserGroupException);
+				exception instanceof SharingEntryToUserGroupIdException);
 		}
 
 		try {
@@ -419,7 +419,7 @@ public class SharingEntryLocalServiceTest {
 		}
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testAddSharingEntryWithEmptySharingEntryActions()
 		throws Exception {
 
@@ -471,7 +471,7 @@ public class SharingEntryLocalServiceTest {
 				_classNameId, _group.getGroupId()));
 	}
 
-	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@Test(expected = SharingEntryExpirationDateException.class)
 	public void testAddSharingEntryWithExpirationDateInThePast()
 		throws Exception {
 
@@ -562,7 +562,7 @@ public class SharingEntryLocalServiceTest {
 		Assert.assertTrue(to.contains(emailAddress));
 	}
 
-	@Test(expected = InvalidSharingEntryUserException.class)
+	@Test(expected = SharingEntryToUserIdException.class)
 	@TestInfo("LPD-48130")
 	public void testAddSharingEntryWithNoTarget() throws Exception {
 		_sharingEntryLocalService.addSharingEntry(
@@ -580,7 +580,7 @@ public class SharingEntryLocalServiceTest {
 			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryUserException.class)
+	@Test(expected = SharingEntryToUserIdException.class)
 	public void testAddSharingEntryWithSameFromUserAndToUser()
 		throws Exception {
 
@@ -590,7 +590,7 @@ public class SharingEntryLocalServiceTest {
 			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testAddSharingEntryWithSharingEntryActionsContainingOneNullElement()
 		throws Exception {
 
@@ -601,7 +601,7 @@ public class SharingEntryLocalServiceTest {
 			_serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testAddSharingEntryWithSharingEntryActionsContainingOnlyNullElement()
 		throws Exception {
 
@@ -612,7 +612,7 @@ public class SharingEntryLocalServiceTest {
 			_serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testAddSharingEntryWithoutViewSharingEntryAction()
 		throws Exception {
 
@@ -1429,7 +1429,7 @@ public class SharingEntryLocalServiceTest {
 		Assert.assertNull(sharingEntry.getExpirationDate());
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testUpdateSharingEntryWithEmptySharingEntryActions()
 		throws Exception {
 
@@ -1443,7 +1443,7 @@ public class SharingEntryLocalServiceTest {
 			Collections.emptyList(), true, null, _serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@Test(expected = SharingEntryExpirationDateException.class)
 	public void testUpdateSharingEntryWithExpirationDateInThePast()
 		throws Exception {
 
@@ -1462,7 +1462,7 @@ public class SharingEntryLocalServiceTest {
 			_serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testUpdateSharingEntryWithSharingEntryActionsContainingOneNullElement()
 		throws Exception {
 
@@ -1481,7 +1481,7 @@ public class SharingEntryLocalServiceTest {
 			sharingEntryActions, true, null, _serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testUpdateSharingEntryWithSharingEntryActionsContainingOnlyNullElement()
 		throws Exception {
 
@@ -1496,7 +1496,7 @@ public class SharingEntryLocalServiceTest {
 			_serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testUpdateSharingEntryWithoutViewSharingEntryAction()
 		throws Exception {
 

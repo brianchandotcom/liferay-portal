@@ -32,9 +32,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
-import com.liferay.sharing.exception.InvalidSharingEntryActionException;
-import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.NoSuchEntryException;
+import com.liferay.sharing.exception.SharingEntryActionIdsException;
+import com.liferay.sharing.exception.SharingEntryExpirationDateException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermissionChecker;
@@ -173,7 +173,7 @@ public class SharingEntryServiceTest {
 			updateSharingEntry.getSharingEntryId());
 	}
 
-	@Test(expected = InvalidSharingEntryActionException.class)
+	@Test(expected = SharingEntryActionIdsException.class)
 	public void testAddOrUpdateSharingEntryWithEmptySharingEntryActions()
 		throws Exception {
 
@@ -186,7 +186,7 @@ public class SharingEntryServiceTest {
 			_serviceContext);
 	}
 
-	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@Test(expected = SharingEntryExpirationDateException.class)
 	public void testAddOrUpdateSharingEntryWithExpirationDateInThePast()
 		throws Exception {
 
@@ -744,7 +744,7 @@ public class SharingEntryServiceTest {
 		Assert.assertEquals(expirationDate, sharingEntry.getExpirationDate());
 	}
 
-	@Test(expected = InvalidSharingEntryExpirationDateException.class)
+	@Test(expected = SharingEntryExpirationDateException.class)
 	public void testUpdateSharingEntryWithExpirationDateInThePast()
 		throws Exception {
 

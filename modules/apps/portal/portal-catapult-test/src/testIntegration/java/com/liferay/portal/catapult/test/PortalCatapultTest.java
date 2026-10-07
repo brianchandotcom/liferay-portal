@@ -186,29 +186,27 @@ public class PortalCatapultTest {
 
 	private void _testLaunchWithRedirect() throws Exception {
 		try (ClientExtensionHttpServer redirectClientExtensionHttpServer =
-				new ClientExtensionHttpServer()) {
+				new ClientExtensionHttpServer();
 
-			try (ClientExtensionHttpServer clientExtensionHttpServer =
-					new ClientExtensionHttpServer(
-						redirectClientExtensionHttpServer._getURL() +
-							"/resource")) {
+			ClientExtensionHttpServer clientExtensionHttpServer =
+				new ClientExtensionHttpServer(
+					redirectClientExtensionHttpServer._getURL() +
+						"/resource")) {
 
-				String value = RandomTestUtil.randomString();
+			String value = RandomTestUtil.randomString();
 
-				_launch(
-					clientExtensionHttpServer, Http.Method.GET, null,
-					(companyId, headers, homePageURL, location,
-					 oAuth2ApplicationFeatures, userId) -> headers.put(
-						_HEADER_NAME, value));
+			_launch(
+				clientExtensionHttpServer, Http.Method.GET, null,
+				(companyId, headers, homePageURL, location,
+				 oAuth2ApplicationFeatures, userId) -> headers.put(
+					_HEADER_NAME, value));
 
-				List<String> headerValues =
-					clientExtensionHttpServer._getHeaders(_HEADER_NAME);
+			List<String> headerValues = clientExtensionHttpServer._getHeaders(
+				_HEADER_NAME);
 
-				Assert.assertEquals(value, headerValues.get(0));
+			Assert.assertEquals(value, headerValues.get(0));
 
-				Assert.assertFalse(
-					redirectClientExtensionHttpServer._hasRequest());
-			}
+			Assert.assertFalse(redirectClientExtensionHttpServer._hasRequest());
 		}
 	}
 

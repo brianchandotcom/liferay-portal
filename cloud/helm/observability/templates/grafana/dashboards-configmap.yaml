@@ -77,7 +77,7 @@
 {{- $azureBackupCtx := dict "argoWfDescription" $argoWfDescription "argoWfHref" $argoWfHref "argoWfTileStyle" "azb-tile-muted" "resourceGroupName" $azureResourceGroupName "subscriptionId" $azureSubscriptionId -}}
 {{- if $.Values.centralHub.argoWorkflowsURL -}}
 {{- $_ := set $azureBackupCtx "argoWfDescription" "Submit the Backup Restore Workflow Template" -}}
-{{- $_ := set $azureBackupCtx "argoWfHref" (printf "%s/workflow-templates/${environment}/backup-restore-workflow-template" (trimSuffix "/" $.Values.centralHub.argoWorkflowsURL)) -}}
+{{- $_ := set $azureBackupCtx "argoWfHref" (printf "%s/cluster-workflow-templates/backup-restore-cluster-workflow-template?sidePanel=true" (trimSuffix "/" $.Values.centralHub.argoWorkflowsURL)) -}}
 {{- $_ := set $azureBackupCtx "argoWfTileStyle" "azb-tile" -}}
 {{- end -}}
 {{- $rendered = $rendered | replace "\"${AZURE_BACKUP_HTML}\"" (tpl ($.Files.Get "dashboards/html/azure-backup.html") $azureBackupCtx | toJson) -}}

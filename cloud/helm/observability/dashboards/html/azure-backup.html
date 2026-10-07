@@ -27,7 +27,7 @@
 	<div class="azb-header">
 		<h1 class="azb-title">Restoring From a Recovery Point</h1>
 
-		<p class="azb-sub">On Azure, restores run through the backup-restore workflow template in the environment namespace. It takes the recovery point ID listed above as its only argument.</p>
+		<p class="azb-sub">On Azure, restores run through the backup-restore cluster workflow template, submitted into the environment namespace. It takes the recovery point ID listed above as its only argument.</p>
 	</div>
 
 	<div class="azb-steps">
@@ -59,7 +59,7 @@
 			<div class="azb-tile-title">3. Submit the Restore</div>
 
 			<code class="azb-code">argo submit \
-	--from workflowtemplate/backup-restore-workflow-template \
+	--from clusterworkflowtemplate/backup-restore-cluster-workflow-template \
 	--namespace ${environment} \
 	--parameter recovery-point-id=&lt;ID&gt;</code>
 

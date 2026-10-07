@@ -146,11 +146,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLICATION_ORDER_IN_HISTORY</td>
-	<td>//tbody/tr[${resultOrder}]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PUBLICATION_ROLE_BUTTON</td>
 	<td>//button[strong[contains(.,'${key_publicationRole}')]]</td>
 	<td></td>

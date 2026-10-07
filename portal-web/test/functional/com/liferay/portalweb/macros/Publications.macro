@@ -599,20 +599,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPublicationOrderInHistory(publicationList = null) {
-		var resultOrder = 0;
-
-		for (var publicationName : list ${publicationList}) {
-			var resultOrder = ${resultOrder} + 1;
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Publications#PUBLICATION_ORDER_IN_HISTORY",
-				resultOrder = ${resultOrder},
-				value1 = ${publicationName});
-		}
-	}
-
-	@summary = "Default summary"
 	macro viewPublicationTimeline(isEmpty = null, publicationName = null) {
 		Click(locator1 = "Publications#PUBLICATION_TIMELINE_BUTTON");
 

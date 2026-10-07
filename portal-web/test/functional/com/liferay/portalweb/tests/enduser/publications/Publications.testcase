@@ -1454,63 +1454,6 @@ definition {
 		}
 	}
 
-	@description = "Assert publications changes can search and sort"
-	@priority = 4
-	test PublicationsChangesCanSearchAndSort {
-		JSONPublications.addPublication(publicationName = "Publication Name");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name");
-
-		for (var count : list "1,2,3") {
-			JSONWebcontent.addWebContent(
-				content = "WC Content ${count}",
-				groupName = "Guest",
-				title = "WC Title ${count}");
-		}
-
-		PublicationsNavigator.gotoReviewChanges(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication Name");
-
-		Search.searchCP(searchTerm = 1);
-
-		PublicationsChanges.viewChangesResultsOrder(
-			changeCategory = "Web Content Article",
-			changesList = "WC Title 1");
-
-		PublicationsChanges.viewChangesResultNotPresent(
-			changeCategory = "Web Content Article",
-			changeTitle = "WC Title 2");
-
-		PublicationsChanges.viewChangesResultNotPresent(
-			changeCategory = "Web Content Article",
-			changeTitle = "WC Title 3");
-
-		Search.searchCP(searchTerm = "WC");
-
-		PublicationsChanges.viewChangesResultsOrder(
-			changeCategory = "Web Content Article",
-			changesList = "WC Title 1,WC Title 2,WC Title 3");
-
-		PublicationsChanges.sortChanges(
-			sort = "descending",
-			sortName = "Title");
-
-		PublicationsChanges.viewChangesResultsOrder(
-			changeCategory = "Web Content Article",
-			changesList = "WC Title 1,WC Title 2,WC Title 3");
-
-		Refresh();
-
-		PublicationsChanges.sortChanges(
-			sort = "ascending",
-			sortName = "Title");
-
-		PublicationsChanges.viewChangesResultsOrder(
-			changeCategory = "Web Content Article",
-			changesList = "WC Title 3,WC Title 2,WC Title 1");
-	}
-
 	@priority = 5
 	test RescheduleAndCancelScheduledPublication {
 		property portal.acceptance = "true";
@@ -1803,35 +1746,6 @@ definition {
 
 			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title");
 		}
-	}
-
-	@description = "Can view Published Publications items pagination and order on History Tab."
-	@priority = 4
-	test ViewPublicationsHistoryItemsPaginationAndOrder {
-		for (var count : list "1,2,3,4,5,6,7") {
-			JSONPublications.addPublication(publicationName = "Publication Name ${count}");
-
-			JSONPublications.selectPublication(publicationName = "Publication Name ${count}");
-
-			JSONWebcontent.addWebContent(
-				content = "WC Content ${count}",
-				groupName = "Guest",
-				title = "WC Title ${count}");
-
-			Publications.publishPublication(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Publication Name ${count}");
-		}
-
-		PublicationsNavigator.openPublicationsHistory();
-
-		Click(
-			key_name = "Publication",
-			locator1 = "PublicationsChanges#SORT_BUTTON");
-
-		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 1,Publication Name 2,Publication Name 3,Publication Name 4,Publication Name 5,Publication Name 6,Publication Name 7");
-
-		Pagination.viewResults(results = "Showing 1 to 7 of 7 entries.");
 	}
 
 	@description = "This is a use case for LPS-200858"

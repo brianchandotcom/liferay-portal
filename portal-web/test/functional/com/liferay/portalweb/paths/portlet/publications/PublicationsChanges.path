@@ -151,21 +151,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SORT_BUTTON</td>
-	<td>//span[contains(.,'${key_name}')]//..//..//button[contains(@title, 'Sortable Column')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SORTED_ASCENDING_ICON</td>
-	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-up')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SORTED_DESCENDING_ICON</td>
-	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-down')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHANGES_CHECK_BOX</td>
 	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_changeCategory}')]//following-sibling::tr[${changeOrder}]/td[4][contains(.,'${key_changeTitle}')]//preceding-sibling::td//input[@type='checkbox']
 	</td>

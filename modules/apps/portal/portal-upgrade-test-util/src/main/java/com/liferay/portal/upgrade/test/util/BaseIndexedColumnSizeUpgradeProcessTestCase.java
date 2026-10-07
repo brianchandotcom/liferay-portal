@@ -157,6 +157,8 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 			List<IndexMetadata> indexMetadatas = _getIndexMetadatas(
 				columnName, tableName);
 
+			Assert.assertFalse(indexMetadatas.isEmpty());
+
 			_alterColumnType(getOldColumnLength(), columnName, tableName);
 
 			String maxValue = RandomTestUtil.randomString(getNewColumnLength());

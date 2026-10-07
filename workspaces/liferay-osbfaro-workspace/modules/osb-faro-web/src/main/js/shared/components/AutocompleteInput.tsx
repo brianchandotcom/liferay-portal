@@ -7,10 +7,10 @@ import {NetworkState} from 'shared/util/constants';
 import {useDebounce} from 'shared/hooks/useDebounce';
 
 import {
+	DEFAULT_PAGE_SIZE,
 	PaginatedDataSourceFn,
 	usePaginatedRequest,
 } from 'shared/hooks/usePaginatedRequest';
-import {useRequest} from 'shared/hooks/useRequest';
 
 type TMappedData = {
 	data: string[];
@@ -25,10 +25,9 @@ type GraphqlQuery = {
 
 interface IAutocompleteProps {
 	className?: string;
-	dataSourceFn?: (query?: string) => Promise<string[]>;
 
 	/**
-	 * Extra request identity for `dataSourceFn`, for a caller whose data
+	 * Extra request identity for `paginatedDataSourceFn`, for a caller whose data
 	 * source depends on something other than the typed query (e.g. which
 	 * field the values are read from). The suggestions are refetched
 	 * whenever it changes; without it, only the query invalidates them.
@@ -46,8 +45,6 @@ interface IAutocompleteProps {
 }
 
 const DEBOUNCE_DELAY = 250;
-
-const DEFAULT_PAGE_SIZE = 20;
 
 const PaginatedAutocompleteInput: React.FC<
 	IAutocompleteProps &
@@ -78,52 +75,31 @@ const PaginatedAutocompleteInput: React.FC<
 	);
 };
 
-const SinglePageAutocompleteInput: React.FC<IAutocompleteProps> = ({
-	dataSourceFn,
-	dataSourceKey,
-	graphqlQuery,
-	value,
-	...otherProps
-}) => {
+const GraphqlAutocompleteInput: React.FC<
+	IAutocompleteProps & Required<Pick<IAutocompleteProps, 'graphqlQuery'>>
+> = ({graphqlQuery, value, ...otherProps}) => {
 	const [networkState, setNetworkState] = useState(NetworkState.Unused);
 
-	let response;
+	const {
+		mapResultsToProps = (value) => value,
+		query,
+		variables,
+	} = graphqlQuery;
 
-	if (graphqlQuery) {
-		const {
-			mapResultsToProps = (value) => value,
-			query,
-			variables,
-		} = graphqlQuery;
-		const debouncedInputValue = useDebounce(value, DEBOUNCE_DELAY);
+	const debouncedInputValue = useDebounce(value, DEBOUNCE_DELAY);
 
-		response = useQuery(query, {
-			fetchPolicy: 'network-only',
-			variables: {
-				...variables,
-				keywords: debouncedInputValue,
-			},
-		});
+	const response = useQuery(query, {
+		fetchPolicy: 'network-only',
+		variables: {
+			...variables,
+			keywords: debouncedInputValue,
+		},
+	});
 
-		response = {
-			...response,
-			...mapResultsToProps(response.data),
-		};
-	}
-	else {
-		response = useRequest({
-			dataSourceFn: ({value}) => dataSourceFn?.(value),
-			debounceDelay: DEBOUNCE_DELAY,
-			initialState: {
-				data: [],
-				error: false,
-				loading: false,
-			},
-			variables: {dataSourceKey, value},
-		});
-	}
-
-	const {data: items = [], loading} = response;
+	const {data: items = [], loading} = {
+		...response,
+		...mapResultsToProps(response.data),
+	};
 
 	useEffect(() => {
 		setNetworkState(loading ? NetworkState.Loading : NetworkState.Unused);
@@ -191,14 +167,36 @@ const BaseAutocomplete: React.FC<IBaseAutocompleteProps> = ({
 	</ClayAutocomplete>
 );
 
-const AutocompleteInput: React.FC<IAutocompleteProps> = (props) =>
-	props.paginatedDataSourceFn ? (
-		<PaginatedAutocompleteInput
-			{...props}
-			paginatedDataSourceFn={props.paginatedDataSourceFn}
+const AutocompleteInput: React.FC<IAutocompleteProps> = ({
+	graphqlQuery,
+	paginatedDataSourceFn,
+	...otherProps
+}) => {
+	if (paginatedDataSourceFn) {
+		return (
+			<PaginatedAutocompleteInput
+				{...otherProps}
+				paginatedDataSourceFn={paginatedDataSourceFn}
+			/>
+		);
+	}
+
+	if (graphqlQuery) {
+		return (
+			<GraphqlAutocompleteInput
+				{...otherProps}
+				graphqlQuery={graphqlQuery}
+			/>
+		);
+	}
+
+	return (
+		<BaseAutocomplete
+			{...otherProps}
+			items={[]}
+			loadingState={NetworkState.Unused}
 		/>
-	) : (
-		<SinglePageAutocompleteInput {...props} />
 	);
+};
 
 export default AutocompleteInput;

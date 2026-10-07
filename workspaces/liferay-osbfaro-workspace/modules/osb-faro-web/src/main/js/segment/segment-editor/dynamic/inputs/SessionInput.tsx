@@ -13,8 +13,11 @@ import {fromJS} from 'immutable';
 import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName,
-	getPropertyValue,
 } from '../utils/custom-inputs';
+import {
+	IPaginatedDataSourceParams,
+	IPaginatedDataSourceResult,
+} from 'shared/hooks/usePaginatedRequest';
 import {isNull} from 'lodash';
 
 interface ISessionInputProps extends ISegmentEditorCustomInputBase {
@@ -36,22 +39,25 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 		this.handleCustomInputChange = this.handleCustomInputChange.bind(this);
 	}
 
-	fieldValuesDataSourceFn() {
+	fieldValuesDataSourceFn({
+		page,
+		pageSize,
+		query,
+	}: IPaginatedDataSourceParams): Promise<IPaginatedDataSourceResult> {
 		const {
 			channelId,
 			groupId,
 			property: {name},
-			value: valueIMap,
 		} = this.props;
 
-		return API.session
-			.fetchFieldValues({
-				channelId,
-				fieldName: name,
-				groupId: groupId!,
-				query: getPropertyValue(valueIMap, 'value', 0),
-			})
-			.then(({items}) => items);
+		return API.session.fetchFieldValues({
+			channelId,
+			delta: pageSize,
+			fieldName: name,
+			groupId: groupId!,
+			page,
+			query,
+		});
 	}
 
 	getConjunctionDateFilterIMap() {

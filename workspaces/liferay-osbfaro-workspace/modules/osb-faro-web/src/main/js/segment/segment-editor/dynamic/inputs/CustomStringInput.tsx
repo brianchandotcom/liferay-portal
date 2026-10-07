@@ -14,10 +14,16 @@ import {
 import {isOfKnownType, isValid} from '../utils/utils';
 import {Map} from 'immutable';
 import {Option, Picker} from '@clayui/core';
+import {
+	IPaginatedDataSourceParams,
+	IPaginatedDataSourceResult,
+} from 'shared/hooks/usePaginatedRequest';
 
 export interface ICustomStringInputProps extends ISegmentEditorCustomInputBase {
 	autocomplete?: boolean;
-	fieldValuesDataSourceFn?: () => Promise<string[]>;
+	fieldValuesDataSourceFn?: (
+		params: IPaginatedDataSourceParams
+	) => Promise<IPaginatedDataSourceResult>;
 	touched: boolean;
 	valid: boolean;
 }
@@ -172,8 +178,10 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 							{autocomplete ? (
 								<AutocompleteInput
 									{...sharedInputProps}
-									dataSourceFn={fieldValuesDataSourceFn}
 									onChange={this.handleValueChange}
+									paginatedDataSourceFn={
+										fieldValuesDataSourceFn
+									}
 								/>
 							) : (
 								<Input

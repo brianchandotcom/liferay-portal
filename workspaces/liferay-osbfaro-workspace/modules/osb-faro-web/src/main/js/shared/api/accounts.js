@@ -34,14 +34,17 @@ export function fetchDetails({accountId, channelId, groupId}) {
 
 export function fetchFieldValues({
 	channelId,
+	delta = DEFAULT_DELTA,
 	fieldMappingFieldName,
 	groupId,
+	page = DEFAULT_PAGE,
 	query = '',
 }) {
 	return sendRequest({
 		data: {
 			channelId,
-			delta: DEFAULT_DELTA,
+			cur: page,
+			delta,
 			fieldMappingFieldName,
 			query: escapeSingleQuotes(query),
 		},

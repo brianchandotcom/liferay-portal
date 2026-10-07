@@ -1,9 +1,12 @@
 import * as API from 'shared/api';
 import CustomDateInput from './CustomDateInput';
+import {
+	IPaginatedDataSourceParams,
+	IPaginatedDataSourceResult,
+} from 'shared/hooks/usePaginatedRequest';
 import CustomNumberInput from './CustomNumberInput';
 import CustomStringInput from './CustomStringInput';
 import React from 'react';
-import {getPropertyValue} from '../utils/custom-inputs';
 import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {PropertyTypes} from '../utils/constants';
 
@@ -18,22 +21,25 @@ export default class AccountInput extends React.Component<IAccountInputProps> {
 		this.fieldValuesDataSourceFn = this.fieldValuesDataSourceFn.bind(this);
 	}
 
-	fieldValuesDataSourceFn(): Promise<string[]> {
+	fieldValuesDataSourceFn({
+		page,
+		pageSize,
+		query,
+	}: IPaginatedDataSourceParams): Promise<IPaginatedDataSourceResult> {
 		const {
 			channelId,
 			groupId,
 			property: {id},
-			value: valueIMap,
 		} = this.props;
 
-		return API.accounts
-			.fetchFieldValues({
-				channelId,
-				fieldMappingFieldName: id,
-				groupId,
-				query: getPropertyValue(valueIMap, 'value', 0),
-			})
-			.then(({items}) => items);
+		return API.accounts.fetchFieldValues({
+			channelId,
+			delta: pageSize,
+			fieldMappingFieldName: id,
+			groupId,
+			page,
+			query,
+		});
 	}
 
 	render() {

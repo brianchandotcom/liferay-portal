@@ -19,6 +19,10 @@ import {
 	getUtmParameterLabel,
 	IAcquisitionParameter,
 } from '../utils/properties/session-properties';
+import {
+	IPaginatedDataSourceParams,
+	IPaginatedDataSourceResult,
+} from 'shared/hooks/usePaginatedRequest';
 
 interface IUtmParameterInputProps extends ISegmentEditorCustomInputBase {
 	touched: {
@@ -110,17 +114,21 @@ export default class UtmParameterInput extends React.Component<
 		return this.getOperators().find(({key}) => key === operatorKey)?.key;
 	}
 
-	fieldValuesDataSourceFn() {
-		const {channelId, groupId, value: valueIMap} = this.props;
+	fieldValuesDataSourceFn({
+		page,
+		pageSize,
+		query,
+	}: IPaginatedDataSourceParams): Promise<IPaginatedDataSourceResult> {
+		const {channelId, groupId} = this.props;
 
-		return API.session
-			.fetchFieldValues({
-				channelId,
-				fieldName: this.getParameterFieldName(),
-				groupId: groupId!,
-				query: getPropertyValue(valueIMap, 'value', 0),
-			})
-			.then(({items}) => items);
+		return API.session.fetchFieldValues({
+			channelId,
+			delta: pageSize,
+			fieldName: this.getParameterFieldName(),
+			groupId: groupId!,
+			page,
+			query,
+		});
 	}
 
 	handleBlur() {
@@ -270,10 +278,12 @@ export default class UtmParameterInput extends React.Component<
 								className={getCN(className, {
 									'has-error': showError,
 								})}
-								dataSourceFn={this.fieldValuesDataSourceFn}
 								dataSourceKey={parameterFieldName}
 								onBlur={this.handleBlur}
 								onChange={this.handleValueChange}
+								paginatedDataSourceFn={
+									this.fieldValuesDataSourceFn
+								}
 								value={value}
 							/>
 						</Form.GroupItem>

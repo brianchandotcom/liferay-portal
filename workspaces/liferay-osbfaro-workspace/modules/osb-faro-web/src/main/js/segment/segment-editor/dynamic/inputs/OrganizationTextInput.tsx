@@ -1,26 +1,29 @@
 import * as API from 'shared/api';
 import CustomStringInput from './CustomStringInput';
 import React from 'react';
-import {getPropertyValue} from '../utils/custom-inputs';
 import {ICustomStringInputProps} from './CustomStringInput';
+import {IPaginatedDataSourceParams} from 'shared/hooks/usePaginatedRequest';
 
 const OrganizationTextInput: React.FC<ICustomStringInputProps> = (props) => {
 	const {
 		channelId,
 		groupId,
 		property: {id},
-		value,
 	} = props;
 
-	const fieldValuesDataSourceFn = () =>
-		API.individuals
-			.fetchFieldValues({
-				channelId,
-				fieldMappingFieldName: id,
-				groupId,
-				query: getPropertyValue(value, 'value', 0),
-			})
-			.then(({items}) => items);
+	const fieldValuesDataSourceFn = ({
+		page,
+		pageSize,
+		query,
+	}: IPaginatedDataSourceParams) =>
+		API.individuals.fetchFieldValues({
+			channelId,
+			delta: pageSize,
+			fieldMappingFieldName: id,
+			groupId,
+			page,
+			query,
+		});
 	return (
 		<CustomStringInput
 			{...props}

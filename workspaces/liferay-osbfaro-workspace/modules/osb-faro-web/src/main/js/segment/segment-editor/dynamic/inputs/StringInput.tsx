@@ -7,6 +7,10 @@ import {ISegmentEditorInputBase} from '../utils/types';
 import {isNull} from 'lodash';
 import {isValid} from '../utils/utils';
 import {Option, Picker} from '@clayui/core';
+import {
+	IPaginatedDataSourceParams,
+	IPaginatedDataSourceResult,
+} from 'shared/hooks/usePaginatedRequest';
 
 interface IStringInputProps extends ISegmentEditorInputBase {
 	touched: boolean;
@@ -22,22 +26,25 @@ export default class StringInput extends React.Component<IStringInputProps> {
 		this.handleChange = this.handleChange.bind(this);
 	}
 
-	fieldValuesDataSourceFn() {
+	fieldValuesDataSourceFn({
+		page,
+		pageSize,
+		query,
+	}: IPaginatedDataSourceParams): Promise<IPaginatedDataSourceResult> {
 		const {
 			channelId,
 			groupId,
 			property: {id},
-			value,
 		} = this.props;
 
-		return API.individuals
-			.fetchFieldValues({
-				channelId,
-				fieldMappingFieldName: id,
-				groupId,
-				query: value,
-			})
-			.then(({items}) => items);
+		return API.individuals.fetchFieldValues({
+			channelId,
+			delta: pageSize,
+			fieldMappingFieldName: id,
+			groupId,
+			page,
+			query,
+		});
 	}
 
 	handleBlur() {
@@ -84,9 +91,11 @@ export default class StringInput extends React.Component<IStringInputProps> {
 										'has-error': showError,
 									})}
 									data-testid="value-input"
-									dataSourceFn={this.fieldValuesDataSourceFn}
 									onBlur={this.handleBlur}
 									onChange={this.handleChange}
+									paginatedDataSourceFn={
+										this.fieldValuesDataSourceFn
+									}
 									value={value}
 								/>
 							) : (

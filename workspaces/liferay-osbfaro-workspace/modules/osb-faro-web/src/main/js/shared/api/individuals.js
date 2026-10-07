@@ -65,11 +65,13 @@ export function fetchFieldValues({
 	delta = DEFAULT_DELTA,
 	fieldMappingFieldName,
 	groupId,
+	page = DEFAULT_PAGE,
 	query = '',
 }) {
 	return sendRequest({
 		data: {
 			channelId,
+			cur: page,
 			delta,
 			fieldMappingFieldName,
 			query: escapeSingleQuotes(query),

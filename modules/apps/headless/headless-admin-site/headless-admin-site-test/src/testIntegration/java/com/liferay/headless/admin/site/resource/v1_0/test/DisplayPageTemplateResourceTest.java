@@ -41,6 +41,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTe
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailHttpServer;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.URLFetchSecurityCompanyConfigurationUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -768,7 +769,7 @@ public class DisplayPageTemplateResourceTest
 
 	@Override
 	@Test
-	@TestInfo("LPD-92443")
+	@TestInfo({"LPD-92443", "LPD-107149"})
 	public void testPostSiteDisplayPageTemplate() throws Exception {
 		super.testPostSiteDisplayPageTemplate();
 
@@ -786,6 +787,7 @@ public class DisplayPageTemplateResourceTest
 		_testPostSiteDisplayPageTemplateWithThumbnailURLReferenceFileBase64AndURL();
 		_testPostSiteDisplayPageTemplateWithThumbnailURLReferenceNonexistingProblemException();
 		_testPostSiteDisplayPageTemplateWithThumbnailURLReferenceURL();
+		_testPostSiteDisplayPageTemplateWithThumbnailURLReferenceURLFetchSecurity();
 		_testPostSiteDisplayPageTemplateWithThumbnailURLReferenceURLUnsupportedProtocolProblemException();
 	}
 
@@ -1792,6 +1794,17 @@ public class DisplayPageTemplateResourceTest
 		return displayPageTemplate;
 	}
 
+	private DisplayPageTemplate _randomDisplayPageTemplate(
+			ThumbnailURLReference thumbnailURLReference)
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		displayPageTemplate.setThumbnailURLReference(thumbnailURLReference);
+
+		return displayPageTemplate;
+	}
+
 	private DisplayPageTemplateSettings _randomDisplayPageTemplateSettings() {
 		DisplayPageTemplateSettings displayPageTemplateSettings =
 			new DisplayPageTemplateSettings();
@@ -2353,7 +2366,7 @@ public class DisplayPageTemplateResourceTest
 		postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
-				_randomDisplayPageTemplate(null));
+				_randomDisplayPageTemplate((Boolean)null));
 
 		Assert.assertFalse(postDisplayPageTemplate.getMarkedAsDefault());
 
@@ -2763,6 +2776,31 @@ public class DisplayPageTemplateResourceTest
 
 		_postSiteDisplayPageTemplateAndAssertThumbnailURLReference(
 			_thumbnail1Bytes, externalReferenceCode, thumbnailURLReference);
+	}
+
+	private void _testPostSiteDisplayPageTemplateWithThumbnailURLReferenceURLFetchSecurity()
+		throws Exception {
+
+		DisplayPageTemplateResource displayPageTemplateResource =
+			_getDisplayPageTemplateResource("thumbnailURLReference");
+
+		ThumbnailURLReferenceTestUtil.testThumbnailURLReferenceURLFetchSecurity(
+			(thumbnailURLReference, displayPageTemplate) ->
+				_assertThumbnailURLReference(
+					_thumbnail1URL.equals(thumbnailURLReference.getUrl()) ?
+						_thumbnail1Bytes : _thumbnail2Bytes,
+					thumbnailURLReference.getExternalReferenceCode(),
+					displayPageTemplate),
+			_randomDisplayPageTemplate(
+				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
+					_thumbnail1URL)),
+			_randomDisplayPageTemplate(
+				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
+					_thumbnail2URL)),
+			DisplayPageTemplate::getThumbnailURLReference,
+			displayPageTemplate ->
+				displayPageTemplateResource.postSiteDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(), displayPageTemplate));
 	}
 
 	private void _testPostSiteDisplayPageTemplateWithThumbnailURLReferenceURLUnsupportedProtocolProblemException()

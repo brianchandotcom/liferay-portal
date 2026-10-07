@@ -56,8 +56,6 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 			_upstreamTokenPortalCatapultHeaderContributor,
 			"_openIdConnectSessionLocalService",
 			_openIdConnectSessionLocalService);
-
-		_setUpMocks();
 	}
 
 	@Test
@@ -115,14 +113,6 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 		return headers.get("X-Upstream-ID-Token");
 	}
 
-	private void _resetAndSetUpMocks() {
-		Mockito.reset(
-			_oAuthClientEntry, _oAuthClientEntryLocalService,
-			_openIdConnectSession, _openIdConnectSessionLocalService);
-
-		_setUpMocks();
-	}
-
 	private void _setUpMocks() {
 		Mockito.when(
 			_openIdConnectSessionLocalService.fetchCurrentOpenIdConnectSession()
@@ -171,13 +161,13 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContribute() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Assert.assertEquals(_ID_TOKEN, _getUpstreamIdToken(_LOCATION));
 	}
 
 	private void _testContributeWithDifferentCompanyId() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getCompanyId()
@@ -189,7 +179,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithDifferentSecureOrigin() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Assert.assertNull(
 			_getUpstreamIdToken(_HOME_PAGE_URL + ":9999/o/resource"));
@@ -200,7 +190,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithDifferentUserId() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getUserId()
@@ -212,7 +202,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithExpiredIdToken() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getIdToken()
@@ -224,7 +214,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithInsecureLocation() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Assert.assertNull(
 			_getUpstreamIdToken(
@@ -233,7 +223,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithInvalidIdToken() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getIdToken()
@@ -245,14 +235,14 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithInvalidLocation() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Assert.assertNull(
 			_getUpstreamIdToken(_HOME_PAGE_URL + ":notaport/o/resource"));
 	}
 
 	private void _testContributeWithInvalidTokenRequestParametersJSON() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_oAuthClientEntry.getTokenRequestParametersJSON()
@@ -264,7 +254,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithMissingAccessTokenExpirationDate() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getAccessTokenExpirationDate()
@@ -276,7 +266,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithMissingFeature() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Assert.assertNull(
 			_getUpstreamIdToken(
@@ -285,7 +275,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithMissingIdToken() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getIdToken()
@@ -297,7 +287,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithMissingIdTokenExpirationTime() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getIdToken()
@@ -309,7 +299,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithMissingOAuthClientEntry() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
@@ -322,7 +312,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithMissingSession() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSessionLocalService.fetchCurrentOpenIdConnectSession()
@@ -334,7 +324,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithNearExpiryAccessToken() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getAccessTokenExpirationDate()
@@ -346,7 +336,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithNearExpiryIdToken() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_openIdConnectSession.getIdToken()
@@ -359,7 +349,7 @@ public class UpstreamTokenPortalCatapultHeaderContributorTest {
 	}
 
 	private void _testContributeWithNotAllowedOAuthClientEntry() {
-		_resetAndSetUpMocks();
+		_setUpMocks();
 
 		Mockito.when(
 			_oAuthClientEntry.getTokenRequestParametersJSON()

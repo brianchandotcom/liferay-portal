@@ -68,6 +68,8 @@ public class PortalCatapultImpl implements PortalCatapult {
 				StringPool.UTF8);
 		}
 
+		options.setFollowRedirects(false);
+
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.
 				getOAuth2ApplicationByExternalReferenceCode(

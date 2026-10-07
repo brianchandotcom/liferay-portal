@@ -1,3 +1,4 @@
+{{- $databaseName := "lportal" -}}
 {{- $databasePort := "5432" -}}
 {{- $elasticsearchHealth := "" -}}
 {{- $env := index .context "apiextensions.crossplane.io/environment" -}}
@@ -9,7 +10,6 @@
 {{- $backup := $xr.spec.backup | default dict -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled | default false -}}
 {{- $database := $xr.spec.database -}}
-{{- $databaseName := $xr.spec.database.name | default "lportal" -}}
 {{- $environmentId := $xr.spec.environmentId -}}
 {{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
 {{- $gsaName := printf "%s-sa" $xr.metadata.name -}}

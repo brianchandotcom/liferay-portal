@@ -117,7 +117,7 @@ export function ContributorConcentration({
 					title={percentagesLabel}
 				/>
 			}
-			className="custom-empty-state"
+			className="cms-contributor-concentration custom-empty-state"
 			description={Liferay.Language.get(
 				'this-is-the-share-of-content-created-by-each-contributor-across-the-selected-spaces'
 			)}

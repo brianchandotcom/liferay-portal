@@ -3,7 +3,7 @@
 {{- $searchUsername := "liferay_search_admin" -}}
 {{- $xr := .observed.composite.resource -}}
 
-{{- $backupSpec := $xr.spec.backup -}}
+{{- $backup := $xr.spec.backup -}}
 {{- $clusterSubnetIds := $env.clusterSubnetIds | fromJson -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled -}}
 {{- $environmentId := $xr.spec.environmentId -}}
@@ -17,7 +17,6 @@
 {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
 
 {{- $activeDataPlane := eq $restorePhase "provisioning" | ternary (eq $targetActiveDataPlane "blue" | ternary "green" "blue") $targetActiveDataPlane -}}
-{{- $backupRegion := $backupSpec.region | default $env.region -}}
 {{- $overlayBucketName := printf "%s-overlay-%s" $env.deploymentName (printf "%.18s-%s" $projectId (printf "%s-%s-%s" $env.accountId $env.deploymentName $projectId | sha256sum | trunc 6)) -}}
 {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
 

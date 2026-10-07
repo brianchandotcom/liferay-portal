@@ -46,7 +46,7 @@ spec:
                 namespace: {{ $namespace }}
     managementPolicies: {{ $managementPolicies }}
 {{- end }}
-{{- if $backupSpec.enabled }}
+{{- if $backup.enabled }}
 ---
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object

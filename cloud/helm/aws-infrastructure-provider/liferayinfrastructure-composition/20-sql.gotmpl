@@ -72,7 +72,7 @@ spec:
                 dataPlane: {{ $dataPlane }}
                 environmentId: {{ $environmentId }}
                 projectId: {{ $projectId }}
-    managementPolicies: {{ $backupSpec.enabled | ternary ((list "*") | toJson) $managementPolicies }}
+    managementPolicies: {{ $backup.enabled | ternary ((list "*") | toJson) $managementPolicies }}
     writeConnectionSecretToRef:
         name: liferay-database-{{ $dataPlane }}-credentials
 ---

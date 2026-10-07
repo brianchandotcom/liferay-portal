@@ -1,4 +1,4 @@
-{{- if and $backupSpec.enabled $cmkEnabled }}
+{{- if and $backup.enabled $cmkEnabled }}
 apiVersion: kms.aws.m.upbound.io/v1beta1
 kind: Alias
 metadata:
@@ -13,7 +13,7 @@ metadata:
     name: {{ $baseName }}-backup-vault-kms-alias
 spec:
     forProvider:
-        region: {{ $backupRegion }}
+        region: {{ $env.region }}
         targetKeyIdSelector:
             matchLabels:
                 app: liferay
@@ -66,7 +66,7 @@ spec:
                 ],
                 "Version": "2012-10-17"
             }
-        region: {{ $backupRegion }}
+        region: {{ $env.region }}
     managementPolicies: {{ $managementPolicies }}
 {{- end }}
 {{- if and $opensearchSpec $cmkEnabled }}

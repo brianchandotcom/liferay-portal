@@ -179,7 +179,7 @@ spec:
                 projectId: {{ $projectId }}
     managementPolicies: {{ $managementPolicies }}
 {{- end }}
-{{- if $backupSpec.enabled }}
+{{- if $backup.enabled }}
 ---
 apiVersion: iam.aws.m.upbound.io/v1beta1
 kind: Policy

@@ -29,7 +29,7 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 	type,
 }) => (
 	<Card className="event-analysis-editor-root">
-		<div className="options-container d-flex flex-column-reverse flex-md-row justify-content-between">
+		<div className="d-flex flex-column-reverse flex-md-row justify-content-between mx-3 my-4">
 			<CardTabs
 				activeTabId={type}
 				className="type-selector"

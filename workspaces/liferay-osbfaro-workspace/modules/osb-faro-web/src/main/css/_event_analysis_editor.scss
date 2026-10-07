@@ -7,7 +7,6 @@
 
 	.filter-name {
 		min-height: 32px;
-		overflow-wrap: anywhere;
 	}
 }
 
@@ -121,12 +120,6 @@
 	}
 }
 
-.event-analysis-builder-root {
-	.attribute-list > * + * {
-		margin-top: 8px;
-	}
-}
-
 .event-analysis-editor-root {
 	color: $secondary;
 
@@ -134,10 +127,6 @@
 		.custom-control-label-text {
 			color: $secondary;
 		}
-	}
-
-	.options-container {
-		margin: 24px 16px;
 	}
 }
 

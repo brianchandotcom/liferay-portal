@@ -56,7 +56,7 @@ const AttributeConditionsSection = <T extends Condition>({
 			title={title}
 		>
 			{!!order.length && (
-				<div className="attribute-list d-flex flex-column mt-3">
+				<div className="attribute-list c-gap-2 d-flex flex-column mt-3">
 					{order.map((id, index) => {
 						const [overline, label] = getDisplay(
 							attributes[conditions[id].attributeId],

@@ -6,7 +6,7 @@ exports[`Event Analysis Editor render 1`] = `
     class="card card-root event-analysis-editor-root"
   >
     <div
-      class="options-container d-flex flex-column-reverse flex-md-row justify-content-between"
+      class="d-flex flex-column-reverse flex-md-row justify-content-between mx-3 my-4"
     >
       <ul
         class="card-tabs-root type-selector small"

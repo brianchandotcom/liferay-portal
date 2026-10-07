@@ -17,10 +17,6 @@
 		&:hover {
 			color: $dark;
 		}
-
-		&:focus-visible {
-			box-shadow: 0 0 0 2px $primaryLighten23;
-		}
 	}
 
 	.condition-chip-text {
@@ -29,14 +25,16 @@
 
 	.drag-handle {
 		color: $mainLighten52;
+	}
 
+	.condition-chip-remove,
+	.drag-handle {
 		&:focus-visible {
 			box-shadow: 0 0 0 2px $primaryLighten23;
 		}
 	}
 
 	&.condition-chip-draggable,
-	&.condition-chip-draggable .condition-chip-content,
 	&.condition-chip-draggable .drag-handle {
 		cursor: grab;
 	}

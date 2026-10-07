@@ -11,7 +11,6 @@ cmk:
     enabled: false
 commonTags: {}
 database:
-    authentication: password
     highAvailability: false
     instanceType: GP_Standard_D2s_v3
     storageGB: 32

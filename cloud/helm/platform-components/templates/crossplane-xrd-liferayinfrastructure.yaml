@@ -87,12 +87,6 @@ spec:
                                     type: object
                                 database:
                                     properties:
-                                        authentication:
-                                            default: password
-                                            enum:
-                                                -   password
-                                                -   workloadIdentity
-                                            type: string
                                         highAvailability:
                                             default: false
                                             type: boolean

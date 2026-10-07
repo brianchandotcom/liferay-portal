@@ -623,12 +623,15 @@ test('LPD-39412 Assert publication timeline history is enabled for templates', a
 		.getByPlaceholder('Untitled Template')
 		.pressSequentially(title2, {delay: 50});
 
-	await Promise.all([
-		page.waitForLoadState('load'),
-		page
-			.getByRole('button', {exact: true, name: 'Save and Continue'})
-			.click(),
-	]);
+	await expect(page.locator('[id$="JournalPortlet_name_en_US"]')).toHaveValue(
+		title2
+	);
+
+	await page
+		.getByRole('button', {exact: true, name: 'Save and Continue'})
+		.click();
+
+	await page.waitForURL(/ddmTemplateId=/);
 
 	const timelineButton = page.getByLabel('timeline-button');
 	await timelineButton.waitFor();

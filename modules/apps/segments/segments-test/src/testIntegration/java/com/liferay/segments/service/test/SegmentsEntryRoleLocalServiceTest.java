@@ -53,15 +53,27 @@ public class SegmentsEntryRoleLocalServiceTest {
 	}
 
 	@Test
-	public void testCRUDSegmentsEntryRole() throws Exception {
+	public void testAddSegmentsEntryRole() throws Exception {
 		_testAddSegmentsEntryRole();
 		_testAddSegmentsEntryRoleWithInvalidRoleId();
 		_testAddSegmentsEntryRoleWithInvalidSegmentsEntryId();
+	}
+
+	@Test
+	public void testDeleteSegmentsEntryRole() throws Exception {
 		_testDeleteSegmentsEntryRole();
 		_testDeleteSegmentsEntryRolesByRoleId();
 		_testDeleteSegmentsEntryRolesBySegmentsEntryId();
+	}
+
+	@Test
+	public void testGetSegmentsEntryRoles() throws Exception {
 		_testGetSegmentsEntryRoles();
 		_testGetSegmentsEntryRolesByRoleId();
+	}
+
+	@Test
+	public void testSetSegmentsEntrySiteRoles() throws Exception {
 		_testSetSegmentsEntrySiteRoles();
 		_testSetSegmentsEntrySiteRolesWithExcludedRole();
 		_testSetSegmentsEntrySiteRolesWithRegularRole();

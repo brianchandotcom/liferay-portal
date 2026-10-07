@@ -17,7 +17,7 @@ function main {
 		ready_condition=$( \
 			kubectl \
 				get \
-				liferayinfrastructures.aws.liferay.com \
+				liferayinfrastructures.liferay.com \
 				--output jsonpath="{.items[0].status.conditions[?(@.type==\"Ready\")]}" 2>/dev/null || echo "{}")
 
 		local observed_generation

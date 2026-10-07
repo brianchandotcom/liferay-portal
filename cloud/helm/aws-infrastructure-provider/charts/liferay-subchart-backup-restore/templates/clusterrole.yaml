@@ -22,7 +22,7 @@ rules:
         verbs:
             -   create
             -   patch
-    -   apiGroups: ["aws.liferay.com"]
+    -   apiGroups: ["liferay.com"]
         resources: ["liferayinfrastructures"]
         verbs:
             -   get

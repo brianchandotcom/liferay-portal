@@ -108,7 +108,7 @@ metadata:
         gotemplating.fn.crossplane.io/composition-resource-name: overlay-upload-only-policy
     labels:
         app: liferay
-        aws.liferay.com/username: {{ $overlayBucketName }}-ci-uploader
+        liferay.com/username: {{ $overlayBucketName }}-ci-uploader
         component: overlay-upload-only-policy
         projectId: {{ $projectId }}
     name: {{ $overlayBucketName }}-upload-only
@@ -163,7 +163,7 @@ metadata:
         crossplane.io/external-name: {{ $overlayBucketName }}-ci-uploader-user
         gotemplating.fn.crossplane.io/composition-resource-name: overlay-ci-uploader-user
     labels:
-        aws.liferay.com/username: {{ $overlayBucketName }}-ci-uploader
+        liferay.com/username: {{ $overlayBucketName }}-ci-uploader
     name: {{ $overlayBucketName }}-ci-uploader
     namespace: {{ $namespace }}
 spec:
@@ -185,10 +185,10 @@ spec:
     forProvider:
         policyArnSelector:
             matchLabels:
-                aws.liferay.com/username: {{ $overlayBucketName }}-ci-uploader
+                liferay.com/username: {{ $overlayBucketName }}-ci-uploader
         userSelector:
             matchLabels:
-                aws.liferay.com/username: {{ $overlayBucketName }}-ci-uploader
+                liferay.com/username: {{ $overlayBucketName }}-ci-uploader
     managementPolicies: {{ $managementPolicies }}
 ---
 apiVersion: iam.aws.m.upbound.io/v1beta1
@@ -202,7 +202,7 @@ spec:
     forProvider:
         userSelector:
             matchLabels:
-                aws.liferay.com/username: {{ $overlayBucketName }}-ci-uploader
+                liferay.com/username: {{ $overlayBucketName }}-ci-uploader
     managementPolicies: {{ $managementPolicies }}
     writeConnectionSecretToRef:
         name: {{ $overlayBucketName }}-ci-uploader-access-key

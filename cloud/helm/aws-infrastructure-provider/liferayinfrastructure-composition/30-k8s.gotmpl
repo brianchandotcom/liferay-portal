@@ -181,7 +181,7 @@ spec:
                 name: database-connection-details
                 namespace: {{ $namespace }}
                 ownerReferences:
-                    -   apiVersion: aws.liferay.com/v1alpha1
+                    -   apiVersion: liferay.com/v1alpha1
                         blockOwnerDeletion: true
                         controller: true
                         kind: LiferayInfrastructure
@@ -223,7 +223,7 @@ spec:
                 name: search-connection-details
                 namespace: {{ $namespace }}
                 ownerReferences:
-                    -   apiVersion: aws.liferay.com/v1alpha1
+                    -   apiVersion: liferay.com/v1alpha1
                         blockOwnerDeletion: true
                         controller: true
                         kind: LiferayInfrastructure
@@ -264,7 +264,7 @@ spec:
                 name: doclib-connection-details
                 namespace: {{ $namespace }}
                 ownerReferences:
-                    -   apiVersion: aws.liferay.com/v1alpha1
+                    -   apiVersion: liferay.com/v1alpha1
                         blockOwnerDeletion: true
                         controller: true
                         kind: LiferayInfrastructure
@@ -304,7 +304,7 @@ spec:
                 name: overlay-bucket-details
                 namespace: {{ $namespace }}
                 ownerReferences:
-                    -   apiVersion: aws.liferay.com/v1alpha1
+                    -   apiVersion: liferay.com/v1alpha1
                         blockOwnerDeletion: true
                         controller: true
                         kind: LiferayInfrastructure
@@ -314,7 +314,7 @@ spec:
     managementPolicies: {{ $managementPolicies }}
 {{- end }}
 ---
-apiVersion: aws.liferay.com/v1alpha1
+apiVersion: liferay.com/v1alpha1
 kind: LiferayInfrastructure
 status:
     managedServiceDetailsReady: {{ and $isDatabaseReady $isDoclibReady $isSearchReady }}

@@ -207,14 +207,14 @@ tests:
     -   asserts:
             -   matchRegex:
                     path: data["backups.json"]
-                    pattern: azb-tile azb-tile-row\\" href=\\"https://argo.example.com/workflow-templates/\$\{environment\}/backup-restore-workflow-template\\"
+                    pattern: azb-tile azb-tile-row\\" href=\\"https://argo.example.com/cluster-workflow-templates/backup-restore-cluster-workflow-template\?sidePanel=true\\"
             -   notMatchRegex:
                     path: data["backups.json"]
                     pattern: azb-tile-muted azb-tile-row
         documentSelector:
             path: metadata.name
             value: RELEASE-NAME-observability-dashboard-backups
-        it: Opens the backup-restore workflow template from the Azure restore guide when centralHub.argoWorkflowsURL is set
+        it: Opens the backup-restore cluster workflow template from the Azure restore guide when centralHub.argoWorkflowsURL is set
         set:
             centralHub.argoWorkflowsURL: https://argo.example.com
             cloudProvider: azure

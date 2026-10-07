@@ -25,7 +25,7 @@ spec:
                 days: 7
             deleteRetentionPolicy:
                 days: 7
-            versioningEnabled: {{ hasKey $storage "enableVersioning" | ternary $storage.enableVersioning true }}
+            versioningEnabled: true
         {{- if $cmkEnabled }}
         customerManagedKey:
             keyVaultKeyId: {{ $cmkKeyVaultKeyId }}

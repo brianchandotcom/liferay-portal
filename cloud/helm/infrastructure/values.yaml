@@ -57,5 +57,4 @@ search:
     engine: elasticsearch
     opensearch: {}
 storage:
-    enableVersioning: true
     tags: {}

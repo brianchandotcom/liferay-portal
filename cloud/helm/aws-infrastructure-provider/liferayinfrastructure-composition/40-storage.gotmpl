@@ -1,7 +1,5 @@
 {{- $storage := $xr.spec.storage -}}
 
-{{- $storageRegion := $storage.region | default $env.region }}
-
 {{- range $i, $dataPlane := list "blue" "green" }}
 {{- if $i }}
 ---
@@ -23,7 +21,7 @@ metadata:
 spec:
     forProvider:
         forceDestroy: {{ $forceDestroy }}
-        region: {{ $storageRegion }}
+        region: {{ $env.region }}
         tags:
             {{- with $storage.tags }}
             {{- . | toYaml | nindent 12 }}
@@ -52,7 +50,7 @@ spec:
                 dataPlane: {{ $dataPlane }}
                 environmentId: {{ $environmentId }}
                 projectId: {{ $projectId }}
-        region: {{ $storageRegion }}
+        region: {{ $env.region }}
         rule:
             -   abortIncompleteMultipartUpload:
                     -   daysAfterInitiation: 7
@@ -86,7 +84,7 @@ spec:
                 dataPlane: {{ $dataPlane }}
                 environmentId: {{ $environmentId }}
                 projectId: {{ $projectId }}
-        region: {{ $storageRegion }}
+        region: {{ $env.region }}
         rule:
             objectOwnership: BucketOwnerPreferred
     managementPolicies: {{ $managementPolicies }}
@@ -116,7 +114,7 @@ spec:
                 environmentId: {{ $environmentId }}
                 projectId: {{ $projectId }}
         ignorePublicAcls: true
-        region: {{ $storageRegion }}
+        region: {{ $env.region }}
         restrictPublicBuckets: true
     managementPolicies: {{ $managementPolicies }}
 ---
@@ -144,7 +142,7 @@ spec:
                 environmentId: {{ $environmentId }}
                 projectId: {{ $projectId }}
             namespace: {{ $namespace }}
-        region: {{ $storageRegion }}
+        region: {{ $env.region }}
         versioningConfiguration:
             status: Enabled
     managementPolicies: {{ $managementPolicies }}

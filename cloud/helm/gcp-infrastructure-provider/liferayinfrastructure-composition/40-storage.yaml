@@ -25,7 +25,7 @@ spec:
         storageClass: STANDARD
         uniformBucketLevelAccess: true
         versioning:
-            enabled: {{ $storage.enableVersioning | default true }}
+            enabled: true
     managementPolicies: {{ $managementPolicies }}
 ---
 apiVersion: storage.gcp.m.upbound.io/v1beta1

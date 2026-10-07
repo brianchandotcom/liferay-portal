@@ -12,12 +12,14 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -176,6 +178,28 @@ public class FriendlyURLResolverRegistryUtilTest {
 	}
 
 	@Test
+	public void testGetURLSeparators() {
+		long companyId = RandomTestUtil.randomLong();
+		String urlSeparator = StringPool.SLASH + RandomTestUtil.randomString();
+
+		ServiceRegistration<FriendlyURLResolver> serviceRegistration =
+			_bundleContext.registerService(
+				FriendlyURLResolver.class,
+				_createFriendlyURLResolver(companyId, urlSeparator),
+				new HashMapDictionary<>());
+
+		try {
+			_assertURLSeparators(_COMPANY_ID, _SEPARATOR, urlSeparator);
+			_assertURLSeparators(companyId, urlSeparator, _SEPARATOR);
+		}
+		finally {
+			serviceRegistration.unregister();
+
+			FriendlyURLResolverRegistryUtil.removeURLSeparators();
+		}
+	}
+
+	@Test
 	public void testOverride() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			FriendlyURLResolverRegistryUtilTest.class);
@@ -229,19 +253,25 @@ public class FriendlyURLResolverRegistryUtilTest {
 	}
 
 	private static FriendlyURLResolver _createFriendlyURLResolver() {
+		return _createFriendlyURLResolver(_COMPANY_ID, _SEPARATOR);
+	}
+
+	private static FriendlyURLResolver _createFriendlyURLResolver(
+		long companyId, String urlSeparator) {
+
 		return (FriendlyURLResolver)ProxyUtil.newProxyInstance(
 			FriendlyURLResolver.class.getClassLoader(),
 			new Class<?>[] {FriendlyURLResolver.class},
 			(proxy, method, args) -> {
 				if (Objects.equals(method.getName(), "getCompanyId")) {
-					return _COMPANY_ID;
+					return companyId;
 				}
 
 				if (Objects.equals(
 						method.getName(), "getDefaultURLSeparator") ||
 					Objects.equals(method.getName(), "getURLSeparator")) {
 
-					return _SEPARATOR;
+					return urlSeparator;
 				}
 
 				return null;
@@ -269,6 +299,28 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 		Assert.assertFalse(
 			friendlyURLResolvers.toString(), friendlyURLResolvers.isEmpty());
+	}
+
+	private void _assertURLSeparators(
+		long companyId, String expectedURLSeparator,
+		String notExpectedURLSeparator) {
+
+		String[] urlSeparators =
+			FriendlyURLResolverRegistryUtil.getURLSeparators(companyId);
+
+		Assert.assertTrue(
+			Arrays.toString(urlSeparators),
+			ArrayUtil.contains(urlSeparators, expectedURLSeparator));
+		Assert.assertFalse(
+			Arrays.toString(urlSeparators),
+			ArrayUtil.contains(urlSeparators, notExpectedURLSeparator));
+
+		for (String urlSeparator : urlSeparators) {
+			Assert.assertNotNull(
+				urlSeparator,
+				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+					companyId, urlSeparator));
+		}
 	}
 
 	private static final String _CANONICAL_URL_SEPARATOR = "/-/";

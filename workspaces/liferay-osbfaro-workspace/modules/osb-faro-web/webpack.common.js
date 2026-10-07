@@ -23,6 +23,10 @@ const FAVICONS_DIR = path.resolve(
 	'favicons'
 );
 
+const STATES_DIR = path.resolve(__dirname, 'src', 'main', 'images', 'states');
+
+const ASSET_SVG_DIRS = [FAVICONS_DIR, STATES_DIR];
+
 const config = {
 	entry: [
 		'core-js/fn/array/fill',
@@ -149,15 +153,17 @@ const config = {
 			},
 			{
 
-				// Favicons are referenced by URL from a link element, so they
-				// are emitted as standalone files instead of sprite symbols.
+				// Favicons and empty state illustrations are referenced by URL,
+				// so they are emitted as standalone files instead of sprite
+				// symbols. The illustrations also keep their own style rules,
+				// which would collide with other symbols inside the sprite.
 
-				include: FAVICONS_DIR,
+				include: ASSET_SVG_DIRS,
 				test: /\.svg$/,
 				type: 'asset/resource',
 			},
 			{
-				exclude: FAVICONS_DIR,
+				exclude: ASSET_SVG_DIRS,
 				test: /\.svg$/,
 				use: [
 					{

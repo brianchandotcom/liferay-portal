@@ -31,11 +31,11 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
-import com.liferay.sharing.exception.InvalidSharingEntryActionException;
-import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
-import com.liferay.sharing.exception.InvalidSharingEntryTicketException;
-import com.liferay.sharing.exception.InvalidSharingEntryUserException;
-import com.liferay.sharing.exception.InvalidSharingEntryUserGroupException;
+import com.liferay.sharing.exception.SharingEntryActionIdsException;
+import com.liferay.sharing.exception.SharingEntryExpirationDateException;
+import com.liferay.sharing.exception.SharingEntryToTicketIdException;
+import com.liferay.sharing.exception.SharingEntryToUserGroupIdException;
+import com.liferay.sharing.exception.SharingEntryToUserIdException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryTable;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -847,34 +847,34 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	private void _validateExpirationDate(Date expirationDate)
-		throws InvalidSharingEntryExpirationDateException {
+		throws SharingEntryExpirationDateException {
 
 		if ((expirationDate != null) &&
 			expirationDate.before(DateUtil.newDate())) {
 
-			throw new InvalidSharingEntryExpirationDateException(
+			throw new SharingEntryExpirationDateException(
 				"Expiration date is in the past");
 		}
 	}
 
 	private void _validateSharingEntryActions(
 			Collection<SharingEntryAction> sharedEntryActions)
-		throws InvalidSharingEntryActionException {
+		throws SharingEntryActionIdsException {
 
 		if (sharedEntryActions.isEmpty()) {
-			throw new InvalidSharingEntryActionException(
+			throw new SharingEntryActionIdsException(
 				"Shared entry actions is empty");
 		}
 
 		for (SharingEntryAction curSharingEntryAction : sharedEntryActions) {
 			if (curSharingEntryAction == null) {
-				throw new InvalidSharingEntryActionException(
+				throw new SharingEntryActionIdsException(
 					"Shared entry actions contains a null value");
 			}
 		}
 
 		if (!sharedEntryActions.contains(SharingEntryAction.VIEW)) {
-			throw new InvalidSharingEntryActionException(
+			throw new SharingEntryActionIdsException(
 				"Shared entry actions must contain VIEW shared entry action");
 		}
 	}
@@ -888,13 +888,13 @@ public class SharingEntryLocalServiceImpl
 		}
 
 		if (toUserGroupId > 0) {
-			throw new InvalidSharingEntryTicketException(
+			throw new SharingEntryToTicketIdException(
 				"A sharing entry cannot be associated with a ticket and a " +
 					"user group at the same time");
 		}
 
 		if (toUserId > 0) {
-			throw new InvalidSharingEntryTicketException(
+			throw new SharingEntryToTicketIdException(
 				"A sharing entry cannot be associated with a ticket and a " +
 					"user at the same time");
 		}
@@ -904,10 +904,10 @@ public class SharingEntryLocalServiceImpl
 
 	private void _validateUser(
 			long fromUserId, long toTicketId, long toUserGroupId, long toUserId)
-		throws InvalidSharingEntryUserException {
+		throws SharingEntryToUserIdException {
 
 		if ((toTicketId <= 0) && (toUserGroupId <= 0) && (toUserId <= 0)) {
-			throw new InvalidSharingEntryUserException(
+			throw new SharingEntryToUserIdException(
 				"A sharing entry must be associated with a ticket, a user, " +
 					"or a user group");
 		}
@@ -917,19 +917,19 @@ public class SharingEntryLocalServiceImpl
 		}
 
 		if (toTicketId > 0) {
-			throw new InvalidSharingEntryUserException(
+			throw new SharingEntryToUserIdException(
 				"A sharing entry cannot be associated with a user and a " +
 					"ticket at the same time");
 		}
 
 		if (toUserGroupId > 0) {
-			throw new InvalidSharingEntryUserException(
+			throw new SharingEntryToUserIdException(
 				"A sharing entry cannot be associated with a user and a user " +
 					"group at the same time");
 		}
 
 		if (fromUserId == toUserId) {
-			throw new InvalidSharingEntryUserException(
+			throw new SharingEntryToUserIdException(
 				"From user cannot be the same as to user");
 		}
 	}
@@ -943,13 +943,13 @@ public class SharingEntryLocalServiceImpl
 		}
 
 		if (toTicketId > 0) {
-			throw new InvalidSharingEntryUserGroupException(
+			throw new SharingEntryToUserGroupIdException(
 				"A sharing entry cannot be associated with a user group and " +
 					"a ticket at the same time");
 		}
 
 		if (toUserId > 0) {
-			throw new InvalidSharingEntryUserGroupException(
+			throw new SharingEntryToUserGroupIdException(
 				"A sharing entry cannot be associated with a user group and " +
 					"a user at the same time");
 		}

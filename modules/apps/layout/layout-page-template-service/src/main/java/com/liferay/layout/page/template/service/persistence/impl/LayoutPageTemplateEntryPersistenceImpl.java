@@ -6014,6 +6014,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					layoutPageTemplateEntry.getUuid(),
+					layoutPageTemplateEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					layoutPageTemplateEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					layoutPageTemplateEntry.getExternalReferenceCode())) {
@@ -7561,4 +7564,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-642785642
+// LIFERAY-SERVICE-BUILDER-HASH:-1480323793

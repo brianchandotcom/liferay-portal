@@ -636,6 +636,9 @@ public class SXPBlueprintPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					sxpBlueprint.getUuid(),
+					sxpBlueprint.getExternalReferenceCode()) &&
+				!Objects.equals(
 					sxpBlueprintModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					sxpBlueprint.getExternalReferenceCode())) {
@@ -990,4 +993,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-241544417
+// LIFERAY-SERVICE-BUILDER-HASH:829513158

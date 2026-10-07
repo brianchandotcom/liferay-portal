@@ -962,6 +962,11 @@ public class
 		}
 		else {
 			if (!Objects.equals(
+					layoutPageTemplateStructureRelElementVariationAudienceEntryRel.
+						getUuid(),
+					layoutPageTemplateStructureRelElementVariationAudienceEntryRel.
+						getExternalReferenceCode()) &&
+				!Objects.equals(
 					layoutPageTemplateStructureRelElementVariationAudienceEntryRelModelImpl.
 						getColumnOriginalValue("externalReferenceCode"),
 					layoutPageTemplateStructureRelElementVariationAudienceEntryRel.
@@ -1570,4 +1575,4 @@ public class
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2111690054
+// LIFERAY-SERVICE-BUILDER-HASH:1596452057

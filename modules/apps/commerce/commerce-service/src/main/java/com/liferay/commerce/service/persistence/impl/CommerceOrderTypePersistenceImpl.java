@@ -1214,6 +1214,9 @@ public class CommerceOrderTypePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					commerceOrderType.getUuid(),
+					commerceOrderType.getExternalReferenceCode()) &&
+				!Objects.equals(
 					commerceOrderTypeModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					commerceOrderType.getExternalReferenceCode())) {
@@ -1647,4 +1650,4 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:784596968
+// LIFERAY-SERVICE-BUILDER-HASH:1790377153

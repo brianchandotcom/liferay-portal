@@ -2499,6 +2499,9 @@ public class AssetCategoryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					assetCategory.getUuid(),
+					assetCategory.getExternalReferenceCode()) &&
+				!Objects.equals(
 					assetCategoryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					assetCategory.getExternalReferenceCode())) {
@@ -3259,4 +3262,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2068111641
+// LIFERAY-SERVICE-BUILDER-HASH:-138416690

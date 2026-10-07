@@ -1225,6 +1225,9 @@ public class CalendarBookingPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					calendarBooking.getUuid(),
+					calendarBooking.getExternalReferenceCode()) &&
+				!Objects.equals(
 					calendarBookingModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					calendarBooking.getExternalReferenceCode())) {
@@ -1860,4 +1863,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-838229341
+// LIFERAY-SERVICE-BUILDER-HASH:-1747311940

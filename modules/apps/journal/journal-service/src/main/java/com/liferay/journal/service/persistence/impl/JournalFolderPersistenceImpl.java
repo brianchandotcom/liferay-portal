@@ -1695,6 +1695,9 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					journalFolder.getUuid(),
+					journalFolder.getExternalReferenceCode()) &&
+				!Objects.equals(
 					journalFolderModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					journalFolder.getExternalReferenceCode())) {
@@ -2367,4 +2370,4 @@ public class JournalFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-706472117
+// LIFERAY-SERVICE-BUILDER-HASH:1636401938

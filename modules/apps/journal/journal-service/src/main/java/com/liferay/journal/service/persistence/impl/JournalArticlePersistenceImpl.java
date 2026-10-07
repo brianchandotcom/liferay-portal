@@ -5854,6 +5854,9 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					journalArticle.getUuid(),
+					journalArticle.getExternalReferenceCode()) &&
+				!Objects.equals(
 					journalArticleModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					journalArticle.getExternalReferenceCode())) {
@@ -7487,4 +7490,4 @@ public class JournalArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1620966312
+// LIFERAY-SERVICE-BUILDER-HASH:-162217073

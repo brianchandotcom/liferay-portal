@@ -2141,6 +2141,9 @@ public class ObjectRelationshipPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					objectRelationship.getUuid(),
+					objectRelationship.getExternalReferenceCode()) &&
+				!Objects.equals(
 					objectRelationshipModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					objectRelationship.getExternalReferenceCode())) {
@@ -3086,4 +3089,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1077402853
+// LIFERAY-SERVICE-BUILDER-HASH:35222116

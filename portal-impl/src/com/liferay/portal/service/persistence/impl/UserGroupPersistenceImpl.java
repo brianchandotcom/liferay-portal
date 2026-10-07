@@ -1334,6 +1334,9 @@ public class UserGroupPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					userGroup.getUuid(),
+					userGroup.getExternalReferenceCode()) &&
+				!Objects.equals(
 					userGroupModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					userGroup.getExternalReferenceCode())) {
@@ -2811,4 +2814,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2036796658
+// LIFERAY-SERVICE-BUILDER-HASH:970648089

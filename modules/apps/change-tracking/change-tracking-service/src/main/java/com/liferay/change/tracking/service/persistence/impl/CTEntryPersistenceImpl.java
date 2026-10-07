@@ -1072,6 +1072,8 @@ public class CTEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					ctEntry.getUuid(), ctEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					ctEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					ctEntry.getExternalReferenceCode())) {
@@ -1514,4 +1516,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:621282816
+// LIFERAY-SERVICE-BUILDER-HASH:1035003353

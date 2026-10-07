@@ -770,6 +770,8 @@ public class RegionPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					region.getUuid(), region.getExternalReferenceCode()) &&
+				!Objects.equals(
 					regionModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					region.getExternalReferenceCode())) {
@@ -1206,4 +1208,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1478073826
+// LIFERAY-SERVICE-BUILDER-HASH:-13745615

@@ -639,6 +639,9 @@ public class ObjectViewPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					objectView.getUuid(),
+					objectView.getExternalReferenceCode()) &&
+				!Objects.equals(
 					objectViewModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					objectView.getExternalReferenceCode())) {
@@ -989,4 +992,4 @@ public class ObjectViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-978061098
+// LIFERAY-SERVICE-BUILDER-HASH:670155589

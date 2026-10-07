@@ -1530,6 +1530,9 @@ public class SiteNavigationMenuPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					siteNavigationMenu.getUuid(),
+					siteNavigationMenu.getExternalReferenceCode()) &&
+				!Objects.equals(
 					siteNavigationMenuModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					siteNavigationMenu.getExternalReferenceCode())) {
@@ -2108,4 +2111,4 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1676470136
+// LIFERAY-SERVICE-BUILDER-HASH:-2110723269

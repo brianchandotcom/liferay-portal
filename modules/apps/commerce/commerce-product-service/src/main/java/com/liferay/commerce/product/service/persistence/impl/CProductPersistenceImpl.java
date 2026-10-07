@@ -587,6 +587,8 @@ public class CProductPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					cProduct.getUuid(), cProduct.getExternalReferenceCode()) &&
+				!Objects.equals(
 					cProductModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					cProduct.getExternalReferenceCode())) {
@@ -1001,4 +1003,4 @@ public class CProductPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1029376175
+// LIFERAY-SERVICE-BUILDER-HASH:-108622190

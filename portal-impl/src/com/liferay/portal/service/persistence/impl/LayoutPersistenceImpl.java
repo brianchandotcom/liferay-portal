@@ -3771,6 +3771,8 @@ public class LayoutPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					layout.getUuid(), layout.getExternalReferenceCode()) &&
+				!Objects.equals(
 					layoutModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					layout.getExternalReferenceCode())) {
@@ -4878,4 +4880,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-244446925
+// LIFERAY-SERVICE-BUILDER-HASH:-1607176170

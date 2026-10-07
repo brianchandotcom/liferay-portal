@@ -1192,6 +1192,9 @@ public class KaleoDefinitionPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					kaleoDefinition.getUuid(),
+					kaleoDefinition.getExternalReferenceCode()) &&
+				!Objects.equals(
 					kaleoDefinitionModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					kaleoDefinition.getExternalReferenceCode())) {
@@ -1836,4 +1839,4 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1146678349
+// LIFERAY-SERVICE-BUILDER-HASH:1632787852

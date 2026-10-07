@@ -2904,6 +2904,9 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					mbCategory.getUuid(),
+					mbCategory.getExternalReferenceCode()) &&
+				!Objects.equals(
 					mbCategoryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					mbCategory.getExternalReferenceCode())) {
@@ -3619,4 +3622,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:103568276
+// LIFERAY-SERVICE-BUILDER-HASH:86613795

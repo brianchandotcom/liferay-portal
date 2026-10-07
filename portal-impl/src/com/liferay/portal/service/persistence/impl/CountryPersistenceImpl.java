@@ -1989,6 +1989,8 @@ public class CountryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					country.getUuid(), country.getExternalReferenceCode()) &&
+				!Objects.equals(
 					countryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					country.getExternalReferenceCode())) {
@@ -2749,4 +2751,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1996476422
+// LIFERAY-SERVICE-BUILDER-HASH:-1970189197

@@ -1463,6 +1463,8 @@ public class AddressPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					address.getUuid(), address.getExternalReferenceCode()) &&
+				!Objects.equals(
 					addressModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					address.getExternalReferenceCode())) {
@@ -2164,4 +2166,4 @@ public class AddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1566425612
+// LIFERAY-SERVICE-BUILDER-HASH:-1279504507

@@ -663,6 +663,9 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					commerceAvailabilityEstimate.getUuid(),
+					commerceAvailabilityEstimate.getExternalReferenceCode()) &&
+				!Objects.equals(
 					commerceAvailabilityEstimateModelImpl.
 						getColumnOriginalValue("externalReferenceCode"),
 					commerceAvailabilityEstimate.getExternalReferenceCode())) {
@@ -1018,4 +1021,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-587828756
+// LIFERAY-SERVICE-BUILDER-HASH:1552161617

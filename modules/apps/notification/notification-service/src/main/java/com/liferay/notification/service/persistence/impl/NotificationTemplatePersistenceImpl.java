@@ -651,6 +651,9 @@ public class NotificationTemplatePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					notificationTemplate.getUuid(),
+					notificationTemplate.getExternalReferenceCode()) &&
+				!Objects.equals(
 					notificationTemplateModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					notificationTemplate.getExternalReferenceCode())) {
@@ -992,4 +995,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1696368290
+// LIFERAY-SERVICE-BUILDER-HASH:1832373967

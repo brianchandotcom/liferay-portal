@@ -4609,6 +4609,9 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					blogsEntry.getUuid(),
+					blogsEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					blogsEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					blogsEntry.getExternalReferenceCode())) {
@@ -5805,4 +5808,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1836015658
+// LIFERAY-SERVICE-BUILDER-HASH:1297789121

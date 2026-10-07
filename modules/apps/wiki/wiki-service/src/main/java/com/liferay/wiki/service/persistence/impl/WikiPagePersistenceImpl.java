@@ -4109,6 +4109,8 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					wikiPage.getUuid(), wikiPage.getExternalReferenceCode()) &&
+				!Objects.equals(
 					wikiPageModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					wikiPage.getExternalReferenceCode())) {
@@ -5657,4 +5659,4 @@ public class WikiPagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1242694185
+// LIFERAY-SERVICE-BUILDER-HASH:-713857090

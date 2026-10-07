@@ -841,6 +841,9 @@ public class OAuth2ApplicationPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					oAuth2Application.getUuid(),
+					oAuth2Application.getExternalReferenceCode()) &&
+				!Objects.equals(
 					oAuth2ApplicationModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					oAuth2Application.getExternalReferenceCode())) {
@@ -1231,4 +1234,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-841992491
+// LIFERAY-SERVICE-BUILDER-HASH:1025866908

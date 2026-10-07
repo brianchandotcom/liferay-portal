@@ -880,6 +880,9 @@ public class CommerceCurrencyPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					commerceCurrency.getUuid(),
+					commerceCurrency.getExternalReferenceCode()) &&
+				!Objects.equals(
 					commerceCurrencyModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					commerceCurrency.getExternalReferenceCode())) {
@@ -1331,4 +1334,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:940507259
+// LIFERAY-SERVICE-BUILDER-HASH:421095420

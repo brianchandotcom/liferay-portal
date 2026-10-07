@@ -786,6 +786,9 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					clientExtensionEntry.getUuid(),
+					clientExtensionEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					clientExtensionEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					clientExtensionEntry.getExternalReferenceCode())) {
@@ -1272,4 +1275,4 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1389789202
+// LIFERAY-SERVICE-BUILDER-HASH:-463975945

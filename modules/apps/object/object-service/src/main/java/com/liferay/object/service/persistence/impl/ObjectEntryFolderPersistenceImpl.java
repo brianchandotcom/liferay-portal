@@ -1227,6 +1227,9 @@ public class ObjectEntryFolderPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					objectEntryFolder.getUuid(),
+					objectEntryFolder.getExternalReferenceCode()) &&
+				!Objects.equals(
 					objectEntryFolderModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					objectEntryFolder.getExternalReferenceCode())) {
@@ -1669,4 +1672,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:852034374
+// LIFERAY-SERVICE-BUILDER-HASH:-1152894003

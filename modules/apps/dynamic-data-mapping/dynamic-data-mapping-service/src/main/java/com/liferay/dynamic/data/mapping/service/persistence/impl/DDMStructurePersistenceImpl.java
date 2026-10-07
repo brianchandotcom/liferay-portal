@@ -1191,6 +1191,9 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					ddmStructure.getUuid(),
+					ddmStructure.getExternalReferenceCode()) &&
+				!Objects.equals(
 					ddmStructureModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					ddmStructure.getExternalReferenceCode())) {
@@ -1719,4 +1722,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-317230252
+// LIFERAY-SERVICE-BUILDER-HASH:1337264137

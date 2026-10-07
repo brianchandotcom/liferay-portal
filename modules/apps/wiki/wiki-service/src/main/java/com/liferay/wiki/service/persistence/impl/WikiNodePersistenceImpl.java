@@ -984,6 +984,8 @@ public class WikiNodePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					wikiNode.getUuid(), wikiNode.getExternalReferenceCode()) &&
+				!Objects.equals(
 					wikiNodeModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					wikiNode.getExternalReferenceCode())) {
@@ -1507,4 +1509,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1587071644
+// LIFERAY-SERVICE-BUILDER-HASH:-1775165583

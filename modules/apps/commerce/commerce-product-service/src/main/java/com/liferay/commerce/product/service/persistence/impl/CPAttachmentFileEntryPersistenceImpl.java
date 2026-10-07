@@ -1943,6 +1943,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					cpAttachmentFileEntry.getUuid(),
+					cpAttachmentFileEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					cpAttachmentFileEntry.getExternalReferenceCode())) {
@@ -2832,4 +2835,4 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:367463050
+// LIFERAY-SERVICE-BUILDER-HASH:-327553423

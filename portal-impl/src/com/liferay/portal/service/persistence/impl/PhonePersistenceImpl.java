@@ -913,6 +913,8 @@ public class PhonePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					phone.getUuid(), phone.getExternalReferenceCode()) &&
+				!Objects.equals(
 					phoneModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					phone.getExternalReferenceCode())) {
@@ -1413,4 +1415,4 @@ public class PhonePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1829182316
+// LIFERAY-SERVICE-BUILDER-HASH:1450030605

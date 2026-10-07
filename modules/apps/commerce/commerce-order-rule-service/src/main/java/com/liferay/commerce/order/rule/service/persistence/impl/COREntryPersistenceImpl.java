@@ -1524,6 +1524,8 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					corEntry.getUuid(), corEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					corEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					corEntry.getExternalReferenceCode())) {
@@ -1971,4 +1973,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:476327708
+// LIFERAY-SERVICE-BUILDER-HASH:506427067

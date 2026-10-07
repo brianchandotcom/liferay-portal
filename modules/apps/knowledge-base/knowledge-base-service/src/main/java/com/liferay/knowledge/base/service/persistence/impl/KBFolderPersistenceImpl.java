@@ -1000,6 +1000,8 @@ public class KBFolderPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					kbFolder.getUuid(), kbFolder.getExternalReferenceCode()) &&
+				!Objects.equals(
 					kbFolderModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					kbFolder.getExternalReferenceCode())) {
@@ -1536,4 +1538,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:407544305
+// LIFERAY-SERVICE-BUILDER-HASH:-1447354402

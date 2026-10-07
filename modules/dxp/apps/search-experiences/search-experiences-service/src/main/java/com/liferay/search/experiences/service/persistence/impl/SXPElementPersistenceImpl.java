@@ -1028,6 +1028,9 @@ public class SXPElementPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					sxpElement.getUuid(),
+					sxpElement.getExternalReferenceCode()) &&
+				!Objects.equals(
 					sxpElementModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					sxpElement.getExternalReferenceCode())) {
@@ -1486,4 +1489,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-77974636
+// LIFERAY-SERVICE-BUILDER-HASH:1099997673

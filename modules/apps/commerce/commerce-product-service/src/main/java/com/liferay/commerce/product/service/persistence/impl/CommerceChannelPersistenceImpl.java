@@ -889,6 +889,9 @@ public class CommerceChannelPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					commerceChannel.getUuid(),
+					commerceChannel.getExternalReferenceCode()) &&
+				!Objects.equals(
 					commerceChannelModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					commerceChannel.getExternalReferenceCode())) {
@@ -1369,4 +1372,4 @@ public class CommerceChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-312005947
+// LIFERAY-SERVICE-BUILDER-HASH:1679979966

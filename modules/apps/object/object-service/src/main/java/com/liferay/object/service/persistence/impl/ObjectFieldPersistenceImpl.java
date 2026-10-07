@@ -1716,6 +1716,9 @@ public class ObjectFieldPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					objectField.getUuid(),
+					objectField.getExternalReferenceCode()) &&
+				!Objects.equals(
 					objectFieldModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					objectField.getExternalReferenceCode())) {
@@ -2430,4 +2433,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1596911318
+// LIFERAY-SERVICE-BUILDER-HASH:-777747747

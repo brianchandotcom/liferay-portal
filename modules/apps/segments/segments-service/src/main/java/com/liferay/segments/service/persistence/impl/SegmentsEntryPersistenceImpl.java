@@ -2444,6 +2444,9 @@ public class SegmentsEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					segmentsEntry.getUuid(),
+					segmentsEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					segmentsEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					segmentsEntry.getExternalReferenceCode())) {
@@ -3219,4 +3222,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:379775918
+// LIFERAY-SERVICE-BUILDER-HASH:-750077593

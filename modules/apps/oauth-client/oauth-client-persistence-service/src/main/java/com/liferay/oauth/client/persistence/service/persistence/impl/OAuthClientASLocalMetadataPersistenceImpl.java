@@ -1114,6 +1114,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					oAuthClientASLocalMetadata.getUuid(),
+					oAuthClientASLocalMetadata.getExternalReferenceCode()) &&
+				!Objects.equals(
 					oAuthClientASLocalMetadataModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					oAuthClientASLocalMetadata.getExternalReferenceCode())) {
@@ -1585,4 +1588,4 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-319401216
+// LIFERAY-SERVICE-BUILDER-HASH:-1998182677

@@ -752,6 +752,9 @@ public class RepositoryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					repository.getUuid(),
+					repository.getExternalReferenceCode()) &&
+				!Objects.equals(
 					repositoryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					repository.getExternalReferenceCode())) {
@@ -1191,4 +1194,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-423413700
+// LIFERAY-SERVICE-BUILDER-HASH:-1377424263

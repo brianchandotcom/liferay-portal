@@ -1316,6 +1316,9 @@ public class FragmentCompositionPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					fragmentComposition.getUuid(),
+					fragmentComposition.getExternalReferenceCode()) &&
+				!Objects.equals(
 					fragmentCompositionModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					fragmentComposition.getExternalReferenceCode())) {
@@ -1970,4 +1973,4 @@ public class FragmentCompositionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-170403911
+// LIFERAY-SERVICE-BUILDER-HASH:1070302944

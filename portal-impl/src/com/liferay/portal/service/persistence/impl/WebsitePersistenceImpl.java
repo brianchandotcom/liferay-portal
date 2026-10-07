@@ -905,6 +905,8 @@ public class WebsitePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					website.getUuid(), website.getExternalReferenceCode()) &&
+				!Objects.equals(
 					websiteModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					website.getExternalReferenceCode())) {
@@ -1332,4 +1334,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:895713615
+// LIFERAY-SERVICE-BUILDER-HASH:1798400150

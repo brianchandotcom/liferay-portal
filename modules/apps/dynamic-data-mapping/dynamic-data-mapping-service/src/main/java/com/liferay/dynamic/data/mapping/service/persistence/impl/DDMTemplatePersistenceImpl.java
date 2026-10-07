@@ -1932,6 +1932,9 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					ddmTemplate.getUuid(),
+					ddmTemplate.getExternalReferenceCode()) &&
+				!Objects.equals(
 					ddmTemplateModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					ddmTemplate.getExternalReferenceCode())) {
@@ -2697,4 +2700,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1869450077
+// LIFERAY-SERVICE-BUILDER-HASH:400755492

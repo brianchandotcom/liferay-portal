@@ -644,6 +644,9 @@ public class CPTaxCategoryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					cpTaxCategory.getUuid(),
+					cpTaxCategory.getExternalReferenceCode()) &&
+				!Objects.equals(
 					cpTaxCategoryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					cpTaxCategory.getExternalReferenceCode())) {
@@ -1052,4 +1055,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1636242005
+// LIFERAY-SERVICE-BUILDER-HASH:1213351058

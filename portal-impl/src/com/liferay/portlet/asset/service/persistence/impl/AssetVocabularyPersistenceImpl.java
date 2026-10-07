@@ -1331,6 +1331,9 @@ public class AssetVocabularyPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					assetVocabulary.getUuid(),
+					assetVocabulary.getExternalReferenceCode()) &&
+				!Objects.equals(
 					assetVocabularyModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					assetVocabulary.getExternalReferenceCode())) {
@@ -1833,4 +1836,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-873995306
+// LIFERAY-SERVICE-BUILDER-HASH:1581101391

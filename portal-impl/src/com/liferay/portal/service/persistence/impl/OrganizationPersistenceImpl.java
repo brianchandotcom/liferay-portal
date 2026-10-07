@@ -2063,6 +2063,9 @@ public class OrganizationPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					organization.getUuid(),
+					organization.getExternalReferenceCode()) &&
+				!Objects.equals(
 					organizationModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					organization.getExternalReferenceCode())) {
@@ -3342,4 +3345,4 @@ public class OrganizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1163701549
+// LIFERAY-SERVICE-BUILDER-HASH:-704813148

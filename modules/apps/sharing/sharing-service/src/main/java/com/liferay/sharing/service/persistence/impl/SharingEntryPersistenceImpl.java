@@ -1522,6 +1522,9 @@ public class SharingEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					sharingEntry.getUuid(),
+					sharingEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					sharingEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					sharingEntry.getExternalReferenceCode())) {
@@ -2138,4 +2141,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1325163091
+// LIFERAY-SERVICE-BUILDER-HASH:-1653280536

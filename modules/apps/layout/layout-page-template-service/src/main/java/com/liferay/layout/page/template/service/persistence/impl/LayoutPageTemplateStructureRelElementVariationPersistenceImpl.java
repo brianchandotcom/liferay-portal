@@ -972,6 +972,10 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					layoutPageTemplateStructureRelElementVariation.getUuid(),
+					layoutPageTemplateStructureRelElementVariation.
+						getExternalReferenceCode()) &&
+				!Objects.equals(
 					layoutPageTemplateStructureRelElementVariationModelImpl.
 						getColumnOriginalValue("externalReferenceCode"),
 					layoutPageTemplateStructureRelElementVariation.
@@ -1598,4 +1602,4 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2057238304
+// LIFERAY-SERVICE-BUILDER-HASH:-1638653271

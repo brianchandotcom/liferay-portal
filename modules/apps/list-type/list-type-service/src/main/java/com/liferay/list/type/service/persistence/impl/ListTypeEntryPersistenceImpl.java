@@ -879,6 +879,9 @@ public class ListTypeEntryPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					listTypeEntry.getUuid(),
+					listTypeEntry.getExternalReferenceCode()) &&
+				!Objects.equals(
 					listTypeEntryModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					listTypeEntry.getExternalReferenceCode())) {
@@ -1270,4 +1273,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1876127311
+// LIFERAY-SERVICE-BUILDER-HASH:-832712680

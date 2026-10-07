@@ -930,6 +930,9 @@ public class ObjectValidationRulePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					objectValidationRule.getUuid(),
+					objectValidationRule.getExternalReferenceCode()) &&
+				!Objects.equals(
 					objectValidationRuleModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					objectValidationRule.getExternalReferenceCode())) {
@@ -1381,4 +1384,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:754517429
+// LIFERAY-SERVICE-BUILDER-HASH:709364230

@@ -1740,6 +1740,8 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					role.getUuid(), role.getExternalReferenceCode()) &&
+				!Objects.equals(
 					roleModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					role.getExternalReferenceCode())) {
@@ -3070,4 +3072,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1537799371
+// LIFERAY-SERVICE-BUILDER-HASH:-761376160

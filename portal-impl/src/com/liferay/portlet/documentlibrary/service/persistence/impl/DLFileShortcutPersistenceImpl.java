@@ -1395,6 +1395,9 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					dlFileShortcut.getUuid(),
+					dlFileShortcut.getExternalReferenceCode()) &&
+				!Objects.equals(
 					dlFileShortcutModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					dlFileShortcut.getExternalReferenceCode())) {
@@ -1994,4 +1997,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:283811638
+// LIFERAY-SERVICE-BUILDER-HASH:-1697693581

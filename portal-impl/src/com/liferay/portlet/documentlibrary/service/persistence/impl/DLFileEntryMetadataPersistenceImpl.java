@@ -705,6 +705,9 @@ public class DLFileEntryMetadataPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					dlFileEntryMetadata.getUuid(),
+					dlFileEntryMetadata.getExternalReferenceCode()) &&
+				!Objects.equals(
 					dlFileEntryMetadataModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					dlFileEntryMetadata.getExternalReferenceCode())) {
@@ -1103,4 +1106,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:611787228
+// LIFERAY-SERVICE-BUILDER-HASH:1908794915

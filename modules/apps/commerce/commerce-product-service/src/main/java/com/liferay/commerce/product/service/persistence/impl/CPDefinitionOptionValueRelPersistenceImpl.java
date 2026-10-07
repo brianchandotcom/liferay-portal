@@ -1139,6 +1139,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					cpDefinitionOptionValueRel.getUuid(),
+					cpDefinitionOptionValueRel.getExternalReferenceCode()) &&
+				!Objects.equals(
 					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					cpDefinitionOptionValueRel.getExternalReferenceCode())) {
@@ -1772,4 +1775,4 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1380928072
+// LIFERAY-SERVICE-BUILDER-HASH:-1277412117

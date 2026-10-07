@@ -12447,6 +12447,9 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					kbArticle.getUuid(),
+					kbArticle.getExternalReferenceCode()) &&
+				!Objects.equals(
 					kbArticleModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					kbArticle.getExternalReferenceCode())) {
@@ -14690,4 +14693,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1420054157
+// LIFERAY-SERVICE-BUILDER-HASH:-155195738

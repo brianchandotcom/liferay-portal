@@ -1192,6 +1192,8 @@ public class AssetTagPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					assetTag.getUuid(), assetTag.getExternalReferenceCode()) &&
+				!Objects.equals(
 					assetTagModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					assetTag.getExternalReferenceCode())) {
@@ -2015,4 +2017,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1983858886
+// LIFERAY-SERVICE-BUILDER-HASH:-282864931

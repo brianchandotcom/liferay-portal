@@ -2337,6 +2337,9 @@ public class ObjectDefinitionPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					objectDefinition.getUuid(),
+					objectDefinition.getExternalReferenceCode()) &&
+				!Objects.equals(
 					objectDefinitionModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					objectDefinition.getExternalReferenceCode())) {
@@ -3110,4 +3113,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-879970079
+// LIFERAY-SERVICE-BUILDER-HASH:-381774860

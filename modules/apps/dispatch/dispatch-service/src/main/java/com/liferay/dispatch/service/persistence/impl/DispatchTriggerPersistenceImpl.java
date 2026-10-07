@@ -1317,6 +1317,9 @@ public class DispatchTriggerPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					dispatchTrigger.getUuid(),
+					dispatchTrigger.getExternalReferenceCode()) &&
+				!Objects.equals(
 					dispatchTriggerModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					dispatchTrigger.getExternalReferenceCode())) {
@@ -1799,4 +1802,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-427324970
+// LIFERAY-SERVICE-BUILDER-HASH:-1416078083

@@ -3564,6 +3564,9 @@ public class MBMessagePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					mbMessage.getUuid(),
+					mbMessage.getExternalReferenceCode()) &&
+				!Objects.equals(
 					mbMessageModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					mbMessage.getExternalReferenceCode())) {
@@ -4904,4 +4907,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1423655474
+// LIFERAY-SERVICE-BUILDER-HASH:-408804775

@@ -1276,6 +1276,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					workflowDefinitionLink.getUuid(),
+					workflowDefinitionLink.getExternalReferenceCode()) &&
+				!Objects.equals(
 					workflowDefinitionLinkModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					workflowDefinitionLink.getExternalReferenceCode())) {
@@ -1970,4 +1973,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1364722494
+// LIFERAY-SERVICE-BUILDER-HASH:972145855

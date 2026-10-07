@@ -633,6 +633,9 @@ public class BatchEngineExportTaskPersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					batchEngineExportTask.getUuid(),
+					batchEngineExportTask.getExternalReferenceCode()) &&
+				!Objects.equals(
 					batchEngineExportTaskModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					batchEngineExportTask.getExternalReferenceCode())) {
@@ -1010,4 +1013,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1607746729
+// LIFERAY-SERVICE-BUILDER-HASH:-1649607120

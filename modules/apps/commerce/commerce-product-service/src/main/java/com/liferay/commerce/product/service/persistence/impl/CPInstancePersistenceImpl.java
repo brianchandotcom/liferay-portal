@@ -1757,6 +1757,9 @@ public class CPInstancePersistenceImpl
 		}
 		else {
 			if (!Objects.equals(
+					cpInstance.getUuid(),
+					cpInstance.getExternalReferenceCode()) &&
+				!Objects.equals(
 					cpInstanceModelImpl.getColumnOriginalValue(
 						"externalReferenceCode"),
 					cpInstance.getExternalReferenceCode())) {
@@ -2532,4 +2535,4 @@ public class CPInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1474588557
+// LIFERAY-SERVICE-BUILDER-HASH:-920758944

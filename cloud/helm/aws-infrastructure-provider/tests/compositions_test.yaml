@@ -89,6 +89,20 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "engineVersion: \\{\\{ \\$database\\.version \\| quote \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "instanceClass: \\{\\{ \\$database\\.instanceType \\}\\}"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "multiAz: \\{\\{ \\$database\\.highAvailability \\}\\}"
+        it: Maps the shared database fields onto the RDS instance
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "scheduleExpressionTimezone: \\{\\{ \\$backup\\.timeZone \\| default \"UTC\" \\| quote \\}\\}"
         it: Passes the backup time zone through to the AWS Backup plan rule
     -   asserts:

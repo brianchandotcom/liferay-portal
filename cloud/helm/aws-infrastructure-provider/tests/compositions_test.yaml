@@ -1,0 +1,51 @@
+release:
+    name: my-release
+    namespace: crossplane-system
+suite: Compositions
+templates:
+    -   templates/compositions.yaml
+tests:
+    -   asserts:
+            -   hasDocuments:
+                    count: 2
+            -   documentIndex: 0
+                equal:
+                    path: metadata.name
+                    value: liferay-infrastructure
+            -   documentIndex: 0
+                equal:
+                    path: spec.compositeTypeRef.kind
+                    value: LiferayInfrastructure
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "composition-resource-name: backup-plan\\s"
+            -   documentIndex: 1
+                equal:
+                    path: metadata.name
+                    value: liferay-overlay
+            -   documentIndex: 1
+                equal:
+                    path: spec.compositeTypeRef.kind
+                    value: LiferayOverlay
+            -   documentIndex: 1
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "composition-resource-name: overlay-bucket\\s"
+        it: Implements the shared Liferay APIs through the packaged function pipeline
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\"cron\\(%s %s \\* \\* \\? \\*\\)\""
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\"cron\\(%s %s \\? \\* %s \\*\\)\""
+        it: Leaves the day of month unset in a weekly backup schedule
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "scheduleExpressionTimezone: \\{\\{ \\$[A-Za-z]+\\.timeZone \\|"
+        it: Passes the backup time zone through to the AWS Backup plan rule

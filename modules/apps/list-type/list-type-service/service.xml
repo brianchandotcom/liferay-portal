@@ -60,9 +60,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ListTypeEntryId" return-type="Collection">
-			<finder-column arrayable-operator="OR" comparator="=" name="listTypeEntryId" />
-		</finder>
 		<finder name="ListTypeDefinitionId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="listTypeDefinitionId" />
 		</finder>

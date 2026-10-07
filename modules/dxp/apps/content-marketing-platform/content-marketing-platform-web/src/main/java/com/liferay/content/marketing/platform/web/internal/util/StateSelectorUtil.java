@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Carolina Barbosa
  */
@@ -32,10 +36,18 @@ public class StateSelectorUtil {
 		ObjectField objectField = ObjectFieldLocalServiceUtil.fetchObjectField(
 			objectEntry.getObjectDefinitionId(), "state");
 
-		for (ListTypeEntry listTypeEntry :
-				ListTypeEntryLocalServiceUtil.getListTypeEntries(
-					objectField.getListTypeDefinitionId())) {
+		List<ListTypeEntry> listTypeEntries =
+			ListTypeEntryLocalServiceUtil.getListTypeEntries(
+				objectField.getListTypeDefinitionId());
 
+		Map<Long, ListTypeEntry> listTypeEntriesMap = new HashMap<>();
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			listTypeEntriesMap.put(
+				listTypeEntry.getListTypeEntryId(), listTypeEntry);
+		}
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
 			jsonArray.put(
 				JSONUtil.put(
 					"key", listTypeEntry.getKey()
@@ -63,9 +75,8 @@ public class StateSelectorUtil {
 									objectState.getObjectStateId())) {
 
 							ListTypeEntry nextListTypeEntry =
-								ListTypeEntryLocalServiceUtil.
-									fetchListTypeEntry(
-										nextObjectState.getListTypeEntryId());
+								listTypeEntriesMap.get(
+									nextObjectState.getListTypeEntryId());
 
 							nextStatesJSONArray.put(nextListTypeEntry.getKey());
 						}

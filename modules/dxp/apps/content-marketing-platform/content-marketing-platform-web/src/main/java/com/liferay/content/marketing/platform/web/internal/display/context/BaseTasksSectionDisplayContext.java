@@ -51,6 +51,7 @@ import jakarta.portlet.ActionRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,10 +116,18 @@ public abstract class BaseTasksSectionDisplayContext
 					return jsonArray;
 				}
 
-				for (ListTypeEntry listTypeEntry :
-						listTypeEntryLocalService.getListTypeEntries(
-							objectField.getListTypeDefinitionId())) {
+				List<ListTypeEntry> listTypeEntries =
+					listTypeEntryLocalService.getListTypeEntries(
+						objectField.getListTypeDefinitionId());
 
+				Map<Long, ListTypeEntry> listTypeEntriesMap = new HashMap<>();
+
+				for (ListTypeEntry listTypeEntry : listTypeEntries) {
+					listTypeEntriesMap.put(
+						listTypeEntry.getListTypeEntryId(), listTypeEntry);
+				}
+
+				for (ListTypeEntry listTypeEntry : listTypeEntries) {
 					jsonArray.put(
 						JSONUtil.put(
 							"key", listTypeEntry.getKey()
@@ -127,7 +136,8 @@ public abstract class BaseTasksSectionDisplayContext
 							listTypeEntry.getName(themeDisplay.getLocale())
 						).put(
 							"nextStates",
-							_getNextStatesJSONArray(listTypeEntry, objectField)
+							_getNextStatesJSONArray(
+								listTypeEntry, listTypeEntriesMap, objectField)
 						));
 				}
 
@@ -511,7 +521,8 @@ public abstract class BaseTasksSectionDisplayContext
 	protected final RoleService roleService;
 
 	private JSONArray _getNextStatesJSONArray(
-		ListTypeEntry currentListTypeEntry, ObjectField objectField) {
+		ListTypeEntry currentListTypeEntry,
+		Map<Long, ListTypeEntry> listTypeEntriesMap, ObjectField objectField) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -536,9 +547,8 @@ public abstract class BaseTasksSectionDisplayContext
 				objectStateLocalService.getNextObjectStates(
 					objectState.getObjectStateId())) {
 
-			ListTypeEntry nextListTypeEntry =
-				listTypeEntryLocalService.fetchListTypeEntry(
-					nextObjectState.getListTypeEntryId());
+			ListTypeEntry nextListTypeEntry = listTypeEntriesMap.get(
+				nextObjectState.getListTypeEntryId());
 
 			jsonArray.put(nextListTypeEntry.getKey());
 		}

@@ -25,10 +25,10 @@ spec:
         allocatedStorage: {{ $database.storageGB }}
         applyImmediately: {{ and (eq $dataPlane $targetActiveDataPlane) (ne $restorePhase "none") }}
         autoGeneratePassword: true
-        autoMinorVersionUpgrade: {{ $database.autoMinorVersionUpgrade }}
+        autoMinorVersionUpgrade: true
         backupRetentionPeriod: 7
         copyTagsToSnapshot: true
-        databaseInsightsMode: {{ $database.databaseInsightsMode | quote }}
+        databaseInsightsMode: standard
         dbName: lportal
         dbSubnetGroupNameSelector:
             matchLabels:
@@ -44,7 +44,7 @@ spec:
         identifier: {{ $baseName }}-database-{{ $dataPlane }}
         instanceClass: {{ $database.instanceType }}
         {{- if $isAboveAllocatedStorageThreshold }}
-        iops: {{ int $database.iops }}
+        iops: 12000
         {{- end }}
         multiAz: {{ $database.highAvailability }}
         passwordSecretRef:
@@ -57,7 +57,7 @@ spec:
         {{- end }}
         storageEncrypted: true
         {{- if $isAboveAllocatedStorageThreshold }}
-        storageThroughput: {{ int $database.storageThroughput }}
+        storageThroughput: 500
         {{- end }}
         storageType: gp3
         tags:

@@ -20,6 +20,10 @@ import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {isNull} from 'lodash';
 import {isValid} from '../utils/utils';
 import {Option, Picker} from '@clayui/core';
+import {
+	IPaginatedDataSourceParams,
+	IPaginatedDataSourceResult,
+} from 'shared/hooks/usePaginatedRequest';
 
 /**
  * Location Types
@@ -132,90 +136,54 @@ export function updateLocationOperators(
 	) as CustomValue;
 }
 
-function fetchCountries({
-	channelId,
-	groupId,
-}: {
-	channelId?: string;
-	groupId?: string;
-}): (query?: string) => Promise<string[]> {
-	return (query) =>
-		API.session
-			.fetchFieldValues({
-				channelId,
-				fieldName: `context/${COUNTRY}`,
-				groupId: groupId!,
-				query,
-			})
-			.then(({items}) => items);
+type LocationDataSourceFn = (
+	params: IPaginatedDataSourceParams
+) => Promise<IPaginatedDataSourceResult>;
+
+function getLocationFilter(
+	valueIMap: CustomValue,
+	locationTypes: string[]
+): string {
+	return locationTypes
+		.map((locationType) => [
+			locationType,
+			getLocationTypeValue(valueIMap, locationType),
+		])
+		.filter(([, locationValue]) => locationValue)
+		.map(
+			([locationType, locationValue]) =>
+				`context/${locationType} eq '${locationValue}'`
+		)
+		.join(' and ');
 }
 
-function fetchRegions({
+function fetchLocations({
 	channelId,
+	filter,
 	groupId,
-	valueIMap,
+	locationType,
 }: {
 	channelId?: string;
+	filter?: string;
 	groupId?: string;
-	valueIMap: CustomValue;
-}): (query?: string) => Promise<string[]> {
-	const countryInputValue = getLocationTypeValue(valueIMap, COUNTRY);
-
-	let filter: string[] = [];
-
-	if (countryInputValue) {
-		filter = [...filter, `context/${COUNTRY} eq '${countryInputValue}'`];
-	}
-
-	return (query) =>
-		API.session
-			.fetchFieldValues({
-				channelId,
-				fieldName: `context/${REGION}`,
-				filter: filter.join(' and '),
-				groupId: groupId!,
-				query,
-			})
-			.then(({items}) => items);
-}
-
-function fetchCities({
-	channelId,
-	groupId,
-	valueIMap,
-}: {
-	channelId?: string;
-	groupId?: string;
-	valueIMap: CustomValue;
-}): (query?: string) => Promise<string[]> {
-	const countryInputValue = getLocationTypeValue(valueIMap, COUNTRY);
-	const regionInputValue = getLocationTypeValue(valueIMap, REGION);
-
-	let filter: string[] = [];
-
-	if (countryInputValue) {
-		filter = [...filter, `context/${COUNTRY} eq '${countryInputValue}'`];
-	}
-
-	if (regionInputValue) {
-		filter = [...filter, `context/${REGION} eq '${regionInputValue}'`];
-	}
-
-	return (query) =>
-		API.session
-			.fetchFieldValues({
-				channelId,
-				fieldName: `context/${CITY}`,
-				filter: filter.join(' and '),
-				groupId: groupId!,
-				query,
-			})
-			.then(({items}) => items);
+	locationType: string;
+}): LocationDataSourceFn {
+	return ({page, pageSize, query}) =>
+		API.session.fetchFieldValues({
+			channelId,
+			delta: pageSize,
+			fieldName: `context/${locationType}`,
+			filter,
+			groupId: groupId!,
+			page,
+			query,
+		});
 }
 
 interface IButtonInputTriggerProps {
 	className: string;
-	dataSourceFn: (query?: string) => Promise<string[]>;
+	dataSourceKey: string;
+	paginatedDataSourceFn: LocationDataSourceFn;
 	editing: boolean;
 	label: string;
 	onChange: (value: string) => void;
@@ -371,6 +339,9 @@ export default class GeolocationInput extends React.Component<
 		const cityInputValue = getLocationTypeValue(value, CITY);
 		const regionInputValue = getLocationTypeValue(value, REGION);
 
+		const cityFilter = getLocationFilter(value, [COUNTRY, REGION]);
+		const regionFilter = getLocationFilter(value, [COUNTRY]);
+
 		const conjunctionCriterion = this.getConjunctionDateFilterIMap(value);
 
 		return (
@@ -405,11 +376,15 @@ export default class GeolocationInput extends React.Component<
 							className={getCN({
 								'has-error': !valid && touched,
 							})}
-							dataSourceFn={fetchCountries({channelId, groupId})}
 							onBlur={this.handleCountryBlur}
 							onChange={(value) =>
 								this.handleLocationTypeChange(value, COUNTRY)
 							}
+							paginatedDataSourceFn={fetchLocations({
+								channelId,
+								groupId,
+								locationType: COUNTRY,
+							})}
 							placeholder={Liferay.Language.get('country')}
 							value={getLocationTypeValue(value, COUNTRY)}
 						/>
@@ -418,11 +393,7 @@ export default class GeolocationInput extends React.Component<
 					<Form.GroupItem shrink>
 						<ButtonInputTrigger
 							className="region"
-							dataSourceFn={fetchRegions({
-								channelId,
-								groupId,
-								valueIMap: value,
-							})}
+							dataSourceKey={regionFilter}
 							editing={editRegion || !!regionInputValue.length}
 							label={Liferay.Language.get('add-region')}
 							onBlur={() => this.handleLocationOnBlur(REGION)}
@@ -430,6 +401,12 @@ export default class GeolocationInput extends React.Component<
 								this.handleLocationTypeChange(value, REGION)
 							}
 							onClick={() => this.setState({editRegion: true})}
+							paginatedDataSourceFn={fetchLocations({
+								channelId,
+								filter: regionFilter,
+								groupId,
+								locationType: REGION,
+							})}
 							placeholder={Liferay.Language.get('region')}
 							value={regionInputValue}
 						/>
@@ -438,11 +415,7 @@ export default class GeolocationInput extends React.Component<
 					<Form.GroupItem shrink>
 						<ButtonInputTrigger
 							className="city"
-							dataSourceFn={fetchCities({
-								channelId,
-								groupId,
-								valueIMap: value,
-							})}
+							dataSourceKey={cityFilter}
 							editing={editCity || !!cityInputValue.length}
 							label={Liferay.Language.get('add-city')}
 							onBlur={() => this.handleLocationOnBlur(CITY)}
@@ -450,6 +423,12 @@ export default class GeolocationInput extends React.Component<
 								this.handleLocationTypeChange(value, CITY)
 							}
 							onClick={() => this.setState({editCity: true})}
+							paginatedDataSourceFn={fetchLocations({
+								channelId,
+								filter: cityFilter,
+								groupId,
+								locationType: CITY,
+							})}
 							placeholder={Liferay.Language.get('city')}
 							value={cityInputValue}
 						/>

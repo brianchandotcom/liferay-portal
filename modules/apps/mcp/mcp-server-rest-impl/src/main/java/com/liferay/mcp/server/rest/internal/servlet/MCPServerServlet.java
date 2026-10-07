@@ -550,7 +550,8 @@ public class MCPServerServlet extends HttpServlet {
 
 		try {
 			Tool tool = ToolSetUtil.getTool(
-				httpServletRequest, restrictFieldsMap, toolName, toolSetName);
+				httpServletRequest, false, restrictFieldsMap, toolName,
+				toolSetName);
 
 			return McpSchema.Tool.builder(
 			).description(

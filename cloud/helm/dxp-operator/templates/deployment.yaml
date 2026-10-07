@@ -55,6 +55,11 @@ spec:
                             value: {{ .Values.retry.initialDelay | quote }}
                         -   name: RETRY_MAX_DELAY
                             value: {{ .Values.retry.maxDelay | quote }}
+                        {{- range $k, $v := .Values.customEnv }}
+                        {{- if and $v (gt (len $v) 0) }}
+                        {{- toYaml $v | nindent 24 }}
+                        {{- end }}
+                        {{- end }}
                     image: {{ printf "%s:%s" .Values.image.repository (.Values.image.tag | toString) }}
                     imagePullPolicy: {{ .Values.image.pullPolicy }}
                     livenessProbe:
@@ -83,10 +88,17 @@ spec:
                     securityContext:
                         {{- toYaml . | nindent 24 }}
                     {{- end }}
-                    {{- if .Values.marketplace.enabled }}
+                    {{- if or .Values.marketplace.enabled .Values.customVolumeMounts }}
                     volumeMounts:
+                        {{- if .Values.marketplace.enabled }}
                         -   mountPath: {{ .Values.marketplace.mountPath }}
                             name: marketplace
+                        {{- end }}
+                        {{- range $k, $v := .Values.customVolumeMounts }}
+                        {{- if and $v (gt (len $v) 0) }}
+                        {{- toYaml $v | nindent 24 }}
+                        {{- end }}
+                        {{- end }}
                     {{- end }}
             {{- with .Values.image.pullSecrets }}
             imagePullSecrets:
@@ -105,9 +117,14 @@ spec:
             tolerations:
                 {{- toYaml . | nindent 16 }}
             {{- end }}
-            {{- if .Values.marketplace.enabled }}
+            {{- if or .Values.marketplace.enabled .Values.customVolumes }}
             volumes:
+                {{- if .Values.marketplace.enabled }}
                 -   name: marketplace
                     persistentVolumeClaim:
                         claimName: {{ .Values.marketplace.claimName }}
+                {{- end }}
+                {{- range $k, $v := .Values.customVolumes }}
+                {{- toYaml $v | nindent 16 }}
+                {{- end }}
             {{- end }}

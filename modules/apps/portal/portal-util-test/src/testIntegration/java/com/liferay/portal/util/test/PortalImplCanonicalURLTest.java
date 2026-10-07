@@ -374,7 +374,8 @@ public class PortalImplCanonicalURLTest {
 			portalDomain, _group, 8080, false);
 
 		for (String urlSeparator :
-				FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+				FriendlyURLResolverRegistryUtil.getURLSeparators(
+					TestPropsValues.getCompanyId())) {
 
 			String completeURL = _generateURL(
 				portalDomain, "8080", StringPool.BLANK, _group.getFriendlyURL(),
@@ -418,7 +419,8 @@ public class PortalImplCanonicalURLTest {
 			portalDomain, _group, 8080, false);
 
 		for (String urlSeparator :
-				FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+				FriendlyURLResolverRegistryUtil.getURLSeparators(
+					TestPropsValues.getCompanyId())) {
 
 			String completeURL = _generateURL(
 				portalDomain, "8080", StringPool.BLANK, _group.getFriendlyURL(),

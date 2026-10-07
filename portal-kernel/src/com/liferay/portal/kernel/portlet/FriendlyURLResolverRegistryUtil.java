@@ -7,12 +7,14 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
@@ -72,30 +74,26 @@ public class FriendlyURLResolverRegistryUtil {
 		return friendlyURLResolvers;
 	}
 
-	public static String[] getURLSeparators() {
-		String[] urlSeparators = _urlSeparators.get();
+	public static String[] getURLSeparators(long companyId) {
+		Map<Long, String[]> urlSeparatorsMap = _urlSeparatorsMap.get();
+
+		String[] urlSeparators = urlSeparatorsMap.get(companyId);
 
 		if (urlSeparators != null) {
 			return urlSeparators;
 		}
 
-		List<String> urlSeparatorsList = new ArrayList<>();
+		urlSeparators = TransformUtil.transformToArray(
+			getFriendlyURLResolversAsCollection(companyId),
+			FriendlyURLResolver::getURLSeparator, String.class);
 
-		for (FriendlyURLResolver friendlyURLResolver : _serviceTrackerList) {
-			if (friendlyURLResolver != null) {
-				urlSeparatorsList.add(friendlyURLResolver.getURLSeparator());
-			}
-		}
-
-		urlSeparators = urlSeparatorsList.toArray(new String[0]);
-
-		_urlSeparators.set(urlSeparators);
+		urlSeparatorsMap.put(companyId, urlSeparators);
 
 		return urlSeparators;
 	}
 
 	public static void removeURLSeparators() {
-		_urlSeparators.remove();
+		_urlSeparatorsMap.remove();
 	}
 
 	private static final BundleContext _bundleContext =
@@ -103,9 +101,10 @@ public class FriendlyURLResolverRegistryUtil {
 	private static final ServiceTrackerList<FriendlyURLResolver>
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			_bundleContext, FriendlyURLResolver.class);
-	private static final ThreadLocal<String[]> _urlSeparators =
+	private static final ThreadLocal<Map<Long, String[]>> _urlSeparatorsMap =
 		new CentralizedThreadLocal<>(
 			FriendlyURLResolverRegistryUtil.class.getName() +
-				"._urlSeparators");
+				"._urlSeparatorsMap",
+			HashMap::new);
 
 }

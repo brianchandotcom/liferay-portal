@@ -244,7 +244,8 @@ public class UpdateLanguageActionTest {
 		String testURLSeparator = null;
 
 		for (String urlSeparator :
-				FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+				FriendlyURLResolverRegistryUtil.getURLSeparators(
+					_group.getCompanyId())) {
 
 			if (!Portal.FRIENDLY_URL_SEPARATOR.equals(urlSeparator) &&
 				!VirtualLayoutConstants.CANONICAL_URL_SEPARATOR.equals(

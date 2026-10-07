@@ -1153,7 +1153,8 @@ public class PortalImpl implements Portal {
 			long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 			for (String urlSeparator :
-					FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+					FriendlyURLResolverRegistryUtil.getURLSeparators(
+						companyId)) {
 
 				if (!friendlyURL.startsWith(urlSeparator)) {
 					continue;
@@ -1366,7 +1367,8 @@ public class PortalImpl implements Portal {
 
 			if (replaceFriendlyURL) {
 				String[] urlSeparators =
-					FriendlyURLResolverRegistryUtil.getURLSeparators();
+					FriendlyURLResolverRegistryUtil.getURLSeparators(
+						themeDisplay.getCompanyId());
 
 				for (String urlSeparator : urlSeparators) {
 					if (!currentURL.startsWith(urlSeparator) ||
@@ -1618,7 +1620,8 @@ public class PortalImpl implements Portal {
 			}
 
 			for (String urlSeparator :
-					FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+					FriendlyURLResolverRegistryUtil.getURLSeparators(
+						themeDisplay.getCompanyId())) {
 
 				index = groupFriendlyURL.indexOf(urlSeparator);
 
@@ -2754,7 +2757,8 @@ public class PortalImpl implements Portal {
 			long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 			for (String urlSeparator :
-					FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+					FriendlyURLResolverRegistryUtil.getURLSeparators(
+						companyId)) {
 
 				if (!friendlyURL.startsWith(urlSeparator)) {
 					continue;
@@ -7604,7 +7608,8 @@ public class PortalImpl implements Portal {
 		int friendlyURLSeparatorIndex = -1;
 
 		for (String urlSeparator :
-				FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+				FriendlyURLResolverRegistryUtil.getURLSeparators(
+					layout.getCompanyId())) {
 
 			if (VirtualLayoutConstants.CANONICAL_URL_SEPARATOR.equals(
 					urlSeparator)) {
@@ -7723,7 +7728,8 @@ public class PortalImpl implements Portal {
 
 				changeLanguageURL = layoutURL;
 			}
-			else if (_hasFriendlyURLResolverSeparator(layoutURL) ||
+			else if (_hasFriendlyURLResolverSeparator(
+						layout.getCompanyId(), layoutURL) ||
 					 layout.isTypeControlPanel()) {
 
 				changeLanguageURL = layoutURL + curFriendlyURLSeparatorPart;
@@ -8391,9 +8397,11 @@ public class PortalImpl implements Portal {
 		return company.getVirtualHostname();
 	}
 
-	private boolean _hasFriendlyURLResolverSeparator(String layoutURL) {
+	private boolean _hasFriendlyURLResolverSeparator(
+		long companyId, String layoutURL) {
+
 		for (String urlSeparator :
-				FriendlyURLResolverRegistryUtil.getURLSeparators()) {
+				FriendlyURLResolverRegistryUtil.getURLSeparators(companyId)) {
 
 			if (layoutURL.contains(urlSeparator)) {
 				return true;

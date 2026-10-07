@@ -957,7 +957,7 @@ public class LayoutReferencesExportImportContentProcessor
 			endPos = StringUtil.indexOfAny(
 				url,
 				ArrayUtil.remove(
-					FriendlyURLResolverRegistryUtil.getURLSeparators(),
+					FriendlyURLResolverRegistryUtil.getURLSeparators(companyId),
 					VirtualLayoutConstants.CANONICAL_URL_SEPARATOR));
 
 			if (endPos != -1) {

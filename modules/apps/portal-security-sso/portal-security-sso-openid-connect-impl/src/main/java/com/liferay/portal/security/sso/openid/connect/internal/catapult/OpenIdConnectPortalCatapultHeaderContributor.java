@@ -63,9 +63,9 @@ public class OpenIdConnectPortalCatapultHeaderContributor
 		if ((openIdConnectSession == null) ||
 			(openIdConnectSession.getCompanyId() != companyId) ||
 			(openIdConnectSession.getUserId() != userId) ||
+			!_isAllowedByOAuthClientEntry(openIdConnectSession) ||
 			!_isFreshAccessToken(openIdConnectSession) ||
-			!_isSameSecureOrigin(homePageURL, location) ||
-			!_isAllowedByOAuthClientEntry(openIdConnectSession)) {
+			!_isSameSecureOrigin(homePageURL, location)) {
 
 			return;
 		}

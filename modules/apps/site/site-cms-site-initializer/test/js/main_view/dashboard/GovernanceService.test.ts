@@ -257,3 +257,93 @@ describe('GovernanceService.getContentProgress', () => {
 		);
 	});
 });
+
+describe('GovernanceService.getContributors', () => {
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
+	function mockContributorsSearch(buckets: object[], totalCount: number) {
+		return jest.spyOn(ApiHelper, 'post').mockResolvedValue({
+			data: {searchFacets: {contributors: buckets}, totalCount},
+			error: null,
+		} as any);
+	}
+
+	it('requests the top seven contributors scoped to the given space', async () => {
+		const postSpy = mockContributorsSearch([], 0);
+
+		await GovernanceService.getContributors('someFilter', 123);
+
+		expect(postSpy).toHaveBeenCalledWith(
+			'/o/search/v1.0/search?filter=someFilter+and+groupIds%2Fany%28g%3Ag+eq+123%29&pageSize=1',
+			{
+				attributes: {'search.empty.search': true},
+				facetConfigurations: [
+					{
+						aggregationName: 'contributors',
+						frequencyThreshold: 1,
+						maxTerms: 7,
+						name: 'user',
+					},
+				],
+			}
+		);
+	});
+
+	it('resolves each contributor name and marks deleted users', async () => {
+		mockContributorsSearch(
+			[
+				{frequency: 5, term: '1'},
+				{frequency: 3, term: '2'},
+			],
+			10
+		);
+
+		const getSpy = jest
+			.spyOn(ApiHelper, 'get')
+			.mockImplementation(async (url) =>
+				url.endsWith('/1')
+					? ({data: {name: 'Daniel Reyes'}, error: null} as any)
+					: ({
+							data: null,
+							error: 'an-unexpected-error-occurred',
+							status: 'NOT_FOUND',
+						} as any)
+			);
+
+		const {data, error} =
+			await GovernanceService.getContributors('someFilter');
+
+		expect(getSpy).toHaveBeenCalledWith(
+			'/o/headless-admin-user/v1.0/user-accounts/1'
+		);
+		expect(getSpy).toHaveBeenCalledWith(
+			'/o/headless-admin-user/v1.0/user-accounts/2'
+		);
+		expect(error).toBeNull();
+		expect(data).toEqual({
+			contributors: [
+				{frequency: 5, name: 'Daniel Reyes'},
+				{frequency: 3, name: null},
+			],
+			totalCount: 10,
+		});
+	});
+
+	it('returns the error when a contributor cannot be resolved', async () => {
+		mockContributorsSearch([{frequency: 5, term: '1'}], 5);
+
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: null,
+			error: 'Forbidden',
+			status: 'FORBIDDEN',
+		} as any);
+
+		const {data, error} =
+			await GovernanceService.getContributors('someFilter');
+
+		expect(data).toBeNull();
+		expect(error).toBe('Forbidden');
+	});
+});

@@ -1,16 +1,29 @@
 import classNames from 'classnames';
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import DropDown from '@clayui/drop-down';
 import Loading, {Align} from 'shared/components/Loading';
 import React, {useMemo, useState} from 'react';
 import {ClayInput} from '@clayui/form';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {Icon} from '@clayui/core';
-import {MAX_LABEL_LENGTH} from 'shared/util/constants';
+import {MAX_LABEL_LENGTH, NetworkState} from 'shared/util/constants';
+import {
+	DEFAULT_PAGE_SIZE,
+	PaginatedDataSourceFn,
+	usePaginatedRequest,
+} from 'shared/hooks/usePaginatedRequest';
 import {sub} from 'shared/util/lang';
 import {truncateText} from 'shared/util/util';
 import {useDebounce} from 'shared/hooks/useDebounce';
 import {useRequest} from 'shared/hooks/useRequest';
+
+/**
+ * Distance from the end of the option list at which the next page is
+ * requested, matching Clay's own infinite scroll.
+ */
+
+const LOAD_MORE_THRESHOLD = 40;
 
 const MENU_WIDTH = 240;
 
@@ -60,6 +73,7 @@ export interface IFilterPickerItem {
 interface ITriggerButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	buttonClassName?: string;
+	displayType: 'filter' | 'select';
 	filterLabel: string;
 	loading?: boolean;
 }
@@ -73,37 +87,50 @@ interface ITriggerButtonProps
  */
 
 const TriggerButton = React.forwardRef<HTMLButtonElement, ITriggerButtonProps>(
-	({buttonClassName, filterLabel, loading, ...rest}, ref) => (
-		<ClayButton
-			{...rest}
-			className={classNames(
+	({buttonClassName, displayType, filterLabel, loading, ...rest}, ref) => {
+		const filter = displayType === 'filter';
 
-				// The trigger sits in a flex sub-header, where a wrapping label
-				// would make the button twice as tall as its siblings.
+		return (
+			<ClayButton
+				{...rest}
+				className={classNames(
+					buttonClassName,
 
-				buttonClassName,
-				'rounded-lg',
-				'text-nowrap'
-			)}
-			disabled={loading}
-			displayType="secondary"
-			ref={ref}
-			size="sm"
-		>
-			<Icon className="inline-item inline-item-before" symbol="filter" />
+					// The filter trigger sits in a flex sub-header, where a
+					// wrapping label would make the button twice as tall as its
+					// siblings.
 
-			{filterLabel}
+					filter
+						? ['rounded-lg', 'text-nowrap']
+						: 'form-control form-control-select form-control-select-secondary'
+				)}
+				disabled={loading}
+				displayType="secondary"
+				ref={ref}
+				size={filter ? 'sm' : undefined}
+			>
+				{filter && (
+					<Icon
+						className="inline-item inline-item-before"
+						symbol="filter"
+					/>
+				)}
 
-			{loading ? (
-				<Loading align={Align.Right} />
-			) : (
-				<Icon
-					className="inline-item inline-item-after"
-					symbol="caret-bottom"
-				/>
-			)}
-		</ClayButton>
-	)
+				{filterLabel}
+
+				{loading ? (
+					<Loading align={Align.Right} />
+				) : (
+					filter && (
+						<Icon
+							className="inline-item inline-item-after"
+							symbol="caret-bottom"
+						/>
+					)
+				)}
+			</ClayButton>
+		);
+	}
 );
 
 TriggerButton.displayName = 'TriggerButton';
@@ -143,6 +170,13 @@ interface IFilterPickerProps {
 	dataSourceFn?: (variables: any) => Promise<any> | undefined;
 
 	/**
+	 * `filter` is the dashboard sub-header button; `select` looks like a form
+	 * select, for a picker that is part of a form.
+	 */
+
+	displayType?: 'filter' | 'select';
+
+	/**
 	 * Plural name of what is being filtered, used for the "All <entity>" label
 	 * and for the accessible name.
 	 */
@@ -171,6 +205,14 @@ interface IFilterPickerProps {
 
 	normalize?: (data: any) => IFilterPickerItem[];
 	onFilterChange: (item: IFilterPickerItem | null) => void;
+	pageSize?: number;
+
+	/**
+	 * Fetches the options one page at a time, loading the next page as the
+	 * list is scrolled. Takes precedence over `dataSourceFn` and `items`.
+	 */
+
+	paginatedDataSourceFn?: PaginatedDataSourceFn<IFilterPickerItem>;
 
 	/**
 	 * The selected item, for callers that own the selection (a URL query, a
@@ -180,6 +222,13 @@ interface IFilterPickerProps {
 	 */
 
 	selected?: IFilterPickerItem | null;
+
+	/**
+	 * Whether to prepend the "All <entity>" entry, for a picker whose value is
+	 * required rather than optional.
+	 */
+
+	showAllOption?: boolean;
 
 	/**
 	 * Arguments handed to `dataSourceFn`.
@@ -197,12 +246,16 @@ interface IFilterPickerProps {
 const FilterPicker: React.FC<IFilterPickerProps> = ({
 	className,
 	dataSourceFn,
+	displayType = 'filter',
 	entityLabel,
 	items = NO_ITEMS,
 	loading,
 	normalize = defaultNormalize,
 	onFilterChange,
+	pageSize = DEFAULT_PAGE_SIZE,
+	paginatedDataSourceFn,
 	selected,
+	showAllOption = true,
 	variables = NO_VARIABLES,
 }) => {
 	const [ownSelected, setOwnSelected] = useState<IFilterPickerItem | null>(
@@ -226,7 +279,15 @@ const FilterPicker: React.FC<IFilterPickerProps> = ({
 
 	const [search, setSearch] = useState('');
 
-	const query = useDebounce(search.toLowerCase(), SEARCH_DELAY);
+	const paginated = Boolean(paginatedDataSourceFn);
+
+	// The paginated source debounces the search itself, so this one is held
+	// still to avoid a second render per burst of keystrokes.
+
+	const query = useDebounce(
+		paginated ? '' : search.toLowerCase(),
+		SEARCH_DELAY
+	);
 
 	// `query` is omitted while empty so the request keeps the caller's own
 	// shape; every filter endpoint already defaults it to the empty string.
@@ -249,8 +310,21 @@ const FilterPicker: React.FC<IFilterPickerProps> = ({
 		// and leave no way to start the request this component is waiting on.
 
 		initialState: {data: null, error: false, loading: false},
-		skipRequest: !dataSourceFn || !opened,
+		skipRequest: !dataSourceFn || !opened || paginated,
 		variables: requestVariables,
+	});
+
+	const {
+		items: paginatedItems,
+		loaded: paginatedLoaded,
+		networkState,
+		onLoadMore,
+	} = usePaginatedRequest({
+		dataSourceFn: paginatedDataSourceFn,
+		debounceDelay: SEARCH_DELAY,
+		pageSize,
+		query: search.toLowerCase(),
+		skip: !opened,
 	});
 
 	const fetching = Boolean(dataSourceFn);
@@ -262,9 +336,11 @@ const FilterPicker: React.FC<IFilterPickerProps> = ({
 	// every keystroke. A failure counts, so the menu opens empty rather than
 	// never.
 
-	const settled = data !== null || Boolean(error);
+	const settled = paginated
+		? paginatedLoaded
+		: data !== null || Boolean(error);
 
-	const optionsReady = fetching ? settled : !loading;
+	const optionsReady = paginated || fetching ? settled : !loading;
 
 	// Normalized here rather than through `useRequest`'s own `normalize`, which
 	// is captured in a `useCallback([])` and would go stale.
@@ -274,9 +350,23 @@ const FilterPicker: React.FC<IFilterPickerProps> = ({
 		[data, normalize]
 	);
 
-	const resolvedItems: IFilterPickerItem[] = fetching ? fetchedItems : items;
+	let resolvedItems: IFilterPickerItem[] = fetching ? fetchedItems : items;
+	let resolvedLoading = fetching ? requestLoading : loading;
 
-	const resolvedLoading = fetching ? requestLoading : loading;
+	if (paginated) {
+		resolvedItems = paginatedItems;
+		resolvedLoading = networkState === NetworkState.Loading;
+	}
+
+	const loadingMore = paginated && networkState === NetworkState.Refetch;
+
+	const handleListScroll = (event: React.UIEvent<HTMLElement>) => {
+		const {clientHeight, scrollHeight, scrollTop} = event.currentTarget;
+
+		if (scrollTop + clientHeight >= scrollHeight - LOAD_MORE_THRESHOLD) {
+			onLoadMore?.();
+		}
+	};
 
 	const controlled = selected !== undefined;
 
@@ -287,8 +377,11 @@ const FilterPicker: React.FC<IFilterPickerProps> = ({
 	]) as string;
 
 	const options = useMemo(
-		() => [{id: ALL_VALUES_KEY, name: allValuesLabel}, ...resolvedItems],
-		[allValuesLabel, resolvedItems]
+		() =>
+			showAllOption
+				? [{id: ALL_VALUES_KEY, name: allValuesLabel}, ...resolvedItems]
+				: resolvedItems,
+		[allValuesLabel, resolvedItems, showAllOption]
 	);
 
 	const handleSelectionChange = (key: string) => {
@@ -308,89 +401,99 @@ const FilterPicker: React.FC<IFilterPickerProps> = ({
 
 	const selectedKey = selectedItem?.id ?? ALL_VALUES_KEY;
 
+	// `DropDown` renders its own `div.dropdown` container, which takes the place
+	// of the wrapper `Picker` needed.
+
 	return (
-		<ClayTooltipProvider>
+		<DropDown
 
-			{/* `DropDown` renders its own `div.dropdown` container, which takes
-			    the place of the wrapper `Picker` needed. */}
+			// Held closed until the options are in, so the menu never
+			// flashes empty while the request is in flight.
 
-			<DropDown
+			active={expanded && optionsReady}
 
-				// Held closed until the options are in, so the menu never
-				// flashes empty while the request is in flight.
+			// Matches what `Picker` passed. Left at the `DropDown`
+			// default of false, overflow is resolved against the
+			// scrolling container instead of the viewport, so the
+			// menu can shift or flip while the page scrolls.
 
-				active={expanded && optionsReady}
+			alignmentByViewport
+			closeOnClick={false}
+			closeOnClickOutside
+			hasLeftSymbols
+			menuElementAttrs={{
+				className: 'dropdown-menu-select',
+				style: {maxWidth: 'none', width: MENU_WIDTH},
+			}}
+			menuWidth="shrink"
 
-				// Matches what `Picker` passed. Left at the `DropDown`
-				// default of false, overflow is resolved against the
-				// scrolling container instead of the viewport, so the
-				// menu can shift or flip while the page scrolls.
+			// Without this the menu markup is mounted (hidden) for
+			// every filter on the page, as `Picker` never did.
 
-				alignmentByViewport
-				closeOnClick={false}
-				closeOnClickOutside
-				hasLeftSymbols
-				menuElementAttrs={{
-					className: 'dropdown-menu-select',
-					style: {maxWidth: 'none', width: MENU_WIDTH},
-				}}
-				menuWidth="shrink"
+			onActiveChange={(active) => {
+				setExpanded(active);
 
-				// Without this the menu markup is mounted (hidden) for
-				// every filter on the page, as `Picker` never did.
-
-				onActiveChange={(active) => {
-					setExpanded(active);
-
-					if (active) {
-						setOpened(true);
-					}
-				}}
-				renderMenuOnClick
-				trigger={
-					<TriggerButton
-						aria-label={
-							sub(Liferay.Language.get('filter-by-x'), [
-								entityLabel,
-							]) as string
-						}
-						buttonClassName={className}
-						filterLabel={
-							selectedItem
-								? truncateText(
-										selectedItem.name,
-										MAX_LABEL_LENGTH,
-										null
-									)
-								: allValuesLabel
-						}
-						loading={resolvedLoading}
-						role="combobox"
-					/>
+				if (active) {
+					setOpened(true);
 				}
-			>
-				<div className="pb-2 pt-3 px-3">
-					<ClayInput.Group small>
-						<ClayInput.GroupItem className="input-group-item-focusable">
-							<ClayInput
-								aria-label={Liferay.Language.get('search')}
-								insetAfter
-								onChange={(event) =>
-									setSearch(event.target.value)
-								}
-								placeholder={Liferay.Language.get('search')}
-								type="text"
-								value={search}
-							/>
+			}}
+			renderMenuOnClick
+			trigger={
+				<TriggerButton
+					aria-label={
+						displayType === 'select'
+							? entityLabel
+							: (sub(Liferay.Language.get('filter-by-x'), [
+									entityLabel,
+								]) as string)
+					}
+					buttonClassName={className}
+					displayType={displayType}
+					filterLabel={
+						selectedItem
+							? truncateText(
+									selectedItem.name,
+									MAX_LABEL_LENGTH,
+									null
+								)
+							: showAllOption
+								? allValuesLabel
+								: entityLabel
+					}
+					loading={resolvedLoading}
+					role="combobox"
+				/>
+			}
+		>
+			<div className="pb-2 pt-3 px-3">
+				<ClayInput.Group small>
+					<ClayInput.GroupItem className="input-group-item-focusable">
+						<ClayInput
+							aria-label={Liferay.Language.get('search')}
+							insetAfter
+							onChange={(event) => setSearch(event.target.value)}
+							placeholder={Liferay.Language.get('search')}
+							type="text"
+							value={search}
+						/>
 
-							<ClayInput.GroupInsetItem after tag="span">
-								<Icon symbol="search" />
-							</ClayInput.GroupInsetItem>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-				</div>
+						<ClayInput.GroupInsetItem after tag="span">
+							<Icon symbol="search" />
+						</ClayInput.GroupInsetItem>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
+			</div>
 
-				<DropDown.ItemList className="inline-scroller" role="listbox">
+			{/* The provider wraps the list alone: its hover state would
+				    otherwise re-render `DropDown`, which realigns the menu on
+				    every render and stutters the list while it scrolls. */}
+
+			<ClayTooltipProvider>
+				<DropDown.ItemList
+					className="inline-scroller"
+					onScroll={handleListScroll}
+					role="listbox"
+				>
 					{options.map((item) =>
 						renderOption(
 							item,
@@ -398,9 +501,15 @@ const FilterPicker: React.FC<IFilterPickerProps> = ({
 							handleSelectionChange
 						)
 					)}
+
+					{loadingMore && (
+						<li className="my-2" role="presentation">
+							<ClayLoadingIndicator size="sm" />
+						</li>
+					)}
 				</DropDown.ItemList>
-			</DropDown>
-		</ClayTooltipProvider>
+			</ClayTooltipProvider>
+		</DropDown>
 	);
 };
 

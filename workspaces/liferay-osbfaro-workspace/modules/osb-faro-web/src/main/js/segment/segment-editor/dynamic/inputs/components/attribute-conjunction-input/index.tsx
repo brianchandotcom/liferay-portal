@@ -1,11 +1,9 @@
 import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import FilterPicker, {IFilterPickerItem} from 'shared/components/FilterPicker';
 import Form from 'shared/components/form';
-import getCN from 'classnames';
 import OperatorSelect from './OperatorSelect';
-import React, {useEffect, useState} from 'react';
-import Sticker from 'shared/components/Sticker';
+import React, {useEffect, useRef} from 'react';
 import ValueInput from './ValueInput';
 import {
 	AddEntity,
@@ -13,28 +11,40 @@ import {
 	ReferencedEntities,
 	withReferencedObjectsConsumer,
 } from '../../../context/referencedObjects';
+import {
+	ATTRIBUTES_PAGE_SIZE,
+	encodeAttributeId,
+	getDefaultAttributeOperator,
+	getDefaultAttributeValue,
+	validateAttributeValue,
+} from './utils';
 import {Attribute} from 'event-analysis/utils/types';
 import {
 	AttributeConjunctionChangeParams,
 	AttributeFilterState,
 	Criterion,
 } from '../../../utils/types';
-import {DATA_TYPE_ICONS_MAP} from 'shared/types/DataTypes';
 import {
 	FunctionalOperators,
 	RelationalOperators,
 } from '../../../utils/constants';
-import {
-	encodeAttributeId,
-	getDefaultAttributeOperator,
-	getDefaultAttributeValue,
-	validateAttributeValue,
-} from './utils';
 import {Map} from 'immutable';
+import {PaginatedDataSourceFn} from 'shared/hooks/usePaginatedRequest';
+
+export type AttributesDataSourceFn = PaginatedDataSourceFn<Attribute>;
+
+const toFilterPickerItem = ({
+	displayName,
+	name,
+}: Attribute): IFilterPickerItem => ({
+	id: name,
+	name: displayName || name,
+});
 
 interface IAttributeFilterConjunctionInputProps {
 	addEntity: AddEntity;
 	attributes: Attribute[];
+	attributesDataSourceFn: AttributesDataSourceFn;
 	conjunctionCriterion: Criterion;
 	onChange: (params: AttributeConjunctionChangeParams) => void;
 	onClear?: () => void;
@@ -49,9 +59,11 @@ const AttributeFilterConjunctionInput: React.FC<
 > = ({
 	addEntity,
 	attributes,
+	attributesDataSourceFn,
 	conjunctionCriterion,
 	onChange,
 	onClear,
+	referencedEntities,
 	small,
 	touched,
 	valid,
@@ -64,19 +76,24 @@ const AttributeFilterConjunctionInput: React.FC<
 		}
 	}, []);
 
-	const [attributesDisplayed, setAttributesDisplayed] =
-		useState<Attribute[]>(attributes);
-	const [searchValue, setSearchValue] = useState<string>('');
+	const loadedAttributesRef = useRef<{[name: string]: Attribute}>({});
 
 	const getAttributeFromContext = (): Attribute => {
 		const attributeId = getAttributeId();
+
+		const referencedAttributeIMap = referencedEntities?.getIn([
+			EntityType.Attributes,
+			attributeId,
+		]);
 
 		return (
 			attributes.find(
 				(attribute) =>
 					attribute &&
 					encodeAttributeId(attribute.name) === attributeId
-			) || attributes[0]
+			) ||
+			referencedAttributeIMap?.toJS() ||
+			attributes[0]
 		);
 	};
 
@@ -86,25 +103,16 @@ const AttributeFilterConjunctionInput: React.FC<
 		return id;
 	};
 
-	const handleAttributeChange = (value: string) => {
-		const attribute = attributes.find(({id}) => id === value);
+	const fetchAttributeItems: PaginatedDataSourceFn<IFilterPickerItem> = (
+		params
+	) =>
+		attributesDataSourceFn(params).then(({items, total}) => {
+			items.forEach((attribute) => {
+				loadedAttributesRef.current[attribute.name] = attribute;
+			});
 
-		if (attribute) {
-			setAttribute(attribute);
-		}
-	};
-
-	const getAttributes = (query: string) => {
-		if (!query) return attributes;
-
-		return attributes.filter(
-			({displayName, name}) =>
-				(displayName ?? '')
-					.toLowerCase()
-					.includes(query.toLowerCase()) ||
-				name.toLowerCase().includes(query.toLowerCase())
-		);
-	};
+			return {items: items.map(toFilterPickerItem), total};
+		});
 
 	const setAttribute = (attribute: Attribute) => {
 		const encodedId = encodeAttributeId(attribute.name);
@@ -149,61 +157,27 @@ const AttributeFilterConjunctionInput: React.FC<
 	const attribute = getAttributeFromContext();
 	const {operatorName, value} = conjunctionCriterion;
 
+	const handleAttributeChange = (item: IFilterPickerItem | null) => {
+		const selectedAttribute = item && loadedAttributesRef.current[item.id];
+
+		if (selectedAttribute && selectedAttribute.name !== attribute.name) {
+			setAttribute(selectedAttribute);
+		}
+	};
+
 	return (
 		<>
 			<Form.GroupItem shrink>
-				<ClayDropDown
-					closeOnClick
-					trigger={
-						<ClayButton
-							className={getCN(
-								'form-control form-control-select form-control-select-secondary',
-								{'form-control-sm': small}
-							)}
-							displayType="secondary"
-						>
-							{attribute.displayName || attribute.name}
-						</ClayButton>
-					}
-				>
-					<ClayDropDown.Search
-						className="py-2 px-2"
-						onChange={(query: string) => {
-							setSearchValue(query);
-							setAttributesDisplayed(getAttributes(query));
-						}}
-						placeholder={Liferay.Language.get('search')}
-						value={searchValue}
-					/>
-
-					<ClayDropDown.ItemList items={attributesDisplayed}>
-						{(item: unknown) => {
-							const {dataType, displayName, id, name} =
-								item as Attribute;
-							return (
-								<ClayDropDown.Item
-									active={id === attribute.id}
-									key={name}
-									onClick={() => handleAttributeChange(id)}
-									roleItem="option"
-								>
-									<Sticker
-										className="mr-3"
-										display="secondary"
-									>
-										<ClayIcon
-											symbol={
-												DATA_TYPE_ICONS_MAP[dataType]
-											}
-										/>
-									</Sticker>
-
-									{displayName ?? name}
-								</ClayDropDown.Item>
-							);
-						}}
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
+				<FilterPicker
+					className={small ? 'form-control-sm' : undefined}
+					displayType="select"
+					entityLabel={Liferay.Language.get('event-attributes')}
+					onFilterChange={handleAttributeChange}
+					pageSize={ATTRIBUTES_PAGE_SIZE}
+					paginatedDataSourceFn={fetchAttributeItems}
+					selected={toFilterPickerItem(attribute)}
+					showAllOption={false}
+				/>
 			</Form.GroupItem>
 
 			<OperatorSelect

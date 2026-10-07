@@ -1,4 +1,6 @@
-import AttributeConjunctionInput from './attribute-conjunction-input';
+import AttributeConjunctionInput, {
+	AttributesDataSourceFn,
+} from './attribute-conjunction-input';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import React from 'react';
@@ -11,6 +13,7 @@ import {
 
 interface IAttributeFilterBoxProps {
 	attributes: Attribute[];
+	attributesDataSourceFn: AttributesDataSourceFn;
 	conjunctionCriterion: Criterion;
 	onChange: (params: AttributeConjunctionChangeParams) => void;
 	onClear: () => void;
@@ -20,6 +23,7 @@ interface IAttributeFilterBoxProps {
 
 const AttributeFilterBox: React.FC<IAttributeFilterBoxProps> = ({
 	attributes,
+	attributesDataSourceFn,
 	conjunctionCriterion,
 	onChange,
 	onClear,
@@ -48,6 +52,7 @@ const AttributeFilterBox: React.FC<IAttributeFilterBoxProps> = ({
 
 			<AttributeConjunctionInput
 				attributes={attributes}
+				attributesDataSourceFn={attributesDataSourceFn}
 				conjunctionCriterion={conjunctionCriterion}
 				onChange={onChange}
 				onClear={onClear}

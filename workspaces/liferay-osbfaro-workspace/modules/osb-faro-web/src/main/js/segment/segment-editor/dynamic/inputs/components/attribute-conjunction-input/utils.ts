@@ -12,6 +12,8 @@ import {
 import {isNumber} from 'lodash';
 import {isValid} from '../../../utils/utils';
 
+export const ATTRIBUTES_PAGE_SIZE = 25;
+
 export const encodeAttributeId = (name: string): string =>
 	Array.from(new TextEncoder().encode(name))
 		.map((byte) => byte.toString(16).padStart(2, '0'))

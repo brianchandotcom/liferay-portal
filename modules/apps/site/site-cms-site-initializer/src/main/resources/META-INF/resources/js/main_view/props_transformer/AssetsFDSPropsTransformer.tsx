@@ -295,11 +295,13 @@ export default function AssetsFDSPropsTransformer({
 								additionalProps={additionalProps}
 								itemData={itemData}
 								onViewClick={
-									isSpaceMember(
-										additionalProps.assetLibraries,
+									isSpaceMember({
+										assetLibraries:
+											additionalProps.assetLibraries,
 										itemData,
-										additionalProps.projectGroupExternalReferenceCode
-									)
+										projectGroupExternalReferenceCode:
+											additionalProps.projectGroupExternalReferenceCode,
+									})
 										? (item) => {
 												openCMSModal({
 													contentComponent: () =>
@@ -478,11 +480,12 @@ export default function AssetsFDSPropsTransformer({
 								OBJECT_ENTRY_FOLDER_CLASS_NAME &&
 								!item?.embedded?.file
 						) &&
-						isSpaceMember(
-							additionalProps.assetLibraries,
-							item,
-							additionalProps.projectGroupExternalReferenceCode
-						),
+						isSpaceMember({
+							assetLibraries: additionalProps.assetLibraries,
+							itemData: item,
+							projectGroupExternalReferenceCode:
+								additionalProps.projectGroupExternalReferenceCode,
+						}),
 					target: 'event',
 				};
 			}
@@ -495,11 +498,12 @@ export default function AssetsFDSPropsTransformer({
 							item?.entryClassName !==
 								OBJECT_ENTRY_FOLDER_CLASS_NAME
 						) &&
-						isSpaceMember(
-							additionalProps.assetLibraries,
-							item,
-							additionalProps.projectGroupExternalReferenceCode
-						),
+						isSpaceMember({
+							assetLibraries: additionalProps.assetLibraries,
+							itemData: item,
+							projectGroupExternalReferenceCode:
+								additionalProps.projectGroupExternalReferenceCode,
+						}),
 					target: 'event',
 				};
 			}
@@ -735,11 +739,12 @@ export default function AssetsFDSPropsTransformer({
 					(item: any) =>
 						item?.entryClassName !==
 							OBJECT_ENTRY_FOLDER_CLASS_NAME &&
-						isSpaceMember(
-							additionalProps.assetLibraries,
-							item,
-							additionalProps.projectGroupExternalReferenceCode
-						)
+						isSpaceMember({
+							assetLibraries: additionalProps.assetLibraries,
+							itemData: item,
+							projectGroupExternalReferenceCode:
+								additionalProps.projectGroupExternalReferenceCode,
+						})
 				);
 
 				const currentItemPos = filteredItems.findIndex(

@@ -787,6 +787,14 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 	conditions = appendOptionalCondition(conditions, provisioned, cxv1alpha1.ConditionProvisioned, status)
 	conditions = appendOptionalCondition(conditions, workloadAccepted, cxv1alpha1.ConditionWorkloadAccepted, status)
 
+	if previousWorkloadAccepted := meta.FindStatusCondition(
+		status.Conditions, cxv1alpha1.ConditionWorkloadAccepted,
+	); (workloadAccepted != nil) && (workloadAccepted.Reason == ReasonWorkloadNotFound) &&
+		(previousWorkloadAccepted != nil) && (previousWorkloadAccepted.Reason != ReasonWorkloadNotFound) {
+
+		meta.RemoveStatusCondition(&status.Conditions, cxv1alpha1.ConditionWorkloadAccepted)
+	}
+
 	ready := readyCondition(conditions)
 
 	ready.Type = cxv1alpha1.ConditionReady

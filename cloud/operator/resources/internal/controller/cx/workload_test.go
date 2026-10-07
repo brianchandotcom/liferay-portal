@@ -343,6 +343,51 @@ func TestReconcileReportsWorkloadNotFoundAfterGracePeriod(t *testing.T) {
 	}
 }
 
+func TestReconcileRestartsWorkloadGracePeriodWhenMisconfiguredWorkloadDisappears(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
+
+	clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able"}
+
+	deployment := newDeployment(corev1.PodTemplateSpec{})
+
+	clientExtensionReconciler := newReconciler(
+		nil, t, clientExtension, deployment, newDxpMetadata("liferay-dev", "liferay.com"),
+		newDxpNamespace("liferay-cx"),
+	)
+
+	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhaseDegraded {
+		t.Fatalf("phase = %q, want %q", phase, cxv1alpha1.PhaseDegraded)
+	}
+
+	updatedClientExtension := getClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	workloadAccepted := meta.FindStatusCondition(
+		updatedClientExtension.Status.Conditions, cxv1alpha1.ConditionWorkloadAccepted,
+	)
+
+	workloadAccepted.LastTransitionTime = metav1.NewTime(time.Now().Add(-workloadGracePeriod - time.Second))
+
+	if error := clientExtensionReconciler.Status().Update(context.Background(), updatedClientExtension); error != nil {
+		t.Fatal(error)
+	}
+
+	if error := clientExtensionReconciler.Delete(context.Background(), deployment); error != nil {
+		t.Fatal(error)
+	}
+
+	recorder := record.NewFakeRecorder(10)
+
+	clientExtensionReconciler.Recorder = recorder
+
+	if phase, _ := reconcileClientExtension(clientExtension, clientExtensionReconciler, t); phase != cxv1alpha1.PhasePending {
+		t.Errorf("phase = %q, want %q: the chart may be recreating the workload", phase, cxv1alpha1.PhasePending)
+	}
+
+	if len(recorder.Events) != 0 {
+		t.Errorf("Expected no event while the chart may still be recreating the workload, got %d", len(recorder.Events))
+	}
+}
+
 func TestRequestsForWorkloadMatchesKindAndName(t *testing.T) {
 	able := newClientExtension("liferay-dev", "able", "liferay-cx")
 

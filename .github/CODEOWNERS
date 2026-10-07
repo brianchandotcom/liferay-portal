@@ -274,6 +274,7 @@ modules/apps/portal/portal-tika/    @liferay-core-infra
 modules/apps/portal/portal-tika-test/    @liferay-core-infra
 modules/apps/portal/portal-upgrade-impl    @liferay-database-infra
 modules/apps/portal/portal-upgrade-test    @liferay-database-infra
+modules/apps/portal/portal-upgrade-test-util    @liferay-database-infra
 modules/apps/portal/portal-verify-extender    @liferay-database-infra
 modules/apps/portal/portal-verify-test    @liferay-database-infra
 modules/apps/portal/portal-verify-test-util    @liferay-database-infra
@@ -378,6 +379,7 @@ modules/apps/static/portal/portal-change-tracking-test/    @liferay-core-infra
 modules/apps/static/portal/portal-log4j-extender/    @liferay-core-infra
 modules/apps/static/portal/portal-profile-api/    @liferay-core-infra
 modules/apps/static/portal/portal-profile-impl/    @liferay-core-infra
+modules/apps/static/portal/portal-upgrade-api/    @liferay-database-infra
 modules/apps/static/portal-bundle-blacklist/    @liferay-core-infra
 modules/apps/static/portal-component-blacklist/    @liferay-core-infra
 modules/apps/static/portal-file-install/    @liferay-core-infra
@@ -489,14 +491,18 @@ modules/sdk/gradle-plugins-wsdl-builder/    @liferay-devtools
 modules/sdk/gradle-plugins-xsd-builder/    @liferay-devtools
 modules/sdk/gradle-util/    @liferay-devtools
 modules/sdk/project-templates/    @liferay-devtools
+modules/test/playwright/pages/portal-instances-web    @liferay-database-infra
 modules/test/playwright/tests/ai-hub-site-initializer    @liferay-ai-hub
 modules/test/playwright/tests/batch-planner    @liferay-headless
+modules/test/playwright/tests/data-cleanup    @liferay-database-infra
 modules/test/playwright/tests/dispatch-web    @liferay-headless
 modules/test/playwright/tests/export-import-web    @liferay-headless
 modules/test/playwright/tests/headless-builder-impl    @liferay-headless
 modules/test/playwright/tests/headless-builder-web    @liferay-headless
 modules/test/playwright/tests/layout-set-prototype-web    @liferay-headless
+modules/test/playwright/tests/portal-db-infrastructure    @liferay-database-infra
 modules/test/playwright/tests/portal-impl/portlet    @liferay-frontend
+modules/test/playwright/tests/portal-instances-web    @liferay-database-infra
 modules/test/playwright/tests/portal-tools-rest-builder-test-impl    @liferay-headless
 modules/test/playwright/tests/staging-configuration-web    @liferay-headless
 modules/test/poshi/poshi-vscode/    @liferay-devtools
@@ -529,6 +535,7 @@ modules/util/portal-tools-service-builder-test-service/    @liferay-core-infra
 modules/util/portal-tools-service-builder-test-test/    @liferay-core-infra
 modules/util/portal-tools-service-builder-test-uad/    @liferay-core-infra
 modules/util/portal-tools-soy-builder/    @liferay-devtools
+modules/util/portal-tools-upgrade-table-builder/    @liferay-database-infra
 modules/util/release-util/    @liferay-devtools
 modules/util/source-formatter/    @liferay-devtools
 portal-impl/src/com/liferay/portal/dao/db/    @liferay-database-infra
@@ -550,6 +557,7 @@ portal-kernel/src/com/liferay/portal/kernel/instance/    @liferay-database-infra
 portal-kernel/src/com/liferay/portal/kernel/upgrade/    @liferay-database-infra
 portal-kernel/src/com/liferay/portal/kernel/verify/    @liferay-database-infra
 portal-kernel/test/unit/com/liferay/portal/kernel/dao/db/    @liferay-database-infra
+portal-kernel/test/unit/com/liferay/portal/kernel/db/    @liferay-database-infra
 portal-kernel/test/unit/com/liferay/portal/kernel/upgrade/    @liferay-database-infra
 util-taglib/    @liferay-frontend
 workspaces/liferay-adyen-workspace/    @liferay-commerce

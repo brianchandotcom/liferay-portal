@@ -16,8 +16,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -25,14 +27,18 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -52,8 +58,15 @@ import jakarta.portlet.ActionResponse;
 import jakarta.portlet.MutableActionParameters;
 import jakarta.portlet.Portlet;
 import jakarta.portlet.PortletPreferences;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletResponse;
+import jakarta.portlet.ResourceRequest;
+import jakarta.portlet.ResourceResponse;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -126,6 +139,15 @@ public class PortletConfigurationPortletTest {
 	}
 
 	@Test
+	@TestInfo("LPD-106855")
+	public void testCheckPermissions() throws Exception {
+		_testCheckPermissionsIsNotOverridden();
+		_testCheckPermissionsWithConfigurationPermission();
+		_testCheckPermissionsWithoutConfigurationPermission();
+		_testCheckPermissionsWithoutPermissionsPermission();
+	}
+
+	@Test
 	public void testEditScopeForLayoutPortlet() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
@@ -168,6 +190,25 @@ public class PortletConfigurationPortletTest {
 
 		_assertUpdateScope(
 			layout, _group.getGroupId(), PortletKeys.PREFS_PLID_SHARED);
+	}
+
+	@Test
+	@TestInfo("LPD-106855")
+	public void testServeResource() throws Exception {
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new TestMockLiferayResourceResponse();
+
+		ReflectionTestUtil.invoke(
+			_portlet, "serveResource",
+			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+			_getMockResourceRequest(
+				"/edit_scope.jsp", _getThemeDisplay(_addUser())),
+			mockLiferayResourceResponse);
+
+		Assert.assertEquals(
+			String.valueOf(HttpServletResponse.SC_FORBIDDEN),
+			mockLiferayResourceResponse.getProperty(
+				ResourceResponse.HTTP_STATUS_CODE));
 	}
 
 	@Test
@@ -219,6 +260,14 @@ public class PortletConfigurationPortletTest {
 		}
 
 		return roleIds;
+	}
+
+	private User _addUser() throws Exception {
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		_users.add(user);
+
+		return user;
 	}
 
 	private void _assertResourcePermissions(
@@ -334,11 +383,32 @@ public class PortletConfigurationPortletTest {
 		return mockActionRequest;
 	}
 
+	private MockLiferayResourceRequest _getMockResourceRequest(
+		String mvcPath, ThemeDisplay themeDisplay) {
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
+
+		mockLiferayResourceRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+		mockLiferayResourceRequest.setParameter("mvcPath", mvcPath);
+		mockLiferayResourceRequest.setParameter(
+			"portletResource", _serviceBuilderPortlet.getPortletId());
+
+		return mockLiferayResourceRequest;
+	}
+
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		return _getThemeDisplay(LayoutTestUtil.addTypeContentLayout(_group));
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
+		return _getThemeDisplay(layout, TestPropsValues.getUser());
+	}
+
+	private ThemeDisplay _getThemeDisplay(Layout layout, User user)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
@@ -349,12 +419,76 @@ public class PortletConfigurationPortletTest {
 			(LayoutTypePortlet)layout.getLayoutType());
 		themeDisplay.setLocale(_locale);
 		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setUser(user);
 
 		return themeDisplay;
+	}
+
+	private ThemeDisplay _getThemeDisplay(User user) throws Exception {
+		return _getThemeDisplay(
+			LayoutTestUtil.addTypeContentLayout(_group), user);
+	}
+
+	private void _testCheckPermissionsIsNotOverridden() throws Exception {
+		Class<?> clazz = _portlet.getClass();
+
+		try {
+			clazz.getDeclaredMethod("checkPermissions", PortletRequest.class);
+
+			Assert.fail(
+				"Gate the template include from serveResource rather than by " +
+					"overriding checkPermissions");
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+		}
+	}
+
+	private void _testCheckPermissionsWithConfigurationPermission()
+		throws Exception {
+
+		ReflectionTestUtil.invoke(
+			_portlet, "_checkPermissions",
+			new Class<?>[] {PortletRequest.class, PortletResponse.class},
+			_getMockResourceRequest(
+				"/edit_scope.jsp", _getThemeDisplay(TestPropsValues.getUser())),
+			new MockLiferayResourceResponse());
+	}
+
+	private void _testCheckPermissionsWithoutConfigurationPermission()
+		throws Exception {
+
+		try {
+			ReflectionTestUtil.invoke(
+				_portlet, "_checkPermissions",
+				new Class<?>[] {PortletRequest.class, PortletResponse.class},
+				_getMockResourceRequest(
+					"/edit_scope.jsp", _getThemeDisplay(_addUser())),
+				new MockLiferayResourceResponse());
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+		}
+	}
+
+	private void _testCheckPermissionsWithoutPermissionsPermission()
+		throws Exception {
+
+		try {
+			ReflectionTestUtil.invoke(
+				_portlet, "_checkPermissions",
+				new Class<?>[] {PortletRequest.class, PortletResponse.class},
+				_getMockResourceRequest(
+					"/edit_permissions.jsp", _getThemeDisplay(_addUser())),
+				new MockLiferayResourceResponse());
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+		}
 	}
 
 	@Inject
@@ -387,6 +521,9 @@ public class PortletConfigurationPortletTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 	private static class MockActionRequest
 		extends MockLiferayPortletActionRequest {
@@ -429,6 +566,23 @@ public class PortletConfigurationPortletTest {
 			}
 
 		}
+
+	}
+
+	private static class TestMockLiferayResourceResponse
+		extends MockLiferayResourceResponse {
+
+		@Override
+		public String getProperty(String name) {
+			return _properties.get(name);
+		}
+
+		@Override
+		public void setProperty(String property, String value) {
+			_properties.put(property, value);
+		}
+
+		private final Map<String, String> _properties = new HashMap<>();
 
 	}
 

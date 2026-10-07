@@ -16,7 +16,6 @@
 		}
 	},
 	"plugins": [
-		"graphql-tag",
 		"lodash",
 		"@babel/plugin-syntax-dynamic-import"
 	],

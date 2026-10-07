@@ -108,8 +108,8 @@ metadata:
         gotemplating.fn.crossplane.io/composition-resource-name: overlay-upload-only-policy
     labels:
         app: liferay
-        liferay.com/username: {{ $overlayBucketName }}-ci-uploader
         component: overlay-upload-only-policy
+        liferay.com/username: {{ $overlayBucketName }}-ci-uploader
         projectId: {{ $projectId }}
     name: {{ $overlayBucketName }}-upload-only
     namespace: {{ $namespace }}

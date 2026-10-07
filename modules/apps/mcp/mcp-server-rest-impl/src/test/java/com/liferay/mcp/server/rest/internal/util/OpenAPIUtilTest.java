@@ -347,12 +347,12 @@ public class OpenAPIUtilTest {
 			IllegalArgumentException.class,
 			"OpenAPI document has no tool with name \"missing\"",
 			() -> OpenAPIUtil.getTool(
-				true, _openAPIJSONObject, null, "missing"));
+				true, _openAPIJSONObject, false, null, "missing"));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"OpenAPI document has no \"paths\" object",
 			() -> OpenAPIUtil.getTool(
-				true, JSONFactoryUtil.createJSONObject(), null,
+				true, JSONFactoryUtil.createJSONObject(), false, null,
 				RandomTestUtil.randomString()));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class, "Request body has no content",
@@ -400,7 +400,8 @@ public class OpenAPIUtilTest {
 			"putItem");
 
 		Tool tool = OpenAPIUtil.getTool(
-			true, _openAPIJSONObject, "boolean,object1.name", "getItems");
+			true, _openAPIJSONObject, false, "boolean,object1.name",
+			"getItems");
 
 		Map<String, ?> inputSchemaMap = tool.getInputSchema();
 
@@ -417,7 +418,7 @@ public class OpenAPIUtilTest {
 		Assert.assertTrue(enumValues.contains("object1"));
 
 		tool = OpenAPIUtil.getTool(
-			true, _openAPIJSONObject, "name,title", "getLocalized");
+			true, _openAPIJSONObject, false, "name,title", "getLocalized");
 
 		inputSchemaMap = tool.getInputSchema();
 
@@ -531,6 +532,45 @@ public class OpenAPIUtilTest {
 				JSONFactoryUtil.createJSONObject()));
 	}
 
+	@Test
+	public void testGetToolWithRequiredInputSchemaOnly() throws Exception {
+		JSONObject inputSchemaJSONObject = JSONFactoryUtil.createJSONObject(
+			_read("get_test_v1.0_items.json"));
+
+		_assertRequiredInputSchema(
+			JSONUtil.put(
+				"properties",
+				JSONUtil.put(
+					"fields",
+					JSONUtil.getValueAsJSONObject(
+						inputSchemaJSONObject, "JSONObject/properties",
+						"JSONObject/fields"))
+			).put(
+				"type", "object"
+			),
+			"getItems");
+
+		_assertRequiredInputSchema(
+			JSONUtil.put(
+				"properties",
+				JSONUtil.put(
+					"body",
+					JSONUtil.put(
+						"properties",
+						JSONUtil.put("string", JSONUtil.put("type", "string"))
+					).put(
+						"required", JSONUtil.put("string")
+					).put(
+						"type", "object"
+					))
+			).put(
+				"required", JSONUtil.put("body")
+			).put(
+				"type", "object"
+			),
+			"postItem");
+	}
+
 	private void _assertMultipartContentType(
 		VulcanRequestForwarder.Request request) {
 
@@ -540,6 +580,19 @@ public class OpenAPIUtilTest {
 		Assert.assertTrue(
 			contentType,
 			contentType.startsWith("multipart/form-data; boundary="));
+	}
+
+	private void _assertRequiredInputSchema(
+			JSONObject expectedInputSchemaJSONObject, String toolName)
+		throws Exception {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		Tool tool = OpenAPIUtil.getTool(
+			true, _openAPIJSONObject, true, null, toolName);
+
+		JSONAssert.assertEquals(
+			expectedInputSchemaJSONObject.toString(),
+			objectMapper.writeValueAsString(tool.getInputSchema()), true);
 	}
 
 	private FileItem _getFileItem(List<FileItem> fileItems, String fieldName) {
@@ -602,7 +655,7 @@ public class OpenAPIUtilTest {
 		JSONObject openAPIJSONObject, String toolName) {
 
 		Tool tool = OpenAPIUtil.getTool(
-			true, openAPIJSONObject, null, toolName);
+			true, openAPIJSONObject, false, null, toolName);
 
 		return tool.getInputSchema();
 	}
@@ -670,7 +723,7 @@ public class OpenAPIUtilTest {
 		throws Exception {
 
 		Tool tool = OpenAPIUtil.getTool(
-			injectVulcanParameters, _openAPIJSONObject, null, toolName);
+			injectVulcanParameters, _openAPIJSONObject, false, null, toolName);
 
 		Assert.assertEquals(expectedDescription, tool.getDescription());
 		Assert.assertEquals(toolName, tool.getName());

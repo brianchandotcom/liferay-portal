@@ -10,10 +10,12 @@ import (
 	cxv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/cx/v1alpha1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	record "k8s.io/client-go/tools/record"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
+	interceptor "sigs.k8s.io/controller-runtime/pkg/client/interceptor"
 	reconcile "sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
 
@@ -148,6 +150,40 @@ func TestReconcilePutConfigDigestUpdatesWorkload(t *testing.T) {
 
 	if event := <-recorder.Events; !strings.HasPrefix(event, corev1.EventTypeNormal+" WorkloadUpdated ") {
 		t.Errorf("event = %q, want a workload updated event", event)
+	}
+}
+
+func TestReconcileReadsWorkloadFromTheAPIServer(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
+
+	clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able"}
+
+	clientExtensionReconciler := newReconciler(
+		&interceptor.Funcs{
+			Get: func(
+				context context.Context, client client.WithWatch, key client.ObjectKey,
+				object client.Object, options ...client.GetOption,
+			) error {
+				if _, ok := object.(*appsv1.Deployment); ok {
+					return apierrors.NewNotFound(appsv1.Resource("deployments"), key.Name)
+				}
+
+				return client.Get(context, key, object, options...)
+			},
+		},
+		t, clientExtension, newDeployment(newInitializedPodTemplate()), newDxpMetadata("liferay-dev", "liferay.com"),
+		newDxpNamespace("liferay-cx"),
+	)
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	if workloadAccepted := getCondition(
+		clientExtension, clientExtensionReconciler, cxv1alpha1.ConditionWorkloadAccepted, t,
+	); (workloadAccepted == nil) || (workloadAccepted.Reason != ReasonInitialized) {
+		t.Errorf(
+			"WorkloadAccepted = %v, want %s: the cache only holds workload metadata, so the workload is read from the API server",
+			workloadAccepted, ReasonInitialized,
+		)
 	}
 }
 

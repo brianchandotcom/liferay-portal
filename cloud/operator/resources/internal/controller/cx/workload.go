@@ -222,7 +222,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) workloadCondition(
 		return metav1.Condition{}, nil, error
 	}
 
-	error = clientExtensionReconciler.Get(
+	error = clientExtensionReconciler.APIReader.Get(
 		context, types.NamespacedName{
 			Name: workloadRef.Name, Namespace: clientExtension.Namespace,
 		}, workload,

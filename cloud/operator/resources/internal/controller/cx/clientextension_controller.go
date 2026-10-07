@@ -274,14 +274,17 @@ func (clientExtensionReconciler *ClientExtensionReconciler) SetupWithManager(
 	).Watches(
 		&appsv1.Deployment{},
 		handler.EnqueueRequestsFromMapFunc(clientExtensionReconciler.requestsForWorkload(cxv1alpha1.WorkloadKindDeployment)),
+		builder.OnlyMetadata,
 		builder.WithPredicates(predicate.GenerationChangedPredicate{}),
 	).Watches(
 		&batchv1.CronJob{},
 		handler.EnqueueRequestsFromMapFunc(clientExtensionReconciler.requestsForWorkload(cxv1alpha1.WorkloadKindCronJob)),
+		builder.OnlyMetadata,
 		builder.WithPredicates(predicate.GenerationChangedPredicate{}),
 	).Watches(
 		&batchv1.Job{},
 		handler.EnqueueRequestsFromMapFunc(clientExtensionReconciler.requestsForWorkload(cxv1alpha1.WorkloadKindJob)),
+		builder.OnlyMetadata,
 		builder.WithPredicates(predicate.GenerationChangedPredicate{}),
 	).Watches(
 		&corev1.ConfigMap{},

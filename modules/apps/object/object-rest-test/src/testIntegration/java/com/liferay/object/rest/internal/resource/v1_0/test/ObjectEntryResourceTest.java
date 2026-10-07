@@ -6097,6 +6097,35 @@ public class ObjectEntryResourceTest {
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			null, Type.MANY_TO_ONE);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition4.getRESTContextPath(), "/",
+				_objectEntry4.getObjectEntryId(), "?nestedFields=",
+				_objectRelationship5.getName()),
+			Http.Method.GET);
+
+		_assertNestedFieldsInRelationships(
+			0, 1, jsonObject, relationshipFieldNameNestedFieldName,
+			new String[][] {
+				{
+					_OBJECT_FIELD_NAME_TEXT,
+					String.valueOf(_OBJECT_FIELD_VALUE_4)
+				},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			null, Type.MANY_TO_ONE);
+		_assertNestedFieldsInRelationships(
+			0, 1, jsonObject, _objectRelationship5.getName(),
+			new String[][] {
+				{
+					_OBJECT_FIELD_NAME_TEXT,
+					String.valueOf(_OBJECT_FIELD_VALUE_4)
+				},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			null, Type.MANY_TO_ONE);
 	}
 
 	@Test

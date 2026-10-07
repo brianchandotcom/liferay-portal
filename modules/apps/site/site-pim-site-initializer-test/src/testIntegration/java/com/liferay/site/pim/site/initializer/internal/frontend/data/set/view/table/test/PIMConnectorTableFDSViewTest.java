@@ -56,8 +56,7 @@ public class PIMConnectorTableFDSViewTest {
 			Arrays.asList("name", "key", "dateModified", "active"),
 			new ArrayList<>(_fdsTableSchemaFieldsMap.keySet()));
 
-		_testGetFDSTableSchema(
-			"dateTime", "dateModified", "modified", true);
+		_testGetFDSTableSchema("dateTime", "dateModified", "modified", true);
 		_testGetFDSTableSchema("nameTableCellRenderer", "name", "name", false);
 		_testGetFDSTableSchema(
 			"statusTableCellRenderer", "active", "status", false);

@@ -8,8 +8,8 @@
 
 {{- $backup := $xr.spec.backup | default dict -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled | default false -}}
-{{- $databaseName := $xr.spec.database.name | default "lportal" -}}
 {{- $database := $xr.spec.database -}}
+{{- $databaseName := $xr.spec.database.name | default "lportal" -}}
 {{- $environmentId := $xr.spec.environmentId -}}
 {{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
 {{- $gsaName := printf "%s-sa" $xr.metadata.name -}}

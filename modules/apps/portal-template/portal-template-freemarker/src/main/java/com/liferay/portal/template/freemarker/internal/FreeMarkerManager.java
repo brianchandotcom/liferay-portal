@@ -908,13 +908,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			ObjectWrapper objectWrapper, ServletContext servletContext) {
 
 			_freeMarkerBundleClassloader = freeMarkerBundleClassloader;
-
-			_taglibFactory = new TaglibFactory(
-				_servletContextProxyProviderFunction.apply(
-					new ServletContextInvocationHandler(
-						_freeMarkerBundleClassloader, servletContext)));
-
-			_taglibFactory.setObjectWrapper(objectWrapper);
+			_objectWrapper = objectWrapper;
+			_servletContext = servletContext;
 		}
 
 		@Override
@@ -922,11 +917,13 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			TemplateModel templateModel = _templateModels.get(uri);
 
 			if (templateModel == null) {
+				TaglibFactory taglibFactory = _getTaglibFactory();
+
 				try (SafeCloseable safeCloseable =
 						ThreadContextClassLoaderUtil.swap(
 							_freeMarkerBundleClassloader)) {
 
-					templateModel = _taglibFactory.get(uri);
+					templateModel = taglibFactory.get(uri);
 				}
 
 				_templateModels.put(uri, templateModel);
@@ -940,8 +937,23 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			return false;
 		}
 
+		private TaglibFactory _getTaglibFactory() {
+			if (_taglibFactory == null) {
+				_taglibFactory = new TaglibFactory(
+					_servletContextProxyProviderFunction.apply(
+						new ServletContextInvocationHandler(
+							_freeMarkerBundleClassloader, _servletContext)));
+
+				_taglibFactory.setObjectWrapper(_objectWrapper);
+			}
+
+			return _taglibFactory;
+		}
+
 		private final FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
-		private final TaglibFactory _taglibFactory;
+		private final ObjectWrapper _objectWrapper;
+		private final ServletContext _servletContext;
+		private TaglibFactory _taglibFactory;
 
 	}
 

@@ -154,20 +154,6 @@ describe('BreakdownTable', () => {
 		expect(container.querySelector('table')).toBeInTheDocument();
 	});
 
-	it('render with empty state', () => {
-		const {queryByText} = render(
-			<BreakdownTable
-				compareToPrevious={false}
-				event={null}
-				rangeSelectors={{
-					rangeKey: '30'
-				}}
-			/>
-		);
-
-		expect(queryByText('Add an event to analyze.')).toBeTruthy();
-	});
-
 	it('render breakdown with decoded URL', async () => {
 		const eventAnalysisResult = {
 			__typename: 'EventAnalysis',

@@ -482,11 +482,7 @@ const EventAnalysisBreakdown: React.FC<IEventAnalysisBreakdownProps> = ({
 	...otherProps
 }) => {
 	if (!event) {
-		return (
-			<div className="breakdown-empty">
-				{Liferay.Language.get('add-an-event-to-analyze')}
-			</div>
-		);
+		return null;
 	}
 
 	return <BreakdownWithSafeResults {...otherProps} event={event} />;

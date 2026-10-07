@@ -124,7 +124,7 @@ describe('Event Analysis Create', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(getByPlaceholderText('New Analysis')).toBeTruthy();
-		expect(getByText('Add an event to analyze.')).toBeTruthy();
+		expect(getByText('No Conditions Yet')).toBeTruthy();
 		expect(
 			container.querySelector('.dropdown-range-key-root button')
 				.textContent

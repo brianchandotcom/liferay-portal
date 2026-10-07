@@ -67,106 +67,11 @@ public class PortalCatapultTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testLaunchWithContributedHeaders() throws Exception {
-		try (ClientExtensionHttpServer clientExtensionHttpServer =
-				new ClientExtensionHttpServer()) {
-
-			String value = RandomTestUtil.randomString();
-
-			JSONObject payloadJSONObject = JSONUtil.put(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-			_launch(
-				clientExtensionHttpServer, Http.Method.POST, payloadJSONObject,
-				(companyId, headers, homePageURL, location,
-				 oAuth2ApplicationFeatures, userId) -> {
-
-					headers.put(HttpHeaders.AUTHORIZATION, value);
-					headers.put(HttpHeaders.CONTENT_TYPE, value);
-					headers.put(_HEADER_NAME, value);
-					headers.put("authorization", value);
-					headers.put("content-type", value);
-				});
-
-			List<String> headerValues = clientExtensionHttpServer._getHeaders(
-				_HEADER_NAME);
-
-			Assert.assertEquals(value, headerValues.get(0));
-			Assert.assertEquals(
-				headerValues.toString(), 1, headerValues.size());
-
-			List<String> authorizations = clientExtensionHttpServer._getHeaders(
-				HttpHeaders.AUTHORIZATION);
-
-			Assert.assertEquals(
-				authorizations.toString(), 1, authorizations.size());
-
-			String authorization = authorizations.get(0);
-
-			Assert.assertTrue(
-				authorization, authorization.startsWith("Bearer "));
-
-			List<String> contentTypes = clientExtensionHttpServer._getHeaders(
-				HttpHeaders.CONTENT_TYPE);
-
-			Assert.assertEquals(
-				ContentTypes.APPLICATION_JSON, contentTypes.get(0));
-			Assert.assertEquals(
-				contentTypes.toString(), 1, contentTypes.size());
-
-			Assert.assertEquals(
-				payloadJSONObject.toString(),
-				clientExtensionHttpServer._getRequestBody());
-		}
-	}
-
-	@Test
-	public void testLaunchWithErrorResponse() throws Exception {
-		String responseBody = RandomTestUtil.randomString();
-
-		try (ClientExtensionHttpServer clientExtensionHttpServer =
-				new ClientExtensionHttpServer(
-					responseBody, HttpURLConnection.HTTP_CONFLICT)) {
-
-			ExecutionException executionException = Assert.assertThrows(
-				ExecutionException.class,
-				() -> _launch(
-					clientExtensionHttpServer, Http.Method.GET, null,
-					(companyId, headers, homePageURL, location,
-					 oAuth2ApplicationFeatures, userId) -> {
-					}));
-
-			Throwable throwable = executionException.getCause();
-
-			Assert.assertEquals(responseBody, throwable.getMessage());
-		}
-	}
-
-	@Test
-	public void testLaunchWithoutContributedHeaders() throws Exception {
-		try (ClientExtensionHttpServer clientExtensionHttpServer =
-				new ClientExtensionHttpServer()) {
-
-			_launch(
-				clientExtensionHttpServer, Http.Method.GET, null,
-				(companyId, headers, homePageURL, location,
-				 oAuth2ApplicationFeatures, userId) -> {
-				});
-
-			List<String> authorizations = clientExtensionHttpServer._getHeaders(
-				HttpHeaders.AUTHORIZATION);
-
-			Assert.assertEquals(
-				authorizations.toString(), 1, authorizations.size());
-
-			String authorization = authorizations.get(0);
-
-			Assert.assertTrue(
-				authorization, authorization.startsWith("Bearer "));
-
-			Assert.assertNull(
-				clientExtensionHttpServer._getHeaders(_HEADER_NAME));
-		}
+	public void testLaunch() throws Exception {
+		_testLaunchWithContributedHeaders();
+		_testLaunchWithErrorResponse();
+		_testLaunchWithRedirect();
+		_testLaunchWithoutContributedHeaders();
 	}
 
 	private OAuth2Application _addOrUpdateOAuth2Application(String homePageURL)
@@ -228,6 +133,138 @@ public class PortalCatapultTest {
 		}
 	}
 
+	private void _testLaunchWithContributedHeaders() throws Exception {
+		try (ClientExtensionHttpServer clientExtensionHttpServer =
+				new ClientExtensionHttpServer()) {
+
+			String value = RandomTestUtil.randomString();
+
+			JSONObject payloadJSONObject = JSONUtil.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			_launch(
+				clientExtensionHttpServer, Http.Method.POST, payloadJSONObject,
+				(companyId, headers, homePageURL, location,
+				 oAuth2ApplicationFeatures, userId) -> {
+
+					headers.put(HttpHeaders.AUTHORIZATION, value);
+					headers.put(HttpHeaders.CONTENT_TYPE, value);
+					headers.put(_HEADER_NAME, value);
+					headers.put("authorization", value);
+					headers.put("content-type", value);
+				});
+
+			List<String> headerValues = clientExtensionHttpServer._getHeaders(
+				_HEADER_NAME);
+
+			Assert.assertEquals(value, headerValues.get(0));
+			Assert.assertEquals(
+				headerValues.toString(), 1, headerValues.size());
+
+			List<String> authorizations = clientExtensionHttpServer._getHeaders(
+				HttpHeaders.AUTHORIZATION);
+
+			Assert.assertEquals(
+				authorizations.toString(), 1, authorizations.size());
+
+			String authorization = authorizations.get(0);
+
+			Assert.assertTrue(
+				authorization, authorization.startsWith("Bearer "));
+
+			List<String> contentTypes = clientExtensionHttpServer._getHeaders(
+				HttpHeaders.CONTENT_TYPE);
+
+			Assert.assertEquals(
+				ContentTypes.APPLICATION_JSON, contentTypes.get(0));
+			Assert.assertEquals(
+				contentTypes.toString(), 1, contentTypes.size());
+
+			Assert.assertEquals(
+				payloadJSONObject.toString(),
+				clientExtensionHttpServer._getRequestBody());
+		}
+	}
+
+	private void _testLaunchWithErrorResponse() throws Exception {
+		String responseBody = RandomTestUtil.randomString();
+
+		try (ClientExtensionHttpServer clientExtensionHttpServer =
+				new ClientExtensionHttpServer(
+					null, responseBody, HttpURLConnection.HTTP_CONFLICT)) {
+
+			ExecutionException executionException = Assert.assertThrows(
+				ExecutionException.class,
+				() -> _launch(
+					clientExtensionHttpServer, Http.Method.GET, null,
+					(companyId, headers, homePageURL, location,
+					 oAuth2ApplicationFeatures, userId) -> {
+					}));
+
+			Throwable throwable = executionException.getCause();
+
+			Assert.assertEquals(responseBody, throwable.getMessage());
+		}
+	}
+
+	private void _testLaunchWithRedirect() throws Exception {
+		try (ClientExtensionHttpServer redirectClientExtensionHttpServer =
+				new ClientExtensionHttpServer()) {
+
+			try (ClientExtensionHttpServer clientExtensionHttpServer =
+					new ClientExtensionHttpServer(
+						redirectClientExtensionHttpServer._getURL() +
+							"/resource",
+						RandomTestUtil.randomString(),
+						HttpURLConnection.HTTP_MOVED_TEMP)) {
+
+				String value = RandomTestUtil.randomString();
+
+				Assert.assertThrows(
+					ExecutionException.class,
+					() -> _launch(
+						clientExtensionHttpServer, Http.Method.GET, null,
+						(companyId, headers, homePageURL, location,
+						 oAuth2ApplicationFeatures, userId) -> headers.put(
+							_HEADER_NAME, value)));
+
+				List<String> headerValues =
+					clientExtensionHttpServer._getHeaders(_HEADER_NAME);
+
+				Assert.assertEquals(value, headerValues.get(0));
+
+				Assert.assertFalse(
+					redirectClientExtensionHttpServer._hasRequest());
+			}
+		}
+	}
+
+	private void _testLaunchWithoutContributedHeaders() throws Exception {
+		try (ClientExtensionHttpServer clientExtensionHttpServer =
+				new ClientExtensionHttpServer()) {
+
+			_launch(
+				clientExtensionHttpServer, Http.Method.GET, null,
+				(companyId, headers, homePageURL, location,
+				 oAuth2ApplicationFeatures, userId) -> {
+				});
+
+			List<String> authorizations = clientExtensionHttpServer._getHeaders(
+				HttpHeaders.AUTHORIZATION);
+
+			Assert.assertEquals(
+				authorizations.toString(), 1, authorizations.size());
+
+			String authorization = authorizations.get(0);
+
+			Assert.assertTrue(
+				authorization, authorization.startsWith("Bearer "));
+
+			Assert.assertNull(
+				clientExtensionHttpServer._getHeaders(_HEADER_NAME));
+		}
+	}
+
 	private static final String _HEADER_NAME = RandomTestUtil.randomString();
 
 	@Inject
@@ -239,10 +276,11 @@ public class PortalCatapultTest {
 	private static class ClientExtensionHttpServer implements AutoCloseable {
 
 		public ClientExtensionHttpServer() throws IOException {
-			this("{}", HttpURLConnection.HTTP_OK);
+			this(null, "{}", HttpURLConnection.HTTP_OK);
 		}
 
-		public ClientExtensionHttpServer(String responseBody, int statusCode)
+		public ClientExtensionHttpServer(
+				String redirectURL, String responseBody, int statusCode)
 			throws IOException {
 
 			_httpServer = HttpServer.create(
@@ -268,6 +306,10 @@ public class PortalCatapultTest {
 					responseHeaders.set(
 						HttpHeaders.CONTENT_TYPE,
 						ContentTypes.APPLICATION_JSON);
+
+					if (redirectURL != null) {
+						responseHeaders.set(HttpHeaders.LOCATION, redirectURL);
+					}
 
 					httpExchange.sendResponseHeaders(statusCode, bytes.length);
 
@@ -304,6 +346,14 @@ public class PortalCatapultTest {
 
 		private String _getURL() {
 			return _url;
+		}
+
+		private boolean _hasRequest() {
+			if (_headers != null) {
+				return true;
+			}
+
+			return false;
 		}
 
 		private volatile Headers _headers;

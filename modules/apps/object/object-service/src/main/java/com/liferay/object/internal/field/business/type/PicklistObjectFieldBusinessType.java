@@ -44,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -359,9 +360,20 @@ public class PicklistObjectFieldBusinessType
 			listEntryKey = listEntry.getKey();
 		}
 
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.fetchListTypeEntry(
-				objectField.getListTypeDefinitionId(), listEntryKey);
+		ListTypeEntry listTypeEntry = null;
+		Map<Long, ListTypeEntry> listTypeEntriesMap = new HashMap<>();
+
+		for (ListTypeEntry curListTypeEntry :
+				_listTypeEntryLocalService.getListTypeEntries(
+					objectField.getListTypeDefinitionId())) {
+
+			if (Objects.equals(curListTypeEntry.getKey(), listEntryKey)) {
+				listTypeEntry = curListTypeEntry;
+			}
+
+			listTypeEntriesMap.put(
+				curListTypeEntry.getListTypeEntryId(), curListTypeEntry);
+		}
 
 		if (listTypeEntry == null) {
 			return Collections.emptyList();
@@ -379,12 +391,10 @@ public class PicklistObjectFieldBusinessType
 		List<ListTypeEntry> listTypeEntries = TransformUtil.transform(
 			_objectStateLocalService.getNextObjectStates(
 				objectState.getObjectStateId()),
-			nextObjectState -> _listTypeEntryLocalService.getListTypeEntry(
+			nextObjectState -> listTypeEntriesMap.get(
 				nextObjectState.getListTypeEntryId()));
 
-		listTypeEntries.add(
-			_listTypeEntryLocalService.getListTypeEntry(
-				objectState.getListTypeEntryId()));
+		listTypeEntries.add(listTypeEntry);
 
 		return listTypeEntries;
 	}

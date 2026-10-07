@@ -55,7 +55,7 @@ exports[`CustomStringInput should render 1`] = `
               aria-labelledby="clay-autocomplete-label-1"
               autocomplete="off"
               autocorrect="off"
-              class="form-control input-group-inset input-group-inset-after"
+              class="form-control"
               data-testid="attribute-value-string-input"
               id="clay-autocomplete-1"
               role="combobox"
@@ -63,22 +63,6 @@ exports[`CustomStringInput should render 1`] = `
               type="text"
               value=""
             />
-            <div
-              aria-label="Loading"
-              aria-valuemax="100"
-              aria-valuemin="0"
-              class="input-group-inset-item input-group-inset-item-after"
-              role="progressbar"
-            >
-              <span
-                class="inline-item inline-item-middle"
-              >
-                <span
-                  aria-hidden="true"
-                  class="loading-animation loading-animation-sm"
-                />
-              </span>
-            </div>
           </div>
         </div>
       </div>
@@ -142,7 +126,7 @@ exports[`CustomStringInput should render with data 1`] = `
               aria-labelledby="clay-autocomplete-label-1"
               autocomplete="off"
               autocorrect="off"
-              class="form-control input-group-inset input-group-inset-after"
+              class="form-control"
               data-testid="attribute-value-string-input"
               id="clay-autocomplete-1"
               role="combobox"
@@ -150,22 +134,6 @@ exports[`CustomStringInput should render with data 1`] = `
               type="text"
               value="123 West Road"
             />
-            <div
-              aria-label="Loading"
-              aria-valuemax="100"
-              aria-valuemin="0"
-              class="input-group-inset-item input-group-inset-item-after"
-              role="progressbar"
-            >
-              <span
-                class="inline-item inline-item-middle"
-              >
-                <span
-                  aria-hidden="true"
-                  class="loading-animation loading-animation-sm"
-                />
-              </span>
-            </div>
           </div>
         </div>
       </div>

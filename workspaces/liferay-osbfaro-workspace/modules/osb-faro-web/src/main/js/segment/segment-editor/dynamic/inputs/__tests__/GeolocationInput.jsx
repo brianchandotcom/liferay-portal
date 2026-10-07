@@ -1,10 +1,23 @@
+import * as API from 'shared/api';
 import * as data from 'test/data';
 import client from 'shared/apollo/client';
 import GeolocationInput from '../GeolocationInput';
 import React from 'react';
 import {ApolloProvider} from '@apollo/client';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	waitFor
+} from '@testing-library/react';
 import {createCustomValueMap} from '../../utils/custom-inputs';
+import {
+	mockListGeometry,
+	mockPaginatedFieldValues,
+	scrollListToBottom,
+	waitForListOptions
+} from 'test/infinite-scroll';
 import {MockedProvider} from '@apollo/client/testing';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Property} from 'shared/util/records';
@@ -68,6 +81,48 @@ const WrapperComponent = ({children}) => (
 
 describe('GeolocationInput', () => {
 	afterEach(cleanup);
+
+	it('loads the next page of regions with the country filter', async () => {
+		API.session.fetchFieldValues.mockImplementation(
+			mockPaginatedFieldValues()
+		);
+
+		const restoreListGeometry = mockListGeometry();
+
+		render(
+			<WrapperComponent>
+				<GeolocationInput
+					channelId="123"
+					groupId="456"
+					onChange={jest.fn()}
+					property={new Property(data.mockProperty({}))}
+					touched={false}
+					valid
+					value={mockValue}
+				/>
+			</WrapperComponent>
+		);
+
+		fireEvent.focus(screen.getByPlaceholderText('Region'));
+
+		await waitForListOptions();
+
+		scrollListToBottom();
+
+		await waitFor(() =>
+			expect(API.session.fetchFieldValues).toHaveBeenCalledWith({
+				channelId: '123',
+				delta: 20,
+				fieldName: 'context/region',
+				filter: "context/country eq 'foo country'",
+				groupId: '456',
+				page: 2,
+				query: 'foo region'
+			})
+		);
+
+		restoreListGeometry();
+	});
 
 	it('should render', () => {
 		const {getAllByText, getByText} = render(

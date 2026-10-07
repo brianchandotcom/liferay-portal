@@ -1,10 +1,18 @@
+import * as API from 'shared/api';
 import client from 'shared/apollo/client';
 import React from 'react';
 import SessionInput from '../SessionInput';
 import {ApolloProvider} from '@apollo/client';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
 import {fromJS} from 'immutable';
 import {MockedProvider} from '@apollo/client/testing';
+import {
+	focusAutocompleteInput,
+	mockListGeometry,
+	mockPaginatedFieldValues,
+	scrollListToBottom,
+	waitForListOptions
+} from 'test/infinite-scroll';
 import {mockPreferenceReq} from 'test/graphql-data';
 import {Property} from 'shared/util/records';
 import {PropertyTypes, RelationalOperators} from '../../utils/constants';
@@ -23,6 +31,54 @@ const WrapperComponent = ({children}) => (
 
 describe('SessionInput', () => {
 	afterEach(cleanup);
+
+	it('loads the next page of values when the list is scrolled to the bottom', async () => {
+		API.session.fetchFieldValues.mockImplementationOnce(
+			mockPaginatedFieldValues()
+		);
+		API.session.fetchFieldValues.mockImplementationOnce(
+			mockPaginatedFieldValues()
+		);
+
+		const restoreListGeometry = mockListGeometry();
+
+		render(
+			<WrapperComponent>
+				<SessionInput
+					channelId='123'
+					groupId='456'
+					operatorRenderer={() => <div>{'operator'}</div>}
+					property={new Property({name: 'context/browserName'})}
+					touched={{customInput: false, dateFilter: false}}
+					valid={{customInput: true, dateFilter: true}}
+					value={fromJS({
+						criterionGroup: {
+							items: [{operatorName: EQ, value: ''}]
+						}
+					})}
+				/>
+			</WrapperComponent>
+		);
+
+		focusAutocompleteInput();
+
+		await waitForListOptions();
+
+		scrollListToBottom();
+
+		await waitFor(() =>
+			expect(API.session.fetchFieldValues).toHaveBeenLastCalledWith({
+				channelId: '123',
+				delta: 20,
+				fieldName: 'context/browserName',
+				groupId: '456',
+				page: 2,
+				query: ''
+			})
+		);
+
+		restoreListGeometry();
+	});
 
 	it('should render', () => {
 		const {getAllByText, getByText} = render(

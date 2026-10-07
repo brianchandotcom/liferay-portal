@@ -1,7 +1,8 @@
 import AttributeConjunctionInput from '../index';
 import React from 'react';
 import {encodeAttributeId} from '../utils';
-import {fireEvent, render} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {mockListGeometry, scrollListToBottom} from 'test/infinite-scroll';
 import {mockEventAttributeDefinition} from 'test/data';
 import {range} from 'lodash';
 import {ReferencedObjectsProvider} from '../../../../context/referencedObjects';
@@ -12,33 +13,79 @@ jest.unmock('react-dom');
 const renderWithProvider = props =>
 	render(
 		<ReferencedObjectsProvider>
-			<AttributeConjunctionInput {...props} />
+			<AttributeConjunctionInput
+				attributesDataSourceFn={() =>
+					Promise.resolve({items: [], total: 0})
+				}
+				{...props}
+			/>
 		</ReferencedObjectsProvider>
 	);
 
 describe('AttributeConjunctionInput', () => {
-	it('should render', () => {
-		const {container, getAllByText, getByText} = renderWithProvider({
-			attributes: range(4).map(index =>
-				mockEventAttributeDefinition(index)
-			),
+	it('loads attributes as the list is scrolled and selects one from a later page', async () => {
+		const attributes = range(30).map(index =>
+			mockEventAttributeDefinition(index)
+		);
+
+		const attributesDataSourceFn = jest.fn(({page, pageSize}) =>
+			Promise.resolve({
+				items: attributes.slice((page - 1) * pageSize, page * pageSize),
+				total: attributes.length
+			})
+		);
+
+		const onChange = jest.fn();
+
+		const restoreListGeometry = mockListGeometry();
+
+		renderWithProvider({
+			attributes: attributes.slice(0, 25),
+			attributesDataSourceFn,
 			conjunctionCriterion: {
 				operatorName: RelationalOperators.EQ,
-				propertyName: `attribute/${encodeAttributeId('name-1')}`,
+				propertyName: `attribute/${encodeAttributeId('name-0')}`,
 				value: 'test value'
 			},
-			onChange: jest.fn(),
+			onChange,
 			touched: {attribute: true, attributeValue: true},
 			valid: {attribute: true, attributeValue: true}
 		});
-		fireEvent.click(getAllByText('displayName-1')[0]);
 
-		expect(getByText('displayName-0')).toBeTruthy();
-		expect(getAllByText('displayName-1')[1]).toBeTruthy();
-		expect(getByText('displayName-2')).toBeTruthy();
-		expect(getByText('displayName-3')).toBeTruthy();
+		fireEvent.click(
+			screen.getByRole('combobox', {name: 'Event Attributes'})
+		);
 
-		expect(container).toMatchSnapshot();
+		await screen.findByRole('option', {name: 'displayName-24'});
+
+		expect(screen.queryByText('All Event Attributes')).toBeNull();
+
+		scrollListToBottom();
+
+		fireEvent.click(
+			await screen.findByRole('option', {name: 'displayName-27'})
+		);
+
+		expect(attributesDataSourceFn).toHaveBeenLastCalledWith({
+			page: 2,
+			pageSize: 25,
+			query: ''
+		});
+
+		await waitFor(() =>
+			expect(onChange).toHaveBeenCalledWith(
+				expect.objectContaining({
+					attribute: attributes[27],
+					criterion: expect.objectContaining({
+						propertyName: `attribute/${encodeAttributeId(
+							'name-27'
+						)}`
+					})
+				})
+			)
+		);
+
+		restoreListGeometry();
 	});
 
 	it('should build the criterion propertyName from the hex-encoded attribute name, not its id', () => {

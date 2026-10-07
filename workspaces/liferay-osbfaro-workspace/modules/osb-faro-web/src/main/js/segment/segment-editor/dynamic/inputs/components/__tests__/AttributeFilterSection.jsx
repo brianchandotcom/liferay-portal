@@ -9,11 +9,19 @@ import {render, screen, waitFor} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
-jest.mock('../attribute-conjunction-input', () => (props) => (
-	<div data-testid='attribute-conjunction-input'>
-		{props.attributes.map((attribute) => attribute.displayName).join(',')}
-	</div>
-));
+let mockInputProps;
+
+jest.mock('../attribute-conjunction-input', () => (props) => {
+	mockInputProps = props;
+
+	return (
+		<div data-testid='attribute-conjunction-input'>
+			{props.attributes
+				.map((attribute) => attribute.displayName)
+				.join(',')}
+		</div>
+	);
+});
 
 const renderWithMocks = (mocks, props = {}) =>
 	render(
@@ -86,5 +94,43 @@ describe('AttributeFilterSection', () => {
 		const {container} = renderWithMocks(mocks);
 
 		await waitFor(() => expect(container.firstChild).toBeNull());
+	});
+
+	it('should page the attributes through the event properties query', async () => {
+		const attributes = [0, 1].map((index) =>
+			data.mockEventAttributeDefinition(index, {
+				__typename: 'EventProperty'
+			})
+		);
+
+		renderWithMocks([
+			mockEventPropertiesReq(attributes, {
+				eventId: 'documentDownloaded',
+				size: 25
+			}),
+			mockEventPropertiesReq([attributes[1]], {
+				eventId: 'documentDownloaded',
+				keyword: 'name',
+				page: 1,
+				size: 25
+			})
+		]);
+
+		await screen.findByTestId('attribute-conjunction-input');
+
+		let result;
+
+		mockInputProps
+			.attributesDataSourceFn({page: 2, pageSize: 25, query: 'name'})
+			.then((value) => (result = value));
+
+		const {dataType, displayName, id, name} = attributes[1];
+
+		await waitFor(() =>
+			expect(result).toEqual({
+				items: [expect.objectContaining({dataType, displayName, id, name})],
+				total: 1
+			})
+		);
 	});
 });

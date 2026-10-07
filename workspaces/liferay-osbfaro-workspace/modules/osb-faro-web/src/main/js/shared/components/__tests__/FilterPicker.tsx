@@ -1,5 +1,6 @@
 import FilterPicker, {IFilterPickerItem} from '../FilterPicker';
 import React from 'react';
+import {mockListGeometry, scrollListToBottom} from 'test/infinite-scroll';
 import {
 	cleanup,
 	fireEvent,
@@ -385,6 +386,54 @@ describe('FilterPicker', () => {
 			renderPicker({items: ITEMS, selected: ITEMS[0]});
 
 			expect(screen.getByText('Acme Corporation')).toBeInTheDocument();
+		});
+	});
+
+	describe('paginated data source', () => {
+		it('loads options page by page as the list is scrolled', async () => {
+			const restoreListGeometry = mockListGeometry();
+
+			const items = Array.from({length: 30}, (_, index) => ({
+				id: String(index),
+				name: `Item ${index}`,
+			}));
+
+			const paginatedDataSourceFn = jest.fn(({page, pageSize}) =>
+				Promise.resolve({
+					items: items.slice((page - 1) * pageSize, page * pageSize),
+					total: items.length,
+				})
+			);
+
+			renderPicker({
+				pageSize: 25,
+				paginatedDataSourceFn,
+				showAllOption: false,
+			});
+
+			expect(paginatedDataSourceFn).not.toHaveBeenCalled();
+
+			fireEvent.click(getTrigger());
+
+			await screen.findByRole('option', {name: 'Item 24'});
+
+			expect(screen.queryByText('All Accounts')).not.toBeInTheDocument();
+
+			scrollListToBottom();
+
+			expect(
+				document.querySelector('.dropdown-menu .loading-animation')
+			).toBeInTheDocument();
+
+			await screen.findByRole('option', {name: 'Item 29'});
+
+			expect(paginatedDataSourceFn).toHaveBeenLastCalledWith({
+				page: 2,
+				pageSize: 25,
+				query: '',
+			});
+
+			restoreListGeometry();
 		});
 	});
 });

@@ -9,6 +9,7 @@ import {
 	waitFor,
 } from '@testing-library/react';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
+import {mockListGeometry, scrollListToBottom} from 'test/infinite-scroll';
 
 jest.unmock('react-dom');
 
@@ -348,5 +349,44 @@ describe('AccountDropdown', () => {
 		expect(
 			await screen.findByRole('option', {name: 'Account 100'})
 		).toBeInTheDocument();
+	});
+
+	it('should load the next page of accounts as the list is scrolled', async () => {
+		const restoreListGeometry = mockListGeometry();
+
+		(API.accounts.searchAccounts as jest.Mock).mockImplementation(
+			({page, pageSize}) =>
+				Promise.resolve({
+					items: Array.from({length: pageSize}, (_, index) =>
+						MOCK_ACCOUNT(
+							`${page}-${index}`,
+							`Account ${page}-${index}`
+						)
+					),
+					totalCount: 100,
+				})
+		);
+
+		render(
+			<SiteWrapper>
+				<AccountDropdown onFilterChange={jest.fn()} />
+			</SiteWrapper>
+		);
+
+		openPicker();
+
+		await screen.findByRole('option', {name: 'Account 0-0'});
+
+		scrollListToBottom();
+
+		expect(
+			await screen.findByRole('option', {name: 'Account 1-0'})
+		).toBeInTheDocument();
+
+		expect(API.accounts.searchAccounts).toHaveBeenLastCalledWith(
+			expect.objectContaining({page: 1, pageSize: 20, query: ''})
+		);
+
+		restoreListGeometry();
 	});
 });

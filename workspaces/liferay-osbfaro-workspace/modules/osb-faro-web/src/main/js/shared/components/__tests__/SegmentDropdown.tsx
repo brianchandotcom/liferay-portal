@@ -9,6 +9,7 @@ import {
 	waitFor,
 } from '@testing-library/react';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
+import {mockListGeometry, scrollListToBottom} from 'test/infinite-scroll';
 
 jest.unmock('react-dom');
 
@@ -274,5 +275,44 @@ describe('SegmentDropdown', () => {
 		expect(
 			screen.getByRole('option', {name: 'Segment 100'})
 		).toBeInTheDocument();
+	});
+
+	it('should load the next page of segments as the list is scrolled', async () => {
+		const restoreListGeometry = mockListGeometry();
+
+		(API.individualSegment.search as jest.Mock).mockImplementation(
+			({delta, page}) =>
+				Promise.resolve({
+					items: Array.from({length: delta}, (_, index) =>
+						MOCK_SEGMENT(
+							`${page}-${index}`,
+							`Segment ${page}-${index}`
+						)
+					),
+					total: 100,
+				})
+		);
+
+		render(
+			<Wrapper>
+				<SegmentDropdown onFilterChange={jest.fn()} />
+			</Wrapper>
+		);
+
+		openPicker();
+
+		await screen.findByRole('option', {name: 'Segment 1-0'});
+
+		scrollListToBottom();
+
+		expect(
+			await screen.findByRole('option', {name: 'Segment 2-0'})
+		).toBeInTheDocument();
+
+		expect(API.individualSegment.search).toHaveBeenLastCalledWith(
+			expect.objectContaining({delta: 20, page: 2, query: ''})
+		);
+
+		restoreListGeometry();
 	});
 });

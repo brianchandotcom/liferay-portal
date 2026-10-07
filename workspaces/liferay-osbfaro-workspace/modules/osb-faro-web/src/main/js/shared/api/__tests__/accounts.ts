@@ -1,7 +1,7 @@
 jest.mock('shared/util/request');
 
 import sendRequest from 'shared/util/request';
-import {fetchAccountIndividualMetrics} from '../accounts';
+import {fetchAccountIndividualMetrics, fetchFieldValues} from '../accounts';
 
 describe('Accounts API', () => {
 	beforeEach(() => {
@@ -49,6 +49,31 @@ describe('Accounts API', () => {
 					data: {channelId: '789'},
 				})
 			);
+		});
+	});
+
+	describe('fetchFieldValues', () => {
+		it('requests the given page of account field values', () => {
+			fetchFieldValues({
+				channelId: '123',
+				delta: 20,
+				fieldMappingFieldName: 'industry',
+				groupId: '456',
+				page: 3,
+				query: 'tech',
+			});
+
+			expect(sendRequest).toHaveBeenCalledWith({
+				data: {
+					channelId: '123',
+					cur: 3,
+					delta: 20,
+					fieldMappingFieldName: 'industry',
+					query: 'tech',
+				},
+				method: 'GET',
+				path: 'contacts/456/account/field_values',
+			});
 		});
 	});
 });

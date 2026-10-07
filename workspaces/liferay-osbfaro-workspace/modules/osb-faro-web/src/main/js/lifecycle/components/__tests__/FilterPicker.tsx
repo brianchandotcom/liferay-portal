@@ -9,6 +9,11 @@ import {
 	waitFor,
 } from '@testing-library/react';
 import {LifecycleContextProvider} from '../../context/LifecycleContext';
+import {
+	mockListGeometry,
+	mockPaginatedFieldValues,
+	scrollListToBottom,
+} from 'test/infinite-scroll';
 
 jest.unmock('react-dom');
 
@@ -142,5 +147,29 @@ describe('FilterPicker', () => {
 				})
 			)
 		);
+	});
+
+	it('should load the next page of field values as the list is scrolled', async () => {
+		const restoreListGeometry = mockListGeometry();
+
+		fetchFieldValues.mockImplementation(mockPaginatedFieldValues(100));
+
+		renderFilter();
+
+		fireEvent.click(getTrigger());
+
+		await screen.findByRole('option', {name: 'Value 0'});
+
+		scrollListToBottom();
+
+		expect(
+			await screen.findByRole('option', {name: 'Value 20'})
+		).toBeInTheDocument();
+
+		expect(fetchFieldValues).toHaveBeenLastCalledWith(
+			expect.objectContaining({delta: 20, page: 2, query: ''})
+		);
+
+		restoreListGeometry();
 	});
 });

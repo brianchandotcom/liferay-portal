@@ -96,6 +96,8 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 			String primaryKeyColumnName, String tableName)
 		throws Exception {
 
+		String message = tableName + "." + columnName;
+
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -106,10 +108,10 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 			preparedStatement.setLong(1, id);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				Assert.assertTrue(resultSet.next());
+				Assert.assertTrue(message, resultSet.next());
 
 				Assert.assertEquals(
-					expectedValue, resultSet.getString(columnName));
+					message, expectedValue, resultSet.getString(columnName));
 			}
 		}
 	}
@@ -157,7 +159,9 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 			List<IndexMetadata> indexMetadatas = _getIndexMetadatas(
 				columnName, tableName);
 
-			Assert.assertFalse(indexMetadatas.isEmpty());
+			String message = tableName + "." + columnName;
+
+			Assert.assertFalse(message, indexMetadatas.isEmpty());
 
 			_alterColumnType(getOldColumnLength(), columnName, tableName);
 
@@ -185,6 +189,7 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 				DBInspector dbInspector = new DBInspector(connection);
 
 				Assert.assertTrue(
+					message,
 					dbInspector.hasColumnType(
 						tableName, columnName,
 						StringBundler.concat(
@@ -192,6 +197,7 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 
 				for (IndexMetadata indexMetadata : indexMetadatas) {
 					Assert.assertTrue(
+						message,
 						dbInspector.hasIndex(
 							tableName, indexMetadata.getIndexName()));
 				}
@@ -237,7 +243,8 @@ public abstract class BaseIndexedColumnSizeUpgradeProcessTestCase {
 				getUpgradeStepRegistrator(), getUpgradeProcessClassName());
 
 			Assert.assertThrows(
-				UpgradeException.class, upgradeProcess::upgrade);
+				tableName + "." + columnName, UpgradeException.class,
+				upgradeProcess::upgrade);
 		}
 		finally {
 			_restore(

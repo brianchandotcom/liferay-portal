@@ -32,11 +32,21 @@ const (
 func configDigest(configMaps ...*corev1.ConfigMap) string {
 	hash := sha256.New()
 
+	write := func(value string) {
+		hash.Write([]byte(strconv.Itoa(len(value)) + ":" + value))
+	}
+
 	for _, configMap := range configMaps {
+		write(strconv.Itoa(len(configMap.BinaryData) + len(configMap.Data)))
+
 		for _, key := range slices.Sorted(maps.Keys(configMap.Data)) {
-			for _, value := range []string{key, configMap.Data[key]} {
-				hash.Write([]byte(strconv.Itoa(len(value)) + ":" + value))
-			}
+			write(key)
+			write(configMap.Data[key])
+		}
+
+		for _, key := range slices.Sorted(maps.Keys(configMap.BinaryData)) {
+			write(key)
+			write(string(configMap.BinaryData[key]))
 		}
 	}
 

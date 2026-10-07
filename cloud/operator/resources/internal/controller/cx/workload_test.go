@@ -35,6 +35,21 @@ func TestConfigMapDigestStableComparison(t *testing.T) {
 			t.Errorf("Expected %v to change the digest", data)
 		}
 	}
+
+	for name, configMapPair := range map[string][2][]*corev1.ConfigMap{
+		"a changed binary value": {
+			{{BinaryData: map[string][]byte{"able": []byte("1")}}},
+			{{BinaryData: map[string][]byte{"able": []byte("2")}}},
+		},
+		"a key moved to the next ConfigMap": {
+			{{Data: map[string]string{"able": "1"}}, {Data: map[string]string{"baker": "2"}}},
+			{{Data: map[string]string{"able": "1", "baker": "2"}}, {}},
+		},
+	} {
+		if configDigest(configMapPair[0]...) == configDigest(configMapPair[1]...) {
+			t.Errorf("Expected %s to change the digest", name)
+		}
+	}
 }
 
 func TestReconcileHoldsConfigDigestUntilProvisioned(t *testing.T) {
@@ -348,6 +363,9 @@ func TestValidatePodTemplate(t *testing.T) {
 		},
 		"a volume that holds only some keys": {
 			change: func(podTemplate *corev1.PodTemplateSpec) {
+				podTemplate.Spec.Volumes[0].ConfigMap.Items = []corev1.KeyToPath{
+					{Key: "com.liferay.lxc.dxp.domains", Path: "domains"},
+				}
 			},
 			wantIssues: []string{
 				`Volume "dxp-metadata" holds only some keys of ConfigMap "liferay.com-lxc-dxp-metadata".`,

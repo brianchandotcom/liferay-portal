@@ -150,28 +150,68 @@ func validatePodTemplate(
 	mountPath string,
 	podTemplate *corev1.PodTemplateSpec,
 ) []string {
-	volumeIndex := slices.IndexFunc(
-		podTemplate.Spec.Volumes,
-		func(volume corev1.Volume) bool {
-			return (volume.ConfigMap != nil) && (configMapName == volume.ConfigMap.Name)
-		},
-	)
+	var workloadIssues []string
 
-	if volumeIndex < 0 {
+	for _, volume := range podTemplate.Spec.Volumes {
+		if (volume.ConfigMap == nil) || (configMapName != volume.ConfigMap.Name) {
+			continue
+		}
+
+		volumeIssues := validateVolume(environmentVariableName, mountPath, podTemplate, volume)
+
+		if len(volumeIssues) == 0 {
+			return nil
+		}
+
+		workloadIssues = append(workloadIssues, volumeIssues...)
+	}
+
+	if len(workloadIssues) == 0 {
 		return []string{fmt.Sprintf("No volume holds ConfigMap %q.", configMapName)}
 	}
 
-	volumeName := podTemplate.Spec.Volumes[volumeIndex].Name
+	return workloadIssues
+}
+
+func validateVolume(
+	environmentVariableName string,
+	mountPath string,
+	podTemplate *corev1.PodTemplateSpec,
+	volume corev1.Volume,
+) []string {
+	if len(volume.ConfigMap.Items) > 0 {
+		return []string{
+			fmt.Sprintf("Volume %q holds only some keys of ConfigMap %q.", volume.Name, volume.ConfigMap.Name),
+		}
+	}
+
+	if (volume.ConfigMap.Optional != nil) && *volume.ConfigMap.Optional {
+		return []string{
+			fmt.Sprintf(
+				"Volume %q marks ConfigMap %q optional, so the pod can start without it.", volume.Name,
+				volume.ConfigMap.Name,
+			),
+		}
+	}
 
 	mounted := false
+	subPathContainerName := ""
 
 	for _, container := range podTemplate.Spec.Containers {
-		if !slices.ContainsFunc(
+		volumeMountIndex := slices.IndexFunc(
 			container.VolumeMounts,
 			func(volumeMount corev1.VolumeMount) bool {
-				return (mountPath == volumeMount.MountPath) && (volumeMount.Name == volumeName)
+				return (mountPath == volumeMount.MountPath) && (volume.Name == volumeMount.Name)
 			},
-		) {
+		)
+
+		if volumeMountIndex < 0 {
+			continue
+		}
+
+		if container.VolumeMounts[volumeMountIndex].SubPath != "" {
+			subPathContainerName = container.Name
+
 			continue
 		}
 
@@ -188,16 +228,22 @@ func validatePodTemplate(
 		}
 	}
 
-	if !mounted {
+	if !mounted && (subPathContainerName != "") {
 		return []string{
-			fmt.Sprintf("No container mounts volume %q at %q.", volumeName, mountPath),
+			fmt.Sprintf(
+				"Container %q mounts a single key of volume %q at %q, not the whole volume.", subPathContainerName,
+				volume.Name, mountPath,
+			),
 		}
+	}
+
+	if !mounted {
+		return []string{fmt.Sprintf("No container mounts volume %q at %q.", volume.Name, mountPath)}
 	}
 
 	return []string{
 		fmt.Sprintf(
-			"No container mounts volume %q and sets %s to %q.", volumeName,
-			environmentVariableName, mountPath,
+			"No container mounts volume %q and sets %s to %q.", volume.Name, environmentVariableName, mountPath,
 		),
 	}
 }

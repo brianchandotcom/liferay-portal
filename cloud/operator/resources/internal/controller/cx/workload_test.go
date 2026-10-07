@@ -311,9 +311,30 @@ func TestValidatePodTemplate(t *testing.T) {
 			},
 			wantIssues: []string{`No container mounts volume "dxp-metadata" at "/etc/liferay/lxc/dxp-metadata".`},
 		},
+		"a container that mounts one key of the volume": {
+			change: func(podTemplate *corev1.PodTemplateSpec) {
+				podTemplate.Spec.Containers[0].VolumeMounts[0].SubPath = "com.liferay.lxc.dxp.domains"
+			},
+			wantIssues: []string{
+				`Container "able" mounts a single key of volume "dxp-metadata" at "/etc/liferay/lxc/dxp-metadata", not the whole volume.`,
+			},
+		},
 		"a container whose envvar is wrong": {
 			change: func(podTemplate *corev1.PodTemplateSpec) {
 				podTemplate.Spec.Containers[0].Env[0].Value = "/incorrect"
+			},
+			wantIssues: []string{
+				`No container mounts volume "dxp-metadata" and sets LIFERAY_ROUTES_DXP to "/etc/liferay/lxc/dxp-metadata".`,
+			},
+		},
+		"a sidecar that sets the variable without mounting the volume": {
+			change: func(podTemplate *corev1.PodTemplateSpec) {
+				podTemplate.Spec.Containers = append(
+					podTemplate.Spec.Containers,
+					corev1.Container{Env: podTemplate.Spec.Containers[0].Env, Name: "baker"},
+				)
+
+				podTemplate.Spec.Containers[0].Env = nil
 			},
 			wantIssues: []string{
 				`No container mounts volume "dxp-metadata" and sets LIFERAY_ROUTES_DXP to "/etc/liferay/lxc/dxp-metadata".`,
@@ -325,8 +346,35 @@ func TestValidatePodTemplate(t *testing.T) {
 			},
 			wantIssues: []string{`No volume holds ConfigMap "liferay.com-lxc-dxp-metadata".`},
 		},
+		"a volume that holds only some keys": {
+			change: func(podTemplate *corev1.PodTemplateSpec) {
+			},
+			wantIssues: []string{
+				`Volume "dxp-metadata" holds only some keys of ConfigMap "liferay.com-lxc-dxp-metadata".`,
+			},
+		},
+		"a volume that holds some keys beside one that holds them all": {
+			change: func(podTemplate *corev1.PodTemplateSpec) {
+				partialVolume := *podTemplate.Spec.Volumes[0].DeepCopy()
+
+				partialVolume.ConfigMap.Items = []corev1.KeyToPath{{Key: "com.liferay.lxc.dxp.domains", Path: "domains"}}
+				partialVolume.Name = "dxp-domains"
+
+				podTemplate.Spec.Volumes = append([]corev1.Volume{partialVolume}, podTemplate.Spec.Volumes...)
+			},
+		},
 		"an initialized template": {
 			change: func(podTemplate *corev1.PodTemplateSpec) {},
+		},
+		"an optional volume": {
+			change: func(podTemplate *corev1.PodTemplateSpec) {
+				optional := true
+
+				podTemplate.Spec.Volumes[0].ConfigMap.Optional = &optional
+			},
+			wantIssues: []string{
+				`Volume "dxp-metadata" marks ConfigMap "liferay.com-lxc-dxp-metadata" optional, so the pod can start without it.`,
+			},
 		},
 	}
 

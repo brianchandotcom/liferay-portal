@@ -2327,7 +2327,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_assertListEntries(
 			jsonObject.getJSONArray(objectFieldName), listTypeEntryKey1);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		HTTPTestUtil.invokeToJSONObject(
 			_jsonFactory.createJSONObject(
 				randomUserAccount().toString()
 			).put(
@@ -2335,6 +2335,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			).toString(),
 			"headless-admin-user/v1.0/user-accounts/" + user.getUserId(),
 			Http.Method.PUT);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, "headless-admin-user/v1.0/user-accounts/" + user.getUserId(),
+			Http.Method.GET);
 
 		_assertListEntries(
 			jsonObject.getJSONArray(objectFieldName), listTypeEntryKey2);

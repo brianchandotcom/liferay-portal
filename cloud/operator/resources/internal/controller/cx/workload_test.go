@@ -12,7 +12,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
-	"k8s.io/client-go/tools/record"
+	record "k8s.io/client-go/tools/record"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 	reconcile "sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
@@ -32,6 +32,60 @@ func TestConfigMapDigestStableComparison(t *testing.T) {
 		if configDigest(&corev1.ConfigMap{Data: data}) == digest {
 			t.Errorf("Expected %v to change the digest", data)
 		}
+	}
+}
+
+func TestReconcilePutConfigDigestUpdatesWorkload(t *testing.T) {
+	clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
+
+	clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able"}
+
+	dxpMetadata := newDxpMetadata("liferay-dev", "liferay.com")
+
+	dxpMetadata.Data = map[string]string{"com.liferay.lxc.dxp.mainDomain": "liferay.example.com"}
+
+	clientExtensionReconciler := newReconciler(
+		nil, t, clientExtension, dxpMetadata, newDeployment(newInitializedPodTemplate()), newDxpNamespace("liferay-cx"),
+	)
+
+	recorder := record.NewFakeRecorder(10)
+
+	clientExtensionReconciler.Recorder = recorder
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	firstDigest := getConfigDigest(clientExtensionReconciler, t)
+
+	if configDigest(dxpMetadata) != firstDigest {
+		t.Fatalf("digest = %q, want the digest of the dxp metadata", firstDigest)
+	}
+
+	if len(recorder.Events) != 0 {
+		t.Errorf("Expected no rollout event for the first digest, got %d", len(recorder.Events))
+	}
+
+	dxpMetadata.Data["com.liferay.lxc.dxp.mainDomain"] = "uat.example.com"
+
+	if error := clientExtensionReconciler.Update(
+		context.Background(), dxpMetadata,
+	); error != nil {
+		t.Fatal(error)
+	}
+
+	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
+
+	if secondDigest := getConfigDigest(
+		clientExtensionReconciler, t,
+	); firstDigest == secondDigest {
+		t.Error("Expected a change to the dxp metadata to change the digest")
+	}
+
+	if len(recorder.Events) != 1 {
+		t.Fatalf("Expected one update workload event, got %d", len(recorder.Events))
+	}
+
+	if event := <-recorder.Events; !strings.HasPrefix(event, corev1.EventTypeNormal+" WorkloadUpdated ") {
+		t.Errorf("event = %q, want a workload updated event", event)
 	}
 }
 
@@ -150,60 +204,6 @@ func TestRequestsForWorkloadMatchesKindAndName(t *testing.T) {
 	}
 }
 
-func TestReconcilePutConfigDigestUpdatesWorkload(t *testing.T) {
-	clientExtension := newClientExtension("liferay-dev", "able", "liferay-cx")
-
-	clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able"}
-
-	dxpMetadata := newDxpMetadata("liferay-dev", "liferay.com")
-
-	dxpMetadata.Data = map[string]string{"com.liferay.lxc.dxp.mainDomain": "liferay.example.com"}
-
-	clientExtensionReconciler := newReconciler(
-		nil, t, clientExtension, dxpMetadata, newDeployment(newInitializedPodTemplate()), newDxpNamespace("liferay-cx"),
-	)
-
-	recorder := record.NewFakeRecorder(10)
-
-	clientExtensionReconciler.Recorder = recorder
-
-	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
-
-	firstDigest := getConfigDigest(clientExtensionReconciler, t)
-
-	if configDigest(dxpMetadata) != firstDigest {
-		t.Fatalf("digest = %q, want the digest of the dxp metadata", firstDigest)
-	}
-
-	if len(recorder.Events) != 0 {
-		t.Errorf("Expected no rollout event for the first digest, got %d", len(recorder.Events))
-	}
-
-	dxpMetadata.Data["com.liferay.lxc.dxp.mainDomain"] = "uat.example.com"
-
-	if error := clientExtensionReconciler.Update(
-		context.Background(), dxpMetadata,
-	); error != nil {
-		t.Fatal(error)
-	}
-
-	reconcileClientExtension(clientExtension, clientExtensionReconciler, t)
-
-	if secondDigest := getConfigDigest(
-		clientExtensionReconciler, t,
-	); firstDigest == secondDigest {
-		t.Error("Expected a change to the dxp metadata to change the digest")
-	}
-
-	if len(recorder.Events) != 1 {
-		t.Fatalf("Expected one update workload event, got %d", len(recorder.Events))
-	}
-
-	if event := <-recorder.Events; !strings.HasPrefix(event, corev1.EventTypeNormal+" WorkloadUpdated ") {
-		t.Errorf("event = %q, want a workload updated event", event)
-	}
-}
-
 func TestValidatePodTemplate(t *testing.T) {
 	testCases := map[string]struct {
 		change     func(podTemplate *corev1.PodTemplateSpec)
@@ -246,7 +246,7 @@ func TestValidatePodTemplate(t *testing.T) {
 			)
 
 			if !slices.Equal(workloadIssues, testCase.wantIssues) {
-				t.Errorf("validatePodtemplate() = %q, want %q", workloadIssues, testCase.wantIssues)
+				t.Errorf("validatePodTemplate() = %q, want %q", workloadIssues, testCase.wantIssues)
 			}
 		})
 	}

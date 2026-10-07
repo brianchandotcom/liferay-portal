@@ -425,7 +425,24 @@ function _install_liferay_platform_chart {
 		--slurpfile configuration "${configuration_json_file}" \
 		'{
 			platformComponents: {
-				values: (($configuration[0].platformComponents.values // {}) * {
+				values: (({
+					networkPolicy: {
+						apiServerSources: [
+							{
+								namespaceSelector: {
+									matchLabels: {
+										"kubernetes.io/metadata.name": "kube-system"
+									}
+								},
+								podSelector: {
+									matchLabels: {
+										app: "konnectivity-agent"
+									}
+								}
+							}
+						]
+					}
+				} * ($configuration[0].platformComponents.values // {})) * {
 					clusterSecretStore: {
 						enabled: true,
 						name: ($platform_module_outputs.deployment_context.value.deploymentName + "-secret-store"),
@@ -442,22 +459,6 @@ function _install_liferay_platform_chart {
 					},
 					liferay: {
 						parameters: $liferay_parameters
-					},
-					networkPolicy: {
-						apiServerSources: [
-							{
-								namespaceSelector: {
-									matchLabels: {
-										"kubernetes.io/metadata.name": "kube-system"
-									}
-								},
-								podSelector: {
-									matchLabels: {
-										"k8s-app": "konnectivity-agent"
-									}
-								}
-							}
-						]
 					},
 					observability: {
 						parameters: $observability_parameters

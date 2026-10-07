@@ -1,8 +1,6 @@
 {{- $keda := .Values.operatorApplications.keda -}}
 {{- if $keda.enabled -}}
-{{- if not .Values.networkPolicy.apiServerSources -}}
-{{- fail "The value \"networkPolicy.apiServerSources\" must not be empty when \"operatorApplications.keda.enabled\" is true" -}}
-{{- end -}}
+{{- include "liferay-platform.requireAPIServerSources" (dict "apiServerSources" .Values.networkPolicy.apiServerSources "operatorApplication" "keda") -}}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

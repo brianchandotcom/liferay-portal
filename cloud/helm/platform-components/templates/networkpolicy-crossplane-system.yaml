@@ -1,8 +1,6 @@
 {{- $crossplane := .Values.operatorApplications.crossplane -}}
 {{- if $crossplane.enabled -}}
-{{- if not .Values.networkPolicy.apiServerSources -}}
-{{- fail "The value \"networkPolicy.apiServerSources\" must not be empty when \"operatorApplications.crossplane.enabled\" is true" -}}
-{{- end -}}
+{{- include "liferay-platform.requireAPIServerSources" (dict "apiServerSources" .Values.networkPolicy.apiServerSources "operatorApplication" "crossplane") -}}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

@@ -47,6 +47,12 @@ pod-security.kubernetes.io/enforce: restricted
 liferay.com/project: liferay-cloud-native
 {{- end -}}
 
+{{- define "liferay-platform.requireAPIServerSources" -}}
+{{- if not .apiServerSources -}}
+{{- fail (printf "The value \"networkPolicy.apiServerSources\" must not be empty when \"operatorApplications.%s.enabled\" is true" .operatorApplication) -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "liferay-platform.sourceRepoBase" -}}
 {{- if hasPrefix "oci://" . -}}
 {{- $parts := splitList "/" (trimPrefix "oci://" .) -}}

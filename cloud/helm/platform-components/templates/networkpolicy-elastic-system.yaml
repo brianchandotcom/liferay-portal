@@ -1,8 +1,6 @@
 {{- $eckOperator := .Values.operatorApplications.eckOperator -}}
 {{- if $eckOperator.enabled -}}
-{{- if not .Values.networkPolicy.apiServerSources -}}
-{{- fail "The value \"networkPolicy.apiServerSources\" must not be empty when \"operatorApplications.eckOperator.enabled\" is true" -}}
-{{- end -}}
+{{- include "liferay-platform.requireAPIServerSources" (dict "apiServerSources" .Values.networkPolicy.apiServerSources "operatorApplication" "eckOperator") -}}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

@@ -112,7 +112,6 @@
 		"babel-plugin-import-graphql": "^2.6.2",
 		"babel-plugin-lodash": "^3.2.11",
 		"babel-plugin-transform-require-context": "^0.1.1",
-		"coveralls": "^3.0.5",
 		"cross-env": "^5.1.4",
 		"css-loader": "^3.2.0",
 		"dotenv": "^8.2.0",
@@ -166,7 +165,6 @@
 	"repository": "https://github.com/liferay-ac/liferay-portal",
 	"scripts": {
 		"checkFormat": "node format.mjs --check",
-		"coveralls": "cat ./coverage/lcov.info | coveralls",
 		"email": "mjml -l strict \"src/main/templates/email/*.mjml\" -o \"../osb-faro-service/src/main/resources/com/liferay/osb/faro/dependencies\"",
 		"format": "node format.mjs",
 		"start": "cross-env FARO_ENVIRONMENT_NAME=local webpack-dev-server --config webpack.dev.js",

@@ -115,12 +115,6 @@ public class OpenIdConnectPortalCatapultHeaderContributorTest {
 
 	private void _setUpMocks() {
 		Mockito.when(
-			_openIdConnectSessionLocalService.fetchCurrentOpenIdConnectSession()
-		).thenReturn(
-			_openIdConnectSession
-		);
-
-		Mockito.when(
 			_openIdConnectSession.getCompanyId()
 		).thenReturn(
 			_COMPANY_ID
@@ -145,10 +139,9 @@ public class OpenIdConnectPortalCatapultHeaderContributorTest {
 		);
 
 		Mockito.when(
-			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
-				Mockito.anyLong(), Mockito.any(), Mockito.any())
+			_openIdConnectSessionLocalService.fetchCurrentOpenIdConnectSession()
 		).thenReturn(
-			_oAuthClientEntry
+			_openIdConnectSession
 		);
 
 		Mockito.when(
@@ -157,6 +150,13 @@ public class OpenIdConnectPortalCatapultHeaderContributorTest {
 			JSONUtil.put(
 				"allow_upstream_token_forwarding", true
 			).toString()
+		);
+
+		Mockito.when(
+			_oAuthClientEntryLocalService.fetchOAuthClientEntry(
+				Mockito.anyLong(), Mockito.any(), Mockito.any())
+		).thenReturn(
+			_oAuthClientEntry
 		);
 	}
 

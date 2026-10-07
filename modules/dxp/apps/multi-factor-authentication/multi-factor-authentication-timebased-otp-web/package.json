@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"qrcode": "1.4.4"
+		"qrcode": "1.5.4"
 	},
 	"main": "js/index.js",
 	"name": "multi-factor-authentication-timebased-otp-web",

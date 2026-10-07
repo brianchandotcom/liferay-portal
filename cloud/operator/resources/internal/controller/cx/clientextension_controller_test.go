@@ -11,6 +11,8 @@ import (
 	"time"
 
 	cxv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/cx/v1alpha1"
+	appsv1 "k8s.io/api/apps/v1"
+	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -1275,11 +1277,11 @@ func newDxpNamespace(allowedNamespaces string) *corev1.Namespace {
 	}
 }
 
-func newExtInit(externalReferenceCodes ...string) *corev1.ConfigMap {
+func newExtInit(identifiers ...string) *corev1.ConfigMap {
 	data := map[string]string{}
 
-	for _, externalReferenceCode := range externalReferenceCodes {
-		data[externalReferenceCode+".oauth2.token.uri"] = "/o/oauth2/token"
+	for _, identifier := range identifiers {
+		data[identifier+".oauth2.token.uri"] = "/o/oauth2/token"
 	}
 
 	return &corev1.ConfigMap{
@@ -1316,6 +1318,14 @@ func newReconciler(
 	t.Helper()
 
 	scheme := runtime.NewScheme()
+
+	if error := appsv1.AddToScheme(scheme); error != nil {
+		t.Fatal(error)
+	}
+
+	if error := batchv1.AddToScheme(scheme); error != nil {
+		t.Fatal(error)
+	}
 
 	if error := corev1.AddToScheme(scheme); error != nil {
 		t.Fatal(error)

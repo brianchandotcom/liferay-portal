@@ -140,7 +140,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) workloadCondition(
 		MountPathDxpMetadata, podTemplate,
 	)
 
-	if len(extInitFactoryPIDs(clientExtension)) > 0 {
+	if len(extInitIdentifiers(clientExtension)) > 0 {
 		workloadIssues = append(
 			workloadIssues,
 			validatePodTemplate(

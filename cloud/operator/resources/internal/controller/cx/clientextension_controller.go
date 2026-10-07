@@ -87,7 +87,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 			newCondition(
 				metav1.ConditionFalse, refusalMessage(&clientExtension, dxpNamespace, refusedReason), refusedReason,
 			),
-			"", nil, nil,
+			"", nil, nil, nil, nil,
 		); error != nil {
 			return controllerruntime.Result{}, error
 		}
@@ -127,7 +127,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 				metav1.ConditionFalse, unknownVirtualInstanceMessage(&clientExtension, dxpNamespace),
 				ReasonUnknownVirtualInstance,
 			),
-			"", nil, nil,
+			"", nil, nil, nil, nil,
 		)
 	}
 
@@ -153,7 +153,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 					),
 					ReasonDeliveryNotPermitted,
 				),
-				"", nil, nil,
+				"", nil, nil, nil, nil,
 			)
 	}
 
@@ -168,7 +168,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 				metav1.ConditionFalse, serviceIDConflictMessage(&clientExtension, conflictingConfigMap),
 				ReasonServiceIDConflict,
 			),
-			"", nil, nil,
+			"", nil, nil, nil, nil,
 		)
 	}
 
@@ -223,10 +223,19 @@ func (clientExtensionReconciler *ClientExtensionReconciler) Reconcile(
 		result.RequeueAfter = refusalRequeueInterval
 	}
 
+	workloadAcceptedCondition, workloadIssues, error := clientExtensionReconciler.workloadCondition(
+		&clientExtension, context,
+	)
+
+	if error != nil {
+		return controllerruntime.Result{}, error
+	}
+
 	if error := clientExtensionReconciler.updateStatus(
 		&clientExtension, context,
 		newCondition(metav1.ConditionTrue, message, ReasonDelivered),
 		extProvisionResourceVersion, &mirroredCondition, &provisionedCondition,
+		&workloadAcceptedCondition, workloadIssues,
 	); error != nil {
 		return controllerruntime.Result{}, error
 	}
@@ -493,9 +502,9 @@ func (clientExtensionReconciler *ClientExtensionReconciler) provisionedCondition
 	context context.Context,
 	dxpNamespace string,
 ) (metav1.Condition, *corev1.ConfigMap, error) {
-	externalReferenceCodes := extInitApplicationERCs(clientExtension)
+	identifiers := extInitIdentifiers(clientExtension)
 
-	if len(externalReferenceCodes) == 0 {
+	if len(identifiers) == 0 {
 		return newCondition(
 			metav1.ConditionTrue,
 			"The configs declare no OAuth2 application, so they require no ext-init ConfigMap from DXP.",
@@ -519,22 +528,20 @@ func (clientExtensionReconciler *ClientExtensionReconciler) provisionedCondition
 		existingExtInitConfigMap = &extInitConfigMap
 	}
 
-	var missingExternalReferenceCodes []string
+	var missingIdentifiers []string
 
-	for _, externalReferenceCode := range externalReferenceCodes {
-		if _, ok := extInitConfigMap.Data[externalReferenceCode+".oauth2.token.uri"]; !ok {
-			missingExternalReferenceCodes = append(
-				missingExternalReferenceCodes, fmt.Sprintf("%q", externalReferenceCode),
-			)
+	for _, identifier := range identifiers {
+		if _, ok := extInitConfigMap.Data[identifier+".oauth2.token.uri"]; !ok {
+			missingIdentifiers = append(missingIdentifiers, fmt.Sprintf("%q", identifier))
 		}
 	}
 
-	if len(missingExternalReferenceCodes) > 0 {
+	if len(missingIdentifiers) > 0 {
 		return newCondition(
 			metav1.ConditionFalse,
 			fmt.Sprintf(
 				"DXP has not written the OAuth2 applications %s to ConfigMap %q in namespace %q.",
-				strings.Join(missingExternalReferenceCodes, ", "), extInitConfigMapName.Name,
+				strings.Join(missingIdentifiers, ", "), extInitConfigMapName.Name,
 				extInitConfigMapName.Namespace,
 			),
 			ReasonExtInitMissing,
@@ -735,6 +742,8 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 	extProvisionResourceVersion string,
 	mirrored *metav1.Condition,
 	provisioned *metav1.Condition,
+	workloadAccepted *metav1.Condition,
+	workloadIssues []string,
 ) error {
 	status := clientExtension.Status.DeepCopy()
 
@@ -744,6 +753,7 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 
 	conditions = appendOptionalCondition(conditions, mirrored, cxv1alpha1.ConditionMirrored, status)
 	conditions = appendOptionalCondition(conditions, provisioned, cxv1alpha1.ConditionProvisioned, status)
+	conditions = appendOptionalCondition(conditions, workloadAccepted, cxv1alpha1.ConditionWorkloadAccepted, status)
 
 	ready := readyCondition(conditions)
 
@@ -768,7 +778,16 @@ func (clientExtensionReconciler *ClientExtensionReconciler) updateStatus(
 
 	status.ObservedGeneration = clientExtension.Generation
 
-	if (ready.Reason == ReasonExtInitMissing) && (extInitGraceRemaining(status) > 0) {
+	status.WorkloadIssues = workloadIssues
+	status.WorkloadName = ""
+
+	if (clientExtension.Spec.WorkloadRef != nil) && (workloadAccepted != nil) {
+		status.WorkloadName = clientExtension.Spec.WorkloadRef.Name
+	}
+
+	if ((ready.Reason == ReasonExtInitMissing) && (extInitGraceRemaining(status) > 0)) ||
+		(ready.Reason == ReasonWorkloadNotFound) {
+
 		status.Phase = cxv1alpha1.PhasePending
 	} else if ready.Status == metav1.ConditionTrue {
 		status.Phase = cxv1alpha1.PhaseReady

@@ -4,8 +4,98 @@ import (
 	"slices"
 	"testing"
 
+	cxv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/cx/v1alpha1"
+	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
+
+func TestReconcileReportsWorkload(t *testing.T) {
+	testCases := map[string]struct {
+		objects     []client.Object
+		wantIssues  []string
+		wantPhase   string
+		wantReason  string
+		wantStatus  metav1.ConditionStatus
+		workloadRef bool
+	}{
+		"a workload that does not exist yet": {
+			wantPhase:   cxv1alpha1.PhasePending,
+			wantReason:  ReasonWorkloadNotFound,
+			wantStatus:  metav1.ConditionFalse,
+			workloadRef: true,
+		},
+		"a workload that does not mount dxp-metadata": {
+			objects:     []client.Object{newDeployment(corev1.PodTemplateSpec{})},
+			wantIssues:  []string{`No volume holds ConfigMap "liferay.com-lxc-dxp-metadata".`},
+			wantPhase:   cxv1alpha1.PhaseDegraded,
+			wantReason:  ReasonWorkloadMisconfigured,
+			wantStatus:  metav1.ConditionFalse,
+			workloadRef: true,
+		},
+		"an initialized workload": {
+			objects:     []client.Object{newDeployment(newInitializedPodTemplate())},
+			wantPhase:   cxv1alpha1.PhaseReady,
+			wantReason:  ReasonInitialized,
+			wantStatus:  metav1.ConditionTrue,
+			workloadRef: true,
+		},
+		"no workload": {
+			wantPhase:   cxv1alpha1.PhaseReady,
+			wantReason:  ReasonConfigurationOnly,
+			wantStatus:  metav1.ConditionTrue,
+			workloadRef: false,
+		},
+	}
+
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			clientExtension := newClientExtension("liferay-dev", "able", "able")
+
+			if testCase.workloadRef {
+				clientExtension.Spec.WorkloadRef = &cxv1alpha1.WorkloadRef{
+					Kind: cxv1alpha1.WorkloadKindDeployment, Name: "able",
+				}
+			}
+
+			clientExtensionReconciler := newReconciler(
+				nil, t,
+				append(
+					testCase.objects, clientExtension,
+					newDxpMetadata("liferay-dev", "liferay.com"), newDxpNamespace("able"),
+				)...,
+			)
+
+			if phase, _ := reconcileClientExtension(
+				clientExtension, clientExtensionReconciler, t,
+			); phase != testCase.wantPhase {
+				t.Errorf("phase = %q, want %q", phase, testCase.wantPhase)
+			}
+
+			workloadAccepted := getCondition(
+				clientExtension, clientExtensionReconciler,
+				cxv1alpha1.ConditionWorkloadAccepted, t,
+			)
+
+			if (testCase.wantReason != workloadAccepted.Reason) ||
+				(testCase.wantStatus != workloadAccepted.Status) ||
+				(workloadAccepted == nil) {
+
+				t.Errorf(
+					"WorkloadAccepted = %v, want %s / %s", workloadAccepted,
+					testCase.wantReason, testCase.wantStatus,
+				)
+			}
+
+			clientExtension = getClientExtension(clientExtension, clientExtensionReconciler, t)
+
+			if workloadIssues := clientExtension.Status.WorkloadIssues; !slices.Equal(workloadIssues, testCase.wantIssues) {
+				t.Errorf("workloadIssues = %q, want %q", workloadIssues, testCase.wantIssues)
+			}
+		})
+	}
+}
 
 func TestValidatePodTemplate(t *testing.T) {
 	testCases := map[string]struct {
@@ -52,6 +142,13 @@ func TestValidatePodTemplate(t *testing.T) {
 				t.Errorf("validatePodtemplate() = %q, want %q", workloadIssues, testCase.wantIssues)
 			}
 		})
+	}
+}
+
+func newDeployment(podTemplate corev1.PodTemplateSpec) *appsv1.Deployment {
+	return &appsv1.Deployment{
+		ObjectMeta: metav1.ObjectMeta{Name: "able", Namespace: "able"},
+		Spec:       appsv1.DeploymentSpec{Template: podTemplate},
 	}
 }
 

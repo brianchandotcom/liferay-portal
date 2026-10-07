@@ -59,10 +59,12 @@ func effectiveDxpNamespace(clientExtension *cxv1alpha1.ClientExtension) string {
 	return clientExtension.Namespace
 }
 
-func extInitApplicationERCs(clientExtension *cxv1alpha1.ClientExtension) []string {
-	var externalReferenceCodes []string
+func extInitIdentifiers(clientExtension *cxv1alpha1.ClientExtension) []string {
+	var identifiers []string
 
-	for pid := range clientExtension.Spec.Configs {
+	for configurationKey := range clientExtension.Spec.Configs {
+		pid, _, _ := strings.Cut(configurationKey, "/")
+
 		for _, separator := range []string{"~", "_", "-"} {
 			index := strings.Index(pid, separator)
 
@@ -70,23 +72,21 @@ func extInitApplicationERCs(clientExtension *cxv1alpha1.ClientExtension) []strin
 				continue
 			}
 
-			if !slices.Contains(extInitFactoryPIDs, pid[:index]) {
+			if !slices.Contains(extInitFactoryConfigurationIDs, pid[:index]) {
 				break
 			}
 
-			externalReferenceCode, _, _ := strings.Cut(pid[index+1:], "/")
-
-			if externalReferenceCode != "" {
-				externalReferenceCodes = append(externalReferenceCodes, externalReferenceCode)
+			if identifier := pid[index+1:]; identifier != "" {
+				identifiers = append(identifiers, identifier)
 			}
 
 			break
 		}
 	}
 
-	slices.Sort(externalReferenceCodes)
+	slices.Sort(identifiers)
 
-	return slices.Compact(externalReferenceCodes)
+	return slices.Compact(identifiers)
 }
 
 func extInitName(clientExtension *cxv1alpha1.ClientExtension) string {
@@ -133,7 +133,7 @@ func ownsMirrorAlone(clientExtension *cxv1alpha1.ClientExtension, configMap *cor
 		)
 }
 
-var extInitFactoryPIDs = []string{
+var extInitFactoryConfigurationIDs = []string{
 	"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration",
 	"com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration",
 }

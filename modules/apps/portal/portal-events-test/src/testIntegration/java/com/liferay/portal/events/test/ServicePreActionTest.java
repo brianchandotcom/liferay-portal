@@ -10,6 +10,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
@@ -54,6 +55,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -393,6 +395,27 @@ public class ServicePreActionTest {
 
 		_testInitThemeDisplayPortalImpersonationEnable(false);
 		_testInitThemeDisplayPortalImpersonationEnable(true);
+	}
+
+	@Test
+	public void testInitThemeDisplaySupportCookie() throws Exception {
+		_servicePreAction.servicePre(
+			_mockHttpServletRequest, _mockHttpServletResponse, false);
+
+		Cookie cookie = _mockHttpServletResponse.getCookie(
+			CookiesConstants.NAME_COOKIE_SUPPORT);
+
+		Assert.assertEquals("true", cookie.getValue());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servicePreAction.servicePre(
+			_mockHttpServletRequest, mockHttpServletResponse, false);
+
+		Assert.assertNull(
+			mockHttpServletResponse.getCookie(
+				CookiesConstants.NAME_COOKIE_SUPPORT));
 	}
 
 	private Layout _getLayout(Object layoutComposite) {

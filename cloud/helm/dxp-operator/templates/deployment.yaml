@@ -125,6 +125,8 @@ spec:
                         claimName: {{ .Values.marketplace.claimName }}
                 {{- end }}
                 {{- range $k, $v := .Values.customVolumes }}
+                {{- if and $v (gt (len $v) 0) }}
                 {{- toYaml $v | nindent 16 }}
+                {{- end }}
                 {{- end }}
             {{- end }}

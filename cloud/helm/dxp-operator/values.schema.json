@@ -1,0 +1,379 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"additionalProperties": false,
+	"description": "Values for the Liferay DXP operator chart.",
+	"properties": {
+		"affinity": {
+			"description": "Pod affinity for the operator.",
+			"type": "object"
+		},
+		"customEnv": {
+			"additionalProperties": {
+				"type": [
+					"array",
+					"null"
+				]
+			},
+			"description": "Named lists of extra environment variables for the operator container, such as HTTPS_PROXY and NO_PROXY. Set a key to null to remove it.",
+			"type": "object"
+		},
+		"customLabels": {
+			"description": "Extra labels added to every resource the chart creates.",
+			"type": "object"
+		},
+		"customVolumeMounts": {
+			"additionalProperties": {
+				"type": [
+					"array",
+					"null"
+				]
+			},
+			"description": "Named lists of extra volume mounts for the operator container. Set a key to null to remove it.",
+			"type": "object"
+		},
+		"customVolumes": {
+			"additionalProperties": {
+				"type": [
+					"array",
+					"null"
+				]
+			},
+			"description": "Named lists of extra pod volumes, such as a private CA bundle. Set a key to null to remove it.",
+			"type": "object"
+		},
+		"debug": {
+			"description": "Enables debug logging.",
+			"type": "boolean"
+		},
+		"downloadPollInterval": {
+			"description": "How often add-on downloads are polled, as a Go duration.",
+			"maximum": 0,
+			"minimum": 0,
+			"pattern": "^(0|([0-9]+([.][0-9]+)?(ns|us|µs|μs|ms|s|m|h))+)$",
+			"type": [
+				"integer",
+				"string"
+			]
+		},
+		"enabled": {
+			"description": "Set by a parent chart that includes this chart as a conditional subchart.",
+			"type": "boolean"
+		},
+		"expirationGracePeriod": {
+			"description": "How long an expired license keeps a ceiling of one replica before dropping to zero, as a Go duration.",
+			"maximum": 0,
+			"minimum": 0,
+			"pattern": "^(0|([0-9]+([.][0-9]+)?(ns|us|µs|μs|ms|s|m|h))+)$",
+			"type": [
+				"integer",
+				"string"
+			]
+		},
+		"fullnameOverride": {
+			"description": "Overrides the full name of the chart's resources.",
+			"type": "string"
+		},
+		"global": {
+			"description": "Global values shared by a parent chart.",
+			"type": "object"
+		},
+		"heartbeatInterval": {
+			"description": "How often the license manifest is refreshed, as a Go duration.",
+			"maximum": 0,
+			"minimum": 0,
+			"pattern": "^(0|([0-9]+([.][0-9]+)?(ns|us|µs|μs|ms|s|m|h))+)$",
+			"type": [
+				"integer",
+				"string"
+			]
+		},
+		"image": {
+			"additionalProperties": false,
+			"description": "Operator container image.",
+			"properties": {
+				"pullPolicy": {
+					"description": "Image pull policy.",
+					"enum": [
+						"Always",
+						"IfNotPresent",
+						"Never"
+					],
+					"type": "string"
+				},
+				"pullSecrets": {
+					"description": "Image pull secrets for the operator pod.",
+					"type": "array"
+				},
+				"repository": {
+					"description": "Operator image repository.",
+					"type": "string"
+				},
+				"tag": {
+					"description": "Operator image tag.",
+					"type": [
+						"integer",
+						"string"
+					]
+				}
+			},
+			"type": "object"
+		},
+		"marketplace": {
+			"additionalProperties": false,
+			"description": "Shared marketplace volume the operator downloads add-ons into.",
+			"if": {
+				"properties": {
+					"enabled": {
+						"const": true
+					}
+				},
+				"required": [
+					"enabled"
+				]
+			},
+			"properties": {
+				"claimName": {
+					"description": "Name of the persistent volume claim to mount. Required when the marketplace is enabled.",
+					"type": "string"
+				},
+				"csi": {
+					"additionalProperties": false,
+					"description": "CSI settings for a statically provisioned marketplace volume. The chart creates the volume and claim only when the driver and volume handle are both set.",
+					"properties": {
+						"driver": {
+							"description": "CSI driver name.",
+							"type": "string"
+						},
+						"volumeAttributes": {
+							"description": "CSI volume attributes.",
+							"type": "object"
+						},
+						"volumeHandle": {
+							"description": "CSI volume handle.",
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"enabled": {
+					"description": "Mounts the marketplace volume into the operator.",
+					"type": "boolean"
+				},
+				"mountPath": {
+					"description": "Path the marketplace volume is mounted at.",
+					"type": "string"
+				},
+				"size": {
+					"description": "Capacity of the statically provisioned volume and claim.",
+					"type": "string"
+				}
+			},
+			"then": {
+				"properties": {
+					"claimName": {
+						"minLength": 1
+					}
+				},
+				"required": [
+					"claimName"
+				]
+			},
+			"type": "object"
+		},
+		"metrics": {
+			"additionalProperties": false,
+			"description": "Metrics endpoint.",
+			"properties": {
+				"port": {
+					"description": "Metrics port.",
+					"maximum": 65535,
+					"minimum": 1,
+					"type": "integer"
+				}
+			},
+			"type": "object"
+		},
+		"nameOverride": {
+			"description": "Overrides the chart name used in resource names.",
+			"type": "string"
+		},
+		"namespaceOverride": {
+			"description": "Installs the namespaced resources into this namespace instead of the release namespace.",
+			"type": "string"
+		},
+		"nodeSelector": {
+			"description": "Node selector for the operator pod.",
+			"type": "object"
+		},
+		"onlineActivationWorkflow": {
+			"additionalProperties": false,
+			"description": "Argo Workflows ClusterWorkflowTemplate for online activation. Requires Argo Workflows.",
+			"properties": {
+				"defaultEnvironmentName": {
+					"description": "LiferayEnvironment name the workflow targets by default.",
+					"type": "string"
+				},
+				"enabled": {
+					"description": "Creates the online activation workflow template and its RBAC.",
+					"type": "boolean"
+				},
+				"image": {
+					"additionalProperties": false,
+					"description": "Image the workflow steps run.",
+					"properties": {
+						"repository": {
+							"description": "Workflow image repository.",
+							"type": "string"
+						},
+						"tag": {
+							"description": "Image tag.",
+							"type": [
+								"integer",
+								"string"
+							]
+						}
+					},
+					"type": "object"
+				},
+				"resources": {
+					"description": "Resource requests and limits for the workflow steps.",
+					"type": "object"
+				},
+				"serviceAccountName": {
+					"description": "Service account the workflow runs as.",
+					"type": "string"
+				},
+				"ttlSecondsAfterCompletion": {
+					"description": "Seconds a finished workflow is kept.",
+					"minimum": 0,
+					"type": "integer"
+				},
+				"waitTimeoutSeconds": {
+					"description": "Seconds the workflow waits for activation to complete.",
+					"minimum": 1,
+					"type": "integer"
+				}
+			},
+			"type": "object"
+		},
+		"podAnnotations": {
+			"description": "Annotations added to the operator pod.",
+			"type": "object"
+		},
+		"podSecurityContext": {
+			"description": "Pod security context for the operator.",
+			"type": "object"
+		},
+		"probes": {
+			"additionalProperties": false,
+			"description": "Health probe endpoint.",
+			"properties": {
+				"port": {
+					"description": "Health probe port.",
+					"maximum": 65535,
+					"minimum": 1,
+					"type": "integer"
+				}
+			},
+			"type": "object"
+		},
+		"provisioning": {
+			"additionalProperties": false,
+			"description": "Liferay provisioning service.",
+			"properties": {
+				"baseURL": {
+					"description": "Base URL of the provisioning service the operator activates against.",
+					"pattern": "^https?://",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"provisioningGracePeriod": {
+			"description": "How long the last known license is honored while the provisioning service is unreachable, as a Go duration.",
+			"maximum": 0,
+			"minimum": 0,
+			"pattern": "^(0|([0-9]+([.][0-9]+)?(ns|us|µs|μs|ms|s|m|h))+)$",
+			"type": [
+				"integer",
+				"string"
+			]
+		},
+		"rbac": {
+			"additionalProperties": false,
+			"description": "RBAC resources.",
+			"properties": {
+				"create": {
+					"description": "Creates the operator ClusterRole and ClusterRoleBinding.",
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"replicaCount": {
+			"description": "Operator replicas. The operator runs no leader election, so at most one.",
+			"maximum": 1,
+			"minimum": 0,
+			"type": "integer"
+		},
+		"resources": {
+			"description": "Resource requests and limits for the operator container.",
+			"type": "object"
+		},
+		"retry": {
+			"additionalProperties": false,
+			"description": "Backoff between failed provisioning calls.",
+			"properties": {
+				"initialDelay": {
+					"description": "First retry delay, as a Go duration.",
+					"maximum": 0,
+					"minimum": 0,
+					"pattern": "^(0|([0-9]+([.][0-9]+)?(ns|us|µs|μs|ms|s|m|h))+)$",
+					"type": [
+						"integer",
+						"string"
+					]
+				},
+				"maxDelay": {
+					"description": "Longest retry delay, as a Go duration.",
+					"maximum": 0,
+					"minimum": 0,
+					"pattern": "^(0|([0-9]+([.][0-9]+)?(ns|us|µs|μs|ms|s|m|h))+)$",
+					"type": [
+						"integer",
+						"string"
+					]
+				}
+			},
+			"type": "object"
+		},
+		"securityContext": {
+			"description": "Container security context for the operator.",
+			"type": "object"
+		},
+		"serviceAccount": {
+			"additionalProperties": false,
+			"description": "Operator service account.",
+			"properties": {
+				"annotations": {
+					"description": "Annotations added to the service account.",
+					"type": "object"
+				},
+				"create": {
+					"description": "Creates the service account.",
+					"type": "boolean"
+				},
+				"name": {
+					"description": "Service account name. Defaults to the full name when created, or default otherwise.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"tolerations": {
+			"description": "Tolerations for the operator pod.",
+			"type": "array"
+		}
+	},
+	"type": "object"
+}

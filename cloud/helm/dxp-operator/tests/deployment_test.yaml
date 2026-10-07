@@ -174,18 +174,20 @@ tests:
                         -   configMap:
                                 name: custom-ca
                             name: custom-ca
-        it: Mounts the custom volumes without the marketplace volume
+        it: Mounts the custom volumes without the marketplace volume and skips emptied entries
         set:
             customVolumeMounts:
                 x-ca:
                     -   mountPath: /etc/ssl/custom
                         name: custom-ca
                         readOnly: true
+                x-disabled: null
             customVolumes:
                 x-ca:
                     -   configMap:
                             name: custom-ca
                         name: custom-ca
+                x-disabled: null
     -   asserts:
             -   equal:
                     path: spec.template.spec.serviceAccountName
@@ -265,12 +267,12 @@ tests:
     -   asserts:
             -   equal:
                     path: spec.replicas
-                    value: 3
+                    value: 0
             -   isKind:
                     of: Deployment
         it: Reflects the configured replica count
         set:
-            replicaCount: 3
+            replicaCount: 0
     -   asserts:
             -   equal:
                     path: spec.template.metadata.annotations

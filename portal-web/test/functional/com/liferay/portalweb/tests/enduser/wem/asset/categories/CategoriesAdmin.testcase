@@ -369,7 +369,7 @@ definition {
 	@description = "This is a test for LPS-131984. The user could view the description of vocabulary in Categories admin."
 	@priority = 5
 	@uitest
-	test ViewDescriptionOfVocabulary {
+	test ViewDefaultMaximumNumberOfCategoriesAndDescriptionOfVocabulary {
 		property portal.acceptance = "true";
 
 		task ("Navigate to the Categories admin") {

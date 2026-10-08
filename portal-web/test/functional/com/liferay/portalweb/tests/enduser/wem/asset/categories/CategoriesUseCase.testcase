@@ -551,15 +551,21 @@ definition {
 		}
 
 		task ("Search categories by description") {
-			for (var categoryDescription : list "brown,black") {
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-				Category.searchCP(
-					categorySearchEntry = ${categoryDescription},
-					vocabularyName = "Vocabulary Name");
+			Category.searchCP(
+				categorySearchEntry = "brown",
+				vocabularyName = "Vocabulary Name");
 
-				Category.viewSearchResultsCP(categoryDefinitionList = ${categoryDescription});
-			}
+			Category.viewSearchResultsCP(categoryDescriptionList = "brown or white");
+
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.searchCP(
+				categorySearchEntry = "black",
+				vocabularyName = "Vocabulary Name");
+
+			Category.viewSearchResultsCP(categoryDescriptionList = "black and white");
 
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -568,7 +574,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 
 			Category.viewSearchResultsCP(
-				categoryDefinitionList = "brown or white,black and white",
+				categoryDescriptionList = "brown or white,black and white",
 				categoryNameList = "llama,panda");
 		}
 	}

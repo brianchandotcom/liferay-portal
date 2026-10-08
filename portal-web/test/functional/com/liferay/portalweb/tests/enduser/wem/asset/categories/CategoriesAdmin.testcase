@@ -248,7 +248,7 @@ definition {
 
 	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Categories in the edit mode of the elements of Categories."
 	@priority = 3
-	test ViewBackButtonTooltipForCategoriesAdmin {
+	test ViewBackButtonTooltipAndMoveBetweenVocabularies {
 		task ("Given a site administrator adds a vocabulary") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 

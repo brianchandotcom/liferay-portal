@@ -294,7 +294,7 @@ definition {
 
 	@description = "This test makes sure that the documents can be filtered by category."
 	@priority = 4
-	test CanFilterByCategory {
+	test CanFilterDocumentsByCategoryExtensionAndTag {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

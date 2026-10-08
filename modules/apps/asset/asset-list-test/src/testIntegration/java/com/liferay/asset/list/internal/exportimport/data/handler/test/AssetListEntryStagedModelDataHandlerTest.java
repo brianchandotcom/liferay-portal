@@ -6,7 +6,10 @@
 package com.liferay.asset.list.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.constants.AssetListConstants;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -14,11 +17,15 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.list.test.util.AssetListTestUtil;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
@@ -64,8 +71,12 @@ public class AssetListEntryStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	@TestInfo({"LPD-86116", "LPD-86506", "LPD-102486", "LPD-103053"})
+	@TestInfo(
+		{"LPD-86116", "LPD-86506", "LPD-102486", "LPD-103053", "LPD-106171"}
+	)
 	public void testExportImportAssetListEntry() throws Exception {
+		_testExportImportAssetListEntryWithAssetCategoryFilters();
+		_testExportImportAssetListEntryWithLegacyQueryRules();
 		_testExportImportAssetListEntryWithNonexistentClassName();
 		_testExportImportAssetListEntryWithNonexistentClassNames();
 		_testExportImportAssetListEntryWithOnlyNonexistentClassNameIds();
@@ -200,6 +211,105 @@ public class AssetListEntryStagedModelDataHandlerTest
 		).build();
 	}
 
+	private void _testExportImportAssetListEntryWithAssetCategoryFilters()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			stagingGroup.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			stagingGroup.getGroupId(), assetVocabulary.getVocabularyId());
+
+		UnicodeProperties unicodeProperties = _exportImportAssetListEntry(
+			UnicodePropertiesBuilder.put(
+				"filters",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"operatorName", "contains"
+					).put(
+						"propertyName", "assetCategories"
+					).put(
+						"quantifier", "any"
+					).put(
+						"value",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"value",
+								String.valueOf(assetCategory.getCategoryId())))
+					)
+				).toString()
+			).buildString());
+
+		JSONArray filtersJSONArray = _jsonFactory.createJSONArray(
+			unicodeProperties.getProperty("filters"));
+
+		Assert.assertEquals(
+			filtersJSONArray.toString(), 1, filtersJSONArray.length());
+
+		AssetCategory importedAssetCategory =
+			_assetCategoryLocalService.fetchAssetCategoryByUuidAndGroupId(
+				assetCategory.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			String.valueOf(importedAssetCategory.getCategoryId()),
+			JSONUtil.getValueAsString(
+				filtersJSONArray, "JSONObject/0", "JSONArray/value",
+				"JSONObject/0", "Object/value"));
+	}
+
+	private void _testExportImportAssetListEntryWithLegacyQueryRules()
+		throws Exception {
+
+		String assetTagName = RandomTestUtil.randomString();
+		String keyword = RandomTestUtil.randomString();
+
+		UnicodeProperties unicodeProperties = _exportImportAssetListEntry(
+			UnicodePropertiesBuilder.put(
+				"queryAndOperator0", "false"
+			).put(
+				"queryAndOperator1", "true"
+			).put(
+				"queryContains0", "true"
+			).put(
+				"queryContains1", "true"
+			).put(
+				"queryName0", "assetTags"
+			).put(
+				"queryName1", "keywords"
+			).put(
+				"queryValues0", assetTagName
+			).put(
+				"queryValues1", keyword
+			).buildString());
+
+		for (String key : unicodeProperties.keySet()) {
+			Assert.assertFalse(key, key.startsWith("query"));
+		}
+
+		JSONArray filtersJSONArray = _jsonFactory.createJSONArray(
+			unicodeProperties.getProperty("filters"));
+
+		Assert.assertEquals(
+			filtersJSONArray.toString(), 2, filtersJSONArray.length());
+		Assert.assertEquals(
+			"assetTags",
+			JSONUtil.getValueAsString(
+				filtersJSONArray, "JSONObject/0", "Object/propertyName"));
+		Assert.assertEquals(
+			assetTagName,
+			JSONUtil.getValueAsString(
+				filtersJSONArray, "JSONObject/0", "JSONArray/value",
+				"JSONObject/0", "Object/value"));
+		Assert.assertEquals(
+			"keywords",
+			JSONUtil.getValueAsString(
+				filtersJSONArray, "JSONObject/1", "Object/propertyName"));
+		Assert.assertEquals(
+			keyword,
+			JSONUtil.getValueAsString(
+				filtersJSONArray, "JSONObject/1", "Object/value"));
+	}
+
 	private void _testExportImportAssetListEntryWithNonexistentClassName()
 		throws Exception {
 
@@ -325,6 +435,9 @@ public class AssetListEntryStagedModelDataHandlerTest
 	}
 
 	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Inject
@@ -333,6 +446,9 @@ public class AssetListEntryStagedModelDataHandlerTest
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject(
 		filter = "segments.criteria.contributor.key=user",

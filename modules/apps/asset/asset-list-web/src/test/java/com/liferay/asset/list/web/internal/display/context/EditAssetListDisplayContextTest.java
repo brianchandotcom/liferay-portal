@@ -354,12 +354,12 @@ public class EditAssetListDisplayContextTest {
 						).toString()
 					).build());
 
-			List<Map<String, Object>> filtersList =
+			List<Map<String, Object>> filters =
 				editAssetListDisplayContext.getFilters();
 
-			Assert.assertEquals(filtersList.toString(), 3, filtersList.size());
+			Assert.assertEquals(filters.toString(), 3, filters.size());
 
-			Map<String, Object> assetCategoriesFilterMap = filtersList.get(0);
+			Map<String, Object> filter = filters.get(0);
 
 			Assert.assertEquals(
 				Arrays.asList(
@@ -375,9 +375,9 @@ public class EditAssetListDisplayContextTest {
 					).put(
 						"value", String.valueOf(assetCategory2.getCategoryId())
 					).build()),
-				assetCategoriesFilterMap.get("value"));
+				filter.get("value"));
 
-			Map<String, Object> assetTagsFilterMap = filtersList.get(1);
+			filter = filters.get(1);
 
 			Assert.assertEquals(
 				Collections.singletonList(
@@ -386,13 +386,13 @@ public class EditAssetListDisplayContextTest {
 					).put(
 						"value", assetTagName
 					).build()),
-				assetTagsFilterMap.get("value"));
+				filter.get("value"));
 
-			Map<String, Object> objectFieldFilterMap = filtersList.get(2);
+			filter = filters.get(2);
 
 			Assert.assertEquals(
 				objectFieldValueJSONArray.toString(),
-				String.valueOf(objectFieldFilterMap.get("value")));
+				String.valueOf(filter.get("value")));
 		}
 	}
 
@@ -441,20 +441,20 @@ public class EditAssetListDisplayContextTest {
 						).toString()
 					).build());
 
-			List<Map<String, Object>> filtersList =
+			List<Map<String, Object>> filters =
 				editAssetListDisplayContext.getFilters();
 
-			Assert.assertEquals(filtersList.toString(), 2, filtersList.size());
+			Assert.assertEquals(filters.toString(), 2, filters.size());
 
-			Map<String, Object> assetCategoriesFilterMap = filtersList.get(0);
+			Map<String, Object> filter = filters.get(0);
 
 			Assert.assertEquals(
 				assetCategoriesValueJSONArray.toString(),
-				String.valueOf(assetCategoriesFilterMap.get("value")));
+				String.valueOf(filter.get("value")));
 
-			Map<String, Object> keywordsFilterMap = filtersList.get(1);
+			filter = filters.get(1);
 
-			Assert.assertEquals(keywords, keywordsFilterMap.get("value"));
+			Assert.assertEquals(keywords, filter.get("value"));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -526,16 +526,15 @@ public class EditAssetListDisplayContextTest {
 						).toString()
 					).build());
 
-			List<Map<String, Object>> filtersList =
+			List<Map<String, Object>> filters =
 				editAssetListDisplayContext.getFilters();
 
-			Assert.assertEquals(filtersList.toString(), 1, filtersList.size());
+			Assert.assertEquals(filters.toString(), 1, filters.size());
 
-			Map<String, Object> keywordsFilterMap = filtersList.get(0);
+			Map<String, Object> filter = filters.get(0);
 
-			Assert.assertEquals(
-				"keywords", keywordsFilterMap.get("propertyName"));
-			Assert.assertEquals(keywords, keywordsFilterMap.get("value"));
+			Assert.assertEquals("keywords", filter.get("propertyName"));
+			Assert.assertEquals(keywords, filter.get("value"));
 		}
 	}
 

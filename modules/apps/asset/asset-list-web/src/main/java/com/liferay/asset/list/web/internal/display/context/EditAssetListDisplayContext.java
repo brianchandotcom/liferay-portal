@@ -740,17 +740,17 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<Map<String, Object>> getFilters() {
-		String filters = _unicodeProperties.getProperty("filters");
+		String filtersJSON = _unicodeProperties.getProperty("filters");
 
-		if (Validator.isNull(filters)) {
+		if (Validator.isNull(filtersJSON)) {
 			return Collections.emptyList();
 		}
 
 		try {
 			JSONArray filtersJSONArray = JSONFactoryUtil.createJSONArray(
-				filters);
+				filtersJSON);
 
-			List<Map<String, Object>> filtersList = new ArrayList<>(
+			List<Map<String, Object>> filters = new ArrayList<>(
 				filtersJSONArray.length());
 
 			for (int i = 0; i < filtersJSONArray.length(); i++) {
@@ -782,10 +782,10 @@ public class EditAssetListDisplayContext {
 					}
 				}
 
-				filtersList.add(filterMap);
+				filters.add(filterMap);
 			}
 
-			return filtersList;
+			return filters;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

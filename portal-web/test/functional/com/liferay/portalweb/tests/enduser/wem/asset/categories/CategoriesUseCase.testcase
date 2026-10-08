@@ -515,7 +515,7 @@ definition {
 		}
 	}
 
-	@description = "Search categories in vocabulary."
+	@description = "Search categories in vocabulary and subcategories in category by name and description."
 	@priority = 4
 	test SearchCategoriesAndSubcategoriesInCategoriesAdmin {
 		task ("Add a vocabulary") {
@@ -535,6 +535,29 @@ definition {
 				description = "brown or white",
 				groupName = "Test Site Name",
 				title = "llama",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add subcategories") {
+			JSONCategory.addSubcategory(
+				description = "friendly chops",
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "beard hair",
+				vocabularyName = "Vocabulary Name");
+
+			JSONCategory.addSubcategory(
+				description = "handlebar",
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name",
+				title = "mustache hair",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -576,6 +599,57 @@ definition {
 			Category.viewSearchResultsCP(
 				categoryDescriptionList = "brown or white,black and white",
 				categoryNameList = "llama,panda");
+		}
+
+		task ("Search subcategories by name") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.searchCP(
+				categoryName = "Category Name",
+				subcategorySearchEntry = "beard",
+				vocabularyName = "Vocabulary Name");
+
+			Category.viewSearchResultsCP(categoryNameList = "beard hair");
+
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.searchCP(
+				categoryName = "Category Name",
+				subcategorySearchEntry = "mustache",
+				vocabularyName = "Vocabulary Name");
+
+			Category.viewSearchResultsCP(categoryNameList = "mustache hair");
+		}
+
+		task ("Search subcategories by description") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.searchCP(
+				categoryName = "Category Name",
+				subcategorySearchEntry = "friendly chops",
+				vocabularyName = "Vocabulary Name");
+
+			Category.viewSearchResultsCP(categoryDescriptionList = "friendly chops");
+
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.searchCP(
+				categoryName = "Category Name",
+				subcategorySearchEntry = "handlebar",
+				vocabularyName = "Vocabulary Name");
+
+			Category.viewSearchResultsCP(categoryDescriptionList = "handlebar");
+
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.searchCP(
+				categoryName = "Category Name",
+				subcategorySearchEntry = "hair",
+				vocabularyName = "Vocabulary Name");
+
+			Category.viewSearchResultsCP(
+				categoryDescriptionList = "friendly chops,handlebar",
+				categoryNameList = "beard hair,mustache hair");
 		}
 	}
 
@@ -701,76 +775,6 @@ definition {
 			SearchResults.viewSearchResults(
 				searchAssetTitle = "Web Content Title",
 				searchAssetType = "Webcontent");
-		}
-	}
-
-	@description = "Search subcategories in category."
-	@priority = 4
-	test SearchSubcategoryInCategory {
-		task ("Add a vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add categories") {
-			JSONCategory.addSubcategory(
-				description = "friendly chops",
-				groupName = "Test Site Name",
-				parentCategoryName = "Category Name",
-				title = "beard hair",
-				vocabularyName = "Vocabulary Name");
-
-			JSONCategory.addSubcategory(
-				description = "handlebar",
-				groupName = "Test Site Name",
-				parentCategoryName = "Category Name",
-				title = "mustache hair",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Search subcategory by name") {
-			for (var categoryName : list "beard,mustache") {
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-				Subcategory.searchCP(
-					categoryName = "Category Name",
-					subcategorySearchEntry = ${subcategoryName},
-					vocabularyName = "Vocabulary Name");
-
-				Subcategory.viewSearchResultsCP(categoryNameList = ${categoryName});
-			}
-		}
-
-		task ("Search subcategory by description") {
-			for (var categoryDescription : list "friendly chops,handlebar") {
-				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-				Subcategory.searchCP(
-					categoryName = "Category Name",
-					categorySearchEntry = ${subcategoryDescription},
-					vocabularyName = "Vocabulary Name");
-
-				Subcategory.viewSearchResultsCP(subcategoryDefinitionList = ${subcategoryDescription});
-			}
-
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Subcategory.searchCP(
-				categoryName = "Category Name",
-				categorySearchEntry = "hair",
-				vocabularyName = "Vocabulary Name");
-
-			Subcategory.viewSearchResultsCP(
-				subcategoryDefinitionList = "friendly chops,handlebar",
-				subcategoryNameList = "mustache,beard");
 		}
 	}
 

@@ -19,7 +19,7 @@ String errorMessage = errorsJSONObject.getString("errorMessage");
 	<clay:alert
 		cssClass="mt-4"
 		displayType="danger"
-		message="<%= errorMessage %>"
+		message="<%= HtmlUtil.escape(errorMessage) %>"
 	/>
 </c:if>
 

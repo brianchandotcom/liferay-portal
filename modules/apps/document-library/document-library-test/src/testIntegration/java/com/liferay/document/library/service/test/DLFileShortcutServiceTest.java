@@ -12,10 +12,14 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileShortcutServiceUtil;
+import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -118,6 +122,12 @@ public class DLFileShortcutServiceTest {
 				_group.getGroupId()));
 	}
 
+	@Test
+	public void testUpdateFileShortcuts() throws Exception {
+		_testUpdateFileShortcuts();
+		_testUpdateFileShortcutsWithoutUpdatePermission();
+	}
+
 	private DLFileShortcut _addDLFileShortcut(boolean addDefaultPermissions)
 		throws Exception {
 
@@ -125,6 +135,14 @@ public class DLFileShortcutServiceTest {
 
 		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
 			dlFolder.getFolderId());
+
+		return _addDLFileShortcut(
+			addDefaultPermissions, dlFileEntry.getFileEntryId());
+	}
+
+	private DLFileShortcut _addDLFileShortcut(
+			boolean addDefaultPermissions, long toFileEntryId)
+		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -135,7 +153,53 @@ public class DLFileShortcutServiceTest {
 		return DLFileShortcutLocalServiceUtil.addFileShortcut(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			dlFileEntry.getFileEntryId(), serviceContext);
+			toFileEntryId, serviceContext);
+	}
+
+	private void _testUpdateFileShortcuts() throws Exception {
+		FileEntry fileEntry1 = DLAppTestUtil.addFileEntry(_group.getGroupId());
+		FileEntry fileEntry2 = DLAppTestUtil.addFileEntry(_group.getGroupId());
+
+		DLFileShortcut dlFileShortcut1 = _addDLFileShortcut(
+			true, fileEntry1.getFileEntryId());
+		DLFileShortcut dlFileShortcut2 = _addDLFileShortcut(
+			true, fileEntry1.getFileEntryId());
+
+		DLFileShortcutServiceUtil.updateFileShortcuts(
+			fileEntry1.getFileEntryId(), fileEntry2.getFileEntryId());
+
+		Assert.assertEquals(
+			SetUtil.fromArray(dlFileShortcut1, dlFileShortcut2),
+			SetUtil.fromCollection(
+				DLFileShortcutLocalServiceUtil.getFileShortcuts(
+					fileEntry2.getFileEntryId())));
+	}
+
+	private void _testUpdateFileShortcutsWithoutUpdatePermission()
+		throws Exception {
+
+		FileEntry fileEntry1 = DLAppTestUtil.addFileEntry(_group.getGroupId());
+		FileEntry fileEntry2 = DLAppTestUtil.addFileEntry(_group.getGroupId());
+
+		DLFileShortcut dlFileShortcut1 = _addDLFileShortcut(
+			true, fileEntry1.getFileEntryId());
+		DLFileShortcut dlFileShortcut2 = _addDLFileShortcut(
+			true, fileEntry1.getFileEntryId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER))) {
+
+			Assert.assertThrows(
+				PrincipalException.MustHavePermission.class,
+				() -> DLFileShortcutServiceUtil.updateFileShortcuts(
+					fileEntry1.getFileEntryId(), fileEntry2.getFileEntryId()));
+		}
+
+		Assert.assertEquals(
+			SetUtil.fromArray(dlFileShortcut1, dlFileShortcut2),
+			SetUtil.fromCollection(
+				DLFileShortcutLocalServiceUtil.getFileShortcuts(
+					fileEntry1.getFileEntryId())));
 	}
 
 	@DeleteAfterTestRun

@@ -279,7 +279,7 @@ definition {
 			value1 = "Asset Library Text");
 	}
 
-	@description = "This test ensures that an asset library custom document entry can be displayed with the default display page template on a connected site."
+	@description = "This test ensures that an asset library custom document entry and a site article created with an asset library structure can be displayed with their default display page templates on a connected site."
 	@priority = 5
 	test CanViewDepotDMAndSiteWCUsingDefaultDisplayPageTemplates {
 		property portal.upstream = "true";
@@ -351,52 +351,6 @@ definition {
 
 		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			textField = "Text");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.configureScope(depotName = "Test Depot Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		DMDocument.viewPGViaAP(
-			contentList = "DM Document Title,Text",
-			displayPageTemplate = "true",
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
-	}
-
-	@description = "This test ensures that a site article created with a structure stored in an asset library can be displayed with the default display page template on a connected site."
-	@priority = 5
-	test CanViewSiteWCUsingDepotStructure {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Asset Publisher");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Test Site Name");
-
-		JSONDepot.updateStructureState(
-			groupName = "Test Site Name",
-			structureState = "Available");
-
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(
@@ -413,13 +367,13 @@ definition {
 			contentType = "Web Content Article",
 			depotName = "Test Depot Name",
 			depotStructure = "true",
-			displayPageTemplateEntryName = "Display Page Name",
+			displayPageTemplateEntryName = "WC Display Page Template",
 			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "WC Display Page Template");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -450,7 +404,16 @@ definition {
 
 		PageEditor.publish();
 
-		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "WC Display Page Template");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			textField = "Text");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -470,6 +433,22 @@ definition {
 			contentList = "WC Webcontent Title,WC WebContent Content",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC Webcontent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.configureScope(depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		DMDocument.viewPGViaAP(
+			contentList = "DM Document Title,Text",
+			displayPageTemplate = "true",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
 	}
 
 }

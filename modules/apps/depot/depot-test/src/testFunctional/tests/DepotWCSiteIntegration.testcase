@@ -430,7 +430,7 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a display page template on a connected site."
 	@priority = 5
 	@refactordone
-	test CanSelectFromFragmentInDisplayPageTemplate {
+	test CanSelectFromFragmentInContentPageAndDisplayPageTemplate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
 			groupName = "Test Depot Name",

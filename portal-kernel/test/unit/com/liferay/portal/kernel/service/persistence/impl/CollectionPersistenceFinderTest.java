@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -22,6 +23,13 @@ import org.junit.Test;
  * @author Shuyang Zhou
  */
 public class CollectionPersistenceFinderTest {
+
+	@Test
+	public void testBuildSQLWhere() {
+		_testBuildSQLWhereArrayable();
+		_testBuildSQLWhereOneBlank();
+		_testBuildSQLWhereTwoBlanks();
+	}
 
 	@Test
 	public void testMultiElementArrayableFindUsesPaginatedFinderPath() {
@@ -53,6 +61,24 @@ public class CollectionPersistenceFinderTest {
 		Assert.assertSame(_UNPAGINATED_FIND_PATH, recordedFinderPath[0]);
 	}
 
+	@SafeVarargs
+	private String _buildSQLWhere(
+		boolean sqlQuery, Object[] values,
+		FinderColumn<TestModel>... finderColumns) {
+
+		CollectionPersistenceFinder<TestModel, NoSuchModelException>
+			collectionPersistenceFinder = new CollectionPersistenceFinder<>(
+				new BasePersistenceImpl<TestModel, NoSuchModelException>() {
+				},
+				_PAGINATED_FIND_PATH, _UNPAGINATED_FIND_PATH, _COUNT_FIND_PATH,
+				"", "", "", "", "", "", null, finderColumns);
+
+		collectionPersistenceFinder.normalizeValues(values);
+
+		return collectionPersistenceFinder.buildSQLWhere(
+			"WHERE ", values, sqlQuery);
+	}
+
 	private CollectionPersistenceFinder<TestModel, NoSuchModelException>
 		_createCollectionPersistenceFinder() {
 
@@ -64,6 +90,12 @@ public class CollectionPersistenceFinderTest {
 			new ArrayableFinderColumn<>(
 				"t.", "col", FinderColumn.Type.LONG, "=", false, true, true,
 				testModel -> 0L));
+	}
+
+	private FinderColumn<TestModel> _createFinderColumn(String columnName) {
+		return new FinderColumn<>(
+			"t.", columnName, FinderColumn.Type.LONG, "=", true, true,
+			testModel -> 0L);
 	}
 
 	private FinderCache _createRecordingFinderCache(
@@ -115,6 +147,62 @@ public class CollectionPersistenceFinderTest {
 			}
 
 		};
+	}
+
+	private FinderColumn<TestModel> _createStringFinderColumn(
+		String columnName) {
+
+		return new FinderColumn<>(
+			"t.", columnName, columnName + "_", FinderColumn.Type.STRING, "=",
+			true, true, testModel -> null);
+	}
+
+	private void _testBuildSQLWhereArrayable() {
+		Assert.assertEquals(
+			"WHERE ((t.name IS NULL AND t.path IS NULL) OR (t.name IS NULL " +
+				"AND t.path = '') OR (t.name = '' AND t.path IS NULL) OR " +
+					"(t.name = '' AND t.path = ''))",
+			_buildSQLWhere(
+				false, new Object[] {new String[] {""}, ""},
+				new ArrayableFinderColumn<>(
+					"t.", "name", FinderColumn.Type.STRING, "=", false, true,
+					true, testModel -> null),
+				_createStringFinderColumn("path")));
+	}
+
+	private void _testBuildSQLWhereOneBlank() {
+		Assert.assertEquals(
+			"WHERE t.groupId = ? AND (t.name IS NULL OR t.name = '') AND " +
+				"t.path = ?",
+			_buildSQLWhere(
+				false, new Object[] {1L, null, "x"},
+				_createFinderColumn("groupId"),
+				_createStringFinderColumn("name"),
+				_createStringFinderColumn("path")));
+	}
+
+	private void _testBuildSQLWhereTwoBlanks() {
+		FinderColumn<TestModel>[] finderColumns = new FinderColumn[] {
+			_createFinderColumn("groupId"), _createStringFinderColumn("name"),
+			_createFinderColumn("scope"), _createStringFinderColumn("path")
+		};
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"WHERE t.groupId = ? AND t.scope = ? AND ((t.name IS NULL AND ",
+				"t.path IS NULL) OR (t.name IS NULL AND t.path = '') OR ",
+				"(t.name = '' AND t.path IS NULL) OR (t.name = '' AND t.path ",
+				"= ''))"),
+			_buildSQLWhere(
+				false, new Object[] {1L, "", 2L, null}, finderColumns));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"WHERE t.groupId = ? AND t.scope = ? AND ((t.name_ IS NULL ",
+				"AND t.path_ IS NULL) OR (t.name_ IS NULL AND t.path_ = '') ",
+				"OR (t.name_ = '' AND t.path_ IS NULL) OR (t.name_ = '' AND ",
+				"t.path_ = ''))"),
+			_buildSQLWhere(
+				true, new Object[] {1L, "", 2L, null}, finderColumns));
 	}
 
 	private static final FinderPath _COUNT_FIND_PATH = new FinderPath(

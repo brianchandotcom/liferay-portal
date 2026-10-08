@@ -362,7 +362,7 @@ definition {
 
 	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site when publication is enabled."
 	@priority = 4
-	test CanViewInlineVideoWithPublication {
+	test CanViewEmbeddedVideoInBlogsAndWCWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 

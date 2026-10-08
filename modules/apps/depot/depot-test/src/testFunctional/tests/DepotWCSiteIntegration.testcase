@@ -463,7 +463,7 @@ definition {
 			value1 = "WC WebContent Depot");
 	}
 
-	@description = "This ensures that a depot web content can be selected through WCD in a content page on a connected site."
+	@description = "This ensures that a depot web content can be selected through WCD in a content page and in a display page template on a connected site."
 	@priority = 4
 	@refactordone
 	test CanSelectFromWidgetInContentPageAndDisplayPageTemplate {
@@ -494,21 +494,6 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 
 		WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Depot");
-	}
-
-	@description = "This ensures that a depot web content can be selected through WCD in a display page template on a connected site."
-	@priority = 4
-	@refactordone
-	test CanSelectFromWidgetInDisplayPageTemplate {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Depot",
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "WC WebContent Title");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 

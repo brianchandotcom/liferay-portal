@@ -204,7 +204,7 @@ definition {
 		Depot.viewDefaultCP();
 	}
 
-	@description = "This ensures that a user can deselect depots and delete the reselected ones in table view."
+	@description = "This ensures that a user can select all depots, deselect some, and delete the selected and reselected ones in table view."
 	@priority = 4
 	@refactordone
 	test CanSelectAllDeselectAndDeleteInTableView {
@@ -563,27 +563,6 @@ definition {
 			searchTerm = "Depot");
 
 		DepotNavigator.gotoDepot(depotName = "Depot 1");
-	}
-
-	@description = "This ensures that all depots can be deleted in the table view when the user selects all."
-	@priority = 4
-	@refactordone
-	test CanSelectAllAndDeleteInTableView {
-		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
-			JSONDepot.addDepot(
-				depotDescription = "This is the description of a depot",
-				depotName = ${depotName});
-		}
-
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		PortletEntry.selectAll();
-
-		Depot.deleteCP(deletions = "true");
-
-		Depot.viewDefaultCP();
 	}
 
 	@description = "This ensures that the number of connected sites can be viewed in the card view."

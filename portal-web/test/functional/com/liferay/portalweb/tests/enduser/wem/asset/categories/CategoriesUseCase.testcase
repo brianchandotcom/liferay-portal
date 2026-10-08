@@ -1205,7 +1205,7 @@ definition {
 
 	@description = "This is a test for LPS-131984. View vocabulary for specific Asset Types in asset editor."
 	@priority = 4
-	test ViewVocabularyForSpecificAssetTypesInAssetEditor {
+	test ViewRequiredVocabularyForSpecificAssetTypesInAssetEditor {
 		task ("Add a vocabulary for specific assets types") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 

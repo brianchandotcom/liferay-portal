@@ -79,6 +79,63 @@ public class StaticSiteExporterTest {
 	}
 
 	@Test
+	public void testExportWithAbsolutePortalURLs() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		int portalServerPort = PortalUtil.getPortalServerPort(false);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, null, null,
+			StringBundler.concat(
+				"<img src=\"http://localhost:", portalServerPort, _ICONS_URL,
+				"\"><img src=\"https://LOCALHOST", _ICONS_URL,
+				"\"><img src=\"//127.0.0.1:", portalServerPort, _ICONS_URL,
+				"\">"),
+			StringPool.BLANK, draftLayout, null,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()),
+			FragmentConstants.TYPE_COMPONENT);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		try (StaticSiteExport staticSiteExport = _staticSiteExporter.export(
+				_group.getGroupId(), Set.of(LocaleUtil.US))) {
+
+			StaticSiteExportResource iconsStaticSiteExportResource = null;
+
+			for (StaticSiteExportResource staticSiteExportResource :
+					staticSiteExport.getStaticSiteExportResources()) {
+
+				if (_ICONS_URL.equals(staticSiteExportResource.getURL())) {
+					iconsStaticSiteExportResource = staticSiteExportResource;
+				}
+			}
+
+			Assert.assertNotNull(
+				String.valueOf(staticSiteExport.getStaticSiteExportResources()),
+				iconsStaticSiteExportResource);
+
+			List<StaticSiteExportLayout> staticSiteExportLayouts =
+				staticSiteExport.getStaticSiteExportLayouts();
+
+			StaticSiteExportLayout staticSiteExportLayout =
+				staticSiteExportLayouts.get(0);
+
+			String html = staticSiteExportLayout.getHTML();
+
+			Assert.assertEquals(
+				html, 3,
+				StringUtil.count(
+					html,
+					StringBundler.concat(
+						"<img src=\"/", iconsStaticSiteExportResource.getPath(),
+						"\">")));
+		}
+	}
+
+	@Test
 	public void testExportWithSiteInitializer() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -275,6 +332,9 @@ public class StaticSiteExporterTest {
 		Assert.assertTrue(
 			resourceFailures.toString(), resourceFailures.isEmpty());
 	}
+
+	private static final String _ICONS_URL =
+		"/o/classic-theme/images/clay/icons.svg";
 
 	private Group _group;
 

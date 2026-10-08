@@ -167,36 +167,6 @@ definition {
 			dmFolderName = "DM Folder Name");
 	}
 
-	@description = "This test asserts that a document stored in a depot can be accessed from FTP mode."
-	@priority = 5
-	@refactordone
-	test CanViewDocument {
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Panel.expandPanel(panel = "Documents and Media");
-
-		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
-
-		Depot.viewDepotConfiguration(
-			configuration = "enabled",
-			toggleSwitchLabel = "Enable Directory Indexing");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document JPG",
-			groupName = "Test Depot Name");
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document JPG");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
-
-		Depot.viewDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document JPG");
-	}
-
 	@description = "This test asserts that an edited document stored in a depot can be accessed from FTP mode."
 	@priority = 5
 	@refactordone
@@ -206,6 +176,10 @@ definition {
 		Panel.expandPanel(panel = "Documents and Media");
 
 		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
+
+		Depot.viewDepotConfiguration(
+			configuration = "enabled",
+			toggleSwitchLabel = "Enable Directory Indexing");
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",

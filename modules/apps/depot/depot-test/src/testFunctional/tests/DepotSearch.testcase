@@ -51,51 +51,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a depot web content can be searched on a connected site when searching is reenabled."
-	@priority = 4
-	@refactordone
-	test CanReenableSearchability {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "WC WebContent Title");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.configureSearch(
-			depotName = "Test Depot Name",
-			item = "Make Unsearchable",
-			siteList = "Site Name",
-			tableEntryText = "No");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.configureSearch(
-			depotName = "Test Depot Name",
-			item = "Make Searchable",
-			siteList = "Site Name",
-			tableEntryText = "Yes");
-
-		Navigator.openSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Search.searchCP(searchTerm = "WC WebContent Title");
-
-		SearchResults.viewSearchResults(
-			searchAssetTitle = "WC WebContent Title",
-			searchAssetType = "Web Content Article");
-
-		SearchPage.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
-
-		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
-	}
-
 	@description = "This ensures that a depot document cannot be searched from a disconnected site, and that depot content can be searched by user, by title and by tag from the connected site."
 	@priority = 5
 	@refactordone
@@ -200,7 +155,7 @@ definition {
 		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that depot documents and web content cannot be searched on a connected site by user, by title or by tag when searching is disabled."
+	@description = "This ensures that depot documents and web content cannot be searched on a connected site by user, by title or by tag when searching is disabled, and that web content can be searched again when searching is reenabled."
 	@priority = 5
 	@refactordone
 	test CanToggleDepotSearchabilityOnConnectedSite {
@@ -269,6 +224,28 @@ definition {
 		Search.searchCP(searchTerm = "WC WebContent Title");
 
 		SearchResults.viewNoSearchResults(searchTerm = "WC WebContent Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.configureSearch(
+			depotName = "Test Depot Name",
+			item = "Make Searchable",
+			siteList = "Site Name",
+			tableEntryText = "Yes");
+
+		Navigator.openSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Search.searchCP(searchTerm = "WC WebContent Title");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title",
+			searchAssetType = "Web Content Article");
+
+		SearchPage.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
+
+		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
 	}
 
 }

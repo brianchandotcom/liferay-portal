@@ -122,8 +122,8 @@ definition {
 		Depot.viewDefaultCP();
 	}
 
-	@description = "This ensures that a user can deselect depots and delete the reselected ones in cards view."
-	@priority = 3
+	@description = "This ensures that a user can select all depots, deselect some, and delete the selected and reselected ones in cards view."
+	@priority = 4
 	@refactordone
 	test CanSelectAllDeselectAndDeleteInCardsView {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
@@ -563,25 +563,6 @@ definition {
 			searchTerm = "Depot");
 
 		DepotNavigator.gotoDepot(depotName = "Depot 1");
-	}
-
-	@description = "This ensures that all depots can be deleted when the user selects all."
-	@priority = 4
-	@refactordone
-	test CanSelectAllAndDelete {
-		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
-			JSONDepot.addDepot(
-				depotDescription = "This is the description of a depot",
-				depotName = ${depotName});
-		}
-
-		DepotNavigator.openDepotAdmin();
-
-		PortletEntry.selectAll();
-
-		Depot.deleteCP(deletions = "true");
-
-		Depot.viewDefaultCP();
 	}
 
 	@description = "This ensures that all depots can be deleted in the list view when the user selects all."

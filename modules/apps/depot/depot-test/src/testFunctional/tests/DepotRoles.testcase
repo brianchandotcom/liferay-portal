@@ -459,32 +459,7 @@ definition {
 			dmDocumentVersionNumber = "1.1");
 	}
 
-	@description = "This ensures that an asset library role can be deleted."
-	@priority = 5
-	@refactordone
-	test CanDeleteALRole {
-		JSONRole.addDepotRole(roleTitle = "AL Role Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-			roleTitle = "AL Role Name",
-			roleType = "asset library");
-
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoRoleType(roleType = "Space");
-
-		LexiconEntry.delete(rowEntry = "AL Role Name");
-
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoRoleType(roleType = "Space");
-
-		Role.viewDefaultCP(roleTitle = "AL Role Name");
-	}
-
-	@description = "This ensures that an asset library role can be edited."
+	@description = "This ensures that an asset library role can be edited and deleted."
 	@priority = 5
 	@refactordone
 	test CanEditAndDeleteALRole {
@@ -520,6 +495,18 @@ definition {
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "Documents",
 			permissionValues = "Add Document");
+
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoRoleType(roleType = "Space");
+
+		LexiconEntry.delete(rowEntry = "AL Role Name Edit");
+
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoRoleType(roleType = "Space");
+
+		Role.viewDefaultCP(roleTitle = "AL Role Name Edit");
 	}
 
 	@description = "This ensures that an asset library role can be edited."

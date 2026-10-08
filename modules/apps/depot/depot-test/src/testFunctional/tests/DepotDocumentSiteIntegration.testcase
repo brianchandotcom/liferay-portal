@@ -1243,7 +1243,7 @@ definition {
 
 	@description = "This test makes sure that the connected site assets are not included in filter."
 	@priority = 4
-	test ConnectedSiteAssetsAreNotIncludedInFilter {
+	test SiteAssetsAreNotIncludedInDepotFilterWhetherConnectedOrNot {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");

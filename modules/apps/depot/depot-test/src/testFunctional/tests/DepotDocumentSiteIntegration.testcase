@@ -364,7 +364,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title 2");
 	}
 
-	@description = "This ensures that a document using a type stored in AL can be removed on a connected site."
+	@description = "This ensures that a document using a type stored in AL can be viewed in related assets and removed on a connected site."
 	@priority = 5
 	@refactordone
 	test CanRelateAndRemoveDMWithDepotDocumentType {
@@ -401,6 +401,30 @@ definition {
 			siteURLKey = "site-name");
 
 		DMDocument.viewDocumentTypePG(textContent = "DM Document Text");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC WebContent Title");
+
+		RelatedAssets.selectAsset(
+			assetTitle = "Document_1.jpg",
+			assetType = "DM Document Type Depot");
+
+		WebContent.publishWithPermissions();
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "WC WebContent Title");
+
+		AssertTextEquals.assertPartialText(
+			key_assetTitle = "Document_1.jpg",
+			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TYPE",
+			value1 = "DM Document Type Depot");
 
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
@@ -472,66 +496,6 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
 			dmDocumentType = "DM Document Type Depot");
-	}
-
-	@description = "This ensures that a document using a type stored in AL can be viewed in related assets on a connected site."
-	@priority = 4
-	@refactordone
-	test CanViewDocumentTypeInRelatedAssets {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Depot");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.configureDDMStructures(
-			depotName = "Test Depot Name",
-			siteName = "Site Name",
-			tableEntryText = "Yes");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg",
-			dmDocumentTypeName = "DM Document Type Depot",
-			textField = "DM Document Text");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC WebContent Title");
-
-		RelatedAssets.selectAsset(
-			assetTitle = "Document_1.jpg",
-			assetType = "DM Document Type Depot");
-
-		WebContent.publishWithPermissions();
-
-		WebContentNavigator.openToEditWCInSite(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			webContentTitle = "WC WebContent Title");
-
-		AssertTextEquals.assertPartialText(
-			key_assetTitle = "Document_1.jpg",
-			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TYPE",
-			value1 = "DM Document Type Depot");
 	}
 
 	@description = "This ensures that a depot image in the KB content field can be rendered correctly on a connected site after moving it to a folder."

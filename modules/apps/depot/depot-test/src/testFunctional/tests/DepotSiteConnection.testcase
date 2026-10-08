@@ -196,10 +196,10 @@ definition {
 			locator1 = "NavBar#NAV_ITEM_LINK");
 	}
 
-	@description = "This asserts that a deactivated site is still shown in connected sites."
+	@description = "This asserts that a deactivated site is still shown in connected sites and that a deleted site is removed from them."
 	@priority = 4
 	@refactordone
-	test DeactivatedSiteWillRemainInConnectedSitesList {
+	test ConnectedSitesListReflectsSiteDeactivationAndDeletion {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -219,25 +219,6 @@ definition {
 		Site.deactivateCP(
 			siteName = "Site Name",
 			successMessage = "true");
-
-		DepotNavigator.openDepotSiteSettings(depotName = "Test Depot Name");
-
-		Depot.viewConnectedSite(
-			depotName = "Test Depot Name",
-			siteList = "Site Name");
-	}
-
-	@description = "This asserts that a deleted site is removed from connected sites."
-	@priority = 4
-	@refactordone
-	test ConnectedSitesListReflectsSiteDeactivationAndDeletion {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
 
 		DepotNavigator.openDepotSiteSettings(depotName = "Test Depot Name");
 

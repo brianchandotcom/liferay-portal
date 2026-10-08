@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -203,8 +202,7 @@ public class FeatureFlagsBagProviderImpl
 
 		_populateFeatureFlagsMap(companyId, featureFlags, systemFeatureFlags);
 
-		return new FeatureFlagsBag(
-			companyId, Collections.unmodifiableMap(featureFlags));
+		return new FeatureFlagsBag(companyId, featureFlags);
 	}
 
 	private List<String> _getFeatureFlagKeys(

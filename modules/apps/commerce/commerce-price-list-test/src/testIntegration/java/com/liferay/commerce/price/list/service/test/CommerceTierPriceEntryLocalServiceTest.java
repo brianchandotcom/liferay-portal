@@ -10,6 +10,7 @@ import com.liferay.commerce.price.list.exception.CommerceTierPriceEntryMinQuanti
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
@@ -74,8 +75,14 @@ public class CommerceTierPriceEntryLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_commercePriceListLocalService.deleteCommercePriceLists(
-			_company.getCompanyId());
+		List<CommercePriceList> commercePriceLists =
+			_commercePriceListLocalService.getCommercePriceLists(
+				_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CommercePriceList commercePriceList : commercePriceLists) {
+			_commercePriceListLocalService.forceDeleteCommercePriceList(
+				commercePriceList);
+		}
 	}
 
 	@Test

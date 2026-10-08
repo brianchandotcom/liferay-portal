@@ -96,8 +96,14 @@ public class CommercePriceListIndexerTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_commercePriceListLocalService.deleteCommercePriceLists(
-			_company.getCompanyId());
+		List<CommercePriceList> commercePriceLists =
+			_commercePriceListLocalService.getCommercePriceLists(
+				_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CommercePriceList commercePriceList : commercePriceLists) {
+			_commercePriceListLocalService.forceDeleteCommercePriceList(
+				commercePriceList);
+		}
 	}
 
 	@Test

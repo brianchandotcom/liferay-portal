@@ -354,20 +354,6 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommercePriceLists(long companyId)
-		throws PortalException {
-
-		List<CommercePriceList> commercePriceLists =
-			commercePriceListPersistence.findByCompanyId(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CommercePriceList commercePriceList : commercePriceLists) {
-			commercePriceListLocalService.forceDeleteCommercePriceList(
-				commercePriceList);
-		}
-	}
-
-	@Override
 	public CommercePriceList fetchCatalogBaseCommercePriceList(long groupId) {
 		return commercePriceListPersistence.fetchByG_CBPL_T_First(
 			groupId, true, CommercePriceListConstants.TYPE_PRICE_LIST, null);

@@ -127,37 +127,6 @@ definition {
 			toggleSwitchLabel = "Enable Auto Tagging");
 	}
 
-	@description = "This test asserts that no auto-tag is generated when a text document is uploaded to a depot that has auto-tagging disabled."
-	@priority = 4
-	@refactordone
-	test CanDisableForTextDocument {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		AutoTagging.enableOpenNLP(
-			assetType = "Document",
-			confidenceThreshold = "0.05");
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureAutoTagging(autoTagging = "Disabled");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			dmDocumentTitle = "DM Document PDF");
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document PDF");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document PDF");
-
-		DMDocument.viewNoTagInfo(tagName = "alice");
-	}
-
 	@description = "This test asserts that no auto-tag is generated when a web content article is uploaded to a depot that has auto-tagging disabled."
 	@priority = 4
 	@refactordone
@@ -251,7 +220,7 @@ definition {
 		DMDocument.viewNoTagInfo(tagName = "carton");
 	}
 
-	@description = "This test asserts that a text document is auto-tagged in a depot."
+	@description = "This test asserts that a text document is auto-tagged in a depot, and that no auto-tag is generated once auto-tagging is disabled for the depot."
 	@priority = 5
 	@refactordone
 	test TextDocumentAutoTaggingCanBeDisabledPerDepot {
@@ -276,6 +245,33 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document PDF");
 
 		DMDocument.viewTagInfo(tagName = "alice");
+
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		Depot.configureAutoTagging(autoTagging = "Disabled");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			dmDocumentTitle = "DM Document PDF Without Auto Tagging");
+
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document PDF Without Auto Tagging",
+			folderName = "DM Folder Name");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document PDF Without Auto Tagging");
+
+		DMDocument.viewNoTagInfo(tagName = "alice");
 	}
 
 }

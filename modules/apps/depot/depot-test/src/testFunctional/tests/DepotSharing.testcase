@@ -276,44 +276,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@description = "This ensures that a document can be shared with another user in a depot."
-	@priority = 4
-	@refactordone
-	test CanShareDocument {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name",
-			guestPermissions = "false",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoShareInfoPanel(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			noAutocomplete = "true",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "userea@liferay.com");
-
-		Notifications.viewBadgeCount(notificationCount = 1);
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "viewing",
-			contentTitle = "DM Document Title",
-			openNotification = "true",
-			ownerName = "Test Test");
-	}
-
 	@description = "This test ensures that the same document can be shared by different users with sharing permissions."
 	@priority = 4
 	@refactordone
@@ -374,7 +336,7 @@ definition {
 		DMDocumentSharing.viewNoDuplicateDocument(dmDocumentTitle = "Document_1.jpg");
 	}
 
-	@description = "This test asserts that users get the proper notification based on depot sharing permissions granted to him."
+	@description = "This test asserts that depot documents can be shared via the share action and the info panel, and that users get the proper notification based on depot sharing permissions granted to him."
 	@priority = 4
 	@refactordone
 	test CanShareDocumentsAndViewSharingNotifications {
@@ -382,11 +344,10 @@ definition {
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
 
-		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1");
+		DMNavigator.gotoShareInfoPanel(dmDocumentTitle = "Document_1");
 
-		Asset.share(
+		DMDocument.sharePG(
 			noAutocomplete = "true",
-			sharingPermissions = "View",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
@@ -442,6 +403,7 @@ definition {
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "viewing",
 			contentTitle = "Document_1",
+			openNotification = "true",
 			ownerName = "Test Test");
 
 		Notifications.gotoNotifications();

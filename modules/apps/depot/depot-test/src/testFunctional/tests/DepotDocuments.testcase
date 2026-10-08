@@ -292,8 +292,8 @@ definition {
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Edit");
 	}
 
-	@description = "This test makes sure that the documents can be filtered by category."
-	@priority = 4
+	@description = "This test makes sure that the documents can be filtered by category and by extension."
+	@priority = 5
 	test CanFilterDocumentsByCategoryExtensionAndTag {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -326,8 +326,8 @@ definition {
 			assetCategoryIds = ${categoryId2},
 			dmDocumentTitle = "DM Document Title 2",
 			groupName = "Test Depot Name",
-			mimeType = "application/msword",
-			sourceFileName = "Document_2.doc");
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -356,26 +356,6 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "DM Document Title 1");
 
 		LexiconEntry.viewEntryName(rowEntry = "DM Document Title 2");
-	}
-
-	@description = "This test makes sure that the documents can be filtered by extension."
-	@priority = 5
-	test CanFilterByExtension {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title 1",
-			groupName = "Test Depot Name",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "DM Document Title 2",
-			groupName = "Test Depot Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

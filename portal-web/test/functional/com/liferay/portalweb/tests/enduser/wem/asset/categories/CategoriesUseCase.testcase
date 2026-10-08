@@ -515,7 +515,7 @@ definition {
 		}
 	}
 
-	@description = "Search categories in vocabulary and subcategories in category by name and description."
+	@description = "Search categories in vocabulary and subcategories in category by name and description, and view the empty search result for an unrelated keyword at both levels."
 	@priority = 4
 	test SearchCategoriesAndSubcategoriesInCategoriesAdmin {
 		task ("Add a vocabulary") {
@@ -601,6 +601,16 @@ definition {
 				categoryNameList = "llama,panda");
 		}
 
+		task ("Search an unrelated keyword in vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.searchCP(
+				categorySearchEntry = "Null",
+				vocabularyName = "Vocabulary Name");
+
+			Category.viewSearchResultsCP(nullResult = "true");
+		}
+
 		task ("Search subcategories by name") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -650,6 +660,17 @@ definition {
 			Category.viewSearchResultsCP(
 				categoryDescriptionList = "friendly chops,handlebar",
 				categoryNameList = "beard hair,mustache hair");
+		}
+
+		task ("Search an unrelated keyword in category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Subcategory.searchCP(
+				categoryName = "Category Name",
+				subcategorySearchEntry = "Null",
+				vocabularyName = "Vocabulary Name");
+
+			Category.viewSearchResultsCP(nullResult = "true");
 		}
 	}
 
@@ -957,56 +978,6 @@ definition {
 			AssertVisible(
 				key_itemName = "Test Page Name 2",
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
-		}
-	}
-
-	@description = "View empty search result."
-	@priority = 3
-	test ViewEmptySearchResult {
-		task ("Add a vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a subcategory") {
-			JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
-				parentCategoryName = "Category Name",
-				title = "Subcategory Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Search an unrelated keyword in vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Category.searchCP(
-				categorySearchEntry = "Null",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View empty search result") {
-			Category.viewSearchResultsCP(nullResult = "true");
-		}
-
-		task ("Search an unrelated keyword in category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Subcategory.searchCP(
-				categoryName = "Category Name",
-				subCategorySearchEntry = "Null",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View empty search result") {
-			Subcategory.viewSearchResultsCP(nullResult = "true");
 		}
 	}
 

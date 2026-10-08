@@ -133,7 +133,7 @@ definition {
 			value1 = "título");
 	}
 
-	@description = "This ensures that an organization and a user can be added and removed in the membership of an asset library."
+	@description = "This ensures that an organization, a user and a user group can be added and removed in the membership of an asset library."
 	@priority = 4
 	@refactordone
 	test CanAddAndRemoveMembersByType {
@@ -183,12 +183,7 @@ definition {
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
 		LexiconCard.viewCardNotPresent(card = "userfn userln");
-	}
 
-	@description = "This ensures that a user group can be added and removed in the membership of an asset library."
-	@priority = 4
-	@refactordone
-	test CanRemoveUserGroupFromMemberships {
 		JSONUserGroup.addUserGroup(userGroupName = "User Group Name");
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");

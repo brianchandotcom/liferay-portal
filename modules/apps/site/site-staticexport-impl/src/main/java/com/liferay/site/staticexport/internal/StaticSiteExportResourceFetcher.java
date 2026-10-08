@@ -6,7 +6,6 @@
 package com.liferay.site.staticexport.internal;
 
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
@@ -14,9 +13,7 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.RequestDispatcher;
@@ -52,25 +49,22 @@ public class StaticSiteExportResourceFetcher {
 	}
 
 	public File fetch(String url) throws Exception {
-		String path = HttpComponentsUtil.getPath(url);
+		StaticSiteExportURL staticSiteExportURL = new StaticSiteExportURL(url);
 
 		File file = null;
 
-		String moduleName = _getModuleName(path);
+		String moduleName = staticSiteExportURL.getModuleName();
 
 		if (moduleName == null) {
-			file = _getServletFile(path, _servletContext, url);
+			file = _getServletFile(_servletContext, staticSiteExportURL);
 		}
 		else {
-			String resourcePath = StringUtil.removeFirst(
-				path, _MODULE_PATH_PREFIX + moduleName);
-
 			file = _staticSiteExportBundleResourceResolver.resolve(
-				moduleName, resourcePath);
+				moduleName, staticSiteExportURL.getDispatchPath());
 
 			if (file == null) {
 				file = _getServletFile(
-					resourcePath, ServletContextPool.get(moduleName), url);
+					ServletContextPool.get(moduleName), staticSiteExportURL);
 			}
 		}
 
@@ -78,14 +72,16 @@ public class StaticSiteExportResourceFetcher {
 			return file;
 		}
 
-		return _fetchFile(url);
+		return _fetchFile(staticSiteExportURL);
 	}
 
-	private File _fetchFile(String url) throws Exception {
+	private File _fetchFile(StaticSiteExportURL staticSiteExportURL)
+		throws Exception {
+
 		Http.Options options = new Http.Options();
 
 		options.setFollowRedirects(true);
-		options.setLocation(_getLocation(url));
+		options.setLocation(_getLocation(staticSiteExportURL));
 
 		File file = FileUtil.createTempFile();
 
@@ -108,30 +104,17 @@ public class StaticSiteExportResourceFetcher {
 		return file;
 	}
 
-	private String _getLocation(String url) {
-		if (Validator.isNotNull(HttpComponentsUtil.getDomain(url))) {
-			return url;
+	private String _getLocation(StaticSiteExportURL staticSiteExportURL) {
+		if (staticSiteExportURL.isExternal()) {
+			return staticSiteExportURL.getURL();
 		}
 
-		return _portalURL + url;
-	}
-
-	private String _getModuleName(String path) {
-		if (!path.startsWith(_MODULE_PATH_PREFIX)) {
-			return null;
-		}
-
-		int index = path.indexOf(CharPool.SLASH, _MODULE_PATH_PREFIX.length());
-
-		if (index == -1) {
-			return null;
-		}
-
-		return path.substring(_MODULE_PATH_PREFIX.length(), index);
+		return _portalURL + staticSiteExportURL.getURL();
 	}
 
 	private File _getServletFile(
-			String path, ServletContext servletContext, String url)
+			ServletContext servletContext,
+			StaticSiteExportURL staticSiteExportURL)
 		throws Exception {
 
 		if (servletContext == null) {
@@ -140,7 +123,7 @@ public class StaticSiteExportResourceFetcher {
 
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-				servletContext, path);
+				servletContext, staticSiteExportURL.getDispatchPath());
 
 		if (requestDispatcher == null) {
 			return null;
@@ -148,7 +131,7 @@ public class StaticSiteExportResourceFetcher {
 
 		HttpServletRequest httpServletRequest = _httpServletRequest;
 
-		String queryString = HttpComponentsUtil.getQueryString(url);
+		String queryString = staticSiteExportURL.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
 			httpServletRequest = DynamicServletRequest.addQueryString(
@@ -166,7 +149,8 @@ public class StaticSiteExportResourceFetcher {
 					metaInfoCacheServletResponse, outputStream);
 
 			requestDispatcher.include(
-				new PathHttpServletRequestWrapper(httpServletRequest, path),
+				new PathHttpServletRequestWrapper(
+					httpServletRequest, staticSiteExportURL),
 				pipingServletResponse);
 
 			PrintWriter printWriter = pipingServletResponse.getWriter();
@@ -186,8 +170,6 @@ public class StaticSiteExportResourceFetcher {
 		return file;
 	}
 
-	private static final String _MODULE_PATH_PREFIX = "/o/";
-
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final String _portalURL;
@@ -199,41 +181,30 @@ public class StaticSiteExportResourceFetcher {
 		extends HttpServletRequestWrapper {
 
 		public PathHttpServletRequestWrapper(
-			HttpServletRequest httpServletRequest, String path) {
+			HttpServletRequest httpServletRequest,
+			StaticSiteExportURL staticSiteExportURL) {
 
 			super(httpServletRequest);
 
-			_path = path;
+			_staticSiteExportURL = staticSiteExportURL;
 		}
 
 		@Override
 		public String getPathInfo() {
-			int index = _path.indexOf(CharPool.SLASH, 1);
-
-			if (index == -1) {
-				return null;
-			}
-
-			return _path.substring(index);
+			return _staticSiteExportURL.getPathInfo();
 		}
 
 		@Override
 		public String getRequestURI() {
-			return _path;
+			return _staticSiteExportURL.getDispatchPath();
 		}
 
 		@Override
 		public String getServletPath() {
-			int index = _path.indexOf(CharPool.SLASH, 1);
-
-			if (index == -1) {
-				return _path;
-			}
-
-			return _path.substring(0, index);
+			return _staticSiteExportURL.getServletPath();
 		}
 
-		private final String _path;
+		private final StaticSiteExportURL _staticSiteExportURL;
 
 	}
 

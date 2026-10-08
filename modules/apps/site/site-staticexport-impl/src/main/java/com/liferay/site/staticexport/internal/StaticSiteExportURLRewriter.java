@@ -5,12 +5,11 @@
 
 package com.liferay.site.staticexport.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Víctor Galán
@@ -18,9 +17,11 @@ import java.util.Map;
 public class StaticSiteExportURLRewriter {
 
 	public StaticSiteExportURLRewriter(
-		Map<String, String> pagePaths, Map<String, String> resourcePaths) {
+		Map<String, String> pagePaths, Set<String> portalHostNames,
+		Map<String, String> resourcePaths) {
 
 		_pagePaths = pagePaths;
+		_portalHostNames = portalHostNames;
 		_resourcePaths = resourcePaths;
 	}
 
@@ -33,32 +34,24 @@ public class StaticSiteExportURLRewriter {
 			return null;
 		}
 
-		url = StringUtil.trim(url);
+		StaticSiteExportURL staticSiteExportURL = new StaticSiteExportURL(
+			_portalHostNames, url);
 
-		String uriFragment = StringPool.BLANK;
-
-		int index = url.indexOf(CharPool.POUND);
-
-		if (index != -1) {
-			uriFragment = url.substring(index);
-
-			url = url.substring(0, index);
-		}
-
-		String path = _resourcePaths.get(url);
+		String path = _resourcePaths.get(staticSiteExportURL.getURL());
 
 		if (path == null) {
-			path = _pagePaths.get(url);
+			path = _pagePaths.get(staticSiteExportURL.getURL());
 		}
 
 		if (path == null) {
 			return null;
 		}
 
-		return StringPool.SLASH + path + uriFragment;
+		return StringPool.SLASH + path + staticSiteExportURL.getURIFragment();
 	}
 
 	private final Map<String, String> _pagePaths;
+	private final Set<String> _portalHostNames;
 	private final Map<String, String> _resourcePaths;
 
 }

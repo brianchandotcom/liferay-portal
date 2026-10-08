@@ -94,9 +94,15 @@ public class ServletRequestContext implements UploadContext {
      */
     @Override
     public long contentLength() {
+        String header = request.getHeader(FileUploadBase.CONTENT_LENGTH);
+
+        if ((header == null) || (header.length() == 0)) {
+            return request.getContentLength();
+        }
+
         long size;
         try {
-            size = Long.parseLong(request.getHeader(FileUploadBase.CONTENT_LENGTH));
+            size = Long.parseLong(header);
         } catch (NumberFormatException e) {
             size = request.getContentLength();
         }
@@ -128,3 +134,4 @@ public class ServletRequestContext implements UploadContext {
     }
 
 }
+/* @generated */

@@ -228,25 +228,7 @@ definition {
 		}
 	}
 
-	@description = "When the user accesses to Categorization > Categories, he can navigate from one to another"
-	@priority = 3
-	test MoveBetweenVocabularies {
-		task ("Add a vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
-		}
-
-		task ("Edit the new vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.goToVocabulary(vocabularyName = "Audience");
-
-			Vocabulary.goToVocabulary(vocabularyName = "Vocabulary Name");
-		}
-	}
-
-	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Categories in the edit mode of the elements of Categories."
+	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Categories in the edit mode of the elements of Categories, and the user can navigate from one vocabulary to another in Categories admin."
 	@priority = 3
 	test ViewBackButtonTooltipAndMoveBetweenVocabularies {
 		task ("Given a site administrator adds a vocabulary") {
@@ -274,7 +256,9 @@ definition {
 
 			Navigator.gotoBack();
 
-			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+			Vocabulary.goToVocabulary(vocabularyName = "Audience");
+
+			Vocabulary.goToVocabulary(vocabularyName = "Vocabulary Name");
 
 			LexiconEntry.gotoAdd();
 

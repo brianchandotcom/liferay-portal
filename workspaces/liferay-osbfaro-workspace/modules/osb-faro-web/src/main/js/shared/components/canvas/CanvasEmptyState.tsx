@@ -1,7 +1,7 @@
 import emptyStateReducedMotionURL from '../../../../images/states/empty_state_reduced_motion.svg';
 import emptyStateURL from '../../../../images/states/empty_state.svg';
 import getCN from 'classnames';
-import React from 'react';
+import React, {useSyncExternalStore} from 'react';
 import {Heading, Text} from '@clayui/core';
 
 export type DropState = 'dragging' | 'idle' | 'over';
@@ -12,6 +12,26 @@ export interface ICanvasEmptyStateProps
 	dropState?: DropState;
 	title: string;
 }
+
+const REDUCED_MOTION_CLASS_NAME = 'c-prefers-reduced-motion';
+
+const isReducedMotion = () =>
+	document.body.classList.contains(REDUCED_MOTION_CLASS_NAME);
+
+/**
+ * The accessibility menu toggles the reduced motion class on the body at
+ * runtime, so it is observed rather than read once.
+ */
+const subscribeToReducedMotion = (onChange: () => void) => {
+	const observer = new MutationObserver(onChange);
+
+	observer.observe(document.body, {
+		attributeFilter: ['class'],
+		attributes: true,
+	});
+
+	return () => observer.disconnect();
+};
 
 /**
  * Mirrors the markup of ClayEmptyState, whose title only accepts a string
@@ -25,53 +45,58 @@ const CanvasEmptyState: React.FC<ICanvasEmptyStateProps> = ({
 	dropState = 'idle',
 	title,
 	...otherProps
-}) => (
-	<div
-		className={getCN(
-			'align-items-center canvas-empty-state d-flex justify-content-center rounded-lg',
-			`canvas-empty-state-${dropState}`,
-			{
+}) => {
+	const reducedMotion = useSyncExternalStore(
+		subscribeToReducedMotion,
+		isReducedMotion
+	);
 
-				// The utility is important, so it would hide the drop color
-
-				'bg-white': dropState !== 'over',
-			},
-			className
-		)}
-		{...otherProps}
-	>
+	return (
 		<div
-			className={getCN('c-empty-state c-empty-state-animation', {
-				invisible: dropState !== 'idle',
-			})}
-		>
-			<div className="c-empty-state-image">
-				<div className="c-empty-state-aspect-ratio">
-					<img
-						alt=""
-						className="aspect-ratio-item aspect-ratio-item-fluid d-none-c-prefers-reduced-motion"
-						src={emptyStateURL}
-					/>
+			className={getCN(
+				'align-items-center canvas-empty-state d-flex justify-content-center rounded-lg',
+				`canvas-empty-state-${dropState}`,
+				{
 
-					<img
-						alt=""
-						className="aspect-ratio-item aspect-ratio-item-fluid d-block-c-prefers-reduced-motion"
-						src={emptyStateReducedMotionURL}
-					/>
+					// The utility is important, so it would hide the drop color
+
+					'bg-white': dropState !== 'over',
+				},
+				className
+			)}
+			{...otherProps}
+		>
+			<div
+				className={getCN('c-empty-state c-empty-state-animation', {
+					invisible: dropState !== 'idle',
+				})}
+			>
+				<div className="c-empty-state-image">
+					<div className="c-empty-state-aspect-ratio">
+						<img
+							alt=""
+							className="aspect-ratio-item aspect-ratio-item-fluid"
+							src={
+								reducedMotion
+									? emptyStateReducedMotionURL
+									: emptyStateURL
+							}
+						/>
+					</div>
+				</div>
+
+				<div className="c-empty-state-title text-dark">
+					<Heading fontSize={6} level={3} weight="bold">
+						{title}
+					</Heading>
+				</div>
+
+				<div className="c-empty-state-text">
+					<Text color="secondary">{description}</Text>
 				</div>
 			</div>
-
-			<div className="c-empty-state-title text-dark">
-				<Heading fontSize={6} level={3} weight="bold">
-					{title}
-				</Heading>
-			</div>
-
-			<div className="c-empty-state-text">
-				<Text color="secondary">{description}</Text>
-			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export default CanvasEmptyState;

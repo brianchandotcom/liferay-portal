@@ -1,6 +1,6 @@
 import Canvas from '../Canvas';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render, waitFor} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
@@ -85,18 +85,34 @@ describe('Canvas', () => {
 describe('Canvas.EmptyState', () => {
 	afterEach(cleanup);
 
-	it('renders the illustration with its reduced motion variant', () => {
+	it('renders only the animated illustration by default', () => {
 		const {container} = render(<Canvas.EmptyState {...EMPTY_STATE} />);
 
 		const images = container.querySelectorAll('img');
 
-		expect(images).toHaveLength(2);
+		expect(images).toHaveLength(1);
 		expect(images[0]).toHaveAttribute('alt', '');
 		expect(images[0]).toHaveAttribute('src', 'empty_state.svg');
-		expect(images[1]).toHaveAttribute(
-			'src',
-			'empty_state_reduced_motion.svg'
-		);
+	});
+
+	it('swaps to the reduced motion illustration when it is enabled', async () => {
+		const {container} = render(<Canvas.EmptyState {...EMPTY_STATE} />);
+
+		act(() => {
+			document.body.classList.add('c-prefers-reduced-motion');
+		});
+
+		await waitFor(() => {
+			const images = container.querySelectorAll('img');
+
+			expect(images).toHaveLength(1);
+			expect(images[0]).toHaveAttribute(
+				'src',
+				'empty_state_reduced_motion.svg'
+			);
+		});
+
+		document.body.classList.remove('c-prefers-reduced-motion');
 	});
 
 	it('shows the content while nothing is dragged', () => {

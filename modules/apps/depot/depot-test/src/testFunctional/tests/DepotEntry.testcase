@@ -53,8 +53,8 @@ definition {
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 	}
 
-	@description = "This ensures that a depot containing a folder and some files can be deleted."
-	@priority = 4
+	@description = "This ensures that a depot can be deleted, whether it is empty or contains a folder and some files."
+	@priority = 5
 	@refactordone
 	test CanDeleteEmptyAndPopulatedDepot {
 		JSONDepot.addDepot(
@@ -78,21 +78,6 @@ definition {
 			groupName = "Test Depot Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.deleteCP(depotName = "Test Depot Name");
-
-		Depot.viewDefaultCP();
-	}
-
-	@description = "This ensures that an empty depot can be deleted."
-	@priority = 5
-	@refactordone
-	test CanDeleteEmptyDepot {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotAdmin();
 

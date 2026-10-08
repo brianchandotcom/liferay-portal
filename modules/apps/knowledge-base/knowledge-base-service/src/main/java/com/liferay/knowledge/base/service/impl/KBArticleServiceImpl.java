@@ -165,6 +165,16 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		_adminPortletResourcePermission.check(
 			getPermissionChecker(), groupId, KBActionKeys.DELETE_KB_ARTICLES);
 
+		for (KBArticle kbArticle :
+				kbArticleLocalService.getKBArticles(
+					resourcePrimKeys, WorkflowConstants.STATUS_ANY, null)) {
+
+			if (kbArticle.getGroupId() != groupId) {
+				_kbArticleModelResourcePermission.check(
+					getPermissionChecker(), kbArticle, KBActionKeys.DELETE);
+			}
+		}
+
 		kbArticleLocalService.deleteKBArticles(resourcePrimKeys);
 	}
 

@@ -192,66 +192,78 @@ definition {
 		SearchResults.viewNoSearchResults(searchTerm = "depot");
 	}
 
-	@description = "This ensures that a depot external video in an external video fragment can be rendered correctly on a connected site after moving it to a folder."
+	@description = "This ensures that a depot external video embedded in the Blogs and WC content fields can be rendered correctly on a connected site when publication is enabled."
 	@priority = 4
-	test CanViewExternalVideoViaFragmentAfterMovingToFolder {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Content Page Name",
-			type = "content");
+	test CanViewEmbeddedVideoInBlogsAndWCWithPublication {
+		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+		property osgi.module.configurations = "enabled=B\"true\"";
 
-		JSONLayout.publishLayout(
-			groupName = "Guest",
-			layoutName = "Content Page Name");
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(
-			videoShortcutTitle = "Liferay Digital Experience Platform",
+			videoShortcutTitle = "Test YouTube Video",
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
-			groupName = "Guest");
+			groupName = "Site Name");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Guest");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "External Video");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
-		PageEditor.gotoConfiguration(fragmentName = "External Video");
-
-		Click(
-			key_fieldLabel = "Video",
-			key_text = "plus",
-			locator1 = "Icon#ANY_ITEM_SELECTOR");
-
-		ItemSelector.addVideoFromDM(
+		BlogsEntry.editContent(
 			depotName = "Test Depot Name",
+			embedVideo = "Test YouTube Video",
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			depotName = "Test Depot Name",
+			embedVideo = "true",
 			navTab = "Documents and Media",
-			videoShortcutTitle = "Liferay Digital Experience Platform");
+			videoShortcutTitle = "Test YouTube Video",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC WebContent Title");
 
-		PageEditor.publish();
+		WebContent.publishWithPermissions();
 
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
-		JSONDocument.moveFileEntryToFolder(
-			dmDocumentTitle = "Liferay Digital Experience Platform",
-			folderName = "DM Folder Name",
-			groupName = "Test Depot Name",
-			site = "false");
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Guest");
+		BlogsEntry.viewEntryCP(
+			embedVideo = "true",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
-		YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewVideoPreview(
+			service = "youtube",
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a depot external video embedded in the Blogs, KB and WC content fields can be rendered correctly on a connected site after moving it to a folder."
@@ -360,78 +372,66 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@description = "This ensures that a depot external video embedded in the Blogs and WC content fields can be rendered correctly on a connected site when publication is enabled."
+	@description = "This ensures that a depot external video in an external video fragment can be rendered correctly on a connected site after moving it to a folder."
 	@priority = 4
-	test CanViewEmbeddedVideoInBlogsAndWCWithPublication {
-		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
-		property osgi.module.configurations = "enabled=B\"true\"";
+	test CanViewExternalVideoViaFragmentAfterMovingToFolder {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		JSONPublications.addPublication(publicationName = "Publication Name");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name");
+		JSONLayout.publishLayout(
+			groupName = "Guest",
+			layoutName = "Content Page Name");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(
-			videoShortcutTitle = "Test YouTube Video",
+			videoShortcutTitle = "Liferay Digital Experience Platform",
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
-			groupName = "Site Name");
+			groupName = "Guest");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Guest");
 
-		BlogsNavigator.openToEditEntryInSite(
-			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "External Video");
 
-		BlogsEntry.editContent(
+		PageEditor.gotoConfiguration(fragmentName = "External Video");
+
+		Click(
+			key_fieldLabel = "Video",
+			key_text = "plus",
+			locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+		ItemSelector.addVideoFromDM(
 			depotName = "Test Depot Name",
-			embedVideo = "Test YouTube Video",
-			entryContent = "Blogs Entry Content",
-			entryContentEdit = "Blogs Entry Content",
-			navTab = "Documents and Media");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			depotName = "Test Depot Name",
-			embedVideo = "true",
 			navTab = "Documents and Media",
-			videoShortcutTitle = "Test YouTube Video",
-			webContentContent = "Web Content Content",
-			webContentTitle = "WC WebContent Title");
+			videoShortcutTitle = "Liferay Digital Experience Platform");
 
-		WebContent.publishWithPermissions();
+		PageEditor.publish();
 
-		Publications.publishPublication(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication Name");
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
 
-		BlogsNavigator.openToEditEntryInSite(
-			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
+		JSONDocument.moveFileEntryToFolder(
+			dmDocumentTitle = "Liferay Digital Experience Platform",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
 
-		BlogsEntry.viewEntryCP(
-			embedVideo = "true",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Guest");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContent.viewVideoPreview(
-			service = "youtube",
-			webContentTitle = "WC WebContent Title");
+		YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
 	}
 
 	@description = "This ensures that a depot video shortcut can be used through Related Assets on a connected site."

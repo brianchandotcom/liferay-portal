@@ -20,7 +20,9 @@ const Actions: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 	</div>
 );
 
-interface ICanvasBodyProps extends React.HTMLAttributes<HTMLElement> {
+interface ICanvasBodyProps {
+	children?: React.ReactNode;
+	className?: string;
 	empty?: boolean;
 	emptyState?: {
 		description: string;
@@ -39,8 +41,9 @@ const Body: React.FC<ICanvasBodyProps> = ({
 	</Card.Body>
 );
 
-interface ICanvasHeaderProps
-	extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+interface ICanvasHeaderProps {
+	children?: React.ReactNode;
+	className?: string;
 	title: string;
 }
 
@@ -61,7 +64,9 @@ const Header: React.FC<ICanvasHeaderProps> = ({children, className, title}) => (
 	</Card.Header>
 );
 
-interface ICanvasProps extends React.HTMLAttributes<HTMLElement> {
+interface ICanvasProps {
+	children?: React.ReactNode;
+	className?: string;
 	testId?: string;
 }
 

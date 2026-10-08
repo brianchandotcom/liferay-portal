@@ -377,7 +377,7 @@ definition {
 	@description = "This test asserts that users get the proper notification based on depot sharing permissions granted to him."
 	@priority = 4
 	@refactordone
-	test CanViewSharingNotifications {
+	test CanShareDocumentsAndViewSharingNotifications {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");

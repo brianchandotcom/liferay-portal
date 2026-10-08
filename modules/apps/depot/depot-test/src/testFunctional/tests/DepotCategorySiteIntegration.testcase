@@ -146,9 +146,14 @@ definition {
 			searchAssetType = "Wiki Page");
 	}
 
-	@description = "This ensures that assets stored in a site can be searched by a depot category after disconnecting the site."
+	@description = "This ensures that assets stored in a site can be searched by a depot category after disconnecting the site, that the depot category is not shown in Category Navigation, and that the depot vocabulary cannot be seen when creating assets from the disconnected site."
 	@priority = 3
 	test DepotCategoryAndVocabularyBehaviourOnDisconnectedSite {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Category Filter");
+
 		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Depot Name",
 			site = "false",
@@ -229,6 +234,45 @@ definition {
 		SearchResults.viewSearchResults(
 			searchAssetTitle = "Wiki Page Name",
 			searchAssetType = "Wiki Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		CategoriesNavigationPortlet.viewNoCategory();
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+
+		AssetCategorization.viewBlogsNoVocabularyField(vocabularyName = "Vocabulary Name");
+
+		DMNavigator.openToAddEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
+
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
+
+		KBArticle.openToAddKBArticle(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
+
+		MessageboardsThread.openToAddThread(siteURLKey = "site-name");
+
+		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
+
+		WikiNavigator.openToAddPage(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			wikiNodeName = "Main");
+
+		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 	}
 
 	@description = "This ensures that a depot category can be selected in Category Navigation on a connected site."
@@ -318,66 +362,6 @@ definition {
 			siteURLKey = "site-name");
 
 		DMDocument.viewCategoriesInfo(categoryName = "apple");
-	}
-
-	@description = "This ensures that a depot vocabulary cannot be seen when creating assets from the disconnected site, and that a depot category cannot be shown in Category Navigation on a disconnected site."
-	@priority = 4
-	test VocabularyAndCategoryShouldNotBeViewedFromDisconnectedSite {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Category Filter");
-
-		JSONCategory.addCategory(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "depot",
-			vocabularyName = "Vocabulary Name");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONDepot.disconnectSite(groupName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		CategoriesNavigationPortlet.viewNoCategory();
-
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
-
-		AssetCategorization.viewBlogsNoVocabularyField(vocabularyName = "Vocabulary Name");
-
-		DMNavigator.openToAddEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
-
-		WebContentNavigator.openToAddBasicArticle(
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
-
-		KBArticle.openToAddKBArticle(
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
-
-		MessageboardsThread.openToAddThread(siteURLKey = "site-name");
-
-		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
-
-		WikiNavigator.openToAddPage(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			wikiNodeName = "Main");
-
-		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 	}
 
 }

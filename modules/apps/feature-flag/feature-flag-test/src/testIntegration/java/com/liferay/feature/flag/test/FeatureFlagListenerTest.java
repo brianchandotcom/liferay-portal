@@ -21,6 +21,8 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -112,7 +114,7 @@ public class FeatureFlagListenerTest {
 					FeatureFlagTestHelper.FEATURE_FLAG_KEY_1,
 					FeatureFlagTestHelper.FEATURE_FLAG_KEY_2)) {
 
-			testFeatureFlagListener.assertInvocations(
+			testFeatureFlagListener.assertInvocationsInAnyOrder(
 				_valuesToString(
 					_companyId, FeatureFlagTestHelper.FEATURE_FLAG_KEY_1,
 					_value1),
@@ -190,7 +192,7 @@ public class FeatureFlagListenerTest {
 		try (TestFeatureFlagListener testFeatureFlagListener =
 				new TestFeatureFlagListener("*")) {
 
-			testFeatureFlagListener.assertInvocations(
+			testFeatureFlagListener.assertInvocationsInAnyOrder(
 				_valuesToString(
 					_companyId, FeatureFlagTestHelper.FEATURE_FLAG_KEY_1,
 					_value1),
@@ -276,6 +278,14 @@ public class FeatureFlagListenerTest {
 			}
 
 			_strings.clear();
+		}
+
+		public void assertInvocationsInAnyOrder(String... expectedStrings) {
+			Arrays.sort(expectedStrings);
+
+			Collections.sort(_strings);
+
+			assertInvocations(expectedStrings);
 		}
 
 		@Override

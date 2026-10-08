@@ -110,7 +110,7 @@ definition {
 			value1 = "There are no structures.");
 	}
 
-	@description = "This ensures that a web content folder can be edited in a depot."
+	@description = "This ensures that a web content folder can be edited in a depot and that web content can be moved into it."
 	@e2e
 	@priority = 3
 	@refactordone
@@ -133,6 +133,24 @@ definition {
 			key_webContentTitle = "WC Folder Name Edit",
 			locator1 = "WC#ENTRY_LIST_TITLE",
 			value1 = "WC Folder Name Edit");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent Title");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContent.moveToFolderCP(
+			folderName = "WC Folder Name Edit",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentFolder.gotoCP(
+			folderName = "WC Folder Name Edit",
+			webContentTitle = "WC Folder Name Edit");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This test edits template and structure in a depot. Skip the instance for performance improvement."
@@ -253,34 +271,6 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentStatus = "Expired",
 			webContentTitle = "WC WebContent Title");
-	}
-
-	@description = "This ensures that web content can be moved to a folder in a depot."
-	@priority = 3
-	@refactordone
-	test CanMoveWebContentToFolder {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "WC WebContent Title");
-
-		JSONWebcontent.addFolder(
-			folderName = "WC Folder Name",
-			groupName = "Test Depot Name",
-			site = "false");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContent.moveToFolderCP(
-			folderName = "WC Folder Name",
-			webContentTitle = "WC WebContent Title");
-
-		WebContentFolder.gotoCP(
-			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name");
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that web content with structure can be restored to a depot."

@@ -188,6 +188,7 @@ spec:
                                             type: object
                                     type: object
                                 storage:
+                                    default: {}
                                     properties:
                                         tags:
                                             additionalProperties:
@@ -203,7 +204,6 @@ spec:
                             required:
                                 -   environmentId
                                 -   projectId
-                                -   storage
                             type: object
                         status:
                             properties:

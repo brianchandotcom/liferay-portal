@@ -657,7 +657,7 @@ definition {
 	@description = "This ensures that the asset can be removed in Collections."
 	@priority = 4
 	@refactordone
-	test CanRemoveSelectedAsset {
+	test CanSelectAndRemoveAssetsManually {
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",

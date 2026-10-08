@@ -136,7 +136,7 @@ definition {
 	@description = "This ensures that an organization can be added and removed in the membership of an asset library."
 	@priority = 4
 	@refactordone
-	test CanRemoveOrganizationFromMemberships {
+	test CanAddAndRemoveMembersByType {
 		JSONOrganization.addOrganization(
 			organizationName = "Organization Name",
 			organizationSite = "true");

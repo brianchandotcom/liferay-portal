@@ -7,7 +7,7 @@
 {{- fail "Azure has no managed OpenSearch, so search.engine must be elasticsearch" -}}
 {{- end -}}
 
-{{- $backup := $xr.spec.backup | default dict -}}
+{{- $backup := $xr.spec.backup -}}
 {{- $cmkEnabled := $xr.spec.cmk.enabled -}}
 {{- $environmentId := $xr.spec.environmentId -}}
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
@@ -16,12 +16,12 @@
 {{- $projectId := $xr.spec.projectId -}}
 {{- $region := $env.region -}}
 {{- $restoreGeneration := $xr.spec.restoreGeneration | default "" -}}
-{{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
-{{- $retainedDataPlanes := $xr.spec.retainedDataPlanes | default dict -}}
-{{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
+{{- $restorePhase := $xr.spec.restorePhase -}}
+{{- $retainedDataPlanes := $xr.spec.retainedDataPlanes -}}
+{{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane -}}
 
 {{- $activeDataPlane := $targetActiveDataPlane -}}
-{{- $backupRetentionDays := max 7 (min 35 (int ($backup.retentionDays | default 30))) -}}
+{{- $backupRetentionDays := max 7 (min 35 (int $backup.retentionDays)) -}}
 {{- $dataPlanes := list $targetActiveDataPlane -}}
 {{- $overlayStorageAccountName := printf "%.9s%.6sovl%s" ($env.deploymentName | replace "-" "" | lower) ($projectId | replace "-" "" | lower) (printf "%s-%s" $env.deploymentName $projectId | sha256sum | trunc 6) -}}
 {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}

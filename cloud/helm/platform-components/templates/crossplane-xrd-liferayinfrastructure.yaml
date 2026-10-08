@@ -150,6 +150,7 @@ spec:
                                     pattern: ^[0-9a-f]{6}$
                                     type: string
                                 restorePhase:
+                                    default: none
                                     enum:
                                         -   none
                                         -   promoting
@@ -201,6 +202,7 @@ spec:
                                             type: object
                                     type: object
                                 targetActiveDataPlane:
+                                    default: blue
                                     enum:
                                         -   blue
                                         -   green

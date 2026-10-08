@@ -14,8 +14,8 @@
 {{- $opensearchEnabled := eq $xr.spec.search.engine "opensearch" -}}
 {{- $overlayAccess := $xr.spec.overlayAccess -}}
 {{- $projectId := $xr.spec.projectId -}}
-{{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
-{{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}
+{{- $restorePhase := $xr.spec.restorePhase -}}
+{{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane -}}
 
 {{- $activeDataPlane := eq $restorePhase "provisioning" | ternary (eq $targetActiveDataPlane "blue" | ternary "green" "blue") $targetActiveDataPlane -}}
 {{- $overlayBucketName := printf "%s-overlay-%s" $env.deploymentName (printf "%.18s-%s" $projectId (printf "%s-%s-%s" $env.accountId $env.deploymentName $projectId | sha256sum | trunc 6)) -}}

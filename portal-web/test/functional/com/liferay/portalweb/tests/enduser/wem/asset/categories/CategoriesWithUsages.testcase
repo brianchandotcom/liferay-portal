@@ -31,7 +31,7 @@ definition {
 
 	@description = "This is a test for LPS-154273. The site designer can view number of usages on Categories admin."
 	@priority = 4
-	test ViewUsages {
+	test ViewUsagesOfSiteAndGlobalCategories {
 		task ("Given a site designer has a web content with a category") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

@@ -115,6 +115,24 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$restore := \\$database.restore \\| default dict"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$restoreSnapshotId := dig \"snapshot\" \"id\" \"\" \\$restore"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\{\\{- if and \\(eq \\$restorePhase \"provisioning\"\\) \\(not \\$restoreSnapshotId\\) \\}\\}\\s+\\{\\{- fail \""
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\{\\{- if and \\(eq \\$restorePhase \"provisioning\"\\) \\(eq \\$dataPlane \\$targetActiveDataPlane\\) \\}\\}\\s+snapshotIdentifier: \\{\\{ \\$restoreSnapshotId \\}\\}"
+        it: Restores the target data plane from the database restore snapshot
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "key: aws:ResourceTag/Active\\s+value: \"true\"\\s+-\\s+key: aws:ResourceTag/Backup\\s+value: \"true\"\\s+-\\s+key: aws:ResourceTag/DeploymentName\\s+value: \\{\\{ \\$env\\.deploymentName \\}\\}\\s+-\\s+key: aws:ResourceTag/EnvironmentId\\s+value: \\{\\{ \\$environmentId \\}\\}\\s+-\\s+key: aws:ResourceTag/ProjectId\\s+value: \\{\\{ \\$projectId \\}\\}"
         it: Selects only the active resources of this environment for backup
     -   asserts:

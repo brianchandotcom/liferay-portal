@@ -137,9 +137,7 @@ tests:
         it: Targets the cloud agnostic API group
     -   asserts:
             -   notExists:
-                    path: spec.database.restorePointInTime
-            -   notExists:
-                    path: spec.database.restoreSourceDataPlane
+                    path: spec.database.restore
             -   notExists:
                     path: spec.database.rootPasswordSecretName
             -   notExists:

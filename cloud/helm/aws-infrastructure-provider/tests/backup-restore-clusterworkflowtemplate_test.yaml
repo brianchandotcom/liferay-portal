@@ -6,6 +6,21 @@ templates:
     -   charts/liferay-subchart-backup-restore/templates/clusterworkflowtemplate.yaml
 tests:
     -   asserts:
+            -   contains:
+                    content:
+                        default: ""
+                        name: restore-snapshot-id
+                    path: spec.templates[?(@.name=="apply-infrastructure")].inputs.parameters
+            -   matchRegex:
+                    path: spec.templates[?(@.name=="apply-infrastructure")].resource.manifest
+                    pattern: "database:\\s+restore: [{][{]=inputs[.]parameters\\['restore-snapshot-id'\\] == '' [?] 'null' : toJson[(][{]'snapshot': [{]'id': inputs[.]parameters\\['restore-snapshot-id'\\][}] [}][)][}][}]"
+            -   contains:
+                    content:
+                        name: restore-snapshot-id
+                        value: "{{tasks.get-peer-recovery-points.outputs.parameters.rds-snapshot-id}}"
+                    path: spec.templates[?(@.name=="main")].dag.tasks[?(@.name=="restore-rds-instance")].arguments.parameters
+        it: Restores the database from the snapshot paired with the recovery point
+    -   asserts:
             -   equal:
                     path: spec.templates[?(@.name=="sanitize-database")].activeDeadlineSeconds
                     value: 600

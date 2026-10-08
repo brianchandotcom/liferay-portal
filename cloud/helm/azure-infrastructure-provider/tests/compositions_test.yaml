@@ -457,10 +457,6 @@ tests:
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "\\$databaseServerName := index \\$databaseServerNames \\$dataPlane"
-            -   documentIndex: 0
-                notMatchRegex:
-                    path: spec.pipeline[1].input.inline.template
-                    pattern: "restorePointInTime \\| default \"\" \\| sha256sum"
         it: Names each restored server after its restore generation so no two restores share one
     -   asserts:
             -   documentIndex: 0
@@ -716,11 +712,27 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "pointInTimeRestoreTimeInUtc: \\{\\{ \\$database.restorePointInTime \\}\\}"
+                    pattern: "pointInTimeRestoreTimeInUtc: \\{\\{ \\$restorePointInTime \\}\\}"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\$restoreSourceDatabaseServerName := dig \\(\\$database.restoreSourceDataPlane \\| default \\(index \\$dataPlaneKeys \\$activeDataPlane\\)\\) \"databaseServer\" \"\" \\$dataPlaneNames"
+                    pattern: "\\$restore := \\$database.restore \\| default dict"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$restorePointInTime := dig \"pointInTime\" \"time\" \"\" \\$restore"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$restoreSourceDataPlane := dig \"pointInTime\" \"sourceDataPlane\" \"\" \\$restore"
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\{\\{- if and \\(eq \\$restorePhase \"provisioning\"\\) \\(not \\$restorePointInTime\\) -\\}\\}\\s+\\{\\{- fail \""
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$restoreSourceDatabaseServerName := dig \\(\\$restoreSourceDataPlane \\| default \\(index \\$dataPlaneKeys \\$activeDataPlane\\)\\) \"databaseServer\" \"\" \\$dataPlaneNames"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template

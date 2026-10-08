@@ -18,8 +18,8 @@ spec:
                 parameters:
                     -   name: liferay-infrastructure-name
                     -   name: restore-phase
-                    -   default: "null"
-                        name: snapshot-identifier
+                    -   default: ""
+                        name: restore-snapshot-id
                     -   name: target-active-data-plane
             name: apply-infrastructure
             outputs:
@@ -39,7 +39,7 @@ spec:
                         namespace: {{ "{{" }}workflow.namespace}}
                     spec:
                         database:
-                            snapshotIdentifier: {{ "{{" }}inputs.parameters.snapshot-identifier}}
+                            restore: {{ "{{" }}=inputs.parameters['restore-snapshot-id'] == '' ? 'null' : toJson({'snapshot': {'id': inputs.parameters['restore-snapshot-id']} })}}
                         restorePhase: {{ "{{" }}inputs.parameters.restore-phase}}
                         targetActiveDataPlane: {{ "{{" }}inputs.parameters.target-active-data-plane}}
                 mergeStrategy: merge
@@ -47,8 +47,8 @@ spec:
                 parameters:
                     -   name: liferay-infrastructure-name
                     -   name: restore-phase
-                    -   default: "null"
-                        name: snapshot-identifier
+                    -   default: ""
+                        name: restore-snapshot-id
                     -   name: target-active-data-plane
             name: apply-wait-infrastructure
             steps:
@@ -58,8 +58,8 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: "{{ "{{" }}inputs.parameters.restore-phase}}"
-                                -   name: snapshot-identifier
-                                    value: "{{ "{{" }}inputs.parameters.snapshot-identifier}}"
+                                -   name: restore-snapshot-id
+                                    value: "{{ "{{" }}inputs.parameters.restore-snapshot-id}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}inputs.parameters.target-active-data-plane}}"
                         name: apply-infrastructure
@@ -236,7 +236,7 @@ spec:
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
                                 -   name: restore-phase
                                     value: provisioning
-                                -   name: snapshot-identifier
+                                -   name: restore-snapshot-id
                                     value: "{{ "{{" }}tasks.get-peer-recovery-points.outputs.parameters.rds-snapshot-id}}"
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"

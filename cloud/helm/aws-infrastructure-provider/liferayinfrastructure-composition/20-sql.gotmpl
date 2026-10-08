@@ -1,6 +1,13 @@
 {{- $database := $xr.spec.database -}}
 
 {{- $isAboveAllocatedStorageThreshold := ge (int $database.storageGB) 400 }}
+{{- $restore := $database.restore | default dict }}
+
+{{- $restoreSnapshotId := dig "snapshot" "id" "" $restore }}
+
+{{- if and (eq $restorePhase "provisioning") (not $restoreSnapshotId) }}
+{{- fail "AWS restores the database from a snapshot, so database.restore.snapshot.id is required while restoring" }}
+{{- end }}
 
 {{- range $i, $dataPlane := has $restorePhase (list "promoting" "provisioning") | ternary (list "blue" "green") (list $targetActiveDataPlane) }}
 {{- if $i }}
@@ -53,7 +60,7 @@ spec:
         region: {{ $env.region }}
         skipFinalSnapshot: true
         {{- if and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
-        snapshotIdentifier: {{ $database.snapshotIdentifier }}
+        snapshotIdentifier: {{ $restoreSnapshotId }}
         {{- end }}
         storageEncrypted: true
         {{- if $isAboveAllocatedStorageThreshold }}

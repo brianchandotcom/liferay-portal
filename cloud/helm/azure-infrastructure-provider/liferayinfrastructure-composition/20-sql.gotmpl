@@ -1,6 +1,15 @@
 {{- $database := $xr.spec.database -}}
 {{- $observedDatabaseDataPlanes := list -}}
 
+{{- $restore := $database.restore | default dict -}}
+
+{{- $restorePointInTime := dig "pointInTime" "time" "" $restore -}}
+{{- $restoreSourceDataPlane := dig "pointInTime" "sourceDataPlane" "" $restore -}}
+
+{{- if and (eq $restorePhase "provisioning") (not $restorePointInTime) -}}
+{{- fail "Azure restores the database to a point in time, so database.restore.pointInTime.time is required while restoring" -}}
+{{- end -}}
+
 {{- range $dataPlane := list "blue" "green" -}}
     {{- if hasKey $observedResources (printf "liferay-db-%s" $dataPlane) -}}
         {{- $observedDatabaseDataPlanes = append $observedDatabaseDataPlanes $dataPlane -}}
@@ -11,7 +20,7 @@
 {{- $databaseServerName := index $databaseServerNames $dataPlane }}
 {{- $isDatabaseRestoreTarget := and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane) }}
 {{- $isDemotedDataPlane := eq $dataPlane $demotedDataPlane }}
-{{- $restoreSourceDatabaseServerName := dig ($database.restoreSourceDataPlane | default (index $dataPlaneKeys $activeDataPlane)) "databaseServer" "" $dataPlaneNames }}
+{{- $restoreSourceDatabaseServerName := dig ($restoreSourceDataPlane | default (index $dataPlaneKeys $activeDataPlane)) "databaseServer" "" $dataPlaneNames }}
 {{- if $i }}
 ---
 {{- end }}
@@ -70,7 +79,7 @@ spec:
     {{- if $isDatabaseRestoreTarget }}
     initProvider:
         createMode: PointInTimeRestore
-        pointInTimeRestoreTimeInUtc: {{ $database.restorePointInTime }}
+        pointInTimeRestoreTimeInUtc: {{ $restorePointInTime }}
         sourceServerId: /subscriptions/{{ $env.subscriptionId }}/resourceGroups/{{ $env.resourceGroupName }}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{{ $restoreSourceDatabaseServerName }}
     {{- end }}
     managementPolicies: {{ $isDemotedDataPlane | ternary $demotedManagementPolicies $managementPolicies }}

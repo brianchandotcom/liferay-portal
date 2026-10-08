@@ -320,7 +320,7 @@ definition {
 
 	@description = "This ensures that a folder in a depot can be copied to a site when connected, but not when unconnected."
 	@priority = 5
-	test CanCopyFolderFromDepotToConnectedSiteAndCannotToUnconnectedSite {
+	test CanCopyDocumentAndFolderFromDepotToConnectedSiteAndCannotToUnconnectedSite {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");

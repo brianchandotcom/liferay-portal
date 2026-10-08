@@ -112,8 +112,6 @@ public interface ModuleLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public Module deleteModule(Module module);
 
-	public void deleteModules(long appId);
-
 	/**
 	 * @throws PortalException
 	 */
@@ -293,4 +291,4 @@ public interface ModuleLocalService
 	public Module updateModule(Module module);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1718092912
+// LIFERAY-SERVICE-BUILDER-HASH:-1941562056

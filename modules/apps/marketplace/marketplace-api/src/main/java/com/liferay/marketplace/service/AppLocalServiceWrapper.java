@@ -337,13 +337,6 @@ public class AppLocalServiceWrapper
 		return _appLocalService.getInstalledApps();
 	}
 
-	@Override
-	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps(
-		String category) {
-
-		return _appLocalService.getInstalledApps(category);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -444,4 +437,4 @@ public class AppLocalServiceWrapper
 	private AppLocalService _appLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1027365753
+// LIFERAY-SERVICE-BUILDER-HASH:67003131

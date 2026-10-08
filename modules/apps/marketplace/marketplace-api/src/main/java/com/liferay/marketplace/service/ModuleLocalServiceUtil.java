@@ -108,10 +108,6 @@ public class ModuleLocalServiceUtil {
 		return getService().deleteModule(module);
 	}
 
-	public static void deleteModules(long appId) {
-		getService().deleteModules(appId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -339,4 +335,4 @@ public class ModuleLocalServiceUtil {
 		new Snapshot<>(ModuleLocalServiceUtil.class, ModuleLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1812001527
+// LIFERAY-SERVICE-BUILDER-HASH:-1213598600

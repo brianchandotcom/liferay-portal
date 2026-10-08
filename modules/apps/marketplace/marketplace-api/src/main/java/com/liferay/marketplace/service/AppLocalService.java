@@ -272,9 +272,6 @@ public interface AppLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<App> getInstalledApps();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<App> getInstalledApps(String category);
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -322,4 +319,4 @@ public interface AppLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:123133156
+// LIFERAY-SERVICE-BUILDER-HASH:-678283231

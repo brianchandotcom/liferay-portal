@@ -110,11 +110,6 @@ public class ModuleLocalServiceWrapper
 		return _moduleLocalService.deleteModule(module);
 	}
 
-	@Override
-	public void deleteModules(long appId) {
-		_moduleLocalService.deleteModules(appId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -391,4 +386,4 @@ public class ModuleLocalServiceWrapper
 	private ModuleLocalService _moduleLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-232197680
+// LIFERAY-SERVICE-BUILDER-HASH:-1215300161

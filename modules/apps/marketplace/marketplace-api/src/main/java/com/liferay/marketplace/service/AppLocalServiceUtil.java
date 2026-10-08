@@ -297,10 +297,6 @@ public class AppLocalServiceUtil {
 		return getService().getInstalledApps();
 	}
 
-	public static List<App> getInstalledApps(String category) {
-		return getService().getInstalledApps(category);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -374,4 +370,4 @@ public class AppLocalServiceUtil {
 		new Snapshot<>(AppLocalServiceUtil.class, AppLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001836979
+// LIFERAY-SERVICE-BUILDER-HASH:-2065378730

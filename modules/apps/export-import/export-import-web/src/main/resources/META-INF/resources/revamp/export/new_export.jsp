@@ -71,14 +71,7 @@ renderResponse.setTitle(exportImportProcessDisplayContext.getExportTitle());
 					).put(
 						"lookAndFeelEnabled", exportImportProcessDisplayContext.isLookAndFeelEnabled()
 					).put(
-						"pageTreeModalConfiguration",
-						HashMapBuilder.<String, Object>put(
-							"groupId", liveGroupId
-						).put(
-							"pageSize", PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN
-						).put(
-							"privateLayoutsAvailable", liveGroup.isPrivateLayoutsEnabled() && liveGroup.hasPrivateLayouts()
-						).build()
+						"pageTreeModalConfiguration", exportImportProcessDisplayContext.getPageTreeModalConfiguration()
 					).put(
 						"siteSelectionEnabled", exportImportProcessDisplayContext.isSiteSelectionEnabled()
 					).put(

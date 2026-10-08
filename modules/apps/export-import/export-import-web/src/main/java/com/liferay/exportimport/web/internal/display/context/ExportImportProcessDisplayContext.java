@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -32,6 +34,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
 
 import java.nio.charset.StandardCharsets;
+
+import java.util.Map;
 
 /**
  * @author Daniel Raposo
@@ -193,6 +197,22 @@ public class ExportImportProcessDisplayContext {
 		return _getTitle("new-import-process");
 	}
 
+	public Map<String, Object> getPageTreeModalConfiguration() {
+		Group liveGroup = _getLiveGroup();
+
+		return HashMapBuilder.<String, Object>put(
+			"defaultPrivateLayout", liveGroup.isLayoutSetPrototype()
+		).put(
+			"groupId", liveGroup.getGroupId()
+		).put(
+			"pageSize", PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN
+		).put(
+			"privateLayoutsAvailable",
+			!liveGroup.isLayoutSetPrototype() &&
+			liveGroup.isPrivateLayoutsEnabled() && liveGroup.hasPrivateLayouts()
+		).build();
+	}
+
 	public Scope getScope() {
 		if (!Validator.isBlank(_getPortletId())) {
 			return Scope.PORTLET;
@@ -291,6 +311,14 @@ public class ExportImportProcessDisplayContext {
 		}
 
 		return null;
+	}
+
+	private Group _getLiveGroup() {
+		if (_group.isStagingGroup()) {
+			return _group.getLiveGroup();
+		}
+
+		return _group;
 	}
 
 	private String _getPortletId() {

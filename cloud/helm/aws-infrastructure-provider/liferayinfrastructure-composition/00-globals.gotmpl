@@ -11,7 +11,7 @@
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $namespace := $xr.metadata.namespace -}}
 {{- $opensearch := dig "search" "opensearch" dict $xr.spec -}}
-{{- $overlayAccess := $xr.spec.overlayAccess | default dict -}}
+{{- $overlayAccess := $xr.spec.overlayAccess -}}
 {{- $projectId := $xr.spec.projectId -}}
 {{- $restorePhase := $xr.spec.restorePhase | default "none" -}}
 {{- $targetActiveDataPlane := $xr.spec.targetActiveDataPlane | default "blue" -}}

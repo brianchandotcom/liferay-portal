@@ -8,7 +8,7 @@
 {{- $environmentId := $xr.spec.environmentId -}}
 {{- $managementPolicies := $xr.spec.orphanOnDelete | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
 {{- $namespace := $xr.metadata.namespace -}}
-{{- $overlayAccess := $xr.spec.overlayAccess | default dict -}}
+{{- $overlayAccess := $xr.spec.overlayAccess -}}
 {{- $projectId := $xr.spec.projectId -}}
 {{- $region := $env.region -}}
 {{- $restoreGeneration := $xr.spec.restoreGeneration | default "" -}}

@@ -136,6 +136,7 @@ spec:
                                     default: false
                                     type: boolean
                                 overlayAccess:
+                                    default: {}
                                     properties:
                                         enabled:
                                             default: false

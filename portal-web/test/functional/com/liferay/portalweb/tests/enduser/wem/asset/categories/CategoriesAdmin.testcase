@@ -15,12 +15,54 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
-	@description = "This is a test for LPS-118305. The user cannot add a category to a vocabulary if the limit was exceeded."
+	@description = "This is a test for LPS-118305. The user could change the maximum number of categories per vocabulary and cannot add a category to a vocabulary if the limit was exceeded."
 	@priority = 5
+	@uitest
 	test ConfigureMaximumNumberOfCategoriesPerVocabularyAndReachTheLimit {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		task ("Change the Maximum Number of Categories per Vocabulary in System Settings") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Categorization",
+				configurationScope = "System Scope");
+
+			SystemSettings.editTextSetting(
+				settingName = "Maximum Number of Categories per Vocabulary",
+				settingValue = 300);
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Navigate to the Categories admin") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("View the Maximum Number of categories of existing vocabularies is 300") {
+			for (var vocabularyName : list "Topic,Audience,Stage") {
+				Navigator.gotoNavNested(navNested = ${vocabularyName});
+
+				AssertVisible(
+					assetTitle = ${vocabularyName},
+					info = "The maximum number of categories per vocabulary is 300.",
+					locator1 = "Message#ASSET_INFO");
+			}
+		}
+
+		task ("Add a new vocabulary") {
+			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the Maximum Number of categories of new vocabulary is 300") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name",
+				info = "The maximum number of categories per vocabulary is 300.",
+				locator1 = "Message#ASSET_INFO");
+		}
 
 		task ("Change the Maximum Number of Categories per Vocabulary to 3") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -35,12 +77,6 @@ definition {
 				settingValue = 3);
 
 			SystemSettings.saveConfiguration();
-		}
-
-		task ("Add a new vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
 		}
 
 		task ("Add two categories in new vocabulary") {
@@ -92,56 +128,6 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Add Subcategory");
 
 			MenuItem.viewPresent(menuItem = "Edit");
-		}
-	}
-
-	@description = "This is a test for LPS-118305. The user could change the maximum number of categories per vocabuary."
-	@priority = 5
-	@uitest
-	test ConfigureMaximumNumberOfCategoriesPerVocabulary {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Change the Maximum Number of Categories per Vocabulary in System Settings") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Assets",
-				configurationName = "Categorization",
-				configurationScope = "System Scope");
-
-			SystemSettings.editTextSetting(
-				settingName = "Maximum Number of Categories per Vocabulary",
-				settingValue = 300);
-
-			SystemSettings.saveConfiguration();
-		}
-
-		task ("Navigate to the Categories admin") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("View the Maximum Number of categories of existing vocabularies is 300") {
-			for (var vocabularyName : list "Topic,Audience,Stage") {
-				Navigator.gotoNavNested(navNested = ${vocabularyName});
-
-				AssertVisible(
-					assetTitle = ${vocabularyName},
-					info = "The maximum number of categories per vocabulary is 300.",
-					locator1 = "Message#ASSET_INFO");
-			}
-		}
-
-		task ("Add a new vocabulary") {
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View the Maximum Number of categories of new vocabulary is 300") {
-			AssertVisible(
-				assetTitle = "Vocabulary Name",
-				info = "The maximum number of categories per vocabulary is 300.",
-				locator1 = "Message#ASSET_INFO");
 		}
 	}
 

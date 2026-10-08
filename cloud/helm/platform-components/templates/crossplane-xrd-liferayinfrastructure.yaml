@@ -165,25 +165,32 @@ spec:
                                         -   message: retainedDataPlanes keys must be blue or green, optionally followed by a hyphen and six hexadecimal digits
                                             rule: self.all(key, key.matches('^(blue|green)(-[0-9a-f]{6})?$'))
                                 search:
+                                    default: {}
                                     properties:
+                                        engine:
+                                            default: elasticsearch
+                                            enum:
+                                                -   elasticsearch
+                                                -   opensearch
+                                            type: string
                                         opensearch:
+                                            default: {}
                                             properties:
                                                 autoSoftwareUpdateEnabled:
+                                                    default: true
                                                     type: boolean
                                                 engineVersion:
+                                                    minLength: 1
                                                     type: string
                                                 instanceCount:
+                                                    default: 2
                                                     type: integer
                                                 instanceType:
+                                                    minLength: 1
                                                     type: string
                                                 volumeSizeGB:
+                                                    default: 20
                                                     type: integer
-                                            required:
-                                                -   autoSoftwareUpdateEnabled
-                                                -   engineVersion
-                                                -   instanceCount
-                                                -   instanceType
-                                                -   volumeSizeGB
                                             type: object
                                     type: object
                                 storage:

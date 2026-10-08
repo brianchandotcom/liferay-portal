@@ -24,11 +24,12 @@ spec:
     overlayAccess:
         {{- .Values.overlayAccess | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId | quote }}
-    {{- if eq .Values.search.engine "opensearch" }}
     search:
+        engine: {{ .Values.search.engine }}
+        {{- if and (eq .Values.search.engine "opensearch") .Values.search.opensearch }}
         opensearch:
             {{- .Values.search.opensearch | toYaml | nindent 12 }}
-    {{- end }}
+        {{- end }}
     storage:
         {{- .Values.storage | toYaml | nindent 8 }}
 {{- end -}}

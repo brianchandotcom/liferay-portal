@@ -33,7 +33,7 @@ definition {
 	@description = "This ensures that an asset library can be assigned to a user from the user profile."
 	@priority = 4
 	@refactordone
-	test CanAssignALFromUserProfile {
+	test CanAssignReselectAndRemoveALFromUserProfile {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

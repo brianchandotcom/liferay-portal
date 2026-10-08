@@ -63,21 +63,19 @@ tests:
             -   equal:
                     path: spec.search.opensearch
                     value:
-                        autoSoftwareUpdateEnabled: true
-                        engineVersion: OpenSearch_2.15
-                        instanceCount: 2
-                        instanceType: t3.small.search
-                        volumeSizeGB: 20
+                        instanceCount: 3
+                        instanceType: m6g.large.search
+                        version: "2.19"
+                        volumeSizeGB: 50
         it: Passes the OpenSearch settings through to the composite resource
         set:
             search:
                 engine: opensearch
                 opensearch:
-                    autoSoftwareUpdateEnabled: true
-                    engineVersion: OpenSearch_2.15
-                    instanceCount: 2
-                    instanceType: t3.small.search
-                    volumeSizeGB: 20
+                    instanceCount: 3
+                    instanceType: m6g.large.search
+                    version: "2.19"
+                    volumeSizeGB: 50
     -   asserts:
             -   equal:
                     path: spec.backup.dayOfWeek

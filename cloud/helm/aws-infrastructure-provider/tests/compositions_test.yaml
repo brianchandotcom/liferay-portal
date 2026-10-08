@@ -109,6 +109,12 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "engineVersion: \\{\\{ printf \"OpenSearch_%s\" \\$opensearch\\.version \\| quote \\}\\}"
+        it: Prefixes the OpenSearch version with the engine name AWS expects
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "\\$opensearchEnabled := eq \\$xr\\.spec\\.search\\.engine \"opensearch\""
             -   documentIndex: 0
                 matchRegex:

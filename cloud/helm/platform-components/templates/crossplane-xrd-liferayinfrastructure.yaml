@@ -176,17 +176,15 @@ spec:
                                         opensearch:
                                             default: {}
                                             properties:
-                                                autoSoftwareUpdateEnabled:
-                                                    default: true
-                                                    type: boolean
-                                                engineVersion:
-                                                    minLength: 1
-                                                    type: string
                                                 instanceCount:
                                                     default: 2
                                                     type: integer
                                                 instanceType:
                                                     minLength: 1
+                                                    type: string
+                                                version:
+                                                    default: "2.15"
+                                                    pattern: ^[0-9]+\.[0-9]+$
                                                     type: string
                                                 volumeSizeGB:
                                                     default: 20

@@ -914,7 +914,7 @@ definition {
 
 	@description = "This is for LPS-101409. Validate if select a required category when entering the page name based on a page template. Also add a step to check adding page with category successfully via json."
 	@priority = 5
-	test SelectRequiredCategoryInWidgetPageCreation {
+	test SelectRequiredCategoryInContentAndWidgetPageCreation {
 		property portal.acceptance = "true";
 
 		task ("Enable widget pages") {

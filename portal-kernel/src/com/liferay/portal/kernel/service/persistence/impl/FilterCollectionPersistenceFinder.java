@@ -169,43 +169,23 @@ public class FilterCollectionPersistenceFinder
 
 		StringBundler sb = null;
 
-		int extraSize = inlineDistinct ? 3 : 4;
+		int extraSize = inlineDistinct ? 2 : 3;
 
 		if (orderByComparator == null) {
-			sb = new StringBundler((finderColumns.length * 2) + extraSize);
+			sb = new StringBundler(extraSize);
 		}
 		else {
 			sb = new StringBundler(
-				(finderColumns.length * 2) + extraSize +
-					(orderByComparator.getOrderByFields().length * 2));
+				extraSize + (orderByComparator.getOrderByFields().length * 2));
 		}
 
 		if (inlineDistinct) {
-			sb.append(_filterSqlSelectWhere);
+			sb.append(buildSQLWhere(_filterSqlSelectWhere, values, true));
 		}
 		else {
-			sb.append(_filterSqlSelectNoInlineDistinctWhere1);
-		}
-
-		for (int i = 0; i < finderColumns.length; i++) {
-			String fragment = finderColumns[i].getSqlFragment(values[i], true);
-
-			if (fragment.isEmpty()) {
-				continue;
-			}
-
-			sb.append(fragment);
-			sb.append(" AND ");
-		}
-
-		if (!dbWhere.isEmpty()) {
-			sb.append(dbWhere);
-		}
-		else if (sb.index() > 1) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		if (!inlineDistinct) {
+			sb.append(
+				buildSQLWhere(
+					_filterSqlSelectNoInlineDistinctWhere1, values, true));
 			sb.append(_filterSqlSelectNoInlineDistinctWhere2);
 		}
 

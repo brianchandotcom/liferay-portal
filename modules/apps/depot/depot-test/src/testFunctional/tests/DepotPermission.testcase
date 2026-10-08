@@ -1219,8 +1219,8 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a specific asset library scope can be selected and deselected from DM, Collections and WC permissions."
-	@priority = 3
+	@description = "This ensures that a specific asset library scope can be selected and deselected from DM, Collections and WC permissions, and that an unsupported application like Blogs cannot select an asset library as the scope of the permission."
+	@priority = 4
 	@refactordone
 	test CanSelectDepotScopeOnlyFromSupportedApplicationPermissions {
 		JSONRole.addRegularRole(roleKey = "Depot Regrole Name");
@@ -1358,6 +1358,35 @@ definition {
 				permissionDefinitionValue = "View",
 				permissionNavigationValue = "Web Content",
 				siteNameScope = "All Sites and Asset Libraries");
+		}
+
+		task ("View that the depot scope cannot be selected from Blogs permissions") {
+			Role.openRolesAdmin();
+
+			RoleNavigator.gotoDefineRolePermissions(
+				permissionNavHeader = "Content & Data",
+				permissionNavItem = "Blogs",
+				roleTitle = "Depot Regrole Name");
+
+			AssertClick(
+				key_permissionSheetSubtitle = "Blogs Entry",
+				key_permissionValue = "View",
+				locator1 = "RolesPermissions#PERMISSION_CHANGE_SCOPE",
+				value1 = "Change");
+
+			SelectFrame(locator1 = "RolesPermissionsSelectSite#SELECT_SITE_IFRAME");
+
+			AssertVisible(
+				locator1 = "NavBar#RECENT",
+				value1 = "Recent");
+
+			AssertVisible(
+				locator1 = "NavBar#MY_SITES",
+				value1 = "My Sites");
+
+			AssertElementNotPresent(
+				locator1 = "NavBar#ASSET_LIBRARIES",
+				value1 = "Asset Libraries");
 		}
 	}
 
@@ -1565,40 +1594,6 @@ definition {
 			dmDocumentTitle = "Depot DM Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "Depot DM Document Title");
-	}
-
-	@description = "This ensures that the unsupported application can not select a depot as the scope of the permission."
-	@priority = 4
-	@refactordone
-	test CanViewScopeFromUnsupportedApplicationPermissions {
-		JSONRole.addRegularRole(roleKey = "Depot Regrole Name");
-
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoDefineRolePermissions(
-			permissionNavHeader = "Content & Data",
-			permissionNavItem = "Blogs",
-			roleTitle = "Depot Regrole Name");
-
-		AssertClick(
-			key_permissionSheetSubtitle = "Blogs Entry",
-			key_permissionValue = "View",
-			locator1 = "RolesPermissions#PERMISSION_CHANGE_SCOPE",
-			value1 = "Change");
-
-		SelectFrame(locator1 = "RolesPermissionsSelectSite#SELECT_SITE_IFRAME");
-
-		AssertVisible(
-			locator1 = "NavBar#RECENT",
-			value1 = "Recent");
-
-		AssertVisible(
-			locator1 = "NavBar#MY_SITES",
-			value1 = "My Sites");
-
-		AssertElementNotPresent(
-			locator1 = "NavBar#ASSET_LIBRARIES",
-			value1 = "Asset Libraries");
 	}
 
 	@description = "This ensures that a document from depot cannot be accessed through Blogs on a connected site when a user doesn't have permissions. Skip the instance for performance improvement."

@@ -221,7 +221,7 @@ definition {
 	@e2e
 	@priority = 5
 	@refactordone
-	test ImageCanBeAutoTagged {
+	test ImageAutoTaggingCanBeDisabledPerDepot {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

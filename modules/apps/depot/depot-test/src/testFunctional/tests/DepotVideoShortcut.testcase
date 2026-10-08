@@ -256,7 +256,7 @@ definition {
 
 	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = 4
-	test CanViewInlineVideoAfterMovingToFolder {
+	test CanViewEmbeddedVideoInBlogsKBAndWCAfterMovingToFolder {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(

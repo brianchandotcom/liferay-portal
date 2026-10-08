@@ -30,9 +30,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="RemoteAppId" return-type="App" unique="true">
 			<finder-column name="remoteAppId" />
 		</finder>
@@ -61,9 +58,6 @@
 
 		<finder name="AppId" return-type="Collection">
 			<finder-column name="appId" />
-		</finder>
-		<finder name="BundleSymbolicName" return-type="Collection">
-			<finder-column name="bundleSymbolicName" />
 		</finder>
 		<finder name="ContextName" return-type="Collection">
 			<finder-column name="contextName" />

@@ -517,7 +517,7 @@ definition {
 
 	@description = "Search categories in vocabulary."
 	@priority = 4
-	test SearchCategoryInVocabulary {
+	test SearchCategoriesAndSubcategoriesInCategoriesAdmin {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

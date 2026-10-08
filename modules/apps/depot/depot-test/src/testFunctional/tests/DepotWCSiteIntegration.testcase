@@ -38,8 +38,8 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a user can select depot web content from different repositories through WCD on a connected site."
-	@priority = 4
+	@description = "This ensures that a user can select depot web content through WCD on a connected site, view it, and change the selection to web content from a different repository."
+	@priority = 5
 	@refactordone
 	test CanChangeWCDSelection {
 		JSONLayout.addPublicLayout(
@@ -79,6 +79,14 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(
 			depotName = "Test Depot Name",
+			webContentTitle = "WC WebContent Title 1");
+
+		Navigator.openSitePage(
+			pageName = "Test New Page Name",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Depot 1",
 			webContentTitle = "WC WebContent Title 1");
 
 		Navigator.openSitePage(
@@ -472,46 +480,6 @@ definition {
 		AssertTextEquals.assertPartialTextAceEditor(
 			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
 			value1 = "WC WebContent Depot");
-	}
-
-	@description = "This ensures that a depot web content can be selected through WCD on a connected site."
-	@priority = 5
-	@refactordone
-	test CanSelectFromWCD {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Depot",
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "WC WebContent Title");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page",
-			widgetName = "Web Content Display");
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		WebContentDisplayPortlet.selectWebContent(
-			depotName = "Test Depot Name",
-			webContentTitle = "WC WebContent Title");
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a depot web content can be selected through WCD in a content page on a connected site."

@@ -61,11 +61,6 @@ public class ModuleLocalServiceImpl extends ModuleLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteModules(long appId) {
-		modulePersistence.removeByAppId(appId);
-	}
-
-	@Override
 	public Module fetchModule(
 		long appId, String bundleSymbolicName, String bundleVersion,
 		String contextName) {

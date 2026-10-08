@@ -96,10 +96,10 @@ definition {
 		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a depot document associated with a tag can be searched from the connected site."
+	@description = "This ensures that a depot document cannot be searched from a disconnected site, and that depot content can be searched by user, by title and by tag from the connected site."
 	@priority = 5
 	@refactordone
-	test CanSearchForTag {
+	test CanSearchDepotContentByTitleTagAndUser {
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "depot",
 			dmDocumentDescription = "DM Document Description",
@@ -107,34 +107,6 @@ definition {
 			groupName = "Test Depot Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		Navigator.openSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Search.searchCP(searchTerm = "depot");
-
-		SearchResults.viewSearchResults(
-			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document");
-
-		SearchPage.gotoResultDetails(searchAssetTitle = "DM Document Title");
-
-		SearchPage.viewResultDetails(searchAssetTitle = "DM Document Title");
-	}
-
-	@description = "This ensures that a depot document cannot be searched from a disconnected site, and that depot content can be searched by user and by title from the connected site."
-	@priority = 5
-	@refactordone
-	test CanSearchDepotContentByTitleTagAndUser {
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -173,6 +145,20 @@ definition {
 			siteName = "Site Name");
 
 		Search.searchCP(searchTerm = "DM Document Title");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "DM Document Title",
+			searchAssetType = "Document");
+
+		SearchPage.gotoResultDetails(searchAssetTitle = "DM Document Title");
+
+		SearchPage.viewResultDetails(searchAssetTitle = "DM Document Title");
+
+		Navigator.openSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Search.searchCP(searchTerm = "depot");
 
 		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",

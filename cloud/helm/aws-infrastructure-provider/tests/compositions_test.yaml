@@ -119,7 +119,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\{\\{- if \\$opensearchEnabled \\}\\}\\s+\\{\\{- \\$clusterSubnetIdsCount := len \\$clusterSubnetIds \\}\\}\\s+apiVersion: opensearch\\.aws\\.m\\.upbound\\.io/v1beta1\\s+kind: Domain"
+                    pattern: "\\{\\{- if \\$opensearchEnabled \\}\\}\\s+\\{\\{- \\$clusterSubnetIdsCount := len \\$clusterSubnetIds \\}\\}[\\s\\S]+?apiVersion: opensearch\\.aws\\.m\\.upbound\\.io/v1beta1\\s+kind: Domain"
         it: Provisions OpenSearch only when the search engine is OpenSearch
     -   asserts:
             -   documentIndex: 0
@@ -127,6 +127,12 @@ tests:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "\\{\\{- if \\$backup\\.enabled \\}\\}(\\s+\\{\\{-[^\\n]*)*\\s+apiVersion: backup\\.aws\\.m\\.upbound\\.io/v1beta1\\s+kind: Plan"
         it: Provisions the backup plan only once backups are enabled
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "if and \\(gt \\$clusterSubnetIdsCount 1\\) \\(mod \\(int \\$opensearch\\.instanceCount\\) \\$clusterSubnetIdsCount\\)"
+        it: Rejects an OpenSearch node count the cluster zones cannot spread evenly
     -   asserts:
             -   documentIndex: 0
                 matchRegex:

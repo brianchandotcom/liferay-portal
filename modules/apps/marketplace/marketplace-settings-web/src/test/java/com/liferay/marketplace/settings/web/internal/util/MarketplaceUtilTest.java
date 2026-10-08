@@ -83,9 +83,11 @@ public class MarketplaceUtilTest {
 
 		KeyReference accessTokenKeyReference = _getKeyReference(
 			companyId, "marketplaceAccessToken");
+
 		_mockPreference(
 			companyId, "marketplaceAccessToken",
 			KeyReferenceUtil.toKeyReferenceString(accessTokenKeyReference));
+
 		_mockPreference(
 			companyId, "marketplaceRefreshToken",
 			RandomTestUtil.randomString());

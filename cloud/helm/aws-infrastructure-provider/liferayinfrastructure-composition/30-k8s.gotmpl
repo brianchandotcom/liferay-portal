@@ -15,7 +15,7 @@
 
 {{- $isDatabaseReady := and (ne $databaseAddress "") (ne $databasePassword "") (ne $databasePort "") -}}
 {{- $isDoclibReady := ne $doclibBucketName "" -}}
-{{- $isSearchReady := or (not $opensearch) (and (ne $searchEndpoint "") (ne $searchPassword "")) }}
+{{- $isSearchReady := or (not $opensearchEnabled) (and (ne $searchEndpoint "") (ne $searchPassword "")) }}
 {{- if $liferayRoleArn }}
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
@@ -114,7 +114,7 @@ spec:
     managementPolicies: {{ $managementPolicies }}
 {{- end }}
 {{- end }}
-{{- if $opensearch }}
+{{- if $opensearchEnabled }}
 ---
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object

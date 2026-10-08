@@ -48,12 +48,18 @@ tests:
                     path: spec.commonTags
         it: Omits the common tags when none are set
     -   asserts:
+            -   equal:
+                    path: spec.search.engine
+                    value: elasticsearch
             -   notExists:
-                    path: spec.search
-        it: Omits the search settings when the engine is Elasticsearch
+                    path: spec.search.opensearch
+        it: Omits the OpenSearch settings when the engine is Elasticsearch
         set:
             search.opensearch.instanceType: t3.small.search
     -   asserts:
+            -   equal:
+                    path: spec.search.engine
+                    value: opensearch
             -   equal:
                     path: spec.search.opensearch
                     value:

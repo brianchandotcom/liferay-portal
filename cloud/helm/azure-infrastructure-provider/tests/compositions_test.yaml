@@ -644,6 +644,12 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "\\{\\{- if eq \\$xr\\.spec\\.search\\.engine \"opensearch\" -\\}\\}\\s+\\{\\{- fail \"Azure has no managed OpenSearch, so search\\.engine must be elasticsearch\" -\\}\\}"
+        it: Rejects OpenSearch because Azure has no managed OpenSearch
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "gotemplating[^:]*: backup-restore-release-cron-workflow"
             -   documentIndex: 0
                 matchRegex:

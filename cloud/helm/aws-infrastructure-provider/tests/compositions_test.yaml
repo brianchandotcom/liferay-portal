@@ -109,6 +109,16 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
+                    pattern: "\\$opensearchEnabled := eq \\$xr\\.spec\\.search\\.engine \"opensearch\""
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "\\{\\{- if \\$opensearchEnabled \\}\\}\\s+\\{\\{- \\$clusterSubnetIdsCount := len \\$clusterSubnetIds \\}\\}\\s+apiVersion: opensearch\\.aws\\.m\\.upbound\\.io/v1beta1\\s+kind: Domain"
+        it: Provisions OpenSearch only when the search engine is OpenSearch
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
                     pattern: "\\{\\{- if \\$backup\\.enabled \\}\\}(\\s+\\{\\{-[^\\n]*)*\\s+apiVersion: backup\\.aws\\.m\\.upbound\\.io/v1beta1\\s+kind: Plan"
         it: Provisions the backup plan only once backups are enabled
     -   asserts:

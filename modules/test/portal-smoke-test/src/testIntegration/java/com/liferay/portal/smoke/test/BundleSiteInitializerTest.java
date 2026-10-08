@@ -542,6 +542,42 @@ public class BundleSiteInitializerTest {
 		}
 	}
 
+	@Test
+	public void testInitializeFromFileWithoutLayoutSetTheme() throws Exception {
+		_updateLayoutSetTheme(false, "cms_WAR_cmstheme");
+		_updateLayoutSetTheme(true, "cms_WAR_cmstheme");
+
+		File tempDir = FileUtil.createTempFolder();
+
+		try {
+			File siteInitializerDir = new File(tempDir, "site-initializer");
+
+			siteInitializerDir.mkdirs();
+
+			SiteInitializer siteInitializer = _siteInitializerFactory.create(
+				siteInitializerDir, null);
+
+			siteInitializer.initialize(_group.getGroupId());
+
+			LayoutSet privateLayoutSet = _layoutSetLocalService.fetchLayoutSet(
+				_group.getGroupId(), true);
+
+			Theme privateTheme = privateLayoutSet.getTheme();
+
+			Assert.assertEquals("CMS", privateTheme.getName());
+
+			LayoutSet publicLayoutSet = _layoutSetLocalService.fetchLayoutSet(
+				_group.getGroupId(), false);
+
+			Theme publicTheme = publicLayoutSet.getTheme();
+
+			Assert.assertEquals("CMS", publicTheme.getName());
+		}
+		finally {
+			FileUtil.deltree(tempDir);
+		}
+	}
+
 	@FeatureFlags(
 		featureFlags = {@FeatureFlag("LPD-19870"), @FeatureFlag("LPD-76864")}
 	)
@@ -4963,6 +4999,17 @@ public class BundleSiteInitializerTest {
 		_assertSiteNavigationMenu2();
 		_assertSXPBlueprint2();
 		_assertUserAccounts2();
+	}
+
+	private void _updateLayoutSetTheme(boolean privateLayout, String themeId)
+		throws Exception {
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			_group.getGroupId(), privateLayout);
+
+		_layoutSetLocalService.updateLookAndFeel(
+			_group.getGroupId(), privateLayout, themeId,
+			layoutSet.getColorSchemeId(), layoutSet.getCss());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

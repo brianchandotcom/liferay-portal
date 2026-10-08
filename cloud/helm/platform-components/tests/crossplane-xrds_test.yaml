@@ -96,16 +96,9 @@ tests:
                     path: spec.versions[0].schema.openAPIV3Schema.properties.spec.properties.backup.properties.vaultTags.type
                     value: object
                 template: templates/crossplane-xrd-liferayinfrastructure.yaml
-            -   notExists:
+            -   equal:
                     path: spec.versions[0].schema.openAPIV3Schema.properties.spec.properties.backup.properties.dayOfWeek.default
-                template: templates/crossplane-xrd-liferayinfrastructure.yaml
-            -   equal:
-                    path: spec.versions[0].schema.openAPIV3Schema.properties.spec.properties.backup.x-kubernetes-validations[0].message
-                    value: dayOfWeek is required when frequency is Weekly
-                template: templates/crossplane-xrd-liferayinfrastructure.yaml
-            -   equal:
-                    path: spec.versions[0].schema.openAPIV3Schema.properties.spec.properties.backup.x-kubernetes-validations[0].rule
-                    value: "!has(self.frequency) || self.frequency != 'Weekly' || has(self.dayOfWeek)"
+                    value: Sunday
                 template: templates/crossplane-xrd-liferayinfrastructure.yaml
         it: Declares the provider neutral backup schedule contract
     -   asserts:

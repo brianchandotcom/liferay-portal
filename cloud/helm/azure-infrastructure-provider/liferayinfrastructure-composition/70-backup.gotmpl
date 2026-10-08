@@ -3,7 +3,7 @@
 {{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
 {{- $isWeekly := eq ($backup.frequency | default "Daily") "Weekly" -}}
 
-{{- $anchorDate := $isWeekly | ternary (index $anchorDates ($backup.dayOfWeek | default "Sunday")) "2024-01-01" -}}
+{{- $anchorDate := $isWeekly | ternary (index $anchorDates $backup.dayOfWeek) "2024-01-01" -}}
 {{- $backupRestoreIdentityName := printf "%s-backup-restore" $baseName -}}
 {{- $backupRetentionDuration := printf "P%dD" $backupRetentionDays -}}
 

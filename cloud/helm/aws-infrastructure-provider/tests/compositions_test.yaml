@@ -23,7 +23,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "printf \"cron\\(%s %s \\? \\* %s \\*\\)\" \\(index \\$[A-Za-z]+ 1\\) \\(index \\$[A-Za-z]+ 0\\) \\(index \\$[A-Za-z]+ \\(\\$backup\\.dayOfWeek \\| default \"Sunday\"\\)\\)"
+                    pattern: "printf \"cron\\(%s %s \\? \\* %s \\*\\)\" \\(index \\$[A-Za-z]+ 1\\) \\(index \\$[A-Za-z]+ 0\\) \\(index \\$[A-Za-z]+ \\$backup\\.dayOfWeek\\)"
         it: Builds a weekly backup schedule on the chosen day of the week
     -   asserts:
             -   documentIndex: 0

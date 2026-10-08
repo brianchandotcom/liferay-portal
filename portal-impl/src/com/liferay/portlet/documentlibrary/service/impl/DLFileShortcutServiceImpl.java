@@ -179,6 +179,20 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 			long oldToFileEntryId, long newToFileEntryId)
 		throws PortalException {
 
+		ModelResourcePermission<FileShortcut>
+			fileShortcutModelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					FileShortcut.class.getName());
+
+		for (DLFileShortcut fileShortcut :
+				dlFileShortcutPersistence.findByToFileEntryId(
+					oldToFileEntryId)) {
+
+			fileShortcutModelResourcePermission.check(
+				getPermissionChecker(), fileShortcut.getFileShortcutId(),
+				ActionKeys.UPDATE);
+		}
+
 		try {
 			ModelResourcePermission<FileEntry>
 				fileEntryModelResourcePermission =

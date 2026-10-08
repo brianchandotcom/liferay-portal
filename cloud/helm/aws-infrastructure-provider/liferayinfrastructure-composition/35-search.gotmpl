@@ -1,6 +1,10 @@
 {{- if $opensearchEnabled }}
 {{- $clusterSubnetIdsCount := len $clusterSubnetIds }}
 
+{{- if and (gt $clusterSubnetIdsCount 1) (mod (int $opensearch.instanceCount) $clusterSubnetIdsCount) }}
+{{- fail (printf "OpenSearch spreads its nodes evenly across the %d cluster zones, so search.opensearch.instanceCount must be a multiple of %d" $clusterSubnetIdsCount $clusterSubnetIdsCount) }}
+{{- end }}
+
 apiVersion: opensearch.aws.m.upbound.io/v1beta1
 kind: Domain
 metadata:

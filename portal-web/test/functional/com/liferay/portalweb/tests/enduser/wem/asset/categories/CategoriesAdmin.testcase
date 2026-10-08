@@ -333,10 +333,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-118305. The maximum number of categories per vocabulary is 150 shown below vocabulary name in Categories admin by default."
+	@description = "This is a test for LPS-118305 and LPS-131984. The user could view the default maximum number of categories per vocabulary (150) and the description of vocabulary in Categories admin."
 	@priority = 5
 	@uitest
-	test ViewDefaultMaximumNumberOfCategoriesPerVocabulary {
+	test ViewDefaultMaximumNumberOfCategoriesAndDescriptionOfVocabulary {
 		property portal.acceptance = "true";
 
 		task ("Navigate to the Categories admin") {
@@ -352,28 +352,6 @@ definition {
 					info = "The maximum number of categories per vocabulary is 150.",
 					locator1 = "Message#ASSET_INFO");
 			}
-		}
-
-		task ("Add a new vocabulary") {
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View the default Maximum Number of categories of new vocabulary") {
-			AssertVisible(
-				assetTitle = "Vocabulary Name",
-				info = "The maximum number of categories per vocabulary is 150.",
-				locator1 = "Message#ASSET_INFO");
-		}
-	}
-
-	@description = "This is a test for LPS-131984. The user could view the description of vocabulary in Categories admin."
-	@priority = 5
-	@uitest
-	test ViewDefaultMaximumNumberOfCategoriesAndDescriptionOfVocabulary {
-		property portal.acceptance = "true";
-
-		task ("Navigate to the Categories admin") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add the first vocabulary with a short description") {
@@ -393,6 +371,13 @@ definition {
 			AssertVisible(
 				assetTitle = "Vocabulary Name 1",
 				info = "Asset Types: All Asset Types",
+				locator1 = "Message#ASSET_INFO");
+		}
+
+		task ("View the default Maximum Number of categories of the first vocabulary in Categories admin") {
+			AssertVisible(
+				assetTitle = "Vocabulary Name 1",
+				info = "The maximum number of categories per vocabulary is 150.",
 				locator1 = "Message#ASSET_INFO");
 		}
 

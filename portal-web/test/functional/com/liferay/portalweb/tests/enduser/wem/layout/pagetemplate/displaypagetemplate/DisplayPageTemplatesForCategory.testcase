@@ -20,7 +20,7 @@ definition {
 
 	@description = "This is a test for LPS-110247 and LPS-112578. The user can create a display page template for Category and mark it as default. The new non-subcategory will be associated to the Default."
 	@priority = 5
-	test AddDisplayPageTemplateAndMarkItAsDefault {
+	test AddDefaultAndSelectSpecificDisplayPageTemplateInCategoryEditor {
 		property portal.acceptance = "true";
 
 		task ("Navigate to Display Page Template admin") {

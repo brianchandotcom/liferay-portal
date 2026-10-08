@@ -281,7 +281,7 @@ definition {
 
 	@description = "This test ensures that an asset library custom document entry can be displayed with the default display page template on a connected site."
 	@priority = 5
-	test CanViewDepotDMUsingDepotType {
+	test CanViewDepotDMAndSiteWCUsingDefaultDisplayPageTemplates {
 		property portal.upstream = "true";
 
 		JSONLayout.addPublicLayout(

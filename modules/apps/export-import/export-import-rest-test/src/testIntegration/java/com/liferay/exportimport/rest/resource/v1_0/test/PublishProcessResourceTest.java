@@ -34,11 +34,13 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -180,6 +182,8 @@ public class PublishProcessResourceTest
 		_testPostSitePublishProcessWithLayoutSet();
 		_testPostSitePublishProcessWithDateRangeType();
 		_testPostSitePublishProcessPerformsDirectBinaryImport();
+
+		_testPostSitePublishProcessWithLayoutSetPrototypeGroup();
 	}
 
 	@Override
@@ -553,6 +557,25 @@ public class PublishProcessResourceTest
 			_layoutLocalService.getLayoutsCount(testGroup.getGroupId(), false));
 	}
 
+	private void _testPostSitePublishProcessWithLayoutSetPrototypeGroup()
+		throws Exception {
+
+		_layoutSetPrototype = LayoutTestUtil.addLayoutSetPrototype(
+			RandomTestUtil.randomString());
+
+		Group group = _layoutSetPrototype.getGroup();
+
+		assertHttpResponseStatusCode(
+			404,
+			publishProcessResource.postSitePublishProcessHttpResponse(
+				group.getExternalReferenceCode(),
+				new PublishProcessRequest() {
+					{
+						name = RandomTestUtil.randomString();
+					}
+				}));
+	}
+
 	private void _testPostSitePublishProcessWithOneTimeCronExpression()
 		throws Exception {
 
@@ -677,6 +700,9 @@ public class PublishProcessResourceTest
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@DeleteAfterTestRun
+	private LayoutSetPrototype _layoutSetPrototype;
 
 	private PublishProcessResource _publishProcessResource;
 	private ScheduledPublishProcessResource _scheduledPublishProcessResource;

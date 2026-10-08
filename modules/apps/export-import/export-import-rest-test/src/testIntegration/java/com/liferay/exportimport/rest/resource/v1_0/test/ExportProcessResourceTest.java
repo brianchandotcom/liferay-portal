@@ -42,11 +42,14 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -475,6 +478,8 @@ public class ExportProcessResourceTest
 					exportProcessRequest));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		_testPostSiteExportProcessWithLayoutSetPrototypeGroup();
 	}
 
 	@Override
@@ -763,6 +768,40 @@ public class ExportProcessResourceTest
 			externalReferenceCode, testCompany.getCompanyId());
 
 		return group.getGroupId();
+	}
+
+	private ExportProcessRequest _getLayoutSetExportProcessRequest(
+		String controlName) {
+
+		RequestPortletDataHandlerControl requestPortletDataHandlerControl =
+			new RequestPortletDataHandlerControl() {
+				{
+					name = controlName;
+				}
+			};
+
+		RequestPortletDataHandler requestPortletDataHandler =
+			new RequestPortletDataHandler() {
+				{
+					name = "PORTLET_DATA_" + _PORTLET_ID;
+
+					setRequestPortletDataHandlerControls(
+						new RequestPortletDataHandlerControl[] {
+							requestPortletDataHandlerControl
+						});
+				}
+			};
+
+		return new ExportProcessRequest() {
+			{
+				name = RandomTestUtil.randomString();
+
+				setRequestPortletDataHandlers(
+					new RequestPortletDataHandler[] {
+						requestPortletDataHandler
+					});
+			}
+		};
 	}
 
 	private ExportProcess _postExportProcess(
@@ -1108,6 +1147,57 @@ public class ExportProcessResourceTest
 		}
 	}
 
+	private void _testPostSiteExportProcessWithLayoutSetPrototypeGroup()
+		throws Exception {
+
+		_layoutSetPrototype = LayoutTestUtil.addLayoutSetPrototype(
+			RandomTestUtil.randomString());
+
+		Group group = _layoutSetPrototype.getGroup();
+
+		LayoutTestUtil.addTypePortletLayout(group, true);
+
+		ExportProcess exportProcess =
+			exportProcessResource.postSiteExportProcess(
+				group.getExternalReferenceCode(), 0L, null,
+				_getLayoutSetExportProcessRequest("privateLayoutPages"));
+
+		ExportImportTestUtil.retryAssert(
+			1, TimeUnit.SECONDS, 30, TimeUnit.SECONDS,
+			() -> {
+				BackgroundTask backgroundTask =
+					_backgroundTaskLocalService.getBackgroundTask(
+						exportProcess.getId());
+
+				Assert.assertEquals(
+					BackgroundTaskConstants.STATUS_SUCCESSFUL,
+					backgroundTask.getStatus());
+			});
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			group.getGroupId(), true);
+
+		_assertExportedExternalReferenceCodes(
+			_backgroundTaskLocalService.getBackgroundTask(
+				exportProcess.getId()),
+			"com.liferay.headless.admin.site.internal.resource.v1_0." +
+				"SitePageResourceImpl",
+			group.getGroupId(), layouts.toArray(new Layout[0]),
+			Layout::getExternalReferenceCode);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.WARN)) {
+
+			assertHttpResponseStatusCode(
+				400,
+				exportProcessResource.postSiteExportProcessHttpResponse(
+					group.getExternalReferenceCode(), 0L, null,
+					_getLayoutSetExportProcessRequest("publicLayoutPages")));
+		}
+	}
+
 	private static final String _PORTLET_ID =
 		"com_liferay_layout_admin_web_portlet_LayoutSetLayoutsPortlet";
 
@@ -1123,6 +1213,12 @@ public class ExportProcessResourceTest
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@DeleteAfterTestRun
+	private LayoutSetPrototype _layoutSetPrototype;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

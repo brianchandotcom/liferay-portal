@@ -1272,7 +1272,7 @@ definition {
 	@description = "This ensures that able to select and deselect specific asset libraries scope from DM permissions."
 	@priority = 3
 	@refactordone
-	test CanSelectAndDeselectScopeFromDMPermissions {
+	test CanSelectDepotScopeOnlyFromSupportedApplicationPermissions {
 		JSONRole.addRegularRole(roleKey = "Depot Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(

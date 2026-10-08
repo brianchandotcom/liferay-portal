@@ -230,7 +230,7 @@ definition {
 	@description = "This asserts that a deleted site is removed from connected sites."
 	@priority = 4
 	@refactordone
-	test DeletedSiteCannotBeDisplayedInConnectedSitesList {
+	test ConnectedSitesListReflectsSiteDeactivationAndDeletion {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

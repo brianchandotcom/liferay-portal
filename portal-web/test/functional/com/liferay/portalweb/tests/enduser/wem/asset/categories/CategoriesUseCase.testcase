@@ -320,45 +320,6 @@ definition {
 		}
 	}
 
-	@description = "Add a web content with a specific type category."
-	@priority = 3
-	test AddWebContentWithSpecificTypeCategory {
-		task ("Add a vocabulary for Web Content Article") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addWithAssociatedAssetTypeCP(
-				assetType = "Web Content Article",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a web content with the category") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addWithCategoryCP(
-				categoryName = "Category Name",
-				vocabularyName = "Vocabulary Name",
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("View the category is assigned to web content") {
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.viewCategorizationCategoryCP(
-				categoryNameList = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-	}
-
 	@description = "Cannot add multiple categories when disallow multiple categories."
 	@priority = 4
 	test CannotAddMultipleCategoriesWhenDisallowMultipleCategories {

@@ -216,7 +216,7 @@ definition {
 
 	@description = "LPS-134960 When in Web Content, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
 	@priority = 4
-	test AddCategoryOfAnyVisibilityToWebContent {
+	test AddCategoryOfAnyVisibilityToAssets {
 		task ("Create public vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

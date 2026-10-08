@@ -125,7 +125,7 @@ definition {
 	@description = "This ensures that a user can deselect depots and delete the reselected ones in cards view."
 	@priority = 3
 	@refactordone
-	test CanDeselectAndDeleteInCardsView {
+	test CanSelectAllDeselectAndDeleteInCardsView {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
 			JSONDepot.addDepot(
 				depotDescription = "This is the description of a depot",

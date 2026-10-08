@@ -776,7 +776,7 @@ definition {
 	@description = "This ensures that a WC folder workflow can be restored to default from other settings."
 	@priority = 4
 	@refactordone
-	test CanRestoreWCFolderWorkflowToDefault {
+	test CanRestoreFolderWorkflowToDefault {
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
 			groupName = "Test Depot Name",

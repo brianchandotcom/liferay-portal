@@ -254,7 +254,7 @@ definition {
 		YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
 	}
 
-	@description = "This ensures that a depot external video embedded in the Blogs and KB content fields can be rendered correctly on a connected site after moving it to a folder."
+	@description = "This ensures that a depot external video embedded in the Blogs, KB and WC content fields can be rendered correctly on a connected site after moving it to a folder."
 	@priority = 4
 	test CanViewEmbeddedVideoInBlogsKBAndWCAfterMovingToFolder {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -304,6 +304,25 @@ definition {
 			skipNavigation = "true",
 			videoShortcutTitle = "Test YouTube Video");
 
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Site Name",
+			title = "Web Content Title");
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			webContentTitle = "Web Content Title");
+
+		WebContent.editCP(
+			depotName = "Test Depot Name",
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test YouTube Video",
+			webContentContentEdit = "Web Content Content",
+			webContentTitle = "Web Content Title",
+			webContentTitleEdit = "Web Content Title");
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -333,6 +352,12 @@ definition {
 		AssertElementPresent(
 			key_service = "youtube",
 			locator1 = "BlogsEntry#CONTENT_VIDEO");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewVideoPreview(
+			service = "https://www.youtube.com",
+			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site when publication is enabled."
@@ -387,56 +412,6 @@ definition {
 			embedVideo = "true",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-	}
-
-	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connected site after moving it to a folder."
-	@priority = 4
-	test CanViewVideoInWCAfterMovingToFolder {
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		VideoShortcut.addCP(
-			videoShortcutTitle = "Test YouTube Video",
-			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Site Name",
-			title = "Web Content Title");
-
-		WebContentNavigator.openToEditWCInSite(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			webContentTitle = "Web Content Title");
-
-		WebContent.editCP(
-			depotName = "Test Depot Name",
-			embedVideo = "true",
-			navTab = "Documents and Media",
-			videoShortcutTitle = "Test YouTube Video",
-			webContentContentEdit = "Web Content Content",
-			webContentTitle = "Web Content Title",
-			webContentTitleEdit = "Web Content Title");
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name");
-
-		JSONDocument.moveFileEntryToFolder(
-			dmDocumentTitle = "Test YouTube Video",
-			folderName = "DM Folder Name",
-			groupName = "Test Depot Name",
-			site = "false");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContent.viewVideoPreview(
-			service = "https://www.youtube.com",
-			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connect site when publication is enabled."

@@ -205,17 +205,6 @@ definition {
 		Depot.viewDocumentInFTP(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document TXT Edit");
-	}
-
-	@description = "This test asserts that a document in a folder stored in a depot can be accessed from FTP mode."
-	@priority = 5
-	@refactordone
-	test CanViewDocumentInFolder {
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Panel.expandPanel(panel = "Documents and Media");
-
-		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

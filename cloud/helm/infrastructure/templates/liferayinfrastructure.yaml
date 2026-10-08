@@ -19,8 +19,12 @@ spec:
     database:
         {{- .Values.database | toYaml | nindent 8 }}
     environmentId: {{ .Values.environmentId | quote }}
+    {{- if hasKey .Values "forceDestroy" }}
     forceDestroy: {{ .Values.forceDestroy }}
+    {{- end }}
+    {{- if hasKey .Values "orphanOnDelete" }}
     orphanOnDelete: {{ .Values.orphanOnDelete }}
+    {{- end }}
     overlayAccess:
         {{- .Values.overlayAccess | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId | quote }}

@@ -1,21 +1,11 @@
-backup:
-    dayOfWeek: Sunday
-    enabled: false
-    frequency: Daily
-    retentionDays: 30
-    timeOfDay: 05:00
-    timeZone: UTC
-    vaultTags: {}
+backup: {}
 clusterSecretStoreName: ""
-cmk:
-    enabled: false
+cmk: {}
 commonTags: {}
-database:
-    highAvailability: false
+database: {}
 enabled: true
 endpoints: {}
 environmentId: ""
-forceDestroy: false
 gateway:
     annotations: {}
     className: ""
@@ -25,9 +15,7 @@ license:
     externalSecretKey: ""
     externalSecretProperty: license.xml
     targetSecretName: ""
-orphanOnDelete: false
-overlayAccess:
-    enabled: false
+overlayAccess: {}
 overlayBucket:
     commonTags: {}
     enabled: false
@@ -52,5 +40,4 @@ search:
         volumeSize: 10Gi
     engine: elasticsearch
     opensearch: {}
-storage:
-    tags: {}
+storage: {}

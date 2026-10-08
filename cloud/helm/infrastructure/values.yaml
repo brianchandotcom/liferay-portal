@@ -12,9 +12,6 @@ cmk:
 commonTags: {}
 database:
     highAvailability: false
-    instanceType: GP_Standard_D2s_v3
-    storageGB: 32
-    version: "16"
 enabled: true
 endpoints: {}
 environmentId: ""

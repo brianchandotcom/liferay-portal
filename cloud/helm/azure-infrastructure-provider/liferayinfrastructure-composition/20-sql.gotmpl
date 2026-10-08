@@ -72,11 +72,11 @@ spec:
         publicNetworkAccessEnabled: false
         resourceGroupName: {{ $env.resourceGroupName }}
         skuName: {{ $database.instanceType | default "GP_Standard_D2s_v3" }}
-        storageMb: {{ mul ($database.storageGB | default 32) 1024 }}
+        storageMb: {{ mul $database.storageGB 1024 }}
         tags:
             {{- $backupTargetTags | toYaml | nindent 12 }}
             active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
-        version: {{ $database.version | default "16" | quote }}
+        version: {{ $database.version | quote }}
     {{- if $isDatabaseRestoreTarget }}
     initProvider:
         createMode: PointInTimeRestore

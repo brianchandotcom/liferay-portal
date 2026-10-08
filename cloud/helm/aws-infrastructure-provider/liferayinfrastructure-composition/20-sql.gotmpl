@@ -49,7 +49,7 @@ spec:
         engineVersion: {{ $database.version | quote }}
         iamDatabaseAuthenticationEnabled: true
         identifier: {{ $baseName }}-database-{{ $dataPlane }}
-        instanceClass: {{ $database.instanceType }}
+        instanceClass: {{ $database.instanceType | default "db.t3.medium" }}
         {{- if $isAboveAllocatedStorageThreshold }}
         iops: 12000
         {{- end }}

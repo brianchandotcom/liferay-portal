@@ -127,35 +127,6 @@ definition {
 			toggleSwitchLabel = "Enable Auto Tagging");
 	}
 
-	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a depot that has auto-tagging disabled."
-	@priority = 4
-	@refactordone
-	test CanDisableForImage {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		AutoTagging.enableTensorFlow();
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureAutoTagging(autoTagging = "Disabled");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document JPG",
-			groupName = "Test Depot Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_4.jpg");
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document JPG");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
-
-		DMDocument.viewNoTagInfo(tagName = "carton");
-	}
-
 	@description = "This test asserts that no auto-tag is generated when a text document is uploaded to a depot that has auto-tagging disabled."
 	@priority = 4
 	@refactordone
@@ -217,7 +188,7 @@ definition {
 		DMDocument.viewNoTagInfo(tagName = "DXP");
 	}
 
-	@description = "This test asserts that an image is auto-tagged in a depot."
+	@description = "This test asserts that an image is auto-tagged in a depot, and that no auto-tag is generated once auto-tagging is disabled for the depot."
 	@e2e
 	@priority = 5
 	@refactordone
@@ -252,6 +223,32 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
 		DMDocument.viewTagInfo(tagName = "carton");
+
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
+
+		Depot.configureAutoTagging(autoTagging = "Disabled");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document JPG Without Auto Tagging",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
+
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document JPG Without Auto Tagging",
+			folderName = "DM Folder Name");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Without Auto Tagging");
+
+		DMDocument.viewNoTagInfo(tagName = "carton");
 	}
 
 	@description = "This test asserts that a text document is auto-tagged in a depot."

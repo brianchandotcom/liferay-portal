@@ -727,93 +727,92 @@ definition {
 			webContentTitle = "Depot WebContent Title");
 	}
 
-	@description = "This ensures that a DM folder workflow can be restored to default from other settings."
-	@priority = 4
-	@refactordone
-	test CanRestoreDMFolderWorkflowToDefault {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMFolder.configureWorkflowCP(
-			dmDocumentTypeName = "Basic Document",
-			dmFolderName = "DM Folder Name",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Specific Restrictions");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMFolder.configureWorkflowCP(
-			dmFolderName = "DM Folder Name",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMFolder.configureWorkflowCP(
-			dmFolderName = "DM Folder Name",
-			workflowRestriction = "Parent Folder");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "Depot Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Depot Document Title");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.viewStatus(
-			dmDocumentStatus = "Approved",
-			dmDocumentTitle = "Depot Document Title");
-	}
-
-	@description = "This ensures that a WC folder workflow can be restored to default from other settings."
+	@description = "This ensures that a WC folder workflow and a DM folder workflow can each be restored to default from other settings."
 	@priority = 4
 	@refactordone
 	test CanRestoreFolderWorkflowToDefault {
-		JSONWebcontent.addFolder(
-			folderName = "WC Folder Name",
-			groupName = "Test Depot Name",
-			site = "false");
+		task ("Restore the WC folder workflow to Parent Folder and approve a new web content") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Test Depot Name",
+				site = "false");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
-		WebContentFolder.configureWorkflowCP(
-			folderName = "WC Folder Name",
-			structureName = "Basic Web Content",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Specific Restrictions");
+			WebContentFolder.configureWorkflowCP(
+				folderName = "WC Folder Name",
+				structureName = "Basic Web Content",
+				workflowDefinition = "Single Approver",
+				workflowRestriction = "Specific Restrictions");
 
-		WebContentFolder.configureWorkflowCP(
-			folderName = "WC Folder Name",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow");
+			WebContentFolder.configureWorkflowCP(
+				folderName = "WC Folder Name",
+				workflowDefinition = "Single Approver",
+				workflowRestriction = "Default Workflow");
 
-		WebContentFolder.configureWorkflowCP(
-			folderName = "WC Folder Name",
-			workflowRestriction = "Parent Folder");
+			WebContentFolder.configureWorkflowCP(
+				folderName = "WC Folder Name",
+				workflowRestriction = "Parent Folder");
 
-		WebContentFolder.gotoCP(
-			folderName = "WC Folder Name",
-			webContentTitle = "WC Folder Name");
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
 
-		WebContentNavigator.gotoAddCP();
+			WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "Depot WebContent Content",
-			webContentTitle = "Depot WebContent Title");
+			WebContent.addCP(
+				webContentContent = "Depot WebContent Content",
+				webContentTitle = "Depot WebContent Title");
 
-		WebContent.publishWithPermissions();
+			WebContent.publishWithPermissions();
 
-		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Approved",
-			webContentTitle = "Depot WebContent Title");
+			WebContentNavigator.gotoViewStatus(
+				webContentStatus = "Approved",
+				webContentTitle = "Depot WebContent Title");
+		}
+
+		task ("Restore the DM folder workflow to Parent Folder and approve a new document") {
+			JSONFolder.addFolder(
+				dmFolderDescription = "DM Folder Description",
+				dmFolderName = "DM Folder Name",
+				groupName = "Test Depot Name");
+
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+			DMFolder.configureWorkflowCP(
+				dmDocumentTypeName = "Basic Document",
+				dmFolderName = "DM Folder Name",
+				workflowDefinition = "Single Approver",
+				workflowRestriction = "Specific Restrictions");
+
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+			DMFolder.configureWorkflowCP(
+				dmFolderName = "DM Folder Name",
+				workflowDefinition = "Single Approver",
+				workflowRestriction = "Default Workflow");
+
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+			DMFolder.configureWorkflowCP(
+				dmFolderName = "DM Folder Name",
+				workflowRestriction = "Parent Folder");
+
+			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "Depot Document Description",
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "Depot Document Title");
+
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+			DMDocument.viewStatus(
+				dmDocumentStatus = "Approved",
+				dmDocumentTitle = "Depot Document Title");
+		}
 	}
 
 	@description = "This ensures that the workflow can be set in an asset library."

@@ -708,7 +708,7 @@ definition {
 	@description = "This ensures that a pending image in depot cannot be found in staging site when enabling local staging."
 	@priority = 4
 	@refactordone
-	test CanNotViewPendingImage {
+	test CanNotFindPendingDocumentInItemSelectorOrSearch {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",

@@ -34,34 +34,6 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that no document shows in FTP mode after deleting it in a depot."
-	@priority = 4
-	@refactordone
-	test CanNotViewDocumentAfterDeleting {
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Panel.expandPanel(panel = "Documents and Media");
-
-		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document PDF",
-			groupName = "Test Depot Name");
-
-		Depot.viewDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document PDF");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
-
-		Depot.viewNoDocumentInFTP(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document PDF");
-	}
-
 	@description = "This test asserts that Not Found error returns when visiting FTP mode if indexing is disabled."
 	@priority = 4
 	@refactordone
@@ -167,7 +139,7 @@ definition {
 			dmFolderName = "DM Folder Name");
 	}
 
-	@description = "This test asserts that an edited document stored in a depot can be accessed from FTP mode."
+	@description = "This test asserts that documents stored in a depot, including edited ones, ones in a folder and ones with escape characters, can be accessed from FTP mode, and that a deleted document no longer shows in it."
 	@priority = 5
 	@refactordone
 	test CanViewDocumentsInFTPAcrossLifecycle {
@@ -241,6 +213,14 @@ definition {
 		Depot.viewDocumentInFTP(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "& < > DM Document");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document TXT Edit");
+
+		Depot.viewNoDocumentInFTP(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document TXT Edit");
 	}
 
 }

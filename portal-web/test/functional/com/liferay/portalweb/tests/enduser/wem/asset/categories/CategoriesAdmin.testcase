@@ -133,7 +133,7 @@ definition {
 
 	@description = "This is a test for LPS-171967. Disable and enable configuration for managing asset.categories.search.hierarchical property from the UI."
 	@priority = 4
-	test DisableAndEnableIncludeChildCategoriesWhenSearchingParentCategories {
+	test ViewAndToggleIncludeChildCategoriesWhenSearchingParentCategories {
 		task ("Enable dynamic and manual selection") {
 			AssetPublisherPortlet.enableDynamicAndManualSelection();
 		}

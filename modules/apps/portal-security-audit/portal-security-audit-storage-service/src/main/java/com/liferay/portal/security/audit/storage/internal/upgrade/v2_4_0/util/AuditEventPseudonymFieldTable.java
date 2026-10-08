@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
  * @generated
  * @see com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder
  */
-public class AuditPseudonymTable {
+public class AuditEventPseudonymFieldTable {
 
 	public static UpgradeProcess create() {
 		return new UpgradeProcess() {
@@ -27,9 +27,9 @@ public class AuditPseudonymTable {
 		};
 	}
 
-	private static final String _TABLE_NAME = "Audit_AuditPseudonym";
+	private static final String _TABLE_NAME = "Audit_AuditEventPseudonymField";
 
 	private static final String _TABLE_SQL_CREATE =
-		"create table Audit_AuditPseudonym (auditPseudonymId LONG not null primary key,companyId LONG,createDate DATE null,contextName VARCHAR(75) null,fieldCategory VARCHAR(75) null,value VARCHAR(255) null,valueHash VARCHAR(75) null)";
+		"create table Audit_AuditEventPseudonymField (auditEventPseudonymFieldId LONG not null primary key,companyId LONG,createDate DATE null,contextName VARCHAR(75) null,name VARCHAR(75) null,value VARCHAR(255) null,valueHash VARCHAR(75) null)";
 
 }

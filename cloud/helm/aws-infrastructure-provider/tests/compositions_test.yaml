@@ -9,7 +9,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "splitList \":\" \\(\\$backup\\.timeOfDay \\| default \"05:00\"\\)"
+                    pattern: "splitList \":\" \\$backup\\.timeOfDay"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
@@ -19,7 +19,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "if eq \\(\\$backup\\.frequency \\| default \"Daily\"\\) \"Weekly\""
+                    pattern: "if eq \\$backup\\.frequency \"Weekly\""
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
@@ -35,7 +35,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "deleteAfter: \\{\\{ \\$backup\\.retentionDays \\| default 30 \\}\\}"
+                    pattern: "deleteAfter: \\{\\{ \\$backup\\.retentionDays \\}\\}"
         it: Deletes each recovery point after the retention period
     -   asserts:
             -   documentIndex: 0
@@ -103,7 +103,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "scheduleExpressionTimezone: \\{\\{ \\$backup\\.timeZone \\| default \"UTC\" \\| quote \\}\\}"
+                    pattern: "scheduleExpressionTimezone: \\{\\{ \\$backup\\.timeZone \\| quote \\}\\}"
         it: Passes the backup time zone through to the AWS Backup plan rule
     -   asserts:
             -   documentIndex: 0

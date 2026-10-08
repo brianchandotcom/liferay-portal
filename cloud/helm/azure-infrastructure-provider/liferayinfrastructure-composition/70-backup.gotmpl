@@ -1,15 +1,15 @@
 {{- if $backup.enabled }}
 {{- $anchorDates := dict "Friday" "2024-01-05" "Monday" "2024-01-01" "Saturday" "2024-01-06" "Sunday" "2024-01-07" "Thursday" "2024-01-04" "Tuesday" "2024-01-02" "Wednesday" "2024-01-03" -}}
-{{- $forceDestroy := $xr.spec.forceDestroy | default false -}}
-{{- $isWeekly := eq ($backup.frequency | default "Daily") "Weekly" -}}
+{{- $forceDestroy := $xr.spec.forceDestroy -}}
+{{- $isWeekly := eq $backup.frequency "Weekly" -}}
 
 {{- $anchorDate := $isWeekly | ternary (index $anchorDates $backup.dayOfWeek) "2024-01-01" -}}
 {{- $backupRestoreIdentityName := printf "%s-backup-restore" $baseName -}}
 {{- $backupRetentionDuration := printf "P%dD" $backupRetentionDays -}}
 
-{{- $backupRepeatingTimeInterval := printf "R/%sT%s:00+00:00/%s" $anchorDate ($backup.timeOfDay | default "05:00") ($isWeekly | ternary "P1W" "P1D") -}}
+{{- $backupRepeatingTimeInterval := printf "R/%sT%s:00+00:00/%s" $anchorDate $backup.timeOfDay ($isWeekly | ternary "P1W" "P1D") -}}
 
-{{- $backupScheduleHash := printf "%s|%s|%s" $backupRepeatingTimeInterval ($backup.timeZone | default "UTC") $backupRetentionDuration | sha256sum | trunc 6 -}}
+{{- $backupScheduleHash := printf "%s|%s|%s" $backupRepeatingTimeInterval $backup.timeZone $backupRetentionDuration | sha256sum | trunc 6 -}}
 
 {{- $backupPolicyStorageName := printf "%s-storage-policy-%s" $backupVaultName $backupScheduleHash -}}
 
@@ -228,7 +228,7 @@ spec:
     forProvider:
         backupRepeatingTimeIntervals:
             -   {{ $backupRepeatingTimeInterval }}
-        timeZone: {{ $backup.timeZone | default "UTC" }}
+        timeZone: {{ $backup.timeZone }}
         vaultDefaultRetentionDuration: {{ $backupRetentionDuration }}
         vaultIdRef:
             name: {{ $backupVaultName }}

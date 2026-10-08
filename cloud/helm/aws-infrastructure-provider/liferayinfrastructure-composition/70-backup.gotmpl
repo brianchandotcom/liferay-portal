@@ -1,10 +1,10 @@
 {{- if $backup.enabled }}
 {{- $daysOfWeek := dict "Friday" "FRI" "Monday" "MON" "Saturday" "SAT" "Sunday" "SUN" "Thursday" "THU" "Tuesday" "TUE" "Wednesday" "WED" -}}
-{{- $timeOfDay := splitList ":" ($backup.timeOfDay | default "05:00") -}}
+{{- $timeOfDay := splitList ":" $backup.timeOfDay -}}
 
 {{- $backupSchedule := printf "cron(%s %s * * ? *)" (index $timeOfDay 1) (index $timeOfDay 0) -}}
 
-{{- if eq ($backup.frequency | default "Daily") "Weekly" -}}
+{{- if eq $backup.frequency "Weekly" -}}
     {{- $backupSchedule = printf "cron(%s %s ? * %s *)" (index $timeOfDay 1) (index $timeOfDay 0) (index $daysOfWeek $backup.dayOfWeek) -}}
 {{- end }}
 apiVersion: backup.aws.m.upbound.io/v1beta1
@@ -24,10 +24,10 @@ spec:
         region: {{ $env.region }}
         rule:
             -   lifecycle:
-                    deleteAfter: {{ $backup.retentionDays | default 30 }}
+                    deleteAfter: {{ $backup.retentionDays }}
                 ruleName: scheduled-backups
                 schedule: {{ $backupSchedule | quote }}
-                scheduleExpressionTimezone: {{ $backup.timeZone | default "UTC" | quote }}
+                scheduleExpressionTimezone: {{ $backup.timeZone | quote }}
                 startWindow: 60
                 targetVaultNameSelector:
                     matchLabels:

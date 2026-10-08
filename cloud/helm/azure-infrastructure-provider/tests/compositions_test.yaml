@@ -762,7 +762,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\$backupRetentionDays := max 7 \\(min 35 \\(int \\(\\$backup.retentionDays \\| default 30\\)\\)\\)"
+                    pattern: "\\$backupRetentionDays := max 7 \\(min 35 \\(int \\$backup.retentionDays\\)\\)"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template

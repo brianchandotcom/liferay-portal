@@ -27,9 +27,9 @@ spec:
                     -   default: "null"
                         name: restore-generation
                     -   name: restore-phase
-                    -   default: "null"
+                    -   default: ""
                         name: restore-point-in-time
-                    -   default: "null"
+                    -   default: ""
                         name: restore-source-data-plane
                     -   default: "{}"
                         name: retained-data-planes
@@ -52,8 +52,7 @@ spec:
                         namespace: {{ "{{" }}workflow.namespace}}
                     spec:
                         database:
-                            restorePointInTime: {{ "{{" }}inputs.parameters.restore-point-in-time}}
-                            restoreSourceDataPlane: {{ "{{" }}inputs.parameters.restore-source-data-plane}}
+                            restore: {{ "{{" }}=inputs.parameters['restore-point-in-time'] == '' ? 'null' : toJson({'pointInTime': {'sourceDataPlane': inputs.parameters['restore-source-data-plane'], 'time': inputs.parameters['restore-point-in-time']} })}}
                         restoreGeneration: {{ "{{" }}inputs.parameters.restore-generation}}
                         restorePhase: {{ "{{" }}inputs.parameters.restore-phase}}
                         retainedDataPlanes: {{ "{{" }}inputs.parameters.retained-data-planes}}
@@ -65,9 +64,9 @@ spec:
                     -   default: "null"
                         name: restore-generation
                     -   name: restore-phase
-                    -   default: "null"
+                    -   default: ""
                         name: restore-point-in-time
-                    -   default: "null"
+                    -   default: ""
                         name: restore-source-data-plane
                     -   default: "{}"
                         name: retained-data-planes

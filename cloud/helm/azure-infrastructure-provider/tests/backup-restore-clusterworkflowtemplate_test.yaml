@@ -194,12 +194,12 @@ tests:
                     pattern: server-id|server_id
             -   contains:
                     content:
-                        default: "null"
+                        default: ""
                         name: restore-source-data-plane
                     path: spec.templates[0].inputs.parameters
             -   matchRegex:
                     path: spec.templates[0].resource.manifest
-                    pattern: "restoreSourceDataPlane: [{][{]inputs[.]parameters[.]restore-source-data-plane[}][}]"
+                    pattern: "database:\\s+restore: [{][{]=inputs[.]parameters\\['restore-point-in-time'\\] == '' [?] 'null' : toJson[(][{]'pointInTime': [{]'sourceDataPlane': inputs[.]parameters\\['restore-source-data-plane'\\], 'time': inputs[.]parameters\\['restore-point-in-time'\\][}] [}][)][}][}]"
             -   contains:
                     content:
                         name: restore-source-data-plane

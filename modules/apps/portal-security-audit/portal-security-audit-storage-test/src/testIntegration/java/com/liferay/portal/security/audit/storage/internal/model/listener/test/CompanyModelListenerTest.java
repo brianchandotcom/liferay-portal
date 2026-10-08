@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
-import com.liferay.portal.security.audit.storage.model.AuditPseudonym;
+import com.liferay.portal.security.audit.storage.model.AuditEventPseudonymField;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
-import com.liferay.portal.security.audit.storage.service.AuditPseudonymLocalService;
+import com.liferay.portal.security.audit.storage.service.AuditEventPseudonymFieldLocalService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -44,8 +44,8 @@ public class CompanyModelListenerTest {
 			new AuditMessage(
 				company.getCompanyId(), RandomTestUtil.randomLong(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
-		AuditPseudonym auditPseudonym =
-			_auditPseudonymLocalService.addAuditPseudonym(
+		AuditEventPseudonymField auditEventPseudonymField =
+			_auditEventPseudonymFieldLocalService.addAuditEventPseudonymField(
 				company.getCompanyId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
@@ -55,15 +55,16 @@ public class CompanyModelListenerTest {
 			_auditEventLocalService.fetchAuditEvent(
 				auditEvent.getAuditEventId()));
 		Assert.assertNull(
-			_auditPseudonymLocalService.fetchAuditPseudonym(
-				auditPseudonym.getAuditPseudonymId()));
+			_auditEventPseudonymFieldLocalService.fetchAuditEventPseudonymField(
+				auditEventPseudonymField.getAuditEventPseudonymFieldId()));
 	}
 
 	@Inject
 	private AuditEventLocalService _auditEventLocalService;
 
 	@Inject
-	private AuditPseudonymLocalService _auditPseudonymLocalService;
+	private AuditEventPseudonymFieldLocalService
+		_auditEventPseudonymFieldLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

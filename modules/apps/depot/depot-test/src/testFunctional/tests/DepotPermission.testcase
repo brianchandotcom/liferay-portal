@@ -1219,104 +1219,101 @@ definition {
 		}
 	}
 
-	@description = "This ensures that able to select and deselect specific asset libraries scope from Collections permissions."
-	@priority = 3
-	@refactordone
-	test CanSelectAndDeselectScopeFromCollectionsPermissions {
-		JSONRole.addRegularRole(roleKey = "Depot Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.asset.list.model.AssetListEntry",
-			roleTitle = "Depot Regrole Name");
-
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoRoleType();
-
-		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
-
-		Role.editPermissionCP(
-			assetLibrariesScope = "true",
-			define = "true",
-			permissionNavHeader = "Site Builder",
-			permissionNavItem = "Collections",
-			permissionSheetSubtitle = "Asset List Entry",
-			permissionValues = "Delete",
-			siteNameScope = "Test Depot Name");
-
-		Role.viewPermissionCP(
-			permissionDefinitionValue = "Delete",
-			permissionNavigationValue = "Collections > Asset List Entry",
-			siteNameScope = "Test Depot Name");
-
-		Role.openRolesAdmin();
-
-		RoleNavigator.gotoRoleType();
-
-		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
-
-		Role.editPermissionCP(
-			permissionNavHeader = "Site Builder",
-			permissionNavItem = "Collections",
-			permissionSheetSubtitle = "Asset List Entry",
-			permissionValues = "Delete",
-			removeSiteScope = "Test Depot Name");
-
-		Role.viewPermissionCP(
-			permissionDefinitionValue = "Delete",
-			permissionNavigationValue = "Collections > Asset List Entry",
-			siteNameScope = "All Sites and Asset Libraries");
-	}
-
-	@description = "This ensures that able to select and deselect specific asset libraries scope from DM permissions."
+	@description = "This ensures that a specific asset library scope can be selected and deselected from DM and Collections permissions."
 	@priority = 3
 	@refactordone
 	test CanSelectDepotScopeOnlyFromSupportedApplicationPermissions {
 		JSONRole.addRegularRole(roleKey = "Depot Regrole Name");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_DOCUMENT",
-			resourceName = "com.liferay.document.library",
-			roleTitle = "Depot Regrole Name");
+		task ("Select and deselect the depot scope from Documents and Media permissions") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_DOCUMENT",
+				resourceName = "com.liferay.document.library",
+				roleTitle = "Depot Regrole Name");
 
-		Role.openRolesAdmin();
+			Role.openRolesAdmin();
 
-		RoleNavigator.gotoRoleType();
+			RoleNavigator.gotoRoleType();
 
-		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+			LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCP(
-			assetLibrariesScope = "true",
-			define = "true",
-			permissionNavHeader = "Content & Data",
-			permissionNavItem = "Documents and Media",
-			permissionSheetSubtitle = "Documents",
-			permissionValues = "Add Document",
-			siteNameScope = "Test Depot Name");
+			Role.editPermissionCP(
+				assetLibrariesScope = "true",
+				define = "true",
+				permissionNavHeader = "Content & Data",
+				permissionNavItem = "Documents and Media",
+				permissionSheetSubtitle = "Documents",
+				permissionValues = "Add Document",
+				siteNameScope = "Test Depot Name");
 
-		Role.viewPermissionCP(
-			permissionDefinitionValue = "Add Document",
-			permissionNavigationValue = "Documents and Media > Documents",
-			siteNameScope = "Test Depot Name");
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "Add Document",
+				permissionNavigationValue = "Documents and Media > Documents",
+				siteNameScope = "Test Depot Name");
 
-		Role.openRolesAdmin();
+			Role.openRolesAdmin();
 
-		RoleNavigator.gotoRoleType();
+			RoleNavigator.gotoRoleType();
 
-		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+			LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		Role.editPermissionCP(
-			permissionNavHeader = "Content & Data",
-			permissionNavItem = "Documents and Media",
-			permissionSheetSubtitle = "Documents",
-			permissionValues = "Add Document",
-			removeSiteScope = "Test Depot Name");
+			Role.editPermissionCP(
+				permissionNavHeader = "Content & Data",
+				permissionNavItem = "Documents and Media",
+				permissionSheetSubtitle = "Documents",
+				permissionValues = "Add Document",
+				removeSiteScope = "Test Depot Name");
 
-		Role.viewPermissionCP(
-			permissionDefinitionValue = "Add Document",
-			permissionNavigationValue = "Documents and Media > Documents",
-			siteNameScope = "All Sites and Asset Libraries");
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "Add Document",
+				permissionNavigationValue = "Documents and Media > Documents",
+				siteNameScope = "All Sites and Asset Libraries");
+		}
+
+		task ("Select and deselect the depot scope from Collections permissions") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.asset.list.model.AssetListEntry",
+				roleTitle = "Depot Regrole Name");
+
+			Role.openRolesAdmin();
+
+			RoleNavigator.gotoRoleType();
+
+			LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+			Role.editPermissionCP(
+				assetLibrariesScope = "true",
+				define = "true",
+				permissionNavHeader = "Site Builder",
+				permissionNavItem = "Collections",
+				permissionSheetSubtitle = "Asset List Entry",
+				permissionValues = "Delete",
+				siteNameScope = "Test Depot Name");
+
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "Delete",
+				permissionNavigationValue = "Collections > Asset List Entry",
+				siteNameScope = "Test Depot Name");
+
+			Role.openRolesAdmin();
+
+			RoleNavigator.gotoRoleType();
+
+			LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+			Role.editPermissionCP(
+				permissionNavHeader = "Site Builder",
+				permissionNavItem = "Collections",
+				permissionSheetSubtitle = "Asset List Entry",
+				permissionValues = "Delete",
+				removeSiteScope = "Test Depot Name");
+
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "Delete",
+				permissionNavigationValue = "Collections > Asset List Entry",
+				siteNameScope = "All Sites and Asset Libraries");
+		}
 	}
 
 	@description = "This ensures that able to select and deselect specific asset libraries scope from WC permissions."

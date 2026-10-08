@@ -1592,6 +1592,36 @@ public class BundleSiteInitializerTest {
 					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
 
 		Assert.assertTrue(string.isEmpty());
+
+		DLFolder notesDLFolder = _dlFolderLocalService.fetchFolder(
+			_group.getGroupId(), dlFolder.getFolderId(), "Notes");
+
+		dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			_group.getGroupId(), notesDLFolder.getFolderId(), "Summary.md");
+
+		string = new String(
+			StreamUtil.toByteArray(
+				_dlFileEntryLocalService.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+
+		Assert.assertEquals("## Old Testament Notes Update", string);
+
+		dlFolder = _dlFolderLocalService.fetchFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"New Testament");
+
+		notesDLFolder = _dlFolderLocalService.fetchFolder(
+			_group.getGroupId(), dlFolder.getFolderId(), "Notes");
+
+		dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			_group.getGroupId(), notesDLFolder.getFolderId(), "Summary.md");
+
+		string = new String(
+			StreamUtil.toByteArray(
+				_dlFileEntryLocalService.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+
+		Assert.assertEquals("## New Testament Notes Update", string);
 	}
 
 	private void _assertDataDefinition1() throws Exception {

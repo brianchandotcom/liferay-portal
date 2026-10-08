@@ -386,7 +386,7 @@ public class OpenSearchIndexWriterExceptionsTest extends BaseIndexingTestCase {
 		Throwable throwable = logEntry.getThrowable();
 
 		if (throwableClass == null) {
-			Assert.assertNull(String.valueOf(throwable), throwable);
+			Assert.assertNull(throwable);
 		}
 		else {
 			Assert.assertSame(throwableClass, throwable.getClass());

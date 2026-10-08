@@ -20,5 +20,6 @@ patch {
 	}
 
 	fileNames "org/apache/commons/fileupload/FileUploadBase.java"
+	fileNames "org/apache/commons/fileupload/servlet/ServletRequestContext.java"
 	originalLibModuleName = "commons-fileupload"
 }

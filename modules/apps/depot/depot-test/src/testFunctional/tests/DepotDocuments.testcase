@@ -467,7 +467,7 @@ definition {
 
 	@description = "This ensures that the friendly URL of a document created on a depot will be updated automatically if it duplicates the existing one on the depot."
 	@priority = 4
-	test FriendlyURLDuplicatingDepotDocIsAutomaticallyChanged {
+	test FriendlyURLDuplicatingDepotOrRecycleBinDocIsAutomaticallyChanged {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

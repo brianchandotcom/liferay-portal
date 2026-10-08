@@ -254,7 +254,7 @@ definition {
 	@description = "This test asserts that a text document is auto-tagged in a depot."
 	@priority = 5
 	@refactordone
-	test TextDocumentCanBeAutoTagged {
+	test TextDocumentAutoTaggingCanBeDisabledPerDepot {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

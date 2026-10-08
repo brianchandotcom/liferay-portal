@@ -2,7 +2,7 @@ defaults:
     run:
         shell: bash
 jobs:
-    test-cloud-helm-chart-smoke:
+    test-default:
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
@@ -18,6 +18,85 @@ jobs:
             -   name: Validate Helm chart
                 run: helm install liferay . --dry-run=server
                 working-directory: ./cloud/helm/default
+    test-dxp-operator:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Create kind cluster
+                uses: helm/kind-action@v1
+                with:
+                    cluster_name: dxp-operator
+            -   name: Install Helm
+                uses: azure/setup-helm@v4
+                with:
+                    version: 4.2.4
+            -   name: Build image
+                run: docker build --pull --tag liferay-dxp-operator:smoke .
+                working-directory: ./cloud/operator
+            -   name: Load image
+                run: kind load docker-image liferay-dxp-operator:smoke --name dxp-operator
+            -   name: Install Helm chart
+                run: helm install liferay-dxp-operator . --create-namespace --namespace dxp-operator-system --set image.pullPolicy=Never --set image.repository=liferay-dxp-operator --set image.tag=smoke --timeout 5m --wait
+                working-directory: ./cloud/helm/dxp-operator
+            -   name: Create LiferayEnvironment
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        kubectl create namespace liferay
+
+                        kubectl apply --filename - <<EOF
+                    apiVersion: licensing.liferay.com/v1alpha1
+                    kind: LiferayEnvironment
+                    metadata:
+                        name: liferay
+                        namespace: liferay
+                    spec:
+                        activationCodeSecretRef:
+                            key: activationCode
+                            name: liferay-activation-code
+                        workloadRef:
+                            name: liferay
+                    EOF
+                    }
+
+                    main "${@}"
+            -   name: Check LiferayEnvironment reconciliation
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        kubectl wait --for=jsonpath='{.status.phase}'=Pending --namespace liferay --timeout 2m liferayenvironment/liferay
+
+                        local reason
+
+                        reason=$(kubectl get liferayenvironment liferay --namespace liferay --output jsonpath='{.status.conditions[?(@.type=="Activated")].reason}')
+
+                        if [[ ${reason} != AwaitingActivationCode ]]
+                        then
+                            echo "The Activated condition reason is \"${reason}\" instead of \"AwaitingActivationCode\"." >&2
+
+                            exit 1
+                        fi
+
+                        kubectl get secret liferay-identity --namespace liferay
+                    }
+
+                    main "${@}"
+            -   if: ${{failure()}}
+                name: Print operator events
+                run: kubectl get events --namespace dxp-operator-system
+            -   if: ${{failure()}}
+                name: Print operator logs
+                run: kubectl logs deployment/liferay-dxp-operator --namespace dxp-operator-system
+            -   if: ${{failure()}}
+                name: Print LiferayEnvironment
+                run: kubectl get liferayenvironment liferay --namespace liferay --output yaml
 on:
     workflow_call:
 permissions:

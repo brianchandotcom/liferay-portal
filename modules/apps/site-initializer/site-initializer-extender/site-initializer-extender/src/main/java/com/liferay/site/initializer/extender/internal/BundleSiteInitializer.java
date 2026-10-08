@@ -2237,13 +2237,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).toString());
 		}
 
-		Page<DocumentFolder> documentFoldersPage =
-			documentFolderResource.getSiteDocumentFoldersPage(
-				groupId, true, null, null,
-				documentFolderResource.toFilter(
-					StringBundler.concat(
-						"name eq '", documentFolder.getName(), "'")),
-				null, null);
+		Page<DocumentFolder> documentFoldersPage = null;
+
+		if (documentFolderId != null) {
+			documentFoldersPage =
+				documentFolderResource.getDocumentFolderDocumentFoldersPage(
+					documentFolderId, false, null, null,
+					documentFolderResource.toFilter(
+						StringBundler.concat(
+							"name eq '", documentFolder.getName(), "'")),
+					null, null);
+		}
+		else {
+			documentFoldersPage =
+				documentFolderResource.getSiteDocumentFoldersPage(
+					groupId, false, null, null,
+					documentFolderResource.toFilter(
+						StringBundler.concat(
+							"name eq '", documentFolder.getName(), "'")),
+					null, null);
+		}
 
 		DocumentFolder existingDocumentFolder =
 			documentFoldersPage.fetchFirstItem();

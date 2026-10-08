@@ -8,8 +8,8 @@
 	"devDependencies": {
 		"@types/react": "^18.2.0",
 		"@types/react-dom": "^18.2.0",
-		"@vitejs/plugin-react": "^4.2.1",
-		"vite": "^5.2.0"
+		"@vitejs/plugin-react": "^6.1.2",
+		"vite": "^8.3.4"
 	},
 	"name": "clarity-solution-custom-element-distributor-details",
 	"private": true,
@@ -18,5 +18,6 @@
 		"dev": "vite",
 		"preview": "vite preview"
 	},
+	"type": "module",
 	"version": "0.0.0"
 }

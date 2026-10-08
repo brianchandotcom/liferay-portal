@@ -3,23 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {resolve} from 'path';
-import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
+import {resolve} from 'path';
+import {defineConfig, esmExternalRequirePlugin} from 'vite';
 
 // https://vitejs.dev/config/
+
 export default defineConfig({
-	plugins: [react()],
 	build: {
 		lib: {
 			entry: {
-				index: resolve(__dirname, 'src/index.jsx'),
+				index: resolve(import.meta.dirname, 'src/index.jsx'),
 			},
 			formats: ['es'],
 		},
 		outDir: 'build/vite',
-		rollupOptions: {
-			external: ['react', 'react-dom'],
+		rolldownOptions: {
 			output: {
 				entryFileNames: '[name].js',
 				format: 'es', // Ensured format is consistent
@@ -29,6 +28,12 @@ export default defineConfig({
 	define: {
 		'process.env.NODE_ENV': '"production"',
 	},
+	plugins: [
+		esmExternalRequirePlugin({
+			external: ['react', 'react-dom'],
+		}),
+		react(),
+	],
 	server: {
 		origin: 'http://localhost:5173',
 	},

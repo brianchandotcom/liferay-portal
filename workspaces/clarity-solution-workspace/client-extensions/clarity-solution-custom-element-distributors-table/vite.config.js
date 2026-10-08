@@ -4,18 +4,16 @@
  */
 
 import react from '@vitejs/plugin-react';
-import {defineConfig} from 'vite';
+import {defineConfig, esmExternalRequirePlugin} from 'vite';
 
 export default defineConfig({
 	build: {
 		assetsInlineLimit: 32 * 1024,
 		outDir: 'build/vite',
-		rollupOptions: {
+		rolldownOptions: {
 			external: [
 				'/@clayui/*/',
 				'clarity-solution-js-import-maps-entry-distributors',
-				'react',
-				'react-dom',
 			],
 			output: {
 				assetFileNames: '[name]-[hash][extname]',
@@ -25,7 +23,12 @@ export default defineConfig({
 		},
 		target: 'esnext',
 	},
-	plugins: [react()],
+	plugins: [
+		esmExternalRequirePlugin({
+			external: ['react', 'react-dom'],
+		}),
+		react(),
+	],
 	server: {
 		origin: 'http://localhost:5173',
 	},

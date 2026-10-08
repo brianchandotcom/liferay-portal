@@ -10,12 +10,12 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: {
-				index: resolve(__dirname, 'src/index.js'),
+				index: resolve(import.meta.dirname, 'src/index.js'),
 			},
 			formats: ['es'],
 		},
 		outDir: 'build/vite',
-		rollupOptions: {
+		rolldownOptions: {
 			output: {
 				entryFileNames: '[name].js',
 				format: 'es',

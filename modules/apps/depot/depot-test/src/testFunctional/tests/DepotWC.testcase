@@ -30,22 +30,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a web content folder can be deleted in a depot."
-	@priority = 4
-	@refactordone
-	test CanDeleteFolder {
-		JSONWebcontent.addFolder(
-			folderName = "WC Folder Name",
-			groupName = "Test Depot Name",
-			site = "false");
-
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContentFolder.moveToRecycleBinCP(
-			assetType = "Web Content Folder",
-			folderName = "WC Folder Name");
-	}
-
 	@description = "This test deletes multiple web content in a depot."
 	@priority = 4
 	@refactordone
@@ -110,9 +94,9 @@ definition {
 			value1 = "There are no structures.");
 	}
 
-	@description = "This ensures that a web content folder can be edited in a depot and that web content can be moved into it."
+	@description = "This ensures that a web content folder can be edited in a depot, that web content can be moved into it, and that the folder can then be deleted."
 	@e2e
-	@priority = 3
+	@priority = 4
 	@refactordone
 	test CanEditMoveIntoAndDeleteFolder {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
@@ -151,6 +135,12 @@ definition {
 			webContentTitle = "WC Folder Name Edit");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentFolder.moveToRecycleBinCP(
+			assetType = "Web Content Folder",
+			folderName = "WC Folder Name Edit");
 	}
 
 	@description = "This test edits template and structure in a depot. Skip the instance for performance improvement."

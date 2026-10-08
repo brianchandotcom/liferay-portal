@@ -24,12 +24,15 @@ const InfoPopover: React.FC<IInfoPopoverProps> = ({
 	return (
 		<>
 			<span
+				aria-label={title || Liferay.Language.get('more-information')}
 				className={getCN('info-popover-root', className)}
 				onBlur={() => setShowPopover(false)}
 				onFocus={() => setShowPopover(true)}
 				onMouseOut={() => setShowPopover(false)}
 				onMouseOver={() => setShowPopover(true)}
 				ref={_iconSpanRef}
+				role="button"
+				tabIndex={0}
 			>
 				<ClayIcon className="icon-root" symbol="question-circle-full" />
 			</span>

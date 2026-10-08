@@ -337,7 +337,10 @@ exports[`AddWorkspaceForm should render 1`] = `
                   Add Incident Report Contacts
                 </span>
                 <span
+                  aria-label="Incident Report Contact"
                   class="info-popover-root"
+                  role="button"
+                  tabindex="0"
                 >
                   <svg
                     class="lexicon-icon lexicon-icon-question-circle-full icon-root"

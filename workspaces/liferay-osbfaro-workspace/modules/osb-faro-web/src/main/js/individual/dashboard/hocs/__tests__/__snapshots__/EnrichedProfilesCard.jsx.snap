@@ -15,7 +15,10 @@ exports[`EnrichedProfilesCard should render 1`] = `
         Enriched Profiles
       </div>
       <span
+        aria-label="Enriched Profiles"
         class="info-popover-root"
+        role="button"
+        tabindex="0"
       >
         <svg
           class="lexicon-icon lexicon-icon-question-circle-full icon-root"

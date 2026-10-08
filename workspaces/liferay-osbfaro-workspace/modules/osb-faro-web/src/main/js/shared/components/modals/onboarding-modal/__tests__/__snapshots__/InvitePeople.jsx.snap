@@ -51,7 +51,10 @@ exports[`InvitePeople renders 1`] = `
               Add Other Members
             </span>
             <span
+              aria-label="Member Permissions"
               class="info-popover-root ml-2"
+              role="button"
+              tabindex="0"
             >
               <svg
                 class="lexicon-icon lexicon-icon-question-circle-full icon-root"

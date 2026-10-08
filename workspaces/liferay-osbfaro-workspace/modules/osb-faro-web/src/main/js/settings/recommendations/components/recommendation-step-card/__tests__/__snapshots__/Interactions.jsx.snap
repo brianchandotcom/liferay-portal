@@ -89,7 +89,10 @@ exports[`Interactions should render 1`] = `
             </label>
           </div>
           <span
+            aria-label="More Information"
             class="info-popover-root include-previous-period-help-icon"
+            role="button"
+            tabindex="0"
           >
             <svg
               class="lexicon-icon lexicon-icon-question-circle-full icon-root"

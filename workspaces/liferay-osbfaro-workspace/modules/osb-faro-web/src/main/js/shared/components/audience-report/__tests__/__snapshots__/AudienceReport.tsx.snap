@@ -267,7 +267,10 @@ exports[`AudienceReport should render 1`] = `
               class="h4 mb-3 mr-2 text-center text-secondary title"
             />
             <span
+              aria-label="More Information"
               class="info-popover-root"
+              role="button"
+              tabindex="0"
             >
               <svg
                 class="lexicon-icon lexicon-icon-question-circle-full icon-root"
@@ -527,7 +530,10 @@ exports[`AudienceReport should render 1`] = `
           Viewer Segments
         </div>
         <span
+          aria-label="Viewer Segments"
           class="info-popover-root"
+          role="button"
+          tabindex="0"
         >
           <svg
             class="lexicon-icon lexicon-icon-question-circle-full icon-root"

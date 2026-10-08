@@ -36,7 +36,10 @@ exports[`TrackedBehaviorsList should render 1`] = `
                     Restrict External Access
                   </span>
                   <span
+                    aria-label="Restrict Access"
                     class="info-popover-root"
+                    role="button"
+                    tabindex="0"
                   >
                     <svg
                       class="lexicon-icon lexicon-icon-question-circle-full icon-root"

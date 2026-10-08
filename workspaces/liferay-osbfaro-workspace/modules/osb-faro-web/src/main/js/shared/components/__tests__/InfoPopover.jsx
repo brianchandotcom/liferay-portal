@@ -16,4 +16,23 @@ describe('InfoPopover', () => {
 		);
 		expect(container).toMatchSnapshot();
 	});
+
+	it('should be reachable with the keyboard', () => {
+		const {getByRole} = render(
+			<InfoPopover content='foo content' title='foo title' />
+		);
+
+		expect(getByRole('button', {name: 'foo title'})).toHaveAttribute(
+			'tabindex',
+			'0'
+		);
+	});
+
+	it('should fall back to a generic label when there is no title', () => {
+		const {getByRole} = render(<InfoPopover content='foo content' />);
+
+		expect(
+			getByRole('button', {name: 'More Information'})
+		).toBeInTheDocument();
+	});
 });

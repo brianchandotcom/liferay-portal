@@ -147,7 +147,10 @@ exports[`ConnectDXPModal renders 1`] = `
                 DXP Requirements
               </span>
               <span
+                aria-label="DXP Requirements"
                 class="info-popover-root ml-2"
+                role="button"
+                tabindex="0"
               >
                 <svg
                   class="lexicon-icon lexicon-icon-question-circle-full icon-root"

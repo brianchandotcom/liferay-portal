@@ -693,7 +693,7 @@ definition {
 
 	@description = "This ensures that assets stored in the asset library folder can be edited by a user with permissions Via DM widget on a connected site."
 	@priority = 4
-	test CanEditFileInDMWidget {
+	test CanEditAndDeleteFileInDMWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(

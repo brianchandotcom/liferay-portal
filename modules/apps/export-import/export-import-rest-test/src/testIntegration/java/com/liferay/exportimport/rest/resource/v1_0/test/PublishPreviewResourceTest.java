@@ -11,8 +11,11 @@ import com.liferay.exportimport.rest.client.dto.v1_0.PublishPreview;
 import com.liferay.exportimport.rest.client.dto.v1_0.PublishProcessRequest;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -88,10 +91,29 @@ public class PublishPreviewResourceTest
 				null, null);
 
 		Assert.assertNotNull(lastPublishDatePublishPreview.getAdditionCount());
+
+		_testGetSitePublishPreviewWithLayoutSetPrototypeGroup();
+	}
+
+	private void _testGetSitePublishPreviewWithLayoutSetPrototypeGroup()
+		throws Exception {
+
+		_layoutSetPrototype = LayoutTestUtil.addLayoutSetPrototype(
+			RandomTestUtil.randomString());
+
+		Group group = _layoutSetPrototype.getGroup();
+
+		assertHttpResponseStatusCode(
+			404,
+			publishPreviewResource.getSitePublishPreviewHttpResponse(
+				group.getExternalReferenceCode(), null, null, null));
 	}
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@DeleteAfterTestRun
+	private LayoutSetPrototype _layoutSetPrototype;
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;

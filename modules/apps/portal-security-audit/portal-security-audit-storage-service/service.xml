@@ -61,11 +61,11 @@
 			<finder-column name="companyId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="AuditPseudonym" remote-service="false">
+	<entity local-service="true" name="AuditEventPseudonymField" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="auditPseudonymId" primary="true" type="long" />
+		<column name="auditEventPseudonymFieldId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -75,20 +75,20 @@
 		<!-- Other fields -->
 
 		<column name="contextName" type="String" />
-		<column name="fieldCategory" type="String" />
+		<column name="name" type="String" />
 		<column name="value" type="String" />
 		<column name="valueHash" type="String" />
 
 		<!-- Finder methods -->
 
-		<finder name="C_CN_FC_VH" return-type="AuditPseudonym" unique="true">
+		<finder name="C_CN_N_VH" return-type="AuditEventPseudonymField" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="contextName" />
-			<finder-column name="fieldCategory" />
+			<finder-column name="name" />
 			<finder-column name="valueHash" />
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>AuditPseudonymValue</exception>
+		<exception>AuditEventPseudonymFieldValue</exception>
 	</exceptions>
 </service-builder>

@@ -17,7 +17,7 @@ const CALCULATION_TYPES = [
 interface IEventAnalysisEditorProps extends React.HTMLAttributes<HTMLElement> {
 	channelId: string;
 	compareToPrevious: boolean;
-	event: Event;
+	event: Event | null;
 	onCompareToPreviousChange: (compareToPrevious: boolean) => void;
 	onRangeSelectorsChange: (rangeSelectors: RangeSelectors) => void;
 	onTypeChange: (type: CalculationTypes) => void;
@@ -75,22 +75,23 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 			</Canvas.Actions>
 		</Canvas.Header>
 
-		<Canvas.Body
-			empty={!event}
-			emptyState={{
-				description: Liferay.Language.get(
-					'to-create-a-new-analysis-select-an-event-then-add-filters-and-breakdowns-for-more-detail'
-				),
-				title: Liferay.Language.get('no-conditions-yet'),
-			}}
-		>
-			<BreakdownTable
-				channelId={channelId}
-				compareToPrevious={compareToPrevious}
-				event={event}
-				rangeSelectors={rangeSelectors}
-				type={type}
-			/>
+		<Canvas.Body>
+			{event ? (
+				<BreakdownTable
+					channelId={channelId}
+					compareToPrevious={compareToPrevious}
+					event={event}
+					rangeSelectors={rangeSelectors}
+					type={type}
+				/>
+			) : (
+				<Canvas.EmptyState
+					description={Liferay.Language.get(
+						'to-create-a-new-analysis-select-an-event-then-add-filters-and-breakdowns-for-more-detail'
+					)}
+					title={Liferay.Language.get('no-conditions-yet')}
+				/>
+			)}
 		</Canvas.Body>
 	</Canvas>
 );

@@ -368,7 +368,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					<EventAnalysisEditor
 						channelId={channelId}
 						compareToPrevious={compareToPrevious}
-						event={event!}
+						event={event}
 						onCompareToPreviousChange={onCompareToPreviousChange}
 						onRangeSelectorsChange={onRangeSelectorsChange}
 						onTypeChange={onTypeChange}

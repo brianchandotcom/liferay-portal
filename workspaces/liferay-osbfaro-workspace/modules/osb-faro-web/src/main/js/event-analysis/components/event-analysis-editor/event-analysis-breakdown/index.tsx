@@ -42,11 +42,6 @@ interface IBreakdownWithSafeResultsProps extends WithRangeKeyProps {
 	type: CalculationTypes;
 }
 
-interface IEventAnalysisBreakdownProps
-	extends Omit<IBreakdownWithSafeResultsProps, 'event'> {
-	event?: Event | null;
-}
-
 interface IBreakdownTableProps
 	extends WithRangeKeyProps,
 		React.HTMLAttributes<HTMLElement> {
@@ -477,15 +472,4 @@ const getColumns = ({
 	return columns;
 };
 
-const EventAnalysisBreakdown: React.FC<IEventAnalysisBreakdownProps> = ({
-	event,
-	...otherProps
-}) => {
-	if (!event) {
-		return null;
-	}
-
-	return <BreakdownWithSafeResults {...otherProps} event={event} />;
-};
-
-export default EventAnalysisBreakdown;
+export default BreakdownWithSafeResults;

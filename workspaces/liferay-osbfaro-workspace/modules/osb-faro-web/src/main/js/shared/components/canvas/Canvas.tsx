@@ -23,21 +23,11 @@ const Actions: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 interface ICanvasBodyProps {
 	children?: React.ReactNode;
 	className?: string;
-	empty?: boolean;
-	emptyState?: {
-		description: string;
-		title: string;
-	};
 }
 
-const Body: React.FC<ICanvasBodyProps> = ({
-	children,
-	className,
-	empty = false,
-	emptyState,
-}) => (
+const Body: React.FC<ICanvasBodyProps> = ({children, className}) => (
 	<Card.Body className={getCN('canvas-body', className)}>
-		{empty && emptyState ? <CanvasEmptyState {...emptyState} /> : children}
+		{children}
 	</Card.Body>
 );
 
@@ -73,7 +63,8 @@ interface ICanvasProps {
 /**
  * Presentational container for the page editors, built on Card so it shares
  * the spacing and look of the other cards. Each feature fills the slots with
- * its own controls and content, and decides when the body is empty.
+ * its own controls and content, and renders Canvas.EmptyState in the body
+ * when it has nothing to show.
  */
 const Canvas: React.FC<ICanvasProps> & {
 	Actions: typeof Actions;

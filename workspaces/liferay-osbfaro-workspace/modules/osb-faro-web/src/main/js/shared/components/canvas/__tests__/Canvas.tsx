@@ -30,29 +30,27 @@ describe('Canvas', () => {
 		expect(getByText('Action').closest('.canvas-header')).toBeTruthy();
 	});
 
-	it('renders the body children when it is not empty', () => {
-		const {getByText, queryByText} = render(
+	it('renders the body children', () => {
+		const {getByText} = render(
 			<Canvas>
-				<Canvas.Body emptyState={EMPTY_STATE}>
+				<Canvas.Body>
 					<span>{'Content'}</span>
 				</Canvas.Body>
 			</Canvas>
 		);
 
-		expect(getByText('Content')).toBeInTheDocument();
-		expect(queryByText(EMPTY_STATE.title)).not.toBeInTheDocument();
+		expect(getByText('Content').closest('.canvas-body')).toBeTruthy();
 	});
 
-	it('renders the empty state instead of the children when it is empty', () => {
-		const {getByRole, getByText, queryByText} = render(
+	it('renders the empty state as a body child', () => {
+		const {getByRole, getByText} = render(
 			<Canvas>
-				<Canvas.Body empty emptyState={EMPTY_STATE}>
-					<span>{'Content'}</span>
+				<Canvas.Body>
+					<Canvas.EmptyState {...EMPTY_STATE} />
 				</Canvas.Body>
 			</Canvas>
 		);
 
-		expect(queryByText('Content')).not.toBeInTheDocument();
 		expect(
 			getByRole('heading', {level: 3, name: EMPTY_STATE.title})
 		).toBeInTheDocument();

@@ -185,7 +185,7 @@ definition {
 	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."
 	@priority = 4
 	@refactordone
-	test CanSearchVideoShortcutByTag {
+	test CanSearchVideoShortcutByTagUntilSearchingIsDisabled {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

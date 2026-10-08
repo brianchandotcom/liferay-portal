@@ -1219,7 +1219,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a specific asset library scope can be selected and deselected from DM and Collections permissions."
+	@description = "This ensures that a specific asset library scope can be selected and deselected from DM, Collections and WC permissions."
 	@priority = 3
 	@refactordone
 	test CanSelectDepotScopeOnlyFromSupportedApplicationPermissions {
@@ -1314,56 +1314,51 @@ definition {
 				permissionNavigationValue = "Collections > Asset List Entry",
 				siteNameScope = "All Sites and Asset Libraries");
 		}
-	}
 
-	@description = "This ensures that able to select and deselect specific asset libraries scope from WC permissions."
-	@priority = 3
-	@refactordone
-	test CanSelectAndDeselectScopeFromWCPermissions {
-		JSONRole.addRegularRole(roleKey = "Depot Regrole Name");
+		task ("Select and deselect the depot scope from Web Content permissions") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Depot Regrole Name");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Depot Regrole Name");
+			Role.openRolesAdmin();
 
-		Role.openRolesAdmin();
+			RoleNavigator.gotoRoleType();
 
-		RoleNavigator.gotoRoleType();
+			LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+			Role.editPermissionCP(
+				assetLibrariesScope = "true",
+				define = "true",
+				permissionNavHeader = "Content & Data",
+				permissionNavItem = "Web Content",
+				permissionSheetSubtitle = "General Permissions",
+				permissionValues = "View",
+				siteNameScope = "Test Depot Name");
 
-		Role.editPermissionCP(
-			assetLibrariesScope = "true",
-			define = "true",
-			permissionNavHeader = "Content & Data",
-			permissionNavItem = "Web Content",
-			permissionSheetSubtitle = "General Permissions",
-			permissionValues = "View",
-			siteNameScope = "Test Depot Name");
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Web Content",
+				siteNameScope = "Test Depot Name");
 
-		Role.viewPermissionCP(
-			permissionDefinitionValue = "View",
-			permissionNavigationValue = "Web Content",
-			siteNameScope = "Test Depot Name");
+			Role.openRolesAdmin();
 
-		Role.openRolesAdmin();
+			RoleNavigator.gotoRoleType();
 
-		RoleNavigator.gotoRoleType();
+			LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+			Role.editPermissionCP(
+				permissionNavHeader = "Content & Data",
+				permissionNavItem = "Web Content",
+				permissionSheetSubtitle = "General Permissions",
+				permissionValues = "View",
+				removeSiteScope = "Test Depot Name");
 
-		Role.editPermissionCP(
-			permissionNavHeader = "Content & Data",
-			permissionNavItem = "Web Content",
-			permissionSheetSubtitle = "General Permissions",
-			permissionValues = "View",
-			removeSiteScope = "Test Depot Name");
-
-		Role.viewPermissionCP(
-			permissionDefinitionValue = "View",
-			permissionNavigationValue = "Web Content",
-			siteNameScope = "All Sites and Asset Libraries");
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Web Content",
+				siteNameScope = "All Sites and Asset Libraries");
+		}
 	}
 
 	@description = "This test covers LPS-119994. It ensures that the user with access application permission can view the depot dashboard."

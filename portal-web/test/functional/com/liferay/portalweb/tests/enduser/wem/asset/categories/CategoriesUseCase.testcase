@@ -1017,64 +1017,6 @@ definition {
 		}
 	}
 
-	@description = "View the vocabulary for asset subtype in web content editor."
-	@priority = 3
-	test ViewVocabularyForAssetSubtypeInWebContentEditor {
-		task ("Add a web content structure with a Text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoStructures();
-
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			WebContentStructures.saveCP();
-		}
-
-		task ("Add a vocabulary for Web Content Article and Basic Web Content") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addWithAssociatedAssetTypeCP(
-				assetSubtype = "Basic Web Content",
-				assetType = "Web Content Article",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View vocabulary for asset subtype in web content editor") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(webContentTitle = "WC Title");
-
-			Panel.expandPanel(panel = "Categorization");
-
-			AssetCategorization.addCategory(
-				categoryName = "Category Name",
-				vocabularyName = "Vocabulary Name");
-
-			WebContent.publishWithPermissions();
-		}
-
-		task ("View the vocabulary for asset subtype not shown in web content editor based on new structure") {
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-			Panel.expandPanel(panel = "Categorization");
-
-			AssertTextNotPresent(value1 = "Vocabulary Name");
-		}
-	}
-
 	@description = "This is a test for LPS-131984. View vocabulary for specific Asset Types in asset editor. A web content cannot be added without the required category, and the category is assigned once selected."
 	@priority = 4
 	test ViewRequiredVocabularyForSpecificAssetTypesInAssetEditor {
@@ -1161,6 +1103,64 @@ definition {
 			AssertElementNotPresent(
 				key_vocabularyName = "Vocabulary Name",
 				locator1 = "AssetCategorization#CATEGORY_SELECT");
+		}
+	}
+
+	@description = "View the vocabulary for asset subtype in web content editor."
+	@priority = 3
+	test ViewVocabularyForAssetSubtypeInWebContentEditor {
+		task ("Add a web content structure with a Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a vocabulary for Web Content Article and Basic Web Content") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetSubtype = "Basic Web Content",
+				assetType = "Web Content Article",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View vocabulary for asset subtype in web content editor") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentTitle = "WC Title");
+
+			Panel.expandPanel(panel = "Categorization");
+
+			AssetCategorization.addCategory(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			WebContent.publishWithPermissions();
+		}
+
+		task ("View the vocabulary for asset subtype not shown in web content editor based on new structure") {
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			Panel.expandPanel(panel = "Categorization");
+
+			AssertTextNotPresent(value1 = "Vocabulary Name");
 		}
 	}
 

@@ -53,9 +53,9 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a subfolder stored in the asset library folder can be accessed via DM widget on a connected site."
-	@priority = 4
-	test CanAccessSubfolderFromSiteWidget {
+	@description = "This ensures that assets and subfolders stored in the asset library folder can be accessed and edited via DM widget on a connected site, and that the assets are no longer displayed in the DM widget once the site is disconnected."
+	@priority = 5
+	test CanAccessSubfolderAndEditAssetAndCannotViewAfterDisconnectingFromSiteWidget {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "Depot Folder Name",
@@ -66,45 +66,6 @@ definition {
 			dmFolderName = "Depot Subfolder Name",
 			groupName = "Test Depot Name",
 			parentFolderName = "Depot Folder Name");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.setRootFolder(
-			depotName = "Test Depot Name",
-			dmRootFolderName = "Depot Folder Name");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMNavigator.gotoFolder(dmFolderName = "Depot Subfolder Name");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
-
-		DepotNavigator.openToDMFolder(
-			depotName = "Test Depot Name",
-			folderName = "Depot Subfolder Name",
-			parentFolderName = "Depot Folder Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-	}
-
-	@description = "This ensures that assets stored in the asset library folder can be edited via DM widget on a connected site, and that the assets are no longer displayed in the DM widget once the site is disconnected."
-	@priority = 5
-	test CanAccessSubfolderAndEditAssetAndCannotViewAfterDisconnectingFromSiteWidget {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "Depot Folder Name",
-			groupName = "Test Depot Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -143,6 +104,28 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
+
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		DMNavigator.gotoFolder(dmFolderName = "Depot Subfolder Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "Depot Subfolder Name",
+			parentFolderName = "Depot Folder Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		JSONDepot.disconnectSite(groupName = "Site Name");
 

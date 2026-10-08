@@ -1121,7 +1121,7 @@ definition {
 
 	@description = "This ensures that a depot image in the Blogs small image can be rendered correctly on a connected site after moving it to a folder."
 	@priority = 4
-	test CanViewSmallImageAfterMovingToFolder {
+	test CanViewInlineAndSmallImageInBlogsAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

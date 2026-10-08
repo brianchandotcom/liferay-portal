@@ -56,7 +56,7 @@ definition {
 	@description = "This ensures that a depot containing a folder and some files can be deleted."
 	@priority = 4
 	@refactordone
-	test CanDeleteDepotWithContent {
+	test CanDeleteEmptyAndPopulatedDepot {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

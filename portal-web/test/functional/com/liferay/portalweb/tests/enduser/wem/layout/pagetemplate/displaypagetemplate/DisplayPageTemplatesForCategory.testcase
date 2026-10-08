@@ -18,7 +18,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110247 and LPS-112578. The user can create a display page template for Category and mark it as default. The new non-subcategory will be associated to the Default."
+	@description = "This is a test for LPS-110247, LPS-112578 and LPS-158711. The user can create a display page template for Category and mark it as default. The new non-subcategory will be associated to the Default. The user can then select specific display page templates in the category editor."
 	@priority = 5
 	test AddDefaultAndSelectSpecificDisplayPageTemplateInCategoryEditor {
 		property portal.acceptance = "true";
@@ -66,6 +66,7 @@ definition {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Category.addCP(
+				categoryDescription = "This is a description",
 				categoryName = "Category Name",
 				displayPageName = "Display Page Name",
 				displayPageTemplateType = "Default",
@@ -84,12 +85,6 @@ definition {
 				id = "element-text",
 				text = "Category Name");
 		}
-	}
-
-	@description = "This is a test for LPS-110247 and LPS-158711. The user can select the specific display page template in category editor."
-	@priority = 5
-	test SelectSpecificDisplayPageTemplateInCategoryEditor {
-		property portal.acceptance = "true";
 
 		task ("Add the first display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -143,17 +138,10 @@ definition {
 			PageEditor.publish();
 		}
 
-		task ("Add a vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
-		}
-
-		task ("Add a category and select the first display page template as specific display page template") {
+		task ("Edit the category and select the first display page template as specific display page template") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-			Category.addCP(
-				categoryDescription = "This is a description",
+			Category.editCP(
 				categoryName = "Category Name",
 				displayPageName = "Display Page Name 1",
 				displayPageTemplateType = "Specific",

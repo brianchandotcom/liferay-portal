@@ -19,13 +19,6 @@ gradle.allprojects {
 			testModules group: "com.liferay.portal", name: "com.liferay.portal.test.integration"
 		}
 
-		tasks.named("testIntegration") {
-			testLogging {
-				events "failed", "passed", "skipped"
-				exceptionFormat "full"
-			}
-		}
-
 		List<String> disabledTaskNames = []
 
 		if (project.name.endsWith("-test")) {

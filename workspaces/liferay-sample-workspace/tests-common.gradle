@@ -1,0 +1,14 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+gradle.allprojects {
+	pluginManager.withPlugin("java") {
+		tasks.withType(Test).configureEach {
+			testLogging {
+				events = EnumSet.allOf(TestLogEvent)
+				exceptionFormat = TestExceptionFormat.FULL
+				stackTraceFilters = []
+			}
+		}
+	}
+}

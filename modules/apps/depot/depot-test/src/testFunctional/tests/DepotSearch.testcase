@@ -200,36 +200,6 @@ definition {
 		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a depot document cannot be searched on a connected site when searching is disabled."
-	@priority = 5
-	@refactordone
-	test DocumentCanNotBeSearchedWhenDisabled {
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.configureSearch(
-			depotName = "Test Depot Name",
-			item = "Make Unsearchable",
-			siteList = "Site Name",
-			tableEntryText = "No");
-
-		Navigator.openSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Search.searchCP(searchTerm = "DM Document Title");
-
-		SearchResults.viewNoSearchResults(searchTerm = "DM Document Title");
-	}
-
 	@description = "This ensures that a depot document associated with a tag cannot be searched on a connected site when searching is disabled."
 	@priority = 5
 	@refactordone
@@ -263,7 +233,7 @@ definition {
 		SearchResults.viewNoSearchResults(searchTerm = "depot");
 	}
 
-	@description = "This ensures that a depot content associated with the user cannot be searched on a connected site when searching is disabled."
+	@description = "This ensures that depot content cannot be searched on a connected site by user or by title when searching is disabled."
 	@priority = 5
 	@refactordone
 	test CanToggleDepotSearchabilityOnConnectedSite {
@@ -305,6 +275,14 @@ definition {
 			key_searchAssetTitle = "WC WebContent Title",
 			key_searchAssetType = "Web Content Article",
 			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
+
+		Navigator.openSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Search.searchCP(searchTerm = "DM Document Title");
+
+		SearchResults.viewNoSearchResults(searchTerm = "DM Document Title");
 	}
 
 	@description = "This ensures that a depot web content cannot be searched on a connected site when searching is disabled."

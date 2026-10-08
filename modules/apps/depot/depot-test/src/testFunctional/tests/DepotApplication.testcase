@@ -272,49 +272,7 @@ definition {
 			assetType = "Document");
 	}
 
-	@description = "This ensures that a depot image persists in a site blog entry even after the depot DM application is disabled."
-	@priority = 4
-	@refactordone
-	test DisabledImageRemainsInBlogs {
-		HeadlessSite.addSite(siteName = "Test Site Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Test Depot Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Test Site Name");
-
-		Blogs.addEntryWithCoverImageFromDepot(
-			depotName = "Test Depot Name",
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			imageFileName = "Document_1.jpg",
-			siteURLKey = "test-site-name");
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureApplication(
-			applicationList = "Documents and Media",
-			status = "Disabled");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntryCP(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			uploadFileName = "Document_1");
-	}
-
-	@description = "This ensures that a depot WC persists in the WCD even after the depot WC application is disabled."
+	@description = "This ensures that a depot WC persists in the WCD and a depot image persists in a site blog entry even after the depot WC and DM applications are disabled."
 	@priority = 4
 	@refactordone
 	test DisabledDepotAssetsRemainInSiteConsumers {
@@ -335,6 +293,13 @@ definition {
 			site = "false",
 			title = "WC Depot Title");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Test Site Name");
@@ -347,10 +312,18 @@ definition {
 			depotName = "Test Depot Name",
 			webContentTitle = "WC Depot Title");
 
+		Blogs.addEntryWithCoverImageFromDepot(
+			depotName = "Test Depot Name",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			imageFileName = "Document_1.jpg",
+			siteURLKey = "test-site-name");
+
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
-			applicationList = "Web Content",
+			applicationList = "Documents and Media,Web Content",
 			status = "Disabled");
 
 		Navigator.openSitePage(
@@ -360,6 +333,16 @@ definition {
 		WebContentDisplayPortlet.viewContent(
 			webContentContent = "WC Depot Content",
 			webContentTitle = "WC Depot Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			uploadFileName = "Document_1");
 	}
 
 }

@@ -51,24 +51,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a depot document cannot be searched from the disconnected site."
-	@priority = 4
-	@refactordone
-	test CanNotSearchForDocumentFromDisconnectedSite {
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name");
-
-		Navigator.openSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Search.searchCP(searchTerm = "DM Document Title");
-
-		SearchResults.viewNoSearchResults(searchTerm = "DM Document Title");
-	}
-
 	@description = "This ensures that a depot web content can be searched on a connected site when searching is reenabled."
 	@priority = 4
 	@refactordone
@@ -173,7 +155,7 @@ definition {
 		SearchPage.viewResultDetails(searchAssetTitle = "DM Document Title");
 	}
 
-	@description = "This ensures that a depot content associated with the user can be searched with from the connected site."
+	@description = "This ensures that a depot document cannot be searched from a disconnected site, and that depot content associated with the user can be searched from the connected site."
 	@priority = 5
 	@refactordone
 	test CanSearchDepotContentByTitleTagAndUser {
@@ -187,6 +169,14 @@ definition {
 			groupName = "Test Depot Name",
 			site = "false",
 			title = "WC WebContent Title");
+
+		Navigator.openSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Search.searchCP(searchTerm = "DM Document Title");
+
+		SearchResults.viewNoSearchResults(searchTerm = "DM Document Title");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",

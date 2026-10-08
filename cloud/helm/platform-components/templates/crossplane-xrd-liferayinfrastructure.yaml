@@ -86,6 +86,7 @@ spec:
                                     default: {}
                                     type: object
                                 database:
+                                    default: {}
                                     properties:
                                         highAvailability:
                                             default: false
@@ -120,14 +121,12 @@ spec:
                                                 -   message: restore must set exactly one of pointInTime or snapshot
                                                     rule: has(self.pointInTime) != has(self.snapshot)
                                         storageGB:
+                                            default: 32
                                             type: integer
                                         version:
+                                            default: "16"
                                             pattern: ^[0-9]+$
                                             type: string
-                                    required:
-                                        -   instanceType
-                                        -   storageGB
-                                        -   version
                                     type: object
                                 environmentId:
                                     minLength: 1
@@ -202,7 +201,6 @@ spec:
                                         -   green
                                     type: string
                             required:
-                                -   database
                                 -   environmentId
                                 -   projectId
                                 -   storage

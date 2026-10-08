@@ -228,17 +228,6 @@ definition {
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document DOC",
 			dmFolderName = "DM Folder Name");
-	}
-
-	@description = "This test asserts that a document with escape characters stored in a depot can be accessed from FTP mode."
-	@priority = 3
-	@refactordone
-	test CanViewDocumentWithEscapeCharacters {
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Panel.expandPanel(panel = "Documents and Media");
-
-		Depot.configureDirectoryIndexing(directoryIndexing = "Enabled");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

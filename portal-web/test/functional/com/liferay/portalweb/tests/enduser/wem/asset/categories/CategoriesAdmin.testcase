@@ -17,7 +17,7 @@ definition {
 
 	@description = "This is a test for LPS-118305. The user cannot add a category to a vocabulary if the limit was exceeded."
 	@priority = 5
-	test CannotAddCategoriesWhenReachTheLimit {
+	test ConfigureMaximumNumberOfCategoriesPerVocabularyAndReachTheLimit {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

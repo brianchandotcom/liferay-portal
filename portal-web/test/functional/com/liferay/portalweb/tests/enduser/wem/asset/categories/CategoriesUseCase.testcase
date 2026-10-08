@@ -102,64 +102,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-134960 When in Documents & Media, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
-	@priority = 4
-	test AddCategoryOfAnyVisibilityToDocsAndMedia {
-		task ("Create public vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Public Vocabulary Name");
-		}
-
-		task ("Add category to public vocabulary") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Public Category Name",
-				vocabularyName = "Public Vocabulary Name");
-		}
-
-		task ("Create internal vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addInternalVocabulary(vocabularyName = "Internal Vocabulary Name");
-		}
-
-		task ("Add categories to internal vocabulary") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Internal Category Name",
-				vocabularyName = "Internal Vocabulary Name");
-		}
-
-		task ("Create a new Document") {
-			JSONDocument.addFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add public and internal categories to Document") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "DM Document Title");
-
-			DMDocument.addCategories(
-				categoryNameList = "Public Category Name",
-				vocabularyName = "Public Vocabulary Name");
-
-			DMDocument.addCategories(
-				categoryNameList = "Internal Category Name",
-				vocabularyName = "Internal Vocabulary Name");
-
-			Button.clickSubmitButton();
-
-			Alert.viewSuccessMessage();
-		}
-	}
-
-	@description = "LPS-134960 When in Web Content or Blogs, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
+	@description = "LPS-134960 When in Web Content, Blogs or Documents & Media, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
 	@priority = 4
 	test AddCategoryOfAnyVisibilityToAssets {
 		task ("Create public vocabulary") {
@@ -234,6 +177,33 @@ definition {
 				vocabularyName = "Internal Vocabulary Name");
 
 			PortletEntry.publish();
+		}
+
+		task ("Create a new Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add public and internal categories to Document") {
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "DM Document Title");
+
+			DMDocument.addCategories(
+				categoryNameList = "Public Category Name",
+				vocabularyName = "Public Vocabulary Name");
+
+			DMDocument.addCategories(
+				categoryNameList = "Internal Category Name",
+				vocabularyName = "Internal Vocabulary Name");
+
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessage();
 		}
 	}
 

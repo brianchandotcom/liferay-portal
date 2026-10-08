@@ -385,49 +385,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."
-	@priority = 5
-	@refactordone
-	test CanSelectFromFragmentInContentPage {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Fragment Depot Name");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Depot",
-			groupName = "Test Fragment Depot Name",
-			site = "false",
-			title = "WC WebContent Title");
-
-		JSONDepot.connectSite(
-			depotName = "Test Fragment Depot Name",
-			groupName = "Site Name");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Content Display");
-
-		PageEditor.editContentDisplay(
-			depotName = "Test Fragment Depot Name",
-			fragmentName = "Content Display",
-			webcontent = "true",
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PageEditor.publish();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
-
-		AssertTextEquals.assertPartialTextAceEditor(
-			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
-			value1 = "WC WebContent Depot");
-	}
-
-	@description = "This ensures that a depot web content can be selected through the fragment in a display page template on a connected site."
+	@description = "This ensures that a depot web content can be selected through the fragment in a content page and in a display page template on a connected site."
 	@priority = 5
 	@refactordone
 	test CanSelectFromFragmentInContentPageAndDisplayPageTemplate {
@@ -440,6 +398,29 @@ definition {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			depotName = "Test Depot Name",
+			fragmentName = "Content Display",
+			webcontent = "true",
+			webContentContent = "WC WebContent Depot",
+			webContentTitle = "WC WebContent Title");
+
+		PageEditor.publish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
+
+		AssertTextEquals.assertPartialTextAceEditor(
+			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
+			value1 = "WC WebContent Depot");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 

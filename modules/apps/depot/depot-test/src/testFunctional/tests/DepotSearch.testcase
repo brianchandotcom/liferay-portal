@@ -266,7 +266,7 @@ definition {
 	@description = "This ensures that a depot content associated with the user cannot be searched on a connected site when searching is disabled."
 	@priority = 5
 	@refactordone
-	test UserCanNotBeSearchedWhenDisabled {
+	test CanToggleDepotSearchabilityOnConnectedSite {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

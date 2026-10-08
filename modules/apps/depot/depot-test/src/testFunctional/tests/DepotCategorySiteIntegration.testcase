@@ -148,7 +148,7 @@ definition {
 
 	@description = "This ensures that assets stored in a site can be searched by a depot category after disconnecting the site."
 	@priority = 3
-	test AssetsCanBeSearchedByCategoryFromDisconnectedSite {
+	test DepotCategoryAndVocabularyBehaviourOnDisconnectedSite {
 		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Depot Name",
 			site = "false",

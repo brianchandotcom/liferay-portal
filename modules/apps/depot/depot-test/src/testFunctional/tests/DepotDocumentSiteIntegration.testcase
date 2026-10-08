@@ -187,57 +187,6 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a document in a depot can be copied to a site when connected, but not when unconnected."
-	@priority = 5
-	test CanCopyDocumentFromDepotToConnectedSiteAndCannotToUnconnectedSite {
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.copy(
-			dmDocumentTitle = "DM Document Title",
-			homeFolder = "true",
-			siteName = "Site Name");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
-
-		JSONDepot.disconnectSite(groupName = "Site Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title 2",
-			groupName = "Test Depot Name",
-			mimeType = "application/msword",
-			sourceFileName = "Document_2.doc");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.copy(
-			copyToUnconnectedSite = "true",
-			dmDocumentTitle = "DM Document Title 2",
-			homeFolder = "true",
-			siteName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title 2");
-	}
-
 	@description = "This ensures that a document and a folder in a site can be copied to the depot when connected, but not when unconnected."
 	@priority = 5
 	test CanCopyDocumentAndFolderFromConnectedSiteToDepotAndCannotFromUnconnectedSite {
@@ -318,7 +267,7 @@ definition {
 		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
 	}
 
-	@description = "This ensures that a folder in a depot can be copied to a site when connected, but not when unconnected."
+	@description = "This ensures that a document and a folder in a depot can be copied to a site when connected, but not when unconnected."
 	@priority = 5
 	test CanCopyDocumentAndFolderFromDepotToConnectedSiteAndCannotToUnconnectedSite {
 		JSONDepot.connectSite(
@@ -338,6 +287,13 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.copy(
@@ -347,11 +303,22 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
 		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
 
 		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder Name",
@@ -367,6 +334,13 @@ definition {
 			dmFolderName = "DM Folder Name 2",
 			groupName = "Test Depot Name");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title 2",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMFolder.copy(
@@ -375,9 +349,19 @@ definition {
 			homeFolder = "true",
 			siteName = "Site Name");
 
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			copyToUnconnectedSite = "true",
+			dmDocumentTitle = "DM Document Title 2",
+			homeFolder = "true",
+			siteName = "Site Name");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.viewNoEntry(rowEntry = "DM Folder Name 2");
+
+		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title 2");
 	}
 
 	@description = "This ensures that a document using a type stored in AL can be removed on a connected site."

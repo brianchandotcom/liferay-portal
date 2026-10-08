@@ -34,40 +34,6 @@ String errorMessage = errorsJSONObject.getString("errorMessage");
 />
 
 <div aria-labelledby="<portlet:namespace />header" role="group">
-
-	<%
-	JSONArray friendlyURLSeparatorsJSONArray = friendlyURLSeparatorCompanyConfigurationDisplayContext.getConfigurableFriendlyURLSeparatorsJSONArray();
-
-	for (int i = 0; i < friendlyURLSeparatorsJSONArray.length(); i++) {
-		JSONObject friendlyURLSeparatorJSONObject = friendlyURLSeparatorsJSONArray.getJSONObject(i);
-	%>
-
-		<div class="form-group">
-			<label class="mb-0" for="<%= friendlyURLSeparatorJSONObject.getString("name") %>">
-				<%= friendlyURLSeparatorJSONObject.getString("label") %>
-			</label>
-
-			<p class="mb-1 small text-secondary">
-				<%= friendlyURLSeparatorCompanyConfigurationDisplayContext.getSampleURL() %>
-			</p>
-
-			<div class="input-group">
-				<div class="input-group-item input-group-item-shrink input-group-prepend">
-					<div aria-hidden="true" class="input-group-text">
-						/
-					</div>
-				</div>
-
-				<div class="input-group-append input-group-item">
-					<input class="form-control" id="<%= friendlyURLSeparatorJSONObject.getString("name") %>" name="<%= friendlyURLSeparatorJSONObject.getString("name") %>" value="<%= friendlyURLSeparatorJSONObject.getString("value") %>" />
-				</div>
-			</div>
-		</div>
-
-	<%
-	}
-	%>
-
 	<react:component
 		module="{SeparatorFields} from friendly-url-web"
 		props="<%= friendlyURLSeparatorCompanyConfigurationDisplayContext.getSeparatorFieldsProps() %>"

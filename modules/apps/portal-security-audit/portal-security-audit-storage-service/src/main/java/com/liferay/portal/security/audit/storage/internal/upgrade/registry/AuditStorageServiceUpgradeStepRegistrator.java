@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.security.audit.storage.internal.upgrade.v1_0_1.util.AuditEventTable;
-import com.liferay.portal.security.audit.storage.internal.upgrade.v2_4_0.util.AuditPseudonymTable;
+import com.liferay.portal.security.audit.storage.internal.upgrade.v2_4_0.util.AuditEventPseudonymFieldTable;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.ReleaseRenamingUpgradeStep;
 
@@ -70,7 +70,8 @@ public class AuditStorageServiceUpgradeStepRegistrator
 				"userAgent VARCHAR(255) null",
 				"userEmailAddress VARCHAR(75) null"));
 
-		registry.register("2.3.0", "2.4.0", AuditPseudonymTable.create());
+		registry.register(
+			"2.3.0", "2.4.0", AuditEventPseudonymFieldTable.create());
 	}
 
 	@Reference

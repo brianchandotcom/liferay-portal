@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.transaction.TransactionCallbackUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,12 +26,12 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
 	public void onAfterRemove(Company company) throws ModelListenerException {
-		TransactionCallbackUtil.registerCommitCallback(
-			() -> {
-				_deleteDLSyncEvent(company);
-
-				return null;
-			});
+		try {
+			_deleteDLSyncEvent(company);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	private void _deleteDLSyncEvent(Company company) throws PortalException {

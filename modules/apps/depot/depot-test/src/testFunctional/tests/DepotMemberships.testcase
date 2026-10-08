@@ -133,7 +133,7 @@ definition {
 			value1 = "título");
 	}
 
-	@description = "This ensures that an organization can be added and removed in the membership of an asset library."
+	@description = "This ensures that an organization and a user can be added and removed in the membership of an asset library."
 	@priority = 4
 	@refactordone
 	test CanAddAndRemoveMembersByType {
@@ -158,12 +158,7 @@ definition {
 		Depot.removeOrganization(orgName = "Organization Name");
 
 		Portlet.viewEmptyMessage(message = "No organization was found that is a member of this asset library.");
-	}
 
-	@description = "This ensures that a user can be added and removed in the membership of an asset library."
-	@priority = 4
-	@refactordone
-	test CanRemoveUserFromMemberships {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

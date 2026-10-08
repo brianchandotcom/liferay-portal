@@ -48,6 +48,62 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that a basic article can be deleted in a staged asset library by a user with permissions."
+	@priority = 4
+	test CanDeleteWC {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name (Staging)",
+			site = "false",
+			title = "WC WebContent Title");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.journal.model.JournalArticle",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.journal.model.JournalArticle",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_STAGING",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Regular Role");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
+
+		WebContent.moveToRecycleBinCP(webContentTitle = "WC WebContent Title");
+	}
+
 	@description = "This test covers LPS-151760. It ensures that an image can be downloaded and deleted in a staged asset library by a user with permissions."
 	@priority = 4
 	test CanDownloadAndDeleteImage {
@@ -108,62 +164,6 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
 
 		DMDocument.viewDefault();
-	}
-
-	@description = "This test ensures that a basic article can be deleted in a staged asset library by a user with permissions."
-	@priority = 4
-	test CanDeleteWC {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Depot Name (Staging)",
-			site = "false",
-			title = "WC WebContent Title");
-
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "UPDATE",
-			resourceName = "com.liferay.journal.model.JournalArticle",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.journal.model.JournalArticle",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.depot.model.DepotEntry",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_STAGING",
-			resourceName = "com.liferay.depot.model.DepotEntry",
-			roleTitle = "Regular Role");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
-
-		WebContent.moveToRecycleBinCP(webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This test covers LPS-151756. It ensures that a user with permissions can add a document, edit an image and publish them to live in asset library. Skip the instance for performance improvement."

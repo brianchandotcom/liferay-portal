@@ -146,6 +146,95 @@ definition {
 			searchAssetType = "Wiki Page");
 	}
 
+	@description = "This ensures that a depot category can be selected in Category Navigation on a connected site."
+	@priority = 4
+	test CanSelectCategoryInCategoriesNavigation {
+		task ("Enable dynamic and manual selection") {
+			AssetPublisherPortlet.enableDynamicAndManualSelection();
+		}
+
+		for (var portletName : list "Asset Publisher,Category Filter") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Page Name",
+				widgetName = ${portletName});
+		}
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = ${categoryId},
+			content = "WC WebContent Content 1",
+			groupName = "Site Name",
+			title = "WC WebContent Title 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 2",
+			groupName = "Site Name",
+			title = "WC WebContent Title 2");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
+		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC WebContent Content 1",
+			assetTitle = "WC WebContent Title 1",
+			categoryName = "Category Name",
+			filteredByCategory = "true");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(
+			assetContent = "WC WebContent Content 2",
+			assetTitle = "WC WebContent Title 2");
+	}
+
+	@description = "This test covers LPS-131774 and LPS-131849. It ensures that a depot category can be viewed through details info on a connected site, and that a user cannot add a category to depot from the connected site."
+	@priority = 4
+	test CategoryCanBeViewedFromInfoPanelAndCannotBeAddedFromConnectedSite {
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "apple",
+			vocabularyName = "Vocabulary Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetCategoryIds = ${categoryId},
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.txt",
+			groupName = "Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMNavigator.openToAddEntry(
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		AssetCategorization.viewNoAddPermissions(vocabularyName = "Vocabulary Name");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.txt",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCategoriesInfo(categoryName = "apple");
+	}
+
 	@description = "This ensures that assets stored in a site can be searched by a depot category after disconnecting the site, that the depot category is not shown in Category Navigation, and that the depot vocabulary cannot be seen when creating assets from the disconnected site."
 	@priority = 3
 	test DepotCategoryAndVocabularyBehaviourOnDisconnectedSite {
@@ -273,95 +362,6 @@ definition {
 			wikiNodeName = "Main");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
-	}
-
-	@description = "This ensures that a depot category can be selected in Category Navigation on a connected site."
-	@priority = 4
-	test CanSelectCategoryInCategoriesNavigation {
-		task ("Enable dynamic and manual selection") {
-			AssetPublisherPortlet.enableDynamicAndManualSelection();
-		}
-
-		for (var portletName : list "Asset Publisher,Category Filter") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Page Name",
-				widgetName = ${portletName});
-		}
-
-		var categoryId = JSONCategory.addCategory(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONWebcontent.addWebContent(
-			assetCategoryIds = ${categoryId},
-			content = "WC WebContent Content 1",
-			groupName = "Site Name",
-			title = "WC WebContent Title 1");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content 2",
-			groupName = "Site Name",
-			title = "WC WebContent Title 2");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
-
-		CategoriesNavigationPortlet.selectCategoryPG(categoryName = "Category Name");
-
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "WC WebContent Content 1",
-			assetTitle = "WC WebContent Title 1",
-			categoryName = "Category Name",
-			filteredByCategory = "true");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(
-			assetContent = "WC WebContent Content 2",
-			assetTitle = "WC WebContent Title 2");
-	}
-
-	@description = "This test covers LPS-131774 and LPS-131849. It ensures that a depot category can be viewed through details info on a connected site, and that a user cannot add a category to depot from the connected site."
-	@priority = 4
-	test CategoryCanBeViewedFromInfoPanelAndCannotBeAddedFromConnectedSite {
-		var categoryId = JSONCategory.addCategory(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "apple",
-			vocabularyName = "Vocabulary Name");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			assetCategoryIds = ${categoryId},
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.txt",
-			groupName = "Site Name",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		DMNavigator.openToAddEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		AssetCategorization.viewNoAddPermissions(vocabularyName = "Vocabulary Name");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "Document_1.txt",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCategoriesInfo(categoryName = "apple");
 	}
 
 }

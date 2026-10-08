@@ -276,66 +276,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@description = "This test ensures that the same document can be shared by different users with sharing permissions."
-	@priority = 4
-	@refactordone
-	test CanShareSameDocumentByDifferentUsers {
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea2@liferay.com");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Test Depot Name",
-			guestPermissions = "false",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.jpg");
-
-		Asset.share(
-			sharingPermissions = "View",
-			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "userea@liferay.com");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoShareFromInfoPanel(dmDocumentTitle = "Document_1.jpg");
-
-		Asset.share(
-			sharingPermissions = "Update",
-			userEmailAddress = "userea2@liferay.com",
-			userName = "userfn2 userln2");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "userea2@liferay.com");
-
-		DMDocumentSharing.viewNoDuplicateDocument(dmDocumentTitle = "Document_1.jpg");
-	}
-
 	@description = "This test asserts that depot documents can be shared via the share action and the info panel, and that users get the proper notification based on depot sharing permissions granted to him."
 	@priority = 4
 	@refactordone
@@ -426,6 +366,66 @@ definition {
 			contentSharingPermission = "commenting",
 			contentTitle = "Document_3",
 			ownerName = "Test Test");
+	}
+
+	@description = "This test ensures that the same document can be shared by different users with sharing permissions."
+	@priority = 4
+	@refactordone
+	test CanShareSameDocumentByDifferentUsers {
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Depot Name",
+			guestPermissions = "false",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.jpg");
+
+		Asset.share(
+			sharingPermissions = "View",
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = PropsUtil.get("default.admin.password"),
+			userEmailAddress = "userea@liferay.com");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoShareFromInfoPanel(dmDocumentTitle = "Document_1.jpg");
+
+		Asset.share(
+			sharingPermissions = "Update",
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = PropsUtil.get("default.admin.password"),
+			userEmailAddress = "userea2@liferay.com");
+
+		DMDocumentSharing.viewNoDuplicateDocument(dmDocumentTitle = "Document_1.jpg");
 	}
 
 }

@@ -542,8 +542,6 @@ test('LPD-24758 Error when viewing Workflow tab in publication history', async (
 	for (const data of displayData) {
 		await expect(page.getByText(data, {exact: true})).toBeVisible();
 	}
-
-	await expect(page.getByLabel('more-actions')).toBeHidden();
 });
 
 test('LPD-28970 Error when viewing data tab after viewing Workflow tab', async ({

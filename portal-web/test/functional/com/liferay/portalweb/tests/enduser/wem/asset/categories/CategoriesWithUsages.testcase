@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-154273. The site designer can view number of usages on Categories admin."
+	@description = "This is a test for LPS-154273. The site designer can view number of usages on Categories admin for a site category used by a web content and for a global category used by a blogs entry, before and after moving the asset to recycle bin and deleting it."
 	@priority = 4
 	test ViewUsagesOfSiteAndGlobalCategories {
 		task ("Given a site designer has a web content with a category") {
@@ -94,12 +94,8 @@ definition {
 				tableEntry = "Category Name",
 				tableEntryInfo = 0);
 		}
-	}
 
-	@description = "This is a test for LPS-154273. The site designer can view number of usages on categories admin in global site."
-	@priority = 4
-	test ViewUsagesOfGlobalCategory {
-		task ("Given a site designer has a web content with a global category") {
+		task ("Given a site designer has a blogs entry with a global category") {
 			var categoryId = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "Category Name",
@@ -112,11 +108,11 @@ definition {
 				title = "Blogs Entry Title");
 		}
 
-		task ("When the site designer accesses to the Categories admin") {
+		task ("When the site designer accesses to the Categories admin in global site") {
 			Category.openCategoriesAdmin(siteURLKey = "global");
 		}
 
-		task ("Then the usage number of category is 1") {
+		task ("Then the usage number of global category is 1") {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Category Name",
@@ -131,7 +127,7 @@ definition {
 				entryTitle = "Blogs Entry Title");
 		}
 
-		task ("Then the usage number of category is 1") {
+		task ("Then the usage number of global category is 1") {
 			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			LexiconTable.viewTableEntryInfo(
@@ -148,7 +144,7 @@ definition {
 				assetType = "Blogs Entry");
 		}
 
-		task ("Then the usage number of category is 0") {
+		task ("Then the usage number of global category is 0") {
 			Category.openCategoriesAdmin(siteURLKey = "global");
 
 			LexiconTable.viewTableEntryInfo(

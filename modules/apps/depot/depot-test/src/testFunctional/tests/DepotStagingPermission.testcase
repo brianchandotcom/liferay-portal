@@ -50,7 +50,7 @@ definition {
 
 	@description = "This test ensures that an image can be deleted in a staged asset library by a user with permissions."
 	@priority = 4
-	test CanDeleteImage {
+	test CanDownloadAndDeleteImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",

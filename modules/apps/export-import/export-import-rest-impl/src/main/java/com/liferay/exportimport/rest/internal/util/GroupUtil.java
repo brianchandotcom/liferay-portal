@@ -63,7 +63,10 @@ public class GroupUtil {
 		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, companyId);
 
-		if ((group == null) || (!group.isCMS() && !group.isSite())) {
+		if ((group == null) ||
+			(!group.isCMS() && !group.isLayoutSetPrototype() &&
+			 !group.isSite())) {
+
 			throw new NotFoundException();
 		}
 
@@ -71,6 +74,10 @@ public class GroupUtil {
 	}
 
 	public static Group getStagingGroup(Group group) {
+		if (group.isLayoutSetPrototype()) {
+			throw new NotFoundException();
+		}
+
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 

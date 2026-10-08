@@ -33,6 +33,16 @@ create table Audit_AuditEvent (
 	userEmailAddress VARCHAR(75) null
 );
 
+create table Audit_AuditEventPseudonymField (
+	auditEventPseudonymFieldId LONG not null primary key,
+	companyId LONG,
+	createDate DATE null,
+	contextName VARCHAR(75) null,
+	name VARCHAR(75) null,
+	value VARCHAR(255) null,
+	valueHash VARCHAR(75) null
+);
+
 create table Audit_AuditPseudonym (
 	auditPseudonymId LONG not null primary key,
 	companyId LONG,

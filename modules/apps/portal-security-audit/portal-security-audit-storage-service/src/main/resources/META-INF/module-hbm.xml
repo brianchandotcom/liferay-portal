@@ -3,7 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.portal.security.audit.storage.model.AuditEvent" />
-	<import class="com.liferay.portal.security.audit.storage.model.AuditPseudonym" />
+	<import class="com.liferay.portal.security.audit.storage.model.AuditEventPseudonymField" />
 	<class name="com.liferay.portal.security.audit.storage.model.impl.AuditEventImpl" table="Audit_AuditEvent">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="auditEventId" type="long">
 			<generator class="assigned" />
@@ -40,14 +40,14 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userAgent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.portal.security.audit.storage.model.impl.AuditPseudonymImpl" table="Audit_AuditPseudonym">
-		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="auditPseudonymId" type="long">
+	<class name="com.liferay.portal.security.audit.storage.model.impl.AuditEventPseudonymFieldImpl" table="Audit_AuditEventPseudonymField">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="auditEventPseudonymFieldId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="timestamp" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="contextName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="fieldCategory" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="valueHash" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>

@@ -871,48 +871,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-101409. Validate if select a required category when entering the page name not based on a page template."
-	@priority = 5
-	test SelectRequiredCategoryInContentPageCreation {
-		property portal.acceptance = "true";
-
-		task ("Add a vocabulary with required for page") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addWithAssociatedAssetTypeCP(
-				assetType = "Page",
-				required = "true",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a content page and select a required category") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(
-				categoryName = "Category Name",
-				pageName = "Test Content Page Name",
-				vocabularyName = "Vocabulary Name");
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("View the new page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			AssertVisible(
-				key_itemName = "Test Content Page Name",
-				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
-		}
-	}
-
-	@description = "This is for LPS-101409. Validate if select a required category when entering the page name based on a page template. Also add a step to check adding page with category successfully via json."
+	@description = "This is for LPS-101409. Validate if select a required category when entering the page name of a widget page based on a page template and of a content page not based on a page template. Also add a step to check adding page with category successfully via json."
 	@priority = 5
 	test SelectRequiredCategoryInContentAndWidgetPageCreation {
 		property portal.acceptance = "true";
@@ -953,6 +912,25 @@ definition {
 
 			AssertVisible(
 				key_itemName = "Test Widget Page Name",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+		}
+
+		task ("Add a content page and select a required category") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				categoryName = "Category Name",
+				pageName = "Test Content Page Name",
+				vocabularyName = "Vocabulary Name");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View the new content page in Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			AssertVisible(
+				key_itemName = "Test Content Page Name",
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 

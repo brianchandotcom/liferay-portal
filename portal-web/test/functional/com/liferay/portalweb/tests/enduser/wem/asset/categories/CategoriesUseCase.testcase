@@ -102,61 +102,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-134960 When in Blogs, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
-	@priority = 4
-	test AddCategoryOfAnyVisibilityToBlogs {
-		task ("Create public vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Public Vocabulary Name");
-		}
-
-		task ("Add category to public vocabulary") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Public Category Name",
-				vocabularyName = "Public Vocabulary Name");
-		}
-
-		task ("Create internal vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addInternalVocabulary(vocabularyName = "Internal Vocabulary Name");
-		}
-
-		task ("Add categories to internal vocabulary") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Internal Category Name",
-				vocabularyName = "Internal Vocabulary Name");
-		}
-
-		task ("Create a new blog") {
-			HeadlessBlog.addBlogEntry(
-				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
-				title = "Blogs Entry Title");
-		}
-
-		task ("Add public and internal categories to Blogs") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
-
-			Blogs.expandPanel(panel = "Categorization");
-
-			AssetCategorization.addCategory(
-				categoryName = "Public Category Name",
-				vocabularyName = "Public Vocabulary Name");
-
-			AssetCategorization.addCategory(
-				categoryName = "Internal Category Name",
-				vocabularyName = "Internal Vocabulary Name");
-
-			PortletEntry.publish();
-		}
-	}
-
 	@description = "LPS-134960 When in Documents & Media, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
 	@priority = 4
 	test AddCategoryOfAnyVisibilityToDocsAndMedia {
@@ -214,7 +159,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-134960 When in Web Content, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
+	@description = "LPS-134960 When in Web Content or Blogs, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
 	@priority = 4
 	test AddCategoryOfAnyVisibilityToAssets {
 		task ("Create public vocabulary") {
@@ -264,6 +209,31 @@ definition {
 				vocabularyName = "Internal Vocabulary Name");
 
 			WebContent.publishExistingWCArticleWithPermissions();
+		}
+
+		task ("Create a new blog") {
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = "Test Site Name",
+				title = "Blogs Entry Title");
+		}
+
+		task ("Add public and internal categories to Blogs") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+			Blogs.expandPanel(panel = "Categorization");
+
+			AssetCategorization.addCategory(
+				categoryName = "Public Category Name",
+				vocabularyName = "Public Vocabulary Name");
+
+			AssetCategorization.addCategory(
+				categoryName = "Internal Category Name",
+				vocabularyName = "Internal Vocabulary Name");
+
+			PortletEntry.publish();
 		}
 	}
 

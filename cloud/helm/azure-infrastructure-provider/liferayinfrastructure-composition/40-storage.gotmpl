@@ -1,4 +1,4 @@
-{{- $storage := $xr.spec.storage | default dict -}}
+{{- $storage := $xr.spec.storage -}}
 
 {{- range $i, $dataPlane := $dataPlanes }}
 {{- $storageAccountName := index $storageAccountNames $dataPlane }}

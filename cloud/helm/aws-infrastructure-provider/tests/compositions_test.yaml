@@ -115,7 +115,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "\\$restore := \\$database.restore \\| default dict"
+                    pattern: "\\$restore := \\$database\\.restore \\| default dict"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template

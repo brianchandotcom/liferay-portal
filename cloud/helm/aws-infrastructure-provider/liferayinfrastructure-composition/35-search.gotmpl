@@ -48,7 +48,7 @@ spec:
                     environmentId: {{ $environmentId }}
                     projectId: {{ $projectId }}
             {{- end }}
-        engineVersion: {{ $opensearch.engineVersion | default "OpenSearch_2.15" | quote }}
+        engineVersion: {{ printf "OpenSearch_%s" $opensearch.version | quote }}
         logPublishingOptions:
             -   cloudwatchLogGroupArn: arn:{{ $env.partition }}:logs:{{ $env.region }}:{{ $env.accountId }}:log-group:{{ $searchName }}-audit-logs
                 enabled: true
@@ -60,7 +60,7 @@ spec:
             enabled: true
         region: {{ $env.region }}
         softwareUpdateOptions:
-            autoSoftwareUpdateEnabled: {{ $opensearch.autoSoftwareUpdateEnabled }}
+            autoSoftwareUpdateEnabled: true
         tags:
             Name: {{ $searchName }}
         vpcOptions:

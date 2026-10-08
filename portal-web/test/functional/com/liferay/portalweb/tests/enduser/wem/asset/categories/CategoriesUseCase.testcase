@@ -320,54 +320,6 @@ definition {
 		}
 	}
 
-	@description = "Add a web content with required category."
-	@priority = 3
-	test AddWebContentWithRequiredCategory {
-		task ("Add a vocabulary for Web Content Article") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addWithAssociatedAssetTypeCP(
-				assetType = "Web Content Article",
-				required = "true",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Cannot add a web content without required category") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addFailWithoutRequiredCategoryAssetTypeCP(vocabularyName = "Vocabulary Name");
-		}
-
-		task ("View add a web content with required category") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addWithCategoryCP(
-				categoryName = "Category Name",
-				vocabularyName = "Vocabulary Name",
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("View the category is assigned to web content") {
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.viewCategorizationCategoryCP(
-				categoryNameList = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-	}
-
 	@description = "Add a web content with a specific type category."
 	@priority = 3
 	test AddWebContentWithSpecificTypeCategory {
@@ -1203,7 +1155,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-131984. View vocabulary for specific Asset Types in asset editor."
+	@description = "This is a test for LPS-131984. View vocabulary for specific Asset Types in asset editor. A web content cannot be added without the required category, and the category is assigned once selected."
 	@priority = 4
 	test ViewRequiredVocabularyForSpecificAssetTypesInAssetEditor {
 		task ("Add a vocabulary for specific assets types") {
@@ -1243,6 +1195,14 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
+		task ("Cannot add a web content without required category") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addFailWithoutRequiredCategoryAssetTypeCP(vocabularyName = "Vocabulary Name");
+		}
+
 		task ("View the vocabulary in web content editor") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1253,6 +1213,14 @@ definition {
 				vocabularyName = "Vocabulary Name",
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the category is assigned to web content") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.viewCategorizationCategoryCP(
+				categoryNameList = "Category Name",
+				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add a widget page") {

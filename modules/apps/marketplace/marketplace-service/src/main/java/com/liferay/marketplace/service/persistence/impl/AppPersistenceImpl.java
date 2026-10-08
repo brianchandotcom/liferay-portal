@@ -248,88 +248,6 @@ public class AppPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<App, NoSuchAppException>
-		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns an ordered range of all the apps where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of apps
-	 * @param end the upper bound of the range of apps (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching apps
-	 */
-	@Override
-	public List<App> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<App> orderByComparator, boolean useFinderCache) {
-
-		return _collectionPersistenceFinderByCompanyId.find(
-			finderCache, new Object[] {companyId}, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first app in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching app
-	 * @throws NoSuchAppException if a matching app could not be found
-	 */
-	@Override
-	public App findByCompanyId_First(
-			long companyId, OrderByComparator<App> orderByComparator)
-		throws NoSuchAppException {
-
-		return _collectionPersistenceFinderByCompanyId.findFirst(
-			finderCache, new Object[] {companyId}, orderByComparator);
-	}
-
-	/**
-	 * Returns the first app in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching app, or <code>null</code> if a matching app could not be found
-	 */
-	@Override
-	public App fetchByCompanyId_First(
-		long companyId, OrderByComparator<App> orderByComparator) {
-
-		return _collectionPersistenceFinderByCompanyId.fetchFirst(
-			finderCache, new Object[] {companyId}, orderByComparator);
-	}
-
-	/**
-	 * Removes all the apps where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 */
-	@Override
-	public void removeByCompanyId(long companyId) {
-		_collectionPersistenceFinderByCompanyId.remove(
-			finderCache, new Object[] {companyId});
-	}
-
-	/**
-	 * Returns the number of apps where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the number of matching apps
-	 */
-	@Override
-	public int countByCompanyId(long companyId) {
-		return _collectionPersistenceFinderByCompanyId.count(
-			finderCache, new Object[] {companyId});
-	}
-
 	private UniquePersistenceFinder<App, NoSuchAppException>
 		_uniquePersistenceFinderByRemoteAppId;
 
@@ -729,31 +647,6 @@ public class AppPersistenceImpl
 					"app.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, App::getCompanyId));
 
-		_collectionPersistenceFinderByCompanyId =
-			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, false),
-				_SQL_SELECT_APP_WHERE, _SQL_COUNT_APP_WHERE,
-				AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
-				new FinderColumn<>(
-					"app.", "companyId", FinderColumn.Type.LONG, "=", true,
-					true, App::getCompanyId));
-
 		_uniquePersistenceFinderByRemoteAppId = new UniquePersistenceFinder<>(
 			this,
 			createUniqueFinderPath(
@@ -852,4 +745,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:903752799
+// LIFERAY-SERVICE-BUILDER-HASH:376263736

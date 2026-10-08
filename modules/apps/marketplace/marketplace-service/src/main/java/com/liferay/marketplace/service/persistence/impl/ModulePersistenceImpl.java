@@ -329,90 +329,6 @@ public class ModulePersistenceImpl
 	}
 
 	private CollectionPersistenceFinder<Module, NoSuchModuleException>
-		_collectionPersistenceFinderByBundleSymbolicName;
-
-	/**
-	 * Returns an ordered range of all the modules where bundleSymbolicName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching modules
-	 */
-	@Override
-	public List<Module> findByBundleSymbolicName(
-		String bundleSymbolicName, int start, int end,
-		OrderByComparator<Module> orderByComparator, boolean useFinderCache) {
-
-		return _collectionPersistenceFinderByBundleSymbolicName.find(
-			finderCache, new Object[] {bundleSymbolicName}, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	@Override
-	public Module findByBundleSymbolicName_First(
-			String bundleSymbolicName,
-			OrderByComparator<Module> orderByComparator)
-		throws NoSuchModuleException {
-
-		return _collectionPersistenceFinderByBundleSymbolicName.findFirst(
-			finderCache, new Object[] {bundleSymbolicName}, orderByComparator);
-	}
-
-	/**
-	 * Returns the first module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching module, or <code>null</code> if a matching module could not be found
-	 */
-	@Override
-	public Module fetchByBundleSymbolicName_First(
-		String bundleSymbolicName,
-		OrderByComparator<Module> orderByComparator) {
-
-		return _collectionPersistenceFinderByBundleSymbolicName.fetchFirst(
-			finderCache, new Object[] {bundleSymbolicName}, orderByComparator);
-	}
-
-	/**
-	 * Removes all the modules where bundleSymbolicName = &#63; from the database.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 */
-	@Override
-	public void removeByBundleSymbolicName(String bundleSymbolicName) {
-		_collectionPersistenceFinderByBundleSymbolicName.remove(
-			finderCache, new Object[] {bundleSymbolicName});
-	}
-
-	/**
-	 * Returns the number of modules where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @return the number of matching modules
-	 */
-	@Override
-	public int countByBundleSymbolicName(String bundleSymbolicName) {
-		return _collectionPersistenceFinderByBundleSymbolicName.count(
-			finderCache, new Object[] {bundleSymbolicName});
-	}
-
-	private CollectionPersistenceFinder<Module, NoSuchModuleException>
 		_collectionPersistenceFinderByContextName;
 
 	/**
@@ -926,35 +842,6 @@ public class ModulePersistenceImpl
 				"module.", "appId", FinderColumn.Type.LONG, "=", true, true,
 				Module::getAppId));
 
-		_collectionPersistenceFinderByBundleSymbolicName =
-			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					"findByBundleSymbolicName",
-					new String[] {
-						String.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"bundleSymbolicName"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByBundleSymbolicName",
-					new String[] {String.class.getName()},
-					new String[] {"bundleSymbolicName"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByBundleSymbolicName",
-					new String[] {String.class.getName()},
-					new String[] {"bundleSymbolicName"}, 0, 1, false, null),
-				_SQL_SELECT_MODULE_WHERE, _SQL_COUNT_MODULE_WHERE,
-				ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
-				null,
-				new FinderColumn<>(
-					"module.", "bundleSymbolicName", FinderColumn.Type.STRING,
-					"=", true, true, Module::getBundleSymbolicName));
-
 		_collectionPersistenceFinderByContextName =
 			new CollectionPersistenceFinder<>(
 				this,
@@ -1094,4 +981,4 @@ public class ModulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1396801744
+// LIFERAY-SERVICE-BUILDER-HASH:-1425431534

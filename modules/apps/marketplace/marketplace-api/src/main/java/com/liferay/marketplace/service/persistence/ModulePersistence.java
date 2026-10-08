@@ -220,67 +220,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public int countByAppId(long appId);
 
 	/**
-	 * Returns an ordered range of all the modules where bundleSymbolicName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching modules
-	 */
-	public java.util.List<Module> findByBundleSymbolicName(
-		String bundleSymbolicName, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Returns the first module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching module
-	 * @throws NoSuchModuleException if a matching module could not be found
-	 */
-	public Module findByBundleSymbolicName_First(
-			String bundleSymbolicName,
-			com.liferay.portal.kernel.util.OrderByComparator<Module>
-				orderByComparator)
-		throws NoSuchModuleException;
-
-	/**
-	 * Returns the first module in the ordered set where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public Module fetchByBundleSymbolicName_First(
-		String bundleSymbolicName,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator);
-
-	/**
-	 * Removes all the modules where bundleSymbolicName = &#63; from the database.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 */
-	public void removeByBundleSymbolicName(String bundleSymbolicName);
-
-	/**
-	 * Returns the number of modules where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @return the number of matching modules
-	 */
-	public int countByBundleSymbolicName(String bundleSymbolicName);
-
-	/**
 	 * Returns an ordered range of all the modules where contextName = &#63;.
 	 *
 	 * <p>
@@ -667,62 +606,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	}
 
 	/**
-	 * Returns all the modules where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @return the matching modules
-	 */
-	public default java.util.List<Module> findByBundleSymbolicName(
-		String bundleSymbolicName) {
-
-		return findByBundleSymbolicName(
-			bundleSymbolicName,
-			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
-			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
-	}
-
-	/**
-	 * Returns a range of all the modules where bundleSymbolicName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @return the range of matching modules
-	 */
-	public default java.util.List<Module> findByBundleSymbolicName(
-		String bundleSymbolicName, int start, int end) {
-
-		return findByBundleSymbolicName(
-			bundleSymbolicName, start, end, null, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the modules where bundleSymbolicName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching modules
-	 */
-	public default java.util.List<Module> findByBundleSymbolicName(
-		String bundleSymbolicName, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Module>
-			orderByComparator) {
-
-		return findByBundleSymbolicName(
-			bundleSymbolicName, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns all the modules where contextName = &#63;.
 	 *
 	 * @param contextName the context name
@@ -835,4 +718,4 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1434594591
+// LIFERAY-SERVICE-BUILDER-HASH:-1495180408

@@ -140,6 +140,17 @@ public class ArrayableFinderColumn<T extends BaseModel<T>>
 		return StringUtil.merge(array);
 	}
 
+	@Override
+	protected boolean isBlankEquality(Object normalizedValue) {
+		if ((normalizedValue instanceof String[] strings) &&
+			(strings.length == 1)) {
+
+			return super.isBlankEquality(strings[0]);
+		}
+
+		return false;
+	}
+
 	private String _buildStringSqlFragment(String[] strings, boolean sqlQuery) {
 		String closeWithJoiner = _andOperator ? ") AND " : ") OR ";
 

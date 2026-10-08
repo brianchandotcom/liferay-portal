@@ -57,6 +57,13 @@ public class FinderColumn<T extends BaseModel<T>> {
 			hqlNull = null;
 		}
 
+		if ((type == Type.STRING) && convertNull && comparator.equals("=")) {
+			hqlBlank = StringBundler.concat(entityAlias, columnName, " = ''");
+		}
+		else {
+			hqlBlank = null;
+		}
+
 		if (comparator.equals("<>") || comparator.equals("!=")) {
 			hqlIsNull = entityAlias + columnName + " IS NOT NULL";
 		}
@@ -68,11 +75,13 @@ public class FinderColumn<T extends BaseModel<T>> {
 			sqlBind = hqlBind;
 			sqlIsNull = hqlIsNull;
 			sqlNull = hqlNull;
+			sqlBlank = hqlBlank;
 		}
 		else {
 			sqlBind = StringUtil.replace(hqlBind, columnName, dbColumnName);
 			sqlIsNull = StringUtil.replace(hqlIsNull, columnName, dbColumnName);
 			sqlNull = StringUtil.replace(hqlNull, columnName, dbColumnName);
+			sqlBlank = StringUtil.replace(hqlBlank, columnName, dbColumnName);
 		}
 	}
 
@@ -275,12 +284,22 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	}
 
+	protected boolean isBlankEquality(Object normalizedValue) {
+		if ((hqlBlank != null) && Objects.equals(normalizedValue, "")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected final boolean caseSensitive;
 	protected final boolean convertNull;
 	protected final String hqlBind;
+	protected final String hqlBlank;
 	protected final String hqlIsNull;
 	protected final String hqlNull;
 	protected final String sqlBind;
+	protected final String sqlBlank;
 	protected final String sqlIsNull;
 	protected final String sqlNull;
 	protected final Type type;

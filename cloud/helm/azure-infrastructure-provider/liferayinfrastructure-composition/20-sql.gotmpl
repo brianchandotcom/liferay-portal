@@ -21,7 +21,6 @@ metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: database-primary-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
         dataPlaneKey: {{ index $dataPlaneKeys $dataPlane }}
     name: {{ $databaseServerName }}
@@ -65,8 +64,8 @@ spec:
         skuName: {{ $database.instanceType | default "GP_Standard_D2s_v3" }}
         storageMb: {{ mul ($database.storageGB | default 32) 1024 }}
         tags:
-            {{- $backupTargetTags | toYaml | nindent 12 }}
             active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
+            should-back-up: "true"
         version: {{ $database.version | default "16" | quote }}
     {{- if $isDatabaseRestoreTarget }}
     initProvider:
@@ -83,7 +82,6 @@ metadata:
         crossplane.io/external-name: {{ $databaseName }}
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-db-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
     name: {{ $xr.metadata.name }}-db-{{ $dataPlane }}
 spec:
@@ -107,7 +105,6 @@ metadata:
         crossplane.io/external-name: {{ $retainedDatabaseServerName }}
         gotemplating.fn.crossplane.io/composition-resource-name: database-retained-{{ $retainedDataPlaneKey }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         retainedDataPlane: {{ $retainedDataPlaneKey }}
     name: {{ $retainedDatabaseServerName }}-retained
 spec:

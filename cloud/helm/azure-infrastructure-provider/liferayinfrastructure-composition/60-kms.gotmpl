@@ -6,8 +6,6 @@ kind: RoleAssignment
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-cmk-role-assignment
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $xr.metadata.name }}-cmk-encryption-user
 spec:
     forProvider:
@@ -26,8 +24,6 @@ kind: Key
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-key
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $baseName }}-key
 spec:
     forProvider:
@@ -46,8 +42,6 @@ kind: Vault
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-key-vault
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $keyVaultName }}
 spec:
     forProvider:
@@ -56,8 +50,6 @@ spec:
         rbacAuthorizationEnabled: true
         resourceGroupName: {{ $env.resourceGroupName }}
         skuName: standard
-        tags:
-            {{- $tags | toYaml | nindent 12 }}
         tenantId: {{ $env.tenantId }}
     managementPolicies: {{ $managementPolicies }}
 ---
@@ -66,16 +58,12 @@ kind: UserAssignedIdentity
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-cmk-identity
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $baseName }}-cmk
 spec:
     forProvider:
         location: {{ $region }}
         name: {{ $baseName }}-cmk
         resourceGroupName: {{ $env.resourceGroupName }}
-        tags:
-            {{- $tags | toYaml | nindent 12 }}
     managementPolicies: {{ $managementPolicies }}
     providerConfigRef:
         kind: ClusterProviderConfig

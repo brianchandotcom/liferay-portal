@@ -77,6 +77,16 @@ tests:
         it: Implements the shared Liferay APIs through the packaged function pipeline
     -   asserts:
             -   documentIndex: 0
+                equal:
+                    path: spec.pipeline[2].input.addTags[0].fromFieldPath
+                    value: defaultTags
+            -   documentIndex: 1
+                equal:
+                    path: spec.pipeline[2].input.addTags[0].fromFieldPath
+                    value: defaultTags
+        it: Lets the derived tags win over the common tags
+    -   asserts:
+            -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "scheduleExpressionTimezone: \\{\\{ \\$backup\\.timeZone \\| default \"UTC\" \\| quote \\}\\}"
@@ -93,6 +103,12 @@ tests:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "key: aws:ResourceTag/Active\\s+value: \"true\"\\s+-\\s+key: aws:ResourceTag/Backup\\s+value: \"true\"\\s+-\\s+key: aws:ResourceTag/DeploymentName\\s+value: \\{\\{ \\$env\\.deploymentName \\}\\}\\s+-\\s+key: aws:ResourceTag/EnvironmentId\\s+value: \\{\\{ \\$environmentId \\}\\}\\s+-\\s+key: aws:ResourceTag/ProjectId\\s+value: \\{\\{ \\$projectId \\}\\}"
         it: Selects only the active resources of this environment for backup
+    -   asserts:
+            -   documentIndex: 0
+                matchRegex:
+                    path: spec.pipeline[1].input.inline.template
+                    pattern: "tags:\\s+\\{\\{- with \\$storage\\.tags \\}\\}\\s+\\{\\{- \\. \\| toYaml \\| nindent 12 \\}\\}\\s+\\{\\{- end \\}\\}\\s+Active: [^\\n]+\\s+Backup: \"true\""
+        it: Tags each bucket with its backup selection over the custom storage tags
     -   asserts:
             -   documentIndex: 0
                 matchRegex:

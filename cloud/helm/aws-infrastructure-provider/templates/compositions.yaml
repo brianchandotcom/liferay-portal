@@ -48,10 +48,10 @@ spec:
                 name: function-tag-manager
             input:
                 addTags:
-                    -   fromFieldPath: spec.commonTags
-                        type: FromCompositeFieldPath
                     -   fromFieldPath: defaultTags
                         type: FromEnvironmentFieldPath
+                    -   fromFieldPath: spec.commonTags
+                        type: FromCompositeFieldPath
                 apiVersion: tag-manager.fn.crossplane.io/v1beta1
                 kind: ManagedTags
             step: apply-default-tags

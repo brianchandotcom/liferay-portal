@@ -45,6 +45,17 @@ spec:
                 source: Inline
             step: go-templating
         -   functionRef:
+                name: function-tag-manager
+            input:
+                addTags:
+                    -   fromFieldPath: defaultTags
+                        type: FromEnvironmentFieldPath
+                    -   fromFieldPath: spec.commonTags
+                        type: FromCompositeFieldPath
+                apiVersion: tag-manager.fn.crossplane.io/v1beta1
+                kind: ManagedTags
+            step: apply-default-tags
+        -   functionRef:
                 name: function-auto-ready
             step: auto-detect-ready-composed-resources
 {{- end }}

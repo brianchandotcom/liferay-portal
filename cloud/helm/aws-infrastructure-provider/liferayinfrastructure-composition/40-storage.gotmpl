@@ -25,12 +25,12 @@ spec:
         forceDestroy: {{ $forceDestroy }}
         region: {{ $storageRegion }}
         tags:
-            Active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
-            Backup: "true"
-            Name: {{ $storageName }}-{{ $dataPlane }}
             {{- with $storage.tags }}
             {{- . | toYaml | nindent 12 }}
             {{- end }}
+            Active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
+            Backup: "true"
+            Name: {{ $storageName }}-{{ $dataPlane }}
     managementPolicies: {{ $managementPolicies }}
 ---
 apiVersion: s3.aws.m.upbound.io/v1beta1

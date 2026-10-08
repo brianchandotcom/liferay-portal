@@ -14,8 +14,6 @@ kind: Object
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: database-bootstrap-service-account
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $baseName }}-database-bootstrap-service-account
 spec:
     forProvider:
@@ -25,8 +23,6 @@ spec:
             metadata:
                 annotations:
                     azure.workload.identity/client-id: {{ dig "database-bootstrap-identity" "resource" "status" "atProvider" "clientId" "" $observedResources }}
-                labels:
-                    {{- $tags | toYaml | nindent 20 }}
                 name: database-bootstrap
                 namespace: {{ $namespace }}
     managementPolicies: {{ $managementPolicies }}
@@ -36,8 +32,6 @@ kind: Object
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: database-bootstrap-job
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $baseName }}-database-bootstrap-job
 spec:
     forProvider:
@@ -45,8 +39,6 @@ spec:
             apiVersion: batch/v1
             kind: Job
             metadata:
-                labels:
-                    {{- $tags | toYaml | nindent 20 }}
                 name: {{ $baseName }}-database-bootstrap
                 namespace: {{ $namespace }}
             spec:

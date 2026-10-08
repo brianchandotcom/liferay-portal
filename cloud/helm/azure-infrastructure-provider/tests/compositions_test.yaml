@@ -281,6 +281,9 @@ tests:
                     value: function-go-templating
             -   equal:
                     path: spec.pipeline[2].functionRef.name
+                    value: function-tag-manager
+            -   equal:
+                    path: spec.pipeline[3].functionRef.name
                     value: function-auto-ready
             -   hasDocuments:
                     count: 2
@@ -375,6 +378,16 @@ tests:
                     path: spec.pipeline[1].input.inline.template
                     pattern: "softDelete: \"On\""
         it: Lets forceDestroy disable vault soft delete so the vault can be destroyed
+    -   asserts:
+            -   documentIndex: 0
+                equal:
+                    path: spec.pipeline[2].input.addTags[0].fromFieldPath
+                    value: defaultTags
+            -   documentIndex: 1
+                equal:
+                    path: spec.pipeline[2].input.addTags[0].fromFieldPath
+                    value: defaultTags
+        it: Lets the derived tags win over the common tags
     -   asserts:
             -   documentIndex: 0
                 matchRegex:
@@ -639,7 +652,7 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "kind: CronWorkflow\\s+metadata:\\s+labels:\\s+\\{\\{- \\$tags \\| toYaml \\| nindent 20 \\}\\}\\s+name: backup-restore-release-cron-workflow\\s+namespace: \\{\\{ \\$namespace \\}\\}"
+                    pattern: "kind: CronWorkflow\\s+metadata:\\s+name: backup-restore-release-cron-workflow\\s+namespace: \\{\\{ \\$namespace \\}\\}"
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
@@ -751,8 +764,8 @@ tests:
             -   documentIndex: 0
                 matchRegex:
                     path: spec.pipeline[1].input.inline.template
-                    pattern: "tags:\\s+\\{\\{- merge \\(dict\\) \\$backupTargetTags [^\\n]+\\s+active: [^\\n]+\\s+data-plane: \\{\\{ \\$dataPlane \\}\\}"
-        it: Tags each storage account with its data plane
+                    pattern: "tags:\\s+\\{\\{- with \\$storage\\.tags \\}\\}\\s+\\{\\{- \\. \\| toYaml \\| nindent 12 \\}\\}\\s+\\{\\{- end \\}\\}\\s+active: [^\\n]+\\s+data-plane: \\{\\{ \\$dataPlane \\}\\}\\s+should-back-up: \"true\""
+        it: Tags each storage account with its data plane over the custom storage tags
     -   asserts:
             -   documentIndex: 0
                 matchRegex:

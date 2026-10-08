@@ -33,7 +33,6 @@ metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-vault-storage-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
     name: {{ $backupVaultName }}-storage-{{ $dataPlane }}
 spec:
@@ -57,7 +56,6 @@ metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-database-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
     name: {{ $backupRestoreIdentityName }}-database-{{ $dataPlane }}
 spec:
@@ -80,7 +78,6 @@ metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-database-retained-{{ $retainedDataPlaneKey }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         retainedDataPlane: {{ $retainedDataPlaneKey }}
     name: {{ $backupRestoreIdentityName }}-database-retained-{{ $retainedDataPlaneKey }}
 spec:
@@ -103,7 +100,6 @@ metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-storage-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
     name: {{ $backupRestoreIdentityName }}-storage-{{ $dataPlane }}
 spec:
@@ -123,7 +119,6 @@ metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-storage-reader-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
     name: {{ $backupRestoreIdentityName }}-storage-reader-{{ $dataPlane }}
 spec:
@@ -143,8 +138,6 @@ kind: RoleAssignment
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-vault-backup-contributor
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $backupRestoreIdentityName }}-vault-backup-contributor
 spec:
     forProvider:
@@ -162,8 +155,6 @@ kind: RoleAssignment
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-vault-reader
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $backupRestoreIdentityName }}-vault-reader
 spec:
     forProvider:
@@ -186,7 +177,6 @@ metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-instance-storage-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
         dataPlaneKey: {{ index $dataPlaneKeys $dataPlane }}
     name: {{ index $dataPlaneNames (index $dataPlaneKeys $dataPlane) "backupInstance" }}
@@ -219,7 +209,6 @@ metadata:
         crossplane.io/external-name: {{ $retainedBackupInstanceName }}
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-instance-retained-{{ $retainedDataPlaneKey }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         retainedDataPlane: {{ $retainedDataPlaneKey }}
     name: {{ $retainedBackupInstanceName }}-retained
 spec:
@@ -234,8 +223,6 @@ kind: BackupPolicyBlobStorage
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-policy-storage-{{ $backupScheduleHash }}
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $backupPolicyStorageName }}
 spec:
     forProvider:
@@ -252,8 +239,6 @@ kind: BackupVault
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-vault
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $backupVaultName }}
 spec:
     forProvider:
@@ -265,8 +250,10 @@ spec:
         resourceGroupName: {{ $env.resourceGroupName }}
         retentionDurationInDays: 14
         softDelete: {{ $forceDestroy | ternary "Off" "On" | quote }}
+        {{- with $backup.vaultTags }}
         tags:
-            {{- merge (dict) $tags ($backup.vaultTags | default dict) | toYaml | nindent 12 }}
+            {{- . | toYaml | nindent 12 }}
+        {{- end }}
     managementPolicies: {{ $managementPolicies }}
 ---
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
@@ -274,8 +261,6 @@ kind: Object
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-release-cron-workflow
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $baseName }}-backup-restore-release-cron-workflow
 spec:
     forProvider:
@@ -283,8 +268,6 @@ spec:
             apiVersion: argoproj.io/v1alpha1
             kind: CronWorkflow
             metadata:
-                labels:
-                    {{- $tags | toYaml | nindent 20 }}
                 name: backup-restore-release-cron-workflow
                 namespace: {{ $namespace }}
             spec:
@@ -314,8 +297,6 @@ kind: Object
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-role-binding
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $baseName }}-backup-restore-role-binding
 spec:
     forProvider:
@@ -323,8 +304,6 @@ spec:
             apiVersion: rbac.authorization.k8s.io/v1
             kind: RoleBinding
             metadata:
-                labels:
-                    {{- $tags | toYaml | nindent 20 }}
                 name: backup-restore-role-binding
                 namespace: {{ $namespace }}
             roleRef:
@@ -343,8 +322,6 @@ kind: Object
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-service-account
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $baseName }}-backup-restore-service-account
 spec:
     forProvider:
@@ -354,8 +331,6 @@ spec:
             metadata:
                 annotations:
                     azure.workload.identity/client-id: {{ $backupRestoreIdentityClientId }}
-                labels:
-                    {{- $tags | toYaml | nindent 20 }}
                 name: backup-restore-service-account
                 namespace: {{ $namespace }}
     managementPolicies: {{ $managementPolicies }}
@@ -366,8 +341,6 @@ kind: FederatedIdentityCredential
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-identity-federation
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $backupRestoreIdentityName }}-federation
 spec:
     forProvider:
@@ -388,16 +361,12 @@ kind: UserAssignedIdentity
 metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-backup-restore-identity
-    labels:
-        {{- $tags | toYaml | nindent 8 }}
     name: {{ $backupRestoreIdentityName }}
 spec:
     forProvider:
         location: {{ $region }}
         name: {{ $backupRestoreIdentityName }}
         resourceGroupName: {{ $env.resourceGroupName }}
-        tags:
-            {{- $tags | toYaml | nindent 12 }}
     managementPolicies: {{ $managementPolicies }}
     providerConfigRef:
         kind: ClusterProviderConfig

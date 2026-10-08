@@ -11,7 +11,6 @@ metadata:
     annotations:
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-storage-account-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
         dataPlaneKey: {{ index $dataPlaneKeys $dataPlane }}
     name: {{ $storageAccountName }}
@@ -40,9 +39,12 @@ spec:
         resourceGroupName: {{ $env.resourceGroupName }}
         sharedAccessKeyEnabled: true
         tags:
-            {{- merge (dict) $backupTargetTags ($storage.tags | default dict) | toYaml | nindent 12 }}
+            {{- with $storage.tags }}
+            {{- . | toYaml | nindent 12 }}
+            {{- end }}
             active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}
             data-plane: {{ $dataPlane }}
+            should-back-up: "true"
     managementPolicies: {{ $managementPolicies }}
     writeConnectionSecretToRef:
         name: liferay-storage-{{ $dataPlane }}-credentials
@@ -55,7 +57,6 @@ metadata:
         crossplane.io/external-name: document-library
         gotemplating.fn.crossplane.io/composition-resource-name: liferay-storage-container-{{ $dataPlane }}
     labels:
-        {{- $tags | toYaml | nindent 8 }}
         dataPlane: {{ $dataPlane }}
     name: {{ $storageAccountName }}-document-library
 spec:

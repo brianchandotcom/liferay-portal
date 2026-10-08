@@ -187,46 +187,6 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a document in a site can be copied to the depot when connected, but not when unconnected."
-	@priority = 5
-	test CanCopyDocumentFromConnectedSiteToDepotAndCannotFromUnconnectedSite {
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpeg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.copy(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document Title",
-			homeFolder = "true");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
-
-		JSONDepot.disconnectSite(groupName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Copy To",
-			rowEntry = "DM Document Title");
-
-		Button.clickSelect();
-
-		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
-
-		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
-	}
-
 	@description = "This ensures that a document in a depot can be copied to a site when connected, but not when unconnected."
 	@priority = 5
 	test CanCopyDocumentFromDepotToConnectedSiteAndCannotToUnconnectedSite {
@@ -278,7 +238,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title 2");
 	}
 
-	@description = "This ensures that a folder in a site can be copied to the depot when connected, but not when unconnected."
+	@description = "This ensures that a document and a folder in a site can be copied to the depot when connected, but not when unconnected."
 	@priority = 5
 	test CanCopyDocumentAndFolderFromConnectedSiteToDepotAndCannotFromUnconnectedSite {
 		JSONDepot.connectSite(
@@ -298,6 +258,13 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMFolder.copy(
@@ -305,9 +272,18 @@ definition {
 			dmFolderName = "DM Folder Name",
 			homeFolder = "true");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.copy(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true");
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
 
 		DepotNavigator.openToDMFolder(
 			depotName = "Test Depot Name",
@@ -322,6 +298,18 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Copy To",
 			rowEntry = "DM Folder Name");
+
+		Button.clickSelect();
+
+		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
+
+		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Copy To",
+			rowEntry = "DM Document Title");
 
 		Button.clickSelect();
 

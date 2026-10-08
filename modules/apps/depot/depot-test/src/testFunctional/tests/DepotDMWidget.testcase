@@ -100,7 +100,7 @@ definition {
 
 	@description = "This ensures that assets stored in the asset library folder can be edited via DM widget on a connected site, and that the assets are no longer displayed in the DM widget once the site is disconnected."
 	@priority = 5
-	test CanEditAssetAndCannotViewAfterDisconnectingFromSiteWidget {
+	test CanAccessSubfolderAndEditAssetAndCannotViewAfterDisconnectingFromSiteWidget {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "Depot Folder Name",

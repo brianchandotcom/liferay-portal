@@ -1049,9 +1049,9 @@ public class CompanyLocalServiceDBPartitionTest
 
 			// Reverse order to generate different class name IDs
 
-			_classNameLocalService.addClassName(_CLASS_NAME_2);
+			_classNameLocalService.getClassName(_CLASS_NAME_2);
 
-			_classNameLocalService.addClassName(_CLASS_NAME_1);
+			_classNameLocalService.getClassName(_CLASS_NAME_1);
 
 			_counter = _counterLocalService.increment(
 				CompanyLocalServiceDBPartitionTest.class.getName());

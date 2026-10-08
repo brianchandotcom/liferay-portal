@@ -55,93 +55,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a document with a custom field from depot can be published, deleted and republished in the site when enabling local staging. Skip the instance for performance improvement."
-	@priority = 4
-	@refactordone
-	test CanPublishAndDeleteDocumentWithCustomField {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		CustomFields.openCustomFieldAdmin();
-
-		CustomFields.addCP(
-			customFieldName = "Text Field",
-			customFieldType = "Input Field",
-			customInputDataType = "Text",
-			resourceName = "Document");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DMDocument.addCP(
-			customFieldText = "This is my document",
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name (Staging)",
-			layoutName = "Test Page",
-			site = "false",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "DM Document Title",
-			assetType = "Basic Document",
-			depotName = "Test Depot Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		DMDocument.viewPGViaAP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		DMDocument.viewPGViaAP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title");
-	}
-
 	@description = "This ensures that the image in depot can be removed and republished in open graph when enabling local staging."
 	@priority = 4
 	@refactordone
@@ -575,6 +488,62 @@ definition {
 		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
 	}
 
+	@description = "This ensures that a document pending review in depot can be neither selected nor searched for in a staged site when enabling local staging."
+	@priority = 4
+	@refactordone
+	test CanNotFindPendingDocumentInItemSelectorOrSearch {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name-staging");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.configureFilterViaSelectFile(
+			filterBy = "Everywhere",
+			navTab = "Documents and Media");
+
+		AssertElementPresent(
+			key_card = "DM Folder Name",
+			locator1 = "Card#CARD_TITLE");
+
+		AssertElementNotPresent(
+			key_card = "DM Document Title",
+			locator1 = "Card#CARD_TITLE");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		SearchPage.addWidgetsOnWidgetPageViaUI(searchPortletList = "Search Results,Search Bar");
+
+		SearchPage.searchWidget(searchTerm = "DM Document Title");
+
+		SearchResults.viewSearchResultNotPresent(
+			searchAssetTitle = "DM Document Title",
+			searchAssetType = "Document");
+	}
+
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling local staging."
 	@priority = 4
 	@refactordone
@@ -665,60 +634,91 @@ definition {
 			locator1 = "Card#CARD_TITLE");
 	}
 
-	@description = "This ensures that a document pending review in depot can be neither selected nor searched for in a staged site when enabling local staging."
+	@description = "This ensures that a document with a custom field from depot can be published, deleted and republished in the site when enabling local staging. Skip the instance for performance improvement."
 	@priority = 4
 	@refactordone
-	test CanNotFindPendingDocumentInItemSelectorOrSearch {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name-staging");
+	test CanPublishAndDeleteDocumentWithCustomField {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		CustomFields.openCustomFieldAdmin();
+
+		CustomFields.addCP(
+			customFieldName = "Text Field",
+			customFieldType = "Input Field",
+			customInputDataType = "Text",
+			resourceName = "Document");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
-		DMFolder.configureWorkflowCP(
-			dmFolderName = "DM Folder Name",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addWithWorkflowCP(
+		DMDocument.addCP(
+			customFieldText = "This is my document",
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
-
-		BlogsNavigator.gotoSelectFile();
-
-		ItemSelector.configureFilterViaSelectFile(
-			filterBy = "Everywhere",
-			navTab = "Documents and Media");
-
-		AssertElementPresent(
-			key_card = "DM Folder Name",
-			locator1 = "Card#CARD_TITLE");
-
-		AssertElementNotPresent(
-			key_card = "DM Document Title",
-			locator1 = "Card#CARD_TITLE");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		SearchPage.addWidgetsOnWidgetPageViaUI(searchPortletList = "Search Results,Search Bar");
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "DM Document Title",
+			assetType = "Basic Document",
+			depotName = "Test Depot Name");
 
-		SearchPage.searchWidget(searchTerm = "DM Document Title");
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
-		SearchResults.viewSearchResultNotPresent(
-			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document");
+		DMDocument.viewPGViaAP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		DMDocument.viewPGViaAP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that assets stored in a depot can be published from the site DM widget when local staging is enabled."

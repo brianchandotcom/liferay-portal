@@ -54,8 +54,9 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 			_batchEngineTaskItemDelegate, "contextCompany",
 			CompanyLocalServiceUtil.getCompany(TestPropsValues.getCompanyId()));
 
+		_analyticsAdministratorUser = UserTestUtil.addUser();
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
-		_user = UserTestUtil.addUser();
+		_regularUser = UserTestUtil.addUser();
 	}
 
 	@After
@@ -83,17 +84,19 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 
 	private void _testReadWithAnalyticsAdministratorUser() throws Exception {
 		Role role = _roleLocalService.getRole(
-			_user.getCompanyId(), RoleConstants.ANALYTICS_ADMINISTRATOR);
+			_analyticsAdministratorUser.getCompanyId(),
+			RoleConstants.ANALYTICS_ADMINISTRATOR);
 
-		_userLocalService.addRoleUser(role.getRoleId(), _user.getUserId());
+		_userLocalService.addRoleUser(
+			role.getRoleId(), _analyticsAdministratorUser.getUserId());
 
-		UserTestUtil.setUser(_user);
+		UserTestUtil.setUser(_analyticsAdministratorUser);
 
 		Assert.assertNotNull(_read());
 	}
 
 	private void _testReadWithRegularUser() throws Exception {
-		UserTestUtil.setUser(_user);
+		UserTestUtil.setUser(_regularUser);
 
 		try {
 			_read();
@@ -105,6 +108,9 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 		}
 	}
 
+	@DeleteAfterTestRun
+	private User _analyticsAdministratorUser;
+
 	@Inject(
 		filter = "component.name=com.liferay.analytics.batch.exportimport.internal.engine.UserAnalyticsDXPEntityBatchEngineTaskItemDelegate"
 	)
@@ -112,11 +118,11 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 
 	private PermissionChecker _permissionChecker;
 
+	@DeleteAfterTestRun
+	private User _regularUser;
+
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

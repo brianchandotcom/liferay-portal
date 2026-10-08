@@ -351,7 +351,7 @@ public class StringUtilTest {
 
 		Assert.assertEquals(randomId, "abcd", randomId);
 
-		Assert.assertEquals(String.valueOf(index[0]), 8, index[0]);
+		Assert.assertEquals(8, index[0]);
 
 		index[0] = 0;
 
@@ -361,7 +361,7 @@ public class StringUtilTest {
 
 		Assert.assertEquals(randomId, "nulla", randomId);
 
-		Assert.assertEquals(String.valueOf(index[0]), 5, index[0]);
+		Assert.assertEquals(5, index[0]);
 
 		randomId = StringUtil.randomId(4);
 

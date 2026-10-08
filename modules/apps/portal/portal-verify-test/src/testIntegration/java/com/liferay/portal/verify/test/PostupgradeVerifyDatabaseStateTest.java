@@ -460,9 +460,7 @@ public class PostupgradeVerifyDatabaseStateTest
 				}
 			}
 
-			Assert.assertEquals(
-				messages.toString(), SetUtil.fromArray(expectedMessages),
-				messages);
+			Assert.assertEquals(SetUtil.fromArray(expectedMessages), messages);
 		}
 	}
 

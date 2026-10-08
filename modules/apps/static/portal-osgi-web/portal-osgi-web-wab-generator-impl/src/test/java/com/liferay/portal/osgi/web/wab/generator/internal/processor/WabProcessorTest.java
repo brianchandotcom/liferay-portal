@@ -585,7 +585,7 @@ public class WabProcessorTest {
 				"javax.portlet.tck.portlets.URLTests_ResourceURL",
 				"javax.portlet.tck.util.ModuleTestCaseDetails");
 
-			Assert.assertEquals(expectedList.toString(), expectedList, beans);
+			Assert.assertEquals(expectedList, beans);
 
 			// Make sure other CDI requirements were added
 

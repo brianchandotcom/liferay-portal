@@ -201,8 +201,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 				}
 			};
 
-		Assert.assertEquals(
-			keyValuePairs.toString(), expectedKeyValuePairs, keyValuePairs);
+		Assert.assertEquals(expectedKeyValuePairs, keyValuePairs);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -301,8 +300,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 
 		Assert.assertNotNull(keyValuePairs);
 
-		Assert.assertEquals(
-			keyValuePairs.toString(), Collections.emptyList(), keyValuePairs);
+		Assert.assertEquals(Collections.emptyList(), keyValuePairs);
 	}
 
 	private static void _setUpLanguageUtil() {

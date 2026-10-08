@@ -97,8 +97,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProviderTest {
 			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			RandomTestUtil.randomString(), null);
 
-		Assert.assertEquals(
-			tagNames.toString(), Collections.emptySet(), tagNames);
+		Assert.assertEquals(Collections.emptySet(), tagNames);
 	}
 
 	@Test
@@ -151,8 +150,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProviderTest {
 			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			RandomTestUtil.randomString(), LocaleUtil.GERMAN);
 
-		Assert.assertEquals(
-			tagNames.toString(), Collections.emptySet(), tagNames);
+		Assert.assertEquals(Collections.emptySet(), tagNames);
 	}
 
 	@Test
@@ -205,8 +203,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProviderTest {
 			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			RandomTestUtil.randomString(), null);
 
-		Assert.assertEquals(
-			tagNames.toString(), Collections.emptySet(), tagNames);
+		Assert.assertEquals(Collections.emptySet(), tagNames);
 	}
 
 	@Test
@@ -259,8 +256,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProviderTest {
 			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			RandomTestUtil.randomString(), LocaleUtil.TAIWAN);
 
-		Assert.assertEquals(
-			tagNames.toString(), Collections.emptySet(), tagNames);
+		Assert.assertEquals(Collections.emptySet(), tagNames);
 	}
 
 	@Test

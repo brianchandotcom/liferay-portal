@@ -382,9 +382,7 @@ public class PreupgradeVerifyDatabaseStateTest
 					verifyMessages.add(entry.getMessage());
 				}
 
-				Assert.assertEquals(
-					verifyMessages.toString(), expectedMessages,
-					verifyMessages);
+				Assert.assertEquals(expectedMessages, verifyMessages);
 			}
 			finally {
 				db.runSQL("DROP_TABLE_IF_EXISTS(" + tableName + ")");
@@ -490,9 +488,7 @@ public class PreupgradeVerifyDatabaseStateTest
 					verifyMessages.add(entry.getMessage());
 				}
 
-				Assert.assertEquals(
-					verifyMessages.toString(), expectedMessages,
-					verifyMessages);
+				Assert.assertEquals(expectedMessages, verifyMessages);
 			}
 			finally {
 				serviceComponent.setData(originalData);

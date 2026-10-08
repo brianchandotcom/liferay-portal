@@ -806,7 +806,6 @@ public class FragmentEntryServiceTest {
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			lowerCaseFragmentCompositionsAndFragmentEntries.toString(),
 			fragmentCompositionsAndFragmentEntries,
 			lowerCaseFragmentCompositionsAndFragmentEntries);
 
@@ -819,7 +818,6 @@ public class FragmentEntryServiceTest {
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			upperCaseFragmentCompositionsAndFragmentEntries.toString(),
 			fragmentCompositionsAndFragmentEntries,
 			upperCaseFragmentCompositionsAndFragmentEntries);
 	}
@@ -1150,7 +1148,6 @@ public class FragmentEntryServiceTest {
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			lowerCaseFragmentCompositionsAndFragmentEntries.toString(),
 			fragmentCompositionsAndFragmentEntries,
 			lowerCaseFragmentCompositionsAndFragmentEntries);
 
@@ -1163,7 +1160,6 @@ public class FragmentEntryServiceTest {
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			upperCaseFragmentCompositionsAndFragmentEntries.toString(),
 			fragmentCompositionsAndFragmentEntries,
 			upperCaseFragmentCompositionsAndFragmentEntries);
 	}

@@ -244,7 +244,6 @@ public class PortletHotDeployListenerTest {
 
 				if (categoryName == null) {
 					Assert.assertEquals(
-						categoryNames.toString(),
 						Collections.singleton("category.undefined"),
 						categoryNames);
 
@@ -264,7 +263,6 @@ public class PortletHotDeployListenerTest {
 				}
 				else {
 					Assert.assertEquals(
-						categoryNames.toString(),
 						Collections.singleton(categoryName), categoryNames);
 
 					PortletCategory portletCategory = rootPortletCategory;

@@ -56,8 +56,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProviderTest {
 					RandomTestUtil.randomLong(), _getRandomStringsSupplier(),
 					null, ContentTypes.TEXT_PLAIN);
 
-				Assert.assertEquals(
-					tagNames.toString(), Collections.emptySet(), tagNames);
+				Assert.assertEquals(Collections.emptySet(), tagNames);
 			});
 	}
 
@@ -133,8 +132,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProviderTest {
 					RandomTestUtil.randomLong(), _getRandomStringsSupplier(),
 					null, ContentTypes.IMAGE_JPEG);
 
-				Assert.assertEquals(
-					tagNames.toString(), Collections.emptySet(), tagNames);
+				Assert.assertEquals(Collections.emptySet(), tagNames);
 			},
 			RandomTestUtil.randomString());
 	}

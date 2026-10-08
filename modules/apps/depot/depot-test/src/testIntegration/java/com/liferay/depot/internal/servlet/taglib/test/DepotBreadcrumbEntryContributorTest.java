@@ -113,9 +113,7 @@ public class DepotBreadcrumbEntryContributorTest {
 			BreadcrumbEntryContributorUtil.contribute(
 				originalBreadcrumbEntries, mockHttpServletRequest);
 
-		Assert.assertEquals(
-			breadcrumbEntries.toString(), originalBreadcrumbEntries,
-			breadcrumbEntries);
+		Assert.assertEquals(originalBreadcrumbEntries, breadcrumbEntries);
 	}
 
 	@Test

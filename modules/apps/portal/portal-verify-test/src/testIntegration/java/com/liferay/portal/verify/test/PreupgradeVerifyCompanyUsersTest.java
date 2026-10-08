@@ -107,9 +107,7 @@ public class PreupgradeVerifyCompanyUsersTest
 					verifyMessages.add(entry.getMessage());
 				}
 
-				Assert.assertEquals(
-					verifyMessages.toString(), expectedMessages,
-					verifyMessages);
+				Assert.assertEquals(expectedMessages, verifyMessages);
 			}
 			finally {
 				db.runSQL(

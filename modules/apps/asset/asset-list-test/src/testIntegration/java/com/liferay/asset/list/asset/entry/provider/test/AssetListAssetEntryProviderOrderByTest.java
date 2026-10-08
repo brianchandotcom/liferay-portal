@@ -398,8 +398,7 @@ public class AssetListAssetEntryProviderOrderByTest {
 		List<Long> expectedClassPKs = TransformUtil.transformToList(
 			expectedObjectEntries, ObjectEntry::getObjectEntryId);
 
-		Assert.assertEquals(
-			actualClassPKs.toString(), expectedClassPKs, actualClassPKs);
+		Assert.assertEquals(expectedClassPKs, actualClassPKs);
 	}
 
 	private String _getOrderByColumn(String propertyName) {

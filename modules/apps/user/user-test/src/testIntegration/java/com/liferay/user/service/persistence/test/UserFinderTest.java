@@ -294,7 +294,6 @@ public class UserFinderTest {
 			UserIdComparator.getInstance(true));
 
 		Assert.assertEquals(
-			users.toString(),
 			ListUtil.fromArray(TestPropsValues.getUser(), _groupUser), users);
 	}
 

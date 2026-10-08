@@ -243,8 +243,7 @@ public class PreupgradeVerifyStoreFileSystemStructureTest
 			verifyMessages.add(entry.getMessage());
 		}
 
-		Assert.assertEquals(
-			verifyMessages.toString(), expectedMessages, verifyMessages);
+		Assert.assertEquals(expectedMessages, verifyMessages);
 	}
 
 	private File _mkdirs(Object... objects) {

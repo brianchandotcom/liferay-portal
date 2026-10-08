@@ -227,8 +227,7 @@ public class AopCacheManagerTest {
 
 				expectedAdviceNames.sort(null);
 
-				Assert.assertEquals(
-					adviceNames.toString(), expectedAdviceNames, adviceNames);
+				Assert.assertEquals(expectedAdviceNames, adviceNames);
 			}
 		}
 

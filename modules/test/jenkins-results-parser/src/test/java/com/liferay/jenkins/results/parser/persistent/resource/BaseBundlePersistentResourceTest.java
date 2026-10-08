@@ -144,9 +144,7 @@ public class BaseBundlePersistentResourceTest
 			thread.join();
 		}
 
-		Assert.assertNull(
-			String.valueOf(throwableAtomicReference.get()),
-			throwableAtomicReference.get());
+		Assert.assertNull(throwableAtomicReference.get());
 
 		Assert.assertEquals(1, startCount.get());
 	}

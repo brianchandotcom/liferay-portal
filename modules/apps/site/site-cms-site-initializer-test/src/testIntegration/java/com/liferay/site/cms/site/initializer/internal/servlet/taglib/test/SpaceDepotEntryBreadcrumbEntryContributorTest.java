@@ -177,9 +177,7 @@ public class SpaceDepotEntryBreadcrumbEntryContributorTest {
 			BreadcrumbEntryContributorUtil.contribute(
 				Collections.emptyList(), _getMockHttpServletRequest(_group));
 
-		Assert.assertEquals(
-			breadcrumbEntries.toString(), Collections.emptyList(),
-			breadcrumbEntries);
+		Assert.assertEquals(Collections.emptyList(), breadcrumbEntries);
 	}
 
 	private void _testContributeBreadcrumbEntriesWithOriginalBreadcrumbEntries()

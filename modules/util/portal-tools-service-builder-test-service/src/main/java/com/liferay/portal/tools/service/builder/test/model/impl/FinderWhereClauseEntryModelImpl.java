@@ -128,14 +128,20 @@ public class FinderWhereClauseEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 4L;
+	public static final long NICKNAME_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long STATUS_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FINDERWHERECLAUSEENTRYID_COLUMN_BITMASK = 8L;
+	public static final long FINDERWHERECLAUSEENTRYID_COLUMN_BITMASK = 16L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
@@ -379,6 +385,15 @@ public class FinderWhereClauseEntryModelImpl
 		}
 
 		_nickname = nickname;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalNickname() {
+		return getColumnOriginalValue("nickname");
 	}
 
 	@Override
@@ -721,4 +736,4 @@ public class FinderWhereClauseEntryModelImpl
 	private FinderWhereClauseEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:469814964
+// LIFERAY-SERVICE-BUILDER-HASH:295054251

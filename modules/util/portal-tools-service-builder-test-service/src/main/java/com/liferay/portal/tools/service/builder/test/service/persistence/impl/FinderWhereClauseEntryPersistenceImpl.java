@@ -408,6 +408,104 @@ public class FinderWhereClauseEntryPersistenceImpl
 			finderCache, new Object[] {name, status});
 	}
 
+	private CollectionPersistenceFinder
+		<FinderWhereClauseEntry, NoSuchFinderWhereClauseEntryException>
+			_collectionPersistenceFinderByH_N_N;
+
+	/**
+	 * Returns an ordered range of all the finder where clause entries where headId = &#63; and name = &#63; and nickname = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FinderWhereClauseEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param headId the head ID
+	 * @param name the name
+	 * @param nickname the nickname
+	 * @param start the lower bound of the range of finder where clause entries
+	 * @param end the upper bound of the range of finder where clause entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching finder where clause entries
+	 */
+	@Override
+	public List<FinderWhereClauseEntry> findByH_N_N(
+		long headId, String name, String nickname, int start, int end,
+		OrderByComparator<FinderWhereClauseEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByH_N_N.find(
+			finderCache, new Object[] {headId, name, nickname}, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first finder where clause entry in the ordered set where headId = &#63; and name = &#63; and nickname = &#63;.
+	 *
+	 * @param headId the head ID
+	 * @param name the name
+	 * @param nickname the nickname
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching finder where clause entry
+	 * @throws NoSuchFinderWhereClauseEntryException if a matching finder where clause entry could not be found
+	 */
+	@Override
+	public FinderWhereClauseEntry findByH_N_N_First(
+			long headId, String name, String nickname,
+			OrderByComparator<FinderWhereClauseEntry> orderByComparator)
+		throws NoSuchFinderWhereClauseEntryException {
+
+		return _collectionPersistenceFinderByH_N_N.findFirst(
+			finderCache, new Object[] {headId, name, nickname},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first finder where clause entry in the ordered set where headId = &#63; and name = &#63; and nickname = &#63;.
+	 *
+	 * @param headId the head ID
+	 * @param name the name
+	 * @param nickname the nickname
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching finder where clause entry, or <code>null</code> if a matching finder where clause entry could not be found
+	 */
+	@Override
+	public FinderWhereClauseEntry fetchByH_N_N_First(
+		long headId, String name, String nickname,
+		OrderByComparator<FinderWhereClauseEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByH_N_N.fetchFirst(
+			finderCache, new Object[] {headId, name, nickname},
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the finder where clause entries where headId = &#63; and name = &#63; and nickname = &#63; from the database.
+	 *
+	 * @param headId the head ID
+	 * @param name the name
+	 * @param nickname the nickname
+	 */
+	@Override
+	public void removeByH_N_N(long headId, String name, String nickname) {
+		_collectionPersistenceFinderByH_N_N.remove(
+			finderCache, new Object[] {headId, name, nickname});
+	}
+
+	/**
+	 * Returns the number of finder where clause entries where headId = &#63; and name = &#63; and nickname = &#63;.
+	 *
+	 * @param headId the head ID
+	 * @param name the name
+	 * @param nickname the nickname
+	 * @return the number of matching finder where clause entries
+	 */
+	@Override
+	public int countByH_N_N(long headId, String name, String nickname) {
+		return _collectionPersistenceFinderByH_N_N.count(
+			finderCache, new Object[] {headId, name, nickname});
+	}
+
 	public FinderWhereClauseEntryPersistenceImpl() {
 		setModelClass(FinderWhereClauseEntry.class);
 
@@ -725,6 +823,44 @@ public class FinderWhereClauseEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					FinderWhereClauseEntry::getStatus));
 
+		_collectionPersistenceFinderByH_N_N = new CollectionPersistenceFinder<>(
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByH_N_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"headId", "name", "nickname"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByH_N_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"headId", "name", "nickname"}, 0, 6, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByH_N_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"headId", "name", "nickname"}, 0, 6, false, null),
+			_SQL_SELECT_FINDERWHERECLAUSEENTRY_WHERE,
+			_SQL_COUNT_FINDERWHERECLAUSEENTRY_WHERE,
+			FinderWhereClauseEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"", "", null,
+			new FinderColumn<>(
+				"finderWhereClauseEntry.", "headId", FinderColumn.Type.LONG,
+				"=", true, true, FinderWhereClauseEntry::getHeadId),
+			new FinderColumn<>(
+				"finderWhereClauseEntry.", "name", FinderColumn.Type.STRING,
+				"=", true, true, FinderWhereClauseEntry::getName),
+			new FinderColumn<>(
+				"finderWhereClauseEntry.", "nickname", FinderColumn.Type.STRING,
+				"=", true, true, FinderWhereClauseEntry::getNickname));
+
 		FinderWhereClauseEntryUtil.setPersistence(this);
 	}
 
@@ -758,4 +894,4 @@ public class FinderWhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-212150618
+// LIFERAY-SERVICE-BUILDER-HASH:-255373173

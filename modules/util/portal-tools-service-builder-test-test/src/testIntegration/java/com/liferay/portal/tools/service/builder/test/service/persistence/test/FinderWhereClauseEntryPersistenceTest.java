@@ -182,6 +182,15 @@ public class FinderWhereClauseEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByH_N_N() throws Exception {
+		_persistence.countByH_N_N(RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByH_N_N(0L, "null", "null");
+
+		_persistence.countByH_N_N(0L, (String)null, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FinderWhereClauseEntry newFinderWhereClauseEntry =
 			addFinderWhereClauseEntry();
@@ -476,4 +485,4 @@ public class FinderWhereClauseEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1380175781
+// LIFERAY-SERVICE-BUILDER-HASH:1914718840

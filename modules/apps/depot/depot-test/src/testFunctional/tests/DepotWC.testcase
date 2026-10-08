@@ -114,7 +114,7 @@ definition {
 	@e2e
 	@priority = 3
 	@refactordone
-	test CanEditFolder {
+	test CanEditMoveIntoAndDeleteFolder {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContentFolder.addCP(

@@ -176,7 +176,7 @@ definition {
 	@description = "This ensures that a depot content associated with the user can be searched with from the connected site."
 	@priority = 5
 	@refactordone
-	test CanSearchForUser {
+	test CanSearchDepotContentByTitleTagAndUser {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

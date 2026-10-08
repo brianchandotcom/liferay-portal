@@ -166,11 +166,18 @@ definition {
 		WebContent.moveToRecycleBinCP(webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This test covers LPS-151756. It ensures that a user can add a document and publish it to live in asset library with permissions. Skip the instance for performance improvement."
+	@description = "This test covers LPS-151756. It ensures that a user with permissions can add a document, edit an image and publish them to live in asset library. Skip the instance for performance improvement."
 	@priority = 4
-	test CanPublishDocument {
+	test CanPublishAddedAndEditedDocuments {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Test Depot Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -179,6 +186,11 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 			roleTitle = "Regular Role");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -210,6 +222,12 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
+		DMDocument.editCP(
+			dmDocumentTitle = "Document_2.jpg",
+			dmDocumentTitleEdit = "DM Document Image Edit");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
@@ -220,75 +238,15 @@ definition {
 
 		DepotNavigator.openToDMEntryInDepot(
 			depotName = "Test Depot Name",
-			dmDocumentTitle = "Document_1.doc");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.doc");
-	}
-
-	@description = "This test ensures that a user with permissions can edit an image and publish it to live in asset library. Skip the instance for performance improvement."
-	@priority = 4
-	test CanPublishAddedAndEditedDocuments {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Test Depot Name-staging",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "UPDATE",
-			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-			roleTitle = "Regular Role");
-
-		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
-				roleTitle = "Regular Role");
-		}
-
-		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,PUBLISH_STAGING,VIEW_STAGING") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = "Regular Role");
-		}
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DMDocument.editCP(
-			dmDocumentTitle = "Document_2.jpg",
-			dmDocumentTitleEdit = "DM Document Image Edit");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Document Image Edit");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Image Edit");
+
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_1.doc");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.doc");
 	}
 
 	@description = "This test ensures that a user with permissions can edit a basic article and publish it to live in asset library. Skip the instance for performance improvement."

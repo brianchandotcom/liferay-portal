@@ -10,7 +10,6 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,7 +28,7 @@ public class ResponsiveLayoutStructureUtil {
 		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
 		int index) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(_viewportSizes.length * 3);
 
 		int size = LayoutStructureConstants.COLUMN_SIZES
 			[collectionStyledLayoutStructureItem.getNumberOfColumns() - 1]
@@ -86,7 +85,7 @@ public class ResponsiveLayoutStructureUtil {
 		ColumnLayoutStructureItem columnLayoutStructureItem,
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(_viewportSizes.length * 3);
 
 		sb.append("col-lg-");
 		sb.append(columnLayoutStructureItem.getSize());
@@ -153,7 +152,7 @@ public class ResponsiveLayoutStructureUtil {
 	public static String getRowCssClass(
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler((_viewportSizes.length * 6) - 2);
 
 		sb.append("align-items-lg-");
 		sb.append(
@@ -179,20 +178,18 @@ public class ResponsiveLayoutStructureUtil {
 			sb.append(_getVerticalAlignmentCssClass(verticalAlignment));
 		}
 
-		sb.append(StringPool.SPACE);
-
 		if (rowStyledLayoutStructureItem.isReverseOrder() &&
 			(rowStyledLayoutStructureItem.getModulesPerRow() > 1)) {
 
-			sb.append("flex-lg-row-reverse");
+			sb.append(" flex-lg-row-reverse");
 		}
 		else if (rowStyledLayoutStructureItem.isReverseOrder() &&
 				 (rowStyledLayoutStructureItem.getModulesPerRow() == 1)) {
 
-			sb.append("flex-lg-column-reverse");
+			sb.append(" flex-lg-column-reverse");
 		}
 		else {
-			sb.append("flex-lg-row");
+			sb.append(" flex-lg-row");
 		}
 
 		for (ViewportSize viewportSize : _viewportSizes) {
@@ -212,12 +209,10 @@ public class ResponsiveLayoutStructureUtil {
 					"modulesPerRow",
 					rowStyledLayoutStructureItem.getModulesPerRow()));
 
-			sb.append(StringPool.SPACE);
+			sb.append(" flex");
+			sb.append(viewportSize.getCssClassPrefix());
 
 			if (reverseOrder) {
-				sb.append("flex");
-				sb.append(viewportSize.getCssClassPrefix());
-
 				if (modulesPerRow > 1) {
 					sb.append("row-reverse");
 				}
@@ -226,8 +221,6 @@ public class ResponsiveLayoutStructureUtil {
 				}
 			}
 			else {
-				sb.append("flex");
-				sb.append(viewportSize.getCssClassPrefix());
 				sb.append("row");
 			}
 		}

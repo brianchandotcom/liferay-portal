@@ -122,7 +122,7 @@ definition {
 	@description = "This test ensures that sharing a depot document to a user, and changing its sharing permissions via Manage Collaborators."
 	@priority = 5
 	@refactordone
-	test CanManageCollaborators {
+	test CanManageViewAndRemoveCollaborators {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",

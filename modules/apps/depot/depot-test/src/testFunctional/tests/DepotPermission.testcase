@@ -722,7 +722,7 @@ definition {
 
 	@description = "This ensures that an image stored in asset library folder can be edited by a user with permissions via MG on a connected site."
 	@priority = 4
-	test CanEditImageInMG {
+	test CanEditAndDeleteImageInMG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var portalURL = PropsUtil.get("portal.url");

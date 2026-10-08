@@ -654,7 +654,7 @@ definition {
 			depotName = "Test Depot Name");
 	}
 
-	@description = "This ensures that multiple web contents can be selected manually through Collections in a depot and that a selected asset can be removed."
+	@description = "This ensures that multiple assets can be selected manually through Collections in a depot and that a selected asset can be removed."
 	@priority = 4
 	@refactordone
 	test CanSelectAndRemoveAssetsManually {
@@ -811,62 +811,6 @@ definition {
 		}
 
 		for (var documentName : list "DM Document Title 1,DM Document Title 2") {
-			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-			AssetListsAdmin.viewContent(
-				assetListTitle = "Depot Manual Asset List",
-				assetTitle = ${documentName},
-				assetType = "Document");
-		}
-	}
-
-	@description = "This ensures that multiple documents can be selected through Collections in a depot."
-	@priority = 4
-	@refactordone
-	test CanSelectMultipleDMManually {
-		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
-			var extension = StringUtil.extractLast(${documentName}, ".");
-
-			if (${extension} == "doc") {
-				var mimeType = "application/msword";
-			}
-			else if (${extension} == "jpg") {
-				var mimeType = "image/jpg";
-			}
-			else if (${extension} == "txt") {
-				var mimeType = "text/plain";
-			}
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = ${documentName},
-				groupName = "Test Depot Name",
-				mimeType = ${mimeType},
-				sourceFileName = ${documentName});
-		}
-
-		JSONAssetlist.addManualAssetListEntryWithItemType(
-			groupName = "Test Depot Name",
-			itemSubtype = "Basic Document",
-			itemType = "Document",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Manual Asset List",
-			type = "Manual");
-
-		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
-			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-			AssetListsAdmin.selectAsset(
-				assetListName = "Depot Manual Asset List",
-				assetName = ${documentName});
-		}
-
-		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
 			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 			AssetListsAdmin.viewContent(

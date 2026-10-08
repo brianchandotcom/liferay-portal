@@ -67,6 +67,10 @@ public interface AuditEventPseudonymFieldLocalService
 	public AuditEventPseudonymField addAuditEventPseudonymField(
 		AuditEventPseudonymField auditEventPseudonymField);
 
+	public AuditEventPseudonymField addAuditEventPseudonymField(
+			long companyId, String contextName, String name, String value)
+		throws PortalException;
+
 	/**
 	 * Creates a new audit event pseudonym field with the primary key. Does not add the audit event pseudonym field to the database.
 	 *
@@ -267,4 +271,4 @@ public interface AuditEventPseudonymFieldLocalService
 		AuditEventPseudonymField auditEventPseudonymField);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1207200748
+// LIFERAY-SERVICE-BUILDER-HASH:502965395

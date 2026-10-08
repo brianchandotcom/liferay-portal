@@ -52,6 +52,18 @@ public class AuditEventPseudonymFieldLocalServiceWrapper
 			addAuditEventPseudonymField(auditEventPseudonymField);
 	}
 
+	@Override
+	public
+		com.liferay.portal.security.audit.storage.model.AuditEventPseudonymField
+				addAuditEventPseudonymField(
+					long companyId, String contextName, String name,
+					String value)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _auditEventPseudonymFieldLocalService.
+			addAuditEventPseudonymField(companyId, contextName, name, value);
+	}
+
 	/**
 	 * Creates a new audit event pseudonym field with the primary key. Does not add the audit event pseudonym field to the database.
 	 *
@@ -377,4 +389,4 @@ public class AuditEventPseudonymFieldLocalServiceWrapper
 		_auditEventPseudonymFieldLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1282474708
+// LIFERAY-SERVICE-BUILDER-HASH:-1826015033

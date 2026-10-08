@@ -6438,7 +6438,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutSetLocalService.updateLookAndFeel(
 			serviceContext.getScopeGroupId(), privateLayout,
 			_getThemeId(
-				serviceContext.getCompanyId(), StringPool.BLANK,
+				serviceContext.getCompanyId(), layoutSet.getThemeId(),
 				metadataJSONObject.getString("themeName")),
 			layoutSet.getColorSchemeId(), css);
 

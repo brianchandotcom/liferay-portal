@@ -220,20 +220,20 @@ exports[`SegmentEditor should render 1`] = `
                   class="mb-4 mt-4"
                 >
                   <div
-                    class="row align-items-center mb-3"
+                    class="row align-items-center mb-2"
                   >
                     <div
-                      class="col-md-3 col-sm-12"
+                      class="col-lg-2 col-md-3 col-sm-12"
                     >
                       <span
                         class="align-items-center d-flex font-weight-semi-bold text-nowrap text-secondary"
                       >
                         <svg
-                          class="lexicon-icon lexicon-icon-categories mr-2"
+                          class="lexicon-icon lexicon-icon-plus-squares mr-2"
                           role="presentation"
                         >
                           <use
-                            href="#categories"
+                            href="#plus-squares"
                           />
                         </svg>
                         Segment Type
@@ -243,7 +243,7 @@ exports[`SegmentEditor should render 1`] = `
                       class="col"
                     >
                       <span
-                        class="label label-secondary"
+                        class="label label-inverse-secondary"
                       >
                         <span
                           class="label-item label-item-expand"
@@ -252,7 +252,7 @@ exports[`SegmentEditor should render 1`] = `
                         </span>
                       </span>
                       <span
-                        class="label label-info"
+                        class="label label-inverse-info"
                       >
                         <span
                           class="label-item label-item-expand"
@@ -269,7 +269,7 @@ exports[`SegmentEditor should render 1`] = `
                       class="row align-items-center"
                     >
                       <div
-                        class="align-items-center d-flex col-md-3 col-sm-12"
+                        class="align-items-center d-flex col-lg-2 col-md-3 col-sm-12"
                       >
                         <label
                           class="align-items-center d-flex font-weight-semi-bold mb-0 text-nowrap text-secondary"
@@ -295,7 +295,7 @@ exports[`SegmentEditor should render 1`] = `
                         </label>
                         <button
                           aria-label="Help"
-                          class="rounded-lg btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs"
+                          class="ml-2 rounded-lg btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs"
                           type="button"
                         >
                           <svg
@@ -309,7 +309,7 @@ exports[`SegmentEditor should render 1`] = `
                         </button>
                       </div>
                       <div
-                        class="col"
+                        class="col-lg-4 col-md-6"
                       >
                         <input
                           class="form-control form-control-sm"

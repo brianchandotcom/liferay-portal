@@ -155,21 +155,21 @@ const SegmentDetails: React.FC<{
 
 	return (
 		<div className="mb-4 mt-4">
-			<ClayLayout.Row className="align-items-center mb-3">
-				<ClayLayout.Col md={3} sm={12}>
+			<ClayLayout.Row className="align-items-center mb-2">
+				<ClayLayout.Col lg={2} md={3} sm={12}>
 					<span className="align-items-center d-flex font-weight-semi-bold text-nowrap text-secondary">
-						<ClayIcon className="mr-2" symbol="categories" />
+						<ClayIcon className="mr-2" symbol="plus-squares" />
 
 						{Liferay.Language.get('segment-type')}
 					</span>
 				</ClayLayout.Col>
 
 				<ClayLayout.Col>
-					<ClayLabel displayType="secondary">
+					<ClayLabel displayType="secondary" inverse>
 						{getSegmentCategoryLabel(segmentCategory)}
 					</ClayLabel>
 
-					<ClayLabel displayType="info">
+					<ClayLabel displayType="info" inverse>
 						{getSegmentTypeLabel(type)}
 					</ClayLabel>
 				</ClayLayout.Col>
@@ -181,6 +181,7 @@ const SegmentDetails: React.FC<{
 				<ClayLayout.Row className="align-items-center">
 					<ClayLayout.Col
 						className="align-items-center d-flex"
+						lg={2}
 						md={3}
 						sm={12}
 					>
@@ -206,7 +207,7 @@ const SegmentDetails: React.FC<{
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('help')}
 									borderless
-									className="rounded-lg"
+									className="ml-2 rounded-lg"
 									displayType="secondary"
 									monospaced
 									size="xs"
@@ -231,7 +232,7 @@ const SegmentDetails: React.FC<{
 						</ClayPopover>
 					</ClayLayout.Col>
 
-					<ClayLayout.Col>
+					<ClayLayout.Col lg={4} md={6}>
 						<ClayInput
 							id="externalReferenceCode"
 							name="externalReferenceCode"

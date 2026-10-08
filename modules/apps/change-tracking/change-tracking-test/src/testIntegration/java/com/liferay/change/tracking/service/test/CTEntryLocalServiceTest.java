@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -205,6 +208,44 @@ public class CTEntryLocalServiceTest {
 		_assertCTRowCTCollectionId(
 			ctCollection3.getCtCollectionId(), ctEntry2,
 			journalFolder.getFolderId(), folderName2);
+	}
+
+	@Test
+	public void testUpdateCTEntry() throws Exception {
+		CTCollection ctCollection = _createCTCollection();
+
+		JournalArticle journalArticle = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			journalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		}
+
+		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+			ctCollection.getCtCollectionId(),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			journalArticle.getId());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.search.IndexableAdvice",
+				LoggerTestUtil.DEBUG)) {
+
+			_ctEntryLocalService.updateCTEntry(ctEntry);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Skip indexing because the result opts out",
+				logEntry.getMessage());
+		}
 	}
 
 	private void _assertCTRowCTCollectionId(

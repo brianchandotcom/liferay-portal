@@ -185,7 +185,7 @@ definition {
 
 	@description = "This is a test for LPS-112578. The user can define associated display page template in subcategory and it will be inherited by its subcategory."
 	@priority = 5
-	test SelectSpecificDisplayPageTemplateInSubcategoryEditor {
+	test SelectSpecificAndInheritedDisplayPageTemplateInSubcategoryEditor {
 		property portal.acceptance = "true";
 
 		task ("Add the first display page template for Category") {

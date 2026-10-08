@@ -32,6 +32,7 @@ spec:
                                     default: {}
                                     properties:
                                         dayOfWeek:
+                                            default: Sunday
                                             enum:
                                                 -   Sunday
                                                 -   Monday
@@ -69,9 +70,6 @@ spec:
                                             default: {}
                                             type: object
                                     type: object
-                                    x-kubernetes-validations:
-                                        -   message: dayOfWeek is required when frequency is Weekly
-                                            rule: "!has(self.frequency) || self.frequency != 'Weekly' || has(self.dayOfWeek)"
                                 cmk:
                                     default:
                                         enabled: false

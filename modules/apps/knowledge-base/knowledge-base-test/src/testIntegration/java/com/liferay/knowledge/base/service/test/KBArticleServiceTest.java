@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
@@ -17,18 +19,23 @@ import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -68,14 +75,26 @@ public class KBArticleServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group1 = GroupTestUtil.addGroup();
+		_group2 = GroupTestUtil.addGroup();
 		_kbFolderClassNameId = ClassNameLocalServiceUtil.getClassNameId(
 			KBFolderConstants.getClassName());
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, TestPropsValues.getUserId());
-		_siteMemberUser = UserTestUtil.addUser(_group.getGroupId());
+			_group1, TestPropsValues.getUserId());
+		_siteMemberUser = UserTestUtil.addUser(_group1.getGroupId());
 		_testPortletId = "TEST_PORTLET_" + RandomTestUtil.randomString();
 		_user = UserTestUtil.addUser();
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
+
+		RoleTestUtil.addResourcePermission(
+			_role, KBConstants.RESOURCE_NAME_ADMIN,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group1.getGroupId()),
+			KBActionKeys.DELETE_KB_ARTICLES);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			_siteMemberUser.getUserId(), _group1.getGroupId(),
+			new long[] {_role.getRoleId()});
 	}
 
 	@Test
@@ -85,11 +104,19 @@ public class KBArticleServiceTest {
 		_testDeleteKBArticleAttachmentWithoutUpdatePermission();
 	}
 
+	@Test
+	public void testDeleteKBArticles() throws Exception {
+		_testDeleteKBArticles();
+		_testDeleteKBArticlesWithKBArticleFromDifferentGroup();
+		_testDeleteKBArticlesWithKBArticleFromDifferentGroupAndDeletePermission();
+		_testDeleteKBArticlesWithKBArticlesFromDifferentGroups();
+	}
+
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testForceLockKBArticle() throws Exception {
 		KBArticle kbArticle = _addKbArticle(new Date());
-		User otherUser = UserTestUtil.addUser(_group.getGroupId());
+		User otherUser = UserTestUtil.addUser(_group1.getGroupId());
 
 		try {
 			_kbArticleLocalService.lockKBArticle(
@@ -104,7 +131,7 @@ public class KBArticleServiceTest {
 					kbArticle.getResourcePrimKey()));
 
 			_kbArticleService.forceLockKBArticle(
-				_group.getGroupId(), kbArticle.getResourcePrimKey());
+				_group1.getGroupId(), kbArticle.getResourcePrimKey());
 
 			Assert.assertFalse(
 				_kbArticleLocalService.hasKBArticleLock(
@@ -139,14 +166,14 @@ public class KBArticleServiceTest {
 		KBArticle kbArticle = _addKbArticle(new Date());
 
 		List<KBArticle> kbArticles = _kbArticleService.getKBArticles(
-			_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_group1.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, KBArticlePriorityComparator.getInstance(true));
 
 		Assert.assertEquals(kbArticles.toString(), 2, kbArticles.size());
 
 		kbArticles = _kbArticleService.getKBArticles(
-			_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_group1.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			KBArticlePriorityComparator.getInstance(true));
 
@@ -156,7 +183,7 @@ public class KBArticleServiceTest {
 			kbArticle.getResourcePrimKey(), _serviceContext);
 
 		kbArticles = _kbArticleService.getKBArticles(
-			_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_group1.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, KBArticlePriorityComparator.getInstance(true));
 
@@ -178,7 +205,7 @@ public class KBArticleServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
+				_group1, TestPropsValues.getUserId());
 
 		serviceContext.setAddGroupPermissions(addGroupPermissions);
 		serviceContext.setAddGuestPermissions(addGuestPermissions);
@@ -202,7 +229,7 @@ public class KBArticleServiceTest {
 
 	private FileEntry _addFileEntry(long folderId) throws Exception {
 		return _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			null, TestPropsValues.getUserId(), _group1.getGroupId(), folderId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), null, null, null,
 			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
@@ -211,7 +238,7 @@ public class KBArticleServiceTest {
 
 	private Folder _addFolder(String name) throws Exception {
 		return _dlAppLocalService.addFolder(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name,
 			RandomTestUtil.randomString(), _serviceContext);
 	}
@@ -230,6 +257,13 @@ public class KBArticleServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
 			displayDate, null, null, null, serviceContext);
+	}
+
+	private KBArticle _addKbArticle(Group group) throws Exception {
+		return _addKbArticle(
+			new Date(),
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId()));
 	}
 
 	private void _assertNoSuchFileEntry(FileEntry fileEntry) {
@@ -281,6 +315,82 @@ public class KBArticleServiceTest {
 			_dlAppLocalService.fetchFileEntry(fileEntry.getFileEntryId()));
 	}
 
+	private void _testDeleteKBArticles() throws Exception {
+		KBArticle kbArticle = _addKbArticle(_group1);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_siteMemberUser)) {
+
+			_kbArticleService.deleteKBArticles(
+				_group1.getGroupId(),
+				new long[] {kbArticle.getResourcePrimKey()});
+		}
+
+		Assert.assertNull(
+			_kbArticleLocalService.fetchLatestKBArticle(
+				kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY));
+	}
+
+	private void _testDeleteKBArticlesWithKBArticleFromDifferentGroup()
+		throws Exception {
+
+		KBArticle kbArticle = _addKbArticle(_group2);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_siteMemberUser)) {
+
+			Assert.assertThrows(
+				PrincipalException.MustHavePermission.class,
+				() -> _kbArticleService.deleteKBArticles(
+					_group1.getGroupId(),
+					new long[] {kbArticle.getResourcePrimKey()}));
+		}
+
+		Assert.assertNotNull(
+			_kbArticleLocalService.fetchLatestKBArticle(
+				kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY));
+	}
+
+	private void _testDeleteKBArticlesWithKBArticleFromDifferentGroupAndDeletePermission()
+		throws Exception {
+
+		KBArticle kbArticle = _addKbArticle(_group2);
+
+		_kbArticleService.deleteKBArticles(
+			_group1.getGroupId(), new long[] {kbArticle.getResourcePrimKey()});
+
+		Assert.assertNull(
+			_kbArticleLocalService.fetchLatestKBArticle(
+				kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY));
+	}
+
+	private void _testDeleteKBArticlesWithKBArticlesFromDifferentGroups()
+		throws Exception {
+
+		KBArticle kbArticle1 = _addKbArticle(_group1);
+		KBArticle kbArticle2 = _addKbArticle(_group2);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_siteMemberUser)) {
+
+			Assert.assertThrows(
+				PrincipalException.MustHavePermission.class,
+				() -> _kbArticleService.deleteKBArticles(
+					_group1.getGroupId(),
+					new long[] {
+						kbArticle1.getResourcePrimKey(),
+						kbArticle2.getResourcePrimKey()
+					}));
+		}
+
+		Assert.assertNotNull(
+			_kbArticleLocalService.fetchLatestKBArticle(
+				kbArticle1.getResourcePrimKey(), WorkflowConstants.STATUS_ANY));
+		Assert.assertNotNull(
+			_kbArticleLocalService.fetchLatestKBArticle(
+				kbArticle2.getResourcePrimKey(), WorkflowConstants.STATUS_ANY));
+	}
+
 	private void _testGetKBArticleAttachment() throws Exception {
 		FileEntry fileEntry = _addAttachment(true, false);
 
@@ -308,7 +418,7 @@ public class KBArticleServiceTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
+				_group1, TestPropsValues.getUserId());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -466,7 +576,10 @@ public class KBArticleServiceTest {
 	private DLAppLocalService _dlAppLocalService;
 
 	@DeleteAfterTestRun
-	private Group _group;
+	private Group _group1;
+
+	@DeleteAfterTestRun
+	private Group _group2;
 
 	@Inject
 	private KBArticleLocalService _kbArticleLocalService;
@@ -475,6 +588,10 @@ public class KBArticleServiceTest {
 	private KBArticleService _kbArticleService;
 
 	private long _kbFolderClassNameId;
+
+	@DeleteAfterTestRun
+	private Role _role;
+
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
@@ -484,5 +601,8 @@ public class KBArticleServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

@@ -73,6 +73,10 @@ Using `jsImportMapsEntry` here (instead of e.g. a Custom Element / widget client
 
 > **Note:** the `<map-item>` children don't have to be hand-written. Since a fragment's rendered HTML can loop over a Liferay collection (Asset List / Collection selector in Fragment configuration, or a `for`/mapped repeat in the fragment's Freemarker/React code), the list of points of interest can be generated dynamically — e.g. one `<map-item>` per item in a collection of locations/stores, with `latitude`, `longitude` and the tooltip markup populated from that collection's fields — instead of listing them statically as in the example above.
 
+## Fragment
+
+[fragments/distributors-map-osm-with-slots](fragments/distributors-map-osm-with-slots) holds a ready-to-use fragment: copy [fragment.html](fragments/distributors-map-osm-with-slots/fragment.html) into the fragment's HTML and [fragment.js](fragments/distributors-map-osm-with-slots/fragment.js) into its JavaScript. The JavaScript only imports the bare specifier, which makes Liferay load the bundle through the import map and define the custom element.
+
 ## Development
 
 ```bash

@@ -20,15 +20,12 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
 import com.liferay.portal.tools.db.partition.migration.validator.util.ValidatorUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import java.nio.file.Files;
 
@@ -42,7 +39,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
@@ -52,20 +48,34 @@ import org.apache.commons.cli.ParseException;
 public class DBPartitionMigrationValidator {
 
 	public static void main(String[] args) {
-		if (args.length != 0) {
-			if (args[0].equals("export")) {
-				_export(ArrayUtil.remove(args, args[0]));
+		if (args.length == 0) {
+			System.err.println("Missing command: export or validate");
+		}
+		else if (args[0].equals("export")) {
+			_export(ArrayUtil.remove(args, args[0]));
 
-				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
-			}
-			else if (args[0].equals("validate")) {
-				_validate(ArrayUtil.remove(args, args[0]));
+			_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+		}
+		else if (args[0].equals("validate")) {
+			_validate(ArrayUtil.remove(args, args[0]));
 
-				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
-			}
+			_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+		}
+		else if (args[0].equals("--help")) {
+			_printHelp();
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+		}
+		else if (args[0].startsWith("-")) {
+			System.err.println("Unrecognized option: " + args[0]);
+		}
+		else {
+			System.err.println("Unrecognized command: " + args[0]);
 		}
 
 		_printHelp();
+
+		_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 	}
 
 	private static void _exit(int code) {
@@ -82,24 +92,8 @@ public class DBPartitionMigrationValidator {
 	}
 
 	private static void _export(String[] args) {
-		Options options = _getExportOptions();
-
-		CommandLine commandLine = null;
-
-		try {
-			CommandLineParser commandLineParser = new DefaultParser();
-
-			commandLine = commandLineParser.parse(options, args);
-		}
-		catch (ParseException parseException) {
-			if (!ArrayUtil.contains(args, "--help")) {
-				System.err.println(parseException.getMessage());
-			}
-
-			_printHelp();
-
-			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
-		}
+		CommandLine commandLine = _parse(
+			args, "export", _DESCRIPTION_EXPORT, _getExportOptions());
 
 		String jdbcURL = DatabaseUtil.replaceSchemaName(
 			commandLine.getOptionValue("jdbc-url"),
@@ -137,7 +131,7 @@ public class DBPartitionMigrationValidator {
 				"Export file generated successfully in " + exportFilePath);
 		}
 		catch (Exception exception) {
-			System.out.println("Unable to generate the export file:");
+			System.err.println("Unable to generate the export file:");
 
 			exception.printStackTrace();
 
@@ -163,19 +157,6 @@ public class DBPartitionMigrationValidator {
 		return options;
 	}
 
-	private static Options _getMainOptions() {
-		Options options = new Options();
-
-		options.addOption(
-			new Option(null, "export", false, "Export validation file."));
-		options.addOption(
-			new Option(
-				null, "validate", false,
-				"Validate source and target validation files."));
-
-		return options;
-	}
-
 	private static Options _getValidationOptions() {
 		Options options = new Options();
 
@@ -189,43 +170,50 @@ public class DBPartitionMigrationValidator {
 		return options;
 	}
 
+	private static CommandLine _parse(
+		String[] args, String command, String description, Options options) {
+
+		if (ArrayUtil.contains(args, "--help")) {
+			_printHelp(command, description, options);
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+		}
+
+		CommandLine commandLine = null;
+
+		try {
+			CommandLineParser commandLineParser = new DefaultParser();
+
+			commandLine = commandLineParser.parse(options, args);
+		}
+		catch (ParseException parseException) {
+			System.err.println(parseException.getMessage());
+
+			_printHelp(command, description, options);
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
+		}
+
+		return commandLine;
+	}
+
 	private static void _printHelp() {
-		HelpFormatter helpFormatter = new HelpFormatter();
+		_printHelp("export", _DESCRIPTION_EXPORT, _getExportOptions());
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
+		System.out.println();
 
-		PrintWriter printWriter = new PrintWriter(byteArrayOutputStream);
+		_printHelp("validate", _DESCRIPTION_VALIDATE, _getValidationOptions());
+	}
 
-		helpFormatter.printWrapped(
-			printWriter, _HELP_WIDTH,
-			"Liferay Database Partition Migration Validator Tool.\n\n");
-		helpFormatter.printUsage(
-			printWriter, _HELP_WIDTH,
-			"./db_partition_migration_validator.sh <command> [parameters]");
-		helpFormatter.printWrapped(printWriter, _HELP_WIDTH, "\nCommands:");
-		helpFormatter.printOptions(
-			printWriter, _HELP_WIDTH, _getMainOptions(), _HELP_LEFT_PAD,
-			_HELP_DESC_PAD);
-		helpFormatter.printWrapped(
-			printWriter, _HELP_WIDTH, _HELP_DESC_PAD, "\nExport parameters:");
-		helpFormatter.printOptions(
-			printWriter, _HELP_WIDTH, _getExportOptions(), _HELP_LEFT_PAD,
-			_HELP_DESC_PAD);
-		helpFormatter.printWrapped(
-			printWriter, _HELP_WIDTH, "\nValidate parameters:");
-		helpFormatter.printOptions(
-			printWriter, _HELP_WIDTH, _getValidationOptions(), _HELP_LEFT_PAD,
-			_HELP_DESC_PAD);
+	private static void _printHelp(
+		String command, String description, Options options) {
 
-		printWriter.flush();
-
-		String helpMessage = byteArrayOutputStream.toString();
-
-		helpMessage = StringUtil.replace(helpMessage, "--export", "export");
-		helpMessage = StringUtil.replace(helpMessage, "--validate", "validate");
-
-		System.out.println(helpMessage);
+		new HelpFormatter(
+		).printHelp(
+			System.getProperty("launcher", "db_partition_migration_validator") +
+				" " + command,
+			"\n" + description + "\n\nOptions:", options, null, true
+		);
 	}
 
 	private static LiferayDatabase _read(String path) throws IOException {
@@ -244,24 +232,8 @@ public class DBPartitionMigrationValidator {
 	}
 
 	private static void _validate(String[] args) {
-		Options options = _getValidationOptions();
-
-		CommandLine commandLine = null;
-
-		try {
-			CommandLineParser commandLineParser = new DefaultParser();
-
-			commandLine = commandLineParser.parse(options, args);
-		}
-		catch (ParseException parseException) {
-			if (!ArrayUtil.contains(args, "--help")) {
-				System.err.println(parseException.getMessage());
-			}
-
-			_printHelp();
-
-			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
-		}
+		CommandLine commandLine = _parse(
+			args, "validate", _DESCRIPTION_VALIDATE, _getValidationOptions());
 
 		try {
 			_sourceLiferayDatabase = _read(
@@ -356,11 +328,11 @@ public class DBPartitionMigrationValidator {
 		return exportFile.getCanonicalPath();
 	}
 
-	private static final int _HELP_DESC_PAD = 5;
+	private static final String _DESCRIPTION_EXPORT =
+		"Export a validation file.";
 
-	private static final int _HELP_LEFT_PAD = 2;
-
-	private static final int _HELP_WIDTH = 80;
+	private static final String _DESCRIPTION_VALIDATE =
+		"Validate the source and target validation files.";
 
 	/**
 	 * https://github.com/liferay/liferay-docker/blob/master/_liferay_common.sh

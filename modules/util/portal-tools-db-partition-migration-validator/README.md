@@ -1,7 +1,6 @@
 # Database Partition Migration Validator Tool
 
-This tool validates the compatibility between the source and target databases
-for a partition migration.
+This tool validates the compatibility between the source and target databases for a partition migration.
 
 ## Requirements
 
@@ -24,8 +23,8 @@ db_partition_migration_validator.bat <command> <parameters>
 
 Commands:
 
-- `export` Export validation file.
-- `validate` Validate source and target validation files.
+- `export` Export a validation file.
+- `validate` Validate the source and target validation files.
 
 Export parameters:
 
@@ -33,7 +32,7 @@ Export parameters:
 - `--jdbc-url <arg>` Set the JDBC URL.
 - `--output-dir <arg>` Set the output directory.
 - `--password <arg>` Set the database user password.
-- `--schema-name <arg>` Set the schema name.
+- `--schema-name <arg>` Set the database schema name.
 - `--user <arg>` Set the database user name.
 
 Validate parameters:

@@ -637,10 +637,11 @@ test(
 			{name: folderName}
 		);
 
-		const subfolder = await apiHelpers.headlessDelivery.postDocumentFolder(
-			site.id,
-			{name: subfolderName, parentDocumentFolderId: folder.id}
-		);
+		const subfolder =
+			await apiHelpers.headlessDelivery.postDocumentFolderDocumentFolder(
+				folder.id,
+				{name: subfolderName}
+			);
 
 		await apiHelpers.headlessDelivery.postDocumentFolderDocument(
 			subfolder.id,

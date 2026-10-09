@@ -83,6 +83,8 @@ public class OpenIdConnectPortalCatapultHeaderContributorTest {
 	@FeatureFlag(enable = false, value = "LPD-108193")
 	@Test
 	public void testContributeWithDisabledFeatureFlag() {
+		_setUpMocks();
+
 		Assert.assertNull(_getUpstreamIdToken(_LOCATION));
 	}
 

@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.internal.DBSupportDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JavadocFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.RESTBuilderDefaultsPlugin;
+import com.liferay.gradle.plugins.internal.SchemaManifestBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.ServiceBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.TLDFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.TestIntegrationDefaultsPlugin;
@@ -375,6 +376,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		JavadocFormatterDefaultsPlugin.INSTANCE.apply(project);
 		JspCDefaultsPlugin.INSTANCE.apply(project);
 		RESTBuilderDefaultsPlugin.INSTANCE.apply(project);
+		SchemaManifestBuilderDefaultsPlugin.INSTANCE.apply(project);
 		ServiceBuilderDefaultsPlugin.INSTANCE.apply(project);
 		TLDFormatterDefaultsPlugin.INSTANCE.apply(project);
 		TestIntegrationDefaultsPlugin.INSTANCE.apply(project);

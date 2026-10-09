@@ -1,0 +1,26 @@
+apply plugin: "com.liferay.portal.tools.schema.manifest.builder"
+
+task runGradleTest
+
+buildSchemaManifest {
+	module = "com.example.sample"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildSchemaManifest
+
+	doLast {
+		File manifestFile = file("src/main/resources/META-INF/schema/manifest.json")
+
+		Map<String, Object> manifest = new groovy.json.JsonSlurper().parse(manifestFile)
+
+		assert manifest.keySet() == ["description", "module", "timestamp"] as Set
+		assert manifest.module == "com.example.sample"
+	}
+}

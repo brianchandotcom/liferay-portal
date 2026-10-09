@@ -495,6 +495,7 @@ modules/sdk/gradle-plugins-node/    @liferay-devtools
 modules/sdk/gradle-plugins-patcher/    @liferay-devtools
 modules/sdk/gradle-plugins-poshi-runner/    @liferay-devtools
 modules/sdk/gradle-plugins-rest-builder/    @liferay-devtools
+modules/sdk/gradle-plugins-schema-manifest-builder/    @liferay-devtools
 modules/sdk/gradle-plugins-service-builder/    @liferay-devtools
 modules/sdk/gradle-plugins-source-formatter/    @liferay-devtools
 modules/sdk/gradle-plugins-target-platform/    @liferay-devtools

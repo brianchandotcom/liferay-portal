@@ -5,6 +5,7 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
+import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -13,7 +14,6 @@ import {DocumentLibraryPage} from '../../../pages/document-library-web/DocumentL
 import {WebContentPage} from '../../../pages/journal-web/WebContentPage';
 import {RecycleBinPage} from '../../../pages/trash-web/RecycleBinPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {SizedFileType, createSizedFile} from '../../../utils/createSizedFile';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -45,10 +45,10 @@ function acceptDialog(page: Page) {
 
 async function addDepotContent({
 	apiHelpers,
-	documentTypes,
+	documentCount,
 }: {
 	apiHelpers: DataApiHelpers;
-	documentTypes: SizedFileType[];
+	documentCount: number;
 }) {
 	const assetLibrary =
 		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
@@ -58,19 +58,13 @@ async function addDepotContent({
 
 	const documentTitles = [];
 
-	for (const documentType of documentTypes) {
+	for (let i = 0; i < documentCount; i++) {
 		const documentTitle = getRandomString();
 
 		await apiHelpers.headlessDelivery.postAssetLibraryDocument(
 			assetLibrary.id,
-			createReadStream(
-				createSizedFile(
-					`${getRandomString()}.${documentType}`,
-					documentType,
-					1024
-				)
-			),
-			{fileName: `${documentTitle}.${documentType}`, title: documentTitle}
+			createReadStream(path.join(__dirname, 'dependencies/Document.jpg')),
+			{fileName: `${documentTitle}.jpg`, title: documentTitle}
 		);
 
 		documentTitles.push(documentTitle);
@@ -99,7 +93,7 @@ test(
 		const {depotURL, documentTitles, webContentTitle} =
 			await addDepotContent({
 				apiHelpers,
-				documentTypes: ['pdf', 'jpeg'],
+				documentCount: 2,
 			});
 
 		const documentLibraryPage = new DocumentLibraryPage(page);
@@ -164,7 +158,7 @@ test(
 		const {assetLibrary, depotURL, documentTitles, webContentTitle} =
 			await addDepotContent({
 				apiHelpers,
-				documentTypes: ['pdf'],
+				documentCount: 1,
 			});
 
 		const documentLibraryPage = new DocumentLibraryPage(page);

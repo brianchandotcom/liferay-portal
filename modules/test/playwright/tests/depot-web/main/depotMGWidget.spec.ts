@@ -14,7 +14,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {DocumentLibraryEditFilePage} from '../../../pages/document-library-web/DocumentLibraryEditFilePage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {createSizedFile} from '../../../utils/createSizedFile';
+import createTempFile from '../../../utils/createTempFile';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -186,20 +186,20 @@ test(
 			{fileName: `${imageTitle}.jpg`, title: imageTitle}
 		);
 
-		const pdfTitle = getRandomString();
+		const textTitle = getRandomString();
 
 		await apiHelpers.headlessDelivery.postDocumentFolderDocument(
 			folder.id,
 			createReadStream(
-				createSizedFile(`${getRandomString()}.pdf`, 'pdf', 1024)
+				createTempFile(`${getRandomString()}.txt`, 'Text content')
 			),
-			{fileName: `${pdfTitle}.pdf`, title: pdfTitle}
+			{fileName: `${textTitle}.txt`, title: textTitle}
 		);
 
 		await page.goto(pageURL);
 
 		await expect(getCard(page, imageTitle)).toBeVisible();
-		await expect(getCard(page, pdfTitle)).toHaveCount(0);
+		await expect(getCard(page, textTitle)).toHaveCount(0);
 
 		const editedDescription = getRandomString();
 		const editedTitle = getRandomString();
@@ -232,7 +232,7 @@ test(
 				);
 
 			expect(items.map(({title}) => title).sort()).toEqual(
-				[editedTitle, pdfTitle].sort()
+				[editedTitle, textTitle].sort()
 			);
 		});
 

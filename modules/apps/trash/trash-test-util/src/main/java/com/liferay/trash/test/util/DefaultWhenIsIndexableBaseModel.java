@@ -6,12 +6,14 @@
 package com.liferay.trash.test.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
+import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 
 /**
@@ -45,12 +47,13 @@ public class DefaultWhenIsIndexableBaseModel
 			String keywords, ServiceContext serviceContext)
 		throws Exception {
 
-		Hits results = TrashEntryLocalServiceUtil.search(
-			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-			serviceContext.getUserId(), keywords, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		BaseModelSearchResult<TrashEntry> baseModelSearchResult =
+			TrashEntryLocalServiceUtil.searchTrashEntries(
+				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+				serviceContext.getUserId(), keywords, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
-		return results.getLength();
+		return baseModelSearchResult.getLength();
 	}
 
 }

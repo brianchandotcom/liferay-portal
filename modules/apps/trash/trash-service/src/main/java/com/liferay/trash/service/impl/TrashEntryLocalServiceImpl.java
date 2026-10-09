@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -293,41 +292,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return trashEntryPersistence.findByGroupId(groupId);
 	}
 
-	/**
-	 * Returns a range of all the trash entries matching the group ID.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  start the lower bound of the range of trash entries to return
-	 * @param  end the upper bound of the range of trash entries to return (not
-	 *         inclusive)
-	 * @return the range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> getEntries(long groupId, int start, int end) {
-		return trashEntryPersistence.findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns a range of all the trash entries matching the group ID.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  start the lower bound of the range of trash entries to return
-	 * @param  end the upper bound of the range of trash entries to return (not
-	 *         inclusive)
-	 * @param  orderByComparator the comparator to order the trash entries
-	 *         (optionally <code>null</code>)
-	 * @return the range of matching trash entries ordered by comparator
-	 *         <code>orderByComparator</code>
-	 */
-	@Override
-	public List<TrashEntry> getEntries(
-		long groupId, int start, int end,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		return trashEntryPersistence.findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
 	@Override
 	public List<TrashEntry> getEntries(long groupId, String className) {
 		return trashEntryPersistence.findByG_CN(
@@ -369,25 +333,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 		return trashEntryPersistence.findByCN_CPK(
 			_classNameLocalService.getClassNameId(className), classPK);
-	}
-
-	@Override
-	public Hits search(
-		long companyId, long groupId, long userId, String keywords, int start,
-		int end, Sort sort) {
-
-		try {
-			Indexer<TrashEntry> indexer = _indexerRegistry.nullSafeGetIndexer(
-				TrashEntry.class);
-
-			SearchContext searchContext = _buildSearchContext(
-				companyId, groupId, userId, keywords, start, end, sort);
-
-			return indexer.search(searchContext);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
 	}
 
 	@Override

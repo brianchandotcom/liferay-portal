@@ -8,7 +8,6 @@ package com.liferay.trash.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.service.base.TrashVersionLocalServiceBaseImpl;
 
@@ -71,16 +70,6 @@ public class TrashVersionLocalServiceImpl
 	@Override
 	public List<TrashVersion> getVersions(long entryId) {
 		return trashVersionPersistence.findByEntryId(entryId);
-	}
-
-	@Override
-	public List<TrashVersion> getVersions(long entryId, String className) {
-		if (Validator.isNull(className)) {
-			return trashVersionPersistence.findByEntryId(entryId);
-		}
-
-		return trashVersionPersistence.findByE_CN(
-			entryId, _classNameLocalService.getClassNameId(className));
 	}
 
 	@Reference

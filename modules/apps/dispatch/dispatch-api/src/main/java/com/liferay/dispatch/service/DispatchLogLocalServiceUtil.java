@@ -263,12 +263,6 @@ public class DispatchLogLocalServiceUtil {
 	}
 
 	public static List<DispatchLog> getDispatchLogs(
-		long dispatchTriggerId, int start, int end) {
-
-		return getService().getDispatchLogs(dispatchTriggerId, start, end);
-	}
-
-	public static List<DispatchLog> getDispatchLogs(
 		long dispatchTriggerId, int start, int end,
 		OrderByComparator<DispatchLog> orderByComparator) {
 
@@ -347,4 +341,4 @@ public class DispatchLogLocalServiceUtil {
 			DispatchLogLocalServiceUtil.class, DispatchLogLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2128174621
+// LIFERAY-SERVICE-BUILDER-HASH:1756916859

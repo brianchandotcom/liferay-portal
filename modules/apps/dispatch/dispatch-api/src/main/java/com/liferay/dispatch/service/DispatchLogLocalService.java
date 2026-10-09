@@ -238,10 +238,6 @@ public interface DispatchLogLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DispatchLog> getDispatchLogs(
-		long dispatchTriggerId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DispatchLog> getDispatchLogs(
 		long dispatchTriggerId, int start, int end,
 		OrderByComparator<DispatchLog> orderByComparator);
 
@@ -293,4 +289,4 @@ public interface DispatchLogLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1278523321
+// LIFERAY-SERVICE-BUILDER-HASH:-602265128

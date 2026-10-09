@@ -302,14 +302,6 @@ public class DispatchLogLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dispatch.model.DispatchLog>
-		getDispatchLogs(long dispatchTriggerId, int start, int end) {
-
-		return _dispatchLogLocalService.getDispatchLogs(
-			dispatchTriggerId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.dispatch.model.DispatchLog>
 		getDispatchLogs(
 			long dispatchTriggerId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -410,4 +402,4 @@ public class DispatchLogLocalServiceWrapper
 	private DispatchLogLocalService _dispatchLogLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-9061983
+// LIFERAY-SERVICE-BUILDER-HASH:-2096583461

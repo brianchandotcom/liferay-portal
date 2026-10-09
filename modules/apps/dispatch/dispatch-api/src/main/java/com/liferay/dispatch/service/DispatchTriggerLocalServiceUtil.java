@@ -323,19 +323,6 @@ public class DispatchTriggerLocalServiceUtil {
 			uuid, companyId);
 	}
 
-	public static List<DispatchTrigger> getDispatchTriggers(boolean active) {
-		return getService().getDispatchTriggers(active);
-	}
-
-	public static List<DispatchTrigger> getDispatchTriggers(
-		boolean active,
-		com.liferay.dispatch.executor.DispatchTaskClusterMode
-			dispatchTaskClusterMode) {
-
-		return getService().getDispatchTriggers(
-			active, dispatchTaskClusterMode);
-	}
-
 	/**
 	 * Returns a range of all the dispatch triggers.
 	 *
@@ -411,25 +398,6 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.Date getPreviousFireDate(long dispatchTriggerId)
-		throws PortalException {
-
-		return getService().getPreviousFireDate(dispatchTriggerId);
-	}
-
-	public static List<DispatchTrigger> getUserDispatchTriggers(
-		long companyId, long userId, int start, int end) {
-
-		return getService().getUserDispatchTriggers(
-			companyId, userId, start, end);
-	}
-
-	public static int getUserDispatchTriggersCount(
-		long companyId, long userId) {
-
-		return getService().getUserDispatchTriggersCount(companyId, userId);
-	}
-
 	/**
 	 * Updates the dispatch trigger in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -484,4 +452,4 @@ public class DispatchTriggerLocalServiceUtil {
 			DispatchTriggerLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:53945700
+// LIFERAY-SERVICE-BUILDER-HASH:554121363

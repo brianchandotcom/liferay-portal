@@ -372,24 +372,6 @@ public class DispatchTriggerLocalServiceWrapper
 			getDispatchTriggerByUuidAndCompanyId(uuid, companyId);
 	}
 
-	@Override
-	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getDispatchTriggers(boolean active) {
-
-		return _dispatchTriggerLocalService.getDispatchTriggers(active);
-	}
-
-	@Override
-	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getDispatchTriggers(
-			boolean active,
-			com.liferay.dispatch.executor.DispatchTaskClusterMode
-				dispatchTaskClusterMode) {
-
-		return _dispatchTriggerLocalService.getDispatchTriggers(
-			active, dispatchTaskClusterMode);
-	}
-
 	/**
 	 * Returns a range of all the dispatch triggers.
 	 *
@@ -477,29 +459,6 @@ public class DispatchTriggerLocalServiceWrapper
 		return _dispatchTriggerLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public java.util.Date getPreviousFireDate(long dispatchTriggerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dispatchTriggerLocalService.getPreviousFireDate(
-			dispatchTriggerId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
-		getUserDispatchTriggers(
-			long companyId, long userId, int start, int end) {
-
-		return _dispatchTriggerLocalService.getUserDispatchTriggers(
-			companyId, userId, start, end);
-	}
-
-	@Override
-	public int getUserDispatchTriggersCount(long companyId, long userId) {
-		return _dispatchTriggerLocalService.getUserDispatchTriggersCount(
-			companyId, userId);
-	}
-
 	/**
 	 * Updates the dispatch trigger in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -568,4 +527,4 @@ public class DispatchTriggerLocalServiceWrapper
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-594566932
+// LIFERAY-SERVICE-BUILDER-HASH:-1429302899

@@ -278,13 +278,6 @@ public interface DispatchTriggerLocalService
 			String uuid, long companyId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DispatchTrigger> getDispatchTriggers(boolean active);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DispatchTrigger> getDispatchTriggers(
-		boolean active, DispatchTaskClusterMode dispatchTaskClusterMode);
-
 	/**
 	 * Returns a range of all the dispatch triggers.
 	 *
@@ -339,17 +332,6 @@ public interface DispatchTriggerLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Date getPreviousFireDate(long dispatchTriggerId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DispatchTrigger> getUserDispatchTriggers(
-		long companyId, long userId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserDispatchTriggersCount(long companyId, long userId);
-
 	/**
 	 * Updates the dispatch trigger in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -379,4 +361,4 @@ public interface DispatchTriggerLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1446508126
+// LIFERAY-SERVICE-BUILDER-HASH:-838912358

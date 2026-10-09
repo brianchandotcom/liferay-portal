@@ -73,7 +73,7 @@ test(
 
 		await expect(
 			notificationsPage.getNotification(
-				'An unexpected error occurred.',
+				`No Company exists with the key {webId=${name}}`,
 				`The instance ${name} could not be deleted.`
 			)
 		).toBeVisible();

@@ -99,6 +99,15 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 		_bundleContext = bundleContext;
 	}
 
+	private void _addPortalHostName(
+		String hostName, Set<String> portalHostNames) {
+
+		if (Validator.isNotNull(hostName)) {
+			portalHostNames.add(
+				StringUtil.toLowerCase(StringUtil.trim(hostName)));
+		}
+	}
+
 	private StaticSiteExport _export(
 			long groupId, List<Layout> layouts, Set<Locale> locales)
 		throws PortalException {
@@ -166,15 +175,6 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
-		}
-	}
-
-	private void _addPortalHostName(
-		String hostName, Set<String> portalHostNames) {
-
-		if (Validator.isNotNull(hostName)) {
-			portalHostNames.add(
-				StringUtil.toLowerCase(StringUtil.trim(hostName)));
 		}
 	}
 

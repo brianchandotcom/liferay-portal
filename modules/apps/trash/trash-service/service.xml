@@ -39,9 +39,6 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="G_LtCD" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="&lt;" name="createDate" />
@@ -81,10 +78,6 @@
 
 		<finder name="EntryId" return-type="Collection">
 			<finder-column name="entryId" />
-		</finder>
-		<finder name="E_CN" return-type="Collection">
-			<finder-column name="entryId" />
-			<finder-column name="classNameId" />
 		</finder>
 		<finder name="CN_CPK" return-type="TrashVersion" unique="true">
 			<finder-column name="classNameId" />

@@ -6334,6 +6334,30 @@
 	},
 	{
 		"classNames": [
+			"CommerceOrderHttpHelper"
+		],
+		"from": "getCommerceCartPortletURL(HttpServletRequest paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-102414"
+	},
+	{
+		"classNames": [
+			"CommerceOrderHttpHelper"
+		],
+		"from": "getCommerceCartPortletURL(HttpServletRequest paramName, CommerceOrder paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-102414"
+	},
+	{
+		"classNames": [
+			"CommerceOrderHttpHelper"
+		],
+		"from": "getCommerceCartPortletURL(long paramName, HttpServletRequest paramName, CommerceOrder paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-102414"
+	},
+	{
+		"classNames": [
 			"CommerceOrderLocalService",
 			"CommerceOrderLocalServiceUtil",
 			"CommerceOrderLocalServiceWrapper",

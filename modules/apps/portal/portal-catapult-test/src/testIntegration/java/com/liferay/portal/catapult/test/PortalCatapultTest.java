@@ -339,11 +339,11 @@ public class PortalCatapultTest {
 
 			_httpServer.createContext(
 				"/",
-				httpExchange -> _respond(
+				httpExchange -> _handle(
 					httpExchange, null, "{}", HttpURLConnection.HTTP_OK));
 			_httpServer.createContext(
 				"/resource",
-				httpExchange -> _respond(
+				httpExchange -> _handle(
 					httpExchange, redirectURL, responseBody, statusCode));
 
 			_httpServer.start();
@@ -374,15 +374,7 @@ public class PortalCatapultTest {
 			return _url;
 		}
 
-		private boolean _hasHeaders() {
-			if (_headers != null) {
-				return true;
-			}
-
-			return false;
-		}
-
-		private void _respond(
+		private void _handle(
 				HttpExchange httpExchange, String redirectURL,
 				String responseBody, int statusCode)
 			throws IOException {
@@ -410,6 +402,14 @@ public class PortalCatapultTest {
 			try (OutputStream outputStream = httpExchange.getResponseBody()) {
 				outputStream.write(bytes);
 			}
+		}
+
+		private boolean _hasHeaders() {
+			if (_headers != null) {
+				return true;
+			}
+
+			return false;
 		}
 
 		private volatile Headers _headers;

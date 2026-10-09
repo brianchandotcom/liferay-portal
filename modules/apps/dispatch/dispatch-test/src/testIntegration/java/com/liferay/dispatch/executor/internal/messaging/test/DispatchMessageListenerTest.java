@@ -72,7 +72,7 @@ public class DispatchMessageListenerTest {
 		List<DispatchLog> dispatchLogs =
 			_dispatchLogLocalService.getDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(
 			String.format(
@@ -97,7 +97,7 @@ public class DispatchMessageListenerTest {
 		_assertExecutionSequence(
 			_dispatchLogLocalService.getDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS),
+				QueryUtil.ALL_POS, null),
 			executeCount, true);
 	}
 
@@ -112,7 +112,7 @@ public class DispatchMessageListenerTest {
 		_assertExecutionSequence(
 			_dispatchLogLocalService.getDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS),
+				QueryUtil.ALL_POS, null),
 			executeCount, false);
 	}
 

@@ -202,7 +202,7 @@ public class DispatchLogLocalServiceTest {
 		List<DispatchLog> dispatchLogs =
 			_dispatchLogLocalService.getDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, null);
 
 		_assertLatestStartDate(dispatchLog, dispatchLogs);
 
@@ -245,7 +245,7 @@ public class DispatchLogLocalServiceTest {
 		List<DispatchLog> dispatchLogs =
 			_dispatchLogLocalService.getDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
 			dispatchLogs.toString(), dispatchLogsCount, dispatchLogs.size());

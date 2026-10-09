@@ -86,7 +86,7 @@ public class CTConflictCheckerDispatchTaskExecutorTest {
 		List<DispatchLog> dispatchLogs =
 			_dispatchLogLocalService.getDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, null);
 
 		DispatchLog dispatchLog = dispatchLogs.get(0);
 

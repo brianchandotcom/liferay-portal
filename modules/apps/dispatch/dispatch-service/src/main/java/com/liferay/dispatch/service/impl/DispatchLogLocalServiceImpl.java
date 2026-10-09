@@ -120,14 +120,6 @@ public class DispatchLogLocalServiceImpl
 
 	@Override
 	public List<DispatchLog> getDispatchLogs(
-		long dispatchTriggerId, int start, int end) {
-
-		return dispatchLogPersistence.findByDispatchTriggerId(
-			dispatchTriggerId, start, end);
-	}
-
-	@Override
-	public List<DispatchLog> getDispatchLogs(
 		long dispatchTriggerId, int start, int end,
 		OrderByComparator<DispatchLog> orderByComparator) {
 

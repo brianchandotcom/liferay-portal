@@ -55,6 +55,7 @@ import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.task.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
+import com.liferay.gradle.plugins.schema.manifest.builder.SchemaManifestBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
@@ -516,6 +517,22 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project, portalRootDir,
 						RESTBuilderPlugin.CONFIGURATION_NAME,
 						_REST_BUILDER_PORTAL_TOOL_NAME);
+				}
+
+			});
+
+		GradleUtil.withPlugin(
+			project, SchemaManifestBuilderPlugin.class,
+			new Action<SchemaManifestBuilderPlugin>() {
+
+				@Override
+				public void execute(
+					SchemaManifestBuilderPlugin schemaManifestBuilderPlugin) {
+
+					_configureLocalPortalTool(
+						project, portalRootDir,
+						SchemaManifestBuilderPlugin.CONFIGURATION_NAME,
+						_SCHEMA_MANIFEST_BUILDER_PORTAL_TOOL_NAME);
 				}
 
 			});
@@ -1556,6 +1573,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (FileUtil.exists(project, "rest-config.yaml")) {
 			GradleUtil.applyPlugin(project, RESTBuilderPlugin.class);
+		}
+
+		if (_hasUpgradeStepRegistrator(project)) {
+			GradleUtil.applyPlugin(project, SchemaManifestBuilderPlugin.class);
 		}
 
 		if (FileUtil.exists(project, "service.xml")) {
@@ -4673,6 +4694,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return !sourceDirectorySet.isEmpty();
 	}
 
+	private boolean _hasUpgradeStepRegistrator(Project project) {
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", project.file("src/main/java"));
+		args.put("include", "**/upgrade/registry/*UpgradeStepRegistrator.java");
+
+		FileTree fileTree = project.fileTree(args);
+
+		return !fileTree.isEmpty();
+	}
+
 	private boolean _isPublishing(Project project) {
 		Gradle gradle = project.getGradle();
 
@@ -4945,6 +4977,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _REST_BUILDER_PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.rest.builder";
+
+	private static final String _SCHEMA_MANIFEST_BUILDER_PORTAL_TOOL_NAME =
+		"com.liferay.portal.tools.schema.manifest.builder";
 
 	private static final String _SERVICE_BUILDER_PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.service.builder";

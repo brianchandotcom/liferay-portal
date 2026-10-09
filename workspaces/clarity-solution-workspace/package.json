@@ -18,6 +18,7 @@
 			"client-extensions/clarity-solution-custom-element-distributors-table",
 			"client-extensions/clarity-solution-custom-element-distributor-details",
 			"client-extensions/clarity-solution-custom-element-distributors-map-osm",
+			"client-extensions/clarity-solution-custom-element-distributors-map-osm-with-slots",
 			"client-extensions/clarity-solution-commerce-checkout-step",
 			"client-extensions/clarity-solution-js-import-maps-entry-distributors"
 		]

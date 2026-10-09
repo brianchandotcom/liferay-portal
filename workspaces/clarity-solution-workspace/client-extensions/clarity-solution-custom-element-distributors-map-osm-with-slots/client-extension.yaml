@@ -1,0 +1,8 @@
+assemble:
+    -   from: build/vite
+        into: static
+clarity-solution-custom-element-distributors-map-osm-with-slots:
+    bareSpecifier: clarity-solution-custom-element-distributors-map-osm-with-slots
+    name: Clarity Solution Custom Element Distributors Map OSM With Slots
+    type: jsImportMapsEntry
+    url: index.js

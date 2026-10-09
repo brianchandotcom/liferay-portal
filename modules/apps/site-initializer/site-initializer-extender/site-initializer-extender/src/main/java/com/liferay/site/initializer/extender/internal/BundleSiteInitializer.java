@@ -47,7 +47,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
@@ -300,8 +302,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
 		DepotEntryLocalService depotEntryLocalService,
+		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-		DLURLHelper dlURLHelper,
+		DLFolderLocalService dlFolderLocalService, DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
 		ExpandoValueLocalService expandoValueLocalService,
@@ -394,7 +397,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
 		_depotEntryLocalService = depotEntryLocalService;
+		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+		_dlFolderLocalService = dlFolderLocalService;
 		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
@@ -6541,7 +6546,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_depotEntryGroupRelLocalService;
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private boolean _dialectThemeDetected;
+	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private final DLFolderLocalService _dlFolderLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;

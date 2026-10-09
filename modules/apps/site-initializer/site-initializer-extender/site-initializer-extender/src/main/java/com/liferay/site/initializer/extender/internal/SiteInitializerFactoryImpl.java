@@ -21,7 +21,9 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.helper.DLURLHelper;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -141,7 +143,8 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_configurationProvider, _dataDefinitionResourceFactory,
 			_ddmStructureLocalService, _ddmTemplateLocalService,
 			_defaultDDMStructureHelper, _depotEntryGroupRelLocalService,
-			_depotEntryLocalService, _dlFileEntryTypeLocalService, _dlURLHelper,
+			_depotEntryLocalService, _dlFileEntryLocalService,
+			_dlFileEntryTypeLocalService, _dlFolderLocalService, _dlURLHelper,
 			_documentFolderResourceFactory, _documentResourceFactory,
 			_expandoValueLocalService, _fragmentEntryLinkLocalService,
 			_fragmentsImporter, _groupLocalService, _journalArticleLocalService,
@@ -266,7 +269,13 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

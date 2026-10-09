@@ -1961,10 +1961,6 @@ public class UserLocalServiceTest {
 		User user1 = _addUserWithWorkflow();
 		User user2 = _addUserWithWorkflow();
 
-		WorkflowHandler<User> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				User.class.getName());
-
 		AuditRequestThreadLocal auditRequestThreadLocal =
 			AuditRequestThreadLocal.getAuditThreadLocal();
 
@@ -1983,6 +1979,10 @@ public class UserLocalServiceTest {
 		auditRequestThreadLocal.setSessionID(sessionID);
 
 		try {
+			WorkflowHandler<User> workflowHandler =
+				WorkflowHandlerRegistryUtil.getWorkflowHandler(
+					User.class.getName());
+
 			user1 = workflowHandler.updateStatus(
 				WorkflowConstants.STATUS_APPROVED, _getWorkflowContext(user1));
 

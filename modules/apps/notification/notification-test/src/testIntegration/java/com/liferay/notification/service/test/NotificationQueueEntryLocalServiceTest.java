@@ -245,8 +245,13 @@ public class NotificationQueueEntryLocalServiceTest {
 			notificationQueueEntryId,
 			NotificationQueueEntryConstants.STATUS_FAILED);
 
-		_notificationQueueEntryLocalService.resendNotificationQueueEntry(
-			notificationQueueEntryId);
+		notificationQueueEntry =
+			_notificationQueueEntryLocalService.resendNotificationQueueEntry(
+				notificationQueueEntryId);
+
+		Assert.assertEquals(
+			NotificationQueueEntryConstants.STATUS_SENT,
+			notificationQueueEntry.getStatus());
 
 		_notificationQueueEntryLocalService.updateStatus(
 			notificationQueueEntryId,

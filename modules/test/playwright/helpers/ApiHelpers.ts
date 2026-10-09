@@ -92,6 +92,7 @@ import {JSONWebServicesStagingApiHelper} from './json-web-services/JSONWebServic
 import {JSONWebServicesTeamApiHelper} from './json-web-services/JSONWebServicesTeamApiHelper';
 import {JSONWebServicesUserApiHelper} from './json-web-services/JSONWebServicesUserApiHelper';
 import {JSONWebServicesUserGroupApiHelper} from './json-web-services/JSONWebServicesUserGroupApiHelper';
+import {JSONWebServicesWorkflowDefinitionLinkApiHelper} from './json-web-services/JSONWebServicesWorkflowDefinitionLinkApiHelper';
 
 type TDataApiHelpersData = {
 	applicationName?: string;
@@ -178,6 +179,7 @@ export class ApiHelpers {
 	readonly jsonWebServicesTeam: JSONWebServicesTeamApiHelper;
 	readonly jsonWebServicesUser: JSONWebServicesUserApiHelper;
 	readonly jsonWebServicesUserGroup: JSONWebServicesUserGroupApiHelper;
+	readonly jsonWebServicesWorkflowDefinitionLink: JSONWebServicesWorkflowDefinitionLinkApiHelper;
 	readonly language: LanguageApiHelper;
 	readonly listTypeAdmin: ListTypeAdminApiHelper;
 	readonly notification: NotificationApiHelper;
@@ -300,6 +302,8 @@ export class ApiHelpers {
 		this.jsonWebServicesUserGroup = new JSONWebServicesUserGroupApiHelper(
 			this
 		);
+		this.jsonWebServicesWorkflowDefinitionLink =
+			new JSONWebServicesWorkflowDefinitionLinkApiHelper(this);
 		this.language = new LanguageApiHelper(this);
 		this.listTypeAdmin = new ListTypeAdminApiHelper(this);
 		this.notification = new NotificationApiHelper(this);

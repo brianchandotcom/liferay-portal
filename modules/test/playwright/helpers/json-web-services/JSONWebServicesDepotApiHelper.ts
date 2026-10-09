@@ -8,6 +8,7 @@ import getRandomString from '../../utils/getRandomString';
 import {ApiHelpers} from '../ApiHelpers';
 
 type DepotEntry = {
+	companyId: number;
 	depotEntryId: string;
 	groupId: number;
 };

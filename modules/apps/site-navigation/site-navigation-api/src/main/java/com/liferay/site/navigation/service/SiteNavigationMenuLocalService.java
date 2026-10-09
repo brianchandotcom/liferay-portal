@@ -149,10 +149,6 @@ public interface SiteNavigationMenuLocalService
 			SiteNavigationMenu siteNavigationMenu)
 		throws PortalException;
 
-	public SiteNavigationMenu deleteSiteNavigationMenu(
-			String externalReferenceCode, long groupId)
-		throws PortalException;
-
 	public void deleteSiteNavigationMenus(long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -241,10 +237,6 @@ public interface SiteNavigationMenuLocalService
 	public SiteNavigationMenu fetchSiteNavigationMenuByExternalReferenceCode(
 		String externalReferenceCode, long groupId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SiteNavigationMenu fetchSiteNavigationMenuByName(
-		long groupId, String name);
-
 	/**
 	 * Returns the site navigation menu matching the UUID and group.
 	 *
@@ -330,16 +322,6 @@ public interface SiteNavigationMenuLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, String keywords, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator);
-
 	/**
 	 * Returns all the site navigation menus matching the UUID and company.
 	 *
@@ -373,12 +355,6 @@ public interface SiteNavigationMenuLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSiteNavigationMenusCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSiteNavigationMenusCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSiteNavigationMenusCount(long groupId, String keywords);
 
 	public SiteNavigationMenu updateSiteNavigationMenu(
 			long userId, long siteNavigationMenuId, int type, boolean auto,
@@ -425,4 +401,4 @@ public interface SiteNavigationMenuLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1657933472
+// LIFERAY-SERVICE-BUILDER-HASH:-1095269481

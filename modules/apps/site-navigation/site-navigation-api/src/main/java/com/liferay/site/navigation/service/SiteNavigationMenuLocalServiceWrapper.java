@@ -163,15 +163,6 @@ public class SiteNavigationMenuLocalServiceWrapper
 	}
 
 	@Override
-	public SiteNavigationMenu deleteSiteNavigationMenu(
-			String externalReferenceCode, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _siteNavigationMenuLocalService.deleteSiteNavigationMenu(
-			externalReferenceCode, groupId);
-	}
-
-	@Override
 	public void deleteSiteNavigationMenus(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -308,14 +299,6 @@ public class SiteNavigationMenuLocalServiceWrapper
 		return _siteNavigationMenuLocalService.
 			fetchSiteNavigationMenuByExternalReferenceCode(
 				externalReferenceCode, groupId);
-	}
-
-	@Override
-	public SiteNavigationMenu fetchSiteNavigationMenuByName(
-		long groupId, String name) {
-
-		return _siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
-			groupId, name);
 	}
 
 	/**
@@ -455,26 +438,6 @@ public class SiteNavigationMenuLocalServiceWrapper
 		return _siteNavigationMenuLocalService.getSiteNavigationMenus(groupId);
 	}
 
-	@Override
-	public java.util.List<SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator) {
-
-		return _siteNavigationMenuLocalService.getSiteNavigationMenus(
-			groupId, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, String keywords, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenu>
-			orderByComparator) {
-
-		return _siteNavigationMenuLocalService.getSiteNavigationMenus(
-			groupId, keywords, start, end, orderByComparator);
-	}
-
 	/**
 	 * Returns all the site navigation menus matching the UUID and company.
 	 *
@@ -520,18 +483,6 @@ public class SiteNavigationMenuLocalServiceWrapper
 	@Override
 	public int getSiteNavigationMenusCount() {
 		return _siteNavigationMenuLocalService.getSiteNavigationMenusCount();
-	}
-
-	@Override
-	public int getSiteNavigationMenusCount(long groupId) {
-		return _siteNavigationMenuLocalService.getSiteNavigationMenusCount(
-			groupId);
-	}
-
-	@Override
-	public int getSiteNavigationMenusCount(long groupId, String keywords) {
-		return _siteNavigationMenuLocalService.getSiteNavigationMenusCount(
-			groupId, keywords);
 	}
 
 	@Override
@@ -622,4 +573,4 @@ public class SiteNavigationMenuLocalServiceWrapper
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-49170783
+// LIFERAY-SERVICE-BUILDER-HASH:-1509351027

@@ -152,14 +152,6 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().deleteSiteNavigationMenu(siteNavigationMenu);
 	}
 
-	public static SiteNavigationMenu deleteSiteNavigationMenu(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		return getService().deleteSiteNavigationMenu(
-			externalReferenceCode, groupId);
-	}
-
 	public static void deleteSiteNavigationMenus(long groupId)
 		throws PortalException {
 
@@ -275,12 +267,6 @@ public class SiteNavigationMenuLocalServiceUtil {
 
 		return getService().fetchSiteNavigationMenuByExternalReferenceCode(
 			externalReferenceCode, groupId);
-	}
-
-	public static SiteNavigationMenu fetchSiteNavigationMenuByName(
-		long groupId, String name) {
-
-		return getService().fetchSiteNavigationMenuByName(groupId, name);
 	}
 
 	/**
@@ -404,22 +390,6 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().getSiteNavigationMenus(groupId);
 	}
 
-	public static List<SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getService().getSiteNavigationMenus(
-			groupId, start, end, orderByComparator);
-	}
-
-	public static List<SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, String keywords, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getService().getSiteNavigationMenus(
-			groupId, keywords, start, end, orderByComparator);
-	}
-
 	/**
 	 * Returns all the site navigation menus matching the UUID and company.
 	 *
@@ -460,16 +430,6 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 */
 	public static int getSiteNavigationMenusCount() {
 		return getService().getSiteNavigationMenusCount();
-	}
-
-	public static int getSiteNavigationMenusCount(long groupId) {
-		return getService().getSiteNavigationMenusCount(groupId);
-	}
-
-	public static int getSiteNavigationMenusCount(
-		long groupId, String keywords) {
-
-		return getService().getSiteNavigationMenusCount(groupId, keywords);
 	}
 
 	public static SiteNavigationMenu updateSiteNavigationMenu(
@@ -525,4 +485,4 @@ public class SiteNavigationMenuLocalServiceUtil {
 			SiteNavigationMenuLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1474406708
+// LIFERAY-SERVICE-BUILDER-HASH:1656398634

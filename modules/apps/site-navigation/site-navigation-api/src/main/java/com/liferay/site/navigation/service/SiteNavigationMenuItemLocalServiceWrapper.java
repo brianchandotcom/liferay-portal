@@ -539,12 +539,6 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	@Override
-	public int getSiteNavigationMenuItemsCount(long siteNavigationMenuId) {
-		return _siteNavigationMenuItemLocalService.
-			getSiteNavigationMenuItemsCount(siteNavigationMenuId);
-	}
-
-	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 			int order)
@@ -636,4 +630,4 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		_siteNavigationMenuItemLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:560411459
+// LIFERAY-SERVICE-BUILDER-HASH:-1123962971

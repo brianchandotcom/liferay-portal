@@ -470,13 +470,6 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 		return getService().getSiteNavigationMenuItemsCount();
 	}
 
-	public static int getSiteNavigationMenuItemsCount(
-		long siteNavigationMenuId) {
-
-		return getService().getSiteNavigationMenuItemsCount(
-			siteNavigationMenuId);
-	}
-
 	public static SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 			int order)
@@ -533,4 +526,4 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 			SiteNavigationMenuItemLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1518951111
+// LIFERAY-SERVICE-BUILDER-HASH:1101401138

@@ -46,6 +46,7 @@ import com.liferay.document.library.helper.DLURLHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -2242,31 +2243,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).toString());
 		}
 
-		Page<DocumentFolder> documentFoldersPage = null;
+		DLFolder dlFolder = null;
 
 		if (documentFolderId != null) {
-			documentFoldersPage =
-				documentFolderResource.getDocumentFolderDocumentFoldersPage(
-					documentFolderId, false, null, null,
-					documentFolderResource.toFilter(
-						StringBundler.concat(
-							"name eq '", documentFolder.getName(), "'")),
-					null, null);
+			dlFolder = _dlFolderLocalService.fetchFolder(
+				groupId, documentFolderId, documentFolder.getName());
 		}
 		else {
-			documentFoldersPage =
-				documentFolderResource.getSiteDocumentFoldersPage(
-					groupId, false, null, null,
-					documentFolderResource.toFilter(
-						StringBundler.concat(
-							"name eq '", documentFolder.getName(), "'")),
-					null, null);
+			dlFolder = _dlFolderLocalService.fetchFolder(
+				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				documentFolder.getName());
 		}
 
-		DocumentFolder existingDocumentFolder =
-			documentFoldersPage.fetchFirstItem();
-
-		if (existingDocumentFolder == null) {
+		if (dlFolder == null) {
 			if (documentFolderId != null) {
 				documentFolder =
 					documentFolderResource.postDocumentFolderDocumentFolder(
@@ -2279,7 +2268,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 		else {
 			documentFolder = documentFolderResource.putDocumentFolder(
-				existingDocumentFolder.getId(), documentFolder);
+				dlFolder.getFolderId(), documentFolder);
 		}
 
 		return documentFolder.getId();
@@ -2351,16 +2340,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Document document = null;
 
 			if (documentFolderId != null) {
-				Page<Document> documentsPage =
-					documentResource.getDocumentFolderDocumentsPage(
-						documentFolderId, false, null, null,
-						documentResource.toFilter(
-							StringBundler.concat("title eq '", fileName, "'")),
-						null, null);
+				DLFileEntry dlFileEntry =
+					_dlFileEntryLocalService.fetchFileEntry(
+						groupId, documentFolderId, fileName);
 
-				Document existingDocument = documentsPage.fetchFirstItem();
-
-				if (existingDocument == null) {
+				if (dlFileEntry == null) {
 					document = documentResource.postDocumentFolderDocument(
 						documentFolderId,
 						MultipartBody.of(
@@ -2374,7 +2358,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 				else {
 					document = documentResource.putDocument(
-						existingDocument.getId(),
+						dlFileEntry.getFileEntryId(),
 						MultipartBody.of(
 							Collections.singletonMap(
 								"file",
@@ -2386,16 +2370,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			}
 			else {
-				Page<Document> documentsPage =
-					documentResource.getSiteDocumentsPage(
-						groupId, false, null, null,
-						documentResource.toFilter(
-							StringBundler.concat("title eq '", fileName, "'")),
-						null, null);
+				DLFileEntry dlFileEntry =
+					_dlFileEntryLocalService.fetchFileEntry(
+						groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						fileName);
 
-				Document existingDocument = documentsPage.fetchFirstItem();
-
-				if (existingDocument == null) {
+				if (dlFileEntry == null) {
 					document = documentResource.postSiteDocument(
 						groupId,
 						MultipartBody.of(
@@ -2409,7 +2389,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 				else {
 					document = documentResource.putDocument(
-						existingDocument.getId(),
+						dlFileEntry.getFileEntryId(),
 						MultipartBody.of(
 							Collections.singletonMap(
 								"file",

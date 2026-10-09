@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -24,6 +24,181 @@ const test = mergeTests(
 	}),
 	loginTest(),
 	pageEditorPagesTest
+);
+
+async function selectMasterCard(blankCard: Locator, masterPageCard: Locator) {
+	await expect(blankCard.locator('.card-type-asset-icon')).toHaveCSS(
+		'color',
+		'rgb(0, 110, 255)'
+	);
+	await expect(masterPageCard.locator('.card-type-asset-icon')).toHaveCSS(
+		'color',
+		'rgb(0, 110, 255)'
+	);
+
+	await masterPageCard.click();
+}
+
+test(
+	'Can select a library master when adding a display page template or a content page template',
+	{tag: ['@LPD-109440', '@LPD-109441', '@LPD-109442', '@LPD-109443']},
+	async ({apiHelpers, designLibrariesPage, page, pageEditorPage}) => {
+
+		// Add a design library with a master page
+
+		const designLibrary =
+			await apiHelpers.headlessAssetLibrary.createDesignLibrary();
+
+		const masterPageName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+			{
+				groupId: String(designLibrary.siteId),
+				name: masterPageName,
+				type: 'master-layout',
+			}
+		);
+
+		// Add a display page template with the master page
+
+		await designLibrariesPage.goToDesignLibrary(designLibrary.name);
+
+		await designLibrariesPage.clickAddAssetMenuItem(
+			'New Display Page Template'
+		);
+
+		const blankCard = page.getByRole('button', {
+			exact: true,
+			name: 'Blank',
+		});
+		const masterPageCard = page.getByRole('button', {
+			exact: true,
+			name: masterPageName,
+		});
+
+		await selectMasterCard(blankCard, masterPageCard);
+
+		const displayPageTemplateName = getRandomString();
+
+		await page
+			.getByLabel('Name', {exact: true})
+			.fill(displayPageTemplateName);
+
+		await page
+			.getByLabel('Content Type')
+			.selectOption({label: 'Web Content Article'});
+
+		await page
+			.getByLabel('Subtype')
+			.selectOption({label: 'Basic Web Content'});
+
+		await page.getByRole('button', {exact: true, name: 'Save'}).click();
+
+		// Check the editor uses the master page
+
+		await pageEditorPage.goToSidebarTab('Page Design Options');
+
+		await expect(masterPageCard).toHaveClass(/tab-card--active/);
+
+		// Publish it and check that it is in the design library
+
+		await pageEditorPage.publishPage();
+
+		await expect(
+			designLibrariesPage.resourcesTable.getByRole('row', {
+				name: displayPageTemplateName,
+			})
+		).toBeVisible();
+
+		// Add a content page template in a new set with the master page
+
+		await designLibrariesPage.clickAddAssetSubmenuItem(
+			'Page Templates',
+			'New Content Page Template'
+		);
+
+		await selectMasterCard(blankCard, masterPageCard);
+
+		const addPageTemplateModal = page.getByRole('dialog', {
+			name: 'Add Page Template',
+		});
+
+		const layoutPageTemplateEntryName1 = getRandomString();
+
+		await addPageTemplateModal
+			.getByLabel('Page Template Name')
+			.fill(layoutPageTemplateEntryName1);
+
+		const layoutPageTemplateCollectionName = getRandomString();
+
+		await addPageTemplateModal
+			.getByLabel('Page Template Set Name')
+			.fill(layoutPageTemplateCollectionName);
+
+		await addPageTemplateModal
+			.getByRole('button', {exact: true, name: 'Save'})
+			.click();
+
+		// Check the editor uses the master page
+
+		await pageEditorPage.goToSidebarTab('Page Design Options');
+
+		await expect(masterPageCard).toHaveClass(/tab-card--active/);
+
+		// Publish it and check that it is in the new set
+
+		await pageEditorPage.publishPage();
+
+		await expect(page).toHaveTitle(
+			`Page Templates - ${designLibrary.name} - Liferay`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: layoutPageTemplateCollectionName})
+		).toBeVisible();
+
+		await expect(
+			page
+				.locator('.card-type-asset')
+				.filter({hasText: layoutPageTemplateEntryName1})
+		).toBeVisible();
+
+		// Add another content page template from the set with the master page
+
+		await page
+			.getByRole('link', {exact: true, name: 'Content Page Template'})
+			.click();
+
+		await selectMasterCard(blankCard, masterPageCard);
+
+		const layoutPageTemplateEntryName2 = getRandomString();
+
+		await page
+			.getByPlaceholder('Name', {exact: true})
+			.fill(layoutPageTemplateEntryName2);
+
+		await page.getByRole('button', {exact: true, name: 'Save'}).click();
+
+		// Check the editor uses the master page
+
+		await pageEditorPage.goToSidebarTab('Page Design Options');
+
+		await expect(masterPageCard).toHaveClass(/tab-card--active/);
+
+		// Publish it and check that it is in the same set
+
+		await pageEditorPage.publishPage();
+
+		await expect(
+			page.getByRole('heading', {name: layoutPageTemplateCollectionName})
+		).toBeVisible();
+
+		await expect(
+			page
+				.locator('.card-type-asset')
+				.filter({hasText: layoutPageTemplateEntryName2})
+		).toBeVisible();
+	}
 );
 
 test(

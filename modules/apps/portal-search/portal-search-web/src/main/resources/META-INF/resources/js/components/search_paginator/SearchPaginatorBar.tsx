@@ -25,6 +25,11 @@ export interface ISearchPaginatorProps {
 	activeDelta: number;
 	activePage: number;
 
+	/**
+	 * How many results the active page holds.
+	 */
+	activePageItemsCount: number;
+
 	deltas: Array<IDelta>;
 
 	/**
@@ -98,6 +103,7 @@ interface IProps extends ISearchPaginatorProps {
 const SearchPaginatorBar = ({
 	activeDelta,
 	activePage,
+	activePageItemsCount,
 	children,
 	deltas,
 	showDeltasDropDown = true,
@@ -114,10 +120,18 @@ const SearchPaginatorBar = ({
 		Liferay.ThemeDisplay.getBCP47LanguageId()
 	);
 
-	// `totalItems` stays an exact number so the page count and the upper bound
-	// below remain arithmetic. When the search only counted up to its accurate
-	// count limit, that number is a floor rather than a true total, so it is
-	// the rendered label that gains the "or more" marker, not the value.
+	// `totalItems` stays an exact number so the page count remains arithmetic.
+	// When the search only counted up to its accurate count limit, that number
+	// is a floor rather than a true total, so it is the rendered label that
+	// gains the "or more" marker, not the value.
+
+	const firstItem = (activePage - 1) * activeDelta + 1;
+
+	// The range ends at the last result the page holds rather than where a
+	// full page would end, since the search engine's max result window can cut
+	// the page off before the total is reached.
+
+	const lastItem = firstItem + activePageItemsCount - 1;
 
 	const totalItemsLabel = totalItemsApproximate
 		? sub(Liferay.Language.get('x-plus'), [numberFormat.format(totalItems)])
@@ -163,10 +177,8 @@ const SearchPaginatorBar = ({
 
 			<PaginationBar.Results id={resultsId}>
 				{sub(Liferay.Language.get('showing-x-to-x-of-x-entries'), [
-					numberFormat.format((activePage - 1) * activeDelta + 1),
-					numberFormat.format(
-						Math.min(activePage * activeDelta, totalItems)
-					),
+					numberFormat.format(firstItem),
+					numberFormat.format(lastItem),
 					totalItemsLabel,
 				])}
 			</PaginationBar.Results>

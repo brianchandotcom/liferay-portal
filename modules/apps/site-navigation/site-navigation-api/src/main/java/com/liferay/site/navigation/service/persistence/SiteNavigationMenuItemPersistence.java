@@ -203,67 +203,6 @@ public interface SiteNavigationMenuItemPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns an ordered range of all the site navigation menu items where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	public java.util.List<SiteNavigationMenuItem> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Returns the first site navigation menu item in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	public SiteNavigationMenuItem findByCompanyId_First(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException;
-
-	/**
-	 * Returns the first site navigation menu item in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	public SiteNavigationMenuItem fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
-			orderByComparator);
-
-	/**
-	 * Removes all the site navigation menu items where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 */
-	public void removeByCompanyId(long companyId);
-
-	/**
-	 * Returns the number of site navigation menu items where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the number of matching site navigation menu items
-	 */
-	public int countByCompanyId(long companyId);
-
-	/**
 	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63;.
 	 *
 	 * <p>
@@ -323,70 +262,6 @@ public interface SiteNavigationMenuItemPersistence
 	 * @return the number of matching site navigation menu items
 	 */
 	public int countBySiteNavigationMenuId(long siteNavigationMenuId);
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	public java.util.List<SiteNavigationMenuItem>
-		findByParentSiteNavigationMenuItemId(
-			long parentSiteNavigationMenuItemId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SiteNavigationMenuItem> orderByComparator,
-			boolean useFinderCache);
-
-	/**
-	 * Returns the first site navigation menu item in the ordered set where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	public SiteNavigationMenuItem findByParentSiteNavigationMenuItemId_First(
-			long parentSiteNavigationMenuItemId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException;
-
-	/**
-	 * Returns the first site navigation menu item in the ordered set where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	public SiteNavigationMenuItem fetchByParentSiteNavigationMenuItemId_First(
-		long parentSiteNavigationMenuItemId,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
-			orderByComparator);
-
-	/**
-	 * Removes all the site navigation menu items where parentSiteNavigationMenuItemId = &#63; from the database.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 */
-	public void removeByParentSiteNavigationMenuItemId(
-		long parentSiteNavigationMenuItemId);
-
-	/**
-	 * Returns the number of site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @return the number of matching site navigation menu items
-	 */
-	public int countByParentSiteNavigationMenuItemId(
-		long parentSiteNavigationMenuItemId);
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where type = &#63;.
@@ -517,117 +392,6 @@ public interface SiteNavigationMenuItemPersistence
 	 */
 	public int countByS_P(
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId);
-
-	/**
-	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @return the matching site navigation menu items
-	 */
-	public java.util.List<SiteNavigationMenuItem> findByS_LikeN(
-		long siteNavigationMenuId, String name);
-
-	/**
-	 * Returns a range of all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	public java.util.List<SiteNavigationMenuItem> findByS_LikeN(
-		long siteNavigationMenuId, String name, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	public java.util.List<SiteNavigationMenuItem> findByS_LikeN(
-		long siteNavigationMenuId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	public java.util.List<SiteNavigationMenuItem> findByS_LikeN(
-		long siteNavigationMenuId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Returns the first site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching site navigation menu item
-	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
-	 */
-	public SiteNavigationMenuItem findByS_LikeN_First(
-			long siteNavigationMenuId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SiteNavigationMenuItem> orderByComparator)
-		throws NoSuchMenuItemException;
-
-	/**
-	 * Returns the first site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	public SiteNavigationMenuItem fetchByS_LikeN_First(
-		long siteNavigationMenuId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
-			orderByComparator);
-
-	/**
-	 * Removes all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63; from the database.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 */
-	public void removeByS_LikeN(long siteNavigationMenuId, String name);
-
-	/**
-	 * Returns the number of site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param name the name
-	 * @return the number of matching site navigation menu items
-	 */
-	public int countByS_LikeN(long siteNavigationMenuId, String name);
 
 	/**
 	 * Returns the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMenuItemException</code> if it could not be found.
@@ -851,59 +615,6 @@ public interface SiteNavigationMenuItemPersistence
 	}
 
 	/**
-	 * Returns all the site navigation menu items where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching site navigation menu items
-	 */
-	public default java.util.List<SiteNavigationMenuItem> findByCompanyId(
-		long companyId) {
-
-		return findByCompanyId(
-			companyId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
-			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	public default java.util.List<SiteNavigationMenuItem> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	public default java.util.List<SiteNavigationMenuItem> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SiteNavigationMenuItem>
-			orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63;.
 	 *
 	 * @param siteNavigationMenuId the site navigation menu ID
@@ -959,66 +670,6 @@ public interface SiteNavigationMenuItemPersistence
 
 		return findBySiteNavigationMenuId(
 			siteNavigationMenuId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @return the matching site navigation menu items
-	 */
-	public default java.util.List<SiteNavigationMenuItem>
-		findByParentSiteNavigationMenuItemId(
-			long parentSiteNavigationMenuItemId) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId,
-			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
-			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	public default java.util.List<SiteNavigationMenuItem>
-		findByParentSiteNavigationMenuItemId(
-			long parentSiteNavigationMenuItemId, int start, int end) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId, start, end, null, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	public default java.util.List<SiteNavigationMenuItem>
-		findByParentSiteNavigationMenuItemId(
-			long parentSiteNavigationMenuItemId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId, start, end, orderByComparator,
-			true);
 	}
 
 	/**
@@ -1138,4 +789,4 @@ public interface SiteNavigationMenuItemPersistence
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1401230827
+// LIFERAY-SERVICE-BUILDER-HASH:1143778905

@@ -278,25 +278,10 @@ public class SiteNavigationMenuItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountBySiteNavigationMenuId() throws Exception {
 		_persistence.countBySiteNavigationMenuId(RandomTestUtil.nextLong());
 
 		_persistence.countBySiteNavigationMenuId(0L);
-	}
-
-	@Test
-	public void testCountByParentSiteNavigationMenuItemId() throws Exception {
-		_persistence.countByParentSiteNavigationMenuItemId(
-			RandomTestUtil.nextLong());
-
-		_persistence.countByParentSiteNavigationMenuItemId(0L);
 	}
 
 	@Test
@@ -314,15 +299,6 @@ public class SiteNavigationMenuItemPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByS_P(0L, 0L);
-	}
-
-	@Test
-	public void testCountByS_LikeN() throws Exception {
-		_persistence.countByS_LikeN(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByS_LikeN(0L, "null");
-
-		_persistence.countByS_LikeN(0L, (String)null);
 	}
 
 	@Test
@@ -741,4 +717,4 @@ public class SiteNavigationMenuItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:346758852
+// LIFERAY-SERVICE-BUILDER-HASH:-977184345

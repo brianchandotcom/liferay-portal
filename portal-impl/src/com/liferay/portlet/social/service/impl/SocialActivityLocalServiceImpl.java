@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
-import com.liferay.portal.kernel.transaction.TransactionCallbackUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.asset.util.DeletedAssetEntryThreadLocal;
@@ -50,7 +49,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.Callable;
 
 /**
  * The social activity local service. This service provides the means to record
@@ -134,7 +132,7 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		final SocialActivity activity = socialActivityPersistence.create(0);
+		SocialActivity activity = socialActivityPersistence.create(0);
 
 		activity.setGroupId(groupId);
 		activity.setCompanyId(user.getCompanyId());
@@ -187,21 +185,7 @@ public class SocialActivityLocalServiceImpl
 			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
-		final SocialActivity finalMirrorActivity = mirrorActivity;
-
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				socialActivityLocalService.addActivity(
-					activity, finalMirrorActivity);
-
-				return null;
-			}
-
-		};
-
-		TransactionCallbackUtil.registerCommitCallback(callable);
+		socialActivityLocalService.addActivity(activity, mirrorActivity);
 	}
 
 	/**

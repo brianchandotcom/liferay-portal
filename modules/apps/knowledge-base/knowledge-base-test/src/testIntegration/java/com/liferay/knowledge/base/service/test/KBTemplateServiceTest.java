@@ -17,7 +17,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -127,8 +129,23 @@ public class KBTemplateServiceTest {
 
 		KBTemplate kbTemplate = _addKBTemplate(_group2);
 
-		_kbTemplateService.deleteKBTemplates(
-			_group1.getGroupId(), new long[] {kbTemplate.getKbTemplateId()});
+		_regularRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_regularRole.getCompanyId(), KBTemplate.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(kbTemplate.getKbTemplateId()),
+			_regularRole.getRoleId(), new String[] {KBActionKeys.DELETE});
+
+		_userLocalService.addRoleUser(_regularRole.getRoleId(), _user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user)) {
+
+			_kbTemplateService.deleteKBTemplates(
+				_group1.getGroupId(),
+				new long[] {kbTemplate.getKbTemplateId()});
+		}
 
 		Assert.assertNull(
 			_kbTemplateLocalService.fetchKBTemplate(
@@ -175,6 +192,12 @@ public class KBTemplateServiceTest {
 	private KBTemplateService _kbTemplateService;
 
 	@DeleteAfterTestRun
+	private Role _regularRole;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@DeleteAfterTestRun
 	private Role _role;
 
 	@DeleteAfterTestRun
@@ -182,5 +205,8 @@ public class KBTemplateServiceTest {
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

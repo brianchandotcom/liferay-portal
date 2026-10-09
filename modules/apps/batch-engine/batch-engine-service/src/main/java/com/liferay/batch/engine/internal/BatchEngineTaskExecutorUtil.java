@@ -50,7 +50,9 @@ public class BatchEngineTaskExecutorUtil {
 
 		String name = PrincipalThreadLocal.getName();
 
-		try {
+		try (SafeCloseable safeCloseable =
+				ItemIndexThreadLocal.pushIndexQueueWithSafeCloseable()) {
+
 			auditRequestThreadLocal.setRealUserEmailAddress(
 				user.getEmailAddress());
 			auditRequestThreadLocal.setRealUserId(user.getUserId());
@@ -66,11 +68,7 @@ public class BatchEngineTaskExecutorUtil {
 
 			PrincipalThreadLocal.setName(user.getUserId());
 
-			try (SafeCloseable safeCloseable =
-					ItemIndexThreadLocal.pushIndexQueueWithSafeCloseable()) {
-
-				return unsafeSupplier.get();
-			}
+			return unsafeSupplier.get();
 		}
 		finally {
 			auditRequestThreadLocal.setRealUserEmailAddress(

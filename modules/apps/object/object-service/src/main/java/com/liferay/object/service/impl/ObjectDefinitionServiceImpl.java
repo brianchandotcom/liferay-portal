@@ -232,26 +232,11 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
-	public List<ObjectDefinition> getObjectDefinitions(
-		long companyId, int start, int end) {
-
-		return objectDefinitionPersistence.findByCompanyId(
-			companyId, start, end);
-	}
-
-	@Override
 	public int getObjectDefinitionsCount() throws PortalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		return objectDefinitionPersistence.filterCountByCompanyId(
 			permissionChecker.getCompanyId());
-	}
-
-	@Override
-	public int getObjectDefinitionsCount(long companyId)
-		throws PortalException {
-
-		return objectDefinitionPersistence.countByCompanyId(companyId);
 	}
 
 	@Override

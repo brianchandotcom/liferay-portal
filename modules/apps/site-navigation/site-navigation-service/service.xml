@@ -83,14 +83,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="SiteNavigationMenuId" return-type="Collection">
 			<finder-column name="siteNavigationMenuId" />
-		</finder>
-		<finder name="ParentSiteNavigationMenuItemId" return-type="Collection">
-			<finder-column name="parentSiteNavigationMenuItemId" />
 		</finder>
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />
@@ -98,10 +92,6 @@
 		<finder name="S_P" return-type="Collection">
 			<finder-column name="siteNavigationMenuId" />
 			<finder-column name="parentSiteNavigationMenuItemId" />
-		</finder>
-		<finder name="S_LikeN" return-type="Collection">
-			<finder-column name="siteNavigationMenuId" />
-			<finder-column comparator="LIKE" name="name" />
 		</finder>
 	</entity>
 	<exceptions>

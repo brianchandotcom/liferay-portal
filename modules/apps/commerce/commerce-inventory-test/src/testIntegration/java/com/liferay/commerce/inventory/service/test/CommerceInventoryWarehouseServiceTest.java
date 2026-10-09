@@ -5,10 +5,13 @@
 
 package com.liferay.commerce.inventory.service.test;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -93,6 +96,14 @@ public class CommerceInventoryWarehouseServiceTest {
 
 	@Test
 	public void testDeleteCommerceInventoryWarehouse() throws Exception {
+		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel =
+			_commerceInventoryWarehouseRelLocalService.
+				addCommerceInventoryWarehouseRel(
+					TestPropsValues.getUserId(), AccountEntry.class.getName(),
+					RandomTestUtil.randomLong(),
+					_commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId());
+
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
@@ -115,6 +126,12 @@ public class CommerceInventoryWarehouseServiceTest {
 			_commerceInventoryWarehouseService.deleteCommerceInventoryWarehouse(
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 		}
+
+		Assert.assertNull(
+			_commerceInventoryWarehouseRelLocalService.
+				fetchCommerceInventoryWarehouseRel(
+					commerceInventoryWarehouseRel.
+						getCommerceInventoryWarehouseRelId()));
 	}
 
 	@Test
@@ -565,6 +582,10 @@ public class CommerceInventoryWarehouseServiceTest {
 	}
 
 	private CommerceInventoryWarehouse _commerceInventoryWarehouse;
+
+	@Inject
+	private CommerceInventoryWarehouseRelLocalService
+		_commerceInventoryWarehouseRelLocalService;
 
 	@Inject
 	private CommerceInventoryWarehouseService

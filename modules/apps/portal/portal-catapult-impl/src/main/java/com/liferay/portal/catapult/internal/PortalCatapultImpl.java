@@ -27,13 +27,17 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -110,6 +114,22 @@ public class PortalCatapultImpl implements PortalCatapult {
 					byte[] bytes = _http.URLtoByteArray(options);
 
 					Http.Response response = options.getResponse();
+
+					for (int i = 0; i < _MAX_REDIRECTS; i++) {
+						String redirectLocation = _getRedirectLocation(
+							location, options, response);
+
+						if (redirectLocation == null) {
+							break;
+						}
+
+						options.setLocation(redirectLocation);
+						options.setResponse(new Http.Response());
+
+						bytes = _http.URLtoByteArray(options);
+
+						response = options.getResponse();
+					}
 
 					if ((response.getResponseCode() >=
 							HttpURLConnection.HTTP_MULT_CHOICE) ||
@@ -192,6 +212,66 @@ public class PortalCatapultImpl implements PortalCatapult {
 		return StringBundler.concat(
 			homePageURL, StringPool.SLASH, resourcePath);
 	}
+
+	private String _getOrigin(URI uri) {
+		int port = uri.getPort();
+
+		if (port == -1) {
+			if (StringUtil.equalsIgnoreCase(uri.getScheme(), Http.HTTPS)) {
+				port = Http.HTTPS_PORT;
+			}
+			else {
+				port = Http.HTTP_PORT;
+			}
+		}
+
+		return StringBundler.concat(
+			uri.getScheme(), StringPool.COLON,
+			StringUtil.toLowerCase(uri.getHost()), StringPool.COLON, port);
+	}
+
+	private String _getRedirectLocation(
+		String location, Http.Options options, Http.Response response) {
+
+		String redirect = response.getRedirect();
+
+		if ((options.getMethod() != Http.Method.GET) ||
+			(response.getResponseCode() >=
+				HttpURLConnection.HTTP_BAD_REQUEST) ||
+			(response.getResponseCode() < HttpURLConnection.HTTP_MULT_CHOICE) ||
+			Validator.isNull(redirect)) {
+
+			return null;
+		}
+
+		try {
+			URI uri = new URI(options.getLocation());
+
+			URI redirectURI = uri.resolve(new URI(redirect));
+
+			if (Objects.equals(
+					_getOrigin(new URI(location)), _getOrigin(redirectURI))) {
+
+				return redirectURI.toString();
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to follow the redirect to ", redirectURI,
+						" because it leaves the origin of ", location));
+			}
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(uriSyntaxException);
+			}
+		}
+
+		return null;
+	}
+
+	private static final int _MAX_REDIRECTS = 5;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCatapultImpl.class);

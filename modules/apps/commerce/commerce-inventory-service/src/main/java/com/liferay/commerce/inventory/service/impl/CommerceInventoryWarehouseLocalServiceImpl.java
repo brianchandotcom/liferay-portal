@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRelTable;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseTable;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelLocalService;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseLocalServiceBaseImpl;
 import com.liferay.commerce.product.model.CommerceChannelRelTable;
 import com.liferay.commerce.product.model.CommerceChannelTable;
@@ -152,6 +153,10 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 
 		_commerceInventoryReplenishmentItemLocalService.
 			deleteCommerceInventoryReplenishmentItems(
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
+
+		_commerceInventoryWarehouseRelLocalService.
+			deleteCommerceInventoryWarehouseRels(
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 		_expandoRowLocalService.deleteRows(
@@ -699,6 +704,10 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 	@Reference
 	private CommerceInventoryWarehouseItemLocalService
 		_commerceInventoryWarehouseItemLocalService;
+
+	@Reference
+	private CommerceInventoryWarehouseRelLocalService
+		_commerceInventoryWarehouseRelLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

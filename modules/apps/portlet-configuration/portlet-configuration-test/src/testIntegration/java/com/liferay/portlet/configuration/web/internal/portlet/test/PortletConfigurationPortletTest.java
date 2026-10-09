@@ -438,9 +438,7 @@ public class PortletConfigurationPortletTest {
 		try {
 			clazz.getDeclaredMethod("checkPermissions", PortletRequest.class);
 
-			Assert.fail(
-				"Gate the template include from serveResource rather than by " +
-					"overriding checkPermissions");
+			Assert.fail();
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 		}

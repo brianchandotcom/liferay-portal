@@ -131,7 +131,7 @@
 		"jest-canvas-mock": "^2.5.2",
 		"jest-environment-jsdom": "^29.7.0",
 		"jest-extended": "^4.0.2",
-		"jest-junit": "^16.0.0",
+		"jest-junit": "^17.0.0",
 		"liferay-lang-key-dev-loader": "^1.0.3",
 		"mini-css-extract-plugin": "^2.7.6",
 		"mjml": "^4.6.3",

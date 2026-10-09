@@ -181,13 +181,6 @@ public class CommercePriceListLocalServiceWrapper
 			commercePriceListId);
 	}
 
-	@Override
-	public void deleteCommercePriceLists(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_commercePriceListLocalService.deleteCommercePriceLists(companyId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -974,4 +967,4 @@ public class CommercePriceListLocalServiceWrapper
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1386049642
+// LIFERAY-SERVICE-BUILDER-HASH:-2059119729

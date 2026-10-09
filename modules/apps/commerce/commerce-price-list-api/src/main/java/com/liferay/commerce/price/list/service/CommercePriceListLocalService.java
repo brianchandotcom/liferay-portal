@@ -161,8 +161,6 @@ public interface CommercePriceListLocalService
 	public CommercePriceList deleteCommercePriceList(long commercePriceListId)
 		throws PortalException;
 
-	public void deleteCommercePriceLists(long companyId) throws PortalException;
-
 	/**
 	 * @throws PortalException
 	 */
@@ -622,4 +620,4 @@ public interface CommercePriceListLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1598055346
+// LIFERAY-SERVICE-BUILDER-HASH:1530436664

@@ -10,6 +10,7 @@ import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.catapult.PortalCatapultHeaderContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -25,10 +26,14 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -69,8 +74,9 @@ public class PortalCatapultTest {
 	@Test
 	public void testLaunch() throws Exception {
 		_testLaunchWithContributedHeaders();
+		_testLaunchWithCrossOriginRedirect();
 		_testLaunchWithErrorResponse();
-		_testLaunchWithRedirect();
+		_testLaunchWithSameOriginRedirect();
 		_testLaunchWithoutContributedHeaders();
 	}
 
@@ -186,6 +192,53 @@ public class PortalCatapultTest {
 		}
 	}
 
+	private void _testLaunchWithCrossOriginRedirect() throws Exception {
+		try (ClientExtensionHttpServer redirectClientExtensionHttpServer =
+				new ClientExtensionHttpServer();
+
+			ClientExtensionHttpServer clientExtensionHttpServer =
+				new ClientExtensionHttpServer(
+					redirectClientExtensionHttpServer._getURL() + "/resource",
+					RandomTestUtil.randomString(),
+					HttpURLConnection.HTTP_MOVED_TEMP);
+
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.catapult.internal.PortalCatapultImpl",
+				LoggerTestUtil.WARN)) {
+
+			String value = RandomTestUtil.randomString();
+
+			Assert.assertThrows(
+				ExecutionException.class,
+				() -> _launch(
+					clientExtensionHttpServer, Http.Method.GET, null,
+					(companyId, headers, homePageURL, location,
+					 oAuth2ApplicationFeatures, userId) -> headers.put(
+						_HEADER_NAME, value)));
+
+			List<String> headerValues = clientExtensionHttpServer._getHeaders(
+				_HEADER_NAME);
+
+			Assert.assertEquals(value, headerValues.get(0));
+
+			Assert.assertFalse(redirectClientExtensionHttpServer._hasHeaders());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to follow the redirect to ",
+					redirectClientExtensionHttpServer._getURL(),
+					"/resource because it leaves the origin of ",
+					clientExtensionHttpServer._getURL(), "/resource"),
+				logEntry.getMessage());
+		}
+	}
+
 	private void _testLaunchWithErrorResponse() throws Exception {
 		String responseBody = RandomTestUtil.randomString();
 
@@ -207,32 +260,33 @@ public class PortalCatapultTest {
 		}
 	}
 
-	private void _testLaunchWithRedirect() throws Exception {
-		try (ClientExtensionHttpServer redirectClientExtensionHttpServer =
-				new ClientExtensionHttpServer();
-
-			ClientExtensionHttpServer clientExtensionHttpServer =
+	private void _testLaunchWithSameOriginRedirect() throws Exception {
+		try (ClientExtensionHttpServer clientExtensionHttpServer =
 				new ClientExtensionHttpServer(
-					redirectClientExtensionHttpServer._getURL() + "/resource",
+					"/" + RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
 					HttpURLConnection.HTTP_MOVED_TEMP)) {
 
 			String value = RandomTestUtil.randomString();
 
-			Assert.assertThrows(
-				ExecutionException.class,
-				() -> _launch(
-					clientExtensionHttpServer, Http.Method.GET, null,
-					(companyId, headers, homePageURL, location,
-					 oAuth2ApplicationFeatures, userId) -> headers.put(
-						_HEADER_NAME, value)));
+			_launch(
+				clientExtensionHttpServer, Http.Method.GET, null,
+				(companyId, headers, homePageURL, location,
+				 oAuth2ApplicationFeatures, userId) -> headers.put(
+					_HEADER_NAME, value));
 
 			List<String> headerValues = clientExtensionHttpServer._getHeaders(
 				_HEADER_NAME);
 
 			Assert.assertEquals(value, headerValues.get(0));
 
-			Assert.assertFalse(redirectClientExtensionHttpServer._hasHeaders());
+			Assert.assertThrows(
+				ExecutionException.class,
+				() -> _launch(
+					clientExtensionHttpServer, Http.Method.POST, null,
+					(companyId, headers, homePageURL, location,
+					 oAuth2ApplicationFeatures, userId) -> {
+					}));
 		}
 	}
 
@@ -285,37 +339,12 @@ public class PortalCatapultTest {
 
 			_httpServer.createContext(
 				"/",
-				httpExchange -> {
-					_headers = httpExchange.getRequestHeaders();
-
-					try (InputStream inputStream =
-							httpExchange.getRequestBody()) {
-
-						_requestBody = new String(
-							inputStream.readAllBytes(), StandardCharsets.UTF_8);
-					}
-
-					byte[] bytes = responseBody.getBytes(
-						StandardCharsets.UTF_8);
-
-					Headers responseHeaders = httpExchange.getResponseHeaders();
-
-					responseHeaders.set(
-						HttpHeaders.CONTENT_TYPE,
-						ContentTypes.APPLICATION_JSON);
-
-					if (redirectURL != null) {
-						responseHeaders.set(HttpHeaders.LOCATION, redirectURL);
-					}
-
-					httpExchange.sendResponseHeaders(statusCode, bytes.length);
-
-					try (OutputStream outputStream =
-							httpExchange.getResponseBody()) {
-
-						outputStream.write(bytes);
-					}
-				});
+				httpExchange -> _respond(
+					httpExchange, null, "{}", HttpURLConnection.HTTP_OK));
+			_httpServer.createContext(
+				"/resource",
+				httpExchange -> _respond(
+					httpExchange, redirectURL, responseBody, statusCode));
 
 			_httpServer.start();
 
@@ -351,6 +380,36 @@ public class PortalCatapultTest {
 			}
 
 			return false;
+		}
+
+		private void _respond(
+				HttpExchange httpExchange, String redirectURL,
+				String responseBody, int statusCode)
+			throws IOException {
+
+			_headers = httpExchange.getRequestHeaders();
+
+			try (InputStream inputStream = httpExchange.getRequestBody()) {
+				_requestBody = new String(
+					inputStream.readAllBytes(), StandardCharsets.UTF_8);
+			}
+
+			byte[] bytes = responseBody.getBytes(StandardCharsets.UTF_8);
+
+			Headers responseHeaders = httpExchange.getResponseHeaders();
+
+			responseHeaders.set(
+				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+
+			if (redirectURL != null) {
+				responseHeaders.set(HttpHeaders.LOCATION, redirectURL);
+			}
+
+			httpExchange.sendResponseHeaders(statusCode, bytes.length);
+
+			try (OutputStream outputStream = httpExchange.getResponseBody()) {
+				outputStream.write(bytes);
+			}
 		}
 
 		private volatile Headers _headers;

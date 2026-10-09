@@ -504,6 +504,7 @@ modules/test/playwright/tests/portal-db-infrastructure    @liferay-database-infr
 modules/test/playwright/tests/portal-impl/portlet    @liferay-frontend
 modules/test/playwright/tests/portal-instances-web    @liferay-database-infra
 modules/test/playwright/tests/portal-tools-rest-builder-test-impl    @liferay-headless
+modules/test/playwright/tests/server-admin-web/database-migration    @liferay-database-infra
 modules/test/playwright/tests/staging-configuration-web    @liferay-headless
 modules/third-party/
 modules/util/css-builder/    @liferay-devtools

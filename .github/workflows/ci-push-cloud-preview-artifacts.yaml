@@ -48,8 +48,6 @@ jobs:
                 include:
                     -   chart_name: liferay-aws
                         working_directory: ./cloud/helm/aws
-                    -   chart_name: liferay-aws-infrastructure
-                        working_directory: ./cloud/helm/aws-infrastructure
                     -   chart_name: liferay-aws-infrastructure-provider
                         working_directory: ./cloud/helm/aws-infrastructure-provider
                     -   chart_name: liferay-azure

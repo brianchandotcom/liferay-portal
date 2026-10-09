@@ -306,7 +306,7 @@ function _update_default_chart_version {
 	if [[ ${helm_chart_name} == aws ]] || [[ ${helm_chart_name} == gcp ]]
 	then
 		_update_resources_tfvars "${helm_chart_name}" "liferay_helm_chart_version" "${version}"
-	elif [[ ${helm_chart_name} == aws-infrastructure ]] || [[ ${helm_chart_name} == gcp-infrastructure ]]
+	elif [[ ${helm_chart_name} == gcp-infrastructure ]]
 	then
 		_update_resources_tfvars "${helm_chart_name%%-*}" "infrastructure_helm_chart_version" "${version}"
 	elif [[ ${helm_chart_name} == aws-infrastructure-provider ]] || [[ ${helm_chart_name} == gcp-infrastructure-provider ]]

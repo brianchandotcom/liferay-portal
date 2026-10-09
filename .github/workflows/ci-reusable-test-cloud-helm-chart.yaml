@@ -42,7 +42,6 @@ jobs:
             matrix:
                 chart:
                     -   aws
-                    -   aws-infrastructure
                     -   aws-infrastructure-provider
                     -   aws-marketplace
                     -   azure

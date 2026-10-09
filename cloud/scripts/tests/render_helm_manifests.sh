@@ -17,7 +17,6 @@ function main {
 
 	local charts=(
 		aws
-		aws-infrastructure
 		aws-infrastructure-provider
 		aws-marketplace
 		azure

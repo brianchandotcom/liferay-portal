@@ -7,6 +7,7 @@ package com.liferay.portal.security.sso.openid.connect.internal.catapult;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -184,11 +185,15 @@ public class OpenIdConnectPortalCatapultHeaderContributorTest {
 		_setUpMocks();
 
 		Assert.assertNull(
-			_getUpstreamIdToken(_HOME_PAGE_URL + ":9999/o/resource"));
+			_getUpstreamIdToken(
+				StringBundler.concat(
+					_HOME_PAGE_URL, ":", RandomTestUtil.randomInt(1024, 65535),
+					"/", RandomTestUtil.randomString())));
 		Assert.assertNull(
 			_getUpstreamIdToken(
-				"https://" + RandomTestUtil.randomString() +
-					".liferay.com/o/resource"));
+				StringBundler.concat(
+					"https://", RandomTestUtil.randomString(), ".com/",
+					RandomTestUtil.randomString())));
 	}
 
 	private void _testContributeWithDifferentUserId() {
@@ -365,7 +370,7 @@ public class OpenIdConnectPortalCatapultHeaderContributorTest {
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final String _HOME_PAGE_URL =
-		"https://" + RandomTestUtil.randomString() + ".liferay.com";
+		"https://" + RandomTestUtil.randomString() + ".com";
 
 	private static final String _ID_TOKEN = _createIdToken(
 		new Date(System.currentTimeMillis() + Time.HOUR));

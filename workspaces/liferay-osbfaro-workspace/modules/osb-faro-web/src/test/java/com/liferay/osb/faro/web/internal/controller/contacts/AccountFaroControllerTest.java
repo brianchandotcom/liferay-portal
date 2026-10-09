@@ -115,9 +115,7 @@ public class AccountFaroControllerTest {
 	}
 
 	@Test
-	public void testSearchFDSFieldValuesWithLifecycleStatus()
-		throws Exception {
-
+	public void testSearchFDSFieldValuesWithLifecycleStatus() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 		String id = RandomTestUtil.randomString();
 		String stageType = RandomTestUtil.randomString();

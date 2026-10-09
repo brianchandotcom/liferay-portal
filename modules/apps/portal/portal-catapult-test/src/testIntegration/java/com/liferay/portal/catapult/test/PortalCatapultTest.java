@@ -94,7 +94,7 @@ public class PortalCatapultTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ListUtil.fromArray("token.introspection"), homePageURL, 0, null,
 			RandomTestUtil.randomString(),
-			"http://" + RandomTestUtil.randomString() + ".liferay.com/privacy",
+			"http://" + RandomTestUtil.randomString() + ".com",
 			Collections.emptyList(), false, Collections.emptyList(), true,
 			new ServiceContext());
 	}

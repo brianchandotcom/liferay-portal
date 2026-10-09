@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
+import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
@@ -13,7 +14,6 @@ import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {DocumentLibraryPage} from '../../../pages/document-library-web/DocumentLibraryPage';
 import {WebContentPage} from '../../../pages/journal-web/WebContentPage';
 import {RecycleBinPage} from '../../../pages/trash-web/RecycleBinPage';
-import {SizedFileType, createSizedFile} from '../../../utils/createSizedFile';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -28,18 +28,21 @@ const test = mergeTests(
 	loginTest()
 );
 
+const DOCUMENT_PATHS = {
+	pdf: path.join(__dirname, 'dependencies/Document.pdf'),
+	png: path.join(__dirname, 'dependencies/Document.png'),
+};
+
 function createDocument(
 	apiHelpers: DataApiHelpers,
 	siteId: string,
 	fileName: string
 ) {
-	const type = fileName.split('.').pop() as SizedFileType;
+	const type = fileName.split('.').pop() as keyof typeof DOCUMENT_PATHS;
 
 	return apiHelpers.headlessDelivery.postDocument(
 		siteId,
-		createReadStream(
-			createSizedFile(`${getRandomString()}.${type}`, type, 1024)
-		),
+		createReadStream(DOCUMENT_PATHS[type]),
 		{fileName, title: fileName}
 	);
 }
@@ -584,9 +587,7 @@ test(
 		const postDocument = () =>
 			apiHelpers.headlessDelivery.postDocument(
 				site.id,
-				createReadStream(
-					createSizedFile(`${getRandomString()}.png`, 'png', 1024)
-				),
+				createReadStream(DOCUMENT_PATHS.png),
 				{fileName: `${getRandomString()}.png`, title: documentTitle}
 			);
 
@@ -643,9 +644,7 @@ test(
 
 		await apiHelpers.headlessDelivery.postDocumentFolderDocument(
 			subfolder.id,
-			createReadStream(
-				createSizedFile(`${getRandomString()}.png`, 'png', 1024)
-			),
+			createReadStream(DOCUMENT_PATHS.png),
 			{fileName: `${getRandomString()}.png`, title: documentTitle}
 		);
 
@@ -752,9 +751,7 @@ test('Can search for documents from a deleted folder in the recycle bin', async 
 	for (const title of documentTitles) {
 		await apiHelpers.headlessDelivery.postDocumentFolderDocument(
 			folder.id,
-			createReadStream(
-				createSizedFile(`${getRandomString()}.png`, 'png', 1024)
-			),
+			createReadStream(DOCUMENT_PATHS.png),
 			{fileName: `${getRandomString()}.png`, title}
 		);
 	}
@@ -801,9 +798,7 @@ test(
 		for (const title of [homeDocumentTitle, targetDocumentTitle]) {
 			await apiHelpers.headlessDelivery.postDocumentFolderDocument(
 				folder.id,
-				createReadStream(
-					createSizedFile(`${getRandomString()}.png`, 'png', 1024)
-				),
+				createReadStream(DOCUMENT_PATHS.png),
 				{fileName: `${getRandomString()}.png`, title}
 			);
 		}

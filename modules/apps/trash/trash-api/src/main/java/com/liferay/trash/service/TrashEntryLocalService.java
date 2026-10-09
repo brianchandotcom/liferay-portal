@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
@@ -284,35 +283,6 @@ public interface TrashEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TrashEntry> getEntries(long groupId);
 
-	/**
-	 * Returns a range of all the trash entries matching the group ID.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param start the lower bound of the range of trash entries to return
-	 * @param end the upper bound of the range of trash entries to return (not
-	 inclusive)
-	 * @return the range of matching trash entries
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getEntries(long groupId, int start, int end);
-
-	/**
-	 * Returns a range of all the trash entries matching the group ID.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param start the lower bound of the range of trash entries to return
-	 * @param end the upper bound of the range of trash entries to return (not
-	 inclusive)
-	 * @param orderByComparator the comparator to order the trash entries
-	 (optionally <code>null</code>)
-	 * @return the range of matching trash entries ordered by comparator
-	 <code>orderByComparator</code>
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashEntry> getEntries(
-		long groupId, int start, int end,
-		OrderByComparator<TrashEntry> orderByComparator);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TrashEntry> getEntries(long groupId, String className);
 
@@ -396,11 +366,6 @@ public interface TrashEntryLocalService
 	public TrashEntry getTrashEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(
-		long companyId, long groupId, long userId, String keywords, int start,
-		int end, Sort sort);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<TrashEntry> searchTrashEntries(
 		long companyId, long groupId, long userId, String keywords, int start,
 		int end, Sort sort);
@@ -434,4 +399,4 @@ public interface TrashEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1404665847
+// LIFERAY-SERVICE-BUILDER-HASH:-1782827224

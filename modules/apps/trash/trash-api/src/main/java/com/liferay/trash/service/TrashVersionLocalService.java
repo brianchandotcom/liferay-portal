@@ -262,9 +262,6 @@ public interface TrashVersionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TrashVersion> getVersions(long entryId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<TrashVersion> getVersions(long entryId, String className);
-
 	/**
 	 * Updates the trash version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -294,4 +291,4 @@ public interface TrashVersionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1961125142
+// LIFERAY-SERVICE-BUILDER-HASH:-2083386713

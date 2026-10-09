@@ -343,44 +343,6 @@ public class TrashEntryLocalServiceWrapper
 		return _trashEntryLocalService.getEntries(groupId);
 	}
 
-	/**
-	 * Returns a range of all the trash entries matching the group ID.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param start the lower bound of the range of trash entries to return
-	 * @param end the upper bound of the range of trash entries to return (not
-	 inclusive)
-	 * @return the range of matching trash entries
-	 */
-	@Override
-	public java.util.List<TrashEntry> getEntries(
-		long groupId, int start, int end) {
-
-		return _trashEntryLocalService.getEntries(groupId, start, end);
-	}
-
-	/**
-	 * Returns a range of all the trash entries matching the group ID.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param start the lower bound of the range of trash entries to return
-	 * @param end the upper bound of the range of trash entries to return (not
-	 inclusive)
-	 * @param orderByComparator the comparator to order the trash entries
-	 (optionally <code>null</code>)
-	 * @return the range of matching trash entries ordered by comparator
-	 <code>orderByComparator</code>
-	 */
-	@Override
-	public java.util.List<TrashEntry> getEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
-			orderByComparator) {
-
-		return _trashEntryLocalService.getEntries(
-			groupId, start, end, orderByComparator);
-	}
-
 	@Override
 	public java.util.List<TrashEntry> getEntries(
 		long groupId, String className) {
@@ -495,15 +457,6 @@ public class TrashEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.Hits search(
-		long companyId, long groupId, long userId, String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort) {
-
-		return _trashEntryLocalService.search(
-			companyId, groupId, userId, keywords, start, end, sort);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<TrashEntry>
 		searchTrashEntries(
 			long companyId, long groupId, long userId, String keywords,
@@ -568,4 +521,4 @@ public class TrashEntryLocalServiceWrapper
 	private TrashEntryLocalService _trashEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1552995298
+// LIFERAY-SERVICE-BUILDER-HASH:-776419590

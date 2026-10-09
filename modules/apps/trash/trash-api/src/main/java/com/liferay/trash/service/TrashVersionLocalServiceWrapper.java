@@ -321,13 +321,6 @@ public class TrashVersionLocalServiceWrapper
 		return _trashVersionLocalService.getVersions(entryId);
 	}
 
-	@Override
-	public java.util.List<TrashVersion> getVersions(
-		long entryId, String className) {
-
-		return _trashVersionLocalService.getVersions(entryId, className);
-	}
-
 	/**
 	 * Updates the trash version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -383,4 +376,4 @@ public class TrashVersionLocalServiceWrapper
 	private TrashVersionLocalService _trashVersionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:457984376
+// LIFERAY-SERVICE-BUILDER-HASH:778775929

@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.audit;
 
 /**
- * @author Michael C. Han
+ * @author Rafael Praxedes
  */
 public class AuditRequestContext {
 

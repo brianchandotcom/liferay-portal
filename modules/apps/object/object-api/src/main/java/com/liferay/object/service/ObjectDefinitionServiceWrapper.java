@@ -166,25 +166,10 @@ public class ObjectDefinitionServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.object.model.ObjectDefinition>
-		getObjectDefinitions(long companyId, int start, int end) {
-
-		return _objectDefinitionService.getObjectDefinitions(
-			companyId, start, end);
-	}
-
-	@Override
 	public int getObjectDefinitionsCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.getObjectDefinitionsCount();
-	}
-
-	@Override
-	public int getObjectDefinitionsCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectDefinitionService.getObjectDefinitionsCount(companyId);
 	}
 
 	/**
@@ -315,4 +300,4 @@ public class ObjectDefinitionServiceWrapper
 	private ObjectDefinitionService _objectDefinitionService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1243867172
+// LIFERAY-SERVICE-BUILDER-HASH:731728290

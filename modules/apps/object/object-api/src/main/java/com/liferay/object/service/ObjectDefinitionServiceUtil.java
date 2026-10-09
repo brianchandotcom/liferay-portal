@@ -148,20 +148,8 @@ public class ObjectDefinitionServiceUtil {
 		return getService().getObjectDefinitions(start, end);
 	}
 
-	public static List<ObjectDefinition> getObjectDefinitions(
-		long companyId, int start, int end) {
-
-		return getService().getObjectDefinitions(companyId, start, end);
-	}
-
 	public static int getObjectDefinitionsCount() throws PortalException {
 		return getService().getObjectDefinitionsCount();
-	}
-
-	public static int getObjectDefinitionsCount(long companyId)
-		throws PortalException {
-
-		return getService().getObjectDefinitionsCount(companyId);
 	}
 
 	/**
@@ -267,4 +255,4 @@ public class ObjectDefinitionServiceUtil {
 			ObjectDefinitionServiceUtil.class, ObjectDefinitionService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1377800454
+// LIFERAY-SERVICE-BUILDER-HASH:1331019794

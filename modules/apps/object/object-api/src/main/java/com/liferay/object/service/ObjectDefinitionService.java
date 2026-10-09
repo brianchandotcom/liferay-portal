@@ -113,14 +113,7 @@ public interface ObjectDefinitionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ObjectDefinition> getObjectDefinitions(
-		long companyId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectDefinitionsCount() throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getObjectDefinitionsCount(long companyId) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -176,4 +169,4 @@ public interface ObjectDefinitionService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1534210298
+// LIFERAY-SERVICE-BUILDER-HASH:1817969760

@@ -468,89 +468,15 @@ public class ObjectDefinitionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.object.model.ObjectDefinition>
-		getObjectDefinitions(
-			HttpPrincipal httpPrincipal, long companyId, int start, int end) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				ObjectDefinitionServiceUtil.class, "getObjectDefinitions",
-				_getObjectDefinitionsParameterTypes9);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List<com.liferay.object.model.ObjectDefinition>)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static int getObjectDefinitionsCount(HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class, "getObjectDefinitionsCount",
-				_getObjectDefinitionsCountParameterTypes10);
+				_getObjectDefinitionsCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static int getObjectDefinitionsCount(
-			HttpPrincipal httpPrincipal, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				ObjectDefinitionServiceUtil.class, "getObjectDefinitionsCount",
-				_getObjectDefinitionsCountParameterTypes11);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId);
 
 			Object returnObj = null;
 
@@ -589,7 +515,7 @@ public class ObjectDefinitionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class,
 				"publishCustomObjectDefinition",
-				_publishCustomObjectDefinitionParameterTypes12);
+				_publishCustomObjectDefinitionParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId);
@@ -631,7 +557,7 @@ public class ObjectDefinitionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class,
 				"publishSystemObjectDefinition",
-				_publishSystemObjectDefinitionParameterTypes13);
+				_publishSystemObjectDefinitionParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId);
@@ -700,7 +626,7 @@ public class ObjectDefinitionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class,
 				"updateCustomObjectDefinition",
-				_updateCustomObjectDefinitionParameterTypes14);
+				_updateCustomObjectDefinitionParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, objectDefinitionId,
@@ -754,7 +680,7 @@ public class ObjectDefinitionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class,
 				"updateExternalReferenceCode",
-				_updateExternalReferenceCodeParameterTypes15);
+				_updateExternalReferenceCodeParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId, externalReferenceCode);
@@ -805,7 +731,7 @@ public class ObjectDefinitionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class,
 				"updateSystemObjectDefinition",
-				_updateSystemObjectDefinitionParameterTypes16);
+				_updateSystemObjectDefinitionParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, objectDefinitionId,
@@ -849,7 +775,7 @@ public class ObjectDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class, "updateTitleObjectFieldId",
-				_updateTitleObjectFieldIdParameterTypes17);
+				_updateTitleObjectFieldIdParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId, titleObjectFieldId);
@@ -924,22 +850,18 @@ public class ObjectDefinitionServiceHttp {
 			new Class[] {String.class, long.class};
 	private static final Class<?>[] _getObjectDefinitionsParameterTypes8 =
 		new Class[] {int.class, int.class};
-	private static final Class<?>[] _getObjectDefinitionsParameterTypes9 =
-		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getObjectDefinitionsCountParameterTypes10 =
+	private static final Class<?>[] _getObjectDefinitionsCountParameterTypes9 =
 		new Class[] {};
-	private static final Class<?>[] _getObjectDefinitionsCountParameterTypes11 =
-		new Class[] {long.class};
 	private static final Class<?>[]
-		_publishCustomObjectDefinitionParameterTypes12 = new Class[] {
+		_publishCustomObjectDefinitionParameterTypes10 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_publishSystemObjectDefinitionParameterTypes13 = new Class[] {
+		_publishSystemObjectDefinitionParameterTypes11 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_updateCustomObjectDefinitionParameterTypes14 = new Class[] {
+		_updateCustomObjectDefinitionParameterTypes12 = new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
 			long.class, boolean.class, boolean.class, String.class,
 			java.util.Map.class, boolean.class, boolean.class, boolean.class,
@@ -951,16 +873,16 @@ public class ObjectDefinitionServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateExternalReferenceCodeParameterTypes15 = new Class[] {
+		_updateExternalReferenceCodeParameterTypes13 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_updateSystemObjectDefinitionParameterTypes16 = new Class[] {
+		_updateSystemObjectDefinitionParameterTypes14 = new Class[] {
 			String.class, long.class, long.class, long.class,
 			java.util.List.class, java.util.List.class, java.util.List.class
 		};
-	private static final Class<?>[] _updateTitleObjectFieldIdParameterTypes17 =
+	private static final Class<?>[] _updateTitleObjectFieldIdParameterTypes15 =
 		new Class[] {long.class, long.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-425958013
+// LIFERAY-SERVICE-BUILDER-HASH:-874013822

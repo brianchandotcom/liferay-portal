@@ -174,10 +174,10 @@ run "should_omit_the_external_url_and_the_dex_connector_by_default" {
 	}
 	command=plan
 }
-run "should_register_the_health_checks_under_the_infrastructure_api_group" {
+run "should_register_the_liferay_infrastructure_health_check" {
 	assert {
-		condition=contains(keys(yamldecode(helm_release.argocd.values[0]).configs.cm), "resource.customizations.health.azure.liferay.com_LiferayInfrastructure")
-		error_message="The LiferayInfrastructure health check key must carry the caller's infrastructure API group"
+		condition=contains(keys(yamldecode(helm_release.argocd.values[0]).configs.cm), "resource.customizations.health.liferay.com_LiferayInfrastructure")
+		error_message="The LiferayInfrastructure health check must be registered under the liferay.com API group"
 	}
 	command=plan
 }
@@ -210,11 +210,11 @@ run "should_restrict_each_component_to_its_callers" {
 }
 run "should_tolerate_the_restore_workflow_by_its_field_manager" {
 	assert {
-		condition=contains(yamldecode(yamldecode(helm_release.argocd.values[0]).configs.cm["resource.customizations.ignoreDifferences.azure.liferay.com_LiferayInfrastructure"]).managedFieldsManagers, "liferay-backup-restore")
+		condition=contains(yamldecode(yamldecode(helm_release.argocd.values[0]).configs.cm["resource.customizations.ignoreDifferences.liferay.com_LiferayInfrastructure"]).managedFieldsManagers, "liferay-backup-restore")
 		error_message="The LiferayInfrastructure ignore rule must name the restore workflow's field manager, so every field the restore writes is tolerated"
 	}
 	assert {
-		condition=!contains(keys(yamldecode(yamldecode(helm_release.argocd.values[0]).configs.cm["resource.customizations.ignoreDifferences.azure.liferay.com_LiferayInfrastructure"])), "jsonPointers")
+		condition=!contains(keys(yamldecode(yamldecode(helm_release.argocd.values[0]).configs.cm["resource.customizations.ignoreDifferences.liferay.com_LiferayInfrastructure"])), "jsonPointers")
 		error_message="The LiferayInfrastructure ignore rule must not enumerate field paths, so growing the restore contract needs no ArgoCD change"
 	}
 	command=plan
@@ -232,5 +232,4 @@ run "should_write_the_network_policies_through_extra_objects" {
 }
 variables {
 	argocd_helm_chart_version="10.1.3"
-	infrastructure_api_group="azure.liferay.com"
 }

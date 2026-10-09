@@ -26,9 +26,9 @@ resource "helm_release" "argocd" {
 						cm={
 							"admin.enabled"=var.argocd_admin_login_enabled
 							"kustomize.buildOptions"="--enable-helm"
-							"resource.customizations.health.${var.infrastructure_api_group}_LiferayInfrastructure"=file("${path.module}/health-LiferayInfrastructure.lua")
+							"resource.customizations.health.liferay.com_LiferayInfrastructure"=file("${path.module}/health-LiferayInfrastructure.lua")
 							"resource.customizations.health.argoproj.io_Application"=file("${path.module}/health-argoproj.io_Application.lua")
-							"resource.customizations.ignoreDifferences.${var.infrastructure_api_group}_LiferayInfrastructure"=yamlencode(
+							"resource.customizations.ignoreDifferences.liferay.com_LiferayInfrastructure"=yamlencode(
 								{
 									managedFieldsManagers=["liferay-backup-restore"]
 								})

@@ -441,6 +441,7 @@ public class PortletConfigurationPortletTest {
 			Assert.fail();
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
+			Assert.assertNotNull(noSuchMethodException);
 		}
 	}
 
@@ -469,6 +470,7 @@ public class PortletConfigurationPortletTest {
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
+			Assert.assertNotNull(principalException);
 		}
 	}
 
@@ -486,6 +488,7 @@ public class PortletConfigurationPortletTest {
 			Assert.fail();
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
+			Assert.assertNotNull(principalException);
 		}
 	}
 

@@ -184,13 +184,6 @@ public class TrashEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByG_LtCD() throws Exception {
 		_persistence.countByG_LtCD(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextDate());
@@ -556,4 +549,4 @@ public class TrashEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1152399192
+// LIFERAY-SERVICE-BUILDER-HASH:-2007480708

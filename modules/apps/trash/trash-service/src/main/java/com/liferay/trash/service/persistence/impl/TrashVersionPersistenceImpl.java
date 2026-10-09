@@ -160,98 +160,6 @@ public class TrashVersionPersistenceImpl
 			finderCache, new Object[] {entryId});
 	}
 
-	private CollectionPersistenceFinder<TrashVersion, NoSuchVersionException>
-		_collectionPersistenceFinderByE_CN;
-
-	/**
-	 * Returns an ordered range of all the trash versions where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of trash versions
-	 * @param end the upper bound of the range of trash versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching trash versions
-	 */
-	@Override
-	public List<TrashVersion> findByE_CN(
-		long entryId, long classNameId, int start, int end,
-		OrderByComparator<TrashVersion> orderByComparator,
-		boolean useFinderCache) {
-
-		return _collectionPersistenceFinderByE_CN.find(
-			finderCache, new Object[] {entryId, classNameId}, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching trash version
-	 * @throws NoSuchVersionException if a matching trash version could not be found
-	 */
-	@Override
-	public TrashVersion findByE_CN_First(
-			long entryId, long classNameId,
-			OrderByComparator<TrashVersion> orderByComparator)
-		throws NoSuchVersionException {
-
-		return _collectionPersistenceFinderByE_CN.findFirst(
-			finderCache, new Object[] {entryId, classNameId},
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the first trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching trash version, or <code>null</code> if a matching trash version could not be found
-	 */
-	@Override
-	public TrashVersion fetchByE_CN_First(
-		long entryId, long classNameId,
-		OrderByComparator<TrashVersion> orderByComparator) {
-
-		return _collectionPersistenceFinderByE_CN.fetchFirst(
-			finderCache, new Object[] {entryId, classNameId},
-			orderByComparator);
-	}
-
-	/**
-	 * Removes all the trash versions where entryId = &#63; and classNameId = &#63; from the database.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 */
-	@Override
-	public void removeByE_CN(long entryId, long classNameId) {
-		_collectionPersistenceFinderByE_CN.remove(
-			finderCache, new Object[] {entryId, classNameId});
-	}
-
-	/**
-	 * Returns the number of trash versions where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @return the number of matching trash versions
-	 */
-	@Override
-	public int countByE_CN(long entryId, long classNameId) {
-		return _collectionPersistenceFinderByE_CN.count(
-			finderCache, new Object[] {entryId, classNameId});
-	}
-
 	private UniquePersistenceFinder<TrashVersion, NoSuchVersionException>
 		_uniquePersistenceFinderByCN_CPK;
 
@@ -584,34 +492,6 @@ public class TrashVersionPersistenceImpl
 					"trashVersion.", "entryId", FinderColumn.Type.LONG, "=",
 					true, true, TrashVersion::getEntryId));
 
-		_collectionPersistenceFinderByE_CN = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_CN",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				},
-				new String[] {"entryId", "classNameId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_CN",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"entryId", "classNameId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_CN",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"entryId", "classNameId"}, false),
-			_SQL_SELECT_TRASHVERSION_WHERE, _SQL_COUNT_TRASHVERSION_WHERE,
-			TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
-			null,
-			new FinderColumn<>(
-				"trashVersion.", "entryId", FinderColumn.Type.LONG, "=", true,
-				true, TrashVersion::getEntryId),
-			new FinderColumn<>(
-				"trashVersion.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, true, TrashVersion::getClassNameId));
-
 		_uniquePersistenceFinderByCN_CPK = new UniquePersistenceFinder<>(
 			this,
 			createUniqueFinderPath(
@@ -690,4 +570,4 @@ public class TrashVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:555525346
+// LIFERAY-SERVICE-BUILDER-HASH:485806616

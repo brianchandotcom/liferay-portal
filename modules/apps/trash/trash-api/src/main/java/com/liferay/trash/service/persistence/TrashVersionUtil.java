@@ -196,86 +196,6 @@ public class TrashVersionUtil {
 	}
 
 	/**
-	 * Returns an ordered range of all the trash versions where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.trash.model.impl.TrashVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of trash versions
-	 * @param end the upper bound of the range of trash versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching trash versions
-	 */
-	public static List<TrashVersion> findByE_CN(
-		long entryId, long classNameId, int start, int end,
-		OrderByComparator<TrashVersion> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByE_CN(
-			entryId, classNameId, start, end, orderByComparator,
-			useFinderCache);
-	}
-
-	/**
-	 * Returns the first trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching trash version
-	 * @throws NoSuchVersionException if a matching trash version could not be found
-	 */
-	public static TrashVersion findByE_CN_First(
-			long entryId, long classNameId,
-			OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.trash.exception.NoSuchVersionException {
-
-		return getPersistence().findByE_CN_First(
-			entryId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first trash version in the ordered set where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching trash version, or <code>null</code> if a matching trash version could not be found
-	 */
-	public static TrashVersion fetchByE_CN_First(
-		long entryId, long classNameId,
-		OrderByComparator<TrashVersion> orderByComparator) {
-
-		return getPersistence().fetchByE_CN_First(
-			entryId, classNameId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the trash versions where entryId = &#63; and classNameId = &#63; from the database.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 */
-	public static void removeByE_CN(long entryId, long classNameId) {
-		getPersistence().removeByE_CN(entryId, classNameId);
-	}
-
-	/**
-	 * Returns the number of trash versions where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @return the number of matching trash versions
-	 */
-	public static int countByE_CN(long entryId, long classNameId) {
-		return getPersistence().countByE_CN(entryId, classNameId);
-	}
-
-	/**
 	 * Returns the trash version where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchVersionException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
@@ -438,60 +358,6 @@ public class TrashVersionUtil {
 			entryId, start, end, orderByComparator);
 	}
 
-	/**
-	 * Returns all the trash versions where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @return the matching trash versions
-	 */
-	public static List<TrashVersion> findByE_CN(
-		long entryId, long classNameId) {
-
-		return getPersistence().findByE_CN(entryId, classNameId);
-	}
-
-	/**
-	 * Returns a range of all the trash versions where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.trash.model.impl.TrashVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of trash versions
-	 * @param end the upper bound of the range of trash versions (not inclusive)
-	 * @return the range of matching trash versions
-	 */
-	public static List<TrashVersion> findByE_CN(
-		long entryId, long classNameId, int start, int end) {
-
-		return getPersistence().findByE_CN(entryId, classNameId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the trash versions where entryId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.trash.model.impl.TrashVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId the entry ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of trash versions
-	 * @param end the upper bound of the range of trash versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching trash versions
-	 */
-	public static List<TrashVersion> findByE_CN(
-		long entryId, long classNameId, int start, int end,
-		OrderByComparator<TrashVersion> orderByComparator) {
-
-		return getPersistence().findByE_CN(
-			entryId, classNameId, start, end, orderByComparator);
-	}
-
 	public static TrashVersionPersistence getPersistence() {
 		return _persistence;
 	}
@@ -503,4 +369,4 @@ public class TrashVersionUtil {
 	private static volatile TrashVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:226236594
+// LIFERAY-SERVICE-BUILDER-HASH:1252551044

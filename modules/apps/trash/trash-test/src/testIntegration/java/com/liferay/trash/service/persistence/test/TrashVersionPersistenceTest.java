@@ -167,14 +167,6 @@ public class TrashVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByE_CN() throws Exception {
-		_persistence.countByE_CN(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-
-		_persistence.countByE_CN(0L, 0L);
-	}
-
-	@Test
 	public void testCountByCN_CPK() throws Exception {
 		_persistence.countByCN_CPK(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -514,4 +506,4 @@ public class TrashVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-430636691
+// LIFERAY-SERVICE-BUILDER-HASH:-1126700617

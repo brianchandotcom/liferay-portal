@@ -117,9 +117,9 @@ public class OpenIdConnectPortalCatapultHeaderContributor
 			if (_log.isDebugEnabled()) {
 				_log.debug(uriSyntaxException);
 			}
-
-			return null;
 		}
+
+		return null;
 	}
 
 	private boolean _isAllowedByOAuthClientEntry(
@@ -150,9 +150,9 @@ public class OpenIdConnectPortalCatapultHeaderContributor
 						oAuthClientEntry.getOAuthClientEntryId()),
 					parseException);
 			}
-
-			return false;
 		}
+
+		return false;
 	}
 
 	private boolean _isFreshAccessToken(
@@ -201,9 +201,9 @@ public class OpenIdConnectPortalCatapultHeaderContributor
 			if (_log.isDebugEnabled()) {
 				_log.debug(parseException);
 			}
-
-			return false;
 		}
+
+		return false;
 	}
 
 	private boolean _isSameSecureOrigin(String homePageURL, String location) {

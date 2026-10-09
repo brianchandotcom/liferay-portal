@@ -36,7 +36,18 @@ export class RecycleBinPage {
 
 	async bulkRestore(assetNames: string[]) {
 		for (const assetName of assetNames) {
+
+			// Each selection refreshes the info panel with the selected
+			// entries. Wait for it before restoring, otherwise the refresh
+			// can reach the server after the entries are gone
+
+			const infoPanelResponse = this.page.waitForResponse((response) =>
+				response.url().includes('info_panel')
+			);
+
 			await this._row(assetName).first().getByRole('checkbox').check();
+
+			await infoPanelResponse;
 		}
 
 		await this.page.getByRole('button', {name: 'Restore'}).click();

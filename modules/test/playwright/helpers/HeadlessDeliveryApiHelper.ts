@@ -593,6 +593,30 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async postDocumentFolderDocumentFolder(
+		parentDocumentFolderId: number | string,
+		documentFolder?: TDocumentFolder
+	) {
+		documentFolder = {
+			description: getRandomString(),
+			externalReferenceCode: getRandomString(),
+			name: getRandomString(),
+			viewableBy: 'Anyone',
+			...(documentFolder || {}),
+		};
+
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/document-folders/${parentDocumentFolderId}/document-folders`,
+			{
+				data: documentFolder,
+				failOnStatusCode: true,
+				headers: {
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
+			}
+		);
+	}
+
 	async postDocumentShortcut(
 		siteId: number | string,
 		documentShortcut?: TDocumentShortcut

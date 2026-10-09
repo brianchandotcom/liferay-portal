@@ -11,20 +11,24 @@ import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -132,6 +136,37 @@ public class CommerceInventoryWarehouseServiceTest {
 				fetchCommerceInventoryWarehouseRel(
 					commerceInventoryWarehouseRel.
 						getCommerceInventoryWarehouseRelId()));
+	}
+
+	@Test
+	public void testDeleteCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.getAdminUser(company.getCompanyId());
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			_commerceInventoryWarehouseLocalService.
+				addCommerceInventoryWarehouse(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomLocaleStringMap(),
+					RandomTestUtil.randomLocaleStringMap(), true,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), null, null,
+					RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(),
+					ServiceContextTestUtil.getServiceContext(
+						company.getCompanyId(), company.getGroupId(),
+						user.getUserId()));
+
+		_companyLocalService.deleteCompany(company.getCompanyId());
+
+		Assert.assertNull(
+			_commerceInventoryWarehouseLocalService.
+				fetchCommerceInventoryWarehouse(
+					commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId()));
 	}
 
 	@Test
@@ -584,12 +619,19 @@ public class CommerceInventoryWarehouseServiceTest {
 	private CommerceInventoryWarehouse _commerceInventoryWarehouse;
 
 	@Inject
+	private CommerceInventoryWarehouseLocalService
+		_commerceInventoryWarehouseLocalService;
+
+	@Inject
 	private CommerceInventoryWarehouseRelLocalService
 		_commerceInventoryWarehouseRelLocalService;
 
 	@Inject
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

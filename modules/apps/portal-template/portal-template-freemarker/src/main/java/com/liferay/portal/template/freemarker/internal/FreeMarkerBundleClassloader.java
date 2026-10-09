@@ -5,6 +5,7 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -16,7 +17,9 @@ import java.net.URLClassLoader;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Miguel Pastor
@@ -83,9 +86,22 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 			throw new ClassNotFoundException(name);
 		}
 
+		String packageName = name.substring(
+			0, name.lastIndexOf(CharPool.PERIOD) + 1);
+
+		ClassLoader packageClassLoader = _packageClassLoaders.get(packageName);
+
+		if (packageClassLoader != null) {
+			return packageClassLoader.loadClass(name);
+		}
+
 		for (ClassLoader classLoader : _classLoaders) {
 			try {
-				return classLoader.loadClass(name);
+				Class<?> clazz = classLoader.loadClass(name);
+
+				_packageClassLoaders.put(packageName, classLoader);
+
+				return clazz;
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
@@ -118,5 +134,7 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	}
 
 	private final Set<ClassLoader> _classLoaders;
+	private final Map<String, ClassLoader> _packageClassLoaders =
+		new ConcurrentHashMap<>();
 
 }

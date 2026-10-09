@@ -6,8 +6,6 @@
 package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -17,7 +15,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuException;
@@ -153,18 +150,6 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	@Override
-	public SiteNavigationMenu deleteSiteNavigationMenu(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		SiteNavigationMenu siteNavigationMenu =
-			siteNavigationMenuPersistence.findByERC_G(
-				externalReferenceCode, groupId);
-
-		return deleteSiteNavigationMenu(siteNavigationMenu);
-	}
-
-	@Override
 	public void deleteSiteNavigationMenus(long groupId) throws PortalException {
 		for (SiteNavigationMenu siteNavigationMenu :
 				getSiteNavigationMenus(groupId)) {
@@ -192,13 +177,6 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	@Override
-	public SiteNavigationMenu fetchSiteNavigationMenuByName(
-		long groupId, String name) {
-
-		return siteNavigationMenuPersistence.fetchByG_N(groupId, name);
-	}
-
-	@Override
 	public List<SiteNavigationMenu> getAutoSiteNavigationMenus(long groupId) {
 		return siteNavigationMenuPersistence.findByG_A(groupId, true);
 	}
@@ -206,38 +184,6 @@ public class SiteNavigationMenuLocalServiceImpl
 	@Override
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
 		return siteNavigationMenuPersistence.findByGroupId(groupId);
-	}
-
-	@Override
-	public List<SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return siteNavigationMenuPersistence.findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<SiteNavigationMenu> getSiteNavigationMenus(
-		long groupId, String keywords, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return siteNavigationMenuPersistence.findByG_LikeN(
-			groupId,
-			_customSQL.keywords(keywords, false, WildcardMode.SURROUND)[0],
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getSiteNavigationMenusCount(long groupId) {
-		return siteNavigationMenuPersistence.countByGroupId(groupId);
-	}
-
-	@Override
-	public int getSiteNavigationMenusCount(long groupId, String keywords) {
-		return siteNavigationMenuPersistence.countByG_LikeN(
-			groupId,
-			_customSQL.keywords(keywords, false, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override
@@ -359,9 +305,6 @@ public class SiteNavigationMenuLocalServiceImpl
 			throw new DuplicateSiteNavigationMenuException(name);
 		}
 	}
-
-	@Reference
-	private CustomSQL _customSQL;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

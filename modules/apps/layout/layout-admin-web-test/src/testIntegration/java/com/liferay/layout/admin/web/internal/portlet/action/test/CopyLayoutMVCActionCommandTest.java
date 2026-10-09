@@ -79,6 +79,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
@@ -262,11 +263,13 @@ public class CopyLayoutMVCActionCommandTest {
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
 			).build());
 
-		long navigationItemCount =
-			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
 				siteNavigationMenu.getSiteNavigationMenuId());
 
-		Assert.assertEquals(1, navigationItemCount);
+		Assert.assertEquals(
+			siteNavigationMenuItems.toString(), 1,
+			siteNavigationMenuItems.size());
 	}
 
 	@Test

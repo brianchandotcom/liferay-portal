@@ -344,12 +344,6 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	}
 
 	@Override
-	public int getSiteNavigationMenuItemsCount(long siteNavigationMenuId) {
-		return siteNavigationMenuItemPersistence.countBySiteNavigationMenuId(
-			siteNavigationMenuId);
-	}
-
-	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 			int order)

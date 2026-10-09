@@ -126,10 +126,13 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			).buildString(),
 			false, new HashMap<>(), _serviceContext);
 
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				_siteNavigationMenu.getSiteNavigationMenuId());
+
 		Assert.assertEquals(
-			0,
-			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
-				_siteNavigationMenu.getSiteNavigationMenuId()));
+			siteNavigationMenuItems.toString(), 0,
+			siteNavigationMenuItems.size());
 	}
 
 	@Test
@@ -157,15 +160,21 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			).buildString(),
 			false, new HashMap<>(), _serviceContext);
 
-		Assert.assertEquals(
-			1,
-			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
-				autoSiteNavigationMenu.getSiteNavigationMenuId()));
+		List<SiteNavigationMenuItem> autoSiteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				autoSiteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
-			1,
-			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
-				_siteNavigationMenu.getSiteNavigationMenuId()));
+			autoSiteNavigationMenuItems.toString(), 1,
+			autoSiteNavigationMenuItems.size());
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				_siteNavigationMenu.getSiteNavigationMenuId());
+
+		Assert.assertEquals(
+			siteNavigationMenuItems.toString(), 1,
+			siteNavigationMenuItems.size());
 	}
 
 	@Test
@@ -184,10 +193,13 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			).buildString(),
 			false, new HashMap<>(), _serviceContext);
 
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				_siteNavigationMenu.getSiteNavigationMenuId());
+
 		Assert.assertEquals(
-			1,
-			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
-				_siteNavigationMenu.getSiteNavigationMenuId()));
+			siteNavigationMenuItems.toString(), 1,
+			siteNavigationMenuItems.size());
 	}
 
 	@Test

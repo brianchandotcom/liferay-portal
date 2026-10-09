@@ -34,6 +34,7 @@ import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersistence;
 import com.liferay.site.navigation.test.util.SiteNavigationMenuTestUtil;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -129,7 +130,7 @@ public class SiteNavigationMenuPropagationTest {
 					Sites.MERGE_FAIL_COUNT)));
 
 		SiteNavigationMenu propagatedSiteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
+			_siteNavigationMenuPersistence.fetchByG_N(
 				_group.getGroupId(), name);
 
 		Assert.assertEquals(
@@ -262,6 +263,9 @@ public class SiteNavigationMenuPropagationTest {
 
 	@Inject
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Inject
+	private SiteNavigationMenuPersistence _siteNavigationMenuPersistence;
 
 	@Inject
 	private Sites _sites;

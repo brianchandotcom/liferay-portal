@@ -73,6 +73,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 			});
 
+		configuration.setCanBeConsumed(false);
 		configuration.setDescription(
 			"Configures Liferay Source Formatter for this project.");
 		configuration.setVisible(false);

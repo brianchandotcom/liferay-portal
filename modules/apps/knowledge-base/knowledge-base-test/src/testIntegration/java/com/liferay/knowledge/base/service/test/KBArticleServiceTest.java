@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -356,8 +358,24 @@ public class KBArticleServiceTest {
 
 		KBArticle kbArticle = _addKbArticle(_group2);
 
-		_kbArticleService.deleteKBArticles(
-			_group1.getGroupId(), new long[] {kbArticle.getResourcePrimKey()});
+		_regularRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_regularRole.getCompanyId(), KBArticle.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(kbArticle.getResourcePrimKey()),
+			_regularRole.getRoleId(), new String[] {KBActionKeys.DELETE});
+
+		_userLocalService.addRoleUser(
+			_regularRole.getRoleId(), _siteMemberUser);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_siteMemberUser)) {
+
+			_kbArticleService.deleteKBArticles(
+				_group1.getGroupId(),
+				new long[] {kbArticle.getResourcePrimKey()});
+		}
 
 		Assert.assertNull(
 			_kbArticleLocalService.fetchLatestKBArticle(
@@ -590,6 +608,12 @@ public class KBArticleServiceTest {
 	private long _kbFolderClassNameId;
 
 	@DeleteAfterTestRun
+	private Role _regularRole;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@DeleteAfterTestRun
 	private Role _role;
 
 	private ServiceContext _serviceContext;
@@ -604,5 +628,8 @@ public class KBArticleServiceTest {
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

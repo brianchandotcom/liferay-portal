@@ -34,6 +34,7 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -217,7 +218,7 @@ public class OpenIdConnectPortalCatapultHeaderContributor
 			return false;
 		}
 
-		return origin.equals(_getOrigin(homePageURL));
+		return Objects.equals(origin, _getOrigin(homePageURL));
 	}
 
 	private static final long _TOKEN_EXPIRATION_OFFSET = 30 * Time.SECOND;

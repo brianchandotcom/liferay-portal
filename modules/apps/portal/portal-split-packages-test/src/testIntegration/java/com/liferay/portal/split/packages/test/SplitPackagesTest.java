@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,7 +30,6 @@ import org.osgi.framework.wiring.BundleWiring;
  * @author Tom Wang
  * @author Shuyang Zhou
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class SplitPackagesTest {
 

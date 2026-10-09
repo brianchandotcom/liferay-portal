@@ -117,36 +117,6 @@ public class OpenIdConnectPortalCatapultHeaderContributorTest {
 
 	private void _setUpMocks() {
 		Mockito.when(
-			_openIdConnectSession.getCompanyId()
-		).thenReturn(
-			_COMPANY_ID
-		);
-
-		Mockito.when(
-			_openIdConnectSession.getUserId()
-		).thenReturn(
-			_USER_ID
-		);
-
-		Mockito.when(
-			_openIdConnectSession.getAccessTokenExpirationDate()
-		).thenReturn(
-			new Date(System.currentTimeMillis() + Time.HOUR)
-		);
-
-		Mockito.when(
-			_openIdConnectSession.getIdToken()
-		).thenReturn(
-			_ID_TOKEN
-		);
-
-		Mockito.when(
-			_openIdConnectSessionLocalService.fetchCurrentOpenIdConnectSession()
-		).thenReturn(
-			_openIdConnectSession
-		);
-
-		Mockito.when(
 			_oAuthClientEntry.getTokenRequestParametersJSON()
 		).thenReturn(
 			JSONUtil.put(
@@ -159,6 +129,36 @@ public class OpenIdConnectPortalCatapultHeaderContributorTest {
 				Mockito.anyLong(), Mockito.any(), Mockito.any())
 		).thenReturn(
 			_oAuthClientEntry
+		);
+
+		Mockito.when(
+			_openIdConnectSession.getAccessTokenExpirationDate()
+		).thenReturn(
+			new Date(System.currentTimeMillis() + Time.HOUR)
+		);
+
+		Mockito.when(
+			_openIdConnectSession.getCompanyId()
+		).thenReturn(
+			_COMPANY_ID
+		);
+
+		Mockito.when(
+			_openIdConnectSession.getIdToken()
+		).thenReturn(
+			_ID_TOKEN
+		);
+
+		Mockito.when(
+			_openIdConnectSession.getUserId()
+		).thenReturn(
+			_USER_ID
+		);
+
+		Mockito.when(
+			_openIdConnectSessionLocalService.fetchCurrentOpenIdConnectSession()
+		).thenReturn(
+			_openIdConnectSession
 		);
 	}
 

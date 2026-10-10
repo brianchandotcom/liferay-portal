@@ -60,6 +60,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -127,7 +128,7 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 
 			List<StaticSiteExportLayout> staticSiteExportLayouts =
 				_exportStaticSiteExportLayouts(
-					groupId, layoutFailures, layouts, locales);
+					layoutFailures, layouts, locales);
 
 			Map<StaticSiteExportLayout, StaticSiteExportDocument>
 				staticSiteExportDocuments = new LinkedHashMap<>();
@@ -164,11 +165,12 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 
 			StaticSiteExportURLRewriter staticSiteExportURLRewriter =
 				new StaticSiteExportURLRewriter(
-					_getPagePaths(group, staticSiteExportLayouts),
+					_getPagePathsMap(group, staticSiteExportLayouts),
 					portalHostNames, resourcePaths);
 
 			return new StaticSiteExportImpl(
 				_rewriteLayouts(
+					_portal.getSiteDefaultLocale(groupId),
 					staticSiteExportDocuments, staticSiteExportURLRewriter),
 				new StaticSiteExportReport(layoutFailures, resourceFailures),
 				staticSiteExportResources);
@@ -182,14 +184,12 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 	}
 
 	private List<StaticSiteExportLayout> _exportStaticSiteExportLayouts(
-			long groupId, List<StaticSiteExportReport.Failure> layoutFailures,
+			List<StaticSiteExportReport.Failure> layoutFailures,
 			List<Layout> layouts, Set<Locale> locales)
 		throws PortalException {
 
 		List<StaticSiteExportLayout> staticSiteExportLayouts =
 			new ArrayList<>();
-
-		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
 
 		for (Layout layout : _getExportableLayouts(layouts)) {
 			long segmentsExperienceId =
@@ -203,8 +203,7 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 					staticSiteExportLayouts.add(
 						new StaticSiteExportLayout(
 							_render(layout, locale, segmentsExperienceId),
-							locale,
-							_getPath(friendlyURL, locale, siteDefaultLocale),
+							locale, _getPath(friendlyURL, locale),
 							layout.getPlid()));
 				}
 				catch (Exception exception) {
@@ -427,6 +426,26 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 		return auiModuleURLs;
 	}
 
+	private Map<String, String> _getAlternatePaths(
+		Map<Locale, String> paths, Locale siteDefaultLocale) {
+
+		Map<String, String> alternatePaths = new TreeMap<>();
+
+		for (Map.Entry<Locale, String> entry : paths.entrySet()) {
+			alternatePaths.put(
+				LocaleUtil.toW3cLanguageId(entry.getKey()),
+				StringPool.SLASH + entry.getValue());
+		}
+
+		String path = paths.get(siteDefaultLocale);
+
+		if (path != null) {
+			alternatePaths.put("x-default", StringPool.SLASH + path);
+		}
+
+		return alternatePaths;
+	}
+
 	private List<Layout> _getExportableLayouts(List<Layout> layouts) {
 		List<Layout> exportableLayouts = new ArrayList<>();
 
@@ -530,21 +549,39 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 		return Collections.emptySet();
 	}
 
-	private Map<String, String> _getPagePaths(
+	private List<String> _getOpenGraphLocaleAlternates(
+		Locale locale, Set<Locale> locales) {
+
+		List<String> openGraphLocaleAlternates = new ArrayList<>();
+
+		for (Locale alternateLocale : locales) {
+			if (!Objects.equals(alternateLocale, locale)) {
+				openGraphLocaleAlternates.add(
+					LocaleUtil.toLanguageId(alternateLocale));
+			}
+		}
+
+		Collections.sort(openGraphLocaleAlternates);
+
+		return openGraphLocaleAlternates;
+	}
+
+	private Map<Locale, Map<String, String>> _getPagePathsMap(
 			Group group, List<StaticSiteExportLayout> staticSiteExportLayouts)
 		throws PortalException {
 
-		Map<String, String> pagePaths = new HashMap<>();
+		Map<Locale, Map<String, String>> pagePathsMap = new HashMap<>();
 
 		Layout defaultLayout = _layoutLocalService.fetchFirstLayout(
 			group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
-			group.getGroupId());
+		Map<String, String> localizedPagePaths = new HashMap<>();
 
 		String siteURL =
 			_portal.getPathFriendlyURLPublic() + group.getFriendlyURL();
+
+		Map<Long, Set<String>> urlsMap = new HashMap<>();
 
 		for (StaticSiteExportLayout staticSiteExportLayout :
 				staticSiteExportLayouts) {
@@ -553,8 +590,6 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 				staticSiteExportLayout.getPlid());
 
 			Locale locale = staticSiteExportLayout.getLocale();
-
-			String path = staticSiteExportLayout.getPath();
 
 			List<String> urls = new ArrayList<>();
 
@@ -567,36 +602,53 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 				urls.add(siteURL + StringPool.SLASH);
 			}
 
-			for (String url : urls) {
-				if (Objects.equals(locale, siteDefaultLocale)) {
-					pagePaths.put(url, path);
-				}
+			Set<String> layoutURLs = urlsMap.computeIfAbsent(
+				layout.getPlid(), plid -> new HashSet<>());
 
-				pagePaths.put(
+			layoutURLs.addAll(urls);
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			String i18nPathLanguageId = _portal.getI18nPathLanguageId(
+				locale, languageId);
+
+			String path = staticSiteExportLayout.getPath();
+
+			for (String url : urls) {
+				localizedPagePaths.put(
 					StringBundler.concat(
-						StringPool.SLASH, LocaleUtil.toLanguageId(locale), url),
+						StringPool.SLASH, i18nPathLanguageId, url),
 					path);
-				pagePaths.put(
+				localizedPagePaths.put(
+					StringBundler.concat(StringPool.SLASH, languageId, url),
+					path);
+				localizedPagePaths.put(
 					StringBundler.concat(
 						StringPool.SLASH, locale.getLanguage(), url),
 					path);
 			}
 		}
 
-		return pagePaths;
-	}
+		for (StaticSiteExportLayout staticSiteExportLayout :
+				staticSiteExportLayouts) {
 
-	private String _getPath(
-		String friendlyURL, Locale locale, Locale siteDefaultLocale) {
+			Map<String, String> pagePaths = pagePathsMap.computeIfAbsent(
+				staticSiteExportLayout.getLocale(),
+				locale -> new HashMap<>(localizedPagePaths));
 
-		String path = StringUtil.removeFirst(friendlyURL, StringPool.SLASH);
-
-		if (Objects.equals(locale, siteDefaultLocale)) {
-			return path + ".html";
+			for (String url : urlsMap.get(staticSiteExportLayout.getPlid())) {
+				pagePaths.put(url, staticSiteExportLayout.getPath());
+			}
 		}
 
+		return pagePathsMap;
+	}
+
+	private String _getPath(String friendlyURL, Locale locale) {
 		return StringBundler.concat(
-			LocaleUtil.toLanguageId(locale), StringPool.SLASH, path, ".html");
+			_portal.getI18nPathLanguageId(
+				locale, LocaleUtil.toLanguageId(locale)),
+			friendlyURL, ".html");
 	}
 
 	private Set<String> _getPortalHostNames(
@@ -749,9 +801,23 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 	}
 
 	private List<StaticSiteExportLayout> _rewriteLayouts(
+		Locale siteDefaultLocale,
 		Map<StaticSiteExportLayout, StaticSiteExportDocument>
 			staticSiteExportDocuments,
 		StaticSiteExportURLRewriter staticSiteExportURLRewriter) {
+
+		Map<Long, Map<Locale, String>> pathsMap = new HashMap<>();
+
+		for (StaticSiteExportLayout staticSiteExportLayout :
+				staticSiteExportDocuments.keySet()) {
+
+			Map<Locale, String> paths = pathsMap.computeIfAbsent(
+				staticSiteExportLayout.getPlid(), plid -> new HashMap<>());
+
+			paths.put(
+				staticSiteExportLayout.getLocale(),
+				staticSiteExportLayout.getPath());
+		}
 
 		List<StaticSiteExportLayout> rewrittenStaticSiteExportLayouts =
 			new ArrayList<>();
@@ -764,7 +830,21 @@ public class StaticSiteExporterImpl implements StaticSiteExporter {
 			StaticSiteExportDocument staticSiteExportDocument =
 				entry.getValue();
 
-			staticSiteExportURLRewriter.rewrite(staticSiteExportDocument);
+			staticSiteExportURLRewriter.rewrite(
+				staticSiteExportLayout.getLocale(), staticSiteExportDocument);
+
+			Map<Locale, String> paths = pathsMap.get(
+				staticSiteExportLayout.getPlid());
+
+			String canonicalPath =
+				StringPool.SLASH + staticSiteExportLayout.getPath();
+
+			staticSiteExportDocument.replaceLinks(
+				_getAlternatePaths(paths, siteDefaultLocale), canonicalPath);
+			staticSiteExportDocument.replaceOpenGraphMetaTags(
+				canonicalPath,
+				_getOpenGraphLocaleAlternates(
+					staticSiteExportLayout.getLocale(), paths.keySet()));
 
 			rewrittenStaticSiteExportLayouts.add(
 				new StaticSiteExportLayout(

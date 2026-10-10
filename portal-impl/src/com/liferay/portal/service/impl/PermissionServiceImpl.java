@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
+import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.TeamPersistence;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.base.PermissionServiceBaseImpl;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Provides the remote service for checking permissions.
@@ -124,6 +127,20 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 			String primKey)
 		throws PortalException {
 
+		if (ResourceActionsUtil.isRootModelResource(name)) {
+			groupId = GetterUtil.getLong(primKey);
+		}
+		else if (Objects.equals(name, primKey)) {
+			groupId = 0;
+		}
+		else {
+			List<String> portletNames = ResourceActionsUtil.getPortletNames();
+
+			if (portletNames.contains(name)) {
+				groupId = 0;
+			}
+		}
+
 		if (checkModelResourcePermission(
 				permissionChecker, groupId, name,
 				GetterUtil.getLong(primKey))) {
@@ -138,15 +155,20 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 
 			long plid = GetterUtil.getLong(primKey.substring(0, pos));
 
+			Layout layout = _layoutPersistence.findByPrimaryKey(plid);
+
 			String portletId = primKey.substring(
 				pos + PortletConstants.LAYOUT_SEPARATOR.length());
 
 			PortletPermissionUtil.check(
-				permissionChecker, groupId, plid, portletId,
+				permissionChecker, layout.getGroupId(), plid, portletId,
 				ActionKeys.CONFIGURATION);
+
+			return;
 		}
-		else if (!permissionChecker.hasPermission(
-					groupId, name, primKey, ActionKeys.PERMISSIONS)) {
+
+		if (!permissionChecker.hasPermission(
+				groupId, name, primKey, ActionKeys.PERMISSIONS)) {
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
@@ -215,6 +237,9 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionServiceImpl.class);
+
+	@BeanReference(type = LayoutPersistence.class)
+	private LayoutPersistence _layoutPersistence;
 
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	private ResourcePermissionPersistence _resourcePermissionPersistence;

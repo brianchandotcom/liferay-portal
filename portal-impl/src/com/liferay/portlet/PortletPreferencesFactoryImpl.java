@@ -299,9 +299,25 @@ public class PortletPreferencesFactoryImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return getPortalPreferences(
+		PortalPreferences portalPreferences =
+			(PortalPreferences)httpServletRequest.getAttribute(
+				WebKeys.REQUEST_PORTAL_PREFERENCES);
+
+		if ((portalPreferences != null) &&
+			(portalPreferences.getUserId() == themeDisplay.getUserId()) &&
+			(portalPreferences.isSignedIn() == themeDisplay.isSignedIn())) {
+
+			return portalPreferences;
+		}
+
+		portalPreferences = getPortalPreferences(
 			httpServletRequest.getSession(), themeDisplay.getUserId(),
 			themeDisplay.isSignedIn());
+
+		httpServletRequest.setAttribute(
+			WebKeys.REQUEST_PORTAL_PREFERENCES, portalPreferences);
+
+		return portalPreferences;
 	}
 
 	@Override
@@ -310,14 +326,8 @@ public class PortletPreferencesFactoryImpl
 
 		PortalPreferences portalPreferences = null;
 
-		PortalPreferencesWrapper portalPreferencesWrapper =
-			(PortalPreferencesWrapper)
-				PortalPreferencesLocalServiceUtil.getPreferences(
-					userId, PortletKeys.PREFS_OWNER_TYPE_USER);
-
 		if (signedIn) {
-			portalPreferences =
-				portalPreferencesWrapper.getPortalPreferencesImpl();
+			portalPreferences = _getPortalPreferences(userId);
 		}
 		else {
 			if (httpSession != null) {
@@ -326,8 +336,7 @@ public class PortletPreferencesFactoryImpl
 			}
 
 			if (portalPreferences == null) {
-				portalPreferences =
-					portalPreferencesWrapper.getPortalPreferencesImpl();
+				portalPreferences = _getPortalPreferences(userId);
 
 				if (httpSession != null) {
 					httpSession.setAttribute(
@@ -854,6 +863,15 @@ public class PortletPreferencesFactoryImpl
 		}
 
 		return String.valueOf(cacheKeyGenerator.getCacheKey(xml));
+	}
+
+	private PortalPreferences _getPortalPreferences(long userId) {
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			(PortalPreferencesWrapper)
+				PortalPreferencesLocalServiceUtil.getPreferences(
+					userId, PortletKeys.PREFS_OWNER_TYPE_USER);
+
+		return portalPreferencesWrapper.getPortalPreferencesImpl();
 	}
 
 	private PortletPreferencesIds _getPortletPreferencesIds(

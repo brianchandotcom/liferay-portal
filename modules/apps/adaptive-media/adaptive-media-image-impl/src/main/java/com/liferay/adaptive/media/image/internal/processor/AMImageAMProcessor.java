@@ -15,7 +15,11 @@ import com.liferay.adaptive.media.image.scaler.AMImageScalerRegistry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.adaptive.media.processor.AMProcessor;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.FileVersionWrapper;
@@ -49,7 +53,9 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 
 	@Override
 	public void process(FileVersion fileVersion) throws PortalException {
-		if (!_amImageValidator.isProcessingSupported(fileVersion)) {
+		if (!_amImageValidator.isProcessingSupported(fileVersion) ||
+			!_hasDLFileVersion(fileVersion)) {
+
 			return;
 		}
 
@@ -60,7 +66,7 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 		for (AMImageConfigurationEntry amImageConfigurationEntry :
 				amImageConfigurationEntries) {
 
-			process(fileVersion, amImageConfigurationEntry.getUUID());
+			_process(fileVersion, amImageConfigurationEntry);
 		}
 	}
 
@@ -68,7 +74,9 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 	public void process(FileVersion fileVersion, String configurationEntryUuid)
 		throws PortalException {
 
-		if (!_amImageValidator.isProcessingSupported(fileVersion)) {
+		if (!_amImageValidator.isProcessingSupported(fileVersion) ||
+			!_hasDLFileVersion(fileVersion)) {
+
 			return;
 		}
 
@@ -80,47 +88,7 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 			return;
 		}
 
-		AMImageEntry amImageEntry = _amImageEntryLocalService.fetchAMImageEntry(
-			amImageConfigurationEntry.getUUID(),
-			fileVersion.getFileVersionId());
-
-		try {
-			if (!_isUpdateImageEntry(amImageEntry, fileVersion)) {
-				return;
-			}
-
-			AMImageScaler amImageScaler =
-				_amImageScalerRegistry.getAMImageScaler(
-					fileVersion.getMimeType());
-
-			if (amImageScaler == null) {
-				return;
-			}
-
-			AMImageScaledImage amImageScaledImage = amImageScaler.scaleImage(
-				fileVersion, amImageConfigurationEntry);
-
-			try (InputStream inputStream =
-					amImageScaledImage.getInputStream()) {
-
-				FileVersion scaledFileVersion = _getScaledFileVersion(
-					amImageScaledImage, fileVersion);
-
-				if (amImageEntry != null) {
-					_amImageEntryLocalService.deleteAMImageEntry(
-						amImageEntry.getAmImageEntryId());
-				}
-
-				_amImageEntryLocalService.addAMImageEntry(
-					amImageConfigurationEntry, scaledFileVersion,
-					amImageScaledImage.getHeight(),
-					amImageScaledImage.getWidth(), inputStream,
-					amImageScaledImage.getSize());
-			}
-		}
-		catch (IOException ioException) {
-			throw new AMRuntimeException.IOException(ioException);
-		}
+		_process(fileVersion, amImageConfigurationEntry);
 	}
 
 	private FileVersion _getScaledFileVersion(
@@ -142,6 +110,28 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 			}
 
 		};
+	}
+
+	private boolean _hasDLFileVersion(FileVersion fileVersion) {
+		if (!(fileVersion.getModel() instanceof DLFileVersion)) {
+			return true;
+		}
+
+		DLFileVersion dlFileVersion =
+			_dlFileVersionLocalService.fetchDLFileVersion(
+				fileVersion.getFileVersionId());
+
+		if (dlFileVersion != null) {
+			return true;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"File version " + fileVersion.getFileVersionId() +
+					" was deleted");
+		}
+
+		return false;
 	}
 
 	private boolean _isUpdateImageEntry(
@@ -168,6 +158,61 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 		return false;
 	}
 
+	private void _process(
+			FileVersion fileVersion,
+			AMImageConfigurationEntry amImageConfigurationEntry)
+		throws PortalException {
+
+		try {
+			AMImageEntry amImageEntry =
+				_amImageEntryLocalService.fetchAMImageEntry(
+					amImageConfigurationEntry.getUUID(),
+					fileVersion.getFileVersionId());
+
+			if (!_isUpdateImageEntry(amImageEntry, fileVersion)) {
+				return;
+			}
+
+			AMImageScaler amImageScaler =
+				_amImageScalerRegistry.getAMImageScaler(
+					fileVersion.getMimeType());
+
+			if (amImageScaler == null) {
+				return;
+			}
+
+			AMImageScaledImage amImageScaledImage = amImageScaler.scaleImage(
+				fileVersion, amImageConfigurationEntry);
+
+			try (InputStream inputStream =
+					amImageScaledImage.getInputStream()) {
+
+				if (amImageEntry != null) {
+					_amImageEntryLocalService.deleteAMImageEntry(
+						amImageEntry.getAmImageEntryId());
+				}
+
+				_amImageEntryLocalService.addAMImageEntry(
+					amImageConfigurationEntry,
+					_getScaledFileVersion(amImageScaledImage, fileVersion),
+					amImageScaledImage.getHeight(),
+					amImageScaledImage.getWidth(), inputStream,
+					amImageScaledImage.getSize());
+			}
+
+			if (!_hasDLFileVersion(fileVersion)) {
+				_amImageEntryLocalService.deleteAMImageEntryFileVersion(
+					fileVersion);
+			}
+		}
+		catch (IOException ioException) {
+			throw new AMRuntimeException.IOException(ioException);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AMImageAMProcessor.class);
+
 	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
@@ -179,5 +224,8 @@ public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 
 	@Reference
 	private AMImageValidator _amImageValidator;
+
+	@Reference
+	private DLFileVersionLocalService _dlFileVersionLocalService;
 
 }

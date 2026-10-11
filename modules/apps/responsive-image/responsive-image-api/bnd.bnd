@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.responsive.image.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.responsive.image,\
+	com.liferay.responsive.image.configuration,\
 	com.liferay.responsive.image.constants

@@ -5,7 +5,9 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {expandSection} from '../../../../utils/expandSection';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {AssetCategoriesAdminPage} from './AssetCategoriesAdminPage';
 
@@ -168,6 +170,58 @@ export class AssetCategoriesEditPage {
 			.click();
 
 		await waitForAlert(this.page);
+	}
+
+	async selectDisplayPage({
+		displayPageName,
+		type,
+	}: {
+		displayPageName?: string;
+		type: 'Default' | 'Inherited' | 'None' | 'Specific';
+	}) {
+		const fieldset = this.page.getByRole('group', {name: 'Display Page'});
+
+		const displayPageTemplateTypeSelect = fieldset.getByTitle(
+			'Display Page Template Type'
+		);
+
+		await displayPageTemplateTypeSelect.waitFor({state: 'attached'});
+
+		// The category editor collapses the fieldset, but the bulk assignment
+		// screen renders it without a toggle
+
+		const toggle = fieldset.getByRole('button', {name: 'Display Page'});
+
+		if (await toggle.count()) {
+			await expandSection(toggle);
+		}
+
+		await fieldset
+			.getByTitle('Display Page Template Type')
+			.selectOption(type);
+
+		if (!displayPageName) {
+			return;
+		}
+
+		await fieldset.getByRole('button', {name: 'Select'}).click();
+
+		const selectDisplayPageModal = this.page.frameLocator(
+			'iframe[title*="Select Page"]'
+		);
+
+		const displayPageCard = selectDisplayPageModal
+			.locator('.card-type-asset')
+			.filter({hasText: displayPageName});
+
+		await displayPageCard.click({trial: true});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Select Page',
+			}),
+			trigger: displayPageCard,
+		});
 	}
 
 	async selectLanguage(languageId: string) {

@@ -160,6 +160,10 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			Collections.singletonList("foo"), "Unrecognized command: foo", 2,
 			Collections.emptyList(),
 			"usage: db_partition_migration_validator export");
+		_testHelp(
+			Arrays.asList("validate", "--source-file", "validate"),
+			"Missing required option: target-file", 2, Collections.emptyList(),
+			"usage: db_partition_migration_validator validate");
 	}
 
 	@Test

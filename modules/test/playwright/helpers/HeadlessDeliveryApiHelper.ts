@@ -20,6 +20,7 @@ type TDocument = {
 	contentUrl?: string;
 	description?: string;
 	documentFolderId?: number;
+	documentType?: {name: string};
 	externalReferenceCode?: string;
 	fileName?: string;
 	id?: number;
@@ -218,6 +219,7 @@ export class HeadlessDeliveryApiHelper {
 			articleBody?: string;
 			headline?: string;
 			keywords?: string[];
+			taxonomyCategoryIds?: number[];
 		}
 	): Promise<any> {
 		blog = {
@@ -261,11 +263,13 @@ export class HeadlessDeliveryApiHelper {
 	async postSiteKnowledgeBaseArticle({
 		articleBody,
 		siteId,
+		taxonomyCategoryIds,
 		title,
 		viewableBy,
 	}: {
 		articleBody: string;
 		siteId: string;
+		taxonomyCategoryIds?: number[];
 		title: string;
 		viewableBy?: string;
 	}): Promise<KnowledgeBaseArticle> {
@@ -274,6 +278,7 @@ export class HeadlessDeliveryApiHelper {
 			{
 				data: {
 					articleBody,
+					taxonomyCategoryIds,
 					title,
 					viewableBy,
 				},

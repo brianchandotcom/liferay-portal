@@ -1,0 +1,15 @@
+map-item[data-layout-mode='edit'] {
+	border: 1px dashed var(--gray-500, #6b6c7e);
+	display: block;
+	margin-bottom: 1rem;
+	min-height: 6rem;
+	padding: 0.5rem;
+}
+
+map-item[data-layout-mode='edit']::before {
+	color: var(--gray-600, #6b6c7e);
+	content: attr(name) ' (' attr(latitude) ', ' attr(longitude) ')';
+	display: block;
+	font-size: 0.75rem;
+	margin-bottom: 0.5rem;
+}

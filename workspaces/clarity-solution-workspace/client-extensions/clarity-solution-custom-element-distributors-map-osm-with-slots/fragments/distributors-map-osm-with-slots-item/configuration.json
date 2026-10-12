@@ -8,6 +8,39 @@
 					"type": "itemSelector"
 				}
 			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "latitude",
+					"label": "Latitude Field",
+					"name": "latitudeField",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "longitude",
+					"label": "Longitude Field",
+					"name": "longitudeField",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "name",
+					"label": "Name Field",
+					"name": "nameField",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "tier",
+					"label": "Tier Field",
+					"name": "tierField",
+					"type": "text"
+				}
+			],
+			"label": "Field Names"
 		}
 	]
 }

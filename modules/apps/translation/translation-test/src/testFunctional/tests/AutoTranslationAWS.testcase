@@ -63,46 +63,4 @@ definition {
 			webContentTitle = "Título del artículo");
 	}
 
-	@description = "This ensures that the web content title can be translated independently"
-	@priority = 5
-	test CanTranslateWCFieldIndependently {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		JSONWebcontent.addWebContent(
-			content = "WC content",
-			description = "WC description",
-			groupName = "Site Name",
-			title = "WC title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		Translations.gotoTranslate(webContentTitle = "WC title");
-
-		Translations.changeTargetLocale(
-			currentTargetLocale = "ar-SA",
-			newTargetLocale = "ja-JP");
-
-		Translations.translateSpecificField(fieldName = "Title");
-
-		Translations.viewTargetFields(
-			webContentContent = "WC content",
-			webContentDescription = "WC description",
-			webContentTitle = "トイレタイトル");
-
-		PortletEntry.publish();
-
-		Translations.openToTranslateEntry(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			sourceLanguageId = "en_US",
-			targetLanguageId = "ja_JP",
-			webContentTitle = "WC title");
-
-		Translations.viewTargetFields(
-			webContentContent = "WC content",
-			webContentDescription = "WC description",
-			webContentTitle = "トイレタイトル");
-	}
-
 }

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -55,6 +56,15 @@ public class TranslationTestUtil {
 
 		return _getJournalArticle(
 			group, ddmFormDeserializer, "test-journal-content-rich-html.xml");
+	}
+
+	public static String getXLIFF(String className, long classPK)
+		throws Exception {
+
+		return StringUtil.replace(
+			readFileToString("test-journal-article-simple.xlf"),
+			JournalArticle.class.getName() + ":[$JOURNAL_ARTICLE_ID$]",
+			className + ":" + classPK);
 	}
 
 	public static InputStream readFileToInputStream(String fileName)

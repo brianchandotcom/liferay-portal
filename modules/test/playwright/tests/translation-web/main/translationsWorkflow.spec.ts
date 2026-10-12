@@ -11,11 +11,15 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {WorkflowPage} from '../../../pages/portal-workflow-web/WorkflowPage';
+import createTempFile from '../../../utils/createTempFile';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {readFileFromZip} from '../../../utils/zip';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import {JournalPage} from '../../journal-web/main/pages/JournalPage';
 import {translationPagesTest} from './fixtures/translationPagesTest';
+import {TranslationFilesPage} from './pages/TranslationFilesPage';
 import {WebContentTranslationPage} from './pages/WebContentTranslationPage';
 
 const test = mergeTests(
@@ -79,6 +83,52 @@ async function enableTranslationWorkflow(
 	await workflowPage.goto(site.friendlyUrlPath);
 
 	await workflowPage.changeWorkflow('Translation', 'Single Approver');
+}
+
+async function exportTranslations({
+	journalPage,
+	languages,
+	site,
+	title,
+	translationFilesPage,
+}: {
+	journalPage: JournalPage;
+	languages: string[];
+	site: Site;
+	title: string;
+	translationFilesPage: TranslationFilesPage;
+}) {
+	await journalPage.goto(site.friendlyUrlPath);
+
+	await journalPage.goToJournalArticleAction('Export for Translation', title);
+
+	const {filePath} = await translationFilesPage.exportTranslation({
+		languages,
+	});
+
+	return filePath;
+}
+
+async function importTranslations({
+	action,
+	filePaths,
+	journalPage,
+	site,
+	title,
+	translationFilesPage,
+}: {
+	action: 'Save as Draft' | 'Submit for Workflow';
+	filePaths: string[];
+	journalPage: JournalPage;
+	site: Site;
+	title: string;
+	translationFilesPage: TranslationFilesPage;
+}) {
+	await journalPage.goto(site.friendlyUrlPath);
+
+	await journalPage.goToJournalArticleAction('Import Translation', title);
+
+	await translationFilesPage.importTranslation(filePaths, action);
 }
 
 async function submitSpanishTranslation(
@@ -311,5 +361,222 @@ test(
 		).toBeDisabled();
 
 		await performUserSwitch(page, 'test');
+	}
+);
+
+test(
+	'Approving an imported translation applies it to the web content',
+	{tag: '@LPD-109576'},
+	async ({
+		apiHelpers,
+		journalEditArticlePage,
+		journalPage,
+		page,
+		site,
+		translationFilesPage,
+		translationsAdminPage,
+		workflowPage,
+		workflowTasksPage,
+	}) => {
+		const title = getRandomString();
+
+		await addWebContent(apiHelpers, site, title);
+
+		await enableTranslationWorkflow(site, workflowPage);
+
+		// Export German and Spanish, translate Spanish and break German, so
+		// that only one file of the zip can be submitted
+
+		const zipFilePath = await exportTranslations({
+			journalPage,
+			languages: ['German (Germany)', 'Spanish (Spain)'],
+			site,
+			title,
+			translationFilesPage,
+		});
+
+		const germanFileName = `${title}-en_US-de_DE.xlf`;
+
+		await importTranslations({
+			action: 'Submit for Workflow',
+			filePaths: [
+				createTempFile(
+					`${title}-en_US-es_ES.xlf`,
+					TranslationFilesPage.translateXliff(
+						await readFileFromZip(
+							`${title}-en_US-es_ES.xlf`,
+							zipFilePath
+						),
+						{JournalArticle_title: SPANISH.title}
+					)
+				),
+				createTempFile(
+					germanFileName,
+					(
+						await readFileFromZip(germanFileName, zipFilePath)
+					).replace(/JournalArticle:\d+/, 'JournalArticle:0')
+				),
+			],
+			journalPage,
+			site,
+			title,
+			translationFilesPage,
+		});
+
+		await expect(
+			page.getByText('1 file could not be published.')
+		).toBeVisible();
+
+		await expect(page.getByText(germanFileName)).toBeVisible();
+
+		// Only the Spanish translation waits for review
+
+		await translationsAdminPage.goto(site);
+
+		await translationsAdminPage.assertEntry({
+			language: 'es-ES',
+			status: 'Pending',
+			title: `Translation of ${title} to es-ES`,
+		});
+
+		await translationsAdminPage.assertNoEntry(
+			`Translation of ${title} to de-DE`
+		);
+
+		// Approve it
+
+		await workflowTasksPage.goToAssignedToMyRoles(site.friendlyUrlPath);
+
+		await workflowTasksPage.assignToMe(`Translation of ${title} to es-ES`);
+
+		await workflowTasksPage.approve(`Translation of ${title} to es-ES`);
+
+		// The approved translation is applied to the web content
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalEditArticlePage.editArticle(title);
+
+		await journalEditArticlePage.changeLanguage('es_ES');
+
+		await expect(journalEditArticlePage.titleInput).toHaveValue(
+			SPANISH.title
+		);
+	}
+);
+
+test(
+	'A rejected imported translation can be imported again and approved',
+	{tag: '@LPD-109576'},
+	async ({
+		apiHelpers,
+		journalEditArticlePage,
+		journalPage,
+		site,
+		translationFilesPage,
+		translationsAdminPage,
+		workflowPage,
+		workflowTasksPage,
+	}) => {
+		const title = getRandomString();
+
+		const entry = `Translation of ${title} to es-ES`;
+
+		await addWebContent(apiHelpers, site, title);
+
+		await enableTranslationWorkflow(site, workflowPage);
+
+		const zipFilePath = await exportTranslations({
+			journalPage,
+			languages: ['Spanish (Spain)'],
+			site,
+			title,
+			translationFilesPage,
+		});
+
+		const xliff = await readFileFromZip(
+			`${title}-en_US-es_ES.xlf`,
+			zipFilePath
+		);
+
+		// Import a Spanish translation and reject it
+
+		await importTranslations({
+			action: 'Submit for Workflow',
+			filePaths: [
+				createTempFile(
+					`${title}-en_US-es_ES.xlf`,
+					TranslationFilesPage.translateXliff(xliff, {
+						JournalArticle_title: SPANISH.title,
+					})
+				),
+			],
+			journalPage,
+			site,
+			title,
+			translationFilesPage,
+		});
+
+		await workflowTasksPage.goToAssignedToMyRoles(site.friendlyUrlPath);
+
+		await workflowTasksPage.assignToMe(entry);
+
+		await workflowTasksPage.reject(entry);
+
+		await translationsAdminPage.goto(site);
+
+		await translationsAdminPage.assertEntry({
+			language: 'es-ES',
+			status: 'Pending',
+			title: entry,
+		});
+
+		// Import a corrected translation and resubmit it
+
+		const correctedTitle = `${SPANISH.title} ${getRandomString()}`;
+
+		await importTranslations({
+			action: 'Save as Draft',
+			filePaths: [
+				createTempFile(
+					`${title}-corrected-en_US-es_ES.xlf`,
+					TranslationFilesPage.translateXliff(xliff, {
+						JournalArticle_title: correctedTitle,
+					})
+				),
+			],
+			journalPage,
+			site,
+			title,
+			translationFilesPage,
+		});
+
+		await workflowTasksPage.resubmit(entry, site.friendlyUrlPath);
+
+		// Approve the resubmitted translation
+
+		await workflowTasksPage.goToAssignedToMyRoles(site.friendlyUrlPath);
+
+		await workflowTasksPage.assignToMe(entry);
+
+		await workflowTasksPage.approve(entry);
+
+		await translationsAdminPage.goto(site);
+
+		await translationsAdminPage.assertEntry({
+			language: 'es-ES',
+			status: 'Approved',
+			title: entry,
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalEditArticlePage.editArticle(title);
+
+		await journalEditArticlePage.changeLanguage('es_ES');
+
+		await expect(journalEditArticlePage.titleInput).toHaveValue(
+			correctedTitle
+		);
 	}
 );

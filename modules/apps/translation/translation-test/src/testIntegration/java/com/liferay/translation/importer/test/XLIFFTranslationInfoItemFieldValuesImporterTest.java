@@ -124,6 +124,24 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 	}
 
 	@Test
+	public void testImportXLIFF12PreservesCDATAMarkup() throws Exception {
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					new ByteArrayInputStream(
+						_CDATA_MARKUP_V12_XLIFF.getBytes()));
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("content");
+
+		Assert.assertEquals(
+			"<bpt id=\"3\"><h1></bpt>Contenidoweb<ept id=\"3\"></h1></ept>",
+			infoFieldValue.getValue(LocaleUtil.SPAIN));
+	}
+
+	@Test
 	public void testImportXLIFF12PreservesInlineCodes() throws Exception {
 		InfoItemFieldValues infoItemFieldValues =
 			_xliffTranslationInfoItemFieldValuesImporter.
@@ -382,6 +400,18 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 		Assert.assertEquals(
 			"Hola mundo", contentInfoFieldValue.getValue(LocaleUtil.SPAIN));
 	}
+
+	private static final String _CDATA_MARKUP_V12_XLIFF = StringBundler.concat(
+		"<?xml version=\"1.0\"?>\n\n<xliff version=\"1.2\" xmlns=",
+		"\"urn:oasis:names:tc:xliff:document:1.2\">\n\t<file datatype=",
+		"\"plaintext\" original=\"com.liferay.journal.model.JournalArticle:",
+		"122\" source-language=\"en-US\" target-language=\"es-ES\" tool=",
+		"\"Liferay\">\n\t\t<body>\n\t\t\t<trans-unit id=",
+		"\"JournalArticle_content\">\n\t\t\t\t<source xml:lang=\"en-US\">",
+		"<![CDATA[<h1>Webcontent</h1>]]></source>\n\t\t\t\t<target ",
+		"xml:lang=\"es-ES\"><![CDATA[<bpt id=\"3\"><h1></bpt>Contenidoweb",
+		"<ept id=\"3\"></h1></ept>]]></target>\n\t\t\t</trans-unit>\n\t\t",
+		"</body>\n\t</file>\n</xliff>");
 
 	private static final String _INLINE_CODE_ONLY_TARGET_XLIFF =
 		StringBundler.concat(

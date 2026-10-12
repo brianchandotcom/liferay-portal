@@ -16,7 +16,6 @@ export class TranslationFilesPage {
 	readonly doneButton: Locator;
 	readonly exportButton: Locator;
 	readonly fileInput: Locator;
-	readonly publishButton: Locator;
 	readonly uploadAnotherFileButton: Locator;
 
 	constructor(page: Page) {
@@ -28,10 +27,6 @@ export class TranslationFilesPage {
 			name: 'Export',
 		});
 		this.fileInput = page.locator('input[type="file"]');
-		this.publishButton = page.getByRole('button', {
-			exact: true,
-			name: 'Publish',
-		});
 		this.uploadAnotherFileButton = page.getByRole('link', {
 			name: 'Upload Another File',
 		});
@@ -72,10 +67,15 @@ export class TranslationFilesPage {
 		return this.download(this.exportButton);
 	}
 
-	async importTranslation(filePaths: string[]) {
+	async importTranslation(
+		filePaths: string[],
+		action: 'Publish' | 'Save as Draft' | 'Submit for Workflow' = 'Publish'
+	) {
 		await this.fileInput.setInputFiles(filePaths);
 
-		await this.publishButton.click();
+		await this.page
+			.getByRole('button', {exact: true, name: action})
+			.click();
 
 		await this.doneButton.waitFor();
 	}

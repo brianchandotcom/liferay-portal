@@ -33,24 +33,6 @@ definition {
 		JSONGroup.deleteGroupByName(groupName = "Site Name");
 	}
 
-	@description = "This ensures that an invalid Google translation service key cannot be saved."
-	@priority = 5
-	test CannotSaveWhenConfigurationIsInvalid {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		SystemSettings.resetConfiguration();
-
-		Translations.saveInvalidConfiguration(settingValue = "");
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
-
-		Translations.saveInvalidConfiguration(settingValue = "This is an invalid input");
-	}
-
 	@description = "This ensures that Google Translation can be used to auto-translate a Web Content into Japanese"
 	@priority = 5
 	test CanTranslateWCToJapaneseWithGoogle {

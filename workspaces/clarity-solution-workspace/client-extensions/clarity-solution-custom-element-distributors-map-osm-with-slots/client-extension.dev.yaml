@@ -1,3 +1,6 @@
+# Loads the element from the Vite dev server (yarn dev) instead of the deployed
+# bundle, for hot reload in a running portal
+
 clarity-solution-custom-element-distributors-map-osm-with-slots:
     urls:
         -   http://localhost:5173/@vite/client

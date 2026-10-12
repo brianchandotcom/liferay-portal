@@ -9,6 +9,9 @@ import {defineConfig} from 'vite';
 
 // https://vitejs.dev/config/
 
+// Builds a single ES module, index.js, which the import map entry points to.
+// React stays external because Liferay's import map already provides it.
+
 export default defineConfig({
 	build: {
 		lib: {
@@ -26,6 +29,10 @@ export default defineConfig({
 			},
 		},
 	},
+
+	// The bundled JSX runtime reads process.env.NODE_ENV, which a library build
+	// leaves as is
+
 	define: {
 		'process.env.NODE_ENV': '"production"',
 	},

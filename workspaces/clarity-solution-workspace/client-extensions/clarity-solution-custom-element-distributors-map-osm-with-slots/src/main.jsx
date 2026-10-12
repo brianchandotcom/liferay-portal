@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// A jsImportMapsEntry only ships JavaScript, so the CSS is imported as strings
+// and injected into the shadow root, where it neither leaks into the page nor
+// gets overridden by it
+
 import leafletCSS from 'leaflet/dist/leaflet.css?inline';
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
@@ -10,7 +14,13 @@ import {createRoot} from 'react-dom/client';
 import App from './App.jsx';
 import appCSS from './App.css?inline';
 
+// Removes the <map-item> box so its children lay out directly in the tooltip
+
 const SLOT_CSS = '::slotted(map-item) { display: contents; }';
+
+// The <map-item> children stay in the light DOM, where the page author wrote
+// them, and the browser projects each one into the <slot> of its marker's
+// tooltip, so any HTML can be shown there without being copied
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {
@@ -34,6 +44,9 @@ class WebComponent extends HTMLElement {
 
 		this._render();
 
+		// Fragments may move <map-item> children in after the first render, for
+		// example out of a Collection Display
+
 		this.observer = new MutationObserver(() => this._render());
 
 		this.observer.observe(this, {childList: true});
@@ -46,6 +59,8 @@ class WebComponent extends HTMLElement {
 		delete this.observer;
 		delete this.root;
 	}
+
+	// Only direct children can be assigned to a slot
 
 	_getMapItems() {
 		return Array.from(this.querySelectorAll(':scope > map-item')).map(

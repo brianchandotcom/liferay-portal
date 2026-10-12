@@ -60,6 +60,8 @@ const MapItemMarker = ({item}) => {
 					opacity={1}
 					permanent
 				>
+					{/* Filled by the <map-item> whose slot attribute matches */}
+
 					<div style={{whiteSpace: 'normal'}}>
 						<slot name={item.slot}></slot>
 					</div>

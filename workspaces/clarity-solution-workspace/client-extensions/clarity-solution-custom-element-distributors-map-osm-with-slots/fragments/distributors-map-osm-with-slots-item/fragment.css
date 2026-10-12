@@ -1,3 +1,5 @@
+/* An unknown element such as <map-item> is inline by default, which collapses its drop zone in the page editor */
+
 map-item[data-layout-mode='edit'] {
 	border: 1px dashed var(--gray-500, #6b6c7e);
 	display: block;

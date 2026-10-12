@@ -6,6 +6,9 @@
 import {useEffect} from 'react';
 import {useMap} from 'react-leaflet';
 
+// Fits the map to the items, since there is no fixed center or zoom that suits
+// every list
+
 const CalculateBounds = ({items}) => {
 	const map = useMap();
 

@@ -6,7 +6,8 @@
 import 'clarity-solution-custom-element-distributors-map-osm-with-slots';
 
 // The page editor owns the drop zone's DOM in edit mode, so the items are only
-// moved when the page is viewed
+// moved when the page is viewed. Items added later, for example by a "Load
+// More" pagination, are not moved.
 
 if (layoutMode !== 'edit') {
 	const items = fragmentElement.querySelector(

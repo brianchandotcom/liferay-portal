@@ -1,3 +1,7 @@
+# A jsImportMapsEntry only registers the bundle under a bare specifier in the
+# import map, so the custom element is placed by a fragment (see fragments) that
+# writes its markup, including the <map-item> children shown in the tooltips
+
 assemble:
     -   from: build/vite
         into: static

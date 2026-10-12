@@ -30,7 +30,7 @@ const mockConfirmAndDeleteEntryAction = jest.fn();
 Liferay.Util = {...Liferay.Util, escapeHTML: (value) => value};
 
 jest.mock(
-	'../../src/main/resources/META-INF/resources/js/openProductRelationshipSelectorModal',
+	'../../src/main/resources/META-INF/resources/js/ProductRelationshipSelectorModal',
 	() => ({
 		__esModule: true,
 		default: jest.fn(),

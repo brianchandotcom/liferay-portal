@@ -8,6 +8,9 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
+import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {translationPagesTest} from './fixtures/translationPagesTest';
@@ -17,8 +20,38 @@ const test = mergeTests(
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
+	systemSettingsPageTest,
 	translationPagesTest
 );
+
+const GOOGLE_CLOUD_TRANSLATOR_CONFIGURATION_PID =
+	'com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration';
+
+async function enableGoogleCloudTranslator(
+	systemSettingsPage: SystemSettingsPage
+) {
+	await systemSettingsPage.goToConfiguration(
+		GOOGLE_CLOUD_TRANSLATOR_CONFIGURATION_PID
+	);
+
+	await systemSettingsPage.page.getByLabel('Enabled').check();
+
+	await systemSettingsPage.page
+		.getByLabel('Service Account Private Key')
+		.fill('{"type": "service_account"}');
+
+	await systemSettingsPage.saveAndWaitForAlert();
+}
+
+async function resetGoogleCloudTranslator(
+	systemSettingsPage: SystemSettingsPage
+) {
+	await systemSettingsPage.goToConfiguration(
+		GOOGLE_CLOUD_TRANSLATOR_CONFIGURATION_PID
+	);
+
+	await systemSettingsPage.resetToDefaultValues();
+}
 
 test('Can translate the fields of a web content into another language', async ({
 	apiHelpers,
@@ -186,3 +219,101 @@ test('Translating from a translated base language adds a second translation', as
 		title: 'wc webcontentタイトル',
 	});
 });
+
+test(
+	'Auto translate fills the fields of a web content while a translator is enabled',
+	{tag: '@LPD-109576'},
+	async ({
+		apiHelpers,
+		page,
+		site,
+		systemSettingsPage,
+		webContentTranslationPage,
+	}) => {
+		const title = getRandomString();
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			content: 'WC WebContent Content',
+			ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+			descriptionMap: {en_US: 'WC WebContent Description'},
+			groupId: site.id,
+			titleMap: {en_US: title},
+		});
+
+		try {
+			await enableGoogleCloudTranslator(systemSettingsPage);
+
+			// The provider is stubbed: the response translates each requested
+			// field by its name and keeps the HTML flags of the request
+
+			const translations: {[key: string]: string} = {
+				content: '<p>WC WebContent Contenido</p>',
+				description: '<p>WC WebContent Descripción</p>',
+				title: 'WC WebContent Título',
+			};
+
+			await page.route(
+				'**/o/translation/auto_translate',
+				async (route) => {
+					const {fields, html} = route.request().postDataJSON();
+
+					await route.fulfill({
+						body: JSON.stringify({
+							fields: Object.fromEntries(
+								Object.keys(fields).map((name) => [
+									name,
+									translations[
+										Object.keys(translations).find((key) =>
+											name.includes(`_${key}--`)
+										)!
+									],
+								])
+							),
+							html,
+						}),
+						contentType: 'application/json',
+						status: 200,
+					});
+				}
+			);
+
+			// Auto translate the web content into Spanish and publish
+
+			await webContentTranslationPage.open(site, title);
+
+			await webContentTranslationPage.changeTargetLocale('es-ES');
+
+			await webContentTranslationPage.autoTranslate();
+
+			await webContentTranslationPage.assertTargetFields({
+				content: 'WC WebContent Contenido',
+				description: 'WC WebContent Descripción',
+				title: 'WC WebContent Título',
+			});
+
+			await webContentTranslationPage.publish();
+
+			await page.unroute('**/o/translation/auto_translate');
+		}
+		finally {
+			await resetGoogleCloudTranslator(systemSettingsPage);
+		}
+
+		// Once the translator is disabled, the translation persists and Auto
+		// Translate is no longer offered
+
+		await webContentTranslationPage.open(site, title);
+
+		await webContentTranslationPage.changeTargetLocale('es-ES');
+
+		await webContentTranslationPage.assertTargetFields({
+			content: 'WC WebContent Contenido',
+			description: 'WC WebContent Descripción',
+			title: 'WC WebContent Título',
+		});
+
+		await expect(
+			webContentTranslationPage.autoTranslateButton
+		).toBeHidden();
+	}
+);

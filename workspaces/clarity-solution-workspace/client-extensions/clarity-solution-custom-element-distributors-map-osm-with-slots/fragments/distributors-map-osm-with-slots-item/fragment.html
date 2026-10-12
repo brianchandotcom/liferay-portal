@@ -1,12 +1,10 @@
-[#if itemObject??]
-	[#assign
-		values = itemObject.getValues()
+[#assign
+	values = (itemObject.getValues())!{}
 
-		latitude = values[configuration.latitudeField]!0
-		longitude = values[configuration.longitudeField]!0
-	/]
+	latitude = values[configuration.latitudeField]!0
+	longitude = values[configuration.longitudeField]!0
+/]
 
-	<map-item data-layout-mode="${layoutMode}" id="${itemObject.getObjectEntryId()?c}" latitude="${latitude?is_number?then(latitude?c, latitude)}" longitude="${longitude?is_number?then(longitude?c, longitude)}" name="${htmlUtil.escapeAttribute(values[configuration.nameField]!)}" tier-key="${htmlUtil.escapeAttribute(values[configuration.tierField]!)}">
-		<lfr-drop-zone id="tooltip"></lfr-drop-zone>
-	</map-item>
-[/#if]
+<map-item data-layout-mode="${layoutMode}" id="${(itemObject.getObjectEntryId()?c)!}" latitude="${latitude?is_number?then(latitude?c, latitude)}" longitude="${longitude?is_number?then(longitude?c, longitude)}" name="${htmlUtil.escapeAttribute(values[configuration.nameField]!)}" tier-key="${htmlUtil.escapeAttribute(values[configuration.tierField]!)}">
+	<lfr-drop-zone data-lfr-drop-zone-id="tooltip"></lfr-drop-zone>
+</map-item>

@@ -79,8 +79,6 @@ tests:
                     value:
                         -   get
                         -   list
-                        -   patch
-                        -   update
                         -   watch
             -   equal:
                     path: rules[?(@.resources[0]=="liferayenvironments/finalizers")].verbs
@@ -90,7 +88,6 @@ tests:
                     path: rules[?(@.resources[0]=="liferayenvironments/status")].verbs
                     value:
                         -   get
-                        -   patch
                         -   update
         documentSelector:
             path: kind
@@ -161,7 +158,6 @@ tests:
                         verbs:
                             -   get
                             -   list
-                            -   patch
                             -   update
                             -   watch
                     path: rules
@@ -174,8 +170,6 @@ tests:
                         verbs:
                             -   get
                             -   list
-                            -   patch
-                            -   update
                             -   watch
                     path: rules
             -   contains:
@@ -198,7 +192,6 @@ tests:
                         verbs:
                             -   get
                             -   list
-                            -   patch
                             -   update
                             -   watch
                     path: rules

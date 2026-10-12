@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -40,10 +41,13 @@ import com.liferay.translation.manager.Translation;
 import com.liferay.translation.manager.TranslationManager;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +56,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -251,6 +256,59 @@ public class TranslationManagerTest {
 	}
 
 	@Test
+	public void testGetXLIFFZipFileWithMultipleClassPKs() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		String[] targetLanguageIds = {"es_ES", "ja_JP"};
+
+		File xliffZipFile = _translationManager.getXLIFFZipFile(
+			JournalArticle.class.getName(),
+			new long[] {
+				_journalArticle.getResourcePrimKey(),
+				journalArticle.getResourcePrimKey()
+			},
+			_MIMETYPE_XLIFF_2_0, LocaleUtil.US,
+			LocaleUtil.toLanguageId(LocaleUtil.US), targetLanguageIds);
+
+		try (ZipFile zipFile = new ZipFile(xliffZipFile)) {
+			Assert.assertEquals(
+				"Web Content Article Translations-en_US.zip",
+				xliffZipFile.getName());
+
+			List<String> fileNames = new ArrayList<>();
+
+			Enumeration<? extends ZipEntry> zipEntriesEnumeration =
+				zipFile.entries();
+
+			while (zipEntriesEnumeration.hasMoreElements()) {
+				ZipEntry zipEntry = zipEntriesEnumeration.nextElement();
+
+				fileNames.add(zipEntry.getName());
+			}
+
+			List<String> expectedFileNames = new ArrayList<>();
+
+			for (JournalArticle curJournalArticle :
+					new JournalArticle[] {_journalArticle, journalArticle}) {
+
+				for (String targetLanguageId : targetLanguageIds) {
+					expectedFileNames.add(
+						String.format(
+							"%s-en_US-%s.xlf", curJournalArticle.getTitle(),
+							targetLanguageId));
+				}
+			}
+
+			Assert.assertEquals(expectedFileNames, fileNames);
+		}
+		finally {
+			xliffZipFile.delete();
+		}
+	}
+
+	@Test
 	@TestInfo("LPD-85323")
 	public void testObjectEntryGetTitle() throws Exception {
 		ObjectDefinition objectDefinition =
@@ -308,6 +366,23 @@ public class TranslationManagerTest {
 
 		_testProcessXLIFFTranslationFailureWithZipFile(xliffZipFile);
 		_testProcessXLIFFTranslationSuccessWithZipFile(xliffZipFile);
+	}
+
+	@Test
+	public void testProcessXLIFFTranslationWithJapaneseCharacters()
+		throws Exception {
+
+		_testProcessXLIFFTranslation(
+			RandomTestUtil.randomString(), "ja_JP", "ウェブコンテンツのタイトル");
+	}
+
+	@Test
+	public void testProcessXLIFFTranslationWithSpecialCharacters()
+		throws Exception {
+
+		_testProcessXLIFFTranslation(
+			"Title@!&#" + RandomTestUtil.randomString(80), "es_ES",
+			"Título@!&#<>" + RandomTestUtil.randomString(80));
 	}
 
 	private void _assertProcessXLIFFTranslationFailure(
@@ -427,6 +502,55 @@ public class TranslationManagerTest {
 		}
 	}
 
+	private void _testProcessXLIFFTranslation(
+			String title, String targetLanguageId, String translatedTitle)
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), title, RandomTestUtil.randomString());
+
+		File xliffFile = _translationManager.getXLIFFFile(
+			JournalArticle.class.getName(), journalArticle.getResourcePrimKey(),
+			_MIMETYPE_XLIFF_2_0, LocaleUtil.US,
+			LocaleUtil.toLanguageId(LocaleUtil.US), targetLanguageId);
+
+		String xliff = StringUtil.read(new FileInputStream(xliffFile));
+
+		String target = Matcher.quoteReplacement(
+			"<![CDATA[" + translatedTitle + "]]>");
+
+		String translatedXLIFF = xliff.replaceFirst(
+			_TITLE_TARGET_REGEX, "$1" + target + "$2");
+
+		Assert.assertNotEquals(xliff, translatedXLIFF);
+
+		List<Map<String, String>> failureMessages = new LinkedList<>();
+		List<String> successMessages = new ArrayList<>();
+
+		_translationManager.processXLIFFTranslation(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey(),
+			new Translation(
+				() -> _MIMETYPE_XLIFF_2_0, xliffFile.getName(),
+				() -> new ByteArrayInputStream(
+					translatedXLIFF.getBytes(StandardCharsets.UTF_8))),
+			successMessages, failureMessages, LocaleUtil.US,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			failureMessages.toString(), 0, failureMessages.size());
+		Assert.assertEquals(
+			Collections.singletonList(xliffFile.getName()), successMessages);
+
+		journalArticle = _journalArticleLocalService.getLatestArticle(
+			journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			translatedTitle,
+			journalArticle.getTitle(
+				LocaleUtil.fromLanguageId(targetLanguageId)));
+	}
+
 	private void _testProcessXLIFFTranslationFailureWithSingleFile(
 			File xliffFile)
 		throws Exception {
@@ -521,6 +645,10 @@ public class TranslationManagerTest {
 
 	private static final String[] _TARGET_LANGUAGE_IDS = {"es_ES"};
 
+	private static final String _TITLE_TARGET_REGEX =
+		"(<unit id=\"JournalArticle_title\">[\\s\\S]*?<target>)" +
+			"[\\s\\S]*?(</target>)";
+
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private DDMFormDeserializer _ddmFormDeserializer;
 
@@ -528,6 +656,9 @@ public class TranslationManagerTest {
 	private Group _group;
 
 	private JournalArticle _journalArticle;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

@@ -277,6 +277,20 @@ describe('Translate', () => {
 
 				expect(getByText('field-translated')).toBeInTheDocument();
 			});
+
+			it('translates only the field of the button', () => {
+				const [, {body}] = fetch.mock.calls[0];
+
+				expect(Object.keys(JSON.parse(body).fields)).toEqual([
+					`${infoFieldContent.id}0`,
+				]);
+
+				const {queryByDisplayValue} = result;
+
+				expect(
+					queryByDisplayValue('Esto es un "texto de ejemplo"')
+				).not.toBeInTheDocument();
+			});
 		});
 
 		describe('when the user clicks on the auto-translate general button', () => {

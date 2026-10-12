@@ -17,6 +17,7 @@ type TranslationFields = {
 export class WebContentTranslationPage {
 	readonly page: Page;
 
+	readonly autoTranslateButton: Locator;
 	readonly baseLocaleToggle: Locator;
 	readonly contentEditor: Locator;
 	readonly descriptionEditor: Locator;
@@ -30,6 +31,10 @@ export class WebContentTranslationPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.autoTranslateButton = page.getByRole('button', {
+			exact: true,
+			name: 'Auto Translate',
+		});
 		this.baseLocaleToggle = page
 			.locator('button.dropdown-toggle')
 			.filter({hasText: /^[a-z]{2}-[A-Z]{2}$/})
@@ -97,6 +102,14 @@ export class WebContentTranslationPage {
 
 	richTextEditor(index: number): Locator {
 		return this.page.locator('.lfr-ck').nth(index).locator('.ck-content');
+	}
+
+	async autoTranslate() {
+		await this.autoTranslateButton.click();
+
+		await expect(
+			this.page.getByText('Successfully received translations.')
+		).toBeVisible();
 	}
 
 	async changeBaseLocale(locale: string) {

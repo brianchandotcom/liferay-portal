@@ -34,11 +34,14 @@ export type TNavigationMenuItem = {
 
 export type TSite = {
 	active?: boolean;
+	defaultLanguageId?: string;
 	description?: string;
 	externalReferenceCode?: string;
 	friendlyUrlPath?: string;
 	id?: string;
+	inheritLocales?: boolean;
 	key?: string;
+	locales?: string[];
 	membershipType?: string;
 	name: string;
 	parentSiteExternalReferenceCode?: string;
@@ -120,6 +123,18 @@ export class HeadlessAdminSiteApiHelper {
 		}
 
 		return responseSite;
+	}
+
+	async putSite(
+		siteExternalReferenceCode: string,
+		site: Partial<TSite>
+	): Promise<Site> {
+		const currentSite = await this.getSite(siteExternalReferenceCode);
+
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteExternalReferenceCode}`,
+			{data: {...currentSite, ...site}, failOnStatusCode: true}
+		);
 	}
 
 	async postSiteNavigationMenu(

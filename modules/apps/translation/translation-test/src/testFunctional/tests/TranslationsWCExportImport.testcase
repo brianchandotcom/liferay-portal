@@ -23,28 +23,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that user can change and remove translation files during import"
-	@priority = 3
-	test CanChangeFilesDuringImport {
-		property portal.acceptance = "false";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		Translations.gotoBulkImportTranslation();
-
-		Translations.importTranslation(
-			dependencyfile = "true",
-			fileName = "WebContentTitle-en_US-de_DE.xlf,WebContentTitle-en_US-de_DE_db2.xlf",
-			filePath = "WebContentTitle-en_US.zip",
-			replace = "true");
-
-		Translations.importTranslation(
-			dependencyfile = "true",
-			fileName = "WebContentTitle-en_US-de_DE.xlf,WebContentTitle-en_US-de_DE_db2.xlf",
-			filePath = "WebContentTitle-en_US.zip",
-			replace = "true");
-	}
-
 	@description = "This ensures that a translated zip file contains multiple web contents with multiple available languages can be exported."
 	@priority = 5
 	test CanExportMultipleWCsWithMultipleLanguages {

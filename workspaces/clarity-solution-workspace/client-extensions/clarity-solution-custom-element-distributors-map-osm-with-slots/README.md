@@ -61,7 +61,7 @@ Each `<map-item>` child becomes a marker:
 
 ## How it works
 
-- [src/main.jsx](src/main.jsx) attaches an open shadow root once per element instance, reads the `<map-item>` children from the light DOM, and passes them as data to the React app mounted inside the shadow root.
+- [src/main.jsx](src/main.jsx) attaches an open shadow root once per element instance, reads the `<map-item>` direct children from the light DOM, and passes them as data to the React app mounted inside the shadow root. A `MutationObserver` renders the map again whenever `<map-item>` children are added or removed, so items moved into the element after it was defined still show up.
 - The map (a `<slot>` per item, empty until a marker is hovered) is scoped to the same shadow root, so the browser natively projects each `<map-item>`'s content into the corresponding tooltip — no HTML cloning or manual serialization involved.
 - The map bounds automatically fit all provided items ([src/components/CalculateBounds.jsx](src/components/CalculateBounds.jsx)).
 
@@ -73,9 +73,15 @@ Using `jsImportMapsEntry` here (instead of e.g. a Custom Element / widget client
 
 > **Note:** the `<map-item>` children don't have to be hand-written. Since a fragment's rendered HTML can loop over a Liferay collection (Asset List / Collection selector in Fragment configuration, or a `for`/mapped repeat in the fragment's Freemarker/React code), the list of points of interest can be generated dynamically — e.g. one `<map-item>` per item in a collection of locations/stores, with `latitude`, `longitude` and the tooltip markup populated from that collection's fields — instead of listing them statically as in the example above.
 
-## Fragment
+## Fragments
 
-[fragments/distributors-map-osm-with-slots](fragments/distributors-map-osm-with-slots) holds a ready-to-use fragment: copy [fragment.html](fragments/distributors-map-osm-with-slots/fragment.html) into the fragment's HTML and [fragment.js](fragments/distributors-map-osm-with-slots/fragment.js) into its JavaScript. The JavaScript only imports the bare specifier, which makes Liferay load the bundle through the import map and define the custom element.
+Each folder under [fragments](fragments) holds the code of a fragment: copy its `fragment.html` into the fragment's HTML and its `fragment.js` into its JavaScript. The JavaScript imports the bare specifier, which makes Liferay load the bundle through the import map and define the custom element.
+
+- [distributors-map-osm-with-slots](fragments/distributors-map-osm-with-slots) lists the points of interest statically, as in the example above.
+- [distributors-map-osm-with-slots-collection](fragments/distributors-map-osm-with-slots-collection) is a placeholder for a Collection Display. Drop the Collection Display into the fragment's drop zone and make each of its items render a `<map-item>`. A Collection Display nests its items several levels deep, while slots only project the element's direct children, so the fragment's JavaScript moves every `<map-item>` it finds in the drop zone to the top level of the custom element and hides what is left of the Collection Display. It leaves the drop zone alone in edit mode, where the page editor owns its DOM, so the map is only filled when the page is viewed. Items added afterwards, for example by a "Load More" pagination, are not moved.
+- [distributors-map-osm-with-slots-item](fragments/distributors-map-osm-with-slots-item) renders one `<map-item>` for a U3A2 Distributor Location. Place it in the item of a Collection Display of distributor locations, inside the previous fragment. Its `itemSelector` configuration field (see [configuration.json](fragments/distributors-map-osm-with-slots-item/configuration.json)) exposes the current collection item to FreeMarker as `itemObject`, whose values fill the `latitude` and `longitude` attributes and the tooltip markup. A basic component mapped to a field, such as a Heading, does not render a `<map-item>`, so the map would stay empty.
+
+The Collection Display only lists the entries the visitor may view, so Guest needs the VIEW permission on the distributor locations for the map to show them to anonymous visitors.
 
 ## Development
 

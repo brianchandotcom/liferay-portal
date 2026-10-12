@@ -1,0 +1,10 @@
+[#if itemObject??]
+	[#assign values = itemObject.getValues() /]
+
+	<map-item id="${itemObject.getObjectEntryId()?c}" latitude="${(values.latitude!0)?c}" longitude="${(values.longitude!0)?c}" name="${htmlUtil.escapeAttribute(values.name!)}" tier-key="${htmlUtil.escapeAttribute(values.tier!)}">
+		<h5>${htmlUtil.escape(values.name!)}</h5>
+
+		<div>${htmlUtil.escape(values.street!)}</div>
+		<div>${htmlUtil.escape(values.city!)}, ${htmlUtil.escape(values.state!)}, ${htmlUtil.escape(values.zipCode!)}</div>
+	</map-item>
+[/#if]

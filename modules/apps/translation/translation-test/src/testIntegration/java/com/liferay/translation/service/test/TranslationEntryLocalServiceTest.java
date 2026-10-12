@@ -116,6 +116,56 @@ public class TranslationEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddOrUpdateTranslationEntryUpdatesTheTranslationEntry()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), "test title", "test content");
+
+		String xliff = StringUtil.replace(
+			TranslationTestUtil.readFileToString(
+				"test-journal-article-simple.xlf"),
+			"[$JOURNAL_ARTICLE_ID$]",
+			String.valueOf(journalArticle.getResourcePrimKey()));
+
+		TranslationEntry translationEntry =
+			_translationEntryLocalService.addOrUpdateTranslationEntry(
+				_group.getGroupId(), JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(), xliff,
+				"application/xliff+xml",
+				LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		TranslationEntry updatedTranslationEntry =
+			_translationEntryLocalService.addOrUpdateTranslationEntry(
+				_group.getGroupId(), JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(),
+				StringUtil.replace(
+					xliff, "título de pruebas", "título de pruebas editado"),
+				"application/xliff+xml",
+				LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			translationEntry.getTranslationEntryId(),
+			updatedTranslationEntry.getTranslationEntryId());
+
+		Assert.assertEquals(
+			1,
+			_translationEntryLocalService.getTranslationEntriesCount(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(),
+				new int[] {WorkflowConstants.STATUS_ANY}, true));
+
+		journalArticle = _journalArticleLocalService.fetchLatestArticle(
+			journalArticle.getResourcePrimKey());
+
+		Assert.assertEquals(
+			"título de pruebas editado",
+			journalArticle.getTitle(LocaleUtil.SPAIN));
+	}
+
+	@Test
 	public void testAddOrUpdateTranslationEntryWritesToTheJournalArticleOnPublish()
 		throws Exception {
 

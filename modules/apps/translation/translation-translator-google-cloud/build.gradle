@@ -62,5 +62,6 @@ dependencies {
 	compileOnly project(":apps:translation:translation-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
+	testImplementation group: "com.google.guava", name: "failureaccess", version: "1.0.1"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 }

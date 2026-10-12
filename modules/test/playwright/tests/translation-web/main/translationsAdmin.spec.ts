@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -262,3 +263,63 @@ test('Editing a translation entry into a new language adds that translation', as
 
 	await webContentTranslationPage.assertTargetFields(JAPANESE);
 });
+
+// The entry of a trashed web content gets a generic title, so this test runs on
+// its own site to tell its entry apart
+
+mergeTests(test, isolatedSiteTest)(
+	'A translation entry of a web content in the recycle bin cannot be translated',
+	{tag: '@LPD-109576'},
+	async ({
+		apiHelpers,
+		page,
+		site,
+		translationsAdminPage,
+		webContentTranslationPage,
+	}) => {
+		const title = getRandomString();
+
+		const article = await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+			groupId: site.id,
+			titleMap: {en_US: title},
+		});
+
+		// Translate the web content into Spanish and publish
+
+		await webContentTranslationPage.open(site, title);
+
+		await webContentTranslationPage.changeTargetLocale('es-ES');
+
+		await webContentTranslationPage.translateFields({title: SPANISH.title});
+
+		await webContentTranslationPage.publish();
+
+		// Move the web content to the recycle bin
+
+		await apiHelpers.jsonWebServicesJournal.moveArticleToTrash(
+			site.id,
+			article.articleId
+		);
+
+		// The entry is still listed, but opening it offers nothing to translate
+
+		const entry = 'Translation of Translation to es-ES';
+
+		await translationsAdminPage.goto(site);
+
+		await translationsAdminPage.assertEntry({
+			language: 'es-ES',
+			status: 'Approved',
+			title: entry,
+		});
+
+		await page.getByRole('link', {name: entry}).click();
+
+		await expect(
+			page.getByText(
+				'You do not have permissions to translate to any of the available languages.'
+			)
+		).toBeVisible();
+	}
+);

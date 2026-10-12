@@ -32,7 +32,7 @@ export class TranslationFilesPage {
 			exact: true,
 			name: 'Publish',
 		});
-		this.uploadAnotherFileButton = page.getByRole('button', {
+		this.uploadAnotherFileButton = page.getByRole('link', {
 			name: 'Upload Another File',
 		});
 	}

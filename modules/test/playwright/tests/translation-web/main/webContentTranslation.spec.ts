@@ -10,6 +10,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
@@ -315,5 +316,56 @@ test(
 		await expect(
 			webContentTranslationPage.autoTranslateButton
 		).toBeHidden();
+	}
+);
+
+test(
+	'The translation actions of a web content are only offered on a site with more than one language',
+	{tag: '@LPD-109576'},
+	async ({apiHelpers, journalPage, page, site}) => {
+		const title = getRandomString();
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+			groupId: site.id,
+			titleMap: {en_US: title},
+		});
+
+		const assertTranslationActions = async (count: number) => {
+			await journalPage.goto(site.friendlyUrlPath);
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('menuitem', {exact: true, name: 'Edit'}),
+				trigger: page.getByLabel(`Actions for ${title}`, {exact: true}),
+			});
+
+			for (const action of [
+				'Export for Translation',
+				'Import Translation',
+				'Translate',
+			]) {
+				await expect(
+					page.getByRole('menuitem', {exact: true, name: action})
+				).toHaveCount(count);
+			}
+		};
+
+		// A site with a single language has nothing to translate into
+
+		await apiHelpers.headlessAdminSite.putSite(site.externalReferenceCode, {
+			defaultLanguageId: 'en_US',
+			inheritLocales: false,
+			locales: ['en_US'],
+		});
+
+		await assertTranslationActions(0);
+
+		// One more language makes the translation actions available
+
+		await apiHelpers.headlessAdminSite.putSite(site.externalReferenceCode, {
+			locales: ['en_US', 'es_ES'],
+		});
+
+		await assertTranslationActions(1);
 	}
 );

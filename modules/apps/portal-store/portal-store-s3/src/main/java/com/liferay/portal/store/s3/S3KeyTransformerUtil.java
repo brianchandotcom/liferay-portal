@@ -21,7 +21,13 @@ public class S3KeyTransformerUtil {
 	public static String getDirectoryKey(
 		long companyId, long repositoryId, String folderName) {
 
-		return getFileKey(companyId, repositoryId, folderName);
+		if (folderName.endsWith(StringPool.SLASH)) {
+			return getFileKey(companyId, repositoryId, folderName);
+		}
+
+		return StringBundler.concat(
+			companyId, StringPool.SLASH, repositoryId,
+			getNormalizedFileName(folderName));
 	}
 
 	public static String getFileKey(
@@ -29,7 +35,7 @@ public class S3KeyTransformerUtil {
 
 		return StringBundler.concat(
 			companyId, StringPool.SLASH, repositoryId,
-			getNormalizedFileName(fileName));
+			getNormalizedFileName(fileName), StringPool.SLASH);
 	}
 
 	public static String getFileName(String key) {
@@ -71,7 +77,8 @@ public class S3KeyTransformerUtil {
 	}
 
 	public static String getRepositoryKey(long companyId, long repositoryId) {
-		return companyId + StringPool.SLASH + repositoryId;
+		return StringBundler.concat(
+			companyId, StringPool.SLASH, repositoryId, StringPool.SLASH);
 	}
 
 	public static String moveKey(

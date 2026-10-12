@@ -62,6 +62,48 @@ public class IBMS3StoreTest extends BaseStoreTestCase {
 			dlStoreImpl.equals(s3StoreClassName));
 	}
 
+	@Override
+	@Test
+	public void testDeleteDirectory() throws Exception {
+		super.testDeleteDirectory();
+
+		long companyId = RandomTestUtil.nextLong();
+
+		try {
+			long repositoryId = RandomTestUtil.nextLong();
+
+			String dirName = RandomTestUtil.randomString();
+
+			String fileName1 = StringBundler.concat(
+				dirName, StringPool.SLASH, RandomTestUtil.randomString());
+
+			_store.addFile(
+				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+
+			String fileName2 = StringBundler.concat(
+				dirName, RandomTestUtil.randomString(), StringPool.SLASH,
+				RandomTestUtil.randomString());
+
+			_store.addFile(
+				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+
+			_store.deleteDirectory(
+				companyId, repositoryId, dirName + StringPool.SLASH);
+
+			Assert.assertFalse(
+				_store.hasFile(
+					companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
+			Assert.assertTrue(
+				_store.hasFile(
+					companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
+		}
+		finally {
+			_store.deleteDirectory(companyId);
+		}
+	}
+
 	@Test
 	@TestInfo("LPS-127589")
 	public void testGetFileAsStream() throws Exception {
@@ -100,6 +142,98 @@ public class IBMS3StoreTest extends BaseStoreTestCase {
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		_store.deleteDirectory(companyId, repositoryId, StringPool.SLASH);
+	}
+
+	@Override
+	@Test
+	public void testGetFileNames() throws Exception {
+		super.testGetFileNames();
+
+		long companyId = RandomTestUtil.nextLong();
+
+		try {
+			long repositoryId = RandomTestUtil.nextLong();
+			String fileName = RandomTestUtil.randomString();
+
+			_store.addFile(
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+			_store.addFile(
+				companyId, repositoryId, fileName, "1.1",
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+
+			_store.addFile(
+				companyId, repositoryId * 10, RandomTestUtil.randomString(),
+				Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+
+			Assert.assertArrayEquals(
+				new String[] {fileName},
+				_store.getFileNames(companyId, repositoryId, StringPool.BLANK));
+		}
+		finally {
+			_store.deleteDirectory(companyId);
+		}
+	}
+
+	@Override
+	@Test
+	public void testGetFileSize() throws Exception {
+		super.testGetFileSize();
+
+		long companyId = RandomTestUtil.nextLong();
+
+		try {
+			long repositoryId = RandomTestUtil.nextLong();
+			String fileName = RandomTestUtil.randomString();
+
+			_store.addFile(
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+			_store.addFile(
+				companyId, repositoryId, fileName, "1.1",
+				new UnsyncByteArrayInputStream(new byte[0]));
+			_store.addFile(
+				companyId, repositoryId,
+				fileName + RandomTestUtil.randomString(), Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+
+			Assert.assertEquals(
+				0,
+				_store.getFileSize(
+					companyId, repositoryId, fileName, StringPool.BLANK));
+		}
+		finally {
+			_store.deleteDirectory(companyId);
+		}
+	}
+
+	@Override
+	@Test
+	public void testGetFileVersions() throws Exception {
+		super.testGetFileVersions();
+
+		long companyId = RandomTestUtil.nextLong();
+
+		try {
+			long repositoryId = RandomTestUtil.nextLong();
+			String fileName = RandomTestUtil.randomString();
+
+			_store.addFile(
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+			_store.addFile(
+				companyId, repositoryId,
+				fileName + RandomTestUtil.randomString(), Store.VERSION_DEFAULT,
+				new UnsyncByteArrayInputStream(DATA_VERSION));
+
+			Assert.assertArrayEquals(
+				new String[] {Store.VERSION_DEFAULT},
+				_store.getFileVersions(companyId, repositoryId, fileName));
+		}
+		finally {
+			_store.deleteDirectory(companyId);
+		}
 	}
 
 	@Override

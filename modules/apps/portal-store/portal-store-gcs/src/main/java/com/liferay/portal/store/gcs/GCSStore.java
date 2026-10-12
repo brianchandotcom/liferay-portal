@@ -61,8 +61,10 @@ import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.osgi.framework.BundleContext;
@@ -167,12 +169,18 @@ public class GCSStore implements Store {
 			StoreArea.getCurrentStoreAreaPath(companyId, repositoryId) +
 				StringPool.SLASH;
 
-		return TransformUtil.transform(
-			_getFilePaths(companyId, repositoryId, dirName),
-			filePath -> filePath.substring(
-				filePath.indexOf(prefix) + prefix.length(),
-				filePath.lastIndexOf(StringPool.SLASH)),
-			String.class);
+		Set<String> fileNames = new LinkedHashSet<>();
+
+		for (String filePath :
+				_getFilePaths(companyId, repositoryId, dirName)) {
+
+			fileNames.add(
+				filePath.substring(
+					filePath.indexOf(prefix) + prefix.length(),
+					filePath.lastIndexOf(StringPool.SLASH)));
+		}
+
+		return fileNames.toArray(new String[0]);
 	}
 
 	@Override
@@ -200,7 +208,9 @@ public class GCSStore implements Store {
 		long companyId, long repositoryId, String fileName) {
 
 		return TransformUtil.transform(
-			_getFilePaths(companyId, repositoryId, fileName),
+			_getFilePaths(
+				_getFileVersionKey(
+					companyId, repositoryId, fileName, StringPool.BLANK)),
 			path -> {
 				String[] parts = StringUtil.split(path, CharPool.SLASH);
 
@@ -386,40 +396,25 @@ public class GCSStore implements Store {
 	}
 
 	private String[] _getFilePaths(long companyId) {
-		List<String> filePaths = new ArrayList<>();
-
-		Bucket bucket = _gcsStore.get(_gcsStoreConfiguration.bucketName());
-
 		String path = StoreArea.getCurrentStoreAreaPath(companyId);
 
-		Page<Blob> blobPage = bucket.list(Storage.BlobListOption.prefix(path));
-
-		Iterable<Blob> blobs = blobPage.iterateAll();
-
-		blobs.forEach(blob -> filePaths.add(blob.getName()));
-
-		return filePaths.toArray(new String[0]);
+		return _getFilePaths(path);
 	}
 
 	private String[] _getFilePaths(
 		long companyId, long repositoryId, String dirName) {
 
+		String path = _getDirectoryKey(companyId, repositoryId, dirName);
+
+		return _getFilePaths(path);
+	}
+
+	private String[] _getFilePaths(String path) {
 		List<String> filePaths = new ArrayList<>();
 
-		Bucket bucket = _gcsStore.get(_gcsStoreConfiguration.bucketName());
-
-		String path = null;
-
-		if (Validator.isNull(dirName) ||
-			dirName.equals(StringPool.FORWARD_SLASH)) {
-
-			path = _getRepositoryKey(companyId, repositoryId);
-		}
-		else {
-			path = _getDirectoryKey(companyId, repositoryId, dirName);
-		}
-
-		Page<Blob> blobPage = bucket.list(Storage.BlobListOption.prefix(path));
+		Page<Blob> blobPage = _gcsStore.list(
+			_gcsStoreConfiguration.bucketName(),
+			Storage.BlobListOption.prefix(path));
 
 		Iterable<Blob> blobs = blobPage.iterateAll();
 
@@ -445,24 +440,23 @@ public class GCSStore implements Store {
 				companyId, repositoryId, fileName, versionLabel);
 		}
 
-		String path = _getFileKey(companyId, repositoryId, fileName);
+		String[] versionLabels = getFileVersions(
+			companyId, repositoryId, fileName);
 
-		String[] fileNames = _getFilePaths(companyId, repositoryId, path);
-
-		if (ArrayUtil.isEmpty(fileNames)) {
+		if (ArrayUtil.isEmpty(versionLabels)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Using default version for " + path);
+				_log.debug("Using default version for " + fileName);
 			}
 
 			return _getFileVersionKey(
 				companyId, repositoryId, fileName, VERSION_DEFAULT);
 		}
 
-		List<String> fileNamesList = Arrays.asList(fileNames);
+		Arrays.sort(versionLabels, new VersionNumberComparator(true));
 
-		fileNamesList.sort(new VersionNumberComparator());
-
-		return fileNamesList.get(fileNamesList.size() - 1);
+		return _getFileVersionKey(
+			companyId, repositoryId, fileName,
+			versionLabels[versionLabels.length - 1]);
 	}
 
 	private ReadChannel _getReadChannel(Blob blob) {
@@ -471,10 +465,6 @@ public class GCSStore implements Store {
 		}
 
 		return blob.reader(_decryptBlobBlobSourceOption);
-	}
-
-	private String _getRepositoryKey(long companyId, long repositoryId) {
-		return StoreArea.getCurrentStoreAreaPath(companyId, repositoryId);
 	}
 
 	private WriteChannel _getWriteChannel(BlobInfo blobInfo) {

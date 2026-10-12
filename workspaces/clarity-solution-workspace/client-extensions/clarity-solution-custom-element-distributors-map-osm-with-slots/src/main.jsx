@@ -32,23 +32,29 @@ class WebComponent extends HTMLElement {
 
 		this.root = createRoot(this.mountPoint);
 
-		this.root.render(
-			<StrictMode>
-				<App items={this._getMapItems()} />
-			</StrictMode>
-		);
+		this._render();
+
+		this.observer = new MutationObserver(() => this._render());
+
+		this.observer.observe(this, {childList: true});
 	}
 
 	disconnectedCallback() {
+		this.observer.disconnect();
 		this.root.unmount();
 
+		delete this.observer;
 		delete this.root;
 	}
 
 	_getMapItems() {
-		return Array.from(this.querySelectorAll('map-item')).map(
+		return Array.from(this.querySelectorAll(':scope > map-item')).map(
 			(element, index) => {
-				const slot = element.getAttribute('slot') ?? `item-${index}`;
+				if (!element.slot) {
+					element.slot = `item-${index}`;
+				}
+
+				const slot = element.slot;
 
 				return {
 					id: element.getAttribute('id') ?? slot,
@@ -57,6 +63,14 @@ class WebComponent extends HTMLElement {
 					slot,
 				};
 			}
+		);
+	}
+
+	_render() {
+		this.root.render(
+			<StrictMode>
+				<App items={this._getMapItems()} />
+			</StrictMode>
 		);
 	}
 }

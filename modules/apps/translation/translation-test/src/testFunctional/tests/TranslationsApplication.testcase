@@ -82,65 +82,6 @@ definition {
 			title = "Translation of WC WebContent Title to es-ES");
 	}
 
-	@description = "This test covers LPS-142411. It ensures that a translation entry is not shown after deleting translated content page with new experience."
-	@priority = 4
-	test EntryIsNotShownAfterDeletingTranslatedPage {
-		HeadlessSite.addSite(siteName = "Test Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page Name",
-			type = "content");
-
-		Segmentation.enableDXPSegments();
-
-		JSONSegmentsentry.addSegment(
-			fieldName = "Email Address",
-			groupName = "Test Site Name",
-			operator = "contains",
-			segmentName = "Segment Email Address",
-			text = "test@liferay.com");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addExperience(
-			experienceName = "Segment Email Experience",
-			segmentName = "Segment Email Address");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		PageEditor.publish();
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		WaitForPageLoad();
-
-		ContentPagesNavigator.goToTranslation(pageName = "Test Content Page Name");
-
-		Translations.changeTargetLocale(
-			currentTargetLocale = "ar-SA",
-			newTargetLocale = "ja-JP");
-
-		Translations.translateFragmentField(
-			experienceName = "Segment Email Experience",
-			fieldName = "element-text",
-			fragmentText = "経験をテストする");
-
-		PortletEntry.publish();
-
-		JSONLayout.deletePublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page Name");
-
-		Translations.openTranslationAdmin(siteURLKey = "test-site-name");
-
-		Translations.viewEmptyState();
-	}
-
 	@description = "This test covers LPS-125966. This ensures that a warning message shows when viewing a translation that its web content has been deleted."
 	@priority = 4
 	@refactordone

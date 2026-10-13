@@ -10,12 +10,16 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -36,6 +40,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -104,6 +110,33 @@ public class DepotAssetRendererFactoryTrackerTest {
 	}
 
 	@Test
+	public void testOnlyEnabledAssetRendererFactoriesAreSelectableForADepotGroup()
+		throws Exception {
+
+		_depotAppCustomizationLocalService.updateDepotAppCustomization(
+			_depotEntry.getDepotEntryId(), false,
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+		Group group = _groupLocalService.fetchGroup(_depotEntry.getGroupId());
+
+		_withGroup(
+			group,
+			() -> Assert.assertEquals(
+				Arrays.asList(
+					JournalArticle.class.getName(),
+					JournalFolder.class.getName()),
+				_getSelectableClassNames()));
+
+		_depotAppCustomizationLocalService.updateDepotAppCustomization(
+			_depotEntry.getDepotEntryId(), false, JournalPortletKeys.JOURNAL);
+
+		_withGroup(
+			group,
+			() -> Assert.assertEquals(
+				Collections.emptyList(), _getSelectableClassNames()));
+	}
+
+	@Test
 	public void testOnlySupportedAssetRendererFactoriesAreSelectableForADepotGroup()
 		throws Exception {
 
@@ -146,6 +179,14 @@ public class DepotAssetRendererFactoryTrackerTest {
 							dlFolderAssetRendererFactory.getClassName(),
 							DLFolder.class.getName())));
 			});
+	}
+
+	private List<String> _getSelectableClassNames() throws Exception {
+		return ListUtil.sort(
+			TransformUtil.transform(
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+					TestPropsValues.getCompanyId(), true),
+				AssetRendererFactory::getClassName));
 	}
 
 	private void _withGroup(
@@ -206,6 +247,10 @@ public class DepotAssetRendererFactoryTrackerTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
+
+	@Inject
+	private DepotAppCustomizationLocalService
+		_depotAppCustomizationLocalService;
 
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;

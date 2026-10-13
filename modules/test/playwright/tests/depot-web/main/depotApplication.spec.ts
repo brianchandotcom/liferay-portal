@@ -10,8 +10,11 @@ import path from 'path';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {AssetPublisherPage} from '../../../pages/asset-publisher-web/AssetPublisherPage';
+import {AssetPublisherWidgetPage} from '../../../pages/asset-publisher-web/AssetPublisherWidgetPage';
 import {DocumentLibraryPage} from '../../../pages/document-library-web/DocumentLibraryPage';
 import {WebContentPage} from '../../../pages/journal-web/WebContentPage';
+import {WidgetPagePage} from '../../../pages/layout-admin-web/WidgetPagePage';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -183,6 +186,47 @@ test(
 
 		await expect(
 			itemSelector.getByText(
+				'This application is not supported for Asset Libraries.'
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'A connected site cannot select depot collections once the depot disables Collections',
+	{tag: '@LPD-109574'},
+	async ({apiHelpers, page, site}) => {
+		const depot = await addEditableDepot(apiHelpers);
+
+		await apiHelpers.headlessAssetLibrary.connectSite(
+			depot.externalReferenceCode,
+			site.externalReferenceCode
+		);
+
+		await setApplications(page, depot.depotEntryId, ['Collections'], false);
+
+		const assetPublisherWidgetPage = new AssetPublisherWidgetPage(page);
+
+		await assetPublisherWidgetPage.addAssetPublisherPortlet(site);
+
+		await new WidgetPagePage(page).clickOnAction(
+			'Asset Publisher',
+			'Configuration'
+		);
+
+		await new AssetPublisherPage(page).openAssetSelectionTab();
+
+		await assetPublisherWidgetPage.configurationIframe
+			.getByRole('button', {name: 'Select Collection'})
+			.click();
+
+		const collectionSelector =
+			assetPublisherWidgetPage.collectionSelectorIframe;
+
+		await gotoDepotInItemSelector(collectionSelector, depot.name);
+
+		await expect(
+			collectionSelector.getByText(
 				'This application is not supported for Asset Libraries.'
 			)
 		).toBeVisible();

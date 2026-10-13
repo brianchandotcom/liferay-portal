@@ -363,37 +363,29 @@ export class CollectionsPage {
 	}
 
 	/**
+	 * On a collection's edit page, adds the collection's own site or asset
+	 * library back to its scope. The selection is saved right away.
+	 */
+	async scopeToCurrentGroup() {
+		await this._openScopeMenu();
+
+		await this.page.getByRole('menuitem', {name: /^Current /}).click();
+	}
+
+	/**
+	 * On a collection's edit page, adds a site to the collection's scope
+	 * through the Scope section. The selection is saved right away.
+	 */
+	async scopeToSite(siteName: string) {
+		await this._addScope('My Sites', siteName);
+	}
+
+	/**
 	 * On a collection's edit page, restricts the collection's scope to a Space
 	 * through the Scope section. Call `save` to persist it.
 	 */
 	async scopeToSpace(spaceName: string) {
-		const selectSiteButton = this.page.getByRole('button', {
-			name: 'Select Site',
-		});
-
-		await clickAndExpectToBeVisible({
-			target: selectSiteButton,
-			trigger: this.page.getByRole('button', {
-				exact: true,
-				name: 'Scope',
-			}),
-		});
-
-		await selectSiteButton.click();
-
-		await this.page
-			.getByRole('menuitem', {name: 'Other Site, Asset Library, or'})
-			.click();
-
-		const scopeFrame = this.page
-			.locator('iframe[title="Scope"]')
-			.contentFrame();
-
-		await scopeFrame.getByRole('link', {name: 'Spaces'}).click();
-
-		await scopeFrame
-			.getByRole('link', {exact: true, name: spaceName})
-			.click();
+		await this._addScope('Spaces', spaceName);
 	}
 
 	/**
@@ -458,5 +450,39 @@ export class CollectionsPage {
 			.evaluate((event) => event.dataset.assetlistentryid);
 
 		return Number(classPK);
+	}
+
+	private async _addScope(tabName: string, groupName: string) {
+		await this._openScopeMenu();
+
+		await this.page
+			.getByRole('menuitem', {name: 'Other Site, Asset Library, or'})
+			.click();
+
+		const scopeFrame = this.page
+			.locator('iframe[title="Scope"]')
+			.contentFrame();
+
+		await scopeFrame.getByRole('link', {name: tabName}).click();
+
+		await scopeFrame
+			.getByRole('link', {exact: true, name: groupName})
+			.click();
+	}
+
+	private async _openScopeMenu() {
+		const selectSiteButton = this.page.getByRole('button', {
+			name: 'Select Site',
+		});
+
+		await clickAndExpectToBeVisible({
+			target: selectSiteButton,
+			trigger: this.page.getByRole('button', {
+				exact: true,
+				name: 'Scope',
+			}),
+		});
+
+		await selectSiteButton.click();
 	}
 }

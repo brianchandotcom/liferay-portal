@@ -10,7 +10,6 @@ import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.digital.signature.constants.DSObjectDefinitionConstants;
 import com.liferay.digital.signature.constants.DSRequestConstants;
-import com.liferay.digital.signature.constants.DSRequestRecipientConstants;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.manager.DSRequestManager;
 import com.liferay.digital.signature.model.DSEnvelope;
@@ -79,14 +78,13 @@ public class DSRequestManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		String prefix = ".com.liferay.digital.signature.internal.batch.";
-
 		BatchEngineTestUtil.processBatchEngineUnits(
 			"com.liferay.digital.signature.impl", DSRequestManagerTest.class,
 			new String[] {
-				prefix + "00.list.type.definition",
-				prefix + "01.object.definition",
-				prefix + "02.object.relationship"
+				".com.liferay.digital.signature.internal.batch.01.object." +
+					"definition",
+				".com.liferay.digital.signature.internal.batch.02.object." +
+					"relationship"
 			});
 
 		_companyConfigurationTemporarySwapper =
@@ -237,14 +235,29 @@ public class DSRequestManagerTest {
 			System.currentTimeMillis() / 1000, 0, ZoneOffset.UTC);
 
 		_testUpdateDSRequest(
+			DSRequestConstants.STATUS_COMPLETED,
 			DSRequestConstants.STATUS_COMPLETED, localDateTime.plusDays(1),
-			"completed", localDateTime);
+			"completed", "completed", localDateTime);
 		_testUpdateDSRequest(
-			DSRequestConstants.STATUS_EXPIRED, localDateTime, "voided",
-			localDateTime);
+			DSRequestConstants.STATUS_CREATED,
+			DSRequestConstants.STATUS_CREATED, localDateTime.plusDays(1),
+			"autoresponded", RandomTestUtil.randomString(), localDateTime);
 		_testUpdateDSRequest(
-			DSRequestConstants.STATUS_VOIDED, localDateTime.plusDays(1),
-			"voided", localDateTime);
+			DSRequestConstants.STATUS_DECLINED,
+			DSRequestConstants.STATUS_DECLINED, localDateTime.plusDays(1),
+			"declined", "declined", localDateTime);
+		_testUpdateDSRequest(
+			DSRequestConstants.STATUS_SENT, DSRequestConstants.STATUS_SENT,
+			localDateTime.plusDays(1), "delivered", "delivered", localDateTime);
+		_testUpdateDSRequest(
+			DSRequestConstants.STATUS_SIGNED, DSRequestConstants.STATUS_EXPIRED,
+			localDateTime, "signed", "voided", localDateTime);
+		_testUpdateDSRequest(
+			DSRequestConstants.STATUS_SIGNED, DSRequestConstants.STATUS_SENT,
+			localDateTime.plusDays(1), "signed", "signed", localDateTime);
+		_testUpdateDSRequest(
+			DSRequestConstants.STATUS_SIGNED, DSRequestConstants.STATUS_VOIDED,
+			localDateTime.plusDays(1), "signed", "voided", localDateTime);
 	}
 
 	private DSEnvelope _createDSEnvelope() {
@@ -358,11 +371,18 @@ public class DSRequestManagerTest {
 	}
 
 	private void _testUpdateDSRequest(
-			String expectedRequestStatus, LocalDateTime expireLocalDateTime,
-			String status, LocalDateTime statusChangedLocalDateTime)
+			String expectedRequestRecipientStatus, String expectedRequestStatus,
+			LocalDateTime expireLocalDateTime, String requestRecipientStatus,
+			String requestStatus, LocalDateTime statusChangedLocalDateTime)
 		throws Exception {
 
 		DSEnvelope dsEnvelope = _createDSEnvelope();
+
+		dsEnvelope.setStatus(DSRequestConstants.STATUS_CREATED);
+
+		for (DSRecipient dsRecipient : dsEnvelope.getDSRecipients()) {
+			dsRecipient.setStatus(DSRequestConstants.STATUS_CREATED);
+		}
 
 		_dsRequestManager.addDSRequest(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
@@ -370,11 +390,11 @@ public class DSRequestManagerTest {
 			new long[] {RandomTestUtil.randomInt()});
 
 		dsEnvelope.setExpireLocalDateTime(expireLocalDateTime);
-		dsEnvelope.setStatus(status);
+		dsEnvelope.setStatus(requestStatus);
 		dsEnvelope.setStatusChangedLocalDateTime(statusChangedLocalDateTime);
 
 		for (DSRecipient dsRecipient : dsEnvelope.getDSRecipients()) {
-			dsRecipient.setStatus("completed");
+			dsRecipient.setStatus(requestRecipientStatus);
 			dsRecipient.setStatusLocalDateTime(statusChangedLocalDateTime);
 		}
 
@@ -420,7 +440,7 @@ public class DSRequestManagerTest {
 
 		for (Map<String, Serializable> values : recipientValuesList) {
 			Assert.assertEquals(
-				DSRequestRecipientConstants.STATUS_COMPLETED,
+				expectedRequestRecipientStatus,
 				MapUtil.getString(values, "requestRecipientStatus"));
 			Assert.assertEquals(
 				Date.from(statusChangedLocalDateTime.toInstant(ZoneOffset.UTC)),

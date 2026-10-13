@@ -108,7 +108,7 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Picklist",
+					"businessType": "Text",
 					"defaultValue": "sent",
 					"externalReferenceCode": "REQUEST_STATUS",
 					"indexed": true,
@@ -116,10 +116,9 @@
 					"label": {
 						"en_US": "Request Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "L_DS_REQUEST_STATUSES",
 					"name": "requestStatus",
 					"required": true,
-					"state": true,
+					"state": false,
 					"system": true,
 					"type": "String"
 				},
@@ -321,7 +320,7 @@
 				},
 				{
 					"DBType": "String",
-					"businessType": "Picklist",
+					"businessType": "Text",
 					"defaultValue": "sent",
 					"externalReferenceCode": "REQUEST_RECIPIENT_STATUS",
 					"indexed": true,
@@ -329,10 +328,9 @@
 					"label": {
 						"en_US": "Request Recipient Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "L_DS_REQUEST_RECIPIENT_STATUSES",
 					"name": "requestRecipientStatus",
 					"required": true,
-					"state": true,
+					"state": false,
 					"system": true,
 					"type": "String"
 				},

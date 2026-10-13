@@ -6,6 +6,7 @@
 package com.liferay.digital.signature.manager;
 
 import com.liferay.digital.signature.model.DSEnvelope;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -24,6 +25,9 @@ public interface DSEnvelopeManager {
 			long companyId, long groupId, String... dsEnvelopeIds)
 		throws Exception;
 
+	public byte[] getDSDocumentAsBytes(
+		long companyId, String dsDocumentId, String dsEnvelopeId, long groupId);
+
 	public DSEnvelope getDSEnvelope(
 		long companyId, long groupId, String dsEnvelopeId);
 
@@ -34,5 +38,9 @@ public interface DSEnvelopeManager {
 		long companyId, long groupId, String fromDateString,
 		boolean includeDocuments, String keywords, String order,
 		Pagination pagination, String status);
+
+	public void voidDSEnvelope(
+			long companyId, String dsEnvelopeId, long groupId, String reason)
+		throws PortalException;
 
 }

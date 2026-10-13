@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
+import com.liferay.portal.kernel.launch.LaunchPreviewThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
@@ -160,6 +161,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -790,6 +792,16 @@ public class PortalImpl implements Portal {
 		if (CTCollectionPreviewThreadLocal.isIndicatorEnabled()) {
 			url = HttpComponentsUtil.setParameter(
 				url, "previewCTIndicator", true);
+		}
+
+		long previewLaunchSetId = LaunchPreviewThreadLocal.getLaunchSetId();
+
+		if (previewLaunchSetId > -1) {
+			url = HttpComponentsUtil.setParameter(
+				url, "previewLaunchSetId", previewLaunchSetId);
+
+			url = HttpComponentsUtil.setParameter(
+				url, "p_l_mode", Constants.PREVIEW);
 		}
 
 		return url;

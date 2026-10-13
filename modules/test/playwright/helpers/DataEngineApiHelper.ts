@@ -20,14 +20,17 @@ export class DataEngineApiHelper {
 	 * @param siteId the id of the site in which the structure will be created
 	 * @param dataDefinition the definition of the structure to specify
 	 * the fields for it.
+	 * @param contentType the content type of the structure, such as
+	 * document-library for a metadata set.
 	 */
 
 	async createStructure(
 		siteId: string,
-		dataDefinition: DataDefinition
+		dataDefinition: DataDefinition,
+		contentType = 'journal'
 	): Promise<DataDefinition> {
 		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/data-definitions/by-content-type/journal`,
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/data-definitions/by-content-type/${contentType}`,
 			{data: dataDefinition}
 		);
 	}

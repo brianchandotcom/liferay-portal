@@ -237,14 +237,27 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
-	async postSiteDocumentDataDefinitionType(siteId: string, name: string) {
+	async postSiteDocumentDataDefinitionType(
+		siteId: string,
+		name: string,
+		{
+			dataDefinitionFields = [],
+			dataLayout = {},
+			documentMetadataSetIds,
+		}: {
+			dataDefinitionFields?: DefinitionField[];
+			dataLayout?: DataLayout | {};
+			documentMetadataSetIds?: number[];
+		} = {}
+	) {
 		const documentDataDefinitionType = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/document-data-definition-types`,
 			{
 				data: {
 					availableLanguages: ['en-US'],
-					dataDefinitionFields: [],
-					dataLayout: {},
+					dataDefinitionFields,
+					dataLayout,
+					documentMetadataSetIds,
 					name,
 				},
 			}

@@ -32,6 +32,7 @@ import com.liferay.portal.service.http.GroupServiceHttp;
 import jakarta.portlet.PortletPreferences;
 import jakarta.portlet.ReadOnlyException;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,6 +60,10 @@ public class ExportImportPortletPreferencesProcessorHelperImpl
 			return externalReferenceCode;
 		}
 
+		if (group.isCompany()) {
+			return COMPANY_GROUP_EXTERNAL_REFERENCE_CODE;
+		}
+
 		if (group.isStagedRemotely()) {
 			String remoteGroupExternalReferenceCode =
 				_getRemoteGroupExternalReferenceCode(group);
@@ -79,6 +84,30 @@ public class ExportImportPortletPreferencesProcessorHelperImpl
 		}
 
 		return liveGroup.getExternalReferenceCode();
+	}
+
+	@Override
+	public String getGroupImportPortletPreferencesExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		if (!Objects.equals(
+				externalReferenceCode, COMPANY_GROUP_EXTERNAL_REFERENCE_CODE)) {
+
+			return externalReferenceCode;
+		}
+
+		Group companyGroup = _groupLocalService.fetchCompanyGroup(companyId);
+
+		if (companyGroup == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find the company group of company " + companyId);
+			}
+
+			return externalReferenceCode;
+		}
+
+		return companyGroup.getExternalReferenceCode();
 	}
 
 	@Override
@@ -110,22 +139,24 @@ public class ExportImportPortletPreferencesProcessorHelperImpl
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		String externalReferenceCode = portletPreferences.getValue(
-			externalReferenceCodePreferenceKey, null);
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			return;
-		}
-
-		try {
-			portletPreferences.setValue(
-				externalReferenceCodePreferenceKey,
+		_updateGroupPortletPreferencesExternalReferenceCode(
+			externalReferenceCodePreferenceKey, portletPreferences,
+			externalReferenceCode ->
 				getGroupExportPortletPreferencesExternalReferenceCode(
 					companyId, externalReferenceCode));
-		}
-		catch (ReadOnlyException readOnlyException) {
-			throw new PortletDataException(readOnlyException);
-		}
+	}
+
+	@Override
+	public void updateGroupImportPortletPreferencesExternalReferenceCode(
+			long companyId, String externalReferenceCodePreferenceKey,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_updateGroupPortletPreferencesExternalReferenceCode(
+			externalReferenceCodePreferenceKey, portletPreferences,
+			externalReferenceCode ->
+				getGroupImportPortletPreferencesExternalReferenceCode(
+					companyId, externalReferenceCode));
 	}
 
 	@Override
@@ -260,6 +291,29 @@ public class ExportImportPortletPreferencesProcessorHelperImpl
 		}
 
 		portletPreferences.setValues(key, newValues);
+	}
+
+	private void _updateGroupPortletPreferencesExternalReferenceCode(
+			String externalReferenceCodePreferenceKey,
+			PortletPreferences portletPreferences,
+			Function<String, String> externalReferenceCodeFunction)
+		throws PortletDataException {
+
+		String externalReferenceCode = portletPreferences.getValue(
+			externalReferenceCodePreferenceKey, null);
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			return;
+		}
+
+		try {
+			portletPreferences.setValue(
+				externalReferenceCodePreferenceKey,
+				externalReferenceCodeFunction.apply(externalReferenceCode));
+		}
+		catch (ReadOnlyException readOnlyException) {
+			throw new PortletDataException(readOnlyException);
+		}
 	}
 
 	private void _updateImportPortletPreferencesClassPKs(

@@ -21,7 +21,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ExportImportPortletPreferencesProcessorHelper {
 
+	public static final String COMPANY_GROUP_EXTERNAL_REFERENCE_CODE =
+		"[$COMPANY_GROUP_EXTERNAL_REFERENCE_CODE$]";
+
 	public String getGroupExportPortletPreferencesExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	public String getGroupImportPortletPreferencesExternalReferenceCode(
 		long companyId, String externalReferenceCode);
 
 	public void updateExportPortletPreferencesClassPKs(
@@ -36,6 +42,11 @@ public interface ExportImportPortletPreferencesProcessorHelper {
 		throws Exception;
 
 	public void updateGroupExportPortletPreferencesExternalReferenceCode(
+			long companyId, String externalReferenceCodePreferenceKey,
+			PortletPreferences portletPreferences)
+		throws PortletDataException;
+
+	public void updateGroupImportPortletPreferencesExternalReferenceCode(
 			long companyId, String externalReferenceCodePreferenceKey,
 			PortletPreferences portletPreferences)
 		throws PortletDataException;

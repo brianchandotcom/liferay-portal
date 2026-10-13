@@ -213,6 +213,8 @@ public class ExportImportProcessesDisplayContext {
 		).addPrimaryDropdownItem(
 			() ->
 				Objects.equals(cmd, Constants.EXPORT) &&
+				Validator.isBlank(_getPortletId()) && !_group.isDepot() &&
+				!ScopeUtil.isInstanceScoped(_group) &&
 				FeatureFlagManagerUtil.isEnabled(
 					_themeDisplay.getCompanyId(), "LPD-107410"),
 			dropdownItem -> {

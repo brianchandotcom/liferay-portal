@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorHelper;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
@@ -78,6 +79,18 @@ public class DLExportImportPortletPreferencesProcessor
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.fromArray(
 			_dlCommentsAndRatingsExporterImporterCapability, _importCapability);
+	}
+
+	@Override
+	public void processExportPortletPreferences(
+			long companyId, PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_exportImportPortletPreferencesProcessorHelper.
+			updateGroupExportPortletPreferencesExternalReferenceCode(
+				companyId,
+				_PREFERENCE_KEY_SELECTED_GROUP_EXTERNAL_REFERENCE_CODE,
+				portletPreferences);
 	}
 
 	@Override
@@ -313,6 +326,18 @@ public class DLExportImportPortletPreferencesProcessor
 	}
 
 	@Override
+	public void processImportPortletPreferences(
+			long companyId, PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_exportImportPortletPreferencesProcessorHelper.
+			updateGroupImportPortletPreferencesExternalReferenceCode(
+				companyId,
+				_PREFERENCE_KEY_SELECTED_GROUP_EXTERNAL_REFERENCE_CODE,
+				portletPreferences);
+	}
+
+	@Override
 	public PortletPreferences processImportPortletPreferences(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
@@ -329,8 +354,10 @@ public class DLExportImportPortletPreferencesProcessor
 						_PREFERENCE_KEY_ROOT_FOLDER_EXTERNAL_REFERENCE_CODE));
 				portletPreferences.setValue(
 					_PREFERENCE_KEY_SELECTED_GROUP_EXTERNAL_REFERENCE_CODE,
-					stagingPreferencesMappingJSONObject.getString(
-						_PREFERENCE_KEY_SELECTED_GROUP_EXTERNAL_REFERENCE_CODE));
+					getGroupImportPortletPreferencesExternalReferenceCode(
+						portletDataContext,
+						stagingPreferencesMappingJSONObject.getString(
+							_PREFERENCE_KEY_SELECTED_GROUP_EXTERNAL_REFERENCE_CODE)));
 				portletPreferences.setValue(
 					_PREFERENCE_KEY_SELECTED_REPOSITORY_EXTERNAL_REFERENCE_CODE,
 					stagingPreferencesMappingJSONObject.getString(
@@ -709,6 +736,10 @@ public class DLExportImportPortletPreferencesProcessor
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;
+
+	@Reference
+	private ExportImportPortletPreferencesProcessorHelper
+		_exportImportPortletPreferencesProcessorHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

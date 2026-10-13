@@ -96,7 +96,6 @@ public class OAuthClientEntryLocalServiceImplTest {
 		ReflectionTestUtil.setFieldValue(
 			oAuthClientEntryLocalServiceImpl, "_configurationProvider",
 			configurationProvider);
-
 		ReflectionTestUtil.setFieldValue(
 			oAuthClientEntryLocalServiceImpl, "_http", http);
 
@@ -284,7 +283,7 @@ public class OAuthClientEntryLocalServiceImplTest {
 		Assert.assertThrows(
 			OAuthClientEntryAuthServerWellKnownURIException.class,
 			() -> _validateAuthServerWellKnownURI(
-				_getWellKnownURI(_getRandomHost(2, _HOST_PREFIX_LINK_LOCAL)),
+				_getWellKnownURI(_getRandomHost(2, "169.254.")),
 				_createOAuthClientEntryLocalServiceImpl(null, false, http)));
 
 		Mockito.verifyNoInteractions(http);
@@ -443,8 +442,9 @@ public class OAuthClientEntryLocalServiceImplTest {
 			() -> _validateAuthServerWellKnownURI(
 				_getWellKnownURI(
 					StringBundler.concat(
-						"[fd",
-						Integer.toHexString(RandomTestUtil.randomInt(16, 255)),
+						StringPool.OPEN_BRACKET,
+						Integer.toHexString(
+							RandomTestUtil.randomInt(0xfc00, 0xfdff)),
 						StringPool.COLON,
 						Integer.toHexString(
 							RandomTestUtil.randomInt(16, 65535)),
@@ -499,8 +499,6 @@ public class OAuthClientEntryLocalServiceImplTest {
 			"_validateTokenRequestParametersJSON",
 			new Class<?>[] {String.class}, tokenRequestParametersJSON);
 	}
-
-	private static final String _HOST_PREFIX_LINK_LOCAL = "169.254.";
 
 	private static final String _HOST_PREFIX_LOOPBACK = "127.";
 

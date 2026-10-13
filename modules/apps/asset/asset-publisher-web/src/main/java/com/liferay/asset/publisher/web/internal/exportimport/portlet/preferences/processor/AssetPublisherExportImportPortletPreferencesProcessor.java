@@ -133,10 +133,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		try {
 			exportImportPortletPreferencesProcessorHelper.
 				updateGroupExportPortletPreferencesExternalReferenceCode(
-					companyId, "displayStyleGroupExternalReferenceCode",
-					portletPreferences);
-			exportImportPortletPreferencesProcessorHelper.
-				updateGroupExportPortletPreferencesExternalReferenceCode(
 					companyId, "assetListEntryGroupExternalReferenceCode",
 					portletPreferences);
 
@@ -209,6 +205,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		throws PortletDataException {
 
 		try {
+			exportImportPortletPreferencesProcessorHelper.
+				updateGroupImportPortletPreferencesExternalReferenceCode(
+					companyId, "assetListEntryGroupExternalReferenceCode",
+					portletPreferences);
+
 			_updateImportClassTypeIds(companyId, portletPreferences);
 			exportImportPortletPreferencesProcessorHelper.
 				updateImportPortletPreferencesClassPKs(
@@ -893,7 +894,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 
 		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
-			oldValues[1], companyId);
+			exportImportPortletPreferencesProcessorHelper.
+				getGroupImportPortletPreferencesExternalReferenceCode(
+					companyId, oldValues[1]),
+			companyId);
 
 		if (group == null) {
 			return null;

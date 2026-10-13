@@ -24,6 +24,7 @@ import {
 	withRecipientPage,
 } from '../../../utils/sharingRecipient';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import addConnectedDepot from './utils/addConnectedDepot';
 import addEditableDepot from './utils/addEditableDepot';
 
 const test = mergeTests(
@@ -132,16 +133,7 @@ test(
 		sharePage,
 		site,
 	}) => {
-		const assetLibrary =
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: getRandomString(),
-				type: 'AssetLibrary',
-			});
-
-		await apiHelpers.headlessAssetLibrary.connectSite(
-			assetLibrary.externalReferenceCode,
-			site.externalReferenceCode
-		);
+		const assetLibrary = await addConnectedDepot(apiHelpers, site);
 
 		// The notification is only shown in a site connected to the depot
 

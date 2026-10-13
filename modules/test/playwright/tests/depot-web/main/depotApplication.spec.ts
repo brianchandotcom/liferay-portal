@@ -18,6 +18,7 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {BlogsEditBlogEntryPage} from '../../blogs-web/main/pages/BlogsEditBlogEntryPage';
 import addEditableDepot from './utils/addEditableDepot';
+import gotoDepotInItemSelector from './utils/gotoDepotInItemSelector';
 
 const test = mergeTests(dataApiHelpersTest, isolatedSiteTest, loginTest());
 
@@ -178,13 +179,7 @@ test(
 			.getByRole('link', {name: 'Documents and Media'})
 			.click();
 
-		await itemSelector
-			.getByRole('link', {exact: true, name: 'Sites and Libraries'})
-			.click();
-
-		await itemSelector.getByText('Asset Library', {exact: true}).click();
-
-		await itemSelector.getByText(depot.name, {exact: true}).click();
+		await gotoDepotInItemSelector(itemSelector, depot.name);
 
 		await expect(
 			itemSelector.getByText(

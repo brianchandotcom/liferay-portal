@@ -5,10 +5,21 @@
 
 package com.liferay.digital.signature.web.internal.portlet;
 
+import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
+import com.liferay.digital.signature.web.internal.constants.DigitalSignatureWebKeys;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.Portlet;
+import jakarta.portlet.PortletException;
+import jakarta.portlet.RenderRequest;
+import jakarta.portlet.RenderResponse;
+
+import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,4 +48,26 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DigitalSignaturePortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DigitalSignatureConfiguration digitalSignatureConfiguration =
+			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
+
+		renderRequest.setAttribute(
+			DigitalSignatureWebKeys.DIGITAL_SIGNATURE_EMBEDDED_VIEW_ENABLED,
+			FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-69290") &&
+			digitalSignatureConfiguration.embeddedViewEnabled());
+
+		super.render(renderRequest, renderResponse);
+	}
+
 }

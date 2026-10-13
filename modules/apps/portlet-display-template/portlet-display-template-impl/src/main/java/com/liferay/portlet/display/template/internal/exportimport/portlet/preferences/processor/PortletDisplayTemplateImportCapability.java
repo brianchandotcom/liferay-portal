@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,15 +35,29 @@ import java.util.Map;
 public class PortletDisplayTemplateImportCapability implements Capability {
 
 	public PortletDisplayTemplateImportCapability(
+		ExportImportPortletPreferencesProcessorHelper
+			exportImportPortletPreferencesProcessorHelper,
 		Portal portal, PortletLocalService portletLocalService,
 		PortletDisplayTemplate portletDisplayTemplate,
 		PortletDisplayTemplateRegister portletDisplayTemplateImportRegister) {
 
+		_exportImportPortletPreferencesProcessorHelper =
+			exportImportPortletPreferencesProcessorHelper;
 		_portal = portal;
 		_portletLocalService = portletLocalService;
 		_portletDisplayTemplate = portletDisplayTemplate;
 		_portletDisplayTemplateImportRegister =
 			portletDisplayTemplateImportRegister;
+	}
+
+	@Override
+	public void process(long companyId, PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_exportImportPortletPreferencesProcessorHelper.
+			updateGroupImportPortletPreferencesExternalReferenceCode(
+				companyId, "displayStyleGroupExternalReferenceCode",
+				portletPreferences);
 	}
 
 	@Override
@@ -52,6 +67,8 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 		throws PortletDataException {
 
 		try {
+			process(portletDataContext.getCompanyId(), portletPreferences);
+
 			return _importDisplayStyle(
 				portletDataContext, portletDataContext.getPortletId(),
 				portletPreferences);
@@ -133,6 +150,8 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDisplayTemplateImportCapability.class);
 
+	private final ExportImportPortletPreferencesProcessorHelper
+		_exportImportPortletPreferencesProcessorHelper;
 	private final Portal _portal;
 	private final PortletDisplayTemplate _portletDisplayTemplate;
 	private final PortletDisplayTemplateRegister

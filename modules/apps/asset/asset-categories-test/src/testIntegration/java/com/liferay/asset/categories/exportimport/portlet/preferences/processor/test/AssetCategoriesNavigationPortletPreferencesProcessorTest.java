@@ -9,27 +9,34 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorHelper;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
+import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
+import com.liferay.layout.importer.PortletPreferencesPortletConfigurationImporter;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.portlet.PortletPreferences;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,6 +90,87 @@ public class AssetCategoriesNavigationPortletPreferencesProcessorTest {
 				_layout,
 				AssetCategoriesNavigationPortletKeys.
 					ASSET_CATEGORIES_NAVIGATION);
+	}
+
+	@Test
+	@TestInfo("LPD-109596")
+	public void testGetPortletConfigurationWithCompanyGroup() throws Exception {
+		String portletId = _addPortletToLayout(
+			_groupLocalService.getCompanyGroup(_group.getCompanyId()));
+
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		try {
+			Map<String, Object> portletConfiguration =
+				_portletPreferencesPortletConfigurationExporter.
+					getPortletConfiguration(_layout.getPlid(), portletId);
+
+			Assert.assertEquals(
+				_companyAssetVocabulary.getExternalReferenceCode(),
+				portletConfiguration.get(
+					"assetVocabularyExternalReferenceCodes_" +
+						_COMPANY_GROUP_EXTERNAL_REFERENCE_CODE));
+			Assert.assertEquals(
+				_COMPANY_GROUP_EXTERNAL_REFERENCE_CODE,
+				portletConfiguration.get(
+					"assetVocabularyGroupExternalReferenceCodes"));
+			Assert.assertEquals(
+				_COMPANY_GROUP_EXTERNAL_REFERENCE_CODE,
+				portletConfiguration.get(
+					"displayStyleGroupExternalReferenceCode"));
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-109596")
+	public void testImportPortletConfigurationWithCompanyGroup()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_group.getCompanyId());
+
+		String portletId = _addPortletToLayout(companyGroup);
+
+		Layout importedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		try {
+			_portletPreferencesPortletConfigurationImporter.
+				importPortletConfiguration(
+					importedLayout.getPlid(), portletId,
+					_portletPreferencesPortletConfigurationExporter.
+						getPortletConfiguration(_layout.getPlid(), portletId));
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+
+		PortletPreferences portletPreferences =
+			LayoutTestUtil.getPortletPreferences(importedLayout, portletId);
+
+		Assert.assertEquals(
+			_companyAssetVocabulary.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"assetVocabularyExternalReferenceCodes_" +
+					companyGroup.getExternalReferenceCode(),
+				null));
+		Assert.assertNull(
+			portletPreferences.getValue(
+				"assetVocabularyExternalReferenceCodes_" +
+					_COMPANY_GROUP_EXTERNAL_REFERENCE_CODE,
+				null));
+		Assert.assertEquals(
+			companyGroup.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"assetVocabularyGroupExternalReferenceCodes", null));
+		Assert.assertEquals(
+			companyGroup.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"displayStyleGroupExternalReferenceCode", null));
 	}
 
 	@Test
@@ -174,6 +262,117 @@ public class AssetCategoriesNavigationPortletPreferencesProcessorTest {
 				null));
 	}
 
+	@Test
+	@TestInfo("LPD-109596")
+	public void testProcessExportImportPortletPreferencesWithCompanyGroup()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_group.getCompanyId());
+
+		_companyAssetVocabulary = AssetTestUtil.addVocabulary(
+			companyGroup.getGroupId());
+
+		_portletPreferences.setValue(
+			"allAssetVocabularies", Boolean.FALSE.toString());
+		_portletPreferences.setValues(
+			"assetVocabularyExternalReferenceCodes_" +
+				companyGroup.getExternalReferenceCode(),
+			_companyAssetVocabulary.getExternalReferenceCode());
+		_portletPreferences.setValues(
+			"assetVocabularyGroupExternalReferenceCodes",
+			companyGroup.getExternalReferenceCode());
+
+		_portletPreferences.store();
+
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		try {
+			PortletPreferences exportedPortletPreferences =
+				_exportImportPortletPreferencesProcessor.
+					processExportPortletPreferences(
+						_portletDataContextExport, _portletPreferences);
+
+			Assert.assertArrayEquals(
+				new String[] {_COMPANY_GROUP_EXTERNAL_REFERENCE_CODE},
+				exportedPortletPreferences.getValues(
+					"assetVocabularyGroupExternalReferenceCodes", null));
+			Assert.assertArrayEquals(
+				new String[] {
+					_companyAssetVocabulary.getExternalReferenceCode()
+				},
+				exportedPortletPreferences.getValues(
+					"assetVocabularyExternalReferenceCodes_" +
+						_COMPANY_GROUP_EXTERNAL_REFERENCE_CODE,
+					null));
+			Assert.assertNull(
+				exportedPortletPreferences.getValues(
+					"assetVocabularyExternalReferenceCodes_" +
+						companyGroup.getExternalReferenceCode(),
+					null));
+
+			PortletPreferences importedPortletPreferences =
+				_exportImportPortletPreferencesProcessor.
+					processImportPortletPreferences(
+						_portletDataContextImport, exportedPortletPreferences);
+
+			Assert.assertArrayEquals(
+				new String[] {companyGroup.getExternalReferenceCode()},
+				importedPortletPreferences.getValues(
+					"assetVocabularyGroupExternalReferenceCodes", null));
+			Assert.assertArrayEquals(
+				new String[] {
+					_companyAssetVocabulary.getExternalReferenceCode()
+				},
+				importedPortletPreferences.getValues(
+					"assetVocabularyExternalReferenceCodes_" +
+						companyGroup.getExternalReferenceCode(),
+					null));
+			Assert.assertNull(
+				importedPortletPreferences.getValues(
+					"assetVocabularyExternalReferenceCodes_" +
+						_COMPANY_GROUP_EXTERNAL_REFERENCE_CODE,
+					null));
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+	}
+
+	private String _addPortletToLayout(Group companyGroup) throws Exception {
+		_companyAssetVocabulary = AssetTestUtil.addVocabulary(
+			companyGroup.getGroupId());
+
+		return LayoutTestUtil.addPortletToLayout(
+			_layout,
+			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
+			HashMapBuilder.put(
+				"allAssetVocabularies", new String[] {Boolean.FALSE.toString()}
+			).put(
+				"assetVocabularyExternalReferenceCodes_" +
+					companyGroup.getExternalReferenceCode(),
+				new String[] {
+					_companyAssetVocabulary.getExternalReferenceCode()
+				}
+			).put(
+				"assetVocabularyGroupExternalReferenceCodes",
+				new String[] {companyGroup.getExternalReferenceCode()}
+			).put(
+				"displayStyle",
+				new String[] {"ddmTemplate_" + RandomTestUtil.randomString()}
+			).put(
+				"displayStyleGroupExternalReferenceCode",
+				new String[] {companyGroup.getExternalReferenceCode()}
+			).build());
+	}
+
+	private static final String _COMPANY_GROUP_EXTERNAL_REFERENCE_CODE =
+		ExportImportPortletPreferencesProcessorHelper.
+			COMPANY_GROUP_EXTERNAL_REFERENCE_CODE;
+
+	@DeleteAfterTestRun
+	private AssetVocabulary _companyAssetVocabulary;
+
 	@Inject(
 		filter = "jakarta.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION
 	)
@@ -190,5 +389,13 @@ public class AssetCategoriesNavigationPortletPreferencesProcessorTest {
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private PortletPreferences _portletPreferences;
+
+	@Inject
+	private PortletPreferencesPortletConfigurationExporter
+		_portletPreferencesPortletConfigurationExporter;
+
+	@Inject
+	private PortletPreferencesPortletConfigurationImporter
+		_portletPreferencesPortletConfigurationImporter;
 
 }

@@ -15,6 +15,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {SiteMembershipsPage} from '../../../pages/users-admin-web/site-admin-web/SiteMembershipsPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
@@ -38,9 +39,17 @@ async function assignMember(
 	iframeTitle: string,
 	getItem: (frameLocator: FrameLocator) => Locator
 ) {
-	await page.getByRole('button', {name: 'Add'}).click();
+	const iframe = page.locator(`iframe[title="${iframeTitle}"]`);
 
-	await getItem(page.frameLocator(`iframe[title="${iframeTitle}"]`)).check();
+	// The add button may be clicked before its handler is ready
+
+	await clickAndExpectToBeVisible({
+		target: iframe,
+		timeout: 1000,
+		trigger: page.getByRole('button', {name: 'Add'}),
+	});
+
+	await getItem(iframe.contentFrame()).check();
 
 	await page.getByRole('button', {name: 'Done'}).click();
 

@@ -4950,8 +4950,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
-		long[] userIds = _organizationLocalService.getUserPrimaryKeys(
-			userGroupId);
+		long[] userIds = userGroupPersistence.getUserPrimaryKeys(userGroupId);
 
 		if (ArrayUtil.isNotEmpty(userIds)) {
 			long companyId = userGroup.getCompanyId();

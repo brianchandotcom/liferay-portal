@@ -106,7 +106,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 	}
 
 	@Test
-	public void testAssociationsThatDoNotIndexGroupIdFields() {
+	public void testAssociationsThatIndexGroupIdFields() {
 		String[] fieldNames = {
 			_CT_COLLECTION_ID, Field.GROUP_ID, Field.SCOPE_GROUP_ID, Field.UID
 		};
@@ -131,7 +131,15 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		_groupLocalService.addUserGroupGroup(userGroupId, group);
 
-		assertFieldValues(user, fieldNames, map);
+		assertFieldValues(
+			user, fieldNames,
+			HashMapBuilder.putAll(
+				map
+			).put(
+				Field.GROUP_ID, String.valueOf(group.getGroupId())
+			).put(
+				Field.SCOPE_GROUP_ID, String.valueOf(group.getGroupId())
+			).build());
 	}
 
 	@Test

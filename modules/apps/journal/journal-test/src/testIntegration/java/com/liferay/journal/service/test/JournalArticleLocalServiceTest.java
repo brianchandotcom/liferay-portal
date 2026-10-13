@@ -2362,6 +2362,41 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testMoveArticleToTrashWithDDMStructureFromDisconnectedDepotEntry()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			depotEntry.getGroupId(), JournalArticle.class.getName());
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(),
+				DDMStructureTestUtil.getSampleStructuredContent(),
+				ddmStructure.getStructureKey(), null);
+
+		_disconnectDepotEntry(depotEntry);
+
+		journalArticle = _journalArticleLocalService.moveArticleToTrash(
+			TestPropsValues.getUserId(), journalArticle);
+
+		Assert.assertTrue(journalArticle.isInTrash());
+
+		_journalArticleLocalService.deleteArticle(journalArticle);
+
+		Assert.assertNull(
+			_journalArticleLocalService.fetchArticle(
+				journalArticle.getGroupId(), journalArticle.getArticleId()));
+
+		_ddmStructureLocalService.deleteStructure(ddmStructure);
+
+		Assert.assertNull(
+			_ddmStructureLocalService.fetchDDMStructure(
+				ddmStructure.getStructureId()));
+	}
+
+	@Test
 	public void testRemoveArticleLocale() throws Exception {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
@@ -2849,6 +2884,27 @@ public class JournalArticleLocalServiceTest {
 			"Predefined Value", field.getValue(unavailableLocale));
 	}
 
+	private DepotEntry _addDepotEntry() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		DepotEntryGroupRel depotEntryGroupRel =
+			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+				depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		_depotEntryGroupRelLocalService.updateDDMStructuresAvailable(
+			depotEntryGroupRel.getDepotEntryGroupRelId(), true);
+
+		return depotEntry;
+	}
+
 	private JSONObject _addDocumentLibraryFieldValue(JSONObject valueJSONObject)
 		throws Exception {
 
@@ -3063,6 +3119,19 @@ public class JournalArticleLocalServiceTest {
 				serviceContext);
 
 		return new Tuple(journalArticle, ddmStructure);
+	}
+
+	private void _disconnectDepotEntry(DepotEntry depotEntry) throws Exception {
+		DepotEntryGroupRel depotEntryGroupRel =
+			_depotEntryGroupRelLocalService.
+				getDepotEntryGroupRelByDepotEntryIdToGroupId(
+					depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		_depotEntryGroupRelLocalService.updateDDMStructuresAvailable(
+			depotEntryGroupRel.getDepotEntryGroupRelId(), false);
+
+		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
+			depotEntryGroupRel);
 	}
 
 	private AssetVocabularySettingsHelper _getAssetVocabularySettingsHelper(

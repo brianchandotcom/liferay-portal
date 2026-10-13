@@ -9,12 +9,18 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -62,6 +68,22 @@ public abstract class BaseDepotGroupItemSelectorProviderTestCase {
 	}
 
 	@Test
+	public void testGetGroupsCountLayoutPrototype() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		Group layoutPrototypeGroup = _addLayoutPrototypeGroup();
+
+		Assert.assertEquals(
+			1,
+			getGroupItemSelectorProvider().getGroupsCount(
+				layoutPrototypeGroup.getCompanyId(),
+				layoutPrototypeGroup.getGroupId(), null));
+	}
+
+	@Test
 	public void testGetGroupsCountStaging() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry();
 
@@ -76,6 +98,22 @@ public abstract class BaseDepotGroupItemSelectorProviderTestCase {
 			1,
 			getGroupItemSelectorProvider().getGroupsCount(
 				stagingGroup.getCompanyId(), stagingGroup.getGroupId(), null));
+	}
+
+	@Test
+	public void testGetGroupsLayoutPrototype() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		Group layoutPrototypeGroup = _addLayoutPrototypeGroup();
+
+		List<Group> groups = getGroupItemSelectorProvider().getGroups(
+			layoutPrototypeGroup.getCompanyId(),
+			layoutPrototypeGroup.getGroupId(), null, 0, 20);
+
+		Assert.assertEquals(groups.toString(), 1, groups.size());
 	}
 
 	@Test
@@ -126,6 +164,20 @@ public abstract class BaseDepotGroupItemSelectorProviderTestCase {
 		return depotEntry;
 	}
 
+	private Group _addLayoutPrototypeGroup() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+				WorkflowConstants.STATUS_APPROVED);
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.getLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId());
+
+		return layoutPrototype.getGroup();
+	}
+
 	@DeleteAfterTestRun
 	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
@@ -137,5 +189,8 @@ public abstract class BaseDepotGroupItemSelectorProviderTestCase {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

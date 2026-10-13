@@ -8,6 +8,7 @@ package com.liferay.site.internal.storage.helper;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +26,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,12 +40,12 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 
 	@Override
 	public void deleteSitemap(
-			long companyId, long groupId, String assetTypeKey, int page)
+			long companyId, long groupId, String sitemapKey, int page)
 		throws PortalException {
 
 		_dlStore.deleteFile(
 			companyId, CompanyConstants.SYSTEM,
-			_getSitemapFileName(groupId, assetTypeKey, page));
+			_getSitemapFileName(groupId, sitemapKey, page));
 	}
 
 	@Override
@@ -67,6 +70,13 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 		throws PortalException {
 
 		_deleteFiles(companyId, _getDirName(groupId));
+	}
+
+	@Override
+	public void deleteSitemaps(long companyId, long groupId, String sitemapKey)
+		throws PortalException {
+
+		_deleteFiles(companyId, _getDirName(groupId, sitemapKey));
 	}
 
 	@Override
@@ -95,6 +105,33 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 	}
 
 	@Override
+	public Map<String, Integer> getPageCountsBySitemapKey(
+			long companyId, long groupId)
+		throws PortalException {
+
+		Map<String, Integer> pageCountsBySitemapKey = new HashMap<>();
+
+		String dirName = _getDirName(groupId);
+
+		for (String fileName :
+				_dlStore.getFileNames(
+					companyId, CompanyConstants.SYSTEM, dirName)) {
+
+			int index = fileName.lastIndexOf(CharPool.SLASH);
+
+			if (index <= dirName.length()) {
+				continue;
+			}
+
+			pageCountsBySitemapKey.merge(
+				fileName.substring(dirName.length() + 1, index), 1,
+				Integer::sum);
+		}
+
+		return pageCountsBySitemapKey;
+	}
+
+	@Override
 	public InputStream getSitemapInputStream(long companyId, long groupId)
 		throws PortalException {
 
@@ -105,12 +142,12 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 
 	@Override
 	public InputStream getSitemapInputStream(
-			long companyId, long groupId, String assetTypeKey, int page)
+			long companyId, long groupId, String sitemapKey, int page)
 		throws PortalException {
 
 		return _dlStore.getFileAsStream(
 			companyId, CompanyConstants.SYSTEM,
-			_getSitemapFileName(groupId, assetTypeKey, page),
+			_getSitemapFileName(groupId, sitemapKey, page),
 			Store.VERSION_DEFAULT);
 	}
 
@@ -125,12 +162,12 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 
 	@Override
 	public boolean hasSitemapFile(
-			long companyId, long groupId, String assetTypeKey, int page)
+			long companyId, long groupId, String sitemapKey, int page)
 		throws PortalException {
 
 		return _dlStore.hasFile(
 			companyId, CompanyConstants.SYSTEM,
-			_getSitemapFileName(groupId, assetTypeKey, page),
+			_getSitemapFileName(groupId, sitemapKey, page),
 			Store.VERSION_DEFAULT);
 	}
 
@@ -171,12 +208,12 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 
 	@Override
 	public void storeSitemapFile(
-			long companyId, long groupId, String assetTypeKey, int page,
+			long companyId, long groupId, String sitemapKey, int page,
 			String xml)
 		throws PortalException {
 
 		_storeSitemapFile(
-			companyId, _getSitemapFileName(groupId, assetTypeKey, page), xml);
+			companyId, _getSitemapFileName(groupId, sitemapKey, page), xml);
 	}
 
 	private void _deleteFiles(long companyId, String dirName)
@@ -206,6 +243,11 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 		return "sitemaps/" + groupId;
 	}
 
+	private String _getDirName(long groupId, String sitemapKey) {
+		return StringBundler.concat(
+			"sitemaps/", groupId, StringPool.SLASH, sitemapKey);
+	}
+
 	private String _getLastRegenerateSitemapDateFileName() {
 		return "sitemap-metadata/last-regenerate-sitemap-date";
 	}
@@ -215,10 +257,10 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 	}
 
 	private String _getSitemapFileName(
-		long groupId, String assetTypeKey, int page) {
+		long groupId, String sitemapKey, int page) {
 
 		return StringBundler.concat(
-			"sitemaps/", groupId, StringPool.SLASH, assetTypeKey,
+			"sitemaps/", groupId, StringPool.SLASH, sitemapKey,
 			StringPool.SLASH, page, ".xml");
 	}
 

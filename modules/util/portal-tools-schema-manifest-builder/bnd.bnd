@@ -31,4 +31,5 @@ Main-Class: com.liferay.portal.tools.schema.manifest.builder.SchemaManifestBuild
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/json/JSONSerializable.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/json/JSONUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*,\
+	@osgi.core-*.jar!/org/osgi/framework/Version.class

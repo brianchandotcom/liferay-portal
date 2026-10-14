@@ -40,7 +40,7 @@ public class ResponsiveImageSettingsTest {
 				_newPreset(presetName),
 				_newPreset(ResponsiveImageConstants.PRESET_DEFAULT));
 
-		// Blank preset name
+		// Blank
 
 		ResponsiveImageSettings.Preset preset =
 			responsiveImageSettings.getPreset(StringPool.BLANK);
@@ -48,20 +48,20 @@ public class ResponsiveImageSettingsTest {
 		Assert.assertEquals(
 			ResponsiveImageConstants.PRESET_DEFAULT, preset.getName());
 
-		// Null preset name
+		// Declared
+
+		preset = responsiveImageSettings.getPreset(presetName);
+
+		Assert.assertEquals(presetName, preset.getName());
+
+		// Null
 
 		preset = responsiveImageSettings.getPreset(null);
 
 		Assert.assertEquals(
 			ResponsiveImageConstants.PRESET_DEFAULT, preset.getName());
 
-		// The named preset
-
-		preset = responsiveImageSettings.getPreset(presetName);
-
-		Assert.assertEquals(presetName, preset.getName());
-
-		// Undeclared preset
+		// Undeclared
 
 		preset = responsiveImageSettings.getPreset(
 			RandomTestUtil.randomString());
@@ -71,12 +71,17 @@ public class ResponsiveImageSettingsTest {
 	}
 
 	@Test
-	public void testGetSizesIsTakenVerbatim() {
+	public void testGetSizes() {
+
+		// Declared
+
 		String sizes = RandomTestUtil.randomString();
 
 		ResponsiveImageSettings.Variant variant = _newVariant(sizes);
 
 		Assert.assertEquals(sizes, variant.getSizes());
+
+		// Null
 
 		variant = _newVariant(null);
 
@@ -84,7 +89,7 @@ public class ResponsiveImageSettingsTest {
 	}
 
 	@Test
-	public void testIsLazyLoadingUndeclaredMeansEager() {
+	public void testIsLazyLoading() {
 		ResponsiveImageSettings.Preset preset = _newPreset(
 			RandomTestUtil.randomString());
 

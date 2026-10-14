@@ -100,7 +100,10 @@ public class ObjectEntryDisplayPageFriendlyURLResolverTest {
 
 		_friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.
-				getFriendlyURLResolverByDefaultURLSeparator("/c_test/");
+				getFriendlyURLResolverByDefaultURLSeparator(
+					StringUtil.quote(
+						_objectDefinition.getFriendlyURLSeparator(),
+						CharPool.SLASH));
 	}
 
 	@AfterClass

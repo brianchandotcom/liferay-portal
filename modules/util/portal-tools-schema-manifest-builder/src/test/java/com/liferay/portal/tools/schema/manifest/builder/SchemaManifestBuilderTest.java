@@ -8,12 +8,15 @@ package com.liferay.portal.tools.schema.manifest.builder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.json.JSONArrayImpl;
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.io.File;
+
+import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -111,6 +114,27 @@ public class SchemaManifestBuilderTest {
 		_assertManifest(module);
 	}
 
+	@Test
+	public void testBuildWithUpgradeStepRegistrator() throws Exception {
+		String module = RandomTestUtil.randomString();
+
+		_writeBndFile(module);
+
+		_copyUpgradeStepRegistratorFile("TestUpgradeStepRegistrator");
+
+		_schemaManifestBuilder.build();
+
+		JSONObject manifestJSONObject = new JSONObjectImpl(
+			_read(_manifestFile));
+
+		Assert.assertEquals(
+			_read("expected/TestUpgradeStepRegistrator.json"),
+			JSONUtil.toString(manifestJSONObject.getJSONArray("history")));
+		Assert.assertEquals(module, manifestJSONObject.getString("module"));
+		Assert.assertEquals(
+			"1.10.0", manifestJSONObject.getString("schemaVersion"));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildWithoutBndFile() throws Exception {
 		_schemaManifestBuilder.build();
@@ -150,8 +174,28 @@ public class SchemaManifestBuilderTest {
 	}
 
 	@Test
+	public void testGetHistoryJSONArray() throws Exception {
+		_copyUpgradeStepRegistratorFile("TestUpgradeStepRegistrator");
+
+		Assert.assertEquals(
+			_read("expected/TestUpgradeStepRegistrator.json"),
+			JSONUtil.toString(
+				_schemaManifestBuilder.getHistoryJSONArray(_baseDir)));
+	}
+
+	@Test
+	public void testGetHistoryJSONArrayWithoutRegisterCalls() throws Exception {
+		_copyUpgradeStepRegistratorFile("InitializationUpgradeStepRegistrator");
+
+		JSONArray historyJSONArray = _schemaManifestBuilder.getHistoryJSONArray(
+			_baseDir);
+
+		Assert.assertEquals(0, historyJSONArray.length());
+	}
+
+	@Test
 	public void testGetManifestJSONObject() {
-		JSONArray historyJSONArray = new JSONArrayImpl();
+		JSONArray historyJSONArray = _getHistoryJSONArray("1.0.0");
 		String module = RandomTestUtil.randomString();
 
 		JSONObject manifestJSONObject =
@@ -164,7 +208,32 @@ public class SchemaManifestBuilderTest {
 			historyJSONArray.toString(),
 			String.valueOf(manifestJSONObject.get("history")));
 		Assert.assertEquals(module, manifestJSONObject.get("module"));
+		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
 		Assert.assertFalse(manifestJSONObject.has("timestamp"));
+	}
+
+	@Test
+	public void testGetManifestJSONObjectWithoutHistory() {
+		JSONObject manifestJSONObject =
+			_schemaManifestBuilder.getManifestJSONObject(
+				new JSONArrayImpl(), RandomTestUtil.randomString());
+
+		Assert.assertFalse(manifestJSONObject.has("schemaVersion"));
+	}
+
+	@Test
+	public void testGetSchemaVersion() {
+		Assert.assertEquals(
+			"1.10.0",
+			_schemaManifestBuilder.getSchemaVersion(
+				_getHistoryJSONArray(
+					"1.0.0", "1.10.0", "1.0.0.step-1", "1.9.0")));
+	}
+
+	@Test
+	public void testGetSchemaVersionWithoutHistory() {
+		Assert.assertNull(
+			_schemaManifestBuilder.getSchemaVersion(new JSONArrayImpl()));
 	}
 
 	@Test
@@ -261,9 +330,47 @@ public class SchemaManifestBuilderTest {
 		return timestamp;
 	}
 
+	private void _copyUpgradeStepRegistratorFile(String className)
+		throws Exception {
+
+		File file = new File(
+			_baseDir,
+			"src/main/java/com/liferay/test/internal/upgrade/registry/" +
+				className + ".java");
+
+		File dir = file.getParentFile();
+
+		dir.mkdirs();
+
+		String content = _read(className + ".testjava");
+
+		Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private JSONArray _getHistoryJSONArray(String... toSchemaVersions) {
+		JSONArray historyJSONArray = new JSONArrayImpl();
+
+		for (String toSchemaVersion : toSchemaVersions) {
+			JSONObject edgeJSONObject = new JSONObjectImpl();
+
+			edgeJSONObject.put("toSchemaVersion", toSchemaVersion);
+
+			historyJSONArray.put(edgeJSONObject);
+		}
+
+		return historyJSONArray;
+	}
+
 	private String _read(File file) throws Exception {
 		return new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+	}
+
+	private String _read(String fileName) throws Exception {
+		URL url = SchemaManifestBuilderTest.class.getResource(
+			"dependencies/" + fileName);
+
+		return _read(new File(url.toURI()));
 	}
 
 	private void _writeBndFile(String bundleSymbolicName) throws Exception {

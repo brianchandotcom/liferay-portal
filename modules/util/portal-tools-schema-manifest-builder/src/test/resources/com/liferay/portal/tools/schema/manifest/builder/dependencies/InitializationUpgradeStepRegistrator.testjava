@@ -1,0 +1,14 @@
+package com.liferay.test.internal.upgrade.registry;
+
+public class InitializationUpgradeStepRegistrator
+	implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.registerInitialization();
+
+		registry.registerReleaseCreationUpgradeSteps(
+			new DummyUpgradeStep());
+	}
+
+}

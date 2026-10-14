@@ -11,7 +11,9 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationPa
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorHelper;
 import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
+import com.liferay.layout.importer.PortletPreferencesPortletConfigurationImporter;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -19,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -34,6 +37,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.portlet.PortletPreferences;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -95,6 +99,39 @@ public class AnnouncementsExportImportTest {
 	}
 
 	@Test
+	@TestInfo("LPD-109596")
+	public void testGetPortletConfigurationWithCompanyGroup() throws Exception {
+		_setUpLocalStaging();
+
+		Layout stagingLayout = LayoutTestUtil.addTypePortletLayout(
+			_stagingGroup);
+
+		String portletId = _addAnnouncementsPortletWithScopeGroups(
+			stagingLayout,
+			_groupLocalService.getCompanyGroup(_stagingGroup.getCompanyId()));
+
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		try {
+			Map<String, Object> portletConfiguration =
+				_portletPreferencesPortletConfigurationExporter.
+					getPortletConfiguration(stagingLayout.getPlid(), portletId);
+
+			Assert.assertEquals(
+				Collections.singletonList(
+					ExportImportPortletPreferencesProcessorHelper.
+						COMPANY_GROUP_EXTERNAL_REFERENCE_CODE),
+				JSONUtil.toStringList(
+					JSONFactoryUtil.createJSONArray(
+						(String)portletConfiguration.get(
+							"selectedScopeGroupExternalReferenceCodes"))));
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+	}
+
+	@Test
 	@TestInfo("LPD-98716")
 	public void testGetPortletConfigurationWithLocalStaging() throws Exception {
 		_setUpLocalStaging();
@@ -124,6 +161,47 @@ public class AnnouncementsExportImportTest {
 
 		GroupTestUtil.deleteGroup(liveGroup1);
 		GroupTestUtil.deleteGroup(liveGroup2);
+	}
+
+	@Test
+	@TestInfo("LPD-109596")
+	public void testImportPortletConfigurationWithCompanyGroup()
+		throws Exception {
+
+		_setUpLocalStaging();
+
+		Layout stagingLayout = LayoutTestUtil.addTypePortletLayout(
+			_stagingGroup);
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_stagingGroup.getCompanyId());
+
+		String portletId = _addAnnouncementsPortletWithScopeGroups(
+			stagingLayout, companyGroup);
+
+		Layout liveLayout = LayoutTestUtil.addTypePortletLayout(_liveGroup);
+
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		try {
+			_portletPreferencesPortletConfigurationImporter.
+				importPortletConfiguration(
+					liveLayout.getPlid(), portletId,
+					_portletPreferencesPortletConfigurationExporter.
+						getPortletConfiguration(
+							stagingLayout.getPlid(), portletId));
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+
+		PortletPreferences portletPreferences =
+			LayoutTestUtil.getPortletPreferences(liveLayout, portletId);
+
+		_assertScopeGroupExternalReferenceCodesTranslated(
+			portletPreferences.getValue(
+				"selectedScopeGroupExternalReferenceCodes", StringPool.BLANK),
+			companyGroup);
 	}
 
 	private String _addAnnouncementsPortletWithScopeGroups(
@@ -200,6 +278,9 @@ public class AnnouncementsExportImportTest {
 	}
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@DeleteAfterTestRun
@@ -211,6 +292,10 @@ public class AnnouncementsExportImportTest {
 	@Inject
 	private PortletPreferencesPortletConfigurationExporter
 		_portletPreferencesPortletConfigurationExporter;
+
+	@Inject
+	private PortletPreferencesPortletConfigurationImporter
+		_portletPreferencesPortletConfigurationImporter;
 
 	private Group _stagingGroup;
 

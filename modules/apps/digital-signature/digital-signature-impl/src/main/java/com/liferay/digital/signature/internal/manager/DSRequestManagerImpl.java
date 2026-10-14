@@ -7,6 +7,7 @@ package com.liferay.digital.signature.internal.manager;
 
 import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
+import com.liferay.digital.signature.constants.DSObjectDefinitionConstants;
 import com.liferay.digital.signature.constants.DSRequestConstants;
 import com.liferay.digital.signature.constants.DSRequestRecipientConstants;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
@@ -105,11 +106,14 @@ public class DSRequestManagerImpl implements DSRequestManager {
 		ObjectDefinition dsRequestObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DS_REQUEST", companyId);
+					DSObjectDefinitionConstants.EXTERNAL_REFERENCE_CODE_REQUEST,
+					companyId);
 		ObjectDefinition dsRequestRecipientObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DS_REQUEST_RECIPIENT", companyId);
+					DSObjectDefinitionConstants.
+						EXTERNAL_REFERENCE_CODE_REQUEST_RECIPIENT,
+					companyId);
 
 		if ((dsRequestObjectDefinition == null) ||
 			(dsRequestRecipientObjectDefinition == null)) {
@@ -162,15 +166,20 @@ public class DSRequestManagerImpl implements DSRequestManager {
 		ObjectDefinition dsRequestDocumentObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DS_REQUEST_DOCUMENT", companyId);
+					DSObjectDefinitionConstants.
+						EXTERNAL_REFERENCE_CODE_REQUEST_DOCUMENT,
+					companyId);
 		ObjectDefinition dsRequestObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DS_REQUEST", companyId);
+					DSObjectDefinitionConstants.EXTERNAL_REFERENCE_CODE_REQUEST,
+					companyId);
 		ObjectDefinition dsRequestRecipientObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_DS_REQUEST_RECIPIENT", companyId);
+					DSObjectDefinitionConstants.
+						EXTERNAL_REFERENCE_CODE_REQUEST_RECIPIENT,
+					companyId);
 
 		if ((dsRequestDocumentObjectDefinition == null) ||
 			(dsRequestObjectDefinition == null) ||

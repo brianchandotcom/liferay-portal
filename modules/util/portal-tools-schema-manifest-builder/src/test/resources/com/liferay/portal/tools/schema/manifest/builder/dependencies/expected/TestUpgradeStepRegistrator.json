@@ -1,0 +1,75 @@
+[
+	{
+		"changes": [
+			{
+				"className": "com.liferay.portal.kernel.upgrade.DummyUpgradeStep",
+				"op": "customChange",
+				"registratorLine": 21
+			}
+		],
+		"fromSchemaVersion": "0.0.1",
+		"registrator": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+		"toSchemaVersion": "1.0.0"
+	},
+	{
+		"changes": [
+			{
+				"className": "com.liferay.portal.kernel.upgrade.UpgradeProcessFactory",
+				"op": "customChange",
+				"registratorLine": 25
+			},
+			{
+				"className": "com.liferay.test.internal.upgrade.v1_0_0.util.TestTable",
+				"op": "customChange",
+				"registratorLine": 27
+			},
+			{
+				"className": "com.liferay.test.internal.upgrade.v1_0_0.TestUpgradeProcess",
+				"op": "customChange",
+				"registratorLine": 28
+			}
+		],
+		"fromSchemaVersion": "1.0.0",
+		"registrator": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+		"toSchemaVersion": "1.0.0.step-1"
+	},
+	{
+		"changes": [
+			{
+				"className": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+				"op": "customChange",
+				"registratorLine": 33
+			},
+			{
+				"className": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+				"op": "customChange",
+				"registratorLine": 43
+			}
+		],
+		"fromSchemaVersion": "1.0.0.step-1",
+		"registrator": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+		"toSchemaVersion": "1.9.0"
+	},
+	{
+		"changes": [
+			{
+				"className": "com.liferay.portal.kernel.upgrade.DummyUpgradeStep",
+				"op": "customChange",
+				"registratorLine": 49
+			},
+			{
+				"className": "com.liferay.portal.kernel.upgrade.DummyUpgradeStep",
+				"op": "customChange",
+				"registratorLine": 50
+			},
+			{
+				"className": "com.liferay.portal.configuration.upgrade.ConfigurationUpgradeStepFactory",
+				"op": "customChange",
+				"registratorLine": 51
+			}
+		],
+		"fromSchemaVersion": "1.9.0",
+		"registrator": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+		"toSchemaVersion": "1.10.0"
+	}
+]

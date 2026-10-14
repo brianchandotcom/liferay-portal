@@ -5,12 +5,16 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
-import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Michael Hashimoto
@@ -19,8 +23,44 @@ public abstract class BaseTestrayCaseResultDescriptor
 	implements TestrayCaseResultDescriptor {
 
 	@Override
-	public AxisTestClassGroup getAxisTestClassGroup() {
-		return _axisTestClassGroup;
+	public String getBatchName() {
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		if (axisTestClassGroup == null) {
+			return null;
+		}
+
+		return axisTestClassGroup.getBatchName();
+	}
+
+	@Override
+	public String getComponentName() {
+		TestClass testClass = getTestClass();
+
+		if (testClass != null) {
+			String testrayMainComponentName =
+				testClass.getTestrayMainComponentName();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					testrayMainComponentName)) {
+
+				return testrayMainComponentName;
+			}
+		}
+
+		if (getAxisTestClassGroup() != null) {
+			JobProperty testrayComponentNameJobProperty = _getJobProperty(
+				"testray.component.name");
+
+			String testrayComponentName =
+				testrayComponentNameJobProperty.getValue();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayComponentName)) {
+				return testrayComponentName;
+			}
+		}
+
+		return _getBuildProperty("testray.case.component");
 	}
 
 	@Override
@@ -34,27 +74,75 @@ public abstract class BaseTestrayCaseResultDescriptor
 	}
 
 	@Override
+	public int getPriority() {
+		String testrayCasePriority = _getBuildProperty("testray.case.priority");
+
+		if ((testrayCasePriority != null) &&
+			testrayCasePriority.matches("\\d+")) {
+
+			return Integer.parseInt(testrayCasePriority);
+		}
+
+		return 5;
+	}
+
+	@Override
 	public String getSubcomponentNames() {
 		return "";
 	}
 
 	@Override
+	public String getTeamName() {
+		if (getAxisTestClassGroup() == null) {
+			return _getBuildProperty("testray.case.team");
+		}
+
+		JobProperty teamNamesJobProperty = _getJobProperty(
+			"testray.team.names");
+
+		String teamNames = teamNamesJobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(teamNames)) {
+			return _getBuildProperty("testray.case.team");
+		}
+
+		String componentName = getComponentName();
+
+		for (String teamName : teamNames.split(",")) {
+			JobProperty teamComponentNamesJobProperty = _getJobProperty(
+				"testray.team." + teamName + ".component.names");
+
+			if (teamComponentNamesJobProperty == null) {
+				continue;
+			}
+
+			String teamComponentNames =
+				teamComponentNamesJobProperty.getValue();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(teamComponentNames)) {
+				continue;
+			}
+
+			for (String teamComponentName : teamComponentNames.split(",")) {
+				if (teamComponentName.equals(componentName)) {
+					return _upperCaseFirstLetterOfEachWord(
+						teamName.replace("-", " "));
+				}
+			}
+		}
+
+		return _getBuildProperty("testray.case.team");
+	}
+
+	@Override
 	public File getTestBaseDir() {
-		if (_axisTestClassGroup == null) {
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		if (axisTestClassGroup == null) {
 			return null;
 		}
 
-		return _axisTestClassGroup.getTestBaseDir();
-	}
-
-	@Override
-	public TestClass getTestClass() {
-		return _testClass;
-	}
-
-	@Override
-	public TestClassMethod getTestClassMethod() {
-		return _testClassMethod;
+		return axisTestClassGroup.getTestBaseDir();
 	}
 
 	@Override
@@ -66,17 +154,9 @@ public abstract class BaseTestrayCaseResultDescriptor
 		return _job.getTestSuiteName();
 	}
 
-	protected BaseTestrayCaseResultDescriptor(
-		AxisTestClassGroup axisTestClassGroup,
-		TestrayCaseResultDescriptor parentTestrayCaseResultDescriptor,
-		TestClass testClass, TestClassMethod testClassMethod) {
-
-		_axisTestClassGroup = axisTestClassGroup;
-		_parentTestrayCaseResultDescriptor = parentTestrayCaseResultDescriptor;
-		_testClass = testClass;
-		_testClassMethod = testClassMethod;
-
-		_job = axisTestClassGroup.getJob();
+	@Override
+	public String getType() {
+		return _getBuildProperty("testray.case.type");
 	}
 
 	protected BaseTestrayCaseResultDescriptor(
@@ -85,17 +165,57 @@ public abstract class BaseTestrayCaseResultDescriptor
 
 		_job = job;
 		_parentTestrayCaseResultDescriptor = parentTestrayCaseResultDescriptor;
-
-		_axisTestClassGroup = null;
-		_testClass = null;
-		_testClassMethod = null;
 	}
 
-	private final AxisTestClassGroup _axisTestClassGroup;
+	protected AxisTestClassGroup getAxisTestClassGroup() {
+		return null;
+	}
+
+	protected TestClass getTestClass() {
+		return null;
+	}
+
+	private String _getBuildProperty(String basePropertyName) {
+		try {
+			return JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(), basePropertyName,
+				getBatchName());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private JobProperty _getJobProperty(String basePropertyName) {
+		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+		Job job = axisTestClassGroup.getJob();
+
+		if (job instanceof QAWebsitesGitRepositoryJob) {
+			return JobPropertyFactory.newJobProperty(
+				basePropertyName, getBatchName(), job,
+				axisTestClassGroup.getTestBaseDir(),
+				JobProperty.Type.QA_WEBSITES_TEST_DIR);
+		}
+
+		return JobPropertyFactory.newJobProperty(
+			basePropertyName, getBatchName(), job);
+	}
+
+	private String _upperCaseFirstLetterOfEachWord(String string) {
+		StringBuilder sb = new StringBuilder(string);
+
+		for (int i = 0; i < sb.length(); i++) {
+			if ((i == 0) || (sb.charAt(i - 1) == ' ')) {
+				sb.setCharAt(i, Character.toUpperCase(sb.charAt(i)));
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private final Job _job;
 	private final TestrayCaseResultDescriptor
 		_parentTestrayCaseResultDescriptor;
-	private final TestClass _testClass;
-	private final TestClassMethod _testClassMethod;
 
 }

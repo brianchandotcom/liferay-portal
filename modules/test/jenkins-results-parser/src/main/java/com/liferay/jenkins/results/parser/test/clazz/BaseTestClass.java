@@ -205,6 +205,11 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
+	public String getTestrayMainComponentName() {
+		return null;
+	}
+
+	@Override
 	public long getWeight() {
 		return getAverageDuration();
 	}

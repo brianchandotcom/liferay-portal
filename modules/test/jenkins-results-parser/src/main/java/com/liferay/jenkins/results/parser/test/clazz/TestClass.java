@@ -54,6 +54,8 @@ public interface TestClass extends Comparable<TestClass>, WeightedItem {
 
 	public String getTestTaskName();
 
+	public String getTestrayMainComponentName();
+
 	public boolean hasTestClassMethods();
 
 	public boolean isBuildCachingEnabled();

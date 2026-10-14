@@ -6,9 +6,6 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.test.clazz.TestClass;
-import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
-import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.io.File;
 
@@ -16,8 +13,6 @@ import java.io.File;
  * @author Michael Hashimoto
  */
 public interface TestrayCaseResultDescriptor {
-
-	public AxisTestClassGroup getAxisTestClassGroup();
 
 	public String getBatchName();
 
@@ -36,10 +31,6 @@ public interface TestrayCaseResultDescriptor {
 	public String getTeamName();
 
 	public File getTestBaseDir();
-
-	public TestClass getTestClass();
-
-	public TestClassMethod getTestClassMethod();
 
 	public String getTestSuiteName();
 

@@ -119,6 +119,7 @@ public abstract class BaseAntTargetTestClass extends BaseTestClass {
 		return name.replaceAll("/", ".");
 	}
 
+	@Override
 	public String getTestrayMainComponentName() {
 		return _testrayMainComponentName;
 	}

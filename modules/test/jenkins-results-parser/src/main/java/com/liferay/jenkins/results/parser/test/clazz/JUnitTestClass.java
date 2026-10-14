@@ -155,6 +155,7 @@ public class JUnitTestClass extends BaseTestClass {
 		return testTaskName.replaceAll("/", ":") + ":" + taskName;
 	}
 
+	@Override
 	public String getTestrayMainComponentName() {
 		return _testrayMainComponentName;
 	}

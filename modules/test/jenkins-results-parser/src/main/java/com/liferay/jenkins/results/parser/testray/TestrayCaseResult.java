@@ -41,10 +41,22 @@ public class TestrayCaseResult {
 		"dueStatus { key name }", "errors", "id", "startDate"
 	};
 
+	public void cacheTestrayCaseResultURL() {
+		try {
+			getTestrayCaseResultURL();
+		}
+		catch (RuntimeException runtimeException) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to create Testray case result '", getName(), "':\n",
+					runtimeException.getMessage()));
+		}
+	}
+
 	public TestrayAttachment getBuildResultTestrayAttachment() {
 		initTestrayAttachments();
 
-		return testrayAttachments.get("Build Result (Top Level)");
+		return _testrayAttachments.get("Build Result (Top Level)");
 	}
 
 	public String getCaseId() {
@@ -189,7 +201,7 @@ public class TestrayCaseResult {
 	public List<TestrayAttachment> getTestrayAttachments() {
 		initTestrayAttachments();
 
-		return new ArrayList<>(testrayAttachments.values());
+		return new ArrayList<>(_testrayAttachments.values());
 	}
 
 	public synchronized TestrayBuild getTestrayBuild() {
@@ -529,24 +541,12 @@ public class TestrayCaseResult {
 		}
 	}
 
-	protected void cacheTestrayCaseResultURL() {
-		try {
-			getTestrayCaseResultURL();
-		}
-		catch (RuntimeException runtimeException) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to create Testray case result '", getName(), "':\n",
-					runtimeException.getMessage()));
-		}
-	}
-
 	protected synchronized void initTestrayAttachments() {
-		if (testrayAttachments != null) {
+		if (_testrayAttachments != null) {
 			return;
 		}
 
-		testrayAttachments = new TreeMap<>();
+		_testrayAttachments = new TreeMap<>();
 
 		String attachments = _jsonObject.getString("attachments");
 
@@ -581,12 +581,10 @@ public class TestrayCaseResult {
 					this, attachmentJSONObject.getString("name"),
 					attachmentJSONObject.getString("value"), url);
 
-			testrayAttachments.put(
+			_testrayAttachments.put(
 				testrayAttachment.getName(), testrayAttachment);
 		}
 	}
-
-	protected Map<String, TestrayAttachment> testrayAttachments;
 
 	private synchronized URL _createTestrayCaseResultURL() {
 		final TestrayBuild testrayBuild = getTestrayBuild();
@@ -831,6 +829,7 @@ public class TestrayCaseResult {
 	private ErrorType _errorType;
 	private final JSONObject _jsonObject;
 	private TestrayCaseResult _parentTestrayCaseResult;
+	private Map<String, TestrayAttachment> _testrayAttachments;
 	private TestrayBuild _testrayBuild;
 	private TestrayCase _testrayCase;
 	private boolean _testrayCaseCached;

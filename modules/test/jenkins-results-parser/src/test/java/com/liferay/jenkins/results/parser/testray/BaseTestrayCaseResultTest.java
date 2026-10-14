@@ -32,7 +32,7 @@ import org.mockito.Mockito;
  * @author Michael Hashimoto
  * @author Peter Yoo
  */
-public class TestrayCaseResultTest
+public class BaseTestrayCaseResultTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
@@ -175,7 +175,7 @@ public class TestrayCaseResultTest
 		TestrayServer testrayServer) {
 
 		TestrayCaseResult testrayCaseResult = Mockito.mock(
-			TestrayCaseResult.class);
+			BaseTestrayCaseResult.class);
 
 		Mockito.doCallRealMethod(
 		).when(
@@ -376,7 +376,7 @@ public class TestrayCaseResultTest
 		TestrayServer testrayServer = _mockTestrayServer();
 
 		TestrayCaseResult testrayCaseResult = Mockito.mock(
-			TestrayCaseResult.class);
+			BaseTestrayCaseResult.class);
 
 		Mockito.doCallRealMethod(
 		).when(

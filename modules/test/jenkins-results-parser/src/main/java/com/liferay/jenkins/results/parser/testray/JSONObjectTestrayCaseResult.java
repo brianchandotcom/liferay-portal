@@ -10,7 +10,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JSONObjectTestrayCaseResult extends TestrayCaseResult {
+public class JSONObjectTestrayCaseResult extends BaseTestrayCaseResult {
 
 	public JSONObjectTestrayCaseResult(
 		TestrayBuild testrayBuild, JSONObject jsonObject) {

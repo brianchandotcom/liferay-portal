@@ -26,7 +26,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
+public abstract class BuildTestrayCaseResult extends BaseTestrayCaseResult {
 
 	@Override
 	public long getDuration() {

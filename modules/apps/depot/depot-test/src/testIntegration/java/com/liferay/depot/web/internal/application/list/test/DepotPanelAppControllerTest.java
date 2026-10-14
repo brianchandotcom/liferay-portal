@@ -13,14 +13,19 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -57,7 +62,7 @@ public class DepotPanelAppControllerTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
+		_depotEntry1 = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "name"
 			).build(),
@@ -72,7 +77,7 @@ public class DepotPanelAppControllerTest {
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			PanelCategoryKeys.SITE_ADMINISTRATION_BUILD,
 			PermissionThreadLocal.getPermissionChecker(),
-			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+			_groupLocalService.getGroup(_depotEntry1.getGroupId()));
 
 		Assert.assertEquals(panelApps.toString(), 1, panelApps.size());
 
@@ -96,7 +101,7 @@ public class DepotPanelAppControllerTest {
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING,
 			PermissionThreadLocal.getPermissionChecker(),
-			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+			_groupLocalService.getGroup(_depotEntry1.getGroupId()));
 
 		Assert.assertEquals(panelApps.toString(), 3, panelApps.size());
 
@@ -113,7 +118,7 @@ public class DepotPanelAppControllerTest {
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
 			PermissionThreadLocal.getPermissionChecker(),
-			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+			_groupLocalService.getGroup(_depotEntry1.getGroupId()));
 
 		Assert.assertEquals(panelApps.toString(), 3, panelApps.size());
 
@@ -126,13 +131,52 @@ public class DepotPanelAppControllerTest {
 	}
 
 	@Test
+	public void testGetPanelAppsShowsOnlyDocumentsAndMediaInTheContentCategoryForAGroupScopedPermission()
+		throws Exception {
+
+		_depotEntry2 = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "other name"
+			).build(),
+			new HashMap<>(), DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		DepotTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(_depotEntry1.getGroupId()),
+					ActionKeys.ACCESS_IN_CONTROL_PANEL);
+
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(user);
+
+				List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+					PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
+					permissionChecker, _depotEntry1.getGroup());
+
+				Assert.assertEquals(panelApps.toString(), 1, panelApps.size());
+
+				_assertPanelAppsContain(
+					panelApps, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+				panelApps = _panelAppRegistry.getPanelApps(
+					PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
+					permissionChecker, _depotEntry2.getGroup());
+
+				Assert.assertEquals(panelApps.toString(), 0, panelApps.size());
+			});
+	}
+
+	@Test
 	public void testGetPanelAppsShowsOnlyMembersInThePeopleCategoryForADepotGroup()
 		throws Exception {
 
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			PanelCategoryKeys.SITE_ADMINISTRATION_MEMBERS,
 			PermissionThreadLocal.getPermissionChecker(),
-			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+			_groupLocalService.getGroup(_depotEntry1.getGroupId()));
 
 		Assert.assertEquals(panelApps.toString(), 1, panelApps.size());
 
@@ -152,7 +196,7 @@ public class DepotPanelAppControllerTest {
 		throws Exception {
 
 		_assertIsDisplayed(
-			_depotEntry.getGroupId(),
+			_depotEntry1.getGroupId(),
 			PanelCategoryKeys.SITE_ADMINISTRATION_CATEGORIZATION);
 	}
 
@@ -161,17 +205,19 @@ public class DepotPanelAppControllerTest {
 		throws Exception {
 
 		_assertIsDisplayed(
-			_depotEntry.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_APPS);
+			_depotEntry1.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_APPS);
 		_assertIsDisplayed(
-			_depotEntry.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_INSTANCE);
+			_depotEntry1.getGroupId(),
+			PanelCategoryKeys.CONTROL_PANEL_INSTANCE);
 		_assertIsDisplayed(
-			_depotEntry.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_SITES);
+			_depotEntry1.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_SITES);
 		_assertIsDisplayed(
-			_depotEntry.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_USERS);
+			_depotEntry1.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_USERS);
 		_assertIsDisplayed(
-			_depotEntry.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_WORKFLOW);
+			_depotEntry1.getGroupId(),
+			PanelCategoryKeys.CONTROL_PANEL_WORKFLOW);
 		_assertIsDisplayed(
-			_depotEntry.getGroupId(),
+			_depotEntry1.getGroupId(),
 			PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION);
 	}
 
@@ -180,7 +226,7 @@ public class DepotPanelAppControllerTest {
 		throws Exception {
 
 		_assertIsDisplayed(
-			_depotEntry.getGroupId(),
+			_depotEntry1.getGroupId(),
 			PanelCategoryKeys.SITE_ADMINISTRATION_RECYCLE_BIN);
 	}
 
@@ -213,7 +259,10 @@ public class DepotPanelAppControllerTest {
 	}
 
 	@DeleteAfterTestRun
-	private DepotEntry _depotEntry;
+	private DepotEntry _depotEntry1;
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry2;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

@@ -94,10 +94,6 @@ public class ResponsiveImageMarkupRendererImpl
 			_responsiveImageURLTransformerProvider);
 	}
 
-	/**
-	 * Returns the value of the named attribute of the image tag, or
-	 * <code>null</code> when the tag does not carry it.
-	 */
 	private String _getAttributeValue(String imgTag, String name) {
 		int index = _getEqualIndex(imgTag, name);
 
@@ -133,14 +129,11 @@ public class ResponsiveImageMarkupRendererImpl
 	}
 
 	/**
-	 * Returns the index of the equal sign of the named attribute of the image
-	 * tag, or <code>-1</code> when the tag does not carry it.
-	 *
-	 * <p>
-	 * The name ends where HTML says it ends, so an attribute whose name merely
-	 * ends with the one asked for, as <code>data-loading</code> does with
-	 * <code>loading</code>, is never mistaken for it.
-	 * </p>
+	 * Returns the index of the equal sign of the named attribute in the image
+	 * tag, or <code>-1</code> when the tag does not carry it. The name ends
+	 * where HTML says it ends. An attribute whose name merely ends with the one
+	 * asked for, as <code>data-loading</code> does with <code>loading</code>,
+	 * is never mistaken for it.
 	 */
 	private int _getEqualIndex(String imgTag, String name) {
 		int index = imgTag.indexOf(name);
@@ -172,13 +165,9 @@ public class ResponsiveImageMarkupRendererImpl
 
 	/**
 	 * Returns the index of the image tag, or <code>-1</code> when the markup
-	 * holds none.
-	 *
-	 * <p>
-	 * The tag name ends where HTML says it ends, at whitespace, at
-	 * <code>/</code> or at <code>&gt;</code>, so that an element whose name
-	 * merely starts with <code>img</code> is never mistaken for one.
-	 * </p>
+	 * holds none. The tag name ends where HTML says it ends, at whitespace, at
+	 * <code>/</code>, or at <code>&gt;</code>. An element whose name merely
+	 * starts with <code>img</code> is never mistaken for one.
 	 */
 	private int _getImgTagIndex(String imgTag) {
 		int index = imgTag.indexOf(_IMG_TAG_START);
@@ -203,22 +192,21 @@ public class ResponsiveImageMarkupRendererImpl
 	}
 
 	/**
-	 * Returns the <code>sizes</code> value to render with, without the
-	 * <code>auto</code> an administrator declared where it would not be valid.
+	 * Returns the <code>sizes</code> value to render with, removing an
+	 * <code>auto</code> that an administrator declared where it is not valid.
 	 *
 	 * <p>
-	 * Browsers honor <code>auto</code> only on a lazily loaded image element,
-	 * and only measure one that already has an aspect ratio to measure.
-	 * Whether a page gives it one, by the tag's own width and height or by its
-	 * style, is the administrator's to know and not this renderer's to guess,
-	 * so <code>auto</code> is never added here. It is taken away where the
-	 * markup alone says it is invalid.
+	 * Browsers honor <code>auto</code> only on a lazily loaded image, and they
+	 * measure it only when it already has an aspect ratio. Whether a page gives
+	 * it one, through the tag's own width and height or through its style, is
+	 * for the administrator to know. This renderer never adds <code>auto</code>
+	 * and removes it only where the markup alone shows that it is invalid.
 	 * </p>
 	 *
 	 * <p>
-	 * A value of <code>auto</code> alone leaves nothing to render once it is
-	 * taken away, and an absent <code>sizes</code> renders the same as one a
-	 * browser cannot read, so it is answered with nothing at all.
+	 * A value of <code>auto</code> alone returns a blank value because an
+	 * absent <code>sizes</code> renders the same as one that a browser cannot
+	 * read.
 	 * </p>
 	 */
 	private String _getSizes(boolean lazyLoading, String sizes) {

@@ -8,9 +8,6 @@ package com.liferay.responsive.image;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * Represents a request for a responsive image, carrying everything one call
- * needs: which image and the placement context it is being rendered in.
- *
  * @author Daniel Sanz
  */
 public final class ResponsiveImageRequest {
@@ -19,13 +16,6 @@ public final class ResponsiveImageRequest {
 		return new Builder(imageResource);
 	}
 
-	/**
-	 * Returns a request for the given image, when placement information is not
-	 * available to the caller.
-	 *
-	 * @param  imageResource the image to render responsively
-	 * @return the request
-	 */
 	public static ResponsiveImageRequest of(ImageResource imageResource) {
 		return builder(
 			imageResource
@@ -34,18 +24,19 @@ public final class ResponsiveImageRequest {
 
 	/**
 	 * Returns the site the caller declared, or <code>0</code> to have one
-	 * derived. The group is the <em>rendering</em> site, not the site the image
-	 * is stored in.
+	 * derived. The group is the site that renders the image, not the site that
+	 * stores it.
 	 *
 	 * <p>
-	 * Left at <code>0</code> the framework takes the rendering site from the
-	 * theme display of {@link #getHttpServletRequest}, then from the service
-	 * context, and failing both resolves the configuration at company scope.
+	 * When the group ID is <code>0</code>, the framework takes the rendering
+	 * site from the theme display of {@link #getHttpServletRequest}, then from
+	 * the service context. Failing both, it resolves the configuration at the
+	 * company scope.
 	 * </p>
 	 *
 	 * <p>
-	 * It is worth declaring only when there is no request to derive it from,
-	 * which is the case for export and import, staging, and scheduled work.
+	 * Declare it only when there is no request to derive it from, as in export
+	 * and import, staging, and scheduled work.
 	 * </p>
 	 */
 	public long getGroupId() {
@@ -57,33 +48,24 @@ public final class ResponsiveImageRequest {
 	 * none.
 	 *
 	 * <p>
-	 * It is worth supplying when available, because it resolves the CDN host
-	 * exactly, knows whether the connection is secure, and identifies the
-	 * company. Callers that have one should pass it.
-	 * </p>
-	 *
-	 * <p>
-	 * It is optional rather than required, because several rendering paths
-	 * genuinely have none to give. Without it, the company comes from the
-	 * ambient one and the CDN host is resolved per company rather than per
-	 * request.
+	 * Callers that have a request should pass it because it resolves the CDN
+	 * host exactly, tells whether the connection is secure, and identifies the
+	 * company. Without it, the company comes from the ambient one and the CDN
+	 * host is resolved per company rather than per request.
 	 * </p>
 	 */
 	public HttpServletRequest getHttpServletRequest() {
 		return _httpServletRequest;
 	}
 
-	/**
-	 * Returns the image to render responsively.
-	 */
 	public ImageResource getImageResource() {
 		return _imageResource;
 	}
 
 	/**
-	 * Returns the name of the configured preset describing where this image
-	 * sits in the page layout (for example <code>card</code>), or
-	 * <code>null</code> to use the default.
+	 * Returns the name of the configured preset that describes where this image
+	 * sits in the page layout, such as <code>card</code>, or <code>null</code>
+	 * to use the default.
 	 */
 	public String getPresetName() {
 		return _presetName;

@@ -110,33 +110,30 @@ public class ResponsiveImageFactory {
 	}
 
 	/**
-	 * Returns the image URL behind the CDN host the transformed images are
-	 * delivered by, or <code>null</code> when the image names a host the
-	 * configured one is not.
+	 * Returns the image URL behind the CDN host that delivers the transformed
+	 * images, or <code>null</code> when the image names a host other than the
+	 * configured one.
 	 *
 	 * <p>
-	 * The given CDN host wins, so images can be delivered by an image
-	 * optimization service that fronts nothing else. Absent it, the company's
-	 * own CDN host is used.
+	 * The given CDN host wins, which lets an image optimization service that
+	 * fronts nothing else deliver the images. Without it, the company's own CDN
+	 * host is used.
 	 * </p>
 	 *
 	 * <p>
-	 * An image the portal is itself served by is taken back to its path and
-	 * delivered like any other, whichever host it happens to name. See
-	 * {@link #_getPortalPath(long, String)} for what counts as one.
+	 * An image that the portal itself serves is taken back to its path and
+	 * delivered like any other, whichever host it names. See {@link
+	 * #_getPortalPath(long, String)} for what counts as one.
 	 * </p>
 	 *
 	 * <p>
-	 * An image that names a host the portal is not served by is left alone,
-	 * there being no telling whether that host is already a CDN. It is
-	 * declined only when a host is configured and is not the one naming it,
-	 * since transforming it would then ask a CDN for an image it does not
-	 * front. A protocol relative URL names a host too, so it counts as one of
-	 * these rather than as a path that merely begins with a slash.
+	 * An image that names a host the portal does not serve is left alone
+	 * because there is no telling whether that host is already a CDN. It is
+	 * declined only when a configured host is not the one naming it, because
+	 * transforming it would ask a CDN for an image it does not front. A
+	 * protocol relative URL also names a host and counts as one of these rather
+	 * than as a path that begins with a slash.
 	 * </p>
-	 *
-	 * @param  cdnHost the host to deliver by, or <code>null</code> for the
-	 *         company's own
 	 */
 	private String _getDeliveryURL(String cdnHost, long companyId, String url) {
 		if (!url.startsWith(StringPool.SLASH) ||
@@ -176,14 +173,14 @@ public class ResponsiveImageFactory {
 
 	/**
 	 * Returns the portal's own path behind an absolute URL, or
-	 * <code>null</code> when the host naming it is not one the portal is
-	 * served by.
+	 * <code>null</code> when the URL names a host that the portal is not served
+	 * by.
 	 *
 	 * <p>
-	 * The portal is asked which domains are its own, so the virtual hosts of
-	 * the company and of its sites count, and so do the company's own CDN
-	 * hosts, since a URL names one because something put it there rather than
-	 * because that is where the image lives.
+	 * The portal is asked which domains are its own, which covers the virtual
+	 * hosts of the company and its sites. The company's own CDN hosts count as
+	 * well because a URL names one only because something put it there, not
+	 * because the image lives there.
 	 * </p>
 	 */
 	private String _getPortalPath(long companyId, String url) {
@@ -284,8 +281,9 @@ public class ResponsiveImageFactory {
 
 	/**
 	 * Returns the URL without the given host, or <code>null</code> when the URL
-	 * does not name it. The host must end where the path begins, so that a URL
-	 * merely starting with it is never mistaken for one it serves.
+	 * does not name it. The host must end where the path begins, which keeps a
+	 * URL that merely starts with the host from being mistaken for one it
+	 * serves.
 	 */
 	private String _stripCDNHost(String cdnHost, String url) {
 		if (Validator.isBlank(cdnHost)) {
@@ -309,9 +307,6 @@ public class ResponsiveImageFactory {
 		return url;
 	}
 
-	/**
-	 * Names the raster formats a rendition can be generated from.
-	 */
 	private static final Set<String> _supportedMimeTypes = SetUtil.fromArray(
 		"image/bmp", "image/gif", "image/jpeg", "image/pjpeg", "image/png",
 		"image/webp", "image/x-citrix-jpeg", "image/x-citrix-png",

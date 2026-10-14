@@ -22,10 +22,9 @@ import java.util.TreeSet;
  *
  * <p>
  * These are the values that reading {@link ResponsiveImageConfiguration}
- * resolved to, so this is deliberately separate from the configuration, which
- * is what an administrator wrote. Resolving happens once per change rather
- * than once per image, and {@link ResponsiveImageSettingsProvider}
- * decides when.
+ * resolved to, which is why this class is separate from the configuration that
+ * an administrator wrote. Resolving happens once per change rather than once
+ * per image, and {@link ResponsiveImageSettingsProvider} decides when.
  * </p>
  *
  * @author Daniel Sanz
@@ -55,12 +54,6 @@ public class ResponsiveImageSettings {
 		return _candidateWidths;
 	}
 
-	/**
-	 * Returns a hash of the configuration this was parsed from, so the registry
-	 * can tell whether reparsing is needed.
-	 *
-	 * @return the content hash
-	 */
 	public int getContentHash() {
 		return _contentHash;
 	}
@@ -69,13 +62,6 @@ public class ResponsiveImageSettings {
 		return _defaultTransformations;
 	}
 
-	/**
-	 * Returns the preset of the given name, falling back to the default preset
-	 * when the name is blank or names nothing.
-	 *
-	 * @param  presetName the preset name, or <code>null</code> for the default
-	 * @return the preset definition
-	 */
 	public Preset getPreset(String presetName) {
 		if (Validator.isBlank(presetName)) {
 			presetName = ResponsiveImageConstants.PRESET_DEFAULT;
@@ -100,14 +86,9 @@ public class ResponsiveImageSettings {
 
 	/**
 	 * Returns whether the responsive image feature is enabled in this scope.
-	 *
-	 * <p>
-	 * Enabling is explicit because a site inherits the instance configuration,
-	 * so every site would otherwise operate the feature the moment the
-	 * instance holds a configuration at all.
-	 * </p>
-	 *
-	 * @return whether the responsive image feature is enabled
+	 * Enabling is explicit because a site inherits the instance configuration.
+	 * Otherwise, every site would run the feature as soon as the instance holds
+	 * any configuration.
 	 */
 	public boolean isEnabled() {
 		return _enabled;
@@ -123,35 +104,23 @@ public class ResponsiveImageSettings {
 			_variants = Collections.unmodifiableList(variants);
 		}
 
-		/**
-		 * Returns the name callers use to request this preset.
-		 *
-		 * @return the name
-		 */
 		public String getName() {
 			return _name;
 		}
 
-		/**
-		 * Returns the variants this preset defines under each media condition,
-		 * in the order they must be rendered.
-		 *
-		 * @return this preset's variants
-		 */
 		public List<Variant> getVariants() {
 			return _variants;
 		}
 
 		/**
-		 * Returns whether an image in this placement is lazily loaded.
+		 * Returns whether an image in this placement is lazily loaded. An
+		 * undeclared value means eager loading.
 		 *
 		 * <p>
-		 * Undeclared means eager. Loading eagerly costs bandwidth; loading the
-		 * largest contentful image lazily costs a Core Web Vital, so the safer
-		 * default is the one that cannot regress it.
+		 * Eager loading costs bandwidth, while lazily loading the largest
+		 * contentful image costs a Core Web Vital. Eager loading is the safer
+		 * default because it cannot regress that vital.
 		 * </p>
-		 *
-		 * @return whether to lazily load
 		 */
 		public boolean isLazyLoading() {
 			return GetterUtil.getBoolean(_lazyLoading);
@@ -181,46 +150,30 @@ public class ResponsiveImageSettings {
 		 *
 		 * <p>
 		 * A variant that renders small has no use for the widest configured
-		 * candidate: a 96 pixel thumbnail advertising a 2560 pixel candidate
-		 * ships 7 URLs of markup for an image the browser will never choose.
+		 * candidate. A thumbnail rendered 96 pixels wide that advertises a
+		 * candidate 2560 pixels wide ships seven URLs of markup for images that
+		 * the browser never chooses.
 		 * </p>
 		 *
 		 * <p>
-		 * This is a <b>soft</b> limit: the smallest candidate at or above this
-		 * width is still included, because that is the one the browser needs,
-		 * and excluding it would leave nothing usable. Set it to the rendered
-		 * width multiplied by the highest pixel density worth serving.
+		 * This is a soft limit. The smallest candidate at or above this width
+		 * is still included because the browser needs it, and excluding it
+		 * would leave nothing usable. Set it to the rendered width multiplied
+		 * by the highest pixel density worth serving.
 		 * </p>
-		 *
-		 * @return the maximum width in pixels, or <code>null</code>
 		 */
 		public Integer getMaxWidth() {
 			return _maxWidth;
 		}
 
-		/**
-		 * Returns the query this applies under, resolved from its media
-		 * condition declaration, or <code>null</code> when it applies
-		 * unconditionally.
-		 */
 		public String getQuery() {
 			return _query;
 		}
 
-		/**
-		 * Returns the <code>sizes</code> attribute describing how wide the
-		 * image renders under this variant, or <code>null</code>.
-		 */
 		public String getSizes() {
 			return _sizes;
 		}
 
-		/**
-		 * Returns the transformations to apply to every candidate generated for
-		 * this variant, such as a crop that differs between viewports.
-		 *
-		 * @return the transformations
-		 */
 		public Map<String, String> getTransformations() {
 			return _transformations;
 		}

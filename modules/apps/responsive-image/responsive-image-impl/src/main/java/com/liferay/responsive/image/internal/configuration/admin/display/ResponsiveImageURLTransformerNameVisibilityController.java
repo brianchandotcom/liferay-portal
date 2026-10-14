@@ -17,13 +17,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Hides the transformer name for as long as naming one is not a choice.
+ * Hides the transformer name while naming one is not a choice.
  *
  * <p>
- * An installation deploying a single transformer has nothing to say, and a
- * blank name already resolves to that one, so asking for it would be asking an
- * administrator to repeat what the deployment already decided. The field
- * appears of its own accord once a second transformer is deployed.
+ * An installation that deploys a single transformer has nothing to choose, and
+ * a blank name already resolves to that transformer. Asking for the name would
+ * make an administrator repeat what the deployment already decided. The field
+ * appears once a second transformer is deployed.
  * </p>
  *
  * @author Daniel Sanz

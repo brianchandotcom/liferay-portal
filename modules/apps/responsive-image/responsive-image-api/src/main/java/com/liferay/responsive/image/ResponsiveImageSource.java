@@ -10,9 +10,6 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents the image candidates that apply under one media condition,
- * together with the media query itself and how wide the image renders under it.
- *
  * @author Daniel Sanz
  */
 public final class ResponsiveImageSource {
@@ -21,26 +18,20 @@ public final class ResponsiveImageSource {
 		return new Builder();
 	}
 
-	/**
-	 * Returns the candidates a browser chooses between.
-	 */
 	public List<ResponsiveImageCandidate> getCandidates() {
 		return _responsiveImageCandidates;
 	}
 
 	/**
-	 * Returns the media query this applies under, or <code>null</code> when it
-	 * applies unconditionally, in which case it is rendered as the
-	 * <code>&lt;img&gt;</code> rather than as a <code>&lt;source&gt;</code>.
+	 * Returns the media query this source applies under, or <code>null</code>
+	 * when it applies unconditionally. An unconditional source is rendered as
+	 * the <code>&lt;img&gt;</code> rather than as a
+	 * <code>&lt;source&gt;</code>.
 	 */
 	public String getQuery() {
 		return _query;
 	}
 
-	/**
-	 * Returns the <code>sizes</code> attribute describing how wide the image
-	 * renders under this query, or <code>null</code>.
-	 */
 	public String getSizes() {
 		return _sizes;
 	}

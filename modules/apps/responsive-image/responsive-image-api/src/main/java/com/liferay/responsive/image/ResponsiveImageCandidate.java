@@ -6,9 +6,6 @@
 package com.liferay.responsive.image;
 
 /**
- * Represents one entry of a {@link ResponsiveImageSource}'s candidates: a URL
- * the image can be served from, and the width it is served at.
- *
  * @author Daniel Sanz
  */
 public final class ResponsiveImageCandidate {
@@ -17,17 +14,14 @@ public final class ResponsiveImageCandidate {
 		return new Builder(url);
 	}
 
-	/**
-	 * Returns the URL the image is served from. It may carry transformations.
-	 */
 	public String getURL() {
 		return _url;
 	}
 
 	/**
-	 * Returns the width in pixels the image is served at, or <code>null</code>,
-	 * in which case the candidate is left out of the markup, there being no
-	 * width to advertise it by.
+	 * Returns the width in pixels that the image is served at, or
+	 * <code>null</code>. A candidate with no width is left out of the markup
+	 * because there is no width to advertise it by.
 	 */
 	public Integer getWidth() {
 		return _width;

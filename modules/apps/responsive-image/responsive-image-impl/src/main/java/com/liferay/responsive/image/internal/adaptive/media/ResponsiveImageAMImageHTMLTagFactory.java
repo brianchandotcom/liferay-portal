@@ -24,14 +24,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Routes existing Adaptive Media tag factory callers through the
+ * Routes the existing callers of Adaptive Media's tag factory through the
  * {@link ResponsiveImageMarkupRenderer}.
  *
  * <p>
- * It is registered above Adaptive Media's own implementation so that the
- * consumers already calling {@code AMImageHTMLTagFactory} (content
- * transformers, export and import, the taglib, several commerce classes) pick
- * up whichever is configured without being modified.
+ * This factory is registered above Adaptive Media's own implementation. The
+ * consumers that already call {@code AMImageHTMLTagFactory}, such as content
+ * transformers, export and import, the taglib, and several commerce classes,
+ * pick up whichever implementation is configured without being modified.
  * </p>
  *
  * @author Daniel Sanz
@@ -70,14 +70,14 @@ public class ResponsiveImageAMImageHTMLTagFactory
 
 	/**
 	 * Returns the markup with the file entry named on its
-	 * <code>&lt;picture&gt;</code> element, which is how Adaptive Media's
-	 * consumers find the image a tag stands for.
+	 * <code>&lt;picture&gt;</code> element, which is how the consumers of
+	 * Adaptive Media find the image that a tag stands for.
 	 *
 	 * <p>
-	 * The tag name ends where HTML says it ends, at <code>&gt;</code> or at
-	 * the whitespace before the global attributes the element may carry, so
-	 * that an element merely starting with <code>picture</code> is never
-	 * rewritten into nonsense.
+	 * The tag name ends where HTML says it ends, at <code>&gt;</code> or at the
+	 * whitespace before the global attributes that the element may carry. An
+	 * element whose name merely starts with <code>picture</code> is never
+	 * rewritten.
 	 * </p>
 	 */
 	private String _addFileEntryIdAttribute(

@@ -6,33 +6,23 @@
 package com.liferay.responsive.image;
 
 /**
- * Represents the original image, from which renditions are generated,
- * independently of where it is stored: file entries, OSGi modules, the legacy
- * portal image path, or on a completely different host.
- *
- * <p>
- * It carries nothing about cache freshness. That is defined by the
- * <code>Cache-Control</code> the origin returns and by the CDN's own
- * invalidation.
- * </p>
- *
- * <p>
- * It carries no intrinsic dimensions, as they are not cheaply obtainable
- * in general.
- * </p>
+ * An image resource carries nothing about cache freshness, which the
+ * <code>Cache-Control</code> header from the origin and the CDN's own
+ * invalidation define. It carries no intrinsic dimensions either because they
+ * are not cheaply obtainable in general.
  *
  * @author Daniel Sanz
  */
 public interface ImageResource {
 
 	/**
-	 * Returns the image's mime type, or <code>null</code> if it is not known.
+	 * Returns the image's MIME type, or <code>null</code> if it is not known.
 	 */
 	public String getMimeType();
 
 	/**
-	 * Returns the image's original URL, before any transformation. It may be
-	 * portal relative or absolute.
+	 * Returns the image's original URL before any transformation, which may be
+	 * relative to the portal or absolute.
 	 */
 	public String getURL();
 

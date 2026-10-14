@@ -29,8 +29,6 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Holds the presets a scope has, and hands one back by name.
- *
  * @author Daniel Sanz
  */
 public class ResponsiveImageSettingsProvider {
@@ -42,11 +40,6 @@ public class ResponsiveImageSettingsProvider {
 			responsiveImageConfigurationHelper;
 	}
 
-	/**
-	 * Returns this scope's whole parsed configuration, reparsing only when it
-	 * has actually changed, or <code>null</code> if the configuration could not
-	 * be read.
-	 */
 	public ResponsiveImageSettings getResponsiveImageSettings(
 		long companyId, long groupId) {
 
@@ -99,10 +92,6 @@ public class ResponsiveImageSettingsProvider {
 		return responsiveImageSettings;
 	}
 
-	/**
-	 * Reads one <code>name=value</code> transformation into the given map,
-	 * ignoring an entry that is blank or carries no value.
-	 */
 	private static void _addTransformation(
 		String transformation, Map<String, String> transformationsMap) {
 
@@ -165,13 +154,12 @@ public class ResponsiveImageSettingsProvider {
 	 * <code>null</code> when it declares nothing there.
 	 *
 	 * <p>
-	 * The unconditional media condition is the exception, answering with
-	 * nothing declared rather than with nothing at all. A preset that names
-	 * conditions but nothing unconditional still needs the unconditional
-	 * variant, because that is what the <code>&lt;img&gt;</code> inside the
-	 * <code>&lt;picture&gt;</code> renders when no condition matches, and
-	 * declaring nothing there leaves it the whole candidate ladder and the
-	 * default transformations.
+	 * The unconditional media condition is the exception and returns an empty
+	 * map rather than <code>null</code>. A preset that names conditions but
+	 * nothing unconditional still needs the unconditional variant because the
+	 * <code>&lt;img&gt;</code> inside the <code>&lt;picture&gt;</code> renders
+	 * it when no condition matches. The empty map gives that variant the whole
+	 * candidate ladder and the default transformations.
 	 * </p>
 	 */
 	private Map<String, String> _getVariantProperties(
@@ -196,8 +184,8 @@ public class ResponsiveImageSettingsProvider {
 	}
 
 	/**
-	 * Returns the configured presets with the system ones ahead of them, so
-	 * that a configured preset overrides the system preset of the same key
+	 * Returns the configured presets with the system ones ahead of them. A
+	 * configured preset then overrides the system preset entry of the same key
 	 * and leaves every other key of that preset alone.
 	 */
 	private String[] _prependSystemPresets(String[] presets) {
@@ -211,12 +199,9 @@ public class ResponsiveImageSettingsProvider {
 
 	/**
 	 * Returns the configured candidate widths as a sorted set, ignoring any
-	 * that does not read as a positive number.
-	 *
-	 * <p>
-	 * An unusable width is warned about rather than refused, so that one typo
-	 * leaves the rest of the widths generating.
-	 * </p>
+	 * width that does not read as a positive number. An unusable width is
+	 * warned about rather than refused, which keeps the rest of the widths
+	 * generating after a typo.
 	 */
 	private TreeSet<Integer> _toCandidateWidthsSet(String[] candidateWidths) {
 		TreeSet<Integer> candidateWidthsSet = new TreeSet<>();
@@ -418,10 +403,6 @@ public class ResponsiveImageSettingsProvider {
 		return presetsMap;
 	}
 
-	/**
-	 * Returns one variant, built from what a preset declares under one
-	 * media condition.
-	 */
 	private ResponsiveImageSettings.Variant _toVariant(
 		Map<String, String> variantProperties, String query) {
 
@@ -441,10 +422,11 @@ public class ResponsiveImageSettingsProvider {
 	}
 
 	/**
-	 * Returns a preset's variants, ordered by the order media conditions
-	 * are declared rather than by the order the preset's own keys appear, so
-	 * ordering is decided once for the whole installation. The unconditional
-	 * media condition always sorts last, being the catch all.
+	 * Returns a preset's variants in the order that the media conditions are
+	 * declared rather than the order that the preset's own keys appear, which
+	 * decides the ordering once for the whole installation. The unconditional
+	 * media condition always sorts last because it matches when no other
+	 * condition does.
 	 */
 	private List<ResponsiveImageSettings.Variant> _toVariants(
 		Map<String, Map<String, String>> variantPropertiesMap,

@@ -21,20 +21,16 @@ import java.util.TreeMap;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Applies image transformations as Fastly Image Optimizer URL parameters.
+ * Image transformations that Fastly Image Optimizer does not support are
+ * ignored to minimize the number of CDN cache entries. The supported ones are
+ * sorted to produce exactly the same URL regardless of the insertion order in
+ * the image transformations map.
  *
  * <p>
- * To minimize the number of CDN cache entries, image transformations not
- * supported by Fastly Image Optimizer are ignored. The supported ones are
- * sorted in order to produce exactly the same URL regardless of the insertion
- * order in the image transformations map.
- * </p>
- *
- * <p>
- * An image transformation replaces the one of the same name the URL already
- * carries, so transforming the same image twice always produces the same URL.
- * Every other URL parameter is left untouched, and the transformations are
- * appended before any anchor.
+ * An image transformation replaces the one of the same name that the URL
+ * already carries, which makes transforming the same image twice produce the
+ * same URL. Every other URL parameter is left untouched, and the
+ * transformations are appended before any anchor.
  * </p>
  *
  * @author Daniel Sanz

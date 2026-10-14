@@ -224,9 +224,9 @@ public class FastlyImageOptimizerURLTransformerTest {
 	}
 
 	/**
-	 * @see com.liferay.portal.util.PortalImpl
+	 * This method is copied from <code>PortalImpl</code> for ease of testing.
 	 *
-	 * _stripURLAnchor is copied from PortalImpl for ease of testing.
+	 * @see com.liferay.portal.util.PortalImpl
 	 */
 	private String[] _stripURLAnchor(String separator, String url) {
 		String anchor = StringPool.BLANK;

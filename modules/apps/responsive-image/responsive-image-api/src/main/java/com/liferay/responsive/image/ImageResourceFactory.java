@@ -11,17 +11,11 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Builds the {@link ImageResource} a caller hands to the framework, from
- * whatever form the caller holds the image in.
- *
  * @author Daniel Sanz
  */
 @ProviderType
 public interface ImageResourceFactory {
 
-	/**
-	 * Returns a resource for a document library image.
-	 */
 	public ImageResource fromFileEntry(FileEntry fileEntry)
 		throws PortalException;
 

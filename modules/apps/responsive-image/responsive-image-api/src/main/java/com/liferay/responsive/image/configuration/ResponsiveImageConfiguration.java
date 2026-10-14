@@ -25,15 +25,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ResponsiveImageConfiguration {
 
 	/**
-	 * Lists the full set of widths available to generate image candidates, in
-	 * pixels.
-	 *
-	 * <p>
-	 * Two costs pull in opposite directions: every extra width is another
-	 * distinct CDN cache object, while wider gaps mean shipping more pixels
-	 * than needed. The default is a roughly 1.4x ladder, which caps overshoot
-	 * near 2x the pixel count.
-	 * </p>
+	 * Every extra width is another distinct CDN cache object, while wider gaps
+	 * between widths ship more pixels than needed. The default is a ladder of
+	 * widths about 1.4 times apart, which caps the overshoot near twice the
+	 * pixel count.
 	 */
 	@Meta.AD(
 		deflt = "320|480|640|960|1280|1920|2560",
@@ -42,30 +37,18 @@ public interface ResponsiveImageConfiguration {
 	)
 	public String[] candidateWidths();
 
-	/**
-	 * Names the host the transformed image URLs are served from, protocol
-	 * included, such as <code>https://cdn.example.com</code>. Leave it blank to
-	 * use the CDN host configured for the instance.
-	 */
 	@Meta.AD(
 		deflt = "", description = "cdn-host-help", name = "cdn-host",
 		required = false
 	)
 	public String cdnHost();
 
-	/**
-	 * Lists the transformations applied to every generated rendition, as
-	 * <code>name=value</code> entries.
-	 */
 	@Meta.AD(
 		deflt = "disable=upscale", description = "default-transformations-help",
 		name = "default-transformations", required = false
 	)
 	public String[] defaultTransformations();
 
-	/**
-	 * Returns whether the feature is enabled in this scope.
-	 */
 	@Meta.AD(
 		deflt = "false", description = "responsive-image-enabled-help",
 		name = "enabled", required = false
@@ -73,7 +56,7 @@ public interface ResponsiveImageConfiguration {
 	public boolean enabled();
 
 	/**
-	 * Lists the media conditions available to presets, typically a theme's
+	 * Lists the media conditions that presets can use, typically a theme's
 	 * breakpoints, as <code>&lt;name&gt;.query=&lt;media query&gt;</code>
 	 * entries.
 	 *
@@ -89,28 +72,7 @@ public interface ResponsiveImageConfiguration {
 	public String[] mediaConditions();
 
 	/**
-	 * Lists the presets, as flat <code>key=value</code> entries in one of two
-	 * forms:
-	 *
-	 * <p>
-	 * <code>&lt;preset&gt;.lazyLoading</code> says whether images in this
-	 * preset are lazily loaded by default.
-	 * <code>&lt;preset&gt;.&lt;media condition name&gt;.sizes</code>,
-	 * <code>.transformations</code> and <code>.maxWidth</code> describe what to
-	 * generate under one media condition, which must be one declared in
-	 * {@link #mediaConditions()}. The <code>sizes</code> value is the
-	 * <a
-	 * href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/sizes">
-	 * sizes attribute</a> the image is rendered with, which is what turns the
-	 * candidates' width descriptors into a choice. Browsers honor
-	 * <code>auto</code> there only on a lazily loaded image that already has
-	 * an aspect ratio to measure, so a preset declaring it has to declare
-	 * <code>lazyLoading</code> too, and the image has to carry a width and
-	 * a height or be sized by the page's style. A preset is named by the
-	 * <code>responsive-image-preset-</code> language key matching its name,
-	 * which an administrator overrides the way every other shipped string is
-	 * overridden.
-	 * </p>
+	 * Lists the presets as flat <code>key=value</code> entries.
 	 *
 	 * <pre>
 	 * hero.narrow.sizes=100vw
@@ -122,6 +84,31 @@ public interface ResponsiveImageConfiguration {
 	 * thumb.default.sizes=96px
 	 * thumb.default.maxWidth=320
 	 * </pre>
+	 *
+	 * <p>
+	 * <code>&lt;preset&gt;.lazyLoading</code> says whether images in the preset
+	 * are lazily loaded by default. <code>&lt;preset&gt;.&lt;media condition
+	 * name&gt;.sizes</code>, <code>.transformations</code>, and
+	 * <code>.maxWidth</code> describe what to generate under one media
+	 * condition, which must be declared in {@link #mediaConditions()}.
+	 * </p>
+	 *
+	 * <p>
+	 * The <code>sizes</code> value is the <a
+	 * href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/sizes">
+	 * sizes attribute</a> the image is rendered with, and it turns the width
+	 * descriptors of the candidates into a choice. Browsers honor
+	 * <code>auto</code> only on a lazily loaded image that already has an
+	 * aspect ratio to measure. A preset that declares it must also declare
+	 * <code>lazyLoading</code>, and the image must carry a width and a height
+	 * or be sized by the page's style.
+	 * </p>
+	 *
+	 * <p>
+	 * A preset is named by the <code>responsive-image-preset-</code> language
+	 * key that matches its name, which an administrator overrides like any
+	 * other shipped string.
+	 * </p>
 	 */
 	@Meta.AD(
 		deflt = "", description = "presets-help", name = "presets",
@@ -129,16 +116,6 @@ public interface ResponsiveImageConfiguration {
 	)
 	public String[] presets();
 
-	/**
-	 * Names the image optimization service whose URL vocabulary is used. It
-	 * must match the name reported by a deployed
-	 * {@code ResponsiveImageURLTransformer}.
-	 *
-	 * <p>
-	 * It defaults to the transformer the product ships, and is not asked for
-	 * until a second one makes the name a choice.
-	 * </p>
-	 */
 	@ExtendedAttributeDefinition(
 		visibilityControllerKey = "responsive-image-url-transformer-name"
 	)

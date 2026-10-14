@@ -24,8 +24,6 @@ import com.liferay.responsive.image.configuration.ResponsiveImageConfiguration;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * Resolves which company's configuration applies to a call, and reads it.
- *
  * @author Daniel Sanz
  */
 public class ResponsiveImageConfigurationHelper {
@@ -37,10 +35,6 @@ public class ResponsiveImageConfigurationHelper {
 		_portal = portal;
 	}
 
-	/**
-	 * Returns the company the ResponsiveImageRequest is being made for, or
-	 * <code>0</code> if it could not be determined.
-	 */
 	public long getCompanyId(ResponsiveImageRequest responsiveImageRequest) {
 		if (responsiveImageRequest != null) {
 			HttpServletRequest httpServletRequest =
@@ -70,10 +64,6 @@ public class ResponsiveImageConfigurationHelper {
 		return 0;
 	}
 
-	/**
-	 * Returns the group ID the responsiveImageRequest is being rendered for, or
-	 * <code>0</code> if it could not be determined.
-	 */
 	public long getGroupId(ResponsiveImageRequest responsiveImageRequest) {
 		if (responsiveImageRequest == null) {
 			return 0;
@@ -122,10 +112,6 @@ public class ResponsiveImageConfigurationHelper {
 		return 0;
 	}
 
-	/**
-	 * Returns the configuration for the narrowest scope the caller could name,
-	 * or <code>null</code> if it could not be read.
-	 */
 	public ResponsiveImageConfiguration getResponsiveImageConfiguration(
 		long companyId, long groupId) {
 
@@ -156,9 +142,6 @@ public class ResponsiveImageConfigurationHelper {
 		}
 	}
 
-	/**
-	 * Returns a key naming the scope whose configuration applies.
-	 */
 	public String getScopeKey(long companyId, long groupId) {
 		if (groupId > 0) {
 			return StringBundler.concat(

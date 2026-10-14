@@ -10,36 +10,29 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents a resolved image, ready to be rendered responsively in a format
- * such as HTML or JSON.
- *
  * @author Daniel Sanz
  */
 public final class ResponsiveImage {
 
-	/**
-	 * Returns a builder for a responsive image.
-	 *
-	 * @return the builder
-	 */
 	public static Builder builder() {
 		return new Builder();
 	}
 
 	/**
 	 * Returns the sources, or an empty list when nothing could support the
-	 * resource. Empty is not an error, because callers fall back to the image
-	 * they already have. Order is significant: a source with a narrower media
-	 * condition must precede a broader one, because a browser takes the first
+	 * resource.
+	 *
+	 * <p>
+	 * An empty list is not an error because callers fall back to the image they
+	 * already have. Order is significant. A source with a narrower media
+	 * condition must precede a broader one because a browser takes the first
 	 * one that matches.
+	 * </p>
 	 */
 	public List<ResponsiveImageSource> getSources() {
 		return _responsiveImageSources;
 	}
 
-	/**
-	 * Returns whether this image should be loaded lazily.
-	 */
 	public boolean isLazyLoading() {
 		return _lazyLoading;
 	}

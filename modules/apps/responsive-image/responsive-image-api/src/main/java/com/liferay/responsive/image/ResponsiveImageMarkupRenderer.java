@@ -10,8 +10,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Produces responsive image markup. Every consumer should call this renderer
- * when it needs image markup, rather than calling a specific factory directly.
+ * Every consumer that needs image markup should call this renderer rather than
+ * call a specific factory directly.
  *
  * @author Daniel Sanz
  */
@@ -19,15 +19,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ResponsiveImageMarkupRenderer {
 
 	/**
-	 * Returns responsive markup wrapping the given image tag, or
-	 * <code>null</code> when nothing was produced.
-	 *
-	 * @param  originalImgTag the original image tag, whose attributes are
-	 *         preserved
-	 * @param  responsiveImageRequest what the caller wants to render
-	 * @return the responsive markup, or <code>null</code> if the framework
-	 *         declined
-	 * @throws PortalException if the resource could not be read
+	 * Returns responsive markup wrapping the image tag, or <code>null</code>
+	 * when the framework declines to produce any. The original image tag keeps
+	 * its attributes.
 	 */
 	public String render(
 			String originalImgTag,

@@ -8,19 +8,14 @@ package com.liferay.responsive.image;
 import java.util.Map;
 
 /**
- * Transforms an image URL into the one an image optimization provider
- * understands, typically a CDN.
- *
- * <p>
  * The caller already holds a usable URL and the image transformations it wants
- * applied, so a transformer only rewrites what it is given. It decides how the
- * provider spells each transformation, and which of them the provider
- * understands at all.
- * </p>
+ * applied. A transformer only rewrites what it is given, deciding how the
+ * provider spells each transformation and which ones the provider understands
+ * at all.
  *
  * <p>
  * Implementations must be deterministic. Two calls with equal image
- * transformations must produce byte identical URLs, otherwise every render
+ * transformations must produce byte identical URLs. Otherwise, every render
  * creates a new CDN cache object for the same image.
  * </p>
  *
@@ -29,14 +24,9 @@ import java.util.Map;
 public interface ResponsiveImageURLTransformer {
 
 	/**
-	 * Returns the URL with the given image transformations applied.
-	 *
-	 * @param  url the image URL to transform
-	 * @param  imageTransformations the image transformations to apply, keyed
-	 *         by the provider's own parameter names
-	 * @return the transformed URL, or <code>url</code> unchanged if the
-	 *         provider cannot apply any of the image transformations, which
-	 *         includes the case where it recognizes none of them
+	 * Returns the URL with the image transformations applied, or the URL
+	 * unchanged if the provider can apply none of them. The image
+	 * transformations are keyed by the provider's own parameter names.
 	 */
 	public String transform(
 		String url, Map<String, String> imageTransformations);

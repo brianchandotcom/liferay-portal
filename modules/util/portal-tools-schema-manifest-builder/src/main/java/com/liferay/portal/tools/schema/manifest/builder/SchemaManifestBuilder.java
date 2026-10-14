@@ -45,6 +45,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.framework.Version;
+
 /**
  * @author Luis Ortiz
  */
@@ -135,7 +137,7 @@ public class SchemaManifestBuilder {
 
 		JSONObject manifestJSONObject = new JSONObjectImpl();
 
-		return manifestJSONObject.put(
+		manifestJSONObject.put(
 			"description",
 			StringBundler.concat(
 				"Database changes manifest of one Liferay module, generated ",
@@ -143,9 +145,10 @@ public class SchemaManifestBuilder {
 				"Do not edit it by hand. Top level keys: 'history' stores the ",
 				"upgrade steps that move a database between schema versions; ",
 				"'module' is the module's Bundle-SymbolicName, or 'portal' ",
-				"for portal core; 'timestamp' is when the content last ",
-				"changed. Rules: 'history' is a SET of edges, not a sequence: ",
-				"array order is not meaningful, several edges may share a ",
+				"for portal core; 'schemaVersion' is the current schema ",
+				"version; 'timestamp' is when the content last changed. ",
+				"Rules: 'history' is a SET of edges, not a sequence: array ",
+				"order is not meaningful, several edges may share a ",
 				"'toSchemaVersion', and only one applies to any given ",
 				"database. Compute the upgrade path by following ",
 				"'fromSchemaVersion'/'toSchemaVersion'. 'changes' inside an ",
@@ -162,6 +165,39 @@ public class SchemaManifestBuilder {
 		).put(
 			"module", module
 		);
+
+		String schemaVersion = getSchemaVersion(historyJSONArray);
+
+		if (schemaVersion != null) {
+			manifestJSONObject.put("schemaVersion", schemaVersion);
+		}
+
+		return manifestJSONObject;
+	}
+
+	protected String getSchemaVersion(JSONArray historyJSONArray) {
+		Version schemaVersion = null;
+
+		for (int i = 0; i < historyJSONArray.length(); i++) {
+			JSONObject edgeJSONObject = historyJSONArray.getJSONObject(i);
+
+			Version toSchemaVersion = Version.parseVersion(
+				edgeJSONObject.getString("toSchemaVersion"));
+
+			if ((schemaVersion != null) &&
+				(schemaVersion.compareTo(toSchemaVersion) >= 0)) {
+
+				continue;
+			}
+
+			schemaVersion = toSchemaVersion;
+		}
+
+		if (schemaVersion == null) {
+			return null;
+		}
+
+		return schemaVersion.toString();
 	}
 
 	protected String getTimestamp(String content) {

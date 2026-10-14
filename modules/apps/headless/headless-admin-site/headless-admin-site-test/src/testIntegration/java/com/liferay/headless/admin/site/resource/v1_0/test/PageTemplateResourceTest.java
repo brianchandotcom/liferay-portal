@@ -2092,6 +2092,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			_randomPageTemplate(
 				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
 					_thumbnail2URL)),
+			_randomPageTemplate(
+				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
+					_thumbnail2URL)),
 			PageTemplate::getThumbnailURLReference,
 			pageTemplate -> pageTemplateResource.postSitePageTemplate(
 				testGroup.getExternalReferenceCode(), pageTemplate));

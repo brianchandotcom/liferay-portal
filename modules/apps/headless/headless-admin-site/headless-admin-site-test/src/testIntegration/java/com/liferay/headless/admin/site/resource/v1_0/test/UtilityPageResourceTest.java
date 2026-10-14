@@ -1283,6 +1283,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			_randomUtilityPage(
 				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
 					_thumbnail2URL)),
+			_randomUtilityPage(
+				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
+					_thumbnail2URL)),
 			UtilityPage::getThumbnailURLReference,
 			utilityPage -> utilityPageResource.postSiteUtilityPage(
 				testGroup.getExternalReferenceCode(), utilityPage));

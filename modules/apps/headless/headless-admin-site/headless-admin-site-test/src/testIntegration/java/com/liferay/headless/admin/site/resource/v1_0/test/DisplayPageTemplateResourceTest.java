@@ -2910,6 +2910,9 @@ public class DisplayPageTemplateResourceTest
 			_randomDisplayPageTemplate(
 				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
 					_thumbnail2URL)),
+			_randomDisplayPageTemplate(
+				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
+					_thumbnail2URL)),
 			DisplayPageTemplate::getThumbnailURLReference,
 			displayPageTemplate ->
 				displayPageTemplateResource.postSiteDisplayPageTemplate(

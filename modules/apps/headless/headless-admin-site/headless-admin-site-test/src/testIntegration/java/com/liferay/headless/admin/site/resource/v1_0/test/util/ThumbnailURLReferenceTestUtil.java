@@ -32,7 +32,7 @@ public class ThumbnailURLReferenceTestUtil {
 	public static <T> void testThumbnailURLReferenceURLFetchSecurity(
 			UnsafeBiConsumer<ThumbnailURLReference, T, Exception>
 				assertUnsafeBiConsumer,
-			T t1, T t2,
+			T t1, T t2, T t3,
 			UnsafeFunction<T, ThumbnailURLReference, Exception>
 				thumbnailURLReferenceUnsafeFunction,
 			UnsafeFunction<T, T, Exception> unsafeFunction)
@@ -54,7 +54,7 @@ public class ThumbnailURLReferenceTestUtil {
 			new String[] {"127.0.0.1"}, true, assertUnsafeBiConsumer, t2,
 			thumbnailURLReferenceUnsafeFunction, unsafeFunction);
 		_assertRestrictedHost(
-			new String[] {"example.test"}, true, t2,
+			new String[] {"example.test"}, true, t3,
 			thumbnailURLReferenceUnsafeFunction, unsafeFunction);
 	}
 

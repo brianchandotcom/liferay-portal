@@ -1600,6 +1600,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			_randomMasterPage(
 				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
 					_thumbnail2URL)),
+			_randomMasterPage(
+				ThumbnailURLReferenceTestUtil.getThumbnailURLReference(
+					_thumbnail2URL)),
 			MasterPage::getThumbnailURLReference,
 			masterPage -> masterPageResource.postSiteMasterPage(
 				testGroup.getExternalReferenceCode(), masterPage));

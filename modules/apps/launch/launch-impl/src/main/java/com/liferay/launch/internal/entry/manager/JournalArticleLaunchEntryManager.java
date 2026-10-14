@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.launch.internal.entry.type;
+package com.liferay.launch.internal.entry.manager;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -14,7 +14,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
-import com.liferay.launch.entry.type.LaunchEntryType;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "launch.entry.type.class.name=com.liferay.journal.model.JournalArticle",
-	service = LaunchEntryType.class
+	property = "launch.entry.manager.class.name=com.liferay.journal.model.JournalArticle",
+	service = LaunchEntryManager.class
 )
-public class JournalArticleLaunchEntryType implements LaunchEntryType {
+public class JournalArticleLaunchEntryManager implements LaunchEntryManager {
 
 	@Override
 	public Draft addDraft(long classPK, String versionKey)

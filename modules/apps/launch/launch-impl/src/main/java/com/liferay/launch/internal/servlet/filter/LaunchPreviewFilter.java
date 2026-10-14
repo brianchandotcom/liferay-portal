@@ -5,8 +5,8 @@
 
 package com.liferay.launch.internal.servlet.filter;
 
-import com.liferay.launch.entry.type.LaunchEntryType;
-import com.liferay.launch.entry.type.registry.LaunchEntryTypeRegistry;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
+import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -164,12 +164,12 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 	}
 
 	private Serializable _getPreviewPrimaryKey(
-			long classPK, LaunchEntryType launchEntryType,
+			long classPK, LaunchEntryManager launchEntryManager,
 			Map<String, Serializable> launchEntryValues,
-			LaunchEntryType.Version publishedVersion)
+			LaunchEntryManager.Version publishedVersion)
 		throws Exception {
 
-		LaunchEntryType.Draft draft = launchEntryType.fetchDraft(
+		LaunchEntryManager.Draft draft = launchEntryManager.fetchDraft(
 			classPK, GetterUtil.getLong(launchEntryValues.get("draftId")));
 
 		if (draft != null) {
@@ -182,7 +182,7 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 			return null;
 		}
 
-		LaunchEntryType.Version version = launchEntryType.fetchVersion(
+		LaunchEntryManager.Version version = launchEntryManager.fetchVersion(
 			classPK, versionKey);
 
 		if (version == null) {
@@ -208,12 +208,13 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 			String className = MapUtil.getString(
 				launchEntryValues, "className");
 
-			LaunchEntryType launchEntryType =
-				_launchEntryTypeRegistry.getLaunchEntryType(className);
+			LaunchEntryManager launchEntryManager =
+				_launchEntryManagerRegistry.getLaunchEntryManager(className);
 
-			if (launchEntryType == null) {
+			if (launchEntryManager == null) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("No launch entry type exists for " + className);
+					_log.debug(
+						"No launch entry manager exists for " + className);
 				}
 
 				continue;
@@ -221,16 +222,18 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 
 			long classPK = GetterUtil.getLong(launchEntryValues.get("classPK"));
 
-			LaunchEntryType.Item item = launchEntryType.fetchItem(classPK);
-			LaunchEntryType.Version publishedVersion =
-				launchEntryType.fetchPublishedVersion(classPK);
+			LaunchEntryManager.Item item = launchEntryManager.fetchItem(
+				classPK);
+			LaunchEntryManager.Version publishedVersion =
+				launchEntryManager.fetchPublishedVersion(classPK);
 
 			if ((item == null) || (publishedVersion == null)) {
 				continue;
 			}
 
 			Serializable previewPrimaryKey = _getPreviewPrimaryKey(
-				classPK, launchEntryType, launchEntryValues, publishedVersion);
+				classPK, launchEntryManager, launchEntryValues,
+				publishedVersion);
 
 			if (previewPrimaryKey == null) {
 				continue;
@@ -238,7 +241,7 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 
 			Map<Serializable, Serializable> primaryKeys =
 				previewableMap.computeIfAbsent(
-					launchEntryType.getModelClass(), key -> new HashMap<>());
+					launchEntryManager.getModelClass(), key -> new HashMap<>());
 
 			primaryKeys.put(item.getPrimaryKey(), previewPrimaryKey);
 		}
@@ -286,7 +289,7 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private LaunchEntryTypeRegistry _launchEntryTypeRegistry;
+	private LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

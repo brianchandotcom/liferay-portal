@@ -5,8 +5,8 @@
 
 package com.liferay.launch.internal.object.entry.contributor;
 
-import com.liferay.launch.entry.type.LaunchEntryType;
-import com.liferay.launch.entry.type.registry.LaunchEntryTypeRegistry;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
+import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.object.entry.ObjectEntryContext;
 import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.scope.ObjectDefinitionScoped;
@@ -38,11 +38,11 @@ public class LaunchEntryObjectEntryValuesContributor
 	public void contribute(ObjectEntryContext objectEntryContext) {
 		Map<String, Serializable> values = objectEntryContext.getValues();
 
-		LaunchEntryType launchEntryType =
-			_launchEntryTypeRegistry.getLaunchEntryType(
+		LaunchEntryManager launchEntryManager =
+			_launchEntryManagerRegistry.getLaunchEntryManager(
 				MapUtil.getString(values, "className"));
 
-		if ((launchEntryType == null) ||
+		if ((launchEntryManager == null) ||
 			(GetterUtil.getLong(values.get("draftId")) != 0) ||
 			Validator.isNotNull(MapUtil.getString(values, "versionKey")) ||
 			Validator.isNull(MapUtil.getString(values, "baseVersionKey"))) {
@@ -66,7 +66,7 @@ public class LaunchEntryObjectEntryValuesContributor
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			LaunchEntryType.Draft draft = launchEntryType.addDraft(
+			LaunchEntryManager.Draft draft = launchEntryManager.addDraft(
 				GetterUtil.getLong(values.get("classPK")),
 				MapUtil.getString(values, "baseVersionKey"));
 
@@ -86,6 +86,6 @@ public class LaunchEntryObjectEntryValuesContributor
 	}
 
 	@Reference
-	private LaunchEntryTypeRegistry _launchEntryTypeRegistry;
+	private LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 
 }

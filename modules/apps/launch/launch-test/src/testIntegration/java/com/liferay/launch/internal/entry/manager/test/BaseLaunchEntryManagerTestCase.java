@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.launch.internal.entry.type.test;
+package com.liferay.launch.internal.entry.manager.test;
 
-import com.liferay.launch.entry.type.LaunchEntryType;
-import com.liferay.launch.entry.type.registry.LaunchEntryTypeRegistry;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
+import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -49,7 +49,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Alejandro Tardín
  */
-public abstract class BaseLaunchEntryTypeTestCase {
+public abstract class BaseLaunchEntryManagerTestCase {
 
 	@ClassRule
 	@Rule
@@ -79,10 +79,10 @@ public abstract class BaseLaunchEntryTypeTestCase {
 
 		String entryTitle = getEntryTitle(classPK);
 
-		LaunchEntryType.Version version = getPublishedVersion(classPK);
+		LaunchEntryManager.Version version = getPublishedVersion(classPK);
 
-		LaunchEntryType.Draft draft1 = addDraft(classPK);
-		LaunchEntryType.Draft draft2 = addDraft(classPK);
+		LaunchEntryManager.Draft draft1 = addDraft(classPK);
+		LaunchEntryManager.Draft draft2 = addDraft(classPK);
 
 		Assert.assertNotEquals(draft1.getDraftId(), draft2.getDraftId());
 
@@ -108,17 +108,17 @@ public abstract class BaseLaunchEntryTypeTestCase {
 		Assert.assertEquals(title1, _getDraftTitle(classPK, draft1));
 		Assert.assertEquals(title2, _getDraftTitle(classPK, draft2));
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
 		Assert.assertEquals(
 			entryTitle,
 			getDraftTitle(
-				launchEntryType.addDraft(classPK, version.getVersionKey())));
+				launchEntryManager.addDraft(classPK, version.getVersionKey())));
 
 		Assert.assertEquals(title3, getDraftTitle(addDraft(classPK)));
 
 		try {
-			launchEntryType.addDraft(
+			launchEntryManager.addDraft(
 				classPK, String.valueOf(draft1.getDraftId()));
 
 			Assert.fail();
@@ -134,19 +134,19 @@ public abstract class BaseLaunchEntryTypeTestCase {
 
 		String entryTitle = getEntryTitle(classPK);
 
-		LaunchEntryType.Draft draft = addDraft(classPK);
+		LaunchEntryManager.Draft draft = addDraft(classPK);
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		launchEntryType.deleteDraft(classPK, draft.getDraftId());
+		launchEntryManager.deleteDraft(classPK, draft.getDraftId());
 
 		Assert.assertNull(
-			launchEntryType.fetchDraft(classPK, draft.getDraftId()));
+			launchEntryManager.fetchDraft(classPK, draft.getDraftId()));
 
-		launchEntryType.deleteDraft(classPK, draft.getDraftId());
+		launchEntryManager.deleteDraft(classPK, draft.getDraftId());
 
 		Assert.assertEquals(entryTitle, getEntryTitle(classPK));
-		Assert.assertNotNull(launchEntryType.fetchPublishedVersion(classPK));
+		Assert.assertNotNull(launchEntryManager.fetchPublishedVersion(classPK));
 	}
 
 	@Test
@@ -155,27 +155,28 @@ public abstract class BaseLaunchEntryTypeTestCase {
 
 		String title = RandomTestUtil.randomString();
 
-		LaunchEntryType.Draft draft = addDraft(classPK);
+		LaunchEntryManager.Draft draft = addDraft(classPK);
 
 		updateDraft(title, draft);
 
-		LaunchEntryType.Draft fetchedDraft = getDraft(
+		LaunchEntryManager.Draft fetchedDraft = getDraft(
 			classPK, draft.getDraftId());
 
 		Assert.assertEquals(draft.getDraftId(), fetchedDraft.getDraftId());
 		Assert.assertEquals(title, getDraftTitle(fetchedDraft));
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
 		Assert.assertNull(
-			launchEntryType.fetchDraft(classPK, RandomTestUtil.randomLong()));
+			launchEntryManager.fetchDraft(
+				classPK, RandomTestUtil.randomLong()));
 	}
 
 	@Test
 	public void testFetchItem() throws Exception {
 		long classPK = addEntry();
 
-		LaunchEntryType.Item item = getItem(classPK);
+		LaunchEntryManager.Item item = getItem(classPK);
 
 		Assert.assertEquals(group.getGroupId(), item.getGroupId());
 		Assert.assertEquals(
@@ -197,17 +198,18 @@ public abstract class BaseLaunchEntryTypeTestCase {
 		Assert.assertNotEquals(
 			title, item.getTitle(LocaleUtil.getSiteDefault()));
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
 		Assert.assertNull(
-			launchEntryType.fetchItem(RandomTestUtil.randomLong()));
+			launchEntryManager.fetchItem(RandomTestUtil.randomLong()));
 	}
 
 	@Test
 	public void testFetchPublishedVersion() throws Exception {
 		long classPK = addEntry();
 
-		LaunchEntryType.Version publishedVersion = getPublishedVersion(classPK);
+		LaunchEntryManager.Version publishedVersion = getPublishedVersion(
+			classPK);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, publishedVersion.getStatus());
@@ -217,27 +219,28 @@ public abstract class BaseLaunchEntryTypeTestCase {
 	public void testFetchVersion() throws Exception {
 		long classPK = addEntry();
 
-		LaunchEntryType.Version publishedVersion = getPublishedVersion(classPK);
+		LaunchEntryManager.Version publishedVersion = getPublishedVersion(
+			classPK);
 
-		LaunchEntryType.Version fetchedVersion = getVersion(
+		LaunchEntryManager.Version fetchedVersion = getVersion(
 			classPK, publishedVersion.getVersionKey());
 
 		Assert.assertEquals(
 			publishedVersion.getVersionKey(), fetchedVersion.getVersionKey());
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
 		Assert.assertNull(
-			launchEntryType.fetchVersion(
+			launchEntryManager.fetchVersion(
 				classPK, String.valueOf(RandomTestUtil.randomLong())));
 		Assert.assertNull(
-			launchEntryType.fetchVersion(
+			launchEntryManager.fetchVersion(
 				RandomTestUtil.randomLong(), publishedVersion.getVersionKey()));
 
-		LaunchEntryType.Draft draft = addDraft(classPK);
+		LaunchEntryManager.Draft draft = addDraft(classPK);
 
 		Assert.assertNull(
-			launchEntryType.fetchVersion(
+			launchEntryManager.fetchVersion(
 				classPK, String.valueOf(draft.getDraftId())));
 	}
 
@@ -245,10 +248,11 @@ public abstract class BaseLaunchEntryTypeTestCase {
 	public void testGetClassPK() throws Exception {
 		long classPK = addEntry();
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
 		Assert.assertEquals(
-			classPK, launchEntryType.getClassPK(getSelectedItemData(classPK)));
+			classPK,
+			launchEntryManager.getClassPK(getSelectedItemData(classPK)));
 	}
 
 	@Test
@@ -271,13 +275,13 @@ public abstract class BaseLaunchEntryTypeTestCase {
 
 		String title1 = RandomTestUtil.randomString();
 
-		LaunchEntryType.Draft draft1 = addDraft(classPK);
+		LaunchEntryManager.Draft draft1 = addDraft(classPK);
 
 		updateDraft(title1, draft1);
 
 		String title2 = RandomTestUtil.randomString();
 
-		LaunchEntryType.Draft draft2 = addDraft(classPK);
+		LaunchEntryManager.Draft draft2 = addDraft(classPK);
 
 		updateDraft(title2, draft2);
 
@@ -299,14 +303,14 @@ public abstract class BaseLaunchEntryTypeTestCase {
 
 		Assert.assertEquals(entryTitle, getEntryTitle(classPK));
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryType.Version publishedVersion1 =
-			launchEntryType.publishDraft(classPK, draft1.getDraftId());
+		LaunchEntryManager.Version publishedVersion1 =
+			launchEntryManager.publishDraft(classPK, draft1.getDraftId());
 
-		launchEntryType.publishDraft(classPK, draft2.getDraftId());
+		launchEntryManager.publishDraft(classPK, draft2.getDraftId());
 
-		LaunchEntryType.Version version1 = getVersion(
+		LaunchEntryManager.Version version1 = getVersion(
 			classPK, publishedVersion1.getVersionKey());
 
 		try (SafeCloseable safeCloseable = _setPreviewIdWithSafeCloseable(
@@ -322,19 +326,21 @@ public abstract class BaseLaunchEntryTypeTestCase {
 	public void testGetVersions() throws Exception {
 		long classPK = addEntry();
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryType.Draft draft = addDraft(classPK);
+		LaunchEntryManager.Draft draft = addDraft(classPK);
 
-		LaunchEntryType.Version publishedVersion = launchEntryType.publishDraft(
-			classPK,
-			addDraft(
-				classPK
-			).getDraftId());
+		LaunchEntryManager.Version publishedVersion =
+			launchEntryManager.publishDraft(
+				classPK,
+				addDraft(
+					classPK
+				).getDraftId());
 
 		List<String> versionKeys = TransformUtil.transform(
-			launchEntryType.getVersions(classPK, LocaleUtil.getSiteDefault()),
-			LaunchEntryType.Version::getVersionKey);
+			launchEntryManager.getVersions(
+				classPK, LocaleUtil.getSiteDefault()),
+			LaunchEntryManager.Version::getVersionKey);
 
 		Assert.assertTrue(
 			versionKeys.toString(),
@@ -349,17 +355,18 @@ public abstract class BaseLaunchEntryTypeTestCase {
 		Assert.assertEquals(
 			versionKeys,
 			TransformUtil.transform(
-				launchEntryType.getVersions(
+				launchEntryManager.getVersions(
 					classPK, LocaleUtil.getSiteDefault()),
-				LaunchEntryType.Version::getVersionKey));
+				LaunchEntryManager.Version::getVersionKey));
 
 		for (String versionKey : versionKeys) {
-			LaunchEntryType.Version version = getVersion(classPK, versionKey);
+			LaunchEntryManager.Version version = getVersion(
+				classPK, versionKey);
 
 			Assert.assertEquals(versionKey, version.getVersionKey());
 
 			Assert.assertNotNull(
-				versionKey, launchEntryType.addDraft(classPK, versionKey));
+				versionKey, launchEntryManager.addDraft(classPK, versionKey));
 		}
 	}
 
@@ -367,41 +374,41 @@ public abstract class BaseLaunchEntryTypeTestCase {
 	public void testPublishDraft() throws Exception {
 		long classPK = addEntry();
 
-		LaunchEntryType.Version baseVersion = getPublishedVersion(classPK);
+		LaunchEntryManager.Version baseVersion = getPublishedVersion(classPK);
 
 		String title1 = RandomTestUtil.randomString();
 
-		LaunchEntryType.Draft draft1 = addDraft(classPK);
+		LaunchEntryManager.Draft draft1 = addDraft(classPK);
 
 		updateDraft(title1, draft1);
 
 		String title2 = RandomTestUtil.randomString();
 
-		LaunchEntryType.Draft draft2 = addDraft(classPK);
+		LaunchEntryManager.Draft draft2 = addDraft(classPK);
 
 		updateDraft(title2, draft2);
 
 		Assert.assertNotEquals(title1, getEntryTitle(classPK));
 		Assert.assertNotEquals(title2, getEntryTitle(classPK));
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryType.Version publishedVersion2 =
-			launchEntryType.publishDraft(classPK, draft2.getDraftId());
+		LaunchEntryManager.Version publishedVersion2 =
+			launchEntryManager.publishDraft(classPK, draft2.getDraftId());
 
 		_assertPublishedVersion(
 			classPK, draft2, publishedVersion2, title2, baseVersion);
 
 		Assert.assertEquals(title1, _getDraftTitle(classPK, draft1));
 
-		LaunchEntryType.Version publishedVersion1 =
-			launchEntryType.publishDraft(classPK, draft1.getDraftId());
+		LaunchEntryManager.Version publishedVersion1 =
+			launchEntryManager.publishDraft(classPK, draft1.getDraftId());
 
 		_assertPublishedVersion(
 			classPK, draft1, publishedVersion1, title1, publishedVersion2);
 
 		try {
-			launchEntryType.publishDraft(classPK, draft1.getDraftId());
+			launchEntryManager.publishDraft(classPK, draft1.getDraftId());
 
 			Assert.fail();
 		}
@@ -410,12 +417,13 @@ public abstract class BaseLaunchEntryTypeTestCase {
 		}
 	}
 
-	protected LaunchEntryType.Draft addDraft(long classPK) throws Exception {
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+	protected LaunchEntryManager.Draft addDraft(long classPK) throws Exception {
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryType.Version publishedVersion = getPublishedVersion(classPK);
+		LaunchEntryManager.Version publishedVersion = getPublishedVersion(
+			classPK);
 
-		return launchEntryType.addDraft(
+		return launchEntryManager.addDraft(
 			classPK, publishedVersion.getVersionKey());
 	}
 
@@ -423,10 +431,10 @@ public abstract class BaseLaunchEntryTypeTestCase {
 
 	protected abstract String getBackURLParameterName();
 
-	protected LaunchEntryType.Draft getDraft(long classPK, long draftId) {
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+	protected LaunchEntryManager.Draft getDraft(long classPK, long draftId) {
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryType.Draft draft = launchEntryType.fetchDraft(
+		LaunchEntryManager.Draft draft = launchEntryManager.fetchDraft(
 			classPK, draftId);
 
 		Assert.assertNotNull(String.valueOf(draftId), draft);
@@ -434,25 +442,25 @@ public abstract class BaseLaunchEntryTypeTestCase {
 		return draft;
 	}
 
-	protected abstract String getDraftTitle(LaunchEntryType.Draft draft)
+	protected abstract String getDraftTitle(LaunchEntryManager.Draft draft)
 		throws Exception;
 
 	protected abstract String getEntryTitle(long classPK) throws Exception;
 
-	protected LaunchEntryType.Item getItem(long classPK) {
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+	protected LaunchEntryManager.Item getItem(long classPK) {
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryType.Item item = launchEntryType.fetchItem(classPK);
+		LaunchEntryManager.Item item = launchEntryManager.fetchItem(classPK);
 
 		Assert.assertNotNull(item);
 
 		return item;
 	}
 
-	protected LaunchEntryType getLaunchEntryType() {
+	protected LaunchEntryManager getLaunchEntryManager() {
 		Class<?> modelClass = getModelClass();
 
-		return _launchEntryTypeRegistry.getLaunchEntryType(
+		return _launchEntryManagerRegistry.getLaunchEntryManager(
 			modelClass.getName());
 	}
 
@@ -461,11 +469,11 @@ public abstract class BaseLaunchEntryTypeTestCase {
 
 	protected abstract Class<?> getModelClass();
 
-	protected LaunchEntryType.Version getPublishedVersion(long classPK) {
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+	protected LaunchEntryManager.Version getPublishedVersion(long classPK) {
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryType.Version publishedVersion =
-			launchEntryType.fetchPublishedVersion(classPK);
+		LaunchEntryManager.Version publishedVersion =
+			launchEntryManager.fetchPublishedVersion(classPK);
 
 		Assert.assertNotNull(publishedVersion);
 
@@ -475,12 +483,12 @@ public abstract class BaseLaunchEntryTypeTestCase {
 	protected abstract Map<String, String> getSelectedItemData(long classPK)
 		throws Exception;
 
-	protected LaunchEntryType.Version getVersion(
+	protected LaunchEntryManager.Version getVersion(
 		long classPK, String versionKey) {
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryType.Version version = launchEntryType.fetchVersion(
+		LaunchEntryManager.Version version = launchEntryManager.fetchVersion(
 			classPK, versionKey);
 
 		Assert.assertNotNull(versionKey, version);
@@ -489,7 +497,7 @@ public abstract class BaseLaunchEntryTypeTestCase {
 	}
 
 	protected abstract void updateDraft(
-			String title, LaunchEntryType.Draft draft)
+			String title, LaunchEntryManager.Draft draft)
 		throws Exception;
 
 	protected abstract void updateLiveEntry(String title, long classPK)
@@ -499,9 +507,9 @@ public abstract class BaseLaunchEntryTypeTestCase {
 	protected ServiceContext serviceContext;
 
 	private void _assertPublishedVersion(
-			long classPK, LaunchEntryType.Draft draft,
-			LaunchEntryType.Version publishedVersion, String title,
-			LaunchEntryType.Version previousPublishedVersion)
+			long classPK, LaunchEntryManager.Draft draft,
+			LaunchEntryManager.Version publishedVersion, String title,
+			LaunchEntryManager.Version previousPublishedVersion)
 		throws Exception {
 
 		Assert.assertEquals(title, getEntryTitle(classPK));
@@ -519,19 +527,21 @@ public abstract class BaseLaunchEntryTypeTestCase {
 				classPK, publishedVersion.getVersionKey()
 			).getStatus());
 
-		LaunchEntryType launchEntryType = getLaunchEntryType();
+		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
 		Assert.assertNull(
-			launchEntryType.fetchDraft(classPK, draft.getDraftId()));
+			launchEntryManager.fetchDraft(classPK, draft.getDraftId()));
 	}
 
-	private String _getDraftTitle(long classPK, LaunchEntryType.Draft draft)
+	private String _getDraftTitle(long classPK, LaunchEntryManager.Draft draft)
 		throws Exception {
 
 		return getDraftTitle(getDraft(classPK, draft.getDraftId()));
 	}
 
-	private String _getEditURL(LaunchEntryType.Draft draft) throws Exception {
+	private String _getEditURL(LaunchEntryManager.Draft draft)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -556,7 +566,7 @@ public abstract class BaseLaunchEntryTypeTestCase {
 				getModelClass(),
 				HashMapBuilder.<Serializable, Serializable>put(
 					() -> {
-						LaunchEntryType.Item item = getItem(classPK);
+						LaunchEntryManager.Item item = getItem(classPK);
 
 						return item.getPrimaryKey();
 					},
@@ -582,6 +592,6 @@ public abstract class BaseLaunchEntryTypeTestCase {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private LaunchEntryTypeRegistry _launchEntryTypeRegistry;
+	private LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 
 }

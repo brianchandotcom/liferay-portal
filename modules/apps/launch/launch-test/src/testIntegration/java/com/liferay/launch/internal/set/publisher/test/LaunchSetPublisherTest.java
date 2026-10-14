@@ -10,8 +10,8 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.launch.entry.type.LaunchEntryType;
-import com.liferay.launch.entry.type.registry.LaunchEntryTypeRegistry;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
+import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.launch.set.publisher.LaunchSetPublisher;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -122,13 +122,15 @@ public class LaunchSetPublisherTest {
 				throwable.getMessage(),
 				StringUtil.startsWith(
 					throwable.getMessage(),
-					"No launch entry type exists for "));
+					"No launch entry manager exists for "));
 		}
 
-		LaunchEntryType launchEntryType = _getJournalArticleLaunchEntryType();
+		LaunchEntryManager launchEntryManager =
+			_getJournalArticleLaunchEntryManager();
 
-		LaunchEntryType.Version version = launchEntryType.fetchPublishedVersion(
-			journalArticle.getResourcePrimKey());
+		LaunchEntryManager.Version version =
+			launchEntryManager.fetchPublishedVersion(
+				journalArticle.getResourcePrimKey());
 
 		Assert.assertEquals(
 			String.valueOf(journalArticle.getVersion()),
@@ -147,8 +149,8 @@ public class LaunchSetPublisherTest {
 
 		_launchSetPublisher.publish(_launchSetObjectEntry.getObjectEntryId());
 
-		LaunchEntryType.Version publishedVersion =
-			launchEntryType.fetchPublishedVersion(
+		LaunchEntryManager.Version publishedVersion =
+			launchEntryManager.fetchPublishedVersion(
 				journalArticle.getResourcePrimKey());
 
 		Assert.assertNotEquals(
@@ -158,7 +160,8 @@ public class LaunchSetPublisherTest {
 		Assert.assertEquals(title, _getTitle(journalArticle));
 
 		_assertPublished(
-			draftId, launchEntryObjectEntry, launchEntryType, publishedVersion);
+			draftId, launchEntryObjectEntry, launchEntryManager,
+			publishedVersion);
 
 		launchSetObjectEntry = _objectEntryLocalService.getObjectEntry(
 			_launchSetObjectEntry.getObjectEntryId());
@@ -201,8 +204,8 @@ public class LaunchSetPublisherTest {
 		_launchSetPublisher.publish(
 			otherLaunchSetObjectEntry.getObjectEntryId());
 
-		LaunchEntryType.Version otherPublishedVersion =
-			launchEntryType.fetchPublishedVersion(
+		LaunchEntryManager.Version otherPublishedVersion =
+			launchEntryManager.fetchPublishedVersion(
 				journalArticle.getResourcePrimKey());
 
 		Assert.assertEquals(otherTitle, _getTitle(journalArticle));
@@ -211,7 +214,7 @@ public class LaunchSetPublisherTest {
 			otherPublishedVersion.getVersionKey());
 
 		_assertPublished(
-			otherDraftId, otherLaunchEntryObjectEntry, launchEntryType,
+			otherDraftId, otherLaunchEntryObjectEntry, launchEntryManager,
 			otherPublishedVersion);
 	}
 
@@ -266,8 +269,8 @@ public class LaunchSetPublisherTest {
 
 	private void _assertPublished(
 			long draftId, ObjectEntry launchEntryObjectEntry,
-			LaunchEntryType launchEntryType,
-			LaunchEntryType.Version publishedVersion)
+			LaunchEntryManager launchEntryManager,
+			LaunchEntryManager.Version publishedVersion)
 		throws Exception {
 
 		Map<String, Serializable> values = _getValues(launchEntryObjectEntry);
@@ -278,12 +281,12 @@ public class LaunchSetPublisherTest {
 		Assert.assertEquals(0, MapUtil.getLong(values, "draftId"));
 
 		Assert.assertNull(
-			launchEntryType.fetchDraft(
+			launchEntryManager.fetchDraft(
 				MapUtil.getLong(values, "classPK"), draftId));
 	}
 
-	private LaunchEntryType _getJournalArticleLaunchEntryType() {
-		return _launchEntryTypeRegistry.getLaunchEntryType(
+	private LaunchEntryManager _getJournalArticleLaunchEntryManager() {
+		return _launchEntryManagerRegistry.getLaunchEntryManager(
 			JournalArticle.class.getName());
 	}
 
@@ -346,7 +349,7 @@ public class LaunchSetPublisherTest {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
-	private LaunchEntryTypeRegistry _launchEntryTypeRegistry;
+	private LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 
 	private ObjectEntry _launchSetObjectEntry;
 

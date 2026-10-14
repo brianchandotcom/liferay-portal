@@ -5,8 +5,8 @@
 
 package com.liferay.launch.web.internal.portlet.action;
 
-import com.liferay.launch.entry.type.LaunchEntryType;
-import com.liferay.launch.entry.type.registry.LaunchEntryTypeRegistry;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
+import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.launch.web.internal.constants.LaunchPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -47,11 +47,11 @@ public class GetLaunchEntryVersionsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		LaunchEntryType launchEntryType =
-			_launchEntryTypeRegistry.getLaunchEntryType(
+		LaunchEntryManager launchEntryManager =
+			_launchEntryManagerRegistry.getLaunchEntryManager(
 				ParamUtil.getString(resourceRequest, "className"));
 
-		if (launchEntryType == null) {
+		if (launchEntryManager == null) {
 			resourceResponse.setProperty(
 				ResourceResponse.HTTP_STATUS_CODE,
 				String.valueOf(HttpServletResponse.SC_NOT_FOUND));
@@ -64,12 +64,13 @@ public class GetLaunchEntryVersionsMVCResourceCommand
 
 		Locale locale = themeDisplay.getLocale();
 
-		List<LaunchEntryType.Version> versions = launchEntryType.getVersions(
-			ParamUtil.getLong(resourceRequest, "classPK"), locale);
+		List<LaunchEntryManager.Version> versions =
+			launchEntryManager.getVersions(
+				ParamUtil.getLong(resourceRequest, "classPK"), locale);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (LaunchEntryType.Version version : versions) {
+		for (LaunchEntryManager.Version version : versions) {
 			jsonArray.put(
 				JSONUtil.put(
 					"label", version.getLabel(locale)
@@ -92,6 +93,6 @@ public class GetLaunchEntryVersionsMVCResourceCommand
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private LaunchEntryTypeRegistry _launchEntryTypeRegistry;
+	private LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 
 }

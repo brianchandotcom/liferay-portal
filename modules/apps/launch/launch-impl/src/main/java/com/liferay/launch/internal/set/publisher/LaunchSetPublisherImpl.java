@@ -5,8 +5,8 @@
 
 package com.liferay.launch.internal.set.publisher;
 
-import com.liferay.launch.entry.type.LaunchEntryType;
-import com.liferay.launch.entry.type.registry.LaunchEntryTypeRegistry;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
+import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.launch.set.publisher.LaunchSetPublisher;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
@@ -65,17 +65,18 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 
 			String className = MapUtil.getString(values, "className");
 
-			LaunchEntryType launchEntryType =
-				_launchEntryTypeRegistry.getLaunchEntryType(className);
+			LaunchEntryManager launchEntryManager =
+				_launchEntryManagerRegistry.getLaunchEntryManager(className);
 
-			if (launchEntryType == null) {
+			if (launchEntryManager == null) {
 				throw new PortalException(
-					"No launch entry type exists for " + className);
+					"No launch entry manager exists for " + className);
 			}
 
-			LaunchEntryType.Version version = launchEntryType.publishDraft(
-				GetterUtil.getLong(values.get("classPK")),
-				GetterUtil.getLong(values.get("draftId")));
+			LaunchEntryManager.Version version =
+				launchEntryManager.publishDraft(
+					GetterUtil.getLong(values.get("classPK")),
+					GetterUtil.getLong(values.get("draftId")));
 
 			values.put("versionKey", version.getVersionKey());
 
@@ -94,7 +95,7 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 	}
 
 	@Reference
-	private LaunchEntryTypeRegistry _launchEntryTypeRegistry;
+	private LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

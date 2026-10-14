@@ -5,8 +5,8 @@
 
 package com.liferay.launch.internal.model.listener;
 
-import com.liferay.launch.entry.type.LaunchEntryType;
-import com.liferay.launch.entry.type.registry.LaunchEntryTypeRegistry;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
+import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -63,18 +63,18 @@ public class LaunchEntryRelevantObjectEntryModelListener
 	private void _deleteDraft(Map<String, Serializable> values)
 		throws ModelListenerException {
 
-		LaunchEntryType launchEntryType =
-			_launchEntryTypeRegistry.getLaunchEntryType(
+		LaunchEntryManager launchEntryManager =
+			_launchEntryManagerRegistry.getLaunchEntryManager(
 				MapUtil.getString(values, "className"));
 
 		long draftId = GetterUtil.getLong(values.get("draftId"));
 
-		if ((launchEntryType == null) || (draftId == 0)) {
+		if ((launchEntryManager == null) || (draftId == 0)) {
 			return;
 		}
 
 		try {
-			launchEntryType.deleteDraft(
+			launchEntryManager.deleteDraft(
 				GetterUtil.getLong(values.get("classPK")), draftId);
 		}
 		catch (PortalException portalException) {
@@ -83,6 +83,6 @@ public class LaunchEntryRelevantObjectEntryModelListener
 	}
 
 	@Reference
-	private LaunchEntryTypeRegistry _launchEntryTypeRegistry;
+	private LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 
 }

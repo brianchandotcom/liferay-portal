@@ -9,8 +9,8 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.launch.entry.type.LaunchEntryType;
-import com.liferay.launch.entry.type.registry.LaunchEntryTypeRegistry;
+import com.liferay.launch.entry.manager.LaunchEntryManager;
+import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.launch.web.internal.constants.LaunchFDSNames;
 import com.liferay.launch.web.internal.constants.LaunchPortletKeys;
 import com.liferay.layout.item.selector.LayoutItemSelectorCriterion;
@@ -48,13 +48,13 @@ public class ViewLaunchDisplayContext {
 
 	public ViewLaunchDisplayContext(
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
-		LaunchEntryTypeRegistry launchEntryTypeRegistry,
+		LaunchEntryManagerRegistry launchEntryManagerRegistry,
 		LiferayPortletResponse liferayPortletResponse,
 		ObjectEntryLocalService objectEntryLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_itemSelector = itemSelector;
-		_launchEntryTypeRegistry = launchEntryTypeRegistry;
+		_launchEntryManagerRegistry = launchEntryManagerRegistry;
 		_liferayPortletResponse = liferayPortletResponse;
 		_objectEntryLocalService = objectEntryLocalService;
 	}
@@ -78,7 +78,7 @@ public class ViewLaunchDisplayContext {
 		).put(
 			"itemSelectedEventName", getItemSelectedEventName()
 		).put(
-			"launchEntryTypes", _getLaunchEntryTypeMaps()
+			"launchEntryManagers", _getLaunchEntryManagerMaps()
 		).put(
 			"launchSetId", getLaunchSetId()
 		).put(
@@ -98,10 +98,12 @@ public class ViewLaunchDisplayContext {
 
 		Locale locale = _getLocale();
 
-		for (LaunchEntryType launchEntryType : _getLaunchEntryTypes()) {
+		for (LaunchEntryManager launchEntryManager :
+				_getLaunchEntryManagers()) {
+
 			creationMenu.addPrimaryDropdownItem(
 				dropdownItem -> dropdownItem.setLabel(
-					launchEntryType.getLabel(locale)));
+					launchEntryManager.getLabel(locale)));
 		}
 
 		return creationMenu;
@@ -215,21 +217,23 @@ public class ViewLaunchDisplayContext {
 		return _published;
 	}
 
-	private String _getClassName(LaunchEntryType launchEntryType) {
-		Class<?> modelClass = launchEntryType.getModelClass();
+	private String _getClassName(LaunchEntryManager launchEntryManager) {
+		Class<?> modelClass = launchEntryManager.getModelClass();
 
 		return modelClass.getName();
 	}
 
-	private List<Map<String, Object>> _getLaunchEntryTypeMaps() {
-		List<Map<String, Object>> launchEntryTypeMaps = new ArrayList<>();
+	private List<Map<String, Object>> _getLaunchEntryManagerMaps() {
+		List<Map<String, Object>> launchEntryManagerMaps = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		for (LaunchEntryType launchEntryType : _getLaunchEntryTypes()) {
-			launchEntryTypeMaps.add(
+		for (LaunchEntryManager launchEntryManager :
+				_getLaunchEntryManagers()) {
+
+			launchEntryManagerMaps.add(
 				HashMapBuilder.<String, Object>put(
-					"className", _getClassName(launchEntryType)
+					"className", _getClassName(launchEntryManager)
 				).put(
 					"itemSelectorURL",
 					String.valueOf(
@@ -239,31 +243,31 @@ public class ViewLaunchDisplayContext {
 							themeDisplay.getScopeGroup(),
 							themeDisplay.getScopeGroupId(),
 							getItemSelectedEventName(),
-							launchEntryType.getItemSelectorCriterion()))
+							launchEntryManager.getItemSelectorCriterion()))
 				).put(
-					"label", launchEntryType.getLabel(_getLocale())
+					"label", launchEntryManager.getLabel(_getLocale())
 				).build());
 		}
 
-		return launchEntryTypeMaps;
+		return launchEntryManagerMaps;
 	}
 
-	private List<LaunchEntryType> _getLaunchEntryTypes() {
+	private List<LaunchEntryManager> _getLaunchEntryManagers() {
 		Locale locale = _getLocale();
 
-		List<LaunchEntryType> launchEntryTypes =
-			_launchEntryTypeRegistry.getLaunchEntryTypes();
+		List<LaunchEntryManager> launchEntryManagers =
+			_launchEntryManagerRegistry.getLaunchEntryManagers();
 
 		ListUtil.sort(
-			launchEntryTypes,
-			(launchEntryType1, launchEntryType2) -> {
-				String label1 = launchEntryType1.getLabel(locale);
-				String label2 = launchEntryType2.getLabel(locale);
+			launchEntryManagers,
+			(launchEntryManager1, launchEntryManager2) -> {
+				String label1 = launchEntryManager1.getLabel(locale);
+				String label2 = launchEntryManager2.getLabel(locale);
 
 				return label1.compareTo(label2);
 			});
 
-		return launchEntryTypes;
+		return launchEntryManagers;
 	}
 
 	private Locale _getLocale() {
@@ -287,7 +291,7 @@ public class ViewLaunchDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
-	private final LaunchEntryTypeRegistry _launchEntryTypeRegistry;
+	private final LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 	private Long _launchSetId;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ObjectEntryLocalService _objectEntryLocalService;

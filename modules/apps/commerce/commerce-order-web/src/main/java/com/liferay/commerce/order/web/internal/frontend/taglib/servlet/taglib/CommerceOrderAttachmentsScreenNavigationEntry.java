@@ -6,6 +6,7 @@
 package com.liferay.commerce.order.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderAttachmentAdminFDSActionContributor;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderAttachmentsDisplayContext;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderEditDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -18,8 +19,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Tancredi Covioli
@@ -53,8 +58,9 @@ public class CommerceOrderAttachmentsScreenNavigationEntry
 		CommerceOrderAttachmentsDisplayContext
 			commerceOrderAttachmentsDisplayContext =
 				new CommerceOrderAttachmentsDisplayContext(
-					commerceOrder.getCommerceOrderId(), httpServletRequest,
-					_language);
+					commerceOrder,
+					_commerceOrderAttachmentAdminFDSActionContributors,
+					httpServletRequest, _language);
 
 		httpServletRequest.setAttribute(
 			CommerceOrderAttachmentsDisplayContext.class.getName(),
@@ -64,6 +70,13 @@ public class CommerceOrderAttachmentsScreenNavigationEntry
 			httpServletRequest, httpServletResponse,
 			"/commerce_order/attachments.jsp");
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private List<CommerceOrderAttachmentAdminFDSActionContributor>
+		_commerceOrderAttachmentAdminFDSActionContributors;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

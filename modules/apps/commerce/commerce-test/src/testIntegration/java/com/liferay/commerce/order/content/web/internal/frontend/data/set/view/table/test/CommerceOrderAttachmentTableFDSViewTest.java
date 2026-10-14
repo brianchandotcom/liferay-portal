@@ -58,6 +58,9 @@ public class CommerceOrderAttachmentTableFDSViewTest {
 			"dateTime", "modified-date", "dateModified", true);
 		_testGetFDSTableSchemaField(null, "priority", "priority", true);
 		_testGetFDSTableSchemaField(
+			"dsRequestStatusDataRenderer", "signature-status",
+			"dsRequestStatus", false);
+		_testGetFDSTableSchemaField(
 			"commerceOrderAttachmentRestrictedDataRenderer", "restricted",
 			"restricted", false);
 		_testGetFDSTableSchemaField(

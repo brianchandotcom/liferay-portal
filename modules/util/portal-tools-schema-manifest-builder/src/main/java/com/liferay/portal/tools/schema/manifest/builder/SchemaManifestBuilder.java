@@ -270,7 +270,8 @@ public class SchemaManifestBuilder {
 					).put(
 						"className",
 						_getClassName(
-							classNames, packageName, parameter, registrator)
+							classNames, content, packageName, parameter,
+							registrator)
 					).put(
 						"op", "customChange"
 					).put(
@@ -295,8 +296,20 @@ public class SchemaManifestBuilder {
 	}
 
 	private String _getClassName(
-		Map<String, String> classNames, String packageName, String parameter,
-		String registrator) {
+		Map<String, String> classNames, String content, String packageName,
+		String parameter, String registrator) {
+
+		Matcher matcher = _lambdaPattern.matcher(parameter);
+
+		if (matcher.find()) {
+			return registrator;
+		}
+
+		matcher = _castPattern.matcher(parameter);
+
+		if (matcher.find()) {
+			parameter = parameter.substring(matcher.end());
+		}
 
 		int openParenthesisIndex = parameter.indexOf(CharPool.OPEN_PARENTHESIS);
 
@@ -322,25 +335,35 @@ public class SchemaManifestBuilder {
 			return _getClassName(className, classNames, packageName);
 		}
 
-		if (openParenthesisIndex == -1) {
-			return registrator;
+		if (openParenthesisIndex != -1) {
+			String methodName = parameter.substring(0, openParenthesisIndex);
+
+			int index = methodName.lastIndexOf(CharPool.PERIOD);
+
+			if (index == -1) {
+				return registrator;
+			}
+
+			String receiver = StringUtil.trim(methodName.substring(0, index));
+
+			if (_isVariableName(receiver)) {
+				return _getClassName(
+					_getVariableType(content, receiver), classNames,
+					packageName);
+			}
+
+			return _getClassName(receiver, classNames, packageName);
 		}
 
-		String methodName = parameter.substring(0, openParenthesisIndex);
+		String initializer = _getVariableInitializer(content, parameter);
 
-		int index = methodName.lastIndexOf(CharPool.PERIOD);
-
-		if (index == -1) {
-			return registrator;
+		if (initializer == null) {
+			return _getClassName(
+				_getVariableType(content, parameter), classNames, packageName);
 		}
 
-		String receiver = StringUtil.trim(methodName.substring(0, index));
-
-		if (_isVariableName(receiver)) {
-			return registrator;
-		}
-
-		return _getClassName(receiver, classNames, packageName);
+		return _getClassName(
+			classNames, content, packageName, initializer, registrator);
 	}
 
 	private String _getClassName(
@@ -480,6 +503,47 @@ public class SchemaManifestBuilder {
 		return files;
 	}
 
+	private String _getVariableInitializer(String content, String name) {
+		Pattern pattern = Pattern.compile(
+			"\\b" + Pattern.quote(name) + "\\s*=(?!=)\\s*");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		int position = matcher.end();
+
+		int index = position;
+
+		while (true) {
+			index = content.indexOf(CharPool.SEMICOLON, index + 1);
+
+			String initializer = content.substring(position, index);
+
+			if ((ToolsUtil.getLevel(initializer, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(initializer, "{", "}") == 0)) {
+
+				return StringUtil.trim(initializer);
+			}
+		}
+	}
+
+	private String _getVariableType(String content, String name) {
+		Pattern pattern = Pattern.compile(
+			"([\\w.]+)(?:<[^;=]*>)?\\s+" + Pattern.quote(name) + "\\s*[;=]");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			throw new IllegalArgumentException(
+				"Unable to find the type of " + name);
+		}
+
+		return matcher.group(1);
+	}
+
 	private boolean _isVariableName(String name) {
 		char c = name.charAt(0);
 
@@ -503,8 +567,12 @@ public class SchemaManifestBuilder {
 	private static final String _LAMBDA_SYMBOL_PLACEHOLDER =
 		"_LAMBDA_SYMBOL_PLACEHOLDER_";
 
+	private static final Pattern _castPattern = Pattern.compile(
+		"^\\(\\s*[\\w.]+\\s*\\)\\s*");
 	private static final Pattern _importPattern = Pattern.compile(
 		"^import ([\\w.]+\\.(\\w+));", Pattern.MULTILINE);
+	private static final Pattern _lambdaPattern = Pattern.compile(
+		"^(\\([\\w\\s,]*\\)|\\w+)\\s*->");
 	private static final Pattern _timestampPattern = Pattern.compile(
 		"^\t\"timestamp\": \"([^\"]*)\"", Pattern.MULTILINE);
 	private static final Pattern _upgradeStepRegistratorPattern =

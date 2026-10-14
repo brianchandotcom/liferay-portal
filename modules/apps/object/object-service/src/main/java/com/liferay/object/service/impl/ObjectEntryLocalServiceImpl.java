@@ -250,6 +250,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -5024,6 +5025,18 @@ public class ObjectEntryLocalServiceImpl
 		);
 	}
 
+	private Locale _getLocale(long userId) throws PortalException {
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		if (locale == null) {
+			User user = _userLocalService.getUser(userId);
+
+			locale = user.getLocale();
+		}
+
+		return locale;
+	}
+
 	private Set<Locale> _getLocales(
 		long companyId, List<ObjectField> objectFields,
 		Map<String, Serializable> originalValues, boolean partialUpdate,
@@ -8683,13 +8696,12 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (invalidObjectStateTransition) {
-			User user = _userLocalService.getUser(userId);
+			Locale locale = _getLocale(userId);
 
 			_handle(
 				new ObjectEntryValuesException.InvalidObjectStateTransition(
-					originalListTypeEntry.getName(user.getLocale()),
-					sourceObjectState, listTypeEntry.getName(user.getLocale()),
-					targetObjectState),
+					originalListTypeEntry.getName(locale), sourceObjectState,
+					listTypeEntry.getName(locale), targetObjectState),
 				validationErrors);
 		}
 	}
@@ -8955,13 +8967,12 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		User user = _userLocalService.getUser(userId);
 		Table<?> finalTable = table;
 
 		_handle(
 			new ObjectEntryValuesException.UniqueValueConstraintViolation(
 				objectField.getDBColumnName(), (Serializable)value,
-				objectField.getLabel(user.getLocale()),
+				objectField.getLabel(_getLocale(userId)),
 				finalTable.getTableName(), null),
 			validationErrors);
 	}

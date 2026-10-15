@@ -75,16 +75,16 @@ public class BaseTestrayCaseResultDescriptorTest
 
 	@Test
 	public void testGetComponentName() {
-		String testrayMainComponentName = RandomTestUtil.randomString();
-		String jobComponentName = RandomTestUtil.randomString();
-
 		String buildComponentName = RandomTestUtil.randomString();
 
 		_testGetComponentName(
 			false, buildComponentName, buildComponentName, null, null);
-
 		_testGetComponentName(
 			true, buildComponentName, buildComponentName, "", null);
+
+		String testrayMainComponentName = RandomTestUtil.randomString();
+		String jobComponentName = RandomTestUtil.randomString();
+
 		_testGetComponentName(
 			true, buildComponentName, jobComponentName, jobComponentName, "");
 		_testGetComponentName(
@@ -182,8 +182,6 @@ public class BaseTestrayCaseResultDescriptorTest
 
 	@Test
 	public void testGetTeamName() {
-		String componentName = RandomTestUtil.randomString();
-
 		Properties buildProperties = new Properties();
 
 		String batchName = RandomTestUtil.randomString();
@@ -202,6 +200,8 @@ public class BaseTestrayCaseResultDescriptorTest
 			"testray.team." + firstTeamName + ".component.names[" + batchName +
 				"]",
 			RandomTestUtil.randomString());
+
+		String componentName = RandomTestUtil.randomString();
 
 		matchingJobProperties.setProperty(
 			"testray.team.beta-team-two.component.names[" + batchName + "]",
@@ -288,9 +288,10 @@ public class BaseTestrayCaseResultDescriptorTest
 
 	@Test
 	public void testGetType() {
+		_testGetType(null, null);
+
 		String type = RandomTestUtil.randomString();
 
-		_testGetType(null, null);
 		_testGetType(type, type);
 	}
 

@@ -24,18 +24,10 @@ public class BaseTestClassTestrayCaseResultDescriptorTest
 		AxisTestClassGroup axisTestClassGroup = Mockito.mock(
 			AxisTestClassGroup.class);
 
-		TestClass testClass = Mockito.mock(TestClass.class);
-
-		Mockito.doReturn(
-			Mockito.mock(AxisTestClassGroup.class)
-		).when(
-			testClass
-		).getAxisTestClassGroup();
-
 		BaseTestClassTestrayCaseResultDescriptor<TestClass>
 			baseTestClassTestrayCaseResultDescriptor =
 				new BaseTestClassTestrayCaseResultDescriptor<TestClass>(
-					axisTestClassGroup, null, testClass) {
+					axisTestClassGroup, null, Mockito.mock(TestClass.class)) {
 				};
 
 		testSame(
@@ -45,8 +37,6 @@ public class BaseTestClassTestrayCaseResultDescriptorTest
 
 	@Test
 	public void testGetName() {
-		String axisName = RandomTestUtil.randomString();
-		String batchName = RandomTestUtil.randomString();
 		String testClassName = RandomTestUtil.randomString();
 
 		TestClass testClass = Mockito.mock(TestClass.class);
@@ -56,6 +46,9 @@ public class BaseTestClassTestrayCaseResultDescriptorTest
 		).when(
 			testClass
 		).getName();
+
+		String axisName = RandomTestUtil.randomString();
+		String batchName = RandomTestUtil.randomString();
 
 		_testGetName(axisName, batchName, axisName, null);
 		_testGetName(

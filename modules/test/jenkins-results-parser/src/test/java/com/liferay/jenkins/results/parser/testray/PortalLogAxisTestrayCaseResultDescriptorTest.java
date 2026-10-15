@@ -49,13 +49,13 @@ public class PortalLogAxisTestrayCaseResultDescriptorTest
 
 	@Test
 	public void testGetComponentName() {
-		String batchName = RandomTestUtil.randomString();
-
 		Properties buildProperties = new Properties();
 
 		String componentName = RandomTestUtil.randomString();
 
 		buildProperties.setProperty("testray.case.component", componentName);
+
+		String batchName = RandomTestUtil.randomString();
 
 		buildProperties.setProperty(
 			"testray.case.component[" + batchName + "]",
@@ -84,10 +84,10 @@ public class PortalLogAxisTestrayCaseResultDescriptorTest
 
 	@Test
 	public void testGetName() {
-		String axisName = RandomTestUtil.randomString();
-
 		AxisTestClassGroup axisTestClassGroup = Mockito.mock(
 			AxisTestClassGroup.class);
+
+		String axisName = RandomTestUtil.randomString();
 
 		Mockito.doReturn(
 			axisName

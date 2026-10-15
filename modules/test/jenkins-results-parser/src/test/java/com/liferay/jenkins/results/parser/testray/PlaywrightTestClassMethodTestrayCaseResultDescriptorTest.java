@@ -25,17 +25,17 @@ public class PlaywrightTestClassMethodTestrayCaseResultDescriptorTest
 
 	@Test
 	public void testGetName() {
-		String otherDirName = RandomTestUtil.randomString();
 		String parentDirName = RandomTestUtil.randomString();
-		String sharedDirName = RandomTestUtil.randomString();
-		String specFileName = RandomTestUtil.randomString();
-		String subDirName = RandomTestUtil.randomString();
-		String testName = RandomTestUtil.randomString();
-		String testClassMethodName = RandomTestUtil.randomString();
 		String variantName = RandomTestUtil.randomString();
 
 		String projectName = JenkinsResultsParserUtil.combine(
 			parentDirName, ".", variantName);
+
+		String otherDirName = RandomTestUtil.randomString();
+		String sharedDirName = RandomTestUtil.randomString();
+		String specFileName = RandomTestUtil.randomString();
+		String testName = RandomTestUtil.randomString();
+		String testClassMethodName = RandomTestUtil.randomString();
 
 		_testGetName(
 			JenkinsResultsParserUtil.combine(
@@ -45,6 +45,8 @@ public class PlaywrightTestClassMethodTestrayCaseResultDescriptorTest
 			JenkinsResultsParserUtil.combine(
 				otherDirName, "/", sharedDirName, "/", specFileName),
 			testClassMethodName, testName);
+
+		String subDirName = RandomTestUtil.randomString();
 
 		_testGetName(
 			JenkinsResultsParserUtil.combine(
@@ -57,6 +59,7 @@ public class PlaywrightTestClassMethodTestrayCaseResultDescriptorTest
 				parentDirName, "/", subDirName, "/", sharedDirName, "/",
 				specFileName),
 			testClassMethodName, testName);
+
 		_testGetName(
 			JenkinsResultsParserUtil.combine(
 				parentDirName, "/", variantName, "/", specFileName, " > ",
@@ -70,7 +73,6 @@ public class PlaywrightTestClassMethodTestrayCaseResultDescriptorTest
 			_mockPlaywrightSegmentTestClassGroup(variantName),
 			JenkinsResultsParserUtil.combine(sharedDirName, "/", specFileName),
 			testClassMethodName, testName);
-
 		_testGetName(
 			testClassMethodName, Mockito.mock(SegmentTestClassGroup.class),
 			JenkinsResultsParserUtil.combine(sharedDirName, "/", specFileName),

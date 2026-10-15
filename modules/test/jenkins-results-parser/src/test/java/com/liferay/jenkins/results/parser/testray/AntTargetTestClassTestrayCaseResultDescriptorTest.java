@@ -50,7 +50,6 @@ public class AntTargetTestClassTestrayCaseResultDescriptorTest
 
 	@Test
 	public void testGetName() {
-		String antTargetName = RandomTestUtil.randomString();
 		String axisName = RandomTestUtil.randomString();
 		String batchName = RandomTestUtil.randomString();
 		String testClassName = RandomTestUtil.randomString();
@@ -58,6 +57,9 @@ public class AntTargetTestClassTestrayCaseResultDescriptorTest
 		_testGetName(
 			"", axisName, batchName, batchName + "[" + testClassName + "]",
 			testClassName);
+
+		String antTargetName = RandomTestUtil.randomString();
+
 		_testGetName(
 			antTargetName, axisName, batchName,
 			batchName + "[" + antTargetName + "]", testClassName);

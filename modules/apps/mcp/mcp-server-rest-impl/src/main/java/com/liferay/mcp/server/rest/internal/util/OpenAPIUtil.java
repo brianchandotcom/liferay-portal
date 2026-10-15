@@ -66,12 +66,30 @@ import org.apache.http.util.EntityUtils;
  */
 public class OpenAPIUtil {
 
+	public static final String[] METHODS = {
+		"delete", "get", "head", "options", "patch", "post", "put"
+	};
+
+	public static String getLastPathParameter(String path) {
+		String[] segments = StringUtil.split(path, CharPool.SLASH);
+
+		for (int i = segments.length - 1; i >= 0; i--) {
+			String pathParameter = getPathParameter(segments[i]);
+
+			if (pathParameter != null) {
+				return pathParameter;
+			}
+		}
+
+		return null;
+	}
+
 	public static Map<String, ?> getOutputSchema(
 		JSONObject openAPIJSONObject, String toolName) {
 
 		Operation operation = _getOperation(openAPIJSONObject, toolName);
 
-		JSONObject responseSchemaJSONObject = _getResponseSchemaJSONObject(
+		JSONObject responseSchemaJSONObject = getResponseSchemaJSONObject(
 			operation._operationJSONObject);
 
 		if (responseSchemaJSONObject == null) {
@@ -81,6 +99,25 @@ public class OpenAPIUtil {
 		return (Map<String, Object>)_getSchemaObject(
 			"writeOnly", openAPIJSONObject, responseSchemaJSONObject,
 			new HashSet<>());
+	}
+
+	public static String getPathParameter(String segment) {
+		if ((segment.length() > 2) &&
+			(segment.charAt(0) == CharPool.OPEN_CURLY_BRACE) &&
+			(segment.charAt(segment.length() - 1) ==
+				CharPool.CLOSE_CURLY_BRACE)) {
+
+			return segment.substring(1, segment.length() - 1);
+		}
+
+		return null;
+	}
+
+	public static Map<String, JSONObject> getPropertiesJSONObjects(
+		JSONObject openAPIJSONObject, JSONObject schemaJSONObject) {
+
+		return _getPropertiesJSONObjects(
+			false, openAPIJSONObject, false, schemaJSONObject, new HashSet<>());
 	}
 
 	public static VulcanRequestForwarder.Request getRequest(
@@ -182,6 +219,91 @@ public class OpenAPIUtil {
 		};
 	}
 
+	public static JSONObject getRequestBodySchemaJSONObject(
+		JSONObject openAPIJSONObject, JSONObject operationJSONObject) {
+
+		JSONObject contentJSONObject = JSONUtil.getValueAsJSONObject(
+			operationJSONObject, "JSONObject/requestBody",
+			"JSONObject/content");
+
+		if (contentJSONObject == null) {
+			return null;
+		}
+
+		JSONObject mediaTypeJSONObject = _getMediaTypeJSONObject(
+			contentJSONObject);
+
+		if (mediaTypeJSONObject == null) {
+			return null;
+		}
+
+		JSONObject schemaJSONObject = mediaTypeJSONObject.getJSONObject(
+			"schema");
+
+		if ((schemaJSONObject == null) || !schemaJSONObject.has("$ref")) {
+			return schemaJSONObject;
+		}
+
+		return _getRefJSONObject(
+			schemaJSONObject.getString("$ref"), openAPIJSONObject);
+	}
+
+	public static Set<String> getRequiredPropertyNames(
+		JSONObject openAPIJSONObject, JSONObject schemaJSONObject) {
+
+		Map<String, JSONObject> propertiesJSONObjects =
+			_getPropertiesJSONObjects(
+				false, openAPIJSONObject, true, schemaJSONObject,
+				new HashSet<>());
+
+		return propertiesJSONObjects.keySet();
+	}
+
+	public static JSONObject getResponseSchemaJSONObject(
+		JSONObject operationJSONObject) {
+
+		JSONObject responsesJSONObject = operationJSONObject.getJSONObject(
+			"responses");
+
+		if (responsesJSONObject == null) {
+			return null;
+		}
+
+		JSONObject responseJSONObject = null;
+
+		for (String code : responsesJSONObject.keySet()) {
+			if (code.startsWith("2")) {
+				responseJSONObject = responsesJSONObject.getJSONObject(code);
+
+				break;
+			}
+		}
+
+		if (responseJSONObject == null) {
+			responseJSONObject = responsesJSONObject.getJSONObject("default");
+		}
+
+		if (responseJSONObject == null) {
+			return null;
+		}
+
+		JSONObject contentJSONObject = responseJSONObject.getJSONObject(
+			"content");
+
+		if (contentJSONObject == null) {
+			return null;
+		}
+
+		JSONObject mediaTypeJSONObject = contentJSONObject.getJSONObject(
+			"application/json");
+
+		if (mediaTypeJSONObject == null) {
+			return null;
+		}
+
+		return mediaTypeJSONObject.getJSONObject("schema");
+	}
+
 	public static Tool getTool(
 		boolean injectVulcanParameters, JSONObject openAPIJSONObject,
 		boolean requiredInputSchemaOnly, String restrictFields,
@@ -209,8 +331,9 @@ public class OpenAPIUtil {
 						return _toRequiredInputSchema(
 							inputSchema,
 							_isObjectEntrySchema(
-								_getRequestBodySchemaJSONObject(
-									openAPIJSONObject, operation)));
+								getRequestBodySchemaJSONObject(
+									openAPIJSONObject,
+									operation._operationJSONObject)));
 					});
 
 				setName(() -> toolName);
@@ -233,7 +356,7 @@ public class OpenAPIUtil {
 		for (String path : pathsJSONObject.keySet()) {
 			JSONObject pathItemJSONObject = pathsJSONObject.getJSONObject(path);
 
-			for (String method : _METHODS) {
+			for (String method : METHODS) {
 				JSONObject operationJSONObject =
 					pathItemJSONObject.getJSONObject(method);
 
@@ -258,6 +381,64 @@ public class OpenAPIUtil {
 		return toolSummaries;
 	}
 
+	public static boolean isCollectionSchema(
+		JSONObject openAPIJSONObject, JSONObject schemaJSONObject) {
+
+		if (schemaJSONObject == null) {
+			return false;
+		}
+
+		if (schemaJSONObject.has("$ref")) {
+			return isCollectionSchema(
+				openAPIJSONObject,
+				_getRefJSONObject(
+					schemaJSONObject.getString("$ref"), openAPIJSONObject));
+		}
+
+		if (Objects.equals(schemaJSONObject.getString("type"), "array")) {
+			return true;
+		}
+
+		JSONObject itemsJSONObject = JSONUtil.getValueAsJSONObject(
+			schemaJSONObject, "JSONObject/properties", "JSONObject/items");
+
+		if ((itemsJSONObject != null) &&
+			Objects.equals(itemsJSONObject.getString("type"), "array")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isNestedSchema(JSONObject propertyJSONObject) {
+		if (propertyJSONObject == null) {
+			return false;
+		}
+
+		if (Validator.isNotNull(propertyJSONObject.getString("$ref"))) {
+			return true;
+		}
+
+		JSONObject itemsJSONObject = propertyJSONObject.getJSONObject("items");
+
+		if ((itemsJSONObject != null) &&
+			Validator.isNotNull(itemsJSONObject.getString("$ref"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isPathParameter(String segment) {
+		if (getPathParameter(segment) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static String _addLocalizedRestrictFields(
 		JSONObject openAPIJSONObject, JSONObject operationJSONObject,
 		String restrictFields) {
@@ -270,7 +451,7 @@ public class OpenAPIUtil {
 
 		Object schemaObject = _getSchemaObject(
 			"writeOnly", openAPIJSONObject,
-			_getResponseSchemaJSONObject(operationJSONObject), new HashSet<>());
+			getResponseSchemaJSONObject(operationJSONObject), new HashSet<>());
 
 		for (String restrictFieldName : StringUtil.split(restrictFields)) {
 			restrictFieldNames.add(restrictFieldName);
@@ -1038,7 +1219,7 @@ public class OpenAPIUtil {
 		for (String path : pathsJSONObject.keySet()) {
 			JSONObject pathJSONObject = pathsJSONObject.getJSONObject(path);
 
-			for (String method : _METHODS) {
+			for (String method : METHODS) {
 				JSONObject operationJSONObject = pathJSONObject.getJSONObject(
 					method);
 
@@ -1165,6 +1346,106 @@ public class OpenAPIUtil {
 		return path;
 	}
 
+	private static Map<String, JSONObject> _getPropertiesJSONObjects(
+		boolean excludeWriteOnlyProperties, JSONObject openAPIJSONObject,
+		boolean requiredOnly, JSONObject schemaJSONObject,
+		Set<String> visitedRefs) {
+
+		Map<String, JSONObject> propertiesJSONObjects = new LinkedHashMap<>();
+
+		if (schemaJSONObject == null) {
+			return propertiesJSONObjects;
+		}
+
+		if (schemaJSONObject.has("$ref")) {
+			String ref = schemaJSONObject.getString("$ref");
+
+			if (!visitedRefs.add(ref)) {
+				return propertiesJSONObjects;
+			}
+
+			return _getPropertiesJSONObjects(
+				excludeWriteOnlyProperties, openAPIJSONObject, requiredOnly,
+				_getRefJSONObject(ref, openAPIJSONObject), visitedRefs);
+		}
+
+		if (Objects.equals(schemaJSONObject.getString("type"), "array")) {
+			return _getPropertiesJSONObjects(
+				excludeWriteOnlyProperties, openAPIJSONObject, requiredOnly,
+				schemaJSONObject.getJSONObject("items"), visitedRefs);
+		}
+
+		JSONObject propertiesJSONObject = schemaJSONObject.getJSONObject(
+			"properties");
+
+		if (propertiesJSONObject != null) {
+			JSONObject itemsPropertyJSONObject =
+				propertiesJSONObject.getJSONObject("items");
+
+			if ((itemsPropertyJSONObject != null) &&
+				Objects.equals(
+					itemsPropertyJSONObject.getString("type"), "array")) {
+
+				return _getPropertiesJSONObjects(
+					excludeWriteOnlyProperties, openAPIJSONObject, requiredOnly,
+					itemsPropertyJSONObject.getJSONObject("items"),
+					visitedRefs);
+			}
+		}
+
+		if (requiredOnly) {
+			for (String requiredPropertyName :
+					JSONUtil.toStringArray(
+						schemaJSONObject.getJSONArray("required"))) {
+
+				JSONObject requiredPropertyJSONObject = null;
+
+				if (propertiesJSONObject != null) {
+					requiredPropertyJSONObject =
+						propertiesJSONObject.getJSONObject(
+							requiredPropertyName);
+				}
+
+				if (excludeWriteOnlyProperties &&
+					_isWriteOnlyProperty(requiredPropertyJSONObject)) {
+
+					continue;
+				}
+
+				propertiesJSONObjects.put(
+					requiredPropertyName, requiredPropertyJSONObject);
+			}
+		}
+		else if (propertiesJSONObject != null) {
+			for (String propertyName : propertiesJSONObject.keySet()) {
+				JSONObject propertyJSONObject =
+					propertiesJSONObject.getJSONObject(propertyName);
+
+				if (excludeWriteOnlyProperties &&
+					_isWriteOnlyProperty(propertyJSONObject)) {
+
+					continue;
+				}
+
+				propertiesJSONObjects.put(propertyName, propertyJSONObject);
+			}
+		}
+
+		JSONArray allOfJSONArray = schemaJSONObject.getJSONArray("allOf");
+
+		if (allOfJSONArray != null) {
+			for (int i = 0; i < allOfJSONArray.length(); i++) {
+				propertiesJSONObjects.putAll(
+					_getPropertiesJSONObjects(
+						excludeWriteOnlyProperties, openAPIJSONObject,
+						requiredOnly, allOfJSONArray.getJSONObject(i),
+						visitedRefs));
+			}
+		}
+
+		return propertiesJSONObjects;
+	}
+
 	private static String _getQueryString(
 		JSONObject inputJSONObject, JSONObject openAPIJSONObject,
 		Operation operation, String restrictFields) {
@@ -1224,160 +1505,16 @@ public class OpenAPIUtil {
 		return refJSONObject;
 	}
 
-	private static JSONObject _getRequestBodySchemaJSONObject(
-		JSONObject openAPIJSONObject, Operation operation) {
-
-		JSONObject contentJSONObject = JSONUtil.getValueAsJSONObject(
-			operation._operationJSONObject, "JSONObject/requestBody",
-			"JSONObject/content");
-
-		if (contentJSONObject == null) {
-			return null;
-		}
-
-		JSONObject mediaTypeJSONObject = _getMediaTypeJSONObject(
-			contentJSONObject);
-
-		if (mediaTypeJSONObject == null) {
-			return null;
-		}
-
-		JSONObject schemaJSONObject = mediaTypeJSONObject.getJSONObject(
-			"schema");
-
-		if ((schemaJSONObject == null) || !schemaJSONObject.has("$ref")) {
-			return schemaJSONObject;
-		}
-
-		return _getRefJSONObject(
-			schemaJSONObject.getString("$ref"), openAPIJSONObject);
-	}
-
 	private static Collection<String> _getResponseFieldNames(
 		JSONObject openAPIJSONObject, JSONObject operationJSONObject) {
 
-		return _getResponseFieldNames(
-			openAPIJSONObject,
-			_getResponseSchemaJSONObject(operationJSONObject), new HashSet<>());
-	}
+		Map<String, JSONObject> propertiesJSONObjects =
+			_getPropertiesJSONObjects(
+				true, openAPIJSONObject, false,
+				getResponseSchemaJSONObject(operationJSONObject),
+				new HashSet<>());
 
-	private static Set<String> _getResponseFieldNames(
-		JSONObject openAPIJSONObject, JSONObject schemaJSONObject,
-		Set<String> visitedRefs) {
-
-		Set<String> responseFieldNames = new TreeSet<>();
-
-		if (schemaJSONObject == null) {
-			return responseFieldNames;
-		}
-
-		if (schemaJSONObject.has("$ref")) {
-			String ref = schemaJSONObject.getString("$ref");
-
-			if (!visitedRefs.add(ref)) {
-				return responseFieldNames;
-			}
-
-			return _getResponseFieldNames(
-				openAPIJSONObject, _getRefJSONObject(ref, openAPIJSONObject),
-				visitedRefs);
-		}
-
-		if (Objects.equals(schemaJSONObject.getString("type"), "array")) {
-			return _getResponseFieldNames(
-				openAPIJSONObject, schemaJSONObject.getJSONObject("items"),
-				visitedRefs);
-		}
-
-		JSONObject propertiesJSONObject = schemaJSONObject.getJSONObject(
-			"properties");
-
-		if (propertiesJSONObject != null) {
-			JSONObject itemsPropertyJSONObject =
-				propertiesJSONObject.getJSONObject("items");
-
-			if ((itemsPropertyJSONObject != null) &&
-				Objects.equals(
-					itemsPropertyJSONObject.getString("type"), "array")) {
-
-				return _getResponseFieldNames(
-					openAPIJSONObject,
-					itemsPropertyJSONObject.getJSONObject("items"),
-					visitedRefs);
-			}
-
-			for (String propertyName : propertiesJSONObject.keySet()) {
-				JSONObject propertyJSONObject =
-					propertiesJSONObject.getJSONObject(propertyName);
-
-				if ((propertyJSONObject != null) &&
-					GetterUtil.getBoolean(
-						propertyJSONObject.get("writeOnly"))) {
-
-					continue;
-				}
-
-				responseFieldNames.add(propertyName);
-			}
-		}
-
-		JSONArray allOfJSONArray = schemaJSONObject.getJSONArray("allOf");
-
-		if (allOfJSONArray != null) {
-			for (int i = 0; i < allOfJSONArray.length(); i++) {
-				responseFieldNames.addAll(
-					_getResponseFieldNames(
-						openAPIJSONObject, allOfJSONArray.getJSONObject(i),
-						visitedRefs));
-			}
-		}
-
-		return responseFieldNames;
-	}
-
-	private static JSONObject _getResponseSchemaJSONObject(
-		JSONObject operationJSONObject) {
-
-		JSONObject responsesJSONObject = operationJSONObject.getJSONObject(
-			"responses");
-
-		if (responsesJSONObject == null) {
-			return null;
-		}
-
-		JSONObject responseJSONObject = null;
-
-		for (String code : responsesJSONObject.keySet()) {
-			if (code.startsWith("2")) {
-				responseJSONObject = responsesJSONObject.getJSONObject(code);
-
-				break;
-			}
-		}
-
-		if (responseJSONObject == null) {
-			responseJSONObject = responsesJSONObject.getJSONObject("default");
-		}
-
-		if (responseJSONObject == null) {
-			return null;
-		}
-
-		JSONObject contentJSONObject = responseJSONObject.getJSONObject(
-			"content");
-
-		if (contentJSONObject == null) {
-			return null;
-		}
-
-		JSONObject mediaTypeJSONObject = contentJSONObject.getJSONObject(
-			"application/json");
-
-		if (mediaTypeJSONObject == null) {
-			return null;
-		}
-
-		return mediaTypeJSONObject.getJSONObject("schema");
+		return new TreeSet<>(propertiesJSONObjects.keySet());
 	}
 
 	private static int _getSchemaMaxDepth(
@@ -1599,6 +1736,14 @@ public class OpenAPIUtil {
 		return false;
 	}
 
+	private static boolean _isWriteOnlyProperty(JSONObject propertyJSONObject) {
+		if (propertyJSONObject == null) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(propertyJSONObject.get("writeOnly"));
+	}
+
 	private static Map<String, Object> _removeObjectEntrySystemProperties(
 		Map<String, Object> schema) {
 
@@ -1767,10 +1912,6 @@ public class OpenAPIUtil {
 	private static final String _DESCRIPTION =
 		"Fields to include in the response. Pass only the fields the user " +
 			"actually needs.";
-
-	private static final String[] _METHODS = {
-		"delete", "get", "head", "options", "patch", "post", "put"
-	};
 
 	private static final Set<String> _excludedSchemaKeys = Set.of(
 		"actions", "example", "exclusiveMaximum", "exclusiveMinimum", "xml");

@@ -8,12 +8,19 @@ package com.liferay.mcp.server.rest.internal.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.mcp.server.rest.dto.v1_0.Tool;
+import com.liferay.mcp.server.rest.dto.v1_0.ToolSearchResult;
 import com.liferay.mcp.server.rest.dto.v1_0.ToolSet;
 import com.liferay.mcp.server.rest.dto.v1_0.ToolSummary;
+import com.liferay.mcp.server.rest.internal.configuration.MCPServerConfiguration;
+import com.liferay.mcp.server.rest.internal.search.exception.ToolSearchUnavailableException;
+import com.liferay.mcp.server.rest.internal.search.index.MCPToolIndexReader;
+import com.liferay.mcp.server.rest.internal.search.index.MCPToolIndexWriter;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -29,6 +36,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.vulcan.application.HeadlessApplicationProvider;
 import com.liferay.portal.vulcan.http.VulcanRequestForwarder;
 import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
@@ -50,10 +58,58 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ToolSetUtil {
 
+	public static final String TOOL_SET_NAME = "mcp-server-v1.0";
+
 	public static void clearOpenAPIJSONObjectCache(long companyId) {
 		Set<String> keys = _openAPIJSONObjects.keySet();
 
 		keys.removeIf(key -> key.startsWith(companyId + StringPool.POUND));
+	}
+
+	public static Map<String, HeadlessApplicationProvider.OpenAPIDocument>
+		getOpenAPIDocuments() {
+
+		Map<String, HeadlessApplicationProvider.OpenAPIDocument>
+			openAPIDocuments = new TreeMap<>();
+
+		HeadlessApplicationProvider headlessApplicationProvider =
+			_headlessApplicationProviderSnapshot.get();
+
+		for (HeadlessApplicationProvider.Application application :
+				headlessApplicationProvider.getApplications()) {
+
+			if (Validator.isNull(application.getBasePath()) ||
+				Objects.equals(application.getBasePath(), "/openapi")) {
+
+				continue;
+			}
+
+			for (HeadlessApplicationProvider.OpenAPIDocument openAPIDocument :
+					application.getOpenAPIDocuments()) {
+
+				String apiPath = application.getBasePath();
+
+				String version = openAPIDocument.getVersion();
+
+				if (version != null) {
+					apiPath += StringPool.SLASH + version;
+				}
+
+				openAPIDocuments.putIfAbsent(
+					StringUtil.replace(
+						apiPath.substring(1), CharPool.SLASH, CharPool.DASH),
+					openAPIDocument);
+			}
+		}
+
+		return openAPIDocuments;
+	}
+
+	public static JSONObject getOpenAPIJSONObject(
+		HttpServletRequest httpServletRequest, String toolSetName) {
+
+		return _getOpenAPIJSONObject(
+			httpServletRequest, _getOpenAPIDocument(toolSetName), toolSetName);
 	}
 
 	public static Tool getTool(
@@ -62,10 +118,8 @@ public class ToolSetUtil {
 		String toolSetName) {
 
 		return OpenAPIUtil.getTool(
-			!Objects.equals(toolSetName, _TOOL_SET_NAME),
-			_getOpenAPIJSONObject(
-				httpServletRequest, _getOpenAPIDocument(toolSetName),
-				toolSetName),
+			!Objects.equals(toolSetName, TOOL_SET_NAME),
+			getOpenAPIJSONObject(httpServletRequest, toolSetName),
 			requiredInputSchemaOnly,
 			_getRestrictFields(restrictFieldsMap, toolName, toolSetName),
 			toolName);
@@ -80,15 +134,100 @@ public class ToolSetUtil {
 		String toolSetName) {
 
 		return OpenAPIUtil.getOutputSchema(
-			_getOpenAPIJSONObject(
-				httpServletRequest, _getOpenAPIDocument(toolSetName),
-				toolSetName),
-			toolName);
+			getOpenAPIJSONObject(httpServletRequest, toolSetName), toolName);
+	}
+
+	public static Page<ToolSearchResult> getToolSearchResultsPage(
+		Set<String> allowedToolKeys, HttpServletRequest httpServletRequest,
+		boolean includeRequiredInputSchema,
+		Map<String, String> restrictFieldsMap, String search) {
+
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
+		FeatureFlagManagerUtil.checkEnabled(companyId, "LPD-63311");
+
+		SearchCapabilities searchCapabilities =
+			_searchCapabilitiesSnapshot.get();
+
+		if ((searchCapabilities == null) ||
+			!searchCapabilities.isMCPToolSearchSupported()) {
+
+			throw new ToolSearchUnavailableException(
+				StringBundler.concat(
+					"Tool search is unavailable on this instance because it ",
+					"needs Elasticsearch or OpenSearch. Browse instead: ",
+					"\"getToolSetsPage\" lists every tool set and ",
+					"\"getToolSetToolSetNameToolSummariesPage\" lists the ",
+					"operations of one."));
+		}
+
+		_validateSearch(search);
+
+		try {
+			MCPToolIndexWriter mcpToolIndexWriter =
+				_mcpToolIndexWriterSnapshot.get();
+
+			mcpToolIndexWriter.updateIfStale(companyId, httpServletRequest);
+
+			return Page.of(
+				_getToolSearchResults(
+					allowedToolKeys, companyId, httpServletRequest,
+					includeRequiredInputSchema, restrictFieldsMap, search));
+		}
+		catch (RuntimeException runtimeException) {
+			_log.error("Unable to search the tool index", runtimeException);
+
+			throw new ToolSearchUnavailableException(
+				StringBundler.concat(
+					"Tool search is unavailable on this instance. Browse ",
+					"instead: \"getToolSetsPage\" lists every tool set and ",
+					"\"getToolSetToolSetNameToolSummariesPage\" lists the ",
+					"operations of one."));
+		}
+	}
+
+	public static String getToolSetName(String restContextPath) {
+		if (Validator.isBlank(restContextPath)) {
+			return null;
+		}
+
+		String mostSpecificBasePath = null;
+		String toolSetName = null;
+
+		Map<String, HeadlessApplicationProvider.OpenAPIDocument>
+			openAPIDocuments = getOpenAPIDocuments();
+
+		for (Map.Entry<String, HeadlessApplicationProvider.OpenAPIDocument>
+				entry : openAPIDocuments.entrySet()) {
+
+			HeadlessApplicationProvider.OpenAPIDocument openAPIDocument =
+				entry.getValue();
+
+			HeadlessApplicationProvider.Application application =
+				openAPIDocument.getApplication();
+
+			String basePath = application.getBasePath();
+
+			if (!restContextPath.equals(basePath) &&
+				!restContextPath.startsWith(basePath + StringPool.SLASH)) {
+
+				continue;
+			}
+
+			if ((mostSpecificBasePath == null) ||
+				(basePath.length() > mostSpecificBasePath.length())) {
+
+				mostSpecificBasePath = basePath;
+				toolSetName = entry.getKey();
+			}
+		}
+
+		return toolSetName;
 	}
 
 	public static Page<ToolSet> getToolSetsPage() {
 		Map<String, HeadlessApplicationProvider.OpenAPIDocument>
-			openAPIDocuments = _getOpenAPIDocuments();
+			openAPIDocuments = getOpenAPIDocuments();
 
 		return Page.of(
 			TransformUtil.transform(
@@ -113,12 +252,11 @@ public class ToolSetUtil {
 
 		return Page.of(
 			OpenAPIUtil.getToolSummaries(
-				_getOpenAPIJSONObject(
-					httpServletRequest, _getOpenAPIDocument(toolSetName),
-					toolSetName)));
+				getOpenAPIJSONObject(httpServletRequest, toolSetName)));
 	}
 
 	public static Response invokeTool(
+			Set<String> allowedToolKeys,
 			List<String> dataMaskExternalReferenceCodes,
 			HttpServletRequest httpServletRequest, Object inputObject,
 			Map<String, String> restrictFieldsMap, String toolName,
@@ -138,7 +276,19 @@ public class ToolSetUtil {
 			inputJSONObject = JSONFactoryUtil.createJSONObject();
 		}
 
-		if (Objects.equals(toolSetName, _TOOL_SET_NAME)) {
+		if (Objects.equals(toolSetName, TOOL_SET_NAME)) {
+			if (Objects.equals(
+					toolName, "getToolSearchToolSearchResultsPage")) {
+
+				return _getResponse(
+					getToolSearchResultsPage(
+						allowedToolKeys, httpServletRequest,
+						inputJSONObject.getBoolean(
+							"includeRequiredInputSchema"),
+						restrictFieldsMap,
+						inputJSONObject.getString("search")));
+			}
+
 			if (Objects.equals(toolName, "getToolSetToolSetNameTool")) {
 				return _getResponse(
 					getTool(
@@ -164,9 +314,9 @@ public class ToolSetUtil {
 
 			if (Objects.equals(toolName, "postToolSetToolSetNameToolInvoke")) {
 				return invokeTool(
-					dataMaskExternalReferenceCodes, httpServletRequest,
-					inputJSONObject.opt("body"), restrictFieldsMap,
-					inputJSONObject.getString("toolName"),
+					allowedToolKeys, dataMaskExternalReferenceCodes,
+					httpServletRequest, inputJSONObject.opt("body"),
+					restrictFieldsMap, inputJSONObject.getString("toolName"),
 					inputJSONObject.getString("toolSetName"));
 			}
 		}
@@ -243,7 +393,7 @@ public class ToolSetUtil {
 		_getOpenAPIDocument(String toolSetName) {
 
 		Map<String, HeadlessApplicationProvider.OpenAPIDocument>
-			openAPIDocuments = _getOpenAPIDocuments();
+			openAPIDocuments = getOpenAPIDocuments();
 
 		HeadlessApplicationProvider.OpenAPIDocument openAPIDocument =
 			openAPIDocuments.get(toolSetName);
@@ -254,45 +404,6 @@ public class ToolSetUtil {
 		}
 
 		return openAPIDocument;
-	}
-
-	private static Map<String, HeadlessApplicationProvider.OpenAPIDocument>
-		_getOpenAPIDocuments() {
-
-		Map<String, HeadlessApplicationProvider.OpenAPIDocument>
-			openAPIDocuments = new TreeMap<>();
-
-		HeadlessApplicationProvider headlessApplicationProvider =
-			_headlessApplicationProviderSnapshot.get();
-
-		for (HeadlessApplicationProvider.Application application :
-				headlessApplicationProvider.getApplications()) {
-
-			if (Validator.isNull(application.getBasePath()) ||
-				Objects.equals(application.getBasePath(), "/openapi")) {
-
-				continue;
-			}
-
-			for (HeadlessApplicationProvider.OpenAPIDocument openAPIDocument :
-					application.getOpenAPIDocuments()) {
-
-				String apiPath = application.getBasePath();
-
-				String version = openAPIDocument.getVersion();
-
-				if (version != null) {
-					apiPath += StringPool.SLASH + version;
-				}
-
-				openAPIDocuments.putIfAbsent(
-					StringUtil.replace(
-						apiPath.substring(1), CharPool.SLASH, CharPool.DASH),
-					openAPIDocument);
-			}
-		}
-
-		return openAPIDocuments;
 	}
 
 	private static JSONObject _getOpenAPIJSONObject(
@@ -330,6 +441,31 @@ public class ToolSetUtil {
 			});
 	}
 
+	private static Map<String, ?> _getRequiredInputSchema(
+		HttpServletRequest httpServletRequest,
+		Map<String, String> restrictFieldsMap, String toolName,
+		String toolSetName) {
+
+		try {
+			Tool tool = getTool(
+				httpServletRequest, true, restrictFieldsMap, toolName,
+				toolSetName);
+
+			return tool.getInputSchema();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get the required input schema of tool ",
+						toolName, " of tool set ", toolSetName),
+					exception);
+			}
+
+			return null;
+		}
+	}
+
 	private static Response _getResponse(Object value) throws Exception {
 		ObjectMapper objectMapper = ObjectMapperProviderUtil.getObjectMapper();
 
@@ -349,15 +485,102 @@ public class ToolSetUtil {
 		return restrictFieldsMap.get(getToolKey(toolName, toolSetName));
 	}
 
-	private static final String _TOOL_SET_NAME = "mcp-server-v1.0";
+	private static int _getSize(long companyId) {
+		try {
+			ConfigurationProvider configurationProvider =
+				_configurationProviderSnapshot.get();
+
+			MCPServerConfiguration mcpServerConfiguration =
+				configurationProvider.getCompanyConfiguration(
+					MCPServerConfiguration.class, companyId);
+
+			int searchToolMaxResultsCount =
+				mcpServerConfiguration.searchToolMaxResultsCount();
+
+			if (searchToolMaxResultsCount > 0) {
+				return Math.min(searchToolMaxResultsCount, _SIZE_MAX);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return _SIZE_DEFAULT;
+	}
+
+	private static List<ToolSearchResult> _getToolSearchResults(
+		Set<String> allowedToolKeys, long companyId,
+		HttpServletRequest httpServletRequest,
+		boolean includeRequiredInputSchema,
+		Map<String, String> restrictFieldsMap, String search) {
+
+		MCPToolIndexReader mcpToolIndexReader =
+			_mcpToolIndexReaderSnapshot.get();
+
+		List<ToolSearchResult> toolSearchResults = mcpToolIndexReader.search(
+			allowedToolKeys, companyId, includeRequiredInputSchema, search,
+			_getSize(companyId));
+
+		if (includeRequiredInputSchema && !toolSearchResults.isEmpty()) {
+			ToolSearchResult toolSearchResult = toolSearchResults.getFirst();
+
+			toolSearchResult.setRequiredInputSchema(
+				() -> _getRequiredInputSchema(
+					httpServletRequest, restrictFieldsMap,
+					toolSearchResult.getToolName(),
+					toolSearchResult.getToolSetName()));
+		}
+
+		return toolSearchResults;
+	}
+
+	private static void _validateSearch(String search) {
+		if (Validator.isBlank(search)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"The search is empty. Say what the user wants to do, as ",
+					"\"create a blog entry\", and search for one action at a ",
+					"time."));
+		}
+
+		if (search.length() > _SEARCH_MAX_LENGTH) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"The search is ", search.length(),
+					" characters long and the most this tool answers is ",
+					_SEARCH_MAX_LENGTH,
+					". Search for one action at a time, phrased the way a ",
+					"person would ask for it, as in \"create a blog entry\". ",
+					"A request made of several steps needs one search for ",
+					"each."));
+		}
+	}
+
+	private static final int _SEARCH_MAX_LENGTH = 500;
+
+	private static final int _SIZE_DEFAULT = 10;
+
+	private static final int _SIZE_MAX = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(ToolSetUtil.class);
 
+	private static final Snapshot<ConfigurationProvider>
+		_configurationProviderSnapshot = new Snapshot<>(
+			ToolSetUtil.class, ConfigurationProvider.class);
 	private static final Snapshot<HeadlessApplicationProvider>
 		_headlessApplicationProviderSnapshot = new Snapshot<>(
 			ToolSetUtil.class, HeadlessApplicationProvider.class);
+	private static final Snapshot<MCPToolIndexReader>
+		_mcpToolIndexReaderSnapshot = new Snapshot<>(
+			ToolSetUtil.class, MCPToolIndexReader.class);
+	private static final Snapshot<MCPToolIndexWriter>
+		_mcpToolIndexWriterSnapshot = new Snapshot<>(
+			ToolSetUtil.class, MCPToolIndexWriter.class);
 	private static final Map<String, JSONObject> _openAPIJSONObjects =
 		new ConcurrentHashMap<>();
+	private static final Snapshot<SearchCapabilities>
+		_searchCapabilitiesSnapshot = new Snapshot<>(
+			ToolSetUtil.class, SearchCapabilities.class);
 	private static final Snapshot<VulcanRequestForwarder>
 		_vulcanRequestForwarderSnapshot = new Snapshot<>(
 			ToolSetUtil.class, VulcanRequestForwarder.class);

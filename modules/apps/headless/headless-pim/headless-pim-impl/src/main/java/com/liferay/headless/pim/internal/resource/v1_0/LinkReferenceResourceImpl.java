@@ -101,21 +101,23 @@ public class LinkReferenceResourceImpl extends BaseLinkReferenceResourceImpl {
 				ListUtil.subList(
 					pimLinkRelatedEntries, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				pimLinkRelatedEntry -> _toLinkReference(
-					pimLinkRelatedEntry.getType(),
-					pimLinkRelatedEntry.getObjectEntry())),
+				this::_toLinkReference),
 			pagination, pimLinkRelatedEntries.size());
 	}
 
 	private Map<String, Map<String, String>> _getActions(
-		ObjectEntry objectEntry, String type) {
+		PIMLinkRelatedEntry pimLinkRelatedEntry) {
 
-		String href = StringBundler.concat(
-			"/o/headless-pim/v1.0/scopes/", objectEntry.getGroupId(),
-			"/links?className=",
-			URLCodec.encodeURL(objectEntry.getModelClassName()),
+		ObjectEntry objectEntry = pimLinkRelatedEntry.getObjectEntry();
+
+		String path = StringBundler.concat(
+			"/o/headless-pim/v1.0/scopes/", objectEntry.getGroupId(), "/links");
+		String queryString = StringBundler.concat(
+			"?className=", URLCodec.encodeURL(objectEntry.getModelClassName()),
 			"&externalReferenceCode=",
 			URLCodec.encodeURL(objectEntry.getExternalReferenceCode()));
+
+		String type = URLCodec.encodeURL(pimLinkRelatedEntry.getType());
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
@@ -126,8 +128,7 @@ public class LinkReferenceResourceImpl extends BaseLinkReferenceResourceImpl {
 
 				return HashMapBuilder.put(
 					"href",
-					StringBundler.concat(
-						href, "&type=", URLCodec.encodeURL(type))
+					StringBundler.concat(path, queryString, "&type=", type)
 				).put(
 					"method", "DELETE"
 				).build();
@@ -140,9 +141,26 @@ public class LinkReferenceResourceImpl extends BaseLinkReferenceResourceImpl {
 				}
 
 				return HashMapBuilder.put(
-					"href", href
+					"href", path + queryString
 				).put(
 					"method", "GET"
+				).build();
+			}
+		).put(
+			"setPrimary",
+			() -> {
+				if (pimLinkRelatedEntry.isPrimary() ||
+					!_hasPermission(objectEntry, ActionKeys.UPDATE)) {
+
+					return null;
+				}
+
+				return HashMapBuilder.put(
+					"href",
+					StringBundler.concat(
+						path, "/primary", queryString, "&type=", type)
+				).put(
+					"method", "PUT"
 				).build();
 			}
 		).build();
@@ -206,18 +224,21 @@ public class LinkReferenceResourceImpl extends BaseLinkReferenceResourceImpl {
 	}
 
 	private LinkReference _toLinkReference(
-			String linkType, ObjectEntry objectEntry)
+			PIMLinkRelatedEntry pimLinkRelatedEntry)
 		throws Exception {
+
+		ObjectEntry objectEntry = pimLinkRelatedEntry.getObjectEntry();
 
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry);
 
 		return new LinkReference() {
 			{
-				setActions(() -> _getActions(objectEntry, linkType));
+				setActions(() -> _getActions(pimLinkRelatedEntry));
 				setClassName(objectEntry::getModelClassName);
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setId(objectEntry::getObjectEntryId);
+				setPrimary(pimLinkRelatedEntry::isPrimary);
 				setSku(() -> MapUtil.getString(values, "sku"));
 				setStatus(
 					() -> new Status() {
@@ -234,7 +255,7 @@ public class LinkReferenceResourceImpl extends BaseLinkReferenceResourceImpl {
 						}
 					});
 				setTitle(() -> MapUtil.getString(values, "title"));
-				setType(() -> _getTypeLabel(linkType));
+				setType(() -> _getTypeLabel(pimLinkRelatedEntry.getType()));
 			}
 		};
 	}

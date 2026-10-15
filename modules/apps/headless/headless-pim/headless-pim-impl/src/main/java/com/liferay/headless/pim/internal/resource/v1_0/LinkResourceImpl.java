@@ -74,6 +74,24 @@ public class LinkResourceImpl extends BaseLinkResourceImpl {
 			link.getType());
 	}
 
+	@Override
+	public void putScopeScopeKeyLinkPrimary(
+			String scopeKey, String className, String externalReferenceCode,
+			String type)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-96666")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		_pimLinkEngine.setPrimaryPIMLink(
+			_getObjectEntry(
+				className, externalReferenceCode, _getGroupId(scopeKey)),
+			type);
+	}
+
 	private long _getGroupId(String scopeKey) throws Exception {
 		Long groupId = GroupUtil.getGroupId(
 			contextCompany.getCompanyId(), scopeKey, groupLocalService);

@@ -85,6 +85,8 @@ test(
 				viewableBy: 'Owner',
 			});
 
+		const layoutTitle = getRandomString();
+
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([
 				getWidgetDefinition({
@@ -98,7 +100,7 @@ test(
 				}),
 			]),
 			siteId: site.id,
-			title: getRandomString(),
+			title: layoutTitle,
 		});
 
 		const layoutURL = `/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`;
@@ -109,6 +111,9 @@ test(
 			async (recipientPage) => {
 				await recipientPage.goto(layoutURL);
 
+				await expect(recipientPage).toHaveTitle(
+					new RegExp(layoutTitle)
+				);
 				await expect(recipientPage.getByText(content)).toHaveCount(0);
 			}
 		);
@@ -297,6 +302,9 @@ test(
 		await test.step('Edit a document without adding one', async () => {
 			await documentLibraryPage.goto(depotURL);
 
+			await expect(
+				page.getByText(documentTitle, {exact: true})
+			).toBeVisible();
 			await expect(
 				page.getByRole('button', {exact: true, name: 'New'})
 			).toHaveCount(0);

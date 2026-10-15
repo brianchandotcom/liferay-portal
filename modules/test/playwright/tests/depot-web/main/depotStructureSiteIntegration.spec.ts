@@ -94,8 +94,22 @@ test(
 		});
 
 		await test.step('The site does not manage the depot structure', async () => {
+			const siteStructureName = getRandomString();
+
+			await apiHelpers.dataEngine.createStructure(
+				site.id,
+				getDataStructureDefinition({
+					defaultLanguageId: 'en_US',
+					fields: [{name: 'Text'}],
+					name: siteStructureName,
+				})
+			);
+
 			await journalStructuresPage.goto(site.friendlyUrlPath);
 
+			await expect(
+				page.getByRole('link', {exact: true, name: siteStructureName})
+			).toBeVisible();
 			await expect(
 				page.getByRole('link', {exact: true, name: structureName})
 			).toHaveCount(0);
@@ -183,7 +197,13 @@ test(
 				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await expect(page.getByText(text).first()).toBeVisible();
+			await expect(
+				page
+					.locator(
+						'[id^="portlet_com_liferay_journal_content_web_portlet_JournalContentPortlet"]'
+					)
+					.getByText(text)
+			).toBeVisible();
 			await expect(
 				page
 					.locator(

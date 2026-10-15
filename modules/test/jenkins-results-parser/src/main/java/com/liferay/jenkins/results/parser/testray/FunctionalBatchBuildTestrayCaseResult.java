@@ -38,15 +38,6 @@ public class FunctionalBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getComponentName() {
-		FunctionalTestClass functionalTestClass = getTestClass();
-
-		return JenkinsResultsParserUtil.getProperty(
-			functionalTestClass.getPoshiProperties(),
-			"testray.main.component.name");
-	}
-
-	@Override
 	public long getDuration() {
 		return getTestResultDuration();
 	}
@@ -54,27 +45,6 @@ public class FunctionalBatchBuildTestrayCaseResult
 	@Override
 	public String getErrors() {
 		return getTestResultErrors();
-	}
-
-	@Override
-	public String getName() {
-		FunctionalTestClass functionalTestClass = getTestClass();
-
-		return functionalTestClass.getTestClassMethodName();
-	}
-
-	@Override
-	public int getPriority() {
-		FunctionalTestClass functionalTestClass = getTestClass();
-
-		String priority = JenkinsResultsParserUtil.getProperty(
-			functionalTestClass.getPoshiProperties(), "priority");
-
-		if ((priority != null) && priority.matches("\\d+")) {
-			return Integer.parseInt(priority);
-		}
-
-		return 5;
 	}
 
 	@Override
@@ -92,15 +62,6 @@ public class FunctionalBatchBuildTestrayCaseResult
 		}
 
 		return getTestResultStatus();
-	}
-
-	@Override
-	public String getSubcomponentNames() {
-		FunctionalTestClass functionalTestClass = getTestClass();
-
-		return JenkinsResultsParserUtil.getProperty(
-			functionalTestClass.getPoshiProperties(),
-			"testray.component.names");
 	}
 
 	@Override
@@ -183,6 +144,13 @@ public class FunctionalBatchBuildTestrayCaseResult
 		}
 
 		super.initBuildReport();
+	}
+
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new FunctionalTestClassTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), getTestClass(), null));
 	}
 
 	private TestrayAttachment _getPoshiConsoleTestrayAttachment() {

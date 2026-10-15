@@ -35,19 +35,6 @@ public class ModulesBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getComponentName() {
-		ModulesTestClass modulesTestClass = getTestClass();
-
-		String componentName = modulesTestClass.getTestrayMainComponentName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
-			return super.getComponentName();
-		}
-
-		return componentName;
-	}
-
-	@Override
 	public long getDuration() {
 		TestClassReport testClassReport = getTestClassReport();
 
@@ -116,17 +103,6 @@ public class ModulesBatchBuildTestrayCaseResult
 		}
 
 		return errorMessage;
-	}
-
-	@Override
-	public String getName() {
-		ModulesTestClass modulesTestClass = getTestClass();
-
-		if (modulesTestClass == null) {
-			return super.getName();
-		}
-
-		return getBatchName() + "[" + modulesTestClass.getName() + "]";
 	}
 
 	@Override
@@ -225,6 +201,13 @@ public class ModulesBatchBuildTestrayCaseResult
 		}
 
 		super.initBuildReport();
+	}
+
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new DefaultTestClassTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), null, getTestClass()));
 	}
 
 	private String _getTestClassName() {

@@ -16,8 +16,6 @@ import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightSegmentTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 
 import java.io.IOException;
 
@@ -25,7 +23,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -47,20 +44,6 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		super(
 			axisTestClassGroup, testClass, testClassMethod, testrayBuild,
 			topLevelBuildReport);
-	}
-
-	@Override
-	public String getComponentName() {
-		PlaywrightJUnitTestClass playwrightJUnitTestClass = getTestClass();
-
-		String componentName =
-			playwrightJUnitTestClass.getTestrayMainComponentName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
-			return super.getComponentName();
-		}
-
-		return componentName;
 	}
 
 	@Override
@@ -155,29 +138,6 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			getTestClassMethod();
 
 		return playwrightTestClassMethod.getIssues();
-	}
-
-	@Override
-	public String getName() {
-		PlaywrightJUnitTestClass playwrightJUnitTestClass = getTestClass();
-
-		if (playwrightJUnitTestClass == null) {
-			return super.getName();
-		}
-
-		PlaywrightTestClassMethod playwrightTestClassMethod =
-			getTestClassMethod();
-
-		String variantSpecFilePath = _getVariantSpecFilePath(
-			playwrightJUnitTestClass.getSpecFilePath());
-
-		if (variantSpecFilePath == null) {
-			return playwrightTestClassMethod.getName();
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			variantSpecFilePath, " > ",
-			playwrightTestClassMethod.getTestName());
 	}
 
 	@Override
@@ -329,75 +289,11 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		super.initBuildReport();
 	}
 
-	private String _getProjectName() {
-		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
-
-		SegmentTestClassGroup segmentTestClassGroup =
-			axisTestClassGroup.getSegmentTestClassGroup();
-
-		if (!(segmentTestClassGroup instanceof
-				PlaywrightSegmentTestClassGroup)) {
-
-			return null;
-		}
-
-		PlaywrightSegmentTestClassGroup playwrightSegmentTestClassGroup =
-			(PlaywrightSegmentTestClassGroup)segmentTestClassGroup;
-
-		return playwrightSegmentTestClassGroup.getProjectName();
-	}
-
-	private String _getVariantSpecFilePath(String specFilePath) {
-		String projectName = _getProjectName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(projectName) ||
-			JenkinsResultsParserUtil.isNullOrEmpty(specFilePath)) {
-
-			return null;
-		}
-
-		int specSlashIndex = specFilePath.lastIndexOf("/");
-
-		if (specSlashIndex == -1) {
-			return null;
-		}
-
-		String projectPath = projectName.replace(".", "/");
-
-		int projectSlashIndex = projectPath.lastIndexOf("/");
-
-		String variantName = projectPath.substring(projectSlashIndex + 1);
-
-		String specDirPath = specFilePath.substring(0, specSlashIndex);
-
-		List<String> specDirNames = Arrays.asList(specDirPath.split("/"));
-
-		if (specDirNames.contains(variantName)) {
-			return null;
-		}
-
-		String projectParentPath = projectPath.substring(
-			0, projectSlashIndex + 1);
-
-		if (specFilePath.startsWith(projectParentPath)) {
-			String relativeSpecFilePath = specFilePath.substring(
-				projectParentPath.length());
-
-			int relativeSlashIndex = relativeSpecFilePath.indexOf("/");
-
-			if (relativeSlashIndex == -1) {
-				return JenkinsResultsParserUtil.combine(
-					projectParentPath, variantName, "/", relativeSpecFilePath);
-			}
-
-			return JenkinsResultsParserUtil.combine(
-				projectParentPath, variantName,
-				relativeSpecFilePath.substring(relativeSlashIndex));
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			specDirPath.substring(0, specDirPath.lastIndexOf("/") + 1),
-			variantName, specFilePath.substring(specSlashIndex));
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new PlaywrightTestClassMethodTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), null, getTestClassMethod()));
 	}
 
 	private static final Pattern _traceZipPattern = Pattern.compile(

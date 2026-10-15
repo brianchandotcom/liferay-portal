@@ -40,20 +40,6 @@ public class JSUnitBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getComponentName() {
-		JSUnitJUnitTestClass jsUnitJUnitTestClass = getTestClass();
-
-		String componentName =
-			jsUnitJUnitTestClass.getTestrayMainComponentName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
-			return super.getComponentName();
-		}
-
-		return componentName;
-	}
-
-	@Override
 	public long getDuration() {
 		TestClassReport testClassResult = _getTestClassReport();
 
@@ -138,17 +124,6 @@ public class JSUnitBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getName() {
-		if (_testClassMethod != null) {
-			return _testClassMethod.getName();
-		}
-
-		JSUnitJUnitTestClass jsUnitJUnitTestClass = getTestClass();
-
-		return jsUnitJUnitTestClass.getTestTaskName();
-	}
-
-	@Override
 	public Status getStatus() {
 		BuildReport buildReport = getBuildReport();
 
@@ -205,6 +180,21 @@ public class JSUnitBatchBuildTestrayCaseResult
 		}
 
 		super.initBuildReport();
+	}
+
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		if (_testClassMethod != null) {
+			setTestrayCaseResultDescriptor(
+				new JSUnitTestClassMethodTestrayCaseResultDescriptor(
+					getAxisTestClassGroup(), null, _testClassMethod));
+
+			return;
+		}
+
+		setTestrayCaseResultDescriptor(
+			new JSUnitTestClassTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), getTestClass(), null));
 	}
 
 	private TestClassReport _getTestClassReport() {

@@ -75,15 +75,7 @@ public abstract class BaseTestrayCaseResultDescriptor
 
 	@Override
 	public int getPriority() {
-		String testrayCasePriority = _getBuildProperty("testray.case.priority");
-
-		if ((testrayCasePriority != null) &&
-			testrayCasePriority.matches("\\d+")) {
-
-			return Integer.parseInt(testrayCasePriority);
-		}
-
-		return 5;
+		return getPriority(_getBuildProperty("testray.case.priority"));
 	}
 
 	@Override
@@ -169,6 +161,19 @@ public abstract class BaseTestrayCaseResultDescriptor
 
 	protected AxisTestClassGroup getAxisTestClassGroup() {
 		return null;
+	}
+
+	protected int getPriority(String priority) {
+		if ((priority == null) || !priority.matches("\\d+")) {
+			return 5;
+		}
+
+		try {
+			return Integer.parseInt(priority);
+		}
+		catch (NumberFormatException numberFormatException) {
+			return 5;
+		}
 	}
 
 	protected TestClass getTestClass() {

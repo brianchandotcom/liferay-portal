@@ -233,6 +233,12 @@ public class PlaywrightBatchBuildTestrayCaseResultTest
 		).getName();
 
 		Mockito.doReturn(
+			playwrightJUnitTestClass
+		).when(
+			playwrightTestClassMethod
+		).getTestClass();
+
+		Mockito.doReturn(
 			testName
 		).when(
 			playwrightTestClassMethod

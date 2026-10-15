@@ -36,22 +36,6 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getComponentName() {
-		String componentName = super.getComponentName();
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
-			return componentName;
-		}
-
-		return "App Server Bundle Builder";
-	}
-
-	@Override
-	public String getName() {
-		return "App Server Bundle Builder > " + _appServerType;
-	}
-
-	@Override
 	public List<TestrayAttachment> getTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments =
 			super.getTestrayAttachments();
@@ -62,11 +46,6 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 		testrayAttachments.removeAll(Collections.singleton(null));
 
 		return testrayAttachments;
-	}
-
-	@Override
-	protected String getBatchName() {
-		return "app-server-bundle-builder";
 	}
 
 	@Override
@@ -88,6 +67,13 @@ public class AppServerBundleStandaloneBuildTestrayCaseResult
 
 		setBuildReport(
 			topLevelBuildReport.getDownstreamBuildReport(_getAxisName()));
+	}
+
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new AppServerBundleBuildTestrayCaseResultDescriptor(
+				_appServerType, null, null));
 	}
 
 	private String _getAxisName() {

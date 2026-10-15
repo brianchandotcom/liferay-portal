@@ -36,19 +36,6 @@ public class JUnitBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getComponentName() {
-		JUnitTestClass jUnitTestClass = getTestClass();
-
-		String componentName = jUnitTestClass.getTestrayMainComponentName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
-			return super.getComponentName();
-		}
-
-		return componentName;
-	}
-
-	@Override
 	public long getDuration() {
 		List<TestClassReport> testClassReports = getTestClassReports();
 
@@ -229,18 +216,6 @@ public class JUnitBatchBuildTestrayCaseResult
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getName() {
-		JUnitTestClass jUnitTestClass = getTestClass();
-
-		String testClassName = JenkinsResultsParserUtil.getCanonicalPath(
-			jUnitTestClass.getTestClassFile());
-
-		testClassName = testClassName.replaceAll(".*/(com/.*)\\.java", "$1");
-
-		return testClassName.replace("/", ".");
 	}
 
 	@Override
@@ -433,6 +408,13 @@ public class JUnitBatchBuildTestrayCaseResult
 		}
 
 		super.initBuildReport();
+	}
+
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new JUnitTestClassTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), getTestClass(), null));
 	}
 
 	private boolean _isTestClassReportsFailing() {

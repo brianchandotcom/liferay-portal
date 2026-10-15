@@ -57,18 +57,6 @@ public class WorkspacesCompileBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getName() {
-		WorkspacesCompileTestClass workspacesCompileTestClass = getTestClass();
-
-		if (workspacesCompileTestClass == null) {
-			return super.getName();
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			getBatchName(), "[", workspacesCompileTestClass.getName(), "]");
-	}
-
-	@Override
 	public Status getStatus() {
 		return getTestResultStatus();
 	}
@@ -114,6 +102,13 @@ public class WorkspacesCompileBatchBuildTestrayCaseResult
 		}
 
 		return null;
+	}
+
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new DefaultTestClassTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), null, getTestClass()));
 	}
 
 }

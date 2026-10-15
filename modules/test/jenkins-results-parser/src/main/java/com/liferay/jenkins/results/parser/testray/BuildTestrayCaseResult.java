@@ -28,6 +28,21 @@ import org.json.JSONObject;
  */
 public abstract class BuildTestrayCaseResult extends BaseTestrayCaseResult {
 
+	public String getBatchName() {
+		TestrayCaseResultDescriptor testrayCaseResultDescriptor =
+			getTestrayCaseResultDescriptor();
+
+		return testrayCaseResultDescriptor.getBatchName();
+	}
+
+	@Override
+	public String getComponentName() {
+		TestrayCaseResultDescriptor testrayCaseResultDescriptor =
+			getTestrayCaseResultDescriptor();
+
+		return testrayCaseResultDescriptor.getComponentName();
+	}
+
 	@Override
 	public long getDuration() {
 		BuildReport buildReport = getBuildReport();
@@ -37,6 +52,22 @@ public abstract class BuildTestrayCaseResult extends BaseTestrayCaseResult {
 		}
 
 		return buildReport.getDuration();
+	}
+
+	@Override
+	public String getName() {
+		TestrayCaseResultDescriptor testrayCaseResultDescriptor =
+			getTestrayCaseResultDescriptor();
+
+		return testrayCaseResultDescriptor.getName();
+	}
+
+	@Override
+	public int getPriority() {
+		TestrayCaseResultDescriptor testrayCaseResultDescriptor =
+			getTestrayCaseResultDescriptor();
+
+		return testrayCaseResultDescriptor.getPriority();
 	}
 
 	@Override
@@ -54,8 +85,42 @@ public abstract class BuildTestrayCaseResult extends BaseTestrayCaseResult {
 		return Status.PASSED;
 	}
 
+	@Override
+	public String getSubcomponentNames() {
+		TestrayCaseResultDescriptor testrayCaseResultDescriptor =
+			getTestrayCaseResultDescriptor();
+
+		return testrayCaseResultDescriptor.getSubcomponentNames();
+	}
+
+	@Override
+	public String getTeamName() {
+		TestrayCaseResultDescriptor testrayCaseResultDescriptor =
+			getTestrayCaseResultDescriptor();
+
+		return testrayCaseResultDescriptor.getTeamName();
+	}
+
+	public synchronized TestrayCaseResultDescriptor
+		getTestrayCaseResultDescriptor() {
+
+		if (_testrayCaseResultDescriptor == null) {
+			initTestrayCaseResultDescriptor();
+		}
+
+		return _testrayCaseResultDescriptor;
+	}
+
 	public TopLevelBuildReport getTopLevelBuildReport() {
 		return _topLevelBuildReport;
+	}
+
+	@Override
+	public String getType() {
+		TestrayCaseResultDescriptor testrayCaseResultDescriptor =
+			getTestrayCaseResultDescriptor();
+
+		return testrayCaseResultDescriptor.getType();
 	}
 
 	protected BuildTestrayCaseResult(
@@ -260,8 +325,16 @@ public abstract class BuildTestrayCaseResult extends BaseTestrayCaseResult {
 
 	protected abstract void initBuildReport();
 
+	protected abstract void initTestrayCaseResultDescriptor();
+
 	protected void setBuildReport(BuildReport buildReport) {
 		_buildReport = buildReport;
+	}
+
+	protected void setTestrayCaseResultDescriptor(
+		TestrayCaseResultDescriptor testrayCaseResultDescriptor) {
+
+		_testrayCaseResultDescriptor = testrayCaseResultDescriptor;
 	}
 
 	protected synchronized TestrayAttachment uploadTestrayAttachment(
@@ -315,6 +388,7 @@ public abstract class BuildTestrayCaseResult extends BaseTestrayCaseResult {
 	private BuildReport _buildReport;
 	private final Map<String, TestrayAttachment> _testrayAttachments =
 		new HashMap<>();
+	private TestrayCaseResultDescriptor _testrayCaseResultDescriptor;
 	private final File _testrayUploadBaseDir;
 	private final TopLevelBuildReport _topLevelBuildReport;
 

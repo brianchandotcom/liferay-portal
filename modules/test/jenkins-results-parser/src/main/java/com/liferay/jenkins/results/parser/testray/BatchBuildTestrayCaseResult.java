@@ -10,12 +10,8 @@ import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
-import com.liferay.jenkins.results.parser.job.property.JobProperty;
-import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
@@ -87,32 +83,6 @@ public class BatchBuildTestrayCaseResult
 		return _axisTestClassGroup.getAxisName();
 	}
 
-	public String getBatchName() {
-		return _axisTestClassGroup.getBatchName();
-	}
-
-	@Override
-	public String getComponentName() {
-		JobProperty testrayComponentNameJobProperty = _getJobProperty(
-			"testray.component.name");
-
-		String testrayComponentName =
-			testrayComponentNameJobProperty.getValue();
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayComponentName)) {
-			return testrayComponentName;
-		}
-
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.component", getBatchName());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	public DownstreamBuildReport getDownstreamBuildReport() {
 		BuildReport buildReport = getBuildReport();
 
@@ -153,84 +123,6 @@ public class BatchBuildTestrayCaseResult
 		}
 
 		return errorMessage;
-	}
-
-	@Override
-	public String getName() {
-		return getAxisName();
-	}
-
-	@Override
-	public int getPriority() {
-		try {
-			String testrayCasePriority = JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.priority", getBatchName());
-
-			if ((testrayCasePriority != null) &&
-				testrayCasePriority.matches("\\d+")) {
-
-				return Integer.parseInt(testrayCasePriority);
-			}
-
-			return 5;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	@Override
-	public String getTeamName() {
-		JobProperty teamNamesJobProperty = _getJobProperty(
-			"testray.team.names");
-
-		String teamNames = teamNamesJobProperty.getValue();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(teamNames)) {
-			try {
-				return JenkinsResultsParserUtil.getProperty(
-					JenkinsResultsParserUtil.getBuildProperties(),
-					"testray.case.team", getBatchName());
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-		}
-
-		String componentName = getComponentName();
-
-		for (String teamName : teamNames.split(",")) {
-			JobProperty teamComponentNamesJobProperty = _getJobProperty(
-				"testray.team." + teamName + ".component.names");
-
-			if (teamComponentNamesJobProperty == null) {
-				continue;
-			}
-
-			String teamComponentNames =
-				teamComponentNamesJobProperty.getValue();
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(teamComponentNames)) {
-				continue;
-			}
-
-			for (String teamComponentName : teamComponentNames.split(",")) {
-				if (teamComponentName.equals(componentName)) {
-					return _upperCaseFirstLetterOfEachWord(
-						teamName.replace("-", " "));
-				}
-			}
-		}
-
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.team", getBatchName());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Override
@@ -291,18 +183,6 @@ public class BatchBuildTestrayCaseResult
 		setTestrayComponent(testrayComponent);
 
 		return testrayComponent;
-	}
-
-	@Override
-	public String getType() {
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.type", getBatchName());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Override
@@ -661,6 +541,13 @@ public class BatchBuildTestrayCaseResult
 			topLevelBuildReport.getDownstreamBuildReport(getAxisName()));
 	}
 
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new DefaultAxisTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), null));
+	}
+
 	private List<TestrayAttachment> _getDockerLogsTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
@@ -843,34 +730,6 @@ public class BatchBuildTestrayCaseResult
 				}
 
 			});
-	}
-
-	private JobProperty _getJobProperty(String basePropertyName) {
-		AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
-
-		Job job = axisTestClassGroup.getJob();
-
-		if (job instanceof QAWebsitesGitRepositoryJob) {
-			return JobPropertyFactory.newJobProperty(
-				basePropertyName, getBatchName(), job,
-				axisTestClassGroup.getTestBaseDir(),
-				JobProperty.Type.QA_WEBSITES_TEST_DIR);
-		}
-
-		return JobPropertyFactory.newJobProperty(
-			basePropertyName, getBatchName(), job);
-	}
-
-	private String _upperCaseFirstLetterOfEachWord(String string) {
-		StringBuilder sb = new StringBuilder(string);
-
-		for (int i = 0; i < sb.length(); i++) {
-			if ((i == 0) || (sb.charAt(i - 1) == ' ')) {
-				sb.setCharAt(i, Character.toUpperCase(sb.charAt(i)));
-			}
-		}
-
-		return sb.toString();
 	}
 
 	private static final int _ERROR_MESSAGE_MAX_LENGTH_DEFAULT = 50000;

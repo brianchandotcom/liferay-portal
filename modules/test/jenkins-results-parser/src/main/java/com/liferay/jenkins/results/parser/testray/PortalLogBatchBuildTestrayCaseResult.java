@@ -14,8 +14,6 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
-import java.io.IOException;
-
 /**
  * @author Michael Hashimoto
  */
@@ -27,18 +25,6 @@ public class PortalLogBatchBuildTestrayCaseResult
 		TopLevelBuildReport topLevelBuildReport) {
 
 		super(axisTestClassGroup, testrayBuild, topLevelBuildReport);
-	}
-
-	@Override
-	public String getComponentName() {
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.component");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Override
@@ -105,8 +91,10 @@ public class PortalLogBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getName() {
-		return "PortalLogAssertorTest-" + getAxisName();
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new PortalLogAxisTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), null));
 	}
 
 	private TestClassReport _getTestClassReport() {

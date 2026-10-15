@@ -36,20 +36,6 @@ public class AntTargetBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getComponentName() {
-		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
-
-		String componentName =
-			baseAntTargetTestClass.getTestrayMainComponentName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
-			return super.getComponentName();
-		}
-
-		return componentName;
-	}
-
-	@Override
 	public long getDuration() {
 		TestReport testReport = _getAntTargetTestReport();
 
@@ -139,25 +125,6 @@ public class AntTargetBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getName() {
-		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
-
-		if (baseAntTargetTestClass == null) {
-			return super.getName();
-		}
-
-		String antTargetName = baseAntTargetTestClass.getAntTargetName();
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(antTargetName)) {
-			return JenkinsResultsParserUtil.combine(
-				getBatchName(), "[", antTargetName, "]");
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			getBatchName(), "[", baseAntTargetTestClass.getName(), "]");
-	}
-
-	@Override
 	public Status getStatus() {
 		BuildReport buildReport = getBuildReport();
 
@@ -198,19 +165,6 @@ public class AntTargetBatchBuildTestrayCaseResult
 		}
 
 		return Status.PASSED;
-	}
-
-	@Override
-	public String getTeamName() {
-		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
-
-		String teamName = baseAntTargetTestClass.getTestrayTeamName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(teamName)) {
-			return super.getTeamName();
-		}
-
-		return teamName;
 	}
 
 	public TestClassReport getTestClassReport() {
@@ -280,6 +234,13 @@ public class AntTargetBatchBuildTestrayCaseResult
 		}
 
 		super.initBuildReport();
+	}
+
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new AntTargetTestClassTestrayCaseResultDescriptor(
+				getAxisTestClassGroup(), getTestClass(), null));
 	}
 
 	private TestReport _getAntTargetTestReport() {

@@ -37,11 +37,6 @@ public class TopLevelStandaloneBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getName() {
-		return "Top Level Build";
-	}
-
-	@Override
 	public Status getStatus() {
 		if (_status != null) {
 			return _status;
@@ -66,11 +61,6 @@ public class TopLevelStandaloneBuildTestrayCaseResult
 	}
 
 	@Override
-	protected String getBatchName() {
-		return "top-level-build";
-	}
-
-	@Override
 	protected String getFileName() {
 		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
 
@@ -86,6 +76,12 @@ public class TopLevelStandaloneBuildTestrayCaseResult
 	@Override
 	protected void initBuildReport() {
 		setBuildReport(getTopLevelBuildReport());
+	}
+
+	@Override
+	protected void initTestrayCaseResultDescriptor() {
+		setTestrayCaseResultDescriptor(
+			new TopLevelBuildTestrayCaseResultDescriptor(null));
 	}
 
 	private final Status _status;

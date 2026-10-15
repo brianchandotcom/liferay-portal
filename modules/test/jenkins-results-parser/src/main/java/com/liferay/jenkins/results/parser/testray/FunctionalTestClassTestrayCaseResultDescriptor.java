@@ -39,13 +39,7 @@ public class FunctionalTestClassTestrayCaseResultDescriptor
 
 	@Override
 	public int getPriority() {
-		String priority = _getPoshiProperty("priority");
-
-		if ((priority != null) && priority.matches("\\d+")) {
-			return Integer.parseInt(priority);
-		}
-
-		return 5;
+		return getPriority(_getPoshiProperty("priority"));
 	}
 
 	@Override

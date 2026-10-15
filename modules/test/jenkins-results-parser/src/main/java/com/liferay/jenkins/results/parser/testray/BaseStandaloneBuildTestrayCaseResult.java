@@ -42,64 +42,8 @@ public abstract class BaseStandaloneBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getComponentName() {
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.component", getBatchName());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	@Override
 	public String getErrors() {
 		return null;
-	}
-
-	@Override
-	public int getPriority() {
-		try {
-			String testrayCasePriority = JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.priority", getBatchName());
-
-			if ((testrayCasePriority != null) &&
-				testrayCasePriority.matches("\\d+")) {
-
-				return Integer.parseInt(testrayCasePriority);
-			}
-
-			return 5;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	@Override
-	public String getTeamName() {
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.team", getBatchName());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	@Override
-	public String getType() {
-		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.type", getBatchName());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	@Override
@@ -287,8 +231,6 @@ public abstract class BaseStandaloneBuildTestrayCaseResult
 				" case results for ", getBatchName(), " in ",
 				JenkinsResultsParserUtil.toDurationString(end - start)));
 	}
-
-	protected abstract String getBatchName();
 
 	protected abstract String getFileName();
 

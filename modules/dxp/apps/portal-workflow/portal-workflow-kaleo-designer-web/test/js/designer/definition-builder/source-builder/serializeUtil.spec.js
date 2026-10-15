@@ -48,3 +48,42 @@ describe('Serializing roles that carry an external reference code', () => {
 		);
 	});
 });
+
+describe('Serializing users that carry an external reference code', () => {
+	it('Writes the external reference code of every user', () => {
+		const deserializeUtil = new DeserializeUtil(
+			fs.readFileSync(
+				path.join(
+					__dirname,
+					'../../../../dependencies/users-with-external-reference-codes-workflow-definition.xml'
+				),
+				'utf8'
+			)
+		);
+
+		const elements = deserializeUtil.getElements();
+
+		const xmlDefinition = serializeDefinition(
+			{
+				'xmlns': 'urn:liferay.com:liferay-workflow_7.4.0',
+				'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+			},
+			{description: '', name: 'definition', version: 1},
+			elements.filter(isNode),
+			elements.filter(isEdge)
+		);
+
+		expect(xmlDefinition).toContain(
+			'<user-external-reference-code>USER1_ERC</user-external-reference-code>'
+		);
+		expect(xmlDefinition).toContain(
+			'<user-external-reference-code>USER2_ERC</user-external-reference-code>'
+		);
+		expect(xmlDefinition).toContain(
+			'<user-external-reference-code>USER3_ERC</user-external-reference-code>'
+		);
+		expect(xmlDefinition).toContain(
+			'<user-external-reference-code>USER4_ERC</user-external-reference-code>'
+		);
+	});
+});

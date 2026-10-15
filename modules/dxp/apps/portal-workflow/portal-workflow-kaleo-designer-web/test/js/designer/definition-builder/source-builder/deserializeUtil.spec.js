@@ -130,3 +130,36 @@ describe('Deserializing transitions that share a name', () => {
 		expect(TransitionFromChildTask2ToEnd.data.name).toBe('transitionName');
 	});
 });
+
+describe('Deserializing users that carry an external reference code', () => {
+	it('Reads the external reference code and ID of every user', () => {
+		const elements = getElements(
+			'users-with-external-reference-codes-workflow-definition.xml'
+		);
+
+		const task = elements.find((element) => element.id === 'Review');
+
+		expect(task.data.assignments).toEqual({
+			assignmentType: ['user'],
+			userExternalReferenceCode: ['USER1_ERC'],
+			userId: ['1'],
+		});
+		expect(task.data.notifications.recipients[0][0]).toEqual({
+			assignmentType: ['user'],
+			userExternalReferenceCode: ['USER2_ERC'],
+			userId: ['2'],
+		});
+		expect(task.data.taskTimers.reassignments[0]).toEqual({
+			assignmentType: ['user'],
+			userExternalReferenceCode: ['USER3_ERC'],
+			userId: ['3'],
+		});
+		expect(
+			task.data.taskTimers.timerNotifications[0].recipients[0][0]
+		).toEqual({
+			assignmentType: ['user'],
+			userExternalReferenceCode: ['USER4_ERC'],
+			userId: ['4'],
+		});
+	});
+});

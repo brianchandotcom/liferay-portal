@@ -5,56 +5,33 @@
 
 package com.liferay.mcp.server.rest.internal.model.listener;
 
-import com.liferay.mcp.server.rest.internal.cache.MCPServerCacheManager;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(service = ModelListener.class)
-public class ObjectFieldModelListener extends BaseModelListener<ObjectField> {
+public class ObjectFieldModelListener
+	extends BaseObjectModelListener<ObjectField> {
 
 	@Override
 	public void onAfterCreate(ObjectField objectField) {
-		_clearOpenAPIJSONObjectCache(objectField);
+		invalidateToolSet(objectField.getObjectDefinitionId());
 	}
 
 	@Override
 	public void onAfterRemove(ObjectField objectField) {
-		_clearOpenAPIJSONObjectCache(objectField);
+		invalidateToolSet(objectField.getObjectDefinitionId());
 	}
 
 	@Override
 	public void onAfterUpdate(
 		ObjectField originalObjectField, ObjectField objectField) {
 
-		_clearOpenAPIJSONObjectCache(objectField);
+		invalidateToolSet(objectField.getObjectDefinitionId());
 	}
-
-	private void _clearOpenAPIJSONObjectCache(ObjectField objectField) {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectField.getObjectDefinitionId());
-
-		if ((objectDefinition == null) || !objectDefinition.isApproved()) {
-			return;
-		}
-
-		_mcpServerCacheManager.clearOpenAPIJSONObjectCache(
-			objectField.getCompanyId());
-	}
-
-	@Reference
-	private MCPServerCacheManager _mcpServerCacheManager;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

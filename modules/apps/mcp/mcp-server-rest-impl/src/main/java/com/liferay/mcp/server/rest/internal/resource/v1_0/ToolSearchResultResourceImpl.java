@@ -6,8 +6,9 @@
 package com.liferay.mcp.server.rest.internal.resource.v1_0;
 
 import com.liferay.mcp.server.rest.dto.v1_0.ToolSearchResult;
+import com.liferay.mcp.server.rest.internal.util.ToolSetUtil;
 import com.liferay.mcp.server.rest.resource.v1_0.ToolSearchResultResource;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,11 +29,9 @@ public class ToolSearchResultResourceImpl
 			Boolean includeRequiredInputSchema, String search)
 		throws Exception {
 
-		FeatureFlagManagerUtil.checkEnabled(
-			contextCompany.getCompanyId(), "LPD-63311");
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return ToolSetUtil.getToolSearchResultsPage(
+			null, contextHttpServletRequest,
+			GetterUtil.getBoolean(includeRequiredInputSchema), null, search);
 	}
 
 }

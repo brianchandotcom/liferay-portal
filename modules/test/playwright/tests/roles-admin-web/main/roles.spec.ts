@@ -489,9 +489,18 @@ test(
 
 		await rolesPage.rolesLink('Space').click();
 
+		await expect(rolesPage.rolesLink('Space')).toHaveAttribute(
+			'aria-current',
+			'page'
+		);
+
 		await rolesPage.rolesTable.search(role.name);
 
-		await (await rolesPage.rolesTable.cellLink(role.name)).click();
+		await expect(async () => {
+			await (
+				await rolesPage.rolesTable.cellLink(role.name)
+			).click({timeout: 1000});
+		}).toPass();
 
 		const title = getRandomString();
 
@@ -515,6 +524,11 @@ test(
 		await rolesPage.goto();
 
 		await rolesPage.rolesLink('Space').click();
+
+		await expect(rolesPage.rolesLink('Space')).toHaveAttribute(
+			'aria-current',
+			'page'
+		);
 
 		await rolesPage.rolesTable.search(title);
 

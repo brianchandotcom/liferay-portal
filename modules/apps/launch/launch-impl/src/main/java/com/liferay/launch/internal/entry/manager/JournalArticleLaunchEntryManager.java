@@ -50,14 +50,14 @@ public class JournalArticleLaunchEntryManager implements LaunchEntryManager {
 	public Draft addDraft(long classPK, String versionKey)
 		throws PortalException {
 
-		JournalArticle journalArticle =
-			_journalArticleLocalService.getLatestArticle(
-				classPK, WorkflowConstants.STATUS_APPROVED);
+		JournalArticleResource journalArticleResource =
+			_journalArticleResourceLocalService.getJournalArticleResource(
+				classPK);
 
-		JournalArticle baseJournalArticle =
-			_journalArticleLocalService.getArticle(
-				journalArticle.getGroupId(), journalArticle.getArticleId(),
-				GetterUtil.getDouble(versionKey));
+		JournalArticle journalArticle = _journalArticleLocalService.getArticle(
+			journalArticleResource.getGroupId(),
+			journalArticleResource.getArticleId(),
+			GetterUtil.getDouble(versionKey));
 
 		ServiceContext serviceContext = _getServiceContext(
 			WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -65,9 +65,8 @@ public class JournalArticleLaunchEntryManager implements LaunchEntryManager {
 		return _toDraft(
 			_journalArticleLocalService.addArticle(
 				null, serviceContext.getUserId(), journalArticle.getGroupId(),
-				journalArticle.getFolderId(), baseJournalArticle.getTitleMap(),
-				baseJournalArticle.getDescriptionMap(),
-				baseJournalArticle.getContent(),
+				journalArticle.getFolderId(), journalArticle.getTitleMap(),
+				journalArticle.getDescriptionMap(), journalArticle.getContent(),
 				journalArticle.getDDMStructureId(),
 				journalArticle.getDDMTemplateKey(), serviceContext));
 	}
@@ -140,7 +139,19 @@ public class JournalArticleLaunchEntryManager implements LaunchEntryManager {
 
 	@Override
 	public Version fetchVersion(long classPK, String versionKey) {
-		return _toVersion(_fetchJournalArticle(classPK, versionKey));
+		JournalArticleResource journalArticleResource =
+			_journalArticleResourceLocalService.fetchJournalArticleResource(
+				classPK);
+
+		if (journalArticleResource == null) {
+			return null;
+		}
+
+		return _toVersion(
+			_journalArticleLocalService.fetchArticle(
+				journalArticleResource.getGroupId(),
+				journalArticleResource.getArticleId(),
+				GetterUtil.getDouble(versionKey)));
 	}
 
 	@Override
@@ -220,23 +231,6 @@ public class JournalArticleLaunchEntryManager implements LaunchEntryManager {
 			launchDraftJournalArticle.getArticleId(), serviceContext);
 
 		return _toVersion(journalArticle);
-	}
-
-	private JournalArticle _fetchJournalArticle(
-		long classPK, String versionKey) {
-
-		JournalArticleResource journalArticleResource =
-			_journalArticleResourceLocalService.fetchJournalArticleResource(
-				classPK);
-
-		if (journalArticleResource == null) {
-			return null;
-		}
-
-		return _journalArticleLocalService.fetchArticle(
-			journalArticleResource.getGroupId(),
-			journalArticleResource.getArticleId(),
-			GetterUtil.getDouble(versionKey));
 	}
 
 	private String _getEditURL(

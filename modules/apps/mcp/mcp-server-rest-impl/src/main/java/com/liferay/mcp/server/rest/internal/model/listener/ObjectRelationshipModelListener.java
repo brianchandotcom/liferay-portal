@@ -5,9 +5,7 @@
 
 package com.liferay.mcp.server.rest.internal.model.listener;
 
-import com.liferay.mcp.server.rest.internal.util.ToolSetUtil;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
@@ -17,18 +15,16 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ModelListener.class)
 public class ObjectRelationshipModelListener
-	extends BaseModelListener<ObjectRelationship> {
+	extends BaseObjectModelListener<ObjectRelationship> {
 
 	@Override
 	public void onAfterCreate(ObjectRelationship objectRelationship) {
-		ToolSetUtil.clearOpenAPIJSONObjectCache(
-			objectRelationship.getCompanyId());
+		_invalidateToolSets(objectRelationship);
 	}
 
 	@Override
 	public void onAfterRemove(ObjectRelationship objectRelationship) {
-		ToolSetUtil.clearOpenAPIJSONObjectCache(
-			objectRelationship.getCompanyId());
+		_invalidateToolSets(objectRelationship);
 	}
 
 	@Override
@@ -36,8 +32,12 @@ public class ObjectRelationshipModelListener
 		ObjectRelationship originalObjectRelationship,
 		ObjectRelationship objectRelationship) {
 
-		ToolSetUtil.clearOpenAPIJSONObjectCache(
-			objectRelationship.getCompanyId());
+		_invalidateToolSets(objectRelationship);
+	}
+
+	private void _invalidateToolSets(ObjectRelationship objectRelationship) {
+		invalidateToolSet(objectRelationship.getObjectDefinitionId1());
+		invalidateToolSet(objectRelationship.getObjectDefinitionId2());
 	}
 
 }

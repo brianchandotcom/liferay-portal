@@ -5,29 +5,26 @@
 
 package com.liferay.mcp.server.rest.internal.model.listener;
 
-import com.liferay.mcp.server.rest.internal.cache.MCPServerCacheManager;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(service = ModelListener.class)
 public class ObjectDefinitionModelListener
-	extends BaseModelListener<ObjectDefinition> {
+	extends BaseObjectModelListener<ObjectDefinition> {
 
 	@Override
 	public void onAfterCreate(ObjectDefinition objectDefinition) {
-		_clearOpenAPIJSONObjectCache(objectDefinition);
+		invalidateToolSet(objectDefinition);
 	}
 
 	@Override
 	public void onAfterRemove(ObjectDefinition objectDefinition) {
-		_clearOpenAPIJSONObjectCache(objectDefinition);
+		invalidateToolSet(objectDefinition);
 	}
 
 	@Override
@@ -35,21 +32,7 @@ public class ObjectDefinitionModelListener
 		ObjectDefinition originalObjectDefinition,
 		ObjectDefinition objectDefinition) {
 
-		_clearOpenAPIJSONObjectCache(objectDefinition);
+		invalidateToolSet(objectDefinition);
 	}
-
-	private void _clearOpenAPIJSONObjectCache(
-		ObjectDefinition objectDefinition) {
-
-		if (!objectDefinition.isApproved()) {
-			return;
-		}
-
-		_mcpServerCacheManager.clearOpenAPIJSONObjectCache(
-			objectDefinition.getCompanyId());
-	}
-
-	@Reference
-	private MCPServerCacheManager _mcpServerCacheManager;
 
 }

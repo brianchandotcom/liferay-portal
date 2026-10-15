@@ -6,6 +6,7 @@
 package com.liferay.mcp.server.rest.internal.model.listener;
 
 import com.liferay.mcp.server.rest.internal.cache.MCPServerCacheManager;
+import com.liferay.mcp.server.rest.internal.search.index.MCPToolIndexInvalidator;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -33,10 +34,13 @@ public class ObjectFieldModelListenerTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_objectFieldModelListener, "_mcpServerCacheManager",
+			_objectFieldModelListener, "mcpServerCacheManager",
 			_mcpServerCacheManager);
 		ReflectionTestUtil.setFieldValue(
-			_objectFieldModelListener, "_objectDefinitionLocalService",
+			_objectFieldModelListener, "mcpToolIndexInvalidator",
+			_mcpToolIndexInvalidator);
+		ReflectionTestUtil.setFieldValue(
+			_objectFieldModelListener, "objectDefinitionLocalService",
 			_objectDefinitionLocalService);
 	}
 
@@ -46,14 +50,14 @@ public class ObjectFieldModelListenerTest {
 
 		_objectFieldModelListener.onAfterCreate(_mockObjectField());
 
-		_assertCacheCleared();
+		_assertToolSetInvalidated();
 	}
 
 	@Test
 	public void testOnAfterCreateWhenObjectDefinitionIsMissing() {
 		_objectFieldModelListener.onAfterCreate(_mockObjectField());
 
-		_assertCacheNotCleared();
+		_assertToolSetNotInvalidated();
 	}
 
 	@Test
@@ -62,7 +66,7 @@ public class ObjectFieldModelListenerTest {
 
 		_objectFieldModelListener.onAfterCreate(_mockObjectField());
 
-		_assertCacheNotCleared();
+		_assertToolSetNotInvalidated();
 	}
 
 	@Test
@@ -71,7 +75,7 @@ public class ObjectFieldModelListenerTest {
 
 		_objectFieldModelListener.onAfterRemove(_mockObjectField());
 
-		_assertCacheCleared();
+		_assertToolSetInvalidated();
 	}
 
 	@Test
@@ -80,7 +84,7 @@ public class ObjectFieldModelListenerTest {
 
 		_objectFieldModelListener.onAfterRemove(_mockObjectField());
 
-		_assertCacheNotCleared();
+		_assertToolSetNotInvalidated();
 	}
 
 	@Test
@@ -90,7 +94,7 @@ public class ObjectFieldModelListenerTest {
 		_objectFieldModelListener.onAfterUpdate(
 			_mockObjectField(), _mockObjectField());
 
-		_assertCacheCleared();
+		_assertToolSetInvalidated();
 	}
 
 	@Test
@@ -100,28 +104,64 @@ public class ObjectFieldModelListenerTest {
 		_objectFieldModelListener.onAfterUpdate(
 			_mockObjectField(), _mockObjectField());
 
-		_assertCacheNotCleared();
+		_assertToolSetNotInvalidated();
 	}
 
-	private void _assertCacheCleared() {
+	private void _assertToolSetInvalidated() {
 		Mockito.verify(
 			_mcpServerCacheManager
 		).clearOpenAPIJSONObjectCache(
 			_COMPANY_ID
 		);
+
+		Mockito.verify(
+			_mcpServerCacheManager
+		).clearServletCache(
+			_COMPANY_ID
+		);
+
+		Mockito.verify(
+			_mcpToolIndexInvalidator
+		).invalidate(
+			_COMPANY_ID, _REST_CONTEXT_PATH
+		);
 	}
 
-	private void _assertCacheNotCleared() {
+	private void _assertToolSetNotInvalidated() {
 		Mockito.verify(
 			_mcpServerCacheManager, Mockito.never()
 		).clearOpenAPIJSONObjectCache(
 			Mockito.anyLong()
+		);
+
+		Mockito.verify(
+			_mcpServerCacheManager, Mockito.never()
+		).clearServletCache(
+			Mockito.anyLong()
+		);
+
+		Mockito.verify(
+			_mcpToolIndexInvalidator, Mockito.never()
+		).invalidate(
+			Mockito.anyLong(), Mockito.anyString()
 		);
 	}
 
 	private void _mockObjectDefinition(boolean approved) {
 		ObjectDefinition objectDefinition = Mockito.mock(
 			ObjectDefinition.class);
+
+		Mockito.when(
+			objectDefinition.getCompanyId()
+		).thenReturn(
+			_COMPANY_ID
+		);
+
+		Mockito.when(
+			objectDefinition.getRESTContextPath()
+		).thenReturn(
+			_REST_CONTEXT_PATH
+		);
 
 		Mockito.when(
 			objectDefinition.isApproved()
@@ -141,12 +181,6 @@ public class ObjectFieldModelListenerTest {
 		ObjectField objectField = Mockito.mock(ObjectField.class);
 
 		Mockito.when(
-			objectField.getCompanyId()
-		).thenReturn(
-			_COMPANY_ID
-		);
-
-		Mockito.when(
 			objectField.getObjectDefinitionId()
 		).thenReturn(
 			_OBJECT_DEFINITION_ID
@@ -160,8 +194,13 @@ public class ObjectFieldModelListenerTest {
 	private static final long _OBJECT_DEFINITION_ID =
 		RandomTestUtil.randomLong();
 
+	private static final String _REST_CONTEXT_PATH =
+		"/c/" + RandomTestUtil.randomString();
+
 	private final MCPServerCacheManager _mcpServerCacheManager = Mockito.mock(
 		MCPServerCacheManager.class);
+	private final MCPToolIndexInvalidator _mcpToolIndexInvalidator =
+		Mockito.mock(MCPToolIndexInvalidator.class);
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
 		Mockito.mock(ObjectDefinitionLocalService.class);
 	private final ObjectFieldModelListener _objectFieldModelListener =

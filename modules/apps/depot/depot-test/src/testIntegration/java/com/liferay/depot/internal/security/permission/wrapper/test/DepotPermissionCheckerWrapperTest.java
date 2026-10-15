@@ -139,6 +139,17 @@ public class DepotPermissionCheckerWrapperTest {
 					permissionChecker.hasPermission(
 						fileEntry.getGroupId(), DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId(), ActionKeys.VIEW));
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					TestPropsValues.getCompanyId(), DLFileEntry.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(fileEntry.getFileEntryId()),
+					role.getRoleId(), new String[] {ActionKeys.VIEW});
+
+				Assert.assertTrue(
+					permissionChecker.hasPermission(
+						fileEntry.getGroupId(), DLFileEntry.class.getName(),
+						fileEntry.getFileEntryId(), ActionKeys.VIEW));
 			});
 	}
 

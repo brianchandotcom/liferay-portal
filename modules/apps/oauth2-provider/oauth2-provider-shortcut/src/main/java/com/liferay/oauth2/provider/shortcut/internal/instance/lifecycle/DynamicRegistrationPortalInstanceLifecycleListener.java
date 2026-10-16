@@ -11,12 +11,16 @@ import com.liferay.oauth2.provider.constants.OAuth2ApplicationConstants;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -29,6 +33,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +49,8 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		_removeClientCredentialsGrant(company.getCompanyId());
+
 		DynamicQuery dynamicQuery =
 			_oAuth2ApplicationLocalService.dynamicQuery();
 
@@ -61,6 +68,8 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
 
 		if (!oAuth2Applications.isEmpty()) {
+			_removeScopeAliases(oAuth2Applications.get(0));
+
 			return;
 		}
 
@@ -111,8 +120,86 @@ public class DynamicRegistrationPortalInstanceLifecycleListener
 			});
 	}
 
+	private void _removeClientCredentialsGrant(long companyId) {
+		DynamicQuery dynamicQuery =
+			_oAuth2ApplicationLocalService.dynamicQuery();
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		Property userNameProperty = PropertyFactoryUtil.forName("userName");
+
+		dynamicQuery.add(userNameProperty.like("%_dynamic_registered"));
+
+		List<OAuth2Application> oAuth2Applications =
+			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
+
+		for (OAuth2Application oAuth2Application : oAuth2Applications) {
+			String userName = oAuth2Application.getUserName();
+
+			if (!userName.endsWith("_dynamic_registered")) {
+				continue;
+			}
+
+			List<GrantType> allowedGrantTypesList = new ArrayList<>(
+				oAuth2Application.getAllowedGrantTypesList());
+
+			if (!allowedGrantTypesList.remove(GrantType.CLIENT_CREDENTIALS)) {
+				continue;
+			}
+
+			oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
+
+			oAuth2Application =
+				_oAuth2ApplicationLocalService.updateOAuth2Application(
+					oAuth2Application);
+
+			_oAuth2AuthorizationLocalService.deleteOAuth2Authorizations(
+				oAuth2Application.getClientCredentialUserId(),
+				oAuth2Application.getOAuth2ApplicationId());
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"The client credentials grant was removed from the ",
+						"dynamically registered OAuth 2 application with ",
+						"client ID ", oAuth2Application.getClientId()));
+			}
+		}
+	}
+
+	private void _removeScopeAliases(OAuth2Application oAuth2Application)
+		throws Exception {
+
+		if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() == 0) {
+			return;
+		}
+
+		oAuth2Application = _oAuth2ApplicationLocalService.updateScopeAliases(
+			oAuth2Application.getUserId(), oAuth2Application.getUserName(),
+			oAuth2Application.getOAuth2ApplicationId(),
+			Collections.emptyList());
+
+		_oAuth2AuthorizationLocalService.deleteOAuth2Authorizations(
+			oAuth2Application.getClientCredentialUserId(),
+			oAuth2Application.getOAuth2ApplicationId());
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"The scopes were removed from the OAuth 2 application with " +
+					"client ID " + oAuth2Application.getClientId());
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DynamicRegistrationPortalInstanceLifecycleListener.class);
+
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+
+	@Reference
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

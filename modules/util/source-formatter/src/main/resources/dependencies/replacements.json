@@ -6056,6 +6056,20 @@
 	},
 	{
 		"classNames": [
+			"CPDefinitionLocalService",
+			"CPDefinitionLocalServiceUtil",
+			"CPDefinitionService",
+			"CPDefinitionServiceUtil"
+		],
+		"from": "updateCPDefinition(long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, boolean paramName, String paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, ServiceContext paramName)",
+		"issueKey": "LPD-99280",
+		"newImports": [
+			"com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil"
+		],
+		"to": "updateCPDefinition(param#0#, CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).getCPTaxCategoryId(), CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).isAccountGroupFilterEnabled(), CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).isChannelFilterEnabled(), param#9#, CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).getDepth(), param#3#, param#12#, param#14#, param#15#, param#11#, param#13#, param#17#, param#19#, param#20#, param#16#, param#18#, CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).isFreeShipping(), CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).getHeight(), param#8#, param#6#, param#7#, param#5#, param#1#, param#21#, param#10#, CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).isShipSeparately(), CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).isShippable(), CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).getShippingExtraPrice(), param#2#, CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).isTaxExempt(), CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).isTelcoOrElectronics(), param#4#, CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).getWeight(), CPDefinitionLocalServiceUtil.getCPDefinition(param#0#).getWidth(), param#22#)"
+	},
+	{
+		"classNames": [
 			"CPAttachmentFileEntryService",
 			"CPAttachmentFileEntryServiceUtil"
 		],

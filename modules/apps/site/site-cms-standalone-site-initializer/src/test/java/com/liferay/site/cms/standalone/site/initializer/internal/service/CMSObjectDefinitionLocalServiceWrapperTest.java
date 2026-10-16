@@ -48,35 +48,11 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 
 	@Test
 	@TestInfo("LPD-110251")
-	public void testAddCustomObjectDefinitionInCMSFolderWithDepotScope()
+	public void testAddCustomObjectDefinitionInContentStructuresFolderWithDepotScope()
 		throws Exception {
 
-		for (String externalReferenceCode : _CMS_EXTERNAL_REFERENCE_CODES) {
-			ObjectDefinition objectDefinition = Mockito.mock(
-				ObjectDefinition.class);
-
-			Mockito.when(
-				_objectDefinitionLocalService.addCustomObjectDefinition(
-					Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
-					Mockito.any(), Mockito.any(), Mockito.anyBoolean(),
-					Mockito.anyBoolean(), Mockito.anyBoolean(),
-					Mockito.anyBoolean(), Mockito.anyBoolean(),
-					Mockito.anyBoolean(), Mockito.anyBoolean(),
-					Mockito.anyBoolean(), Mockito.anyBoolean(), Mockito.any(),
-					Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(),
-					Mockito.any(), Mockito.anyBoolean(), Mockito.anyString(),
-					Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(),
-					Mockito.any())
-			).thenReturn(
-				objectDefinition
-			);
-
-			Assert.assertSame(
-				objectDefinition,
-				_addCustomObjectDefinition(
-					_mockObjectFolder(externalReferenceCode),
-					ObjectDefinitionConstants.SCOPE_DEPOT));
-		}
+		_testAddCustomObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
 	}
 
 	@Test
@@ -88,6 +64,25 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 			ObjectDefinitionObjectFolderIdException.class,
 			() -> _addCustomObjectDefinition(
 				0, ObjectDefinitionConstants.SCOPE_DEPOT));
+	}
+
+	@Test
+	@TestInfo("LPD-110251")
+	public void testAddCustomObjectDefinitionInFileTypesFolderWithDepotScope()
+		throws Exception {
+
+		_testAddCustomObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
+	}
+
+	@Test
+	@TestInfo("LPD-110251")
+	public void testAddCustomObjectDefinitionInRepeatableGroupsFolderWithDepotScope()
+		throws Exception {
+
+		_testAddCustomObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.
+				EXTERNAL_REFERENCE_CODE_STRUCTURE_REPEATABLE_GROUPS);
 	}
 
 	@Test
@@ -118,34 +113,11 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 
 	@Test
 	@TestInfo("LPD-110251")
-	public void testAddObjectDefinitionInCMSFolderWithDepotScope()
+	public void testAddObjectDefinitionInContentStructuresFolderWithDepotScope()
 		throws Exception {
 
-		for (String externalReferenceCode : _CMS_EXTERNAL_REFERENCE_CODES) {
-			ObjectDefinition objectDefinition = Mockito.mock(
-				ObjectDefinition.class);
-
-			String objectDefinitionExternalReferenceCode =
-				RandomTestUtil.randomString();
-			long userId = RandomTestUtil.randomLong();
-			long objectFolderId = _mockObjectFolder(externalReferenceCode);
-
-			Mockito.when(
-				_objectDefinitionLocalService.addObjectDefinition(
-					objectDefinitionExternalReferenceCode, userId,
-					objectFolderId, true, ObjectDefinitionConstants.SCOPE_DEPOT,
-					false)
-			).thenReturn(
-				objectDefinition
-			);
-
-			Assert.assertSame(
-				objectDefinition,
-				_cmsObjectDefinitionLocalServiceWrapper.addObjectDefinition(
-					objectDefinitionExternalReferenceCode, userId,
-					objectFolderId, true, ObjectDefinitionConstants.SCOPE_DEPOT,
-					false));
-		}
+		_testAddObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
 	}
 
 	@Test
@@ -172,6 +144,25 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 			_cmsObjectDefinitionLocalServiceWrapper.addObjectDefinition(
 				externalReferenceCode, userId, 0, true,
 				ObjectDefinitionConstants.SCOPE_DEPOT, false));
+	}
+
+	@Test
+	@TestInfo("LPD-110251")
+	public void testAddObjectDefinitionInFileTypesFolderWithDepotScope()
+		throws Exception {
+
+		_testAddObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
+	}
+
+	@Test
+	@TestInfo("LPD-110251")
+	public void testAddObjectDefinitionInRepeatableGroupsFolderWithDepotScope()
+		throws Exception {
+
+		_testAddObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.
+				EXTERNAL_REFERENCE_CODE_STRUCTURE_REPEATABLE_GROUPS);
 	}
 
 	@Test
@@ -240,22 +231,11 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 
 	@Test
 	@TestInfo("LPD-110251")
-	public void testUpdateCustomObjectDefinitionInCMSFolderWithDepotScope()
+	public void testUpdateCustomObjectDefinitionInContentStructuresFolderWithDepotScope()
 		throws Exception {
 
-		for (String externalReferenceCode : _CMS_EXTERNAL_REFERENCE_CODES) {
-			ObjectDefinition objectDefinition = _mockObjectDefinition(
-				RandomTestUtil.randomString(), false);
-
-			_mockUpdateCustomObjectDefinition(objectDefinition);
-
-			Assert.assertSame(
-				objectDefinition,
-				_updateCustomObjectDefinition(
-					objectDefinition.getObjectDefinitionId(),
-					_mockObjectFolder(externalReferenceCode),
-					ObjectDefinitionConstants.SCOPE_DEPOT));
-		}
+		_testUpdateCustomObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
 	}
 
 	@Test
@@ -271,6 +251,25 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 			() -> _updateCustomObjectDefinition(
 				objectDefinition.getObjectDefinitionId(), 0,
 				ObjectDefinitionConstants.SCOPE_DEPOT));
+	}
+
+	@Test
+	@TestInfo("LPD-110251")
+	public void testUpdateCustomObjectDefinitionInFileTypesFolderWithDepotScope()
+		throws Exception {
+
+		_testUpdateCustomObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
+	}
+
+	@Test
+	@TestInfo("LPD-110251")
+	public void testUpdateCustomObjectDefinitionInRepeatableGroupsFolderWithDepotScope()
+		throws Exception {
+
+		_testUpdateCustomObjectDefinitionInCMSFolderWithDepotScope(
+			ObjectFolderConstants.
+				EXTERNAL_REFERENCE_CODE_STRUCTURE_REPEATABLE_GROUPS);
 	}
 
 	@Test
@@ -326,25 +325,28 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 
 	@Test
 	@TestInfo("LPD-110251")
-	public void testUpdateObjectFolderIdInCMSFolder() throws Exception {
-		for (String externalReferenceCode : _CMS_EXTERNAL_REFERENCE_CODES) {
-			ObjectDefinition objectDefinition = _mockObjectDefinition(
-				RandomTestUtil.randomString(), false);
+	public void testUpdateObjectFolderIdInContentStructuresFolder()
+		throws Exception {
 
-			long objectFolderId = _mockObjectFolder(externalReferenceCode);
+		_testUpdateObjectFolderIdInCMSFolder(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
+	}
 
-			Mockito.when(
-				_objectDefinitionLocalService.updateObjectFolderId(
-					objectDefinition.getObjectDefinitionId(), objectFolderId)
-			).thenReturn(
-				objectDefinition
-			);
+	@Test
+	@TestInfo("LPD-110251")
+	public void testUpdateObjectFolderIdInFileTypesFolder() throws Exception {
+		_testUpdateObjectFolderIdInCMSFolder(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
+	}
 
-			Assert.assertSame(
-				objectDefinition,
-				_cmsObjectDefinitionLocalServiceWrapper.updateObjectFolderId(
-					objectDefinition.getObjectDefinitionId(), objectFolderId));
-		}
+	@Test
+	@TestInfo("LPD-110251")
+	public void testUpdateObjectFolderIdInRepeatableGroupsFolder()
+		throws Exception {
+
+		_testUpdateObjectFolderIdInCMSFolder(
+			ObjectFolderConstants.
+				EXTERNAL_REFERENCE_CODE_STRUCTURE_REPEATABLE_GROUPS);
 	}
 
 	@Test
@@ -476,6 +478,102 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 		);
 	}
 
+	private void _testAddCustomObjectDefinitionInCMSFolderWithDepotScope(
+			String externalReferenceCode)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = Mockito.mock(
+			ObjectDefinition.class);
+
+		Mockito.when(
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
+				Mockito.any(), Mockito.any(), Mockito.anyBoolean(),
+				Mockito.anyBoolean(), Mockito.anyBoolean(),
+				Mockito.anyBoolean(), Mockito.anyBoolean(),
+				Mockito.anyBoolean(), Mockito.anyBoolean(),
+				Mockito.anyBoolean(), Mockito.anyBoolean(), Mockito.any(),
+				Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(),
+				Mockito.any(), Mockito.anyBoolean(), Mockito.anyString(),
+				Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any(),
+				Mockito.any())
+		).thenReturn(
+			objectDefinition
+		);
+
+		Assert.assertSame(
+			objectDefinition,
+			_addCustomObjectDefinition(
+				_mockObjectFolder(externalReferenceCode),
+				ObjectDefinitionConstants.SCOPE_DEPOT));
+	}
+
+	private void _testAddObjectDefinitionInCMSFolderWithDepotScope(
+			String externalReferenceCode)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = Mockito.mock(
+			ObjectDefinition.class);
+
+		String objectDefinitionExternalReferenceCode =
+			RandomTestUtil.randomString();
+		long userId = RandomTestUtil.randomLong();
+		long objectFolderId = _mockObjectFolder(externalReferenceCode);
+
+		Mockito.when(
+			_objectDefinitionLocalService.addObjectDefinition(
+				objectDefinitionExternalReferenceCode, userId, objectFolderId,
+				true, ObjectDefinitionConstants.SCOPE_DEPOT, false)
+		).thenReturn(
+			objectDefinition
+		);
+
+		Assert.assertSame(
+			objectDefinition,
+			_cmsObjectDefinitionLocalServiceWrapper.addObjectDefinition(
+				objectDefinitionExternalReferenceCode, userId, objectFolderId,
+				true, ObjectDefinitionConstants.SCOPE_DEPOT, false));
+	}
+
+	private void _testUpdateCustomObjectDefinitionInCMSFolderWithDepotScope(
+			String externalReferenceCode)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _mockObjectDefinition(
+			RandomTestUtil.randomString(), false);
+
+		_mockUpdateCustomObjectDefinition(objectDefinition);
+
+		Assert.assertSame(
+			objectDefinition,
+			_updateCustomObjectDefinition(
+				objectDefinition.getObjectDefinitionId(),
+				_mockObjectFolder(externalReferenceCode),
+				ObjectDefinitionConstants.SCOPE_DEPOT));
+	}
+
+	private void _testUpdateObjectFolderIdInCMSFolder(
+			String externalReferenceCode)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _mockObjectDefinition(
+			RandomTestUtil.randomString(), false);
+
+		long objectFolderId = _mockObjectFolder(externalReferenceCode);
+
+		Mockito.when(
+			_objectDefinitionLocalService.updateObjectFolderId(
+				objectDefinition.getObjectDefinitionId(), objectFolderId)
+		).thenReturn(
+			objectDefinition
+		);
+
+		Assert.assertSame(
+			objectDefinition,
+			_cmsObjectDefinitionLocalServiceWrapper.updateObjectFolderId(
+				objectDefinition.getObjectDefinitionId(), objectFolderId));
+	}
+
 	private ObjectDefinition _updateCustomObjectDefinition(
 			long objectDefinitionId, long objectFolderId, String scope)
 		throws Exception {
@@ -488,13 +586,6 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 				null, RandomTestUtil.randomString(), null, null, false, null,
 				scope, 0, null, null, null, null);
 	}
-
-	private static final String[] _CMS_EXTERNAL_REFERENCE_CODES = {
-		ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
-		ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-		ObjectFolderConstants.
-			EXTERNAL_REFERENCE_CODE_STRUCTURE_REPEATABLE_GROUPS
-	};
 
 	private final CMSObjectDefinitionLocalServiceWrapper
 		_cmsObjectDefinitionLocalServiceWrapper =

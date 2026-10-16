@@ -36,7 +36,7 @@
 	{
 		"changes": [
 			{
-				"className": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+				"className": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator$1",
 				"op": "customChange",
 				"registratorLine": 33
 			},
@@ -53,19 +53,19 @@
 	{
 		"changes": [
 			{
-				"className": "com.liferay.portal.kernel.upgrade.DummyUpgradeStep",
-				"op": "customChange",
-				"registratorLine": 49
-			},
-			{
-				"className": "com.liferay.portal.kernel.upgrade.DummyUpgradeStep",
+				"className": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator$2",
 				"op": "customChange",
 				"registratorLine": 50
 			},
 			{
-				"className": "com.liferay.portal.configuration.upgrade.ConfigurationUpgradeStepFactory",
+				"className": "com.liferay.portal.kernel.upgrade.DummyUpgradeStep",
 				"op": "customChange",
 				"registratorLine": 51
+			},
+			{
+				"className": "com.liferay.portal.configuration.upgrade.ConfigurationUpgradeStepFactory",
+				"op": "customChange",
+				"registratorLine": 52
 			}
 		],
 		"fromSchemaVersion": "1.9.0",

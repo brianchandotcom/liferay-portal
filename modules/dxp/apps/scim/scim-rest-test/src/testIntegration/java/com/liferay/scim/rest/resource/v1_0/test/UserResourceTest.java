@@ -15,6 +15,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -494,6 +495,42 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 			postUser4.getExternalId(), TestPropsValues.getCompanyId());
 
 		Assert.assertTrue(portalUser4.isActive());
+
+		User postUser5 = randomUser();
+
+		String expectedFirstName = RandomTestUtil.randomString();
+		String expectedLastName = RandomTestUtil.randomString();
+
+		postUser5.setDisplayName(
+			expectedFirstName + StringPool.SPACE + expectedLastName);
+
+		postUser5.setName((Name)null);
+
+		assertHttpResponseStatusCode(
+			201, userResource.postV2UserHttpResponse(postUser5));
+
+		com.liferay.portal.kernel.model.User portalUser5 =
+			_userLocalService.getUserByExternalReferenceCode(
+				postUser5.getExternalId(), TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(expectedFirstName, portalUser5.getFirstName());
+		Assert.assertEquals(expectedLastName, portalUser5.getLastName());
+
+		User postUser6 = randomUser();
+
+		postUser6.setDisplayName((String)null);
+		postUser6.setName((Name)null);
+
+		assertHttpResponseStatusCode(
+			201, userResource.postV2UserHttpResponse(postUser6));
+
+		com.liferay.portal.kernel.model.User portalUser6 =
+			_userLocalService.getUserByExternalReferenceCode(
+				postUser6.getExternalId(), TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			postUser6.getUserName(), portalUser6.getFirstName());
+		Assert.assertEquals(postUser6.getUserName(), portalUser6.getLastName());
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 

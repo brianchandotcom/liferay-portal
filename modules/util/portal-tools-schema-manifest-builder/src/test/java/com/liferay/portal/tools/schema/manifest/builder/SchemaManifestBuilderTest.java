@@ -400,12 +400,16 @@ public class SchemaManifestBuilderTest {
 		"Compute the upgrade path by following ",
 		"'fromSchemaVersion'/'toSchemaVersion'. 'changes' inside an edge IS ",
 		"ordered, in execution order. Schema versions are opaque strings: ",
-		"never compare or sort them. A change's 'className' is where the step ",
-		"is implemented; the edge's 'registrator' plus the change's ",
-		"'registratorLine' is where it is declared. 'customChange' means the ",
-		"step's effect could NOT be determined, not that it made no change. A ",
-		"database's own schemaVersion for this module is in its Release_ ",
-		"table, in the row where servletContextName equals 'module'.");
+		"never compare or sort them. A change's 'className' is the class that ",
+		"implements the step, as the upgrade log names it; for an anonymous ",
+		"class it is its binary name, '<registrator>$<n>'. The edge's ",
+		"'registrator' plus the change's 'registratorLine' is where the step ",
+		"is declared; an upgrade log entry '<class>:<line> - ...' written by ",
+		"UpgradeProcessFactory matches the change whose edge 'registrator' is ",
+		"<class> and whose 'registratorLine' is <line>. 'customChange' means ",
+		"the step's effect could NOT be determined, not that it made no ",
+		"change. A database's own schemaVersion for this module is in its ",
+		"Release_ table, in the row where servletContextName equals 'module'.");
 
 	private static final String _MANIFEST_FILE_NAME =
 		"src/main/resources/META-INF/schema/manifest.json";

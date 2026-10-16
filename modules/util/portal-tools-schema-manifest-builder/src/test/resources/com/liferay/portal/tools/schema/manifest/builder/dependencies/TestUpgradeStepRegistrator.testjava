@@ -43,7 +43,8 @@ public class TestUpgradeStepRegistrator
 			() -> {
 			});
 
-		UpgradeStep upgradeStep = new DummyUpgradeStep();
+		UpgradeStep upgradeStep = new DummyUpgradeStep() {
+		};
 
 		registry.register(
 			"1.9.0", "1.10.0", upgradeStep,

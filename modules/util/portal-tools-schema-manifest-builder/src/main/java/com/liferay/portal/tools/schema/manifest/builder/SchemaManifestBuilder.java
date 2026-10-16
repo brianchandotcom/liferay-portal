@@ -154,12 +154,17 @@ public class SchemaManifestBuilder {
 				"'fromSchemaVersion'/'toSchemaVersion'. 'changes' inside an ",
 				"edge IS ordered, in execution order. Schema versions are ",
 				"opaque strings: never compare or sort them. A change's ",
-				"'className' is where the step is implemented; the edge's ",
-				"'registrator' plus the change's 'registratorLine' is where ",
-				"it is declared. 'customChange' means the step's effect could ",
-				"NOT be determined, not that it made no change. A database's ",
-				"own schemaVersion for this module is in its Release_ table, ",
-				"in the row where servletContextName equals 'module'.")
+				"'className' is the class that implements the step, as the ",
+				"upgrade log names it; for an anonymous class it is its ",
+				"binary name, '<registrator>$<n>'. The edge's 'registrator' ",
+				"plus the change's 'registratorLine' is where the step is ",
+				"declared; an upgrade log entry '<class>:<line> - ...' ",
+				"written by UpgradeProcessFactory matches the change whose ",
+				"edge 'registrator' is <class> and whose 'registratorLine' is ",
+				"<line>. 'customChange' means the step's effect could NOT be ",
+				"determined, not that it made no change. A database's own ",
+				"schemaVersion for this module is in its Release_ table, in ",
+				"the row where servletContextName equals 'module'.")
 		).put(
 			"history", historyJSONArray
 		).put(
@@ -268,6 +273,8 @@ public class SchemaManifestBuilder {
 			packageName + StringPool.PERIOD +
 				StringUtil.removeLast(fileName, ".java");
 
+		List<Integer> anonymousClassPositions = _getAnonymousClassPositions(
+			content);
 		Map<String, String> classNames = _getClassNames(content);
 
 		int registerPosition = -1;
@@ -306,7 +313,8 @@ public class SchemaManifestBuilder {
 					).put(
 						"className",
 						_getClassName(
-							classNames, content, packageName, parameter,
+							anonymousClassPositions, classNames, content,
+							packageName, parameter, parameterPosition,
 							registrator)
 					).put(
 						"op", "customChange"
@@ -331,9 +339,64 @@ public class SchemaManifestBuilder {
 		}
 	}
 
+	private List<Integer> _getAnonymousClassPositions(String content) {
+		List<Integer> anonymousClassPositions = new ArrayList<>();
+
+		Matcher matcher = _constructorPattern.matcher(content);
+
+		int closeCurlyBraceIndex = -1;
+
+		while (matcher.find()) {
+			int position = matcher.start();
+
+			if ((position < closeCurlyBraceIndex) ||
+				ToolsUtil.isInsideQuotes(content, position)) {
+
+				continue;
+			}
+
+			int openParenthesisIndex = matcher.end() - 1;
+
+			String parameters = _getParameters(
+				content.substring(openParenthesisIndex));
+
+			int trailingContentIndex =
+				openParenthesisIndex + parameters.length() + 2;
+
+			String trailingContent = StringUtil.trim(
+				content.substring(trailingContentIndex));
+
+			if (!trailingContent.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+				continue;
+			}
+
+			anonymousClassPositions.add(position);
+
+			int openCurlyBraceIndex = content.indexOf(
+				CharPool.OPEN_CURLY_BRACE, trailingContentIndex);
+
+			closeCurlyBraceIndex = openCurlyBraceIndex;
+
+			while (true) {
+				closeCurlyBraceIndex = content.indexOf(
+					CharPool.CLOSE_CURLY_BRACE, closeCurlyBraceIndex + 1);
+
+				String anonymousClassBody = content.substring(
+					openCurlyBraceIndex, closeCurlyBraceIndex + 1);
+
+				if (ToolsUtil.getLevel(anonymousClassBody, "{", "}") == 0) {
+					break;
+				}
+			}
+		}
+
+		return anonymousClassPositions;
+	}
+
 	private String _getClassName(
-		Map<String, String> classNames, String content, String packageName,
-		String parameter, String registrator) {
+		List<Integer> anonymousClassPositions, Map<String, String> classNames,
+		String content, String packageName, String parameter, int position,
+		String registrator) {
 
 		Matcher matcher = _lambdaPattern.matcher(parameter);
 
@@ -345,6 +408,7 @@ public class SchemaManifestBuilder {
 
 		if (matcher.find()) {
 			parameter = parameter.substring(matcher.end());
+			position += matcher.end();
 		}
 
 		int openParenthesisIndex = parameter.indexOf(CharPool.OPEN_PARENTHESIS);
@@ -357,7 +421,15 @@ public class SchemaManifestBuilder {
 					openParenthesisIndex + parameters.length() + 2));
 
 			if (trailingContent.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-				return registrator;
+				int index = anonymousClassPositions.indexOf(position);
+
+				if (index == -1) {
+					throw new IllegalStateException(
+						"Unable to find the anonymous class at position " +
+							position);
+				}
+
+				return registrator + StringPool.DOLLAR + (index + 1);
 			}
 
 			String className = parameter.substring(4, openParenthesisIndex);
@@ -391,15 +463,18 @@ public class SchemaManifestBuilder {
 			return _getClassName(receiver, classNames, packageName);
 		}
 
-		String initializer = _getVariableInitializer(content, parameter);
+		int initializerPosition = _getVariableInitializerPosition(
+			content, parameter);
 
-		if (initializer == null) {
+		if (initializerPosition == -1) {
 			return _getClassName(
 				_getVariableType(content, parameter), classNames, packageName);
 		}
 
 		return _getClassName(
-			classNames, content, packageName, initializer, registrator);
+			anonymousClassPositions, classNames, content, packageName,
+			_getVariableInitializer(content, initializerPosition),
+			initializerPosition, registrator);
 	}
 
 	private String _getClassName(
@@ -539,18 +614,7 @@ public class SchemaManifestBuilder {
 		return files;
 	}
 
-	private String _getVariableInitializer(String content, String name) {
-		Pattern pattern = Pattern.compile(
-			"\\b" + Pattern.quote(name) + "\\s*=(?!=)\\s*");
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		int position = matcher.end();
-
+	private String _getVariableInitializer(String content, int position) {
 		int index = position;
 
 		while (true) {
@@ -564,6 +628,19 @@ public class SchemaManifestBuilder {
 				return StringUtil.trim(initializer);
 			}
 		}
+	}
+
+	private int _getVariableInitializerPosition(String content, String name) {
+		Pattern pattern = Pattern.compile(
+			"\\b" + Pattern.quote(name) + "\\s*=(?!=)\\s*");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return -1;
+		}
+
+		return matcher.end();
 	}
 
 	private String _getVariableType(String content, String name) {
@@ -605,6 +682,8 @@ public class SchemaManifestBuilder {
 
 	private static final Pattern _castPattern = Pattern.compile(
 		"^\\(\\s*[\\w.]+\\s*\\)\\s*");
+	private static final Pattern _constructorPattern = Pattern.compile(
+		"\\bnew\\s+[\\w.\\s]+(?:<[^;{]*?>)?\\s*\\(");
 	private static final Pattern _importPattern = Pattern.compile(
 		"^import ([\\w.]+\\.(\\w+));", Pattern.MULTILINE);
 	private static final Pattern _lambdaPattern = Pattern.compile(

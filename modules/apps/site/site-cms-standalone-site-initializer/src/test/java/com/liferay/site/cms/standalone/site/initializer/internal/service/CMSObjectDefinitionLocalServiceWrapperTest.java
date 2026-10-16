@@ -118,6 +118,38 @@ public class CMSObjectDefinitionLocalServiceWrapperTest {
 
 	@Test
 	@TestInfo("LPD-110251")
+	public void testAddObjectDefinitionInCMSFolderWithDepotScope()
+		throws Exception {
+
+		for (String externalReferenceCode : _CMS_EXTERNAL_REFERENCE_CODES) {
+			ObjectDefinition objectDefinition = Mockito.mock(
+				ObjectDefinition.class);
+
+			String objectDefinitionExternalReferenceCode =
+				RandomTestUtil.randomString();
+			long userId = RandomTestUtil.randomLong();
+			long objectFolderId = _mockObjectFolder(externalReferenceCode);
+
+			Mockito.when(
+				_objectDefinitionLocalService.addObjectDefinition(
+					objectDefinitionExternalReferenceCode, userId,
+					objectFolderId, true, ObjectDefinitionConstants.SCOPE_DEPOT,
+					false)
+			).thenReturn(
+				objectDefinition
+			);
+
+			Assert.assertSame(
+				objectDefinition,
+				_cmsObjectDefinitionLocalServiceWrapper.addObjectDefinition(
+					objectDefinitionExternalReferenceCode, userId,
+					objectFolderId, true, ObjectDefinitionConstants.SCOPE_DEPOT,
+					false));
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-110251")
 	public void testAddObjectDefinitionInDefaultFolder() throws Exception {
 		Assert.assertThrows(
 			ObjectDefinitionObjectFolderIdException.class,

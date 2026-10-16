@@ -36,9 +36,11 @@ public class IntentUtil {
 		for (Map.Entry<String, List<String>> entry : _verbIntents.entrySet()) {
 			List<String> intents = entry.getValue();
 
-			if (Objects.equals(intents.get(0), intent)) {
-				verbs.add(entry.getKey());
+			if (!Objects.equals(intents.get(0), intent)) {
+				continue;
 			}
+
+			verbs.add(entry.getKey());
 		}
 
 		Collections.sort(verbs);
@@ -73,9 +75,11 @@ public class IntentUtil {
 
 		for (List<String> intents : _verbIntents.values()) {
 			for (String intent : intents) {
-				if (!searchIntents.contains(intent)) {
-					otherIntents.add(intent);
+				if (searchIntents.contains(intent)) {
+					continue;
 				}
+
+				otherIntents.add(intent);
 			}
 		}
 

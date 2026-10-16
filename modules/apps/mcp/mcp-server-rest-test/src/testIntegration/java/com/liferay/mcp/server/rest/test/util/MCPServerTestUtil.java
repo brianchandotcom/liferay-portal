@@ -397,14 +397,16 @@ public class MCPServerTestUtil {
 
 			Map<String, Serializable> values = objectEntry.getValues();
 
-			if (Objects.equals(
+			if (!Objects.equals(
 					GetterUtil.getLong(
 						values.get(
 							"r_mcpServerProfileToTools_l_mcpServerProfileId")),
 					mcpServerProfileObjectEntry.getObjectEntryId())) {
 
-				toolNames.add(MapUtil.getString(values, "toolName"));
+				continue;
 			}
+
+			toolNames.add(MapUtil.getString(values, "toolName"));
 		}
 
 		return toolNames;

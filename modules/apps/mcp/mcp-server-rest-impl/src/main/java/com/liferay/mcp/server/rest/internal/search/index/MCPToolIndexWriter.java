@@ -163,9 +163,11 @@ public class MCPToolIndexWriter {
 		changedToolSetNames.removeAll(indexedToolSetNames);
 
 		for (String staleToolSetName : staleToolSetTokens.keySet()) {
-			if (toolSetNames.contains(staleToolSetName)) {
-				changedToolSetNames.add(staleToolSetName);
+			if (!toolSetNames.contains(staleToolSetName)) {
+				continue;
 			}
+
+			changedToolSetNames.add(staleToolSetName);
 		}
 
 		return changedToolSetNames;
@@ -485,10 +487,12 @@ public class MCPToolIndexWriter {
 		mcpToolIndexState.setIndexedToolSetNames(toolSetNames);
 
 		for (Map.Entry<String, Object> entry : staleToolSetTokens.entrySet()) {
-			if (!failedToolSetNames.contains(entry.getKey())) {
-				mcpToolIndexState.clearStaleToolSet(
-					entry.getKey(), entry.getValue());
+			if (failedToolSetNames.contains(entry.getKey())) {
+				continue;
 			}
+
+			mcpToolIndexState.clearStaleToolSet(
+				entry.getKey(), entry.getValue());
 		}
 
 		for (String failedToolSetName : failedToolSetNames) {
@@ -533,9 +537,11 @@ public class MCPToolIndexWriter {
 			for (Map.Entry<String, Object> entry :
 					_staleToolSetTokens.entrySet()) {
 
-				if (_isDue(entry.getKey(), time)) {
-					staleToolSetTokens.put(entry.getKey(), entry.getValue());
+				if (!_isDue(entry.getKey(), time)) {
+					continue;
 				}
+
+				staleToolSetTokens.put(entry.getKey(), entry.getValue());
 			}
 
 			return staleToolSetTokens;

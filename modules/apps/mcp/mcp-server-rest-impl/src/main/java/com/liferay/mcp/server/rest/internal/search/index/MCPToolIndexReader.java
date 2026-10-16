@@ -323,9 +323,11 @@ public class MCPToolIndexReader {
 		for (int i = 1; i < (segments.length - 1); i++) {
 			String parameter = OpenAPIUtil.getPathParameter(segments[i]);
 
-			if (parameter != null) {
-				parameterCollectionSegments.put(parameter, segments[i - 1]);
+			if (parameter == null) {
+				continue;
 			}
+
+			parameterCollectionSegments.put(parameter, segments[i - 1]);
 		}
 
 		for (String requiredReference :
@@ -334,9 +336,11 @@ public class MCPToolIndexReader {
 			String[] parts = StringUtil.split(
 				requiredReference, CharPool.POUND);
 
-			if (parts.length == 2) {
-				parameterCollectionSegments.put(parts[0], parts[1]);
+			if (parts.length != 2) {
+				continue;
 			}
+
+			parameterCollectionSegments.put(parts[0], parts[1]);
 		}
 
 		return parameterCollectionSegments;

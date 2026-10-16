@@ -214,12 +214,14 @@ public class ToolSetUtil {
 				continue;
 			}
 
-			if ((mostSpecificBasePath == null) ||
-				(basePath.length() > mostSpecificBasePath.length())) {
+			if ((mostSpecificBasePath != null) &&
+				(basePath.length() <= mostSpecificBasePath.length())) {
 
-				mostSpecificBasePath = basePath;
-				toolSetName = entry.getKey();
+				continue;
 			}
+
+			mostSpecificBasePath = basePath;
+			toolSetName = entry.getKey();
 		}
 
 		return toolSetName;

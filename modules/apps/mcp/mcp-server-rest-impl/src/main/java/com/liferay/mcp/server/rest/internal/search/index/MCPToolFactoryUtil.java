@@ -522,11 +522,13 @@ public class MCPToolFactoryUtil {
 		int byExternalReferenceCodeSegmentCount = 0;
 
 		for (String segment : segments) {
-			if (StringUtil.startsWith(
+			if (!StringUtil.startsWith(
 					StringUtil.toLowerCase(segment), "by-external")) {
 
-				byExternalReferenceCodeSegmentCount++;
+				continue;
 			}
+
+			byExternalReferenceCodeSegmentCount++;
 		}
 
 		if (byExternalReferenceCodeSegmentCount > 1) {
@@ -550,11 +552,13 @@ public class MCPToolFactoryUtil {
 
 			String propertyName = entry.getKey();
 
-			if (!propertyName.startsWith("x-") &&
-				!OpenAPIUtil.isNestedSchema(entry.getValue())) {
+			if (propertyName.startsWith("x-") ||
+				OpenAPIUtil.isNestedSchema(entry.getValue())) {
 
-				propertyNames.add(propertyName);
+				continue;
 			}
+
+			propertyNames.add(propertyName);
 		}
 
 		return propertyNames;
@@ -746,9 +750,11 @@ public class MCPToolFactoryUtil {
 				continue;
 			}
 
-			if (parameterSeen) {
-				segmentsAfterParameter.add(segment);
+			if (!parameterSeen) {
+				continue;
 			}
+
+			segmentsAfterParameter.add(segment);
 		}
 
 		if (segmentsAfterParameter.isEmpty()) {

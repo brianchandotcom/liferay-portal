@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.security.auth.FullNameGenerator;
+import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
@@ -245,6 +247,34 @@ public class ScimUtil {
 		scimUser.setExternalReferenceCode(user.getExternalId());
 
 		ScimName scimName = user.getName();
+
+		if (scimName == null) {
+			scimName = new ScimName();
+		}
+
+		if (Validator.isNull(scimName.getFamilyName()) &&
+			Validator.isNull(scimName.getGivenName()) &&
+			Validator.isNull(scimName.getMiddleName())) {
+
+			String fullName = scimName.getFormatted();
+
+			if (Validator.isNull(fullName)) {
+				fullName = user.getDisplayName();
+			}
+
+			if (Validator.isNull(fullName)) {
+				fullName = user.getUserName();
+			}
+
+			FullNameGenerator fullNameGenerator =
+				FullNameGeneratorFactory.getInstance();
+
+			String[] names = fullNameGenerator.splitFullName(fullName);
+
+			scimName.setFamilyName(names[2]);
+			scimName.setGivenName(names[0]);
+			scimName.setMiddleName(names[1]);
+		}
 
 		scimUser.setFirstName(scimName.getGivenName());
 

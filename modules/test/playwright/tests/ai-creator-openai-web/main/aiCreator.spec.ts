@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {aiCreatorPagesTest} from './fixtures/aiCreatorPagesTest';
 
@@ -24,7 +25,7 @@ const test = mergeTests(
 
 test(
 	'Access the OpenAI configuration page from the Instance Settings and the Site Settings',
-	{tag: '@LPS-179484'},
+	{tag: ['@LPD-109984', '@LPS-179484']},
 	async ({aiCreatorInstanceSettingsPage, page, site, siteSettingsPage}) => {
 
 		// The OpenAI settings are reachable from the Instance Settings
@@ -32,9 +33,18 @@ test(
 		await aiCreatorInstanceSettingsPage.goto();
 
 		await expect(
+			aiCreatorInstanceSettingsPage.openAIImageGenerationCheckbox
+		).toBeChecked();
+		await expect(
 			page.getByLabel('Enable ChatGPT to Create Content')
 		).toBeChecked();
 		await expect(aiCreatorInstanceSettingsPage.apiKeyInput).toHaveValue('');
+		await expect(aiCreatorInstanceSettingsPage.imageModelInput).toHaveValue(
+			'gpt-image-2'
+		);
+		await expect(aiCreatorInstanceSettingsPage.imageSizesInput).toHaveValue(
+			'1024x1024,1536x1024,1024x1536'
+		);
 
 		// The OpenAI settings are reachable from the Site Settings
 
@@ -45,9 +55,18 @@ test(
 		);
 
 		await expect(
+			aiCreatorInstanceSettingsPage.openAIImageGenerationCheckbox
+		).toBeChecked();
+		await expect(
 			page.getByLabel('Enable ChatGPT to Create Content')
 		).toBeChecked();
 		await expect(aiCreatorInstanceSettingsPage.apiKeyInput).toHaveValue('');
+		await expect(aiCreatorInstanceSettingsPage.imageModelInput).toHaveValue(
+			''
+		);
+		await expect(aiCreatorInstanceSettingsPage.imageSizesInput).toHaveValue(
+			''
+		);
 
 		// The How do I get an API key link points to the OpenAI docs
 
@@ -330,5 +349,136 @@ test(
 		await expect(aiCreatorInstanceSettingsPage.apiKeyInput).toHaveValue(
 			apiKey
 		);
+	}
+);
+
+test(
+	'Blank Instance image model and sizes use the default values',
+	{tag: '@LPD-109984'},
+	async ({aiCreatorInstanceSettingsPage, page}) => {
+		try {
+
+			// Clear the image model and sizes
+
+			await aiCreatorInstanceSettingsPage.goto();
+
+			await aiCreatorInstanceSettingsPage.imageModelInput.fill('');
+			await aiCreatorInstanceSettingsPage.imageSizesInput.fill('');
+			await aiCreatorInstanceSettingsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			// The default image model and sizes are used
+
+			await aiCreatorInstanceSettingsPage.goto();
+
+			await expect(
+				aiCreatorInstanceSettingsPage.imageModelInput
+			).toHaveValue('gpt-image-2');
+			await expect(
+				aiCreatorInstanceSettingsPage.imageSizesInput
+			).toHaveValue('1024x1024,1536x1024,1024x1536');
+		}
+		finally {
+			await aiCreatorInstanceSettingsPage.goto();
+
+			await aiCreatorInstanceSettingsPage.imageModelInput.fill(
+				'gpt-image-2'
+			);
+			await aiCreatorInstanceSettingsPage.imageSizesInput.fill(
+				'1024x1024,1536x1024,1024x1536'
+			);
+			await aiCreatorInstanceSettingsPage.saveButton.click();
+
+			await waitForAlert(page);
+		}
+	}
+);
+
+test(
+	'Image sizes that are not in WIDTHxHEIGHT format are not saved',
+	{tag: '@LPD-109984'},
+	async ({aiCreatorInstanceSettingsPage, page}) => {
+
+		// Save image sizes in the wrong format
+
+		await aiCreatorInstanceSettingsPage.goto();
+
+		await aiCreatorInstanceSettingsPage.imageSizesInput.fill(
+			'1024x1024, 1536*1024'
+		);
+		await aiCreatorInstanceSettingsPage.saveButton.click();
+
+		await expect(
+			page.getByText(
+				'Image sizes must be in WIDTHxHEIGHT format, separated by commas.'
+			)
+		).toBeVisible();
+		await expect(aiCreatorInstanceSettingsPage.imageSizesInput).toHaveValue(
+			'1024x1024, 1536*1024'
+		);
+
+		// The image sizes are kept
+
+		await aiCreatorInstanceSettingsPage.goto();
+
+		await expect(aiCreatorInstanceSettingsPage.imageSizesInput).toHaveValue(
+			'1024x1024,1536x1024,1024x1536'
+		);
+	}
+);
+
+test(
+	'Site image model is validated with the API key inherited from the Instance',
+	{tag: '@LPD-109984'},
+	async ({
+		aiCreatorInstanceSettingsPage,
+		enableMockAICreatorOpenAIClient,
+		page,
+		site,
+		siteSettingsPage,
+	}) => {
+		await enableMockAICreatorOpenAIClient();
+
+		try {
+			await aiCreatorInstanceSettingsPage.addApiKey();
+
+			// A wrong Site image model is reported
+
+			await siteSettingsPage.goToSiteSetting(
+				'AI Creator',
+				'OpenAI',
+				site.friendlyUrlPath
+			);
+
+			await aiCreatorInstanceSettingsPage.imageModelInput.fill(
+				'OPENAI_API_INVALID_MODEL_ERROR_MESSAGE'
+			);
+			await aiCreatorInstanceSettingsPage.saveButton.click();
+
+			await expect(page.getByText('INVALID_MODEL')).toBeVisible();
+
+			// A valid Site image model is saved
+
+			await siteSettingsPage.goToSiteSetting(
+				'AI Creator',
+				'OpenAI',
+				site.friendlyUrlPath
+			);
+
+			await aiCreatorInstanceSettingsPage.imageModelInput.fill(
+				'gpt-image-2'
+			);
+			await aiCreatorInstanceSettingsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await expect(
+				aiCreatorInstanceSettingsPage.imageModelInput
+			).toHaveValue('gpt-image-2');
+		}
+		finally {
+			await aiCreatorInstanceSettingsPage.removeApiKey();
+		}
 	}
 );

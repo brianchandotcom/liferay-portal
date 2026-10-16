@@ -56,7 +56,8 @@ public class CMSObjectDefinitionLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(objectFolderId, scope);
+		_validateObjectFolder(objectFolderId);
+		_validateScope(scope);
 
 		return super.addCustomObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
@@ -76,12 +77,8 @@ public class CMSObjectDefinitionLocalServiceWrapper
 			boolean modifiable, String scope, boolean system)
 		throws PortalException {
 
-		if (!system &&
-			!externalReferenceCode.startsWith(
-				ObjectDefinitionConstants.
-					EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION)) {
-
-			_validate(objectFolderId, scope);
+		if (!_isSystem(externalReferenceCode, system)) {
+			_validateScope(scope);
 		}
 
 		return super.addObjectDefinition(
@@ -89,13 +86,80 @@ public class CMSObjectDefinitionLocalServiceWrapper
 			system);
 	}
 
-	private void _validate(long objectFolderId, String scope)
+	@Override
+	public ObjectDefinition updateCustomObjectDefinition(
+			String externalReferenceCode, long objectDefinitionId,
+			long accountEntryRestrictedObjectFieldId,
+			long descriptionObjectFieldId, long objectFolderId,
+			long titleObjectFieldId, boolean accountEntryRestricted,
+			boolean active, String className,
+			Map<Locale, String> descriptionMap, boolean enableCategorization,
+			boolean enableComments, boolean enableFormContainer,
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			boolean enableObjectEntrySchedule,
+			boolean enableObjectEntrySubscription,
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			Map<Locale, String> pluralLabelMap, String scope, int status,
+			List<ObjectDefinitionSetting> objectDefinitionSettings,
+			List<ObjectField> objectFields,
+			List<WorkflowDefinitionLink> workflowDefinitionLinks,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!Objects.equals(scope, ObjectDefinitionConstants.SCOPE_DEPOT)) {
-			throw new ObjectDefinitionScopeException(
-				"Custom object definitions must have depot scope");
+		if (!_isSystem(getObjectDefinition(objectDefinitionId))) {
+			_validateObjectFolder(objectFolderId);
+			_validateScope(scope);
 		}
+
+		return super.updateCustomObjectDefinition(
+			externalReferenceCode, objectDefinitionId,
+			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
+			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
+			className, descriptionMap, enableCategorization, enableComments,
+			enableFormContainer, enableFriendlyURLCustomization,
+			enableIndexSearch, enableObjectEntryDraft, enableObjectEntryHistory,
+			enableObjectEntrySchedule, enableObjectEntrySubscription,
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
+			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
+			status, objectDefinitionSettings, objectFields,
+			workflowDefinitionLinks, serviceContext);
+	}
+
+	@Override
+	public ObjectDefinition updateObjectFolderId(
+			long objectDefinitionId, long objectFolderId)
+		throws PortalException {
+
+		if (!_isSystem(getObjectDefinition(objectDefinitionId))) {
+			_validateObjectFolder(objectFolderId);
+		}
+
+		return super.updateObjectFolderId(objectDefinitionId, objectFolderId);
+	}
+
+	private boolean _isSystem(ObjectDefinition objectDefinition) {
+		return _isSystem(
+			objectDefinition.getExternalReferenceCode(),
+			objectDefinition.isSystem());
+	}
+
+	private boolean _isSystem(String externalReferenceCode, boolean system) {
+		if (system ||
+			externalReferenceCode.startsWith(
+				ObjectDefinitionConstants.
+					EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _validateObjectFolder(long objectFolderId)
+		throws PortalException {
 
 		if (objectFolderId == 0) {
 			throw new ObjectDefinitionObjectFolderIdException(
@@ -110,6 +174,13 @@ public class CMSObjectDefinitionLocalServiceWrapper
 
 			throw new ObjectDefinitionObjectFolderIdException(
 				"Custom object definitions must be in a CMS object folder");
+		}
+	}
+
+	private void _validateScope(String scope) throws PortalException {
+		if (!Objects.equals(scope, ObjectDefinitionConstants.SCOPE_DEPOT)) {
+			throw new ObjectDefinitionScopeException(
+				"Custom object definitions must have scope \"depot\"");
 		}
 	}
 

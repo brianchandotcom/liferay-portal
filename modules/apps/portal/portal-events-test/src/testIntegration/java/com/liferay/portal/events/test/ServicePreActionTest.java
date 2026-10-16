@@ -213,12 +213,13 @@ public class ServicePreActionTest {
 		Object viewableLayoutComposite = ReflectionTestUtil.invoke(
 			_servicePreAction, "_getViewableLayoutComposite",
 			new Class<?>[] {
-				HttpServletRequest.class, boolean.class, Layout.class,
-				List.class, PermissionChecker.class, boolean.class, User.class
+				HttpServletRequest.class, User.class, PermissionChecker.class,
+				Layout.class, List.class, boolean.class
 			},
-			_mockHttpServletRequest, false, _getLayout(defaultLayoutComposite),
-			_getLayouts(defaultLayoutComposite),
-			_permissionCheckerFactory.create(_user), true, _user);
+			_mockHttpServletRequest, _user,
+			_permissionCheckerFactory.create(_user),
+			_getLayout(defaultLayoutComposite),
+			_getLayouts(defaultLayoutComposite), false);
 
 		Layout layout = _getLayout(viewableLayoutComposite);
 

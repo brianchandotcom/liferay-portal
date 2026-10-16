@@ -8,6 +8,7 @@ package com.liferay.mcp.server.rest.internal.model.listener;
 import com.liferay.mcp.server.rest.internal.cache.MCPServerCacheManager;
 import com.liferay.mcp.server.rest.internal.search.index.MCPToolIndexInvalidator;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -25,7 +26,7 @@ import org.mockito.Mockito;
 /**
  * @author Petteri Karttunen
  */
-public class ObjectDefinitionModelListenerTest {
+public class ObjectDefinitionToolSetInvalidatorTest {
 
 	@ClassRule
 	@Rule
@@ -35,35 +36,38 @@ public class ObjectDefinitionModelListenerTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_objectDefinitionModelListener, "mcpServerCacheManager",
+			_objectDefinitionToolSetInvalidator, "_mcpServerCacheManager",
 			_mcpServerCacheManager);
 		ReflectionTestUtil.setFieldValue(
-			_objectDefinitionModelListener, "mcpToolIndexInvalidator",
+			_objectDefinitionToolSetInvalidator, "_mcpToolIndexInvalidator",
 			_mcpToolIndexInvalidator);
 		ReflectionTestUtil.setFieldValue(
-			_objectDefinitionModelListener,
-			"systemObjectDefinitionManagerRegistry",
+			_objectDefinitionToolSetInvalidator,
+			"_objectDefinitionLocalService", _objectDefinitionLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_objectDefinitionToolSetInvalidator,
+			"_systemObjectDefinitionManagerRegistry",
 			_systemObjectDefinitionManagerRegistry);
 	}
 
 	@Test
-	public void testOnAfterCreate() {
-		_objectDefinitionModelListener.onAfterCreate(
+	public void testInvalidate() {
+		_objectDefinitionToolSetInvalidator.invalidate(
 			_mockObjectDefinition(true));
 
 		_assertToolSetInvalidated(_REST_CONTEXT_PATH);
 	}
 
 	@Test
-	public void testOnAfterCreateWhenObjectDefinitionIsNotApproved() {
-		_objectDefinitionModelListener.onAfterCreate(
+	public void testInvalidateWhenObjectDefinitionIsNotApproved() {
+		_objectDefinitionToolSetInvalidator.invalidate(
 			_mockObjectDefinition(false));
 
 		_assertToolSetNotInvalidated();
 	}
 
 	@Test
-	public void testOnAfterCreateWhenObjectDefinitionIsUnmodifiableSystemObject() {
+	public void testInvalidateWhenObjectDefinitionIsUnmodifiableSystemObject() {
 		ObjectDefinition objectDefinition = _mockObjectDefinition(true);
 
 		Mockito.when(
@@ -96,39 +100,30 @@ public class ObjectDefinitionModelListenerTest {
 			systemObjectDefinitionManager
 		);
 
-		_objectDefinitionModelListener.onAfterCreate(objectDefinition);
+		_objectDefinitionToolSetInvalidator.invalidate(objectDefinition);
 
 		_assertToolSetInvalidated("/headless-admin-user/v1.0/user-accounts");
 	}
 
 	@Test
-	public void testOnAfterRemove() {
-		_objectDefinitionModelListener.onAfterRemove(
-			_mockObjectDefinition(true));
+	public void testInvalidateWithObjectDefinitionId() {
+		ObjectDefinition objectDefinition = _mockObjectDefinition(true);
+
+		Mockito.when(
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_OBJECT_DEFINITION_ID)
+		).thenReturn(
+			objectDefinition
+		);
+
+		_objectDefinitionToolSetInvalidator.invalidate(_OBJECT_DEFINITION_ID);
 
 		_assertToolSetInvalidated(_REST_CONTEXT_PATH);
 	}
 
 	@Test
-	public void testOnAfterRemoveWhenObjectDefinitionIsNotApproved() {
-		_objectDefinitionModelListener.onAfterRemove(
-			_mockObjectDefinition(false));
-
-		_assertToolSetNotInvalidated();
-	}
-
-	@Test
-	public void testOnAfterUpdate() {
-		_objectDefinitionModelListener.onAfterUpdate(
-			_mockObjectDefinition(false), _mockObjectDefinition(true));
-
-		_assertToolSetInvalidated(_REST_CONTEXT_PATH);
-	}
-
-	@Test
-	public void testOnAfterUpdateWhenObjectDefinitionIsNotApproved() {
-		_objectDefinitionModelListener.onAfterUpdate(
-			_mockObjectDefinition(false), _mockObjectDefinition(false));
+	public void testInvalidateWithObjectDefinitionIdWhenObjectDefinitionIsMissing() {
+		_objectDefinitionToolSetInvalidator.invalidate(_OBJECT_DEFINITION_ID);
 
 		_assertToolSetNotInvalidated();
 	}
@@ -200,6 +195,9 @@ public class ObjectDefinitionModelListenerTest {
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
+	private static final long _OBJECT_DEFINITION_ID =
+		RandomTestUtil.randomLong();
+
 	private static final String _REST_CONTEXT_PATH =
 		"/c/" + RandomTestUtil.randomString();
 
@@ -207,8 +205,11 @@ public class ObjectDefinitionModelListenerTest {
 		MCPServerCacheManager.class);
 	private final MCPToolIndexInvalidator _mcpToolIndexInvalidator =
 		Mockito.mock(MCPToolIndexInvalidator.class);
-	private final ObjectDefinitionModelListener _objectDefinitionModelListener =
-		new ObjectDefinitionModelListener();
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
+		Mockito.mock(ObjectDefinitionLocalService.class);
+	private final ObjectDefinitionToolSetInvalidator
+		_objectDefinitionToolSetInvalidator =
+			new ObjectDefinitionToolSetInvalidator();
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry = Mockito.mock(
 			SystemObjectDefinitionManagerRegistry.class);

@@ -13,63 +13,45 @@ import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseObjectModelListener<T extends BaseModel<T>>
-	extends BaseModelListener<T> {
+@Component(service = ObjectDefinitionToolSetInvalidator.class)
+public class ObjectDefinitionToolSetInvalidator {
 
-	protected void invalidateToolSet(long objectDefinitionId) {
-		invalidateToolSet(
-			objectDefinitionLocalService.fetchObjectDefinition(
+	public void invalidate(long objectDefinitionId) {
+		invalidate(
+			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectDefinitionId));
 	}
 
-	protected void invalidateToolSet(ObjectDefinition objectDefinition) {
+	public void invalidate(ObjectDefinition objectDefinition) {
 		if ((objectDefinition == null) || !objectDefinition.isApproved()) {
 			return;
 		}
 
 		long companyId = objectDefinition.getCompanyId();
 
-		mcpServerCacheManager.clearOpenAPIJSONObjectCache(companyId);
-		mcpServerCacheManager.clearServletCache(companyId);
+		_mcpServerCacheManager.clearOpenAPIJSONObjectCache(companyId);
+		_mcpServerCacheManager.clearServletCache(companyId);
 
-		mcpToolIndexInvalidator.invalidate(
+		_mcpToolIndexInvalidator.invalidate(
 			companyId, _getRESTContextPath(objectDefinition));
 	}
-
-	@Reference
-	protected MCPServerCacheManager mcpServerCacheManager;
-
-	@Reference
-	protected MCPToolIndexInvalidator mcpToolIndexInvalidator;
-
-	@Reference
-	protected ObjectDefinitionLocalService objectDefinitionLocalService;
-
-	@Reference
-	protected SystemObjectDefinitionManagerRegistry
-		systemObjectDefinitionManagerRegistry;
 
 	private String _getRESTContextPath(ObjectDefinition objectDefinition) {
 		if (!objectDefinition.isUnmodifiableSystemObject()) {
 			return objectDefinition.getRESTContextPath();
 		}
 
-		if (systemObjectDefinitionManagerRegistry == null) {
-			return null;
-		}
-
 		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			systemObjectDefinitionManagerRegistry.
+			_systemObjectDefinitionManagerRegistry.
 				getSystemObjectDefinitionManager(objectDefinition.getName());
 
 		if (systemObjectDefinitionManager == null) {
@@ -96,5 +78,18 @@ public abstract class BaseObjectModelListener<T extends BaseModel<T>>
 
 		return restContextPath;
 	}
+
+	@Reference
+	private MCPServerCacheManager _mcpServerCacheManager;
+
+	@Reference
+	private MCPToolIndexInvalidator _mcpToolIndexInvalidator;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private SystemObjectDefinitionManagerRegistry
+		_systemObjectDefinitionManagerRegistry;
 
 }

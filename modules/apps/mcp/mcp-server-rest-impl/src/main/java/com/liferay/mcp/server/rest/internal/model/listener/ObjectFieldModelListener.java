@@ -6,32 +6,40 @@
 package com.liferay.mcp.server.rest.internal.model.listener;
 
 import com.liferay.object.model.ObjectField;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(service = ModelListener.class)
-public class ObjectFieldModelListener
-	extends BaseObjectModelListener<ObjectField> {
+public class ObjectFieldModelListener extends BaseModelListener<ObjectField> {
 
 	@Override
 	public void onAfterCreate(ObjectField objectField) {
-		invalidateToolSet(objectField.getObjectDefinitionId());
+		_objectDefinitionToolSetInvalidator.invalidate(
+			objectField.getObjectDefinitionId());
 	}
 
 	@Override
 	public void onAfterRemove(ObjectField objectField) {
-		invalidateToolSet(objectField.getObjectDefinitionId());
+		_objectDefinitionToolSetInvalidator.invalidate(
+			objectField.getObjectDefinitionId());
 	}
 
 	@Override
 	public void onAfterUpdate(
 		ObjectField originalObjectField, ObjectField objectField) {
 
-		invalidateToolSet(objectField.getObjectDefinitionId());
+		_objectDefinitionToolSetInvalidator.invalidate(
+			objectField.getObjectDefinitionId());
 	}
+
+	@Reference
+	private ObjectDefinitionToolSetInvalidator
+		_objectDefinitionToolSetInvalidator;
 
 }

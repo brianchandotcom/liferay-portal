@@ -37,6 +37,10 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.security.auth.FullNameDefinition;
+import com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory;
+import com.liferay.portal.kernel.security.auth.FullNameGenerator;
+import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
@@ -246,15 +250,53 @@ public class ScimUtil {
 
 		ScimName scimName = user.getName();
 
-		scimUser.setFirstName(scimName.getGivenName());
+		if (scimName == null) {
+			scimName = new ScimName();
+		}
 
+		String firstName = scimName.getGivenName();
+		String middleName = scimName.getMiddleName();
+		String lastName = scimName.getFamilyName();
+
+		FullNameDefinition fullNameDefinition =
+			FullNameDefinitionFactory.getInstance(locale);
+
+		if (Validator.isNull(firstName) ||
+			(fullNameDefinition.isFieldRequired("last-name") &&
+			 Validator.isNull(lastName))) {
+
+			String fullName = user.getDisplayName();
+
+			if (Validator.isNull(fullName)) {
+				fullName = user.getUserName();
+			}
+
+			FullNameGenerator fullNameGenerator =
+				FullNameGeneratorFactory.getInstance();
+
+			String[] names = fullNameGenerator.splitFullName(fullName);
+
+			if (Validator.isNull(firstName)) {
+				firstName = names[0];
+			}
+
+			if (Validator.isNull(middleName)) {
+				middleName = names[1];
+			}
+
+			if (Validator.isNull(lastName)) {
+				lastName = names[2];
+			}
+		}
+
+		scimUser.setFirstName(firstName);
 		scimUser.setId(user.getId());
 		scimUser.setIMs(_getIMs(user.getInstantMessagingAddresses()));
 		scimUser.setJobTitle(user.getTitle());
-		scimUser.setLastName(scimName.getFamilyName());
+		scimUser.setLastName(lastName);
 		scimUser.setLocale(locale);
 		scimUser.setMale(_isMale(user));
-		scimUser.setMiddleName(scimName.getMiddleName());
+		scimUser.setMiddleName(middleName);
 		scimUser.setNickName(user.getNickName());
 		scimUser.setPassword(user.getPassword());
 		scimUser.setPhoneNumberMultiValuedComplexTypes(user.getPhoneNumbers());

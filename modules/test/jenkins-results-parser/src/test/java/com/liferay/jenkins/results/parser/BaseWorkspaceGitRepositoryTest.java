@@ -1104,19 +1104,19 @@ public class BaseWorkspaceGitRepositoryTest
 			defaultWorkspaceGitRepository
 		).updateBuildDatabase();
 
-		defaultWorkspaceGitRepository.setUsePullRequestBaseRepository(
-			usePullRequestBaseRepository);
+		String baseBranchSHA = RandomTestUtil.randomSHA();
+		String baseBranchUsername = RandomTestUtil.randomString();
+
+		if (usePullRequestBaseRepository) {
+			defaultWorkspaceGitRepository.setBaseBranchSHA(baseBranchSHA);
+			defaultWorkspaceGitRepository.setUsePullRequestBaseRepository(true);
+
+			ReflectionTestUtil.invoke(
+				defaultWorkspaceGitRepository, "_setBaseBranchUsername",
+				new Class<?>[] {String.class}, baseBranchUsername);
+		}
 
 		PullRequest pullRequest = Mockito.mock(PullRequest.class);
-
-		RemoteGitBranch baseRemoteGitBranch = _newRemoteGitBranch(
-			RandomTestUtil.randomSHA(), RandomTestUtil.randomString());
-
-		Mockito.doReturn(
-			baseRemoteGitBranch
-		).when(
-			pullRequest
-		).getBaseRemoteGitBranch();
 
 		RemoteGitBranch senderRemoteGitBranch = _newRemoteGitBranch(
 			RandomTestUtil.randomSHA(), RandomTestUtil.randomString());
@@ -1152,20 +1152,26 @@ public class BaseWorkspaceGitRepositoryTest
 			defaultWorkspaceGitRepository.setGitHubURL(gitHubURL);
 		}
 
-		RemoteGitBranch expectedRemoteGitBranch = upstreamRemoteGitBranch;
+		String expectedBaseBranchSHA = upstreamRemoteGitBranch.getSHA();
+
+		String expectedBaseBranchUsername =
+			upstreamRemoteGitBranch.getUsername();
 
 		if (usePullRequestBaseRepository) {
-			expectedRemoteGitBranch = baseRemoteGitBranch;
+			expectedBaseBranchSHA = baseBranchSHA;
+			expectedBaseBranchUsername = baseBranchUsername;
 		}
 
 		JSONObject jsonObject = defaultWorkspaceGitRepository.getJSONObject();
 
 		testEquals(
-			expectedRemoteGitBranch.getSHA(),
-			jsonObject.getString("base_branch_sha"));
+			expectedBaseBranchSHA, jsonObject.getString("base_branch_sha"));
 		testEquals(
-			expectedRemoteGitBranch.getUsername(),
+			expectedBaseBranchUsername,
 			jsonObject.getString("base_branch_username"));
+		testEquals(
+			senderRemoteGitBranch.getSHA(),
+			jsonObject.getString("sender_branch_sha"));
 	}
 
 	private void _testTearDown(

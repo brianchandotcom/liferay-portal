@@ -53,6 +53,18 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 	</clay:content-col>
 </clay:content-row>
 
+<clay:content-row
+	cssClass="c-mb-4"
+>
+	<clay:content-col
+		expand="<%= true %>"
+	>
+		<liferay-ui:error key="imageSizesInvalid" message='<%= LanguageUtil.format(request, "image-sizes-must-be-a-width-and-height-separated-by-x", "x", false) %>' />
+
+		<aui:input helpMessage='<%= StringBundler.concat(LanguageUtil.get(request, "image-sizes-help"), StringPool.SPACE, LanguageUtil.format(request, "image-sizes-must-be-a-width-and-height-separated-by-x", "x", false)) %>' label="image-sizes" name="imageSizes" type="text" value="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.getImageSizes() %>" />
+	</clay:content-col>
+</clay:content-row>
+
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-93786") %>'>
 	<clay:content-row>
 		<clay:content-col

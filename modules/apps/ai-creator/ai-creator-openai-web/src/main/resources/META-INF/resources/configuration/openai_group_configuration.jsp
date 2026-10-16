@@ -68,6 +68,16 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 	</clay:content-col>
 </clay:content-row>
 
+<clay:content-row
+	cssClass="c-mb-4"
+>
+	<clay:content-col
+		expand="<%= true %>"
+	>
+		<aui:input helpMessage="image-model-site-help" label="image-model" name="imageModel" type="text" value="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.getImageModel() %>" />
+	</clay:content-col>
+</clay:content-row>
+
 <clay:content-row>
 	<clay:content-col
 		cssClass="ai-creator-config-checkbox"

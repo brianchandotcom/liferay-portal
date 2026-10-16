@@ -338,17 +338,14 @@ public abstract class BaseWorkspaceGitRepository
 			PullRequest pullRequest = PullRequestFactory.newPullRequest(
 				gitHubURL);
 
-			if (_isUsePullRequestBaseRepository()) {
-				_upstreamRemoteGitRef = pullRequest.getBaseRemoteGitBranch();
-			}
-			else {
+			if (!_isUsePullRequestBaseRepository()) {
 				_upstreamRemoteGitRef =
 					pullRequest.getUpstreamRemoteGitBranch();
-			}
 
-			_setBaseBranchHeadSHA(_upstreamRemoteGitRef.getSHA());
-			setBaseBranchSHA(_upstreamRemoteGitRef.getSHA());
-			_setBaseBranchUsername(_upstreamRemoteGitRef.getUsername());
+				_setBaseBranchHeadSHA(_upstreamRemoteGitRef.getSHA());
+				setBaseBranchSHA(_upstreamRemoteGitRef.getSHA());
+				_setBaseBranchUsername(_upstreamRemoteGitRef.getUsername());
+			}
 
 			_senderRemoteGitRef = pullRequest.getSenderRemoteGitBranch();
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -375,6 +376,40 @@ public class MCPServerTestUtil {
 		}
 
 		return mcpServerProfileDataMaskObjectEntries;
+	}
+
+	public static List<String> getMCPServerProfileToolNames(
+			ObjectEntry mcpServerProfileObjectEntry)
+		throws Exception {
+
+		List<String> toolNames = new ArrayList<>();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_MCP_SERVER_PROFILE_TOOL",
+					TestPropsValues.getCompanyId());
+
+		for (ObjectEntry objectEntry :
+				ObjectEntryLocalServiceUtil.getObjectEntries(
+					0, objectDefinition.getObjectDefinitionId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			Map<String, Serializable> values = objectEntry.getValues();
+
+			if (!Objects.equals(
+					GetterUtil.getLong(
+						values.get(
+							"r_mcpServerProfileToTools_l_mcpServerProfileId")),
+					mcpServerProfileObjectEntry.getObjectEntryId())) {
+
+				continue;
+			}
+
+			toolNames.add(MapUtil.getString(values, "toolName"));
+		}
+
+		return toolNames;
 	}
 
 	public static List<ObjectEntry> getMCPServerProfileToolObjectEntries(

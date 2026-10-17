@@ -4,6 +4,7 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/AppContext';
@@ -64,5 +65,34 @@ describe('DigitalSignatureForm', () => {
 		expect(parentEmailSubject.classList.contains('has-error')).toBeTruthy();
 
 		expect(asFragment()).toMatchSnapshot();
+	});
+
+	describe('With the LPD-69290 feature flag enabled', () => {
+		beforeAll(() => {
+			Liferay.FeatureFlags['LPD-69290'] = true;
+		});
+
+		afterAll(() => {
+			Liferay.FeatureFlags['LPD-69290'] = false;
+		});
+
+		it('Validates the days to warn recipients', async () => {
+			const {getByLabelText, getByText} = render(
+				<DigitalSignatureFormWithProvider />
+			);
+
+			const inputExpireWarn = getByLabelText(
+				'days-to-warn-recipients-before-expiration'
+			);
+
+			await userEvent.clear(inputExpireWarn);
+			await userEvent.type(inputExpireWarn, '120');
+
+			expect(
+				getByText(
+					'days-to-warn-recipients-must-be-fewer-than-days-until-expiration'
+				)
+			).toBeInTheDocument();
+		});
 	});
 });

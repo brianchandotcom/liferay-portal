@@ -7,20 +7,22 @@ package com.liferay.digital.signature.web.internal.portlet.action;
 
 import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
+import com.liferay.digital.signature.manager.DSRequestManager;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -46,46 +48,70 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
+public class AddDSEnvelopeMVCResourceCommand
+	extends BaseTransactionalMVCResourceCommand {
 
 	@Override
-	protected void doServeResource(
+	protected void doTransactionalCommand(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long[] fileEntryIds = ParamUtil.getLongValues(
+			resourceRequest, "fileEntryIds");
 		User user = themeDisplay.getUser();
 
-		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
-			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
-			new DSEnvelope() {
-				{
-					dsDocuments = _getDSDocuments(resourceRequest);
-					dsRecipients = _getDSRecipients(resourceRequest);
-					emailBlurb = ParamUtil.getString(
-						resourceRequest, "emailMessage");
-					emailSubject = ParamUtil.getString(
-						resourceRequest, "emailSubject");
-					name = ParamUtil.getString(resourceRequest, "envelopeName");
-					senderEmailAddress = user.getEmailAddress();
-					status = "sent";
+		DSEnvelope dsEnvelope = new DSEnvelope() {
+			{
+				dsDocuments = _getDSDocuments(fileEntryIds);
+				dsRecipients = _getDSRecipients(resourceRequest);
+				emailBlurb = ParamUtil.getString(
+					resourceRequest, "emailMessage");
+				emailSubject = ParamUtil.getString(
+					resourceRequest, "emailSubject");
+
+				if (FeatureFlagManagerUtil.isEnabled(
+						themeDisplay.getCompanyId(), "LPD-69290")) {
+
+					expireAfter = ParamUtil.getInteger(
+						resourceRequest, "expireAfter");
+					expireWarn = ParamUtil.getInteger(
+						resourceRequest, "expireWarn");
 				}
-			});
+
+				name = ParamUtil.getString(resourceRequest, "envelopeName");
+				senderEmailAddress = user.getEmailAddress();
+				status = "sent";
+			}
+		};
+
+		if ((dsEnvelope.getExpireAfter() > 0) &&
+			(dsEnvelope.getExpireWarn() >= dsEnvelope.getExpireAfter())) {
+
+			throw new PortalException(
+				"Expire warn must be less than expire after");
+		}
+
+		dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
+			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+			dsEnvelope);
+
+		_dsRequestManager.addDSRequest(
+			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+			user.getUserId(), dsEnvelope, fileEntryIds);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put("dsEnvelopeId", dsEnvelope.getDSEnvelopeId()));
 	}
 
-	private List<DSDocument> _getDSDocuments(ResourceRequest resourceRequest)
+	private List<DSDocument> _getDSDocuments(long[] fileEntryIds)
 		throws Exception {
 
 		return TransformUtil.transformToList(
-			ArrayUtil.toLongArray(
-				ParamUtil.getLongValues(resourceRequest, "fileEntryIds")),
-			fileEntryId -> _toDSDocument(fileEntryId));
+			fileEntryIds, fileEntryId -> _toDSDocument(fileEntryId));
 	}
 
 	private List<DSRecipient> _getDSRecipients(ResourceRequest resourceRequest)
@@ -124,6 +150,9 @@ public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private DSEnvelopeManager _dsEnvelopeManager;
+
+	@Reference
+	private DSRequestManager _dsRequestManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

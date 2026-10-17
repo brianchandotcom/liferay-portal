@@ -67,7 +67,7 @@ public class ToolResourceImpl extends BaseToolResourceImpl {
 			contextCompany.getCompanyId(), "LPD-63311");
 
 		return ToolSetUtil.invokeTool(
-			null, contextHttpServletRequest, object, null, toolName,
+			null, null, contextHttpServletRequest, object, null, toolName,
 			toolSetName);
 	}
 

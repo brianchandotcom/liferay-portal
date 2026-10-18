@@ -35,6 +35,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.AdditionalMatchers;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -98,14 +99,25 @@ public class InputAssetLinksDisplayContextTest {
 			liveGroupId
 		);
 
+		long scopeDepotGroupId = RandomTestUtil.randomLong();
+
+		_setUpCurrentAndAncestorSiteAndDepotGroupIds(
+			_SCOPE_GROUP_ID, _SCOPE_GROUP_ID, scopeDepotGroupId);
+
+		long liveDepotGroupId = RandomTestUtil.randomLong();
+
+		_setUpCurrentAndAncestorSiteAndDepotGroupIds(
+			liveGroupId, liveGroupId, liveDepotGroupId);
+
 		JSONArray jsonArray = _getAssetEntryTypesJSONArray();
 
 		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
+
 		Assert.assertArrayEquals(
-			new long[] {_SCOPE_GROUP_ID},
+			new long[] {_SCOPE_GROUP_ID, scopeDepotGroupId},
 			_getGroupIds(_BASE_CLASS_NAME_ID, jsonArray));
 		Assert.assertArrayEquals(
-			new long[] {liveGroupId},
+			new long[] {liveGroupId, liveDepotGroupId},
 			_getGroupIds(_TARGET_CLASS_NAME_ID, jsonArray));
 	}
 
@@ -119,6 +131,7 @@ public class InputAssetLinksDisplayContextTest {
 		JSONArray jsonArray = _getAssetEntryTypesJSONArray();
 
 		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+
 		Assert.assertArrayEquals(
 			new long[] {_SCOPE_GROUP_ID},
 			_getGroupIds(_BASE_CLASS_NAME_ID, jsonArray));
@@ -226,6 +239,19 @@ public class InputAssetLinksDisplayContextTest {
 			_stagingGroupHelper.isStagedPortlet(_SCOPE_GROUP_ID, portletId)
 		).thenReturn(
 			staged
+		);
+	}
+
+	private void _setUpCurrentAndAncestorSiteAndDepotGroupIds(
+		long groupId, long... currentAndAncestorSiteAndDepotGroupIds) {
+
+		_siteConnectedGroupGroupProviderUtilMockedStatic.when(
+			() ->
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						AdditionalMatchers.aryEq(new long[] {groupId}))
+		).thenReturn(
+			currentAndAncestorSiteAndDepotGroupIds
 		);
 	}
 

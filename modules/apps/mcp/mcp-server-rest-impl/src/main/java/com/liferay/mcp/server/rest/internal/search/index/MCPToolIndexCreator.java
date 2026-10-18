@@ -39,7 +39,7 @@ public class MCPToolIndexCreator {
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 			getIndexName(companyId));
 
-		createIndexRequest.setMappings(_read(_INDEX_MAPPINGS_FILE_NAME));
+		createIndexRequest.setMappings(_read(_FILE_NAME_MAPPINGS));
 		createIndexRequest.setSettings(_getSettingsJSONString());
 
 		try {
@@ -93,7 +93,7 @@ public class MCPToolIndexCreator {
 	private String _getSettingsJSONString() {
 		try {
 			JSONObject settingsJSONObject = _jsonFactory.createJSONObject(
-				_read(_INDEX_SETTINGS_FILE_NAME));
+				_read(_FILE_NAME_SETTINGS));
 
 			JSONObject synonymJSONObject = JSONUtil.getValueAsJSONObject(
 				settingsJSONObject, "JSONObject/analysis", "JSONObject/filter",
@@ -105,16 +105,14 @@ public class MCPToolIndexCreator {
 		}
 		catch (JSONException jsonException) {
 			throw new IllegalStateException(
-				"Unable to parse " + _INDEX_SETTINGS_FILE_NAME, jsonException);
+				"Unable to parse " + _FILE_NAME_SETTINGS, jsonException);
 		}
 	}
 
 	private JSONArray _getSynonymsJSONArray() {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (String line :
-				StringUtil.splitLines(_read(_INDEX_SYNONYMS_FILE_NAME))) {
-
+		for (String line : StringUtil.splitLines(_read(_FILE_NAME_SYNONYMS))) {
 			line = line.trim();
 
 			if (Validator.isNull(line) || line.startsWith(StringPool.POUND)) {
@@ -132,13 +130,13 @@ public class MCPToolIndexCreator {
 			MCPToolIndexCreator.class, "/META-INF/search/" + fileName);
 	}
 
-	private static final String _INDEX_MAPPINGS_FILE_NAME =
+	private static final String _FILE_NAME_MAPPINGS =
 		"liferay-mcp-tools-mappings.json";
 
-	private static final String _INDEX_SETTINGS_FILE_NAME =
+	private static final String _FILE_NAME_SETTINGS =
 		"liferay-mcp-tools-settings.json";
 
-	private static final String _INDEX_SYNONYMS_FILE_NAME =
+	private static final String _FILE_NAME_SYNONYMS =
 		"liferay-mcp-tools-synonyms.txt";
 
 	private static final Log _log = LogFactoryUtil.getLog(

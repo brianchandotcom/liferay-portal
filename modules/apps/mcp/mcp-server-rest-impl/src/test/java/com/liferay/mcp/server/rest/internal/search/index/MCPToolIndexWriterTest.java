@@ -47,12 +47,6 @@ public class MCPToolIndexWriterTest {
 
 	@Before
 	public void setUp() {
-		_companyId = RandomTestUtil.randomLong();
-
-		_mcpToolIndexCreator = Mockito.mock(MCPToolIndexCreator.class);
-
-		_mcpToolIndexWriter = new MCPToolIndexWriter();
-
 		ReflectionTestUtil.setFieldValue(
 			_mcpToolIndexWriter, "_mcpToolIndexCreator", _mcpToolIndexCreator);
 	}
@@ -61,7 +55,7 @@ public class MCPToolIndexWriterTest {
 	public void testClearStaleToolSet() {
 		String toolSetName = RandomTestUtil.randomString();
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		Map<String, Object> staleToolSetTokens = _getStaleToolSetTokens();
 
@@ -74,11 +68,11 @@ public class MCPToolIndexWriterTest {
 	public void testClearStaleToolSetWhenTheToolSetWasMarkedAgain() {
 		String toolSetName = RandomTestUtil.randomString();
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		Map<String, Object> staleToolSetTokens = _getStaleToolSetTokens();
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		Object token = staleToolSetTokens.get(toolSetName);
 
@@ -97,7 +91,7 @@ public class MCPToolIndexWriterTest {
 	public void testDeleteIndex() {
 		Object mcpToolIndexState = ReflectionTestUtil.invoke(
 			_mcpToolIndexWriter, "_getIndexState", new Class<?>[] {long.class},
-			_companyId);
+			_COMPANY_ID);
 
 		ReflectionTestUtil.invoke(
 			mcpToolIndexState, "setIndexedToolSetNames",
@@ -105,7 +99,7 @@ public class MCPToolIndexWriterTest {
 
 		Assert.assertFalse(_hasStaleToolSets());
 
-		_mcpToolIndexWriter.deleteIndex(_companyId);
+		_mcpToolIndexWriter.deleteIndex(_COMPANY_ID);
 
 		Assert.assertSame(mcpToolIndexState, _getIndexState());
 		Assert.assertTrue(_hasStaleToolSets());
@@ -118,13 +112,13 @@ public class MCPToolIndexWriterTest {
 		Mockito.verify(
 			_mcpToolIndexCreator
 		).deleteIfExists(
-			_companyId
+			_COMPANY_ID
 		);
 	}
 
 	@Test
 	public void testGetChangedToolSetNamesWhenAllToolSetsAreStale() {
-		_mcpToolIndexWriter.invalidate(_companyId);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID);
 
 		Set<String> toolSetNames = SetUtil.fromArray("new", "unchanged");
 
@@ -136,8 +130,8 @@ public class MCPToolIndexWriterTest {
 
 	@Test
 	public void testGetChangedToolSetNamesWhenOneIsStale() {
-		_mcpToolIndexWriter.invalidate(_companyId, "staleToolSet");
-		_mcpToolIndexWriter.invalidate(_companyId, "dummyToolSet");
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, "staleToolSet");
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, "dummyToolSet");
 
 		Set<String> changedToolSetNames = _getChangedToolSetNames(
 			SetUtil.fromArray("indexedToolSet", "staleToolSet"),
@@ -186,7 +180,7 @@ public class MCPToolIndexWriterTest {
 
 		Set<String> indexedToolSetNames = ReflectionTestUtil.invoke(
 			_mcpToolIndexWriter, "_getIndexedToolSetNames",
-			new Class<?>[] {long.class}, _companyId);
+			new Class<?>[] {long.class}, _COMPANY_ID);
 
 		Assert.assertEquals(
 			SetUtil.fromArray("headless-delivery-v1.0", "object-admin-v1.0"),
@@ -239,7 +233,7 @@ public class MCPToolIndexWriterTest {
 
 	@Test
 	public void testInvalidate() {
-		_mcpToolIndexWriter.invalidate(_companyId);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID);
 
 		Assert.assertTrue(_hasStaleToolSets());
 
@@ -252,7 +246,7 @@ public class MCPToolIndexWriterTest {
 	public void testInvalidateWithAToolSetName() {
 		String toolSetName = RandomTestUtil.randomString();
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		Map<String, Object> staleToolSetTokens = _getStaleToolSetTokens();
 
@@ -265,7 +259,7 @@ public class MCPToolIndexWriterTest {
 	public void testMarkToolSetFailed() {
 		String toolSetName = RandomTestUtil.randomString();
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		_markToolSetFailed(toolSetName);
 
@@ -280,11 +274,11 @@ public class MCPToolIndexWriterTest {
 	public void testMarkToolSetFailedWhenAllToolSetsAreInvalidated() {
 		String toolSetName = RandomTestUtil.randomString();
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		_markToolSetFailed(toolSetName);
 
-		_mcpToolIndexWriter.invalidate(_companyId);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID);
 
 		Map<String, Object> staleToolSetTokens = _getStaleToolSetTokens();
 
@@ -296,7 +290,7 @@ public class MCPToolIndexWriterTest {
 	public void testMarkToolSetFailedWhenTheRetryTimeHasPassed() {
 		String toolSetName = RandomTestUtil.randomString();
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		_markToolSetFailed(toolSetName);
 
@@ -313,11 +307,11 @@ public class MCPToolIndexWriterTest {
 	public void testMarkToolSetFailedWhenTheToolSetIsInvalidatedAgain() {
 		String toolSetName = RandomTestUtil.randomString();
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		_markToolSetFailed(toolSetName);
 
-		_mcpToolIndexWriter.invalidate(_companyId, toolSetName);
+		_mcpToolIndexWriter.invalidate(_COMPANY_ID, toolSetName);
 
 		Assert.assertTrue(_hasStaleToolSets());
 	}
@@ -341,7 +335,7 @@ public class MCPToolIndexWriterTest {
 		Map<Long, Object> mcpToolIndexStates = ReflectionTestUtil.getFieldValue(
 			_mcpToolIndexWriter, "_mcpToolIndexStates");
 
-		return mcpToolIndexStates.get(_companyId);
+		return mcpToolIndexStates.get(_COMPANY_ID);
 	}
 
 	private MCPTool _getMCPTool(String toolSetName) {
@@ -379,8 +373,11 @@ public class MCPToolIndexWriterTest {
 			new Class<?>[] {String.class}, toolSetName);
 	}
 
-	private long _companyId;
-	private MCPToolIndexCreator _mcpToolIndexCreator;
-	private MCPToolIndexWriter _mcpToolIndexWriter;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private final MCPToolIndexCreator _mcpToolIndexCreator = Mockito.mock(
+		MCPToolIndexCreator.class);
+	private final MCPToolIndexWriter _mcpToolIndexWriter =
+		new MCPToolIndexWriter();
 
 }

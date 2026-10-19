@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -147,17 +148,28 @@ public class JournalContentConfigurationAction
 			actionRequest, "ddmTemplateExternalReferenceCode",
 			ddmTemplateExternalReferenceCode);
 
+		String groupExternalReferenceCode = StringPool.BLANK;
+
 		long groupId = _getArticleGroupId(actionRequest);
 
-		if ((groupId > 0) && (themeDisplay.getScopeGroupId() != groupId)) {
+		Layout layout = themeDisplay.getLayout();
+
+		if ((groupId > 0) &&
+			((groupId != layout.getGroupId()) ||
+			 (groupId != _portal.getScopeGroupId(
+				 layout,
+				 ParamUtil.getString(actionRequest, "portletResource"))))) {
+
 			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (group != null) {
-				setPreference(
-					actionRequest, "groupExternalReferenceCode",
-					group.getExternalReferenceCode());
+				groupExternalReferenceCode = group.getExternalReferenceCode();
 			}
 		}
+
+		setPreference(
+			actionRequest, "groupExternalReferenceCode",
+			groupExternalReferenceCode);
 
 		String[] userToolAssetAddonEntryKeys = ParamUtil.getParameterValues(
 			actionRequest, "userToolAssetAddonEntryKeys");

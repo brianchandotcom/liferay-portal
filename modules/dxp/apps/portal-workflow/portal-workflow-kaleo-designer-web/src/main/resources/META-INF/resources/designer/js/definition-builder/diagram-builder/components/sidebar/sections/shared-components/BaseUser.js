@@ -144,8 +144,6 @@ const BaseUser = ({
 											emailAddress: item.emailAddress,
 											name: item.name,
 											screenName: item.alternateName,
-											userExternalReferenceCode:
-												item.externalReferenceCode,
 											userId: item.id,
 										})}
 										value={item.name}

@@ -11,7 +11,7 @@
 AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfigurationDisplayContext = (AICreatorOpenAIGroupConfigurationDisplayContext)request.getAttribute(AICreatorOpenAIGroupConfigurationDisplayContext.class.getName());
 
 boolean companyChatGPTEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyChatGPTEnabled();
-boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyDALLEEnabled();
+boolean companyOpenAIImageGenerationEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.isCompanyOpenAIImageGenerationEnabled();
 %>
 
 <liferay-util:html-top
@@ -25,19 +25,19 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 		expand="<%= true %>"
 	>
 		<c:choose>
-			<c:when test="<%= !companyChatGPTEnabled && !companyDALLEEnabled %>">
+			<c:when test="<%= !companyChatGPTEnabled && !companyOpenAIImageGenerationEnabled %>">
 				<clay:alert
 					message="to-enable-openai-in-this-site,-it-must-also-be-enabled-from-instance-settings"
 				/>
 			</c:when>
-			<c:when test="<%= !companyChatGPTEnabled && companyDALLEEnabled %>">
+			<c:when test="<%= !companyChatGPTEnabled && companyOpenAIImageGenerationEnabled %>">
 				<clay:alert
 					message="to-enable-chatgpt-for-this-site,-first-enable-it-for-your-instance"
 				/>
 			</c:when>
-			<c:when test="<%= companyChatGPTEnabled && !companyDALLEEnabled %>">
+			<c:when test="<%= companyChatGPTEnabled && !companyOpenAIImageGenerationEnabled %>">
 				<clay:alert
-					message="to-enable-dalle-for-this-site,-first-enable-it-for-your-instance"
+					message="to-enable-openai-image-generation-for-this-site,-first-enable-it-for-your-instance"
 				/>
 			</c:when>
 		</c:choose>
@@ -125,21 +125,21 @@ boolean companyDALLEEnabled = aiCreatorOpenAIGroupConfigurationDisplayContext.is
 		expand="<%= true %>"
 	>
 		<c:choose>
-			<c:when test="<%= companyDALLEEnabled %>">
+			<c:when test="<%= companyOpenAIImageGenerationEnabled %>">
 				<clay:checkbox
-					checked="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isDALLEEnabled() %>"
-					id='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
-					label='<%= LanguageUtil.get(request, "enable-dalle-to-create-images") %>'
-					name='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+					checked="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.isOpenAIImageGenerationEnabled() %>"
+					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAIImageGeneration" %>'
+					label='<%= LanguageUtil.get(request, "enable-openai-image-generation") %>'
+					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAIImageGeneration" %>'
 				/>
 			</c:when>
 			<c:otherwise>
 				<clay:checkbox
 					checked="<%= false %>"
 					disabled="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
-					label='<%= LanguageUtil.get(request, "enable-dalle-to-create-images") %>'
-					name='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+					id='<%= liferayPortletResponse.getNamespace() + "enableOpenAIImageGeneration" %>'
+					label='<%= LanguageUtil.get(request, "enable-openai-image-generation") %>'
+					name='<%= liferayPortletResponse.getNamespace() + "enableOpenAIImageGeneration" %>'
 				/>
 			</c:otherwise>
 		</c:choose>

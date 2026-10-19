@@ -31,6 +31,21 @@ const serializeFixture = (fileName) => {
 	).replace(/\s/g, '');
 };
 
+describe('Serializing roles written by name without a type', () => {
+	it('Writes every role as a regular role by name', () => {
+		const xmlDefinition = serializeFixture(
+			'roles-by-name-without-type-workflow-definition.xml'
+		);
+
+		['PortalContentReviewer', 'PortalContentPublisher'].forEach((name) => {
+			expect(xmlDefinition).toContain(
+				`<role><role-type>regular</role-type><name>${name}</name></role>`
+			);
+		});
+		expect(xmlDefinition).not.toContain('<role-id>');
+	});
+});
+
 describe('Serializing roles that carry an external reference code', () => {
 	it('Writes the external reference code of every role', () => {
 		const deserializeUtil = new DeserializeUtil(
@@ -67,6 +82,23 @@ describe('Serializing roles that carry an external reference code', () => {
 		expect(xmlDefinition).toContain(
 			'<role-external-reference-code>ROLE4_ERC</role-external-reference-code>'
 		);
+	});
+});
+
+describe('Serializing roles that carry only an external reference code', () => {
+	it('Writes the external reference code and type of every role without a role ID', () => {
+		const xmlDefinition = serializeFixture(
+			'roles-with-only-external-reference-codes-workflow-definition.xml'
+		);
+
+		['ROLE1_ERC', 'ROLE2_ERC', 'ROLE3_ERC', 'ROLE4_ERC'].forEach(
+			(externalReferenceCode) => {
+				expect(xmlDefinition).toContain(
+					`<role-external-reference-code>${externalReferenceCode}</role-external-reference-code>`
+				);
+			}
+		);
+		expect(xmlDefinition).not.toContain('<role-id>');
 	});
 });
 
@@ -125,5 +157,22 @@ describe('Serializing users that carry an external reference code and users that
 				`<user><user-external-reference-code>${externalReferenceCode}</user-external-reference-code><user-id>${userId}</user-id></user><user><user-id>${userId}0</user-id></user>`
 			);
 		});
+	});
+});
+
+describe('Serializing users that carry only an external reference code', () => {
+	it('Writes the external reference code of every user without a user ID', () => {
+		const xmlDefinition = serializeFixture(
+			'users-with-only-external-reference-codes-workflow-definition.xml'
+		);
+
+		['USER1_ERC', 'USER2_ERC', 'USER3_ERC', 'USER4_ERC'].forEach(
+			(externalReferenceCode) => {
+				expect(xmlDefinition).toContain(
+					`<user><user-external-reference-code>${externalReferenceCode}</user-external-reference-code></user>`
+				);
+			}
+		);
+		expect(xmlDefinition).not.toContain('<user-id>');
 	});
 });

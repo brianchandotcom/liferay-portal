@@ -9,9 +9,12 @@ import * as path from 'path';
 type fileNames =
 	| 'basic'
 	| 'bcc-reception-type'
+	| 'role-external-reference-code'
+	| 'role-name'
 	| 'same-source-transitions'
 	| 'sample-client-extension'
 	| 'sample-start-end'
+	| 'user-external-reference-code'
 	| 'user-id-and-external-reference-code';
 
 function getXMLContentFromFile(fileName: string) {

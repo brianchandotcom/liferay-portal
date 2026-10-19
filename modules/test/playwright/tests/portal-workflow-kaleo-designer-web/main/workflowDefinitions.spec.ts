@@ -65,6 +65,146 @@ test('can create a workflow definition with a slash in the name tag', async ({
 });
 
 test(
+	'can open a workflow definition that assigns a task to a role by external reference code',
+	{tag: '@LPD-110693'},
+	async ({apiHelpers, diagramViewPage, page, processBuilderPage}) => {
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			externalReferenceCode: 'ROLE_' + getRandomString(),
+			name: 'Role ' + getRandomString(),
+		});
+
+		try {
+			const workflowDefinitionName = getRandomString();
+
+			const {content} = getWorkflowDefinition(
+				'role-external-reference-code'
+			);
+
+			const workflowDefinition =
+				await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
+					workflowDefinitionName,
+					{
+						content: content.replace(
+							'ROLE_EXTERNAL_REFERENCE_CODE',
+							role.externalReferenceCode
+						),
+					}
+				);
+
+			workflowDefinitionIds.push(workflowDefinition.id);
+
+			await processBuilderPage.goto();
+
+			await processBuilderPage.clickWorkflowDefinitionName(
+				workflowDefinitionName
+			);
+
+			await expect(diagramViewPage.diagramNodes).toHaveCount(3);
+
+			await diagramViewPage.clickNode('Review');
+
+			await expect(
+				page.getByText(role.name, {exact: true})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessAdminUser.deleteRole(role.id);
+		}
+	}
+);
+
+test(
+	'can open a workflow definition that assigns a task to a role by name without a type',
+	{tag: '@LPD-110693'},
+	async ({apiHelpers, diagramViewPage, page, processBuilderPage}) => {
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'Role ' + getRandomString(),
+		});
+
+		try {
+			const workflowDefinitionName = getRandomString();
+
+			const {content} = getWorkflowDefinition('role-name');
+
+			const workflowDefinition =
+				await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
+					workflowDefinitionName,
+					{content: content.replace('ROLE_NAME', role.name)}
+				);
+
+			workflowDefinitionIds.push(workflowDefinition.id);
+
+			await processBuilderPage.goto();
+
+			await processBuilderPage.clickWorkflowDefinitionName(
+				workflowDefinitionName
+			);
+
+			await expect(diagramViewPage.diagramNodes).toHaveCount(3);
+
+			await diagramViewPage.clickNode('Review');
+
+			await expect(
+				page.getByText(role.name, {exact: true})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessAdminUser.deleteRole(role.id);
+		}
+	}
+);
+
+test(
+	'can open a workflow definition that assigns a task to a user by external reference code',
+	{tag: '@LPD-110693'},
+	async ({apiHelpers, diagramViewPage, page, processBuilderPage}) => {
+		const userAccount = await apiHelpers.headlessAdminUser.postUserAccount({
+			externalReferenceCode: 'USER_' + getRandomString(),
+		});
+
+		try {
+			const workflowDefinitionName = getRandomString();
+
+			const {content} = getWorkflowDefinition(
+				'user-external-reference-code'
+			);
+
+			const workflowDefinition =
+				await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
+					workflowDefinitionName,
+					{
+						content: content.replace(
+							'USER_EXTERNAL_REFERENCE_CODE',
+							userAccount.externalReferenceCode
+						),
+					}
+				);
+
+			workflowDefinitionIds.push(workflowDefinition.id);
+
+			await processBuilderPage.goto();
+
+			await processBuilderPage.clickWorkflowDefinitionName(
+				workflowDefinitionName
+			);
+
+			await expect(diagramViewPage.diagramNodes).toHaveCount(3);
+
+			await diagramViewPage.clickNode('Review');
+
+			await expect(
+				page.getByText(userAccount.givenName, {exact: true})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessAdminUser.deleteUserAccount(
+				Number(userAccount.id)
+			);
+		}
+	}
+);
+
+test(
 	'can open a workflow definition that assigns a task to a user by id and external reference code',
 	{tag: '@LPD-109013'},
 	async ({apiHelpers, diagramViewPage, page, processBuilderPage}) => {

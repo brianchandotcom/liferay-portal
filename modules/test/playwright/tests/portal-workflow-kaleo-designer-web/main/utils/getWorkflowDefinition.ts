@@ -11,7 +11,8 @@ type fileNames =
 	| 'bcc-reception-type'
 	| 'same-source-transitions'
 	| 'sample-client-extension'
-	| 'sample-start-end';
+	| 'sample-start-end'
+	| 'user-id-and-external-reference-code';
 
 function getXMLContentFromFile(fileName: string) {
 	const absolutePath = path.resolve(__dirname, `../dependencies/${fileName}`);

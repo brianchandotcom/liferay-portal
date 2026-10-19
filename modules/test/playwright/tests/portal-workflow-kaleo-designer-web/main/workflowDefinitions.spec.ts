@@ -64,6 +64,58 @@ test('can create a workflow definition with a slash in the name tag', async ({
 	);
 });
 
+test(
+	'can open a workflow definition that assigns a task to a user by id and external reference code',
+	{tag: '@LPD-109013'},
+	async ({apiHelpers, diagramViewPage, page, processBuilderPage}) => {
+		const userAccount = await apiHelpers.headlessAdminUser.postUserAccount({
+			externalReferenceCode: 'USER_' + getRandomString(),
+		});
+
+		try {
+			const workflowDefinitionName = getRandomString();
+
+			const {content} = getWorkflowDefinition(
+				'user-id-and-external-reference-code'
+			);
+
+			const workflowDefinition =
+				await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
+					workflowDefinitionName,
+					{
+						content: content
+							.replace(
+								'USER_EXTERNAL_REFERENCE_CODE',
+								userAccount.externalReferenceCode
+							)
+							.replace('USER_ID', userAccount.id),
+					}
+				);
+
+			workflowDefinitionIds.push(workflowDefinition.id);
+
+			await processBuilderPage.goto();
+
+			await processBuilderPage.clickWorkflowDefinitionName(
+				workflowDefinitionName
+			);
+
+			await expect(diagramViewPage.diagramNodes).toHaveCount(3);
+
+			await diagramViewPage.clickNode('Review');
+
+			await expect(
+				page.getByText(userAccount.givenName, {exact: true})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessAdminUser.deleteUserAccount(
+				Number(userAccount.id)
+			);
+		}
+	}
+);
+
 test('LPD-49034 Custom Workflow Action Client Extension not working when the asset has related contents', async ({
 	apiHelpers,
 	diagramViewPage,

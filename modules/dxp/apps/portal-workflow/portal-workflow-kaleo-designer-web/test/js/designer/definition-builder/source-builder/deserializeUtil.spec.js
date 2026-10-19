@@ -163,3 +163,36 @@ describe('Deserializing users that carry an external reference code', () => {
 		});
 	});
 });
+
+describe('Deserializing users that carry an external reference code and users that do not', () => {
+	it('Keeps the external reference codes paired with their user IDs', () => {
+		const elements = getElements(
+			'users-with-and-without-external-reference-codes-workflow-definition.xml'
+		);
+
+		const task = elements.find((element) => element.id === 'Review');
+
+		expect(task.data.assignments).toEqual({
+			assignmentType: ['user'],
+			userExternalReferenceCode: ['USER1_ERC', undefined],
+			userId: ['1', '10'],
+		});
+		expect(task.data.notifications.recipients[0][0]).toEqual({
+			assignmentType: ['user'],
+			userExternalReferenceCode: ['USER2_ERC', undefined],
+			userId: ['2', '20'],
+		});
+		expect(task.data.taskTimers.reassignments[0]).toEqual({
+			assignmentType: ['user'],
+			userExternalReferenceCode: ['USER3_ERC', undefined],
+			userId: ['3', '30'],
+		});
+		expect(
+			task.data.taskTimers.timerNotifications[0].recipients[0][0]
+		).toEqual({
+			assignmentType: ['user'],
+			userExternalReferenceCode: ['USER4_ERC', undefined],
+			userId: ['4', '40'],
+		});
+	});
+});

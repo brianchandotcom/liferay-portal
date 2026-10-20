@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "Exports, imports, and publishes the content of the instance, a site, an asset library, or one of their portlets. Get the preview first, then send its portlet data handlers back in the process request with the controls you want. Only the handlers and controls in the request are processed. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.exportimport.rest.client', and version '1.0.12'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Export Import", version = "v1.0")
+	info = @Info(description = "Exports, imports, and publishes the content of the instance, a site, an asset library, or one of their portlets. Get the preview first, then send its portlet data handlers back in the process request with the controls you want. Only the handlers and controls in the request are processed. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.exportimport.rest.client', and version '1.0.13'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Export Import", version = "v1.0")
 )
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
@@ -93,8 +93,6 @@ public class OpenAPIResourceImpl {
 
 			add(ImportProcessResourceImpl.class);
 
-			add(PreviewSiteResourceImpl.class);
-
 			add(PublishPreviewResourceImpl.class);
 
 			add(PublishProcessResourceImpl.class);
@@ -103,9 +101,11 @@ public class OpenAPIResourceImpl {
 
 			add(ScheduledPublishProcessResourceImpl.class);
 
+			add(SiteResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1452781774
+// LIFERAY-REST-BUILDER-HASH:-815306981

@@ -456,7 +456,11 @@ const List = () => {
 				</div>
 			</BasePage.SubHeader>
 
-			<BasePage.Body fluid sidebarOpened={!!infoPanelData}>
+			<BasePage.Body
+				className="d-flex"
+				fluid
+				sidebarOpened={!!infoPanelData}
+			>
 				<Card minHeight={300}>
 					<FrontendDataSet
 

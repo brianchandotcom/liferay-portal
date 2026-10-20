@@ -30,6 +30,10 @@ type TDocument = {
 	viewableBy?: string;
 };
 
+type TDocumentFile =
+	| fs.ReadStream
+	| {buffer: Buffer; mimeType: string; name: string};
+
 type TDocumentFolder = {
 	description?: string;
 	externalReferenceCode?: string;
@@ -203,7 +207,7 @@ export class HeadlessDeliveryApiHelper {
 
 	async postAssetLibraryDocument(
 		assetLibraryId: number | string,
-		file: fs.ReadStream,
+		file: TDocumentFile,
 		document?: TDocument
 	) {
 		return this._postDocument(
@@ -218,8 +222,10 @@ export class HeadlessDeliveryApiHelper {
 		blog?: {
 			articleBody?: string;
 			headline?: string;
+			image?: {imageId: number};
 			keywords?: string[];
 			taxonomyCategoryIds?: number[];
+			viewableBy?: string;
 		}
 	): Promise<any> {
 		blog = {
@@ -233,6 +239,26 @@ export class HeadlessDeliveryApiHelper {
 			{
 				data: blog,
 				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postSiteBlogPostingImage(
+		siteId: number | string,
+		file: TDocumentFile,
+		title = getRandomString()
+	): Promise<{contentUrl: string; id: number; title: string}> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/blog-posting-images`,
+			{
+				failOnStatusCode: true,
+				headers: {
+					...(await this.apiHelpers.getCSRFTokenHeader()),
+				},
+				multipart: {
+					blogPostingImage: JSON.stringify({title}),
+					file,
+				},
 			}
 		);
 	}
@@ -568,7 +594,7 @@ export class HeadlessDeliveryApiHelper {
 
 	async postDocument(
 		siteId: number | string,
-		file: fs.ReadStream,
+		file: TDocumentFile,
 		document?: TDocument
 	) {
 		return this._postDocument(`sites/${siteId}`, file, document);
@@ -727,7 +753,7 @@ export class HeadlessDeliveryApiHelper {
 
 	private async _postDocument(
 		scopePath: string,
-		file: fs.ReadStream,
+		file: TDocumentFile,
 		document?: TDocument
 	) {
 		document = {

@@ -5,16 +5,14 @@
 
 import React from 'react';
 
-import {RequestResult} from '../../../services/ApiHelper';
 import FileSelector from '../../FileSelector';
 import {FormikWrapper} from './FormikWrapper';
-import {useFileSelector} from './hooks/useFileSelector';
+import {UploadRequest, useFileSelector} from './hooks/useFileSelector';
 
 export function FormikFieldFileSelector<T>({
 	'aria-describedby': ariaDescribedby,
 	'aria-labelledby': ariaLabelledby,
 	name,
-	progress,
 	uploadRequest,
 	validExtensions,
 	...otherProps
@@ -22,17 +20,14 @@ export function FormikFieldFileSelector<T>({
 	'aria-describedby'?: string;
 	'aria-labelledby'?: string;
 	'name': string;
-	'progress'?: number;
-	'uploadRequest': (
-		file: File,
-		signal?: AbortSignal
-	) => Promise<RequestResult<T>>;
+	'uploadRequest': UploadRequest<T>;
 	'validExtensions'?: string;
 }) {
 	const {
 		handleRejection,
 		handleRemove,
 		handleUpload,
+		progress,
 		selectedFile,
 		status,
 		validate,

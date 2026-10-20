@@ -4,28 +4,42 @@
  */
 
 import {useFormikContext} from 'formik';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import SectionHeader from '../../../components/SectionHeader';
 import {FormikFieldText} from '../../../components/forms/formik';
 import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
-import {postImportPreview} from '../../../services/postImportPreview';
+import {ABORTED_ERROR} from '../../../services/ApiHelper';
+import ImportUploadService from '../../../services/ImportUploadService';
+import {uploadImportFile} from '../../../services/uploadImportFile';
 import {ImportPreview} from '../../../types/exportImportPreview';
+import {UploadProgress} from '../../../types/importUpload';
+
+function isSameFile(file1: File, file2: File) {
+	return (
+		file1.lastModified === file2.lastModified &&
+		file1.name === file2.name &&
+		file1.size === file2.size
+	);
+}
 
 export default function FileSelectionStep({
-	importPreviewAPIURL,
+	importUploadAPIURL,
 	setImportPreview,
 }: {
-	importPreviewAPIURL: string;
+	importUploadAPIURL: string;
 	setImportPreview: (importPreview?: ImportPreview) => void;
 }) {
-	const [progress, setProgress] = useState<number>();
-
 	const {setFieldTouched, setFieldValue, values} = useFormikContext<{
 		fileSelector?: File;
+		importUploadId?: string;
 		name: string;
 	}>();
 	const autoFilledFileRef = useRef<File | undefined>(undefined);
+	const importUploadIdRef = useRef<string | undefined>(undefined);
+	const interruptedUploadRef = useRef<
+		{file: File; importUploadId: string} | undefined
+	>(undefined);
 
 	useEffect(() => {
 		const currentFile = values.fileSelector;
@@ -41,8 +55,20 @@ export default function FileSelectionStep({
 		}
 
 		if (!currentFile) {
+			if (importUploadIdRef.current) {
+				ImportUploadService.deleteImportUpload(
+					ImportUploadService.getImportUploadURL(
+						importUploadAPIURL,
+						importUploadIdRef.current
+					)
+				);
+
+				importUploadIdRef.current = undefined;
+			}
+
 			setFieldValue('contentSelection', undefined);
 			setFieldTouched('contentSelection', false, false);
+			setFieldValue('importUploadId', undefined);
 			setFieldValue('siteExternalReferenceCodes', []);
 			setFieldTouched('siteExternalReferenceCodes', false, false);
 			setFieldValue('spaceExternalReferenceCodes', []);
@@ -50,6 +76,7 @@ export default function FileSelectionStep({
 			setImportPreview(undefined);
 		}
 	}, [
+		importUploadAPIURL,
 		values.fileSelector,
 		values.name,
 		setFieldTouched,
@@ -57,16 +84,38 @@ export default function FileSelectionStep({
 		setImportPreview,
 	]);
 
-	const handleUpload = async (file: File, signal?: AbortSignal) => {
-		const result = await postImportPreview({
+	const handleUpload = async (
+		file: File,
+		onProgress: (progress: UploadProgress) => void,
+		signal?: AbortSignal
+	) => {
+		const interruptedUpload = interruptedUploadRef.current;
+
+		const result = await uploadImportFile({
 			file,
-			onProgress: setProgress,
+			importUploadAPIURL,
+			importUploadId:
+				interruptedUpload && isSameFile(interruptedUpload.file, file)
+					? interruptedUpload.importUploadId
+					: undefined,
+			onImportUpload: (importUploadId) => {
+				interruptedUploadRef.current = {file, importUploadId};
+			},
+			onProgress,
 			signal,
-			url: importPreviewAPIURL,
 		});
 
+		if (result.error !== null && result.error !== ABORTED_ERROR) {
+			return result;
+		}
+
+		interruptedUploadRef.current = undefined;
+
 		if (result.data) {
-			setImportPreview(result.data);
+			importUploadIdRef.current = result.data.importUploadId;
+
+			setFieldValue('importUploadId', result.data.importUploadId);
+			setImportPreview(result.data.importPreview);
 		}
 
 		return result;
@@ -95,7 +144,6 @@ export default function FileSelectionStep({
 				aria-describedby="fileSelector-description"
 				aria-labelledby="fileSelector-label"
 				name="fileSelector"
-				progress={progress}
 				uploadRequest={handleUpload}
 				validExtensions=".lar"
 			/>

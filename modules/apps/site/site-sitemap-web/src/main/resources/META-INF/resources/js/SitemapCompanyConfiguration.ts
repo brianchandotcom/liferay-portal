@@ -195,7 +195,7 @@ export default function ({
 			selectedData: [objectDefinitionIds],
 			title: sub(
 				Liferay.Language.get('select-x'),
-				Liferay.Language.get('object')
+				Liferay.Language.get('object[entity]')
 			),
 			url: objectDefinitionSelectorURL,
 		});

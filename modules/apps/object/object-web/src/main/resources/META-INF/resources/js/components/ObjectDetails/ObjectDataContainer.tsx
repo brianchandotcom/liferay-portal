@@ -140,7 +140,7 @@ export function ObjectDataContainer({
 					disabled={!isApproved || isReadOnly || noPermissionOrLinked}
 					label={sub(
 						Liferay.Language.get('activate-x'),
-						Liferay.Language.get('object')
+						Liferay.Language.get('object[entity]')
 					)}
 					name="active"
 					onBlur={(event) => {

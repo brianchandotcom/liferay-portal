@@ -39,7 +39,7 @@ public class ObjectDefinitionsPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "object");
+		return _language.get(locale, "object[entity]");
 	}
 
 	@Override

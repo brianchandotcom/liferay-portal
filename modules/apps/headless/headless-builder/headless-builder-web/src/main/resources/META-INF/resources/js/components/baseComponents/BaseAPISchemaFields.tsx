@@ -166,7 +166,7 @@ export default function BaseAPISchemaFields({
 				})}
 			>
 				<label htmlFor="selectTrigger">
-					{Liferay.Language.get('object')}
+					{Liferay.Language.get('object[entity]')}
 
 					<span className="ml-1 reference-mark text-warning">
 						<ClayIcon symbol="asterisk" />

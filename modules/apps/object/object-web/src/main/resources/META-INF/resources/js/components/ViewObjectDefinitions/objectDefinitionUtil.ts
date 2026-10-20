@@ -306,7 +306,7 @@ export function getObjectDefinitionNodeActions({
 		kebabOptions.push({
 			label: sub(
 				Liferay.Language.get('delete-x'),
-				Liferay.Language.get('object')
+				Liferay.Language.get('object[entity]')
 			),
 			onClick: async () => {
 				if (isTreeStructure) {

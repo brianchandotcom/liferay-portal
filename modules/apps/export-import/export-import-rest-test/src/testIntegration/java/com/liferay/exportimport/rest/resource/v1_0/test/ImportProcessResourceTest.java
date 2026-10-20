@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportPreview;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcess;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcessRequest;
+import com.liferay.exportimport.rest.client.dto.v1_0.InstanceImportProcessRequest;
 import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandler;
 import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerControl;
 import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerTreeSelection;
@@ -251,7 +252,7 @@ public class ImportProcessResourceTest
 		assertHttpResponseStatusCode(
 			403,
 			_importProcessResource.postImportProcessHttpResponse(
-				null, new ImportProcessRequest()));
+				null, new InstanceImportProcessRequest()));
 
 		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
 			testCompany.getCompanyId());
@@ -269,7 +270,8 @@ public class ImportProcessResourceTest
 						"file", file
 					).build()),
 				importProcessRequest -> importProcessResource.postImportProcess(
-					null, importProcessRequest));
+					null,
+					_toInstanceImportProcessRequest(importProcessRequest)));
 
 			String portletId = objectDefinition.getPortletId();
 
@@ -285,7 +287,8 @@ public class ImportProcessResourceTest
 						"file", file
 					).build()),
 				importProcessRequest -> importProcessResource.postImportProcess(
-					portletId, importProcessRequest));
+					portletId,
+					_toInstanceImportProcessRequest(importProcessRequest)));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -302,7 +305,7 @@ public class ImportProcessResourceTest
 					"file", file
 				).build()),
 			importProcessRequest -> importProcessResource.postImportProcess(
-				null, importProcessRequest));
+				null, _toInstanceImportProcessRequest(importProcessRequest)));
 
 		_testPostImportProcessWithPreviewForOtherGroup(
 			testGroup.getGroupId(),
@@ -313,7 +316,8 @@ public class ImportProcessResourceTest
 				).build()),
 			importProcessRequest ->
 				importProcessResource.postImportProcessHttpResponse(
-					null, importProcessRequest));
+					null,
+					_toInstanceImportProcessRequest(importProcessRequest)));
 		_testPostImportProcessWithSettings(
 			companyGroup.getGroupId(),
 			file -> _importPreviewResource.postImportPreview(
@@ -322,11 +326,12 @@ public class ImportProcessResourceTest
 					"file", file
 				).build()),
 			importProcessRequest -> importProcessResource.postImportProcess(
-				null, importProcessRequest));
+				null, _toInstanceImportProcessRequest(importProcessRequest)));
 		_testPostImportProcessWithoutPreview(
 			importProcessRequest ->
 				importProcessResource.postImportProcessHttpResponse(
-					null, importProcessRequest));
+					null,
+					_toInstanceImportProcessRequest(importProcessRequest)));
 	}
 
 	@Override
@@ -1192,6 +1197,13 @@ public class ImportProcessResourceTest
 					externalReferenceCode, portletId,
 					RandomTestUtil.randomString(), new ImportProcessRequest()));
 		}
+	}
+
+	private InstanceImportProcessRequest _toInstanceImportProcessRequest(
+		ImportProcessRequest importProcessRequest) {
+
+		return InstanceImportProcessRequest.toDTO(
+			importProcessRequest.toString());
 	}
 
 	private static final String _STATUS_MESSAGE =

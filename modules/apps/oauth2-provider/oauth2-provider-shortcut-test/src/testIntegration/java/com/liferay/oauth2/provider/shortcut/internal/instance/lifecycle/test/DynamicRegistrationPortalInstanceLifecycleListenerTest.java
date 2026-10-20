@@ -98,13 +98,13 @@ public class DynamicRegistrationPortalInstanceLifecycleListenerTest {
 			Collections.singletonList(GrantType.AUTHORIZATION_CODE),
 			dynamicallyRegisteredOAuth2Application.getAllowedGrantTypesList());
 
+		Assert.assertNotNull(
+			_oAuth2AuthorizationLocalService.fetchOAuth2Authorization(
+				oAuth2Authorization.getOAuth2AuthorizationId()));
 		Assert.assertNull(
 			_oAuth2AuthorizationLocalService.fetchOAuth2Authorization(
 				dynamicallyRegisteredOAuth2Authorization.
 					getOAuth2AuthorizationId()));
-		Assert.assertNotNull(
-			_oAuth2AuthorizationLocalService.fetchOAuth2Authorization(
-				oAuth2Authorization.getOAuth2AuthorizationId()));
 
 		dynamicRegistratorOAuth2Application =
 			_oAuth2ApplicationLocalService.getOAuth2Application(

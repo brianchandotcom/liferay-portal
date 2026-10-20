@@ -5,6 +5,8 @@
 
 import {fetch} from 'frontend-js-web';
 
+export const ABORTED_ERROR = 'Aborted';
+
 export type RequestResult<T> =
 	| {data: null; error: string; status?: string | null}
 	| {data: T; error: null; status?: string | null};
@@ -70,10 +72,10 @@ async function get<T>(url: string): Promise<RequestResult<T>> {
 	}
 }
 
-async function postFormDataWithProgress<T>(
+async function putBlobWithProgress<T>(
 	url: string,
-	formData: FormData,
-	onProgress?: (percent: number) => void,
+	blob: Blob,
+	onProgress?: (loadedBytes: number) => void,
 	signal?: AbortSignal
 ): Promise<RequestResult<T>> {
 	return new Promise((resolve) => {
@@ -81,14 +83,16 @@ async function postFormDataWithProgress<T>(
 
 		const handleAbort = () => {
 			xhr.abort();
-			resolve({data: null, error: 'Aborted'});
+			resolve({data: null, error: ABORTED_ERROR});
 		};
 
-		xhr.open('POST', url);
+		xhr.open('PUT', url);
 
 		Object.entries(XHR_HEADERS).forEach(([key, value]) => {
 			xhr.setRequestHeader(key, value);
 		});
+
+		xhr.setRequestHeader('Content-Type', 'application/octet-stream');
 
 		if (signal) {
 			signal.addEventListener('abort', handleAbort);
@@ -96,9 +100,7 @@ async function postFormDataWithProgress<T>(
 
 		if (onProgress && xhr.upload) {
 			xhr.upload.onprogress = (event) => {
-				if (event.lengthComputable) {
-					onProgress(Math.round((event.loaded / event.total) * 100));
-				}
+				onProgress(event.loaded);
 			};
 		}
 
@@ -135,7 +137,7 @@ async function postFormDataWithProgress<T>(
 			}
 		};
 
-		xhr.send(formData);
+		xhr.send(blob);
 	});
 }
 
@@ -197,5 +199,5 @@ export default {
 	delete: deleteResource,
 	get,
 	post,
-	postFormDataWithProgress,
+	putBlobWithProgress,
 };

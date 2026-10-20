@@ -64,6 +64,7 @@ export interface ImportProcessRequest {
 	comments?: boolean;
 	dataStrategy?: DataStrategy;
 	deletions?: boolean;
+	importUploadId?: string;
 	name?: string;
 	permissions?: boolean;
 	portletDataHandlers?: PortletDataHandler[];

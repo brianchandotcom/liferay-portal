@@ -4,10 +4,8 @@
  */
 
 import {DateFilterValues, LastRange, Range} from '../components/date_filter';
-import {PublishProcessRequest} from '../types/exportImportProcess';
+import {DateFilter} from '../types/exportImportProcess';
 import {toWallClockDateTime} from './dateTime';
-
-const HOUR = 60 * 60 * 1000;
 
 const LAST_RANGES: Array<{hours: number; lastRange: LastRange}> = [
 	{hours: 12, lastRange: LastRange.H12},
@@ -41,28 +39,26 @@ function toDateTime(
 }
 
 export function toDateFilterValues(
-	{dateRangeType, endDate, startDate}: PublishProcessRequest,
+	dateFilter: DateFilter | undefined,
 	timeZoneId: string
 ): DateFilterValues {
-	if (dateRangeType === 'DATE_RANGE') {
+	if (dateFilter?.type === 'DateRange') {
 		return {
-			endDate: toDateTime(endDate, timeZoneId),
+			endDate: toDateTime(dateFilter.endDate, timeZoneId),
 			range: Range.DateRange,
-			startDate: toDateTime(startDate, timeZoneId),
+			startDate: toDateTime(dateFilter.startDate, timeZoneId),
 		};
 	}
 
-	if (dateRangeType === 'LAST' && startDate) {
-		const lastRange = toLastRange(
-			Math.round((Date.now() - Date.parse(startDate)) / HOUR)
-		);
+	if (dateFilter?.type === 'LastHours') {
+		const lastRange = toLastRange(dateFilter.hours);
 
 		if (lastRange) {
 			return {last: lastRange, range: Range.Last};
 		}
 	}
 
-	if (dateRangeType === 'FROM_LAST_PUBLISH_DATE') {
+	if (dateFilter?.type === 'FromLastPublishDate') {
 		return {range: Range.FromLastPublishDate};
 	}
 

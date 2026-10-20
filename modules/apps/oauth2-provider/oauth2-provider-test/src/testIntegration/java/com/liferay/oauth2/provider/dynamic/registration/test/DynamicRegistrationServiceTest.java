@@ -1137,7 +1137,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				).toString()));
 
 		Assert.assertEquals(400, response.getStatus());
-
 		Assert.assertEquals("invalid_client_metadata", parseError(response));
 
 		AuditMessage auditMessage = _fetchAuditMessage(
@@ -1257,7 +1256,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				).toString()));
 
 		Assert.assertEquals(400, response.getStatus());
-
 		Assert.assertEquals("invalid_client_metadata", parseError(response));
 
 		OAuth2Application currentOAuth2Application =

@@ -39,9 +39,9 @@ renderResponse.setTitle(exportImportProcessDisplayContext.getImportTitle());
 			).put(
 				"commentsAndRatingsEnabled", exportImportProcessDisplayContext.isCommentsAndRatingsEnabled()
 			).put(
-				"importPreviewAPIURL", exportImportProcessDisplayContext.getImportPreviewAPIURL()
-			).put(
 				"importProcessAPIURL", exportImportProcessDisplayContext.getImportProcessAPIURL()
+			).put(
+				"importUploadAPIURL", exportImportProcessDisplayContext.getImportUploadAPIURL()
 			).put(
 				"scope", exportImportProcessDisplayContext.getScope()
 			).put(

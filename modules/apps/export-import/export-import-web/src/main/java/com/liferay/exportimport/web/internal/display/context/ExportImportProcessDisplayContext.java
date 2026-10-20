@@ -217,16 +217,6 @@ public class ExportImportProcessDisplayContext {
 		return _getTitle("new-export-process");
 	}
 
-	public String getImportPreviewAPIURL() {
-		if (_importPreviewAPIURL != null) {
-			return _importPreviewAPIURL;
-		}
-
-		_importPreviewAPIURL = _getResourceAPIURL("/import-preview");
-
-		return _importPreviewAPIURL;
-	}
-
 	public String getImportProcessAPIURL() {
 		if (_importProcessAPIURL != null) {
 			return _importProcessAPIURL;
@@ -239,6 +229,16 @@ public class ExportImportProcessDisplayContext {
 
 	public String getImportTitle() {
 		return _getTitle("new-import-process");
+	}
+
+	public String getImportUploadAPIURL() {
+		if (_importUploadAPIURL != null) {
+			return _importUploadAPIURL;
+		}
+
+		_importUploadAPIURL = _getResourceAPIURL("/import-uploads");
+
+		return _importUploadAPIURL;
 	}
 
 	public Map<String, Object> getPageTreeModalConfiguration() {
@@ -399,8 +399,8 @@ public class ExportImportProcessDisplayContext {
 	private final Group _group;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
-	private String _importPreviewAPIURL;
 	private String _importProcessAPIURL;
+	private String _importUploadAPIURL;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final long _liveGroupId;
 	private final boolean _privateLayout;

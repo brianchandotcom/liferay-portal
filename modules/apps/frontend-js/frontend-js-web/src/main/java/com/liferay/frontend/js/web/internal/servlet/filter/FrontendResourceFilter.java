@@ -268,10 +268,10 @@ public class FrontendResourceFilter extends BasePortalFilter {
 	private byte[] _getGZipBytes(FrontendResource frontendResource)
 		throws Exception {
 
-		String eTag = frontendResource.getETag();
+		String cacheKey = frontendResource.getCacheKey();
 
-		if (eTag != null) {
-			byte[] bytes = _gZipBytesPortalCache.get(eTag);
+		if (cacheKey != null) {
+			byte[] bytes = _gZipBytesPortalCache.get(cacheKey);
 
 			if (bytes != null) {
 				return bytes;
@@ -290,8 +290,8 @@ public class FrontendResourceFilter extends BasePortalFilter {
 
 		byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
 
-		if (eTag != null) {
-			_gZipBytesPortalCache.put(eTag, bytes);
+		if (cacheKey != null) {
+			_gZipBytesPortalCache.put(cacheKey, bytes);
 		}
 
 		return bytes;

@@ -251,6 +251,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		label_i18n,
 		multiple = false,
 		preselectedValues = '[]',
+		restApplication,
+		restEndpoint,
+		restSchema,
 		source,
 		sourceType,
 	}: {
@@ -264,6 +267,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		label_i18n?: {[key: string]: string};
 		multiple?: boolean;
 		preselectedValues?: string;
+		restApplication?: string;
+		restEndpoint?: string;
+		restSchema?: string;
 		source: string;
 		sourceType: string;
 	}) {
@@ -282,6 +288,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			label_i18n,
 			multiple,
 			preselectedValues,
+			restApplication,
+			restEndpoint,
+			restSchema,
 			source,
 			sourceType,
 		};
@@ -451,6 +460,15 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		};
 
 		return this.post(url, {data});
+	}
+
+	async getDataSetSelectionFilters({dataSetERC}: {dataSetERC: string}) {
+		const url = getDataSetResourceURL({
+			dataSetERC,
+			relationship: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTERS,
+		});
+
+		return this.get(url);
 	}
 
 	async getDataSetSnapshots({

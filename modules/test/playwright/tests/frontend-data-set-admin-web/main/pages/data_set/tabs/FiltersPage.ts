@@ -365,6 +365,12 @@ export class FiltersPage {
 			.click();
 		await this.newSelectionFilterForm.itemLabel.click();
 
+		if (!preselectedValues.length) {
+			await this.page.getByText(selectionType).click();
+
+			return;
+		}
+
 		await this.newSelectionFilterForm.preselectedValuesMultiSelect.click();
 		await this.page
 			.getByRole('option', {name: preselectedValues[0]})

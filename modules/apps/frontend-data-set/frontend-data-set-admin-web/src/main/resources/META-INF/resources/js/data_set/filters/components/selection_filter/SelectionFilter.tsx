@@ -15,6 +15,7 @@ import React, {useState} from 'react';
 
 import CheckboxMultiSelect from '../../../../components/CheckboxMultiSelect';
 import RequiredMark from '../../../../components/RequiredMark';
+import hasTokens from '../../../../utils/hasTokens';
 import {
 	ESelectionFilterSourceType,
 	IField,
@@ -84,7 +85,9 @@ function Body({
 	const [picklists, setPicklists] = useState<IPickList[]>();
 	const [preselectedValueInput, setPreselectedValueInput] = useState('');
 	const [preselectedValues, setPreselectedValues] = useState<TItem[]>(
-		JSON.parse(filter?.preselectedValues || '[]')
+		hasTokens(filter?.source)
+			? []
+			: JSON.parse(filter?.preselectedValues || '[]')
 	);
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		filter
@@ -125,6 +128,10 @@ function Body({
 
 	const isValidSingleMode =
 		multiple || (!multiple && !(preselectedValues.length > 1));
+
+	const hasSourceTokens =
+		sourceType === ESelectionFilterSourceType.API_REST_APPLICATION &&
+		hasTokens(source);
 
 	const isi18nFilterLabelsValid = (
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
@@ -500,6 +507,11 @@ function Body({
 										setSource(
 											`/o${selectedRESTApplication.replace('v1.0', '')}${selectedRESTEndpoint}`
 										);
+
+										if (hasTokens(selectedRESTEndpoint)) {
+											setPreselectedValueInput('');
+											setPreselectedValues([]);
+										}
 									}
 
 									setSourceValidationError(false);
@@ -571,9 +583,15 @@ function Body({
 
 										<CheckboxMultiSelect
 											allowsCustomLabel={false}
+											aria-describedby={
+												hasSourceTokens
+													? `${preselectedValuesFormElementId}Help`
+													: undefined
+											}
 											aria-label={Liferay.Language.get(
 												'preselected-values'
 											)}
+											disabled={hasSourceTokens}
 											inputName={
 												preselectedValuesFormElementId
 											}
@@ -593,6 +611,16 @@ function Body({
 											sourceItems={filteredSourceItems}
 											value={preselectedValueInput}
 										/>
+
+										{hasSourceTokens && (
+											<ClayForm.Text
+												id={`${preselectedValuesFormElementId}Help`}
+											>
+												{Liferay.Language.get(
+													'values-cannot-be-preselected-for-an-endpoint-with-tokens'
+												)}
+											</ClayForm.Text>
+										)}
 
 										{!isValidSingleMode && (
 											<ClayForm.FeedbackGroup>

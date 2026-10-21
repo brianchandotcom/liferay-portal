@@ -14,7 +14,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Daniel Sanz
@@ -40,7 +42,7 @@ public interface FDSSerializer {
 
 	public String serializeAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest,
-		boolean interpolate, JSONObject tokenResolutionsJSONObject);
+		boolean interpolate, JSONObject fdsAPIURLTokenResolutionsJSONObject);
 
 	public default String serializeAdditionalAPIURLParameters(
 		String fdsName, HttpServletRequest httpServletRequest) {
@@ -51,7 +53,7 @@ public interface FDSSerializer {
 
 	public String serializeAdditionalAPIURLParameters(
 		String fdsName, HttpServletRequest httpServletRequest,
-		boolean interpolate, JSONObject tokenResolutionsJSONObject);
+		boolean interpolate, JSONObject fdsAPIURLTokenResolutionsJSONObject);
 
 	public List<FDSActionDropdownItem> serializeBulkActions(
 		String fdsName, HttpServletRequest httpServletRequest);
@@ -65,6 +67,13 @@ public interface FDSSerializer {
 
 	public JSONArray serializeFilters(
 		String fdsName, HttpServletRequest httpServletRequest);
+
+	public default JSONArray serializeFilters(
+		String fdsName, HttpServletRequest httpServletRequest,
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+
+		return serializeFilters(fdsName, httpServletRequest);
+	}
 
 	public JSONArray serializeGroupedFilters(
 		String fdsName, HttpServletRequest httpServletRequest);
@@ -86,6 +95,14 @@ public interface FDSSerializer {
 
 	public boolean serializeSearchSuggestionsEnabled(
 		String fdsName, HttpServletRequest httpServletRequest);
+
+	public default Map<String, String> serializeSelectionFilterAPIURLs(
+		String fdsName, HttpServletRequest httpServletRequest,
+		boolean interpolate,
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+
+		return Collections.emptyMap();
+	}
 
 	public default boolean serializeShowPagination(
 		String fdsName, HttpServletRequest httpServletRequest) {

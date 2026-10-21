@@ -37,6 +37,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.Writer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class FDSRendererImpl implements FDSRenderer {
 
 	public String getFDSAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest,
-		boolean interpolate, JSONObject tokenResolutionsJSONObject) {
+		boolean interpolate, JSONObject fdsAPIURLTokenResolutionsJSONObject) {
 
 		FDSSerializer fdsSerializer = _getFDSSerializer(
 			fdsName, httpServletRequest);
@@ -62,12 +63,12 @@ public class FDSRendererImpl implements FDSRenderer {
 		if (fdsSerializer != null) {
 			String fdsAPIURL = fdsSerializer.serializeAPIURL(
 				fdsName, httpServletRequest, interpolate,
-				tokenResolutionsJSONObject);
+				fdsAPIURLTokenResolutionsJSONObject);
 
 			String additionalAPIURLParameters =
 				fdsSerializer.serializeAdditionalAPIURLParameters(
 					fdsName, httpServletRequest, interpolate,
-					tokenResolutionsJSONObject);
+					fdsAPIURLTokenResolutionsJSONObject);
 
 			if (fdsAPIURL.contains(StringPool.QUESTION) &&
 				Validator.isNotNull(additionalAPIURLParameters)) {
@@ -91,6 +92,24 @@ public class FDSRendererImpl implements FDSRenderer {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public Map<String, String> getSelectionFilterFDSAPIURLs(
+		String fdsName, HttpServletRequest httpServletRequest,
+		boolean interpolate,
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+
+		FDSSerializer fdsSerializer = _getFDSSerializer(
+			fdsName, httpServletRequest);
+
+		if (fdsSerializer == null) {
+			return Collections.emptyMap();
+		}
+
+		return fdsSerializer.serializeSelectionFilterAPIURLs(
+			fdsName, httpServletRequest, interpolate,
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 	}
 
 	@Override
@@ -195,7 +214,9 @@ public class FDSRendererImpl implements FDSRenderer {
 					() -> {
 						JSONArray filtersJSONArray =
 							fdsSerializer.serializeFilters(
-								fdsName, httpServletRequest);
+								fdsName, httpServletRequest,
+								(Map<String, JSONObject>)props.get(
+									"selectionFilterTokenResolutions"));
 
 						if (JSONUtil.isEmpty(filtersJSONArray)) {
 							return null;

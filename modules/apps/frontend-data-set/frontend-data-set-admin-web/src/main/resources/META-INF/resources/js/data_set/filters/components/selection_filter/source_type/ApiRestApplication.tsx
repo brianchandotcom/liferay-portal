@@ -24,6 +24,7 @@ import {
 } from '../../../../../utils/constants';
 import getFields, {getValidFields} from '../../../../../utils/getFields';
 import getOpenApiData from '../../../../../utils/getOpenApiData';
+import hasTokens from '../../../../../utils/hasTokens';
 import openDefaultFailureToast from '../../../../../utils/openDefaultFailureToast';
 import {IField, ISchemas, ISelectionFilter} from '../../../../../utils/types';
 
@@ -100,6 +101,10 @@ function ApiRestApplication({
 		path: string,
 		allowedParameters: string[]
 	): boolean => {
+		if (Liferay.FeatureFlags['LPD-38564']) {
+			return true;
+		}
+
 		const paramsMatcher = RegExp('{(.*?)}', 'g');
 		let matches;
 
@@ -123,8 +128,7 @@ function ApiRestApplication({
 		selectedItemLabel: string;
 		source: string | null;
 	}) {
-		const isValidSource =
-			source && !(source as string).match(/\{[A-Za-z0-9]+\}/g);
+		const isValidSource = source && !hasTokens(source);
 
 		if (!isValidSource || !selectedItemKey || !selectedItemLabel) {
 			return [];

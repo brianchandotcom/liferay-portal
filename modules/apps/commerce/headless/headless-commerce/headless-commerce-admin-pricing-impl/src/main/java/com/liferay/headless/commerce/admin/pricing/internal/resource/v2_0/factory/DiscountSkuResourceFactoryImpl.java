@@ -329,4 +329,4 @@ public class DiscountSkuResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-295444644
+// LIFERAY-REST-BUILDER-HASH:-63788413

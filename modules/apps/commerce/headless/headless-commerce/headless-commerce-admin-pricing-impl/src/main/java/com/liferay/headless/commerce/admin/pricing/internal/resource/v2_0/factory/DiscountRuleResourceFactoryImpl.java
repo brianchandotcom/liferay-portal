@@ -329,4 +329,4 @@ public class DiscountRuleResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1440450761
+// LIFERAY-REST-BUILDER-HASH:-2022583583

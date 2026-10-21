@@ -17,6 +17,7 @@
 	export {ERCAssetLibraryTestEntityAPI} from './apis/ERCAssetLibraryTestEntityAPI';
 	export {ERCScopedTestEntityAPI} from './apis/ERCScopedTestEntityAPI';
 	export {ERCSiteTestEntityAPI} from './apis/ERCSiteTestEntityAPI';
+	export {FeatureFlagMethodTestEntityAPI} from './apis/FeatureFlagMethodTestEntityAPI';
 	export {FilterAPI} from './apis/FilterAPI';
 	export {MultipartTestEntityAPI} from './apis/MultipartTestEntityAPI';
 	export {ReferencingTestEntityAPI} from './apis/ReferencingTestEntityAPI';
@@ -43,6 +44,7 @@
 	export {ERCSiteTestEntity} from './models/ERCSiteTestEntity';
 	export {Facet} from './models/Facet';
 	export {FacetValue} from './models/FacetValue';
+	export {FeatureFlagMethodTestEntity} from './models/FeatureFlagMethodTestEntity';
 	export {Filter} from './models/Filter';
 	export {JSONMapAttributeTestEntity} from './models/JSONMapAttributeTestEntity';
 	export {MultipartTestEntity} from './models/MultipartTestEntity';
@@ -57,6 +59,7 @@
 	export {PageERCAssetLibraryTestEntity} from './models/PageERCAssetLibraryTestEntity';
 	export {PageERCScopedTestEntity} from './models/PageERCScopedTestEntity';
 	export {PageERCSiteTestEntity} from './models/PageERCSiteTestEntity';
+	export {PageFeatureFlagMethodTestEntity} from './models/PageFeatureFlagMethodTestEntity';
 	export {PageFilter} from './models/PageFilter';
 	export {PagePermission} from './models/PagePermission';
 	export {PageSchema} from './models/PageSchema';

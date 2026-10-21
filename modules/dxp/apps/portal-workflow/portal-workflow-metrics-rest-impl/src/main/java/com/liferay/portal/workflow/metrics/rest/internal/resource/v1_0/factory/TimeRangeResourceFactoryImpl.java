@@ -326,4 +326,4 @@ public class TimeRangeResourceFactoryImpl implements TimeRangeResource.Factory {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:911084096
+// LIFERAY-REST-BUILDER-HASH:-2069821403

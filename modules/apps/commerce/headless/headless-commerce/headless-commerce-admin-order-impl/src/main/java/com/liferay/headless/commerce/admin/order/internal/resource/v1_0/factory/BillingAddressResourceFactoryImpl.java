@@ -330,4 +330,4 @@ public class BillingAddressResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1408135410
+// LIFERAY-REST-BUILDER-HASH:-625296185

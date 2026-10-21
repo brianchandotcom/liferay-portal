@@ -332,4 +332,4 @@ public class OrderTransitionResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:736957815
+// LIFERAY-REST-BUILDER-HASH:1012670705

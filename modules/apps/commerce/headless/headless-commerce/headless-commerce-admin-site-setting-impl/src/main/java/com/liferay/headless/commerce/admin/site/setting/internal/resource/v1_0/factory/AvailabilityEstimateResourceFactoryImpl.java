@@ -335,4 +335,4 @@ public class AvailabilityEstimateResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1262382393
+// LIFERAY-REST-BUILDER-HASH:-56848793

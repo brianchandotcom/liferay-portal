@@ -329,4 +329,4 @@ public class CompareRunsResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1651289835
+// LIFERAY-REST-BUILDER-HASH:80743325

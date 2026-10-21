@@ -333,4 +333,4 @@ public class AssetDeviceMetricResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:137062992
+// LIFERAY-REST-BUILDER-HASH:1084538156

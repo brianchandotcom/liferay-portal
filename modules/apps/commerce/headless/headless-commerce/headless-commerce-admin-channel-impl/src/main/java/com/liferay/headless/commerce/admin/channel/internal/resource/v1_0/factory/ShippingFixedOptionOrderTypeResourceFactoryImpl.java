@@ -347,4 +347,4 @@ public class ShippingFixedOptionOrderTypeResourceFactoryImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-487292291
+// LIFERAY-REST-BUILDER-HASH:-882351495

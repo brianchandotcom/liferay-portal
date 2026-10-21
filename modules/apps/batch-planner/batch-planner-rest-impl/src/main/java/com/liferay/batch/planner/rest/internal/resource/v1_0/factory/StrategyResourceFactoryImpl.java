@@ -326,4 +326,4 @@ public class StrategyResourceFactoryImpl implements StrategyResource.Factory {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:351085979
+// LIFERAY-REST-BUILDER-HASH:-363019331

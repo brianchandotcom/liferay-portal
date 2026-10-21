@@ -37,6 +37,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.Writer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +92,24 @@ public class FDSRendererImpl implements FDSRenderer {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public Map<String, String> getSelectionFilterAPIURLs(
+		String fdsName, HttpServletRequest httpServletRequest,
+		boolean interpolate,
+		Map<String, JSONObject> tokenResolutionsJSONObjects) {
+
+		FDSSerializer fdsSerializer = _getFDSSerializer(
+			fdsName, httpServletRequest);
+
+		if (fdsSerializer == null) {
+			return Collections.emptyMap();
+		}
+
+		return fdsSerializer.serializeSelectionFilterAPIURLs(
+			fdsName, httpServletRequest, interpolate,
+			tokenResolutionsJSONObjects);
 	}
 
 	@Override
@@ -195,7 +214,9 @@ public class FDSRendererImpl implements FDSRenderer {
 					() -> {
 						JSONArray filtersJSONArray =
 							fdsSerializer.serializeFilters(
-								fdsName, httpServletRequest);
+								fdsName, httpServletRequest,
+								(Map<String, JSONObject>)props.get(
+									"selectionFilterTokenResolutions"));
 
 						if (JSONUtil.isEmpty(filtersJSONArray)) {
 							return null;

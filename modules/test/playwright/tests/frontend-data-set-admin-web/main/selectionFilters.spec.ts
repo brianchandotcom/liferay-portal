@@ -588,3 +588,133 @@ test(
 		});
 	}
 );
+
+test(
+	'Choosing an endpoint with tokens clears the preselected values',
+	{tag: '@LPD-105344'},
+	async ({dataSetManagerApiHelpers, filtersPage, page}) => {
+		await test.step('Create a selection filter with a preselected value', async () => {
+			await filtersPage.createSelectionFilterApiHeadless({
+				filterBy: 'externalReferenceCode',
+				filterMode: 'Include',
+				itemKey: 'id',
+				itemLabel: 'label',
+				name: SELECTION_API_HEADLESS_FILTER_NAME,
+				preselectedValues: [dataSetLabel],
+				restApplication: `${API_ENDPOINT_PATH}`,
+				restEndpoint: '/',
+				restSchema: 'DataSet',
+				selectionType: 'Single',
+				sourceType: 'API REST Application',
+			});
+
+			await expect(
+				page.locator('.form-control-tag-group .label', {
+					hasText: dataSetLabel,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Choose an endpoint with tokens', async () => {
+			const tokenizedEndpointOption =
+				filtersPage.newSelectionFilterForm.restEndpointOptions.getByRole(
+					'option',
+					{
+						exact: true,
+						name: '/by-external-reference-code/{externalReferenceCode}/versions',
+					}
+				);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: tokenizedEndpointOption,
+				timeout: 1000,
+				trigger: filtersPage.newSelectionFilterForm.restEndpointField,
+			});
+		});
+
+		await test.step('Check that the preselected value is cleared', async () => {
+			await expect(
+				page.locator('.form-control-tag-group .label', {
+					hasText: dataSetLabel,
+				})
+			).toHaveCount(0);
+
+			await expect(
+				filtersPage.newSelectionFilterForm.preselectedValuesMultiSelect
+			).toBeDisabled();
+		});
+
+		await test.step('Save the filter and check that it has no preselected values', async () => {
+			await filtersPage.newSelectionFilterForm.itemKey.click();
+			await page.getByRole('option', {exact: true, name: 'id'}).click();
+			await filtersPage.newSelectionFilterForm.itemKey.click();
+
+			await filtersPage.newSelectionFilterForm.itemLabel.click();
+			await page
+				.getByRole('option', {exact: true, name: 'label'})
+				.click();
+			await filtersPage.newSelectionFilterForm.itemLabel.click();
+
+			await filtersPage.saveAddFilterForm();
+
+			await waitForAlert(page);
+
+			const {items} =
+				await dataSetManagerApiHelpers.getDataSetSelectionFilters({
+					dataSetERC,
+				});
+
+			expect(items).toHaveLength(1);
+			expect(JSON.parse(items[0].preselectedValues)).toEqual([]);
+		});
+	}
+);
+
+test(
+	'Can create a selection filter with a tokenized API Headless endpoint',
+	{tag: '@LPD-105344'},
+	async ({filtersPage, page}) => {
+		await test.step('Create a selection filter from an endpoint with tokens', async () => {
+			await filtersPage.createSelectionFilterApiHeadless({
+				filterBy: 'externalReferenceCode',
+				filterMode: 'Include',
+				itemKey: 'id',
+				itemLabel: 'label',
+				name: SELECTION_API_HEADLESS_FILTER_NAME,
+				preselectedValues: [],
+				restApplication: `${API_ENDPOINT_PATH}`,
+				restEndpoint:
+					'/by-external-reference-code/{externalReferenceCode}/versions',
+				restSchema: 'DataSet',
+				selectionType: 'Single',
+				sourceType: 'API REST Application',
+			});
+		});
+
+		await test.step('Check that values cannot be preselected', async () => {
+			await expect(
+				page.getByText(
+					'Values cannot be preselected for an endpoint with tokens.'
+				)
+			).toBeVisible();
+
+			await expect(
+				filtersPage.newSelectionFilterForm.preselectedValuesMultiSelect
+			).toBeDisabled();
+		});
+
+		await test.step('Save the filter and check that it is in the list', async () => {
+			await filtersPage.saveAddFilterForm();
+
+			await waitForAlert(page);
+
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_API_HEADLESS_FILTER_NAME,
+				})
+			).toBeVisible();
+		});
+	}
+);

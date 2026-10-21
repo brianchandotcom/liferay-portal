@@ -57,6 +57,7 @@ import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -247,7 +248,7 @@ public class OfflineOpenIdConnectSessionManager {
 
 			OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 				OpenIdConnectClientInformationUtil.getOIDCClientInformation(
-					oAuthClientEntry),
+					_configurationAdmin, oAuthClientEntry),
 				oidcProviderMetadata, refreshToken,
 				oAuthClientEntry.getTokenConnectionTimeout(),
 				oAuthClientEntry.getTokenRequestParametersJSON());
@@ -389,6 +390,9 @@ public class OfflineOpenIdConnectSessionManager {
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private CounterLocalService _counterLocalService;

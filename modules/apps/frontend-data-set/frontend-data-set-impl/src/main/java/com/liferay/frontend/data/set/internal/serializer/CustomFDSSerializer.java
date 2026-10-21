@@ -79,6 +79,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -116,7 +118,7 @@ public class CustomFDSSerializer
 	@Override
 	public String serializeAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest,
-		boolean interpolate, JSONObject tokenResolutionsJSONObject) {
+		boolean interpolate, JSONObject fdsAPIURLTokenResolutionsJSONObject) {
 
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
@@ -127,7 +129,7 @@ public class CustomFDSSerializer
 			String.valueOf(properties.get("restEndpoint")),
 			String.valueOf(properties.get("restSchema"))
 		).setTokenResolutions(
-			tokenResolutionsJSONObject
+			fdsAPIURLTokenResolutionsJSONObject
 		);
 
 		List<ObjectEntry> objectEntries = getRelatedObjectEntries(
@@ -187,7 +189,7 @@ public class CustomFDSSerializer
 	@Override
 	public String serializeAdditionalAPIURLParameters(
 		String fdsName, HttpServletRequest httpServletRequest,
-		boolean interpolate, JSONObject tokenResolutionsJSONObject) {
+		boolean interpolate, JSONObject fdsAPIURLTokenResolutionsJSONObject) {
 
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
@@ -198,7 +200,7 @@ public class CustomFDSSerializer
 		String systemAdditionalAPIURLParameters =
 			_systemFDSSerializer.serializeAdditionalAPIURLParameters(
 				fdsName, httpServletRequest, interpolate,
-				tokenResolutionsJSONObject);
+				fdsAPIURLTokenResolutionsJSONObject);
 
 		if (Validator.isNotNull(systemAdditionalAPIURLParameters)) {
 			if (Validator.isNotNull(additionalAPIURLParameters)) {
@@ -219,7 +221,7 @@ public class CustomFDSSerializer
 		).addQueryString(
 			additionalAPIURLParameters
 		).setTokenResolutions(
-			tokenResolutionsJSONObject
+			fdsAPIURLTokenResolutionsJSONObject
 		).buildQueryString(
 			interpolate
 		);
@@ -317,8 +319,17 @@ public class CustomFDSSerializer
 	public JSONArray serializeFilters(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
+		return serializeFilters(fdsName, httpServletRequest, null);
+	}
+
+	@Override
+	public JSONArray serializeFilters(
+		String fdsName, HttpServletRequest httpServletRequest,
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+
 		try {
-			return _serializeFilters(fdsName, httpServletRequest);
+			return _serializeFilters(
+				fdsName, httpServletRequest, selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to serialize filters", exception);
@@ -522,6 +533,44 @@ public class CustomFDSSerializer
 
 		return GetterUtil.getBoolean(
 			properties.get("showColumnsVisibility"), true);
+	}
+
+	@Override
+	public Map<String, String> serializeSelectionFilterAPIURLs(
+		String fdsName, HttpServletRequest httpServletRequest,
+		boolean interpolate,
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+
+		Map<String, String> selectionFilterAPIURLs = new HashMap<>();
+
+		for (ObjectEntry objectEntry :
+				getRelatedObjectEntries(
+					fdsName, httpServletRequest,
+					(ObjectEntry relatedObjectEntry) -> _isActive(
+						relatedObjectEntry),
+					"dataSetToDataSetSelectionFilters")) {
+
+			if (!Objects.equals(
+					MapUtil.getString(
+						objectEntry.getProperties(), "sourceType"),
+					"API_REST_APPLICATION")) {
+
+				continue;
+			}
+
+			String apiURL = _getSelectionFilterAPIURL(
+				httpServletRequest, interpolate, objectEntry,
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+
+			if (apiURL == null) {
+				continue;
+			}
+
+			selectionFilterAPIURLs.put(
+				objectEntry.getExternalReferenceCode(), apiURL);
+		}
+
+		return selectionFilterAPIURLs;
 	}
 
 	@Override
@@ -1264,6 +1313,40 @@ public class CustomFDSSerializer
 		return schemaJSONObject;
 	}
 
+	private String _getSelectionFilterAPIURL(
+		HttpServletRequest httpServletRequest, boolean interpolate,
+		ObjectEntry objectEntry,
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		String restApplication = MapUtil.getString(
+			properties, "restApplication");
+		String restEndpoint = MapUtil.getString(properties, "restEndpoint");
+
+		if (Validator.isNull(restApplication) ||
+			Validator.isNull(restEndpoint)) {
+
+			return null;
+		}
+
+		JSONObject tokenResolutionsJSONObject = null;
+
+		if (selectionFilterFDSAPIURLTokenResolutionsJSONObjects != null) {
+			tokenResolutionsJSONObject = selectionFilterFDSAPIURLTokenResolutionsJSONObjects.get(
+				objectEntry.getExternalReferenceCode());
+		}
+
+		return createFDSAPIURLBuilder(
+			httpServletRequest, restApplication, restEndpoint,
+			MapUtil.getString(properties, "restSchema")
+		).setTokenResolutions(
+			tokenResolutionsJSONObject
+		).build(
+			interpolate
+		);
+	}
+
 	private String _getType(ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
@@ -1351,7 +1434,8 @@ public class CustomFDSSerializer
 	}
 
 	private JSONObject _serializeFilter(
-			HttpServletRequest httpServletRequest, ObjectEntry objectEntry)
+			HttpServletRequest httpServletRequest, ObjectEntry objectEntry,
+			Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
 		throws Exception {
 
 		Map<String, Object> properties = objectEntry.getProperties();
@@ -1382,7 +1466,8 @@ public class CustomFDSSerializer
 
 		if (Validator.isNotNull(sourceType)) {
 			return _serializeFilterSelection(
-				fieldName, httpServletRequest, properties, sourceType);
+				fieldName, httpServletRequest, objectEntry, sourceType,
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 		}
 
 		return null;
@@ -1474,8 +1559,11 @@ public class CustomFDSSerializer
 
 	private JSONObject _serializeFilterSelection(
 			String fieldName, HttpServletRequest httpServletRequest,
-			Map<String, Object> properties, String sourceType)
+			ObjectEntry objectEntry, String sourceType,
+			Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
 		throws Exception {
+
+		Map<String, Object> properties = objectEntry.getProperties();
 
 		if (Objects.equals(
 				sourceType, FDSEntryItemImportPolicy.ITEM_PROXY.toString())) {
@@ -1545,8 +1633,31 @@ public class CustomFDSSerializer
 		String source = MapUtil.getString(properties, "source");
 
 		if (Objects.equals(sourceType, "API_REST_APPLICATION")) {
+			String apiURL = _getSelectionFilterAPIURL(
+				httpServletRequest, true, objectEntry,
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+
+			if (apiURL == null) {
+				apiURL = source;
+			}
+
+			Matcher matcher = _pattern.matcher(apiURL);
+
+			if (matcher.find()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Omitting selection filter ",
+							objectEntry.getExternalReferenceCode(),
+							" because its API URL has unresolved tokens: ",
+							apiURL));
+				}
+
+				return null;
+			}
+
 			return jsonObject.put(
-				"apiURL", source
+				"apiURL", apiURL
 			).put(
 				"itemKey", properties.get("itemKey")
 			).put(
@@ -1652,7 +1763,8 @@ public class CustomFDSSerializer
 	}
 
 	private JSONArray _serializeFilters(
-			String fdsName, HttpServletRequest httpServletRequest)
+			String fdsName, HttpServletRequest httpServletRequest,
+			Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
@@ -1663,7 +1775,7 @@ public class CustomFDSSerializer
 				"dataSetToDataSetDateFilters",
 				"dataSetToDataSetSelectionFilters"),
 			(ObjectEntry objectEntry) -> _serializeFilter(
-				httpServletRequest, objectEntry));
+				httpServletRequest, objectEntry, selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
 	}
 
 	private JSONObject _serializeViewSchema(
@@ -1688,6 +1800,7 @@ public class CustomFDSSerializer
 
 	private static final List<String> _defaultVisualizationModeNames =
 		Arrays.asList("cards", "list", "table");
+	private static final Pattern _pattern = Pattern.compile("\\{(.*?)\\}");
 
 	@Reference
 	private JSONFactory _jsonFactory;

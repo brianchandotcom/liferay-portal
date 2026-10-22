@@ -77,8 +77,9 @@ public class ResendDSRequestMVCResourceCommand extends BaseMVCResourceCommand {
 				ActionKeys.UPDATE);
 
 			if (!DSCommerceOrderAttachmentUtil.isEnabled(commerceOrder)) {
-				throw new DSCommerceOrderAttachmentException.MustBeEnabled(
-					commerceOrder.getCommerceOrderId());
+				throw new DSCommerceOrderAttachmentException.
+					MustHaveEmbeddedViewEnabled(
+						commerceOrder.getCommerceOrderId());
 			}
 
 			DSRequest dsRequest =

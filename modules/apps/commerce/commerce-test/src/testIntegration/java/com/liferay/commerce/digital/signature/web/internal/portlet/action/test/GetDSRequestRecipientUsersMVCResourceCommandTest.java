@@ -163,7 +163,7 @@ public class GetDSRequestRecipientUsersMVCResourceCommandTest {
 		Assert.assertEquals(user.getFullName(), jsonObject.getString("name"));
 		Assert.assertEquals(user.getUserId(), jsonObject.getLong("userId"));
 
-		_testServeResourceWhenUserHasNoUserViewPermission();
+		_testServeResourceWithoutUserViewPermission();
 	}
 
 	private void _saveDigitalSignatureConfiguration(boolean enabled)
@@ -234,7 +234,7 @@ public class GetDSRequestRecipientUsersMVCResourceCommandTest {
 		return byteArrayOutputStream.toString();
 	}
 
-	private void _testServeResourceWhenUserHasNoUserViewPermission()
+	private void _testServeResourceWithoutUserViewPermission()
 		throws Exception {
 
 		Role role = _roleLocalService.addRole(
@@ -257,11 +257,11 @@ public class GetDSRequestRecipientUsersMVCResourceCommandTest {
 
 		_roleLocalService.addUserRole(user1.getUserId(), role);
 
-		User user2 = UserTestUtil.addUser();
-
 		_accountEntryUserRelLocalService.
 			deleteAccountEntryUserRelsByAccountEntryId(
 				accountEntry.getAccountEntryId());
+
+		User user2 = UserTestUtil.addUser();
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), user2.getUserId());

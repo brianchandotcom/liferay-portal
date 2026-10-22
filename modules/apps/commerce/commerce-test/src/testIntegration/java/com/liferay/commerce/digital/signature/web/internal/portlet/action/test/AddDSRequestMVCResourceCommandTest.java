@@ -240,14 +240,14 @@ public class AddDSRequestMVCResourceCommandTest {
 		Assert.assertEquals(
 			User.class.getName(), mustHavePermission.resourceName);
 
-		_testServeResourceWhenNotSequential();
-		_testServeResourceWhenResponseWriteFails();
-
-		User accountUser = UserTestUtil.addUser();
+		_testServeResourceWithFailedResponseWrite();
+		_testServeResourceWithSequentialFalse();
 
 		_accountEntryUserRelLocalService.
 			deleteAccountEntryUserRelsByAccountEntryId(
 				accountEntry.getAccountEntryId());
+
+		User accountUser = UserTestUtil.addUser();
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), accountUser.getUserId());
@@ -544,37 +544,7 @@ public class AddDSRequestMVCResourceCommandTest {
 		return _jsonFactory.createJSONObject(byteArrayOutputStream.toString());
 	}
 
-	private void _testServeResourceWhenNotSequential() throws Exception {
-		CommerceOrderAttachment commerceOrderAttachment =
-			_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_commerceOrder.getCommerceOrderId(),
-				RandomTestUtil.nextDouble(), false,
-				RandomTestUtil.randomString(), "invoice",
-				RandomTestUtil.randomString() + ".pdf",
-				new ByteArrayInputStream(RandomTestUtil.randomBytes()));
-
-		User user = UserTestUtil.addUser();
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayResourceRequest(
-				commerceOrderAttachment.getCommerceOrderAttachmentId(), 0,
-				TestPropsValues.getUser(), TestPropsValues.getUserId(),
-				user.getUserId());
-
-		mockLiferayResourceRequest.addParameter("sequential", "false");
-
-		DSEnvelope dsEnvelope = _getDSEnvelope(mockLiferayResourceRequest);
-
-		List<DSRecipient> dsRecipients = dsEnvelope.getDSRecipients();
-
-		Assert.assertEquals(dsRecipients.toString(), 2, dsRecipients.size());
-
-		_assertDSRecipient(dsRecipients.get(0), 1, TestPropsValues.getUser());
-		_assertDSRecipient(dsRecipients.get(1), 1, user);
-	}
-
-	private void _testServeResourceWhenResponseWriteFails() throws Exception {
+	private void _testServeResourceWithFailedResponseWrite() throws Exception {
 		AtomicReference<String> dsEnvelopeIdAtomicReference =
 			new AtomicReference<>();
 		AtomicReference<String> voidedDSEnvelopeIdAtomicReference =
@@ -655,6 +625,36 @@ public class AddDSRequestMVCResourceCommandTest {
 		Assert.assertEquals(
 			dsEnvelopeIdAtomicReference.get(),
 			voidedDSEnvelopeIdAtomicReference.get());
+	}
+
+	private void _testServeResourceWithSequentialFalse() throws Exception {
+		CommerceOrderAttachment commerceOrderAttachment =
+			_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_commerceOrder.getCommerceOrderId(),
+				RandomTestUtil.nextDouble(), false,
+				RandomTestUtil.randomString(), "invoice",
+				RandomTestUtil.randomString() + ".pdf",
+				new ByteArrayInputStream(RandomTestUtil.randomBytes()));
+
+		User user = UserTestUtil.addUser();
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayResourceRequest(
+				commerceOrderAttachment.getCommerceOrderAttachmentId(), 0,
+				TestPropsValues.getUser(), TestPropsValues.getUserId(),
+				user.getUserId());
+
+		mockLiferayResourceRequest.addParameter("sequential", "false");
+
+		DSEnvelope dsEnvelope = _getDSEnvelope(mockLiferayResourceRequest);
+
+		List<DSRecipient> dsRecipients = dsEnvelope.getDSRecipients();
+
+		Assert.assertEquals(dsRecipients.toString(), 2, dsRecipients.size());
+
+		_assertDSRecipient(dsRecipients.get(0), 1, TestPropsValues.getUser());
+		_assertDSRecipient(dsRecipients.get(1), 1, user);
 	}
 
 	@Inject

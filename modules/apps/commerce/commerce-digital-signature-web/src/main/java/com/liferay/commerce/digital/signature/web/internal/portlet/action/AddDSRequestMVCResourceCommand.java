@@ -94,11 +94,11 @@ public class AddDSRequestMVCResourceCommand
 				_log.debug(throwable);
 			}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			try {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)resourceRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				JSONPortletResponseUtil.writeJSON(
 					resourceRequest, resourceResponse,
 					JSONUtil.put(
@@ -141,8 +141,9 @@ public class AddDSRequestMVCResourceCommand
 				ActionKeys.UPDATE);
 
 			if (!DSCommerceOrderAttachmentUtil.isEnabled(commerceOrder)) {
-				throw new DSCommerceOrderAttachmentException.MustBeEnabled(
-					commerceOrder.getCommerceOrderId());
+				throw new DSCommerceOrderAttachmentException.
+					MustHaveEmbeddedViewEnabled(
+						commerceOrder.getCommerceOrderId());
 			}
 
 			if (!_hasAllowedFileExtension(commerceOrderAttachment)) {
@@ -202,7 +203,7 @@ public class AddDSRequestMVCResourceCommand
 				DSCommerceOrderAttachmentUtil.getAccountUsers(commerceOrder),
 				User::getUserId));
 
-		int countersignerCount = 0;
+		int count = 0;
 		Set<Long> recipientUserIds = new HashSet<>();
 		boolean sequential = ParamUtil.getBoolean(
 			resourceRequest, "sequential", true);
@@ -230,10 +231,10 @@ public class AddDSRequestMVCResourceCommand
 				UserPermissionUtil.check(
 					permissionChecker, recipientUserId, ActionKeys.VIEW);
 
-				countersignerCount++;
+				count++;
 			}
 
-			if (countersignerCount > 1) {
+			if (count > 1) {
 				throw new DSCommerceOrderAttachmentException.
 					MustNotHaveMultipleCountersigners();
 			}

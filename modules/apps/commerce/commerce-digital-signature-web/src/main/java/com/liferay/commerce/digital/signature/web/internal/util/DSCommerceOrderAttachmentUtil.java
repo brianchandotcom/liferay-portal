@@ -108,11 +108,11 @@ public class DSCommerceOrderAttachmentUtil {
 
 		Map<Long, Long> fileEntryIds = new LinkedHashMap<>();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			for (CommerceOrderAttachment commerceOrderAttachment :
 					_getCommerceOrderAttachments(
 						commerceOrder, themeDisplay.getPermissionChecker())) {
@@ -130,7 +130,7 @@ public class DSCommerceOrderAttachmentUtil {
 
 		DSRequestManager dsRequestManager = _dsRequestManagerSnapshot.get();
 
-		Map<Long, DSRequest> latestFileEntryDSRequests =
+		Map<Long, DSRequest> fileEntryDSRequests =
 			dsRequestManager.getLatestFileEntryDSRequests(
 				commerceOrder.getCompanyId(),
 				ArrayUtil.toLongArray(fileEntryIds.values()));
@@ -138,8 +138,7 @@ public class DSCommerceOrderAttachmentUtil {
 		dsRequests = new LinkedHashMap<>();
 
 		for (Map.Entry<Long, Long> entry : fileEntryIds.entrySet()) {
-			DSRequest dsRequest = latestFileEntryDSRequests.get(
-				entry.getValue());
+			DSRequest dsRequest = fileEntryDSRequests.get(entry.getValue());
 
 			if (dsRequest == null) {
 				continue;
@@ -247,11 +246,12 @@ public class DSCommerceOrderAttachmentUtil {
 			DSCommerceOrderAttachmentUtil.class, DSRequestManager.class);
 	private static final Map<Class<?>, String> _errorMessageKeys =
 		HashMapBuilder.<Class<?>, String>put(
-			DSCommerceOrderAttachmentException.MustBeEnabled.class,
-			"digital-signature-is-not-enabled-for-this-order"
-		).put(
 			DSCommerceOrderAttachmentException.MustHaveDSRequest.class,
 			"no-signature-request-was-found-for-this-document"
+		).put(
+			DSCommerceOrderAttachmentException.MustHaveEmbeddedViewEnabled.
+				class,
+			"digital-signature-is-not-enabled-for-this-order"
 		).put(
 			DSCommerceOrderAttachmentException.MustHaveRecipient.class,
 			"at-least-one-recipient-is-required"

@@ -12,17 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DSCommerceOrderAttachmentException extends PortalException {
 
-	public static class MustBeEnabled
-		extends DSCommerceOrderAttachmentException {
-
-		public MustBeEnabled(long commerceOrderId) {
-			super(
-				"Digital signature is not enabled for commerce order " +
-					commerceOrderId);
-		}
-
-	}
-
 	public static class MustHaveDSRequest
 		extends DSCommerceOrderAttachmentException {
 
@@ -30,6 +19,17 @@ public class DSCommerceOrderAttachmentException extends PortalException {
 			super(
 				"Commerce order attachment " + commerceOrderAttachmentId +
 					" has no digital signature request");
+		}
+
+	}
+
+	public static class MustHaveEmbeddedViewEnabled
+		extends DSCommerceOrderAttachmentException {
+
+		public MustHaveEmbeddedViewEnabled(long commerceOrderId) {
+			super(
+				"Digital signature with embedded view is not enabled for " +
+					"commerce order " + commerceOrderId);
 		}
 
 	}

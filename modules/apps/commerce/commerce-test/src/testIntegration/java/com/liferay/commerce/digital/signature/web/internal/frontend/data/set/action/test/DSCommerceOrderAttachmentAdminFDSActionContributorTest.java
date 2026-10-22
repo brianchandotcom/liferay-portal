@@ -175,12 +175,11 @@ public class DSCommerceOrderAttachmentAdminFDSActionContributorTest {
 
 		additionalProps = _getAdditionalProps(user);
 
-		String commerceOrderAttachmentId = String.valueOf(
-			_commerceOrderAttachment.getCommerceOrderAttachmentId());
-
 		Assert.assertEquals(
 			HashMapBuilder.put(
-				commerceOrderAttachmentId, DSRequestConstants.STATUS_SENT
+				String.valueOf(
+					_commerceOrderAttachment.getCommerceOrderAttachmentId()),
+				DSRequestConstants.STATUS_SENT
 			).build(),
 			additionalProps.get("dsRequestStatuses"));
 
@@ -224,7 +223,7 @@ public class DSCommerceOrderAttachmentAdminFDSActionContributorTest {
 
 		Assert.assertNull(addDSRequestModalProps.get("buyer"));
 
-		_testGetAdditionalPropsWhenCommerceOrderAttachmentIsRestricted();
+		_testGetAdditionalPropsWithRestrictedCommerceOrderAttachment();
 
 		additionalProps = _getAdditionalProps(UserTestUtil.addUser());
 
@@ -374,17 +373,8 @@ public class DSCommerceOrderAttachmentAdminFDSActionContributorTest {
 				).build());
 	}
 
-	private void _testGetAdditionalPropsWhenCommerceOrderAttachmentIsRestricted()
+	private void _testGetAdditionalPropsWithRestrictedCommerceOrderAttachment()
 		throws Exception {
-
-		CommerceOrderAttachment commerceOrderAttachment =
-			_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_commerceOrder.getCommerceOrderId(),
-				RandomTestUtil.nextDouble(), true,
-				RandomTestUtil.randomString(), "invoice",
-				RandomTestUtil.randomString() + ".pdf",
-				new ByteArrayInputStream(RandomTestUtil.randomBytes()));
 
 		Role role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
@@ -412,14 +402,23 @@ public class DSCommerceOrderAttachmentAdminFDSActionContributorTest {
 
 		_roleLocalService.addUserRole(user.getUserId(), role);
 
+		CommerceOrderAttachment commerceOrderAttachment =
+			_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_commerceOrder.getCommerceOrderId(),
+				RandomTestUtil.nextDouble(), true,
+				RandomTestUtil.randomString(), "invoice",
+				RandomTestUtil.randomString() + ".pdf",
+				new ByteArrayInputStream(RandomTestUtil.randomBytes()));
+
 		_addDSRequest(
 			commerceOrderAttachment, DSRequestConstants.STATUS_SENT,
 			TestPropsValues.getUser());
 
-		Map<String, Object> additionalProps = _getAdditionalProps(user);
-
 		String commerceOrderAttachmentId = String.valueOf(
 			_commerceOrderAttachment.getCommerceOrderAttachmentId());
+
+		Map<String, Object> additionalProps = _getAdditionalProps(user);
 
 		Assert.assertEquals(
 			HashMapBuilder.put(

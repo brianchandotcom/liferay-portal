@@ -81,6 +81,39 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-110124")
+	public void testCopyFileEntryWithDownloadPermission() throws Exception {
+		DLFileEntry dlFileEntry = addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
+
+		updateStatus(
+			dlFileEntry.getFileVersion(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		UserTestUtil.setUser(
+			UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
+		_addResourcePermission(
+			dlFileEntry.getFileEntryId(), RoleConstants.SITE_MEMBER,
+			ActionKeys.VIEW, ActionKeys.DOWNLOAD);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		DLFileEntryServiceUtil.copyFileEntry(
+			_group.getGroupId(), _group.getGroupId(),
+			dlFileEntry.getFileEntryId(), destFolder.getFolderId(),
+			serviceContext);
+	}
+
+	@Test
 	public void testCopyFileEntryWithExtensionInFolderToFolder()
 		throws Exception {
 
@@ -152,6 +185,54 @@ public class DLFileEntryServiceTest {
 			_group.getGroupId(), _group.getGroupId(),
 			dlFileEntry.getFileEntryId(), destFolder.getFolderId(),
 			serviceContext);
+	}
+
+	@Test
+	@TestInfo("LPD-110124")
+	public void testCopyFileEntryWithoutDownloadPermission() throws Exception {
+		DLFileEntry dlFileEntry = addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
+
+		updateStatus(
+			dlFileEntry.getFileVersion(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		UserTestUtil.setUser(
+			UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
+		_removeResourcePermission(
+			dlFileEntry.getFileEntryId(), RoleConstants.OWNER,
+			ActionKeys.DOWNLOAD);
+		_removeResourcePermission(
+			dlFileEntry.getFileEntryId(), RoleConstants.SITE_MEMBER,
+			ActionKeys.DOWNLOAD);
+		_removeResourcePermission(
+			dlFileEntry.getFileEntryId(), RoleConstants.GUEST,
+			ActionKeys.DOWNLOAD);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLFolder destFolder = DLFolderLocalServiceUtil.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		try {
+			DLFileEntryServiceUtil.copyFileEntry(
+				_group.getGroupId(), _group.getGroupId(),
+				dlFileEntry.getFileEntryId(), destFolder.getFolderId(),
+				serviceContext);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			Assert.assertArrayEquals(
+				new String[] {ActionKeys.DOWNLOAD},
+				principalException.actionId);
+		}
 	}
 
 	@Test
@@ -611,6 +692,19 @@ public class DLFileEntryServiceTest {
 			dlFileVersion.getUserId(), dlFileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext,
 			new HashMap<String, Serializable>());
+	}
+
+	private void _addResourcePermission(
+			long fileEntryId, String roleName, String... actionIds)
+		throws Exception {
+
+		Role role = RoleLocalServiceUtil.getRole(
+			_group.getCompanyId(), roleName);
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			_group.getCompanyId(), DLFileEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(fileEntryId),
+			role.getRoleId(), actionIds);
 	}
 
 	private User _addUser(long fileEntryId, Group group) throws Exception {

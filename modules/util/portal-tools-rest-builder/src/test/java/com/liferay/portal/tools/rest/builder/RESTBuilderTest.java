@@ -54,7 +54,6 @@ public class RESTBuilderTest {
 			String message = runtimeException.getMessage();
 
 			Assert.assertTrue(
-				message,
 				message.contains(
 					"File rest-openapi.yaml: Missing required field info: " +
 						"version"));
@@ -86,20 +85,16 @@ public class RESTBuilderTest {
 			new File(baseClientDir, "src/index.ts"));
 
 		Assert.assertTrue(
-			indexString,
 			indexString.contains("export * as v1_0 from './v1_0';"));
 		Assert.assertTrue(
-			indexString,
 			indexString.contains("export * as v2_0 from './v2_0';"));
 
 		String packageJSONString = FileUtil.read(
 			new File(baseClientDir, "package.json"));
 
 		Assert.assertTrue(
-			packageJSONString,
 			packageJSONString.contains("\"./v1_0\": \"./src/v1_0/index.ts\""));
 		Assert.assertTrue(
-			packageJSONString,
 			packageJSONString.contains("\"./v2_0\": \"./src/v2_0/index.ts\""));
 
 		File version1APIsDir = new File(baseClientDir, "src/v1_0/apis");

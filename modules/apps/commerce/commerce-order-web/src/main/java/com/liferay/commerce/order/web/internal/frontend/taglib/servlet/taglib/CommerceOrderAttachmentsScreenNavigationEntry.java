@@ -5,8 +5,8 @@
 
 package com.liferay.commerce.order.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.frontend.data.set.action.CommerceOrderAttachmentAdminFDSActionContributor;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderAttachmentAdminFDSActionContributor;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderAttachmentsDisplayContext;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderEditDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;

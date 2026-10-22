@@ -5,8 +5,8 @@
 
 package com.liferay.commerce.order.web.internal.display.context;
 
+import com.liferay.commerce.frontend.data.set.action.CommerceOrderAttachmentAdminFDSActionContributor;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderAttachmentAdminFDSActionContributor;
 import com.liferay.commerce.order.web.internal.display.context.helper.CommerceOrderRequestHelper;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;

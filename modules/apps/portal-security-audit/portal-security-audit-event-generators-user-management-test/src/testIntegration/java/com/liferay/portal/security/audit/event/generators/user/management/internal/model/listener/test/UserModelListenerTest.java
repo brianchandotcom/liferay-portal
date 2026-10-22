@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ public class UserModelListenerTest extends BaseModelListenerTestCase {
 		_deleteWorkflowDefinitionLink();
 	}
 
+	@FeatureFlag("LPD-6417")
 	@Test
 	public void testOnBeforeUpdate() throws Exception {
 		_testOnBeforeUpdate();
@@ -140,6 +142,9 @@ public class UserModelListenerTest extends BaseModelListenerTestCase {
 			expectedAuditRequestContext.getRealUserId(),
 			auditRequestContext.getRealUserId());
 		Assert.assertEquals(
+			expectedAuditRequestContext.getRequestId(),
+			auditRequestContext.getRequestId());
+		Assert.assertEquals(
 			expectedAuditRequestContext.getServerName(),
 			auditRequestContext.getServerName());
 		Assert.assertEquals(
@@ -182,6 +187,10 @@ public class UserModelListenerTest extends BaseModelListenerTestCase {
 			expectedAuditRequestContext.getClientIP(),
 			auditMessage.getClientIP());
 		Assert.assertEquals(
+			expectedAuditRequestContext.getRequestId(),
+			auditMessage.getRequestId());
+		Assert.assertFalse(auditMessage.isRequestIdGenerated());
+		Assert.assertEquals(
 			expectedAuditRequestContext.getServerName(),
 			auditMessage.getServerName());
 		Assert.assertEquals(
@@ -205,6 +214,7 @@ public class UserModelListenerTest extends BaseModelListenerTestCase {
 		auditRequestContext.setClientHost(RandomTestUtil.randomString());
 		auditRequestContext.setClientIP(RandomTestUtil.randomString());
 		auditRequestContext.setRealUserId(TestPropsValues.getUserId());
+		auditRequestContext.setRequestId(RandomTestUtil.randomString());
 		auditRequestContext.setServerName(RandomTestUtil.randomString());
 		auditRequestContext.setServerPort(RandomTestUtil.randomInt());
 		auditRequestContext.setSessionID(RandomTestUtil.randomString());

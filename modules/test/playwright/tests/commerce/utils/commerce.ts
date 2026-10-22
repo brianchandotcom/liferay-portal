@@ -666,13 +666,6 @@ export async function initializerSetUp(
 		catalogItems[0].id
 	);
 
-	for (const product of products) {
-		apiHelpers.data.push({
-			id: product.productId,
-			type: 'product',
-		});
-	}
-
 	const options = await apiHelpers.headlessCommerceAdminCatalog.getOptions();
 
 	for (let i = 0; i < options.totalCount; i++) {
@@ -709,6 +702,13 @@ export async function initializerSetUp(
 		apiHelpers.data.push({
 			id: warehouses.items[i].id,
 			type: 'warehouse',
+		});
+	}
+
+	for (const product of products) {
+		apiHelpers.data.push({
+			id: product.productId,
+			type: 'product',
 		});
 	}
 
@@ -941,6 +941,7 @@ export async function createAccountWithBuyerUser(
 	siteId: number | string,
 	options?: {
 		accountName?: string;
+		languageId?: string;
 		userEmailAddress?: string;
 		userFirstName?: string;
 		userLastName?: string;
@@ -1065,6 +1066,7 @@ export async function createBuyerUserForAccount(
 	apiHelpers: DataApiHelpers,
 	siteId: number | string,
 	options?: {
+		languageId?: string;
 		userEmailAddress?: string;
 		userFirstName?: string;
 		userLastName?: string;
@@ -1083,6 +1085,7 @@ export async function createBuyerUserForAccount(
 		emailAddress: userEmailAddress,
 		familyName: userLastName,
 		givenName: userFirstName,
+		languageId: options?.languageId,
 	});
 
 	await assignBuyerUserToAccount(account, apiHelpers, buyerUser);

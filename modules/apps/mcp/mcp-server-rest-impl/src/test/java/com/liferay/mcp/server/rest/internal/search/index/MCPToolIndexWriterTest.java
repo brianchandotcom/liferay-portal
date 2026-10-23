@@ -278,7 +278,6 @@ public class MCPToolIndexWriterTest {
 	@Test
 	public void testUpdateIfStaleWhenNothingIsStale() throws Exception {
 		_updateIfStale();
-
 		_updateIfStale();
 
 		_verifyUpdated(1, _TOOL_SET_NAME_1);
@@ -387,7 +386,6 @@ public class MCPToolIndexWriterTest {
 		);
 
 		_updateIfStale();
-
 		_updateIfStale();
 
 		_verifyUpdated(3, _TOOL_SET_NAME_1);

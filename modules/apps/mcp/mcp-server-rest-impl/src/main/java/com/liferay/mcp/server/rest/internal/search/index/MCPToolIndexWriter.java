@@ -9,6 +9,7 @@ import com.liferay.mcp.server.rest.internal.search.index.constants.MCPToolFields
 import com.liferay.mcp.server.rest.internal.search.index.util.MCPToolFactoryUtil;
 import com.liferay.mcp.server.rest.internal.util.ToolSetUtil;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -131,7 +132,7 @@ public class MCPToolIndexWriter {
 
 		synchronized (mcpToolIndexState) {
 
-			// Ensure state was not updated by another thread
+			// Ensure the state was not updated by another thread
 
 			if (!mcpToolIndexState.isStale(toolSetHashes)) {
 				return;
@@ -299,7 +300,7 @@ public class MCPToolIndexWriter {
 		termsAggregation.addChildAggregation(
 			_aggregations.terms(
 				MCPToolFields.TOOL_SET_HASH, MCPToolFields.TOOL_SET_HASH));
-		termsAggregation.setSize(_INDEXED_TOOL_SET_NAMES_MAX);
+		termsAggregation.setSize(1000);
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
@@ -342,8 +343,9 @@ public class MCPToolIndexWriter {
 				failedToolSetNames.add(toolSetName);
 
 				_log.error(
-					"Unable to build the tools of tool set \"" + toolSetName +
-						"\"",
+					StringBundler.concat(
+						"Unable to build the tools of tool set \"", toolSetName,
+						"\""),
 					exception);
 			}
 		}
@@ -393,15 +395,11 @@ public class MCPToolIndexWriter {
 			return cachedToolSetHash._toolSetHash;
 		}
 
-		List<String> resourceMethods = new ArrayList<>();
-
-		for (HeadlessApplicationProvider.ResourceMethod resourceMethod :
-				application.getResourceMethods()) {
-
-			resourceMethods.add(
+		List<String> resourceMethods = TransformUtil.transform(
+			application.getResourceMethods(),
+			resourceMethod ->
 				resourceMethod.getMethod() + StringPool.SPACE +
 					resourceMethod.getPath());
-		}
 
 		Collections.sort(resourceMethods);
 
@@ -585,8 +583,6 @@ public class MCPToolIndexWriter {
 		}
 	}
 
-	private static final int _INDEXED_TOOL_SET_NAMES_MAX = 1000;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MCPToolIndexWriter.class);
 
@@ -671,8 +667,7 @@ public class MCPToolIndexWriter {
 
 		public void markToolSetFailed(String toolSetName) {
 			_failedToolSetRetryTimes.put(
-				toolSetName,
-				System.currentTimeMillis() + _FAILED_TOOL_SET_RETRY_INTERVAL);
+				toolSetName, System.currentTimeMillis() + Time.MINUTE);
 
 			_staleToolSetTokens.putIfAbsent(toolSetName, new Object());
 		}
@@ -703,8 +698,6 @@ public class MCPToolIndexWriter {
 
 			return false;
 		}
-
-		private static final long _FAILED_TOOL_SET_RETRY_INTERVAL = Time.MINUTE;
 
 		private final Map<String, Long> _failedToolSetRetryTimes =
 			new ConcurrentHashMap<>();

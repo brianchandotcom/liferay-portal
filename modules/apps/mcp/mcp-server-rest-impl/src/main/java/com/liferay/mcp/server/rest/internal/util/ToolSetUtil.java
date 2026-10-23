@@ -73,10 +73,10 @@ public class ToolSetUtil {
 		Map<String, HeadlessApplicationProvider.OpenAPIDocument>
 			openAPIDocuments = _getOpenAPIDocuments(companyId);
 
-		Collection<HeadlessApplicationProvider.OpenAPIDocument> values =
-			openAPIDocuments.values();
+		Collection<HeadlessApplicationProvider.OpenAPIDocument>
+			openAPIDocumentsValues = openAPIDocuments.values();
 
-		values.removeIf(ToolSetUtil::_isSuperseded);
+		openAPIDocumentsValues.removeIf(ToolSetUtil::_isSuperseded);
 
 		return openAPIDocuments;
 	}

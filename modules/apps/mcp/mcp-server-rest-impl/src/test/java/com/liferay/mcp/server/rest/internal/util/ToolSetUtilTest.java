@@ -36,6 +36,9 @@ public class ToolSetUtilTest {
 
 	@Before
 	public void setUp() {
+		Snapshot<HeadlessApplicationProvider>
+			headlessApplicationProviderSnapshot = Mockito.mock(Snapshot.class);
+
 		HeadlessApplicationProvider headlessApplicationProvider = Mockito.mock(
 			HeadlessApplicationProvider.class);
 
@@ -51,9 +54,6 @@ public class ToolSetUtilTest {
 		).thenReturn(
 			applications
 		);
-
-		Snapshot<HeadlessApplicationProvider>
-			headlessApplicationProviderSnapshot = Mockito.mock(Snapshot.class);
 
 		Mockito.when(
 			headlessApplicationProviderSnapshot.get()

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
@@ -401,7 +402,7 @@ public class AssetStatisticsResourceImpl
 					_layoutLocalService, _layoutPageTemplateEntryLocalService,
 					_layoutPageTemplateStructureLocalService,
 					_objectDefinitionLocalService, _objectFieldLocalService,
-					_portal);
+					_portal, _portletPreferencesLocalService);
 			UnlinkedAssetSearcher unlinkedAssetSearcher =
 				new UnlinkedAssetSearcher(
 					_aggregations, _assetLinkLocalService,
@@ -549,6 +550,9 @@ public class AssetStatisticsResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

@@ -46,12 +46,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -86,7 +90,8 @@ public class CollectionUsageResolver {
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectFieldLocalService objectFieldLocalService, Portal portal) {
+		ObjectFieldLocalService objectFieldLocalService, Portal portal,
+		PortletPreferencesLocalService portletPreferencesLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetListAssetEntryProvider = assetListAssetEntryProvider;
@@ -105,6 +110,7 @@ public class CollectionUsageResolver {
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_portal = portal;
+		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
 	public CollectionUsages getCollectionUsages(long companyId) {
@@ -113,6 +119,10 @@ public class CollectionUsageResolver {
 		ResolutionContext resolutionContext = new ResolutionContext(
 			collectionUsages, companyId);
 
+		long collectionStyledLayoutStructureItemClassNameId =
+			_portal.getClassNameId(CollectionStyledLayoutStructureItem.class);
+		long portletClassNameId = _portal.getClassNameId(Portlet.class);
+
 		List<Object[]> assetListEntryUsageObjectsList =
 			_assetListEntryUsageLocalService.dslQuery(
 				DSLQueryFactoryUtil.select(
@@ -120,16 +130,19 @@ public class CollectionUsageResolver {
 					AssetListEntryUsageTable.INSTANCE.plid,
 					AssetListEntryUsageTable.INSTANCE.classNameId,
 					AssetListEntryUsageTable.INSTANCE.key,
-					AssetListEntryUsageTable.INSTANCE.containerKey
+					AssetListEntryUsageTable.INSTANCE.containerKey,
+					AssetListEntryUsageTable.INSTANCE.containerType
 				).from(
 					AssetListEntryUsageTable.INSTANCE
 				).where(
 					AssetListEntryUsageTable.INSTANCE.companyId.eq(
 						companyId
 					).and(
-						AssetListEntryUsageTable.INSTANCE.containerType.eq(
-							_portal.getClassNameId(
-								CollectionStyledLayoutStructureItem.class))
+						AssetListEntryUsageTable.INSTANCE.containerType.in(
+							new Long[] {
+								collectionStyledLayoutStructureItemClassNameId,
+								portletClassNameId
+							})
 					)
 				));
 
@@ -139,9 +152,15 @@ public class CollectionUsageResolver {
 			long classNameId = (Long)row[2];
 			String key = (String)row[3];
 			String containerKey = (String)row[4];
+			long containerType = (Long)row[5];
 
 			try {
 				Layout layout = resolutionContext.getLayout(plid);
+
+				if (containerType == portletClassNameId) {
+					layout = _getPortletLayout(
+						layout, containerKey, resolutionContext);
+				}
 
 				if ((layout == null) || !_isPublished(layout)) {
 					continue;
@@ -295,6 +314,34 @@ public class CollectionUsageResolver {
 		return QueriesUtil.nested("nestedFieldArray", booleanQuery);
 	}
 
+	private Layout _getPortletLayout(
+		Layout layout, String portletId, ResolutionContext resolutionContext) {
+
+		if (layout == null) {
+			return null;
+		}
+
+		if (layout.isDraftLayout()) {
+			layout = resolutionContext.getLayout(layout.getClassPK());
+
+			if (layout == null) {
+				return null;
+			}
+		}
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId);
+
+		if (portletPreferences == null) {
+			return null;
+		}
+
+		return layout;
+	}
+
 	private boolean _isPublished(Layout layout) {
 		if (layout.isDraftLayout()) {
 			return false;
@@ -317,7 +364,9 @@ public class CollectionUsageResolver {
 			return false;
 		}
 
-		if (layout.isTypeContent() && layout.isPublished()) {
+		if ((layout.isTypeContent() && layout.isPublished()) ||
+			layout.isTypePortlet()) {
+
 			return true;
 		}
 
@@ -504,6 +553,8 @@ public class CollectionUsageResolver {
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final Portal _portal;
+	private final PortletPreferencesLocalService
+		_portletPreferencesLocalService;
 
 	private class ResolutionContext {
 

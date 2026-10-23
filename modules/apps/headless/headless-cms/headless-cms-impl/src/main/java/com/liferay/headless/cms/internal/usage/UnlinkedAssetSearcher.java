@@ -25,8 +25,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassNameTable;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -36,6 +41,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.QueriesUtil;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -46,6 +52,10 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.model.SiteNavigationMenuItemTable;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,10 +85,12 @@ public class UnlinkedAssetSearcher {
 			siteNavigationMenuItemLocalService;
 	}
 
-	public long getCount(long companyId, Long[] groupIds) {
+	public long getCount(
+		CollectionUsages collectionUsages, long companyId, Long[] groupIds) {
+
 		SearchResponse searchResponse = _searcher.search(
 			_getSearchRequestBuilder(
-				companyId, groupIds
+				collectionUsages, companyId, groupIds
 			).size(
 				0
 			).build());
@@ -87,11 +99,11 @@ public class UnlinkedAssetSearcher {
 	}
 
 	public SearchResponse search(
-		long companyId, Long[] groupIds, String languageId,
-		Pagination pagination, String search, Sort[] sorts) {
+		CollectionUsages collectionUsages, long companyId, Long[] groupIds,
+		String languageId, Pagination pagination, String search, Sort[] sorts) {
 
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			companyId, groupIds);
+			collectionUsages, companyId, groupIds);
 
 		searchRequestBuilder.addSelectedFieldNames(
 			Field.ENTRY_CLASS_PK, "objectDefinitionId", "objectEntryTitle",
@@ -305,6 +317,115 @@ public class UnlinkedAssetSearcher {
 		return booleanQuery;
 	}
 
+	private Set<String> _getCandidateObjectEntryIds(
+		Collection<com.liferay.portal.kernel.search.BooleanQuery>
+			booleanQueries,
+		long companyId, Long[] groupIds) {
+
+		Set<String> candidateObjectEntryIds = null;
+
+		List<com.liferay.portal.kernel.search.BooleanQuery> blocks =
+			new ArrayList<>();
+
+		com.liferay.portal.kernel.search.BooleanQuery lastBlock = null;
+		int count = 0;
+
+		for (com.liferay.portal.kernel.search.BooleanQuery booleanQuery :
+				booleanQueries) {
+
+			int clausesCount = _getClausesCount(booleanQuery);
+
+			if ((lastBlock == null) || ((count + clausesCount) > 1024)) {
+				lastBlock = new com.liferay.portal.kernel.search.BooleanQuery();
+				count = 1;
+
+				blocks.add(lastBlock);
+			}
+
+			lastBlock.add(booleanQuery, BooleanClauseOccur.SHOULD);
+
+			count += clausesCount;
+		}
+
+		for (com.liferay.portal.kernel.search.BooleanQuery block : blocks) {
+			Set<String> entryClassPKs = CMSSearchUtil.getEntryClassPKs(
+				_aggregations, _searcher,
+				() -> _getSearchRequestBuilder(
+					_getBaseBooleanQuery(), companyId
+				).groupIds(
+					ArrayUtil.toArray(groupIds)
+				).withSearchContext(
+					searchContext -> searchContext.setBooleanClauses(
+						new BooleanClause[] {
+							new BooleanClause<>(
+								block, BooleanClauseOccur.MUST_NOT)
+						})
+				));
+
+			if (candidateObjectEntryIds == null) {
+				candidateObjectEntryIds = entryClassPKs;
+			}
+			else {
+				candidateObjectEntryIds.retainAll(entryClassPKs);
+			}
+
+			if (candidateObjectEntryIds.isEmpty()) {
+				break;
+			}
+		}
+
+		return candidateObjectEntryIds;
+	}
+
+	private int _getClausesCount(Filter filter) {
+		if (filter instanceof BooleanFilter) {
+			BooleanFilter booleanFilter = (BooleanFilter)filter;
+
+			return 1 + _getClausesCount(booleanFilter.getMustBooleanClauses()) +
+				_getClausesCount(booleanFilter.getMustNotBooleanClauses()) +
+					_getClausesCount(booleanFilter.getShouldBooleanClauses());
+		}
+
+		if (filter instanceof QueryFilter) {
+			QueryFilter queryFilter = (QueryFilter)filter;
+
+			return _getClausesCount(queryFilter.getQuery());
+		}
+
+		return 1;
+	}
+
+	private int _getClausesCount(List<BooleanClause<Filter>> booleanClauses) {
+		int count = 0;
+
+		for (BooleanClause<Filter> booleanClause : booleanClauses) {
+			count += _getClausesCount(booleanClause.getClause());
+		}
+
+		return count;
+	}
+
+	private int _getClausesCount(com.liferay.portal.kernel.search.Query query) {
+		int count = 1;
+
+		if (query instanceof com.liferay.portal.kernel.search.BooleanQuery) {
+			com.liferay.portal.kernel.search.BooleanQuery booleanQuery =
+				(com.liferay.portal.kernel.search.BooleanQuery)query;
+
+			for (BooleanClause<com.liferay.portal.kernel.search.Query>
+					booleanClause : booleanQuery.clauses()) {
+
+				count += _getClausesCount(booleanClause.getClause());
+			}
+		}
+
+		if (query.getPreBooleanFilter() != null) {
+			count += _getClausesCount(query.getPreBooleanFilter());
+		}
+
+		return count;
+	}
+
 	private SearchRequestBuilder _getSearchRequestBuilder(
 		BooleanQuery booleanQuery, long companyId) {
 
@@ -322,11 +443,10 @@ public class UnlinkedAssetSearcher {
 	}
 
 	private SearchRequestBuilder _getSearchRequestBuilder(
-		long companyId, Long[] groupIds) {
+		CollectionUsages collectionUsages, long companyId, Long[] groupIds) {
 
-		BooleanQuery booleanQuery = _getBaseBooleanQuery();
-
-		Set<String> objectEntryIds = new HashSet<>();
+		Set<String> objectEntryIds = new HashSet<>(
+			collectionUsages.getObjectEntryIds());
 
 		_addAssetLinkObjectEntryIds(companyId, objectEntryIds);
 		_addLayoutObjectEntryIds(companyId, objectEntryIds);
@@ -370,6 +490,53 @@ public class UnlinkedAssetSearcher {
 					outboundLink.substring(
 						_OBJECT_ENTRY_ID_TOKEN_PREFIX.length()));
 			}
+		}
+
+		BooleanQuery booleanQuery = _getBaseBooleanQuery();
+
+		List<Query> queries = collectionUsages.getQueries();
+
+		if (!queries.isEmpty()) {
+			BooleanQuery collectionsBooleanQuery = QueriesUtil.booleanQuery();
+
+			collectionsBooleanQuery.addShouldQueryClauses(
+				queries.toArray(new Query[0]));
+
+			booleanQuery.addMustNotQueryClauses(collectionsBooleanQuery);
+		}
+
+		Set<Long> booleanQueriesGroupIds = new HashSet<>(
+			collectionUsages.getBooleanQueriesGroupIds());
+
+		if (collectionUsages.isBooleanQueriesAnyGroup()) {
+			Collections.addAll(booleanQueriesGroupIds, groupIds);
+		}
+
+		booleanQueriesGroupIds.retainAll(Arrays.asList(groupIds));
+
+		if (!booleanQueriesGroupIds.isEmpty()) {
+			Set<String> candidateObjectEntryIds = _getCandidateObjectEntryIds(
+				collectionUsages.getBooleanQueries(), companyId,
+				booleanQueriesGroupIds.toArray(new Long[0]));
+
+			BooleanQuery candidatesBooleanQuery = QueriesUtil.booleanQuery();
+
+			candidatesBooleanQuery.addShouldQueryClauses(
+				CMSSearchUtil.getTermsQuery(
+					Field.ENTRY_CLASS_PK,
+					candidateObjectEntryIds.toArray(new String[0])));
+
+			BooleanQuery otherGroupsBooleanQuery = QueriesUtil.booleanQuery();
+
+			otherGroupsBooleanQuery.addMustNotQueryClauses(
+				CMSSearchUtil.getTermsQuery(
+					Field.GROUP_ID,
+					ArrayUtil.toStringArray(booleanQueriesGroupIds)));
+
+			candidatesBooleanQuery.addShouldQueryClauses(
+				otherGroupsBooleanQuery);
+
+			booleanQuery.addFilterQueryClauses(candidatesBooleanQuery);
 		}
 
 		booleanQuery.addMustNotQueryClauses(

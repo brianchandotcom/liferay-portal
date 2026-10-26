@@ -6,16 +6,19 @@
 package com.liferay.depot.service.impl;
 
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.exception.DepotEntryGroupRelToGroupException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelLocalServiceBaseImpl;
 import com.liferay.depot.service.persistence.DepotEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.List;
 
@@ -45,6 +48,11 @@ public class DepotEntryGroupRelLocalServiceImpl
 			return depotEntryGroupRel;
 		}
 
+		DepotEntry depotEntry = _depotEntryPersistence.findByPrimaryKey(
+			depotEntryId);
+
+		_validateToGroup(depotEntry, toGroupId);
+
 		depotEntryGroupRel = depotEntryGroupRelPersistence.create(
 			counterLocalService.increment());
 
@@ -53,10 +61,6 @@ public class DepotEntryGroupRelLocalServiceImpl
 		depotEntryGroupRel.setDepotEntryId(depotEntryId);
 		depotEntryGroupRel.setSearchable(searchable);
 		depotEntryGroupRel.setToGroupId(toGroupId);
-
-		DepotEntry depotEntry = _depotEntryPersistence.findByPrimaryKey(
-			depotEntryId);
-
 		depotEntryGroupRel.setType(depotEntry.getType());
 
 		ServiceContext serviceContext =
@@ -197,6 +201,35 @@ public class DepotEntryGroupRelLocalServiceImpl
 		depotEntryGroupRel.setSearchable(searchable);
 
 		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
+	}
+
+	private void _validateToGroup(DepotEntry depotEntry, long toGroupId)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				depotEntry.getCompanyId(), "LPD-57283")) {
+
+			return;
+		}
+
+		DepotEntry toGroupDepotEntry = _depotEntryPersistence.fetchByGroupId(
+			toGroupId);
+
+		if (toGroupDepotEntry == null) {
+			return;
+		}
+
+		if ((toGroupDepotEntry.getType() !=
+				DepotConstants.TYPE_DESIGN_LIBRARY) ||
+			!ArrayUtil.contains(
+				new int[] {
+					DepotConstants.TYPE_ASSET_LIBRARY, DepotConstants.TYPE_SPACE
+				},
+				depotEntry.getType())) {
+
+			throw new DepotEntryGroupRelToGroupException.
+				MustAcceptDepotEntryType(depotEntry.getType(), toGroupId);
+		}
 	}
 
 	@Reference

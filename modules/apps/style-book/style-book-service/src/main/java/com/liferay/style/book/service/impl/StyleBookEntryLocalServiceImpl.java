@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -1094,9 +1096,12 @@ public class StyleBookEntryLocalServiceImpl
 				frontendTokenDefinition);
 		}
 		catch (JSONValidatorException jsonValidatorException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonValidatorException);
+			}
+
 			throw new StyleBookEntryFrontendTokenDefinitionException(
-				"Unable to parse frontend token definition",
-				jsonValidatorException);
+				"Unable to parse frontend token definition");
 		}
 
 		Set<String> frontendTokenNames = new HashSet<>();
@@ -1145,8 +1150,12 @@ public class StyleBookEntryLocalServiceImpl
 				frontendTokensValues);
 		}
 		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
 			throw new StyleBookEntryFrontendTokensValuesException.
-				MustBeValidJSON(jsonException);
+				MustBeValidJSON();
 		}
 
 		for (String key : frontendTokensValuesJSONObject.keySet()) {
@@ -1184,6 +1193,9 @@ public class StyleBookEntryLocalServiceImpl
 				"Duplicate style book entry key " + styleBookEntryKey);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StyleBookEntryLocalServiceImpl.class);
 
 	@Reference
 	private CustomSQL _customSQL;

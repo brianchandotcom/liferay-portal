@@ -18,17 +18,22 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplat
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -38,6 +43,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -48,6 +54,8 @@ import com.liferay.style.book.test.util.FrontendTokenDefinitionTestUtil;
 import com.liferay.style.book.util.StyleBookUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Assert;
@@ -64,21 +72,21 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteSiteStyleBook() throws Exception {
+		super.testDeleteSiteStyleBook();
+
+		_testDeleteSiteStyleBookForNonexistingStyleBook();
+		_testDeleteSiteStyleBookWithDesignLibraryExternalReferenceCode();
+	}
+
+	@Override
+	@Test
 	public void testGetDesignLibraryStyleBooksPage() throws Exception {
 		super.testGetDesignLibraryStyleBooksPage();
 
-		try {
-			styleBookResource.getDesignLibraryStyleBooksPage(
-				testGroup.getExternalReferenceCode(), null, null, null,
-				Pagination.of(1, 10), null);
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-		}
+		_testGetDesignLibraryStyleBooksPageWithEmptyStyleBook();
+		_testGetDesignLibraryStyleBooksPageWithSiteExternalReferenceCode();
+		_testGetDesignLibraryStyleBooksPageWithSortName();
 	}
 
 	@Override
@@ -101,18 +109,21 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 	public void testGetSiteStyleBook() throws Exception {
 		super.testGetSiteStyleBook();
 
-		try {
-			styleBookResource.getSiteStyleBook(
-				testGetSiteStyleBook_getSiteExternalReferenceCode(),
-				RandomTestUtil.randomString());
+		_testGetSiteStyleBookForNonexistingStyleBook();
+		_testGetSiteStyleBookWithDesignLibraryExternalReferenceCode();
+	}
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
+	@Override
+	@Test
+	public void testGetSiteStyleBooksPage() throws Exception {
+		super.testGetSiteStyleBooksPage();
 
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-		}
+		_testGetSiteStyleBooksPageWithDefaultSort();
+		_testGetSiteStyleBooksPageWithDesignLibraryExternalReferenceCode();
+		_testGetSiteStyleBooksPageWithEmptyStyleBook();
+		_testGetSiteStyleBooksPageWithSearch();
+		_testGetSiteStyleBooksPageWithSortName();
+		_testGetSiteStyleBooksPageWithStaleDocument();
 	}
 
 	@Override
@@ -137,6 +148,7 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 		super.testPostSiteStyleBook();
 
 		_testPostSiteStyleBookWithBlankThemeId();
+		_testPostSiteStyleBookWithDesignLibraryExternalReferenceCode();
 		_testPostSiteStyleBookWithDuplicateExternalReferenceCode();
 		_testPostSiteStyleBookWithDuplicateFrontendToken();
 		_testPostSiteStyleBookWithDuplicateKey();
@@ -162,6 +174,7 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 	public void testPutSiteStyleBook() throws Exception {
 		super.testPutSiteStyleBook();
 
+		_testPutSiteStyleBookWithDesignLibraryExternalReferenceCode();
 		_testPutSiteStyleBookWithFrontendTokenDefinition();
 		_testPutSiteStyleBookWithInvalidFrontendTokenDefinition();
 		_testPutSiteStyleBookWithNullDefaultStyleBook();
@@ -355,6 +368,29 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 		}
 	}
 
+	private void _assertNames(
+		List<String> expectedNames, Page<StyleBook> page) {
+
+		List<String> actualNames = TransformUtil.transform(
+			page.getItems(),
+			styleBook -> {
+				if (!expectedNames.contains(styleBook.getName())) {
+					return null;
+				}
+
+				return styleBook.getName();
+			});
+
+		Assert.assertEquals(expectedNames, actualNames);
+	}
+
+	private void _assertTotalCount(
+		String externalReferenceCode, Page<StyleBook> page, long totalCount) {
+
+		Assert.assertEquals(
+			externalReferenceCode, totalCount, page.getTotalCount());
+	}
+
 	private String _getDesignLibraryExternalReferenceCode() throws Exception {
 		if (_designLibraryGroup == null) {
 			_designLibraryGroup = DesignLibraryTestUtil.addDesignLibraryGroup(
@@ -376,6 +412,19 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 		return _irrelevantDesignLibraryGroup.getExternalReferenceCode();
 	}
 
+	private StyleBookEntry _getOrAddEmptyStyleBookEntry(long groupId)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			return _styleBookEntryLocalService.getOrAddEmptyStyleBookEntry(
+				StringUtil.toLowerCase(RandomTestUtil.randomString()),
+				TestPropsValues.getUserId(), groupId,
+				RandomTestUtil.randomString());
+		}
+	}
+
 	private Layout _getPageSpecificationLayout() throws Exception {
 		if (_pageSpecificationLayout == null) {
 			_pageSpecificationLayout = LayoutTestUtil.addTypeContentLayout(
@@ -391,6 +440,126 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 		Theme theme = layout.getTheme();
 
 		return theme.getThemeId();
+	}
+
+	private void _testDeleteSiteStyleBookForNonexistingStyleBook()
+		throws Exception {
+
+		try {
+			styleBookResource.deleteSiteStyleBook(
+				testGroup.getExternalReferenceCode(),
+				RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
+	}
+
+	private void _testDeleteSiteStyleBookWithDesignLibraryExternalReferenceCode()
+		throws Exception {
+
+		StyleBook styleBook = styleBookResource.postDesignLibraryStyleBook(
+			_getDesignLibraryExternalReferenceCode(), randomStyleBook());
+
+		try {
+			styleBookResource.deleteSiteStyleBook(
+				_getDesignLibraryExternalReferenceCode(),
+				styleBook.getExternalReferenceCode());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+
+		assertEquals(
+			styleBook,
+			styleBookResource.getDesignLibraryStyleBook(
+				_getDesignLibraryExternalReferenceCode(),
+				styleBook.getExternalReferenceCode()));
+	}
+
+	private void _testGetDesignLibraryStyleBooksPageWithEmptyStyleBook()
+		throws Exception {
+
+		Group designLibraryGroup = DesignLibraryTestUtil.addDesignLibraryGroup(
+			testGroup.getGroupId());
+
+		StyleBookEntry emptyStyleBookEntry = _getOrAddEmptyStyleBookEntry(
+			designLibraryGroup.getGroupId());
+
+		_assertTotalCount(
+			emptyStyleBookEntry.getExternalReferenceCode(),
+			styleBookResource.getDesignLibraryStyleBooksPage(
+				designLibraryGroup.getExternalReferenceCode(), null, null,
+				"externalReferenceCode eq '" +
+					emptyStyleBookEntry.getExternalReferenceCode() + "'",
+				Pagination.of(1, 10), null),
+			0);
+
+		StyleBook styleBook = styleBookResource.postDesignLibraryStyleBook(
+			designLibraryGroup.getExternalReferenceCode(), randomStyleBook());
+
+		_assertTotalCount(
+			styleBook.getExternalReferenceCode(),
+			styleBookResource.getDesignLibraryStyleBooksPage(
+				designLibraryGroup.getExternalReferenceCode(), null, null,
+				"externalReferenceCode eq '" +
+					styleBook.getExternalReferenceCode() + "'",
+				Pagination.of(1, 10), null),
+			1);
+	}
+
+	private void _testGetDesignLibraryStyleBooksPageWithSiteExternalReferenceCode()
+		throws Exception {
+
+		try {
+			styleBookResource.getDesignLibraryStyleBooksPage(
+				testGroup.getExternalReferenceCode(), null, null, null,
+				Pagination.of(1, 10), null);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
+	}
+
+	private void _testGetDesignLibraryStyleBooksPageWithSortName()
+		throws Exception {
+
+		StyleBook styleBook1 = randomStyleBook();
+
+		styleBook1.setName("aaa" + RandomTestUtil.randomString());
+
+		styleBook1 = styleBookResource.postDesignLibraryStyleBook(
+			_getDesignLibraryExternalReferenceCode(), styleBook1);
+
+		StyleBook styleBook2 = randomStyleBook();
+
+		styleBook2.setName("bbb" + RandomTestUtil.randomString());
+
+		styleBook2 = styleBookResource.postDesignLibraryStyleBook(
+			_getDesignLibraryExternalReferenceCode(), styleBook2);
+
+		_assertNames(
+			Arrays.asList(styleBook1.getName(), styleBook2.getName()),
+			styleBookResource.getDesignLibraryStyleBooksPage(
+				_getDesignLibraryExternalReferenceCode(), null, null, null,
+				Pagination.of(1, 100), "name:asc"));
+		_assertNames(
+			Arrays.asList(styleBook2.getName(), styleBook1.getName()),
+			styleBookResource.getDesignLibraryStyleBooksPage(
+				_getDesignLibraryExternalReferenceCode(), null, null, null,
+				Pagination.of(1, 100), "name:desc"));
 	}
 
 	private void _testGetSitePageSpecificationStyleBooksPage()
@@ -668,6 +837,180 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 		}
 	}
 
+	private void _testGetSiteStyleBookForNonexistingStyleBook()
+		throws Exception {
+
+		try {
+			styleBookResource.getSiteStyleBook(
+				testGetSiteStyleBook_getSiteExternalReferenceCode(),
+				RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
+	}
+
+	private void _testGetSiteStyleBookWithDesignLibraryExternalReferenceCode()
+		throws Exception {
+
+		StyleBook styleBook = styleBookResource.postDesignLibraryStyleBook(
+			_getDesignLibraryExternalReferenceCode(), randomStyleBook());
+
+		try {
+			styleBookResource.getSiteStyleBook(
+				_getDesignLibraryExternalReferenceCode(),
+				styleBook.getExternalReferenceCode());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+	}
+
+	private void _testGetSiteStyleBooksPageWithDefaultSort() throws Exception {
+		StyleBook styleBook1 = testPostSiteStyleBook_addStyleBook(
+			randomStyleBook());
+		StyleBook styleBook2 = testPostSiteStyleBook_addStyleBook(
+			randomStyleBook());
+
+		_assertNames(
+			Arrays.asList(styleBook2.getName(), styleBook1.getName()),
+			styleBookResource.getSiteStyleBooksPage(
+				testGroup.getExternalReferenceCode(), null, null, null,
+				Pagination.of(1, 100), null));
+	}
+
+	private void _testGetSiteStyleBooksPageWithDesignLibraryExternalReferenceCode()
+		throws Exception {
+
+		try {
+			styleBookResource.getSiteStyleBooksPage(
+				_getDesignLibraryExternalReferenceCode(), null, null, null,
+				Pagination.of(1, 10), null);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+	}
+
+	private void _testGetSiteStyleBooksPageWithEmptyStyleBook()
+		throws Exception {
+
+		StyleBookEntry emptyStyleBookEntry = _getOrAddEmptyStyleBookEntry(
+			testGroup.getGroupId());
+
+		_assertTotalCount(
+			emptyStyleBookEntry.getExternalReferenceCode(),
+			styleBookResource.getSiteStyleBooksPage(
+				testGroup.getExternalReferenceCode(), null, null,
+				"externalReferenceCode eq '" +
+					emptyStyleBookEntry.getExternalReferenceCode() + "'",
+				Pagination.of(1, 10), null),
+			0);
+
+		StyleBook styleBook = testPostSiteStyleBook_addStyleBook(
+			randomStyleBook());
+
+		_assertTotalCount(
+			styleBook.getExternalReferenceCode(),
+			styleBookResource.getSiteStyleBooksPage(
+				testGroup.getExternalReferenceCode(), null, null,
+				"externalReferenceCode eq '" +
+					styleBook.getExternalReferenceCode() + "'",
+				Pagination.of(1, 10), null),
+			1);
+	}
+
+	private void _testGetSiteStyleBooksPageWithSearch() throws Exception {
+		StyleBook styleBook = randomStyleBook();
+
+		String prefix = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+		styleBook.setName(prefix + " " + RandomTestUtil.randomString());
+
+		styleBook = testPostSiteStyleBook_addStyleBook(styleBook);
+
+		String filterString =
+			"externalReferenceCode eq '" +
+				styleBook.getExternalReferenceCode() + "'";
+
+		_assertTotalCount(
+			styleBook.getExternalReferenceCode(),
+			styleBookResource.getSiteStyleBooksPage(
+				testGroup.getExternalReferenceCode(), prefix.substring(0, 4),
+				null, filterString, Pagination.of(1, 10), null),
+			1);
+		_assertTotalCount(
+			styleBook.getExternalReferenceCode(),
+			styleBookResource.getSiteStyleBooksPage(
+				testGroup.getExternalReferenceCode(), prefix.substring(4), null,
+				filterString, Pagination.of(1, 10), null),
+			0);
+	}
+
+	private void _testGetSiteStyleBooksPageWithSortName() throws Exception {
+		StyleBook styleBook1 = randomStyleBook();
+
+		styleBook1.setName("aaa" + RandomTestUtil.randomString());
+
+		styleBook1 = testPostSiteStyleBook_addStyleBook(styleBook1);
+
+		StyleBook styleBook2 = randomStyleBook();
+
+		styleBook2.setName("bbb" + RandomTestUtil.randomString());
+
+		styleBook2 = testPostSiteStyleBook_addStyleBook(styleBook2);
+
+		_assertNames(
+			Arrays.asList(styleBook1.getName(), styleBook2.getName()),
+			styleBookResource.getSiteStyleBooksPage(
+				testGroup.getExternalReferenceCode(), null, null, null,
+				Pagination.of(1, 100), "name:asc"));
+		_assertNames(
+			Arrays.asList(styleBook2.getName(), styleBook1.getName()),
+			styleBookResource.getSiteStyleBooksPage(
+				testGroup.getExternalReferenceCode(), null, null, null,
+				Pagination.of(1, 100), "name:desc"));
+	}
+
+	private void _testGetSiteStyleBooksPageWithStaleDocument()
+		throws Exception {
+
+		StyleBook styleBook = testPostSiteStyleBook_addStyleBook(
+			randomStyleBook());
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.getStyleBookEntry(styleBook.getId());
+
+		_styleBookEntryLocalService.deleteStyleBookEntry(styleBookEntry);
+
+		Indexer<StyleBookEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(StyleBookEntry.class);
+
+		indexer.reindex(styleBookEntry);
+
+		Page<StyleBook> page = styleBookResource.getSiteStyleBooksPage(
+			testGroup.getExternalReferenceCode(), null, null,
+			"externalReferenceCode eq '" +
+				styleBook.getExternalReferenceCode() + "'",
+			Pagination.of(1, 10), null);
+
+		Collection<StyleBook> styleBooks = page.getItems();
+
+		Assert.assertEquals(styleBooks.toString(), 0, styleBooks.size());
+	}
+
 	private void _testPatchDesignLibraryStyleBook() throws Exception {
 		StyleBook postStyleBook =
 			testPatchDesignLibraryStyleBook_addStyleBook();
@@ -800,6 +1143,22 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Assert.assertEquals(
 				"Theme ID must not be null", problemException.getMessage());
+		}
+	}
+
+	private void _testPostSiteStyleBookWithDesignLibraryExternalReferenceCode()
+		throws Exception {
+
+		try {
+			styleBookResource.postSiteStyleBook(
+				_getDesignLibraryExternalReferenceCode(), randomStyleBook());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 		}
 	}
 
@@ -1048,6 +1407,26 @@ public class StyleBookResourceTest extends BaseStyleBookResourceTestCase {
 
 		Assert.assertTrue(
 			Validator.isNull(putStyleBook.getFrontendTokenDefinition()));
+	}
+
+	private void _testPutSiteStyleBookWithDesignLibraryExternalReferenceCode()
+		throws Exception {
+
+		StyleBook styleBook = styleBookResource.postDesignLibraryStyleBook(
+			_getDesignLibraryExternalReferenceCode(), randomStyleBook());
+
+		try {
+			styleBookResource.putSiteStyleBook(
+				_getDesignLibraryExternalReferenceCode(),
+				styleBook.getExternalReferenceCode(), randomStyleBook());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
 	}
 
 	private void _testPutSiteStyleBookWithFrontendTokenDefinition()

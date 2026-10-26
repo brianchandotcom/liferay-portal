@@ -268,6 +268,10 @@ components:
                     description:
                         A flag that indicates whether the file's deletions are applied.
                     type: boolean
+                importUploadId:
+                    description:
+                        The ID of the chunked upload holding the file to import. Without it, the user's last file uploaded through the import preview of the same scope is imported.
+                    type: string
                 name:
                     description:
                         The import process's name. Defaults to the name of the uploaded file.
@@ -290,6 +294,76 @@ components:
                         Who owns the imported items. CURRENT_USER_ID keeps the original owner when it exists, and ALWAYS_CURRENT_USER_ID assigns every item to the current user.
                     enum: [CURRENT_USER_ID, ALWAYS_CURRENT_USER_ID]
                     type: string
+            type: object
+        ImportUpload:
+            description:
+                Represents a file uploaded in chunks. Once every chunk is uploaded, the file is validated in the background and its import preview becomes available.
+            properties:
+                chunkSize:
+                    description:
+                        The size in bytes of every chunk but the last one.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                errorMessage:
+                    description:
+                        The validation error when the status is FAILED.
+                    readOnly: true
+                    type: string
+                fileName:
+                    readOnly: true
+                    type: string
+                id:
+                    readOnly: true
+                    type: string
+                importPreview:
+                    $ref: "#/components/schemas/ImportPreview"
+                    description:
+                        The import preview when the status is READY.
+                    readOnly: true
+                percentage:
+                    description:
+                        The validation progress when the status is VALIDATING.
+                    format: int32
+                    readOnly: true
+                    type: integer
+                size:
+                    description:
+                        The file's size in bytes.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                status:
+                    enum: [UPLOADING, VALIDATING, READY, FAILED]
+                    readOnly: true
+                    type: string
+                totalChunksCount:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                uploadedChunksCount:
+                    description:
+                        The number of chunks uploaded so far, counted from the first one without gaps.
+                    format: int32
+                    readOnly: true
+                    type: integer
+            type: object
+        ImportUploadRequest:
+            description:
+                Represents the file to upload in chunks.
+            properties:
+                contentType:
+                    type: string
+                fileName:
+                    type: string
+                size:
+                    description:
+                        The file's size in bytes.
+                    format: int64
+                    type: integer
+            required:
+                -   fileName
+                -   size
             type: object
         InstanceExportProcessRequest:
             allOf:
@@ -1055,8 +1129,9 @@ paths:
             tags: ["ExportProcess"]
     "/asset-libraries/{assetLibraryExternalReferenceCode}/import-preview":
         post:
+            deprecated: true
             description:
-                Uploads a file to import into the specified asset library and retrieves its portlet data handlers and counts. The import process of the same scope imports the user's last uploaded file.
+                Uploads a file to import into the specified asset library and retrieves its portlet data handlers and counts. The import process of the same scope imports the user's last uploaded file. Deprecated, upload the file in chunks with the import-uploads operations instead.
             operationId: postAssetLibraryImportPreview
             parameters:
                 -   in: path
@@ -1191,6 +1266,122 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ImportProcess"
             tags: ["ImportProcess"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/import-uploads":
+        post:
+            description:
+                Starts uploading a file to import into the specified asset library in chunks. The response has the chunk size to use.
+            operationId: postAssetLibraryImportUpload
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        The ID of a portlet to narrow the process to (e.g., com_liferay_journal_web_portlet_JournalPortlet).
+                    name: portletId
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportUploadRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportUploadRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/import-uploads/{importUploadId}":
+        delete:
+            description:
+                Deletes the chunked upload with the specified ID and its chunks.
+            operationId: deleteAssetLibraryImportUpload
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ImportUpload"]
+        get:
+            description:
+                Retrieves the chunked upload with the specified ID, with its validation progress and, once it is ready, its import preview.
+            operationId: getAssetLibraryImportUpload
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/import-uploads/{importUploadId}/chunks/{chunkIndex}":
+        put:
+            description:
+                Uploads the chunk with the specified zero based index. The request body holds the chunk's raw bytes. Uploading a chunk that was already uploaded leaves it unchanged.
+            operationId: putAssetLibraryImportUploadChunkChunkIndex
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: chunkIndex
+                    required: true
+                    schema:
+                        type: integer
+            requestBody:
+                content:
+                    application/octet-stream: {}
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
     "/export-preview":
         get:
             description:
@@ -1529,8 +1720,9 @@ paths:
             tags: ["ExportProcess"]
     "/import-preview":
         post:
+            deprecated: true
             description:
-                Uploads a file to import into the instance and retrieves its portlet data handlers, counts, and sites. The import process of the same scope imports the user's last uploaded file.
+                Uploads a file to import into the instance and retrieves its portlet data handlers, counts, and sites. The import process of the same scope imports the user's last uploaded file. Deprecated, upload the file in chunks with the import-uploads operations instead.
             operationId: postImportPreview
             parameters:
                 -   in: query
@@ -1781,6 +1973,102 @@ paths:
                                     $ref: "#/components/schemas/ReportEntry"
                                 type: array
             tags: ["ReportEntry"]
+    "/import-uploads":
+        post:
+            description:
+                Starts uploading a file to import into the instance in chunks. The response has the chunk size to use.
+            operationId: postImportUpload
+            parameters:
+                -   in: query
+                    description:
+                        The ID of a portlet to narrow the process to (e.g., com_liferay_journal_web_portlet_JournalPortlet).
+                    name: portletId
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportUploadRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportUploadRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
+    "/import-uploads/{importUploadId}":
+        delete:
+            description:
+                Deletes the chunked upload with the specified ID and its chunks.
+            operationId: deleteImportUpload
+            parameters:
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ImportUpload"]
+        get:
+            description:
+                Retrieves the chunked upload with the specified ID, with its validation progress and, once it is ready, its import preview.
+            operationId: getImportUpload
+            parameters:
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
+    "/import-uploads/{importUploadId}/chunks/{chunkIndex}":
+        put:
+            description:
+                Uploads the chunk with the specified zero based index. The request body holds the chunk's raw bytes. Uploading a chunk that was already uploaded leaves it unchanged.
+            operationId: putImportUploadChunkChunkIndex
+            parameters:
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: chunkIndex
+                    required: true
+                    schema:
+                        type: integer
+            requestBody:
+                content:
+                    application/octet-stream: {}
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
     "/publish-processes/{publishProcessId}":
         delete:
             description:
@@ -2195,8 +2483,9 @@ paths:
             tags: ["ExportProcess"]
     "/sites/{siteExternalReferenceCode}/import-preview":
         post:
+            deprecated: true
             description:
-                Uploads a file to import into the specified site and retrieves its portlet data handlers and counts. The import process of the same scope imports the user's last uploaded file.
+                Uploads a file to import into the specified site and retrieves its portlet data handlers and counts. The import process of the same scope imports the user's last uploaded file. Deprecated, upload the file in chunks with the import-uploads operations instead.
             operationId: postSiteImportPreview
             parameters:
                 -   in: path
@@ -2349,6 +2638,128 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ImportProcess"
             tags: ["ImportProcess"]
+    "/sites/{siteExternalReferenceCode}/import-uploads":
+        post:
+            description:
+                Starts uploading a file to import into the specified site in chunks. The response has the chunk size to use.
+            operationId: postSiteImportUpload
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        The ID of a portlet to narrow the process to (e.g., com_liferay_journal_web_portlet_JournalPortlet).
+                    name: portletId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        The external reference code of the site page that holds the portlet. Without it, the portlet is handled as an application rather than a widget on a page.
+                    name: sitePageExternalReferenceCode
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportUploadRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportUploadRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
+    "/sites/{siteExternalReferenceCode}/import-uploads/{importUploadId}":
+        delete:
+            description:
+                Deletes the chunked upload with the specified ID and its chunks.
+            operationId: deleteSiteImportUpload
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ImportUpload"]
+        get:
+            description:
+                Retrieves the chunked upload with the specified ID, with its validation progress and, once it is ready, its import preview.
+            operationId: getSiteImportUpload
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
+    "/sites/{siteExternalReferenceCode}/import-uploads/{importUploadId}/chunks/{chunkIndex}":
+        put:
+            description:
+                Uploads the chunk with the specified zero based index. The request body holds the chunk's raw bytes. Uploading a chunk that was already uploaded leaves it unchanged.
+            operationId: putSiteImportUploadChunkChunkIndex
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: importUploadId
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: chunkIndex
+                    required: true
+                    schema:
+                        type: integer
+            requestBody:
+                content:
+                    application/octet-stream: {}
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportUpload"
+            tags: ["ImportUpload"]
     "/sites/{siteExternalReferenceCode}/publish-preview":
         get:
             description:

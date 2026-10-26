@@ -12,6 +12,7 @@ liferay-learn-etc-spring-boot-oahs:
         -   c_p2s3course.everything
         -   c_p2s3enrollment.everything
         -   c_p2s3externalmedia.everything
+        -   c_p2s3knowledgearticle.everything
         -   c_p2s3learningpath.everything
         -   c_p2s3learningpathstep.everything
         -   c_p2s3lesson.everything
@@ -48,6 +49,11 @@ liferay-learn-etc-spring-boot-object-action-exam-results-synchronization:
     name: Liferay Learn Etc Spring Boot Object Action Exam Result Synchronization
     oAuth2ApplicationExternalReferenceCode: liferay-learn-etc-spring-boot-oaua
     resourcePath: /object/action/exam/results/synchronization
+    type: objectAction
+liferay-learn-etc-spring-boot-object-action-knowledge-article-guest-view:
+    name: Liferay Learn Etc Spring Boot Object Action Knowledge Article Guest View
+    oAuth2ApplicationExternalReferenceCode: liferay-learn-etc-spring-boot-oaua
+    resourcePath: /object/action/knowledge/article/guest/view
     type: objectAction
 liferay-learn-etc-spring-boot-object-action-permission:
     name: Liferay Learn Etc Spring Boot Object Action Permission

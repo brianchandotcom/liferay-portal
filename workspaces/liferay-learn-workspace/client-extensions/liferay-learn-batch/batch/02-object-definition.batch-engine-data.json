@@ -2295,6 +2295,19 @@
 				"en_US": "P2S3 Knowledge Article"
 			},
 			"name": "P2S3KnowledgeArticle",
+			"objectActions": [
+				{
+					"active": true,
+					"label": {
+						"en_US": "Update Guest View Permission"
+					},
+					"name": "updateGuestViewPermission",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-knowledge-article-guest-view",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+					}
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "String",

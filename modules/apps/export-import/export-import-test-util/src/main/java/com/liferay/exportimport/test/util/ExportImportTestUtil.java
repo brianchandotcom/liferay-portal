@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -39,7 +41,13 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -330,6 +338,41 @@ public class ExportImportTestUtil {
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			liveGroup.getGroupId(), false, parameterMap);
+	}
+
+	public static int putImportUploadChunk(
+			byte[] bytes, String emailAddress, String password,
+			String urlString)
+		throws Exception {
+
+		URL url = new URL(urlString);
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		httpURLConnection.setDoOutput(true);
+		httpURLConnection.setFixedLengthStreamingMode(bytes.length);
+		httpURLConnection.setRequestMethod("PUT");
+
+		String credentials = emailAddress + ":" + password;
+
+		httpURLConnection.setRequestProperty(
+			"Authorization",
+			"Basic " +
+				Base64.encode(credentials.getBytes(StandardCharsets.UTF_8)));
+
+		httpURLConnection.setRequestProperty(
+			"Content-Type", ContentTypes.APPLICATION_OCTET_STREAM);
+
+		try (OutputStream outputStream = httpURLConnection.getOutputStream()) {
+			outputStream.write(bytes);
+		}
+
+		int responseCode = httpURLConnection.getResponseCode();
+
+		httpURLConnection.disconnect();
+
+		return responseCode;
 	}
 
 	public static void retryAssert(

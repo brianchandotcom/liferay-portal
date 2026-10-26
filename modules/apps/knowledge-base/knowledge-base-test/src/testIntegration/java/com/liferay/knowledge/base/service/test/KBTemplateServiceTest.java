@@ -8,6 +8,7 @@ package com.liferay.knowledge.base.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBConstants;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
 import com.liferay.knowledge.base.service.KBTemplateService;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -65,11 +67,24 @@ public class KBTemplateServiceTest {
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group1.getGroupId()),
 			KBActionKeys.DELETE_KB_TEMPLATES);
 
-		_user = UserTestUtil.addUser(_group1.getGroupId());
+		_user = UserTestUtil.addUser();
+		_unrecognizedPortletId =
+			"TEST_PORTLET_" + RandomTestUtil.randomString();
+
+		_siteMemberUser = UserTestUtil.addUser(_group1.getGroupId());
 
 		_userGroupRoleLocalService.addUserGroupRoles(
-			_user.getUserId(), _group1.getGroupId(),
+			_siteMemberUser.getUserId(), _group1.getGroupId(),
 			new long[] {_role.getRoleId()});
+	}
+
+	@Test
+	@TestInfo("LPD-111631")
+	public void testAddKBTemplate() throws Exception {
+		_testAddKBTemplate(KBPortletKeys.KNOWLEDGE_BASE_ADMIN);
+		_testAddKBTemplate(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
+		_testAddKBTemplateWithoutAddKBTemplatePermission();
+		_testAddKBTemplateWithUnrecognizedPortletId();
 	}
 
 	@Test
@@ -88,11 +103,89 @@ public class KBTemplateServiceTest {
 				group, TestPropsValues.getUserId()));
 	}
 
+	private KBTemplate _addKBTemplate(String portletId) throws Exception {
+		return _kbTemplateService.addKBTemplate(
+			portletId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group1, _siteMemberUser.getUserId()));
+	}
+
+	private void _addPortletResourcePermissions(String actionId)
+		throws Exception {
+
+		RoleTestUtil.addResourcePermission(
+			_role, KBConstants.RESOURCE_NAME_ADMIN,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group1.getGroupId()),
+			actionId);
+		RoleTestUtil.addResourcePermission(
+			_role, KBConstants.RESOURCE_NAME_DISPLAY,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group1.getGroupId()),
+			actionId);
+	}
+
+	private void _testAddKBTemplate(String portletId) throws Exception {
+		_addPortletResourcePermissions(KBActionKeys.ADD_KB_TEMPLATE);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_siteMemberUser)) {
+
+			KBTemplate kbTemplate = _addKBTemplate(portletId);
+
+			Assert.assertEquals(
+				_siteMemberUser.getUserId(), kbTemplate.getUserId());
+		}
+	}
+
+	private void _testAddKBTemplateWithUnrecognizedPortletId()
+		throws Exception {
+
+		_addPortletResourcePermissions(KBActionKeys.ADD_KB_TEMPLATE);
+
+		int kbTemplatesCount = _kbTemplateLocalService.getGroupKBTemplatesCount(
+			_group1.getGroupId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_siteMemberUser)) {
+
+			Assert.assertThrows(
+				PrincipalException.class,
+				() -> _addKBTemplate(_unrecognizedPortletId));
+		}
+
+		Assert.assertEquals(
+			kbTemplatesCount,
+			_kbTemplateLocalService.getGroupKBTemplatesCount(
+				_group1.getGroupId()));
+	}
+
+	private void _testAddKBTemplateWithoutAddKBTemplatePermission()
+		throws Exception {
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user)) {
+
+			PrincipalException.MustHavePermission mustHavePermission =
+				Assert.assertThrows(
+					PrincipalException.MustHavePermission.class,
+					() -> _addKBTemplate(KBPortletKeys.KNOWLEDGE_BASE_ADMIN));
+
+			Assert.assertArrayEquals(
+				new String[] {KBActionKeys.ADD_KB_TEMPLATE},
+				mustHavePermission.actionId);
+			Assert.assertEquals(
+				_group1.getGroupId(), mustHavePermission.resourceId);
+			Assert.assertEquals(
+				KBConstants.RESOURCE_NAME_ADMIN,
+				mustHavePermission.resourceName);
+		}
+	}
+
 	private void _testDeleteKBTemplates() throws Exception {
 		KBTemplate kbTemplate = _addKBTemplate(_group1);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user)) {
+				_siteMemberUser)) {
 
 			_kbTemplateService.deleteKBTemplates(
 				_group1.getGroupId(),
@@ -110,7 +203,7 @@ public class KBTemplateServiceTest {
 		KBTemplate kbTemplate = _addKBTemplate(_group2);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user)) {
+				_siteMemberUser)) {
 
 			Assert.assertThrows(
 				PrincipalException.MustHavePermission.class,
@@ -137,10 +230,11 @@ public class KBTemplateServiceTest {
 			String.valueOf(kbTemplate.getKbTemplateId()),
 			_regularRole.getRoleId(), new String[] {KBActionKeys.DELETE});
 
-		_userLocalService.addRoleUser(_regularRole.getRoleId(), _user);
+		_userLocalService.addRoleUser(
+			_regularRole.getRoleId(), _siteMemberUser);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user)) {
+				_siteMemberUser)) {
 
 			_kbTemplateService.deleteKBTemplates(
 				_group1.getGroupId(),
@@ -159,7 +253,7 @@ public class KBTemplateServiceTest {
 		KBTemplate kbTemplate2 = _addKBTemplate(_group2);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user)) {
+				_siteMemberUser)) {
 
 			Assert.assertThrows(
 				PrincipalException.MustHavePermission.class,
@@ -199,6 +293,11 @@ public class KBTemplateServiceTest {
 
 	@DeleteAfterTestRun
 	private Role _role;
+
+	@DeleteAfterTestRun
+	private User _siteMemberUser;
+
+	private String _unrecognizedPortletId;
 
 	@DeleteAfterTestRun
 	private User _user;

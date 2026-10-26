@@ -49,6 +49,9 @@ public class LayoutImportBackgroundTaskExecutorTest {
 			_layoutImportBackgroundTaskExecutor,
 			"_exportImportReportEntryLocalService",
 			_exportImportReportEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_layoutImportBackgroundTaskExecutor, "_importFileSourceHelper",
+			_importFileSourceHelper);
 	}
 
 	@After
@@ -166,6 +169,8 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	private final ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService = Mockito.mock(
 			ExportImportReportEntryLocalService.class);
+	private final ImportFileSourceHelper _importFileSourceHelper = Mockito.mock(
+		ImportFileSourceHelper.class);
 	private final LayoutImportBackgroundTaskExecutor
 		_layoutImportBackgroundTaskExecutor =
 			new LayoutImportBackgroundTaskExecutor();

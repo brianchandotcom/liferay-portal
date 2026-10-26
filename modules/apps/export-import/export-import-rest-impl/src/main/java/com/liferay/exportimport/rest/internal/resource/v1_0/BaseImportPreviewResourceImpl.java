@@ -75,8 +75,10 @@ public abstract class BaseImportPreviewResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/export-import/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/import-preview'  -u 'test@liferay.com:test'
 	 */
+	@Deprecated
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Uploads a file to import into the specified asset library and retrieves its portlet data handlers and counts. The import process of the same scope imports the user's last uploaded file.",
+		deprecated = true,
+		description = "Uploads a file to import into the specified asset library and retrieves its portlet data handlers and counts. The import process of the same scope imports the user's last uploaded file. Deprecated, upload the file in chunks with the import-uploads operations instead.",
 		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "multipart/form-data", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PostAssetLibraryImportPreviewRequestBody.class)))
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -123,6 +125,8 @@ public abstract class BaseImportPreviewResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/export-import/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/import-preview/batch'  -u 'test@liferay.com:test'
 	 */
+	@Deprecated
+	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -188,8 +192,10 @@ public abstract class BaseImportPreviewResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/export-import/v1.0/import-preview'  -u 'test@liferay.com:test'
 	 */
+	@Deprecated
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Uploads a file to import into the instance and retrieves its portlet data handlers, counts, and sites. The import process of the same scope imports the user's last uploaded file.",
+		deprecated = true,
+		description = "Uploads a file to import into the instance and retrieves its portlet data handlers, counts, and sites. The import process of the same scope imports the user's last uploaded file. Deprecated, upload the file in chunks with the import-uploads operations instead.",
 		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "multipart/form-data", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PostImportPreviewRequestBody.class)))
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -226,6 +232,8 @@ public abstract class BaseImportPreviewResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/export-import/v1.0/import-preview/batch'  -u 'test@liferay.com:test'
 	 */
+	@Deprecated
+	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -281,8 +289,10 @@ public abstract class BaseImportPreviewResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/export-import/v1.0/sites/{siteExternalReferenceCode}/import-preview'  -u 'test@liferay.com:test'
 	 */
+	@Deprecated
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Uploads a file to import into the specified site and retrieves its portlet data handlers and counts. The import process of the same scope imports the user's last uploaded file.",
+		deprecated = true,
+		description = "Uploads a file to import into the specified site and retrieves its portlet data handlers and counts. The import process of the same scope imports the user's last uploaded file. Deprecated, upload the file in chunks with the import-uploads operations instead.",
 		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "multipart/form-data", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = PostSiteImportPreviewRequestBody.class)))
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -335,6 +345,8 @@ public abstract class BaseImportPreviewResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/export-import/v1.0/sites/{siteExternalReferenceCode}/import-preview/batch'  -u 'test@liferay.com:test'
 	 */
+	@Deprecated
+	@io.swagger.v3.oas.annotations.Operation(deprecated = true)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1138,4 +1150,4 @@ public abstract class BaseImportPreviewResourceImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1985711980
+// LIFERAY-REST-BUILDER-HASH:1562030869

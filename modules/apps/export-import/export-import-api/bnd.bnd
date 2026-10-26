@@ -18,6 +18,7 @@ Export-Package:\
 	com.liferay.exportimport.resources.importer.portlet.preferences,\
 	com.liferay.exportimport.resources.importer.provider,\
 	com.liferay.exportimport.staged.model.repository,\
+	com.liferay.exportimport.upload,\
 	com.liferay.exportimport.util,\
 	com.liferay.exportimport.util.comparator,\
 	com.liferay.exportimport.vulcan.batch.engine

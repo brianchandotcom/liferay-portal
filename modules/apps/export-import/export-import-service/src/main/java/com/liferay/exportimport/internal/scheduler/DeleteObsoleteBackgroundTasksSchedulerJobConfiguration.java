@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.internal.scheduler;
 
+import com.liferay.exportimport.constants.ExportImportBackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -93,7 +94,9 @@ public class DeleteObsoleteBackgroundTasksSchedulerJobConfiguration
 		BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR,
 		BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR,
 		BackgroundTaskExecutorNames.PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR,
-		BackgroundTaskExecutorNames.PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR
+		BackgroundTaskExecutorNames.PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR,
+		ExportImportBackgroundTaskExecutorNames.
+			IMPORT_PREVIEW_BACKGROUND_TASK_EXECUTOR
 	};
 
 	@Reference

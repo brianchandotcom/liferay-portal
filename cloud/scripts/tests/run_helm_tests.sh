@@ -33,6 +33,7 @@ function main {
 		gcp-infrastructure-provider
 		infrastructure
 		observability
+		observability-paas
 		platform
 		platform-components
 	)

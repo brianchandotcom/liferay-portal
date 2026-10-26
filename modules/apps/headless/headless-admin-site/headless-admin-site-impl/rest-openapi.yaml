@@ -8786,6 +8786,9 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/PageTemplateSet"
                                 type: array
+                404:
+                    description:
+                        "The requested site could not be found."
             tags: ["PageTemplateSet"]
         post:
             # @review
@@ -8815,6 +8818,15 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PageTemplateSet"
+                400:
+                    description:
+                        "The request is invalid. For example, the name is missing or too long, the key contains an invalid character or is too long, or the external reference code is already in use."
+                404:
+                    description:
+                        "The requested site could not be found."
+                409:
+                    description:
+                        "A page template set with the same name or key already exists."
             # @review
             tags: ["PageTemplateSet"]
     "/sites/{siteExternalReferenceCode}/page-template-sets/{pageTemplateSetExternalReferenceCode}":
@@ -8839,6 +8851,9 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                404:
+                    description:
+                        "The requested site or page template set could not be found."
             tags: ["PageTemplateSet"]
         get:
             # @review
@@ -8877,6 +8892,9 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PageTemplateSet"
+                404:
+                    description:
+                        "The requested site or page template set could not be found."
             tags: ["PageTemplateSet"]
         patch:
             # @review
@@ -8923,6 +8941,15 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PageTemplateSet"
+                400:
+                    description:
+                        "The request is invalid. For example, the name is missing or too long."
+                404:
+                    description:
+                        "The requested site or page template set could not be found."
+                409:
+                    description:
+                        "A page template set with the same name already exists."
             tags: ["PageTemplateSet"]
         put:
             # @review
@@ -8969,6 +8996,15 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PageTemplateSet"
+                400:
+                    description:
+                        "The request is invalid. For example, the name is missing or too long, or the key contains an invalid character or is too long."
+                404:
+                    description:
+                        "The requested site could not be found."
+                409:
+                    description:
+                        "A page template set with the same name or key already exists."
             tags: ["PageTemplateSet"]
     "/sites/{siteExternalReferenceCode}/page-template-sets/{pageTemplateSetExternalReferenceCode}/page-templates":
         get:

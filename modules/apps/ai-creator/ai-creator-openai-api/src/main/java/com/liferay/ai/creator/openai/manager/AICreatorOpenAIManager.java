@@ -7,7 +7,9 @@ package com.liferay.ai.creator.openai.manager;
 
 /**
  * @author Lourdes Fernández Besada
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public interface AICreatorOpenAIManager {
 
 	public boolean isAICreatorToolbarEnabled(

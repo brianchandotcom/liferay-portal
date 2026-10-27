@@ -29,6 +29,10 @@ public interface AICreatorOpenAICompanyConfiguration {
 	)
 	public String apiKey();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Meta.AD(
 		deflt = "true", name = "enable-chatgpt-to-create-content",
 		required = false

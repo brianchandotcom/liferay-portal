@@ -21,9 +21,17 @@ public interface AICreatorOpenAIConfigurationManager {
 	public String getAICreatorOpenAIGroupAPIKey(long companyId, long groupId)
 		throws ConfigurationException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isAICreatorChatGPTCompanyEnabled(long companyId)
 		throws ConfigurationException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isAICreatorChatGPTGroupEnabled(long companyId, long groupId)
 		throws ConfigurationException;
 

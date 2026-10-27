@@ -705,9 +705,9 @@ type IVerticalTimelineProps = {
  * summary until the marketer drills into it.
  */
 const VerticalTimeline: FC<IVerticalTimelineProps> = ({
+	LDPEnabled = true,
 	initialExpanded,
 	items = [],
-	LDPEnabled = true,
 	loading = false,
 	nested = false,
 	timeZoneId,

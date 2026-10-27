@@ -978,6 +978,20 @@ public class DiscountResourceTest extends BaseDiscountResourceTestCase {
 		discountResource.putDiscountByExternalReferenceCode(
 			discount.getExternalReferenceCode(), discount);
 
+		discountSku.setUnitOfMeasureKey((String)null);
+
+		try {
+			discountResource.putDiscountByExternalReferenceCode(
+				discount.getExternalReferenceCode(), discount);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+
 		CommerceDiscount commerceDiscount =
 			_commerceDiscountLocalService.
 				fetchCommerceDiscountByExternalReferenceCode(
@@ -986,18 +1000,15 @@ public class DiscountResourceTest extends BaseDiscountResourceTestCase {
 
 		_commerceDiscounts.add(commerceDiscount);
 
-		List<CommerceDiscountRel> commerceDiscountRels =
-			_commerceDiscountRelLocalService.getCommerceDiscountRels(
-				commerceDiscount.getCommerceDiscountId(),
-				CPInstance.class.getName());
-
 		Assert.assertEquals(
 			SetUtil.fromArray(
 				cpInstanceUnitOfMeasure1.getKey(),
 				cpInstanceUnitOfMeasure2.getKey()),
 			SetUtil.fromList(
 				ListUtil.toList(
-					commerceDiscountRels,
+					_commerceDiscountRelLocalService.getCommerceDiscountRels(
+						commerceDiscount.getCommerceDiscountId(),
+						CPInstance.class.getName()),
 					commerceDiscountRel -> {
 						UnicodeProperties typeSettingsUnicodeProperties =
 							commerceDiscountRel.

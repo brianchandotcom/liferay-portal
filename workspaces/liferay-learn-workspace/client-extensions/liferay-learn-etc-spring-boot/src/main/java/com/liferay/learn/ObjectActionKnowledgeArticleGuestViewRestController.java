@@ -21,6 +21,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +40,9 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 	extends BaseRestController {
 
 	@PostMapping
-	public void post(@RequestBody String json) {
+	public ResponseEntity<String> post(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
 		JSONObject jsonObject = new JSONObject(json);
 
 		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
@@ -46,6 +52,8 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 			objectEntryJSONObject.getInt("status") ==
 				WorkflowConstants.STATUS_APPROVED,
 			jsonObject.getLong("classPK"));
+
+		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
 	private String _getAuthorization() {

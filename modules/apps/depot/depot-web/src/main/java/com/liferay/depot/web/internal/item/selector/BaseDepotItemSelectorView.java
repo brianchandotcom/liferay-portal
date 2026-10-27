@@ -49,12 +49,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 public abstract class BaseDepotItemSelectorView
-	implements ItemSelectorView<GroupItemSelectorCriterion> {
-
-	@Override
-	public Class<GroupItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return GroupItemSelectorCriterion.class;
-	}
+	<T extends GroupItemSelectorCriterion>
+		implements ItemSelectorView<T> {
 
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
@@ -72,8 +68,7 @@ public abstract class BaseDepotItemSelectorView
 
 	@Override
 	public boolean isVisible(
-		GroupItemSelectorCriterion groupItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
+		T groupItemSelectorCriterion, ThemeDisplay themeDisplay) {
 
 		if (groupItemSelectorCriterion == null) {
 			return true;
@@ -91,8 +86,8 @@ public abstract class BaseDepotItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			GroupItemSelectorCriterion groupItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName, boolean search)
+			T groupItemSelectorCriterion, PortletURL portletURL,
+			String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		SitesItemSelectorViewDisplayContext

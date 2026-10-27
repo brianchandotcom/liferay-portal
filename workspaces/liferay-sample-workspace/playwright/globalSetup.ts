@@ -66,6 +66,7 @@ export default async function globalSetup() {
 				...process.env,
 				COMPOSE_PROJECT_NAME,
 				LIFERAY_COMPOSE_OVERRIDES: 'playwright',
+				LIFERAY_HTTP_PORT: new URL(portalURL).port || '8080',
 				LIFERAY_IMAGE: 'liferay:playwright',
 			},
 			stdio: 'inherit',

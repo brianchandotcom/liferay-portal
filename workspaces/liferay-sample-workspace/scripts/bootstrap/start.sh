@@ -16,6 +16,8 @@ function main {
 
 	echo "Waiting for Liferay to be healthy."
 
+	local liferay_url=http://localhost:${LIFERAY_HTTP_PORT:-8080}
+
 	curl \
 		--fail \
 		--max-time 5 \
@@ -25,14 +27,14 @@ function main {
 		--retry-delay 10 \
 		--retry-max-time 600 \
 		--silent \
-		http://localhost:8080/c/portal/status
+		"${liferay_url}/c/portal/status"
 
 	if [[ -f post-start.sh ]]
 	then
 		source post-start.sh
 	fi
 
-	echo "Liferay is running at http://localhost:8080."
+	echo "Liferay is running at ${liferay_url}."
 }
 
 main "${@}"

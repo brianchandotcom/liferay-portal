@@ -11,9 +11,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.internal.util.ContextResourcePathsUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -55,6 +57,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -489,7 +492,9 @@ public class MVCPortlet extends LiferayPortlet {
 
 		String path = getPath(renderRequest, renderResponse);
 
-		if (path != null) {
+		if ((path != null) &&
+			!_isUnauthorizedConfigurationPath(renderRequest, path)) {
+
 			WindowState windowState = renderRequest.getWindowState();
 
 			if (windowState.equals(WindowState.MINIMIZED)) {
@@ -796,6 +801,41 @@ public class MVCPortlet extends LiferayPortlet {
 			});
 	}
 
+	private boolean _isUnauthorizedConfigurationPath(
+		RenderRequest renderRequest, String path) {
+
+		if (Objects.equals(
+				renderRequest.getPortletMode(), LiferayPortletMode.CONFIG)) {
+
+			return false;
+		}
+
+		if (configTemplate != null) {
+			return path.equals(configTemplate);
+		}
+
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)getPortletConfig();
+
+		String configJSP = liferayPortletConfig.getInitParameter("config-jsp");
+
+		if (configJSP != null) {
+			return path.equals(configJSP);
+		}
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PortalUtil.getCompanyId(renderRequest),
+			liferayPortletConfig.getPortletId());
+
+		if ((portlet == null) ||
+			(portlet.getConfigurationActionInstance() == null)) {
+
+			return false;
+		}
+
+		return path.equals(_DEFAULT_CONFIGURATION_JSP);
+	}
+
 	private Set<String> _visitResources(
 		PortletContext portletContext, String path, String pattern) {
 
@@ -817,6 +857,9 @@ public class MVCPortlet extends LiferayPortlet {
 				return paths;
 			});
 	}
+
+	private static final String _DEFAULT_CONFIGURATION_JSP =
+		"/configuration.jsp";
 
 	private static final String _PATH_META_INF_RESOURCES =
 		"/META-INF/resources";

@@ -470,6 +470,11 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #liberalGetNextWorkflowTransitions(long)}
+	 */
+	@Deprecated
 	@Override
 	public List<WorkflowTransition> getWorkflowTaskWorkflowTransitions(
 			long workflowTaskId)

@@ -208,6 +208,11 @@ public class WorkflowTaskManagerUtil {
 			companyId, userId, workflowInstanceId, completed);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #liberalGetNextWorkflowTransitions(long)}
+	 */
+	@Deprecated
 	public static List<WorkflowTransition> getWorkflowTaskWorkflowTransitions(
 			long workflowTaskId)
 		throws WorkflowException {

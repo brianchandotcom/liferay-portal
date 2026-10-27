@@ -115,6 +115,11 @@ public interface WorkflowTaskManager {
 			Boolean completed)
 		throws WorkflowException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #liberalGetNextWorkflowTransitions(long)}
+	 */
+	@Deprecated
 	public List<WorkflowTransition> getWorkflowTaskWorkflowTransitions(
 			long workflowTaskId)
 		throws WorkflowException;

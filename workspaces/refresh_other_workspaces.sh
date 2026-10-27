@@ -33,6 +33,11 @@ function refresh_workspaces {
 			--archive \
 			--delete \
 			--exclude .github \
+			--exclude /package.json \
+			--exclude /playwright/.env.local \
+			--exclude /playwright/env \
+			--exclude /playwright/tests \
+			--exclude /yarn.lock \
 			--exclude Jenkinsfile \
 			--exclude README.md \
 			--exclude build.gradle \
@@ -44,12 +49,10 @@ function refresh_workspaces {
 			--exclude modules \
 			--exclude node_modules \
 			--exclude node_modules_cache \
-			--exclude package.json \
 			--exclude poshi \
 			--exclude quickstart \
 			--exclude test.properties \
 			--exclude themes \
-			--exclude yarn.lock \
 			"${PWD}/liferay-sample-workspace/" "${workspace_dir}"
 	done
 }

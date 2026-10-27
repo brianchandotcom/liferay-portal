@@ -18,6 +18,14 @@ buildscript {
 
 apply plugin: "com.liferay.workspace"
 
+gradle.rootProject {
+	afterEvaluate {
+		setUpYarn {
+			excludes "playwright"
+		}
+	}
+}
+
 if (providers.gradleProperty("liferay.workspace.use.test.boms").map(Boolean::parseBoolean).getOrElse(false)) {
 	apply from: "tests-common.gradle"
 

@@ -863,12 +863,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -899,7 +902,7 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        "Sort expression `column:asc|desc`. Defaults to `transitionDate:desc`. Columns: accountId, accountName, fromAccountLifecycleStageId, toAccountLifecycleStageId, transitionDate."
+                        "Sort expression `column:asc|desc`. Defaults to `transitionDate:desc`. Sortable columns: accountId, accountName, fromAccountLifecycleStageId, toAccountLifecycleStageId, transitionDate. Only one column is accepted."
                     example: transitionDate:desc
                     name: sort
                     schema:
@@ -1055,12 +1058,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -1090,7 +1096,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Sort expression `column:asc|desc`. Defaults to `accountName:asc` when omitted. Sortable columns include accountName, activitiesCount, annualRevenue, lastActivityDate, and lifecycleStage; sorting by lifecycleStage requires `accountLifecycleId`. Only one column is sorted on."
+                        "Sort expression `column:asc|desc`. Defaults to `accountName:asc` when omitted. Sortable columns: accountName, accountType, activitiesCount, annualRevenue, country, createDate, firstActivityDate, industry, lastActivityDate, lifecycleStage, modifiedDate, numberOfEmployees, state, yearStarted; sorting by lifecycleStage requires `accountLifecycleId`. Only one column is accepted."
                     example: accountName:asc
                     name: sort
                     schema:
@@ -1214,12 +1220,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -1299,12 +1308,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -1340,7 +1352,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Sort expression `column:asc|desc`. Defaults to `viewsMetric:desc` when omitted. Common columns: viewsMetric, downloadsMetric, impressionMadeMetric, readsMetric."
+                        "Sort expression `column:asc|desc`. Defaults to `viewsMetric:desc` when omitted. Sortable columns: downloadsMetric, impressionsMetric, readsMetric, viewsMetric. Only one column is accepted."
                     example: viewsMetric:desc
                     name: sort
                     schema:
@@ -1403,12 +1415,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -1488,12 +1503,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -1573,12 +1591,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -1616,7 +1637,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Sort expression `column:asc|desc`. Sortable columns: accountName, activitiesCount, averageSessionDuration, emailAddress, firstActivityDate, knownSinceDate, lastActivityDate, lastSessionCountry, sessionsCount. Only one column is sorted on."
+                        "Sort expression `column:asc|desc`; separate several expressions with commas. Sortable columns: accountName, activitiesCount, activityStatus, country, createDate, emailAddress, firstActivityDate, firstName, id, jobTitle, knownSinceDate, lastActivityDate, lastName, lastSessionCountry, middleName, modifiedDate, name, profileType, sessionsCount."
                     example: lastActivityDate:desc
                     name: sort
                     schema:
@@ -1740,12 +1761,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -1831,12 +1855,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -1872,7 +1899,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Sort expression `column:asc|desc`. Defaults to `visitorsMetric:desc` when omitted. Common columns: visitorsMetric, viewsMetric, bounceMetric, avgTimeOnPageMetric."
+                        "Sort expression `column:asc|desc`. Defaults to `visitorsMetric:desc` when omitted. Sortable columns: avgTimeOnPageMetric, bounceRateMetric, directAccessMetric, entrancesMetric, exitRateMetric, indirectAccessMetric, viewsMetric, visitorsMetric. Only one column is accepted."
                     example: viewsMetric:desc
                     name: sort
                     schema:
@@ -1917,12 +1944,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -2055,12 +2085,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
@@ -2135,17 +2168,19 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Sort expression `column:asc|desc`."
-                    example: dateCreated:desc
+                        "Not supported: memberships are returned in no particular order, and any value is rejected."
                     name: sort
                     schema:
                         type: string
@@ -2232,12 +2267,15 @@ paths:
                         "Page number (starts at 1)."
                     name: page
                     schema:
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:
-                        "Page size."
+                        "Page size, from 1 to 500. Larger values are rejected."
                     name: pageSize
                     schema:
+                        maximum: 500
+                        minimum: 1
                         type: integer
                 -   in: query
                     description:

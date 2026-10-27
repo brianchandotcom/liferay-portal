@@ -7,21 +7,38 @@ package com.liferay.headless.cms.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.link.constants.AssetLinkConstants;
 import com.liferay.asset.link.service.AssetLinkLocalService;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.cms.client.dto.v1_0.UnlinkedAsset;
 import com.liferay.headless.cms.client.pagination.Page;
 import com.liferay.headless.cms.resource.v1_0.test.util.CMSOutboundLinkTestUtil;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -40,7 +57,12 @@ import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -57,12 +79,14 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
@@ -97,6 +121,9 @@ public class UnlinkedAssetResourceTest
 	@TestInfo("LPD-105769")
 	public void testGetUnlinkedAssetsPage() throws Exception {
 		_testGetUnlinkedAssetsPageWithAssetLink();
+		_testGetUnlinkedAssetsPageWithAssetPublisher();
+		_testGetUnlinkedAssetsPageWithCollection();
+		_testGetUnlinkedAssetsPageWithFilteredCollection();
 		_testGetUnlinkedAssetsPageWithLayoutClassedModelUsage();
 		_testGetUnlinkedAssetsPageWithManyToManyRelationship();
 		_testGetUnlinkedAssetsPageWithNavigationMenu();
@@ -161,6 +188,48 @@ public class UnlinkedAssetResourceTest
 		return _objectDefinitionLocalService.updateTitleObjectFieldId(
 			objectDefinition.getObjectDefinitionId(),
 			objectField.getObjectFieldId());
+	}
+
+	private Layout _addCollectionDisplayLayout(
+			JSONObject collectionJSONObject, boolean publish)
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addCollectionDisplayToLayout(
+			collectionJSONObject, draftLayout, _layoutStructureProvider, null,
+			null, 0,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
+		if (publish) {
+			_publishLayout(layout);
+		}
+
+		return layout;
+	}
+
+	private AssetListEntry _addManualAssetListEntry(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
+
+		_assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
+			assetListEntry.getAssetListEntryId(),
+			_getAssetEntryId(objectDefinition, objectEntry), 0, 0,
+			serviceContext);
+
+		return assetListEntry;
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -228,6 +297,25 @@ public class UnlinkedAssetResourceTest
 		return assetEntry.getEntryId();
 	}
 
+	private JSONObject _getAssetListEntryJSONObject(
+		AssetListEntry assetListEntry) {
+
+		return JSONUtil.put(
+			"classNameId",
+			String.valueOf(_portal.getClassNameId(AssetListEntry.class))
+		).put(
+			"classPK", String.valueOf(assetListEntry.getAssetListEntryId())
+		).put(
+			"itemType", assetListEntry.getAssetEntryType()
+		).put(
+			"type", InfoListItemSelectorReturnType.class.getName()
+		);
+	}
+
+	private void _publishLayout(Layout layout) throws Exception {
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+	}
+
 	private void _testGetUnlinkedAssetsPageWithAssetLink() throws Exception {
 		DepotEntry depotEntry = _addSpaceDepotEntry();
 
@@ -253,6 +341,218 @@ public class UnlinkedAssetResourceTest
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+	}
+
+	private void _testGetUnlinkedAssetsPageWithAssetPublisher()
+		throws Exception {
+
+		DepotEntry depotEntry = _addSpaceDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), testGroup.getGroupId());
+
+		ObjectDefinition objectDefinition = _addCMSObjectDefinition();
+
+		ObjectEntry objectEntry = _addObjectEntry(depotEntry, objectDefinition);
+
+		_addObjectEntry(depotEntry, objectDefinition);
+
+		_assertUnlinkedAssetsCount(depotEntry, 2);
+
+		AssetListEntry assetListEntry = _addManualAssetListEntry(
+			objectDefinition, objectEntry);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+
+		String portletId = LayoutTestUtil.addPortletToLayout(
+			layout, AssetPublisherPortletKeys.ASSET_PUBLISHER,
+			HashMapBuilder.put(
+				"selectionStyle", new String[] {"asset-list"}
+			).build());
+
+		_assetListEntryUsageLocalService.addAssetListEntryUsage(
+			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			_portal.getClassNameId(AssetListEntry.class), portletId,
+			_portal.getClassNameId(Portlet.class),
+			String.valueOf(assetListEntry.getAssetListEntryId()),
+			layout.getPlid(),
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		_assertUnlinkedAssetsCount(depotEntry, 1);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+	}
+
+	private void _testGetUnlinkedAssetsPageWithCollection() throws Exception {
+		DepotEntry depotEntry = _addSpaceDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), testGroup.getGroupId());
+
+		ObjectDefinition objectDefinition = _addCMSObjectDefinition();
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			depotEntry, objectDefinition);
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		_addObjectEntry(depotEntry, objectDefinition);
+
+		_assertUnlinkedAssetsCount(depotEntry, 3);
+
+		Layout layout = _addCollectionDisplayLayout(
+			_getAssetListEntryJSONObject(
+				_addManualAssetListEntry(objectDefinition, objectEntry1)),
+			false);
+
+		_assertUnlinkedAssetsCount(depotEntry, 3);
+
+		_publishLayout(layout);
+
+		_assertUnlinkedAssetsCount(depotEntry, 2);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
+		AssetTag assetTag = _assetTagLocalService.addTag(
+			null, TestPropsValues.getUserId(), depotEntry.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		_assetTagLocalService.addAssetEntryAssetTag(
+			_getAssetEntryId(objectDefinition, objectEntry2),
+			assetTag.getTagId());
+
+		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			objectDefinition.getClassName());
+
+		indexer.reindex(objectEntry2);
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addDynamicAssetListEntry(
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"anyAssetType", false
+				).put(
+					"classNameIds",
+					_portal.getClassNameId(objectDefinition.getClassName())
+				).put(
+					"filters",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"operatorName", "contains"
+						).put(
+							"propertyName", "assetTags"
+						).put(
+							"quantifier", "any"
+						).put(
+							"value",
+							JSONUtil.putAll(
+								JSONUtil.put("value", assetTag.getName()))
+						)
+					).toString()
+				).put(
+					"groupIds",
+					testGroup.getGroupId() + "," + depotEntry.getGroupId()
+				).buildString(),
+				serviceContext);
+
+		_addCollectionDisplayLayout(
+			_getAssetListEntryJSONObject(assetListEntry), true);
+
+		_assertUnlinkedAssetsCount(depotEntry, 1);
+
+		_addCollectionDisplayLayout(
+			JSONUtil.put(
+				"itemType", objectDefinition.getClassName()
+			).put(
+				"key", objectDefinition.getClassName()
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			),
+			true);
+
+		_assertUnlinkedAssetsCount(depotEntry, 0);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+	}
+
+	private void _testGetUnlinkedAssetsPageWithFilteredCollection()
+		throws Exception {
+
+		DepotEntry depotEntry = _addSpaceDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), testGroup.getGroupId());
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				false,
+				Arrays.asList(
+					ListTypeEntryUtil.createListTypeEntry(
+						"blue",
+						Collections.singletonMap(
+							LocaleUtil.US, RandomTestUtil.randomString())),
+					ListTypeEntryUtil.createListTypeEntry(
+						"red",
+						Collections.singletonMap(
+							LocaleUtil.US, RandomTestUtil.randomString()))),
+				new ServiceContext());
+
+		ObjectDefinition objectDefinition = _addCMSObjectDefinition();
+
+		_objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(),
+			listTypeDefinition.getListTypeDefinitionId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			ObjectFieldConstants.DB_TYPE_STRING, null, true, false, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			false, "color", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
+			false, Collections.emptyList());
+
+		_addObjectEntry(
+			depotEntry, objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				"color", "blue"
+			).build());
+		_addObjectEntry(
+			depotEntry, objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				"color", "red"
+			).build());
+
+		_assertUnlinkedAssetsCount(depotEntry, 2);
+
+		_addCollectionDisplayLayout(
+			JSONUtil.put(
+				"config", JSONUtil.put("color", JSONUtil.putAll("red"))
+			).put(
+				"itemType", objectDefinition.getClassName()
+			).put(
+				"key", objectDefinition.getClassName()
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			),
+			true);
+
+		_assertUnlinkedAssetsCount(depotEntry, 1);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+
+		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+			listTypeDefinition);
 	}
 
 	private void _testGetUnlinkedAssetsPageWithLayoutClassedModelUsage()
@@ -423,11 +723,33 @@ public class UnlinkedAssetResourceTest
 	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Inject
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
+
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
+	private AssetListEntryUsageLocalService _assetListEntryUsageLocalService;
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -453,6 +775,9 @@ public class UnlinkedAssetResourceTest
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private SiteNavigationMenuItemLocalService

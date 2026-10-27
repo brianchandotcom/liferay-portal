@@ -32,6 +32,11 @@ if (title != null) {
 %>
 
 <frontend-data-set:headless-display
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"staticSiteExportIds", exportImportProcessesDisplayContext.getStaticSiteExportIds()
+		).build()
+	%>'
 	apiURL="<%= exportImportProcessesDisplayContext.getExportProcessesAPIURL() %>"
 	creationMenu="<%= exportImportProcessesDisplayContext.getExportCreationMenu() %>"
 	fdsActionDropdownItems="<%= exportImportProcessesDisplayContext.getExportFDSActionDropdownItems() %>"

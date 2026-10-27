@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -291,6 +293,7 @@ public class StyleBookEntryLocalServiceTest {
 		_testUpdateStyleBookEntryWithFrontendTokensAndDraftStyleBookEntryId();
 		_testUpdateStyleBookEntryWithFrontendTokensAndEmptyStyleBookEntry();
 		_testUpdateStyleBookEntryWithFrontendTokensAndFrontendTokenDefinition();
+		_testUpdateStyleBookEntryWithUser();
 	}
 
 	private StyleBookEntry _addStyleBookEntry(
@@ -1009,6 +1012,22 @@ public class StyleBookEntryLocalServiceTest {
 					StringPool.COLON + frontendTokenName));
 	}
 
+	private void _testUpdateStyleBookEntryWithUser() throws Exception {
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(false, _THEME_ID);
+
+		_user = UserTestUtil.addUser();
+
+		styleBookEntry = _styleBookEntryLocalService.updateStyleBookEntry(
+			_user.getUserId(), styleBookEntry.getStyleBookEntryId(), false,
+			styleBookEntry.getFrontendTokenDefinition(),
+			styleBookEntry.getFrontendTokensValues(), styleBookEntry.getName(),
+			styleBookEntry.getStyleBookEntryKey(),
+			styleBookEntry.getPreviewFileEntryId(), _THEME_ID, _serviceContext);
+
+		Assert.assertEquals(_user.getUserId(), styleBookEntry.getUserId());
+		Assert.assertEquals(_user.getFullName(), styleBookEntry.getUserName());
+	}
+
 	private void _updateDefaultStyleBookEntry(long styleBookEntryId)
 		throws Exception {
 
@@ -1077,5 +1096,8 @@ public class StyleBookEntryLocalServiceTest {
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

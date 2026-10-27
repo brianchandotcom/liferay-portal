@@ -17,9 +17,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -65,7 +62,7 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 		).build(
 		).toUri();
 
-		JSONArray permissionsJSONArray = new JSONObject(
+		JSONArray itemsJSONArray = new JSONObject(
 			get(_getAuthorization(), uri)
 		).getJSONArray(
 			"items"
@@ -73,15 +70,14 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 
 		JSONObject guestPermissionJSONObject = null;
 
-		for (int i = 0; i < permissionsJSONArray.length(); i++) {
-			JSONObject permissionJSONObject =
-				permissionsJSONArray.getJSONObject(i);
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
 			if (Objects.equals(
-					permissionJSONObject.getString("roleName"),
+					itemJSONObject.getString("roleName"),
 					RoleConstants.GUEST)) {
 
-				guestPermissionJSONObject = permissionJSONObject;
+				guestPermissionJSONObject = itemJSONObject;
 
 				break;
 			}
@@ -95,13 +91,12 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 				"roleName", RoleConstants.GUEST
 			);
 
-			permissionsJSONArray.put(guestPermissionJSONObject);
+			itemsJSONArray.put(guestPermissionJSONObject);
 		}
 
-		JSONArray actionIdsJSONArray = guestPermissionJSONObject.getJSONArray(
-			"actionIds");
-
-		List<Object> actionIds = actionIdsJSONArray.toList();
+		List<Object> actionIds = guestPermissionJSONObject.getJSONArray(
+			"actionIds"
+		).toList();
 
 		if (actionIds.contains(ActionKeys.VIEW) == approved) {
 			return;
@@ -116,19 +111,8 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 
 		guestPermissionJSONObject.put("actionIds", actionIds);
 
-		put(_getAuthorization(), permissionsJSONArray.toString(), uri);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					approved ? "Added" : "Removed",
-					" guest view permission for knowledge article ",
-					objectEntryId));
-		}
+		put(_getAuthorization(), itemsJSONArray.toString(), uri);
 	}
-
-	private static final Log _log = LogFactory.getLog(
-		ObjectActionKnowledgeArticleGuestViewRestController.class);
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

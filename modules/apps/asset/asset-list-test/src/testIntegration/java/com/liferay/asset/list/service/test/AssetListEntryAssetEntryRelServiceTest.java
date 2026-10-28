@@ -8,6 +8,7 @@ package com.liferay.asset.list.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.exception.AssetListEntryAssetEntryRelPostionException;
+import com.liferay.asset.list.exception.AssetListEntryAssetEntryRelSegmentsEntryIdAndAudienceEntryERCException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
@@ -15,6 +16,7 @@ import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelUti
 import com.liferay.asset.list.test.util.AssetListTestUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -109,8 +111,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 				segmentsEntryId, 1);
 
 		AssetListEntryAssetEntryRel persistedAssetListEntryRel =
-			AssetListEntryAssetEntryRelUtil.findByA_S_P(
-				assetListEntryRel.getAssetListEntryId(), segmentsEntryId, 1);
+			AssetListEntryAssetEntryRelUtil.findByA_S_AEERC_P(
+				assetListEntryRel.getAssetListEntryId(), segmentsEntryId,
+				StringPool.BLANK, 1);
 
 		_assertSameAssetListEntryAssetEntryRel(
 			assetListEntryRel, persistedAssetListEntryRel);
@@ -121,6 +124,95 @@ public class AssetListEntryAssetEntryRelServiceTest {
 
 		Assert.assertEquals(
 			assetEntry.getEntryId(), assetListEntryRel.getAssetEntryId());
+	}
+
+	@Test
+	public void testAddAssetListEntryAssetEntryRelWithAudienceEntryERC()
+		throws Exception {
+
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+
+		_assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
+			assetListEntry.getAssetListEntryId(), assetEntry1.getEntryId(), 0,
+			serviceContext);
+
+		AssetEntry assetEntry2 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+
+		String audienceEntryERC = RandomTestUtil.randomString();
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			_assetListEntryAssetEntryRelLocalService.
+				addAssetListEntryAssetEntryRel(
+					assetListEntry.getAssetListEntryId(),
+					assetEntry2.getEntryId(), 0, audienceEntryERC,
+					serviceContext);
+
+		Assert.assertEquals(
+			audienceEntryERC,
+			assetListEntryAssetEntryRel.getAudienceEntryERC());
+		Assert.assertEquals(0, assetListEntryAssetEntryRel.getPosition());
+
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntry.getAssetListEntryId(), 0, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetListEntryAssetEntryRels.toString(), 1,
+			assetListEntryAssetEntryRels.size());
+
+		assetListEntryAssetEntryRel = assetListEntryAssetEntryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntry1.getEntryId(),
+			assetListEntryAssetEntryRel.getAssetEntryId());
+
+		assetListEntryAssetEntryRels =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntry.getAssetListEntryId(), 0, audienceEntryERC,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetListEntryAssetEntryRels.toString(), 1,
+			assetListEntryAssetEntryRels.size());
+
+		assetListEntryAssetEntryRel = assetListEntryAssetEntryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntry2.getEntryId(),
+			assetListEntryAssetEntryRel.getAssetEntryId());
+	}
+
+	@Test(
+		expected = AssetListEntryAssetEntryRelSegmentsEntryIdAndAudienceEntryERCException.class
+	)
+	public void testAddAssetListEntryAssetEntryRelWithSegmentsEntryIdAndAudienceEntryERC()
+		throws Exception {
+
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		_assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
+			assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Test(expected = AssetListEntryAssetEntryRelPostionException.class)
@@ -230,6 +322,48 @@ public class AssetListEntryAssetEntryRelServiceTest {
 	}
 
 	@Test
+	public void testDeleteAssetListEntryAssetEntryRelWithAudienceEntryERC()
+		throws Exception {
+
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel1 =
+			_addAssetListEntryAssetEntryRel(assetListEntry, StringPool.BLANK);
+
+		String audienceEntryERC = RandomTestUtil.randomString();
+
+		_addAssetListEntryAssetEntryRel(assetListEntry, audienceEntryERC);
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel2 =
+			_addAssetListEntryAssetEntryRel(assetListEntry, audienceEntryERC);
+
+		_assetListEntryAssetEntryRelLocalService.
+			deleteAssetListEntryAssetEntryRel(
+				assetListEntry.getAssetListEntryId(), 0, audienceEntryERC, 0);
+
+		assetListEntryAssetEntryRel1 =
+			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
+				assetListEntryAssetEntryRel1.
+					getAssetListEntryAssetEntryRelId());
+
+		Assert.assertEquals(0, assetListEntryAssetEntryRel1.getPosition());
+
+		assetListEntryAssetEntryRel2 =
+			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
+				assetListEntryAssetEntryRel2.
+					getAssetListEntryAssetEntryRelId());
+
+		Assert.assertEquals(0, assetListEntryAssetEntryRel2.getPosition());
+
+		Assert.assertEquals(
+			1,
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					assetListEntry.getAssetListEntryId(), 0, audienceEntryERC));
+	}
+
+	@Test
 	public void testGetAssetListEntryAssetEntryRels() throws Exception {
 		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), null,
@@ -315,6 +449,50 @@ public class AssetListEntryAssetEntryRelServiceTest {
 	}
 
 	@Test
+	public void testMoveAssetListEntryAssetEntryRelWithAudienceEntryERC()
+		throws Exception {
+
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel1 =
+			_addAssetListEntryAssetEntryRel(assetListEntry, StringPool.BLANK);
+
+		String audienceEntryERC = RandomTestUtil.randomString();
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel2 =
+			_addAssetListEntryAssetEntryRel(assetListEntry, audienceEntryERC);
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel3 =
+			_addAssetListEntryAssetEntryRel(assetListEntry, audienceEntryERC);
+
+		_assetListEntryAssetEntryRelLocalService.
+			moveAssetListEntryAssetEntryRel(
+				assetListEntry.getAssetListEntryId(), 0, audienceEntryERC, 0,
+				1);
+
+		assetListEntryAssetEntryRel1 =
+			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
+				assetListEntryAssetEntryRel1.
+					getAssetListEntryAssetEntryRelId());
+
+		Assert.assertEquals(0, assetListEntryAssetEntryRel1.getPosition());
+
+		assetListEntryAssetEntryRel2 =
+			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
+				assetListEntryAssetEntryRel2.
+					getAssetListEntryAssetEntryRelId());
+
+		Assert.assertEquals(1, assetListEntryAssetEntryRel2.getPosition());
+
+		assetListEntryAssetEntryRel3 =
+			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
+				assetListEntryAssetEntryRel3.
+					getAssetListEntryAssetEntryRelId());
+
+		Assert.assertEquals(0, assetListEntryAssetEntryRel3.getPosition());
+	}
+
+	@Test
 	public void testUpdateAssetListEntryAssetEntryRel() throws Exception {
 		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), null,
@@ -354,6 +532,47 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		Assert.assertEquals(
 			assetEntry2.getEntryId(), assetListEntryRel.getAssetEntryId());
 		Assert.assertEquals(assetListEntryRel.getPosition(), position + 1);
+	}
+
+	@Test(
+		expected = AssetListEntryAssetEntryRelSegmentsEntryIdAndAudienceEntryERCException.class
+	)
+	public void testUpdateAssetListEntryAssetEntryRelWithSegmentsEntryIdAndAudienceEntryERC()
+		throws Exception {
+
+		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+				_group.getGroupId(), assetEntry, assetListEntry, 0);
+
+		_assetListEntryAssetEntryRelLocalService.
+			updateAssetListEntryAssetEntryRel(
+				assetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId(),
+				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				assetListEntryAssetEntryRel.getPosition());
+	}
+
+	private AssetListEntryAssetEntryRel _addAssetListEntryAssetEntryRel(
+			AssetListEntry assetListEntry, String audienceEntryERC)
+		throws Exception {
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+
+		return _assetListEntryAssetEntryRelLocalService.
+			addAssetListEntryAssetEntryRel(
+				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				0, audienceEntryERC,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	private void _assertSameAssetListEntryAssetEntryRel(

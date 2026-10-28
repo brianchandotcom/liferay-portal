@@ -74,6 +74,28 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			assetListEntryId, assetEntryId, segmentsEntryId, serviceContext);
 	}
 
+	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
+			String audienceEntryERC, int position,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addAssetListEntryAssetEntryRel(
+			assetListEntryId, assetEntryId, segmentsEntryId, audienceEntryERC,
+			position, serviceContext);
+	}
+
+	public static AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+			long assetListEntryId, long assetEntryId, long segmentsEntryId,
+			String audienceEntryERC,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addAssetListEntryAssetEntryRel(
+			assetListEntryId, assetEntryId, segmentsEntryId, audienceEntryERC,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new asset list entry asset entry rel with the primary key. Does not add the asset list entry asset entry rel to the database.
 	 *
@@ -141,6 +163,15 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 		return getService().deleteAssetListEntryAssetEntryRel(
 			assetListEntryId, segmentsEntryId, position);
+	}
+
+	public static AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
+			long assetListEntryId, long segmentsEntryId,
+			String audienceEntryERC, int position)
+		throws PortalException {
+
+		return getService().deleteAssetListEntryAssetEntryRel(
+			assetListEntryId, segmentsEntryId, audienceEntryERC, position);
 	}
 
 	public static void deleteAssetListEntryAssetEntryRelByAssetEntryId(
@@ -355,6 +386,15 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 
 	public static List<AssetListEntryAssetEntryRel>
 		getAssetListEntryAssetEntryRels(
+			long assetListEntryId, long segmentsEntryId,
+			String audienceEntryERC, int start, int end) {
+
+		return getService().getAssetListEntryAssetEntryRels(
+			assetListEntryId, segmentsEntryId, audienceEntryERC, start, end);
+	}
+
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRels(
 			long assetListEntryId, long[] segmentsEntryIds, int start,
 			int end) {
 
@@ -420,6 +460,13 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	}
 
 	public static int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC) {
+
+		return getService().getAssetListEntryAssetEntryRelsCount(
+			assetListEntryId, segmentsEntryId, audienceEntryERC);
+	}
+
+	public static int getAssetListEntryAssetEntryRelsCount(
 		long assetListEntryId, long[] segmentsEntryIds) {
 
 		return getService().getAssetListEntryAssetEntryRelsCount(
@@ -468,6 +515,16 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
+	public static AssetListEntryAssetEntryRel moveAssetListEntryAssetEntryRel(
+			long assetListEntryId, long segmentsEntryId,
+			String audienceEntryERC, int position, int newPosition)
+		throws PortalException {
+
+		return getService().moveAssetListEntryAssetEntryRel(
+			assetListEntryId, segmentsEntryId, audienceEntryERC, position,
+			newPosition);
+	}
+
 	/**
 	 * Updates the asset list entry asset entry rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -495,6 +552,17 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			segmentsEntryId, position);
 	}
 
+	public static AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
+			long assetListEntryAssetEntryRelId, long assetListEntryId,
+			long assetEntryId, long segmentsEntryId, String audienceEntryERC,
+			int position)
+		throws PortalException {
+
+		return getService().updateAssetListEntryAssetEntryRel(
+			assetListEntryAssetEntryRelId, assetListEntryId, assetEntryId,
+			segmentsEntryId, audienceEntryERC, position);
+	}
+
 	public static AssetListEntryAssetEntryRelLocalService getService() {
 		return _serviceSnapshot.get();
 	}
@@ -505,4 +573,4 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			AssetListEntryAssetEntryRelLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1879876173
+// LIFERAY-SERVICE-BUILDER-HASH:619740028

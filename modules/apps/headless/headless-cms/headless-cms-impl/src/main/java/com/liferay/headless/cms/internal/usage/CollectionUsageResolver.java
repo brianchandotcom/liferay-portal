@@ -62,6 +62,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperienceTable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -176,6 +178,52 @@ public class CollectionUsageResolver {
 				_resolveUsage(
 					classNameId, containerKey, groupId, key, layout,
 					resolutionContext);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception);
+				}
+			}
+		}
+
+		List<Object[]> segmentsExperienceObjectsList =
+			_assetListEntryUsageLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					SegmentsExperienceTable.INSTANCE.groupId,
+					SegmentsExperienceTable.INSTANCE.plid,
+					SegmentsExperienceTable.INSTANCE.segmentsExperienceId
+				).from(
+					SegmentsExperienceTable.INSTANCE
+				).where(
+					SegmentsExperienceTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						SegmentsExperienceTable.INSTANCE.segmentsExperienceKey.
+							neq(SegmentsExperienceConstants.KEY_DEFAULT)
+					)
+				));
+
+		for (Object[] row : segmentsExperienceObjectsList) {
+			long groupId = (Long)row[0];
+			long plid = (Long)row[1];
+			long segmentsExperienceId = (Long)row[2];
+
+			try {
+				Layout layout = resolutionContext.getLayout(plid);
+
+				if ((layout == null) || !_isPublished(layout)) {
+					continue;
+				}
+
+				Set<Long> connectedDepotGroupIds =
+					resolutionContext.getConnectedDepotGroupIds(groupId);
+
+				if (connectedDepotGroupIds.isEmpty()) {
+					continue;
+				}
+
+				_resolveSegmentsExperienceUsages(
+					groupId, plid, segmentsExperienceId, resolutionContext);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -465,15 +513,12 @@ public class CollectionUsageResolver {
 	}
 
 	private void _resolveInfoCollectionProviderUsage(
-			String containerKey, long groupId, String key, Layout layout,
-			ObjectDefinition objectDefinition,
+			String containerKey, long groupId, String key,
+			LayoutStructure layoutStructure, ObjectDefinition objectDefinition,
 			ResolutionContext resolutionContext)
 		throws Exception {
 
 		JSONObject configJSONObject = null;
-
-		LayoutStructure layoutStructure = resolutionContext.getLayoutStructure(
-			groupId, layout.getPlid());
 
 		if (layoutStructure != null) {
 			CollectionStyledLayoutStructureItem
@@ -511,6 +556,63 @@ public class CollectionUsageResolver {
 		}
 	}
 
+	private void _resolveSegmentsExperienceUsages(
+			long groupId, long plid, long segmentsExperienceId,
+			ResolutionContext resolutionContext)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(groupId, plid);
+
+		if (layoutPageTemplateStructure == null) {
+			return;
+		}
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getCollectionStyledLayoutStructureItems()) {
+
+			if (layoutStructure.isItemMarkedForDeletion(
+					layoutStructureItem.getItemId())) {
+
+				continue;
+			}
+
+			CollectionStyledLayoutStructureItem
+				collectionStyledLayoutStructureItem =
+					(CollectionStyledLayoutStructureItem)layoutStructureItem;
+
+			JSONObject collectionJSONObject =
+				collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+			if (collectionJSONObject == null) {
+				continue;
+			}
+
+			if (collectionJSONObject.has("classPK")) {
+				_resolveAssetListEntryUsage(
+					collectionJSONObject.getString("classPK"),
+					resolutionContext);
+			}
+
+			String key = collectionJSONObject.getString("key");
+
+			ObjectDefinition objectDefinition = _getCMSObjectDefinition(
+				resolutionContext.getCompanyId(), key);
+
+			if (objectDefinition == null) {
+				continue;
+			}
+
+			_resolveInfoCollectionProviderUsage(
+				layoutStructureItem.getItemId(), groupId, key, layoutStructure,
+				objectDefinition, resolutionContext);
+		}
+	}
+
 	private void _resolveUsage(
 			long classNameId, String containerKey, long groupId, String key,
 			Layout layout, ResolutionContext resolutionContext)
@@ -527,8 +629,9 @@ public class CollectionUsageResolver {
 
 		if (objectDefinition != null) {
 			_resolveInfoCollectionProviderUsage(
-				containerKey, groupId, key, layout, objectDefinition,
-				resolutionContext);
+				containerKey, groupId, key,
+				resolutionContext.getLayoutStructure(groupId, layout.getPlid()),
+				objectDefinition, resolutionContext);
 		}
 	}
 

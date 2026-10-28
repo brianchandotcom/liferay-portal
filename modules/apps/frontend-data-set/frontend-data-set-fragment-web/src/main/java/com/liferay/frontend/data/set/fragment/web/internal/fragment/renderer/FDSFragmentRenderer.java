@@ -237,7 +237,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			String autoResolvedFDSAPIURL = _fdsRenderer.getFDSAPIURL(
 				externalReferenceCode, httpServletRequest, true, null);
 
-			JSONObject tokenResolutionsJSONObject =
+			JSONObject fdsAPIURLTokenResolutionsJSONObject =
 				_getTokenResolutionsJSONObject(
 					fdsAPIURL, apiURLTokenMappingsJSONObject,
 					autoResolvedFDSAPIURL, httpServletRequest);
@@ -254,7 +254,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			Set<String> unresolvedTokenNames = _getTokenNames(
 				_fdsRenderer.getFDSAPIURL(
 					externalReferenceCode, httpServletRequest, true,
-					tokenResolutionsJSONObject));
+					fdsAPIURLTokenResolutionsJSONObject));
 
 			boolean resolved = unresolvedTokenNames.isEmpty();
 
@@ -289,7 +289,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 							"apiURL",
 							_fdsRenderer.getFDSAPIURL(
 								externalReferenceCode, httpServletRequest, true,
-								tokenResolutionsJSONObject)
+								fdsAPIURLTokenResolutionsJSONObject)
 						).put(
 							"hasUnmappedTokens",
 							unresolvedTokenNames.size() >
@@ -326,7 +326,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						"tokenResolutions",
 						() -> {
 							if (hasTokens) {
-								return tokenResolutionsJSONObject;
+								return fdsAPIURLTokenResolutionsJSONObject;
 							}
 
 							return null;

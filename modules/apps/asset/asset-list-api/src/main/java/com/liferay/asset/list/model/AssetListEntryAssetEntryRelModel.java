@@ -275,6 +275,21 @@ public interface AssetListEntryAssetEntryRelModel
 	public void setSegmentsEntryId(long segmentsEntryId);
 
 	/**
+	 * Returns the audience entry erc of this asset list entry asset entry rel.
+	 *
+	 * @return the audience entry erc of this asset list entry asset entry rel
+	 */
+	@AutoEscape
+	public String getAudienceEntryERC();
+
+	/**
+	 * Sets the audience entry erc of this asset list entry asset entry rel.
+	 *
+	 * @param audienceEntryERC the audience entry erc of this asset list entry asset entry rel
+	 */
+	public void setAudienceEntryERC(String audienceEntryERC);
+
+	/**
 	 * Returns the position of this asset list entry asset entry rel.
 	 *
 	 * @return the position of this asset list entry asset entry rel
@@ -312,4 +327,4 @@ public interface AssetListEntryAssetEntryRelModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:580329075
+// LIFERAY-SERVICE-BUILDER-HASH:323301129

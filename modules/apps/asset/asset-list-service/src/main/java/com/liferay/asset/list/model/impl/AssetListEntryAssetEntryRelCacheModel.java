@@ -73,7 +73,7 @@ public class AssetListEntryAssetEntryRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 		sb.append(assetEntryId);
 		sb.append(", segmentsEntryId=");
 		sb.append(segmentsEntryId);
+		sb.append(", audienceEntryERC=");
+		sb.append(audienceEntryERC);
 		sb.append(", position=");
 		sb.append(position);
 		sb.append(", lastPublishDate=");
@@ -156,6 +158,15 @@ public class AssetListEntryAssetEntryRelCacheModel
 		assetListEntryAssetEntryRelImpl.setAssetListEntryId(assetListEntryId);
 		assetListEntryAssetEntryRelImpl.setAssetEntryId(assetEntryId);
 		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(segmentsEntryId);
+
+		if (audienceEntryERC == null) {
+			assetListEntryAssetEntryRelImpl.setAudienceEntryERC("");
+		}
+		else {
+			assetListEntryAssetEntryRelImpl.setAudienceEntryERC(
+				audienceEntryERC);
+		}
+
 		assetListEntryAssetEntryRelImpl.setPosition(position);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
@@ -194,6 +205,7 @@ public class AssetListEntryAssetEntryRelCacheModel
 		assetEntryId = objectInput.readLong();
 
 		segmentsEntryId = objectInput.readLong();
+		audienceEntryERC = objectInput.readUTF();
 
 		position = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -236,6 +248,13 @@ public class AssetListEntryAssetEntryRelCacheModel
 
 		objectOutput.writeLong(segmentsEntryId);
 
+		if (audienceEntryERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(audienceEntryERC);
+		}
+
 		objectOutput.writeInt(position);
 		objectOutput.writeLong(lastPublishDate);
 	}
@@ -253,8 +272,9 @@ public class AssetListEntryAssetEntryRelCacheModel
 	public long assetListEntryId;
 	public long assetEntryId;
 	public long segmentsEntryId;
+	public String audienceEntryERC;
 	public int position;
 	public long lastPublishDate;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-486717449
+// LIFERAY-SERVICE-BUILDER-HASH:-1275126531

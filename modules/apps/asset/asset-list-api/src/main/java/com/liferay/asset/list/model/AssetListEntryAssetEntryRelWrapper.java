@@ -54,6 +54,7 @@ public class AssetListEntryAssetEntryRelWrapper
 		attributes.put("assetListEntryId", getAssetListEntryId());
 		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("segmentsEntryId", getSegmentsEntryId());
+		attributes.put("audienceEntryERC", getAudienceEntryERC());
 		attributes.put("position", getPosition());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -141,6 +142,12 @@ public class AssetListEntryAssetEntryRelWrapper
 			setSegmentsEntryId(segmentsEntryId);
 		}
 
+		String audienceEntryERC = (String)attributes.get("audienceEntryERC");
+
+		if (audienceEntryERC != null) {
+			setAudienceEntryERC(audienceEntryERC);
+		}
+
 		Integer position = (Integer)attributes.get("position");
 
 		if (position != null) {
@@ -192,6 +199,16 @@ public class AssetListEntryAssetEntryRelWrapper
 	@Override
 	public long getAssetListEntryId() {
 		return model.getAssetListEntryId();
+	}
+
+	/**
+	 * Returns the audience entry erc of this asset list entry asset entry rel.
+	 *
+	 * @return the audience entry erc of this asset list entry asset entry rel
+	 */
+	@Override
+	public String getAudienceEntryERC() {
+		return model.getAudienceEntryERC();
 	}
 
 	/**
@@ -377,6 +394,16 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 	/**
+	 * Sets the audience entry erc of this asset list entry asset entry rel.
+	 *
+	 * @param audienceEntryERC the audience entry erc of this asset list entry asset entry rel
+	 */
+	@Override
+	public void setAudienceEntryERC(String audienceEntryERC) {
+		model.setAudienceEntryERC(audienceEntryERC);
+	}
+
+	/**
 	 * Sets the company ID of this asset list entry asset entry rel.
 	 *
 	 * @param companyId the company ID of this asset list entry asset entry rel
@@ -549,4 +576,4 @@ public class AssetListEntryAssetEntryRelWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1598852390
+// LIFERAY-SERVICE-BUILDER-HASH:686741948

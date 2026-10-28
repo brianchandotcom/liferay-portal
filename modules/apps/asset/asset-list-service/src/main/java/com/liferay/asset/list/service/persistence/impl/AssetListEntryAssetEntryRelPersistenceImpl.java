@@ -505,10 +505,10 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 	private CollectionPersistenceFinder
 		<AssetListEntryAssetEntryRel, NoSuchEntryAssetEntryRelException>
-			_collectionPersistenceFinderByA_S;
+			_collectionPersistenceFinderByA_S_AEERC;
 
 	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
@@ -516,6 +516,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -523,231 +524,275 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
 	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S(
-		long assetListEntryId, long segmentsEntryId, int start, int end,
+	public List<AssetListEntryAssetEntryRel> findByA_S_AEERC(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int start, int end,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		return _collectionPersistenceFinderByA_S.find(
-			finderCache,
-			new Object[] {assetListEntryId, new long[] {segmentsEntryId}},
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset list entry asset entry rel
-	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
-	 */
-	@Override
-	public AssetListEntryAssetEntryRel findByA_S_First(
-			long assetListEntryId, long segmentsEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
-		throws NoSuchEntryAssetEntryRelException {
-
-		return _collectionPersistenceFinderByA_S.findFirst(
-			finderCache,
-			new Object[] {assetListEntryId, new long[] {segmentsEntryId}},
-			orderByComparator);
-	}
-
-	/**
-	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
-	 */
-	@Override
-	public AssetListEntryAssetEntryRel fetchByA_S_First(
-		long assetListEntryId, long segmentsEntryId,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
-
-		return _collectionPersistenceFinderByA_S.fetchFirst(
-			finderCache,
-			new Object[] {assetListEntryId, new long[] {segmentsEntryId}},
-			orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S(
-		long assetListEntryId, long[] segmentsEntryIds, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
-		boolean useFinderCache) {
-
-		return _collectionPersistenceFinderByA_S.find(
+		return _collectionPersistenceFinderByA_S_AEERC.find(
 			finderCache,
 			new Object[] {
-				assetListEntryId, ArrayUtil.sortedUnique(segmentsEntryIds)
+				assetListEntryId, new long[] {segmentsEntryId}, audienceEntryERC
 			},
 			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; from the database.
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry asset entry rel
+	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
 	 */
 	@Override
-	public void removeByA_S(long assetListEntryId, long segmentsEntryId) {
-		_collectionPersistenceFinderByA_S.remove(
+	public AssetListEntryAssetEntryRel findByA_S_AEERC_First(
+			long assetListEntryId, long segmentsEntryId,
+			String audienceEntryERC,
+			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+		throws NoSuchEntryAssetEntryRelException {
+
+		return _collectionPersistenceFinderByA_S_AEERC.findFirst(
 			finderCache,
-			new Object[] {assetListEntryId, new long[] {segmentsEntryId}});
+			new Object[] {
+				assetListEntryId, new long[] {segmentsEntryId}, audienceEntryERC
+			},
+			orderByComparator);
 	}
 
 	/**
-	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
-	 * @return the number of matching asset list entry asset entry rels
+	 * @param audienceEntryERC the audience entry erc
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
 	@Override
-	public int countByA_S(long assetListEntryId, long segmentsEntryId) {
-		return _collectionPersistenceFinderByA_S.count(
+	public AssetListEntryAssetEntryRel fetchByA_S_AEERC_First(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
+
+		return _collectionPersistenceFinderByA_S_AEERC.fetchFirst(
 			finderCache,
-			new Object[] {assetListEntryId, new long[] {segmentsEntryId}});
+			new Object[] {
+				assetListEntryId, new long[] {segmentsEntryId}, audienceEntryERC
+			},
+			orderByComparator);
 	}
 
 	/**
-	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
+	 * </p>
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryIds the segments entry IDs
+	 * @param audienceEntryERC the audience entry erc
+	 * @param start the lower bound of the range of asset list entry asset entry rels
+	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset list entry asset entry rels
+	 */
+	@Override
+	public List<AssetListEntryAssetEntryRel> findByA_S_AEERC(
+		long assetListEntryId, long[] segmentsEntryIds, String audienceEntryERC,
+		int start, int end,
+		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByA_S_AEERC.find(
+			finderCache,
+			new Object[] {
+				assetListEntryId, ArrayUtil.sortedUnique(segmentsEntryIds),
+				audienceEntryERC
+			},
+			start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; from the database.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
+	 */
+	@Override
+	public void removeByA_S_AEERC(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC) {
+
+		_collectionPersistenceFinderByA_S_AEERC.remove(
+			finderCache,
+			new Object[] {
+				assetListEntryId, new long[] {segmentsEntryId}, audienceEntryERC
+			});
+	}
+
+	/**
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @return the number of matching asset list entry asset entry rels
 	 */
 	@Override
-	public int countByA_S(long assetListEntryId, long[] segmentsEntryIds) {
-		return _collectionPersistenceFinderByA_S.count(
+	public int countByA_S_AEERC(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC) {
+
+		return _collectionPersistenceFinderByA_S_AEERC.count(
 			finderCache,
 			new Object[] {
-				assetListEntryId, ArrayUtil.sortedUnique(segmentsEntryIds)
+				assetListEntryId, new long[] {segmentsEntryId}, audienceEntryERC
+			});
+	}
+
+	/**
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63; and audienceEntryERC = &#63;.
+	 *
+	 * @param assetListEntryId the asset list entry ID
+	 * @param segmentsEntryIds the segments entry IDs
+	 * @param audienceEntryERC the audience entry erc
+	 * @return the number of matching asset list entry asset entry rels
+	 */
+	@Override
+	public int countByA_S_AEERC(
+		long assetListEntryId, long[] segmentsEntryIds,
+		String audienceEntryERC) {
+
+		return _collectionPersistenceFinderByA_S_AEERC.count(
+			finderCache,
+			new Object[] {
+				assetListEntryId, ArrayUtil.sortedUnique(segmentsEntryIds),
+				audienceEntryERC
 			});
 	}
 
 	private UniquePersistenceFinder
 		<AssetListEntryAssetEntryRel, NoSuchEntryAssetEntryRelException>
-			_uniquePersistenceFinderByA_S_P;
+			_uniquePersistenceFinderByA_S_AEERC_P;
 
 	/**
-	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.
+	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @return the matching asset list entry asset entry rel
 	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
 	 */
 	@Override
-	public AssetListEntryAssetEntryRel findByA_S_P(
-			long assetListEntryId, long segmentsEntryId, int position)
+	public AssetListEntryAssetEntryRel findByA_S_AEERC_P(
+			long assetListEntryId, long segmentsEntryId,
+			String audienceEntryERC, int position)
 		throws NoSuchEntryAssetEntryRelException {
 
-		return _uniquePersistenceFinderByA_S_P.find(
+		return _uniquePersistenceFinderByA_S_AEERC_P.find(
 			finderCache,
-			new Object[] {assetListEntryId, segmentsEntryId, position});
+			new Object[] {
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position
+			});
 	}
 
 	/**
-	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
 	@Override
-	public AssetListEntryAssetEntryRel fetchByA_S_P(
-		long assetListEntryId, long segmentsEntryId, int position,
-		boolean useFinderCache) {
+	public AssetListEntryAssetEntryRel fetchByA_S_AEERC_P(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position, boolean useFinderCache) {
 
-		return _uniquePersistenceFinderByA_S_P.fetch(
+		return _uniquePersistenceFinderByA_S_AEERC_P.fetch(
 			finderCache,
-			new Object[] {assetListEntryId, segmentsEntryId, position},
+			new Object[] {
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position
+			},
 			useFinderCache);
 	}
 
 	/**
-	 * Removes the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; from the database.
+	 * Removes the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position = &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @return the asset list entry asset entry rel that was removed
 	 */
 	@Override
-	public AssetListEntryAssetEntryRel removeByA_S_P(
-			long assetListEntryId, long segmentsEntryId, int position)
+	public AssetListEntryAssetEntryRel removeByA_S_AEERC_P(
+			long assetListEntryId, long segmentsEntryId,
+			String audienceEntryERC, int position)
 		throws NoSuchEntryAssetEntryRelException {
 
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = findByA_S_P(
-			assetListEntryId, segmentsEntryId, position);
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			findByA_S_AEERC_P(
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position);
 
 		return remove(assetListEntryAssetEntryRel);
 	}
 
 	/**
-	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63;.
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position = &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @return the number of matching asset list entry asset entry rels
 	 */
 	@Override
-	public int countByA_S_P(
-		long assetListEntryId, long segmentsEntryId, int position) {
+	public int countByA_S_AEERC_P(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position) {
 
-		return _uniquePersistenceFinderByA_S_P.count(
+		return _uniquePersistenceFinderByA_S_AEERC_P.count(
 			finderCache,
-			new Object[] {assetListEntryId, segmentsEntryId, position});
+			new Object[] {
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position
+			});
 	}
 
 	private CollectionPersistenceFinder
 		<AssetListEntryAssetEntryRel, NoSuchEntryAssetEntryRelException>
-			_collectionPersistenceFinderByA_S_GtP;
+			_collectionPersistenceFinderByA_S_AEERC_GtP;
 
 	/**
-	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @return the matching asset list entry asset entry rels
 	 */
 	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S_GtP(
-		long assetListEntryId, long segmentsEntryId, int position) {
+	public List<AssetListEntryAssetEntryRel> findByA_S_AEERC_GtP(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position) {
 
-		return findByA_S_GtP(
-			assetListEntryId, segmentsEntryId, position, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByA_S_AEERC_GtP(
+			assetListEntryId, segmentsEntryId, audienceEntryERC, position,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
@@ -755,22 +800,24 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @return the range of matching asset list entry asset entry rels
 	 */
 	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S_GtP(
-		long assetListEntryId, long segmentsEntryId, int position, int start,
-		int end) {
+	public List<AssetListEntryAssetEntryRel> findByA_S_AEERC_GtP(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position, int start, int end) {
 
-		return findByA_S_GtP(
-			assetListEntryId, segmentsEntryId, position, start, end, null);
+		return findByA_S_AEERC_GtP(
+			assetListEntryId, segmentsEntryId, audienceEntryERC, position,
+			start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
@@ -778,6 +825,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
@@ -785,18 +833,18 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
 	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S_GtP(
-		long assetListEntryId, long segmentsEntryId, int position, int start,
-		int end,
+	public List<AssetListEntryAssetEntryRel> findByA_S_AEERC_GtP(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position, int start, int end,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
 
-		return findByA_S_GtP(
-			assetListEntryId, segmentsEntryId, position, start, end,
-			orderByComparator, true);
+		return findByA_S_AEERC_GtP(
+			assetListEntryId, segmentsEntryId, audienceEntryERC, position,
+			start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
@@ -804,6 +852,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
@@ -812,91 +861,109 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
 	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S_GtP(
-		long assetListEntryId, long segmentsEntryId, int position, int start,
-		int end,
+	public List<AssetListEntryAssetEntryRel> findByA_S_AEERC_GtP(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position, int start, int end,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		return _collectionPersistenceFinderByA_S_GtP.find(
+		return _collectionPersistenceFinderByA_S_AEERC_GtP.find(
 			finderCache,
-			new Object[] {assetListEntryId, segmentsEntryId, position}, start,
-			end, orderByComparator, useFinderCache);
+			new Object[] {
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset list entry asset entry rel
 	 * @throws NoSuchEntryAssetEntryRelException if a matching asset list entry asset entry rel could not be found
 	 */
 	@Override
-	public AssetListEntryAssetEntryRel findByA_S_GtP_First(
-			long assetListEntryId, long segmentsEntryId, int position,
+	public AssetListEntryAssetEntryRel findByA_S_AEERC_GtP_First(
+			long assetListEntryId, long segmentsEntryId,
+			String audienceEntryERC, int position,
 			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException {
 
-		return _collectionPersistenceFinderByA_S_GtP.findFirst(
+		return _collectionPersistenceFinderByA_S_AEERC_GtP.findFirst(
 			finderCache,
-			new Object[] {assetListEntryId, segmentsEntryId, position},
+			new Object[] {
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position
+			},
 			orderByComparator);
 	}
 
 	/**
-	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
 	@Override
-	public AssetListEntryAssetEntryRel fetchByA_S_GtP_First(
-		long assetListEntryId, long segmentsEntryId, int position,
+	public AssetListEntryAssetEntryRel fetchByA_S_AEERC_GtP_First(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
 
-		return _collectionPersistenceFinderByA_S_GtP.fetchFirst(
+		return _collectionPersistenceFinderByA_S_AEERC_GtP.fetchFirst(
 			finderCache,
-			new Object[] {assetListEntryId, segmentsEntryId, position},
+			new Object[] {
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position
+			},
 			orderByComparator);
 	}
 
 	/**
-	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63; from the database.
+	 * Removes all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position &gt; &#63; from the database.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 */
 	@Override
-	public void removeByA_S_GtP(
-		long assetListEntryId, long segmentsEntryId, int position) {
+	public void removeByA_S_AEERC_GtP(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position) {
 
-		_collectionPersistenceFinderByA_S_GtP.remove(
+		_collectionPersistenceFinderByA_S_AEERC_GtP.remove(
 			finderCache,
-			new Object[] {assetListEntryId, segmentsEntryId, position});
+			new Object[] {
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position
+			});
 	}
 
 	/**
-	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
+	 * Returns the number of asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and audienceEntryERC = &#63; and position &gt; &#63;.
 	 *
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
+	 * @param audienceEntryERC the audience entry erc
 	 * @param position the position
 	 * @return the number of matching asset list entry asset entry rels
 	 */
 	@Override
-	public int countByA_S_GtP(
-		long assetListEntryId, long segmentsEntryId, int position) {
+	public int countByA_S_AEERC_GtP(
+		long assetListEntryId, long segmentsEntryId, String audienceEntryERC,
+		int position) {
 
-		return _collectionPersistenceFinderByA_S_GtP.count(
+		return _collectionPersistenceFinderByA_S_AEERC_GtP.count(
 			finderCache,
-			new Object[] {assetListEntryId, segmentsEntryId, position});
+			new Object[] {
+				assetListEntryId, segmentsEntryId, audienceEntryERC, position
+			});
 	}
 
 	public AssetListEntryAssetEntryRelPersistenceImpl() {
@@ -1200,6 +1267,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		ctMergeColumnNames.add("assetListEntryId");
 		ctMergeColumnNames.add("assetEntryId");
 		ctMergeColumnNames.add("segmentsEntryId");
+		ctMergeColumnNames.add("audienceEntryERC");
 		ctMergeColumnNames.add("position");
 		ctMergeColumnNames.add("lastPublishDate");
 
@@ -1217,7 +1285,10 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(
-			new String[] {"assetListEntryId", "segmentsEntryId", "position"});
+			new String[] {
+				"assetListEntryId", "segmentsEntryId", "audienceEntryERC",
+				"position"
+			});
 	}
 
 	/**
@@ -1361,50 +1432,78 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetListEntryAssetEntryRel::getAssetEntryId));
 
-		_collectionPersistenceFinderByA_S = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_S",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				},
-				new String[] {"assetListEntryId", "segmentsEntryId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_S",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"assetListEntryId", "segmentsEntryId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_S",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"assetListEntryId", "segmentsEntryId"}, false),
-			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
-			_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
-			AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "", null,
-			new FinderColumn<>(
-				"assetListEntryAssetEntryRel.", "assetListEntryId",
-				FinderColumn.Type.LONG, "=", true, true,
-				AssetListEntryAssetEntryRel::getAssetListEntryId),
-			new ArrayableFinderColumn<>(
-				"assetListEntryAssetEntryRel.", "segmentsEntryId",
-				FinderColumn.Type.LONG, "=", false, true, true,
-				AssetListEntryAssetEntryRel::getSegmentsEntryId));
+		_collectionPersistenceFinderByA_S_AEERC =
+			new CollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_S_AEERC",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"assetListEntryId", "segmentsEntryId",
+						"audienceEntryERC"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByA_S_AEERC",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"assetListEntryId", "segmentsEntryId",
+						"audienceEntryERC"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_S_AEERC",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"assetListEntryId", "segmentsEntryId",
+						"audienceEntryERC"
+					},
+					0, 4, false, null),
+				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
+				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
+				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "", "", null,
+				new FinderColumn<>(
+					"assetListEntryAssetEntryRel.", "assetListEntryId",
+					FinderColumn.Type.LONG, "=", true, true,
+					AssetListEntryAssetEntryRel::getAssetListEntryId),
+				new ArrayableFinderColumn<>(
+					"assetListEntryAssetEntryRel.", "segmentsEntryId",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					AssetListEntryAssetEntryRel::getSegmentsEntryId),
+				new FinderColumn<>(
+					"assetListEntryAssetEntryRel.", "audienceEntryERC",
+					FinderColumn.Type.STRING, "=", true, true,
+					AssetListEntryAssetEntryRel::getAudienceEntryERC));
 
-		_uniquePersistenceFinderByA_S_P = new UniquePersistenceFinder<>(
+		_uniquePersistenceFinderByA_S_AEERC_P = new UniquePersistenceFinder<>(
 			this,
 			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByA_S_P",
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_S_AEERC_P",
 				new String[] {
 					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName()
+					String.class.getName(), Integer.class.getName()
 				},
 				new String[] {
-					"assetListEntryId", "segmentsEntryId", "position"
+					"assetListEntryId", "segmentsEntryId", "audienceEntryERC",
+					"position"
 				},
-				0, 0, false, AssetListEntryAssetEntryRel::getAssetListEntryId,
+				0, 4, false, AssetListEntryAssetEntryRel::getAssetListEntryId,
 				AssetListEntryAssetEntryRel::getSegmentsEntryId,
+				convertNullFunction(
+					AssetListEntryAssetEntryRel::getAudienceEntryERC),
 				AssetListEntryAssetEntryRel::getPosition),
 			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE, "",
 			new FinderColumn<>(
@@ -1416,34 +1515,42 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				AssetListEntryAssetEntryRel::getSegmentsEntryId),
 			new FinderColumn<>(
+				"assetListEntryAssetEntryRel.", "audienceEntryERC",
+				FinderColumn.Type.STRING, "=", true, true,
+				AssetListEntryAssetEntryRel::getAudienceEntryERC),
+			new FinderColumn<>(
 				"assetListEntryAssetEntryRel.", "position",
 				FinderColumn.Type.INTEGER, "=", true, true,
 				AssetListEntryAssetEntryRel::getPosition));
 
-		_collectionPersistenceFinderByA_S_GtP =
+		_collectionPersistenceFinderByA_S_AEERC_GtP =
 			new CollectionPersistenceFinder<>(
 				this,
 				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_S_GtP",
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByA_S_AEERC_GtP",
 					new String[] {
 						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
 						Integer.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
 						OrderByComparator.class.getName()
 					},
 					new String[] {
-						"assetListEntryId", "segmentsEntryId", "position"
+						"assetListEntryId", "segmentsEntryId",
+						"audienceEntryERC", "position"
 					},
 					true),
 				null,
 				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_S_GtP",
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByA_S_AEERC_GtP",
 					new String[] {
 						Long.class.getName(), Long.class.getName(),
-						Integer.class.getName()
+						String.class.getName(), Integer.class.getName()
 					},
 					new String[] {
-						"assetListEntryId", "segmentsEntryId", "position"
+						"assetListEntryId", "segmentsEntryId",
+						"audienceEntryERC", "position"
 					},
 					false),
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
@@ -1458,6 +1565,10 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 					"assetListEntryAssetEntryRel.", "segmentsEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetListEntryAssetEntryRel::getSegmentsEntryId),
+				new FinderColumn<>(
+					"assetListEntryAssetEntryRel.", "audienceEntryERC",
+					FinderColumn.Type.STRING, "=", true, true,
+					AssetListEntryAssetEntryRel::getAudienceEntryERC),
 				new FinderColumn<>(
 					"assetListEntryAssetEntryRel.", "position",
 					FinderColumn.Type.INTEGER, ">", true, true,
@@ -1530,4 +1641,4 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1691506267
+// LIFERAY-SERVICE-BUILDER-HASH:1278587210

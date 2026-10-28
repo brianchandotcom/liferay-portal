@@ -146,6 +146,9 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 		newAssetListEntryAssetEntryRel.setSegmentsEntryId(
 			RandomTestUtil.nextLong());
 
+		newAssetListEntryAssetEntryRel.setAudienceEntryERC(
+			RandomTestUtil.randomString());
+
 		newAssetListEntryAssetEntryRel.setPosition(RandomTestUtil.nextInt());
 
 		newAssetListEntryAssetEntryRel.setLastPublishDate(
@@ -205,6 +208,9 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 			existingAssetListEntryAssetEntryRel.getSegmentsEntryId(),
 			newAssetListEntryAssetEntryRel.getSegmentsEntryId());
 		Assert.assertEquals(
+			existingAssetListEntryAssetEntryRel.getAudienceEntryERC(),
+			newAssetListEntryAssetEntryRel.getAudienceEntryERC());
+		Assert.assertEquals(
 			existingAssetListEntryAssetEntryRel.getPosition(),
 			newAssetListEntryAssetEntryRel.getPosition());
 		Assert.assertEquals(
@@ -256,36 +262,43 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByA_S() throws Exception {
-		_persistence.countByA_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByA_S_AEERC() throws Exception {
+		_persistence.countByA_S_AEERC(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
 
-		_persistence.countByA_S(0L, 0L);
+		_persistence.countByA_S_AEERC(0L, 0L, "null");
+
+		_persistence.countByA_S_AEERC(0L, 0L, (String)null);
 	}
 
 	@Test
-	public void testCountByA_SArrayable() throws Exception {
-		_persistence.countByA_S(
+	public void testCountByA_S_AEERCArrayable() throws Exception {
+		_persistence.countByA_S_AEERC(
 			RandomTestUtil.nextLong(),
-			new long[] {RandomTestUtil.nextLong(), 0L});
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomString());
 	}
 
 	@Test
-	public void testCountByA_S_P() throws Exception {
-		_persistence.countByA_S_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+	public void testCountByA_S_AEERC_P() throws Exception {
+		_persistence.countByA_S_AEERC_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
 			RandomTestUtil.nextInt());
 
-		_persistence.countByA_S_P(0L, 0L, 0);
+		_persistence.countByA_S_AEERC_P(0L, 0L, "null", 0);
+
+		_persistence.countByA_S_AEERC_P(0L, 0L, (String)null, 0);
 	}
 
 	@Test
-	public void testCountByA_S_GtP() throws Exception {
-		_persistence.countByA_S_GtP(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+	public void testCountByA_S_AEERC_GtP() throws Exception {
+		_persistence.countByA_S_AEERC_GtP(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
 			RandomTestUtil.nextInt());
 
-		_persistence.countByA_S_GtP(0L, 0L, 0);
+		_persistence.countByA_S_AEERC_GtP(0L, 0L, "null", 0);
+
+		_persistence.countByA_S_AEERC_GtP(0L, 0L, (String)null, 0);
 	}
 
 	@Test
@@ -324,8 +337,8 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 			"assetListEntryAssetEntryRelId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "assetListEntryId", true, "assetEntryId",
-			true, "segmentsEntryId", true, "position", true, "lastPublishDate",
-			true);
+			true, "segmentsEntryId", true, "audienceEntryERC", true, "position",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -655,6 +668,11 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 				assetListEntryAssetEntryRel, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "segmentsEntryId"));
 		Assert.assertEquals(
+			assetListEntryAssetEntryRel.getAudienceEntryERC(),
+			ReflectionTestUtil.invoke(
+				assetListEntryAssetEntryRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "audienceEntryERC"));
+		Assert.assertEquals(
 			Integer.valueOf(assetListEntryAssetEntryRel.getPosition()),
 			ReflectionTestUtil.<Integer>invoke(
 				assetListEntryAssetEntryRel, "getColumnOriginalValue",
@@ -694,6 +712,9 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 		assetListEntryAssetEntryRel.setSegmentsEntryId(
 			RandomTestUtil.nextLong());
 
+		assetListEntryAssetEntryRel.setAudienceEntryERC(
+			RandomTestUtil.randomString());
+
 		assetListEntryAssetEntryRel.setPosition(RandomTestUtil.nextInt());
 
 		assetListEntryAssetEntryRel.setLastPublishDate(
@@ -711,4 +732,4 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1500205872
+// LIFERAY-SERVICE-BUILDER-HASH:-1210288400

@@ -70,8 +70,8 @@ public class AssetListEntryAssetEntryRelModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"assetListEntryId", Types.BIGINT}, {"assetEntryId", Types.BIGINT},
-		{"segmentsEntryId", Types.BIGINT}, {"position", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"segmentsEntryId", Types.BIGINT}, {"audienceEntryERC", Types.VARCHAR},
+		{"position", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -91,12 +91,13 @@ public class AssetListEntryAssetEntryRelModelImpl
 		TABLE_COLUMNS_MAP.put("assetListEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("segmentsEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("audienceEntryERC", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntryAssetEntryRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,assetEntryId LONG,segmentsEntryId LONG,position INTEGER,lastPublishDate DATE null,primary key (assetListEntryAssetEntryRelId, ctCollectionId))";
+		"create table AssetListEntryAssetEntryRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,assetEntryId LONG,segmentsEntryId LONG,audienceEntryERC VARCHAR(75) null,position INTEGER,lastPublishDate DATE null,primary key (assetListEntryAssetEntryRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetListEntryAssetEntryRel";
@@ -131,31 +132,37 @@ public class AssetListEntryAssetEntryRelModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long AUDIENCEENTRYERC_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long POSITION_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SEGMENTSENTRYID_COLUMN_BITMASK = 32L;
+	public static final long POSITION_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long SEGMENTSENTRYID_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -302,6 +309,9 @@ public class AssetListEntryAssetEntryRelModelImpl
 				"segmentsEntryId",
 				AssetListEntryAssetEntryRel::getSegmentsEntryId);
 			attributeGetterFunctions.put(
+				"audienceEntryERC",
+				AssetListEntryAssetEntryRel::getAudienceEntryERC);
+			attributeGetterFunctions.put(
 				"position", AssetListEntryAssetEntryRel::getPosition);
 			attributeGetterFunctions.put(
 				"lastPublishDate",
@@ -378,6 +388,10 @@ public class AssetListEntryAssetEntryRelModelImpl
 				"segmentsEntryId",
 				(BiConsumer<AssetListEntryAssetEntryRel, Long>)
 					AssetListEntryAssetEntryRel::setSegmentsEntryId);
+			attributeSetterBiConsumers.put(
+				"audienceEntryERC",
+				(BiConsumer<AssetListEntryAssetEntryRel, String>)
+					AssetListEntryAssetEntryRel::setAudienceEntryERC);
 			attributeSetterBiConsumers.put(
 				"position",
 				(BiConsumer<AssetListEntryAssetEntryRel, Integer>)
@@ -668,6 +682,34 @@ public class AssetListEntryAssetEntryRelModelImpl
 	}
 
 	@Override
+	public String getAudienceEntryERC() {
+		if (_audienceEntryERC == null) {
+			return "";
+		}
+		else {
+			return _audienceEntryERC;
+		}
+	}
+
+	@Override
+	public void setAudienceEntryERC(String audienceEntryERC) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_audienceEntryERC = audienceEntryERC;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalAudienceEntryERC() {
+		return getColumnOriginalValue("audienceEntryERC");
+	}
+
+	@Override
 	public int getPosition() {
 		return _position;
 	}
@@ -786,6 +828,8 @@ public class AssetListEntryAssetEntryRelModelImpl
 		assetListEntryAssetEntryRelImpl.setAssetEntryId(getAssetEntryId());
 		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(
 			getSegmentsEntryId());
+		assetListEntryAssetEntryRelImpl.setAudienceEntryERC(
+			getAudienceEntryERC());
 		assetListEntryAssetEntryRelImpl.setPosition(getPosition());
 		assetListEntryAssetEntryRelImpl.setLastPublishDate(
 			getLastPublishDate());
@@ -826,6 +870,8 @@ public class AssetListEntryAssetEntryRelModelImpl
 			this.<Long>getColumnOriginalValue("assetEntryId"));
 		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(
 			this.<Long>getColumnOriginalValue("segmentsEntryId"));
+		assetListEntryAssetEntryRelImpl.setAudienceEntryERC(
+			this.<String>getColumnOriginalValue("audienceEntryERC"));
 		assetListEntryAssetEntryRelImpl.setPosition(
 			this.<Integer>getColumnOriginalValue("position"));
 		assetListEntryAssetEntryRelImpl.setLastPublishDate(
@@ -976,6 +1022,16 @@ public class AssetListEntryAssetEntryRelModelImpl
 		assetListEntryAssetEntryRelCacheModel.segmentsEntryId =
 			getSegmentsEntryId();
 
+		assetListEntryAssetEntryRelCacheModel.audienceEntryERC =
+			getAudienceEntryERC();
+
+		String audienceEntryERC =
+			assetListEntryAssetEntryRelCacheModel.audienceEntryERC;
+
+		if ((audienceEntryERC != null) && (audienceEntryERC.length() == 0)) {
+			assetListEntryAssetEntryRelCacheModel.audienceEntryERC = null;
+		}
+
 		assetListEntryAssetEntryRelCacheModel.position = getPosition();
 
 		Date lastPublishDate = getLastPublishDate();
@@ -1066,6 +1122,7 @@ public class AssetListEntryAssetEntryRelModelImpl
 	private long _assetListEntryId;
 	private long _assetEntryId;
 	private long _segmentsEntryId;
+	private String _audienceEntryERC;
 	private int _position;
 	private Date _lastPublishDate;
 
@@ -1113,6 +1170,7 @@ public class AssetListEntryAssetEntryRelModelImpl
 		_columnOriginalValues.put("assetListEntryId", _assetListEntryId);
 		_columnOriginalValues.put("assetEntryId", _assetEntryId);
 		_columnOriginalValues.put("segmentsEntryId", _segmentsEntryId);
+		_columnOriginalValues.put("audienceEntryERC", _audienceEntryERC);
 		_columnOriginalValues.put("position", _position);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
@@ -1164,9 +1222,11 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 		columnBitmasks.put("segmentsEntryId", 4096L);
 
-		columnBitmasks.put("position", 8192L);
+		columnBitmasks.put("audienceEntryERC", 8192L);
 
-		columnBitmasks.put("lastPublishDate", 16384L);
+		columnBitmasks.put("position", 16384L);
+
+		columnBitmasks.put("lastPublishDate", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -1175,4 +1235,4 @@ public class AssetListEntryAssetEntryRelModelImpl
 	private AssetListEntryAssetEntryRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:797798779
+// LIFERAY-SERVICE-BUILDER-HASH:2137435544

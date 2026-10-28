@@ -49,8 +49,10 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -63,6 +65,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -734,6 +737,61 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_unregisterServices();
 
+		// Selection filter with tokens
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		long scopeGroupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			themeDisplay.getScopeGroupId()
+		).thenReturn(
+			scopeGroupId
+		);
+
+		Mockito.when(
+			themeDisplay.getUser()
+		).thenReturn(
+			Mockito.mock(User.class)
+		);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		_registerServices(
+			_registerFDSFilter(
+				_createSelectionFDSFilter(
+					"/o/app/{siteId}/{foo}/endpoint", true, IDS[0]),
+				FDS_NAMES[0]),
+			bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				new SelectionFDSFilterContextContributor(),
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "selection")),
+			_registerSystemFDSEntry(FDS_NAMES[0]));
+
+		JSONArray jsonArray = systemFDSSerializer.serializeFilters(
+			FDS_NAMES[0], httpServletRequest,
+			Collections.singletonMap(IDS[0], JSONUtil.put("foo", "bar")));
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			"/o/app/" + scopeGroupId + "/bar/endpoint",
+			jsonObject.getString("apiURL"));
+
+		JSONAssert.assertEquals(
+			"[]",
+			systemFDSSerializer.serializeFilters(
+				FDS_NAMES[0], httpServletRequest, null
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+
 		// Shared filters
 
 		FDSFilter dateRangeFDSFilter = _createFDSFilterDate(
@@ -1227,6 +1285,65 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				FDS_NAMES[0], httpServletRequest));
 
 		_unregisterServices();
+	}
+
+	@Test
+	public void testSerializeSelectionFilterAPIURLs() throws Exception {
+		ServiceTrackerMap
+			<String,
+			 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSFilter>>>
+				serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+					bundleContext, FDSFilter.class, "frontend.data.set.name",
+					ServiceTrackerCustomizerFactory.<FDSFilter>serviceWrapper(
+						bundleContext));
+
+		systemFDSSerializer.fdsFilterRegistry = new FDSFilterRegistryImpl(
+			serviceTrackerMap);
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		long scopeGroupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			themeDisplay.getScopeGroupId()
+		).thenReturn(
+			scopeGroupId
+		);
+
+		Mockito.when(
+			themeDisplay.getUser()
+		).thenReturn(
+			Mockito.mock(User.class)
+		);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		_registerServices(
+			_registerFDSFilter(
+				_createSelectionFDSFilter(
+					"/o/app/{siteId}/{foo}/endpoint", true, IDS[0]),
+				FDS_NAMES[0]),
+			_registerFDSFilter(
+				_createSelectionFDSFilter(URL, false, IDS[1]), FDS_NAMES[0]));
+
+		Assert.assertEquals(
+			Collections.singletonMap(IDS[0], "/o/app/{siteId}/{foo}/endpoint"),
+			systemFDSSerializer.serializeSelectionFilterAPIURLs(
+				FDS_NAMES[0], httpServletRequest, false, null));
+		Assert.assertEquals(
+			Collections.singletonMap(
+				IDS[0], "/o/app/" + scopeGroupId + "/bar/endpoint"),
+			systemFDSSerializer.serializeSelectionFilterAPIURLs(
+				FDS_NAMES[0], httpServletRequest, true,
+				Collections.singletonMap(IDS[0], JSONUtil.put("foo", "bar"))));
+
+		_unregisterServices();
+
+		serviceTrackerMap.close();
 	}
 
 	@Test
@@ -1846,6 +1963,34 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			@Override
 			public Map<String, Object> getPreloadedData() {
 				return preloadedData;
+			}
+
+		};
+	}
+
+	private FDSFilter _createSelectionFDSFilter(
+		String apiURL, boolean autocompleteEnabled, String id) {
+
+		return new BaseSelectionFDSFilter() {
+
+			@Override
+			public String getAPIURL() {
+				return apiURL;
+			}
+
+			@Override
+			public String getId() {
+				return id;
+			}
+
+			@Override
+			public String getLabel() {
+				return LABELS[0];
+			}
+
+			@Override
+			public boolean isAutocompleteEnabled() {
+				return autocompleteEnabled;
 			}
 
 		};

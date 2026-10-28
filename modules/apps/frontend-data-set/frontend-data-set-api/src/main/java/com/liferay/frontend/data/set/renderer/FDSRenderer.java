@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.Writer;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -24,13 +23,10 @@ public interface FDSRenderer {
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate, JSONObject tokenResolutionsJSONObject);
 
-	public default Map<String, String> getSelectionFilterAPIURLs(
+	public Map<String, String> getSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
-		Map<String, JSONObject> tokenResolutionsJSONObjects) {
-
-		return Collections.emptyMap();
-	}
+		Map<String, JSONObject> tokenResolutionsJSONObjects);
 
 	public void render(
 		Map<String, Object> baseProps, String componentId, String fdsName,

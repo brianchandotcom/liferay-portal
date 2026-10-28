@@ -27,6 +27,12 @@ public interface FreeMarkerEngineConfiguration {
 	public String[] allowedClasses();
 
 	@Meta.AD(
+		description = "allowed-new-classes-help", name = "allowed-new-classes",
+		required = false
+	)
+	public String[] allowedNewClasses();
+
+	@Meta.AD(
 		deflt = "2147483647", name = "async-render-thread-pool-max-queue-size",
 		required = false
 	)

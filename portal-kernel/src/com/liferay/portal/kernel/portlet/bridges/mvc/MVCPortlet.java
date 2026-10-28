@@ -833,7 +833,7 @@ public class MVCPortlet extends LiferayPortlet {
 			return false;
 		}
 
-		return path.equals(_DEFAULT_CONFIGURATION_JSP);
+		return path.equals("/configuration.jsp");
 	}
 
 	private Set<String> _visitResources(
@@ -857,9 +857,6 @@ public class MVCPortlet extends LiferayPortlet {
 				return paths;
 			});
 	}
-
-	private static final String _DEFAULT_CONFIGURATION_JSP =
-		"/configuration.jsp";
 
 	private static final String _PATH_META_INF_RESOURCES =
 		"/META-INF/resources";

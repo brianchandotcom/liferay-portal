@@ -29,6 +29,9 @@ import com.liferay.headless.cms.client.pagination.Page;
 import com.liferay.headless.cms.resource.v1_0.test.util.CMSOutboundLinkTestUtil;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -73,12 +76,14 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -128,6 +133,7 @@ public class UnlinkedAssetResourceTest
 		_testGetUnlinkedAssetsPageWithManyToManyRelationship();
 		_testGetUnlinkedAssetsPageWithNavigationMenu();
 		_testGetUnlinkedAssetsPageWithOutboundLink();
+		_testGetUnlinkedAssetsPageWithSegmentsExperience();
 	}
 
 	@Override
@@ -716,6 +722,66 @@ public class UnlinkedAssetResourceTest
 		_depotEntryLocalService.deleteDepotEntry(depotEntry);
 	}
 
+	private void _testGetUnlinkedAssetsPageWithSegmentsExperience()
+		throws Exception {
+
+		DepotEntry depotEntry = _addSpaceDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), testGroup.getGroupId());
+
+		ObjectDefinition objectDefinition = _addCMSObjectDefinition();
+
+		ObjectEntry objectEntry = _addObjectEntry(depotEntry, objectDefinition);
+
+		_addObjectEntry(depotEntry, objectDefinition);
+
+		_assertUnlinkedAssetsCount(depotEntry, 2);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(), null,
+				null, draftLayout.getPlid(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId()));
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					testGroup.getGroupId(), draftLayout.getPlid());
+
+		_layoutPageTemplateStructureRelLocalService.
+			addLayoutPageTemplateStructureRel(
+				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+				segmentsExperience.getSegmentsExperienceId(),
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData(),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId()));
+
+		ContentLayoutTestUtil.addCollectionDisplayToLayout(
+			_getAssetListEntryJSONObject(
+				_addManualAssetListEntry(objectDefinition, objectEntry)),
+			draftLayout, _layoutStructureProvider, null, null, 0,
+			segmentsExperience.getSegmentsExperienceId());
+
+		_assertUnlinkedAssetsCount(depotEntry, 2);
+
+		_publishLayout(layout);
+
+		_assertUnlinkedAssetsCount(depotEntry, 1);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+	}
+
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -744,6 +810,14 @@ public class UnlinkedAssetResourceTest
 	@Inject
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureRelLocalService
+		_layoutPageTemplateStructureRelLocalService;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;

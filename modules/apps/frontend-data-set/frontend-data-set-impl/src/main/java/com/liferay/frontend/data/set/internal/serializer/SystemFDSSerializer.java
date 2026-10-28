@@ -13,6 +13,7 @@ import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
@@ -31,10 +32,13 @@ import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -44,10 +48,13 @@ import com.liferay.portal.kernel.util.Validator;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -156,21 +163,26 @@ public class SystemFDSSerializer
 
 		JSONArray jsonArray = JSONUtil.putAll();
 
-		Locale locale = PortalUtil.getLocale(httpServletRequest);
-
-		_serializeFilters(fdsFilters, jsonArray, locale);
+		_serializeFilters(fdsFilters, httpServletRequest, jsonArray, null);
 		_serializeFilters(
-			fdsFilterRegistry.getFDSFilters(fdsName), jsonArray, locale);
+			fdsFilterRegistry.getFDSFilters(fdsName), httpServletRequest,
+			jsonArray, null);
 
 		return jsonArray;
 	}
 
 	@Override
 	public JSONArray serializeFilters(
-		String fdsName, HttpServletRequest httpServletRequest) {
+		String fdsName, HttpServletRequest httpServletRequest,
+		Map<String, JSONObject> tokenResolutionsJSONObjects) {
 
-		return serializeFilters(
-			Collections.emptyList(), fdsName, httpServletRequest);
+		JSONArray jsonArray = JSONUtil.putAll();
+
+		_serializeFilters(
+			fdsFilterRegistry.getFDSFilters(fdsName), httpServletRequest,
+			jsonArray, tokenResolutionsJSONObjects);
+
+		return jsonArray;
 	}
 
 	@Override
@@ -321,6 +333,31 @@ public class SystemFDSSerializer
 		}
 
 		return systemFDSEntry.getSearchSuggestionsEnabled();
+	}
+
+	@Override
+	public Map<String, String> serializeSelectionFilterAPIURLs(
+		String fdsName, HttpServletRequest httpServletRequest,
+		boolean interpolate,
+		Map<String, JSONObject> tokenResolutionsJSONObjects) {
+
+		Map<String, String> selectionFilterAPIURLs = new LinkedHashMap<>();
+
+		for (FDSFilter fdsFilter : fdsFilterRegistry.getFDSFilters(fdsName)) {
+			String apiURL = _getSelectionFilterAPIURL(fdsFilter);
+
+			if (apiURL == null) {
+				continue;
+			}
+
+			selectionFilterAPIURLs.put(
+				fdsFilter.getId(),
+				_buildSelectionFilterAPIURL(
+					apiURL, fdsFilter, httpServletRequest, interpolate,
+					tokenResolutionsJSONObjects));
+		}
+
+		return selectionFilterAPIURLs;
 	}
 
 	@Override
@@ -482,8 +519,62 @@ public class SystemFDSSerializer
 	@Reference
 	protected SystemFDSEntryRegistry systemFDSEntryRegistry;
 
+	private String _buildSelectionFilterAPIURL(
+		String apiURL, FDSFilter fdsFilter,
+		HttpServletRequest httpServletRequest, boolean interpolate,
+		Map<String, JSONObject> tokenResolutionsJSONObjects) {
+
+		JSONObject tokenResolutionsJSONObject = null;
+
+		if (tokenResolutionsJSONObjects != null) {
+			tokenResolutionsJSONObject = tokenResolutionsJSONObjects.get(
+				fdsFilter.getId());
+		}
+
+		return createFDSAPIURLBuilder(
+			httpServletRequest, apiURL
+		).setTokenResolutions(
+			tokenResolutionsJSONObject
+		).build(
+			interpolate
+		);
+	}
+
+	private String _getSelectionFilterAPIURL(FDSFilter fdsFilter) {
+		if (!fdsFilter.isEnabled() ||
+			!(fdsFilter instanceof BaseSelectionFDSFilter)) {
+
+			return null;
+		}
+
+		BaseSelectionFDSFilter baseSelectionFDSFilter =
+			(BaseSelectionFDSFilter)fdsFilter;
+
+		if (!baseSelectionFDSFilter.isAutocompleteEnabled()) {
+			return null;
+		}
+
+		String apiURL = baseSelectionFDSFilter.getAPIURL();
+
+		if (Validator.isNull(apiURL)) {
+			return null;
+		}
+
+		return apiURL;
+	}
+
+	private boolean _hasTokens(String apiURL) {
+		Matcher matcher = _pattern.matcher(apiURL);
+
+		return matcher.find();
+	}
+
 	private void _serializeFilters(
-		List<FDSFilter> fdsFilters, JSONArray jsonArray, Locale locale) {
+		List<FDSFilter> fdsFilters, HttpServletRequest httpServletRequest,
+		JSONArray jsonArray,
+		Map<String, JSONObject> tokenResolutionsJSONObjects) {
+
+		Locale locale = PortalUtil.getLocale(httpServletRequest);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -491,6 +582,26 @@ public class SystemFDSSerializer
 		for (FDSFilter fdsFilter : fdsFilters) {
 			if (!fdsFilter.isEnabled()) {
 				continue;
+			}
+
+			String apiURL = _getSelectionFilterAPIURL(fdsFilter);
+
+			if ((apiURL != null) && _hasTokens(apiURL)) {
+				apiURL = _buildSelectionFilterAPIURL(
+					apiURL, fdsFilter, httpServletRequest, true,
+					tokenResolutionsJSONObjects);
+
+				if (_hasTokens(apiURL)) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Omitting selection filter ", fdsFilter.getId(),
+								" because its API URL has unresolved tokens: ",
+								apiURL));
+					}
+
+					continue;
+				}
 			}
 
 			JSONObject jsonObject = JSONUtil.put(
@@ -527,9 +638,18 @@ public class SystemFDSSerializer
 				}
 			}
 
+			if (apiURL != null) {
+				jsonObject.put("apiURL", apiURL);
+			}
+
 			jsonArray.put(jsonObject);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SystemFDSSerializer.class);
+
+	private static final Pattern _pattern = Pattern.compile("\\{(.*?)\\}");
 
 	private static final SystemFDSEntry _systemFDSEntry = new SystemFDSEntry() {
 

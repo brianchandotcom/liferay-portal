@@ -102,11 +102,51 @@ public class FDSAPIURLBuilderTest {
 	@Test
 	public void testBuild() throws Exception {
 
-		// No interpolation
+		// API URL
 
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration1 =
 			_registerFDSAPIURLResolver(
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
+
+		Assert.assertEquals(
+			"/o/app/{siteId}/{foo}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest,
+				"/o/app/{siteId}/{foo}/endpoint"
+			).build(
+				false
+			));
+		Assert.assertEquals(
+			"/o/app/12345/{foo}/alice/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest,
+				"/o/app/{siteId}/{foo}/{bob}/endpoint"
+			).setTokenResolutions(
+				JSONUtil.put("bob", "alice")
+			).build());
+		Assert.assertEquals(
+			"/o/app/endpoint?filter=foo&sort=bar",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest,
+				"/o/app/endpoint?filter=foo"
+			).addParameter(
+				"sort", "bar"
+			).build());
+		Assert.assertEquals(
+			"/o/app/endpoint?sort=bar",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest,
+				"/o/app/endpoint"
+			).addParameter(
+				"sort", "bar"
+			).build());
+
+		serviceRegistration1.unregister();
+
+		// No interpolation
+
+		serviceRegistration1 = _registerFDSAPIURLResolver(
+			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
 			"/o/app/{siteId}/{foo}/endpoint",

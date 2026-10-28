@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -65,15 +64,20 @@ public interface FDSSerializer {
 		List<FDSFilter> fdsFilters, String fdsName,
 		HttpServletRequest httpServletRequest);
 
-	public JSONArray serializeFilters(
-		String fdsName, HttpServletRequest httpServletRequest);
-
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #serializeFilters(String, HttpServletRequest, Map)}
+	 */
+	@Deprecated
 	public default JSONArray serializeFilters(
-		String fdsName, HttpServletRequest httpServletRequest,
-		Map<String, JSONObject> tokenResolutionsJSONObjects) {
+		String fdsName, HttpServletRequest httpServletRequest) {
 
-		return serializeFilters(fdsName, httpServletRequest);
+		return serializeFilters(fdsName, httpServletRequest, null);
 	}
+
+	public JSONArray serializeFilters(
+		String fdsName, HttpServletRequest httpServletRequest,
+		Map<String, JSONObject> tokenResolutionsJSONObjects);
 
 	public JSONArray serializeGroupedFilters(
 		String fdsName, HttpServletRequest httpServletRequest);
@@ -96,13 +100,10 @@ public interface FDSSerializer {
 	public boolean serializeSearchSuggestionsEnabled(
 		String fdsName, HttpServletRequest httpServletRequest);
 
-	public default Map<String, String> serializeSelectionFilterAPIURLs(
+	public Map<String, String> serializeSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
-		Map<String, JSONObject> tokenResolutionsJSONObjects) {
-
-		return Collections.emptyMap();
-	}
+		Map<String, JSONObject> tokenResolutionsJSONObjects);
 
 	public default boolean serializeShowPagination(
 		String fdsName, HttpServletRequest httpServletRequest) {

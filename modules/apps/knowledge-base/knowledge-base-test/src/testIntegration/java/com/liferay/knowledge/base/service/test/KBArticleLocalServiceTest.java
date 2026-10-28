@@ -115,7 +115,7 @@ public class KBArticleLocalServiceTest {
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		_kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), parentKBArticle.getClassNameId(),
@@ -131,7 +131,7 @@ public class KBArticleLocalServiceTest {
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
@@ -149,7 +149,7 @@ public class KBArticleLocalServiceTest {
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -176,7 +176,7 @@ public class KBArticleLocalServiceTest {
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -192,7 +192,7 @@ public class KBArticleLocalServiceTest {
 	public void testAddDraftKBArticleInsideDraftKBArticle() throws Exception {
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		_kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), parentKBArticle.getClassNameId(),
@@ -206,7 +206,7 @@ public class KBArticleLocalServiceTest {
 	public void testAddDraftKBArticleUpdatesAssetEntry() throws Exception {
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		Assert.assertNotNull(
 			_assetEntryLocalService.getEntry(
@@ -631,7 +631,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testAddKBArticleWithValidParentKBArticle() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), _kbArticleClassNameId,
@@ -797,7 +797,7 @@ public class KBArticleLocalServiceTest {
 		Date displayDate = new Date(
 			System.currentTimeMillis() + (2 * Time.DAY));
 
-		KBArticle parentKBArticle = _addKbArticle(displayDate);
+		KBArticle parentKBArticle = _addKBArticle(displayDate);
 
 		KBArticle childKBArticle = _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), parentKBArticle.getClassNameId(),
@@ -827,7 +827,7 @@ public class KBArticleLocalServiceTest {
 		Date displayDate = new Date(
 			System.currentTimeMillis() + (2 * Time.DAY));
 
-		KBArticle parentKBArticle = _addKbArticle(displayDate);
+		KBArticle parentKBArticle = _addKBArticle(displayDate);
 
 		KBArticle childKBArticle = _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), parentKBArticle.getClassNameId(),
@@ -889,7 +889,7 @@ public class KBArticleLocalServiceTest {
 		Date displayDate = new Date(
 			System.currentTimeMillis() + (2 * Time.DAY));
 
-		KBArticle parentKBArticle = _addKbArticle(displayDate);
+		KBArticle parentKBArticle = _addKBArticle(displayDate);
 
 		KBArticle childKBArticle = _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), parentKBArticle.getClassNameId(),
@@ -955,7 +955,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testDeleteGroupKBArticlesDeletesKBArticles() throws Exception {
-		_addKbArticle();
+		_addKBArticle();
 
 		Assert.assertEquals(
 			1,
@@ -974,7 +974,7 @@ public class KBArticleLocalServiceTest {
 	public void testDeleteGroupKBArticlesDeletesSubscriptions()
 		throws Exception {
 
-		_addKbArticle();
+		_addKBArticle();
 
 		int subscriptionsCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
@@ -998,7 +998,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testDeleteKBArticleDeletesAssetEntry() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		Assert.assertNotNull(
 			AssetEntryLocalServiceUtil.fetchEntry(
@@ -1013,7 +1013,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testDeleteKBArticleDeletesChildKBArticles() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		KBArticle childKBArticle = _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), kbArticle.getClassNameId(),
@@ -1031,7 +1031,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testDeleteKBArticleDeletesKBComments() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_kbCommentLocalService.addKBComment(
 			_user.getUserId(), kbArticle.getClassNameId(),
@@ -1047,7 +1047,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testDeleteKBArticleDeletesRatings() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		RatingsEntryLocalServiceUtil.updateEntry(
 			_user.getUserId(), KBArticleConstants.getClassName(),
@@ -1063,7 +1063,7 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testDeleteKBArticleWithLock() throws PortalException {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_testKBArticleLock(
 			kbArticle.getResourcePrimKey(),
@@ -1073,7 +1073,7 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testDeleteKBArticleWithLockByPreviousUser() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_testKBArticleWithLockByPreviousUser(
 			kbArticle.getResourcePrimKey(),
@@ -1084,7 +1084,7 @@ public class KBArticleLocalServiceTest {
 	public void testDraftKBArticleDoesNotExpire() throws Exception {
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, kbArticle.getStatus());
@@ -1099,7 +1099,7 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testExpireKBArticleWithLock() throws PortalException {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_testKBArticleLock(
 			kbArticle.getResourcePrimKey(),
@@ -1111,7 +1111,7 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testExpireKBArticleWithLockByPreviousUser() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_testKBArticleWithLockByPreviousUser(
 			kbArticle.getResourcePrimKey(),
@@ -1213,7 +1213,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testFetchPersistedModelByResourcePrimKey() throws Exception {
-		KBArticle kBArticle = _addKbArticle();
+		KBArticle kBArticle = _addKBArticle();
 
 		PersistedModel persistedModel =
 			_kbArticleLocalService.fetchPersistedModel(
@@ -1397,7 +1397,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test(expected = KBArticleParentException.class)
 	public void testMoveKBArticleToInvalidParentKBArticle() throws Exception {
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		KBArticle childKBArticle = _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), _kbArticleClassNameId,
@@ -1423,9 +1423,9 @@ public class KBArticleLocalServiceTest {
 	public void testMoveKBArticleToParentKBArticleInHomeFolder()
 		throws Exception {
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		_kbArticleLocalService.moveKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
@@ -1446,7 +1446,7 @@ public class KBArticleLocalServiceTest {
 	public void testMoveKBArticleToParentKBArticleInKBFolder()
 		throws Exception {
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		KBFolder kbFolder = _kbFolderLocalService.addKBFolder(
 			null, _user.getUserId(), _group.getGroupId(), _kbFolderClassNameId,
@@ -1482,7 +1482,7 @@ public class KBArticleLocalServiceTest {
 	public void testMoveKBArticleToParentKBFolderInHomeFolder()
 		throws Exception {
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		KBFolder parentKBFolder = _kbFolderLocalService.addKBFolder(
 			null, _user.getUserId(), _group.getGroupId(), _kbFolderClassNameId,
@@ -1510,7 +1510,7 @@ public class KBArticleLocalServiceTest {
 	public void testMoveKBArticleToTrashKBArticleWithLock()
 		throws PortalException {
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_testKBArticleLock(
 			kbArticle.getResourcePrimKey(),
@@ -1523,7 +1523,7 @@ public class KBArticleLocalServiceTest {
 	public void testMoveKBArticleToTrashKBArticleWithLockByPreviousUser()
 		throws Exception {
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_testKBArticleWithLockByPreviousUser(
 			kbArticle.getResourcePrimKey(),
@@ -1534,8 +1534,8 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testMoveKBArticleWithLock() throws PortalException {
-		KBArticle kbArticle = _addKbArticle();
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		_testKBArticleLock(
 			kbArticle.getResourcePrimKey(),
@@ -1548,8 +1548,8 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testMoveKBArticleWithLockByPreviousUser() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		_testKBArticleWithLockByPreviousUser(
 			kbArticle.getResourcePrimKey(),
@@ -1561,7 +1561,7 @@ public class KBArticleLocalServiceTest {
 
 	@Test
 	public void testPreviousAndNextKBArticles() throws Exception {
-		KBArticle parentKBArticle = _addKbArticle();
+		KBArticle parentKBArticle = _addKBArticle();
 
 		KBArticle childKBArticle1 = _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), parentKBArticle.getClassNameId(),
@@ -1577,7 +1577,7 @@ public class KBArticleLocalServiceTest {
 			StringUtil.randomString(), null, null, new Date(), null, null, null,
 			_serviceContext);
 
-		KBArticle topLevelKBArticle = _addKbArticle();
+		KBArticle topLevelKBArticle = _addKBArticle();
 
 		KBArticle[] parentPreviousAndNextKBArticles =
 			_kbArticleLocalService.getPreviousAndNextKBArticles(
@@ -1645,7 +1645,7 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testRevertKBArticleWithLock() throws PortalException {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		int firstVersion = kbArticle.getVersion();
 
@@ -1665,7 +1665,7 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testRevertKBArticleWithLockByPreviousUser() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		int firstVersion = kbArticle.getVersion();
 
@@ -1687,7 +1687,7 @@ public class KBArticleLocalServiceTest {
 	public void testUpdateAndUnlockKBArticleWithPreviousLockByCurrentUser()
 		throws Exception {
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_kbArticleLocalService.lockKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey());
@@ -1902,7 +1902,7 @@ public class KBArticleLocalServiceTest {
 	public void testUpdateKBArticleUpdatesAssetEntry() throws Exception {
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
@@ -1936,7 +1936,7 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testUpdateKBArticleWithLockByPreviousUser() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_testKBArticleWithLockByPreviousUser(
 			kbArticle.getResourcePrimKey(),
@@ -1952,7 +1952,7 @@ public class KBArticleLocalServiceTest {
 	public void testUpdateKBArticleWithPreviousLockByCurrentUser()
 		throws Exception {
 
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_kbArticleLocalService.lockKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey());
@@ -1974,7 +1974,7 @@ public class KBArticleLocalServiceTest {
 	@FeatureFlag("LPD-11003")
 	@Test
 	public void testUpdateKBArticleWithoutPreviousLock() throws Exception {
-		KBArticle kbArticle = _addKbArticle();
+		KBArticle kbArticle = _addKBArticle();
 
 		_kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
@@ -2012,11 +2012,11 @@ public class KBArticleLocalServiceTest {
 			KBArticle.class.getName(), 0, 0, workflowDefinition);
 	}
 
-	private KBArticle _addKbArticle() throws PortalException {
-		return _addKbArticle(new Date());
+	private KBArticle _addKBArticle() throws PortalException {
+		return _addKBArticle(new Date());
 	}
 
-	private KBArticle _addKbArticle(Date displayDate) throws PortalException {
+	private KBArticle _addKBArticle(Date displayDate) throws PortalException {
 		return _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,

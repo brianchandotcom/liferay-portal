@@ -12,6 +12,7 @@ import com.liferay.asset.list.model.AssetListEntryTable;
 import com.liferay.asset.list.service.base.AssetListEntrySegmentsEntryRelLocalServiceBaseImpl;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -92,9 +93,10 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 		assetListEntrySegmentsEntryRelPersistence.remove(
 			assetListEntrySegmentsEntryRel);
 
-		_assetListEntryAssetEntryRelPersistence.removeByA_S(
+		_assetListEntryAssetEntryRelPersistence.removeByA_S_AEERC(
 			assetListEntrySegmentsEntryRel.getAssetListEntryId(),
-			assetListEntrySegmentsEntryRel.getSegmentsEntryId());
+			assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+			StringPool.BLANK);
 
 		return assetListEntrySegmentsEntryRel;
 	}

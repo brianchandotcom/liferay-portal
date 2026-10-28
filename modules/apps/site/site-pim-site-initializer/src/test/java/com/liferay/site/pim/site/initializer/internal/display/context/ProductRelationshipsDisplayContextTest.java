@@ -100,7 +100,7 @@ public class ProductRelationshipsDisplayContextTest {
 		Mockito.when(
 			fdsSerializer.serializeFilters(
 				Mockito.eq(PIMFDSNames.PRODUCT_RELATIONSHIP_SELECTOR),
-				Mockito.any())
+				Mockito.any(), Mockito.any())
 		).thenReturn(
 			filtersJSONArray
 		);

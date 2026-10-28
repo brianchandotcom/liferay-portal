@@ -103,7 +103,7 @@ public class ProductRelationshipsDisplayContext {
 				String.valueOf(
 					_fdsSerializer.serializeFilters(
 						PIMFDSNames.PRODUCT_RELATIONSHIP_SELECTOR,
-						_httpServletRequest))
+						_httpServletRequest, null))
 			).putData(
 				"scopeKey", String.valueOf(objectEntry.getGroupId())
 			).putData(

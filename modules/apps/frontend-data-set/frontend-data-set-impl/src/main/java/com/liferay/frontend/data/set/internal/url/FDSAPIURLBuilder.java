@@ -33,6 +33,19 @@ public class FDSAPIURLBuilder {
 
 	public FDSAPIURLBuilder(
 		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry,
+		HttpServletRequest httpServletRequest, String apiURL) {
+
+		_fdsAPIURLResolverRegistry = fdsAPIURLResolverRegistry;
+		_httpServletRequest = httpServletRequest;
+		_apiURL = apiURL;
+
+		_restApplication = null;
+		_restEndpoint = null;
+		_restSchema = null;
+	}
+
+	public FDSAPIURLBuilder(
+		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry,
 		HttpServletRequest httpServletRequest, String restApplication,
 		String restEndpoint, String restSchema) {
 
@@ -41,6 +54,8 @@ public class FDSAPIURLBuilder {
 		_restApplication = restApplication;
 		_restEndpoint = restEndpoint;
 		_restSchema = restSchema;
+
+		_apiURL = null;
 	}
 
 	public FDSAPIURLBuilder addParameter(String name, String value) {
@@ -65,15 +80,29 @@ public class FDSAPIURLBuilder {
 
 	public String build(boolean interpolate) {
 		StringBundler sb = new StringBundler(
-			3 + (_queryStringItems.size() * 2));
+			4 + (_queryStringItems.size() * 2));
 
-		sb.append("/o");
-		sb.append(
-			StringUtil.replaceLast(
-				_restApplication, "/v1.0", StringPool.BLANK));
-		sb.append(_restEndpoint);
+		if (_apiURL != null) {
+			sb.append(_apiURL);
+		}
+		else {
+			sb.append("/o");
+			sb.append(
+				StringUtil.replaceLast(
+					_restApplication, "/v1.0", StringPool.BLANK));
+			sb.append(_restEndpoint);
+		}
 
-		_appendParameters(true, sb);
+		if ((_apiURL != null) && !_queryStringItems.isEmpty() &&
+			(_apiURL.indexOf(CharPool.QUESTION) != -1)) {
+
+			sb.append(CharPool.AMPERSAND);
+
+			_appendParameters(false, sb);
+		}
+		else {
+			_appendParameters(true, sb);
+		}
 
 		String apiURL = sb.toString();
 
@@ -174,9 +203,12 @@ public class FDSAPIURLBuilder {
 
 		// Interpolate using registered resolvers
 
-		FDSAPIURLResolver fdsAPIURLResolver =
-			_fdsAPIURLResolverRegistry.getFDSAPIURLResolver(
+		FDSAPIURLResolver fdsAPIURLResolver = null;
+
+		if (_restApplication != null) {
+			fdsAPIURLResolver = _fdsAPIURLResolverRegistry.getFDSAPIURLResolver(
 				_restApplication, _restSchema);
+		}
 
 		if (fdsAPIURLResolver != null) {
 			for (String nullifiedTokenName : nullifiedTokenNames) {
@@ -231,6 +263,7 @@ public class FDSAPIURLBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FDSAPIURLBuilder.class);
 
+	private final String _apiURL;
 	private final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
 	private final HttpServletRequest _httpServletRequest;
 	private final List<String> _queryStringItems = new LinkedList<>();

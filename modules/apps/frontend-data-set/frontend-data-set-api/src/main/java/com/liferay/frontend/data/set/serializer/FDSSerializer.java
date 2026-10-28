@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -66,14 +65,8 @@ public interface FDSSerializer {
 		HttpServletRequest httpServletRequest);
 
 	public JSONArray serializeFilters(
-		String fdsName, HttpServletRequest httpServletRequest);
-
-	public default JSONArray serializeFilters(
 		String fdsName, HttpServletRequest httpServletRequest,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
-
-		return serializeFilters(fdsName, httpServletRequest);
-	}
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
 	public JSONArray serializeGroupedFilters(
 		String fdsName, HttpServletRequest httpServletRequest);
@@ -99,13 +92,10 @@ public interface FDSSerializer {
 	public boolean serializeShowColumnsVisibility(
 		String fdsName, HttpServletRequest httpServletRequest);
 
-	public default Map<String, String> serializeSelectionFilterAPIURLs(
+	public Map<String, String> serializeSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
-
-		return Collections.emptyMap();
-	}
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
 	public default boolean serializeShowPagination(
 		String fdsName, HttpServletRequest httpServletRequest) {

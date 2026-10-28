@@ -519,7 +519,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[0], httpServletRequest
+				FDS_NAMES[0], httpServletRequest, null
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -577,7 +577,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[0], httpServletRequest
+				FDS_NAMES[0], httpServletRequest, null
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -647,7 +647,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[0], httpServletRequest
+				FDS_NAMES[0], httpServletRequest, null
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -680,10 +680,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		JSONAssert.assertNotEquals(
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[0], httpServletRequest
+				FDS_NAMES[0], httpServletRequest, null
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[1], httpServletRequest
+				FDS_NAMES[1], httpServletRequest, null
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -696,7 +696,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		JSONAssert.assertEquals(
 			"[]",
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[0], httpServletRequest
+				FDS_NAMES[0], httpServletRequest, null
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -722,10 +722,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		JSONAssert.assertEquals(
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[0], httpServletRequest
+				FDS_NAMES[0], httpServletRequest, null
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[1], httpServletRequest
+				FDS_NAMES[1], httpServletRequest, null
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -808,7 +808,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				FDS_NAMES[0], httpServletRequest
+				FDS_NAMES[0], httpServletRequest, null
 			).toString(),
 			JSONCompareMode.STRICT);
 	}
@@ -868,7 +868,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Unresolved token
 
 		jsonArray = _customFDSSerializer.serializeFilters(
-			FDS_NAMES[0], httpServletRequest);
+			FDS_NAMES[0], httpServletRequest, null);
 
 		Assert.assertEquals(0, jsonArray.length());
 
@@ -878,7 +878,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		properties.put("source", "/o/app/items/{itemId}");
 
 		jsonArray = _customFDSSerializer.serializeFilters(
-			FDS_NAMES[0], httpServletRequest);
+			FDS_NAMES[0], httpServletRequest, null);
 
 		Assert.assertEquals(0, jsonArray.length());
 	}
@@ -2245,10 +2245,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.createFDSAPIURLBuilder(
 				Mockito.eq(httpServletRequest), Mockito.anyString(),
 				Mockito.anyString(), Mockito.anyString())
-		).thenCallRealMethod();
-
-		Mockito.when(
-			_customFDSSerializer.serializeFilters(fdsName, httpServletRequest)
 		).thenCallRealMethod();
 
 		Mockito.when(

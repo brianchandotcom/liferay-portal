@@ -312,13 +312,6 @@ public class CustomFDSSerializer
 		List<FDSFilter> fdsFilters, String fdsName,
 		HttpServletRequest httpServletRequest) {
 
-		return serializeFilters(fdsName, httpServletRequest);
-	}
-
-	@Override
-	public JSONArray serializeFilters(
-		String fdsName, HttpServletRequest httpServletRequest) {
-
 		return serializeFilters(fdsName, httpServletRequest, null);
 	}
 
@@ -1572,7 +1565,7 @@ public class CustomFDSSerializer
 				MapUtil.getString(
 					properties,
 					"r_dataSetToDataSetSelectionFilters_l_dataSetERC"),
-				httpServletRequest);
+				httpServletRequest, null);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);

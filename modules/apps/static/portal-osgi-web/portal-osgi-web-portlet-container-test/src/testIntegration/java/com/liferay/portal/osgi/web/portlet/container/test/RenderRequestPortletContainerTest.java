@@ -65,10 +65,44 @@ public class RenderRequestPortletContainerTest
 	extends BasePortletContainerTestCase {
 
 	@Test
-	public void testConfigurationTemplateNotServedUnderViewMode()
+	public void testContainsWithConfigurationPermission() throws Exception {
+		String portletId = "portletId" + RandomTestUtil.randomString();
+
+		setUpPortlet(
+			new TestPortlet(), new HashMapDictionary<String, Object>(),
+			portletId, false);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			group.getCompanyId(), portletId, ResourceConstants.SCOPE_INDIVIDUAL,
+			PortletPermissionUtil.getPrimaryKey(layout.getPlid(), portletId),
+			role.getRoleId(), new String[] {ActionKeys.CONFIGURATION});
+
+		User user = UserTestUtil.addUser();
+
+		RoleLocalServiceUtil.addUserRole(user.getUserId(), role);
+
+		Assert.assertTrue(
+			PortletPermissionUtil.contains(
+				PermissionCheckerFactoryUtil.create(user), group.getGroupId(),
+				layout, portletId, ActionKeys.CONFIGURATION));
+	}
+
+	@Test
+	public void testDoDispatchDoesNotServeConfigTemplateUnderViewMode()
 		throws Exception {
 
-		_setUpConfigurationModeTestPortlet();
+		setUpPortlet(
+			new MVCPortlet(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"jakarta.portlet.init-param.config-template",
+				"/configuration_mode_test/config.jsp"
+			).put(
+				"jakarta.portlet.init-param.view-template",
+				"/configuration_mode_test/view.jsp"
+			).build(),
+			TEST_PORTLET_ID);
 
 		PortletContainerTestUtil.Response response =
 			PortletContainerTestUtil.request(
@@ -79,15 +113,65 @@ public class RenderRequestPortletContainerTest
 						TEST_PORTLET_ID, layout.getPlid(),
 						PortletRequest.RENDER_PHASE)
 				).setMVCPath(
-					_CONFIG_TEMPLATE_PATH
+					"/configuration_mode_test/config.jsp"
 				).buildString());
 
 		Assert.assertEquals(200, response.getCode());
 
 		String body = response.getBody();
 
-		Assert.assertFalse(body.contains(_CONFIG_TEMPLATE_MARKER));
-		Assert.assertTrue(body.contains(_VIEW_TEMPLATE_MARKER));
+		Assert.assertFalse(body.contains("CONFIG_TEMPLATE_MARKER"));
+		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
+	}
+
+	@Test
+	public void testDoTagDoesNotRenderPortletWithoutConfigurationPermission()
+		throws Exception {
+
+		TestPortlet testPreviewPortlet = new TestPortlet();
+		String testPreviewPortletId =
+			"testPreviewPortletId" + RandomTestUtil.randomString();
+
+		setUpPortlet(
+			testPreviewPortlet, new HashMapDictionary<String, Object>(),
+			testPreviewPortletId, false);
+
+		testPortlet = new TestPortlet() {
+
+			@Override
+			public void render(
+					RenderRequest renderRequest, RenderResponse renderResponse)
+				throws IOException, PortletException {
+
+				PortletContext portletContext = getPortletContext();
+
+				PortletRequestDispatcher portletRequestDispatcher =
+					portletContext.getRequestDispatcher("/preview_portlet.jsp");
+
+				portletRequestDispatcher.include(renderRequest, renderResponse);
+			}
+
+		};
+
+		setUpPortlet(
+			testPortlet, new HashMapDictionary<String, Object>(),
+			TEST_PORTLET_ID);
+
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.RENDER_PHASE)
+				).setPortletResource(
+					testPreviewPortletId
+				).buildString());
+
+		Assert.assertEquals(200, response.getCode());
+
+		Assert.assertFalse(testPreviewPortlet.isCalledRender());
 	}
 
 	@Test
@@ -269,113 +353,5 @@ public class RenderRequestPortletContainerTest
 
 		Assert.assertTrue(testRuntimePortlet.isCalledRender());
 	}
-
-	@Test
-	public void testPreviewTagDoesNotRenderPortletWithoutConfigurationPermission()
-		throws Exception {
-
-		TestPortlet victimPortlet = new TestPortlet();
-
-		String victimPortletId =
-			"victimPortletId" + RandomTestUtil.randomString();
-
-		setUpPortlet(
-			victimPortlet, new HashMapDictionary<String, Object>(),
-			victimPortletId, false);
-
-		_setUpPreviewHostPortlet();
-
-		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						PortletContainerTestUtil.getHttpServletRequest(
-							group, layout),
-						TEST_PORTLET_ID, layout.getPlid(),
-						PortletRequest.RENDER_PHASE)
-				).setPortletResource(
-					victimPortletId
-				).buildString());
-
-		Assert.assertEquals(200, response.getCode());
-
-		Assert.assertFalse(victimPortlet.isCalledRender());
-	}
-
-	@Test
-	public void testPreviewTagRendersPortletWithConfigurationPermission()
-		throws Exception {
-
-		String victimPortletId =
-			"victimPortletId" + RandomTestUtil.randomString();
-
-		setUpPortlet(
-			new TestPortlet(), new HashMapDictionary<String, Object>(),
-			victimPortletId, false);
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			group.getCompanyId(), victimPortletId,
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			PortletPermissionUtil.getPrimaryKey(
-				layout.getPlid(), victimPortletId),
-			role.getRoleId(), new String[] {ActionKeys.CONFIGURATION});
-
-		User user = UserTestUtil.addUser();
-
-		RoleLocalServiceUtil.addUserRole(user.getUserId(), role);
-
-		Assert.assertTrue(
-			PortletPermissionUtil.contains(
-				PermissionCheckerFactoryUtil.create(user), group.getGroupId(),
-				layout, victimPortletId, ActionKeys.CONFIGURATION));
-	}
-
-	private void _setUpConfigurationModeTestPortlet() throws Exception {
-		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-template",
-				_CONFIG_TEMPLATE_PATH
-			).put(
-				"jakarta.portlet.init-param.view-template", _VIEW_TEMPLATE_PATH
-			).build();
-
-		setUpPortlet(new MVCPortlet(), properties, TEST_PORTLET_ID);
-	}
-
-	private void _setUpPreviewHostPortlet() throws Exception {
-		testPortlet = new TestPortlet() {
-
-			@Override
-			public void render(
-					RenderRequest renderRequest, RenderResponse renderResponse)
-				throws IOException, PortletException {
-
-				PortletContext portletContext = getPortletContext();
-
-				PortletRequestDispatcher portletRequestDispatcher =
-					portletContext.getRequestDispatcher("/preview_portlet.jsp");
-
-				portletRequestDispatcher.include(renderRequest, renderResponse);
-			}
-
-		};
-
-		setUpPortlet(
-			testPortlet, new HashMapDictionary<String, Object>(),
-			TEST_PORTLET_ID);
-	}
-
-	private static final String _CONFIG_TEMPLATE_MARKER =
-		"CONFIG_TEMPLATE_MARKER";
-
-	private static final String _CONFIG_TEMPLATE_PATH =
-		"/configuration_mode_test/config.jsp";
-
-	private static final String _VIEW_TEMPLATE_MARKER = "VIEW_TEMPLATE_MARKER";
-
-	private static final String _VIEW_TEMPLATE_PATH =
-		"/configuration_mode_test/view.jsp";
 
 }

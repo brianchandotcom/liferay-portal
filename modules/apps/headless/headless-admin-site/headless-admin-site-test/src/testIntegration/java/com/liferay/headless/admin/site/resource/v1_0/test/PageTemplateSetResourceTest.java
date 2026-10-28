@@ -400,10 +400,10 @@ public class PageTemplateSetResourceTest
 				"Key ", key, " must have fewer than 75 characters"));
 
 		_postSitePageTemplateSetWithInvalidName(
-			null, "A name is required for each template folder or set");
-		_postSitePageTemplateSetWithInvalidName(
 			RandomTestUtil.randomString(300),
 			"The name for the template folder or set is too long");
+		_postSitePageTemplateSetWithInvalidName(
+			null, "A name is required for each template folder or set");
 
 		_testPostSitePageTemplateSetWithDuplicateExternalReferenceCode();
 		_testPostSitePageTemplateSetWithImportTask();

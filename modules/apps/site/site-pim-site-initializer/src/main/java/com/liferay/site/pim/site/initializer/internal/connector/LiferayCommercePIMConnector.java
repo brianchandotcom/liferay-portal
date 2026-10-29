@@ -5,6 +5,7 @@
 
 package com.liferay.site.pim.site.initializer.internal.connector;
 
+import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -348,7 +349,8 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 					return null;
 				}
 
-				String valueKey = _friendlyURLNormalizer.normalize(value);
+				String valueKey = _getValueKey(
+					objectDefinition, objectEntry, value, values);
 
 				if (!valueKeys.add(valueKey)) {
 					return null;
@@ -511,9 +513,8 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 		String sourceFieldName, Map<String, Serializable> values) {
 
-		String value = _friendlyURLNormalizer.normalize(
-			PIMConnectorFieldMappingsUtil.getValue(
-				objectDefinition, objectEntry, values));
+		String value = PIMConnectorFieldMappingsUtil.getValue(
+			objectDefinition, objectEntry, values);
 
 		if (Validator.isNull(value)) {
 			return null;
@@ -522,8 +523,23 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 		return JSONUtil.put(
 			"key", sourceFieldName
 		).put(
-			"value", value
+			"value", _getValueKey(objectDefinition, objectEntry, value, values)
 		);
+	}
+
+	private String _getValueKey(
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		String value, Map<String, Serializable> values) {
+
+		ListTypeEntry listTypeEntry =
+			PIMConnectorFieldMappingsUtil.fetchListTypeEntry(
+				objectDefinition, objectEntry, values);
+
+		if (listTypeEntry != null) {
+			return listTypeEntry.getKey();
+		}
+
+		return _friendlyURLNormalizer.normalize(value);
 	}
 
 	private JSONArray _toJSONArray(

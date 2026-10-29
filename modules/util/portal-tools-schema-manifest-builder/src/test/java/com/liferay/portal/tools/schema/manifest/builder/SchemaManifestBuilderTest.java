@@ -130,7 +130,7 @@ public class SchemaManifestBuilderTest {
 		Assert.assertEquals(
 			_read("expected/TestUpgradeStepRegistrator.json"),
 			JSONUtil.toString(manifestJSONObject.getJSONArray("history")));
-		Assert.assertEquals(module, manifestJSONObject.getString("module"));
+		Assert.assertEquals(module, manifestJSONObject.get("module"));
 		Assert.assertEquals(
 			"1.10.0", manifestJSONObject.getString("schemaVersion"));
 	}
@@ -206,7 +206,9 @@ public class SchemaManifestBuilderTest {
 			_DESCRIPTION, manifestJSONObject.get("description"));
 		Assert.assertEquals(
 			historyJSONArray.toString(),
-			String.valueOf(manifestJSONObject.get("history")));
+			manifestJSONObject.getJSONArray(
+				"history"
+			).toString());
 		Assert.assertEquals(module, manifestJSONObject.get("module"));
 		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
 		Assert.assertFalse(manifestJSONObject.has("timestamp"));

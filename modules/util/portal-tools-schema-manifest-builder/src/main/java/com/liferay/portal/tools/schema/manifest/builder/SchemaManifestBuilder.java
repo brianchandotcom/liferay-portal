@@ -287,7 +287,7 @@ public class SchemaManifestBuilder {
 				break;
 			}
 
-			List<String> parameters = _getParameterList(
+			List<String> parameters = _getParameters(
 				content.substring(registerPosition));
 
 			if (parameters.size() < 3) {
@@ -305,7 +305,7 @@ public class SchemaManifestBuilder {
 				parameterPosition = content.indexOf(
 					parameter, parameterPosition);
 
-				int newLineCount = StringUtil.count(
+				int newLinesCount = StringUtil.count(
 					content, 0, parameterPosition, CharPool.NEW_LINE);
 
 				changesJSONArray.put(
@@ -319,7 +319,7 @@ public class SchemaManifestBuilder {
 					).put(
 						"op", "customChange"
 					).put(
-						"registratorLine", newLineCount + 1
+						"registratorLine", newLinesCount + 1
 					));
 
 				parameterPosition += parameter.length();
@@ -357,11 +357,11 @@ public class SchemaManifestBuilder {
 
 			int openParenthesisIndex = matcher.end() - 1;
 
-			String parameters = _getParameters(
+			String parametersString = _getParametersString(
 				content.substring(openParenthesisIndex));
 
 			int trailingContentIndex =
-				openParenthesisIndex + parameters.length() + 2;
+				openParenthesisIndex + parametersString.length() + 2;
 
 			String trailingContent = StringUtil.trim(
 				content.substring(trailingContentIndex));
@@ -414,11 +414,11 @@ public class SchemaManifestBuilder {
 		int openParenthesisIndex = parameter.indexOf(CharPool.OPEN_PARENTHESIS);
 
 		if (parameter.startsWith("new ")) {
-			String parameters = _getParameters(parameter);
+			String parametersString = _getParametersString(parameter);
 
 			String trailingContent = StringUtil.trim(
 				parameter.substring(
-					openParenthesisIndex + parameters.length() + 2));
+					openParenthesisIndex + parametersString.length() + 2));
 
 			if (trailingContent.startsWith(StringPool.OPEN_CURLY_BRACE)) {
 				int index = anonymousClassPositions.indexOf(position);
@@ -508,32 +508,33 @@ public class SchemaManifestBuilder {
 		return classNames;
 	}
 
-	private List<String> _getParameterList(String methodCall) {
-		List<String> parameterList = new ArrayList<>();
+	private List<String> _getParameters(String methodCall) {
+		List<String> parameters = new ArrayList<>();
 
-		String parameters = StringUtil.trim(_getParameters(methodCall));
+		String parametersString = StringUtil.trim(
+			_getParametersString(methodCall));
 
-		if (parameters.equals(StringPool.BLANK)) {
-			return parameterList;
+		if (parametersString.equals(StringPool.BLANK)) {
+			return parameters;
 		}
 
 		int index = -1;
 
 		while (true) {
-			index = parameters.indexOf(StringPool.COMMA, index + 1);
+			index = parametersString.indexOf(StringPool.COMMA, index + 1);
 
 			if (index == -1) {
-				parameterList.add(StringUtil.trim(parameters));
+				parameters.add(StringUtil.trim(parametersString));
 
-				return parameterList;
+				return parameters;
 			}
 
-			if (ToolsUtil.isInsideQuotes(parameters, index)) {
+			if (ToolsUtil.isInsideQuotes(parametersString, index)) {
 				continue;
 			}
 
 			String linePart = StringUtil.replace(
-				parameters.substring(0, index), "->",
+				parametersString.substring(0, index), "->",
 				_LAMBDA_SYMBOL_PLACEHOLDER);
 
 			if ((ToolsUtil.getLevel(linePart, "(", ")") != 0) ||
@@ -546,34 +547,34 @@ public class SchemaManifestBuilder {
 			linePart = StringUtil.replace(
 				linePart, _LAMBDA_SYMBOL_PLACEHOLDER, "->");
 
-			parameterList.add(StringUtil.trim(linePart));
+			parameters.add(StringUtil.trim(linePart));
 
-			parameters = parameters.substring(index + 1);
+			parametersString = parametersString.substring(index + 1);
 
 			index = -1;
 		}
 	}
 
-	private String _getParameters(String methodCall) {
-		String parameters = null;
-
+	private String _getParametersString(String methodCall) {
 		int index = -1;
+		String parametersString = null;
 
 		while (true) {
 			index = methodCall.indexOf(StringPool.CLOSE_PARENTHESIS, index + 1);
 
-			parameters = methodCall.substring(0, index + 1);
+			parametersString = methodCall.substring(0, index + 1);
 
-			if ((ToolsUtil.getLevel(parameters, "(", ")") == 0) &&
-				(ToolsUtil.getLevel(parameters, "{", "}") == 0)) {
+			if ((ToolsUtil.getLevel(parametersString, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(parametersString, "{", "}") == 0)) {
 
 				break;
 			}
 		}
 
-		index = parameters.indexOf(StringPool.OPEN_PARENTHESIS);
+		index = parametersString.indexOf(StringPool.OPEN_PARENTHESIS);
 
-		return parameters.substring(index + 1, parameters.length() - 1);
+		return parametersString.substring(
+			index + 1, parametersString.length() - 1);
 	}
 
 	private List<File> _getUpgradeStepRegistratorFiles(File baseDir)

@@ -88,8 +88,8 @@ public class ParameterContainerRequestFilterTest {
 					}
 				}));
 		_assertTitle(
-			"\"sort\" must be a comma separated list of column:asc or " +
-				"column:desc expressions",
+			"\"sort\" must be a comma separated list of \"column:asc\" or " +
+				"\"column:desc\" expressions",
 			_filter("sort", "accountName:sideways"));
 	}
 

@@ -215,7 +215,6 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 
 		for (String sortString : sortStrings) {
 			String fieldName = sortString;
-
 			String orderBy = StringUtil.extractLast(sortString, CharPool.COLON);
 
 			if (orderBy != null) {
@@ -224,7 +223,7 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 				if (!orderBy.equals("asc") && !orderBy.equals("desc")) {
 					throw new BadRequestException(
 						"\"sort\" must be a comma separated list of " +
-							"column:asc or column:desc expressions");
+							"\"column:asc\" or \"column:desc\" expressions");
 				}
 			}
 

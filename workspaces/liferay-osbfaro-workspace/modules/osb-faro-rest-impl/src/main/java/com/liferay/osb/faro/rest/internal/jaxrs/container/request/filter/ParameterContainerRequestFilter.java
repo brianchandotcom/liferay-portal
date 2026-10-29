@@ -58,9 +58,9 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext) {
-		UriInfo uriInfo = containerRequestContext.getUriInfo();
-
 		try {
+			UriInfo uriInfo = containerRequestContext.getUriInfo();
+
 			_validate(
 				uriInfo.getPathParameters(), uriInfo.getQueryParameters());
 		}

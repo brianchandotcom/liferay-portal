@@ -149,7 +149,7 @@ public abstract class BaseAccountResourceImpl
 				name = "rangeStart"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "Free-text keyword search across account name and related fields. Empty or null returns all accounts.",
+				description = "Free text keyword search across account name and related fields. Empty or null returns all accounts.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
 			),
@@ -655,4 +655,4 @@ public abstract class BaseAccountResourceImpl
 		LogFactoryUtil.getLog(BaseAccountResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1781585264
+// LIFERAY-REST-BUILDER-HASH:58765757

@@ -105,7 +105,6 @@ public class ParameterContainerRequestFilterTest {
 	private Response _filter(MultivaluedMap<String, String> queryParameters) {
 		ContainerRequestContext containerRequestContext = Mockito.mock(
 			ContainerRequestContext.class);
-
 		UriInfo uriInfo = Mockito.mock(UriInfo.class);
 
 		Mockito.when(

@@ -2526,11 +2526,25 @@ public class ContactsEngineClientImpl
 			uriVariablesList.add(uriVariables);
 		}
 
-		return bulk(
+		List<List<String>> fieldNamesList = bulk(
 			faroProject, Rels.FIELD_NAMES, HttpMethod.GET,
 			new TypeReference<List<String>>() {
 			},
 			uriVariablesList);
+
+		for (int i = 0; i < fieldNamesList.size(); i++) {
+			List<String> fieldNames = fieldNamesList.get(i);
+
+			String fieldName = _liferayFieldNames.get(labels.get(i));
+
+			if ((fieldName == null) || fieldNames.contains(fieldName)) {
+				continue;
+			}
+
+			fieldNames.add(0, fieldName);
+		}
+
+		return fieldNamesList;
 	}
 
 	@Override
@@ -4069,6 +4083,9 @@ public class ContactsEngineClientImpl
 	private static final String _FARO_TEMP_FIELD = "faro_temp_field";
 
 	private static final int _PAYLOAD_MAX_BYTE_SIZE = 200000;
+
+	private static final Map<String, String> _liferayFieldNames =
+		FieldMappingConstants.getLiferayFieldNames();
 
 	@Reference
 	private UserLocalService _userLocalService;

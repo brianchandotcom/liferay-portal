@@ -26,6 +26,7 @@ import com.liferay.asset.list.service.persistence.AssetListEntryAudienceEntryRel
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelPersistence;
 import com.liferay.asset.util.AssetRendererFactoryWrapper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.CharPool;
@@ -350,13 +351,14 @@ public class AssetListEntryLocalServiceImpl
 		if (assetListEntry.getType() ==
 				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
 
-			String assetEntryType = _getSegmentsAssetEntryType(
-				assetListEntryId, segmentsEntryId, typeSettings);
+			String assetEntryType = _getDynamicAssetEntryType(
+				assetListEntryId, StringPool.BLANK, segmentsEntryId,
+				typeSettings);
 
 			assetListEntry.setAssetEntrySubtype(
-				_getSegmentsAssetEntrySubtype(
-					assetEntryType, assetListEntryId, segmentsEntryId,
-					typeSettings));
+				_getDynamicAssetEntrySubtype(
+					assetEntryType, assetListEntryId, StringPool.BLANK,
+					segmentsEntryId, typeSettings));
 			assetListEntry.setAssetEntryType(assetEntryType);
 		}
 
@@ -451,13 +453,13 @@ public class AssetListEntryLocalServiceImpl
 
 		assetListEntry.setModifiedDate(new Date());
 
-		String assetEntryType = _getSegmentsAssetEntryType(
-			assetListEntryId, segmentsEntryId, typeSettings);
+		String assetEntryType = _getDynamicAssetEntryType(
+			assetListEntryId, StringPool.BLANK, segmentsEntryId, typeSettings);
 
 		assetListEntry.setAssetEntrySubtype(
-			_getSegmentsAssetEntrySubtype(
-				assetEntryType, assetListEntryId, segmentsEntryId,
-				typeSettings));
+			_getDynamicAssetEntrySubtype(
+				assetEntryType, assetListEntryId, StringPool.BLANK,
+				segmentsEntryId, typeSettings));
 		assetListEntry.setAssetEntryType(assetEntryType);
 
 		assetListEntryPersistence.update(assetListEntry);
@@ -721,6 +723,50 @@ public class AssetListEntryLocalServiceImpl
 				GetterUtil.getLong(classNameId)));
 	}
 
+	private String _getDynamicAssetEntrySubtype(
+		String assetEntryType, long assetListEntryId, String audienceEntryERC,
+		long segmentsEntryId, String typeSettings) {
+
+		String assetEntrySubtype = _getAssetEntrySubtype(
+			assetEntryType, typeSettings);
+
+		for (String variationTypeSettings :
+				_getOtherVariationsTypeSettings(
+					assetListEntryId, audienceEntryERC, segmentsEntryId)) {
+
+			if (!Objects.equals(
+					assetEntrySubtype,
+					_getAssetEntrySubtype(
+						assetEntryType, variationTypeSettings))) {
+
+				return StringPool.BLANK;
+			}
+		}
+
+		return assetEntrySubtype;
+	}
+
+	private String _getDynamicAssetEntryType(
+		long assetListEntryId, String audienceEntryERC, long segmentsEntryId,
+		String typeSettings) {
+
+		String assetEntryType = _getAssetEntryType(typeSettings);
+
+		for (String variationTypeSettings :
+				_getOtherVariationsTypeSettings(
+					assetListEntryId, audienceEntryERC, segmentsEntryId)) {
+
+			if (!Objects.equals(
+					assetEntryType,
+					_getAssetEntryType(variationTypeSettings))) {
+
+				return AssetEntry.class.getName();
+			}
+		}
+
+		return assetEntryType;
+	}
+
 	private String _getManualAssetEntrySubtype(
 		String assetEntryType, long assetListEntryId) {
 
@@ -792,65 +838,38 @@ public class AssetListEntryLocalServiceImpl
 		return assetEntryType;
 	}
 
-	private String _getSegmentsAssetEntrySubtype(
-		String assetEntryType, long assetListEntryId, long segmentsEntryId,
-		String typeSettings) {
+	private List<String> _getOtherVariationsTypeSettings(
+		long assetListEntryId, String audienceEntryERC, long segmentsEntryId) {
 
-		String assetEntrySubtype = _getAssetEntrySubtype(
-			assetEntryType, typeSettings);
+		return ListUtil.concat(
+			TransformUtil.transform(
+				_assetListEntryAudienceEntryRelPersistence.
+					findByAssetListEntryId(assetListEntryId),
+				assetListEntryAudienceEntryRel -> {
+					if (Objects.equals(
+							assetListEntryAudienceEntryRel.
+								getAudienceEntryERC(),
+							audienceEntryERC)) {
 
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			_assetListEntrySegmentsEntryRelLocalService.
-				getAssetListEntrySegmentsEntryRels(
-					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+						return null;
+					}
 
-		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
-				assetListEntrySegmentsEntryRels) {
+					return assetListEntryAudienceEntryRel.getTypeSettings();
+				}),
+			TransformUtil.transform(
+				_assetListEntrySegmentsEntryRelLocalService.
+					getAssetListEntrySegmentsEntryRels(
+						assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				assetListEntrySegmentsEntryRel -> {
+					if (Validator.isNull(audienceEntryERC) &&
+						(assetListEntrySegmentsEntryRel.getSegmentsEntryId() ==
+							segmentsEntryId)) {
 
-			if ((assetListEntrySegmentsEntryRel.getSegmentsEntryId() ==
-					segmentsEntryId) ||
-				Objects.equals(
-					assetEntrySubtype,
-					_getAssetEntrySubtype(
-						assetEntryType,
-						assetListEntrySegmentsEntryRel.getTypeSettings()))) {
+						return null;
+					}
 
-				continue;
-			}
-
-			return StringPool.BLANK;
-		}
-
-		return assetEntrySubtype;
-	}
-
-	private String _getSegmentsAssetEntryType(
-		long assetListEntryId, long segmentsEntryId, String typeSettings) {
-
-		String assetEntryType = _getAssetEntryType(typeSettings);
-
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			_assetListEntrySegmentsEntryRelLocalService.
-				getAssetListEntrySegmentsEntryRels(
-					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
-				assetListEntrySegmentsEntryRels) {
-
-			if ((assetListEntrySegmentsEntryRel.getSegmentsEntryId() ==
-					segmentsEntryId) ||
-				Objects.equals(
-					assetEntryType,
-					_getAssetEntryType(
-						assetListEntrySegmentsEntryRel.getTypeSettings()))) {
-
-				continue;
-			}
-
-			return AssetEntry.class.getName();
-		}
-
-		return assetEntryType;
+					return assetListEntrySegmentsEntryRel.getTypeSettings();
+				}));
 	}
 
 	private boolean _isSupportsItemSubtypes(String assetEntryType) {

@@ -1084,12 +1084,14 @@ public class ProjectFaroController extends BaseFaroController {
 
 				if (trial) {
 					osbOfferingEntry.setProductEntryId(
-						ProductConstants.
-							PRODUCT_ENTRY_ID_DATA_PLATFORM_PRIVATE_BETA);
+						ProductConstants.getProductEntryId(
+							ProductConstants.
+								PRODUCT_ENTRY_NAME_DATA_PLATFORM_PRIVATE_BETA));
 				}
 				else {
 					osbOfferingEntry.setProductEntryId(
-						ProductConstants.PRODUCT_ENTRY_ID_ENTERPRISE);
+						ProductConstants.getProductEntryId(
+							ProductConstants.PRODUCT_ENTRY_NAME_ENTERPRISE));
 				}
 
 				osbOfferingEntry.setQuantity(1);
@@ -1114,8 +1116,9 @@ public class ProjectFaroController extends BaseFaroController {
 					OSBOfferingEntry osbOfferingEntry = new OSBOfferingEntry();
 
 					osbOfferingEntry.setProductEntryId(
-						ProductConstants.
-							PRODUCT_ENTRY_ID_DATA_PLATFORM_PRIVATE_BETA);
+						ProductConstants.getProductEntryId(
+							ProductConstants.
+								PRODUCT_ENTRY_NAME_DATA_PLATFORM_PRIVATE_BETA));
 					osbOfferingEntry.setQuantity(1);
 					osbOfferingEntry.setStartDate(
 						new Date(faroProject.getCreateTime()));
@@ -1872,7 +1875,8 @@ public class ProjectFaroController extends BaseFaroController {
 
 		List<OSBAccountEntry> osbAccountEntries =
 			_provisioningClient.getOSBAccountEntries(
-				user.getUserUuid(), ProductConstants.getProductEntryIds());
+				user.getUserUuid(),
+				ProductConstants.getKoroneikiProductEntryIds());
 
 		for (OSBAccountEntry osbAccountEntry : osbAccountEntries) {
 			if (StringUtil.equals(

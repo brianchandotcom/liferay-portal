@@ -64,13 +64,18 @@ public class OSBAccountEntryUtil {
 
 		if (addOnsJSONArray != null) {
 			for (int i = 0; i < addOnsJSONArray.length(); i++) {
-				OSBOfferingEntry curOSBOfferingEntry = new OSBOfferingEntry();
-
 				JSONObject addOnJSONObject = addOnsJSONArray.getJSONObject(i);
 
-				curOSBOfferingEntry.setProductEntryId(
-					ProductConstants.getProductEntryId(
-						addOnJSONObject.getString("name")));
+				String productEntryId = ProductConstants.getProductEntryId(
+					addOnJSONObject.getString("name"));
+
+				if (productEntryId == null) {
+					continue;
+				}
+
+				OSBOfferingEntry curOSBOfferingEntry = new OSBOfferingEntry();
+
+				curOSBOfferingEntry.setProductEntryId(productEntryId);
 				curOSBOfferingEntry.setQuantity(
 					addOnJSONObject.getInt("quantity"));
 
@@ -89,7 +94,8 @@ public class OSBAccountEntryUtil {
 		String productEntryId = ProductConstants.getProductEntryId(name);
 
 		if (productEntryId == null) {
-			return ProductConstants.PRODUCT_ENTRY_ID_BASIC;
+			return ProductConstants.getProductEntryId(
+				ProductConstants.PRODUCT_ENTRY_NAME_BASIC);
 		}
 
 		return productEntryId;

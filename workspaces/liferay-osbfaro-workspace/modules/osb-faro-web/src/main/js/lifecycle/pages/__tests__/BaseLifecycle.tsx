@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import BaseLifecycle from '../BaseLifecycle';
 import mockStore from 'test/mock-store';
+import ModalRenderer from 'shared/components/ModalRenderer';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {ChannelContext} from 'shared/context/channel';
@@ -9,6 +10,7 @@ import {
 	fireEvent,
 	render,
 	screen,
+	waitFor,
 	within,
 } from '@testing-library/react';
 import {MemoryRouter, useLocation} from 'react-router-dom';
@@ -136,10 +138,13 @@ const buildAccountMetrics = (totalCount: number) =>
 		value: metricType === 'totalCount' ? totalCount : 0,
 	}));
 
+const mockRefetchMetrics = jest.fn();
+
 const useRequestImpl =
 	({
 		lifecycle = {id: '1'},
 		lifecycleError = false,
+		metricsError = false,
 		metricsLoading = false,
 		processedDate = 1700000000000,
 		totalCount = 1,
@@ -151,6 +156,7 @@ const useRequestImpl =
 			processedDate?: number | null;
 		} | null;
 		lifecycleError?: boolean;
+		metricsError?: boolean;
 		metricsLoading?: boolean;
 		processedDate?: number | null;
 		totalCount?: number;
@@ -168,9 +174,10 @@ const useRequestImpl =
 
 		if (dataSourceFn === API.accounts.fetchMetrics) {
 			return {
-				data: buildAccountMetrics(totalCount),
-				error: false,
+				data: metricsError ? null : buildAccountMetrics(totalCount),
+				error: metricsError,
 				loading: metricsLoading,
+				refetch: mockRefetchMetrics,
 			};
 		}
 
@@ -192,6 +199,8 @@ const LocationProbe = () => (
 const renderPage = (initialEntries = ['/workspace/23/123/lifecycle/erc-1']) =>
 	render(
 		<Provider store={mockStore()}>
+			<ModalRenderer />
+
 			<ChannelContext.Provider value={mockChannelContext() as any}>
 				<MemoryRouter initialEntries={initialEntries}>
 					<BaseLifecycle />
@@ -208,7 +217,11 @@ describe('BaseLifecycle', () => {
 
 		(API as any).accounts = {fetchMetrics: jest.fn()};
 		(API as any).lifecycle = {
+			deleteLifecycle: jest.fn(() => Promise.resolve({})),
 			fetchLifecycle: jest.fn(),
+			fetchLifecycles: jest.fn(() =>
+				Promise.resolve([{defaultAccountLifecycle: true, id: '1'}])
+			),
 			fetchLifecyclesPage: jest.fn(),
 			setDefaultLifecycle: jest.fn(() => Promise.resolve()),
 		};
@@ -349,13 +362,33 @@ describe('BaseLifecycle', () => {
 			);
 		});
 
-		it('renders the not found page', () => {
+		it('renders the dashboard not found state inside the page', () => {
 			renderPage();
 
+			expect(screen.getByText('404')).toBeInTheDocument();
 			expect(
-				screen.getByText(/lifecycle not found/i)
+				screen.getByText(/dashboard not found/i)
+			).toBeInTheDocument();
+			expect(
+				screen.getByText(/lifecycle dashboard you are looking for/i)
 			).toBeInTheDocument();
 			expect(screen.queryByTestId('overview-section')).toBeNull();
+			expect(screen.queryByRole('heading', {level: 1})).toBeNull();
+		});
+
+		it('ends the breadcrumb at the lifecycles', () => {
+			const {container} = renderPage();
+
+			const breadcrumb = container.querySelector(
+				'.breadcrumbs-root'
+			) as HTMLElement;
+
+			expect(
+				breadcrumb.querySelectorAll('.breadcrumb-item')
+			).toHaveLength(2);
+			expect(
+				breadcrumb.querySelector('.breadcrumb-item.active')
+			).toHaveTextContent(/^lifecycles$/i);
 		});
 
 		it('links back to the lifecycles', () => {
@@ -380,12 +413,13 @@ describe('BaseLifecycle', () => {
 					: dashboardRequest(options)
 		);
 
-		const {container} = renderPage();
+		renderPage();
 
-		expect(container.querySelector('.breadcrumb')).toBeNull();
+		expect(screen.queryByRole('heading', {level: 1})).toBeNull();
 		expect(
 			screen.queryByRole('button', {name: /switch.dashboard/i})
 		).toBeNull();
+		expect(screen.queryByTestId('overview-section')).toBeNull();
 	});
 
 	it('renders neither an empty state nor content while loading', () => {
@@ -407,6 +441,52 @@ describe('BaseLifecycle', () => {
 
 		expect(screen.queryByText('No Account Data Available')).toBeNull();
 		expect(screen.queryByTestId('overview-section')).toBeNull();
+	});
+
+	describe('when the account metrics fail to load', () => {
+		beforeEach(() => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecycle: {id: '1', name: 'Growth Hub'},
+					metricsError: true,
+				})
+			);
+		});
+
+		it('shows an error instead of the empty state', () => {
+			renderPage();
+
+			expect(
+				screen.getByText(/an.unexpected.error.occurred/i)
+			).toBeInTheDocument();
+			expect(screen.queryByText('No Account Data Available')).toBeNull();
+			expect(screen.queryByText('Growth Hub')).toBeNull();
+		});
+
+		it('reloads the account metrics', () => {
+			renderPage();
+
+			fireEvent.click(screen.getByRole('button', {name: /reload/i}));
+
+			expect(mockRefetchMetrics).toHaveBeenCalled();
+		});
+	});
+
+	it('does not show the lifecycle header while the metrics load', () => {
+		mockedUseRequest.mockImplementation(
+			useRequestImpl({
+				lifecycle: {id: '1', name: 'Growth Hub'},
+				metricsLoading: true,
+			})
+		);
+
+		renderPage();
+
+		expect(screen.queryByText('Growth Hub')).toBeNull();
+		expect(
+			screen.queryByRole('button', {name: /switch dashboard/i})
+		).toBeNull();
+		expect(screen.queryByRole('heading', {level: 1})).toBeNull();
 	});
 
 	describe('when no data sources are connected', () => {
@@ -462,8 +542,32 @@ describe('BaseLifecycle', () => {
 	describe('when data sources have no account data', () => {
 		beforeEach(() => {
 			mockedUseRequest.mockImplementation(
-				useRequestImpl({totalCount: 0})
+				useRequestImpl({
+					lifecycle: {
+						defaultAccountLifecycle: true,
+						id: '1',
+						name: 'Lifecycle Settings Demo',
+					},
+					totalCount: 0,
+				})
 			);
+		});
+
+		it('renders like the lifecycles page, without the lifecycle', () => {
+			renderPage();
+
+			expect(
+				screen.getByRole('heading', {name: /^lifecycles$/i})
+			).toBeInTheDocument();
+			expect(screen.queryByText('Lifecycle Settings Demo')).toBeNull();
+			expect(screen.queryByRole('img', {name: /default/i})).toBeNull();
+			expect(screen.queryByRole('button', {name: 'Menu'})).toBeNull();
+			expect(
+				screen.queryByRole('button', {name: /switch dashboard/i})
+			).toBeNull();
+			expect(
+				screen.queryByRole('link', {name: /new lifecycle/i})
+			).toBeNull();
 		});
 
 		it('renders the "No Account Data Available" empty state', () => {
@@ -503,11 +607,17 @@ describe('BaseLifecycle', () => {
 		});
 
 		it('renders the "almost ready" processing state', () => {
-			renderPage();
+			const {container} = renderPage();
 
 			expect(
 				screen.getByText('Your dashboard is almost ready!')
 			).toBeInTheDocument();
+			expect(
+				screen.getByText(/metrics will appear in the dashboard/i)
+			).toBeInTheDocument();
+			expect(
+				container.querySelectorAll('.c-empty-state-image img')
+			).toHaveLength(2);
 			expect(screen.queryByTestId('overview-section')).toBeNull();
 			expect(screen.queryByTestId('filter-industryFilter')).toBeNull();
 		});
@@ -515,6 +625,45 @@ describe('BaseLifecycle', () => {
 
 	const openActionsMenu = () =>
 		fireEvent.click(screen.getByRole('button', {name: 'Menu'}));
+
+	describe('the New Lifecycle button', () => {
+		it('links admins to the lifecycle editor of the channel', () => {
+			renderPage();
+
+			const button = screen.getByRole('link', {name: /new lifecycle/i});
+
+			expect(button).toHaveAttribute(
+				'href',
+				toRoute(Routes.LIFECYCLE_CREATE, {
+					channelId: '123',
+					groupId: '23',
+				})
+			);
+			expect(button).toHaveClass('btn-primary', 'rounded-lg');
+		});
+
+		it('shows while the lifecycle is processing', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({processedDate: null})
+			);
+
+			renderPage();
+
+			expect(
+				screen.getByRole('link', {name: /new lifecycle/i})
+			).toBeInTheDocument();
+		});
+
+		it('is hidden for non-admins', () => {
+			mockedUseCurrentUser.mockReturnValue({isAdmin: () => false});
+
+			renderPage();
+
+			expect(
+				screen.queryByRole('link', {name: /new lifecycle/i})
+			).toBeNull();
+		});
+	});
 
 	describe('the Edit action', () => {
 		it('navigates to the edit route when clicked by an admin', () => {
@@ -615,6 +764,84 @@ describe('BaseLifecycle', () => {
 			expect(
 				await screen.findByRole('img', {name: /default/i})
 			).toBeInTheDocument();
+		});
+	});
+
+	describe('the Delete action', () => {
+		const confirmDelete = () =>
+			fireEvent.click(
+				within(screen.getByRole('dialog')).getByRole('button', {
+					name: /^delete$/i,
+				})
+			);
+
+		it('shows on the default lifecycle', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecycle: {defaultAccountLifecycle: true, id: '1'},
+				})
+			);
+
+			renderPage();
+
+			openActionsMenu();
+
+			expect(
+				screen.getByRole('menuitem', {name: /^delete$/i})
+			).toBeInTheDocument();
+		});
+
+		it('comes last in the menu', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecycle: {defaultAccountLifecycle: false, id: '1'},
+				})
+			);
+
+			renderPage();
+
+			openActionsMenu();
+
+			const items = screen.getAllByRole('menuitem');
+
+			expect(items[items.length - 1]).toHaveTextContent(/^delete$/i);
+		});
+
+		it('opens the default lifecycle after deleting the open one', async () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecycle: {
+						defaultAccountLifecycle: false,
+						id: '1',
+						name: 'Growth Hub',
+					},
+				})
+			);
+
+			renderPage();
+
+			openActionsMenu();
+
+			fireEvent.click(screen.getByRole('menuitem', {name: /^delete$/i}));
+
+			confirmDelete();
+
+			expect(API.lifecycle.deleteLifecycle).toHaveBeenCalledWith({
+				channelId: '123',
+				groupId: '23',
+				lifecycleId: '1',
+			});
+
+			await waitFor(() =>
+				expect(screen.getByTestId('location')).toHaveTextContent(
+					new RegExp(
+						`^${toRoute(Routes.LIFECYCLE, {
+							channelId: '123',
+							groupId: '23',
+						})}$`
+					)
+				)
+			);
 		});
 	});
 
@@ -762,6 +989,7 @@ describe('BaseLifecycle', () => {
 		const LIST_LIFECYCLES = [
 			{id: '1', name: 'Growth Hub'},
 			{id: '2', name: 'Partner Lifecycle'},
+			{id: '3', name: 'Retention Lifecycle'},
 		];
 
 		beforeEach(() => {
@@ -819,6 +1047,110 @@ describe('BaseLifecycle', () => {
 			)
 				.getByRole('link', {name})
 				.closest('li') as HTMLElement;
+
+		it('reloads the list and stays open after deleting another lifecycle', async () => {
+			renderPage();
+
+			fireEvent.click(
+				screen.getByRole('button', {name: /switch dashboard/i})
+			);
+
+			const listRequests = () =>
+				mockedUseRequest.mock.calls.filter(
+					([{dataSourceFn}]) =>
+						dataSourceFn === API.lifecycle.fetchLifecyclesPage
+				);
+
+			const lastRefreshCount = () =>
+				listRequests()[listRequests().length - 1][0].variables
+					.refreshCount;
+
+			expect(lastRefreshCount()).toBe(0);
+
+			fireEvent.click(
+				within(getRow('Retention Lifecycle')).getByRole('button', {
+					name: /actions for/i,
+				})
+			);
+
+			fireEvent.click(screen.getByRole('menuitem', {name: /^delete$/i}));
+
+			fireEvent.click(
+				within(screen.getByRole('dialog')).getByRole('button', {
+					name: /^delete$/i,
+				})
+			);
+
+			await waitFor(() => expect(lastRefreshCount()).toBe(1));
+
+			expect(API.lifecycle.deleteLifecycle).toHaveBeenCalledWith({
+				channelId: '123',
+				groupId: '23',
+				lifecycleId: '3',
+			});
+			expect(API.lifecycle.fetchLifecycles).not.toHaveBeenCalled();
+			expect(
+				screen.getByRole('button', {name: /switch dashboard/i})
+			).toHaveAttribute('aria-expanded', 'true');
+			expect(screen.getByTestId('location')).toHaveTextContent(
+				'/workspace/23/123/lifecycle/erc-1'
+			);
+		});
+
+		it('pins the open lifecycle when the deleted default hands it over', async () => {
+			const {container} = renderPage();
+
+			fireEvent.click(
+				screen.getByRole('button', {name: /switch dashboard/i})
+			);
+
+			expect(
+				container.querySelector('.title-section .sticker')
+			).toBeNull();
+
+			fireEvent.click(
+				within(getRow('Partner Lifecycle')).getByRole('button', {
+					name: /actions for/i,
+				})
+			);
+
+			fireEvent.click(screen.getByRole('menuitem', {name: /^delete$/i}));
+
+			fireEvent.click(
+				within(screen.getByRole('dialog')).getByRole('button', {
+					name: /^delete$/i,
+				})
+			);
+
+			await waitFor(() =>
+				expect(
+					container.querySelector('.title-section .sticker')
+				).not.toBeNull()
+			);
+
+			expect(API.lifecycle.fetchLifecycles).toHaveBeenCalledWith({
+				channelId: '123',
+				defaultAccountLifecycle: true,
+				groupId: '23',
+			});
+			expect(
+				within(getRow('Growth Hub')).getByRole('img', {
+					name: /default/i,
+				})
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole('button', {name: /switch dashboard/i})
+			).toHaveAttribute('aria-expanded', 'true');
+			expect(screen.getByTestId('location')).toHaveTextContent(
+				'/workspace/23/123/lifecycle/erc-1'
+			);
+
+			openActionsMenu();
+
+			expect(
+				screen.queryByRole('menuitem', {name: /set.default/i})
+			).toBeNull();
+		});
 
 		it('moves the pin in the list when the header sets the default', async () => {
 			renderPage();

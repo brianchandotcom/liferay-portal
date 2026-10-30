@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import CreateLifecycle from '../CreateLifecycle';
+import mockStore from 'test/mock-store';
 import React from 'react';
 import {Alert} from 'shared/types';
 import {
@@ -17,10 +18,13 @@ import {
 	within,
 } from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
+import {Provider} from 'react-redux';
 import {CATALOG_FIELDS_MAX_PAGE_SIZE} from 'shared/api/catalog';
 import {Routes, toRoute} from 'shared/util/router';
+import {useLifecycleAccountData} from 'lifecycle/hooks/useLifecycleAccountData';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useUnsavedChangesPrompt} from 'shared/hooks/useUnsavedChangesPrompt';
+import {AccountDataStatus} from 'lifecycle/utils/types';
 
 jest.unmock('react-dom');
 
@@ -31,7 +35,12 @@ jest.mock('shared/hooks/useRequest', () => ({
 const mockDispatch = jest.fn();
 
 jest.mock('react-redux', () => ({
+	...jest.requireActual('react-redux'),
 	useDispatch: () => mockDispatch,
+}));
+
+jest.mock('lifecycle/hooks/useLifecycleAccountData', () => ({
+	useLifecycleAccountData: jest.fn(),
 }));
 
 jest.mock('shared/actions/alerts', () => ({
@@ -67,6 +76,8 @@ const mockedCreateStageConfig = createStageConfig as jest.Mock;
 
 const mockPush = jest.fn();
 
+const mockReplace = jest.fn();
+
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
 	useParams: () => ({channelId: '123', groupId: '23'}),
@@ -77,7 +88,7 @@ jest.mock('shared/hooks/useUnsavedChangesPrompt', () => ({
 }));
 
 jest.mock('shared/hooks/useCurrentUser', () => ({
-	useCurrentUser: () => ({name: 'Anneta Smith'}),
+	useCurrentUser: () => ({isAdmin: () => true, name: 'Anneta Smith'}),
 }));
 
 jest.mock('shared/hooks/useTimeZone', () => ({
@@ -85,14 +96,18 @@ jest.mock('shared/hooks/useTimeZone', () => ({
 }));
 
 jest.mock('shared/hooks/useHistoryAdapter', () => ({
-	useHistoryAdapter: () => ({push: mockPush}),
+	useHistoryAdapter: () => ({push: mockPush, replace: mockReplace}),
 }));
 
 const mockedUseRequest = useRequest as jest.Mock;
 
-const renderPage = () =>
+const renderPage = (
+	initialEntries: React.ComponentProps<
+		typeof MemoryRouter
+	>['initialEntries'] = ['/workspace/23/123/lifecycle/new']
+) =>
 	render(
-		<MemoryRouter>
+		<MemoryRouter initialEntries={initialEntries}>
 			<CreateLifecycle />
 		</MemoryRouter>
 	);
@@ -109,13 +124,73 @@ describe('CreateLifecycle', () => {
 		(API as any).catalog = {fetchCatalogFields: jest.fn()};
 
 		(API as any).lifecycle = {
-			createLifecycle: jest.fn().mockResolvedValue({}),
+			createLifecycle: jest.fn().mockResolvedValue({
+				externalReferenceCode: 'lifecycle-erc-42',
+				id: '42',
+				name: 'My Lifecycle',
+			}),
 			fetchLifecycles: jest.fn(),
+			fetchLifecyclesPage: jest.fn().mockResolvedValue({items: []}),
 		};
 
 		mockedCreateStageConfig.mockReturnValue(buildStage(false));
 
 		mockedUseRequest.mockReturnValue({data: [], loading: false});
+
+		(useLifecycleAccountData as jest.Mock).mockReturnValue({
+			refetch: jest.fn(),
+			status: AccountDataStatus.Ready,
+		});
+	});
+
+	describe('when the channel has no account data', () => {
+		const renderWithStore = () =>
+			render(
+				<Provider store={mockStore()}>
+					<MemoryRouter
+						initialEntries={['/workspace/23/123/lifecycle/new']}
+					>
+						<CreateLifecycle />
+					</MemoryRouter>
+				</Provider>
+			);
+
+		it('shows the empty state instead of the editor', () => {
+			(useLifecycleAccountData as jest.Mock).mockReturnValue({
+				refetch: jest.fn(),
+				status: AccountDataStatus.NoAccountData,
+			});
+
+			renderWithStore();
+
+			expect(
+				screen.getByText(/no account data available/i)
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole('heading', {name: /^lifecycles$/i})
+			).toBeInTheDocument();
+			expect(
+				screen.queryByRole('button', {name: /create lifecycle/i})
+			).toBeNull();
+		});
+
+		it('shows an error with reload when the account metrics fail', () => {
+			const refetch = jest.fn();
+
+			(useLifecycleAccountData as jest.Mock).mockReturnValue({
+				refetch,
+				status: AccountDataStatus.Error,
+			});
+
+			renderWithStore();
+
+			fireEvent.click(screen.getByRole('button', {name: /reload/i}));
+
+			expect(refetch).toHaveBeenCalled();
+			expect(
+				screen.queryByRole('button', {name: /create lifecycle/i})
+			).toBeNull();
+		});
 	});
 
 	it('opens on the configuration summary with the new lifecycle toolbar', () => {
@@ -222,7 +297,7 @@ describe('CreateLifecycle', () => {
 		).toHaveTextContent(/my lifecycle/i);
 	});
 
-	it('links cancel and back to the dashboard', () => {
+	it('links cancel and back to the lifecycles when opened from a deep link', () => {
 		renderPage();
 
 		expect(screen.getByRole('link', {name: /cancel/i})).toHaveAttribute(
@@ -232,6 +307,30 @@ describe('CreateLifecycle', () => {
 		expect(screen.getByRole('link', {name: /back/i})).toHaveAttribute(
 			'href',
 			lifecycleURL
+		);
+	});
+
+	it('links cancel and back to the dashboard it was opened from', () => {
+		renderPage([
+			{
+				pathname: '/workspace/23/123/lifecycle/new',
+				state: {lifecycleId: '7'},
+			},
+		]);
+
+		const dashboardURL = toRoute(Routes.LIFECYCLE_DASHBOARD, {
+			channelId: '123',
+			groupId: '23',
+			lifecycleId: '7',
+		});
+
+		expect(screen.getByRole('link', {name: /cancel/i})).toHaveAttribute(
+			'href',
+			dashboardURL
+		);
+		expect(screen.getByRole('link', {name: /back/i})).toHaveAttribute(
+			'href',
+			dashboardURL
 		);
 	});
 
@@ -445,6 +544,22 @@ describe('CreateLifecycle', () => {
 		);
 	});
 
+	it('leaves from Back or Cancel without a prompt when nothing changed', () => {
+		const mockedPrompt = useUnsavedChangesPrompt as jest.Mock;
+
+		renderPage();
+
+		fireEvent.click(screen.getByRole('button', {name: /add.stage/i}));
+
+		fireEvent.click(screen.getByRole('button', {name: /remove.stage 1/i}));
+
+		expect(mockedPrompt).toHaveBeenLastCalledWith(false, expect.anything());
+		expect(screen.getByRole('link', {name: /cancel/i})).toHaveAttribute(
+			'href',
+			lifecycleURL
+		);
+	});
+
 	it('warns about unsaved changes only once something changed', () => {
 		const mockedPrompt = useUnsavedChangesPrompt as jest.Mock;
 
@@ -465,7 +580,7 @@ describe('CreateLifecycle', () => {
 		expect(mockedPrompt).toHaveBeenLastCalledWith(false, expect.anything());
 	});
 
-	it('renders a loading state while lifecycles are loading', () => {
+	it('renders a loading state while the catalog is loading', () => {
 		mockedUseRequest.mockReturnValue({data: undefined, loading: true});
 
 		renderPage();
@@ -473,24 +588,15 @@ describe('CreateLifecycle', () => {
 		expect(screen.queryByText(/new lifecycle/i)).toBeNull();
 	});
 
-	it('redirects to a 404 when a lifecycle already exists', () => {
-		mockedUseRequest.mockReturnValue({
-			data: [{id: '1'}],
-			loading: false,
-		});
-
+	it('opens for a channel that already has lifecycles', () => {
 		renderPage();
 
-		expect(screen.queryByText(/new lifecycle/i)).toBeNull();
-	});
-
-	it('checks for lifecycles in the current channel', () => {
-		renderPage();
-
-		expect(mockedUseRequest).toHaveBeenCalledWith(
+		expect(
+			screen.getByRole('heading', {level: 1, name: /new lifecycle/i})
+		).toBeInTheDocument();
+		expect(mockedUseRequest).not.toHaveBeenCalledWith(
 			expect.objectContaining({
 				dataSourceFn: API.lifecycle.fetchLifecycles,
-				variables: {channelId: '123', groupId: '23'},
 			})
 		);
 	});
@@ -531,6 +637,23 @@ describe('CreateLifecycle', () => {
 		expect(refetch).toHaveBeenCalled();
 	});
 
+	const fillLifecycle = (name = 'My Lifecycle') => {
+		fireEvent.change(screen.getByLabelText(/^name/i), {
+			target: {value: name},
+		});
+
+		fireEvent.change(screen.getByLabelText(/^description/i), {
+			target: {value: 'Qualified accounts'},
+		});
+
+		fireEvent.click(screen.getByRole('button', {name: /add.stage/i}));
+	};
+
+	const clickCreate = () =>
+		fireEvent.click(
+			screen.getByRole('button', {name: /create lifecycle/i})
+		);
+
 	it('sends a single create request while one is in flight', async () => {
 		mockedCreateStageConfig.mockReturnValue(buildStage(true));
 
@@ -540,15 +663,7 @@ describe('CreateLifecycle', () => {
 
 		renderPage();
 
-		fireEvent.change(screen.getByLabelText(/^name/i), {
-			target: {value: 'My Lifecycle'},
-		});
-
-		fireEvent.change(screen.getByLabelText(/^description/i), {
-			target: {value: 'Qualified accounts'},
-		});
-
-		fireEvent.click(screen.getByRole('button', {name: /add.stage/i}));
+		fillLifecycle();
 
 		const createButton = screen.getByRole('button', {
 			name: /create lifecycle/i,
@@ -557,29 +672,22 @@ describe('CreateLifecycle', () => {
 		fireEvent.click(createButton);
 		fireEvent.click(createButton);
 
-		await waitFor(() => expect(createButton).toBeDisabled());
+		await waitFor(() =>
+			expect(API.lifecycle.createLifecycle).toHaveBeenCalled()
+		);
 
+		expect(createButton).toBeDisabled();
 		expect(API.lifecycle.createLifecycle).toHaveBeenCalledTimes(1);
 	});
 
-	it('creates the lifecycle with the contract payload, alerts success, and navigates to the dashboard', async () => {
+	it('creates the lifecycle with the contract payload', async () => {
 		mockedCreateStageConfig.mockReturnValue(buildStage(true));
 
 		renderPage();
 
-		fireEvent.change(screen.getByLabelText(/^name/i), {
-			target: {value: 'My Lifecycle'},
-		});
+		fillLifecycle();
 
-		fireEvent.change(screen.getByLabelText(/^description/i), {
-			target: {value: 'Qualified accounts'},
-		});
-
-		fireEvent.click(screen.getByRole('button', {name: /add.stage/i}));
-
-		fireEvent.click(
-			screen.getByRole('button', {name: /create lifecycle/i})
-		);
+		clickCreate();
 
 		await waitFor(() =>
 			expect(API.lifecycle.createLifecycle).toHaveBeenCalled()
@@ -602,17 +710,41 @@ describe('CreateLifecycle', () => {
 		expect(payload.stages[0].accountLifecycleStageRule.name).toBe(
 			'My Lifecycle Stage Aware Criteria'
 		);
+	});
+
+	it('opens the dashboard of the new lifecycle in place of the editor', async () => {
+		mockedCreateStageConfig.mockReturnValue(buildStage(true));
+
+		renderPage();
+
+		fillLifecycle();
+
+		clickCreate();
 
 		await waitFor(() =>
-			expect(mockPush).toHaveBeenCalledWith(lifecycleURL)
+			expect(mockReplace).toHaveBeenCalledWith(
+				toRoute(Routes.LIFECYCLE_DASHBOARD, {
+					channelId: '123',
+					groupId: '23',
+					lifecycleId: 'lifecycle-erc-42',
+				})
+			)
 		);
 
+		expect(mockPush).not.toHaveBeenCalled();
 		expect(mockDispatch).toHaveBeenCalledWith(
-			expect.objectContaining({alertType: Alert.Types.Success})
+			expect.objectContaining({
+				alertType: Alert.Types.Success,
+				message: expect.stringMatching(/my lifecycle.+created/i),
+			})
+		);
+		expect(useUnsavedChangesPrompt).toHaveBeenLastCalledWith(
+			false,
+			expect.anything()
 		);
 	});
 
-	it('alerts an error and does not navigate when creation fails', async () => {
+	it('keeps the editor open with an error toast when creation fails', async () => {
 		mockedCreateStageConfig.mockReturnValue(buildStage(true));
 
 		(API.lifecycle.createLifecycle as jest.Mock).mockRejectedValue(
@@ -621,26 +753,157 @@ describe('CreateLifecycle', () => {
 
 		renderPage();
 
-		fireEvent.change(screen.getByLabelText(/^name/i), {
-			target: {value: 'My Lifecycle'},
-		});
+		fillLifecycle();
 
-		fireEvent.change(screen.getByLabelText(/^description/i), {
-			target: {value: 'Qualified accounts'},
-		});
-
-		fireEvent.click(screen.getByRole('button', {name: /add.stage/i}));
-
-		fireEvent.click(
-			screen.getByRole('button', {name: /create lifecycle/i})
-		);
+		clickCreate();
 
 		await waitFor(() =>
 			expect(mockDispatch).toHaveBeenCalledWith(
-				expect.objectContaining({alertType: Alert.Types.Error})
+				expect.objectContaining({
+					alertType: Alert.Types.Error,
+					message: expect.stringMatching(/creation process failed/i),
+				})
 			)
 		);
 
 		expect(mockPush).not.toHaveBeenCalled();
+		expect(mockReplace).not.toHaveBeenCalled();
+		expect(screen.getByLabelText(/^name/i)).toHaveValue('My Lifecycle');
+	});
+
+	describe('when the name is already used in the channel', () => {
+		beforeEach(() => {
+			mockedCreateStageConfig.mockReturnValue(buildStage(true));
+
+			(API.lifecycle.fetchLifecyclesPage as jest.Mock).mockResolvedValue({
+				items: [{id: '5', name: '  my LIFECYCLE '}],
+			});
+		});
+
+		it('looks the name up among the lifecycles of the channel', async () => {
+			renderPage();
+
+			fillLifecycle();
+
+			clickCreate();
+
+			await waitFor(() =>
+				expect(API.lifecycle.fetchLifecyclesPage).toHaveBeenCalledWith(
+					expect.objectContaining({
+						channelId: '123',
+						groupId: '23',
+						search: 'My Lifecycle',
+					})
+				)
+			);
+		});
+
+		it('sends nothing and asks for a unique name', async () => {
+			renderPage();
+
+			fillLifecycle(' My Lifecycle ');
+
+			clickCreate();
+
+			const alert = (
+				await screen.findByText(
+					/this lifecycle name is currently in use/i
+				)
+			).closest('.alert') as HTMLElement;
+
+			expect(alert).toHaveClass('alert-danger');
+			expect(alert).toHaveTextContent(/review 1 error/i);
+			expect(
+				screen.getByText(/enter a unique name/i)
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole('group', {name: /configuration summary/i})
+			).toHaveAttribute('aria-current', 'true');
+			expect(API.lifecycle.createLifecycle).not.toHaveBeenCalled();
+		});
+
+		it('clears the name error once the name changes', async () => {
+			renderPage();
+
+			fillLifecycle();
+
+			clickCreate();
+
+			await screen.findByText(/enter a unique name/i);
+
+			fireEvent.change(screen.getByLabelText(/^name/i), {
+				target: {value: 'Growth Hub'},
+			});
+
+			expect(screen.queryByText(/enter a unique name/i)).toBeNull();
+			expect(
+				screen.queryByText(/this lifecycle name is currently in use/i)
+			).toBeNull();
+		});
+
+		it('dismisses the name in use alert', async () => {
+			renderPage();
+
+			fillLifecycle();
+
+			clickCreate();
+
+			const alert = (
+				await screen.findByText(
+					/this lifecycle name is currently in use/i
+				)
+			).closest('.alert') as HTMLElement;
+
+			fireEvent.click(
+				within(alert).getByRole('button', {name: /close/i})
+			);
+
+			expect(
+				screen.queryByText(/this lifecycle name is currently in use/i)
+			).toBeNull();
+			expect(
+				screen.getByText(/enter a unique name/i)
+			).toBeInTheDocument();
+		});
+	});
+
+	it('creates a lifecycle whose name only contains a used one', async () => {
+		mockedCreateStageConfig.mockReturnValue(buildStage(true));
+
+		(API.lifecycle.fetchLifecyclesPage as jest.Mock).mockResolvedValue({
+			items: [{id: '5', name: 'My Lifecycle 2'}],
+		});
+
+		renderPage();
+
+		fillLifecycle();
+
+		clickCreate();
+
+		await waitFor(() =>
+			expect(API.lifecycle.createLifecycle).toHaveBeenCalled()
+		);
+	});
+
+	it('asks for a unique name when the server reports the name in use', async () => {
+		mockedCreateStageConfig.mockReturnValue(buildStage(true));
+
+		(API.lifecycle.createLifecycle as jest.Mock).mockRejectedValue(
+			new Error('name-is-already-used')
+		);
+
+		renderPage();
+
+		fillLifecycle();
+
+		clickCreate();
+
+		expect(
+			await screen.findByText(/this lifecycle name is currently in use/i)
+		).toBeInTheDocument();
+		expect(screen.getByText(/enter a unique name/i)).toBeInTheDocument();
+		expect(mockDispatch).not.toHaveBeenCalledWith(
+			expect.objectContaining({alertType: Alert.Types.Error})
+		);
 	});
 });

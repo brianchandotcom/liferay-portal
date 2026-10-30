@@ -40,8 +40,8 @@ const LifecycleSettingsForm: React.FC<ILifecycleSettingsFormProps> = ({
 		<BaseEditPage className="d-flex flex-column" documentTitle={title}>
 			<NavigationWarning when={form.changed} />
 
-			<BaseEditPage.Toolbar backURL={form.lifecycleURL} title={title}>
-				<BaseEditPage.Toolbar.Cancel href={form.lifecycleURL} />
+			<BaseEditPage.Toolbar backURL={form.backURL} title={title}>
+				<BaseEditPage.Toolbar.Cancel href={form.backURL} />
 
 				<BaseEditPage.Toolbar.Save
 					disabled={form.saving}
@@ -98,6 +98,7 @@ const LifecycleSettingsForm: React.FC<ILifecycleSettingsFormProps> = ({
 							isFieldErrorVisible={form.isFieldErrorVisible}
 							modifiedDate={modifiedDate}
 							name={form.lifecycleName}
+							nameTaken={form.nameTaken}
 							onDescriptionChange={setLifecycleDescription}
 							onFieldBlur={blurField}
 							onNameChange={setLifecycleName}

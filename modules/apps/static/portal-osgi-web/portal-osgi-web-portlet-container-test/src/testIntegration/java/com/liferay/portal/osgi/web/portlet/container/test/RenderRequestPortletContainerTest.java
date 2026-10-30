@@ -344,11 +344,9 @@ public class RenderRequestPortletContainerTest
 
 		Assert.assertEquals(200, response.getCode());
 
-		Assert.assertFalse(
-			response.getBody(
-			).contains(
-				"CONFIG_TEMPLATE_MARKER"
-			));
+		String body = response.getBody();
+
+		Assert.assertFalse(body.contains("CONFIG_TEMPLATE_MARKER"));
 	}
 
 }

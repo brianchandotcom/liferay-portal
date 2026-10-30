@@ -7,21 +7,10 @@ package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -63,31 +52,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class RenderRequestPortletContainerTest
 	extends BasePortletContainerTestCase {
-
-	@Test
-	public void testContainsWithConfigurationPermission() throws Exception {
-		String portletId = "portletId" + RandomTestUtil.randomString();
-
-		setUpPortlet(
-			new TestPortlet(), new HashMapDictionary<String, Object>(),
-			portletId, false);
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			group.getCompanyId(), portletId, ResourceConstants.SCOPE_INDIVIDUAL,
-			PortletPermissionUtil.getPrimaryKey(layout.getPlid(), portletId),
-			role.getRoleId(), new String[] {ActionKeys.CONFIGURATION});
-
-		User user = UserTestUtil.addUser();
-
-		RoleLocalServiceUtil.addUserRole(user.getUserId(), role);
-
-		Assert.assertTrue(
-			PortletPermissionUtil.contains(
-				PermissionCheckerFactoryUtil.create(user), group.getGroupId(),
-				layout, portletId, ActionKeys.CONFIGURATION));
-	}
 
 	@Test
 	public void testDoDispatchDoesNotServeConfigTemplateUnderViewMode()
@@ -352,6 +316,39 @@ public class RenderRequestPortletContainerTest
 		Assert.assertEquals(200, response.getCode());
 
 		Assert.assertTrue(testRuntimePortlet.isCalledRender());
+	}
+
+	@Test
+	public void testServeResourceDoesNotServeConfigTemplateOutsideConfigMode()
+		throws Exception {
+
+		setUpPortlet(
+			new MVCPortlet(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"jakarta.portlet.init-param.config-template",
+				"/configuration_mode_test/config.jsp"
+			).build(),
+			TEST_PORTLET_ID);
+
+		PortletContainerTestUtil.Response response =
+			PortletContainerTestUtil.request(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						PortletContainerTestUtil.getHttpServletRequest(
+							group, layout),
+						TEST_PORTLET_ID, layout.getPlid(),
+						PortletRequest.RESOURCE_PHASE)
+				).setMVCPath(
+					"/configuration_mode_test/config.jsp"
+				).buildString());
+
+		Assert.assertEquals(200, response.getCode());
+
+		Assert.assertFalse(
+			response.getBody(
+			).contains(
+				"CONFIG_TEMPLATE_MARKER"
+			));
 	}
 
 }

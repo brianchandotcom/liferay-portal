@@ -13,11 +13,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -351,7 +354,9 @@ public class MVCPortlet extends LiferayPortlet {
 
 		String path = getPath(resourceRequest, resourceResponse);
 
-		if (path != null) {
+		if ((path != null) &&
+			!_isUnauthorizedConfigurationPath(resourceRequest, path)) {
+
 			include(
 				path, resourceRequest, resourceResponse,
 				PortletRequest.RESOURCE_PHASE);
@@ -802,10 +807,10 @@ public class MVCPortlet extends LiferayPortlet {
 	}
 
 	private boolean _isUnauthorizedConfigurationPath(
-		RenderRequest renderRequest, String path) {
+		PortletRequest portletRequest, String path) {
 
 		if (Objects.equals(
-				renderRequest.getPortletMode(), LiferayPortletMode.CONFIG)) {
+				portletRequest.getPortletMode(), LiferayPortletMode.CONFIG)) {
 
 			return false;
 		}
@@ -824,16 +829,41 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortalUtil.getCompanyId(renderRequest),
+			PortalUtil.getCompanyId(portletRequest),
 			liferayPortletConfig.getPortletId());
 
-		if ((portlet == null) ||
-			(portlet.getConfigurationActionInstance() == null)) {
-
+		if (portlet == null) {
 			return false;
 		}
 
-		return path.equals("/configuration.jsp");
+		ConfigurationAction configurationAction =
+			portlet.getConfigurationActionInstance();
+
+		if (configurationAction == null) {
+			return false;
+		}
+
+		if (!(configurationAction instanceof
+				BaseJSPSettingsConfigurationAction)) {
+
+			return path.equals("/configuration.jsp");
+		}
+
+		BaseJSPSettingsConfigurationAction baseJSPSettingsConfigurationAction =
+			(BaseJSPSettingsConfigurationAction)configurationAction;
+
+		// Pin "portletResource" to this portlet's own ID so that a request
+		// cannot redirect the lookup to a different portlet's configuration
+		// path
+
+		HttpServletRequest httpServletRequest = new DynamicServletRequest(
+			PortalUtil.getHttpServletRequest(portletRequest),
+			Collections.singletonMap(
+				"portletResource",
+				new String[] {liferayPortletConfig.getPortletId()}));
+
+		return path.equals(
+			baseJSPSettingsConfigurationAction.getJspPath(httpServletRequest));
 	}
 
 	private Set<String> _visitResources(

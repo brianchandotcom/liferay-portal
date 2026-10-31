@@ -8,8 +8,6 @@ package com.liferay.portal.template.freemarker.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -67,26 +65,15 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				environment);
 		}
 
-		String[] restrictedClassNames = GetterUtil.getStringValues(
-			_freeMarkerEngineConfiguration.restrictedClasses());
-
-		for (String restrictedClassName : restrictedClassNames) {
-			if (match(restrictedClassName, className)) {
-				throw new TemplateException(
-					StringBundler.concat(
-						"Instantiating ", className, " is not allowed in the ",
-						"template for security reasons"),
-					environment);
-			}
-		}
-
 		boolean allowed = false;
 
-		String[] allowedClasseNames = GetterUtil.getStringValues(
-			_freeMarkerEngineConfiguration.allowedClasses());
+		String[] allowedInstantiableClassNames = GetterUtil.getStringValues(
+			_freeMarkerEngineConfiguration.allowedInstantiableClasses());
 
-		for (String allowedClassName : allowedClasseNames) {
-			if (match(allowedClassName, className)) {
+		for (String allowedInstantiableClassName :
+				allowedInstantiableClassNames) {
+
+			if (match(allowedInstantiableClassName, className)) {
 				allowed = true;
 
 				break;
@@ -180,7 +167,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
 		for (Bundle bundle : _bundles) {
 			ClassLoader classLoader = _findClassLoader(
-				_freeMarkerEngineConfiguration.allowedClasses(),
+				_freeMarkerEngineConfiguration.allowedInstantiableClasses(),
 				bundle.getBundleContext());
 
 			if (classLoader == null) {
@@ -274,22 +261,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			if (classLoader != null) {
 				return classLoader;
 			}
-
-			if (_log.isWarnEnabled()) {
-				Bundle bundle = bundleContext.getBundle();
-
-				_log.warn(
-					StringBundler.concat(
-						"Bundle ", bundle.getSymbolicName(),
-						" does not export ", allowedClassName));
-			}
 		}
 
 		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LiferayTemplateClassResolver.class);
 
 	private final Set<Bundle> _bundles = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());
@@ -307,7 +282,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			Bundle bundle, BundleEvent bundleEvent) {
 
 			ClassLoader classLoader = _findClassLoader(
-				_freeMarkerEngineConfiguration.allowedClasses(),
+				_freeMarkerEngineConfiguration.allowedInstantiableClasses(),
 				bundle.getBundleContext());
 
 			if (classLoader != null) {

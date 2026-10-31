@@ -292,6 +292,46 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	@Test
+	public void testAddCompanyWhenCompanyIdExists() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		try {
+			String partitionName = CompanyLocalServiceTestUtil.getPartitionName(
+				company.getCompanyId());
+
+			long[] companyIds =
+				CompanyLocalServiceTestUtil.getCompanyIdsBySQL();
+			int resourcePermissionsCount = _getResourcePermissionsCount(
+				partitionName, company.getCompanyId());
+
+			try {
+				companyLocalService.addCompany(
+					company.getCompanyId(),
+					RandomTestUtil.randomString() + ".test",
+					RandomTestUtil.randomString() + ".test", "test.com", 0,
+					true, false, null, null, null, null, null, null);
+
+				Assert.fail();
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				Assert.assertEquals(
+					"Company ID " + company.getCompanyId() + " already exists",
+					illegalArgumentException.getMessage());
+			}
+
+			Assert.assertArrayEquals(
+				companyIds, CompanyLocalServiceTestUtil.getCompanyIdsBySQL());
+			Assert.assertEquals(
+				resourcePermissionsCount,
+				_getResourcePermissionsCount(
+					partitionName, company.getCompanyId()));
+		}
+		finally {
+			companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
 	public void testAddCompanyWhenCompanyLocalServiceFails() throws Exception {
 		long[] companyIds = CompanyLocalServiceTestUtil.getCompanyIdsBySQL();
 		int dbPartitionsCount = _getDBPartitionsCount();
@@ -322,6 +362,53 @@ public class CompanyLocalServiceDBPartitionTest
 			if (company != null) {
 				removeDBPartitions(new long[] {company.getCompanyId()});
 			}
+		}
+	}
+
+	@Test
+	public void testAddCompanyWhenDBPartitionExists() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
+		String partitionName = CompanyLocalServiceTestUtil.getPartitionName(
+			companyId);
+
+		db.runSQL(
+			dbPartitionDB.getCreatePartitionSQL(connection, partitionName));
+
+		try {
+			db.runSQL(
+				getCreateTableSQL(
+					partitionName + StringPool.PERIOD + TEST_TABLE_NAME));
+
+			long[] companyIds =
+				CompanyLocalServiceTestUtil.getCompanyIdsBySQL();
+
+			try {
+				companyLocalService.addCompany(
+					companyId, RandomTestUtil.randomString() + ".test",
+					RandomTestUtil.randomString() + ".test", "test.com", 0,
+					true, false, null, null, null, null, null, null);
+
+				Assert.fail();
+			}
+			catch (PortalException portalException) {
+				Throwable throwable = portalException.getCause();
+
+				Assert.assertTrue(
+					throwable instanceof IllegalArgumentException);
+				Assert.assertEquals(
+					"Database partition " + partitionName + " already exists",
+					throwable.getMessage());
+			}
+
+			Assert.assertArrayEquals(
+				companyIds, CompanyLocalServiceTestUtil.getCompanyIdsBySQL());
+
+			CompanyLocalServiceTestUtil.checkStandaloneDBPartitionTables(
+				connection, dbPartitionDB, partitionName, TEST_TABLE_NAME);
+		}
+		finally {
+			db.runSQL(dbPartitionDB.getDropPartitionSQL(partitionName));
 		}
 	}
 

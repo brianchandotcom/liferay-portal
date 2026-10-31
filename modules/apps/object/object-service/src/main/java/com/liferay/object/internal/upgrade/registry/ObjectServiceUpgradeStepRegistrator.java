@@ -7,6 +7,7 @@ package com.liferay.object.internal.upgrade.registry;
 
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -24,6 +25,7 @@ import com.liferay.object.internal.upgrade.v10_9_0.util.ObjectEntryVersionTable;
 import com.liferay.object.internal.upgrade.v10_9_1.ClassNameUpgradeProcess;
 import com.liferay.object.internal.upgrade.v13_12_0.ObjectActionDescriptionUpgradeProcess;
 import com.liferay.object.internal.upgrade.v13_13_1.ObjectEntryExtensionTableUpgradeProcess;
+import com.liferay.object.internal.upgrade.v13_13_2.ObjectEntryGroupIdUpgradeProcess;
 import com.liferay.object.internal.upgrade.v13_3_0.AttachmentObjectFieldDownloadPermissionUpgradeProcess;
 import com.liferay.object.internal.upgrade.v13_8_0.LayoutPageTemplateEntryClassNameIdUpgradeProcess;
 import com.liferay.object.internal.upgrade.v1_2_0.util.ObjectViewColumnTable;
@@ -835,6 +837,12 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"13.13.0", "13.13.1",
 			new ObjectEntryExtensionTableUpgradeProcess());
+
+		registry.register(
+			"13.13.1", "13.13.2",
+			new ObjectEntryGroupIdUpgradeProcess(
+				_classNameLocalService, _companyLocalService,
+				_friendlyURLEntryLocalService));
 	}
 
 	private static final String[] _REMOVED_PANEL_CATEGORY_KEYS = {
@@ -854,6 +862,9 @@ public class ObjectServiceUpgradeStepRegistrator
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private FriendlyURLSeparatorConfigurationManager

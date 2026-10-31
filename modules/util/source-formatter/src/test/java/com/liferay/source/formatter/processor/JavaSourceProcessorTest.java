@@ -1472,7 +1472,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 						"\"service.ranking\" in a filter",
 				42
 			));
-		test("TypedPropertyKeyBND.testjava");
+		test(
+			SourceProcessorTestParameters.create(
+				"TypedPropertyKeyBND.testjava"
+			).addExpectedMessage(
+				"The typed key syntax \"service.ranking:Integer\" is only " +
+					"parsed in component property strings, use the plain key " +
+						"\"service.ranking\" with a typed value",
+				29
+			));
 	}
 
 	@Test

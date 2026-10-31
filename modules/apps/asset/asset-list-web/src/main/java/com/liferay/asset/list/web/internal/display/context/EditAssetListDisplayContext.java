@@ -19,17 +19,22 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.asset.list.model.AssetListEntryAudienceEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntryAudienceEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
 import com.liferay.asset.list.web.internal.util.AssetListTypePropertiesUtil;
+import com.liferay.asset.list.web.internal.util.AudienceVariationUtil;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.audiences.model.AudiencesEntry;
+import com.liferay.audiences.service.AudiencesEntryLocalServiceUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -254,6 +259,60 @@ public class EditAssetListDisplayContext {
 		_assetListEntryType = assetListEntryType;
 
 		return _assetListEntryType;
+	}
+
+	public String getAudienceEntryERC() {
+		if (_audienceEntryERC != null) {
+			return _audienceEntryERC;
+		}
+
+		_audienceEntryERC = AudienceVariationUtil.getAudienceEntryERC(
+			_portletRequest);
+
+		return _audienceEntryERC;
+	}
+
+	public Map<String, Object> getAudienceVariationsData() {
+		List<AssetListEntryAudienceEntryRel> assetListEntryAudienceEntryRels =
+			_getAssetListEntryAudienceEntryRels();
+
+		return HashMapBuilder.<String, Object>put(
+			"addVariationAvailable",
+			() ->
+				assetListEntryAudienceEntryRels.size() <
+					AudiencesEntryLocalServiceUtil.getAudiencesEntriesCount(
+						_themeDisplay.getCompanyId())
+		).put(
+			"assetListEntryValid", _isAssetListEntryValid()
+		).put(
+			"defaultVariation",
+			() -> JSONUtil.put(
+				"active", Validator.isNull(getAudienceEntryERC())
+			).put(
+				"editAssetListEntryURL",
+				_getEditAssetListEntryAudienceVariationURL(StringPool.BLANK)
+			).put(
+				"id", "default"
+			).put(
+				"name",
+				SegmentsEntryConstants.getDefaultSegmentsEntryName(
+					_themeDisplay.getLocale())
+			)
+		).put(
+			"updateVariationsPriorityURL",
+			() -> PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					_httpServletRequest, _themeDisplay.getScopeGroup(),
+					AssetListPortletKeys.ASSET_LIST, 0, 0,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/asset_list/update_audience_variations_priority"
+			).buildString()
+		).put(
+			"variations",
+			_getAssetListEntryAudienceEntryRelJSONArray(
+				assetListEntryAudienceEntryRels)
+		).build();
 	}
 
 	public List<Long> getAvailableClassNameIds() {
@@ -517,12 +576,7 @@ public class EditAssetListDisplayContext {
 			"assetListEntrySegmentsEntryRels",
 			_getAssetListEntrySegmentsEntryRelJSONArray()
 		).put(
-			"assetListEntryValid",
-			() -> {
-				AssetListEntry assetListEntry = getAssetListEntry();
-
-				return Validator.isNotNull(assetListEntry.getAssetEntryType());
-			}
+			"assetListEntryValid", _isAssetListEntryValid()
 		).put(
 			"isSegmentationEnabled",
 			isSegmentationEnabled(_themeDisplay.getCompanyId())
@@ -729,6 +783,8 @@ public class EditAssetListDisplayContext {
 		).setParameter(
 			"assetListEntryId", getAssetListEntryId()
 		).setParameter(
+			"audienceEntryERC", getAudienceEntryERC()
+		).setParameter(
 			"segmentsEntryId", getSegmentsEntryId()
 		).buildPortletURL();
 	}
@@ -779,11 +835,13 @@ public class EditAssetListDisplayContext {
 			() ->
 				AssetListEntryAssetEntryRelLocalServiceUtil.
 					getAssetListEntryAssetEntryRels(
-						getAssetListEntryId(), getSegmentsEntryId(),
-						searchContainer.getStart(), searchContainer.getEnd()),
+						getAssetListEntryId(), getAudienceEntryERC(),
+						getSegmentsEntryId(), searchContainer.getStart(),
+						searchContainer.getEnd()),
 			AssetListEntryAssetEntryRelLocalServiceUtil.
 				getAssetListEntryAssetEntryRelsCount(
-					getAssetListEntryId(), getSegmentsEntryId()));
+					getAssetListEntryId(), getAudienceEntryERC(),
+					getSegmentsEntryId()));
 
 		_searchContainer = searchContainer;
 
@@ -967,6 +1025,16 @@ public class EditAssetListDisplayContext {
 
 	public UnicodeProperties getUnicodeProperties() {
 		return _unicodeProperties;
+	}
+
+	public String getVariationName(Locale locale) {
+		String audienceEntryERC = getAudienceEntryERC();
+
+		if (Validator.isNotNull(audienceEntryERC)) {
+			return _getAudiencesEntryName(audienceEntryERC);
+		}
+
+		return getSegmentsEntryName(getSegmentsEntryId(), locale);
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
@@ -1162,6 +1230,51 @@ public class EditAssetListDisplayContext {
 			).build());
 	}
 
+	private JSONArray _getAssetListEntryAudienceEntryRelJSONArray(
+		List<AssetListEntryAudienceEntryRel> assetListEntryAudienceEntryRels) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+		return JSONUtil.toJSONArray(
+			assetListEntryAudienceEntryRels,
+			assetListEntryAudienceEntryRel -> JSONUtil.put(
+				"active",
+				Objects.equals(
+					getAudienceEntryERC(),
+					assetListEntryAudienceEntryRel.getAudienceEntryERC())
+			).put(
+				"deleteAssetListEntryVariationURL",
+				_getDeleteAssetListEntryAudienceVariationURL(
+					liferayPortletResponse, assetListEntryAudienceEntryRel)
+			).put(
+				"editAssetListEntryURL",
+				_getEditAssetListEntryAudienceVariationURL(
+					assetListEntryAudienceEntryRel.getAudienceEntryERC())
+			).put(
+				"id",
+				assetListEntryAudienceEntryRel.
+					getAssetListEntryAudienceEntryRelId()
+			).put(
+				"name",
+				_getAudiencesEntryName(
+					assetListEntryAudienceEntryRel.getAudienceEntryERC())
+			),
+			_log);
+	}
+
+	private List<AssetListEntryAudienceEntryRel>
+		_getAssetListEntryAudienceEntryRels() {
+
+		return ListUtil.sort(
+			AssetListEntryAudienceEntryRelLocalServiceUtil.
+				getAssetListEntryAudienceEntryRels(
+					getAssetListEntryId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+			Comparator.comparingInt(
+				AssetListEntryAudienceEntryRel::getPriority));
+	}
+
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
 		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
 			new ArrayList<>(getAssetListEntrySegmentsEntryRels());
@@ -1244,6 +1357,19 @@ public class EditAssetListDisplayContext {
 			});
 	}
 
+	private String _getAudiencesEntryName(String audienceEntryERC) {
+		AudiencesEntry audiencesEntry =
+			AudiencesEntryLocalServiceUtil.
+				fetchAudiencesEntryByExternalReferenceCode(
+					audienceEntryERC, _themeDisplay.getCompanyId());
+
+		if (audiencesEntry == null) {
+			return audienceEntryERC;
+		}
+
+		return audiencesEntry.getName();
+	}
+
 	private Long[] _getClassTypeIds(
 		UnicodeProperties unicodeProperties, String className,
 		Long[] availableClassTypeIds) {
@@ -1286,6 +1412,29 @@ public class EditAssetListDisplayContext {
 			assetRendererFactories, AssetRendererFactory::getClassNameId);
 	}
 
+	private String _getDeleteAssetListEntryAudienceVariationURL(
+		LiferayPortletResponse liferayPortletResponse,
+		AssetListEntryAudienceEntryRel assetListEntryAudienceEntryRel) {
+
+		if (isLiveGroup()) {
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/asset_list/delete_asset_list_entry_audience_variation"
+		).setBackURL(
+			getBackURL()
+		).setParameter(
+			"assetListEntryId",
+			assetListEntryAudienceEntryRel.getAssetListEntryId()
+		).setParameter(
+			"audienceEntryERC",
+			assetListEntryAudienceEntryRel.getAudienceEntryERC()
+		).buildString();
+	}
+
 	private String _getDeleteAssetListEntryVariationURL(
 		LiferayPortletResponse liferayPortletResponse,
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
@@ -1309,6 +1458,30 @@ public class EditAssetListDisplayContext {
 		).setParameter(
 			"segmentsEntryId",
 			assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+		).buildString();
+	}
+
+	private String _getEditAssetListEntryAudienceVariationURL(
+		String audienceEntryERC) {
+
+		return PortletURLBuilder.createRenderURL(
+			PortalUtil.getLiferayPortletResponse(_portletResponse)
+		).setMVCPath(
+			"/edit_asset_list_entry.jsp"
+		).setBackURL(
+			getBackURL()
+		).setParameter(
+			"assetListEntryId", getAssetListEntryId()
+		).setParameter(
+			"audienceEntryERC", audienceEntryERC
+		).setParameter(
+			"backURLTitle",
+			() -> {
+				PortletDisplay portletDisplay =
+					_themeDisplay.getPortletDisplay();
+
+				return portletDisplay.getPortletDisplayName();
+			}
 		).buildString();
 	}
 
@@ -1356,8 +1529,11 @@ public class EditAssetListDisplayContext {
 	private String _getTypeSettings() {
 		AssetListEntry assetListEntry = getAssetListEntry();
 
-		String typeSettings = assetListEntry.getTypeSettings(
-			getSegmentsEntryId());
+		String audienceEntryERC = getAudienceEntryERC();
+
+		String typeSettings = Validator.isNotNull(audienceEntryERC) ?
+			assetListEntry.getTypeSettings(audienceEntryERC) :
+				assetListEntry.getTypeSettings(getSegmentsEntryId());
 
 		if (Validator.isNull(typeSettings)) {
 			typeSettings = assetListEntry.getTypeSettings(
@@ -1365,6 +1541,12 @@ public class EditAssetListDisplayContext {
 		}
 
 		return typeSettings;
+	}
+
+	private boolean _isAssetListEntryValid() {
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		return Validator.isNotNull(assetListEntry.getAssetEntryType());
 	}
 
 	private boolean _isCommonFieldFilter(JSONObject filterJSONObject) {
@@ -1436,6 +1618,7 @@ public class EditAssetListDisplayContext {
 	private Integer _assetListEntryType;
 	private final AssetRendererFactoryClassProvider
 		_assetRendererFactoryClassProvider;
+	private String _audienceEntryERC;
 	private List<Long> _availableClassNameIds;
 	private List<SegmentsEntry> _availableSegmentsEntries;
 	private String _backURL;

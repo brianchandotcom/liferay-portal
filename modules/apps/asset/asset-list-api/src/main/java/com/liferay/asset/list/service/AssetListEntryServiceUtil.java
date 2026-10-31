@@ -49,6 +49,16 @@ public class AssetListEntryServiceUtil {
 			assetListEntryId, assetEntryIds, segmentsEntryId, serviceContext);
 	}
 
+	public static void addAssetEntrySelections(
+			long assetListEntryId, long[] assetEntryIds,
+			String audienceEntryERC,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().addAssetEntrySelections(
+			assetListEntryId, assetEntryIds, audienceEntryERC, serviceContext);
+	}
+
 	public static AssetListEntry addAssetListEntry(
 			String externalReferenceCode, long groupId, String title, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -86,6 +96,14 @@ public class AssetListEntryServiceUtil {
 
 		getService().deleteAssetEntrySelection(
 			assetListEntryId, segmentsEntryId, position);
+	}
+
+	public static void deleteAssetEntrySelection(
+			long assetListEntryId, String audienceEntryERC, int position)
+		throws PortalException {
+
+		getService().deleteAssetEntrySelection(
+			assetListEntryId, audienceEntryERC, position);
 	}
 
 	public static void deleteAssetListEntries(long[] assetListEntriesIds)
@@ -279,6 +297,15 @@ public class AssetListEntryServiceUtil {
 			assetListEntryId, segmentsEntryId, position, newPosition);
 	}
 
+	public static void moveAssetEntrySelection(
+			long assetListEntryId, String audienceEntryERC, int position,
+			int newPosition)
+		throws PortalException {
+
+		getService().moveAssetEntrySelection(
+			assetListEntryId, audienceEntryERC, position, newPosition);
+	}
+
 	public static void updateAssetListEntry(
 			long assetListEntryId, long segmentsEntryId, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -303,6 +330,14 @@ public class AssetListEntryServiceUtil {
 			assetListEntryId, segmentsEntryId, typeSettings);
 	}
 
+	public static void updateAssetListEntryTypeSettings(
+			long assetListEntryId, String audienceEntryERC, String typeSettings)
+		throws PortalException {
+
+		getService().updateAssetListEntryTypeSettings(
+			assetListEntryId, audienceEntryERC, typeSettings);
+	}
+
 	public static AssetListEntryService getService() {
 		return _serviceSnapshot.get();
 	}
@@ -312,4 +347,4 @@ public class AssetListEntryServiceUtil {
 			AssetListEntryServiceUtil.class, AssetListEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1543305840
+// LIFERAY-SERVICE-BUILDER-HASH:-804479541

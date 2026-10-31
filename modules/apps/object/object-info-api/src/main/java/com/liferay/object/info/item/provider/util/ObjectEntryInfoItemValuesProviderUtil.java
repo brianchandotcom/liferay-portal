@@ -377,9 +377,12 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 
 		Object infoFieldValue = null;
 
-		Locale locale = LocaleUtil.getSiteDefault();
+		Locale locale = null;
 
-		if (themeDisplay != null) {
+		if (themeDisplay == null) {
+			locale = LocaleUtil.getSiteDefault();
+		}
+		else {
 			locale = themeDisplay.getLocale();
 		}
 

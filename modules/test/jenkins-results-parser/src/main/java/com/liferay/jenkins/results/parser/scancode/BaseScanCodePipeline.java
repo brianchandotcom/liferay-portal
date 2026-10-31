@@ -22,6 +22,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.client.utils.URIBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -112,9 +114,15 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("curl ");
-		sb.append(_projectAPIURL);
-		sb.append("compliance/?fail_level=");
-		sb.append(complianceAlertType);
+
+		URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
+			_projectAPIURL + "compliance/");
+
+		uriBuilder.addParameter(
+			"fail_level", String.valueOf(complianceAlertType));
+
+		sb.append(uriBuilder.toString());
+
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" --header ");
@@ -183,9 +191,14 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 			sb.append(".");
 			sb.append(resultTypeEntry.getValue());
 			sb.append(" \"");
-			sb.append(_projectAPIURL);
-			sb.append("results_download/?output_format=");
-			sb.append(resultTypeEntry.getKey());
+
+			URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
+				_projectAPIURL + "results_download/");
+
+			uriBuilder.addParameter("output_format", resultTypeEntry.getKey());
+
+			sb.append(uriBuilder.toString());
+
 			sb.append("\" --header \"Authorization:Token ");
 			sb.append(_API_KEY);
 			sb.append("\" --request GET ");

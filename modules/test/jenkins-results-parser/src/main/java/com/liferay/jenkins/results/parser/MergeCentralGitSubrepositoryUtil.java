@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.URIBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -290,12 +291,16 @@ public class MergeCentralGitSubrepositoryUtil {
 
 			int page = 1;
 
-			while (page < 10) {
-				String url = JenkinsResultsParserUtil.getGitHubAPIURL(
+			URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
+				JenkinsResultsParserUtil.getGitHubAPIURL(
 					centralGitWorkingDirectory.getGitRepositoryName(),
-					receiverUserName, "pulls?page=" + String.valueOf(page));
+					receiverUserName, "pulls"));
 
-				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(url);
+			while (page < 10) {
+				uriBuilder.setParameter("page", String.valueOf(page));
+
+				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(
+					uriBuilder.toString());
 
 				if ((jsonArray != null) && (jsonArray.length() > 0)) {
 					for (int i = 0; i < jsonArray.length(); i++) {

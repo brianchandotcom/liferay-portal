@@ -25,6 +25,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.client.utils.URIBuilder;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -246,12 +248,16 @@ public class DXPCloudClientTestrayImporter {
 		Element attachmentElement = Dom4JUtil.getNewElement("file");
 
 		attachmentElement.addAttribute("name", "Poshi Log");
-		attachmentElement.addAttribute(
-			"url",
+
+		URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
 			JenkinsResultsParserUtil.combine(
-				_testrayCloudBucket.getTestrayCloudBaseURL(), "/", key,
-				"?authuser=0"));
-		attachmentElement.addAttribute("value", key + "?authuser=0");
+				_testrayCloudBucket.getTestrayCloudBaseURL(), "/", key));
+
+		uriBuilder.addParameter("authuser", "0");
+
+		attachmentElement.addAttribute("url", uriBuilder.toString());
+
+		attachmentElement.addAttribute("value", key);
 
 		return attachmentElement;
 	}
@@ -395,12 +401,15 @@ public class DXPCloudClientTestrayImporter {
 
 			attachmentElement.addAttribute("name", attachmentName);
 
-			attachmentElement.addAttribute(
-				"url",
+			URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
 				JenkinsResultsParserUtil.combine(
-					_testrayCloudBucket.getTestrayCloudBaseURL(), "/", key,
-					"?authuser=0"));
-			attachmentElement.addAttribute("value", key + "?authuser=0");
+					_testrayCloudBucket.getTestrayCloudBaseURL(), "/", key));
+
+			uriBuilder.addParameter("authuser", "0");
+
+			attachmentElement.addAttribute("url", uriBuilder.toString());
+
+			attachmentElement.addAttribute("value", key);
 		}
 
 		if (_testType.equals("poshi")) {

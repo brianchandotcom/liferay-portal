@@ -47,6 +47,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.http.client.utils.URIBuilder;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -596,10 +597,16 @@ public class TestrayImporter {
 
 			attachmentFileElement.addAttribute(
 				"name", testrayAttachment.getName());
+
+			URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
+				String.valueOf(testrayAttachment.getURL()));
+
+			uriBuilder.addParameter("authuser", "0");
+
+			attachmentFileElement.addAttribute("url", uriBuilder.toString());
+
 			attachmentFileElement.addAttribute(
-				"url", testrayAttachment.getURL() + "?authuser=0");
-			attachmentFileElement.addAttribute(
-				"value", testrayAttachment.getKey() + "?authuser=0");
+				"value", testrayAttachment.getKey());
 		}
 
 		String errors = testrayCaseResult.getErrors();

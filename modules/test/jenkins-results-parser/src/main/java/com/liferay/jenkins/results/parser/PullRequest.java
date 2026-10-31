@@ -32,6 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.URIBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -348,19 +349,24 @@ public class PullRequest {
 
 		_comments = new ArrayList<>();
 
-		String gitHubAPIURL = JenkinsResultsParserUtil.getGitHubAPIURL(
-			getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
-			"issues/" + getNumber() + "/comments?per_page=100&page=");
+		URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
+			JenkinsResultsParserUtil.getGitHubAPIURL(
+				getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
+				"issues/" + getNumber() + "/comments"));
+
+		uriBuilder.addParameter("per_page", "100");
 
 		for (int pageNumber = 1;
 			 pageNumber <=
 				 JenkinsResultsParserUtil.PAGES_GITHUB_API_PAGES_SIZE_MAX;
 			 pageNumber++) {
 
+			uriBuilder.setParameter("page", String.valueOf(pageNumber));
+
 			try {
 				JSONArray commentJSONArray =
 					JenkinsResultsParserUtil.toJSONArray(
-						gitHubAPIURL + pageNumber, false);
+						uriBuilder.toString(), false);
 
 				if (commentJSONArray.length() == 0) {
 					break;
@@ -1005,16 +1011,21 @@ public class PullRequest {
 			return;
 		}
 
-		String path = JenkinsResultsParserUtil.combine(
-			"issues/", getNumber(), "/labels/",
-			JenkinsResultsParserUtil.fixURL(labelName));
+		URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
+			JenkinsResultsParserUtil.getGitHubAPIURL(
+				getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
+				"issues/" + getNumber() + "/labels"));
 
-		String gitHubAPIURL = JenkinsResultsParserUtil.getGitHubAPIURL(
-			getGitHubRemoteGitRepositoryName(), getOwnerUsername(), path);
+		List<String> pathSegments = new ArrayList<>(
+			uriBuilder.getPathSegments());
+
+		pathSegments.add(labelName);
+
+		uriBuilder.setPathSegments(pathSegments);
 
 		try {
 			JenkinsResultsParserUtil.toString(
-				gitHubAPIURL, false, HttpRequestMethod.DELETE);
+				uriBuilder.toString(), false, HttpRequestMethod.DELETE);
 
 			_labels = null;
 		}
@@ -1360,21 +1371,23 @@ public class PullRequest {
 	}
 
 	private void _initCommits() {
-		String commitsURL = _jsonObject.getString("commits_url");
-
 		_gitHubRemoteGitCommits = new ArrayList<>();
 
 		try {
+			URIBuilder uriBuilder = JenkinsResultsParserUtil.newURIBuilder(
+				_jsonObject.getString("commits_url"));
+
+			uriBuilder.addParameter("per_page", "100");
+
 			for (int pageNumber = 1;
 				 pageNumber <=
 					 JenkinsResultsParserUtil.PAGES_GITHUB_API_PAGES_SIZE_MAX;
 				 pageNumber++) {
 
+				uriBuilder.setParameter("page", String.valueOf(pageNumber));
+
 				JSONArray commitsJSONArray =
-					JenkinsResultsParserUtil.toJSONArray(
-						JenkinsResultsParserUtil.combine(
-							commitsURL, "?per_page=100&page=",
-							String.valueOf(pageNumber)));
+					JenkinsResultsParserUtil.toJSONArray(uriBuilder.toString());
 
 				if (commitsJSONArray.length() == 0) {
 					break;

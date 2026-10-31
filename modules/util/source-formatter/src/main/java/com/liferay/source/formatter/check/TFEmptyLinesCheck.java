@@ -7,6 +7,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.TFSourceUtil;
@@ -22,35 +23,55 @@ public class TFEmptyLinesCheck extends BaseFileCheck {
 
 		String[] lines = content.split("\n", -1);
 
-		StringBundler sb = new StringBundler(lines.length * 2);
+		StringBundler sb = new StringBundler(lines.length * 3);
+
+		boolean precededByEmptyLine = false;
+		boolean previousComment = false;
+		String previousLine = null;
 
 		for (int i = 0; i < lines.length; i++) {
-			String heredocMarker = TFSourceUtil.getHeredocMarker(lines[i]);
-
-			if (heredocMarker != null) {
-				int heredocEndLineIndex = TFSourceUtil.getHeredocEndLineIndex(
-					lines, i, heredocMarker);
-
-				if (heredocEndLineIndex == -1) {
-					return content;
-				}
-
-				for (int j = i; j <= heredocEndLineIndex; j++) {
-					sb.append(lines[j]);
-					sb.append(CharPool.NEW_LINE);
-				}
-
-				i = heredocEndLineIndex;
-
-				continue;
-			}
-
 			if (Validator.isBlank(StringUtil.trim(lines[i]))) {
+				precededByEmptyLine = true;
+
 				continue;
 			}
 
-			sb.append(lines[i]);
-			sb.append(CharPool.NEW_LINE);
+			boolean comment = TFSourceUtil.isCommentLine(lines[i]);
+			int endLineIndex = i;
+
+			if (comment) {
+				endLineIndex = TFSourceUtil.getCommentEndLineIndex(lines, i);
+			}
+			else {
+				String heredocMarker = TFSourceUtil.getHeredocMarker(lines[i]);
+
+				if (heredocMarker != null) {
+					endLineIndex = TFSourceUtil.getHeredocEndLineIndex(
+						lines, i, heredocMarker);
+				}
+			}
+
+			if (endLineIndex == -1) {
+				return content;
+			}
+
+			if ((previousLine != null) &&
+				((comment != previousComment) ||
+				 (precededByEmptyLine && !_isBlockEnd(lines[i]) &&
+				  !_isBlockStart(previousLine)))) {
+
+				sb.append(CharPool.NEW_LINE);
+			}
+
+			for (int j = i; j <= endLineIndex; j++) {
+				sb.append(lines[j]);
+				sb.append(CharPool.NEW_LINE);
+			}
+
+			i = endLineIndex;
+			precededByEmptyLine = false;
+			previousComment = comment;
+			previousLine = lines[endLineIndex];
 		}
 
 		if (sb.index() > 0) {
@@ -58,6 +79,32 @@ public class TFEmptyLinesCheck extends BaseFileCheck {
 		}
 
 		return sb.toString();
+	}
+
+	private boolean _isBlockEnd(String line) {
+		String trimmedLine = StringUtil.trim(line);
+
+		if (trimmedLine.startsWith(StringPool.CLOSE_BRACKET) ||
+			trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) ||
+			trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isBlockStart(String line) {
+		String trimmedLine = StringUtil.trim(TFSourceUtil.removeComment(line));
+
+		if (trimmedLine.endsWith(StringPool.OPEN_BRACKET) ||
+			trimmedLine.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+			trimmedLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

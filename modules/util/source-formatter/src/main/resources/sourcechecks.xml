@@ -1918,15 +1918,15 @@
 		</check>
 		<check name="TFBlockOrderCheck">
 			<category name="Styling" />
-			<description name="Checks the order of blocks and attributes in `.tf` files." />
+			<description name="Checks the order of blocks and attributes in `.hcl` and `.tf` files." />
 		</check>
 		<check name="TFEmptyLinesCheck">
 			<category name="Styling" />
-			<description name="Finds unnecessary empty lines." />
+			<description name="Finds missing and unnecessary empty lines." />
 		</check>
 		<check name="TFIndentationCheck">
 			<category name="Styling" />
-			<description name="Finds incorrect indentation in `.tf` files." />
+			<description name="Finds incorrect indentation in `.hcl` and `.tf` files." />
 		</check>
 		<check name="TFStylingCheck">
 			<category name="Styling" />

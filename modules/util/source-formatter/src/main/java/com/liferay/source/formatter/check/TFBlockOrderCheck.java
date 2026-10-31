@@ -31,8 +31,8 @@ public class TFBlockOrderCheck extends BaseFileCheck {
 
 		String[] lines = content.split("\n", -1);
 
-		_sortNestedEntries(lines);
-		_sortTopLevelBlocks(lines);
+		_sortEntryGroups(fileName, lines, 0, lines.length, true);
+		_sortNestedEntries(fileName, lines);
 
 		StringBundler sb = new StringBundler(lines.length * 2);
 
@@ -98,65 +98,6 @@ public class TFBlockOrderCheck extends BaseFileCheck {
 		return -1;
 	}
 
-	private List<Entry> _getEntries(String[] lines, int openLineIndex) {
-		int blockEndLineIndex = _getBlockEndLineIndex(
-			lines, openLineIndex + 1, 1);
-
-		if (blockEndLineIndex == -1) {
-			return null;
-		}
-
-		List<Entry> entries = new ArrayList<>();
-
-		int commentStartLineIndex = -1;
-
-		for (int i = openLineIndex + 1; i < blockEndLineIndex; i++) {
-			String trimmedLine = StringUtil.trim(lines[i]);
-
-			if (Validator.isBlank(trimmedLine)) {
-				return null;
-			}
-
-			if (_isCommentLine(lines[i])) {
-				if (commentStartLineIndex == -1) {
-					commentStartLineIndex = i;
-				}
-
-				continue;
-			}
-
-			String sortKey = _getSortKey(trimmedLine);
-
-			if (sortKey == null) {
-				return null;
-			}
-
-			int endLineIndex = _getBlockEndLineIndex(lines, i, 0);
-
-			if ((endLineIndex == -1) || (endLineIndex >= blockEndLineIndex)) {
-				return null;
-			}
-
-			int startLineIndex = i;
-
-			if (commentStartLineIndex != -1) {
-				startLineIndex = commentStartLineIndex;
-			}
-
-			Entry entry = new Entry(endLineIndex, lines, startLineIndex);
-
-			entry.setSortKey(sortKey);
-
-			entries.add(entry);
-
-			commentStartLineIndex = -1;
-
-			i = endLineIndex;
-		}
-
-		return entries;
-	}
-
 	private String _getSortKey(String trimmedLine) {
 		Matcher matcher = _keyPattern.matcher(trimmedLine);
 
@@ -173,19 +114,7 @@ public class TFBlockOrderCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private boolean _isCommentLine(String line) {
-		String trimmedLine = StringUtil.trim(line);
-
-		if (trimmedLine.startsWith(StringPool.DOUBLE_SLASH) ||
-			trimmedLine.startsWith(StringPool.POUND)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private void _sort(String[] lines, List<Entry> entries) {
+	private void _sort(String fileName, String[] lines, List<Entry> entries) {
 		List<Entry> sortedEntries = new ArrayList<>(entries);
 
 		Collections.sort(sortedEntries, new EntryComparator());
@@ -195,6 +124,20 @@ public class TFBlockOrderCheck extends BaseFileCheck {
 		}
 
 		Entry firstEntry = entries.get(0);
+		Entry sortedFirstEntry = sortedEntries.get(0);
+
+		if (firstEntry.isPrecededByComment() &&
+			(firstEntry != sortedFirstEntry)) {
+
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Incorrect order: \"", sortedFirstEntry.getSortKey(),
+					"\" should come before \"", firstEntry.getSortKey(), "\""),
+				firstEntry.getStartLineIndex() + 1);
+
+			return;
+		}
 
 		int index = firstEntry.getStartLineIndex();
 
@@ -205,7 +148,85 @@ public class TFBlockOrderCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _sortNestedEntries(String[] lines) {
+	private void _sortEntryGroups(
+		String fileName, String[] lines, int startLineIndex, int endLineIndex,
+		boolean topLevel) {
+
+		List<Entry> entries = new ArrayList<>();
+		List<List<Entry>> entryGroups = new ArrayList<>();
+		boolean precededByComment = false;
+
+		for (int i = startLineIndex; i < endLineIndex; i++) {
+			String trimmedLine = StringUtil.trim(lines[i]);
+
+			if (TFSourceUtil.isCommentLine(lines[i]) ||
+				Validator.isBlank(trimmedLine)) {
+
+				if (!entries.isEmpty()) {
+					entryGroups.add(entries);
+
+					entries = new ArrayList<>();
+				}
+
+				if (TFSourceUtil.isCommentLine(lines[i])) {
+					precededByComment = true;
+				}
+
+				i = TFSourceUtil.getCommentEndLineIndex(lines, i);
+
+				if (i == -1) {
+					return;
+				}
+
+				continue;
+			}
+
+			String line = StringUtil.trimTrailing(
+				TFSourceUtil.removeComment(lines[i]));
+
+			if (topLevel) {
+				Matcher matcher = _topLevelBlockPattern.matcher(line);
+
+				if (!matcher.matches()) {
+					return;
+				}
+			}
+
+			String sortKey = _getSortKey(StringUtil.trim(line));
+
+			if (sortKey == null) {
+				return;
+			}
+
+			int entryEndLineIndex = _getBlockEndLineIndex(lines, i, 0);
+
+			if ((entryEndLineIndex == -1) ||
+				(entryEndLineIndex >= endLineIndex)) {
+
+				return;
+			}
+
+			Entry entry = new Entry(entryEndLineIndex, lines, i);
+
+			entry.setPrecededByComment(precededByComment);
+			entry.setSortKey(sortKey);
+
+			entries.add(entry);
+
+			i = entryEndLineIndex;
+			precededByComment = false;
+		}
+
+		if (!entries.isEmpty()) {
+			entryGroups.add(entries);
+		}
+
+		for (List<Entry> entryGroup : entryGroups) {
+			_sort(fileName, lines, entryGroup);
+		}
+	}
+
+	private void _sortNestedEntries(String fileName, String[] lines) {
 		boolean blockComment = false;
 
 		for (int i = 0; i < lines.length; i++) {
@@ -240,71 +261,22 @@ public class TFBlockOrderCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<Entry> entries = _getEntries(lines, i);
+			int blockEndLineIndex = _getBlockEndLineIndex(lines, i + 1, 1);
 
-			if (entries == null) {
+			if (blockEndLineIndex == -1) {
 				continue;
 			}
 
-			_sort(lines, entries);
+			_sortEntryGroups(fileName, lines, i + 1, blockEndLineIndex, false);
 		}
-	}
-
-	private void _sortTopLevelBlocks(String[] lines) {
-		List<Entry> entries = new ArrayList<>();
-		int previousEndLineIndex = -1;
-
-		for (int i = 0; i < lines.length; i++) {
-			Matcher matcher = _topLevelBlockPattern.matcher(lines[i]);
-
-			if (!matcher.matches()) {
-				if (_isCommentLine(lines[i])) {
-					continue;
-				}
-
-				return;
-			}
-
-			String sortKey = _getSortKey(lines[i]);
-
-			if (sortKey == null) {
-				return;
-			}
-
-			int endLineIndex = _getBlockEndLineIndex(lines, i, 0);
-
-			if (endLineIndex == -1) {
-				return;
-			}
-
-			int startLineIndex = i;
-
-			while (((startLineIndex - 1) > previousEndLineIndex) &&
-				   _isCommentLine(lines[startLineIndex - 1])) {
-
-				startLineIndex--;
-			}
-
-			Entry entry = new Entry(endLineIndex, lines, startLineIndex);
-
-			entry.setSortKey(sortKey);
-
-			entries.add(entry);
-
-			i = endLineIndex;
-
-			previousEndLineIndex = endLineIndex;
-		}
-
-		_sort(lines, entries);
 	}
 
 	private static final Pattern _blockHeaderPattern = Pattern.compile(
-		"([\\w-]+(\\s+\"[^\"]*\")*)\\s*\\{");
+		"([\\w-]+(\\s+\"[^\"]*\")*)\\s*\\{\\}?");
 	private static final Pattern _keyPattern = Pattern.compile(
 		"^(\"[^\"]+\"|[\\w.-]+)\\s*[:=](?!=)");
 	private static final Pattern _topLevelBlockPattern = Pattern.compile(
-		"\\w.*\\{");
+		"\\w.*\\{\\}?");
 
 	private class Entry {
 
@@ -328,11 +300,20 @@ public class TFBlockOrderCheck extends BaseFileCheck {
 			return _startLineIndex;
 		}
 
+		public boolean isPrecededByComment() {
+			return _precededByComment;
+		}
+
+		public void setPrecededByComment(boolean precededByComment) {
+			_precededByComment = precededByComment;
+		}
+
 		public void setSortKey(String sortKey) {
 			_sortKey = sortKey;
 		}
 
 		private final List<String> _lines = new ArrayList<>();
+		private boolean _precededByComment;
 		private String _sortKey;
 		private final int _startLineIndex;
 

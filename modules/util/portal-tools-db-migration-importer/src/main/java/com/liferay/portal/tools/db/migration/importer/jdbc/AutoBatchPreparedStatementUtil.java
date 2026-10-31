@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.db.migration.importer.jdbc;
 
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -17,7 +19,9 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -103,7 +107,7 @@ public class AutoBatchPreparedStatementUtil {
 			if (++_count >= ConnectionConfigUtil.getBatchSize()) {
 				_count = 0;
 
-				_executeAsync(() -> _executeBatch(preparedStatement));
+				_executeAsync(preparedStatement::executeBatch);
 			}
 		}
 
@@ -119,22 +123,29 @@ public class AutoBatchPreparedStatementUtil {
 		}
 
 		private void _close() throws Throwable {
+			ThrowableCollector throwableCollector = new ThrowableCollector();
+
 			for (Future<?> future : _futures) {
 				try {
 					future.get();
 				}
-				catch (Exception exception) {
-					exception.printStackTrace(System.err);
+				catch (ExecutionException executionException) {
+					throwableCollector.collect(executionException.getCause());
+				}
+				catch (InterruptedException interruptedException) {
+					throwableCollector.collect(interruptedException);
 				}
 			}
 
 			_cleanUp(_preparedStatement);
 
 			_preparedStatement = null;
+
+			throwableCollector.rethrow();
 		}
 
-		private void _executeAsync(Runnable runnable) {
-			_futures.add(_executorService.submit(runnable));
+		private void _executeAsync(Callable<?> callable) {
+			_futures.add(_executorService.submit(callable));
 
 			_preparedStatement = null;
 		}
@@ -145,21 +156,10 @@ public class AutoBatchPreparedStatementUtil {
 
 				PreparedStatement preparedStatement = getPreparedStatement();
 
-				_executeAsync(() -> _executeBatch(preparedStatement));
+				_executeAsync(preparedStatement::executeBatch);
 			}
 
 			return new int[0];
-		}
-
-		private void _executeBatch(PreparedStatement preparedStatement) {
-			try {
-				preparedStatement.executeBatch();
-			}
-			catch (Exception exception) {
-				exception.printStackTrace(System.err);
-
-				throw new RuntimeException(exception);
-			}
 		}
 
 		private final Connection _connection;

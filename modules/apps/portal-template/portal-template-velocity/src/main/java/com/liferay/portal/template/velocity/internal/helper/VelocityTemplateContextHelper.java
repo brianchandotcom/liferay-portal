@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.apache.velocity.tools.generic.DateTool;
 import org.apache.velocity.tools.generic.EscapeTool;
@@ -64,50 +65,11 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 		super.prepare(contextObjects, httpServletRequest);
 
-		// Theme display
+		// Insert custom vm variables
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			Theme theme = themeDisplay.getTheme();
-
-			// Full css and templates path
-
-			String servletContextName = GetterUtil.getString(
-				theme.getServletContextName());
-
-			contextObjects.put(
-				"fullCssPath",
-				servletContextName + theme.getVelocityResourceListener() +
-					theme.getCssPath());
-
-			String fullTemplatesPath =
-				servletContextName + theme.getVelocityResourceListener() +
-					theme.getTemplatesPath();
-
-			contextObjects.put("fullTemplatesPath", fullTemplatesPath);
-
-			// Init
-
-			contextObjects.put("init", fullTemplatesPath + "/init.vm");
-
-			// Navigation items
-
-			if (_velocityEngineConfiguration.includeNavItemsInTheContext() &&
-				(themeDisplay.getLayout() != null)) {
-
-				try {
-					contextObjects.put("navItems", themeDisplay.getNavItems());
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-			}
-		}
-
-		// Insert custom vm variables
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -203,6 +165,76 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		catch (SecurityException securityException) {
 			_log.error(securityException);
 		}
+	}
+
+	@Override
+	protected void populateLazyContextFunctions(
+		Map<String, Function<HttpServletRequest, Object>>
+			lazyContextFunctions) {
+
+		super.populateLazyContextFunctions(lazyContextFunctions);
+
+		lazyContextFunctions.put(
+			"fullCssPath",
+			httpServletRequest -> _getThemePath(
+				httpServletRequest, Theme::getCssPath));
+		lazyContextFunctions.put(
+			"fullTemplatesPath",
+			httpServletRequest -> _getThemePath(
+				httpServletRequest, Theme::getTemplatesPath));
+		lazyContextFunctions.put("init", this::_getInit);
+		lazyContextFunctions.put("navItems", this::_getNavItems);
+	}
+
+	private Object _getInit(HttpServletRequest httpServletRequest) {
+		String fullTemplatesPath = _getThemePath(
+			httpServletRequest, Theme::getTemplatesPath);
+
+		if (fullTemplatesPath == null) {
+			return null;
+		}
+
+		return fullTemplatesPath + "/init.vm";
+	}
+
+	private Object _getNavItems(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if ((themeDisplay == null) ||
+			!_velocityEngineConfiguration.includeNavItemsInTheContext() ||
+			(themeDisplay.getLayout() == null)) {
+
+			return null;
+		}
+
+		try {
+			return themeDisplay.getNavItems();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return null;
+	}
+
+	private String _getThemePath(
+		HttpServletRequest httpServletRequest,
+		Function<Theme, String> function) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return null;
+		}
+
+		Theme theme = themeDisplay.getTheme();
+
+		return GetterUtil.getString(theme.getServletContextName()) +
+			theme.getVelocityResourceListener() + function.apply(theme);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

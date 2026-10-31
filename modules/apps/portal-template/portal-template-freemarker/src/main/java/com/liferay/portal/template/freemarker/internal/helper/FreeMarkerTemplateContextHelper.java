@@ -28,6 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -56,50 +57,6 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		HttpServletRequest httpServletRequest) {
 
 		super.prepare(contextObjects, httpServletRequest);
-
-		// Theme display
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			Theme theme = themeDisplay.getTheme();
-
-			// Full css and templates path
-
-			String servletContextName = GetterUtil.getString(
-				theme.getServletContextName());
-
-			contextObjects.put(
-				"fullCssPath",
-				StringBundler.concat(
-					StringPool.SLASH, servletContextName,
-					theme.getFreeMarkerTemplateLoader(), theme.getCssPath()));
-
-			String fullTemplatesPath = StringBundler.concat(
-				StringPool.SLASH, servletContextName,
-				theme.getFreeMarkerTemplateLoader(), theme.getTemplatesPath());
-
-			contextObjects.put("fullTemplatesPath", fullTemplatesPath);
-
-			// Init
-
-			contextObjects.put("init", fullTemplatesPath + "/init.ftl");
-
-			// Navigation items
-
-			if (_freeMarkerEngineConfiguration.includeNavItemsInTheContext() &&
-				(themeDisplay.getLayout() != null)) {
-
-				try {
-					contextObjects.put("navItems", themeDisplay.getNavItems());
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-			}
-		}
 
 		// Insert custom ftl variables
 
@@ -187,6 +144,78 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		// Static class util
 
 		helperUtilities.put("staticUtil", beansWrapper.getStaticModels());
+	}
+
+	@Override
+	protected void populateLazyContextFunctions(
+		Map<String, Function<HttpServletRequest, Object>>
+			lazyContextFunctions) {
+
+		super.populateLazyContextFunctions(lazyContextFunctions);
+
+		lazyContextFunctions.put(
+			"fullCssPath",
+			httpServletRequest -> _getThemePath(
+				httpServletRequest, Theme::getCssPath));
+		lazyContextFunctions.put(
+			"fullTemplatesPath",
+			httpServletRequest -> _getThemePath(
+				httpServletRequest, Theme::getTemplatesPath));
+		lazyContextFunctions.put("init", this::_getInit);
+		lazyContextFunctions.put("navItems", this::_getNavItems);
+	}
+
+	private Object _getInit(HttpServletRequest httpServletRequest) {
+		String fullTemplatesPath = _getThemePath(
+			httpServletRequest, Theme::getTemplatesPath);
+
+		if (fullTemplatesPath == null) {
+			return null;
+		}
+
+		return fullTemplatesPath + "/init.ftl";
+	}
+
+	private Object _getNavItems(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if ((themeDisplay == null) ||
+			!_freeMarkerEngineConfiguration.includeNavItemsInTheContext() ||
+			(themeDisplay.getLayout() == null)) {
+
+			return null;
+		}
+
+		try {
+			return themeDisplay.getNavItems();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return null;
+	}
+
+	private String _getThemePath(
+		HttpServletRequest httpServletRequest,
+		Function<Theme, String> function) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return null;
+		}
+
+		Theme theme = themeDisplay.getTheme();
+
+		return StringBundler.concat(
+			StringPool.SLASH,
+			GetterUtil.getString(theme.getServletContextName()),
+			theme.getFreeMarkerTemplateLoader(), function.apply(theme));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

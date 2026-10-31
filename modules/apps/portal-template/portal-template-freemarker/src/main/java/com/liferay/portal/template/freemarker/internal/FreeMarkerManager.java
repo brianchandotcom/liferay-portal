@@ -5,6 +5,7 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
@@ -222,64 +223,12 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		// Legacy
 
-		FreeMarkerBundleClassloader freeMarkerBundleClassloader =
-			_freeMarkerBundleClassloader;
-
-		if (freeMarkerBundleClassloader == null) {
-			freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(
-				_taglibMappings.keySet());
-
-			_freeMarkerBundleClassloader = freeMarkerBundleClassloader;
-		}
-
 		TaglibFactoryWrapper taglibFactoryWrapper = new TaglibFactoryWrapper(
-			freeMarkerBundleClassloader, objectWrapper, servletContext);
+			_getTemplateModelsEntry(), objectWrapper, servletContext);
 
 		contextObjects.put("PortalJspTagLibs", taglibFactoryWrapper);
 		contextObjects.put("PortletJspTagLibs", taglibFactoryWrapper);
 		contextObjects.put("taglibLiferayHash", taglibFactoryWrapper);
-
-		// Contributed
-
-		Map.Entry<FreeMarkerBundleClassloader, Map<String, TemplateModel>>
-			contributedTemplateModelsEntry = _contributedTemplateModelsEntry;
-
-		if ((contributedTemplateModelsEntry != null) &&
-			(contributedTemplateModelsEntry.getKey() ==
-				freeMarkerBundleClassloader)) {
-
-			contextObjects.putAll(contributedTemplateModelsEntry.getValue());
-
-			return;
-		}
-
-		boolean complete = true;
-		Map<String, TemplateModel> contributedTemplateModels = new HashMap<>();
-
-		for (Map<String, String> map : _taglibMappings.values()) {
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				try {
-					contributedTemplateModels.put(
-						entry.getKey(),
-						taglibFactoryWrapper.get(entry.getValue()));
-				}
-				catch (TemplateModelException templateModelException) {
-					complete = false;
-
-					_log.error(
-						"Unable to add taglib " + entry.getKey() +
-							" to context",
-						templateModelException);
-				}
-			}
-		}
-
-		contextObjects.putAll(contributedTemplateModels);
-
-		if (complete) {
-			_contributedTemplateModelsEntry = Map.entry(
-				freeMarkerBundleClassloader, contributedTemplateModels);
-		}
 	}
 
 	@Deactivate
@@ -318,6 +267,57 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			templateResource, helperUtilities, _configuration,
 			_templateContextHelper, _freeMarkerTemplateResourceCache,
 			restricted, beansWrapper, this);
+	}
+
+	protected Map<String, TemplateModel> getContributedTemplateModels(
+		ServletContext servletContext, ObjectWrapper objectWrapper) {
+
+		Map.Entry<FreeMarkerBundleClassloader, Map<String, TemplateModel>>
+			templateModelsEntry = _getTemplateModelsEntry();
+
+		FreeMarkerBundleClassloader freeMarkerBundleClassloader =
+			templateModelsEntry.getKey();
+
+		Map.Entry<FreeMarkerBundleClassloader, Map<String, TemplateModel>>
+			contributedTemplateModelsEntry = _contributedTemplateModelsEntry;
+
+		if ((contributedTemplateModelsEntry != null) &&
+			(contributedTemplateModelsEntry.getKey() ==
+				freeMarkerBundleClassloader)) {
+
+			return contributedTemplateModelsEntry.getValue();
+		}
+
+		TaglibFactoryWrapper taglibFactoryWrapper = new TaglibFactoryWrapper(
+			templateModelsEntry, objectWrapper, servletContext);
+
+		boolean complete = true;
+		Map<String, TemplateModel> contributedTemplateModels = new HashMap<>();
+
+		for (Map<String, String> map : _taglibMappings.values()) {
+			for (Map.Entry<String, String> entry : map.entrySet()) {
+				try {
+					contributedTemplateModels.put(
+						entry.getKey(),
+						taglibFactoryWrapper.get(entry.getValue()));
+				}
+				catch (TemplateModelException templateModelException) {
+					complete = false;
+
+					_log.error(
+						"Unable to add taglib " + entry.getKey() +
+							" to context",
+						templateModelException);
+				}
+			}
+		}
+
+		if (complete) {
+			_contributedTemplateModelsEntry = Map.entry(
+				freeMarkerBundleClassloader, contributedTemplateModels);
+		}
+
+		return contributedTemplateModels;
 	}
 
 	@Override
@@ -449,7 +449,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_templateContextHelper.removeAllHelperUtilities();
 
-		_templateModels.clear();
+		_templateModelsEntryDCLSingleton.destroy(null);
 
 		_contributedTemplateModelsEntry = null;
 
@@ -498,6 +498,15 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
 		return new ServletContextHashModel(genericServlet, objectWrapper);
+	}
+
+	private Map.Entry<FreeMarkerBundleClassloader, Map<String, TemplateModel>>
+		_getTemplateModelsEntry() {
+
+		return _templateModelsEntryDCLSingleton.getSingleton(
+			() -> Map.entry(
+				new FreeMarkerBundleClassloader(_taglibMappings.keySet()),
+				new ConcurrentHashMap<>()));
 	}
 
 	private boolean _hasLibrary(String library) {
@@ -633,7 +642,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		<FreeMarkerBundleClassloader, Map<String, TemplateModel>>
 			_contributedTemplateModelsEntry;
 	private volatile BeansWrapper _defaultBeansWrapper;
-	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private volatile FreeMarkerEngineConfiguration
 		_freeMarkerEngineConfiguration;
 	private FreeMarkerTemplateResourceCache _freeMarkerTemplateResourceCache;
@@ -658,8 +666,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	)
 	private TemplateContextHelper _templateContextHelper;
 
-	private final Map<String, TemplateModel> _templateModels =
-		new ConcurrentHashMap<>();
+	private final DCLSingleton
+		<Map.Entry<FreeMarkerBundleClassloader, Map<String, TemplateModel>>>
+			_templateModelsEntryDCLSingleton = new DCLSingleton<>();
 	private ServiceRegistration<TemplateResourceLoader>
 		_templateResourceLoaderServiceRegistration;
 	private volatile Map<String, AtomicInteger> _timeoutTemplateCounters;
@@ -902,7 +911,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 				_taglibMappings.put(bundleWiring.getClassLoader(), map);
 
-				_freeMarkerBundleClassloader = null;
+				_templateModelsEntryDCLSingleton.destroy(null);
 
 				return bundleWiring.getClassLoader();
 			}
@@ -924,9 +933,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 			_taglibMappings.remove(classLoader);
 
-			_templateModels.clear();
-
-			_freeMarkerBundleClassloader = null;
+			_templateModelsEntryDCLSingleton.destroy(null);
 		}
 
 	}
@@ -934,12 +941,15 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private class TaglibFactoryWrapper implements TemplateHashModel {
 
 		public TaglibFactoryWrapper(
-			FreeMarkerBundleClassloader freeMarkerBundleClassloader,
+			Map.Entry<FreeMarkerBundleClassloader, Map<String, TemplateModel>>
+				templateModelsEntry,
 			ObjectWrapper objectWrapper, ServletContext servletContext) {
 
-			_freeMarkerBundleClassloader = freeMarkerBundleClassloader;
 			_objectWrapper = objectWrapper;
 			_servletContext = servletContext;
+
+			_freeMarkerBundleClassloader = templateModelsEntry.getKey();
+			_templateModels = templateModelsEntry.getValue();
 		}
 
 		@Override
@@ -984,6 +994,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		private final ObjectWrapper _objectWrapper;
 		private final ServletContext _servletContext;
 		private TaglibFactory _taglibFactory;
+		private final Map<String, TemplateModel> _templateModels;
 
 	}
 

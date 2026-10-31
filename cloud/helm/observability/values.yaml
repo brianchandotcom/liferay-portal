@@ -539,7 +539,10 @@ centralHub:
     argoWorkflowsURL: ""
     argocdURL: ""
     gitURL: ""
+    monitoringTiles: []
 cloudProvider: ""
+clusterSecretStore:
+    name: ""
 customLabels: {}
 dashboards:
     folder: Liferay
@@ -571,6 +574,35 @@ frontend:
             cpu: 10m
             memory: 32Mi
 fullnameOverride: ""
+gateway:
+    annotations: {}
+    enabled: false
+    name: grafana-gateway
+    provider:
+        envoy:
+            accessControl:
+                allowedCIDRs: []
+                enabled: false
+            backendTrafficPolicySpec: {}
+            className: ""
+            clientTrafficPolicySpec: {}
+            envoyProxy:
+                podAnnotations: {}
+                replicas: 2
+                serviceAnnotations: {}
+            proxyNamespace: envoy-gateway-system
+        gke:
+            backendPolicy: {}
+            className: gke-l7-global-external-managed
+            gatewayPolicy: {}
+            healthCheck: {}
+            loadBalancerIPBlocks:
+                -   35.191.0.0/16
+                -   130.211.0.0/22
+        name: envoy
+    tls:
+        clusterIssuer: ""
+        externalSecretKey: ""
 gcp:
     clusterName: ""
     projectId: ""
@@ -578,6 +610,11 @@ grafana:
     admin:
         existingSecret: grafana-admin-credentials
     datasources: {}
+    envFromSecrets:
+        -   name: grafana-smtp-credentials
+            optional: true
+        -   name: grafana-sso-credentials
+            optional: true
     grafana.ini:
         analytics:
             check_for_plugin_updates: true
@@ -616,6 +653,7 @@ grafana:
         server:
             enable_gzip: true
             read_timeout: 0
+            root_url: "{{ with .Values.route.main.hostnames }}https://{{ first . }}{{ else }}%(protocol)s://%(domain)s:%(http_port)s{{ end }}"
         unified_alerting.state_history.annotations:
             max_age: 10d
             max_annotations_to_keep: 3000
@@ -638,6 +676,23 @@ grafana:
         requests:
             cpu: 100m
             memory: 256Mi
+    route:
+        main:
+            hostnames: []
+            parentRefs:
+                -   group: gateway.networking.k8s.io
+                    kind: Gateway
+                    name: grafana-gateway
+                    sectionName: https
+        redirect:
+            enabled: false
+            hostnames: []
+            httpsRedirect: true
+            parentRefs:
+                -   group: gateway.networking.k8s.io
+                    kind: Gateway
+                    name: grafana-gateway
+                    sectionName: http
     serviceAccount:
         annotations:
             azure.workload.identity/client-id: ""
@@ -681,6 +736,8 @@ grafana:
         logLevel: error
         plugins:
             enabled: true
+    testFramework:
+        enabled: false
 grafana-alloy:
     alloy:
         clustering:
@@ -732,12 +789,13 @@ grafana-alloy:
         create: false
         name: liferay-alloy
 kube-state-metrics:
+    customResourceState:
+        create: false
+        enabled: true
     enabled: true
     extraArgs:
-        -   --metric-allowlist=kube_deployment_status_replicas_ready,kube_namespace_labels,kube_node_info,kube_node_status_condition,kube_pod_container_info,kube_pod_container_resource_limits,kube_pod_container_resource_requests,kube_pod_container_status_restarts_total,kube_statefulset_status_replicas_ready
+        -   --config=/etc/customresourcestate/options.yaml
         -   --v=1
-    metricLabelsAllowlist:
-        -   namespaces=[liferay.com/observable]
     networkPolicy:
         egress:
             -   {}
@@ -757,12 +815,79 @@ kube-state-metrics:
     resources:
         limits:
             cpu: 100m
-            memory: 256Mi
+            memory: 512Mi
         requests:
             cpu: 30m
             memory: 128Mi
     serviceAccount:
         automountServiceAccountToken: false
+kubeStateMetrics:
+    customResources:
+        liferay-backup:
+            cloudProvider: gcp
+            plural: liferaybackups
+            resource:
+                groupVersionKind:
+                    group: backup.liferay.cloud
+                    kind: LiferayBackup
+                    version: v1alpha1
+                labelsFromPath:
+                    name:
+                        -   metadata
+                        -   name
+                    namespace:
+                        -   metadata
+                        -   namespace
+                metrics:
+                    -   each:
+                            gauge:
+                                path:
+                                    -   status
+                                valueFrom:
+                                    -   completionTime
+                            type: Gauge
+                        help: Completion time of the Liferay backup in Unix seconds
+                        name: liferay_backup_completion_time_seconds
+                    -   each:
+                            gauge:
+                                path:
+                                    -   status
+                                valueFrom:
+                                    -   startTime
+                            type: Gauge
+                        help: Start time of the Liferay backup in Unix seconds
+                        name: liferay_backup_start_time_seconds
+                    -   each:
+                            gauge:
+                                labelsFromPath:
+                                    reason:
+                                        -   reason
+                                    type:
+                                        -   type
+                                path:
+                                    -   status
+                                    -   conditions
+                                valueFrom:
+                                    -   status
+                            type: Gauge
+                        help: Liferay backup condition status (1 = True, 0 = False)
+                        name: liferay_backup_status_condition
+    metricAllowlist:
+        kube_deployment_status_replicas_ready: true
+        kube_namespace_labels: true
+        kube_node_info: true
+        kube_node_status_condition: true
+        kube_pod_container_info: true
+        kube_pod_container_resource_limits: true
+        kube_pod_container_resource_requests: true
+        kube_pod_container_status_restarts_total: true
+        kube_statefulset_labels: true
+        kube_statefulset_status_replicas_ready: true
+    metricLabelsAllowlist:
+        namespaces:
+            liferay.com/observable: true
+        statefulsets:
+            helm.sh/chart: true
 nameOverride: ""
 prometheus-node-exporter:
     enabled: true
@@ -812,3 +937,12 @@ rdsExporter:
         requests:
             cpu: 25m
             memory: 64Mi
+smtp:
+    credentialsSecretKey: ""
+    enabled: false
+    secretStoreName: ""
+sso:
+    credentialsSecretKey: ""
+    enabled: false
+    provider: generic_oauth
+    secretStoreName: ""

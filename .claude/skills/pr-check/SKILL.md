@@ -190,6 +190,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Service Registration](validations/branch/service-registration.md)
 
+1. [Typed Property Key](validations/branch/typed-property-key.md)
+
 1. [Transaction Usage](validations/branch/transaction-usage.md)
 
 1. [ConcurrentMapperHashMap Usage](validations/branch/concurrent-mapper-hash-map-usage.md)

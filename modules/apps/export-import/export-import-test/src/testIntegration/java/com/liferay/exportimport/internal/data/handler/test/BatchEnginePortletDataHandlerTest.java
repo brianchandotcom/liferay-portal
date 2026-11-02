@@ -5714,7 +5714,7 @@ public class BatchEnginePortletDataHandlerTest {
 		for (ListTypeEntry listTypeEntry : listTypeEntries) {
 			ListTypeEntry importedListTypeEntry =
 				_listTypeEntryLocalService.
-					getListTypeEntryByExternalReferenceCode(
+					fetchListTypeEntryByExternalReferenceCode(
 						listTypeEntry.getExternalReferenceCode(),
 						listTypeEntry.getCompanyId(),
 						importedListTypeDefinition.getListTypeDefinitionId());

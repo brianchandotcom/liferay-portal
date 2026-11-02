@@ -176,14 +176,6 @@ public class VirtualHostLocalServiceImpl
 	}
 
 	@Override
-	public long getVirtualHostsCount(
-		long excludedLayoutSetId, String[] virtualHostNames) {
-
-		return virtualHostPersistence.countByNotL_H(
-			excludedLayoutSetId, virtualHostNames);
-	}
-
-	@Override
 	public List<VirtualHost> updateVirtualHosts(
 		long companyId, long layoutSetId,
 		TreeMap<String, String> virtualHostnames) {

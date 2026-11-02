@@ -270,10 +270,6 @@ public interface VirtualHostLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVirtualHostsCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getVirtualHostsCount(
-		long excludedLayoutSetId, String[] virtualHostNames);
-
 	/**
 	 * Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -307,4 +303,4 @@ public interface VirtualHostLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1321434399
+// LIFERAY-SERVICE-BUILDER-HASH:1665686198

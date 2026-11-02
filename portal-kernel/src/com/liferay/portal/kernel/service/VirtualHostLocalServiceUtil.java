@@ -292,13 +292,6 @@ public class VirtualHostLocalServiceUtil {
 		return getService().getVirtualHostsCount();
 	}
 
-	public static long getVirtualHostsCount(
-		long excludedLayoutSetId, String[] virtualHostNames) {
-
-		return getService().getVirtualHostsCount(
-			excludedLayoutSetId, virtualHostNames);
-	}
-
 	/**
 	 * Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -332,4 +325,4 @@ public class VirtualHostLocalServiceUtil {
 	private static volatile VirtualHostLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1051235735
+// LIFERAY-SERVICE-BUILDER-HASH:-579059864

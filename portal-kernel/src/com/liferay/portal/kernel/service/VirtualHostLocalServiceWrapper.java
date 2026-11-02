@@ -324,14 +324,6 @@ public class VirtualHostLocalServiceWrapper
 		return _virtualHostLocalService.getVirtualHostsCount();
 	}
 
-	@Override
-	public long getVirtualHostsCount(
-		long excludedLayoutSetId, String[] virtualHostNames) {
-
-		return _virtualHostLocalService.getVirtualHostsCount(
-			excludedLayoutSetId, virtualHostNames);
-	}
-
 	/**
 	 * Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -396,4 +388,4 @@ public class VirtualHostLocalServiceWrapper
 	private VirtualHostLocalService _virtualHostLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-932651249
+// LIFERAY-SERVICE-BUILDER-HASH:1435390029

@@ -1907,7 +1907,8 @@ public class DDMStructureLocalServiceImpl
 			}
 
 			Predicate keywordPredicate = DSLFunctionFactoryUtil.lower(
-				DSLFunctionFactoryUtil.castText(DDMStructureTable.INSTANCE.name)
+				DSLFunctionFactoryUtil.castClobText(
+					DDMStructureTable.INSTANCE.name)
 			).like(
 				keyword
 			).or(

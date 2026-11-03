@@ -147,8 +147,7 @@ public class EditTagsBulkSelectionActionTest {
 	private void _assertTagNames(FileEntry fileEntry, String... tagNames)
 		throws Exception {
 
-		fileEntry = _dlAppLocalService.getFileEntry(
-			fileEntry.getFileEntryId());
+		fileEntry = _dlAppLocalService.getFileEntry(fileEntry.getFileEntryId());
 
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			DLFileEntry.class.getName(),
@@ -158,6 +157,7 @@ public class EditTagsBulkSelectionActionTest {
 		String[] actualTagNames = assetEntry.getTagNames();
 
 		Arrays.sort(actualTagNames);
+
 		Arrays.sort(tagNames);
 
 		Assert.assertArrayEquals(tagNames, actualTagNames);

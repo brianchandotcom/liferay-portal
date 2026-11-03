@@ -2,7 +2,6 @@ definition {
 
 	var dmDocumentTypeName = "File Upload";
 
-
 	@summary = "Default summary"
 	macro gotoAddDocumentTypeCP(dmDocumentTypeName = null) {
 		LexiconEntry.gotoAdd();

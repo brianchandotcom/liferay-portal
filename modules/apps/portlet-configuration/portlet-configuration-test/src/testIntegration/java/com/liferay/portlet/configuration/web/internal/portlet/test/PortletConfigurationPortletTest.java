@@ -337,45 +337,43 @@ public class PortletConfigurationPortletTest {
 			String.valueOf(fileEntry2.getFileEntryId()));
 
 		_updateRolePermissions(
-			DLFileEntry.class.getName(), resourcePrimKeys,
-			Arrays.asList(guestRole.getRoleId()),
 			HashMapBuilder.put(
 				guestRole.getRoleId() + "_ACTION_ADD_DISCUSSION", "true"
 			).put(
 				guestRole.getRoleId() + "_ACTION_VIEW", "true"
-			).build());
+			).build(),
+			DLFileEntry.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId()));
 
 		for (String resourcePrimKey : resourcePrimKeys) {
 			_assertHasResourcePermission(
-				true, DLFileEntry.class.getName(), resourcePrimKey,
-				guestRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
+				ActionKeys.ADD_DISCUSSION, true, DLFileEntry.class.getName(),
+				resourcePrimKey, guestRole.getRoleId());
 			_assertHasResourcePermission(
-				true, DLFileEntry.class.getName(), resourcePrimKey,
-				guestRole.getRoleId(), ActionKeys.VIEW);
+				ActionKeys.VIEW, true, DLFileEntry.class.getName(),
+				resourcePrimKey, guestRole.getRoleId());
 		}
 
 		_updateRolePermissions(
-			DLFileEntry.class.getName(), resourcePrimKeys,
-			Arrays.asList(guestRole.getRoleId()), new HashMap<>());
+			new HashMap<>(), DLFileEntry.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId()));
 
 		for (String resourcePrimKey : resourcePrimKeys) {
 			_assertHasResourcePermission(
-				false, DLFileEntry.class.getName(), resourcePrimKey,
-				guestRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
+				ActionKeys.ADD_DISCUSSION, false, DLFileEntry.class.getName(),
+				resourcePrimKey, guestRole.getRoleId());
 			_assertHasResourcePermission(
-				false, DLFileEntry.class.getName(), resourcePrimKey,
-				guestRole.getRoleId(), ActionKeys.DOWNLOAD);
+				ActionKeys.DOWNLOAD, false, DLFileEntry.class.getName(),
+				resourcePrimKey, guestRole.getRoleId());
 			_assertHasResourcePermission(
-				false, DLFileEntry.class.getName(), resourcePrimKey,
-				guestRole.getRoleId(), ActionKeys.VIEW);
+				ActionKeys.VIEW, false, DLFileEntry.class.getName(),
+				resourcePrimKey, guestRole.getRoleId());
 		}
 	}
 
 	@Test
 	@TestInfo("LPD-113588")
-	public void testUpdateRolePermissionsInBulkForDLFolders()
-		throws Exception {
-
+	public void testUpdateRolePermissionsInBulkForDLFolders() throws Exception {
 		Folder folder1 = _addFolder();
 		Folder folder2 = _addFolder();
 
@@ -389,51 +387,51 @@ public class PortletConfigurationPortletTest {
 			String.valueOf(folder2.getFolderId()));
 
 		_updateRolePermissions(
-			DLFolder.class.getName(), resourcePrimKeys,
-			Arrays.asList(guestRole.getRoleId()),
 			HashMapBuilder.put(
 				guestRole.getRoleId() + "_ACTION_VIEW", "true"
-			).build());
+			).build(),
+			DLFolder.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId()));
 
 		for (String resourcePrimKey : resourcePrimKeys) {
 			_assertHasResourcePermission(
-				true, DLFolder.class.getName(), resourcePrimKey,
-				guestRole.getRoleId(), ActionKeys.VIEW);
+				ActionKeys.VIEW, true, DLFolder.class.getName(),
+				resourcePrimKey, guestRole.getRoleId());
 		}
 
 		_removeViewPermission(folder2, guestRole);
 
 		_updateRolePermissions(
-			DLFolder.class.getName(), resourcePrimKeys,
-			Arrays.asList(guestRole.getRoleId()),
 			HashMapBuilder.put(
 				guestRole.getRoleId() + "_ACTION_VIEW", "indeterminate"
-			).build());
+			).build(),
+			DLFolder.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId()));
 
 		_assertHasResourcePermission(
-			true, DLFolder.class.getName(), resourcePrimKeys.get(0),
-			guestRole.getRoleId(), ActionKeys.VIEW);
+			ActionKeys.VIEW, false, DLFolder.class.getName(),
+			resourcePrimKeys.get(1), guestRole.getRoleId());
 		_assertHasResourcePermission(
-			false, DLFolder.class.getName(), resourcePrimKeys.get(1),
-			guestRole.getRoleId(), ActionKeys.VIEW);
+			ActionKeys.VIEW, true, DLFolder.class.getName(),
+			resourcePrimKeys.get(0), guestRole.getRoleId());
 
 		Role userRole = _roleLocalService.getRole(
 			_company.getCompanyId(), RoleConstants.USER);
 
 		_updateRolePermissions(
-			DLFolder.class.getName(), resourcePrimKeys,
-			Arrays.asList(guestRole.getRoleId(), userRole.getRoleId()),
 			HashMapBuilder.put(
 				userRole.getRoleId() + "_ACTION_VIEW", "true"
-			).build());
+			).build(),
+			DLFolder.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId(), userRole.getRoleId()));
 
 		for (String resourcePrimKey : resourcePrimKeys) {
 			_assertHasResourcePermission(
-				false, DLFolder.class.getName(), resourcePrimKey,
-				guestRole.getRoleId(), ActionKeys.VIEW);
+				ActionKeys.VIEW, false, DLFolder.class.getName(),
+				resourcePrimKey, guestRole.getRoleId());
 			_assertHasResourcePermission(
-				true, DLFolder.class.getName(), resourcePrimKey,
-				userRole.getRoleId(), ActionKeys.VIEW);
+				ActionKeys.VIEW, true, DLFolder.class.getName(),
+				resourcePrimKey, userRole.getRoleId());
 		}
 	}
 
@@ -530,8 +528,8 @@ public class PortletConfigurationPortletTest {
 	}
 
 	private void _assertHasResourcePermission(
-			boolean expected, String name, String primKey, long roleId,
-			String actionId)
+			String actionId, boolean expected, String name, String primKey,
+			long roleId)
 		throws Exception {
 
 		Assert.assertEquals(
@@ -666,12 +664,12 @@ public class PortletConfigurationPortletTest {
 		}
 
 		return _getMockActionRequest(
-			Layout.class.getName(), plids, roleIds, actionParameters);
+			actionParameters, Layout.class.getName(), plids, roleIds);
 	}
 
 	private MockActionRequest _getMockActionRequest(
-			String modelResource, List<String> resourcePrimKeys,
-			List<Long> roleIds, Map<String, String> actionParameters)
+			Map<String, String> actionParameters, String modelResource,
+			List<String> resourcePrimKeys, List<Long> roleIds)
 		throws Exception {
 
 		MockActionRequest mockActionRequest = new MockActionRequest();
@@ -975,24 +973,24 @@ public class PortletConfigurationPortletTest {
 			preferenceMap, _getArchivedPortletPreferences(portletItem));
 	}
 
-	private static final String _CLASS_NAME_PORTLET_PREFERENCES =
-		com.liferay.portal.kernel.model.PortletPreferences.class.getName();
-
-	@Inject
-	private static PortletLocalService _portletLocalService;
-
 	private void _updateRolePermissions(
-			String modelResource, List<String> resourcePrimKeys,
-			List<Long> roleIds, Map<String, String> actionParameters)
+			Map<String, String> actionParameters, String modelResource,
+			List<String> resourcePrimKeys, List<Long> roleIds)
 		throws Exception {
 
 		ReflectionTestUtil.invoke(
 			_portlet, "updateRolePermissions",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockActionRequest(
-				modelResource, resourcePrimKeys, roleIds, actionParameters),
+				actionParameters, modelResource, resourcePrimKeys, roleIds),
 			new MockActionResponse());
 	}
+
+	private static final String _CLASS_NAME_PORTLET_PREFERENCES =
+		com.liferay.portal.kernel.model.PortletPreferences.class.getName();
+
+	@Inject
+	private static PortletLocalService _portletLocalService;
 
 	private static com.liferay.portal.kernel.model.Portlet
 		_serviceBuilderPortlet;
@@ -1003,13 +1001,13 @@ public class PortletConfigurationPortletTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Locale _locale;
-
-	@Inject
-	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private Portal _portal;

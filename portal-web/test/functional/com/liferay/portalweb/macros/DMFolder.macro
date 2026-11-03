@@ -536,7 +536,6 @@ definition {
 		PortletEntry.save();
 	}
 
-
 	@summary = "Default summary"
 	macro subscribePG() {
 		Click(locator1 = "Icon#INFO_DM");

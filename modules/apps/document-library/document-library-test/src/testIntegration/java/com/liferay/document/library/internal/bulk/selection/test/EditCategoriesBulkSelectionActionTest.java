@@ -10,9 +10,9 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
-import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -90,9 +90,7 @@ public class EditCategoriesBulkSelectionActionTest {
 
 	@Test
 	@TestInfo({"LPD-113588", "LPS-94956"})
-	public void testExecuteWithAppendRemovingCommonCategory()
-		throws Exception {
-
+	public void testExecuteWithAppendRemovingCommonCategory() throws Exception {
 		FileEntry fileEntry1 = _addFileEntry(
 			_category1.getCategoryId(), _category2.getCategoryId());
 		FileEntry fileEntry2 = _addFileEntry(
@@ -130,6 +128,7 @@ public class EditCategoriesBulkSelectionActionTest {
 		long[] actualCategoryIds = assetEntry.getCategoryIds();
 
 		Arrays.sort(actualCategoryIds);
+
 		Arrays.sort(categoryIds);
 
 		Assert.assertArrayEquals(categoryIds, actualCategoryIds);

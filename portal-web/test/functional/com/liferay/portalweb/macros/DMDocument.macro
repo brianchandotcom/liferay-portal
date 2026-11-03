@@ -1108,7 +1108,6 @@ definition {
 			value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 	}
 
-
 	@summary = "Default summary"
 	macro configureCacheControl(uncacheableMimeTypes = null, maxAge = null, cacheControl = null) {
 		if (isSet(systemSettingsInstanceScope)) {
@@ -1579,7 +1578,6 @@ definition {
 
 		DownloadTempFile();
 	}
-
 
 	@summary = "Default summary"
 	macro editCmd(dmDocumentFileNameEdit = null, dmDocumentTypeEdit = null, dmDocumentTitleEdit = null, dmDocumentFileEdit = null, dmDocumentDescriptionEdit = null) {
@@ -2432,7 +2430,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-
 	@summary = "Default summary"
 	macro removeOldFriendlyURL(oldFriendlyURL = null) {
 		MouseOver(
@@ -3104,7 +3101,6 @@ definition {
 		}
 	}
 
-
 	@summary = "Default summary"
 	macro viewActionDetailsInKebabMenu() {
 		for (var menuItem : list ${menuItem}) {
@@ -3239,7 +3235,6 @@ definition {
 				value1 = ${categoryName});
 		}
 	}
-
 
 	@summary = "Default summary"
 	macro viewCheckedinCP(dmRepositoryName = null, dmDocumentVersionNumber = null) {
@@ -4036,7 +4031,6 @@ definition {
 			fail("The configured cache control property can be viewed in the console.");
 		}
 	}
-
 
 	@summary = "Default summary"
 	macro viewNoFilesViaMG(mgImagePreview = null, mgDocumentTitle = null) {

@@ -212,15 +212,15 @@ public class EditEntryMVCActionCommandTest {
 	@Test
 	@TestInfo("LPD-113588")
 	public void testMoveEntries() throws Exception {
+		FileEntry fileEntry1 = _addFileEntry();
+		FileEntry fileEntry2 = _addFileEntry();
+		FileEntry fileEntry3 = _addFileEntry();
+
 		Folder folder = _dlAppLocalService.addFolder(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext());
-
-		FileEntry fileEntry1 = _addFileEntry();
-		FileEntry fileEntry2 = _addFileEntry();
-		FileEntry fileEntry3 = _addFileEntry();
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -243,16 +243,14 @@ public class EditEntryMVCActionCommandTest {
 				).build()),
 			new MockActionResponse());
 
-		Assert.assertEquals(
-			folder.getFolderId(), _getFolderId(fileEntry1));
-		Assert.assertEquals(
-			folder.getFolderId(), _getFolderId(fileEntry2));
+		Assert.assertEquals(folder.getFolderId(), _getFolderId(fileEntry1));
+		Assert.assertEquals(folder.getFolderId(), _getFolderId(fileEntry2));
 		Assert.assertEquals(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			_getFolderId(fileEntry3));
 	}
 
-	private FileEntry _addFileEntry() throws PortalException {
+	private FileEntry _addFileEntry() throws Exception {
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -260,9 +258,8 @@ public class EditEntryMVCActionCommandTest {
 			null, null, ServiceContextTestUtil.getServiceContext());
 	}
 
-	private long _getFolderId(FileEntry fileEntry) throws PortalException {
-		fileEntry = _dlAppLocalService.getFileEntry(
-			fileEntry.getFileEntryId());
+	private long _getFolderId(FileEntry fileEntry) throws Exception {
+		fileEntry = _dlAppLocalService.getFileEntry(fileEntry.getFileEntryId());
 
 		return fileEntry.getFolderId();
 	}

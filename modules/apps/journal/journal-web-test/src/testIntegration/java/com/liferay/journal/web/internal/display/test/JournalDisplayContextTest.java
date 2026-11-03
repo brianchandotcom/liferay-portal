@@ -112,10 +112,8 @@ public class JournalDisplayContextTest {
 		List<DDMStructure> ddmStructures = ReflectionTestUtil.invoke(
 			journalDisplayContext, "getDDMStructures", new Class<?>[0]);
 
-		Assert.assertTrue(
-			ddmStructures.toString(), ddmStructures.contains(ddmStructure1));
-		Assert.assertTrue(
-			ddmStructures.toString(), ddmStructures.contains(ddmStructure2));
+		Assert.assertTrue(ddmStructures.contains(ddmStructure1));
+		Assert.assertTrue(ddmStructures.contains(ddmStructure2));
 
 		Assert.assertArrayEquals(
 			new long[0],

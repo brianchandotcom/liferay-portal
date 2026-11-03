@@ -99,7 +99,6 @@ public class DeleteDataDefinitionMVCActionCommandTest {
 				new MockLiferayPortletActionResponse()));
 
 		Assert.assertTrue(
-			String.valueOf(portletException.getCause()),
 			portletException.getCause() instanceof
 				RequiredStructureException.
 					MustNotDeleteStructureReferencedByStructureLinks);

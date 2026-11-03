@@ -287,34 +287,7 @@ public class JournalDisplayContextTest {
 
 	@Test
 	@TestInfo("LPD-113777")
-	public void testGetSearchContainerWithTypeParameter() throws Exception {
-		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
-			_journalFolderLocalService);
-
-		JournalFolder journalFolder = journalFolderFixture.addFolder(
-			_group.getGroupId(), RandomTestUtil.randomString());
-
-		JournalArticle journalArticle = _addJournalArticleVersions();
-
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			"versions");
-
-		Assert.assertEquals(
-			Arrays.asList(1.2, 1.1, 1.0),
-			TransformUtil.transform(
-				searchContainer.getResults(),
-				result -> ((JournalArticle)result).getVersion()));
-
-		searchContainer = _getSearchContainer("web-content");
-
-		Assert.assertEquals(
-			Arrays.asList(journalFolder, journalArticle),
-			searchContainer.getResults());
-	}
-
-	@Test
-	@TestInfo("LPD-113777")
-	public void testGetSearchContainerWithTypeParameterAndIndexAllArticleVersionsDisabled()
+	public void testGetSearchContainerWhenIndexAllArticleVersionsIsDisabled()
 		throws Exception {
 
 		try (CompanyConfigurationTemporarySwapper
@@ -346,6 +319,33 @@ public class JournalDisplayContextTest {
 				Arrays.asList(journalFolder, journalArticle),
 				searchContainer.getResults());
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-113777")
+	public void testGetSearchContainerWithTypeParameter() throws Exception {
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		JournalFolder journalFolder = journalFolderFixture.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		JournalArticle journalArticle = _addJournalArticleVersions();
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			"versions");
+
+		Assert.assertEquals(
+			Arrays.asList(1.2, 1.1, 1.0),
+			TransformUtil.transform(
+				searchContainer.getResults(),
+				result -> ((JournalArticle)result).getVersion()));
+
+		searchContainer = _getSearchContainer("web-content");
+
+		Assert.assertEquals(
+			Arrays.asList(journalFolder, journalArticle),
+			searchContainer.getResults());
 	}
 
 	@Test
@@ -448,9 +448,7 @@ public class JournalDisplayContextTest {
 			JavaConstants.JAKARTA_PORTLET_REQUEST,
 			mockLiferayPortletRenderRequest);
 
-		List<String> labels = new ArrayList<>();
-
-		List<Map<String, Object>> dropdownGroupItems =
+		List<Map<String, Object>> articleActionDropdownItems =
 			ReflectionTestUtil.invoke(
 				mockLiferayPortletRenderRequest.getAttribute(
 					"com.liferay.journal.web.internal.display.context." +
@@ -458,7 +456,11 @@ public class JournalDisplayContextTest {
 				"getArticleActionDropdownItems",
 				new Class<?>[] {JournalArticle.class}, journalArticle);
 
-		for (Map<String, Object> dropdownGroupItem : dropdownGroupItems) {
+		List<String> labels = new ArrayList<>();
+
+		for (Map<String, Object> dropdownGroupItem :
+				articleActionDropdownItems) {
+
 			List<Map<String, Object>> dropdownItems =
 				(List<Map<String, Object>>)dropdownGroupItem.get("items");
 

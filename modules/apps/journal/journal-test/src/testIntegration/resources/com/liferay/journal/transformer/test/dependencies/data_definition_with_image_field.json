@@ -22,7 +22,8 @@
 			},
 			"localizable": true,
 			"name": "Image27403159",
-			"nestedDataDefinitionFields": [],
+			"nestedDataDefinitionFields": [
+			],
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
@@ -33,7 +34,8 @@
 		}
 	],
 	"defaultDataLayout": {
-		"dataLayoutFields": {},
+		"dataLayoutFields": {
+		},
 		"dataLayoutPages": [
 			{
 				"dataLayoutRows": [
@@ -56,15 +58,18 @@
 				}
 			}
 		],
-		"dataRules": [],
-		"description": {},
+		"dataRules": [
+		],
+		"description": {
+		},
 		"name": {
 			"en_US": "Image"
 		},
 		"paginationMode": "single-page"
 	},
 	"defaultLanguageId": "en_US",
-	"description": {},
+	"description": {
+	},
 	"name": {
 		"en_US": "Image"
 	},

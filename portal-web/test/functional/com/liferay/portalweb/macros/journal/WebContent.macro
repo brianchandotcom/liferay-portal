@@ -177,7 +177,6 @@ definition {
 		}
 	}
 
-
 	@summary = "Default summary"
 	macro addFailWithoutRequiredCategoryAssetTypeCP(vocabularyName = null) {
 		PortletEntry.inputTitle(title = "Web Content Title");
@@ -2343,7 +2342,6 @@ definition {
 			locator1 = "WCEditWebContent#ENTRY_LIST_AUTHOR",
 			value1 = ${author});
 	}
-
 
 	@summary = "Default summary"
 	macro viewFieldRepeated(ddlRecordFieldData = null, fieldName = null) {

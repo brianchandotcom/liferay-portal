@@ -34,6 +34,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -54,6 +55,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,12 +79,6 @@ public class DBCopyTablesProcessTest {
 			System.getProperty("database.postgresql.username"),
 			System.getProperty("database.postgresql.password"),
 			StringPool.BLANK);
-
-		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
-
-			_sourceTableName = dbInspector.normalizeName("TestTable");
-		}
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
@@ -110,7 +106,8 @@ public class DBCopyTablesProcessTest {
 
 									return databaseMetaData.getColumns(
 										catalog, schemaPattern,
-										_sourceTableName, columnNamePattern);
+										"%" + _sourceTableName,
+										columnNamePattern);
 								}
 
 							},
@@ -147,6 +144,15 @@ public class DBCopyTablesProcessTest {
 		AutoBatchPreparedStatementUtil.stop();
 
 		DataSourceFactoryUtil.destroyDataSource(_targetDataSource);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			_sourceTableName = dbInspector.normalizeName("TestTable");
+		}
 	}
 
 	@After
@@ -449,6 +455,50 @@ public class DBCopyTablesProcessTest {
 	@TestInfo("LPD-110099")
 	public void testRunWithCustomTablesInPartition() throws Exception {
 		_testInPartition(this::_testRunWithCustomTables);
+	}
+
+	@Test
+	@TestInfo("LPD-110099")
+	public void testRunWithReservedWords() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			_sourceTableName = dbInspector.normalizeName("verbose");
+		}
+
+		try {
+			_sourceDB.runSQL(
+				"create table verbose (id INTEGER, freeze INTEGER)");
+			_sourceDB.runSQL("insert into verbose (id, freeze) values (1, 2)");
+
+			new DBCopyTablesProcess(
+				_sourceDataSource, _targetDataSource
+			).run();
+
+			try (Connection connection = _targetDataSource.getConnection();
+
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select \"id\", \"freeze\" from \"verbose\"");
+
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				Assert.assertTrue(resultSet.next());
+				Assert.assertEquals(2, resultSet.getInt("freeze"));
+				Assert.assertEquals(1, resultSet.getInt("id"));
+				Assert.assertFalse(resultSet.next());
+			}
+		}
+		finally {
+			_sourceDB.runSQL("DROP_TABLE_IF_EXISTS(verbose)");
+
+			try (Connection connection = _targetDataSource.getConnection();
+
+				Statement statement = connection.createStatement()) {
+
+				statement.execute("drop table if exists \"verbose\"");
+			}
+		}
 	}
 
 	@Test

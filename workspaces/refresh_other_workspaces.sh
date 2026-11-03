@@ -33,13 +33,13 @@ function refresh_workspaces {
 			--archive \
 			--delete \
 			--exclude .github \
+			--exclude /README.md \
 			--exclude /package.json \
 			--exclude /playwright/.env.local \
 			--exclude /playwright/env \
 			--exclude /playwright/tests \
 			--exclude /yarn.lock \
 			--exclude Jenkinsfile \
-			--exclude README.md \
 			--exclude build.gradle \
 			--exclude client-extensions \
 			--exclude docker-compose-*.yaml \

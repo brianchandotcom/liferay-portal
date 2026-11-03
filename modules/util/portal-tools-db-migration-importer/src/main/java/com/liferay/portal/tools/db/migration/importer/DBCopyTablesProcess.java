@@ -23,6 +23,8 @@ import com.liferay.portal.tools.db.migration.importer.jdbc.ConnectionConfigUtil;
 
 import java.math.BigDecimal;
 
+import java.nio.charset.StandardCharsets;
+
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -95,10 +97,12 @@ public class DBCopyTablesProcess {
 
 			Statement statement = targetConnection.createStatement()) {
 
+			DatabaseMetaData databaseMetaData = sourceConnection.getMetaData();
+
 			Map<String, List<String>> columnDefinitionsMap = new TreeMap<>(
 				String.CASE_INSENSITIVE_ORDER);
-
-			DatabaseMetaData databaseMetaData = sourceConnection.getMetaData();
+			Set<String> longNameTableNames = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
 
 			try (ResultSet resultSet = databaseMetaData.getColumns(
 					sourceConnection.getCatalog(), sourceConnection.getSchema(),
@@ -121,6 +125,24 @@ public class DBCopyTablesProcess {
 							targetColumnNames,
 							targetColumnName -> StringUtil.equalsIgnoreCase(
 								targetColumnName, columnName))) {
+
+						continue;
+					}
+
+					if (targetColumnNames == null) {
+						if (_isLongName(columnName) || _isLongName(tableName)) {
+							longNameTableNames.add(tableName);
+
+							continue;
+						}
+					}
+					else if (_isLongName(columnName)) {
+						System.out.println(
+							StringBundler.concat(
+								"Unable to add column ", columnName,
+								" to table ", tableName, _partitionMessage,
+								" because its name is longer than ",
+								_POSTGRESQL_NAME_MAX_LENGTH, " bytes"));
 
 						continue;
 					}
@@ -154,6 +176,17 @@ public class DBCopyTablesProcess {
 								" add ", columnDefinition));
 					}
 				}
+			}
+
+			for (String longNameTableName : longNameTableNames) {
+				columnDefinitionsMap.remove(longNameTableName);
+
+				System.out.println(
+					StringBundler.concat(
+						"Unable to create table ", longNameTableName,
+						_partitionMessage, " because its name or the name of ",
+						"one of its columns is longer than ",
+						_POSTGRESQL_NAME_MAX_LENGTH, " bytes"));
 			}
 
 			for (Map.Entry<String, List<String>> entry :
@@ -673,6 +706,16 @@ public class DBCopyTablesProcess {
 		return views;
 	}
 
+	private boolean _isLongName(String name) {
+		byte[] bytes = name.getBytes(StandardCharsets.UTF_8);
+
+		if (bytes.length > _POSTGRESQL_NAME_MAX_LENGTH) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _loadColumnNamesMap(
 			Map<String, List<String>> columnNamesMap,
 			Map<String, Integer> columnTypes, DataSource dataSource)
@@ -807,6 +850,8 @@ public class DBCopyTablesProcess {
 			throw new IllegalArgumentException(sb.toString());
 		}
 	}
+
+	private static final int _POSTGRESQL_NAME_MAX_LENGTH = 63;
 
 	private static final int _SQL_TYPE_ORACLE_BINARY_DOUBLE = 101;
 

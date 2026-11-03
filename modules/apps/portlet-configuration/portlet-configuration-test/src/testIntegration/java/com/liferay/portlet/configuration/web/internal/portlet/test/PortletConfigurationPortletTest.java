@@ -6,6 +6,10 @@
 package com.liferay.portlet.configuration.web.internal.portlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,13 +25,17 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -40,9 +48,11 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -70,6 +80,7 @@ import jakarta.portlet.ResourceResponse;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -304,6 +315,145 @@ public class PortletConfigurationPortletTest {
 		_assertResourcePermissions(plids, roleIds);
 	}
 
+	@Test
+	@TestInfo("LPD-113588")
+	public void testUpdateRolePermissionsInBulkForDLFileEntries()
+		throws Exception {
+
+		FileEntry fileEntry1 = _addFileEntry();
+		FileEntry fileEntry2 = _addFileEntry();
+
+		Role guestRole = _roleLocalService.getRole(
+			_company.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_company.getCompanyId(), DLFileEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(fileEntry1.getFileEntryId()), guestRole.getRoleId(),
+			ActionKeys.VIEW);
+
+		List<String> resourcePrimKeys = Arrays.asList(
+			String.valueOf(fileEntry1.getFileEntryId()),
+			String.valueOf(fileEntry2.getFileEntryId()));
+
+		_updateRolePermissions(
+			DLFileEntry.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId()),
+			HashMapBuilder.put(
+				guestRole.getRoleId() + "_ACTION_ADD_DISCUSSION", "true"
+			).put(
+				guestRole.getRoleId() + "_ACTION_VIEW", "true"
+			).build());
+
+		for (String resourcePrimKey : resourcePrimKeys) {
+			_assertHasResourcePermission(
+				true, DLFileEntry.class.getName(), resourcePrimKey,
+				guestRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
+			_assertHasResourcePermission(
+				true, DLFileEntry.class.getName(), resourcePrimKey,
+				guestRole.getRoleId(), ActionKeys.VIEW);
+		}
+
+		_updateRolePermissions(
+			DLFileEntry.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId()), new HashMap<>());
+
+		for (String resourcePrimKey : resourcePrimKeys) {
+			_assertHasResourcePermission(
+				false, DLFileEntry.class.getName(), resourcePrimKey,
+				guestRole.getRoleId(), ActionKeys.ADD_DISCUSSION);
+			_assertHasResourcePermission(
+				false, DLFileEntry.class.getName(), resourcePrimKey,
+				guestRole.getRoleId(), ActionKeys.DOWNLOAD);
+			_assertHasResourcePermission(
+				false, DLFileEntry.class.getName(), resourcePrimKey,
+				guestRole.getRoleId(), ActionKeys.VIEW);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-113588")
+	public void testUpdateRolePermissionsInBulkForDLFolders()
+		throws Exception {
+
+		Folder folder1 = _addFolder();
+		Folder folder2 = _addFolder();
+
+		Role guestRole = _roleLocalService.getRole(
+			_company.getCompanyId(), RoleConstants.GUEST);
+
+		_removeViewPermission(folder2, guestRole);
+
+		List<String> resourcePrimKeys = Arrays.asList(
+			String.valueOf(folder1.getFolderId()),
+			String.valueOf(folder2.getFolderId()));
+
+		_updateRolePermissions(
+			DLFolder.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId()),
+			HashMapBuilder.put(
+				guestRole.getRoleId() + "_ACTION_VIEW", "true"
+			).build());
+
+		for (String resourcePrimKey : resourcePrimKeys) {
+			_assertHasResourcePermission(
+				true, DLFolder.class.getName(), resourcePrimKey,
+				guestRole.getRoleId(), ActionKeys.VIEW);
+		}
+
+		_removeViewPermission(folder2, guestRole);
+
+		_updateRolePermissions(
+			DLFolder.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId()),
+			HashMapBuilder.put(
+				guestRole.getRoleId() + "_ACTION_VIEW", "indeterminate"
+			).build());
+
+		_assertHasResourcePermission(
+			true, DLFolder.class.getName(), resourcePrimKeys.get(0),
+			guestRole.getRoleId(), ActionKeys.VIEW);
+		_assertHasResourcePermission(
+			false, DLFolder.class.getName(), resourcePrimKeys.get(1),
+			guestRole.getRoleId(), ActionKeys.VIEW);
+
+		Role userRole = _roleLocalService.getRole(
+			_company.getCompanyId(), RoleConstants.USER);
+
+		_updateRolePermissions(
+			DLFolder.class.getName(), resourcePrimKeys,
+			Arrays.asList(guestRole.getRoleId(), userRole.getRoleId()),
+			HashMapBuilder.put(
+				userRole.getRoleId() + "_ACTION_VIEW", "true"
+			).build());
+
+		for (String resourcePrimKey : resourcePrimKeys) {
+			_assertHasResourcePermission(
+				false, DLFolder.class.getName(), resourcePrimKey,
+				guestRole.getRoleId(), ActionKeys.VIEW);
+			_assertHasResourcePermission(
+				true, DLFolder.class.getName(), resourcePrimKey,
+				userRole.getRoleId(), ActionKeys.VIEW);
+		}
+	}
+
+	private FileEntry _addFileEntry() throws Exception {
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(), null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	private Folder _addFolder() throws Exception {
+		return _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
 	private Layout _addLayout(Map<String, String[]> preferenceMap)
 		throws Exception {
 
@@ -377,6 +527,18 @@ public class PortletConfigurationPortletTest {
 				portletItem.getPortletItemId(),
 				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, 0,
 				_serviceBuilderPortlet.getRootPortletId()));
+	}
+
+	private void _assertHasResourcePermission(
+			boolean expected, String name, String primKey, long roleId,
+			String actionId)
+		throws Exception {
+
+		Assert.assertEquals(
+			expected,
+			_resourcePermissionLocalService.hasResourcePermission(
+				_company.getCompanyId(), name,
+				ResourceConstants.SCOPE_INDIVIDUAL, primKey, roleId, actionId));
 	}
 
 	private void _assertPortletItemNames(String... names) {
@@ -495,13 +657,31 @@ public class PortletConfigurationPortletTest {
 			List<String> plids, List<Long> roleIds)
 		throws Exception {
 
+		Map<String, String> actionParameters = new HashMap<>();
+
+		for (long roleId : roleIds) {
+			actionParameters.put(roleId + "_ACTION_DELETE", "");
+			actionParameters.put(roleId + "_ACTION_UPDATE", "");
+			actionParameters.put(roleId + "_ACTION_VIEW", "");
+		}
+
+		return _getMockActionRequest(
+			Layout.class.getName(), plids, roleIds, actionParameters);
+	}
+
+	private MockActionRequest _getMockActionRequest(
+			String modelResource, List<String> resourcePrimKeys,
+			List<Long> roleIds, Map<String, String> actionParameters)
+		throws Exception {
+
 		MockActionRequest mockActionRequest = new MockActionRequest();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setParameter(
-			"resourcePrimKey", StringUtil.merge(plids, StringPool.COMMA));
+			"resourcePrimKey",
+			StringUtil.merge(resourcePrimKeys, StringPool.COMMA));
 
 		mockActionRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
@@ -509,23 +689,17 @@ public class PortletConfigurationPortletTest {
 		mockActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		mockActionRequest.setParameter("modelResource", Layout.class.getName());
+		mockActionRequest.setParameter("modelResource", modelResource);
 		mockActionRequest.setParameter(
 			"resourceGroupId", String.valueOf(_group.getGroupId()));
 
-		String roleSearchContainerPrimaryKeys = StringPool.BLANK;
-
-		for (long roleId : roleIds) {
-			mockActionRequest.setParameter(roleId + "_ACTION_DELETE", "");
-			mockActionRequest.setParameter(roleId + "_ACTION_UPDATE", "");
-			mockActionRequest.setParameter(roleId + "_ACTION_VIEW", "");
-
-			roleSearchContainerPrimaryKeys = StringBundler.concat(
-				roleSearchContainerPrimaryKeys, roleId, StringPool.COMMA);
+		for (Map.Entry<String, String> entry : actionParameters.entrySet()) {
+			mockActionRequest.setParameter(entry.getKey(), entry.getValue());
 		}
 
 		mockActionRequest.setParameter(
-			"rolesSearchContainerPrimaryKeys", roleSearchContainerPrimaryKeys);
+			"rolesSearchContainerPrimaryKeys",
+			StringUtil.merge(roleIds, StringPool.COMMA));
 
 		return mockActionRequest;
 	}
@@ -620,6 +794,16 @@ public class PortletConfigurationPortletTest {
 			_portlet, methodName,
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			mockActionRequest, new MockActionResponse());
+	}
+
+	private void _removeViewPermission(Folder folder, Role role)
+		throws Exception {
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_company.getCompanyId(), DLFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(folder.getFolderId()), role.getRoleId(),
+			ActionKeys.VIEW);
 	}
 
 	private void _testCheckPermissionsIsNotOverridden() throws Exception {
@@ -797,6 +981,19 @@ public class PortletConfigurationPortletTest {
 	@Inject
 	private static PortletLocalService _portletLocalService;
 
+	private void _updateRolePermissions(
+			String modelResource, List<String> resourcePrimKeys,
+			List<Long> roleIds, Map<String, String> actionParameters)
+		throws Exception {
+
+		ReflectionTestUtil.invoke(
+			_portlet, "updateRolePermissions",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockActionRequest(
+				modelResource, resourcePrimKeys, roleIds, actionParameters),
+			new MockActionResponse());
+	}
+
 	private static com.liferay.portal.kernel.model.Portlet
 		_serviceBuilderPortlet;
 	private static ServiceRegistration<?> _serviceRegistration;
@@ -810,6 +1007,9 @@ public class PortletConfigurationPortletTest {
 	private Group _group;
 
 	private Locale _locale;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private Portal _portal;
@@ -827,6 +1027,9 @@ public class PortletConfigurationPortletTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

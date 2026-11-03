@@ -6,13 +6,13 @@
 package com.liferay.learn;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 
 import java.text.Normalizer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -64,35 +63,20 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 
 		String authorization = "Bearer " + jwt.getTokenValue();
 
-		String newFriendlyURLPath = _getFriendlyURLPath(
+		String friendlyURLPath = _getFriendlyURLPath(
 			authorization, dtoKey, valuesJSONObject);
 
-		long objectEntryId = objectEntryJSONObject.getLong("id");
-
 		EntryType entryType = _entryTypes.get(dtoKey);
+		long objectEntryId = objectEntryJSONObject.getLong("id");
 
 		_patchFriendlyURL(
 			authorization, _getCurrentFriendlyURLPath(dtoKey, jsonObject),
-			objectEntryId, newFriendlyURLPath, entryType.getRESTPath());
+			friendlyURLPath, objectEntryId, entryType.getRESTPath());
 
 		_propagateFriendlyURL(
-			authorization, dtoKey, objectEntryId, newFriendlyURLPath);
+			authorization, dtoKey, friendlyURLPath, objectEntryId);
 
 		return new ResponseEntity<>(json, HttpStatus.ACCEPTED);
-	}
-
-	private List<String> _getChildDTOKeys(String dtoKey) {
-		List<String> childDTOKeys = new ArrayList<>();
-
-		for (Map.Entry<String, EntryType> entry : _entryTypes.entrySet()) {
-			EntryType entryType = entry.getValue();
-
-			if (dtoKey.equals(entryType.getParentDTOKey())) {
-				childDTOKeys.add(entry.getKey());
-			}
-		}
-
-		return childDTOKeys;
 	}
 
 	private String _getCurrentFriendlyURLPath(
@@ -121,7 +105,6 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		String authorization, String dtoKey, JSONObject valuesJSONObject) {
 
 		EntryType entryType = _entryTypes.get(dtoKey);
-
 		String slug = _normalizeSlug(valuesJSONObject.optString("title", ""));
 
 		if (entryType.getFKFieldName() == null) {
@@ -151,10 +134,10 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 				).build(
 				).toUri()));
 
-		String parentPath = _getFriendlyURLPath(
+		String parentFriendlyURLPath = _getFriendlyURLPath(
 			authorization, entryType.getParentDTOKey(), parentJSONObject);
 
-		return parentPath + "/" + slug;
+		return parentFriendlyURLPath + "/" + slug;
 	}
 
 	private boolean _isTitleChanged(
@@ -173,53 +156,60 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		return !currentTitle.equals(valuesJSONObject.optString("title", ""));
 	}
 
-	private String _normalizeSlug(String value) {
-		String slug = Normalizer.normalize(value, Normalizer.Form.NFD);
+	private String _normalizeSlug(String title) {
+		String slug = Normalizer.normalize(title, Normalizer.Form.NFD);
 
 		slug = slug.replaceAll("\\p{M}", "");
-
 		slug = StringUtil.toLowerCase(slug);
-
 		slug = slug.replaceAll("[^a-z0-9_-]+", "-");
-
 		slug = slug.replaceAll("-+", "-");
 
 		return slug.replaceAll("^-|-$", "");
 	}
 
 	private void _patchFriendlyURL(
-		String authorization, String currentPath, long id, String newPath,
-		String restPath) {
+		String authorization, String currentFriendlyURLPath,
+		String friendlyURLPath, long objectEntryId, String restPath) {
 
-		if (newPath.equals(currentPath)) {
+		if (friendlyURLPath.equals(currentFriendlyURLPath)) {
 			return;
 		}
-
-		UriComponents uriComponents = UriComponentsBuilder.fromPath(
-			restPath
-		).pathSegment(
-			String.valueOf(id)
-		).build();
 
 		patch(
 			authorization,
 			new JSONObject(
 			).put(
-				"friendlyUrlPath", newPath
+				"friendlyUrlPath", friendlyURLPath
 			).put(
 				"friendlyUrlPath_i18n",
 				new JSONObject(
 				).put(
-					"en_US", newPath
+					"en_US", friendlyURLPath
 				)
 			).toString(),
-			uriComponents.toUri());
+			UriComponentsBuilder.fromPath(
+				restPath
+			).pathSegment(
+				String.valueOf(objectEntryId)
+			).build(
+			).toUri());
 	}
 
 	private void _propagateFriendlyURL(
-		String authorization, String dtoKey, long parentId, String pathPrefix) {
+		String authorization, String dtoKey, String friendlyURLPath,
+		long objectEntryId) {
 
-		List<String> childDTOKeys = _getChildDTOKeys(dtoKey);
+		List<String> childDTOKeys = TransformUtil.transform(
+			_entryTypes.entrySet(),
+			entry -> {
+				EntryType entryType = entry.getValue();
+
+				if (dtoKey.equals(entryType.getParentDTOKey())) {
+					return entry.getKey();
+				}
+
+				return null;
+			});
 
 		for (String childDTOKey : childDTOKeys) {
 			EntryType childEntryType = _entryTypes.get(childDTOKey);
@@ -232,8 +222,8 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 					).queryParam(
 						"filter",
 						StringBundler.concat(
-							childEntryType.getFKFieldName(), " eq '", parentId,
-							"'")
+							childEntryType.getFKFieldName(), " eq '",
+							objectEntryId, "'")
 					).queryParam(
 						"pageSize", -1
 					).build(
@@ -245,19 +235,21 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject childJSONObject = itemsJSONArray.getJSONObject(i);
 
-				long childId = childJSONObject.getLong("id");
+				long childObjectEntryId = childJSONObject.getLong("id");
 
-				String childPath =
-					pathPrefix + "/" +
+				String childFriendlyURLPath =
+					friendlyURLPath + "/" +
 						_normalizeSlug(childJSONObject.optString("title", ""));
 
 				_patchFriendlyURL(
 					authorization,
-					childJSONObject.optString("friendlyUrlPath", ""), childId,
-					childPath, childEntryType.getRESTPath());
+					childJSONObject.optString("friendlyUrlPath", ""),
+					childFriendlyURLPath, childObjectEntryId,
+					childEntryType.getRESTPath());
 
 				_propagateFriendlyURL(
-					authorization, childDTOKey, childId, childPath);
+					authorization, childDTOKey, childFriendlyURLPath,
+					childObjectEntryId);
 			}
 		}
 	}

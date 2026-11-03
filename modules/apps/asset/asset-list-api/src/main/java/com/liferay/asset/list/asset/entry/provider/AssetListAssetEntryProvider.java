@@ -20,6 +20,11 @@ public interface AssetListAssetEntryProvider {
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		String userId, int start, int end);
 
+	public InfoPage<AssetEntry> getAssetEntriesInfoPage(
+		AssetListEntry assetListEntry, String[] audienceEntryERCs,
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
+		String userId, int start, int end);
+
 	public AssetEntryQuery getAssetEntryQuery(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId);
 

@@ -27,7 +27,6 @@ definition {
 		}
 	}
 
-
 	@summary = "Default summary"
 	macro addLocalization(localizedManageTranslations = null, locale2 = null, localization2Name = null, locale = null, localizedDone = null, localization1Name = null) {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
@@ -346,9 +345,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-
-
-
 	@summary = "Default summary"
 	macro viewScopesViaMoreIFrame(structureName = null, scopeName = null) {
 		AssertTextEquals(
@@ -357,7 +353,5 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
 			value1 = ${scopeName});
 	}
-
-
 
 }

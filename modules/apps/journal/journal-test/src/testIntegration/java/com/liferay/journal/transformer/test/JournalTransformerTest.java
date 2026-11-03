@@ -59,10 +59,10 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -871,16 +871,17 @@ public class JournalTransformerTest {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
+		String content = StringUtil.replace(
+			_read("journal_article_content_with_link_to_layout_field.xml"),
+			new String[] {"[$GROUP_ID$]", "[$LAYOUT_ID$]"},
+			new String[] {
+				String.valueOf(layout.getGroupId()),
+				String.valueOf(layout.getLayoutId())
+			});
+
 		JournalArticle journalArticle =
 			JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(),
-				StringUtil.replace(
-					_read("journal_article_content_with_link_to_layout_field.xml"),
-					new String[] {"[$GROUP_ID$]", "[$LAYOUT_ID$]"},
-					new String[] {
-						String.valueOf(layout.getGroupId()),
-						String.valueOf(layout.getLayoutId())
-					}),
+				_group.getGroupId(), content,
 				dataDefinition.getDataDefinitionKey(), null);
 
 		Assert.assertEquals(
@@ -919,6 +920,7 @@ public class JournalTransformerTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		themeDisplay.setRequest(mockHttpServletRequest);
+
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setServerName("localhost");

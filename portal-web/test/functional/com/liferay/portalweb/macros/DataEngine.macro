@@ -1971,7 +1971,6 @@ definition {
 		}
 	}
 
-
 	@summary = "Default summary"
 	macro viewFieldSearchable(fieldFieldLabel = null, searchableType = null) {
 		AssertClick.assertPartialTextClickAt(

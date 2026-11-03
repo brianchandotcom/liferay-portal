@@ -93,7 +93,10 @@ public class SchemaManifestBuilder {
 			module = getBundleSymbolicName(new File(_baseDir, "bnd.bnd"));
 		}
 
-		write(_manifestFile, getManifestJSONObject(historyJSONArray, module));
+		write(
+			_manifestFile,
+			getManifestJSONObject(
+				historyJSONArray, isInitialization(_baseDir), module));
 	}
 
 	protected String getBundleSymbolicName(File bndFile) throws IOException {
@@ -133,7 +136,7 @@ public class SchemaManifestBuilder {
 	}
 
 	protected JSONObject getManifestJSONObject(
-		JSONArray historyJSONArray, String module) {
+		JSONArray historyJSONArray, boolean initialization, String module) {
 
 		JSONObject manifestJSONObject = new JSONObjectImpl();
 
@@ -171,7 +174,8 @@ public class SchemaManifestBuilder {
 			"module", module
 		);
 
-		String schemaVersion = getSchemaVersion(historyJSONArray);
+		String schemaVersion = getSchemaVersion(
+			historyJSONArray, initialization);
 
 		if (schemaVersion != null) {
 			manifestJSONObject.put("schemaVersion", schemaVersion);
@@ -180,7 +184,9 @@ public class SchemaManifestBuilder {
 		return manifestJSONObject;
 	}
 
-	protected String getSchemaVersion(JSONArray historyJSONArray) {
+	protected String getSchemaVersion(
+		JSONArray historyJSONArray, boolean initialization) {
+
 		Version schemaVersion = null;
 
 		for (int i = 0; i < historyJSONArray.length(); i++) {
@@ -198,11 +204,15 @@ public class SchemaManifestBuilder {
 			schemaVersion = toSchemaVersion;
 		}
 
-		if (schemaVersion == null) {
-			return null;
+		if (schemaVersion != null) {
+			return schemaVersion.toString();
 		}
 
-		return schemaVersion.toString();
+		if (initialization) {
+			return "1.0.0";
+		}
+
+		return null;
 	}
 
 	protected String getTimestamp(String content) {
@@ -213,6 +223,28 @@ public class SchemaManifestBuilder {
 		}
 
 		return null;
+	}
+
+	protected boolean isInitialization(File baseDir) throws IOException {
+		for (File upgradeStepRegistratorFile :
+				_getUpgradeStepRegistratorFiles(baseDir)) {
+
+			String content = _read(upgradeStepRegistratorFile);
+
+			Matcher matcher = _upgradeStepRegistratorPattern.matcher(content);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			matcher = _registerInitializationPattern.matcher(content);
+
+			if (matcher.find()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected void write(File manifestFile, JSONObject manifestJSONObject)
@@ -735,6 +767,8 @@ public class SchemaManifestBuilder {
 		"^import ([\\w.]+\\.(\\w+));", Pattern.MULTILINE);
 	private static final Pattern _lambdaPattern = Pattern.compile(
 		"^(\\([\\w\\s,]*\\)|\\w+)\\s*->");
+	private static final Pattern _registerInitializationPattern =
+		Pattern.compile("\\.registerInitialization\\(\\s*\\)");
 	private static final Pattern _timestampPattern = Pattern.compile(
 		"^\t\"timestamp\": \"([^\"]*)\"", Pattern.MULTILINE);
 	private static final Pattern _upgradeStepRegistratorPattern =

@@ -101,6 +101,27 @@ public class SchemaManifestBuilderTest {
 	}
 
 	@Test
+	public void testBuildWithInitializationUpgradeStepRegistrator()
+		throws Exception {
+
+		_writeBndFile(RandomTestUtil.randomString());
+
+		_copyUpgradeStepRegistratorFile("InitializationUpgradeStepRegistrator");
+
+		_schemaManifestBuilder.build();
+
+		JSONObject manifestJSONObject = new JSONObjectImpl(
+			_read(_manifestFile));
+
+		Assert.assertEquals(
+			0,
+			manifestJSONObject.getJSONArray(
+				"history"
+			).length());
+		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
+	}
+
+	@Test
 	public void testBuildWithModule() throws Exception {
 		_writeBndFile(RandomTestUtil.randomString());
 
@@ -199,7 +220,7 @@ public class SchemaManifestBuilderTest {
 
 		JSONObject manifestJSONObject =
 			_schemaManifestBuilder.getManifestJSONObject(
-				historyJSONArray, module);
+				historyJSONArray, false, module);
 
 		Assert.assertEquals(
 			_DESCRIPTION, manifestJSONObject.get("description"));
@@ -214,10 +235,19 @@ public class SchemaManifestBuilderTest {
 	}
 
 	@Test
+	public void testGetManifestJSONObjectWithInitialization() {
+		JSONObject manifestJSONObject =
+			_schemaManifestBuilder.getManifestJSONObject(
+				new JSONArrayImpl(), true, RandomTestUtil.randomString());
+
+		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
+	}
+
+	@Test
 	public void testGetManifestJSONObjectWithoutHistory() {
 		JSONObject manifestJSONObject =
 			_schemaManifestBuilder.getManifestJSONObject(
-				new JSONArrayImpl(), RandomTestUtil.randomString());
+				new JSONArrayImpl(), false, RandomTestUtil.randomString());
 
 		Assert.assertFalse(manifestJSONObject.has("schemaVersion"));
 	}
@@ -228,13 +258,26 @@ public class SchemaManifestBuilderTest {
 			"1.10.0",
 			_schemaManifestBuilder.getSchemaVersion(
 				_getHistoryJSONArray(
-					"1.0.0", "1.10.0", "1.0.0.step-1", "1.9.0")));
+					"1.0.0", "1.10.0", "1.0.0.step-1", "1.9.0"),
+				false));
+	}
+
+	@Test
+	public void testGetSchemaVersionWithInitialization() {
+		Assert.assertEquals(
+			"1.0.0",
+			_schemaManifestBuilder.getSchemaVersion(new JSONArrayImpl(), true));
+		Assert.assertEquals(
+			"1.10.0",
+			_schemaManifestBuilder.getSchemaVersion(
+				_getHistoryJSONArray("1.0.0", "1.10.0"), true));
 	}
 
 	@Test
 	public void testGetSchemaVersionWithoutHistory() {
 		Assert.assertNull(
-			_schemaManifestBuilder.getSchemaVersion(new JSONArrayImpl()));
+			_schemaManifestBuilder.getSchemaVersion(
+				new JSONArrayImpl(), false));
 	}
 
 	@Test
@@ -260,13 +303,27 @@ public class SchemaManifestBuilderTest {
 	}
 
 	@Test
+	public void testIsInitialization() throws Exception {
+		_copyUpgradeStepRegistratorFile("InitializationUpgradeStepRegistrator");
+
+		Assert.assertTrue(_schemaManifestBuilder.isInitialization(_baseDir));
+	}
+
+	@Test
+	public void testIsInitializationWithoutRegisterInitialization()
+		throws Exception {
+
+		Assert.assertFalse(_schemaManifestBuilder.isInitialization(_baseDir));
+	}
+
+	@Test
 	public void testWrite() throws Exception {
 		String module = RandomTestUtil.randomString();
 
 		_schemaManifestBuilder.write(
 			_manifestFile,
 			_schemaManifestBuilder.getManifestJSONObject(
-				new JSONArrayImpl(), module));
+				new JSONArrayImpl(), false, module));
 
 		String content = _read(_manifestFile);
 
@@ -277,7 +334,7 @@ public class SchemaManifestBuilderTest {
 		_schemaManifestBuilder.write(
 			_manifestFile,
 			_schemaManifestBuilder.getManifestJSONObject(
-				new JSONArrayImpl(), module));
+				new JSONArrayImpl(), false, module));
 
 		Assert.assertEquals(content, _read(_manifestFile));
 	}
@@ -289,7 +346,7 @@ public class SchemaManifestBuilderTest {
 
 		JSONObject manifestJSONObject =
 			_schemaManifestBuilder.getManifestJSONObject(
-				new JSONArrayImpl(), RandomTestUtil.randomString());
+				new JSONArrayImpl(), false, RandomTestUtil.randomString());
 
 		manifestJSONObject.put("timestamp", timestamp);
 
@@ -304,7 +361,7 @@ public class SchemaManifestBuilderTest {
 		_schemaManifestBuilder.write(
 			_manifestFile,
 			_schemaManifestBuilder.getManifestJSONObject(
-				new JSONArrayImpl(), module));
+				new JSONArrayImpl(), false, module));
 
 		Assert.assertNotEquals(timestamp, _assertManifest(module));
 	}

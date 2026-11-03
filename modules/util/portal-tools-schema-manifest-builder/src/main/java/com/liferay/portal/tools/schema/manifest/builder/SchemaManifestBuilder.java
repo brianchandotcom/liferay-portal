@@ -674,8 +674,44 @@ public class SchemaManifestBuilder {
 		String content = new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 
-		return StringUtil.replace(
+		content = StringUtil.replace(
 			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+
+		return _removeComments(content);
+	}
+
+	private String _removeComments(String content) {
+		int index = 0;
+
+		while (true) {
+			Matcher matcher = _commentPattern.matcher(content);
+
+			if (!matcher.find(index)) {
+				return content;
+			}
+
+			int start = matcher.start();
+
+			if (ToolsUtil.isInsideQuotes(content, start)) {
+				index = start + 1;
+
+				continue;
+			}
+
+			char[] chars = content.toCharArray();
+
+			for (int i = start; i < matcher.end(); i++) {
+				if (chars[i] == CharPool.NEW_LINE) {
+					continue;
+				}
+
+				chars[i] = CharPool.SPACE;
+			}
+
+			content = new String(chars);
+
+			index = matcher.end();
+		}
 	}
 
 	private static final String _LAMBDA_SYMBOL_PLACEHOLDER =
@@ -683,6 +719,8 @@ public class SchemaManifestBuilder {
 
 	private static final Pattern _castPattern = Pattern.compile(
 		"^\\(\\s*[\\w.]+\\s*\\)\\s*");
+	private static final Pattern _commentPattern = Pattern.compile(
+		"//[^\\n]*|/\\*[\\s\\S]*?\\*/");
 	private static final Pattern _constructorPattern = Pattern.compile(
 		"\\bnew\\s+[\\w.\\s]+(?:<[^;{]*?>)?\\s*\\(");
 	private static final Pattern _importPattern = Pattern.compile(

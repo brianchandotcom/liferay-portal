@@ -204,6 +204,21 @@ public class SchemaManifestBuilderTest {
 	}
 
 	@Test
+	public void testGetHistoryJSONArrayWithCRLFLineEndings() throws Exception {
+		File file = _copyUpgradeStepRegistratorFile(
+			"TestUpgradeStepRegistrator");
+
+		String content = StringUtil.replace(_read(file), "\n", "\r\n");
+
+		Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+
+		Assert.assertEquals(
+			_read("expected/TestUpgradeStepRegistrator.json"),
+			JSONUtil.toString(
+				_schemaManifestBuilder.getHistoryJSONArray(_baseDir)));
+	}
+
+	@Test
 	public void testGetHistoryJSONArrayWithoutRegisterCalls() throws Exception {
 		_copyUpgradeStepRegistratorFile("InitializationUpgradeStepRegistrator");
 
@@ -388,7 +403,7 @@ public class SchemaManifestBuilderTest {
 		return timestamp;
 	}
 
-	private void _copyUpgradeStepRegistratorFile(String className)
+	private File _copyUpgradeStepRegistratorFile(String className)
 		throws Exception {
 
 		File file = new File(
@@ -403,6 +418,8 @@ public class SchemaManifestBuilderTest {
 		String content = _read(className + ".testjava");
 
 		Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+
+		return file;
 	}
 
 	private JSONArray _getHistoryJSONArray(String... toSchemaVersions) {

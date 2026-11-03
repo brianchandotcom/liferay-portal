@@ -20,6 +20,8 @@ function main {
 
 	../../gradlew --project-dir ../.. clean
 
+	../../gradlew --project-dir ../.. dockerDeploy
+
 	./extract_hotfix.sh
 	./extract_license.sh
 

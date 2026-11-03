@@ -34,6 +34,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -84,6 +85,8 @@ public class DBCopyTablesProcessTest {
 			_sourceTableName = dbInspector.normalizeName("TestTable");
 		}
 
+		_sourceTableNamePattern = _sourceTableName;
+
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
 		_sourceDataSource = ProxyUtil.newDelegateProxyInstance(
@@ -110,7 +113,8 @@ public class DBCopyTablesProcessTest {
 
 									return databaseMetaData.getColumns(
 										catalog, schemaPattern,
-										_sourceTableName, columnNamePattern);
+										_sourceTableNamePattern,
+										columnNamePattern);
 								}
 
 							},
@@ -452,6 +456,52 @@ public class DBCopyTablesProcessTest {
 	}
 
 	@Test
+	@TestInfo("LPD-110099")
+	public void testRunWithReservedWords() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			_sourceTableNamePattern = dbInspector.normalizeName("verbose");
+		}
+
+		try {
+			_sourceDB.runSQL(
+				"create table verbose (id INTEGER, freeze INTEGER)");
+			_sourceDB.runSQL("insert into verbose (id, freeze) values (1, 2)");
+
+			new DBCopyTablesProcess(
+				_sourceDataSource, _targetDataSource
+			).run();
+
+			try (Connection connection = _targetDataSource.getConnection();
+
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select \"id\", \"freeze\" from \"verbose\"");
+
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				Assert.assertTrue(resultSet.next());
+				Assert.assertEquals(2, resultSet.getInt("freeze"));
+				Assert.assertEquals(1, resultSet.getInt("id"));
+				Assert.assertFalse(resultSet.next());
+			}
+		}
+		finally {
+			_sourceTableNamePattern = _sourceTableName;
+
+			_sourceDB.runSQL("DROP_TABLE_IF_EXISTS(verbose)");
+
+			try (Connection connection = _targetDataSource.getConnection();
+
+				Statement statement = connection.createStatement()) {
+
+				statement.execute("drop table if exists \"verbose\"");
+			}
+		}
+	}
+
+	@Test
 	public void testSblobColumn() throws Exception {
 		_createTable("SBLOB");
 
@@ -779,6 +829,7 @@ public class DBCopyTablesProcessTest {
 
 	private static DataSource _sourceDataSource;
 	private static String _sourceTableName;
+	private static String _sourceTableNamePattern;
 	private static DataSource _targetDataSource;
 	private static String _targetTableName;
 

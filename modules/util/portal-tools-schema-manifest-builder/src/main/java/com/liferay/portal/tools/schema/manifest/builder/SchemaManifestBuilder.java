@@ -455,9 +455,13 @@ public class SchemaManifestBuilder {
 			String receiver = StringUtil.trim(methodName.substring(0, index));
 
 			if (_isVariableName(receiver)) {
-				return _getClassName(
-					_getVariableType(content, receiver), classNames,
-					packageName);
+				String variableType = _getVariableType(content, receiver);
+
+				if (variableType == null) {
+					return registrator;
+				}
+
+				return _getClassName(variableType, classNames, packageName);
 			}
 
 			return _getClassName(receiver, classNames, packageName);
@@ -467,8 +471,13 @@ public class SchemaManifestBuilder {
 			content, parameter);
 
 		if (initializerPosition == -1) {
-			return _getClassName(
-				_getVariableType(content, parameter), classNames, packageName);
+			String variableType = _getVariableType(content, parameter);
+
+			if (variableType == null) {
+				return registrator;
+			}
+
+			return _getClassName(variableType, classNames, packageName);
 		}
 
 		return _getClassName(
@@ -651,8 +660,7 @@ public class SchemaManifestBuilder {
 		Matcher matcher = pattern.matcher(content);
 
 		if (!matcher.find()) {
-			throw new IllegalArgumentException(
-				"Unable to find the type of " + name);
+			return null;
 		}
 
 		return matcher.group(1);

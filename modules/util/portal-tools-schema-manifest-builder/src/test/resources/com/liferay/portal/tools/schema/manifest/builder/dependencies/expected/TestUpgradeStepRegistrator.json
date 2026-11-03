@@ -71,5 +71,17 @@
 		"fromSchemaVersion": "1.9.0",
 		"registrator": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
 		"toSchemaVersion": "1.10.0"
+	},
+	{
+		"changes": [
+			{
+				"className": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+				"op": "customChange",
+				"registratorLine": 56
+			}
+		],
+		"fromSchemaVersion": "1.10.0",
+		"registrator": "com.liferay.test.internal.upgrade.registry.TestUpgradeStepRegistrator",
+		"toSchemaVersion": "2.0.0"
 	}
 ]

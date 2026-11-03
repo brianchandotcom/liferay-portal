@@ -177,22 +177,6 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addExpirationDateCP(expirationDate = null) {
-		Panel.expandPanel(panel = "Schedule");
-
-		AssertChecked(
-			locator1 = "Checkbox#NEVER_EXPIRE",
-			value1 = "Never Expire");
-
-		Uncheck(
-			locator1 = "Checkbox#NEVER_EXPIRE",
-			value1 = "Never Expire");
-
-		Type.clickAtType(
-			locator1 = "TextInput#EXPIRATION_DATE",
-			value1 = ${expirationDate});
-	}
 
 	@summary = "Default summary"
 	macro addFailWithoutRequiredCategoryAssetTypeCP(vocabularyName = null) {
@@ -2360,18 +2344,6 @@ definition {
 			value1 = ${author});
 	}
 
-	@summary = "Default summary"
-	macro viewExpirationDateCP(expirationDate = null) {
-		Panel.expandPanel(panel = "Schedule");
-
-		AssertNotChecked(
-			locator1 = "Checkbox#NEVER_EXPIRE",
-			value1 = "Never Expire");
-
-		AssertTextEquals(
-			locator1 = "TextInput#EXPIRATION_DATE",
-			value1 = ${expirationDate});
-	}
 
 	@summary = "Default summary"
 	macro viewFieldRepeated(ddlRecordFieldData = null, fieldName = null) {

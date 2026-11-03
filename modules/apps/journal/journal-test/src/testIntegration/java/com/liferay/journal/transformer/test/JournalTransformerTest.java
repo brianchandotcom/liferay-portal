@@ -642,6 +642,15 @@ public class JournalTransformerTest {
 			dataDefinition, layout, _getLayoutRelativeURL(layout),
 			themeDisplay);
 
+		Layout nodeLayout = LayoutTestUtil.addTypeNodeLayout(
+			_group.getGroupId(), false);
+
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
+			_group, layout.getPlid());
+
+		Layout grandchildLayout = LayoutTestUtil.addTypePortletLayout(
+			_group, childLayout.getPlid());
+
 		for (Layout curLayout :
 				new Layout[] {
 					LayoutTestUtil.addTypeContentLayout(_group),
@@ -652,18 +661,9 @@ public class JournalTransformerTest {
 						_group.getGroupId(), layout.getLayoutId()),
 					LayoutTestUtil.addTypePanelLayout(_group.getGroupId()),
 					LayoutTestUtil.addTypePortletLayout(
-						_group,
-						LayoutTestUtil.addTypeNodeLayout(
-							_group.getGroupId(), false
-						).getPlid()),
+						_group, nodeLayout.getPlid()),
 					LayoutTestUtil.addTypePortletLayout(
-						_group,
-						LayoutTestUtil.addTypePortletLayout(
-							_group,
-							LayoutTestUtil.addTypePortletLayout(
-								_group, layout.getPlid()
-							).getPlid()
-						).getPlid())
+						_group, grandchildLayout.getPlid())
 				}) {
 
 			_assertTransformLinkToLayout(
@@ -919,7 +919,6 @@ public class JournalTransformerTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		themeDisplay.setRequest(mockHttpServletRequest);
-
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setServerName("localhost");

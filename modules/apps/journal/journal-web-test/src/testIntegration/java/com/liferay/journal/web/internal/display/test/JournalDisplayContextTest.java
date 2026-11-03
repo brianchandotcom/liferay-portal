@@ -159,9 +159,8 @@ public class JournalDisplayContextTest {
 			RandomTestUtil.randomString());
 
 		_assertArticleActionDropdownItemLabels(
-			journalArticle,
-			"Edit", "Preview", "Translate", "Expire", "Subscribe",
-			"View History", "View Usages", "Make a Copy",
+			journalArticle, "Edit", "Preview", "Translate", "Expire",
+			"Subscribe", "View History", "View Usages", "Make a Copy",
 			"Export for Translation", "Import Translation", "Move",
 			"Permissions", "Delete");
 
@@ -169,9 +168,8 @@ public class JournalDisplayContextTest {
 			journalArticle, RandomTestUtil.randomString());
 
 		_assertArticleActionDropdownItemLabels(
-			journalArticle,
-			"Edit Latest Version", "Preview", "Translate", "Expire",
-			"Subscribe", "View History", "View Usages", "Make a Copy",
+			journalArticle, "Edit Latest Version", "Preview", "Translate",
+			"Expire", "Subscribe", "View History", "View Usages", "Make a Copy",
 			"Export for Translation", "Import Translation", "Move",
 			"Permissions", "Delete");
 
@@ -179,9 +177,8 @@ public class JournalDisplayContextTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				StringPool.BLANK, true,
-				_getLocaleStringMap(RandomTestUtil.randomString()),
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+				true, _getLocaleStringMap(RandomTestUtil.randomString()),
 				_getLocaleStringMap(RandomTestUtil.randomString()),
 				_getLocaleStringMap(RandomTestUtil.randomString()), null,
 				LocaleUtil.getDefault(), null, true, false, _serviceContext),
@@ -225,6 +222,42 @@ public class JournalDisplayContextTest {
 		SearchContainer<Object> searchContainer = _getSearchContainer();
 
 		Assert.assertEquals(count, searchContainer.getTotal());
+	}
+
+	@Test
+	@TestInfo("LPD-113777")
+	public void testGetSearchContainerWhenIndexAllArticleVersionsIsDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						JournalServiceConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"indexAllArticleVersionsEnabled", false
+						).build())) {
+
+			JournalFolderFixture journalFolderFixture =
+				new JournalFolderFixture(_journalFolderLocalService);
+
+			JournalFolder journalFolder = journalFolderFixture.addFolder(
+				_group.getGroupId(), RandomTestUtil.randomString());
+
+			JournalArticle journalArticle = _addJournalArticleVersions();
+
+			Assert.assertFalse(
+				ReflectionTestUtil.invoke(
+					_getJournalDisplayContext(), "isIndexAllArticleVersions",
+					new Class<?>[0]));
+
+			SearchContainer<Object> searchContainer = _getSearchContainer(
+				"versions");
+
+			Assert.assertEquals(
+				Arrays.asList(journalFolder, journalArticle),
+				searchContainer.getResults());
+		}
 	}
 
 	@Test
@@ -287,42 +320,6 @@ public class JournalDisplayContextTest {
 
 	@Test
 	@TestInfo("LPD-113777")
-	public void testGetSearchContainerWhenIndexAllArticleVersionsIsDisabled()
-		throws Exception {
-
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						JournalServiceConfiguration.class.getName(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"indexAllArticleVersionsEnabled", false
-						).build())) {
-
-			JournalFolderFixture journalFolderFixture =
-				new JournalFolderFixture(_journalFolderLocalService);
-
-			JournalFolder journalFolder = journalFolderFixture.addFolder(
-				_group.getGroupId(), RandomTestUtil.randomString());
-
-			JournalArticle journalArticle = _addJournalArticleVersions();
-
-			Assert.assertFalse(
-				ReflectionTestUtil.invoke(
-					_getJournalDisplayContext(), "isIndexAllArticleVersions",
-					new Class<?>[0]));
-
-			SearchContainer<Object> searchContainer = _getSearchContainer(
-				"versions");
-
-			Assert.assertEquals(
-				Arrays.asList(journalFolder, journalArticle),
-				searchContainer.getResults());
-		}
-	}
-
-	@Test
-	@TestInfo("LPD-113777")
 	public void testGetSearchContainerWithTypeParameter() throws Exception {
 		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
 			_journalFolderLocalService);
@@ -339,7 +336,11 @@ public class JournalDisplayContextTest {
 			Arrays.asList(1.2, 1.1, 1.0),
 			TransformUtil.transform(
 				searchContainer.getResults(),
-				result -> ((JournalArticle)result).getVersion()));
+				result -> {
+					JournalArticle article = (JournalArticle)result;
+
+					return article.getVersion();
+				}));
 
 		searchContainer = _getSearchContainer("web-content");
 

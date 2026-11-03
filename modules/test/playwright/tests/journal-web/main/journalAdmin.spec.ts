@@ -42,7 +42,11 @@ test(
 			name: folderName,
 		});
 
-		const titles = [getRandomString(), getRandomString(), getRandomString()];
+		const titles = [
+			getRandomString(),
+			getRandomString(),
+			getRandomString(),
+		];
 
 		let webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
 			ddmStructureId,
@@ -107,7 +111,9 @@ test(
 			trigger: page.getByRole('button', {exact: true, name: 'Filter'}),
 		});
 
-		await expect(page.getByText('4 Results Found With Filters')).toBeVisible();
+		await expect(
+			page.getByText('4 Results Found With Filters')
+		).toBeVisible();
 
 		for (const view of ['Cards', 'Table', 'List']) {
 			await changeManagementToolbarView(page, view);
@@ -211,7 +217,11 @@ test(
 		const ddmStructureId = await getBasicWebContentStructureId(apiHelpers);
 
 		const content = getRandomString();
-		const titles = [getRandomString(), getRandomString(), getRandomString()];
+		const titles = [
+			getRandomString(),
+			getRandomString(),
+			getRandomString(),
+		];
 
 		let webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
 			content,
@@ -232,9 +242,7 @@ test(
 
 		await changeManagementToolbarView(page, 'List');
 
-		await page
-			.getByRole('checkbox', {name: `Select ${titles[2]}`})
-			.check();
+		await page.getByRole('checkbox', {name: `Select ${titles[2]}`}).check();
 
 		await page.getByRole('button', {name: 'Toggle Info Panel'}).click();
 
@@ -245,9 +253,9 @@ test(
 		// Preview version 1.0
 
 		const versionRow = (version: string) =>
-			infoPanel
-				.locator('li')
-				.filter({has: page.getByText(`Version ${version}`, {exact: true})});
+			infoPanel.locator('li').filter({
+				has: page.getByText(`Version ${version}`, {exact: true}),
+			});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -274,9 +282,7 @@ test(
 
 		await waitForAlert(page);
 
-		await page
-			.getByRole('checkbox', {name: `Select ${titles[2]}`})
-			.check();
+		await page.getByRole('checkbox', {name: `Select ${titles[2]}`}).check();
 
 		await page.getByRole('button', {name: 'Toggle Info Panel'}).click();
 
@@ -320,7 +326,9 @@ test(
 
 		await journalPage.search('Guild');
 
-		await expect(page.getByText('3 Results Found for "Guild"')).toBeVisible();
+		await expect(
+			page.getByText('3 Results Found for "Guild"')
+		).toBeVisible();
 
 		// Sort by title
 
@@ -543,7 +551,10 @@ test(
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: page.getByRole('menuitem', {name: 'Configuration'}),
-				trigger: page.getByRole('button', {exact: true, name: 'Options'}),
+				trigger: page.getByRole('button', {
+					exact: true,
+					name: 'Options',
+				}),
 			});
 
 			await expect(page.getByText('Notifications')).toBeVisible();
@@ -608,7 +619,10 @@ test(
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: page.getByRole('menuitem', {name: filterName}),
-				trigger: page.getByRole('button', {exact: true, name: 'Filter'}),
+				trigger: page.getByRole('button', {
+					exact: true,
+					name: 'Filter',
+				}),
 			});
 		};
 
@@ -634,7 +648,9 @@ test(
 			.getByRole('button', {exact: true, name: 'Select'})
 			.click();
 
-		await expect(page.getByText('1 Result Found With Filters')).toBeVisible();
+		await expect(
+			page.getByText('1 Result Found With Filters')
+		).toBeVisible();
 		await expect(
 			page.getByText(`Categories: ${category.name}`)
 		).toBeVisible();
@@ -652,7 +668,9 @@ test(
 
 			await openFilter('Tags');
 
-			const tagsModal = page.frameLocator('iframe[title="Filter by Tags"]');
+			const tagsModal = page.frameLocator(
+				'iframe[title="Filter by Tags"]'
+			);
 
 			await tagsModal
 				.getByRole('row', {name: tag})
@@ -746,7 +764,9 @@ test(
 
 		await searchInComments();
 
-		await expect(page.getByText('1 Result Found for "Liferay"')).toBeVisible();
+		await expect(
+			page.getByText('1 Result Found for "Liferay"')
+		).toBeVisible();
 		await expect(page.getByText('Welcome to Liferay DXP')).toBeVisible();
 
 		// Search for DXP
@@ -792,9 +812,7 @@ async function selectHighlightedStructures(page: Page, names: string[]) {
 	await dialog.getByRole('button', {exact: true, name: 'Add'}).click();
 
 	for (const name of names) {
-		await expect(
-			page.getByRole('cell', {exact: true, name})
-		).toBeVisible();
+		await expect(page.getByRole('cell', {exact: true, name})).toBeVisible();
 	}
 
 	await expect(async () => {
@@ -855,8 +873,8 @@ test(
 			await journalPage.goto(site.friendlyUrlPath);
 
 			await page
-			.getByRole('menuitem', {exact: true, name: structureName})
-			.click();
+				.getByRole('menuitem', {exact: true, name: structureName})
+				.click();
 
 			await expect(
 				page.getByRole('heading', {name: structureName})
@@ -910,7 +928,11 @@ test(
 
 		await journalPage.search('Liferay');
 
-		for (const title of ['Liferay Commerce', 'Liferay DXP', 'Liferay LXC']) {
+		for (const title of [
+			'Liferay Commerce',
+			'Liferay DXP',
+			'Liferay LXC',
+		]) {
 			await expect(titleLink(title)).toBeVisible();
 		}
 
@@ -1051,11 +1073,12 @@ test(
 	async ({apiHelpers, journalPage, page, site, widgetPagePage}) => {
 		const title = getRandomString();
 
-		const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
-			ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
-			groupId: site.id,
-			titleMap: {en_US: title},
-		});
+		const webContent =
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+				groupId: site.id,
+				titleMap: {en_US: title},
+			});
 
 		await apiHelpers.jsonWebServicesJournal.editWebContent(
 			{content: getRandomString(), title},
@@ -1093,7 +1116,9 @@ test(
 
 		await journalPage.goToJournalArticleAction('View Usages', title);
 
-		await expect(page.getByRole('heading', {name: 'All (1)'})).toBeVisible();
+		await expect(
+			page.getByRole('heading', {name: 'All (1)'})
+		).toBeVisible();
 
 		await assertBackTooltip('Go to Web Content');
 
@@ -1122,9 +1147,7 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Compare to...'}),
-			trigger: page
-				.getByRole('row', {name: /1\.1/})
-				.getByRole('button'),
+			trigger: page.getByRole('row', {name: /1\.1/}).getByRole('button'),
 		});
 
 		await page

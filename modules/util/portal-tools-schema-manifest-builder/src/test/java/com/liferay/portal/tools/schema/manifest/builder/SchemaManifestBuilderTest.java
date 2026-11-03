@@ -131,8 +131,7 @@ public class SchemaManifestBuilderTest {
 			_read("expected/TestUpgradeStepRegistrator.json"),
 			JSONUtil.toString(manifestJSONObject.getJSONArray("history")));
 		Assert.assertEquals(module, manifestJSONObject.get("module"));
-		Assert.assertEquals(
-			"1.10.0", manifestJSONObject.getString("schemaVersion"));
+		Assert.assertEquals("2.0.0", manifestJSONObject.get("schemaVersion"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

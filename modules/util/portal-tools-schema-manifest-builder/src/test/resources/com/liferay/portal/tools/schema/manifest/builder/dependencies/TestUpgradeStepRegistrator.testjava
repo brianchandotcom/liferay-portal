@@ -52,7 +52,10 @@ public class TestUpgradeStepRegistrator
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"a", "b"));
 
-		registry.register("1.10.0", "2.0.0");
+		registry.register(
+			"1.10.0", "2.0.0", TestUpgradeStepHolder.UPGRADE_STEP);
+
+		registry.register("2.0.0", "3.0.0");
 
 		// registry.register("2.0.0", "9.0.0", new DummyUpgradeStep());
 

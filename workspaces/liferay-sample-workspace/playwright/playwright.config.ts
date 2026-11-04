@@ -4,12 +4,10 @@
  */
 
 import {defineConfig, devices} from '@playwright/test';
-import * as dotenv from 'dotenv';
 
-dotenv.config();
-dotenv.config({override: true, path: '.env.local'});
+import {liferayConfig} from './core/liferayConfig';
 
-const portalURL = process.env.PORTAL_URL || 'http://localhost:8080';
+const {baseUrl} = liferayConfig.environment;
 
 export default defineConfig({
 	expect: {
@@ -23,7 +21,7 @@ export default defineConfig({
 	timeout: 90 * 1000,
 	use: {
 		...devices['Desktop Chrome'],
-		baseURL: portalURL,
+		baseURL: baseUrl,
 		screenshot: 'only-on-failure',
 		trace: 'retain-on-failure',
 	},

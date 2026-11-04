@@ -6,13 +6,15 @@
 import {execFileSync} from 'child_process';
 import {join} from 'path';
 
+import {liferayConfig} from './core/liferayConfig';
+
 const COMPOSE_PROJECT_NAME = 'liferay-playwright-stack';
 
-const portalURL = process.env.PORTAL_URL || 'http://localhost:8080';
+const {baseUrl, port} = liferayConfig.environment;
 
 async function isLiferayRunning() {
 	try {
-		const response = await fetch(`${portalURL}/c/portal/status`);
+		const response = await fetch(`${baseUrl}/c/portal/status`);
 
 		return response.ok;
 	}
@@ -66,7 +68,7 @@ export default async function globalSetup() {
 				...process.env,
 				COMPOSE_PROJECT_NAME,
 				LIFERAY_COMPOSE_OVERRIDES: 'playwright',
-				LIFERAY_HTTP_PORT: new URL(portalURL).port || '8080',
+				LIFERAY_HTTP_PORT: port,
 				LIFERAY_IMAGE: 'liferay:playwright',
 			},
 			stdio: 'inherit',

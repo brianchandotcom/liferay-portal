@@ -173,7 +173,9 @@ public abstract class BaseObjectEntryResourceTestCase {
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws Exception {
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(assetVocabulary);
+
 		_serviceRegistrations.forEach(ServiceRegistration::unregister);
 	}
 
@@ -310,7 +312,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 					).build()),
 				ObjectDefinitionConstants.SCOPE_DEPOT);
 
-		objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
 			objectDefinition.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
@@ -1875,10 +1877,6 @@ public abstract class BaseObjectEntryResourceTestCase {
 	@Inject
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;
 
-	@Inject
-	protected ObjectDefinitionSettingLocalService
-		objectDefinitionSettingLocalService;
-
 	protected ObjectEntry objectEntry1;
 	protected ObjectEntry objectEntry2;
 	protected ObjectEntry objectEntry3;
@@ -2173,6 +2171,11 @@ public abstract class BaseObjectEntryResourceTestCase {
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	private ObjectDefinition _objectDefinition4;
+
+	@Inject
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
+
 	private ObjectEntry _objectEntry5;
 	private ObjectRelationship _objectRelationship6;
 	private ObjectDefinition _siteScopedObjectDefinition2;

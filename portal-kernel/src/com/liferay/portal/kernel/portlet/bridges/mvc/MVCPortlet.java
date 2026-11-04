@@ -13,19 +13,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
-import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -749,6 +747,23 @@ public class MVCPortlet extends LiferayPortlet {
 		return _validPaths;
 	}
 
+	private boolean _hasConfigurationAction(PortletRequest portletRequest) {
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)getPortletConfig();
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			PortalUtil.getCompanyId(portletRequest),
+			liferayPortletConfig.getPortletId());
+
+		if ((portlet == null) ||
+			(portlet.getConfigurationActionInstance() == null)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private Set<String> _initValidPaths(String rootPath) {
 		PortletContext portletContext = getPortletContext();
 
@@ -815,55 +830,25 @@ public class MVCPortlet extends LiferayPortlet {
 			return false;
 		}
 
+		if (path.startsWith(_PATH_META_INF_RESOURCES + StringPool.SLASH)) {
+			path = path.substring(_PATH_META_INF_RESOURCES.length());
+		}
+
 		if (configTemplate != null) {
-			return path.equals(configTemplate);
+			if (path.equals(configTemplate)) {
+				return true;
+			}
 		}
-
-		LiferayPortletConfig liferayPortletConfig =
-			(LiferayPortletConfig)getPortletConfig();
-
-		String configJSP = liferayPortletConfig.getInitParameter("config-jsp");
-
-		if (configJSP != null) {
-			return path.equals(configJSP);
-		}
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortalUtil.getCompanyId(portletRequest),
-			liferayPortletConfig.getPortletId());
-
-		if (portlet == null) {
+		else if (!_hasConfigurationAction(portletRequest)) {
 			return false;
 		}
 
-		ConfigurationAction configurationAction =
-			portlet.getConfigurationActionInstance();
-
-		if (configurationAction == null) {
-			return false;
+		if (path.contains(_PATH_CONFIGURATION_DIRECTORY)) {
+			return true;
 		}
 
-		if (!(configurationAction instanceof
-				BaseJSPSettingsConfigurationAction)) {
-
-			return path.equals("/configuration.jsp");
-		}
-
-		BaseJSPSettingsConfigurationAction baseJSPSettingsConfigurationAction =
-			(BaseJSPSettingsConfigurationAction)configurationAction;
-
-		// Pin "portletResource" to this portlet's own ID so that a request
-		// cannot redirect the lookup to a different portlet's configuration
-		// path
-
-		HttpServletRequest httpServletRequest = new DynamicServletRequest(
-			PortalUtil.getHttpServletRequest(portletRequest),
-			Collections.singletonMap(
-				"portletResource",
-				new String[] {liferayPortletConfig.getPortletId()}));
-
-		return path.equals(
-			baseJSPSettingsConfigurationAction.getJspPath(httpServletRequest));
+		return _configurationJSPFileNames.contains(
+			path.substring(path.lastIndexOf(CharPool.SLASH) + 1));
 	}
 
 	private Set<String> _visitResources(
@@ -888,11 +873,16 @@ public class MVCPortlet extends LiferayPortlet {
 			});
 	}
 
+	private static final String _PATH_CONFIGURATION_DIRECTORY =
+		"/configuration/";
+
 	private static final String _PATH_META_INF_RESOURCES =
 		"/META-INF/resources";
 
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
+	private static final Set<String> _configurationJSPFileNames =
+		SetUtil.fromArray("configuration.jsp", "configuration_browse.jsp");
 	private static final Map<String, Map<String, Set<String>>> _validPathsMaps =
 		new ConcurrentHashMap<>();
 

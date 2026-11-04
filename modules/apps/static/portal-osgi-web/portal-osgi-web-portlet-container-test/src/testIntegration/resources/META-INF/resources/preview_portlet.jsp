@@ -5,10 +5,10 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.taglib.portletext.PreviewTag" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-
-<liferay-portlet:preview
-	portletName='<%= ParamUtil.getString(request, "portletResource") %>'
-/>
+<%
+PreviewTag.doTag("/preview_portlet_page.jsp", ParamUtil.getString(request, "portletResource"), null, false, null, application, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+%>

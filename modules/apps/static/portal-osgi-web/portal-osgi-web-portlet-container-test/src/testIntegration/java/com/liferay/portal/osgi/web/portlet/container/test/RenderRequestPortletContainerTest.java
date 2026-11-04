@@ -169,7 +169,7 @@ public class RenderRequestPortletContainerTest
 
 		String body = response.getBody();
 
-		Assert.assertFalse(body.contains("CONFIGURATION_JSP_MARKER"));
+		Assert.assertFalse(body.contains("SIBLING_CONFIGURATION_JSP_MARKER"));
 		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
 	}
 
@@ -255,7 +255,7 @@ public class RenderRequestPortletContainerTest
 			PortletRequest.RENDER_PHASE,
 			"/configuration_mode_test/configuration.jsp");
 
-		Assert.assertFalse(body.contains("CONFIGURATION_JSP_MARKER"));
+		Assert.assertFalse(body.contains("SIBLING_CONFIGURATION_JSP_MARKER"));
 		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
 	}
 

@@ -114,10 +114,7 @@ public class SchemaManifestBuilderTest {
 			_read(_manifestFile));
 
 		Assert.assertEquals(
-			0,
-			manifestJSONObject.getJSONArray(
-				"history"
-			).length());
+			"[]", String.valueOf(manifestJSONObject.get("history")));
 		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
 	}
 
@@ -241,9 +238,7 @@ public class SchemaManifestBuilderTest {
 			_DESCRIPTION, manifestJSONObject.get("description"));
 		Assert.assertEquals(
 			historyJSONArray.toString(),
-			manifestJSONObject.getJSONArray(
-				"history"
-			).toString());
+			String.valueOf(manifestJSONObject.get("history")));
 		Assert.assertEquals(module, manifestJSONObject.get("module"));
 		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
 		Assert.assertFalse(manifestJSONObject.has("timestamp"));

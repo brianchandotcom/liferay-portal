@@ -6,12 +6,14 @@
 package com.liferay.osb.faro.rest.internal.dto.v1_0.converter;
 
 import com.liferay.osb.faro.engine.client.model.Field;
+import com.liferay.osb.faro.rest.dto.v1_0.Account;
 import com.liferay.osb.faro.rest.dto.v1_0.Individual;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +43,7 @@ public class IndividualDTOConverterTest {
 
 	@Test
 	public void testToDTO() {
+		_testToDTOWithAccounts();
 		_testToDTOWithDemographics();
 		_testToDTOWithoutDemographics();
 	}
@@ -54,12 +57,56 @@ public class IndividualDTOConverterTest {
 		return field;
 	}
 
+	private void _testToDTOWithAccounts() {
+		com.liferay.osb.faro.engine.client.model.Individual.Account
+			engineClientAccount =
+				new com.liferay.osb.faro.engine.client.model.Individual.
+					Account();
+
+		engineClientAccount.setAccountName(RandomTestUtil.randomString());
+		engineClientAccount.setAccountType(RandomTestUtil.randomString());
+		engineClientAccount.setAnnualRevenue(RandomTestUtil.randomDouble());
+		engineClientAccount.setCountry(RandomTestUtil.randomString());
+		engineClientAccount.setId(RandomTestUtil.randomString());
+		engineClientAccount.setIndustry(RandomTestUtil.randomString());
+		engineClientAccount.setLastActivityDate(RandomTestUtil.nextDate());
+		engineClientAccount.setNumberOfEmployees(RandomTestUtil.randomInt());
+
+		Individual individual = _toDTO(
+			Collections.singletonList(engineClientAccount), null);
+
+		Account[] accounts = individual.getAccounts();
+
+		Assert.assertEquals(Arrays.toString(accounts), 1, accounts.length);
+
+		Account account = accounts[0];
+
+		Assert.assertEquals(
+			engineClientAccount.getAccountName(), account.getAccountName());
+		Assert.assertEquals(
+			engineClientAccount.getAccountType(), account.getAccountType());
+		Assert.assertEquals(
+			engineClientAccount.getAnnualRevenue(), account.getAnnualRevenue());
+		Assert.assertEquals(
+			engineClientAccount.getCountry(), account.getCountry());
+		Assert.assertEquals(engineClientAccount.getId(), account.getId());
+		Assert.assertEquals(
+			engineClientAccount.getIndustry(), account.getIndustry());
+		Assert.assertEquals(
+			engineClientAccount.getLastActivityDate(),
+			account.getLastActivityDate());
+		Assert.assertEquals(
+			Integer.valueOf((int)engineClientAccount.getNumberOfEmployees()),
+			account.getNumberOfEmployees());
+	}
+
 	private void _testToDTOWithDemographics() {
 		String emailAddress = RandomTestUtil.randomString();
 		String familyName = RandomTestUtil.randomString();
 		String givenName = RandomTestUtil.randomString();
 
 		Individual individual = _toDTO(
+			null,
 			HashMapBuilder.<String, List<Field>>put(
 				"email",
 				Collections.singletonList(_createField("email", emailAddress))
@@ -81,6 +128,7 @@ public class IndividualDTOConverterTest {
 			givenName + StringPool.SPACE + familyName, individual.getName());
 
 		individual = _toDTO(
+			null,
 			HashMapBuilder.<String, List<Field>>put(
 				"familyName",
 				Collections.singletonList(
@@ -98,9 +146,10 @@ public class IndividualDTOConverterTest {
 		Long sessionsCount = RandomTestUtil.randomLong();
 
 		Individual individual = _toDTO(
-			activityStatus, averageSessionDuration, null, knownSinceDate,
+			null, activityStatus, averageSessionDuration, null, knownSinceDate,
 			StringUtil.toLowerCase(profileType.getValue()), sessionsCount);
 
+		Assert.assertNull(individual.getAccounts());
 		Assert.assertEquals(activityStatus, individual.getActivityStatus());
 		Assert.assertEquals(
 			averageSessionDuration, individual.getAverageSessionDuration());
@@ -112,14 +161,21 @@ public class IndividualDTOConverterTest {
 		Assert.assertEquals(sessionsCount, individual.getSessionsCount());
 	}
 
-	private Individual _toDTO(Map<String, List<Field>> demographics) {
+	private Individual _toDTO(
+		List<com.liferay.osb.faro.engine.client.model.Individual.Account>
+			accounts,
+		Map<String, List<Field>> demographics) {
+
 		return _toDTO(
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			demographics, RandomTestUtil.nextDate(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong());
+			accounts, RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong(), demographics,
+			RandomTestUtil.nextDate(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong());
 	}
 
 	private Individual _toDTO(
+		List<com.liferay.osb.faro.engine.client.model.Individual.Account>
+			accounts,
 		String activityStatus, Long averageSessionDuration,
 		Map<String, List<Field>> demographics, Date knownSinceDate,
 		String profileType, Long sessionsCount) {
@@ -127,6 +183,7 @@ public class IndividualDTOConverterTest {
 		com.liferay.osb.faro.engine.client.model.Individual individual =
 			new com.liferay.osb.faro.engine.client.model.Individual();
 
+		individual.setAccounts(accounts);
 		individual.setActivityStatus(activityStatus);
 		individual.setAverageSessionDuration(averageSessionDuration);
 		individual.setDemographics(demographics);

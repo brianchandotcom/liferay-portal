@@ -25,6 +25,10 @@ public class Account {
 		return _activitiesCount;
 	}
 
+	public String getActivityStatus() {
+		return _activityStatus;
+	}
+
 	public Double getAnnualRevenue() {
 		return _annualRevenue;
 	}
@@ -95,6 +99,10 @@ public class Account {
 
 	public void setActivitiesCount(Long activitiesCount) {
 		_activitiesCount = activitiesCount;
+	}
+
+	public void setActivityStatus(String activityStatus) {
+		_activityStatus = activityStatus;
 	}
 
 	public void setAnnualRevenue(Double annualRevenue) {
@@ -320,6 +328,7 @@ public class Account {
 	private String _accountName;
 	private String _accountType;
 	private Long _activitiesCount;
+	private String _activityStatus;
 	private Double _annualRevenue;
 	private List<CalculatedField> _calculatedFields;
 	private String _country;

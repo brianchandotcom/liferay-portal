@@ -1,21 +1,32 @@
 dependencies {
+	api(group: "com.puppycrawl.tools", name: "checkstyle", version: "10.18.0") {
+		exclude group: "org.apache.maven.doxia"
+	}
+
 	api group: "org.apache.logging.log4j", name: "log4j-core", version: "2.26.1"
+
 	compileInclude group: "org.json", name: "json", version: "20231013"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.concurrent", version: "5.1.7"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "5.5.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.io", version: "5.0.5"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "5.2.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", transitive: false, version: "1.0.59"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "134.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "195.0.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 }
 
 deployDependencies {
 	from (configurations.compileClasspath) {
+		include "antlr4-runtime-*.jar"
+		include "checkstyle-*.jar"
 		include "log4j-api-*.jar"
 		include "log4j-core-*.jar"
 	}
 
+	rename(/antlr4-runtime-(.+)\.jar/, "antlr4-runtime" + renameSuffix)
+	rename(/checkstyle-(.+)\.jar/, "checkstyle" + renameSuffix)
 	rename(/log4j-api-(.+)\.jar/, "log4j-api" + renameSuffix)
 	rename(/log4j-core-(.+)\.jar/, "log4j-core" + renameSuffix)
 }

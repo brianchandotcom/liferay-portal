@@ -1,0 +1,11 @@
+{
+	"devDependencies": {
+		"@playwright/test": "1.55.1"
+	},
+	"name": "playwright-tests",
+	"private": true,
+	"version": "0.0.0",
+	"workspaces": [
+		".."
+	]
+}

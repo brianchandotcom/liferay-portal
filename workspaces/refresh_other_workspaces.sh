@@ -54,6 +54,14 @@ function refresh_workspaces {
 			--exclude test.properties \
 			--exclude themes \
 			"${PWD}/liferay-sample-workspace/" "${workspace_dir}"
+
+		rsync \
+			--archive \
+			--ignore-existing \
+			"${PWD}/liferay-sample-workspace/playwright/tests/.yarnrc" \
+			"${PWD}/liferay-sample-workspace/playwright/tests/package.json" \
+			"${PWD}/liferay-sample-workspace/playwright/tests/yarn.lock" \
+			"${workspace_dir}/playwright/tests/"
 	done
 }
 

@@ -34,8 +34,9 @@ public class SearchTermResourceImpl extends BaseSearchTermResourceImpl {
 
 	@Override
 	public Page<SearchTerm> getWorkspaceGroupChannelSearchTermsPage(
-			Long groupId, String channelId, String rangeEnd, String rangeKey,
-			String rangeStart, Pagination pagination)
+			Long groupId, String channelId, String accountId, String rangeEnd,
+			String rangeKey, String rangeStart, String search, String segmentId,
+			Pagination pagination)
 		throws Exception {
 
 		int cur = FaroPaginationUtil.getCur(pagination);
@@ -48,13 +49,19 @@ public class SearchTermResourceImpl extends BaseSearchTermResourceImpl {
 					_faroProjectLocalService.getFaroProjectByGroupId(groupId),
 					"getWorkspaceGroupChannelSearchTermsPage",
 					HashMapBuilder.<String, Object>put(
+						"accountId", accountId
+					).put(
 						"channelId", channelId
+					).put(
+						"keywords", search
 					).put(
 						"rangeEnd", rangeEnd
 					).put(
 						"rangeKey", TimeRange.getRangeKey(rangeKey)
 					).put(
 						"rangeStart", rangeStart
+					).put(
+						"segmentId", segmentId
 					).put(
 						"size", delta
 					).put(

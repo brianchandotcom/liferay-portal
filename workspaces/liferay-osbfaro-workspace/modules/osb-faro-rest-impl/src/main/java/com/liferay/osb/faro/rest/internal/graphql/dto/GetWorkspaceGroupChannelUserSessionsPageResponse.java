@@ -52,6 +52,10 @@ public class GetWorkspaceGroupChannelUserSessionsPageResponse {
 			return _events;
 		}
 
+		public String getIndividualId() {
+			return _individualId;
+		}
+
 		public Boolean isBecameKnown() {
 			return _becameKnown;
 		}
@@ -82,12 +86,17 @@ public class GetWorkspaceGroupChannelUserSessionsPageResponse {
 			_events = events;
 		}
 
+		public void setIndividualId(String individualId) {
+			_individualId = individualId;
+		}
+
 		private Boolean _becameKnown;
 		private String _browserName;
 		private Date _completeDate;
 		private Date _createDate;
 		private String _deviceType;
 		private List<GetWorkspaceGroupChannelEventsPageResponse.Event> _events;
+		private String _individualId;
 
 	}
 

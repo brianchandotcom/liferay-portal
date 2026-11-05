@@ -55,6 +55,7 @@ public class UserSessionDTOConverter
 				setEvents(
 					() -> _toEvents(
 						dtoConverterContext, userSession.getEvents()));
+				setIndividualId(userSession::getIndividualId);
 			}
 		};
 	}

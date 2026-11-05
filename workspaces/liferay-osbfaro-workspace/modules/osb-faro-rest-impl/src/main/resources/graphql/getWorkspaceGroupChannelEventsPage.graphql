@@ -30,6 +30,8 @@ query getWorkspaceGroupChannelEventsPage(
 			canonicalUrl
 			createDate
 			emailAddressHashed
+			eventDate
+			individualName
 			name
 			pageDescription
 			pageKeywords

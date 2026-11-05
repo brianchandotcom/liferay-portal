@@ -49,6 +49,15 @@ public class GetWorkspaceGroupChannelEventsPageResponse {
 			return _emailAddressHashed;
 		}
 
+		@JsonFormat(pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
+		public Date getEventDate() {
+			return _eventDate;
+		}
+
+		public String getIndividualName() {
+			return _individualName;
+		}
+
 		public String getName() {
 			return _name;
 		}
@@ -97,6 +106,14 @@ public class GetWorkspaceGroupChannelEventsPageResponse {
 			_emailAddressHashed = emailAddressHashed;
 		}
 
+		public void setEventDate(Date eventDate) {
+			_eventDate = eventDate;
+		}
+
+		public void setIndividualName(String individualName) {
+			_individualName = individualName;
+		}
+
 		public void setName(String name) {
 			_name = name;
 		}
@@ -130,6 +147,8 @@ public class GetWorkspaceGroupChannelEventsPageResponse {
 		private String _canonicalUrl;
 		private Date _createDate;
 		private String _emailAddressHashed;
+		private Date _eventDate;
+		private String _individualName;
 		private String _name;
 		private String _pageDescription;
 		private String _pageKeywords;

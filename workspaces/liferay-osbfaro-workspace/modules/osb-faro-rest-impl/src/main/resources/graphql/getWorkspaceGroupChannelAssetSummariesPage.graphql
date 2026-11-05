@@ -3,6 +3,7 @@ query getWorkspaceGroupChannelAssetSummariesPage(
 	$channelId: String
 	$individualIds: [String]
 	$keywords: String
+	$objectType: String
 	$rangeEnd: String
 	$rangeKey: Int
 	$rangeStart: String
@@ -16,6 +17,7 @@ query getWorkspaceGroupChannelAssetSummariesPage(
 		channelId: $channelId
 		individualIds: $individualIds
 		keywords: $keywords
+		objectType: $objectType
 		rangeEnd: $rangeEnd
 		rangeKey: $rangeKey
 		rangeStart: $rangeStart

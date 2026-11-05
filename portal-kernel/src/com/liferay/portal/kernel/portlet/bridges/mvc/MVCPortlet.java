@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -849,12 +849,13 @@ public class MVCPortlet extends LiferayPortlet {
 		String configJSP = liferayPortletConfig.getInitParameter("config-jsp");
 
 		if (((configJSP != null) && path.equals(configJSP)) ||
-			path.contains(_PATH_CONFIGURATION_DIRECTORY)) {
+			path.contains("/configuration/")) {
 
 			return true;
 		}
 
-		return _configurationJSPFileNames.contains(
+		return ArrayUtil.contains(
+			new String[] {"configuration.jsp", "configuration_browse.jsp"},
 			path.substring(path.lastIndexOf(CharPool.SLASH) + 1));
 	}
 
@@ -880,16 +881,11 @@ public class MVCPortlet extends LiferayPortlet {
 			});
 	}
 
-	private static final String _PATH_CONFIGURATION_DIRECTORY =
-		"/configuration/";
-
 	private static final String _PATH_META_INF_RESOURCES =
 		"/META-INF/resources";
 
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
-	private static final Set<String> _configurationJSPFileNames =
-		SetUtil.fromArray("configuration.jsp", "configuration_browse.jsp");
 	private static final Map<String, Map<String, Set<String>>> _validPathsMaps =
 		new ConcurrentHashMap<>();
 

@@ -1,0 +1,72 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.test.internal.upgrade.registry;
+
+import com.liferay.portal.configuration.upgrade.ConfigurationUpgradeStepFactory;
+import com.liferay.portal.kernel.upgrade.BaseReplacePortletId;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.test.internal.upgrade.v1_1_0.TestEntryUpgradeProcess;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+@Component(service = UpgradeStepRegistrator.class)
+public class TestUpgradeStepRegistrator implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
+
+		registry.register(
+			"1.0.0", "1.1.0",
+			UpgradeProcessFactory.addColumns(
+				"TestEntry", "description VARCHAR(75) null"),
+			new TestEntryUpgradeProcess());
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.test.configuration.TestConfiguration",
+				"com.liferay.test.configuration.TestConfiguration"),
+			(UpgradeProcess)new TestEntryUpgradeProcess(),
+			_getDeleteTestEntriesUpgradeProcess());
+
+		BaseReplacePortletId upgradePortletId = new BaseReplacePortletId() {
+
+			@Override
+			protected String[][] getRenamePortletIdsArray() {
+				return new String[][] {
+					{"1_WAR_testportlet", "com_liferay_test_web_TestPortlet"}
+				};
+			}
+
+		};
+
+		registry.register("1.2.0", "1.3.0", upgradePortletId);
+
+		registry.register(
+			"1.3.0", "2.0.0",
+			new UpgradeProcess() {
+
+				@Override
+				protected void doUpgrade() throws Exception {
+					runSQL("delete from TestEntry where description is null");
+				}
+
+			});
+	}
+
+	private UpgradeProcess _getDeleteTestEntriesUpgradeProcess() {
+		return UpgradeProcessFactory.runSQL("delete from TestEntry");
+	}
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
+
+}

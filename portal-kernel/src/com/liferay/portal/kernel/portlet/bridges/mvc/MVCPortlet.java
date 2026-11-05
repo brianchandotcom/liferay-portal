@@ -843,7 +843,14 @@ public class MVCPortlet extends LiferayPortlet {
 			return false;
 		}
 
-		if (path.contains(_PATH_CONFIGURATION_DIRECTORY)) {
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)getPortletConfig();
+
+		String configJSP = liferayPortletConfig.getInitParameter("config-jsp");
+
+		if (((configJSP != null) && path.equals(configJSP)) ||
+			path.contains(_PATH_CONFIGURATION_DIRECTORY)) {
+
 			return true;
 		}
 

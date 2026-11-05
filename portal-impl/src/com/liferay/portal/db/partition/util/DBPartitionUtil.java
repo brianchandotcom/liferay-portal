@@ -772,7 +772,12 @@ public class DBPartitionUtil {
 		String targetPartitionName = getPartitionName(toCompanyId);
 
 		try {
-			_copySchema(connection, sourcePartitionName, targetPartitionName);
+			_copySchema(
+				connection, sourcePartitionName, targetPartitionName,
+				"OA2Auths_OA2ScopeGrants", "OAuth2Authorization",
+				"OpenIdConnectSession", "RememberMeToken", "SamlIbSloMessage",
+				"SamlIdpSpSession", "SamlIdpSsoSession", "SamlSpAuthRequest",
+				"SamlSpSession", "SharepointOAuth2TokenEntry", "Ticket");
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -884,6 +889,14 @@ public class DBPartitionUtil {
 								fromCompanyId));
 					}
 
+					if (StringUtil.equalsIgnoreCase(
+							fromTableName, "SharingEntry")) {
+
+						_deleteData(
+							toTableName, targetPartitionName, statement,
+							" where toTicketId > 0");
+					}
+
 					if (!StringUtil.equalsIgnoreCase(
 							fromTableName, "ResourcePermission")) {
 
@@ -963,7 +976,7 @@ public class DBPartitionUtil {
 
 	private static void _copySchema(
 			Connection connection, String sourcePartitionName,
-			String targetPartitionName)
+			String targetPartitionName, String... excludedDataTableNames)
 		throws SQLException {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -1000,7 +1013,9 @@ public class DBPartitionUtil {
 							targetPartitionName, fromTableName, fromTableName));
 
 					if (StringUtil.equalsIgnoreCase(
-							fromTableName, "Configuration_")) {
+							fromTableName, "Configuration_") ||
+						ArrayUtil.contains(
+							excludedDataTableNames, fromTableName, true)) {
 
 						continue;
 					}

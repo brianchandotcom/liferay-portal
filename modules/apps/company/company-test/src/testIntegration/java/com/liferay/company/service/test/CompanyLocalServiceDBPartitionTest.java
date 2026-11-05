@@ -40,8 +40,11 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -53,9 +56,11 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.RememberMeTokenLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelper;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
@@ -76,6 +81,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -95,6 +101,9 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
+import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import jakarta.portlet.Portlet;
 
@@ -107,6 +116,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -800,7 +810,16 @@ public class CompanyLocalServiceDBPartitionTest
 			RandomTestUtil.randomString());
 		String webId = RandomTestUtil.randomString();
 
+		Company company = companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		String indexNameCurrent = company.getIndexNameCurrent();
+		String indexNameNext = company.getIndexNameNext();
+		String key = company.getKey();
+
 		Company copiedCompany = null;
+		RememberMeToken rememberMeToken = null;
+		Ticket ticket = null;
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -822,6 +841,28 @@ public class CompanyLocalServiceDBPartitionTest
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					TestPropsValues.getCompanyId())) {
 
+			rememberMeToken = _rememberMeTokenLocalService.addRememberMeToken(
+				company.getCompanyId(), TestPropsValues.getUserId(),
+				new Date(System.currentTimeMillis() + Time.DAY),
+				value -> {
+				});
+
+			ticket = _ticketLocalService.addTicket(
+				company.getCompanyId(), User.class.getName(),
+				TestPropsValues.getUserId(),
+				TicketConstants.TYPE_INVITE_COLLABORATOR,
+				RandomTestUtil.randomString() + "@liferay.com", null,
+				new Date(System.currentTimeMillis() + Time.DAY),
+				ServiceContextTestUtil.getServiceContext());
+
+			SharingEntry sharingEntry =
+				_sharingEntryLocalService.addSharingEntry(
+					null, TestPropsValues.getUserId(), ticket.getTicketId(), 0,
+					0, _portal.getClassNameId(User.class),
+					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+					true, Collections.singletonList(SharingEntryAction.VIEW),
+					null, ServiceContextTestUtil.getServiceContext());
+
 			ObjectDefinition objectDefinition =
 				ObjectDefinitionTestUtil.publishObjectDefinition();
 
@@ -838,6 +879,14 @@ public class CompanyLocalServiceDBPartitionTest
 					RandomTestUtil.randomLocaleStringMap(),
 					ServiceContextTestUtil.getServiceContext());
 
+			String newIndexNameCurrent = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+			String newIndexNameNext = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+
+			companyLocalService.updateIndexNames(
+				company.getCompanyId(), newIndexNameCurrent, newIndexNameNext);
+
 			copiedCompany = companyLocalService.copyDBPartitionCompany(
 				TestPropsValues.getCompanyId(), null, name, virtualHostname,
 				webId);
@@ -851,6 +900,23 @@ public class CompanyLocalServiceDBPartitionTest
 
 			long copiedCompanyId = copiedCompany.getCompanyId();
 
+			company = companyLocalService.getCompany(company.getCompanyId());
+
+			Assert.assertEquals(
+				newIndexNameCurrent, company.getIndexNameCurrent());
+			Assert.assertEquals(newIndexNameNext, company.getIndexNameNext());
+
+			Assert.assertNotNull(
+				_rememberMeTokenLocalService.fetchRememberMeToken(
+					rememberMeToken.getRememberMeTokenId()));
+			Assert.assertNotNull(
+				_sharingEntryLocalService.fetchSharingEntry(
+					sharingEntry.getSharingEntryId()));
+			Assert.assertNotNull(
+				_ticketLocalService.fetchTicket(ticket.getTicketId()));
+
+			_assertCopyDBPartitionCompanyIsolation(copiedCompanyId, key);
+
 			_assertCompanyConfiguration(copiedCompanyId, configuration);
 
 			_addCopyDBPartitionCompanyCache(copiedCompanyId);
@@ -858,6 +924,10 @@ public class CompanyLocalServiceDBPartitionTest
 			try (SafeCloseable safeCloseable2 =
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						copiedCompanyId)) {
+
+				Assert.assertNull(
+					_sharingEntryLocalService.fetchSharingEntry(
+						sharingEntry.getSharingEntryId()));
 
 				ObjectDefinition copiedObjectDefinition =
 					_objectDefinitionLocalService.fetchObjectDefinition(
@@ -927,6 +997,7 @@ public class CompanyLocalServiceDBPartitionTest
 				copiedCompany, name, virtualHostname, webId);
 			_assertCopyDBPartitionCompanyId(
 				TestPropsValues.getCompanyId(), copiedCompany.getCompanyId());
+			_assertCopyDBPartitionCompanyIsolation(copiedCompanyId, key);
 
 			Assert.assertEquals(
 				rulesCount,
@@ -953,8 +1024,30 @@ public class CompanyLocalServiceDBPartitionTest
 				ConfigurationTestUtil.deleteConfiguration(configuration);
 			}
 
-			if (copiedCompany != null) {
-				companyLocalService.deleteCompany(copiedCompany.getCompanyId());
+			try {
+				if (copiedCompany != null) {
+					companyLocalService.deleteCompany(
+						copiedCompany.getCompanyId());
+				}
+			}
+			finally {
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							company.getCompanyId())) {
+
+					companyLocalService.updateIndexNames(
+						company.getCompanyId(), indexNameCurrent,
+						indexNameNext);
+
+					if (rememberMeToken != null) {
+						_rememberMeTokenLocalService.deleteRememberMeToken(
+							rememberMeToken);
+					}
+
+					if (ticket != null) {
+						_ticketLocalService.deleteTicket(ticket);
+					}
+				}
 			}
 		}
 	}
@@ -1535,6 +1628,30 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
+	private void _assertCopyDBPartitionCompanyIsolation(
+			long copiedCompanyId, String key)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					copiedCompanyId)) {
+
+			Company copiedCompany = companyLocalService.getCompany(
+				copiedCompanyId);
+
+			Assert.assertEquals(
+				StringPool.BLANK, copiedCompany.getIndexNameCurrent());
+			Assert.assertEquals(
+				StringPool.BLANK, copiedCompany.getIndexNameNext());
+			Assert.assertNotEquals(StringPool.BLANK, copiedCompany.getKey());
+			Assert.assertNotEquals(key, copiedCompany.getKey());
+
+			Assert.assertEquals(
+				0, _rememberMeTokenLocalService.getRememberMeTokensCount());
+			Assert.assertEquals(0, _ticketLocalService.getTicketsCount());
+		}
+	}
+
 	private void _assertExportedCompanyNotUpdated(
 			long companyId, String virtualHostname, String webId)
 		throws Exception {
@@ -1827,6 +1944,9 @@ public class CompanyLocalServiceDBPartitionTest
 	private PortletLocalService _portletLocalService;
 
 	@Inject
+	private RememberMeTokenLocalService _rememberMeTokenLocalService;
+
+	@Inject
 	private RepositoryFactory _repositoryFactory;
 
 	@Inject
@@ -1840,6 +1960,9 @@ public class CompanyLocalServiceDBPartitionTest
 
 	private ServiceRegistration<RepositoryDefiner> _serviceRegistration;
 
+	@Inject
+	private SharingEntryLocalService _sharingEntryLocalService;
+
 	@Inject(
 		filter = "(&(objectClass=com.liferay.document.library.kernel.store.Store)(default=true))"
 	)
@@ -1847,6 +1970,9 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Inject
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
+
+	@Inject
+	private TicketLocalService _ticketLocalService;
 
 	@Inject
 	private VirtualHostLocalService _virtualHostLocalService;

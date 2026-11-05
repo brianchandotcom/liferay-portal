@@ -25,12 +25,6 @@ public class AccountDTOConverterTest {
 		com.liferay.osb.faro.engine.client.model.Account engineClientAccount =
 			new com.liferay.osb.faro.engine.client.model.Account();
 
-		engineClientAccount.setAccountName(RandomTestUtil.randomString());
-		engineClientAccount.setAccountType(RandomTestUtil.randomString());
-		engineClientAccount.setActivitiesCount(RandomTestUtil.randomLong());
-		engineClientAccount.setActivityStatus(RandomTestUtil.randomString());
-		engineClientAccount.setAnnualRevenue(RandomTestUtil.randomDouble());
-
 		com.liferay.osb.faro.engine.client.model.Account.CalculatedField
 			engineClientCalculatedField =
 				new com.liferay.osb.faro.engine.client.model.Account.
@@ -41,9 +35,13 @@ public class AccountDTOConverterTest {
 		engineClientCalculatedField.setNamespace(RandomTestUtil.randomString());
 		engineClientCalculatedField.setValue(RandomTestUtil.randomString());
 
+		engineClientAccount.setAccountName(RandomTestUtil.randomString());
+		engineClientAccount.setAccountType(RandomTestUtil.randomString());
+		engineClientAccount.setActivitiesCount(RandomTestUtil.randomLong());
+		engineClientAccount.setActivityStatus(RandomTestUtil.randomString());
+		engineClientAccount.setAnnualRevenue(RandomTestUtil.randomDouble());
 		engineClientAccount.setCalculatedFields(
 			Collections.singletonList(engineClientCalculatedField));
-
 		engineClientAccount.setFirstActivityDate(RandomTestUtil.nextDate());
 		engineClientAccount.setId(RandomTestUtil.randomString());
 		engineClientAccount.setLastActivityDate(RandomTestUtil.nextDate());

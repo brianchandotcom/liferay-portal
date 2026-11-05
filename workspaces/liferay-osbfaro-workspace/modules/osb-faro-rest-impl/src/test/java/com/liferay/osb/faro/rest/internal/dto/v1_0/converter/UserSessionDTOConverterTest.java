@@ -47,6 +47,7 @@ public class UserSessionDTOConverterTest {
 		responseUserSession.setCompleteDate(RandomTestUtil.nextDate());
 		responseUserSession.setCreateDate(RandomTestUtil.nextDate());
 		responseUserSession.setDeviceType(RandomTestUtil.randomString());
+		responseUserSession.setIndividualId(RandomTestUtil.randomString());
 
 		GetWorkspaceGroupChannelEventsPageResponse.Event responseEvent =
 			new GetWorkspaceGroupChannelEventsPageResponse.Event();
@@ -54,6 +55,8 @@ public class UserSessionDTOConverterTest {
 		responseEvent.setAssetTitle(RandomTestUtil.randomString());
 		responseEvent.setCanonicalUrl(RandomTestUtil.randomString());
 		responseEvent.setCreateDate(responseUserSession.getCreateDate());
+		responseEvent.setEventDate(RandomTestUtil.nextDate());
+		responseEvent.setIndividualName(RandomTestUtil.randomString());
 		responseEvent.setName(RandomTestUtil.randomString());
 
 		responseUserSession.setEvents(Arrays.asList(responseEvent));
@@ -71,6 +74,9 @@ public class UserSessionDTOConverterTest {
 			responseUserSession.getCreateDate(), userSession.getCreateDate());
 		Assert.assertEquals(
 			responseUserSession.getDeviceType(), userSession.getDeviceType());
+		Assert.assertEquals(
+			responseUserSession.getIndividualId(),
+			userSession.getIndividualId());
 
 		Event[] events = userSession.getEvents();
 
@@ -82,6 +88,9 @@ public class UserSessionDTOConverterTest {
 			responseEvent.getAssetTitle(), event.getAssetTitle());
 		Assert.assertEquals(
 			responseEvent.getCanonicalUrl(), event.getCanonicalUrl());
+		Assert.assertEquals(responseEvent.getEventDate(), event.getEventDate());
+		Assert.assertEquals(
+			responseEvent.getIndividualName(), event.getIndividualName());
 		Assert.assertEquals(responseEvent.getName(), event.getName());
 
 		responseUserSession =

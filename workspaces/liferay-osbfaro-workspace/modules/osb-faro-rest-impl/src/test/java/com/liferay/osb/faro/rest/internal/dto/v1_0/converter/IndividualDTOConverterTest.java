@@ -6,11 +6,13 @@
 package com.liferay.osb.faro.rest.internal.dto.v1_0.converter;
 
 import com.liferay.osb.faro.engine.client.model.Field;
+import com.liferay.osb.faro.rest.dto.v1_0.Account;
 import com.liferay.osb.faro.rest.dto.v1_0.Individual;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -59,9 +61,53 @@ public class IndividualDTOConverterTest {
 			engineClientIndividual.getSessionsCount(),
 			individual.getSessionsCount());
 
+		Assert.assertNull(individual.getAccounts());
 		Assert.assertNull(individual.getDemographics());
 		Assert.assertNull(individual.getEmailAddress());
 		Assert.assertNull(individual.getName());
+
+		com.liferay.osb.faro.engine.client.model.Individual.Account
+			engineClientAccount =
+				new com.liferay.osb.faro.engine.client.model.Individual.
+					Account();
+
+		engineClientAccount.setAccountName(RandomTestUtil.randomString());
+		engineClientAccount.setAccountType(RandomTestUtil.randomString());
+		engineClientAccount.setAnnualRevenue(RandomTestUtil.randomDouble());
+		engineClientAccount.setCountry(RandomTestUtil.randomString());
+		engineClientAccount.setId(RandomTestUtil.randomString());
+		engineClientAccount.setIndustry(RandomTestUtil.randomString());
+		engineClientAccount.setLastActivityDate(RandomTestUtil.nextDate());
+		engineClientAccount.setNumberOfEmployees(RandomTestUtil.randomInt());
+
+		engineClientIndividual.setAccounts(
+			Collections.singletonList(engineClientAccount));
+
+		individual = _toDTO(engineClientIndividual);
+
+		Account[] accounts = individual.getAccounts();
+
+		Assert.assertEquals(Arrays.toString(accounts), 1, accounts.length);
+
+		Account account = accounts[0];
+
+		Assert.assertEquals(
+			engineClientAccount.getAccountName(), account.getAccountName());
+		Assert.assertEquals(
+			engineClientAccount.getAccountType(), account.getAccountType());
+		Assert.assertEquals(
+			engineClientAccount.getAnnualRevenue(), account.getAnnualRevenue());
+		Assert.assertEquals(
+			engineClientAccount.getCountry(), account.getCountry());
+		Assert.assertEquals(engineClientAccount.getId(), account.getId());
+		Assert.assertEquals(
+			engineClientAccount.getIndustry(), account.getIndustry());
+		Assert.assertEquals(
+			engineClientAccount.getLastActivityDate(),
+			account.getLastActivityDate());
+		Assert.assertEquals(
+			Integer.valueOf((int)engineClientAccount.getNumberOfEmployees()),
+			account.getNumberOfEmployees());
 
 		String emailAddress = RandomTestUtil.randomString();
 		String familyName = RandomTestUtil.randomString();

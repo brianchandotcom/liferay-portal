@@ -1,16 +1,22 @@
 query getWorkspaceGroupChannelSearchTermsPage(
+	$accountId: String
 	$channelId: String
+	$keywords: String
 	$rangeEnd: String
 	$rangeKey: Int
 	$rangeStart: String
+	$segmentId: String
 	$size: Int!
 	$start: Int!
 ) {
 	compositionBag: searchTerms(
+		accountId: $accountId
 		channelId: $channelId
+		keywords: $keywords
 		rangeEnd: $rangeEnd
 		rangeKey: $rangeKey
 		rangeStart: $rangeStart
+		segmentId: $segmentId
 		size: $size
 		start: $start
 	) {

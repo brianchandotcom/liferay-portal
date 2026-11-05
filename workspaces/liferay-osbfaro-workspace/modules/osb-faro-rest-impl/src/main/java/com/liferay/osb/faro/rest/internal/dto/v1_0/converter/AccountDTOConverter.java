@@ -6,9 +6,11 @@
 package com.liferay.osb.faro.rest.internal.dto.v1_0.converter;
 
 import com.liferay.osb.faro.rest.dto.v1_0.Account;
+import com.liferay.osb.faro.rest.dto.v1_0.CalculatedField;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 
@@ -44,7 +46,10 @@ public class AccountDTOConverter
 				setAccountName(account::getAccountName);
 				setAccountType(account::getAccountType);
 				setActivitiesCount(account::getActivitiesCount);
+				setActivityStatus(account::getActivityStatus);
 				setAnnualRevenue(account::getAnnualRevenue);
+				setCalculatedFields(
+					() -> _toCalculatedFields(account.getCalculatedFields()));
 				setCountry(account::getCountry);
 				setDateModified(account::getModifiedDate);
 				setFirstActivityDate(account::getFirstActivityDate);
@@ -72,6 +77,27 @@ public class AccountDTOConverter
 				setWebsite(account::getWebsite);
 			}
 		};
+	}
+
+	private CalculatedField[] _toCalculatedFields(
+		List<com.liferay.osb.faro.engine.client.model.Account.CalculatedField>
+			calculatedFields) {
+
+		if (calculatedFields == null) {
+			return null;
+		}
+
+		return TransformUtil.transformToArray(
+			calculatedFields,
+			calculatedField -> new CalculatedField() {
+				{
+					setDateModified(calculatedField::getModifiedDate);
+					setName(calculatedField::getName);
+					setNamespace(calculatedField::getNamespace);
+					setValue(calculatedField::getValue);
+				}
+			},
+			CalculatedField.class);
 	}
 
 }

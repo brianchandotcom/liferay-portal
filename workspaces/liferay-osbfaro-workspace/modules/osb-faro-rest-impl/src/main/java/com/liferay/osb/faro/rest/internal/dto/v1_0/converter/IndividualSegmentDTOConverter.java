@@ -42,6 +42,7 @@ public class IndividualSegmentDTOConverter
 
 		return new IndividualSegment() {
 			{
+				setAccountsCount(individualSegment::getAccountsCount);
 				setActiveIndividualCount(
 					individualSegment::getActiveIndividualCount);
 				setAnonymousIndividualCount(
@@ -57,6 +58,8 @@ public class IndividualSegmentDTOConverter
 				setKnownIndividualCount(
 					individualSegment::getKnownIndividualCount);
 				setLastActivityDate(individualSegment::getLastActivityDate);
+				setLastMembershipUpdateDate(
+					individualSegment::getLastMembershipUpdateDate);
 				setName(individualSegment::getName);
 				setSegmentType(
 					() -> FaroEnumUtil.create(

@@ -38,6 +38,8 @@ query getWorkspaceGroupChannelUserSessionsPage(
 					assetTitle
 					canonicalUrl
 					createDate
+					eventDate
+					individualName
 					name
 					pageDescription
 					pageKeywords
@@ -49,6 +51,7 @@ query getWorkspaceGroupChannelUserSessionsPage(
 					referrer
 					url
 				}
+				individualId
 			}
 		}
 	}

@@ -8,6 +8,7 @@ query getWorkspaceGroupChannelEventMetrics(
 	$rangeEnd: String
 	$rangeKey: Int
 	$rangeStart: String
+	$segmentId: String
 ) {
 	eventMetric(
 		accountId: $accountId
@@ -20,6 +21,7 @@ query getWorkspaceGroupChannelEventMetrics(
 		rangeEnd: $rangeEnd
 		rangeKey: $rangeKey
 		rangeStart: $rangeStart
+		segmentId: $segmentId
 	) {
 		totalEventsMetric {
 			...metricFragment

@@ -30,30 +30,31 @@ public class EventMetricResourceImpl extends BaseEventMetricResourceImpl {
 	@Override
 	public EventMetric getWorkspaceGroupChannelAccountEventMetric(
 			Long groupId, String channelId, String accountId, String interval,
-			String rangeEnd, String rangeKey, String rangeStart, String search)
+			String rangeEnd, String rangeKey, String rangeStart, String search,
+			String segmentId)
 		throws Exception {
 
 		return _getEventMetric(
 			accountId, channelId, "", groupId, interval, rangeEnd, rangeKey,
-			rangeStart, search);
+			rangeStart, search, segmentId);
 	}
 
 	@Override
 	public EventMetric getWorkspaceGroupChannelIndividualEventMetric(
 			Long groupId, String channelId, String individualId,
 			String interval, String rangeEnd, String rangeKey,
-			String rangeStart, String search)
+			String rangeStart, String search, String segmentId)
 		throws Exception {
 
 		return _getEventMetric(
 			null, channelId, individualId, groupId, interval, rangeEnd,
-			rangeKey, rangeStart, search);
+			rangeKey, rangeStart, search, segmentId);
 	}
 
 	private EventMetric _getEventMetric(
 			String accountId, String channelId, String entityId, Long groupId,
 			String interval, String rangeEnd, String rangeKey,
-			String rangeStart, String search)
+			String rangeStart, String search, String segmentId)
 		throws Exception {
 
 		GetWorkspaceGroupChannelEventMetricsResponse
@@ -80,6 +81,8 @@ public class EventMetricResourceImpl extends BaseEventMetricResourceImpl {
 						"rangeKey", TimeRange.getRangeKey(rangeKey)
 					).put(
 						"rangeStart", rangeStart
+					).put(
+						"segmentId", segmentId
 					).build());
 
 		return _eventMetricDTOConverter.toDTO(

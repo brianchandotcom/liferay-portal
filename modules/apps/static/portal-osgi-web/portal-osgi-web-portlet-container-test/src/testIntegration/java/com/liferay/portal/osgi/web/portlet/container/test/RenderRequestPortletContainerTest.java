@@ -121,6 +121,35 @@ public class RenderRequestPortletContainerTest
 	}
 
 	@Test
+	public void testDoDispatchDoesNotServeConfigurationJSPInitParamUnderViewMode()
+		throws Exception {
+
+		registerService(
+			ConfigurationAction.class, new DefaultConfigurationAction(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"jakarta.portlet.name", TEST_PORTLET_ID
+			).build());
+
+		setUpPortlet(
+			new MVCPortlet(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"jakarta.portlet.init-param.config-jsp",
+				"/configuration_mode_test/settings.jsp"
+			).put(
+				"jakarta.portlet.init-param.view-template",
+				"/configuration_mode_test/view.jsp"
+			).build(),
+			TEST_PORTLET_ID);
+
+		String body = _getBody(
+			PortletRequest.RENDER_PHASE,
+			"/configuration_mode_test/settings.jsp");
+
+		Assert.assertFalse(body.contains("CONFIG_JSP_MARKER"));
+		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
+	}
+
+	@Test
 	public void testDoDispatchDoesNotServeConfigurationJSPSelectedByRequestParameter()
 		throws Exception {
 

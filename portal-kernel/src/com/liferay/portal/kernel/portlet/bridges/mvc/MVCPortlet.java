@@ -830,7 +830,7 @@ public class MVCPortlet extends LiferayPortlet {
 			return false;
 		}
 
-		if (path.startsWith(_PATH_META_INF_RESOURCES + StringPool.SLASH)) {
+		if (path.startsWith(_PATH_META_INF_RESOURCES.concat(StringPool.SLASH))) {
 			path = path.substring(_PATH_META_INF_RESOURCES.length());
 		}
 

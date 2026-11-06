@@ -76,7 +76,13 @@ public class RenderRequestPortletContainerTest
 				"jakarta.portlet.name", TEST_PORTLET_ID
 			).build());
 
-		_setUpMVCPortlet(null);
+		setUpPortlet(
+			new MVCPortlet(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"jakarta.portlet.init-param.view-template",
+				"/configuration_mode_test/view.jsp"
+			).build(),
+			TEST_PORTLET_ID);
 
 		PortletContainerTestUtil.Response response =
 			PortletContainerTestUtil.request(
@@ -329,19 +335,6 @@ public class RenderRequestPortletContainerTest
 		Assert.assertEquals(200, response.getCode());
 
 		Assert.assertTrue(testRuntimePortlet.isCalledRender());
-	}
-
-	private void _setUpMVCPortlet(String configTemplate) throws Exception {
-		setUpPortlet(
-			new MVCPortlet(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-template",
-				() -> configTemplate
-			).put(
-				"jakarta.portlet.init-param.view-template",
-				"/configuration_mode_test/view.jsp"
-			).build(),
-			TEST_PORTLET_ID);
 	}
 
 }

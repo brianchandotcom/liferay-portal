@@ -37,6 +37,7 @@ import jakarta.portlet.HeaderResponse;
 import jakarta.portlet.PortletConfig;
 import jakarta.portlet.PortletContext;
 import jakarta.portlet.PortletException;
+import jakarta.portlet.PortletMode;
 import jakarta.portlet.PortletPreferences;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletRequestDispatcher;
@@ -58,7 +59,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -824,13 +824,15 @@ public class MVCPortlet extends LiferayPortlet {
 	private boolean _isUnauthorizedConfigurationPath(
 		PortletRequest portletRequest, String path) {
 
-		if (Objects.equals(
-				portletRequest.getPortletMode(), LiferayPortletMode.CONFIG)) {
+		PortletMode portletMode = portletRequest.getPortletMode();
 
+		if (portletMode.equals(LiferayPortletMode.CONFIG)) {
 			return false;
 		}
 
-		if (path.startsWith(_PATH_META_INF_RESOURCES.concat(StringPool.SLASH))) {
+		if (path.startsWith(
+				_PATH_META_INF_RESOURCES.concat(StringPool.SLASH))) {
+
 			path = path.substring(_PATH_META_INF_RESOURCES.length());
 		}
 

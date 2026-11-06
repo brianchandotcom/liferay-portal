@@ -380,7 +380,7 @@ public class LiferayCommercePIMConnectorTest {
 						response.setResponseCode(entry.getValue());
 
 						return JSONUtil.put(
-							"title", "Error"
+							"title", RandomTestUtil.randomString()
 						).toString();
 					}
 				}
@@ -553,8 +553,7 @@ public class LiferayCommercePIMConnectorTest {
 				StringPool.BLANK));
 
 		JSONObject jsonObject = _getProductJSONObject(
-			"SKU-1", objectEntries,
-			Collections.<String, ObjectEntry>emptyMap(),
+			"SKU-1", objectEntries, Collections.<String, ObjectEntry>emptyMap(),
 			_mockPIMProductObjectEntry(
 				"SKU-1",
 				HashMapBuilder.<String, Serializable>put(
@@ -564,8 +563,7 @@ public class LiferayCommercePIMConnectorTest {
 		Assert.assertEquals("simple", jsonObject.getString("productType"));
 
 		jsonObject = _getProductJSONObject(
-			"SKU-2", objectEntries,
-			Collections.<String, ObjectEntry>emptyMap(),
+			"SKU-2", objectEntries, Collections.<String, ObjectEntry>emptyMap(),
 			_mockPIMProductObjectEntry(
 				"SKU-2",
 				HashMapBuilder.<String, Serializable>put(
@@ -607,7 +605,7 @@ public class LiferayCommercePIMConnectorTest {
 							HashMapBuilder.<String, Serializable>put(
 								"catalog", _CATALOG_EXTERNAL_REFERENCE_CODE_1
 							).put(
-								"color", "Red"
+								"color", RandomTestUtil.randomString()
 							).build()))
 				).put(
 					"SKU-2",
@@ -617,7 +615,7 @@ public class LiferayCommercePIMConnectorTest {
 							HashMapBuilder.<String, Serializable>put(
 								"catalog", _CATALOG_EXTERNAL_REFERENCE_CODE_2
 							).put(
-								"color", "Blue"
+								"color", RandomTestUtil.randomString()
 							).build()))
 				).build()));
 
@@ -777,7 +775,7 @@ public class LiferayCommercePIMConnectorTest {
 								HashMapBuilder.<String, Serializable>put(
 									"sku", "SKU-1"
 								).put(
-									"title", "Shirt"
+									"title", RandomTestUtil.randomString()
 								).build()))
 					).build()));
 
@@ -1300,7 +1298,7 @@ public class LiferayCommercePIMConnectorTest {
 						HashMapBuilder.<String, Serializable>put(
 							"sku", "SKU-1"
 						).put(
-							"title", "Shirt"
+							"title", RandomTestUtil.randomString()
 						).build()))
 			).build());
 

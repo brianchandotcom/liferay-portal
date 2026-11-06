@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -116,10 +117,12 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 				"Launch set " + launchSetId + " must be open to be scheduled");
 		}
 
-		if ((date == null) || !date.after(new Date())) {
+		if ((date == null) ||
+			(date.getTime() < (System.currentTimeMillis() + Time.MINUTE))) {
+
 			throw new PortalException(
 				"Launch set " + launchSetId +
-					" must be scheduled for a future date");
+					" must be scheduled at least one minute in the future");
 		}
 
 		ServiceContext serviceContext = _createServiceContext(

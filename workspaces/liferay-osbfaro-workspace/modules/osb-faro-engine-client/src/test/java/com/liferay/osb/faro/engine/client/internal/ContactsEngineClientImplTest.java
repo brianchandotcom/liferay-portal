@@ -123,6 +123,30 @@ public class ContactsEngineClientImplTest {
 	}
 
 	@Test
+	public void testGetIndividualIndividualSegmentsWithChannelId() {
+		_contactsEngineClientImpl.getIndividualIndividualSegments(
+			_faroProject, "13", RandomTestUtil.randomString(), null, null, 1,
+			20, null);
+
+		String filter = String.valueOf(_uriVariables.get("filter"));
+
+		Assert.assertTrue(filter.contains("channelId eq 13"));
+		Assert.assertFalse(filter.contains(" ne "));
+	}
+
+	@Test
+	public void testGetIndividualIndividualSegmentsWithExcludedChannelIds() {
+		_contactsEngineClientImpl.getIndividualIndividualSegments(
+			_faroProject, null, Arrays.asList("11", "12"),
+			RandomTestUtil.randomString(), null, null, 1, 20, null);
+
+		String filter = String.valueOf(_uriVariables.get("filter"));
+
+		Assert.assertTrue(filter.contains("channelId ne 11"));
+		Assert.assertTrue(filter.contains("channelId ne 12"));
+	}
+
+	@Test
 	public void testGetIndividuals() {
 		String campaignId = RandomTestUtil.randomString();
 		String channelId = RandomTestUtil.randomString();

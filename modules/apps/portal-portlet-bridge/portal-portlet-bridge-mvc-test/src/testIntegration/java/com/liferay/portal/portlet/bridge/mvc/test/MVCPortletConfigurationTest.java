@@ -67,9 +67,7 @@ public class MVCPortletConfigurationTest {
 		throws Exception {
 
 		AtomicBoolean invoked = new AtomicBoolean(false);
-
 		String portletId = "testPortlet" + RandomTestUtil.randomString();
-		String viewPath = "/" + RandomTestUtil.randomString() + ".jsp";
 
 		_registerConfigurationAction(
 			new DefaultConfigurationAction() {
@@ -90,6 +88,8 @@ public class MVCPortletConfigurationTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"jakarta.portlet.name", portletId
 			).build());
+
+		String viewPath = "/" + RandomTestUtil.randomString() + ".jsp";
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_createRenderRequest(viewPath);
@@ -131,8 +131,8 @@ public class MVCPortletConfigurationTest {
 	public void testDoDispatchDoesNotServeConfigurationJSPInitParamUnderViewMode()
 		throws Exception {
 
-		String portletId = "testPortlet" + RandomTestUtil.randomString();
 		String configJSP = "/" + RandomTestUtil.randomString() + ".jsp";
+		String portletId = "testPortlet" + RandomTestUtil.randomString();
 		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
 		_registerConfigurationAction(
@@ -164,9 +164,9 @@ public class MVCPortletConfigurationTest {
 		throws Exception {
 
 		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 		String siblingConfigurationJSP =
 			"/" + RandomTestUtil.randomString() + "/configuration.jsp";
+		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
 		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -219,10 +219,10 @@ public class MVCPortletConfigurationTest {
 		throws Exception {
 
 		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 		String nestedConfigurationJSP = StringBundler.concat(
 			"/", RandomTestUtil.randomString(), "/configuration/",
 			RandomTestUtil.randomString(), ".jsp");
+		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
 		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -246,9 +246,9 @@ public class MVCPortletConfigurationTest {
 		throws Exception {
 
 		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 		String siblingConfigurationJSP =
 			"/" + RandomTestUtil.randomString() + "/configuration.jsp";
+		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
 		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(

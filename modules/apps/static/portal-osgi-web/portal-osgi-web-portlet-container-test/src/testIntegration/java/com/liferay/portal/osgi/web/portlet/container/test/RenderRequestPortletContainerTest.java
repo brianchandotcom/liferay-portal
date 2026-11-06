@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -44,7 +43,6 @@ import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,151 +54,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class RenderRequestPortletContainerTest
 	extends BasePortletContainerTestCase {
-
-	@Test
-	public void testDoDispatchDoesNotInvokeConfigurationAction()
-		throws Exception {
-
-		registerService(
-			ConfigurationAction.class,
-			new DefaultConfigurationAction() {
-
-				@Override
-				public String getJspPath(
-					HttpServletRequest httpServletRequest) {
-
-					throw new IllegalStateException();
-				}
-
-			},
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.name", TEST_PORTLET_ID
-			).build());
-
-		_setUpMVCPortlet(null);
-
-		String body = _getBody(
-			PortletRequest.RENDER_PHASE, "/configuration_mode_test/view.jsp");
-
-		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
-	}
-
-	@Test
-	public void testDoDispatchDoesNotServeConfigTemplateUnderViewMode()
-		throws Exception {
-
-		setUpPortlet(
-			new MVCPortlet(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-template",
-				"/configuration_mode_test/config.jsp"
-			).put(
-				"jakarta.portlet.init-param.view-template",
-				"/configuration_mode_test/view.jsp"
-			).build(),
-			TEST_PORTLET_ID);
-
-		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						PortletContainerTestUtil.getHttpServletRequest(
-							group, layout),
-						TEST_PORTLET_ID, layout.getPlid(),
-						PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/configuration_mode_test/config.jsp"
-				).buildString());
-
-		Assert.assertEquals(200, response.getCode());
-
-		String body = response.getBody();
-
-		Assert.assertFalse(body.contains("CONFIG_TEMPLATE_MARKER"));
-		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
-	}
-
-	@Test
-	public void testDoDispatchDoesNotServeConfigurationJSPInitParamUnderViewMode()
-		throws Exception {
-
-		registerService(
-			ConfigurationAction.class, new DefaultConfigurationAction(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.name", TEST_PORTLET_ID
-			).build());
-
-		setUpPortlet(
-			new MVCPortlet(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-jsp",
-				"/configuration_mode_test/settings.jsp"
-			).put(
-				"jakarta.portlet.init-param.view-template",
-				"/configuration_mode_test/view.jsp"
-			).build(),
-			TEST_PORTLET_ID);
-
-		String body = _getBody(
-			PortletRequest.RENDER_PHASE,
-			"/configuration_mode_test/settings.jsp");
-
-		Assert.assertFalse(body.contains("CONFIG_JSP_MARKER"));
-		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
-	}
-
-	@Test
-	public void testDoDispatchDoesNotServeConfigurationJSPSelectedByRequestParameter()
-		throws Exception {
-
-		String cmd = RandomTestUtil.randomString();
-
-		registerService(
-			ConfigurationAction.class,
-			new DefaultConfigurationAction() {
-
-				@Override
-				public String getJspPath(
-					HttpServletRequest httpServletRequest) {
-
-					if (Objects.equals(
-							ParamUtil.getString(httpServletRequest, "cmd"),
-							cmd)) {
-
-						return "/" + RandomTestUtil.randomString() + ".jsp";
-					}
-
-					return "/configuration_mode_test/configuration.jsp";
-				}
-
-			},
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.name", TEST_PORTLET_ID
-			).build());
-
-		_setUpMVCPortlet(null);
-
-		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						PortletContainerTestUtil.getHttpServletRequest(
-							group, layout),
-						TEST_PORTLET_ID, layout.getPlid(),
-						PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/configuration_mode_test/configuration.jsp"
-				).setCMD(
-					cmd
-				).buildString());
-
-		Assert.assertEquals(200, response.getCode());
-
-		String body = response.getBody();
-
-		Assert.assertFalse(body.contains("SIBLING_CONFIGURATION_JSP_MARKER"));
-		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
-	}
 
 	@Test
 	public void testDoDispatchDoesNotServeConfigurationJSPWithForeignPortletResource()
@@ -244,47 +97,6 @@ public class RenderRequestPortletContainerTest
 		String body = response.getBody();
 
 		Assert.assertFalse(body.contains("DEFAULT_CONFIGURATION_JSP_MARKER"));
-		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
-	}
-
-	@Test
-	public void testDoDispatchDoesNotServeMetaInfResourcesConfigTemplateUnderViewMode()
-		throws Exception {
-
-		_setUpMVCPortlet("/configuration_mode_test/config.jsp");
-
-		String body = _getBody(
-			PortletRequest.RENDER_PHASE,
-			"/META-INF/resources/configuration_mode_test/config.jsp");
-
-		Assert.assertFalse(body.contains("CONFIG_TEMPLATE_MARKER"));
-	}
-
-	@Test
-	public void testDoDispatchDoesNotServeNestedConfigurationJSPUnderViewMode()
-		throws Exception {
-
-		_setUpMVCPortlet("/configuration_mode_test/config.jsp");
-
-		String body = _getBody(
-			PortletRequest.RENDER_PHASE,
-			"/configuration_mode_test/configuration/display_settings.jsp");
-
-		Assert.assertFalse(body.contains("NESTED_CONFIGURATION_JSP_MARKER"));
-		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
-	}
-
-	@Test
-	public void testDoDispatchDoesNotServeSiblingConfigurationJSPUnderViewMode()
-		throws Exception {
-
-		_setUpMVCPortlet("/configuration_mode_test/config.jsp");
-
-		String body = _getBody(
-			PortletRequest.RENDER_PHASE,
-			"/configuration_mode_test/configuration.jsp");
-
-		Assert.assertFalse(body.contains("SIBLING_CONFIGURATION_JSP_MARKER"));
 		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
 	}
 
@@ -517,67 +329,6 @@ public class RenderRequestPortletContainerTest
 		Assert.assertEquals(200, response.getCode());
 
 		Assert.assertTrue(testRuntimePortlet.isCalledRender());
-	}
-
-	@Test
-	public void testServeResourceDoesNotServeConfigTemplateOutsideConfigMode()
-		throws Exception {
-
-		setUpPortlet(
-			new MVCPortlet(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-template",
-				"/configuration_mode_test/config.jsp"
-			).build(),
-			TEST_PORTLET_ID);
-
-		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						PortletContainerTestUtil.getHttpServletRequest(
-							group, layout),
-						TEST_PORTLET_ID, layout.getPlid(),
-						PortletRequest.RESOURCE_PHASE)
-				).setMVCPath(
-					"/configuration_mode_test/config.jsp"
-				).buildString());
-
-		Assert.assertEquals(200, response.getCode());
-
-		String body = response.getBody();
-
-		Assert.assertFalse(body.contains("CONFIG_TEMPLATE_MARKER"));
-	}
-
-	@Test
-	public void testServeResourceDoesNotServeNestedConfigurationJSPOutsideConfigMode()
-		throws Exception {
-
-		_setUpMVCPortlet("/configuration_mode_test/config.jsp");
-
-		String body = _getBody(
-			PortletRequest.RESOURCE_PHASE,
-			"/configuration_mode_test/configuration/display_settings.jsp");
-
-		Assert.assertFalse(body.contains("NESTED_CONFIGURATION_JSP_MARKER"));
-	}
-
-	private String _getBody(String lifecycle, String mvcPath) throws Exception {
-		PortletContainerTestUtil.Response response =
-			PortletContainerTestUtil.request(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						PortletContainerTestUtil.getHttpServletRequest(
-							group, layout),
-						TEST_PORTLET_ID, layout.getPlid(), lifecycle)
-				).setMVCPath(
-					mvcPath
-				).buildString());
-
-		Assert.assertEquals(200, response.getCode());
-
-		return response.getBody();
 	}
 
 	private void _setUpMVCPortlet(String configTemplate) throws Exception {

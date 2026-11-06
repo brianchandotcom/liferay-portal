@@ -115,6 +115,7 @@ import com.liferay.portal.kernel.security.auth.FullNameValidator;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
+import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -5584,6 +5585,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		if (FIPSModeValidator.isNotAllowedPassword(password1)) {
+			if (!silentUpdate) {
+				throw new UserPasswordException.MustBeLonger(
+					userId, FIPSModeValidator.PASSWORDS_MIN_LENGTH);
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to update the password of user ", userId,
+						" because it has fewer than ",
+						FIPSModeValidator.PASSWORDS_MIN_LENGTH,
+						" bytes in FIPS mode"));
+			}
+
+			return user;
+		}
+
 		String newEncPwd = null;
 
 		if (user.isPasswordEncrypted()) {
@@ -6478,7 +6497,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				login, password, user.getPassword());
 
 			if (authenticated) {
-				if (!StringUtil.equalsIgnoreCase(
+				if (!FIPSModeValidator.isNotAllowedPassword(password) &&
+					!StringUtil.equalsIgnoreCase(
 						PasswordEncryptorUtil.
 							getEncryptedPasswordAlgorithmSettings(
 								user.getPassword()),

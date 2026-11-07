@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -55,6 +54,7 @@ public class DLSelectFolderDisplayContext {
 
 	public DLSelectFolderDisplayContext(
 		long blockedFolderId, DLAppService dlAppService, Folder folder,
+		long folderId,
 		ModelResourcePermission<Folder> folderModelResourcePermission,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		long repositoryId, long selectedFolderId, long selectedRepositoryId,
@@ -63,6 +63,7 @@ public class DLSelectFolderDisplayContext {
 		_blockedFolderId = blockedFolderId;
 		_dlAppService = dlAppService;
 		_folder = folder;
+		_folderId = folderId;
 		_folderModelResourcePermission = folderModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
@@ -124,11 +125,7 @@ public class DLSelectFolderDisplayContext {
 	}
 
 	public long getFolderId() {
-		return ParamUtil.getLong(
-			_httpServletRequest, "folderId",
-			GetterUtil.get(
-				_folder, Folder::getFolderId,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		return _folderId;
 	}
 
 	public String getFolderName() {
@@ -350,6 +347,7 @@ public class DLSelectFolderDisplayContext {
 	private final long _blockedFolderId;
 	private final DLAppService _dlAppService;
 	private final Folder _folder;
+	private final long _folderId;
 	private final ModelResourcePermission<Folder>
 		_folderModelResourcePermission;
 	private final HttpServletRequest _httpServletRequest;

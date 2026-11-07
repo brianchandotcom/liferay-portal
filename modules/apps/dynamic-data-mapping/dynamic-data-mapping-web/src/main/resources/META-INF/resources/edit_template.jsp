@@ -16,7 +16,7 @@ String portletResourceNamespace = ParamUtil.getString(request, "portletResourceN
 
 DDMTemplate template = (DDMTemplate)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
 
-long templateId = ParamUtil.getLong(request, "templateId", GetterUtil.get(template, DDMTemplate::getTemplateId, 0L));
+long templateId = ParamUtil.getLong(request, "templateId");
 
 long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(template, DDMTemplate::getGroupId, PortalUtil.getScopeGroupId(request, refererPortletName)));
 long classNameId = ParamUtil.getLong(request, "classNameId", GetterUtil.get(template, DDMTemplate::getClassNameId, 0L));

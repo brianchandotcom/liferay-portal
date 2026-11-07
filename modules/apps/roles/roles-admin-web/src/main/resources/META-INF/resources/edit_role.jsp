@@ -14,7 +14,11 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long roleId = ParamUtil.getLong(request, "roleId");
 
-Role role = RoleServiceUtil.fetchRole(roleId);
+Role role = null;
+
+if (roleId > 0) {
+	role = RoleServiceUtil.getRole(roleId);
+}
 
 String roleName = null;
 

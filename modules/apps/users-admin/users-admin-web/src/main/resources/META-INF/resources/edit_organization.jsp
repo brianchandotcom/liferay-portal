@@ -14,7 +14,11 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long organizationId = ParamUtil.getLong(request, "organizationId");
 
-Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
+Organization organization = null;
+
+if (organizationId > 0) {
+	organization = OrganizationServiceUtil.getOrganization(organizationId);
+}
 
 String type = ParamUtil.getString(request, "type", GetterUtil.get(organization, Organization::getType, StringPool.BLANK));
 

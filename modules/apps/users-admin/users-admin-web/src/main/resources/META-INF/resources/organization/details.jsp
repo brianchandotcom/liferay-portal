@@ -10,7 +10,11 @@
 <%
 long organizationId = ParamUtil.getLong(request, "organizationId");
 
-Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
+Organization organization = null;
+
+if (organizationId > 0) {
+	organization = OrganizationServiceUtil.getOrganization(organizationId);
+}
 
 String[] organizationsTypes = OrganizationLocalServiceUtil.getTypes();
 

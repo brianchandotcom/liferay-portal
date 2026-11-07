@@ -61,19 +61,12 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(resourceBundle, "diagram-file") %>'
 			>
-
-				<%
-				FileEntry fileEntry = csDiagramSettingDisplayContext.fetchFileEntry();
-				%>
-
-				<aui:model-context bean="<%= fileEntry %>" model="<%= FileEntry.class %>" />
-
 				<div class="lfr-attachment-cover-image-selector">
 					<portlet:actionURL name="/cp_definitions/upload_cs_diagram_setting_image" var="uploadCSDiagramSettingImageActionURL" />
 
 					<liferay-item-selector:image-selector
 						draggableImage="vertical"
-						fileEntryId='<%= ParamUtil.getLong(request, "fileEntryId", GetterUtil.get(fileEntry, FileEntry::getFileEntryId, 0L)) %>'
+						fileEntryId='<%= ParamUtil.getLong(request, "fileEntryId", csDiagramSettingDisplayContext.getFileEntryId()) %>'
 						itemSelectorEventName="addFileEntry"
 						itemSelectorURL="<%= csDiagramSettingDisplayContext.getImageItemSelectorURL() %>"
 						maxFileSize="<%= csDiagramSettingDisplayContext.getImageMaxSize() %>"

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -66,18 +65,22 @@ public class CSDiagramSettingDisplayContext
 		return _csDiagramSetting;
 	}
 
-	public FileEntry fetchFileEntry() throws PortalException {
+	public long getFileEntryId() throws PortalException {
 		CSDiagramSetting csDiagramSetting = fetchCSDiagramSetting();
 
 		if (csDiagramSetting == null) {
-			return null;
+			return 0;
 		}
 
 		try {
 			CPAttachmentFileEntry cpAttachmentFileEntry =
 				csDiagramSetting.getCPAttachmentFileEntry();
 
-			return cpAttachmentFileEntry.fetchFileEntry();
+			if (cpAttachmentFileEntry.isCDNEnabled()) {
+				return 0;
+			}
+
+			return cpAttachmentFileEntry.getFileEntryId();
 		}
 		catch (NoSuchCPAttachmentFileEntryException
 					noSuchCPAttachmentFileEntryException) {
@@ -86,7 +89,7 @@ public class CSDiagramSettingDisplayContext
 				_log.info(noSuchCPAttachmentFileEntryException);
 			}
 
-			return null;
+			return 0;
 		}
 	}
 

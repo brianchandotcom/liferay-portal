@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -66,30 +65,6 @@ public class CSDiagramSettingDisplayContext
 		return _csDiagramSetting;
 	}
 
-	public FileEntry fetchFileEntry() throws PortalException {
-		CSDiagramSetting csDiagramSetting = fetchCSDiagramSetting();
-
-		if (csDiagramSetting == null) {
-			return null;
-		}
-
-		try {
-			CPAttachmentFileEntry cpAttachmentFileEntry =
-				csDiagramSetting.getCPAttachmentFileEntry();
-
-			return cpAttachmentFileEntry.fetchFileEntry();
-		}
-		catch (NoSuchCPAttachmentFileEntryException
-					noSuchCPAttachmentFileEntryException) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info(noSuchCPAttachmentFileEntryException);
-			}
-
-			return null;
-		}
-	}
-
 	public String getCSDiagramEntriesAPIURL() throws PortalException {
 		CPDefinition cpDefinition = getCPDefinition();
 
@@ -103,6 +78,34 @@ public class CSDiagramSettingDisplayContext
 
 	public List<CSDiagramType> getCSDiagramTypes() {
 		return _csDiagramTypeRegistry.getCSDiagramTypes();
+	}
+
+	public long getFileEntryId() throws PortalException {
+		CSDiagramSetting csDiagramSetting = fetchCSDiagramSetting();
+
+		if (csDiagramSetting == null) {
+			return 0;
+		}
+
+		try {
+			CPAttachmentFileEntry cpAttachmentFileEntry =
+				csDiagramSetting.getCPAttachmentFileEntry();
+
+			if (cpAttachmentFileEntry.isCDNEnabled()) {
+				return 0;
+			}
+
+			return cpAttachmentFileEntry.getFileEntryId();
+		}
+		catch (NoSuchCPAttachmentFileEntryException
+					noSuchCPAttachmentFileEntryException) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(noSuchCPAttachmentFileEntryException);
+			}
+
+			return 0;
+		}
 	}
 
 	public String[] getImageExtensions() {

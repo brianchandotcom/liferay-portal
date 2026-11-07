@@ -12,7 +12,11 @@ String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redire
 
 long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
 
-DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(ddmTemplateId);
+DDMTemplate ddmTemplate = null;
+
+if (ddmTemplateId > 0) {
+	ddmTemplate = DDMTemplateLocalServiceUtil.getDDMTemplate(ddmTemplateId);
+}
 
 long classNameId = ParamUtil.getLong(request, "classNameId", GetterUtil.get(ddmTemplate, DDMTemplate::getClassNameId, 0L));
 long classPK = ParamUtil.getLong(request, "classPK", GetterUtil.get(ddmTemplate, DDMTemplate::getClassPK, 0L));

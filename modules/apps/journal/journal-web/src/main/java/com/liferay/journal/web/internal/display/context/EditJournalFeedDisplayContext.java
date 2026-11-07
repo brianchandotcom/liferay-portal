@@ -271,10 +271,7 @@ public class EditJournalFeedDisplayContext {
 			return _feedId;
 		}
 
-		_feedId = ParamUtil.getString(
-			_httpServletRequest, "feedId",
-			GetterUtil.get(
-				_journalFeed, JournalFeed::getFeedId, StringPool.BLANK));
+		_feedId = ParamUtil.getString(_httpServletRequest, "feedId");
 
 		return _feedId;
 	}
@@ -337,10 +334,7 @@ public class EditJournalFeedDisplayContext {
 		}
 
 		_groupId = ParamUtil.getLong(
-			_httpServletRequest, "groupId",
-			GetterUtil.get(
-				_journalFeed, JournalFeed::getGroupId,
-				_themeDisplay.getScopeGroupId()));
+			_httpServletRequest, "groupId", _themeDisplay.getScopeGroupId());
 
 		return _groupId;
 	}

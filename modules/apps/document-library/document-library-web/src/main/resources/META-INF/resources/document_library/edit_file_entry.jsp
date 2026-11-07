@@ -16,21 +16,18 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 
 long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 
-long repositoryId = ParamUtil.getLong(request, "repositoryId", GetterUtil.get(fileEntry, FileEntry::getRepositoryId, 0L));
-
-if (repositoryId <= 0) {
-
-	// <liferay-ui:asset_add_button /> only passes in groupId
-
-	repositoryId = ParamUtil.getLong(request, "groupId", GetterUtil.get(fileEntry, FileEntry::getGroupId, 0L));
-}
-
-long folderId = ParamUtil.getLong(request, "folderId", GetterUtil.get(fileEntry, FileEntry::getFolderId, 0L));
-
 Folder folder = null;
+long folderId = 0;
+long repositoryId = 0;
 
-if (fileEntry != null) {
+if (fileEntry == null) {
+	folderId = ParamUtil.getLong(request, "folderId");
+	repositoryId = ParamUtil.getLong(request, "repositoryId", ParamUtil.getLong(request, "groupId"));
+}
+else {
 	folder = fileEntry.getFolder();
+	folderId = fileEntry.getFolderId();
+	repositoryId = fileEntry.getRepositoryId();
 }
 
 if ((folder == null) && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {

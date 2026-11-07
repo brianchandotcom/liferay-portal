@@ -12,7 +12,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 DDMDataProviderInstance ddmDataProviderInstance = ddmDataProviderDisplayContext.fetchDataProviderInstance();
 
-long dataProviderInstanceId = ParamUtil.getLong(request, "dataProviderInstanceId", GetterUtil.get(ddmDataProviderInstance, DDMDataProviderInstance::getDataProviderInstanceId, 0L));
+long dataProviderInstanceId = ParamUtil.getLong(request, "dataProviderInstanceId");
 
 long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(ddmDataProviderInstance, DDMDataProviderInstance::getGroupId, scopeGroupId));
 String type = ParamUtil.getString(request, "type", GetterUtil.get(ddmDataProviderInstance, DDMDataProviderInstance::getType, StringPool.BLANK));

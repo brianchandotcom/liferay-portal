@@ -161,6 +161,11 @@ public class LayoutServiceUpgradeStepRegistrator
 				LayoutUpgradeProcess());
 
 		registry.register("6.0.0", "6.1.0", new DummyUpgradeStep());
+
+		registry.register(
+			"6.1.0", "6.1.1",
+			new com.liferay.layout.internal.upgrade.v6_1_1.LayoutUpgradeProcess(
+				_classNameLocalService));
 	}
 
 	@Reference
@@ -188,7 +193,7 @@ public class LayoutServiceUpgradeStepRegistrator
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.fragment.service)(release.schema.version>=2.5.0))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.fragment.service)(release.schema.version>=3.0.0))"
 	)
 	private Release _fragmentServiceRelease;
 
@@ -220,6 +225,11 @@ public class LayoutServiceUpgradeStepRegistrator
 
 	@Reference
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.segments.service)(release.schema.version>=4.1.1))"
+	)
+	private Release _segmentsServiceRelease;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.style.book.service)(release.schema.version>=1.5.0))"

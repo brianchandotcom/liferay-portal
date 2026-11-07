@@ -825,6 +825,19 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout = updateLayout(layout);
 		}
 
+		String layoutSetPrototypeLayoutERC = ParamUtil.getString(
+			serviceContext, "layoutSetPrototypeLayoutERC");
+
+		if (Validator.isNotNull(layoutSetPrototypeLayoutERC) &&
+			!Objects.equals(
+				layout.getLayoutSetPrototypeLayoutERC(),
+				layoutSetPrototypeLayoutERC)) {
+
+			layout.setLayoutSetPrototypeLayoutERC(layoutSetPrototypeLayoutERC);
+
+			layout = layoutLocalService.updateLayout(layout);
+		}
+
 		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 			layout = layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -2414,12 +2427,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	public Layout getOrAddEmptyLayout(
 			String externalReferenceCode, long userId, long groupId,
-			boolean privateLayout, ServiceContext serviceContext)
+			boolean privateLayout)
 		throws Exception {
 
 		return EmptyModelManagerUtil.getOrAddEmptyModel(
 			Layout.class,
 			() -> {
+				ServiceContext serviceContext = new ServiceContext();
+
 				serviceContext.setAttribute(
 					"layout.instanceable.allowed", Boolean.TRUE);
 

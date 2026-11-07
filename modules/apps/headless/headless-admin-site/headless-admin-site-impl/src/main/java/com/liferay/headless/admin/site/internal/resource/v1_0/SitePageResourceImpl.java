@@ -487,7 +487,7 @@ public class SitePageResourceImpl
 		}
 
 		ServiceContext serviceContext = _getServiceContext(
-			layout.getGroupId(), sitePage);
+			layout.getGroupId(), layout.isPrivateLayout(), sitePage);
 
 		if (layout.isTypeEmpty()) {
 			layout = _layoutService.convertEmptyLayout(
@@ -581,7 +581,8 @@ public class SitePageResourceImpl
 					contentPageSpecification, externalReferenceCode));
 		}
 
-		ServiceContext serviceContext = _getServiceContext(groupId, sitePage);
+		ServiceContext serviceContext = _getServiceContext(
+			groupId, privateLayout, sitePage);
 
 		_validatePageSpecificationExternalReferenceCode(
 			serviceContext, sitePage);
@@ -614,7 +615,7 @@ public class SitePageResourceImpl
 
 		long parentLayoutId = _getParentLayoutId(
 			groupId, sitePage.getParentSitePageExternalReferenceCode(),
-			privateLayout, serviceContext);
+			privateLayout);
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.addContentLayout(
@@ -727,7 +728,7 @@ public class SitePageResourceImpl
 
 	private long _getParentLayoutId(
 			long groupId, String parentSitePageExternalReferenceCode,
-			boolean privateLayout, ServiceContext serviceContext)
+			boolean privateLayout)
 		throws Exception {
 
 		if (Validator.isNull(parentSitePageExternalReferenceCode)) {
@@ -735,8 +736,7 @@ public class SitePageResourceImpl
 		}
 
 		Layout layout = _layoutService.getOrAddEmptyLayout(
-			parentSitePageExternalReferenceCode, groupId, privateLayout,
-			serviceContext);
+			parentSitePageExternalReferenceCode, groupId, privateLayout);
 
 		if (layout.isPrivateLayout() != privateLayout) {
 			throw new IllegalArgumentException(
@@ -763,7 +763,8 @@ public class SitePageResourceImpl
 		return null;
 	}
 
-	private ServiceContext _getServiceContext(long groupId, SitePage sitePage)
+	private ServiceContext _getServiceContext(
+			long groupId, boolean privateLayout, SitePage sitePage)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
@@ -792,7 +793,7 @@ public class SitePageResourceImpl
 				(ContentPageSpecification)sortedContentPageSpecifications[1];
 
 			ServiceContextUtil.setContentPageSpecificationsAttributes(
-				draftContentPageSpecification, groupId,
+				draftContentPageSpecification, groupId, privateLayout,
 				publishedContentPageSpecification, serviceContext);
 
 			return serviceContext;
@@ -804,7 +805,7 @@ public class SitePageResourceImpl
 
 		if (pageSpecification != null) {
 			ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
-				groupId, pageSpecification, serviceContext,
+				groupId, pageSpecification, privateLayout, serviceContext,
 				pageSpecification.
 					getSiteTemplatePageSpecificationExternalReferenceCode());
 		}
@@ -1129,7 +1130,7 @@ public class SitePageResourceImpl
 			_getParentLayoutId(
 				layout.getGroupId(),
 				sitePage.getParentSitePageExternalReferenceCode(),
-				layout.isPrivateLayout(), serviceContext));
+				layout.isPrivateLayout()));
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.updateContentLayout(

@@ -7,7 +7,6 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
@@ -17,7 +16,6 @@ import com.liferay.headless.admin.site.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.common.spi.util.GroupUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.scope.Scope;
@@ -93,7 +90,7 @@ public class ServiceContextUtil {
 
 	public static void setContentPageSpecificationsAttributes(
 			ContentPageSpecification draftContentPageSpecification,
-			long groupId,
+			long groupId, boolean privateLayout,
 			ContentPageSpecification publishedContentPageSpecification,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -123,11 +120,13 @@ public class ServiceContextUtil {
 			draftContentPageSpecification.getExternalReferenceCode());
 
 		setLayoutSetPrototypeLayoutERC(
-			groupId, draftContentPageSpecification, serviceContext,
+			groupId, draftContentPageSpecification, privateLayout,
+			serviceContext,
 			draftContentPageSpecification.
 				getSiteTemplatePageSpecificationExternalReferenceCode());
 		setLayoutSetPrototypeLayoutERC(
-			groupId, publishedContentPageSpecification, serviceContext,
+			groupId, publishedContentPageSpecification, privateLayout,
+			serviceContext,
 			publishedContentPageSpecification.
 				getSiteTemplatePageSpecificationExternalReferenceCode());
 
@@ -144,38 +143,14 @@ public class ServiceContextUtil {
 
 	public static void setLayoutSetPrototypeLayoutERC(
 			long groupId, PageSpecification pageSpecification,
-			ServiceContext serviceContext,
+			boolean privateLayout, ServiceContext serviceContext,
 			String siteTemplatePageSpecificationExternalReferenceCode)
 		throws Exception {
 
 		if (Validator.isNull(
 				siteTemplatePageSpecificationExternalReferenceCode)) {
 
-			if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
-				siteTemplatePageSpecificationExternalReferenceCode =
-					pageSpecification.getExternalReferenceCode();
-			}
-			else {
-				return;
-			}
-		}
-
-		boolean privateLayout = Boolean.FALSE;
-
-		int layoutPageTemplateEntryType = GetterUtil.getInteger(
-			serviceContext.getAttribute("layout.page.template.entry.type"), -1);
-
-		if (Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.BASIC,
-				layoutPageTemplateEntryType) ||
-			Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-				layoutPageTemplateEntryType) ||
-			Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
-				layoutPageTemplateEntryType)) {
-
-			privateLayout = Boolean.TRUE;
+			return;
 		}
 
 		boolean draftLayout = Boolean.FALSE;

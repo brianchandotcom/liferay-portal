@@ -12,7 +12,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-long messageId = ParamUtil.getLong(request, "messageId", GetterUtil.get(message, MBMessage::getMessageId, 0L));
+long messageId = ParamUtil.getLong(request, "messageId");
 
 long categoryId = MBUtil.getCategoryId(request, message);
 long threadId = ParamUtil.getLong(request, "threadId", GetterUtil.get(message, MBMessage::getThreadId, 0L));

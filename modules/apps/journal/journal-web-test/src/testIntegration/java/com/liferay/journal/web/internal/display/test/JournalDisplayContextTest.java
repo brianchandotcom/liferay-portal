@@ -444,8 +444,8 @@ public class JournalDisplayContextTest {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_renderPortlet();
 
-		mockLiferayPortletRenderRequest.setAttribute(
-			WebKeys.JOURNAL_FOLDER, journalFolder);
+		mockLiferayPortletRenderRequest.setParameter(
+			"folderId", String.valueOf(journalFolder.getFolderId()));
 		mockLiferayPortletRenderRequest.setParameter(
 			"keywords", RandomTestUtil.randomString());
 		mockLiferayPortletRenderRequest.setParameter("searchIn", searchIn);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.workflow.web.internal.request.preprocessor.helper;
+package com.liferay.portal.workflow.web.internal.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -17,22 +17,18 @@ import com.liferay.portal.kernel.util.Portal;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adam Brandizzi
  */
-@Component(service = WorkflowPreprocessorHelper.class)
-public class WorkflowPreprocessorHelper {
+public class WorkflowPreprocessorUtil {
 
-	public String getMVCPathAttributeName(String namespace) {
+	public static String getMVCPathAttributeName(String namespace) {
 		return StringBundler.concat(
 			namespace, StringPool.PERIOD,
 			MVCRenderConstants.MVC_PATH_REQUEST_ATTRIBUTE_NAME);
 	}
 
-	public String getPath(
+	public static String getPath(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		String mvcPath = portletRequest.getParameter("mvcPath");
@@ -51,21 +47,25 @@ public class WorkflowPreprocessorHelper {
 		return mvcPath;
 	}
 
-	public void hideDefaultErrorMessage(PortletRequest portletRequest) {
+	public static void hideDefaultErrorMessage(
+		Portal portal, PortletRequest portletRequest) {
+
 		SessionMessages.add(
 			portletRequest,
-			_portal.getPortletId(portletRequest) +
+			portal.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 	}
 
-	public void hideDefaultSuccessMessage(PortletRequest portletRequest) {
+	public static void hideDefaultSuccessMessage(
+		Portal portal, PortletRequest portletRequest) {
+
 		SessionMessages.add(
 			portletRequest,
-			_portal.getPortletId(portletRequest) +
+			portal.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 	}
 
-	public boolean isSessionErrorException(Throwable throwable) {
+	public static boolean isSessionErrorException(Throwable throwable) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(throwable, throwable);
 		}
@@ -78,9 +78,6 @@ public class WorkflowPreprocessorHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowPreprocessorHelper.class);
-
-	@Reference
-	private Portal _portal;
+		WorkflowPreprocessorUtil.class);
 
 }

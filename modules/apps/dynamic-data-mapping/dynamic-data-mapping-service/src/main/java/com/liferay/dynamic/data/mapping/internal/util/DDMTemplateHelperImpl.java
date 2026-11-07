@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -183,12 +182,17 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		DDMTemplate ddmTemplate = (DDMTemplate)httpServletRequest.getAttribute(
 			DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
 
-		long classNameId = ParamUtil.getLong(
-			httpServletRequest, "classNameId",
-			GetterUtil.get(ddmTemplate, DDMTemplate::getClassNameId, 0L));
-		long classPK = ParamUtil.getLong(
-			httpServletRequest, "classPK",
-			GetterUtil.get(ddmTemplate, DDMTemplate::getClassPK, 0L));
+		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+
+		long classPK = 0;
+
+		if (ddmTemplate == null) {
+			classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+		}
+		else {
+			classPK = ParamUtil.getLong(
+				httpServletRequest, "classPK", ddmTemplate.getClassPK());
+		}
 
 		if (classPK > 0) {
 			DDMStructure ddmStructure = _ddmStructureService.getStructure(

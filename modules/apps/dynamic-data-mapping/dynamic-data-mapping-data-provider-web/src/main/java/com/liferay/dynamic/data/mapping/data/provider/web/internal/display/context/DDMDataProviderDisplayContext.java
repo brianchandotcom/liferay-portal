@@ -108,20 +108,6 @@ public class DDMDataProviderDisplayContext {
 			renderRequest);
 	}
 
-	public DDMDataProviderInstance fetchDataProviderInstance()
-		throws PortalException {
-
-		if (_ddmDataProviderInstance != null) {
-			return _ddmDataProviderInstance;
-		}
-
-		_ddmDataProviderInstance =
-			_ddmDataProviderInstanceService.fetchDataProviderInstance(
-				ParamUtil.getLong(_renderRequest, "dataProviderInstanceId"));
-
-		return _ddmDataProviderInstance;
-	}
-
 	public List<DropdownItem> getActionItemsDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -158,9 +144,28 @@ public class DDMDataProviderDisplayContext {
 		};
 	}
 
+	public DDMDataProviderInstance getDataProviderInstance()
+		throws PortalException {
+
+		if (_ddmDataProviderInstance != null) {
+			return _ddmDataProviderInstance;
+		}
+
+		long dataProviderInstanceId = ParamUtil.getLong(
+			_renderRequest, "dataProviderInstanceId");
+
+		if (dataProviderInstanceId > 0) {
+			_ddmDataProviderInstance =
+				_ddmDataProviderInstanceService.getDataProviderInstance(
+					dataProviderInstanceId);
+		}
+
+		return _ddmDataProviderInstance;
+	}
+
 	public String getDataProviderInstanceDDMFormHTML() throws PortalException {
 		DDMDataProviderInstance ddmDataProviderInstance =
-			fetchDataProviderInstance();
+			getDataProviderInstance();
 
 		String type = ParamUtil.getString(
 			_renderRequest, "type",
@@ -200,7 +205,7 @@ public class DDMDataProviderDisplayContext {
 
 	public String getDataProviderInstanceDescription() throws PortalException {
 		DDMDataProviderInstance ddmDataProviderInstance =
-			fetchDataProviderInstance();
+			getDataProviderInstance();
 
 		if (ddmDataProviderInstance == null) {
 			return StringPool.BLANK;
@@ -212,7 +217,7 @@ public class DDMDataProviderDisplayContext {
 
 	public String getDataProviderInstanceName() throws PortalException {
 		DDMDataProviderInstance ddmDataProviderInstance =
-			fetchDataProviderInstance();
+			getDataProviderInstance();
 
 		if (ddmDataProviderInstance == null) {
 			return StringPool.BLANK;

@@ -10,7 +10,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDMDataProviderInstance ddmDataProviderInstance = ddmDataProviderDisplayContext.fetchDataProviderInstance();
+DDMDataProviderInstance ddmDataProviderInstance = ddmDataProviderDisplayContext.getDataProviderInstance();
 
 long dataProviderInstanceId = ParamUtil.getLong(request, "dataProviderInstanceId", GetterUtil.get(ddmDataProviderInstance, DDMDataProviderInstance::getDataProviderInstanceId, 0L));
 

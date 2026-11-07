@@ -17,12 +17,14 @@ long roleId = ParamUtil.getLong(request, "roleId");
 Role role = RoleServiceUtil.fetchRole(roleId);
 
 String roleName = null;
+String subtype = StringPool.BLANK;
 
 if (role != null) {
 	roleName = role.getName();
+	subtype = role.getSubtype();
 }
 
-String subtype = ParamUtil.getString(request, "subtype", GetterUtil.get(role, Role::getSubtype, StringPool.BLANK));
+subtype = ParamUtil.getString(request, "subtype", subtype);
 
 RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(request);
 

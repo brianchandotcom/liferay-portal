@@ -40,9 +40,10 @@ public class DLEditFileShortcutDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		FileShortcut fileShortcut = _getFileShortcut();
+		_fileShortcut = (FileShortcut)liferayPortletRequest.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
 
-		if (fileShortcut == null) {
+		if (_fileShortcut == null) {
 			_folderId = ParamUtil.getLong(liferayPortletRequest, "folderId");
 			_repositoryId = ParamUtil.getLong(
 				liferayPortletRequest, "repositoryId");
@@ -51,13 +52,13 @@ public class DLEditFileShortcutDisplayContext {
 		}
 		else {
 			_folderId = ParamUtil.getLong(
-				liferayPortletRequest, "folderId", fileShortcut.getFolderId());
+				liferayPortletRequest, "folderId", _fileShortcut.getFolderId());
 			_repositoryId = ParamUtil.getLong(
 				liferayPortletRequest, "repositoryId",
-				fileShortcut.getRepositoryId());
+				_fileShortcut.getRepositoryId());
 			_toFileEntryId = ParamUtil.getLong(
 				liferayPortletRequest, "toFileEntryId",
-				fileShortcut.getToFileEntryId());
+				_fileShortcut.getToFileEntryId());
 		}
 	}
 
@@ -68,7 +69,7 @@ public class DLEditFileShortcutDisplayContext {
 			"/document_library/edit_file_shortcut"
 		).setCMD(
 			() -> {
-				if (_getFileShortcut() == null) {
+				if (_fileShortcut == null) {
 					return Constants.ADD;
 				}
 
@@ -108,12 +109,10 @@ public class DLEditFileShortcutDisplayContext {
 	}
 
 	public String getTitle() {
-		FileShortcut fileShortcut = _getFileShortcut();
-
-		if (fileShortcut != null) {
+		if (_fileShortcut != null) {
 			return _language.format(
 				_liferayPortletRequest.getHttpServletRequest(), "shortcut-to-x",
-				fileShortcut.getToTitle(), false);
+				_fileShortcut.getToTitle(), false);
 		}
 
 		return _language.get(
@@ -143,22 +142,18 @@ public class DLEditFileShortcutDisplayContext {
 	}
 
 	public boolean isPermissionConfigurable() {
-		if (_getFileShortcut() == null) {
+		if (_fileShortcut == null) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private FileShortcut _getFileShortcut() {
-		return (FileShortcut)_liferayPortletRequest.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLEditFileShortcutDisplayContext.class);
 
 	private final DLAppService _dlAppService;
+	private final FileShortcut _fileShortcut;
 	private final long _folderId;
 	private final ItemSelector _itemSelector;
 	private final Language _language;

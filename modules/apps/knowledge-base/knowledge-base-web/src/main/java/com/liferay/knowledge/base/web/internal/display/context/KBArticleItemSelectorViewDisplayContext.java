@@ -507,9 +507,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 
 		_kbFolderId = ParamUtil.getLong(
 			_httpServletRequest, "kbFolderId",
-			GetterUtil.get(
-				_getKBFolder(), KBFolder::getKbFolderId,
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _kbFolderId;
 	}

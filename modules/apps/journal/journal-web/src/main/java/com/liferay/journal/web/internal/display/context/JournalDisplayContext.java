@@ -612,15 +612,7 @@ public class JournalDisplayContext {
 			return _folder;
 		}
 
-		_folder = (JournalFolder)_httpServletRequest.getAttribute(
-			WebKeys.JOURNAL_FOLDER);
-
-		if (_folder != null) {
-			return _folder;
-		}
-
-		_folder = JournalFolderLocalServiceUtil.fetchFolder(
-			ParamUtil.getLong(_httpServletRequest, "folderId"));
+		_folder = JournalFolderLocalServiceUtil.fetchFolder(getFolderId());
 
 		return _folder;
 	}
@@ -641,11 +633,7 @@ public class JournalDisplayContext {
 			return _folderId;
 		}
 
-		_folderId = ParamUtil.getLong(
-			_httpServletRequest, "folderId",
-			GetterUtil.get(
-				getFolder(), JournalFolder::getFolderId,
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		_folderId = ParamUtil.getLong(_httpServletRequest, "folderId");
 
 		return _folderId;
 	}

@@ -65,6 +65,21 @@ public class CSDiagramSettingDisplayContext
 		return _csDiagramSetting;
 	}
 
+	public String getCSDiagramEntriesAPIURL() throws PortalException {
+		CPDefinition cpDefinition = getCPDefinition();
+
+		return "/o/headless-commerce-admin-catalog/v1.0/products/" +
+			cpDefinition.getCProductId() + "/mapped-products";
+	}
+
+	public CSDiagramType getCSDiagramType(String type) {
+		return _csDiagramTypeRegistry.getCSDiagramType(type);
+	}
+
+	public List<CSDiagramType> getCSDiagramTypes() {
+		return _csDiagramTypeRegistry.getCSDiagramTypes();
+	}
+
 	public long getFileEntryId() throws PortalException {
 		CSDiagramSetting csDiagramSetting = fetchCSDiagramSetting();
 
@@ -91,21 +106,6 @@ public class CSDiagramSettingDisplayContext
 
 			return 0;
 		}
-	}
-
-	public String getCSDiagramEntriesAPIURL() throws PortalException {
-		CPDefinition cpDefinition = getCPDefinition();
-
-		return "/o/headless-commerce-admin-catalog/v1.0/products/" +
-			cpDefinition.getCProductId() + "/mapped-products";
-	}
-
-	public CSDiagramType getCSDiagramType(String type) {
-		return _csDiagramTypeRegistry.getCSDiagramType(type);
-	}
-
-	public List<CSDiagramType> getCSDiagramTypes() {
-		return _csDiagramTypeRegistry.getCSDiagramTypes();
 	}
 
 	public String[] getImageExtensions() {

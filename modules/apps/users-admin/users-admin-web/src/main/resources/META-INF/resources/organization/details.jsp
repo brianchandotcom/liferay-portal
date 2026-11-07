@@ -14,16 +14,21 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 String[] organizationsTypes = OrganizationLocalServiceUtil.getTypes();
 
-String type = ParamUtil.getString(request, "type", GetterUtil.get(organization, Organization::getType, organizationsTypes[0]));
-
-long regionId = ParamUtil.getLong(request, "regionId", GetterUtil.get(organization, Organization::getRegionId, 0L));
-long countryId = ParamUtil.getLong(request, "countryId", GetterUtil.get(organization, Organization::getCountryId, 0L));
-
+long countryId = 0;
 long groupId = 0;
+long regionId = 0;
+String type = organizationsTypes[0];
 
 if (organization != null) {
+	countryId = organization.getCountryId();
 	groupId = organization.getGroupId();
+	regionId = organization.getRegionId();
+	type = organization.getType();
 }
+
+countryId = ParamUtil.getLong(request, "countryId", countryId);
+regionId = ParamUtil.getLong(request, "regionId", regionId);
+type = ParamUtil.getString(request, "type", type);
 %>
 
 <aui:model-context bean="<%= organization %>" model="<%= Organization.class %>" />

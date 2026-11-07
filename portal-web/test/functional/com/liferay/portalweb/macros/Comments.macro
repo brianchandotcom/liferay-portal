@@ -265,15 +265,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCommentReadOnly() {
-		AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");
-
-		AssertTextEquals(
-			locator1 = "Comments#COMMENT_INFO",
-			value1 = "INFO:Comments are unavailable in staged sites.");
-	}
-
-	@summary = "Default summary"
 	macro viewNoComments(entryComment = null) {
 		AssertElementNotPresent(
 			locator1 = "Comments#ENTRY_COUNT_PANEL",

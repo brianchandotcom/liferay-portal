@@ -12,7 +12,11 @@ String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redire
 
 long categoryId = ParamUtil.getLong(request, "categoryId");
 
-AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
+AssetCategory category = null;
+
+if (categoryId > 0) {
+	category = AssetCategoryLocalServiceUtil.getCategory(categoryId);
+}
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 

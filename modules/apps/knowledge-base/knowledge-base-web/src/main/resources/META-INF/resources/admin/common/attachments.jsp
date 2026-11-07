@@ -10,13 +10,16 @@
 <%
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey", GetterUtil.get(kbArticle, KBArticle::getResourcePrimKey, 0L));
-
 List<FileEntry> attachmentsFileEntries = new ArrayList<FileEntry>();
+
+resourcePrimKey = 0;
 
 if (kbArticle != null) {
 	attachmentsFileEntries = kbArticle.getAttachmentsFileEntries();
+	resourcePrimKey = kbArticle.getResourcePrimKey();
 }
+
+resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey", resourcePrimKey);
 %>
 
 <div class="kb-attachments">

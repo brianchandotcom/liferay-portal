@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -61,6 +60,8 @@ public class IGViewDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_rootFolderId = _getRootFolderId();
 
 		_initFolder();
 	}
@@ -230,29 +231,7 @@ public class IGViewDisplayContext {
 		return _repositoryId;
 	}
 
-	public Long getRootFolderId() {
-		if (_rootFolderId != null) {
-			return _rootFolderId;
-		}
-
-		_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		try {
-			Folder rootFolder =
-				_dlPortletInstanceSettingsHelper.getRootFolder();
-
-			if ((rootFolder != null) &&
-				(rootFolder.getGroupId() == _themeDisplay.getScopeGroupId())) {
-
-				_rootFolderId = rootFolder.getFolderId();
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
+	public long getRootFolderId() {
 		return _rootFolderId;
 	}
 
@@ -343,37 +322,55 @@ public class IGViewDisplayContext {
 		return _dlPortletInstanceSettings;
 	}
 
-	private void _initFolder() {
-		if (_folder != null) {
-			return;
+	private long _getRootFolderId() {
+		try {
+			Folder rootFolder =
+				_dlPortletInstanceSettingsHelper.getRootFolder();
+
+			if ((rootFolder != null) &&
+				(rootFolder.getGroupId() == _themeDisplay.getScopeGroupId())) {
+
+				return rootFolder.getFolderId();
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
+		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+	}
+
+	private void _initFolder() {
 		_folder = (Folder)_httpServletRequest.getAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-		_folderId = ParamUtil.getLong(
-			_httpServletRequest, "folderId",
-			GetterUtil.get(_folder, Folder::getFolderId, getRootFolderId()));
+		if (_folder != null) {
+			_folderId = ParamUtil.getLong(
+				_httpServletRequest, "folderId", _folder.getFolderId());
 
-		_defaultFolderView = false;
-
-		if ((_folder == null) &&
-			(getRootFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			_defaultFolderView = true;
+			return;
 		}
 
-		if (_defaultFolderView) {
-			try {
-				_folder = DLAppLocalServiceUtil.getFolder(_folderId);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
+		_folderId = ParamUtil.getLong(
+			_httpServletRequest, "folderId", _rootFolderId);
 
-				_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		if (_rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return;
+		}
+
+		_defaultFolderView = true;
+
+		try {
+			_folder = DLAppLocalServiceUtil.getFolder(_folderId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
+
+			_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 	}
 
@@ -382,7 +379,7 @@ public class IGViewDisplayContext {
 
 	private Long _assetCategoryId;
 	private String _assetTagName;
-	private Boolean _defaultFolderView;
+	private boolean _defaultFolderView;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
@@ -398,7 +395,7 @@ public class IGViewDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Long _repositoryId;
-	private Long _rootFolderId;
+	private final long _rootFolderId;
 	private Integer _status;
 	private final ThemeDisplay _themeDisplay;
 	private String _topLink;

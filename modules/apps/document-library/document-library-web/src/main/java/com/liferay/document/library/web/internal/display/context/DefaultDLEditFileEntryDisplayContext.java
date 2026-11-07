@@ -410,11 +410,14 @@ public class DefaultDLEditFileEntryDisplayContext
 				_dlFileEntryType = dlFileEntryType;
 			}
 
-			if (fileEntry != null) {
-				_fileVersion = fileEntry.getFileVersion();
+			if (fileEntry == null) {
+				_fileVersion = null;
+				_folderId = ParamUtil.getLong(httpServletRequest, "folderId");
 			}
 			else {
-				_fileVersion = null;
+				_fileVersion = fileEntry.getFileVersion();
+				_folderId = ParamUtil.getLong(
+					httpServletRequest, "folderId", fileEntry.getFolderId());
 			}
 
 			_fileVersionDisplayContextHelper =
@@ -466,10 +469,6 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	private boolean _hasFolderWorkflowDefinitionLink() {
 		try {
-			long folderId = ParamUtil.getLong(
-				_dlRequestHelper.getRequest(), "folderId",
-				GetterUtil.get(_fileEntry, FileEntry::getFolderId, 0L));
-
 			long fileEntryTypeId =
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 
@@ -479,7 +478,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 			return DLUtil.hasWorkflowDefinitionLink(
 				_dlRequestHelper.getCompanyId(),
-				_dlRequestHelper.getScopeGroupId(), folderId, fileEntryTypeId);
+				_dlRequestHelper.getScopeGroupId(), _folderId, fileEntryTypeId);
 		}
 		catch (Exception exception) {
 			throw new SystemException(
@@ -528,6 +527,7 @@ public class DefaultDLEditFileEntryDisplayContext
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
+	private final long _folderId;
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _neverExpire;
 	private Boolean _neverReview;

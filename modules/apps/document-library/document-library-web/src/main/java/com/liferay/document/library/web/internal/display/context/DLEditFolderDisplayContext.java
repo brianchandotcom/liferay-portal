@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,6 +49,25 @@ public class DLEditFolderDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Folder folder = getFolder();
+
+		if (folder == null) {
+			_folderId = ParamUtil.getLong(httpServletRequest, "folderId");
+			_parentFolderId = ParamUtil.getLong(
+				httpServletRequest, "parentFolderId");
+			_repositoryId = ParamUtil.getLong(
+				httpServletRequest, "repositoryId");
+		}
+		else {
+			_folderId = ParamUtil.getLong(
+				httpServletRequest, "folderId", folder.getFolderId());
+			_parentFolderId = ParamUtil.getLong(
+				httpServletRequest, "parentFolderId",
+				folder.getParentFolderId());
+			_repositoryId = ParamUtil.getLong(
+				httpServletRequest, "repositoryId", folder.getRepositoryId());
+		}
 	}
 
 	public String getCmd() {
@@ -118,14 +136,6 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public long getFolderId() {
-		if (_folderId != null) {
-			return _folderId;
-		}
-
-		_folderId = ParamUtil.getLong(
-			_httpServletRequest, "folderId",
-			GetterUtil.get(getFolder(), Folder::getFolderId, 0L));
-
 		return _folderId;
 	}
 
@@ -156,16 +166,6 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public long getParentFolderId() {
-		if (_parentFolderId != null) {
-			return _parentFolderId;
-		}
-
-		_parentFolderId = ParamUtil.getLong(
-			_httpServletRequest, "parentFolderId",
-			GetterUtil.get(
-				getFolder(), Folder::getParentFolderId,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
 		return _parentFolderId;
 	}
 
@@ -190,14 +190,6 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public long getRepositoryId() {
-		if (_repositoryId != null) {
-			return _repositoryId;
-		}
-
-		_repositoryId = ParamUtil.getLong(
-			_httpServletRequest, "repositoryId",
-			GetterUtil.get(getFolder(), Folder::getRepositoryId, 0L));
-
 		return _repositoryId;
 	}
 
@@ -472,12 +464,12 @@ public class DLEditFolderDisplayContext {
 	private Boolean _advancedUpdateDLFolderPermission;
 	private List<DLFileEntryType> _dlFileEntryTypes;
 	private Folder _folder;
-	private Long _folderId;
+	private final long _folderId;
 	private final HttpServletRequest _httpServletRequest;
 	private Folder _parentFolder;
-	private Long _parentFolderId;
+	private final long _parentFolderId;
 	private String _redirect;
-	private Long _repositoryId;
+	private final long _repositoryId;
 	private final ThemeDisplay _themeDisplay;
 	private Boolean _updateDLFolderPermission;
 	private List<WorkflowDefinition> _workflowDefinitions;

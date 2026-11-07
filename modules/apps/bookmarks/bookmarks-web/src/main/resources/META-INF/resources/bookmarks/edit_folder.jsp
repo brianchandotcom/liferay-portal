@@ -12,7 +12,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER);
 
-long folderId = ParamUtil.getLong(request, "folderId", GetterUtil.get(folder, BookmarksFolder::getFolderId, 0L));
+long folderId = ParamUtil.getLong(request, "folderId");
 
 long parentFolderId = ParamUtil.getLong(request, "parentFolderId", GetterUtil.get(folder, BookmarksFolder::getParentFolderId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 

@@ -15,7 +15,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY);
 
-long entryId = ParamUtil.getLong(request, "entryId", GetterUtil.get(entry, BookmarksEntry::getEntryId, 0L));
+long entryId = ParamUtil.getLong(request, "entryId");
 
 long folderId = ParamUtil.getLong(request, "folderId", GetterUtil.get(entry, BookmarksEntry::getFolderId, 0L));
 

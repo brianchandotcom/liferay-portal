@@ -10,7 +10,7 @@
 <%
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 
-long kbTemplateId = ParamUtil.getLong(request, "kbTemplateId", GetterUtil.get(kbTemplate, KBTemplate::getKbTemplateId, 0L));
+long kbTemplateId = ParamUtil.getLong(request, "kbTemplateId");
 
 String title = ParamUtil.getString(request, "title", GetterUtil.get(kbTemplate, KBTemplate::getTitle, StringPool.BLANK));
 String content = ParamUtil.getString(request, "content", GetterUtil.get(kbTemplate, KBTemplate::getContent, StringPool.BLANK));

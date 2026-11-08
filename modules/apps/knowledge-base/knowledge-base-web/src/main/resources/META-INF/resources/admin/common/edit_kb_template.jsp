@@ -12,14 +12,21 @@ KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BAS
 
 long kbTemplateId = ParamUtil.getLong(request, "kbTemplateId");
 
-String title = ParamUtil.getString(request, "title", GetterUtil.get(kbTemplate, KBTemplate::getTitle, StringPool.BLANK));
-String content = ParamUtil.getString(request, "content", GetterUtil.get(kbTemplate, KBTemplate::getContent, StringPool.BLANK));
+String content = StringPool.BLANK;
+String title = LanguageUtil.get(request, "new-template");
+
+if (kbTemplate != null) {
+	content = kbTemplate.getContent();
+	title = kbTemplate.getTitle();
+}
+
+content = ParamUtil.getString(request, "content", content);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 
-renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-template") : kbTemplate.getTitle());
+renderResponse.setTitle(title);
 %>
 
 <liferay-portlet:actionURL name="/knowledge_base/update_kb_template" var="updateKBTemplateURL" />
@@ -42,7 +49,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
-					<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
+					<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" />
 
 					<liferay-editor:editor
 						contents="<%= content %>"

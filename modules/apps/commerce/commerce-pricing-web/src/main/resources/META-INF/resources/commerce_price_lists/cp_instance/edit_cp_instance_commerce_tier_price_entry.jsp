@@ -38,17 +38,22 @@ CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInst
 			<div class="col-12">
 
 				<%
+				boolean discountDiscovery = true;
 				BigDecimal minQuantity = BigDecimal.ZERO;
 
-				if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
-					minQuantity = commerceTierPriceEntry.getMinQuantity();
+				if (commerceTierPriceEntry != null) {
+					discountDiscovery = commerceTierPriceEntry.isDiscountDiscovery();
+
+					if (commerceTierPriceEntry.getMinQuantity() != null) {
+						minQuantity = commerceTierPriceEntry.getMinQuantity();
+					}
 				}
+
+				discountDiscovery = ParamUtil.getBoolean(request, "discountDiscovery", discountDiscovery);
 
 				CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 
 				CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
-
-				boolean discountDiscovery = ParamUtil.getBoolean(request, "discountDiscovery", GetterUtil.get(commerceTierPriceEntry, CommerceTierPriceEntry::isDiscountDiscovery, true));
 
 				boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 

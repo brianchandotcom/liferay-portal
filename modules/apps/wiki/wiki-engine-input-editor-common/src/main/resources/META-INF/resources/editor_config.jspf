@@ -9,11 +9,13 @@
 long resourcePrimKey = 0;
 
 String attachmentURLPrefix = StringPool.BLANK;
+String content = StringPool.BLANK;
 
 if (wikiPage != null) {
 	resourcePrimKey = wikiPage.getResourcePrimKey();
 
 	attachmentURLPrefix = themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/wiki/get_page_attachment?p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + URLCodec.encodeURL(wikiPage.getTitle()) + "&fileName=";
+	content = wikiPage.getContent();
 }
 
 Map<String, String> configParams = HashMapBuilder.put(

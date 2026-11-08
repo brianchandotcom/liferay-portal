@@ -11,7 +11,19 @@
 CPSpecificationOption cpSpecificationOption = (CPSpecificationOption)request.getAttribute(CPWebKeys.CP_SPECIFICATION_OPTION);
 CPSpecificationOptionDisplayContext cpSpecificationOptionDisplayContext = (CPSpecificationOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-long cpOptionCategoryId = ParamUtil.getLong(request, "CPOptionCategoryId", GetterUtil.get(cpSpecificationOption, CPSpecificationOption::getCPOptionCategoryId, 0L));
+long cpOptionCategoryId = 0;
+long cpSpecificationOptionId = 0;
+boolean facetable = false;
+boolean visible = true;
+
+if (cpSpecificationOption != null) {
+	cpOptionCategoryId = cpSpecificationOption.getCPOptionCategoryId();
+	cpSpecificationOptionId = cpSpecificationOption.getCPSpecificationOptionId();
+	facetable = cpSpecificationOption.isFacetable();
+	visible = cpSpecificationOption.isVisible();
+}
+
+cpOptionCategoryId = ParamUtil.getLong(request, "CPOptionCategoryId", cpOptionCategoryId);
 
 List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.getCPOptionCategories();
 %>
@@ -34,9 +46,9 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 
 		<aui:input name="description" />
 
-		<aui:input checked="<%= (cpSpecificationOption == null) ? false : cpSpecificationOption.isFacetable() %>" inlineLabel="right" label="use-in-faceted-navigation" labelCssClass="simple-toggle-switch" name="facetable" type="toggle-switch" />
+		<aui:input checked="<%= facetable %>" inlineLabel="right" label="use-in-faceted-navigation" labelCssClass="simple-toggle-switch" name="facetable" type="toggle-switch" />
 
-		<aui:input checked="<%= (cpSpecificationOption == null) ? true : cpSpecificationOption.isVisible() %>" inlineLabel="right" label="visible" labelCssClass="simple-toggle-switch" name="visible" type="toggle-switch" />
+		<aui:input checked="<%= visible %>" inlineLabel="right" label="visible" labelCssClass="simple-toggle-switch" name="visible" type="toggle-switch" />
 
 		<aui:select label="default-specification-group" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
 
@@ -65,12 +77,12 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 	<frontend-data-set:classic-display
 		additionalProps='<%=
 			HashMapBuilder.<String, Object>put(
-				"specificationId", (cpSpecificationOption == null) ? 0 : cpSpecificationOption.getCPSpecificationOptionId()
+				"specificationId", cpSpecificationOptionId
 			).build()
 		%>'
 		contextParams='<%=
 			HashMapBuilder.put(
-				"specificationId", (cpSpecificationOption == null) ? "0" : String.valueOf(cpSpecificationOption.getCPSpecificationOptionId())
+				"specificationId", String.valueOf(cpSpecificationOptionId)
 			).build()
 		%>'
 		creationMenu="<%= cpSpecificationOptionDisplayContext.getCreationMenu(cpSpecificationOption) %>"

@@ -14,11 +14,13 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
-long parentFolderId = ParamUtil.getLong(request, "parentFolderId", GetterUtil.get(folder, BookmarksFolder::getParentFolderId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
 boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWithParentFolderDisabled");
 
+long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
 if (folder != null) {
+	parentFolderId = folder.getParentFolderId();
+
 	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
@@ -26,6 +28,8 @@ if (folder != null) {
 	}
 }
 else {
+	parentFolderId = ParamUtil.getLong(request, "parentFolderId", BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
 	if (parentFolderId > 0) {
 		BookmarksUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
 

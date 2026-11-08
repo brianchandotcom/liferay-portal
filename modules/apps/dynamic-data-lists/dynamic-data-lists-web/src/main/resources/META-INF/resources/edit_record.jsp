@@ -16,15 +16,17 @@ DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS
 
 long recordId = ParamUtil.getLong(request, "recordId");
 
-long recordSetId = ParamUtil.getLong(request, "recordSetId", GetterUtil.get(record, DDLRecord::getRecordSetId, 0L));
-
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
+long recordSetId = 0;
 DDLRecordVersion recordVersion = null;
 
 if (record != null) {
+	recordSetId = record.getRecordSetId();
 	recordVersion = record.getLatestRecordVersion();
 }
+
+recordSetId = ParamUtil.getLong(request, "recordSetId", recordSetId);
 
 DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(recordSetId);
 

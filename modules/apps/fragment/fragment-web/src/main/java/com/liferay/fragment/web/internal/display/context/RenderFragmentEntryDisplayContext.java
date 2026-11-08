@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
@@ -67,25 +66,26 @@ public class RenderFragmentEntryDisplayContext {
 		String html = _readParameter(fragmentEntry, "html", uploadRequest);
 		String js = _readParameter(fragmentEntry, "js", uploadRequest);
 
-		String configuration = ParamUtil.getString(
-			_httpServletRequest, "configuration",
-			GetterUtil.get(
-				fragmentEntry, FragmentEntry::getConfiguration,
-				StringPool.BLANK));
-
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
 
 		fragmentEntryLink.setGroupId(themeDisplay.getScopeGroupId());
 
+		String configuration = StringPool.BLANK;
 		String fragmentEntryERC = null;
 		String fragmentEntryScopeERC = null;
+		int type = FragmentConstants.TYPE_COMPONENT;
 
 		if (fragmentEntry != null) {
+			configuration = fragmentEntry.getConfiguration();
 			fragmentEntryERC = fragmentEntry.getExternalReferenceCode();
 			fragmentEntryScopeERC = ScopeUtil.getItemScopeExternalReferenceCode(
 				fragmentEntry.getGroupId(), themeDisplay.getScopeGroupId());
+			type = fragmentEntry.getType();
 		}
+
+		configuration = ParamUtil.getString(
+			_httpServletRequest, "configuration", configuration);
 
 		fragmentEntryLink.setFragmentEntryERC(fragmentEntryERC);
 		fragmentEntryLink.setFragmentEntryScopeERC(fragmentEntryScopeERC);
@@ -103,12 +103,6 @@ public class RenderFragmentEntryDisplayContext {
 		}
 
 		fragmentEntryLink.setRendererKey(rendererKey);
-
-		int type = FragmentConstants.TYPE_COMPONENT;
-
-		if (fragmentEntry != null) {
-			type = fragmentEntry.getType();
-		}
 
 		fragmentEntryLink.setType(type);
 

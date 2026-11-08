@@ -14,13 +14,27 @@ DDMDataProviderInstance ddmDataProviderInstance = ddmDataProviderDisplayContext.
 
 long dataProviderInstanceId = ParamUtil.getLong(request, "dataProviderInstanceId");
 
-long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(ddmDataProviderInstance, DDMDataProviderInstance::getGroupId, scopeGroupId));
-String type = ParamUtil.getString(request, "type", GetterUtil.get(ddmDataProviderInstance, DDMDataProviderInstance::getType, StringPool.BLANK));
+long groupId = scopeGroupId;
+String title = null;
+String type = null;
+
+if (ddmDataProviderInstance == null) {
+	type = ParamUtil.getString(request, "type");
+
+	title = LanguageUtil.get(request, type);
+}
+else {
+	groupId = ddmDataProviderInstance.getGroupId();
+	title = ddmDataProviderInstance.getName(locale);
+	type = ParamUtil.getString(request, "type", ddmDataProviderInstance.getType());
+}
+
+groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(request, type) : ddmDataProviderInstance.getName(locale));
+renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name="/dynamic_data_mapping_data_provider/add_data_provider" var="addDataProviderURL">
@@ -66,7 +80,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 				</aui:fieldset>
 
 				<aui:fieldset>
-					<%= ddmDataProviderDisplayContext.getDataProviderInstanceDDMFormHTML() %>
+					<%= ddmDataProviderDisplayContext.getDataProviderInstanceDDMFormHTML(type) %>
 				</aui:fieldset>
 
 				<c:if test="<%= ddmDataProviderInstance == null %>">

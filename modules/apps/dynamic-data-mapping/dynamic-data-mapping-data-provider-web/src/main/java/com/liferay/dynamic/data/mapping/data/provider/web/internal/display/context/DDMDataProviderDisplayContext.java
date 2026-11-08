@@ -158,15 +158,11 @@ public class DDMDataProviderDisplayContext {
 		};
 	}
 
-	public String getDataProviderInstanceDDMFormHTML() throws PortalException {
+	public String getDataProviderInstanceDDMFormHTML(String type)
+		throws PortalException {
+
 		DDMDataProviderInstance ddmDataProviderInstance =
 			fetchDataProviderInstance();
-
-		String type = ParamUtil.getString(
-			_renderRequest, "type",
-			GetterUtil.get(
-				ddmDataProviderInstance, DDMDataProviderInstance::getType,
-				StringPool.BLANK));
 
 		DDMDataProvider ddmDataProvider =
 			_ddmDataProviderRegistry.getDDMDataProvider(type);
@@ -178,7 +174,7 @@ public class DDMDataProviderDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			_createDDMFormRenderingContext();
 
-		if (_ddmDataProviderInstance != null) {
+		if (ddmDataProviderInstance != null) {
 			DDMFormValues ddmFormValues = _deserialize(
 				ddmDataProviderInstance.getDefinition(), ddmForm);
 

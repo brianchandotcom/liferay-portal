@@ -81,6 +81,18 @@ public class SelectAssetDisplayPageDisplayContext {
 		_groupId = GetterUtil.getLong(
 			httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:groupId"));
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			_classNameId, _classPK);
+
+		String layoutUuid = null;
+
+		if (assetEntry != null) {
+			layoutUuid = assetEntry.getLayoutUuid();
+		}
+
+		_layoutUuid = ParamUtil.getString(
+			httpServletRequest, "layoutUuid", layoutUuid);
 		_parentClassPK = GetterUtil.getLong(
 			httpServletRequest.getAttribute(
 				"liferay-asset:select-asset-display-page:parentClassPK"));
@@ -205,12 +217,7 @@ public class SelectAssetDisplayPageDisplayContext {
 	}
 
 	public String getLayoutUuid() {
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			_classNameId, _classPK);
-
-		return ParamUtil.getString(
-			_httpServletRequest, "layoutUuid",
-			GetterUtil.get(assetEntry, AssetEntry::getLayoutUuid, null));
+		return _layoutUuid;
 	}
 
 	public String getSpecificAssetDisplayPageName() throws Exception {
@@ -455,6 +462,7 @@ public class SelectAssetDisplayPageDisplayContext {
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _inheritableDisplayPageTemplate;
+	private final String _layoutUuid;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Long _parentClassPK;

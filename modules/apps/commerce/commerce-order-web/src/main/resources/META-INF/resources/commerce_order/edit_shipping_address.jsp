@@ -19,13 +19,23 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 if ((commerceOrder != null) && Validator.isNull(cmd)) {
 	shippingAddress = commerceOrder.getShippingAddress();
 }
+
+String shippingAddressCmd = "addShippingAddress";
+long countryId = 0;
+long regionId = 0;
+
+if (shippingAddress != null) {
+	shippingAddressCmd = "updateShippingAddress";
+	countryId = shippingAddress.getCountryId();
+	regionId = shippingAddress.getRegionId();
+}
 %>
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderShippingAddressActionURL" />
 
 <div class="container-fluid container-fluid-max-xl p-4">
 	<aui:form action="<%= editCommerceOrderShippingAddressActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= (shippingAddress == null) ? "addShippingAddress" : "updateShippingAddress" %>' />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= shippingAddressCmd %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="requestProcessed" type="hidden" value='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>' />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
@@ -86,8 +96,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 				selectId: 'countryId',
 				selectNullable: <%= false %>,
 				selectSort: '<%= true %>',
-				selectVal:
-					'<%= ParamUtil.getLong(request, "countryId", GetterUtil.get(shippingAddress, CommerceAddress::getCountryId, 0L)) %>',
+				selectVal: '<%= countryId %>',
 			},
 			{
 				select: '<portlet:namespace />regionId',
@@ -121,8 +130,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 				selectDesc: 'name',
 				selectId: 'regionId',
 				selectNullable: <%= false %>,
-				selectVal:
-					'<%= ParamUtil.getLong(request, "regionId", GetterUtil.get(shippingAddress, CommerceAddress::getRegionId, 0L)) %>',
+				selectVal: '<%= regionId %>',
 			},
 		]);
 	</aui:script>

@@ -14,11 +14,30 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 
 long messageId = ParamUtil.getLong(request, "messageId");
 
-long categoryId = MBUtil.getCategoryId(request, message);
-long threadId = ParamUtil.getLong(request, "threadId", GetterUtil.get(message, MBMessage::getThreadId, 0L));
-long parentMessageId = ParamUtil.getLong(request, "parentMessageId", GetterUtil.get(message, MBMessage::getParentMessageId, MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID));
+boolean allowPingbacks = true;
+String body = StringPool.BLANK;
+List<FileEntry> existingAttachmentsFileEntries = new ArrayList<FileEntry>();
+long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
+String subject = StringPool.BLANK;
+long threadId = 0;
+double threadPriority = 0;
 
-String subject = ParamUtil.getString(request, "subject", GetterUtil.get(message, MBMessage::getSubject, StringPool.BLANK));
+if (message != null) {
+	allowPingbacks = message.isAllowPingbacks();
+	body = message.getBody();
+	existingAttachmentsFileEntries = message.getAttachmentsFileEntries();
+	parentMessageId = message.getParentMessageId();
+	subject = message.getSubject();
+	threadId = message.getThreadId();
+	threadPriority = message.getPriority();
+}
+
+long categoryId = MBUtil.getCategoryId(request, message);
+
+parentMessageId = ParamUtil.getLong(request, "parentMessageId", parentMessageId);
+threadId = ParamUtil.getLong(request, "threadId", threadId);
+
+subject = ParamUtil.getString(request, "subject", subject);
 
 MBThread thread = null;
 
@@ -45,17 +64,11 @@ if (threadId > 0) {
 	}
 }
 
-String body = ParamUtil.getString(request, "body", GetterUtil.get(message, MBMessage::getBody, StringPool.BLANK));
+body = ParamUtil.getString(request, "body", body);
 boolean quote = ParamUtil.getBoolean(request, "quote");
 boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 
-List<FileEntry> existingAttachmentsFileEntries = new ArrayList<FileEntry>();
-
-if (message != null) {
-	existingAttachmentsFileEntries = message.getAttachmentsFileEntries();
-}
-
-boolean allowPingbacks = PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED && ParamUtil.getBoolean(request, "allowPingbacks", GetterUtil.get(message, MBMessage::isAllowPingbacks, true));
+allowPingbacks = PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED && ParamUtil.getBoolean(request, "allowPingbacks", allowPingbacks);
 
 if (Validator.isNull(redirect)) {
 	redirect = PortletURLBuilder.createRenderURL(
@@ -352,7 +365,7 @@ if (portletTitleBasedNavigation) {
 					<c:if test="<%= (priorities.length > 0) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY) %>">
 
 						<%
-						double threadPriority = ParamUtil.getDouble(request, "priority", GetterUtil.get(message, MBMessage::getPriority, 0.0));
+						threadPriority = ParamUtil.getDouble(request, "priority", threadPriority);
 						%>
 
 						<aui:select name="priority">

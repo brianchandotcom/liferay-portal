@@ -17,21 +17,30 @@ CPMeasurementUnit primaryCPMeasurementUnit = cpMeasurementUnitsDisplayContext.ge
 
 int type = cpMeasurementUnitsDisplayContext.getType();
 
-boolean defaultPrimary = false;
+boolean primary = false;
 
 if (primaryCPMeasurementUnit == null) {
-	defaultPrimary = true;
+	primary = true;
 }
 
-boolean primary = ParamUtil.getBoolean(request, "primary", GetterUtil.get(cpMeasurementUnit, CPMeasurementUnit::isPrimary, defaultPrimary));
+String cmd = Constants.ADD;
+long cpMeasurementUnitId = 0;
+
+if (cpMeasurementUnit != null) {
+	cmd = Constants.UPDATE;
+	cpMeasurementUnitId = cpMeasurementUnit.getCPMeasurementUnitId();
+	primary = cpMeasurementUnit.isPrimary();
+}
+
+primary = ParamUtil.getBoolean(request, "primary", primary);
 %>
 
 <portlet:actionURL name="/cp_measurement_unit/edit_cp_measurement_unit" var="editCPMeasurementUnitActionURL" />
 
 <aui:form action="<%= editCPMeasurementUnitActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCPMeasurementUnit();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpMeasurementUnit == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="cpMeasurementUnitId" type="hidden" value="<%= (cpMeasurementUnit == null) ? 0 : cpMeasurementUnit.getCPMeasurementUnitId() %>" />
+	<aui:input name="cpMeasurementUnitId" type="hidden" value="<%= cpMeasurementUnitId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 
 	<div class="lfr-form-content">

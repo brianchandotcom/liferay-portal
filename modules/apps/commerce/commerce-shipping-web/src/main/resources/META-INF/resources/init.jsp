@@ -23,7 +23,6 @@ page import="com.liferay.commerce.shipping.web.internal.constants.CommerceShippi
 page import="com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@

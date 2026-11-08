@@ -13,9 +13,13 @@ CommerceShippingMethodsDisplayContext commerceShippingMethodsDisplayContext = (C
 CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayContext.getCommerceShippingMethod();
 
 long commerceShippingMethodId = 0;
+String description = commerceShippingMethodsDisplayContext.getCommerceShippingMethodEngineDescription(locale);
+String name = commerceShippingMethodsDisplayContext.getCommerceShippingMethodEngineName(locale);
 
 if (commerceShippingMethod != null) {
 	commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethodId();
+	description = commerceShippingMethod.getDescription();
+	name = commerceShippingMethod.getName();
 }
 %>
 
@@ -38,9 +42,9 @@ if (commerceShippingMethod != null) {
 	</c:if>
 
 	<commerce-ui:panel>
-		<aui:input label="name" localized="<%= true %>" name="nameMapAsXML" required="<%= true %>" type="text" value='<%= ParamUtil.getString(request, "name", GetterUtil.get(commerceShippingMethod, CommerceShippingMethod::getName, commerceShippingMethodsDisplayContext.getCommerceShippingMethodEngineName(locale))) %>' />
+		<aui:input label="name" localized="<%= true %>" name="nameMapAsXML" required="<%= true %>" type="text" value='<%= ParamUtil.getString(request, "name", name) %>' />
 
-		<aui:input label="description" localized="<%= true %>" name="descriptionMapAsXML" type="text" value='<%= ParamUtil.getString(request, "description", GetterUtil.get(commerceShippingMethod, CommerceShippingMethod::getDescription, commerceShippingMethodsDisplayContext.getCommerceShippingMethodEngineDescription(locale))) %>' />
+		<aui:input label="description" localized="<%= true %>" name="descriptionMapAsXML" type="text" value='<%= ParamUtil.getString(request, "description", description) %>' />
 
 		<aui:model-context bean="<%= commerceShippingMethod %>" model="<%= CommerceShippingMethod.class %>" />
 

@@ -640,15 +640,6 @@ public class JournalTransformerTest {
 
 		_assertTransformLinkToLayout(dataDefinition, layout, themeDisplay);
 
-		Layout nodeLayout = LayoutTestUtil.addTypeNodeLayout(
-			_group.getGroupId(), false);
-
-		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
-			_group, layout.getPlid());
-
-		Layout grandchildLayout = LayoutTestUtil.addTypePortletLayout(
-			_group, childLayout.getPlid());
-
 		_assertTransformLinkToLayout(
 			dataDefinition, LayoutTestUtil.addTypeContentLayout(_group),
 			themeDisplay);
@@ -675,10 +666,19 @@ public class JournalTransformerTest {
 			LayoutTestUtil.addTypePanelLayout(_group.getGroupId()),
 			themeDisplay);
 
+		Layout nodeLayout = LayoutTestUtil.addTypeNodeLayout(
+			_group.getGroupId(), false);
+
 		_assertTransformLinkToLayout(
 			dataDefinition,
 			LayoutTestUtil.addTypePortletLayout(_group, nodeLayout.getPlid()),
 			themeDisplay);
+
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
+			_group, layout.getPlid());
+
+		Layout grandchildLayout = LayoutTestUtil.addTypePortletLayout(
+			_group, childLayout.getPlid());
 
 		_assertTransformLinkToLayout(
 			dataDefinition,
@@ -689,9 +689,9 @@ public class JournalTransformerTest {
 		String url = "https://www.liferay.com/" + RandomTestUtil.randomString();
 
 		_assertTransformLinkToLayout(
-			dataDefinition,
+			dataDefinition, url,
 			LayoutTestUtil.addTypeLinkToURLLayout(_group.getGroupId(), url),
-			url, themeDisplay);
+			themeDisplay);
 	}
 
 	@Test
@@ -882,7 +882,17 @@ public class JournalTransformerTest {
 	}
 
 	private void _assertTransformLinkToLayout(
-			DataDefinition dataDefinition, Layout layout, String expectedURL,
+			DataDefinition dataDefinition, Layout layout,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		_assertTransformLinkToLayout(
+			dataDefinition, _getLayoutRelativeURL(layout), layout,
+			themeDisplay);
+	}
+
+	private void _assertTransformLinkToLayout(
+			DataDefinition dataDefinition, String expectedURL, Layout layout,
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -910,16 +920,6 @@ public class JournalTransformerTest {
 					TransformerListener::isEnabled),
 				null, false, "${LinkToPage38292648.getFriendlyUrl()}",
 				themeDisplay, Constants.VIEW));
-	}
-
-	private void _assertTransformLinkToLayout(
-			DataDefinition dataDefinition, Layout layout,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		_assertTransformLinkToLayout(
-			dataDefinition, layout, _getLayoutRelativeURL(layout),
-			themeDisplay);
 	}
 
 	private String _getLayoutRelativeURL(Layout layout) {

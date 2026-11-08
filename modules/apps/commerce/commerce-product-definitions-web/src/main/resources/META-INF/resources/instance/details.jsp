@@ -15,13 +15,18 @@ CPInstance cpInstance = cpInstanceDisplayContext.getCPInstance();
 long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getCPDefinitionOptionRels();
 
+boolean discontinued = false;
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
-if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
-	neverExpire = false;
+if (cpInstance != null) {
+	discontinued = cpInstance.isDiscontinued();
+
+	if (cpInstance.getExpirationDate() != null) {
+		neverExpire = false;
+	}
 }
 
-boolean discontinued = ParamUtil.getBoolean(request, "discontinued", GetterUtil.get(cpInstance, CPInstance::isDiscontinued, false));
+discontinued = ParamUtil.getBoolean(request, "discontinued", discontinued);
 %>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_instance" var="editProductInstanceActionURL" />

@@ -141,8 +141,38 @@ public class JournalEditArticleDisplayContext {
 		_journalWebConfiguration =
 			(JournalWebConfiguration)httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
+
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (article == null) {
+			_classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+			_classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+			_folderId = ParamUtil.getLong(
+				httpServletRequest, "folderId",
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			_groupId = ParamUtil.getLong(
+				httpServletRequest, "groupId", _themeDisplay.getScopeGroupId());
+			_layoutUuid = ParamUtil.getString(
+				httpServletRequest, "layoutUuid", null);
+			_version = ParamUtil.getDouble(
+				httpServletRequest, "version",
+				JournalArticleConstants.VERSION_DEFAULT);
+		}
+		else {
+			_classNameId = ParamUtil.getLong(
+				httpServletRequest, "classNameId", article.getClassNameId());
+			_classPK = ParamUtil.getLong(
+				httpServletRequest, "classPK", article.getClassPK());
+			_folderId = ParamUtil.getLong(
+				httpServletRequest, "folderId", article.getFolderId());
+			_groupId = ParamUtil.getLong(
+				httpServletRequest, "groupId", article.getGroupId());
+			_layoutUuid = ParamUtil.getString(
+				httpServletRequest, "layoutUuid", article.getLayoutUuid());
+			_version = ParamUtil.getDouble(
+				httpServletRequest, "version", article.getVersion());
+		}
 
 		setViewAttributes();
 	}
@@ -451,26 +481,10 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public long getClassNameId() {
-		if (_classNameId != null) {
-			return _classNameId;
-		}
-
-		_classNameId = ParamUtil.getLong(
-			_httpServletRequest, "classNameId",
-			GetterUtil.get(_article, JournalArticle::getClassNameId, 0L));
-
 		return _classNameId;
 	}
 
 	public long getClassPK() {
-		if (_classPK != null) {
-			return _classPK;
-		}
-
-		_classPK = ParamUtil.getLong(
-			_httpServletRequest, "classPK",
-			GetterUtil.get(_article, JournalArticle::getClassPK, 0L));
-
 		return _classPK;
 	}
 
@@ -726,16 +740,6 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public long getFolderId() {
-		if (_folderId != null) {
-			return _folderId;
-		}
-
-		_folderId = ParamUtil.getLong(
-			_httpServletRequest, "folderId",
-			GetterUtil.get(
-				_article, JournalArticle::getFolderId,
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
 		return _folderId;
 	}
 
@@ -918,16 +922,6 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public long getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
-		}
-
-		_groupId = ParamUtil.getLong(
-			_httpServletRequest, "groupId",
-			GetterUtil.get(
-				_article, JournalArticle::getGroupId,
-				_themeDisplay.getScopeGroupId()));
-
 		return _groupId;
 	}
 
@@ -1200,7 +1194,7 @@ public class JournalEditArticleDisplayContext {
 				return null;
 			}
 		).put(
-			"layoutUuid", _getLayoutUuid()
+			"layoutUuid", _layoutUuid
 		).put(
 			"newArticle",
 			(_article == null) || Validator.isNull(_article.getArticleId())
@@ -1373,16 +1367,6 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public double getVersion() {
-		if (_version != null) {
-			return _version;
-		}
-
-		_version = ParamUtil.getDouble(
-			_httpServletRequest, "version",
-			GetterUtil.get(
-				_article, JournalArticle::getVersion,
-				JournalArticleConstants.VERSION_DEFAULT));
-
 		return _version;
 	}
 
@@ -1559,7 +1543,7 @@ public class JournalEditArticleDisplayContext {
 			_getAssetDisplayPageEntry();
 
 		if (assetDisplayPageEntry == null) {
-			if (Validator.isNull(_getLayoutUuid())) {
+			if (Validator.isNull(_layoutUuid)) {
 				_displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
 			}
 			else {
@@ -1645,12 +1629,6 @@ public class JournalEditArticleDisplayContext {
 		return _inheritedWorkflowDDMStructuresFolderId;
 	}
 
-	private String _getLayoutUuid() {
-		return ParamUtil.getString(
-			_httpServletRequest, "layoutUuid",
-			GetterUtil.get(_article, JournalArticle::getLayoutUuid, null));
-	}
-
 	private String _getLocaleDisplayNames(Locale locale, Locale... locales) {
 		List<String> displayLocaleNames = new ArrayList<>();
 
@@ -1708,9 +1686,7 @@ public class JournalEditArticleDisplayContext {
 			return layoutPageTemplateEntry.getName();
 		}
 
-		String layoutUuid = _getLayoutUuid();
-
-		if (Validator.isNull(layoutUuid)) {
+		if (Validator.isNull(_layoutUuid)) {
 			return null;
 		}
 
@@ -1719,11 +1695,11 @@ public class JournalEditArticleDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			layoutUuid, themeDisplay.getSiteGroupId(), false);
+			_layoutUuid, themeDisplay.getSiteGroupId(), false);
 
 		if (selLayout == null) {
 			selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layoutUuid, themeDisplay.getSiteGroupId(), true);
+				_layoutUuid, themeDisplay.getSiteGroupId(), true);
 		}
 
 		if (selLayout != null) {
@@ -1868,8 +1844,8 @@ public class JournalEditArticleDisplayContext {
 	private Set<Locale> _availableLocales;
 	private String _backURL;
 	private Boolean _changeStructure;
-	private Long _classNameId;
-	private Long _classPK;
+	private final long _classNameId;
+	private final long _classPK;
 	private DDMFormValues _ddmFormValues;
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;
@@ -1880,15 +1856,16 @@ public class JournalEditArticleDisplayContext {
 		_depotEntryGroupRelLocalService;
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private Integer _displayPageType;
-	private Long _folderId;
+	private final long _folderId;
 	private String _folderName;
 	private String _friendlyURLDuplicatedWarningMessage;
-	private Long _groupId;
+	private final long _groupId;
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _inheritedWorkflowDDMStructuresFolderId;
 	private final ItemSelector _itemSelector;
 	private final JournalWebConfiguration _journalWebConfiguration;
+	private final String _layoutUuid;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _neverExpire;
 	private Boolean _neverReview;
@@ -1900,6 +1877,6 @@ public class JournalEditArticleDisplayContext {
 	private Boolean _showHeader;
 	private Boolean _showSelectFolder;
 	private final ThemeDisplay _themeDisplay;
-	private Double _version;
+	private final double _version;
 
 }

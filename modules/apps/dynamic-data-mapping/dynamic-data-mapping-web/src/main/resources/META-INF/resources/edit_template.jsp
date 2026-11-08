@@ -18,24 +18,49 @@ DDMTemplate template = (DDMTemplate)request.getAttribute(DDMWebKeys.DYNAMIC_DATA
 
 long templateId = ParamUtil.getLong(request, "templateId");
 
-long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(template, DDMTemplate::getGroupId, PortalUtil.getScopeGroupId(request, refererPortletName)));
-long classNameId = ParamUtil.getLong(request, "classNameId", GetterUtil.get(template, DDMTemplate::getClassNameId, 0L));
-long classPK = ParamUtil.getLong(request, "classPK", GetterUtil.get(template, DDMTemplate::getClassPK, 0L));
-long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId", GetterUtil.get(template, DDMTemplate::getResourceClassNameId, 0L));
-
-boolean cacheable = ParamUtil.getBoolean(request, "cacheable", GetterUtil.get(template, DDMTemplate::isCacheable, true));
-boolean smallImage = ParamUtil.getBoolean(request, "smallImage", GetterUtil.get(template, DDMTemplate::isSmallImage, false));
-
 DDMStructure structure = (DDMStructure)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 if ((structure == null) && (template != null)) {
 	structure = ddmDisplayContext.fetchStructure(template);
 }
 
-String type = ParamUtil.getString(request, "type", GetterUtil.get(template, DDMTemplate::getType, DDMTemplateConstants.TEMPLATE_TYPE_FORM));
-String mode = ParamUtil.getString(request, "mode", GetterUtil.get(template, DDMTemplate::getMode, DDMTemplateConstants.TEMPLATE_MODE_CREATE));
-String language = ParamUtil.getString(request, "language", GetterUtil.get(template, DDMTemplate::getLanguage, ddmDisplay.getDefaultTemplateLanguage()));
-String script = ParamUtil.getString(request, "script", GetterUtil.get(template, DDMTemplate::getScript, StringPool.BLANK));
+boolean cacheable = true;
+long classNameId = 0;
+long classPK = 0;
+long groupId = PortalUtil.getScopeGroupId(request, refererPortletName);
+String language = ddmDisplay.getDefaultTemplateLanguage();
+String mode = DDMTemplateConstants.TEMPLATE_MODE_CREATE;
+long resourceClassNameId = 0;
+String script = StringPool.BLANK;
+boolean smallImage = false;
+DDMTemplateVersion templateVersion = null;
+String type = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
+
+if (template != null) {
+	cacheable = template.isCacheable();
+	classNameId = template.getClassNameId();
+	classPK = template.getClassPK();
+	groupId = template.getGroupId();
+	language = template.getLanguage();
+	mode = template.getMode();
+	resourceClassNameId = template.getResourceClassNameId();
+	script = template.getScript();
+	smallImage = template.isSmallImage();
+	templateVersion = template.getLatestTemplateVersion();
+	type = template.getType();
+}
+
+cacheable = ParamUtil.getBoolean(request, "cacheable", cacheable);
+classNameId = ParamUtil.getLong(request, "classNameId", classNameId);
+classPK = ParamUtil.getLong(request, "classPK", classPK);
+groupId = ParamUtil.getLong(request, "groupId", groupId);
+language = ParamUtil.getString(request, "language", language);
+mode = ParamUtil.getString(request, "mode", mode);
+resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId", resourceClassNameId);
+script = ParamUtil.getString(request, "script", script);
+smallImage = ParamUtil.getBoolean(request, "smallImage", smallImage);
+
+type = ParamUtil.getString(request, "type", type);
 
 if (Validator.isNull(script) && type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
 	TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
@@ -50,12 +75,6 @@ if (Validator.isNull(script) && type.equals(DDMTemplateConstants.TEMPLATE_TYPE_D
 	else {
 		script = StringUtil.read(DDMWebConfigurationUtil.class.getClassLoader(), DDMWebConfigurationUtil.get(DDMWebConfigurationKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(language)));
 	}
-}
-
-DDMTemplateVersion templateVersion = null;
-
-if (template != null) {
-	templateVersion = template.getLatestTemplateVersion();
 }
 
 String structureAvailableFields = ParamUtil.getString(request, "structureAvailableFields");

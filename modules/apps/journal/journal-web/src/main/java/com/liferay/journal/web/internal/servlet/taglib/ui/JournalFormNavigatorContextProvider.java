@@ -13,7 +13,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -43,17 +42,24 @@ public class JournalFormNavigatorContextProvider
 		String toLanguageId = ParamUtil.getString(
 			httpServletRequest, "toLanguageId");
 
-		long classNameId = ParamUtil.getLong(
-			httpServletRequest, "classNameId",
-			GetterUtil.get(article, JournalArticle::getClassNameId, 0L));
-
 		if (Validator.isNotNull(toLanguageId)) {
 			return "translate";
 		}
-		else if ((article != null) && (article.getId() > 0)) {
-			return "update";
+
+		long classNameId = 0;
+
+		if (article != null) {
+			if (article.getId() > 0) {
+				return "update";
+			}
+
+			classNameId = article.getClassNameId();
 		}
-		else if (classNameId > JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
+
+		classNameId = ParamUtil.getLong(
+			httpServletRequest, "classNameId", classNameId);
+
+		if (classNameId > JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
 			return "default.values";
 		}
 

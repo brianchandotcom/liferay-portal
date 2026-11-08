@@ -15,12 +15,29 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-long nodeId = ParamUtil.getLong(request, "nodeId", GetterUtil.get(wikiPage, WikiPage::getNodeId, 0L));
-String title = ParamUtil.getString(request, "title", GetterUtil.get(wikiPage, WikiPage::getTitle, StringPool.BLANK));
+boolean editable = false;
+long nodeId = 0;
+String parentTitle = StringPool.BLANK;
+String selectedFormat = siteWikiGroupServiceConfiguration.defaultFormat();
+String title = StringPool.BLANK;
+
+if (wikiPage != null) {
+	nodeId = wikiPage.getNodeId();
+	parentTitle = wikiPage.getParentTitle();
+	selectedFormat = wikiPage.getFormat();
+	title = wikiPage.getTitle();
+
+	if (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
+		editable = true;
+	}
+}
+
+nodeId = ParamUtil.getLong(request, "nodeId", nodeId);
+title = ParamUtil.getString(request, "title", title);
 
 boolean editTitle = ParamUtil.getBoolean(request, "editTitle");
 
-String selectedFormat = ParamUtil.getString(request, "format", GetterUtil.get(wikiPage, WikiPage::getFormat, siteWikiGroupServiceConfiguration.defaultFormat()));
+selectedFormat = ParamUtil.getString(request, "format", selectedFormat);
 
 Collection<String> formats = wikiEngineRenderer.getFormats();
 
@@ -32,16 +49,9 @@ if (!formats.contains(selectedFormat)) {
 	}
 }
 
-String parentTitle = ParamUtil.getString(request, "parentTitle", GetterUtil.get(wikiPage, WikiPage::getParentTitle, StringPool.BLANK));
+parentTitle = ParamUtil.getString(request, "parentTitle", parentTitle);
 
-boolean editable = false;
-
-if (wikiPage != null) {
-	if (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
-		editable = true;
-	}
-}
-else if ((wikiPage == null) && editTitle) {
+if ((wikiPage == null) && editTitle) {
 	editable = true;
 
 	wikiPage = WikiPageLocalServiceUtil.createWikiPage(0);

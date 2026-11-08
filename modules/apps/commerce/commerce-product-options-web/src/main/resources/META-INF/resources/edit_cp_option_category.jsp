@@ -10,7 +10,7 @@
 <%
 CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWebKeys.CP_OPTION_CATEGORY);
 
-long cpOptionCategoryId = ParamUtil.getLong(request, "CPOptionCategoryId", GetterUtil.get(cpOptionCategory, CPOptionCategory::getCPOptionCategoryId, 0L));
+long cpOptionCategoryId = ParamUtil.getLong(request, "cpOptionCategoryId");
 
 renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 %>

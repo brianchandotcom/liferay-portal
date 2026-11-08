@@ -17,9 +17,11 @@ BookmarksEntry entry = (BookmarksEntry)request.getAttribute(BookmarksWebKeys.BOO
 
 long entryId = ParamUtil.getLong(request, "entryId");
 
-long folderId = ParamUtil.getLong(request, "folderId", GetterUtil.get(entry, BookmarksEntry::getFolderId, 0L));
+long folderId = 0;
 
 if (entry != null) {
+	folderId = entry.getFolderId();
+
 	BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
@@ -27,6 +29,8 @@ if (entry != null) {
 	}
 }
 else {
+	folderId = ParamUtil.getLong(request, "folderId");
+
 	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {

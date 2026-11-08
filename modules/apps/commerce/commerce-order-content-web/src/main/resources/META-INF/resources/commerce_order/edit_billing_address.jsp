@@ -17,15 +17,27 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 if ((commerceOrder != null) && Validator.isNull(cmd)) {
 	billingAddress = commerceOrder.getBillingAddress();
 }
+
+String billingAddressCmd = "addBillingAddress";
+long countryId = 0;
+long regionId = 0;
+String titleKey = "add-billing-address";
+
+if (billingAddress != null) {
+	billingAddressCmd = "updateBillingAddress";
+	countryId = billingAddress.getCountryId();
+	regionId = billingAddress.getRegionId();
+	titleKey = "edit-billing-address";
+}
 %>
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderBillingAddressActionURL" />
 
 <commerce-ui:modal-content
-	title='<%= (billingAddress == null) ? LanguageUtil.get(request, "add-billing-address") : LanguageUtil.get(request, "edit-billing-address") %>'
+	title="<%= LanguageUtil.get(request, titleKey) %>"
 >
 	<aui:form action="<%= editCommerceOrderBillingAddressActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= (billingAddress == null) ? "addBillingAddress" : "updateBillingAddress" %>' />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= billingAddressCmd %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
@@ -86,8 +98,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 			selectId: 'countryId',
 			selectNullable: <%= false %>,
 			selectSort: '<%= true %>',
-			selectVal:
-				'<%= ParamUtil.getLong(request, "countryId", GetterUtil.get(billingAddress, CommerceAddress::getCountryId, 0L)) %>',
+			selectVal: '<%= countryId %>',
 		},
 		{
 			select: '<portlet:namespace />regionId',
@@ -121,8 +132,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 			selectDesc: 'name',
 			selectId: 'regionId',
 			selectNullable: <%= false %>,
-			selectVal:
-				'<%= ParamUtil.getLong(request, "regionId", GetterUtil.get(billingAddress, CommerceAddress::getRegionId, 0L)) %>',
+			selectVal: '<%= regionId %>',
 		},
 	]);
 </aui:script>

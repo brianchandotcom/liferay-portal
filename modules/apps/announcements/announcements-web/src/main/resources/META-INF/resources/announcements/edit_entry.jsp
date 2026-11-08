@@ -14,19 +14,20 @@ AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(Announcement
 
 long entryId = ParamUtil.getLong(request, "entryId");
 
-String title = ParamUtil.getString(request, "title", GetterUtil.get(entry, AnnouncementsEntry::getTitle, StringPool.BLANK));
-String content = ParamUtil.getString(request, "content", GetterUtil.get(entry, AnnouncementsEntry::getContent, StringPool.BLANK));
-
-boolean alert = ParamUtil.getBoolean(request, "alert", GetterUtil.get(entry, AnnouncementsEntry::isAlert, false));
-
 boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately", entry == null);
 
+boolean alert = false;
+String content = StringPool.BLANK;
 String headerTitle = null;
 
 if (entry != null) {
+	alert = entry.isAlert();
+	content = entry.getContent();
 	headerTitle = entry.getTitle();
 }
 else {
+	alert = ParamUtil.getBoolean(request, "alert");
+
 	if (alert) {
 		headerTitle = LanguageUtil.get(resourceBundle, "new-alert");
 	}
@@ -34,6 +35,8 @@ else {
 		headerTitle = LanguageUtil.get(resourceBundle, "new-announcement");
 	}
 }
+
+content = ParamUtil.getString(request, "content", content);
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -70,7 +73,7 @@ if (portletTitleBasedNavigation) {
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
-					<aui:input autocomplete="off" id="titleEditor" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" title="" type="text" value="<%= HtmlUtil.escape(title) %>">
+					<aui:input autocomplete="off" id="titleEditor" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" title="" type="text">
 						<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AnnouncementsEntry.class.getName(), "title") %></aui:validator>
 					</aui:input>
 

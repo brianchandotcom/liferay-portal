@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -281,17 +280,18 @@ public class EditJournalFeedDisplayContext {
 			return _feedType;
 		}
 
+		String feedFormat = RSSUtil.FORMAT_DEFAULT;
+		double feedVersion = RSSUtil.VERSION_DEFAULT;
+
+		if (_journalFeed != null) {
+			feedFormat = _journalFeed.getFeedFormat();
+			feedVersion = _journalFeed.getFeedVersion();
+		}
+
 		_feedType = RSSUtil.getFeedType(
-			ParamUtil.getString(
-				_httpServletRequest, "feedFormat",
-				GetterUtil.get(
-					_journalFeed, JournalFeed::getFeedFormat,
-					RSSUtil.FORMAT_DEFAULT)),
+			ParamUtil.getString(_httpServletRequest, "feedFormat", feedFormat),
 			ParamUtil.getDouble(
-				_httpServletRequest, "feedVersion",
-				GetterUtil.get(
-					_journalFeed, JournalFeed::getFeedVersion,
-					RSSUtil.VERSION_DEFAULT)));
+				_httpServletRequest, "feedVersion", feedVersion));
 
 		return _feedType;
 	}

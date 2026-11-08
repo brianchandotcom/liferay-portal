@@ -14,8 +14,6 @@ JournalEditDDMStructuresDisplayContext journalEditDDMStructuresDisplayContext = 
 
 DDMStructure ddmStructure = journalEditDDMStructuresDisplayContext.getDDMStructure();
 
-long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(ddmStructure, DDMStructure::getGroupId, scopeGroupId));
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
@@ -25,12 +23,16 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 DDMForm ddmForm = null;
 long ddmStructureId = 0L;
 String ddmStructureKey = StringPool.BLANK;
+long groupId = scopeGroupId;
 
 if (ddmStructure != null) {
 	ddmForm = ddmStructure.getDDMForm();
 	ddmStructureId = ddmStructure.getStructureId();
 	ddmStructureKey = ddmStructure.getStructureKey();
+	groupId = ddmStructure.getGroupId();
 }
+
+groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 PortletURL editDDMStructureURL = renderResponse.createActionURL();
 

@@ -16,7 +16,26 @@ MBCategory category = mbRequestHelper.getCategory();
 
 long categoryId = MBUtil.getCategoryId(request, category);
 
-long parentCategoryId = mbRequestHelper.getParentCategoryId();
+long parentCategoryId = 0;
+
+if (category == null) {
+	parentCategoryId = ParamUtil.getLong(request, "parentCategoryId");
+
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(parentCategoryId, request, renderResponse);
+
+	if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-category[message-board]"), currentURL);
+	}
+}
+else {
+	parentCategoryId = ParamUtil.getLong(request, "parentCategoryId", category.getParentCategoryId());
+
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+
+	if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
+	}
+}
 
 String defaultDisplayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
 
@@ -36,21 +55,6 @@ if (categoryId > 0) {
 
 if ((category == null) && (mailingList == null) && (parentCategoryId > 0)) {
 	mailingList = MBMailingListLocalServiceUtil.fetchCategoryMailingList(scopeGroupId, parentCategoryId);
-}
-
-if (category != null) {
-	MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
-
-	if (!layout.isTypeControlPanel()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
-	}
-}
-else {
-	MBBreadcrumbUtil.addPortletBreadcrumbEntries(parentCategoryId, request, renderResponse);
-
-	if (!layout.isTypeControlPanel()) {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-category[message-board]"), currentURL);
-	}
 }
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));

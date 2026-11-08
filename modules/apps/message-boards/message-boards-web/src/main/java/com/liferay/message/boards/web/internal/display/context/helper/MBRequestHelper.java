@@ -5,11 +5,8 @@
 
 package com.liferay.message.boards.web.internal.display.context.helper;
 
-import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.display.context.helper.BaseRequestHelper;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,19 +31,6 @@ public class MBRequestHelper extends BaseRequestHelper {
 		return _category;
 	}
 
-	public long getParentCategoryId() {
-		if (_parentCategoryId == null) {
-			_parentCategoryId = ParamUtil.getLong(
-				getRequest(), "parentCategoryId",
-				GetterUtil.get(
-					getCategory(), MBCategory::getParentCategoryId,
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID));
-		}
-
-		return _parentCategoryId;
-	}
-
 	private MBCategory _category;
-	private Long _parentCategoryId;
 
 }

@@ -14,7 +14,15 @@ CPDefinition cpDefinition = csDiagramSettingDisplayContext.getCPDefinition();
 
 CSDiagramSetting csDiagramSetting = csDiagramSettingDisplayContext.fetchCSDiagramSetting();
 
-String type = ParamUtil.getString(renderRequest, "type", GetterUtil.get(csDiagramSetting, CSDiagramSetting::getType, DefaultCSDiagramType.KEY));
+long diagramId = 0;
+String type = DefaultCSDiagramType.KEY;
+
+if (csDiagramSetting != null) {
+	diagramId = csDiagramSetting.getCSDiagramSettingId();
+	type = csDiagramSetting.getType();
+}
+
+type = ParamUtil.getString(renderRequest, "type", type);
 
 CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(type);
 %>
@@ -109,7 +117,7 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"diagramId", (csDiagramSetting != null) ? csDiagramSetting.getCSDiagramSettingId() : 0
+			"diagramId", diagramId
 		).build()
 	%>'
 	module="{editCsDiagramSetting} from commerce-shop-by-diagram-web"

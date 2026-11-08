@@ -16,6 +16,16 @@ Contact selContact = null;
 
 long userId = ParamUtil.getLong(request, "userId");
 
+String emailAddress = StringPool.BLANK;
+String firstName = StringPool.BLANK;
+String jobTitle = StringPool.BLANK;
+String lastName = StringPool.BLANK;
+boolean male = true;
+String middleName = StringPool.BLANK;
+long prefixListTypeId = 0;
+String screenName = StringPool.BLANK;
+long suffixListTypeId = 0;
+
 if (userId > 0) {
 	selUser = UserLocalServiceUtil.getUser(userId);
 
@@ -24,15 +34,27 @@ if (userId > 0) {
 	}
 
 	selContact = selUser.getContact();
+
+	emailAddress = selUser.getEmailAddress();
+	firstName = selUser.getFirstName();
+	jobTitle = selUser.getJobTitle();
+	lastName = selUser.getLastName();
+	male = selContact.isMale();
+	middleName = selUser.getMiddleName();
+	prefixListTypeId = selContact.getPrefixListTypeId();
+	screenName = selUser.getScreenName();
+	suffixListTypeId = selContact.getSuffixListTypeId();
 }
 
-String screenName = ParamUtil.getString(request, "screenName", GetterUtil.get(selUser, User::getScreenName, StringPool.BLANK));
-String emailAddress = ParamUtil.getString(request, "emailAddress", GetterUtil.get(selUser, User::getEmailAddress, StringPool.BLANK));
-String firstName = ParamUtil.getString(request, "firstName", GetterUtil.get(selUser, User::getFirstName, StringPool.BLANK));
-String middleName = ParamUtil.getString(request, "middleName", GetterUtil.get(selUser, User::getMiddleName, StringPool.BLANK));
-String lastName = ParamUtil.getString(request, "lastName", GetterUtil.get(selUser, User::getLastName, StringPool.BLANK));
-long prefixListTypeId = ParamUtil.getLong(request, "prefixListTypeId", GetterUtil.get(selContact, Contact::getPrefixListTypeId, 0L));
-long suffixListTypeId = ParamUtil.getLong(request, "suffixListTypeId", GetterUtil.get(selContact, Contact::getSuffixListTypeId, 0L));
+emailAddress = ParamUtil.getString(request, "emailAddress", emailAddress);
+firstName = ParamUtil.getString(request, "firstName", firstName);
+jobTitle = ParamUtil.getString(request, "jobTitle", jobTitle);
+lastName = ParamUtil.getString(request, "lastName", lastName);
+male = ParamUtil.getBoolean(request, "male", male);
+middleName = ParamUtil.getString(request, "middleName", middleName);
+prefixListTypeId = ParamUtil.getLong(request, "prefixListTypeId", prefixListTypeId);
+screenName = ParamUtil.getString(request, "screenName", screenName);
+suffixListTypeId = ParamUtil.getLong(request, "suffixListTypeId", suffixListTypeId);
 
 Calendar calendar = CalendarFactoryUtil.getCalendar();
 
@@ -48,8 +70,6 @@ if (birthdayDate != null) {
 else if (selUser != null) {
 	calendar.setTime(selContact.getBirthday());
 }
-
-boolean male = ParamUtil.getBoolean(request, "male", GetterUtil.get(selContact, Contact::isMale, true));
 %>
 
 <div class="anonymous-account">
@@ -76,7 +96,7 @@ boolean male = ParamUtil.getBoolean(request, "male", GetterUtil.get(selContact, 
 		<aui:input name="birthdayDay" type="hidden" value="<%= String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) %>" />
 		<aui:input name="birthdayMonth" type="hidden" value="<%= String.valueOf(calendar.get(Calendar.MONTH)) %>" />
 		<aui:input name="birthdayYear" type="hidden" value="<%= String.valueOf(calendar.get(Calendar.YEAR)) %>" />
-		<aui:input name="jobTitle" type="hidden" value='<%= ParamUtil.getString(request, "jobTitle", GetterUtil.get(selUser, User::getJobTitle, StringPool.BLANK)) %>' />
+		<aui:input name="jobTitle" type="hidden" value="<%= jobTitle %>" />
 	</aui:form>
 
 	<div class="alert alert-warning">

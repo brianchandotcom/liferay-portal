@@ -18,13 +18,18 @@ Definition definition = (Definition)request.getAttribute(ReportsEngineWebKeys.DE
 
 long definitionId = ParamUtil.getLong(request, "definitionId");
 
-long sourceId = ParamUtil.getLong(request, "sourceId", GetterUtil.get(definition, Definition::getSourceId, 0L));
-
 String reportName = StringPool.BLANK;
+String reportParameters = StringPool.BLANK;
+long sourceId = 0;
 
 if (definition != null) {
 	reportName = definition.getReportName();
+	reportParameters = definition.getReportParameters();
+	sourceId = definition.getSourceId();
 }
+
+reportParameters = ParamUtil.getString(request, "reportParameters", reportParameters);
+sourceId = ParamUtil.getLong(request, "sourceId", sourceId);
 
 if (reportsEngineDisplayContext.isAdminPortlet()) {
 	portletDisplay.setShowBackIcon(true);
@@ -212,7 +217,7 @@ else {
 		HashMapBuilder.<String, Object>put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
-			"parameters", reportsEngineDisplayContext.getReportParameters()
+			"parameters", reportsEngineDisplayContext.getReportParameters(reportParameters)
 		).build()
 	%>'
 	module="{reportParameters} from portal-reports-engine-console-web"

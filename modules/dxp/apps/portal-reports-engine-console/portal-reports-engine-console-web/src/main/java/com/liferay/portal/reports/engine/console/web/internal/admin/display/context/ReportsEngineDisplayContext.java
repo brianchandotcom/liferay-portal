@@ -27,18 +27,15 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
-import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
-import com.liferay.portal.reports.engine.console.web.internal.admin.constants.ReportsEngineWebKeys;
 import com.liferay.portal.reports.engine.console.web.internal.admin.display.context.helper.ReportsEngineRequestHelper;
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.DefinitionDisplayTerms;
 import com.liferay.portal.reports.engine.console.web.internal.admin.search.DefinitionSearch;
@@ -191,14 +188,8 @@ public class ReportsEngineDisplayContext {
 		).buildPortletURL();
 	}
 
-	public String getReportParameters() throws JSONException {
-		Definition definition = (Definition)_httpServletRequest.getAttribute(
-			ReportsEngineWebKeys.DEFINITION);
-
-		String reportParameters = ParamUtil.getString(
-			_httpServletRequest, "reportParameters",
-			GetterUtil.get(
-				definition, Definition::getReportParameters, StringPool.BLANK));
+	public String getReportParameters(String reportParameters)
+		throws JSONException {
 
 		if (!JSONUtil.isJSONArray(reportParameters)) {
 			return null;

@@ -12,15 +12,18 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 DDMStructure structure = ddmFormAdminDisplayContext.getDDMStructure();
 
-long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(structure, DDMStructure::getGroupId, scopeGroupId));
-
+long groupId = scopeGroupId;
 long structureId = ParamUtil.getLong(request, "structureId");
+String structureKey = StringPool.BLANK;
 
 if (structure != null) {
+	groupId = structure.getGroupId();
 	structureId = structure.getStructureId();
+	structureKey = structure.getStructureKey();
 }
 
-String structureKey = ParamUtil.getString(request, "structureKey", GetterUtil.get(structure, DDMStructure::getStructureKey, StringPool.BLANK));
+groupId = ParamUtil.getLong(request, "groupId", groupId);
+structureKey = ParamUtil.getString(request, "structureKey", structureKey);
 
 JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();
 

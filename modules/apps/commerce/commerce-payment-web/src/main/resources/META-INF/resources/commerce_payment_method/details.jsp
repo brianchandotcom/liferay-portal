@@ -11,6 +11,17 @@
 CommercePaymentMethodGroupRelsDisplayContext commercePaymentMethodsDisplayContext = (CommercePaymentMethodGroupRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommercePaymentMethodGroupRel commercePaymentMethodGroupRel = commercePaymentMethodsDisplayContext.getCommercePaymentMethodGroupRel();
+
+String description = commercePaymentMethodsDisplayContext.getCommercePaymentMethodEngineDescription(locale);
+String name = commercePaymentMethodsDisplayContext.getCommercePaymentMethodEngineName(locale);
+
+String thumbnailSrc = null;
+
+if (commercePaymentMethodGroupRel != null) {
+	description = commercePaymentMethodGroupRel.getDescription();
+	name = commercePaymentMethodGroupRel.getName();
+	thumbnailSrc = commercePaymentMethodGroupRel.getImageURL(themeDisplay);
+}
 %>
 
 <portlet:actionURL name="/commerce_payment_methods/edit_commerce_payment_method_group_rel" var="commercePaymentMethodGroupRelActionURL" />
@@ -26,19 +37,11 @@ CommercePaymentMethodGroupRel commercePaymentMethodGroupRel = commercePaymentMet
 	<liferay-ui:error exception="<%= CommercePaymentMethodGroupRelNameException.class %>" message="please-enter-a-valid-name" />
 
 	<commerce-ui:panel>
-		<aui:input label="name" localized="<%= true %>" name="nameMapAsXML" required="<%= true %>" type="text" value='<%= ParamUtil.getString(request, "name", GetterUtil.get(commercePaymentMethodGroupRel, CommercePaymentMethodGroupRel::getName, commercePaymentMethodsDisplayContext.getCommercePaymentMethodEngineName(locale))) %>' />
+		<aui:input label="name" localized="<%= true %>" name="nameMapAsXML" required="<%= true %>" type="text" value='<%= ParamUtil.getString(request, "name", name) %>' />
 
-		<aui:input label="description" localized="<%= true %>" name="descriptionMapAsXML" placeholder="<%= commercePaymentMethodsDisplayContext.getCommercePaymentMethodEngineDescription(locale) %>" type="text" value='<%= ParamUtil.getString(request, "description", GetterUtil.get(commercePaymentMethodGroupRel, CommercePaymentMethodGroupRel::getDescription, commercePaymentMethodsDisplayContext.getCommercePaymentMethodEngineDescription(locale))) %>' />
+		<aui:input label="description" localized="<%= true %>" name="descriptionMapAsXML" placeholder="<%= commercePaymentMethodsDisplayContext.getCommercePaymentMethodEngineDescription(locale) %>" type="text" value='<%= ParamUtil.getString(request, "description", description) %>' />
 
 		<aui:model-context bean="<%= commercePaymentMethodGroupRel %>" model="<%= CommercePaymentMethodGroupRel.class %>" />
-
-		<%
-		String thumbnailSrc = null;
-
-		if (commercePaymentMethodGroupRel != null) {
-			thumbnailSrc = commercePaymentMethodGroupRel.getImageURL(themeDisplay);
-		}
-		%>
 
 		<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 			<div class="row">

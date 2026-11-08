@@ -13,16 +13,27 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 CommerceCurrency commerceCurrency = commerceCurrenciesDisplayContext.getCommerceCurrency();
 CommerceCurrency primaryCommerceCurrency = commerceCurrenciesDisplayContext.getPrimaryCommerceCurrency();
 
-String roundingMode = ParamUtil.getString(request, "roundingMode", GetterUtil.get(commerceCurrency, CommerceCurrency::getRoundingMode, commerceCurrenciesDisplayContext.getDefaultRoundingMode()));
+String cmd = Constants.ADD;
+long commerceCurrencyId = 0;
+boolean primary = false;
+String roundingMode = commerceCurrenciesDisplayContext.getDefaultRoundingMode();
 
-boolean primary = ParamUtil.getBoolean(request, "primary", GetterUtil.get(commerceCurrency, CommerceCurrency::isPrimary, false));
+if (commerceCurrency != null) {
+	cmd = Constants.UPDATE;
+	commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
+	primary = commerceCurrency.isPrimary();
+	roundingMode = commerceCurrency.getRoundingMode();
+}
+
+primary = ParamUtil.getBoolean(request, "primary", primary);
+roundingMode = ParamUtil.getString(request, "roundingMode", roundingMode);
 %>
 
 <portlet:actionURL name="/commerce_currency/edit_commerce_currency" var="editCommerceCurrencyActionURL" />
 
 <aui:form action="<%= editCommerceCurrencyActionURL %>" cssClass="container mt-4" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceCurrency();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceCurrency == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="commerceCurrencyId" type="hidden" value="<%= (commerceCurrency == null) ? 0 : commerceCurrency.getCommerceCurrencyId() %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+	<aui:input name="commerceCurrencyId" type="hidden" value="<%= commerceCurrencyId %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:error exception="<%= CommerceCurrencyCodeException.class %>" message="please-enter-a-valid-code" />

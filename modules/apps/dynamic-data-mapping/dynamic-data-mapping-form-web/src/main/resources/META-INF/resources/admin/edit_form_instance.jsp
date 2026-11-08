@@ -12,9 +12,21 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 DDMFormInstance formInstance = ddmFormAdminDisplayContext.getDDMFormInstance();
 
-long formInstanceId = ParamUtil.getLong(request, "formInstanceId", GetterUtil.get(formInstance, DDMFormInstance::getFormInstanceId, 0L));
-long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(formInstance, DDMFormInstance::getGroupId, scopeGroupId));
-long ddmStructureId = ParamUtil.getLong(request, "structureId", GetterUtil.get(formInstance, DDMFormInstance::getStructureId, 0L));
+long ddmStructureId = 0;
+long formInstanceId = 0;
+long groupId = scopeGroupId;
+String title = LanguageUtil.get(request, "new-form");
+
+if (formInstance != null) {
+	ddmStructureId = formInstance.getStructureId();
+	formInstanceId = formInstance.getFormInstanceId();
+	groupId = formInstance.getGroupId();
+	title = LanguageUtil.get(request, "edit-form");
+}
+
+ddmStructureId = ParamUtil.getLong(request, "structureId", ddmStructureId);
+formInstanceId = ParamUtil.getLong(request, "formInstanceId", formInstanceId);
+groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 boolean disableCopyButton = false;
 
@@ -27,7 +39,7 @@ JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuil
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-form") : LanguageUtil.get(request, "edit-form"));
+renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name="/dynamic_data_mapping_form/save_form_instance" var="saveFormInstanceURL">

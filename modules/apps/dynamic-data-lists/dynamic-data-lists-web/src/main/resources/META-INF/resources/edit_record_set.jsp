@@ -15,20 +15,23 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
-long recordSetId = ParamUtil.getLong(request, "recordSetId", GetterUtil.get(recordSet, DDLRecordSet::getRecordSetId, 0L));
+long ddmStructureId = ParamUtil.getLong(request, "ddmStructureId");
+long groupId = scopeGroupId;
+long recordSetId = 0;
 
-long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(recordSet, DDLRecordSet::getGroupId, scopeGroupId));
+if (recordSet != null) {
+	ddmStructureId = recordSet.getDDMStructureId();
+	groupId = recordSet.getGroupId();
+	recordSetId = recordSet.getRecordSetId();
+}
+
+groupId = ParamUtil.getLong(request, "groupId", groupId);
+recordSetId = ParamUtil.getLong(request, "recordSetId", recordSetId);
 
 Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 if (scopeGroup.isStagingGroup() && !scopeGroup.isInStagingPortlet(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
 	groupId = scopeGroup.getLiveGroupId();
-}
-
-long ddmStructureId = ParamUtil.getLong(request, "ddmStructureId");
-
-if (recordSet != null) {
-	ddmStructureId = recordSet.getDDMStructureId();
 }
 
 String ddmStructureName = StringPool.BLANK;

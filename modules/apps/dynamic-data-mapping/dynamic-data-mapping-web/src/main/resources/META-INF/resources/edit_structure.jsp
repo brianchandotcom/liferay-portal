@@ -14,15 +14,21 @@ String portletResourceNamespace = ParamUtil.getString(request, "portletResourceN
 
 DDMStructure structure = (DDMStructure)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
+long classPK = 0;
+long groupId = scopeGroupId;
+long parentStructureId = DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID;
 DDMStructureVersion structureVersion = null;
 
 if (structure != null) {
+	classPK = structure.getStructureId();
+	groupId = structure.getGroupId();
+	parentStructureId = structure.getParentStructureId();
 	structureVersion = structure.getLatestStructureVersion();
 }
 
-long groupId = ParamUtil.getLong(request, "groupId", GetterUtil.get(structure, DDMStructure::getGroupId, scopeGroupId));
-
-long parentStructureId = ParamUtil.getLong(request, "parentStructureId", GetterUtil.get(structure, DDMStructure::getParentStructureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID));
+classPK = ParamUtil.getLong(request, "structureId", classPK);
+groupId = ParamUtil.getLong(request, "groupId", groupId);
+parentStructureId = ParamUtil.getLong(request, "parentStructureId", parentStructureId);
 
 String parentStructureName = StringPool.BLANK;
 
@@ -35,7 +41,6 @@ catch (NoSuchStructureException nsee) {
 }
 
 long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-long classPK = ParamUtil.getLong(request, "structureId", GetterUtil.get(structure, DDMStructure::getStructureId, 0L));
 
 String script = null;
 

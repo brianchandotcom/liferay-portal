@@ -17,15 +17,27 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 if ((commerceOrder != null) && Validator.isNull(cmd)) {
 	shippingAddress = commerceOrder.getShippingAddress();
 }
+
+String shippingAddressCmd = "addShippingAddress";
+long countryId = 0;
+long regionId = 0;
+String titleKey = "add-shipping-address";
+
+if (shippingAddress != null) {
+	shippingAddressCmd = "updateShippingAddress";
+	countryId = shippingAddress.getCountryId();
+	regionId = shippingAddress.getRegionId();
+	titleKey = "edit-shipping-address";
+}
 %>
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderShippingAddressActionURL" />
 
 <commerce-ui:modal-content
-	title='<%= (shippingAddress == null) ? LanguageUtil.get(request, "add-shipping-address") : LanguageUtil.get(request, "edit-shipping-address") %>'
+	title="<%= LanguageUtil.get(request, titleKey) %>"
 >
 	<aui:form action="<%= editCommerceOrderShippingAddressActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= (shippingAddress == null) ? "addShippingAddress" : "updateShippingAddress" %>' />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= shippingAddressCmd %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
@@ -86,8 +98,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 			selectId: 'countryId',
 			selectNullable: <%= false %>,
 			selectSort: '<%= true %>',
-			selectVal:
-				'<%= ParamUtil.getLong(request, "countryId", GetterUtil.get(shippingAddress, CommerceAddress::getCountryId, 0L)) %>',
+			selectVal: '<%= countryId %>',
 		},
 		{
 			select: '<portlet:namespace />regionId',
@@ -121,8 +132,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 			selectDesc: 'name',
 			selectId: 'regionId',
 			selectNullable: <%= false %>,
-			selectVal:
-				'<%= ParamUtil.getLong(request, "regionId", GetterUtil.get(shippingAddress, CommerceAddress::getRegionId, 0L)) %>',
+			selectVal: '<%= regionId %>',
 		},
 	]);
 </aui:script>

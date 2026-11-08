@@ -8,13 +8,18 @@
 <%
 CommercePriceEntry commercePriceEntry = commerceTierPriceEntryDisplayContext.getCommercePriceEntry();
 
-boolean discountDiscovery = ParamUtil.getBoolean(request, "discountDiscovery", GetterUtil.get(commerceTierPriceEntry, CommerceTierPriceEntry::isDiscountDiscovery, true));
-
+boolean discountDiscovery = true;
 BigDecimal minQuantity = BigDecimal.ZERO;
 
-if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
-	minQuantity = commerceTierPriceEntry.getMinQuantity();
+if (commerceTierPriceEntry != null) {
+	discountDiscovery = commerceTierPriceEntry.isDiscountDiscovery();
+
+	if (commerceTierPriceEntry.getMinQuantity() != null) {
+		minQuantity = commerceTierPriceEntry.getMinQuantity();
+	}
 }
+
+discountDiscovery = ParamUtil.getBoolean(request, "discountDiscovery", discountDiscovery);
 %>
 
 <aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" required="<%= true %>" value="<%= BigDecimalUtil.stripTrailingZeros(minQuantity) %>">

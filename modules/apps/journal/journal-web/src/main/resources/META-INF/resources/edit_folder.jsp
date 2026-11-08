@@ -14,7 +14,7 @@ JournalFolder folder = journalDisplayContext.getFolder();
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
-long parentFolderId = ParamUtil.getLong(request, "parentFolderId", GetterUtil.get(folder, JournalFolder::getParentFolderId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+long parentFolderId = journalDisplayContext.getParentFolderId();
 
 boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 
@@ -44,6 +44,7 @@ else {
 		title = LanguageUtil.get(request, "new-folder");
 	}
 	else {
+		parentFolderId = folder.getParentFolderId();
 		title = folder.getName();
 	}
 }

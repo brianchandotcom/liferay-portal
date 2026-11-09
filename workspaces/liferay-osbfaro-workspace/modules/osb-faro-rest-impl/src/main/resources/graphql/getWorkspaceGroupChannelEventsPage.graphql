@@ -29,7 +29,6 @@ query getWorkspaceGroupChannelEventsPage(
 			assetTitle
 			canonicalUrl
 			createDate
-			emailAddressHashed
 			eventDate
 			individualName
 			name

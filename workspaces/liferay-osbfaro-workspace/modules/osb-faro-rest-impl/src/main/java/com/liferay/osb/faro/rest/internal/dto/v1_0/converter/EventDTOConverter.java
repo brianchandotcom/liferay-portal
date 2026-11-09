@@ -7,7 +7,9 @@ package com.liferay.osb.faro.rest.internal.dto.v1_0.converter;
 
 import com.liferay.osb.faro.rest.dto.v1_0.Event;
 import com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupChannelEventsPageResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -50,7 +52,7 @@ public class EventDTOConverter
 				setCanonicalUrl(event::getCanonicalUrl);
 				setCreateDate(event::getCreateDate);
 				setEventDate(event::getEventDate);
-				setIndividualId(event::getEmailAddressHashed);
+				setIndividualId(() -> _getIndividualId(dtoConverterContext));
 				setIndividualName(event::getIndividualName);
 				setName(event::getName);
 				setPageDescription(event::getPageDescription);
@@ -84,6 +86,16 @@ public class EventDTOConverter
 		}
 
 		return attributes;
+	}
+
+	private String _getIndividualId(DTOConverterContext dtoConverterContext) {
+		String individualId = GetterUtil.getString(dtoConverterContext.getId());
+
+		if (Validator.isNull(individualId)) {
+			return null;
+		}
+
+		return individualId;
 	}
 
 }

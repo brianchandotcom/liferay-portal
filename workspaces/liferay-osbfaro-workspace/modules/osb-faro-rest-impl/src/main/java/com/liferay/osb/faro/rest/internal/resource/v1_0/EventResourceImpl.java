@@ -89,7 +89,8 @@ public class EventResourceImpl extends BaseEventResourceImpl {
 				eventBag.getEvents(),
 				event -> _eventDTOConverter.toDTO(
 					new FaroDTOConverterContext(
-						contextAcceptLanguage.isAcceptAllLanguages(), null,
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						individualId,
 						contextAcceptLanguage.getPreferredLocale()),
 					event)),
 			pagination, total);

@@ -501,6 +501,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_SPECIFIC</td>
+	<td>//div[contains(@class,'alert-success')][contains(.,'${key_successMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED</td>
 	<td>//div[@class='form-group' and contains(.,'${key_fieldName}')]//div[contains(@class,'form-feedback-item')]</td>
 	<td></td>

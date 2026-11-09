@@ -106,6 +106,38 @@ public class CopyDLObjectsMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-113295")
+	public void testCheckDestinationGroup() throws Exception {
+		long depotGroupId = RandomTestUtil.randomLong();
+
+		Group depotGroup = _setUpDepotGroup(depotGroupId);
+
+		long siteGroupId1 = RandomTestUtil.randomLong();
+
+		_setUpSiteGroup(siteGroupId1, new long[] {siteGroupId1, depotGroupId});
+
+		_checkDestinationGroup(
+			depotGroup, new long[] {depotGroupId}, siteGroupId1);
+
+		long siteGroupId2 = RandomTestUtil.randomLong();
+
+		_setUpSiteGroup(siteGroupId2, new long[] {siteGroupId2});
+
+		try {
+			_checkDestinationGroup(
+				depotGroup, new long[] {depotGroupId}, siteGroupId2);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"the-item-is-not-copied-because-the-site-and-asset-library-" +
+					"are-not-connected",
+				exception.getMessage());
+		}
+	}
+
+	@Test
 	@TestInfo({"LPD-113633", "LPS-186688"})
 	public void testDoProcessActionWhenDestinationGroupIsStaged()
 		throws Exception {
@@ -159,38 +191,6 @@ public class CopyDLObjectsMVCActionCommandTest {
 		Assert.assertEquals(
 			"cannot-copy-to-the-live-version-of-a-site",
 			errorMessagesJSONArray.getString(0));
-	}
-
-	@Test
-	@TestInfo("LPD-113295")
-	public void testCheckDestinationGroup() throws Exception {
-		long depotGroupId = RandomTestUtil.randomLong();
-
-		Group depotGroup = _setUpDepotGroup(depotGroupId);
-
-		long siteGroupId1 = RandomTestUtil.randomLong();
-
-		_setUpSiteGroup(siteGroupId1, new long[] {siteGroupId1, depotGroupId});
-
-		_checkDestinationGroup(
-			depotGroup, new long[] {depotGroupId}, siteGroupId1);
-
-		long siteGroupId2 = RandomTestUtil.randomLong();
-
-		_setUpSiteGroup(siteGroupId2, new long[] {siteGroupId2});
-
-		try {
-			_checkDestinationGroup(
-				depotGroup, new long[] {depotGroupId}, siteGroupId2);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				"the-item-is-not-copied-because-the-site-and-asset-library-" +
-					"are-not-connected",
-				exception.getMessage());
-		}
 	}
 
 	@Test

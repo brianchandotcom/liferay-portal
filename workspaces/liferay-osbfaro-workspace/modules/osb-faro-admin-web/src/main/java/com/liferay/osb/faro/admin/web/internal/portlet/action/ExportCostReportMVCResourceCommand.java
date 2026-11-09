@@ -59,7 +59,11 @@ public class ExportCostReportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append(_HEADER);
+		sb.append(
+			StringBundler.concat(
+				"Workspace,Project ID,Owner,Subscription,Location,Events,",
+				"Anonymous Individuals,Query Cost (USD),Storage Cost (USD),",
+				"Total Cost (USD)\n"));
 
 		Map<String, BigQueryPrice> bigQueryPrices = new HashMap<>();
 
@@ -169,9 +173,8 @@ public class ExportCostReportMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	/**
-	 * Storage is priced per GiB-month and the daily usage rows add up to
-	 * byte-days, so a GiB-month is a GiB stored for an average month of 365/12
-	 * days.
+	 * Storage is priced per GiB month and the daily usage rows add up to byte
+	 * days, so a GiB month is a GiB stored for an average month of 365/12 days.
 	 */
 	private static final BigDecimal _BYTE_DAYS_PER_GIB_MONTH =
 		BigDecimal.valueOf(
@@ -182,11 +185,6 @@ public class ExportCostReportMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final BigDecimal _BYTES_PER_TIB = BigDecimal.valueOf(
 		1L << 40);
-
-	private static final String _HEADER = StringBundler.concat(
-		"Workspace,Project ID,Owner,Subscription,Location,Events,",
-		"Anonymous Individuals,Query Cost (USD),Storage Cost (USD),",
-		"Total Cost (USD)\n");
 
 	private static final BigDecimal _MILLISECONDS_PER_HOUR = BigDecimal.valueOf(
 		Time.HOUR);

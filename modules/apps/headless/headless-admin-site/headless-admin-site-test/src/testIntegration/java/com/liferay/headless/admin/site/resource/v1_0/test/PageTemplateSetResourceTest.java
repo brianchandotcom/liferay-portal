@@ -377,9 +377,8 @@ public class PageTemplateSetResourceTest
 		_postSitePageTemplateSetWithInvalidKey(
 			postPageTemplateSet.getKey(), "CONFLICT",
 			StringBundler.concat(
-				"Duplicate page template set for group ",
-				testGroup.getGroupId(), " with key ",
-				postPageTemplateSet.getKey()));
+				"A page template set with the key \"",
+				postPageTemplateSet.getKey(), "\" already exists"));
 
 		String key =
 			RandomTestUtil.randomString() + StringPool.AMPERSAND +
@@ -388,22 +387,29 @@ public class PageTemplateSetResourceTest
 		_postSitePageTemplateSetWithInvalidKey(
 			key, "BAD_REQUEST",
 			StringBundler.concat(
-				"Key ", key,
-				" must contain only alphanumeric characters, dashes, and ",
-				"underscores"));
+				"The key \"", key,
+				"\" of the page template set must contain only alphanumeric ",
+				"characters, dashes, and underscores"));
 
 		key = RandomTestUtil.randomString(80);
 
 		_postSitePageTemplateSetWithInvalidKey(
 			key, "BAD_REQUEST",
 			StringBundler.concat(
-				"Key ", key, " must have fewer than 75 characters"));
+				"The key \"", key,
+				"\" of the page template set must not exceed 75 characters"));
 
 		_postSitePageTemplateSetWithInvalidName(
-			RandomTestUtil.randomString(300),
-			"The name for the template folder or set is too long");
+			RandomTestUtil.randomString(300), "BAD_REQUEST",
+			"The name of the page template set must not exceed 75 characters");
 		_postSitePageTemplateSetWithInvalidName(
-			null, "A name is required for each template folder or set");
+			null, "BAD_REQUEST",
+			"A name is required for the page template set");
+		_postSitePageTemplateSetWithInvalidName(
+			postPageTemplateSet.getName(), "CONFLICT",
+			StringBundler.concat(
+				"A page template set with the name \"",
+				postPageTemplateSet.getName(), "\" already exists"));
 
 		_testPostSitePageTemplateSetWithDuplicateExternalReferenceCode();
 		_testPostSitePageTemplateSetWithImportTask();
@@ -714,7 +720,7 @@ public class PageTemplateSetResourceTest
 	}
 
 	private void _postSitePageTemplateSetWithInvalidName(
-			String name, String title)
+			String name, String status, String title)
 		throws Exception {
 
 		PageTemplateSet pageTemplateSet = randomPageTemplateSet();
@@ -722,7 +728,7 @@ public class PageTemplateSetResourceTest
 		pageTemplateSet.setName(name);
 
 		ProblemExceptionTestUtil.assertProblemException(
-			"BAD_REQUEST", title,
+			status, title,
 			() -> pageTemplateSetResource.postSitePageTemplateSet(
 				testGroup.getExternalReferenceCode(), pageTemplateSet));
 	}
@@ -961,7 +967,7 @@ public class PageTemplateSetResourceTest
 			FailedItem failedItem = failedItems[0];
 
 			Assert.assertEquals(
-				"A name is required for each template folder or set",
+				"A name is required for the page template set",
 				failedItem.getMessage());
 		}
 

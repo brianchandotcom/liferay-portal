@@ -12,11 +12,14 @@ import getObjectFields from './getObjectFields';
 import {
 	IFieldMapping,
 	IObjectDefinition,
+	TYPE_CATEGORIES,
 	TYPE_DYNAMIC_VALUE,
 	TYPE_FIXED_VALUE,
+	TYPE_TAGS,
 } from './types';
 
 interface IProps {
+	allowedFieldMappingTypes: string[];
 	deletable: boolean;
 	fieldMapping: IFieldMapping;
 	index: number;
@@ -28,6 +31,7 @@ interface IProps {
 }
 
 export default function FieldMappingRow({
+	allowedFieldMappingTypes,
 	deletable,
 	fieldMapping,
 	index,
@@ -45,13 +49,17 @@ export default function FieldMappingRow({
 	);
 
 	const handleSourceFieldNameChange = (value: string) => {
-		const nextFixedValue = value === TYPE_FIXED_VALUE;
+		const type = [TYPE_CATEGORIES, TYPE_FIXED_VALUE, TYPE_TAGS].includes(
+			value
+		)
+			? value
+			: TYPE_DYNAMIC_VALUE;
 
 		onChange(index, {
 			...fieldMapping,
-			sourceFieldName: nextFixedValue ? '' : value,
-			type: nextFixedValue ? TYPE_FIXED_VALUE : TYPE_DYNAMIC_VALUE,
-			value: nextFixedValue ? fieldMapping.value : '',
+			sourceFieldName: type === TYPE_DYNAMIC_VALUE ? value : '',
+			type,
+			value: type === TYPE_FIXED_VALUE ? fieldMapping.value : '',
 		});
 	};
 
@@ -127,9 +135,9 @@ export default function FieldMappingRow({
 							handleSourceFieldNameChange(event.target.value)
 						}
 						value={
-							fixedValue
-								? TYPE_FIXED_VALUE
-								: fieldMapping.sourceFieldName
+							fieldMapping.type === TYPE_DYNAMIC_VALUE
+								? fieldMapping.sourceFieldName
+								: fieldMapping.type
 						}
 					>
 						<ClaySelect.Option
@@ -137,18 +145,39 @@ export default function FieldMappingRow({
 							value=""
 						/>
 
-						{objectFields.map((objectField) => (
-							<ClaySelect.Option
-								key={objectField.name}
-								label={`${objectField.label} (${objectField.name})`}
-								value={objectField.name}
-							/>
-						))}
+						{allowedFieldMappingTypes.includes(
+							TYPE_DYNAMIC_VALUE
+						) &&
+							objectFields.map((objectField) => (
+								<ClaySelect.Option
+									key={objectField.name}
+									label={`${objectField.label} (${objectField.name})`}
+									value={objectField.name}
+								/>
+							))}
 
-						<ClaySelect.Option
-							label={Liferay.Language.get('fixed-value')}
-							value={TYPE_FIXED_VALUE}
-						/>
+						{allowedFieldMappingTypes.includes(TYPE_CATEGORIES) && (
+							<ClaySelect.Option
+								label={Liferay.Language.get('categories')}
+								value={TYPE_CATEGORIES}
+							/>
+						)}
+
+						{allowedFieldMappingTypes.includes(TYPE_TAGS) && (
+							<ClaySelect.Option
+								label={Liferay.Language.get('tags')}
+								value={TYPE_TAGS}
+							/>
+						)}
+
+						{allowedFieldMappingTypes.includes(
+							TYPE_FIXED_VALUE
+						) && (
+							<ClaySelect.Option
+								label={Liferay.Language.get('fixed-value')}
+								value={TYPE_FIXED_VALUE}
+							/>
+						)}
 					</ClaySelect>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>

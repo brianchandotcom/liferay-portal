@@ -43,10 +43,10 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.site.pim.site.initializer.connector.PIMConnectorChannelField;
+import com.liferay.site.pim.site.initializer.constants.PIMConnectorFieldMappingTypeConstants;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConstants;
 import com.liferay.site.pim.site.initializer.exception.PIMConnectorException;
 import com.liferay.site.pim.site.initializer.internal.link.VariantPIMLinkType;
-import com.liferay.site.pim.site.initializer.internal.util.PIMConnectorFieldMappingsUtil;
 
 import java.io.Serializable;
 
@@ -376,7 +376,7 @@ public class BasePIMConnectorTest {
 						return null;
 					}
 
-					return PIMConnectorFieldMappingsUtil.TYPE_FIXED_VALUE;
+					return PIMConnectorFieldMappingTypeConstants.FIXED_VALUE;
 				}
 			).put(
 				"value", value
@@ -665,12 +665,12 @@ public class BasePIMConnectorTest {
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_NAME = new PIMConnectorChannelField(
-			"name", false, "name", true,
+			Collections.emptyList(), "name", false, "name", true,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_TAGS = new PIMConnectorChannelField(
-			"tags", true, "tags", false,
+			Collections.emptyList(), "tags", true, "tags", false,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final String

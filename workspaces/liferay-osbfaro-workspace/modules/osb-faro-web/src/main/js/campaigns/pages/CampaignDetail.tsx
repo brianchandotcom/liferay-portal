@@ -2,12 +2,14 @@ import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import AccountDropdown from 'shared/components/AccountDropdown';
 import BasePage from 'shared/components/base-page';
+import CampaignUtmParameters from '../components/CampaignUtmParameters';
 import MembershipsCard from '../components/MembershipsCard';
 import React, {useContext} from 'react';
 import {ChannelContext} from 'shared/context/channel';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {pickBy} from 'lodash';
 import {RangeSelectors} from 'shared/types';
+import {SectionHeader} from 'shared/components/SectionHeader';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
 import {useAccountFilter} from 'shared/hooks/useAccountFilter';
 import {useHistoryAdapter} from 'shared/hooks/useHistoryAdapter';
@@ -101,7 +103,23 @@ const CampaignDetail: React.FC = () => {
 			</BasePage.SubHeader>
 
 			<BasePage.Body>
+				<SectionHeader
+					icon="users"
+					title={Liferay.Language.get('membership')}
+				/>
+
 				<MembershipsCard
+					campaignId={id!}
+					channelId={channelId!}
+					groupId={groupId!}
+				/>
+
+				<SectionHeader
+					icon="info-circle"
+					title={Liferay.Language.get('details')}
+				/>
+
+				<CampaignUtmParameters
 					campaignId={id!}
 					channelId={channelId!}
 					groupId={groupId!}

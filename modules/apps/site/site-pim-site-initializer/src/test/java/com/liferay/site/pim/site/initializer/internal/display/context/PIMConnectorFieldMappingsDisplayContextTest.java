@@ -409,8 +409,8 @@ public class PIMConnectorFieldMappingsDisplayContextTest {
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField(
-					RandomTestUtil.randomString(), false,
-					RandomTestUtil.randomString(), true,
+					Collections.emptyList(), RandomTestUtil.randomString(),
+					false, RandomTestUtil.randomString(), true,
 					RandomTestUtil.randomString()))
 		);
 

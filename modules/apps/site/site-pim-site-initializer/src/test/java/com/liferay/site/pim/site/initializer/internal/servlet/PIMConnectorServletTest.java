@@ -288,8 +288,8 @@ public class PIMConnectorServletTest {
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField(
-					RandomTestUtil.randomString(), false,
-					RandomTestUtil.randomString(), true,
+					Collections.emptyList(), RandomTestUtil.randomString(),
+					false, RandomTestUtil.randomString(), true,
 					RandomTestUtil.randomString()))
 		);
 

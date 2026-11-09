@@ -49,6 +49,7 @@ public class ParameterContainerRequestFilterTest {
 
 	@Test
 	public void testFilter() {
+		Assert.assertNull(_filter("objectType", "FILE"));
 		Assert.assertNull(_filter("pageSize", "100"));
 		Assert.assertNull(_filter("rangeKey", "LAST_30_DAYS"));
 		Assert.assertNull(
@@ -71,6 +72,9 @@ public class ParameterContainerRequestFilterTest {
 				"accountId, accountName, fromAccountLifecycleStageId, " +
 					"toAccountLifecycleStageId, transitionDate",
 			_filter("sort", "bogusColumn:desc"));
+		_assertTitle(
+			"\"objectType\" must be one of CONTENT, FILE",
+			_filter("objectType", RandomTestUtil.randomString()));
 		_assertTitle(
 			"\"pageSize\" must be a whole number from 1 to 100",
 			_filter("pageSize", "101"));

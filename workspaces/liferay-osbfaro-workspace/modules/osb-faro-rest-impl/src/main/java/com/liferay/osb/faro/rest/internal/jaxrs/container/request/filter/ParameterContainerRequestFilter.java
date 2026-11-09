@@ -335,6 +335,8 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 		).put(
 			"interval", _getNames(Interval.values())
 		).put(
+			"objectType", new String[] {"CONTENT", "FILE"}
+		).put(
 			"profileType", new String[] {"ANONYMOUS", "KNOWN"}
 		).put(
 			"rangeKey", _getNames(TimeRange.values())

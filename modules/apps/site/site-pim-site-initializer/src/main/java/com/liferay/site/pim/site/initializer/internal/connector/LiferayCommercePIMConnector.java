@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.pim.site.initializer.connector.PIMConnector;
 import com.liferay.site.pim.site.initializer.connector.PIMConnectorChannelField;
+import com.liferay.site.pim.site.initializer.constants.PIMConnectorFieldMappingTypeConstants;
 import com.liferay.site.pim.site.initializer.exception.PIMConnectorException;
 import com.liferay.site.pim.site.initializer.internal.util.PIMConnectorFieldMappingRulesUtil;
 import com.liferay.site.pim.site.initializer.internal.util.PIMConnectorFieldMappingsUtil;
@@ -614,83 +615,128 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_CATALOG_EXTERNAL_REFERENCE_CODE =
 			new PIMConnectorChannelField(
+				ListUtil.fromArray(
+					PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+					PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 				"catalog-external-reference-code", false,
 				"catalogExternalReferenceCode", true,
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_DEPTH = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"depth", false, "skus[].depth", false,
 			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_DESCRIPTION = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"description", false, "description", false,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_HEIGHT = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"height", false, "skus[].height", false,
 			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_NAME = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"name", false, "name", true,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_PRECISION = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"precision", false, "skus[].skuUnitOfMeasures[].precision", false,
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_PRODUCT_OPTIONS =
 			new PIMConnectorChannelField(
+				ListUtil.fromArray(
+					PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+					PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 				"product-options", true, "productOptions", false,
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_PRODUCT_SPECIFICATIONS =
 			new PIMConnectorChannelField(
+				ListUtil.fromArray(
+					PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+					PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 				"product-specifications", true, "productSpecifications", false,
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_PRODUCT_TYPE =
 			new PIMConnectorChannelField(
+				ListUtil.fromArray(
+					PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+					PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 				"product-type", false, "productType", true,
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_SKU = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"sku", false, "skus[].sku", true,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_TAGS = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"tags", true, "tags", false,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_UNIT_OF_MEASURE_KEY =
 			new PIMConnectorChannelField(
+				ListUtil.fromArray(
+					PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+					PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 				"unit-of-measure-key", false, "skus[].skuUnitOfMeasures[].key",
 				false, ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_UNIT_OF_MEASURE_NAME =
 			new PIMConnectorChannelField(
+				ListUtil.fromArray(
+					PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+					PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 				"unit-of-measure-name", false,
 				"skus[].skuUnitOfMeasures[].name", false,
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_WEIGHT = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"weight", false, "skus[].weight", false,
 			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
 
 	private static final PIMConnectorChannelField
 		_PIM_CONNECTOR_CHANNEL_FIELD_WIDTH = new PIMConnectorChannelField(
+			ListUtil.fromArray(
+				PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
+				PIMConnectorFieldMappingTypeConstants.FIXED_VALUE),
 			"width", false, "skus[].width", false,
 			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL);
 

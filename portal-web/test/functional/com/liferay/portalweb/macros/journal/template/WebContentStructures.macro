@@ -27,7 +27,6 @@ definition {
 		}
 	}
 
-
 	@summary = "Default summary"
 	macro addLocalization(localizedManageTranslations = null, locale2 = null, localization2Name = null, locale = null, localizedDone = null, localization1Name = null) {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
@@ -345,4 +344,5 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 	}
+
 }

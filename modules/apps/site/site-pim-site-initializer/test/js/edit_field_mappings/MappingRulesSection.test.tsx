@@ -24,10 +24,10 @@ describe('MappingRulesSection', () => {
 	it('disables the rules of a channel field that is not text', () => {
 		render(
 			<MappingRulesSection
-				channelFieldMultiple={false}
 				disabled={true}
 				mappingRule={MAPPING_RULE}
 				onChange={jest.fn()}
+				useFirstNonemptySourceSupported={true}
 			/>
 		);
 
@@ -45,12 +45,12 @@ describe('MappingRulesSection', () => {
 		expect(screen.getByLabelText('url-encode')).toBeDisabled();
 	});
 
-	it('hides the fallback of a channel field that takes many values', () => {
+	it('hides the fallback of a channel field that does not support it', () => {
 		render(
 			<MappingRulesSection
-				channelFieldMultiple={true}
 				mappingRule={MAPPING_RULE}
 				onChange={jest.fn()}
+				useFirstNonemptySourceSupported={false}
 			/>
 		);
 
@@ -64,9 +64,9 @@ describe('MappingRulesSection', () => {
 
 		render(
 			<MappingRulesSection
-				channelFieldMultiple={false}
 				mappingRule={MAPPING_RULE}
 				onChange={onChange}
+				useFirstNonemptySourceSupported={true}
 			/>
 		);
 

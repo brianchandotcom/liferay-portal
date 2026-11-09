@@ -16,11 +16,13 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,13 +33,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.pim.site.initializer.connector.PIMConnector;
 import com.liferay.site.pim.site.initializer.connector.PIMConnectorChannelField;
+import com.liferay.site.pim.site.initializer.constants.PIMConnectorFieldMappingTypeConstants;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConstants;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,8 +52,6 @@ import java.util.Set;
  * @author Stefano Motta
  */
 public class PIMConnectorFieldMappingsUtil {
-
-	public static final String TYPE_FIXED_VALUE = "fixedValue";
 
 	public static ListTypeEntry fetchListTypeEntry(
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
@@ -120,6 +123,52 @@ public class PIMConnectorFieldMappingsUtil {
 		return "/o" + objectDefinition.getRESTContextPath();
 	}
 
+	public static JSONArray getChannelFieldJSONArray(
+			ObjectDefinition objectDefinition,
+			PIMConnectorChannelField pimConnectorChannelField,
+			Map<String, List<ObjectEntry>> pimFieldMappingObjectEntriesMap,
+			ObjectEntry pimFieldMappingRuleObjectEntry,
+			UnsafeFunction<ObjectEntry, Map<String, Object>, Exception>
+				unsafeFunction)
+		throws Exception {
+
+		List<ObjectEntry> pimFieldMappingObjectEntries = filterObjectEntries(
+			objectDefinition,
+			pimFieldMappingObjectEntriesMap.get(
+				pimConnectorChannelField.getName()));
+
+		if (pimFieldMappingObjectEntries.isEmpty()) {
+			return null;
+		}
+
+		Map<String, Object> channelFieldValuesMap = new LinkedHashMap<>();
+
+		for (ObjectEntry pimFieldMappingObjectEntry :
+				pimFieldMappingObjectEntries) {
+
+			if (!channelFieldValuesMap.isEmpty() &&
+				PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySource(
+					pimFieldMappingRuleObjectEntry)) {
+
+				break;
+			}
+
+			Map<String, Object> pimFieldMappingChannelFieldValuesMap =
+				unsafeFunction.apply(pimFieldMappingObjectEntry);
+
+			for (Map.Entry<String, Object> entry :
+					pimFieldMappingChannelFieldValuesMap.entrySet()) {
+
+				channelFieldValuesMap.putIfAbsent(
+					entry.getKey(), entry.getValue());
+			}
+		}
+
+		Collection<Object> channelFieldValues = channelFieldValuesMap.values();
+
+		return JSONUtil.putAll(channelFieldValues.toArray());
+	}
+
 	public static Object getChannelFieldValue(
 		ObjectDefinition objectDefinition,
 		PIMConnectorChannelField pimConnectorChannelField,
@@ -170,10 +219,8 @@ public class PIMConnectorFieldMappingsUtil {
 		if (Objects.equals(type, ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
 			String value = channelFieldValues.get(0);
 
-			if ((pimFieldMappingRuleObjectEntry == null) ||
-				!MapUtil.getBoolean(
-					pimFieldMappingRuleObjectEntry.getValues(),
-					"useFirstNonemptySource")) {
+			if (!PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySource(
+					pimFieldMappingRuleObjectEntry)) {
 
 				value = StringUtil.merge(channelFieldValues, StringPool.SPACE);
 			}
@@ -249,10 +296,16 @@ public class PIMConnectorFieldMappingsUtil {
 			MapUtil.getString(objectEntry.getValues(), "sourceFieldName"));
 	}
 
+	public static boolean isCategories(ObjectEntry objectEntry) {
+		return Objects.equals(
+			MapUtil.getString(objectEntry.getValues(), "type"),
+			PIMConnectorFieldMappingTypeConstants.CATEGORIES);
+	}
+
 	public static boolean isFixedValue(ObjectEntry objectEntry) {
 		return Objects.equals(
 			MapUtil.getString(objectEntry.getValues(), "type"),
-			TYPE_FIXED_VALUE);
+			PIMConnectorFieldMappingTypeConstants.FIXED_VALUE);
 	}
 
 	public static boolean isMappingComplete(
@@ -305,7 +358,17 @@ public class PIMConnectorFieldMappingsUtil {
 		return isMappingComplete(getObjectEntries(objectEntry), pimConnector);
 	}
 
+	public static boolean isTags(ObjectEntry objectEntry) {
+		return Objects.equals(
+			MapUtil.getString(objectEntry.getValues(), "type"),
+			PIMConnectorFieldMappingTypeConstants.TAGS);
+	}
+
 	private static boolean _isMapped(ObjectEntry objectEntry) {
+		if (isCategories(objectEntry) || isTags(objectEntry)) {
+			return true;
+		}
+
 		if (isFixedValue(objectEntry)) {
 			return Validator.isNotNull(
 				MapUtil.getString(objectEntry.getValues(), "value"));

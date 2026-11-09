@@ -18,17 +18,17 @@ const TEXT_CASES = [
 const TRUNCATE_LENGTHS = [40, 80, 200, 1000];
 
 interface IProps {
-	channelFieldMultiple: boolean;
 	disabled?: boolean;
 	mappingRule: IMappingRule;
 	onChange: (mappingRule: IMappingRule) => void;
+	useFirstNonemptySourceSupported: boolean;
 }
 
 export default function MappingRulesSection({
-	channelFieldMultiple,
 	disabled,
 	mappingRule,
 	onChange,
+	useFirstNonemptySourceSupported,
 }: IProps) {
 	const handleChange = (values: Partial<IMappingRule>) =>
 		onChange({...mappingRule, ...values});
@@ -160,7 +160,7 @@ export default function MappingRulesSection({
 						</ClaySelect>
 					</div>
 
-					{!channelFieldMultiple && (
+					{useFirstNonemptySourceSupported && (
 						<div className="c-gap-1 d-flex flex-column">
 							<label>
 								{Liferay.Language.get('fallback-logic')}

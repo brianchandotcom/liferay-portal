@@ -43,13 +43,16 @@ test(
 
 			await expect(
 				fieldMappingsPage.dataSetFragmentPage.table.bodyRows
-			).toHaveCount(15);
+			).toHaveCount(16);
 		});
 
 		await test.step('Every channel field of a new connector is unmapped', async () => {
 			await expect(
 				fieldMappingsPage.status('Catalog External Reference Code')
 			).toHaveText('Required - Not Mapped');
+			await expect(fieldMappingsPage.status('Categories[]')).toHaveText(
+				'Not Mapped'
+			);
 			await expect(fieldMappingsPage.status('Description')).toHaveText(
 				'Not Mapped'
 			);
@@ -87,7 +90,7 @@ test(
 
 test(
 	'Declare where a channel field takes its value from',
-	{tag: ['@LPD-106221']},
+	{tag: ['@LPD-106221', '@LPD-114544']},
 	async ({
 		connectorsPage,
 		editFieldMappingsPage,
@@ -179,6 +182,56 @@ test(
 			await expect(page).toHaveURL(/\/field-mappings\?/);
 			await expect(fieldMappingsPage.status('SKU')).toHaveText(
 				'Required - Not Mapped'
+			);
+		});
+
+		await test.step('Map the categories next to an attribute', async () => {
+			await fieldMappingsPage.channelField('Categories[]').click();
+
+			await editFieldMappingsPage.mapToSourceAttribute('Categories');
+
+			await editFieldMappingsPage.addRowButton.click();
+
+			await editFieldMappingsPage.mapToSourceAttribute('SKU (sku)', 1);
+
+			await editFieldMappingsPage.saveButton.click();
+
+			await expect(page).toHaveURL(/\/field-mappings\?/);
+			await expect(fieldMappingsPage.status('Categories[]')).toHaveText(
+				'Mapped'
+			);
+			await expect(
+				fieldMappingsPage.sourceAttributes('Categories[]')
+			).toHaveText('CategoriesSKU');
+		});
+
+		await test.step('Map the tags next to a fixed value', async () => {
+			await fieldMappingsPage.channelField('Tags[]').click();
+
+			await editFieldMappingsPage.mapToSourceAttribute('Tags');
+
+			await editFieldMappingsPage.addRowButton.click();
+
+			const value = getRandomString();
+
+			await editFieldMappingsPage.mapToValue(value, 1);
+
+			await editFieldMappingsPage.saveButton.click();
+
+			await expect(page).toHaveURL(/\/field-mappings\?/);
+			await expect(fieldMappingsPage.status('Tags[]')).toHaveText(
+				'Mapped'
+			);
+			await expect(
+				fieldMappingsPage.sourceAttributes('Tags[]')
+			).toHaveText(`Tags${value}`);
+		});
+
+		await test.step('The tags mapping comes back on reopening', async () => {
+			await fieldMappingsPage.channelField('Tags[]').click();
+
+			await expect(editFieldMappingsPage.sourceAttribute(0)).toHaveValue(
+				'tags'
 			);
 		});
 	}

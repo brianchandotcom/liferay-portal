@@ -874,13 +874,13 @@ public class JournalArticleLocalServiceTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				_group.getGroupId(),
-				_portal.getClassNameId(JournalArticle.class.getName()),
+				_portal.getClassNameId(JournalArticle.class),
 				journalArticle.getDDMStructureKey(), false,
 				WorkflowConstants.STATUS_APPROVED);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			journalArticle.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
+			_portal.getClassNameId(JournalArticle.class),
 			journalArticle.getResourcePrimKey(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_SPECIFIC,
@@ -3520,12 +3520,12 @@ public class JournalArticleLocalServiceTest {
 		AssetDisplayPageEntry assetDisplayPageEntry1 =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				journalArticle.getGroupId(),
-				_portal.getClassNameId(JournalArticle.class.getName()),
+				_portal.getClassNameId(JournalArticle.class),
 				journalArticle.getResourcePrimKey());
 		AssetDisplayPageEntry assetDisplayPageEntry2 =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				journalArticle1.getGroupId(),
-				_portal.getClassNameId(JournalArticle.class.getName()),
+				_portal.getClassNameId(JournalArticle.class),
 				journalArticle1.getResourcePrimKey());
 
 		Assert.assertEquals(

@@ -83,8 +83,6 @@ public class JournalEditArticleDisplayContextTest {
 		_group2 = GroupTestUtil.addGroup();
 
 		_assertGetFriendlyURLDuplicatedWarningMessage(
-			StringPool.BLANK, _group2.getGroupId());
-		_assertGetFriendlyURLDuplicatedWarningMessage(
 			"The URL used in English (United States) already exists in other " +
 				"sites or asset libraries.",
 			_group2.getGroupId(), LocaleUtil.US);
@@ -106,6 +104,8 @@ public class JournalEditArticleDisplayContextTest {
 					"other sites or asset libraries.",
 			_group2.getGroupId(), LocaleUtil.CHINA, LocaleUtil.GERMANY,
 			LocaleUtil.JAPAN, LocaleUtil.SPAIN, LocaleUtil.US);
+		_assertGetFriendlyURLDuplicatedWarningMessage(
+			StringPool.BLANK, _group2.getGroupId());
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -183,7 +183,6 @@ public class JournalEditArticleDisplayContextTest {
 		).put(
 			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
-
 		Map<Locale, String> contentMap = HashMapBuilder.put(
 			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();

@@ -271,6 +271,11 @@ public class BeanParamUtilTest {
 			BeanParamUtil.getString(
 				bean, mockHttpServletRequest, "value", Bean::getString,
 				defaultValue));
+		Assert.assertEquals(
+			defaultValue,
+			BeanParamUtil.getString(
+				bean, mockHttpServletRequest, "value", Bean::getNullString,
+				defaultValue));
 
 		MockPortletRequest mockPortletRequest = new MockPortletRequest();
 
@@ -287,6 +292,11 @@ public class BeanParamUtilTest {
 			bean.getString(),
 			BeanParamUtil.getString(
 				bean, mockPortletRequest, "value", Bean::getString,
+				defaultValue));
+		Assert.assertEquals(
+			defaultValue,
+			BeanParamUtil.getString(
+				bean, mockPortletRequest, "value", Bean::getNullString,
 				defaultValue));
 
 		String value = RandomTestUtil.randomString();
@@ -327,6 +337,10 @@ public class BeanParamUtilTest {
 		}
 
 		public BigDecimal getNullBigDecimal() {
+			return null;
+		}
+
+		public String getNullString() {
 			return null;
 		}
 

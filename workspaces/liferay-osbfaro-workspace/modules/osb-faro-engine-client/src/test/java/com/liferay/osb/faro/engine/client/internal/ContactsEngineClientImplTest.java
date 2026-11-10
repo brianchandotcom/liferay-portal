@@ -72,8 +72,8 @@ public class ContactsEngineClientImplTest {
 
 		String filter = String.valueOf(_uriVariables.get("filter"));
 
-		Assert.assertTrue(filter.contains("channelId eq 13"));
 		Assert.assertFalse(filter.contains(" ne "));
+		Assert.assertTrue(filter.contains("channelId eq 13"));
 	}
 
 	@Test

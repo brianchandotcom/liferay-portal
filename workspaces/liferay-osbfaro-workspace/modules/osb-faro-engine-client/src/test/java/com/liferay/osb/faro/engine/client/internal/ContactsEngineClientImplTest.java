@@ -66,26 +66,32 @@ public class ContactsEngineClientImplTest {
 
 	@Test
 	public void testGetIndividualIndividualSegmentsWithChannelId() {
+		long channelId = RandomTestUtil.randomLong();
+
 		_contactsEngineClientImpl.getIndividualIndividualSegments(
-			Mockito.mock(FaroProject.class), "13",
+			Mockito.mock(FaroProject.class), String.valueOf(channelId),
 			RandomTestUtil.randomString(), null, null, 1, 20, null);
 
 		String filter = String.valueOf(_uriVariables.get("filter"));
 
 		Assert.assertFalse(filter.contains(" ne "));
-		Assert.assertTrue(filter.contains("channelId eq 13"));
+		Assert.assertTrue(filter.contains("channelId eq " + channelId));
 	}
 
 	@Test
 	public void testGetIndividualIndividualSegmentsWithExcludedChannelIds() {
+		long channelId1 = RandomTestUtil.randomLong();
+		long channelId2 = RandomTestUtil.randomLong();
+
 		_contactsEngineClientImpl.getIndividualIndividualSegments(
-			Mockito.mock(FaroProject.class), null, Arrays.asList("11", "12"),
+			Mockito.mock(FaroProject.class), null,
+			Arrays.asList(String.valueOf(channelId1), String.valueOf(channelId2)),
 			RandomTestUtil.randomString(), null, null, 1, 20, null);
 
 		String filter = String.valueOf(_uriVariables.get("filter"));
 
-		Assert.assertTrue(filter.contains("channelId ne 11"));
-		Assert.assertTrue(filter.contains("channelId ne 12"));
+		Assert.assertTrue(filter.contains("channelId ne " + channelId1));
+		Assert.assertTrue(filter.contains("channelId ne " + channelId2));
 	}
 
 	private final ContactsEngineClientImpl _contactsEngineClientImpl =

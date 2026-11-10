@@ -1,0 +1,14 @@
+package com.liferay.test.internal.upgrade.registry;
+
+public class NonliteralSchemaVersionUpgradeStepRegistrator
+	implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			_SCHEMA_VERSION_1_0_0, "2.0.0", new DummyUpgradeStep());
+	}
+
+	private static final String _SCHEMA_VERSION_1_0_0 = "1.0.0";
+
+}

@@ -75,13 +75,13 @@ public class IndividualSegmentHelperTest {
 		_mockFaroUser(RoleConstants.SITE_MEMBER, _USER_ID_MEMBER);
 
 		_mockIndividualSegment(
-			_CHANNEL_ID_ALL_USERS, _INDIVIDUAL_SEGMENT_ID_ALL_USERS);
-		_mockIndividualSegment(null, _INDIVIDUAL_SEGMENT_ID_NO_CHANNEL);
-		_mockIndividualSegment(
-			_CHANNEL_ID_SELECT_USERS, _INDIVIDUAL_SEGMENT_ID_SELECT_USERS);
-		_mockIndividualSegment(
 			RandomTestUtil.randomString(),
 			_INDIVIDUAL_SEGMENT_ID_UNKNOWN_CHANNEL);
+		_mockIndividualSegment(
+			_CHANNEL_ID_ALL_USERS, _INDIVIDUAL_SEGMENT_ID_ALL_USERS);
+		_mockIndividualSegment(
+			_CHANNEL_ID_SELECT_USERS, _INDIVIDUAL_SEGMENT_ID_SELECT_USERS);
+		_mockIndividualSegment(null, _INDIVIDUAL_SEGMENT_ID_NO_CHANNEL);
 
 		ReflectionTestUtil.setFieldValue(
 			_individualSegmentHelper, "_contactsEngineClient",

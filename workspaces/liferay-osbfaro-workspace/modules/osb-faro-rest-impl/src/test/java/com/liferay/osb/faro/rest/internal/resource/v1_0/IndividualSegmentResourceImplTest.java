@@ -7,11 +7,14 @@ package com.liferay.osb.faro.rest.internal.resource.v1_0;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.model.Results;
+import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.rest.dto.v1_0.IndividualSegment;
 import com.liferay.osb.faro.rest.internal.helper.IndividualSegmentHelper;
-import com.liferay.osb.faro.rest.internal.security.permission.WorkspacePermission;
+import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -21,7 +24,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.ws.rs.ForbiddenException;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -82,6 +87,9 @@ public class IndividualSegmentResourceImplTest {
 			_individualSegmentResourceImpl, "_contactsEngineClient",
 			_contactsEngineClient);
 		ReflectionTestUtil.setFieldValue(
+			_individualSegmentResourceImpl, "_faroChannelLocalService",
+			_faroChannelLocalService);
+		ReflectionTestUtil.setFieldValue(
 			_individualSegmentResourceImpl, "_faroProjectLocalService",
 			_faroProjectLocalService);
 		ReflectionTestUtil.setFieldValue(
@@ -90,14 +98,42 @@ public class IndividualSegmentResourceImplTest {
 		ReflectionTestUtil.setFieldValue(
 			_individualSegmentResourceImpl, "_individualSegmentHelper",
 			_individualSegmentHelper);
-		ReflectionTestUtil.setFieldValue(
-			_individualSegmentResourceImpl, "_workspacePermission",
-			_workspacePermission);
 	}
 
 	@Test
 	public void testGetWorkspaceGroupIndividualIndividualSegmentsPage()
 		throws Exception {
+
+		FaroChannel accessibleFaroChannel = Mockito.mock(FaroChannel.class);
+
+		Mockito.when(
+			accessibleFaroChannel.getChannelId()
+		).thenReturn(
+			_CHANNEL_ID_ALL_USERS
+		);
+
+		Mockito.when(
+			_faroChannelLocalService.search(
+				_GROUP_ID, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
+		).thenReturn(
+			List.of(accessibleFaroChannel)
+		);
+
+		FaroChannel inaccessibleFaroChannel = Mockito.mock(FaroChannel.class);
+
+		Mockito.when(
+			inaccessibleFaroChannel.getChannelId()
+		).thenReturn(
+			_CHANNEL_ID_SELECT_USERS
+		);
+
+		Mockito.doReturn(
+			Arrays.asList(accessibleFaroChannel, inaccessibleFaroChannel)
+		).when(
+			_faroChannelLocalService
+		).dslQuery(
+			Mockito.any(DSLQuery.class)
+		);
 
 		Mockito.when(
 			_contactsEngineClient.getIndividualIndividualSegments(
@@ -106,13 +142,6 @@ public class IndividualSegmentResourceImplTest {
 				Mockito.anyInt(), Mockito.anyInt(), Mockito.any())
 		).thenReturn(
 			new Results<>(Collections.emptyList(), 0)
-		);
-
-		Mockito.when(
-			_workspacePermission.getInaccessibleChannelIds(
-				Mockito.eq(_GROUP_ID), Mockito.any())
-		).thenReturn(
-			Collections.singletonList(_CHANNEL_ID_SELECT_USERS)
 		);
 
 		_individualSegmentResourceImpl.
@@ -141,9 +170,15 @@ public class IndividualSegmentResourceImplTest {
 		);
 
 		Mockito.verify(
-			_workspacePermission, Mockito.times(1)
-		).getInaccessibleChannelIds(
-			Mockito.anyLong(), Mockito.any()
+			_faroChannelLocalService
+		).dslQuery(
+			Mockito.any(DSLQuery.class)
+		);
+
+		Mockito.verify(
+			_faroChannelLocalService
+		).search(
+			_GROUP_ID, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null
 		);
 	}
 
@@ -187,6 +222,8 @@ public class IndividualSegmentResourceImplTest {
 
 	private final ContactsEngineClient _contactsEngineClient = Mockito.mock(
 		ContactsEngineClient.class);
+	private final FaroChannelLocalService _faroChannelLocalService =
+		Mockito.mock(FaroChannelLocalService.class);
 	private final FaroProject _faroProject = Mockito.mock(FaroProject.class);
 	private final FaroProjectLocalService _faroProjectLocalService =
 		Mockito.mock(FaroProjectLocalService.class);
@@ -200,7 +237,5 @@ public class IndividualSegmentResourceImplTest {
 		Mockito.mock(IndividualSegmentHelper.class);
 	private final IndividualSegmentResourceImpl _individualSegmentResourceImpl =
 		new IndividualSegmentResourceImpl();
-	private final WorkspacePermission _workspacePermission = Mockito.mock(
-		WorkspacePermission.class);
 
 }

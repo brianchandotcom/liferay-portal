@@ -13,7 +13,6 @@ import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalServiceUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -183,10 +182,7 @@ public class WorkspaceContainerRequestFilterTest {
 	@Test
 	public void testFilterWithOutsiderUser() {
 		_assertResponse(
-			StringBundler.concat(
-				"Unable to access the workspace with group ID ", _GROUP_ID,
-				". Call \"getWorkspacesPage\" to list the workspaces you can ",
-				"use."),
+			"Unable to access the workspace with group ID " + _GROUP_ID,
 			_filter(null, _GROUP_ID, _USER_ID_OUTSIDER),
 			Response.Status.FORBIDDEN);
 	}
@@ -202,11 +198,8 @@ public class WorkspaceContainerRequestFilterTest {
 			_filter(_CHANNEL_ID_SELECT_USERS, _GROUP_ID, _USER_ID_OWNER));
 
 		_assertResponse(
-			StringBundler.concat(
-				"Unable to access the property with channel ID ",
+			"Unable to access the property with channel ID " +
 				_CHANNEL_ID_SELECT_USERS,
-				". Call \"getWorkspaceGroupChannelsPage\" to list the ",
-				"properties you can use."),
 			_filter(_CHANNEL_ID_SELECT_USERS, _GROUP_ID, _USER_ID_MEMBER),
 			Response.Status.FORBIDDEN);
 

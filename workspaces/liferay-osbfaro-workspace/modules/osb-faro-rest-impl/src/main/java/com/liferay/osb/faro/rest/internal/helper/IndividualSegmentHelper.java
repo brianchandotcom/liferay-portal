@@ -14,7 +14,6 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.rest.internal.jaxrs.util.ProblemUtil;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.util.FaroPermissionChecker;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -65,11 +64,8 @@ public class IndividualSegmentHelper {
 
 		if (!FaroPermissionChecker.isChannelMember(faroChannel)) {
 			throw ProblemUtil.getForbiddenException(
-				StringBundler.concat(
-					"Unable to access the individual segment with ID ",
-					individualSegmentId, ". Call ",
-					"\"getWorkspaceGroupChannelIndividualSegmentsPage\" to ",
-					"list the individual segments you can use."));
+				"Unable to access the individual segment with ID " +
+					individualSegmentId);
 		}
 
 		return individualSegment;

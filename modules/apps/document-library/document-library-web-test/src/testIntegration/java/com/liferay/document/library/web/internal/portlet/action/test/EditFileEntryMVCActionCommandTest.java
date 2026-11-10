@@ -6,18 +6,12 @@
 package com.liferay.document.library.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import java.util.Calendar;
-import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.document.library.kernel.service.DLTrashLocalService;
-import com.liferay.document.library.kernel.exception.RequiredFileException;
-import com.liferay.document.library.kernel.exception.FileNameException;
-import com.liferay.document.library.kernel.exception.FileExtensionException;
-import com.liferay.document.library.kernel.exception.FileEntryExpirationDateException;
 import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.exception.FileEntryExpirationDateException;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileNameException;
+import com.liferay.document.library.kernel.exception.RequiredFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -26,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
+import com.liferay.document.library.kernel.service.DLTrashLocalService;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
@@ -36,6 +31,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -60,6 +57,8 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -96,6 +95,7 @@ import jakarta.portlet.PortletException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -555,8 +555,7 @@ public class EditFileEntryMVCActionCommandTest {
 			TestPropsValues.getUserId(), fileEntry.getRepositoryId(),
 			fileEntry.getFileEntryId());
 
-		_assertURLTitleChangedMessage(
-			_getURLTitle(fileEntry.getFileEntryId()));
+		_assertURLTitleChangedMessage(_getURLTitle(fileEntry.getFileEntryId()));
 	}
 
 	@Test
@@ -664,6 +663,7 @@ public class EditFileEntryMVCActionCommandTest {
 			"com.liferay.document.library.web.internal.exception." +
 				"FileNameExtensionException",
 			clazz.getName());
+
 		Assert.assertTrue(
 			SessionErrors.contains(
 				withoutExtensionMockLiferayPortletActionRequest,
@@ -940,22 +940,6 @@ public class EditFileEntryMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String fileName, String sourceFileName)
-		throws Exception {
-
-		return _getMockLiferayPortletActionRequest(
-			_CONTENT_BYTES, fileName,
-			HashMapBuilder.putAll(
-				_getParameters(
-					Constants.ADD, 0, _group.getGroupId(), new String[0])
-			).put(
-				"fileName", new String[] {sourceFileName}
-			).put(
-				"title", new String[] {RandomTestUtil.randomString()}
-			).build());
-	}
-
-	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
 			MockMultipartHttpServletRequest mockMultipartHttpServletRequest,
 			Map<String, String[]> parameters)
 		throws PortalException {
@@ -984,6 +968,22 @@ public class EditFileEntryMVCActionCommandTest {
 			new MockPortletSession());
 
 		return mockLiferayPortletActionRequest;
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			String fileName, String sourceFileName)
+		throws Exception {
+
+		return _getMockLiferayPortletActionRequest(
+			_CONTENT_BYTES, fileName,
+			HashMapBuilder.putAll(
+				_getParameters(
+					Constants.ADD, 0, _group.getGroupId(), new String[0])
+			).put(
+				"fileName", new String[] {sourceFileName}
+			).put(
+				"title", new String[] {RandomTestUtil.randomString()}
+			).build());
 	}
 
 	private Map<String, String[]> _getParameters(

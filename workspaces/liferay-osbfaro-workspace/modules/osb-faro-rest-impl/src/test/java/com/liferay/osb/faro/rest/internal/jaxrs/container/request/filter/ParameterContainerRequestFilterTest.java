@@ -56,9 +56,6 @@ public class ParameterContainerRequestFilterTest {
 					"toAccountLifecycleStageId, transitionDate",
 			_filter("sort", "bogusColumn:desc"));
 		_assertTitle(
-			"\"sort\" accepts only one column on this endpoint",
-			_filter("sort", "accountName:asc,transitionDate:desc"));
-		_assertTitle(
 			"\"pageSize\" must be a whole number from 1 to 500",
 			_filter("pageSize", "501"));
 		_assertTitle(
@@ -78,6 +75,9 @@ public class ParameterContainerRequestFilterTest {
 						putSingle("rangeStart", "2026-10-20");
 					}
 				}));
+		_assertTitle(
+			"\"sort\" accepts only one column on this endpoint",
+			_filter("sort", "accountName:asc,transitionDate:desc"));
 		_assertTitle(
 			"\"sort\" must be a comma separated list of \"column:asc\" or " +
 				"\"column:desc\" expressions",

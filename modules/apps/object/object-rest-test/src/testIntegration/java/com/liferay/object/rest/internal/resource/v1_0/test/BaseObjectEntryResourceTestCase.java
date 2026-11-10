@@ -407,8 +407,8 @@ public abstract class BaseObjectEntryResourceTestCase {
 			objectDefinition.getRESTContextPath() + "?filter=" + filterString,
 			Http.Method.GET);
 
-		Assert.assertNull(jsonObject.get("title"));
 		Assert.assertNull(jsonObject.get("status"));
+		Assert.assertNull(jsonObject.get("title"));
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 

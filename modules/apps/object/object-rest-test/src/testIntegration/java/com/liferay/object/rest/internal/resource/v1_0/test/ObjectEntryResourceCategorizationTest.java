@@ -98,11 +98,8 @@ public class ObjectEntryResourceCategorizationTest
 			).toString(),
 			getObjectDefinition2().getRESTContextPath(), Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			getObjectDefinition2().getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
-			Http.Method.GET);
+		jsonObject = getObjectEntryJSONObject(
+			getObjectDefinition2(), jsonObject.getString("id"));
 
 		JSONArray keywordsJSONArray = jsonObject.getJSONArray("keywords");
 
@@ -115,11 +112,8 @@ public class ObjectEntryResourceCategorizationTest
 			).toString(),
 			getObjectDefinition2().getRESTContextPath(), Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			getObjectDefinition2().getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
-			Http.Method.GET);
+		jsonObject = getObjectEntryJSONObject(
+			getObjectDefinition2(), jsonObject.getString("id"));
 
 		keywordsJSONArray = jsonObject.getJSONArray("keywords");
 
@@ -251,11 +245,8 @@ public class ObjectEntryResourceCategorizationTest
 				jsonObject.getString("id"),
 			Http.Method.PATCH);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			getObjectDefinition1().getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
-			Http.Method.GET);
+		jsonObject = getObjectEntryJSONObject(
+			getObjectDefinition1(), jsonObject.getString("id"));
 
 		JSONArray keywordsJSONArray = jsonObject.getJSONArray("keywords");
 

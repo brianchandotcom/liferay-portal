@@ -131,13 +131,15 @@ public class WorkspaceContainerRequestFilterTest {
 		Assert.assertNull(_filter(null, _GROUP_ID, _USER_ID_OMNIADMIN));
 
 		_assertResponseStatus(
-			_filter("unknown", _GROUP_ID, _USER_ID_MEMBER),
+			_filter(
+				RandomTestUtil.randomString(), _GROUP_ID, _USER_ID_MEMBER),
 			Response.Status.NOT_FOUND);
 		_assertResponseStatus(
 			_filter(_CHANNEL_ID_SELECT_USERS, _GROUP_ID, _USER_ID_MEMBER),
 			Response.Status.FORBIDDEN);
 		_assertResponseStatus(
-			_filter(null, 999L, _USER_ID_MEMBER), Response.Status.NOT_FOUND);
+			_filter(null, RandomTestUtil.randomLong(), _USER_ID_MEMBER),
+			Response.Status.NOT_FOUND);
 		_assertResponseStatus(
 			_filter(null, _GROUP_ID, _USER_ID_GUEST),
 			Response.Status.UNAUTHORIZED);

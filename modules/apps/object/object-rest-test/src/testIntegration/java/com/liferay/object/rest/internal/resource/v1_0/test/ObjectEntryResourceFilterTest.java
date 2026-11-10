@@ -67,7 +67,7 @@ public class ObjectEntryResourceFilterTest
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			getObjectDefinition1().getRESTContextPath() + "?filter=" +
-				escape(filterString),
+				URLCodec.encodeURL(filterString),
 			Http.Method.GET);
 
 		JSONAssert.assertEquals(

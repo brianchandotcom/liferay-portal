@@ -21,7 +21,6 @@ import com.liferay.object.rest.dto.v1_0.ValidationRequest;
 import com.liferay.object.rest.dto.v1_0.ValidationResponse;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -272,7 +270,7 @@ public class ObjectEntryResourceValidationTest
 
 		ObjectValidationRule objectValidationRule1 =
 			objectValidationRuleLocalService.addObjectValidationRule(
-				StringUtil.randomString(), TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(), true,
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap(errorMessage1),
@@ -285,7 +283,7 @@ public class ObjectEntryResourceValidationTest
 
 		ObjectValidationRule objectValidationRule2 =
 			objectValidationRuleLocalService.addObjectValidationRule(
-				StringUtil.randomString(), TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(), true,
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap(errorMessage2),
@@ -319,7 +317,7 @@ public class ObjectEntryResourceValidationTest
 
 			_setUpPermissionThreadLocal(user);
 
-			String errorScopeKey = "";
+			String errorScopeKey = StringPool.BLANK;
 
 			if (Validator.isNotNull(scopeKey)) {
 				errorScopeKey = scopeKey;
@@ -342,7 +340,8 @@ public class ObjectEntryResourceValidationTest
 					scopeKey, objectEntryResource,
 					_getValidationRequest(
 						HashMapBuilder.<String, Object>put(
-							objectField1.getName(), StringUtil.randomString()
+							objectField1.getName(),
+							RandomTestUtil.randomString()
 						).build(),
 						objectValidationRule1.getExternalReferenceCode())));
 
@@ -357,7 +356,7 @@ public class ObjectEntryResourceValidationTest
 				scopeKey, objectEntryResource,
 				_getValidationRequest(
 					HashMapBuilder.<String, Object>put(
-						objectField1.getName(), StringUtil.randomString()
+						objectField1.getName(), RandomTestUtil.randomString()
 					).build(),
 					objectValidationRule1.getExternalReferenceCode()));
 
@@ -416,9 +415,9 @@ public class ObjectEntryResourceValidationTest
 				errorMessage1, validationErrors[0].getErrorMessage());
 
 			ObjectField objectField2 =
-				ObjectFieldLocalServiceUtil.addCustomObjectField(
-					StringUtil.randomString(), TestPropsValues.getUserId(), 0,
-					objectDefinition.getObjectDefinitionId(),
+				objectFieldLocalService.addCustomObjectField(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					0, objectDefinition.getObjectDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, null, true, false,
 					null, LocalizedMapUtil.getLocalizedMap("Name Required"),

@@ -394,25 +394,28 @@ public class WorkspaceContainerRequestFilterTest {
 		);
 	}
 
-	private static final long _CHANNEL_GROUP_ID = 200;
+	private static final long _CHANNEL_GROUP_ID = RandomTestUtil.randomLong();
 
-	private static final String _CHANNEL_ID_ALL_USERS = "100";
+	private static final String _CHANNEL_ID_ALL_USERS =
+		String.valueOf(RandomTestUtil.randomLong());
 
-	private static final String _CHANNEL_ID_SELECT_USERS = "500";
+	private static final String _CHANNEL_ID_SELECT_USERS =
+		String.valueOf(RandomTestUtil.randomLong());
 
-	private static final long _GROUP_ID = 300;
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
-	private static final long _USER_ID_ADMINISTRATOR = 5;
+	private static final long _USER_ID_ADMINISTRATOR =
+		RandomTestUtil.randomLong();
 
-	private static final long _USER_ID_GUEST = 1;
+	private static final long _USER_ID_GUEST = RandomTestUtil.randomLong();
 
-	private static final long _USER_ID_MEMBER = 2;
+	private static final long _USER_ID_MEMBER = RandomTestUtil.randomLong();
 
-	private static final long _USER_ID_OMNIADMIN = 4;
+	private static final long _USER_ID_OMNIADMIN = RandomTestUtil.randomLong();
 
-	private static final long _USER_ID_OUTSIDER = 3;
+	private static final long _USER_ID_OUTSIDER = RandomTestUtil.randomLong();
 
-	private static final long _USER_ID_OWNER = 6;
+	private static final long _USER_ID_OWNER = RandomTestUtil.randomLong();
 
 	private final FaroChannelLocalService _faroChannelLocalService =
 		Mockito.mock(FaroChannelLocalService.class);

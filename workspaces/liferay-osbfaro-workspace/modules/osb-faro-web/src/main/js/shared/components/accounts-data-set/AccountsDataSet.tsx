@@ -37,7 +37,6 @@ interface IAccountsDataSetProps {
 	rangeKeyFilter?: RangeKeyTimeRanges;
 	segmentFilter?: string;
 	segmentName?: string;
-	showCampaignFilter?: boolean;
 	stageSelectionNonce?: number;
 }
 
@@ -71,7 +70,6 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	rangeKeyFilter,
 	segmentFilter,
 	segmentName,
-	showCampaignFilter = false,
 	stageSelectionNonce,
 }) => {
 	const {data: lifecycleStageFieldValues, loading: lifecycleStagesLoading} =
@@ -207,7 +205,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 								},
 							]
 						: []),
-					...(showCampaignFilter
+					...(campaignId
 						? [
 								{
 									apiURL: `/o/faro/contacts/${groupId}/campaigns/campaign-names?channelId=${channelId}`,

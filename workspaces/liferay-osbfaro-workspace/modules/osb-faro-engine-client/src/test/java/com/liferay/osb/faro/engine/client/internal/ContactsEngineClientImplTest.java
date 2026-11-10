@@ -85,7 +85,8 @@ public class ContactsEngineClientImplTest {
 
 		_contactsEngineClientImpl.getIndividualIndividualSegments(
 			Mockito.mock(FaroProject.class), null,
-			Arrays.asList(String.valueOf(channelId1), String.valueOf(channelId2)),
+			Arrays.asList(
+				String.valueOf(channelId1), String.valueOf(channelId2)),
 			RandomTestUtil.randomString(), null, null, 1, 20, null);
 
 		String filter = String.valueOf(_uriVariables.get("filter"));

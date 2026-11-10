@@ -153,12 +153,12 @@ public abstract class BaseObjectEntryResourceTestCase {
 		Bundle bundle = FrameworkUtil.getBundle(
 			BaseObjectEntryResourceTestCase.class);
 
-		_bundleContext = bundle.getBundleContext();
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceRegistrations = Arrays.asList(
-			_bundleContext.registerService(
+			bundleContext.registerService(
 				ModelListener.class, testDLFileEntryModelListener, null),
-			_bundleContext.registerService(
+			bundleContext.registerService(
 				ModelListener.class, testObjectEntryModelListener, null));
 
 		TaxonomyCategoryResource.Builder builder =
@@ -182,7 +182,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
 
-		listTypeDefinition =
+		_listTypeDefinition =
 			listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
@@ -191,22 +191,25 @@ public abstract class BaseObjectEntryResourceTestCase {
 
 		_listTypeEntry1 = _listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
-			listTypeDefinition.getListTypeDefinitionId(), LIST_TYPE_ENTRY_KEY_1,
+			_listTypeDefinition.getListTypeDefinitionId(),
+			LIST_TYPE_ENTRY_KEY_1,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			listTypeDefinition.isSystem());
+			_listTypeDefinition.isSystem());
 		_listTypeEntry2 = _listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
-			listTypeDefinition.getListTypeDefinitionId(), LIST_TYPE_ENTRY_KEY_2,
+			_listTypeDefinition.getListTypeDefinitionId(),
+			LIST_TYPE_ENTRY_KEY_2,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			listTypeDefinition.isSystem());
+			_listTypeDefinition.isSystem());
 		_listTypeEntry3 = _listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
-			listTypeDefinition.getListTypeDefinitionId(), LIST_TYPE_ENTRY_KEY_3,
+			_listTypeDefinition.getListTypeDefinitionId(),
+			LIST_TYPE_ENTRY_KEY_3,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			listTypeDefinition.isSystem());
+			_listTypeDefinition.isSystem());
 
 		systemObjectDefinitionManager =
 			_systemObjectDefinitionManagerRegistry.
@@ -276,9 +279,9 @@ public abstract class BaseObjectEntryResourceTestCase {
 				_objectDefinition4);
 		}
 
-		if (siteScopedObjectDefinition1 != null) {
+		if (_siteScopedObjectDefinition1 != null) {
 			objectDefinitionLocalService.deleteObjectDefinition(
-				siteScopedObjectDefinition1);
+				_siteScopedObjectDefinition1);
 		}
 
 		if (_siteScopedObjectDefinition2 != null) {
@@ -287,7 +290,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 		}
 
 		listTypeDefinitionLocalService.deleteListTypeDefinition(
-			listTypeDefinition);
+			_listTypeDefinition);
 
 		groupLocalService.deleteGroup(group);
 	}
@@ -404,10 +407,10 @@ public abstract class BaseObjectEntryResourceTestCase {
 			objectDefinition.getRESTContextPath() + "?filter=" + filterString,
 			Http.Method.GET);
 
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
 		Assert.assertNull(jsonObject.get("title"));
 		Assert.assertNull(jsonObject.get("status"));
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
@@ -1232,13 +1235,13 @@ public abstract class BaseObjectEntryResourceTestCase {
 					RandomTestUtil.randomString(), OBJECT_FIELD_NAME_LONG_TEXT,
 					false),
 				ObjectFieldUtil.createObjectField(
-					listTypeDefinition.getListTypeDefinitionId(),
+					_listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
 					null, RandomTestUtil.randomString(),
 					OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, false, false),
 				ObjectFieldUtil.createObjectField(
-					listTypeDefinition.getListTypeDefinitionId(),
+					_listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					RandomTestUtil.randomString(), OBJECT_FIELD_NAME_PICKLIST,
@@ -1328,13 +1331,13 @@ public abstract class BaseObjectEntryResourceTestCase {
 					RandomTestUtil.randomString(), OBJECT_FIELD_NAME_LONG_TEXT,
 					false),
 				ObjectFieldUtil.createObjectField(
-					listTypeDefinition.getListTypeDefinitionId(),
+					_listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
 					null, RandomTestUtil.randomString(),
 					OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, false, false),
 				ObjectFieldUtil.createObjectField(
-					listTypeDefinition.getListTypeDefinitionId(),
+					_listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					RandomTestUtil.randomString(), OBJECT_FIELD_NAME_PICKLIST,
@@ -1586,18 +1589,18 @@ public abstract class BaseObjectEntryResourceTestCase {
 	protected ObjectDefinition getSiteScopedObjectDefinition1()
 		throws Exception {
 
-		if (siteScopedObjectDefinition1 != null) {
-			return siteScopedObjectDefinition1;
+		if (_siteScopedObjectDefinition1 != null) {
+			return _siteScopedObjectDefinition1;
 		}
 
 		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
-		siteScopedObjectDefinition1 =
+		_siteScopedObjectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				objectDefinitionName, _createObjectFields(objectDefinitionName),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
-		return siteScopedObjectDefinition1;
+		return _siteScopedObjectDefinition1;
 	}
 
 	protected ObjectDefinition getSiteScopedObjectDefinition2()
@@ -1848,8 +1851,6 @@ public abstract class BaseObjectEntryResourceTestCase {
 	@Inject
 	protected GroupLocalService groupLocalService;
 
-	protected ListTypeDefinition listTypeDefinition;
-
 	@Inject
 	protected ListTypeDefinitionLocalService listTypeDefinitionLocalService;
 
@@ -1896,7 +1897,6 @@ public abstract class BaseObjectEntryResourceTestCase {
 	@Inject
 	protected RoleLocalService roleLocalService;
 
-	protected ObjectDefinition siteScopedObjectDefinition1;
 	protected SystemObjectDefinitionManager systemObjectDefinitionManager;
 	protected JSONObject userAccountJSONObject;
 
@@ -2104,13 +2104,13 @@ public abstract class BaseObjectEntryResourceTestCase {
 				RandomTestUtil.randomString(), OBJECT_FIELD_NAME_LONG_TEXT,
 				false),
 			ObjectFieldUtil.createObjectField(
-				listTypeDefinition.getListTypeDefinitionId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST, null,
 				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 				RandomTestUtil.randomString(),
 				OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, false, false),
 			ObjectFieldUtil.createObjectField(
-				listTypeDefinition.getListTypeDefinitionId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 				RandomTestUtil.randomString(), OBJECT_FIELD_NAME_PICKLIST,
@@ -2138,8 +2138,9 @@ public abstract class BaseObjectEntryResourceTestCase {
 	private static final String _OBJECT_FIELD_NAME_RICH_TEXT =
 		"x" + RandomTestUtil.randomString();
 
-	private static BundleContext _bundleContext;
 	private static List<ServiceRegistration<?>> _serviceRegistrations;
+
+	private ListTypeDefinition _listTypeDefinition;
 
 	@DeleteAfterTestRun
 	private ListTypeEntry _listTypeEntry1;
@@ -2160,6 +2161,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 		_objectDefinitionSettingLocalService;
 
 	private ObjectEntry _objectEntry5;
+	private ObjectDefinition _siteScopedObjectDefinition1;
 	private ObjectDefinition _siteScopedObjectDefinition2;
 
 	@Inject

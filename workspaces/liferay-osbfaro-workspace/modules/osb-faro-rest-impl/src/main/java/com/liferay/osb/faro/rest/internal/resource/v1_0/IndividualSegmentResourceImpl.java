@@ -121,7 +121,7 @@ public class IndividualSegmentResourceImpl
 				individualSegmentId));
 	}
 
-	private List<String> _getInaccessibleChannelIds(long groupId) {
+	private List<String> _getExcludedChannelIds(long groupId) {
 		Set<String> accessibleChannelIds = new HashSet<>(
 			transform(
 				_faroChannelLocalService.search(

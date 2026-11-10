@@ -258,6 +258,11 @@ public class ServletDataImpl implements ServletData {
 							ChannelResourceImpl.class,
 							"putChannelByExternalReferenceCode"));
 					put(
+						"mutation#updateChannelPermissionsPage",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class,
+							"putChannelPermissionsPage"));
+					put(
 						"mutation#deleteChannelAccount",
 						new ObjectValuePair<>(
 							ChannelAccountResourceImpl.class,
@@ -475,6 +480,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ChannelResourceImpl.class,
 							"getChannelByExternalReferenceCode"));
+					put(
+						"query#channelPermissions",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class,
+							"getChannelPermissionsPage"));
 					put(
 						"query#channels",
 						new ObjectValuePair<>(
@@ -725,4 +735,4 @@ public class ServletDataImpl implements ServletData {
 		_termResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1406460515
+// LIFERAY-REST-BUILDER-HASH:554396565

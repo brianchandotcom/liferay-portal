@@ -252,14 +252,9 @@ public abstract class BaseObjectEntryResourceTestCase {
 				objectRelationship5);
 		}
 
-		if (_objectRelationship6 != null) {
+		if (objectRelationship6 != null) {
 			objectRelationshipLocalService.deleteObjectRelationship(
-				_objectRelationship6);
-		}
-
-		if (objectRelationship7 != null) {
-			objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship7);
+				objectRelationship6);
 		}
 
 		if (objectDefinition1 != null) {
@@ -1896,7 +1891,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 	protected ObjectRelationship objectRelationship3;
 	protected ObjectRelationship objectRelationship4;
 	protected ObjectRelationship objectRelationship5;
-	protected ObjectRelationship objectRelationship7;
+	protected ObjectRelationship objectRelationship6;
 
 	@Inject
 	protected ObjectRelationshipLocalService objectRelationshipLocalService;
@@ -2177,7 +2172,6 @@ public abstract class BaseObjectEntryResourceTestCase {
 		_objectDefinitionSettingLocalService;
 
 	private ObjectEntry _objectEntry5;
-	private ObjectRelationship _objectRelationship6;
 	private ObjectDefinition _siteScopedObjectDefinition2;
 
 	@Inject

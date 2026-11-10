@@ -100,10 +100,7 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 
 				_abort(
 					containerRequestContext, Response.Status.FORBIDDEN,
-					StringBundler.concat(
-						"Unable to access the workspace with group ID ",
-						groupId, ". Call \"getWorkspacesPage\" to list the ",
-						"workspaces you can use."));
+					"Unable to access the workspace with group ID " + groupId);
 
 				return;
 			}
@@ -138,10 +135,7 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 		if (!FaroPermissionChecker.isChannelMember(faroChannel)) {
 			_abort(
 				containerRequestContext, Response.Status.FORBIDDEN,
-				StringBundler.concat(
-					"Unable to access the property with channel ID ", channelId,
-					". Call \"getWorkspaceGroupChannelsPage\" to list the ",
-					"properties you can use."));
+				"Unable to access the property with channel ID " + channelId);
 		}
 	}
 

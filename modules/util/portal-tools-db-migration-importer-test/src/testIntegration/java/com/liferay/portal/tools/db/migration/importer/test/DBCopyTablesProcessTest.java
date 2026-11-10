@@ -50,6 +50,7 @@ import java.time.ZoneOffset;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.function.Function;
@@ -174,10 +175,11 @@ public class DBCopyTablesProcessTest {
 	public void testAddCustomPrimaryKeysAndIndexes() throws Exception {
 		_sourceDB.runSQL(
 			"create table TestTable (id INTEGER not null primary key, " +
-				"charColumn VARCHAR(75), testColumn VARCHAR(75), textColumn " +
-					"VARCHAR(75))");
+				"charColumn VARCHAR(75), longColumn VARCHAR(700), testColumn " +
+					"VARCHAR(75), textColumn VARCHAR(75))");
 		_sourceDB.runSQL(
 			"create index IX_TEST_3 on TestTable (id, testColumn)");
+		_sourceDB.runSQL("create index IX_TEST_2 on TestTable (longColumn)");
 		_sourceDB.runSQL("create index TestTable on TestTable (charColumn)");
 		_sourceDB.runSQL(
 			"create unique index IX_" + RandomTestUtil.randomInt() +
@@ -193,22 +195,56 @@ public class DBCopyTablesProcessTest {
 				" on TestTable (textColumn, charColumn)");
 
 		DBType dbType = _sourceDB.getDBType();
-		String indexName = "IX_" + RandomTestUtil.randomInt();
+
+		String typedIndexDefinition = null;
+		String typedIndexMessage = null;
+
+		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
+			_sourceDB.runSQL(
+				"create fulltext index IX_TEST_4 on TestTable (charColumn, " +
+					"longColumn)");
+
+			typedIndexDefinition =
+				"CREATE INDEX ix_test_4 ON testtable USING btree " +
+					"(charcolumn, \"left\"((longcolumn)::text, 676))";
+			typedIndexMessage =
+				"created fulltext index ix_test_4 on table testtable in the " +
+					"default schema as a btree index on (\"charcolumn\", " +
+						"left(\"longcolumn\", 676))";
+		}
+		else if (dbType == DBType.ORACLE) {
+			_sourceDB.runSQL(
+				"create index IX_TEST_4 on TestTable (textColumn) indextype " +
+					"is ctxsys.context");
+
+			typedIndexDefinition =
+				"CREATE INDEX ix_test_4 ON testtable USING btree (textcolumn)";
+			typedIndexMessage =
+				"created ctxsys.context index ix_test_4 on table testtable " +
+					"in the default schema as a btree index on " +
+						"(\"textcolumn\")";
+		}
+		else if (dbType == DBType.SQLSERVER) {
+			_sourceDB.runSQL(
+				"create unique index IX_TEST_4 on TestTable (textColumn) " +
+					"where textColumn is not null");
+
+			typedIndexDefinition =
+				"CREATE INDEX ix_test_4 ON testtable USING btree (textcolumn)";
+			typedIndexMessage =
+				"created filtered index ix_test_4 on table testtable in the " +
+					"default schema as a btree index on (\"textcolumn\")";
+		}
 
 		if (dbType == DBType.MYSQL) {
 			_sourceDB.runSQL(
-				"create index " + indexName +
+				"create index IX_" + RandomTestUtil.randomInt() +
 					" on TestTable ((upper(testColumn)))");
 		}
 		else if (dbType == DBType.ORACLE) {
 			_sourceDB.runSQL(
-				"create index " + indexName +
+				"create index IX_" + RandomTestUtil.randomInt() +
 					" on TestTable (upper(testColumn))");
-		}
-		else if (dbType == DBType.SQLSERVER) {
-			_sourceDB.runSQL(
-				"create index " + indexName +
-					" on TestTable (testColumn, id) include (charColumn)");
 		}
 
 		String[] values = RandomTestUtil.randomStrings(_TABLE_SIZE);
@@ -252,20 +288,37 @@ public class DBCopyTablesProcessTest {
 			System.setOut(printStream);
 		}
 
-		Assert.assertEquals(
-			Arrays.asList(
-				"unable to create unique index ix_test_5 on table testtable " +
-					"in the default schema because index ix_test_5 already " +
-						"exists on the same columns"),
-			TransformUtil.transformToList(
-				StringUtil.splitLines(unsyncByteArrayOutputStream.toString()),
-				message -> {
-					if (!message.startsWith("Unable to create unique index ")) {
-						return null;
-					}
+		List<String> expectedMessages = new ArrayList<>();
 
-					return StringUtil.toLowerCase(message);
-				}));
+		expectedMessages.add(
+			"created index ix_test_2 on table testtable in the default " +
+				"schema as a btree index on (left(\"longcolumn\", 676))");
+
+		if (typedIndexMessage != null) {
+			expectedMessages.add(typedIndexMessage);
+		}
+
+		expectedMessages.add(
+			"unable to create unique index ix_test_5 on table testtable in " +
+				"the default schema because index ix_test_5 already exists " +
+					"on the same columns");
+
+		Assert.assertEquals(
+			ListUtil.sort(expectedMessages),
+			ListUtil.sort(
+				TransformUtil.transformToList(
+					StringUtil.splitLines(
+						unsyncByteArrayOutputStream.toString()),
+					message -> {
+						if (!message.startsWith("Created ") &&
+							!message.startsWith(
+								"Unable to create unique index ")) {
+
+							return null;
+						}
+
+						return StringUtil.toLowerCase(message);
+					})));
 
 		try (Connection connection = _targetDataSource.getConnection();
 
@@ -286,7 +339,7 @@ public class DBCopyTablesProcessTest {
 				}
 			}
 
-			Assert.assertEquals(
+			List<String> expectedIndexDefinitions = new ArrayList<>(
 				Arrays.asList(
 					"CREATE INDEX ix_906fecd9 ON testtable USING btree " +
 						"(textcolumn, charcolumn)",
@@ -296,15 +349,27 @@ public class DBCopyTablesProcessTest {
 						"(textcolumn, id)",
 					"CREATE UNIQUE INDEX ix_test_1 ON testtable USING btree " +
 						"(testcolumn, id)",
+					"CREATE INDEX ix_test_2 ON testtable USING btree " +
+						"(\"left\"((longcolumn)::text, 676))",
 					"CREATE INDEX ix_test_3 ON testtable USING btree (id, " +
-						"\"left\"((testcolumn)::text, 676))",
-					"CREATE INDEX ix_test_5 ON testtable USING btree " +
-						"(charcolumn, id)",
-					"CREATE INDEX ix_test_6 ON testtable USING btree (id, " +
-						"textcolumn)",
-					"CREATE UNIQUE INDEX testtable_pkey ON testtable USING " +
-						"btree (id)"),
-				indexDefinitions);
+						"\"left\"((testcolumn)::text, 676))"));
+
+			if (typedIndexDefinition != null) {
+				expectedIndexDefinitions.add(typedIndexDefinition);
+			}
+
+			Collections.addAll(
+				expectedIndexDefinitions,
+				"CREATE INDEX ix_test_5 ON testtable USING btree " +
+					"(charcolumn, id)",
+				"CREATE INDEX ix_test_6 ON testtable USING btree (id, " +
+					"textcolumn)");
+
+			expectedIndexDefinitions.add(
+				"CREATE UNIQUE INDEX testtable_pkey ON testtable USING btree " +
+					"(id)");
+
+			Assert.assertEquals(expectedIndexDefinitions, indexDefinitions);
 		}
 	}
 

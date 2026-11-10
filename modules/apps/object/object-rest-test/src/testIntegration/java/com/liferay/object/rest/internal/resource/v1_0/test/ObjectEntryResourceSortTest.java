@@ -144,7 +144,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -310,7 +310,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -370,7 +370,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, false
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -402,7 +402,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -434,7 +434,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (3 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -693,7 +693,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -753,7 +753,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -1407,7 +1407,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, false
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -1439,7 +1439,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -1471,7 +1471,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (3 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -1531,7 +1531,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, false
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -1563,7 +1563,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
@@ -1595,7 +1595,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_BOOLEAN, true
 			).put(
 				OBJECT_FIELD_NAME_DATE,
-				() -> dateFormat.format(
+				dateFormat.format(
 					new Date(randomDate1.getTime() + (3 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,

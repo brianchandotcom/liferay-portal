@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -130,18 +131,18 @@ public class WorkspaceContainerRequestFilterTest {
 		Assert.assertNull(_filter(null, _GROUP_ID, _USER_ID_OMNIADMIN));
 
 		_assertResponseStatus(
+			_filter("unknown", _GROUP_ID, _USER_ID_MEMBER),
+			Response.Status.NOT_FOUND);
+		_assertResponseStatus(
+			_filter(_CHANNEL_ID_SELECT_USERS, _GROUP_ID, _USER_ID_MEMBER),
+			Response.Status.FORBIDDEN);
+		_assertResponseStatus(
 			_filter(null, 999L, _USER_ID_MEMBER), Response.Status.NOT_FOUND);
 		_assertResponseStatus(
 			_filter(null, _GROUP_ID, _USER_ID_GUEST),
 			Response.Status.UNAUTHORIZED);
 		_assertResponseStatus(
 			_filter(null, _GROUP_ID, _USER_ID_OUTSIDER),
-			Response.Status.FORBIDDEN);
-		_assertResponseStatus(
-			_filter("unknown", _GROUP_ID, _USER_ID_MEMBER),
-			Response.Status.NOT_FOUND);
-		_assertResponseStatus(
-			_filter(_CHANNEL_ID_SELECT_USERS, _GROUP_ID, _USER_ID_MEMBER),
 			Response.Status.FORBIDDEN);
 
 		_userGroupRoleLocalServiceUtilMockedStatic.when(

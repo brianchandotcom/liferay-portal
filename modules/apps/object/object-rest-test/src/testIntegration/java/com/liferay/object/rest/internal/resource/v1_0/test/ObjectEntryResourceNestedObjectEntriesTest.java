@@ -1126,9 +1126,8 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			objectEntryJSONObject.getInt("id"));
 
 		Assert.assertEquals(
-			"_assertObjectEntryField",
-			MapUtil.getString(objectEntry.getValues(), objectFieldName),
-			objectFieldValue);
+			"_assertObjectEntryField", objectFieldValue,
+			MapUtil.getString(objectEntry.getValues(), objectFieldName));
 	}
 
 	private JSONArray _putScopeKey(JSONArray jsonArray, String scopeKey) {

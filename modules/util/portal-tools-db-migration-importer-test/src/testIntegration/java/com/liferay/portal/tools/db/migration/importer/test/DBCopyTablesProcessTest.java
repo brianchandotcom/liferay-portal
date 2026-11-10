@@ -113,7 +113,7 @@ public class DBCopyTablesProcessTest {
 
 									return databaseMetaData.getColumns(
 										catalog, schemaPattern,
-										"%" + _sourceTableName,
+										"%" + _sourceTableName + "%",
 										columnNamePattern);
 								}
 
@@ -730,7 +730,11 @@ public class DBCopyTablesProcessTest {
 	public void testRunWithToolTables() throws Exception {
 		Assume.assumeTrue(_sourceDB.getDBType() == DBType.ORACLE);
 
-		_sourceDB.runSQL("create table TestTable (id INTEGER)");
+		_sourceDB.runSQL(
+			"create table TestTable (id INTEGER, testColumn VARCHAR(75))");
+		_sourceDB.runSQL(
+			"create index TestTable_Text on TestTable (testColumn) indextype " +
+				"is ctxsys.context");
 		_sourceDB.runSQL(
 			"create materialized view log on TestTable with rowid");
 
@@ -742,7 +746,7 @@ public class DBCopyTablesProcessTest {
 				"select relname from pg_class where relname like ? order by " +
 					"relname")) {
 
-			preparedStatement.setString(1, "%testtable");
+			preparedStatement.setString(1, "%testtable%");
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());

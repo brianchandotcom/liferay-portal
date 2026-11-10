@@ -123,6 +123,7 @@ public class JournalDisplayContextTest {
 
 		Assert.assertTrue(ddmStructures.contains(ddmStructure1));
 		Assert.assertTrue(ddmStructures.contains(ddmStructure2));
+
 		Assert.assertArrayEquals(
 			new long[0],
 			ReflectionTestUtil.invoke(

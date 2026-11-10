@@ -883,7 +883,6 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 			getObjectDefinition1(), getObjectDefinition2(),
 			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		objectRelationship2 = addObjectRelationshipAndRelateObjectEntries(
 			getObjectDefinition2(), getObjectDefinition3(),
 			objectEntry2.getPrimaryKey(), objectEntry3.getPrimaryKey(),
@@ -1102,17 +1101,14 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 			getObjectDefinition1(), getObjectDefinition2(),
 			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		objectRelationship2 = addObjectRelationshipAndRelateObjectEntries(
 			getObjectDefinition2(), getObjectDefinition3(),
 			objectEntry2.getPrimaryKey(), objectEntry3.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		objectRelationship3 = addObjectRelationshipAndRelateObjectEntries(
 			getObjectDefinition3(), getObjectDefinition4(),
 			objectEntry3.getPrimaryKey(), objectEntry4.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		objectRelationship4 = addObjectRelationshipAndRelateObjectEntries(
 			getObjectDefinition2(), getObjectDefinition3(),
 			objectEntry2.getPrimaryKey(), objectEntry3.getPrimaryKey(),
@@ -1405,7 +1401,6 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 			getObjectDefinition1(), getObjectDefinition2(),
 			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		objectRelationship2 = addObjectRelationshipAndRelateObjectEntries(
 			getObjectDefinition2(), getObjectDefinition3(),
 			objectEntry2.getPrimaryKey(), objectEntry3.getPrimaryKey(),
@@ -3350,7 +3345,6 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 					return stringBuilder.toString();
 				}
 			).build());
-
 		objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			getObjectDefinition2(), OBJECT_FIELD_NAME_2, OBJECT_FIELD_VALUE_2);
 
@@ -3474,12 +3468,10 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 		throws Exception {
 
 		String objectFieldValue1 = String.valueOf(OBJECT_FIELD_VALUE_1);
+		String objectFieldValue2 = String.valueOf(OBJECT_FIELD_VALUE_2);
 
 		objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			getObjectDefinition1(), OBJECT_FIELD_NAME_1, objectFieldValue1);
-
-		String objectFieldValue2 = String.valueOf(OBJECT_FIELD_VALUE_2);
-
 		objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			getObjectDefinition2(), OBJECT_FIELD_NAME_2, objectFieldValue2);
 
@@ -3958,7 +3950,6 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 					"%s/%s eq '%s'", objectRelationship.getName(),
 					OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1),
 				"en-US", localizedObjectDefinition2, localizedObjectEntry2);
-
 			_testFilterObjectEntriesByRelatedLocalizedObjectEntries(
 				String.format(
 					"%s/%s eq '%s'", objectRelationship.getName(),
@@ -3972,7 +3963,6 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 					"%s/%s eq '%s'", objectRelationship.getName(),
 					OBJECT_FIELD_NAME_2, OBJECT_FIELD_VALUE_3),
 				"en-US", localizedObjectDefinition1, localizedObjectEntry1);
-
 			_testFilterObjectEntriesByRelatedLocalizedObjectEntries(
 				String.format(
 					"%s/%s eq '%s'", objectRelationship.getName(),
@@ -4132,16 +4122,16 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 				String relatedObjectFieldValue)
 		throws Exception {
 
-		String filterString = StringBundler.concat(
-			objectRelationship.getName(), "/", OBJECT_FIELD_NAME_TEXT, " eq '",
-			relatedObjectFieldValue, "'");
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				objectDefinition.getRESTContextPath(), "?filter=",
-				URLCodec.encodeURL(filterString), "&nestedFields=",
-				objectRelationship.getName()),
+				URLCodec.encodeURL(
+					StringBundler.concat(
+						objectRelationship.getName(), "/",
+						OBJECT_FIELD_NAME_TEXT, " eq '",
+						relatedObjectFieldValue, "'")),
+				"&nestedFields=", objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");

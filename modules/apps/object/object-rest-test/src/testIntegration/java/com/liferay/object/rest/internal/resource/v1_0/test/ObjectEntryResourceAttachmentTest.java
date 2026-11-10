@@ -400,8 +400,8 @@ public class ObjectEntryResourceAttachmentTest
 			ObjectActionKeys.ADD_OBJECT_ENTRY,
 			getObjectDefinition1().getResourceName(), role);
 
-		String userPassword = RandomTestUtil.randomString();
 		String userName = RandomTestUtil.randomString();
+		String userPassword = RandomTestUtil.randomString();
 
 		User user = addUser(userName, userPassword);
 
@@ -1572,11 +1572,12 @@ public class ObjectEntryResourceAttachmentTest
 			).toString(),
 			getEndpoint(getObjectDefinition1(), testGroupId), Http.Method.POST);
 
-		JSONObject attachmentJSONObject = objectEntryJSONObject.getJSONObject(
-			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ObjectMapperUtil.class.getName(), LoggerTestUtil.WARN)) {
+
+			JSONObject attachmentJSONObject =
+				objectEntryJSONObject.getJSONObject(
+					OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
 			JSONObject patchedJSONObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -1725,14 +1726,13 @@ public class ObjectEntryResourceAttachmentTest
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
 
-		byte[] fileContent = DLTestUtil.randomTextFileBytes();
-
 		com.liferay.portal.kernel.repository.model.Folder existingFolder =
 			_dlAppLocalService.addFolder(
 				null, TestPropsValues.getUserId(), group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
+		byte[] fileContent = DLTestUtil.randomTextFileBytes();
 
 		DLFileEntry existingDLFileEntry = _addDLFileEntry(
 			fileContent, existingFolder.getFolderId());
@@ -2531,14 +2531,13 @@ public class ObjectEntryResourceAttachmentTest
 			null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
-		byte[] fileContent = DLTestUtil.randomTextFileBytes();
-
 		com.liferay.portal.kernel.repository.model.Folder existingFolder =
 			_dlAppLocalService.addFolder(
 				null, TestPropsValues.getUserId(), group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
+		byte[] fileContent = DLTestUtil.randomTextFileBytes();
 
 		DLFileEntry existingDLFileEntry = _addDLFileEntry(
 			fileContent, existingFolder.getFolderId());

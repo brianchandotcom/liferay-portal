@@ -71,7 +71,6 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 					jsonObject.getLong("id"),
 			Http.Method.PATCH, getObjectDefinition1(), getObjectDefinition2(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
 		_testPatchPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntries(
 			jsonObject ->
 				getSiteScopedObjectDefinition1().getRESTContextPath() + "/" +
@@ -179,11 +178,10 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(), JSONFactoryUtil.createJSONArray());
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(), JSONFactoryUtil.createJSONArray()
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -247,16 +245,16 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
-				new String[] {
-					NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
-				}));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1, ERC_VALUE_2},
+					OBJECT_FIELD_NAME_2,
+					new String[] {
+						NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
+					})
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -274,13 +272,12 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		_assertEquals(nestedObjectEntriesJSONArray);
 
-		String objectEntryId = jsonObject.getString("id");
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				getObjectDefinition1().getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=", objectRelationship1.getName()),
+				jsonObject.getString("id"), "?nestedFields=",
+				objectRelationship1.getName()),
 			Http.Method.GET);
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
@@ -297,19 +294,18 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		objectEntryJSONObject = JSONUtil.put(
-			objectRelationship2.getName(),
-			_putScopeKey(
-				createObjectEntriesJSONArray(
-					new String[] {ERC_VALUE_1, ERC_VALUE_2},
-					OBJECT_FIELD_NAME_2,
-					new String[] {
-						NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
-					}),
-				"Guest"));
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship2.getName(),
+				_putScopeKey(
+					createObjectEntriesJSONArray(
+						new String[] {ERC_VALUE_1, ERC_VALUE_2},
+						OBJECT_FIELD_NAME_2,
+						new String[] {
+							NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
+						}),
+					"Guest")
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -327,13 +323,12 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		_assertEquals(nestedObjectEntriesJSONArray);
 
-		objectEntryId = jsonObject.getString("id");
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				getObjectDefinition1().getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=", objectRelationship2.getName()),
+				jsonObject.getString("id"), "?nestedFields=",
+				objectRelationship2.getName()),
 			Http.Method.GET);
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
@@ -345,19 +340,18 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		// Company-Site scope: with empty 'scopeKey'
 
-		objectEntryJSONObject = JSONUtil.put(
-			objectRelationship2.getName(),
-			_putScopeKey(
-				createObjectEntriesJSONArray(
-					new String[] {ERC_VALUE_1, ERC_VALUE_2},
-					OBJECT_FIELD_NAME_2,
-					new String[] {
-						NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
-					}),
-				StringPool.BLANK));
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship2.getName(),
+				_putScopeKey(
+					createObjectEntriesJSONArray(
+						new String[] {ERC_VALUE_1, ERC_VALUE_2},
+						OBJECT_FIELD_NAME_2,
+						new String[] {
+							NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
+						}),
+					StringPool.BLANK)
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
 		JSONAssert.assertEquals(
@@ -370,19 +364,18 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		// Company-Site scope: with nonexistent 'scopeKey'
 
-		objectEntryJSONObject = JSONUtil.put(
-			objectRelationship2.getName(),
-			_putScopeKey(
-				createObjectEntriesJSONArray(
-					new String[] {ERC_VALUE_1, ERC_VALUE_2},
-					OBJECT_FIELD_NAME_2,
-					new String[] {
-						NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
-					}),
-				RandomTestUtil.randomString()));
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship2.getName(),
+				_putScopeKey(
+					createObjectEntriesJSONArray(
+						new String[] {ERC_VALUE_1, ERC_VALUE_2},
+						OBJECT_FIELD_NAME_2,
+						new String[] {
+							NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
+						}),
+					RandomTestUtil.randomString())
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
 		JSONAssert.assertEquals(
@@ -395,16 +388,16 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		// Company-Site scope: without 'scopeKey'
 
-		objectEntryJSONObject = JSONUtil.put(
-			objectRelationship2.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
-				new String[] {
-					NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
-				}));
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship2.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1, ERC_VALUE_2},
+					OBJECT_FIELD_NAME_2,
+					new String[] {
+						NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
+					})
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
 		JSONAssert.assertEquals(
@@ -425,16 +418,16 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		objectEntryJSONObject = JSONUtil.put(
-			objectRelationship3.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
-				new String[] {
-					NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
-				}));
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship3.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1, ERC_VALUE_2},
+					OBJECT_FIELD_NAME_2,
+					new String[] {
+						NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
+					})
+			).toString(),
 			getEndpoint(getSiteScopedObjectDefinition1(), testGroupId),
 			Http.Method.POST);
 
@@ -453,13 +446,11 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		_assertEquals(nestedObjectEntriesJSONArray);
 
-		objectEntryId = jsonObject.getString("id");
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				getSiteScopedObjectDefinition1().getRESTContextPath(),
-				StringPool.SLASH, objectEntryId, "?nestedFields=",
+				StringPool.SLASH, jsonObject.getString("id"), "?nestedFields=",
 				objectRelationship3.getName()),
 			Http.Method.GET);
 
@@ -482,17 +473,16 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			JSONFactoryUtil.createJSONObject(
-				JSONUtil.put(
-					OBJECT_FIELD_NAME_1, NEW_OBJECT_FIELD_VALUE_1
-				).put(
-					"externalReferenceCode", ERC_VALUE_1
-				).toString()));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						OBJECT_FIELD_NAME_1, NEW_OBJECT_FIELD_VALUE_1
+					).put(
+						"externalReferenceCode", ERC_VALUE_1
+					).toString())
+			).toString(),
 			getObjectDefinition2().getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -511,13 +501,11 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 						getObjectDefinition1().getPKObjectFieldName(), "Id"))),
 			OBJECT_FIELD_NAME_1, NEW_OBJECT_FIELD_VALUE_1);
 
-		String objectEntryId = jsonObject.getString("id");
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				getObjectDefinition2().getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=",
+				jsonObject.getString("id"), "?nestedFields=",
 				StringBundler.concat(
 					"r_", objectRelationship1.getName(), "_",
 					StringUtil.removeLast(
@@ -539,17 +527,16 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		objectEntryJSONObject = JSONUtil.put(
-			objectRelationship6.getName(),
-			JSONFactoryUtil.createJSONObject(
-				JSONUtil.put(
-					OBJECT_FIELD_NAME_1, NEW_OBJECT_FIELD_VALUE_1
-				).put(
-					"externalReferenceCode", ERC_VALUE_1
-				).toString()));
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship6.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						OBJECT_FIELD_NAME_1, NEW_OBJECT_FIELD_VALUE_1
+					).put(
+						"externalReferenceCode", ERC_VALUE_1
+					).toString())
+			).toString(),
 			getEndpoint(getSiteScopedObjectDefinition2(), testGroupId),
 			Http.Method.POST);
 
@@ -570,13 +557,11 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 						"Id"))),
 			OBJECT_FIELD_NAME_1, NEW_OBJECT_FIELD_VALUE_1);
 
-		objectEntryId = jsonObject.getString("id");
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				getSiteScopedObjectDefinition2().getRESTContextPath(),
-				StringPool.SLASH, objectEntryId, "?nestedFields=",
+				StringPool.SLASH, jsonObject.getString("id"), "?nestedFields=",
 				StringBundler.concat(
 					"r_", objectRelationship6.getName(), "_",
 					StringUtil.removeLast(
@@ -605,16 +590,16 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
-				new String[] {
-					NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
-				}));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1, ERC_VALUE_2},
+					OBJECT_FIELD_NAME_2,
+					new String[] {
+						NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
+					})
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -632,13 +617,12 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		_assertEquals(nestedObjectEntriesJSONArray);
 
-		String objectEntryId = jsonObject.getString("id");
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				getObjectDefinition1().getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=", objectRelationship1.getName()),
+				jsonObject.getString("id"), "?nestedFields=",
+				objectRelationship1.getName()),
 			Http.Method.GET);
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
@@ -655,16 +639,16 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		objectEntryJSONObject = JSONUtil.put(
-			objectRelationship6.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
-				new String[] {
-					NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
-				}));
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship6.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1, ERC_VALUE_2},
+					OBJECT_FIELD_NAME_2,
+					new String[] {
+						NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
+					})
+			).toString(),
 			getEndpoint(getSiteScopedObjectDefinition1(), testGroupId),
 			Http.Method.POST);
 
@@ -683,13 +667,11 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		_assertEquals(nestedObjectEntriesJSONArray);
 
-		objectEntryId = jsonObject.getString("id");
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				getSiteScopedObjectDefinition1().getRESTContextPath(),
-				StringPool.SLASH, objectEntryId, "?nestedFields=",
+				StringPool.SLASH, jsonObject.getString("id"), "?nestedFields=",
 				objectRelationship6.getName()),
 			Http.Method.GET);
 
@@ -714,7 +696,6 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 					jsonObject.getLong("id"),
 			Http.Method.PUT, getObjectDefinition1(), getObjectDefinition2(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
 		_testPatchPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntries(
 			jsonObject ->
 				getSiteScopedObjectDefinition1().getRESTContextPath() + "/" +
@@ -866,26 +847,26 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
-				new String[] {
-					RandomTestUtil.randomString(), RandomTestUtil.randomString()
-				}));
-
 		HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1, ERC_VALUE_2},
+					OBJECT_FIELD_NAME_2,
+					new String[] {
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					})
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
-		JSONObject newObjectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1}, OBJECT_FIELD_NAME_2,
-				new String[] {NEW_OBJECT_FIELD_VALUE_1}));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			newObjectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1}, OBJECT_FIELD_NAME_2,
+					new String[] {NEW_OBJECT_FIELD_VALUE_1})
+			).toString(),
 			StringBundler.concat(
 				getObjectDefinition1().getRESTContextPath(), StringPool.SLASH,
 				objectEntry1.getPrimaryKey()),
@@ -935,32 +916,30 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			JSONFactoryUtil.createJSONObject(
-				JSONUtil.put(
-					OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"externalReferenceCode", ERC_VALUE_1
-				).toString()));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+					).put(
+						"externalReferenceCode", ERC_VALUE_1
+					).toString())
+			).toString(),
 			getObjectDefinition2().getRESTContextPath(), Http.Method.POST);
 
 		String objectEntryId = jsonObject.getString("id");
 
-		JSONObject newObjectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			JSONFactoryUtil.createJSONObject(
-				JSONUtil.put(
-					OBJECT_FIELD_NAME_1, NEW_OBJECT_FIELD_VALUE_1
-				).put(
-					"externalReferenceCode", ERC_VALUE_1
-				).toString()));
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			newObjectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						OBJECT_FIELD_NAME_1, NEW_OBJECT_FIELD_VALUE_1
+					).put(
+						"externalReferenceCode", ERC_VALUE_1
+					).toString())
+			).toString(),
 			StringBundler.concat(
 				getObjectDefinition2().getRESTContextPath(), StringPool.SLASH,
 				objectEntryId),
@@ -1014,26 +993,26 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
-				new String[] {
-					RandomTestUtil.randomString(), RandomTestUtil.randomString()
-				}));
-
 		HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1, ERC_VALUE_2},
+					OBJECT_FIELD_NAME_2,
+					new String[] {
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					})
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
-		JSONObject newObjectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1}, OBJECT_FIELD_NAME_2,
-				new String[] {NEW_OBJECT_FIELD_VALUE_1}));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			newObjectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1}, OBJECT_FIELD_NAME_2,
+					new String[] {NEW_OBJECT_FIELD_VALUE_1})
+			).toString(),
 			StringBundler.concat(
 				getObjectDefinition1().getRESTContextPath(), StringPool.SLASH,
 				objectEntry1.getPrimaryKey()),
@@ -1143,10 +1122,8 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 		JSONObject objectEntryJSONObject, String objectFieldName,
 		String objectFieldValue) {
 
-		int objectEntryId = objectEntryJSONObject.getInt("id");
-
 		ObjectEntry objectEntry = objectEntryLocalService.fetchObjectEntry(
-			objectEntryId);
+			objectEntryJSONObject.getInt("id"));
 
 		Assert.assertEquals(
 			"_assertObjectEntryField",
@@ -1474,18 +1451,17 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 				ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship.getName(),
-			JSONFactoryUtil.createJSONObject(
-				JSONUtil.put(
-					OBJECT_FIELD_NAME_2, NEW_OBJECT_FIELD_VALUE_2
-				).put(
-					"externalReferenceCode", ERC_VALUE_2
-				).toString()));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(), objectDefinitionRESTContextPath,
-			Http.Method.POST);
+			JSONUtil.put(
+				objectRelationship.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						OBJECT_FIELD_NAME_2, NEW_OBJECT_FIELD_VALUE_2
+					).put(
+						"externalReferenceCode", ERC_VALUE_2
+					).toString())
+			).toString(),
+			objectDefinitionRESTContextPath, Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 	}
@@ -1496,17 +1472,18 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 				ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship.getName(),
-			createObjectEntriesJSONArray(
-				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_1,
-				new String[] {
-					RandomTestUtil.randomString(), RandomTestUtil.randomString()
-				}));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(), objectDefinitionRESTContextPath,
-			Http.Method.POST);
+			JSONUtil.put(
+				objectRelationship.getName(),
+				createObjectEntriesJSONArray(
+					new String[] {ERC_VALUE_1, ERC_VALUE_2},
+					OBJECT_FIELD_NAME_1,
+					new String[] {
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					})
+			).toString(),
+			objectDefinitionRESTContextPath, Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 	}
@@ -1517,18 +1494,17 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 				ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship.getName(),
-			JSONFactoryUtil.createJSONObject(
-				JSONUtil.put(
-					OBJECT_FIELD_NAME_2, NEW_OBJECT_FIELD_VALUE_2
-				).put(
-					"externalReferenceCode", ERC_VALUE_2
-				).toString()));
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(), objectDefinitionRESTContextPath,
-			Http.Method.POST);
+			JSONUtil.put(
+				objectRelationship.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						OBJECT_FIELD_NAME_2, NEW_OBJECT_FIELD_VALUE_2
+					).put(
+						"externalReferenceCode", ERC_VALUE_2
+					).toString())
+			).toString(),
+			objectDefinitionRESTContextPath, Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 	}
@@ -1538,50 +1514,49 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 				boolean manyToOne)
 		throws Exception {
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			() -> {
-				if (manyToOne) {
-					return JSONFactoryUtil.createJSONObject(
-						JSONUtil.put(
-							OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
-						).put(
-							"externalReferenceCode", ERC_VALUE_1
-						).toString());
-				}
-
-				return createObjectEntriesJSONArray(
-					new String[] {ERC_VALUE_1, ERC_VALUE_2},
-					OBJECT_FIELD_NAME_2,
-					new String[] {
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()
-					});
-			});
-
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				() -> {
+					if (manyToOne) {
+						return JSONFactoryUtil.createJSONObject(
+							JSONUtil.put(
+								OBJECT_FIELD_NAME_2,
+								RandomTestUtil.randomString()
+							).put(
+								"externalReferenceCode", ERC_VALUE_1
+							).toString());
+					}
+
+					return createObjectEntriesJSONArray(
+						new String[] {ERC_VALUE_1, ERC_VALUE_2},
+						OBJECT_FIELD_NAME_2,
+						new String[] {
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString()
+						});
+				}
+			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
-		JSONObject newObjectEntryJSONObject = JSONUtil.put(
-			objectRelationship1.getName(),
-			() -> {
-				if (manyToOne) {
-					return JSONFactoryUtil.createJSONObject(
-						JSONUtil.put(
-							OBJECT_FIELD_NAME_2, NEW_OBJECT_FIELD_VALUE_1
-						).put(
-							"externalReferenceCode", ERC_VALUE_1
-						).toString());
-				}
-
-				return createObjectEntriesJSONArray(
-					new String[] {ERC_VALUE_1}, OBJECT_FIELD_NAME_2,
-					new String[] {NEW_OBJECT_FIELD_VALUE_1});
-			});
-
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			newObjectEntryJSONObject.toString(),
+			JSONUtil.put(
+				objectRelationship1.getName(),
+				() -> {
+					if (manyToOne) {
+						return JSONFactoryUtil.createJSONObject(
+							JSONUtil.put(
+								OBJECT_FIELD_NAME_2, NEW_OBJECT_FIELD_VALUE_1
+							).put(
+								"externalReferenceCode", ERC_VALUE_1
+							).toString());
+					}
+
+					return createObjectEntriesJSONArray(
+						new String[] {ERC_VALUE_1}, OBJECT_FIELD_NAME_2,
+						new String[] {NEW_OBJECT_FIELD_VALUE_1});
+				}
+			).toString(),
 			StringBundler.concat(
 				getObjectDefinition1().getRESTContextPath(),
 				"/by-external-reference-code/",

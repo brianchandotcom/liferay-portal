@@ -365,28 +365,27 @@ public class ObjectEntryResourceAttachmentTest
 				FileUtil.getBytes(
 					getClass(),
 					"dependencies/sample_large_square_1500x1500.jpg"),
-				RandomTestUtil.randomString() + ".jpg",
-				ContentTypes.IMAGE_JPEG),
+				ContentTypes.IMAGE_JPEG,
+				RandomTestUtil.randomString() + ".jpg"),
 			"Square", "Large (Bigger Than 1024)");
 		_testGetObjectEntryWithAttachmentObjectFieldImageMetadata(
 			_addFileEntry(
 				FileUtil.getBytes(
 					getClass(), "dependencies/sample_medium_tall_600x800.jpg"),
-				RandomTestUtil.randomString() + ".jpg",
-				ContentTypes.IMAGE_JPEG),
+				ContentTypes.IMAGE_JPEG,
+				RandomTestUtil.randomString() + ".jpg"),
 			"Tall", "Medium (Up to 1024x768)");
 		_testGetObjectEntryWithAttachmentObjectFieldImageMetadata(
 			_addFileEntry(
 				FileUtil.getBytes(
 					getClass(), "dependencies/sample_small_wide_400x300.jpg"),
-				RandomTestUtil.randomString() + ".jpg",
-				ContentTypes.IMAGE_JPEG),
+				ContentTypes.IMAGE_JPEG,
+				RandomTestUtil.randomString() + ".jpg"),
 			"Wide", "Small (Up to 400x300)");
 		_testGetObjectEntryWithAttachmentObjectFieldImageMetadata(
 			_addFileEntry(
-				RandomTestUtil.randomBytes(),
-				RandomTestUtil.randomString() + ".txt",
-				ContentTypes.TEXT_PLAIN),
+				RandomTestUtil.randomBytes(), ContentTypes.TEXT_PLAIN,
+				RandomTestUtil.randomString() + ".txt"),
 			null, null);
 	}
 
@@ -590,8 +589,8 @@ public class ObjectEntryResourceAttachmentTest
 			JSONArray keywordsJSONArray = patchedJSONObject.getJSONArray(
 				"keywords");
 
-			Assert.assertEquals("tag1", keywordsJSONArray.get(0));
 			Assert.assertEquals(1, keywordsJSONArray.length());
+			Assert.assertEquals("tag1", keywordsJSONArray.get(0));
 		}
 	}
 
@@ -1128,7 +1127,7 @@ public class ObjectEntryResourceAttachmentTest
 	}
 
 	private FileEntry _addFileEntry(
-			byte[] content, String fileName, String contentType)
+			byte[] content, String contentType, String fileName)
 		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
@@ -3279,8 +3278,8 @@ public class ObjectEntryResourceAttachmentTest
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
 		fileEntry.setFileBase64(encodeFunction.apply(fileContent));
-		fileEntry.setName(fileName);
 		fileEntry.setMimeType(mimeType);
+		fileEntry.setName(fileName);
 
 		if ((folderExternalReferenceCode != null) || (folderSiteId != null)) {
 			Folder folder = new Folder();
@@ -3300,9 +3299,9 @@ public class ObjectEntryResourceAttachmentTest
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		fileEntry.setName(fileName);
 		fileEntry.setId(id);
 		fileEntry.setMimeType(mimeType);
+		fileEntry.setName(fileName);
 
 		return fileEntry;
 	}
@@ -3315,8 +3314,8 @@ public class ObjectEntryResourceAttachmentTest
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
 		fileEntry.setFileURL(fileURL);
-		fileEntry.setName(fileName);
 		fileEntry.setMimeType(mimeType);
+		fileEntry.setName(fileName);
 
 		if ((folderExternalReferenceCode != null) || (folderSiteId != null)) {
 			Folder folder = new Folder();
@@ -3340,6 +3339,7 @@ public class ObjectEntryResourceAttachmentTest
 
 		fileEntry.setFileBase64(Base64.encode(fileContent));
 		fileEntry.setMimeType(mimeType);
+		fileEntry.setName(fileName);
 
 		if (StringUtil.equals(
 				objectFieldName,
@@ -3358,8 +3358,6 @@ public class ObjectEntryResourceAttachmentTest
 					}
 				});
 		}
-
-		fileEntry.setName(fileName);
 
 		return JSONFactoryUtil.createJSONObject(fileEntry.toString());
 	}

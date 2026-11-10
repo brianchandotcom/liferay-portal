@@ -227,10 +227,10 @@ public class ObjectEntryResourceSortTest
 
 			_testSortByFieldName(
 				endpoint, jsonObject1, jsonObject2,
-				StringUtil.replaceLast(objectFieldName, "Id", "ERC"));
+				StringUtil.extractLast(objectFieldName, StringPool.UNDERLINE));
 			_testSortByFieldName(
 				endpoint, jsonObject1, jsonObject2,
-				StringUtil.extractLast(objectFieldName, StringPool.UNDERLINE));
+				StringUtil.replaceLast(objectFieldName, "Id", "ERC"));
 
 			// Sort by several fields
 
@@ -1417,12 +1417,6 @@ public class ObjectEntryResourceSortTest
 			// Depth 1
 
 			_testSortByFieldName(
-				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
-				String.format("%s/creator", objectRelationship1.getName()));
-			_testSortByFieldName(
-				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
-				String.format("%s/creatorId", objectRelationship1.getName()));
-			_testSortByFieldName(
 				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
 				String.format("%s/dateCreated", objectRelationship1.getName()));
 			_testSortByFieldName(
@@ -1430,28 +1424,24 @@ public class ObjectEntryResourceSortTest
 				String.format(
 					"%s/dateModified", objectRelationship1.getName()));
 			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format("%s/id", objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format("%s/creator", objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format("%s/creatorId", objectRelationship1.getName()));
+			_testSortByFieldName(
 				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format(
 					"%s/externalReferenceCode", objectRelationship1.getName()));
-			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
-				String.format("%s/id", objectRelationship1.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format("%s/status", objectRelationship1.getName()));
 
 			// Depth 2
 
-			_testSortByFieldName(
-				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
-				String.format(
-					"%s/%s/creator", objectRelationship1.getName(),
-					objectRelationship2.getName()));
-			_testSortByFieldName(
-				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
-				String.format(
-					"%s/%s/creatorId", objectRelationship1.getName(),
-					objectRelationship2.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
 				String.format(
@@ -1463,15 +1453,25 @@ public class ObjectEntryResourceSortTest
 					"%s/%s/dateModified", objectRelationship1.getName(),
 					objectRelationship2.getName()));
 			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				String.format(
+					"%s/%s/id", objectRelationship1.getName(),
+					objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format(
+					"%s/%s/creator", objectRelationship1.getName(),
+					objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format(
+					"%s/%s/creatorId", objectRelationship1.getName(),
+					objectRelationship2.getName()));
+			_testSortByFieldName(
 				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format(
 					"%s/%s/externalReferenceCode",
 					objectRelationship1.getName(),
-					objectRelationship2.getName()));
-			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
-				String.format(
-					"%s/%s/id", objectRelationship1.getName(),
 					objectRelationship2.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
@@ -2488,14 +2488,17 @@ public class ObjectEntryResourceSortTest
 			// Depth 1
 
 			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2,
+				String.format("%s/dateCreated", objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2,
+				String.format("%s/id", objectRelationship1.getName()));
+			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format("%s/creator", objectRelationship1.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format("%s/creatorId", objectRelationship1.getName()));
-			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2,
-				String.format("%s/dateCreated", objectRelationship1.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format(
@@ -2505,14 +2508,21 @@ public class ObjectEntryResourceSortTest
 				String.format(
 					"%s/externalReferenceCode", objectRelationship1.getName()));
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2,
-				String.format("%s/id", objectRelationship1.getName()));
-			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format("%s/status", objectRelationship1.getName()));
 
 			// Depth 2
 
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2,
+				String.format(
+					"%s/%s/dateCreated", objectRelationship1.getName(),
+					objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject1, jsonObject2,
+				String.format(
+					"%s/%s/id", objectRelationship1.getName(),
+					objectRelationship2.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format(
@@ -2524,11 +2534,6 @@ public class ObjectEntryResourceSortTest
 					"%s/%s/creatorId", objectRelationship1.getName(),
 					objectRelationship2.getName()));
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2,
-				String.format(
-					"%s/%s/dateCreated", objectRelationship1.getName(),
-					objectRelationship2.getName()));
-			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format(
 					"%s/%s/dateModified", objectRelationship1.getName(),
@@ -2538,11 +2543,6 @@ public class ObjectEntryResourceSortTest
 				String.format(
 					"%s/%s/externalReferenceCode",
 					objectRelationship1.getName(),
-					objectRelationship2.getName()));
-			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2,
-				String.format(
-					"%s/%s/id", objectRelationship1.getName(),
 					objectRelationship2.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
@@ -2727,18 +2727,18 @@ public class ObjectEntryResourceSortTest
 
 		try {
 			_testSortByFieldName(
+				endpoint, jsonObjects[0], jsonObjects[1], "dateCreated");
+			_testSortByFieldName(
+				endpoint, jsonObjects[0], jsonObjects[1], "id");
+			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "creator");
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "creatorId");
-			_testSortByFieldName(
-				endpoint, jsonObjects[0], jsonObjects[1], "dateCreated");
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "dateModified");
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0],
 				"externalReferenceCode");
-			_testSortByFieldName(
-				endpoint, jsonObjects[0], jsonObjects[1], "id");
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "status");
 			_testSortByFieldName(

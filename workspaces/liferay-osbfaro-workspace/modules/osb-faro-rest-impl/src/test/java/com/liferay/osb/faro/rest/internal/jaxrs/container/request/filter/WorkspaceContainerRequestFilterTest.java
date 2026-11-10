@@ -131,8 +131,7 @@ public class WorkspaceContainerRequestFilterTest {
 		Assert.assertNull(_filter(null, _GROUP_ID, _USER_ID_OMNIADMIN));
 
 		_assertResponseStatus(
-			_filter(
-				RandomTestUtil.randomString(), _GROUP_ID, _USER_ID_MEMBER),
+			_filter(RandomTestUtil.randomString(), _GROUP_ID, _USER_ID_MEMBER),
 			Response.Status.NOT_FOUND);
 		_assertResponseStatus(
 			_filter(_CHANNEL_ID_SELECT_USERS, _GROUP_ID, _USER_ID_MEMBER),

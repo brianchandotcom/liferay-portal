@@ -8,9 +8,9 @@ package com.liferay.osb.faro.rest.internal.jaxrs.container.request.filter;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.rest.internal.jaxrs.util.ProblemUtil;
-import com.liferay.osb.faro.rest.internal.security.permission.WorkspacePermission;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.osb.faro.util.FaroPermissionChecker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -95,7 +95,7 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 				return;
 			}
 
-			if (!_workspacePermission.isWorkspaceMember(
+			if (!FaroPermissionChecker.isGroupMember(
 					faroProject.getGroupId(), permissionChecker)) {
 
 				_abort(
@@ -134,9 +134,7 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 			return;
 		}
 
-		if (!_workspacePermission.hasChannelPermission(
-				faroChannel, permissionChecker)) {
-
+		if (!FaroPermissionChecker.isChannelMember(faroChannel)) {
 			_abort(
 				containerRequestContext, Response.Status.FORBIDDEN,
 				StringBundler.concat(
@@ -172,8 +170,5 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
-
-	@Reference
-	private WorkspacePermission _workspacePermission;
 
 }

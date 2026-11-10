@@ -169,7 +169,7 @@ public class JournalEditArticleDisplayContextTest {
 	}
 
 	private JournalArticle _addArticle(
-			long groupId, Map<Locale, String> friendlyURLMap)
+			Map<Locale, String> friendlyURLMap, long groupId)
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -204,7 +204,6 @@ public class JournalEditArticleDisplayContextTest {
 			RandomTestUtil.randomString());
 
 		_addArticle(
-			groupId,
 			HashMapBuilder.put(
 				LocaleUtil.CHINA, friendlyURL + "-zh"
 			).put(
@@ -215,10 +214,10 @@ public class JournalEditArticleDisplayContextTest {
 				LocaleUtil.SPAIN, friendlyURL + "-es"
 			).put(
 				LocaleUtil.US, friendlyURL + "-en"
-			).build());
+			).build(),
+			groupId);
 
 		JournalArticle journalArticle = _addArticle(
-			_group1.getGroupId(),
 			HashMapBuilder.put(
 				LocaleUtil.CHINA,
 				_getFriendlyURL(
@@ -239,7 +238,8 @@ public class JournalEditArticleDisplayContextTest {
 				LocaleUtil.US,
 				_getFriendlyURL(
 					friendlyURL + "-en", duplicatedLocales, LocaleUtil.US)
-			).build());
+			).build(),
+			_group1.getGroupId());
 
 		RenderRequest renderRequest = _getMockLiferayPortletRenderRequest(
 			journalArticle);

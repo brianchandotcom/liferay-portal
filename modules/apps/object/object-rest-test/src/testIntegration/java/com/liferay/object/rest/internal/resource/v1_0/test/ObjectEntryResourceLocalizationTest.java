@@ -88,7 +88,7 @@ public class ObjectEntryResourceLocalizationTest
 		_testGetObjectEntryTranslation(
 			StringBundler.concat(
 				getObjectDefinition4().getRESTContextPath(), StringPool.SLASH,
-				getObjectEntry5().getObjectEntryId(),
+				getLocalizedObjectEntry().getObjectEntryId(),
 				"/translations?sourceLanguageId=en_US",
 				"&targetLanguageIds=es_ES"),
 			null);
@@ -99,7 +99,7 @@ public class ObjectEntryResourceLocalizationTest
 		_testGetObjectEntryTranslation(
 			StringBundler.concat(
 				getObjectDefinition4().getRESTContextPath(), StringPool.SLASH,
-				getObjectEntry5().getObjectEntryId(),
+				getLocalizedObjectEntry().getObjectEntryId(),
 				"/translations/en_US?targetLanguageId=es_ES"),
 			HashMapBuilder.put(
 				HttpHeaders.ACCEPT, "application/xliff+xml"
@@ -249,7 +249,7 @@ public class ObjectEntryResourceLocalizationTest
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				getObjectDefinition4().getRESTContextPath() + StringPool.SLASH +
-					getObjectEntry5().getObjectEntryId(),
+					getLocalizedObjectEntry().getObjectEntryId(),
 				headers, Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);

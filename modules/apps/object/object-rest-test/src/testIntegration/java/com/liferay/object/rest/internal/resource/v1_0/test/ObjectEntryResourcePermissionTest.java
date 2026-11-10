@@ -89,8 +89,9 @@ public class ObjectEntryResourcePermissionTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetObjectEntriesPageWithObjectActions() throws Exception {
-		JSONObject actionsJSONObject1 = _getActionsJSONObject();
+	public void testGetObjectEntriesPageActions() throws Exception {
+		JSONObject actionsJSONObject1 =
+			_getObjectEntriesPageActionsJSONObject();
 
 		Assert.assertFalse(actionsJSONObject1.isNull("create"));
 		Assert.assertFalse(actionsJSONObject1.isNull("createBatch"));
@@ -102,7 +103,8 @@ public class ObjectEntryResourcePermissionTest
 		).withGuest(
 		).apply(
 			() -> {
-				JSONObject actionsJSONObject2 = _getActionsJSONObject();
+				JSONObject actionsJSONObject2 =
+					_getObjectEntriesPageActionsJSONObject();
 
 				Assert.assertTrue(
 					actionsJSONObject2.keySet(
@@ -129,7 +131,8 @@ public class ObjectEntryResourcePermissionTest
 			userName + "@liferay.com", "test1"
 		).apply(
 			() -> {
-				JSONObject actionsJSONObject3 = _getActionsJSONObject();
+				JSONObject actionsJSONObject3 =
+					_getObjectEntriesPageActionsJSONObject();
 
 				Assert.assertFalse(actionsJSONObject3.isNull("create"));
 				Assert.assertFalse(actionsJSONObject3.isNull("createBatch"));
@@ -149,7 +152,8 @@ public class ObjectEntryResourcePermissionTest
 			userName + "@liferay.com", "test1"
 		).apply(
 			() -> {
-				JSONObject actionsJSONObject4 = _getActionsJSONObject();
+				JSONObject actionsJSONObject4 =
+					_getObjectEntriesPageActionsJSONObject();
 
 				Assert.assertFalse(actionsJSONObject4.isNull("create"));
 				Assert.assertFalse(actionsJSONObject4.isNull("createBatch"));
@@ -210,43 +214,6 @@ public class ObjectEntryResourcePermissionTest
 	}
 
 	@Test
-	public void testGetObjectEntryPermissionsPage() throws Exception {
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		addResourcePermission(
-			ObjectActionKeys.ADD_OBJECT_ENTRY,
-			getObjectDefinition1().getResourceName(), role);
-
-		User user = addUser("test1", "test1");
-
-		roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
-
-		HTTPTestUtil.customize(
-		).withCredentials(
-			"test1@liferay.com", "test1"
-		).apply(
-			() -> {
-				JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						"externalReferenceCode", RandomTestUtil.randomString()
-					).toString(),
-					getEndpoint(getObjectDefinition1(), testGroupId),
-					Http.Method.POST);
-
-				jsonObject = _putCustomObjectEntryPermissionsPage(
-					jsonObject.getLong("id"),
-					JSONUtil.putAll(
-						getPermissionsJSONObject(
-							new String[0], role.getName())));
-
-				Assert.assertNotEquals(
-					jsonObject.getString("status"), "FORBIDDEN",
-					jsonObject.getString("status"));
-			}
-		);
-	}
-
-	@Test
 	@TestInfo("LPD-83639")
 	public void testGetObjectEntryShareAction() throws Exception {
 
@@ -287,7 +254,7 @@ public class ObjectEntryResourcePermissionTest
 			userGroupRoleLocalService.addUserGroupRole(
 				user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
 
-		JSONObject actionsJSONObject = _getActionsJSONObject(
+		JSONObject actionsJSONObject = _getObjectEntryActionsJSONObject(
 			objectDefinition, objectEntry, user, password);
 
 		Assert.assertTrue(actionsJSONObject.has("share"));
@@ -303,7 +270,7 @@ public class ObjectEntryResourcePermissionTest
 		userGroupRole = userGroupRoleLocalService.addUserGroupRole(
 			user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
 
-		actionsJSONObject = _getActionsJSONObject(
+		actionsJSONObject = _getObjectEntryActionsJSONObject(
 			objectDefinition, objectEntry, user, password);
 
 		Assert.assertFalse(actionsJSONObject.has("share"));
@@ -319,7 +286,7 @@ public class ObjectEntryResourcePermissionTest
 			ServiceContextTestUtil.getServiceContext(
 				depotEntry.getGroupId(), TestPropsValues.getUserId()));
 
-		actionsJSONObject = _getActionsJSONObject(
+		actionsJSONObject = _getObjectEntryActionsJSONObject(
 			objectDefinition, objectEntry, user, password);
 
 		_sharingEntryLocalService.deleteSharingEntry(
@@ -336,7 +303,7 @@ public class ObjectEntryResourcePermissionTest
 
 		roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
 
-		actionsJSONObject = _getActionsJSONObject(
+		actionsJSONObject = _getObjectEntryActionsJSONObject(
 			objectDefinition, objectEntry, user, password);
 
 		Assert.assertTrue(actionsJSONObject.has("share"));
@@ -351,23 +318,17 @@ public class ObjectEntryResourcePermissionTest
 				depotEntry.getGroupId(), user.getUserId()),
 			user.getUserId());
 
-		actionsJSONObject = _getActionsJSONObject(
+		actionsJSONObject = _getObjectEntryActionsJSONObject(
 			objectDefinition, userObjectEntry, user, password);
 
 		Assert.assertTrue(actionsJSONObject.has("share"));
 
 		// Without role
 
-		actionsJSONObject = _getActionsJSONObject(
+		actionsJSONObject = _getObjectEntryActionsJSONObject(
 			objectDefinition, objectEntry, user, password);
 
 		Assert.assertFalse(actionsJSONObject.has("share"));
-	}
-
-	@Test
-	public void testGetObjectEntryWithObjectActions() throws Exception {
-		_testGetObjectEntryWithObjectActions(getObjectDefinition1());
-		_testGetObjectEntryWithObjectActions(getSiteScopedObjectDefinition1());
 	}
 
 	@Test
@@ -411,26 +372,26 @@ public class ObjectEntryResourcePermissionTest
 		JSONObject objectEntryJSONObject =
 			_postCustomObjectEntryWithPermissions(true, null);
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getOwnerPermissionsJSONObject(getObjectDefinition1())),
 			objectEntryJSONObject);
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getOwnerPermissionsJSONObject(getObjectDefinition1())),
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method.PATCH, true, objectEntryJSONObject, null));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getOwnerPermissionsJSONObject(getObjectDefinition1())),
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method.PUT, true, objectEntryJSONObject, null));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getOwnerPermissionsJSONObject(getObjectDefinition1())),
 			_patchPutCustomObjectEntryWithPermissions(
 				Http.Method.PATCH, true, objectEntryJSONObject, null));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getOwnerPermissionsJSONObject(getObjectDefinition1())),
 			_patchPutCustomObjectEntryWithPermissions(
@@ -451,7 +412,7 @@ public class ObjectEntryResourcePermissionTest
 				getPermissionsJSONObject(new String[0], RoleConstants.OWNER))
 		).toString();
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONFactoryUtil.createJSONArray(),
 			HTTPTestUtil.invokeToJSONObject(
 				objectEntryJSON,
@@ -465,12 +426,12 @@ public class ObjectEntryResourcePermissionTest
 			objectEntryJSONObject.getString("externalReferenceCode"),
 			"?nestedFields=permissions");
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONFactoryUtil.createJSONArray(),
 			HTTPTestUtil.invokeToJSONObject(
 				objectEntryJSON, byExternalReferenceCodeEndpoint,
 				Http.Method.PATCH));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONFactoryUtil.createJSONArray(),
 			HTTPTestUtil.invokeToJSONObject(
 				objectEntryJSON, byExternalReferenceCodeEndpoint,
@@ -480,16 +441,16 @@ public class ObjectEntryResourcePermissionTest
 			getObjectDefinition1().getRESTContextPath(), StringPool.SLASH,
 			objectEntryJSONObject.getLong("id"), "?nestedFields=permissions");
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONFactoryUtil.createJSONArray(),
 			HTTPTestUtil.invokeToJSONObject(
 				objectEntryJSON, endpoint, Http.Method.PATCH));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONFactoryUtil.createJSONArray(),
 			HTTPTestUtil.invokeToJSONObject(
 				objectEntryJSON, endpoint, Http.Method.PUT));
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getOwnerPermissionsJSONObject(getObjectDefinition1())),
 			HTTPTestUtil.invokeToJSONObject(
@@ -518,7 +479,7 @@ public class ObjectEntryResourcePermissionTest
 					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
 					role2.getName())));
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
@@ -530,7 +491,7 @@ public class ObjectEntryResourcePermissionTest
 
 		Role role3 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE, ActionKeys.UPDATE},
@@ -544,7 +505,7 @@ public class ObjectEntryResourcePermissionTest
 						new String[] {ActionKeys.UPDATE}, role1.getName()),
 					getPermissionsJSONObject(
 						new String[] {ActionKeys.DELETE}, role3.getName()))));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE, ActionKeys.UPDATE},
@@ -560,7 +521,7 @@ public class ObjectEntryResourcePermissionTest
 					getPermissionsJSONObject(
 						new String[] {ActionKeys.DELETE, ActionKeys.VIEW},
 						role3.getName()))));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE}, role1.getName()),
@@ -571,7 +532,7 @@ public class ObjectEntryResourcePermissionTest
 				JSONUtil.putAll(
 					getPermissionsJSONObject(
 						new String[] {ActionKeys.VIEW}, role3.getName()))));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE}, role1.getName()),
@@ -589,26 +550,26 @@ public class ObjectEntryResourcePermissionTest
 			getPermissionsJSONObject(
 				new String[] {ActionKeys.DELETE}, role1.getName()));
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			companyPermissionsJSONArray,
 			_postCustomObjectEntryWithPermissions(
 				true, JSONFactoryUtil.createJSONArray()));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			companyPermissionsJSONArray,
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method.PATCH, true, objectEntryJSONObject,
 				JSONFactoryUtil.createJSONArray()));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			companyPermissionsJSONArray,
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method.PUT, true, objectEntryJSONObject,
 				JSONFactoryUtil.createJSONArray()));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			companyPermissionsJSONArray,
 			_patchPutCustomObjectEntryWithPermissions(
 				Http.Method.PATCH, true, objectEntryJSONObject,
 				JSONFactoryUtil.createJSONArray()));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			companyPermissionsJSONArray,
 			_patchPutCustomObjectEntryWithPermissions(
 				Http.Method.PUT, true, objectEntryJSONObject,
@@ -642,6 +603,13 @@ public class ObjectEntryResourcePermissionTest
 			Http.Method.PUT, false, objectEntryJSONObject, null);
 
 		Assert.assertNull(objectEntryJSONObject.get("permissions"));
+	}
+
+	@Test
+	public void testPostCustomObjectEntryWithObjectActions() throws Exception {
+		_testPostCustomObjectEntryWithObjectActions(getObjectDefinition1());
+		_testPostCustomObjectEntryWithObjectActions(
+			getSiteScopedObjectDefinition1());
 	}
 
 	@Test
@@ -681,7 +649,7 @@ public class ObjectEntryResourcePermissionTest
 
 		Role role3 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE, ActionKeys.UPDATE},
@@ -695,7 +663,7 @@ public class ObjectEntryResourcePermissionTest
 						new String[] {ActionKeys.UPDATE}, role1.getName()),
 					getPermissionsJSONObject(
 						new String[] {ActionKeys.DELETE}, role3.getName()))));
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			JSONUtil.putAll(
 				getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE}, role1.getName()),
@@ -713,11 +681,50 @@ public class ObjectEntryResourcePermissionTest
 			getPermissionsJSONObject(
 				new String[] {ActionKeys.DELETE}, role1.getName()));
 
-		_assertCustomObjectEntryWithPermissions(
+		_assertPermissions(
 			companyPermissionsJSONArray,
 			_putCustomObjectEntryPermissionsPage(
 				objectEntryJSONObject.getLong("id"),
 				JSONFactoryUtil.createJSONArray()));
+	}
+
+	@Test
+	public void testPutCustomObjectEntryPermissionsPageAsOwner()
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			getObjectDefinition1().getResourceName(), role);
+
+		User user = addUser("test1", "test1");
+
+		roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test1@liferay.com", "test1"
+		).apply(
+			() -> {
+				JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", RandomTestUtil.randomString()
+					).toString(),
+					getEndpoint(getObjectDefinition1(), testGroupId),
+					Http.Method.POST);
+
+				jsonObject = _putCustomObjectEntryPermissionsPage(
+					jsonObject.getLong("id"),
+					JSONUtil.putAll(
+						getPermissionsJSONObject(
+							new String[0], role.getName())));
+
+				Assert.assertNotEquals(
+					jsonObject.getString("status"), "FORBIDDEN",
+					jsonObject.getString("status"));
+			}
+		);
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -759,7 +766,7 @@ public class ObjectEntryResourcePermissionTest
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	private void _assertCustomObjectEntryWithPermissions(
+	private void _assertPermissions(
 			JSONArray expectedPermissionsJSONArray, JSONObject jsonObject)
 		throws Exception {
 
@@ -782,42 +789,6 @@ public class ObjectEntryResourcePermissionTest
 		).put(
 			"method", method
 		).build();
-	}
-
-	private JSONObject _getActionsJSONObject() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, getObjectDefinition4().getRESTContextPath(), Http.Method.GET);
-
-		if (!jsonObject.has("actions")) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		return jsonObject.getJSONObject("actions");
-	}
-
-	private JSONObject _getActionsJSONObject(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			User user, String password)
-		throws Exception {
-
-		AtomicReference<JSONObject> atomicReference = new AtomicReference<>();
-
-		HTTPTestUtil.customize(
-		).withCredentials(
-			user.getEmailAddress(), password
-		).apply(
-			() -> {
-				JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-					null,
-					objectDefinition.getRESTContextPath() + StringPool.SLASH +
-						objectEntry.getObjectEntryId(),
-					Http.Method.GET);
-
-				atomicReference.set(jsonObject.getJSONObject("actions"));
-			}
-		);
-
-		return atomicReference.get();
 	}
 
 	private Map<String, Map<String, String>> _getExpectedActions(
@@ -905,6 +876,44 @@ public class ObjectEntryResourcePermissionTest
 					externalReferenceCode, "/versions"),
 				"GET")
 		).build();
+	}
+
+	private JSONObject _getObjectEntriesPageActionsJSONObject()
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, getObjectDefinition4().getRESTContextPath(), Http.Method.GET);
+
+		if (!jsonObject.has("actions")) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		return jsonObject.getJSONObject("actions");
+	}
+
+	private JSONObject _getObjectEntryActionsJSONObject(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			User user, String password)
+		throws Exception {
+
+		AtomicReference<JSONObject> atomicReference = new AtomicReference<>();
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			user.getEmailAddress(), password
+		).apply(
+			() -> {
+				JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+					null,
+					objectDefinition.getRESTContextPath() + StringPool.SLASH +
+						objectEntry.getObjectEntryId(),
+					Http.Method.GET);
+
+				atomicReference.set(jsonObject.getJSONObject("actions"));
+			}
+		);
+
+		return atomicReference.get();
 	}
 
 	private JSONObject
@@ -1004,7 +1013,7 @@ public class ObjectEntryResourcePermissionTest
 			actionsJSONObject.toMap());
 	}
 
-	private void _testGetObjectEntryWithObjectActions(
+	private void _testPostCustomObjectEntryWithObjectActions(
 			ObjectDefinition objectDefinition)
 		throws Exception {
 

@@ -1394,7 +1394,7 @@ public class ObjectEntryResourceNestedFieldsTest
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
-				getEndpoint(
+				getNestedFieldsEndpoint(
 					companyObjectEntry.getObjectEntryId(), objectRelationship1,
 					getObjectDefinition1()),
 				Http.Method.GET
@@ -1434,7 +1434,7 @@ public class ObjectEntryResourceNestedFieldsTest
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(
-					getEndpoint(
+					getNestedFieldsEndpoint(
 						siteObjectEntry1.getObjectEntryId(),
 						objectRelationship1, getSiteScopedObjectDefinition1()),
 					",", objectRelationship2.getName(), "&nestedFieldsDepth=2"),
@@ -1484,7 +1484,7 @@ public class ObjectEntryResourceNestedFieldsTest
 				).build());
 
 		try {
-			String endpoint = getEndpoint(
+			String endpoint = getNestedFieldsEndpoint(
 				objectEntry1.getObjectEntryId(), objectRelationship1,
 				getObjectDefinition1());
 
@@ -1551,10 +1551,11 @@ public class ObjectEntryResourceNestedFieldsTest
 				objectFieldLocalService, objectRelationshipLocalService,
 				objectDefinitionRootNode.getPrimaryKey());
 
-			JSONObject objectEntryAJSONObject = getObjectEntryJSONObject(
-				null, "rootModelHierarchy",
-				objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionRootNode.getPrimaryKey()));
+			JSONObject objectEntryAJSONObject =
+				getNestedFieldsObjectEntryJSONObject(
+					null, "rootModelHierarchy",
+					objectDefinitionLocalService.getObjectDefinition(
+						objectDefinitionRootNode.getPrimaryKey()));
 
 			_assertRelatedObjectEntryExternalReferenceCode(
 				_getChildNodeEdge(0, objectEntryTree.getRootNode()), "AA1",
@@ -1868,7 +1869,7 @@ public class ObjectEntryResourceNestedFieldsTest
 
 		_assertNestedFieldsInRelationships(
 			0, GetterUtil.getInteger(nestedFieldDepth, 1),
-			getObjectEntryJSONObject(
+			getNestedFieldsObjectEntryJSONObject(
 				nestedFieldDepth, nestedFieldName + ",permissions",
 				objectDefinition),
 			expectedFieldName, objectFieldNamesAndObjectFieldValues,
@@ -1883,7 +1884,7 @@ public class ObjectEntryResourceNestedFieldsTest
 
 		_assertNestedFieldsInRelationships(
 			0, GetterUtil.getInteger(nestedFieldDepth, 1),
-			getObjectEntryJSONObject(
+			getNestedFieldsObjectEntryJSONObject(
 				nestedFieldDepth, nestedFieldName, objectDefinition),
 			expectedFieldName, objectFieldNamesAndObjectFieldValues, null,
 			type);
@@ -1914,7 +1915,7 @@ public class ObjectEntryResourceNestedFieldsTest
 			() -> {
 				JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 					null,
-					getEndpoint(
+					getNestedFieldsEndpoint(
 						objectEntry1.getObjectEntryId(), objectRelationship1,
 						getObjectDefinition1()),
 					Http.Method.GET);

@@ -186,7 +186,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_testPostCustomObjectEntryWithNestedCustomObjectEntries(
+		_testPostCustomObjectEntryWithNestedCustomObjectEntriesInXToManyRelationship(
 			getObjectDefinition1(),
 			createObjectEntriesJSONArray(
 				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
@@ -202,7 +202,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_testPostCustomObjectEntryWithNestedCustomObjectEntries(
+		_testPostCustomObjectEntryWithNestedCustomObjectEntriesInXToManyRelationship(
 			getObjectDefinition1(),
 			_putScopeKey(
 				createObjectEntriesJSONArray(
@@ -294,7 +294,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_testPostCustomObjectEntryWithNestedCustomObjectEntries(
+		_testPostCustomObjectEntryWithNestedCustomObjectEntriesInXToManyRelationship(
 			getSiteScopedObjectDefinition1(),
 			createObjectEntriesJSONArray(
 				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
@@ -315,7 +315,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_testPostCustomObjectEntryWithNestedCustomObjectEntries(
+		_testPostCustomObjectEntryWithNestedCustomObjectEntriesInXToManyRelationship(
 			getObjectDefinition1(),
 			createObjectEntriesJSONArray(
 				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
@@ -329,21 +329,21 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		// Site scope
 
-		objectRelationship6 = ObjectRelationshipTestUtil.addObjectRelationship(
+		objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
 			getSiteScopedObjectDefinition1(), getSiteScopedObjectDefinition2(),
 			TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_testPostCustomObjectEntryWithNestedCustomObjectEntries(
+		_testPostCustomObjectEntryWithNestedCustomObjectEntriesInXToManyRelationship(
 			getSiteScopedObjectDefinition1(),
 			createObjectEntriesJSONArray(
 				new String[] {ERC_VALUE_1, ERC_VALUE_2}, OBJECT_FIELD_NAME_2,
 				new String[] {
 					NEW_OBJECT_FIELD_VALUE_1, NEW_OBJECT_FIELD_VALUE_2
 				}),
-			objectRelationship6);
+			objectRelationship2);
 		_testPostCustomObjectEntryWithNestedCustomObjectEntriesInManyToOneRelationship(
-			getSiteScopedObjectDefinition2(), objectRelationship6,
+			getSiteScopedObjectDefinition2(), objectRelationship2,
 			getSiteScopedObjectDefinition1());
 	}
 
@@ -457,7 +457,8 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			));
 	}
 
-	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray)
+	private void _assertNestedObjectEntries(
+			JSONArray nestedObjectEntriesJSONArray)
 		throws Exception {
 
 		JSONAssert.assertEquals(
@@ -871,48 +872,6 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 	}
 
-	private void _testPostCustomObjectEntryWithNestedCustomObjectEntries(
-			ObjectDefinition objectDefinition, JSONArray objectEntriesJSONArray,
-			ObjectRelationship objectRelationship)
-		throws Exception {
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				objectRelationship.getName(), objectEntriesJSONArray
-			).toString(),
-			getEndpoint(objectDefinition, testGroupId), Http.Method.POST);
-
-		Assert.assertEquals(
-			0,
-			jsonObject.getJSONObject(
-				"status"
-			).get(
-				"code"
-			));
-
-		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-			objectRelationship.getName());
-
-		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
-
-		_assertEquals(nestedObjectEntriesJSONArray);
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(), StringPool.SLASH,
-				jsonObject.getString("id"), "?nestedFields=",
-				objectRelationship.getName()),
-			Http.Method.GET);
-
-		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-			objectRelationship.getName());
-
-		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
-
-		_assertEquals(nestedObjectEntriesJSONArray);
-	}
-
 	private void
 			_testPostCustomObjectEntryWithNestedCustomObjectEntriesInManyToOneRelationship(
 				ObjectDefinition objectDefinition,
@@ -959,6 +918,50 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 		_assertObjectEntryField(
 			jsonObject.getJSONObject(nestedFieldName), OBJECT_FIELD_NAME_1,
 			NEW_OBJECT_FIELD_VALUE_1);
+	}
+
+	private void
+			_testPostCustomObjectEntryWithNestedCustomObjectEntriesInXToManyRelationship(
+				ObjectDefinition objectDefinition,
+				JSONArray objectEntriesJSONArray,
+				ObjectRelationship objectRelationship)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				objectRelationship.getName(), objectEntriesJSONArray
+			).toString(),
+			getEndpoint(objectDefinition, testGroupId), Http.Method.POST);
+
+		Assert.assertEquals(
+			0,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
+
+		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
+
+		_assertNestedObjectEntries(nestedObjectEntriesJSONArray);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(), StringPool.SLASH,
+				jsonObject.getString("id"), "?nestedFields=",
+				objectRelationship.getName()),
+			Http.Method.GET);
+
+		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
+
+		_assertNestedObjectEntries(nestedObjectEntriesJSONArray);
 	}
 
 	private void

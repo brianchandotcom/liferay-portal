@@ -55,7 +55,7 @@ public class ObjectEntryResourceVersionsTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetObjectEntriesVersionsPage() throws Exception {
+	public void testGetByExternalReferenceCodeVersionsPage() throws Exception {
 		getObjectDefinition1().setEnableObjectEntryVersioning(true);
 
 		objectDefinition1 = objectDefinitionLocalService.updateObjectDefinition(

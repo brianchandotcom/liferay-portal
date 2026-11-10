@@ -169,7 +169,11 @@ public class BeanParamUtil {
 		Function<T, String> function, String defaultValue) {
 
 		if (bean != null) {
-			defaultValue = function.apply(bean);
+			String value = function.apply(bean);
+
+			if (value != null) {
+				defaultValue = value;
+			}
 		}
 
 		return ParamUtil.get(httpServletRequest, param, defaultValue);
@@ -188,7 +192,11 @@ public class BeanParamUtil {
 		Function<T, String> function, String defaultValue) {
 
 		if (bean != null) {
-			defaultValue = function.apply(bean);
+			String value = function.apply(bean);
+
+			if (value != null) {
+				defaultValue = value;
+			}
 		}
 
 		return ParamUtil.get(portletRequest, param, defaultValue);

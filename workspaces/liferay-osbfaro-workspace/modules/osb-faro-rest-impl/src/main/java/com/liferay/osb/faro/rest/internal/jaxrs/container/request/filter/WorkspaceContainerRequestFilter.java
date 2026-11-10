@@ -128,8 +128,9 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 		if (faroChannel == null) {
 			_abort(
 				containerRequestContext, Response.Status.NOT_FOUND,
-				"No property was found with channel ID " + channelId +
-					" in the workspace with group ID " + groupId);
+				StringBundler.concat(
+					"No property was found with channel ID ", channelId,
+					" in the workspace with group ID ", groupId));
 
 			return;
 		}

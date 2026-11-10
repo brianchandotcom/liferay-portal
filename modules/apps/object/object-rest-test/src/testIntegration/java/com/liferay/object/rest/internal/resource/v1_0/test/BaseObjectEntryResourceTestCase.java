@@ -317,15 +317,14 @@ public abstract class BaseObjectEntryResourceTestCase {
 	}
 
 	protected ObjectRelationship addObjectRelationshipAndRelateObjectEntries(
-			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, long primaryKey1,
+			ObjectDefinition objectDefinition,
+			ObjectDefinition relatedObjectDefinition, long primaryKey1,
 			long primaryKey2, String type)
 		throws Exception {
 
 		return addObjectRelationshipAndRelateObjectEntries(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			objectDefinition1, objectDefinition2, primaryKey1, primaryKey2,
-			type);
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, objectDefinition,
+			relatedObjectDefinition, primaryKey1, primaryKey2, type);
 	}
 
 	protected ObjectRelationship addObjectRelationshipAndRelateObjectEntries(
@@ -338,14 +337,14 @@ public abstract class BaseObjectEntryResourceTestCase {
 	}
 
 	protected ObjectRelationship addObjectRelationshipAndRelateObjectEntries(
-			String deletionType, ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, long primaryKey1,
+			String deletionType, ObjectDefinition objectDefinition,
+			ObjectDefinition relatedObjectDefinition, long primaryKey1,
 			long primaryKey2, String type)
 		throws Exception {
 
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
-				deletionType, objectDefinition1, objectDefinition2,
+				deletionType, objectDefinition, relatedObjectDefinition,
 				TestPropsValues.getUserId(), type);
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
@@ -422,10 +421,10 @@ public abstract class BaseObjectEntryResourceTestCase {
 
 	protected void assertItem(
 		int index, JSONObject jsonObject, String objectFieldName,
-		Object value) {
+		Object objectFieldValue) {
 
 		Assert.assertEquals(
-			String.valueOf(value),
+			String.valueOf(objectFieldValue),
 			JSONUtil.getValueAsString(
 				jsonObject, "JSONArray/items", "JSONObject/" + index,
 				"Object/" + objectFieldName));
@@ -455,15 +454,15 @@ public abstract class BaseObjectEntryResourceTestCase {
 	}
 
 	protected void assertPatchCustomObjectEntry(
-			String endpoint, JSONObject expectedJSONObject, String fieldName,
-			Object fieldValue)
+			String endpoint, JSONObject expectedJSONObject,
+			String objectFieldName, Object objectFieldValue)
 		throws Exception {
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					fieldName, fieldValue
+					objectFieldName, objectFieldValue
 				).put(
 					"externalReferenceCode",
 					expectedJSONObject.get("externalReferenceCode")
@@ -1103,7 +1102,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 	}
 
 	protected JSONArray createObjectEntriesJSONArray(
-			String[] externalReferenceCodeValues, String objectFieldName,
+			String[] externalReferenceCodes, String objectFieldName,
 			String[] objectFieldValues)
 		throws Exception {
 
@@ -1114,7 +1113,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 				JSONUtil.put(
 					objectFieldName, objectFieldValues[i]
 				).put(
-					"externalReferenceCode", externalReferenceCodeValues[i]
+					"externalReferenceCode", externalReferenceCodes[i]
 				).toString());
 
 			jsonArray.put(jsonObject);

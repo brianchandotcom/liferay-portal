@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -123,9 +124,14 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 		if ((date == null) ||
 			(date.getTime() < (System.currentTimeMillis() + Time.MINUTE))) {
 
-			throw new PortalException(
+			SchedulerException schedulerException = new SchedulerException(
 				"Launch set " + launchSetId +
 					" must be scheduled at least one minute in the future");
+
+			schedulerException.setType(
+				SchedulerException.TYPE_INVALID_START_DATE);
+
+			throw schedulerException;
 		}
 
 		ServiceContext serviceContext = _createServiceContext(

@@ -91,14 +91,13 @@ public class DeleteDataDefinitionMVCActionCommandTest {
 				_createMockLiferayPortletActionRequest(usedDataDefinition),
 				new MockLiferayPortletActionResponse()));
 
+		Assert.assertNotNull(
+			_ddmStructureLocalService.fetchStructure(
+				usedDataDefinition.getId()));
 		Assert.assertTrue(
 			portletException.getCause() instanceof
 				RequiredStructureException.
 					MustNotDeleteStructureReferencedByStructureLinks);
-
-		Assert.assertNotNull(
-			_ddmStructureLocalService.fetchStructure(
-				usedDataDefinition.getId()));
 	}
 
 	private DataDefinition _addDataDefinition() throws Exception {

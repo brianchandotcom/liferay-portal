@@ -349,16 +349,17 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 
 		Channel channel = testGetChannelsPage_addChannel(randomChannel);
 
-		Page<Channel> page = channelResource.getChannelsPage(
+		Page<Channel> channelsPage = channelResource.getChannelsPage(
 			null,
 			"externalReferenceCode eq '" + channel.getExternalReferenceCode() +
 				"'",
 			Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(1, channelsPage.getTotalCount());
 
 		assertEquals(
-			Collections.singletonList(channel), (List<Channel>)page.getItems());
+			Collections.singletonList(channel),
+			(List<Channel>)channelsPage.getItems());
 	}
 
 	private void _testPatchChannelByExternalReferenceCodeWithAccountExternalReferenceCode()

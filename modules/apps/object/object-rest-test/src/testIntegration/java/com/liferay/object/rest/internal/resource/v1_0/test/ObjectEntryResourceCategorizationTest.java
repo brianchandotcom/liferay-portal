@@ -314,10 +314,12 @@ public class ObjectEntryResourceCategorizationTest
 
 		// TODO LPS-173383 Add test coverage for invalid state transitions
 
-		getObjectDefinition1().setEnableCategorization(false);
+		ObjectDefinition objectDefinition = getObjectDefinition1();
 
-		objectDefinition1 = objectDefinitionLocalService.updateObjectDefinition(
-			getObjectDefinition1());
+		objectDefinition.setEnableCategorization(false);
+
+		objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
 
 		try {
 			TaxonomyCategory taxonomyCategory =
@@ -357,11 +359,10 @@ public class ObjectEntryResourceCategorizationTest
 				assetCategories.toString(), 0, assetCategories.size());
 		}
 		finally {
-			getObjectDefinition1().setEnableCategorization(true);
+			objectDefinition.setEnableCategorization(true);
 
-			objectDefinition1 =
-				objectDefinitionLocalService.updateObjectDefinition(
-					getObjectDefinition1());
+			objectDefinitionLocalService.updateObjectDefinition(
+				objectDefinition);
 		}
 	}
 

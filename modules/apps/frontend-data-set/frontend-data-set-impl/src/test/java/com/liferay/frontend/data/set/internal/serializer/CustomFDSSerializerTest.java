@@ -346,10 +346,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_resetFDSSerializer();
 
 			_mockSerializeCreationMenu(
-				FDS_NAMES[0],
 				FDSActionUtil.getFDSCreationActionExternalReferenceCode(
 					FDS_NAMES[0], IDS[0]),
-				fdsEntryItemImportPolicy);
+				fdsEntryItemImportPolicy, FDS_NAMES[0]);
 
 			CreationMenu creationMenu =
 				_customFDSSerializer.serializeCreationMenu(
@@ -905,10 +904,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_resetFDSSerializer();
 
 			_mockSerializeItemsActions(
-				FDS_NAMES[0],
 				FDSActionUtil.getFDSItemActionExternalReferenceCode(
 					FDS_NAMES[0], IDS[0]),
-				fdsEntryItemImportPolicy);
+				fdsEntryItemImportPolicy, FDS_NAMES[0]);
 
 			Assert.assertEquals(
 				Collections.singletonList(fdsActionDropdownItem),
@@ -1923,8 +1921,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private void _mockSerializeCreationMenu(
-		String fdsName, String externalReferenceCode,
-		FDSEntryItemImportPolicy fdsEntryItemImportPolicy) {
+		String externalReferenceCode,
+		FDSEntryItemImportPolicy fdsEntryItemImportPolicy, String fdsName) {
 
 		Mockito.when(
 			_customFDSSerializer.getSortedRelatedObjectEntries(
@@ -2020,8 +2018,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private void _mockSerializeItemsActions(
-		String fdsName, String externalReferenceCode,
-		FDSEntryItemImportPolicy fdsEntryItemImportPolicy) {
+		String externalReferenceCode,
+		FDSEntryItemImportPolicy fdsEntryItemImportPolicy, String fdsName) {
 
 		Mockito.when(
 			_customFDSSerializer.getSortedRelatedObjectEntries(

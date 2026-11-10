@@ -288,14 +288,8 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 				OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1
 			).put(
 				"externalReferenceCode",
-				() -> {
-					StringBuilder stringBuilder = new StringBuilder(
-						RandomTestUtil.randomString());
-
-					stringBuilder.setCharAt(4, 'a');
-
-					return stringBuilder.toString();
-				}
+				RandomTestUtil.randomString(4) + "a" +
+					RandomTestUtil.randomString(3)
 			).build());
 		objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			getObjectDefinition2(), OBJECT_FIELD_NAME_2, OBJECT_FIELD_VALUE_2);
@@ -2407,11 +2401,10 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 
 		// Custom object field
 
-		String objectFieldValue1 = String.valueOf(OBJECT_FIELD_VALUE_1);
 		String objectFieldValue3 = String.valueOf(OBJECT_FIELD_VALUE_3);
 
 		assertFilterString(
-			OBJECT_FIELD_NAME_1, objectFieldValue1,
+			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1,
 			URLCodec.encodeURL(
 				String.format(
 					"contains(%s/%s/%s,'%s')", objectRelationship1.getName(),
@@ -2419,7 +2412,7 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 					objectFieldValue3.substring(1))),
 			getObjectDefinition1());
 		assertFilterString(
-			OBJECT_FIELD_NAME_1, objectFieldValue1,
+			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1,
 			URLCodec.encodeURL(
 				String.format(
 					"startswith(%s/%s/%s,'%s')", objectRelationship1.getName(),
@@ -2429,8 +2422,10 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 
 		// Other side, custom object field
 
+		String objectFieldValue1 = String.valueOf(OBJECT_FIELD_VALUE_1);
+
 		assertFilterString(
-			OBJECT_FIELD_NAME_3, objectFieldValue3,
+			OBJECT_FIELD_NAME_3, OBJECT_FIELD_VALUE_3,
 			URLCodec.encodeURL(
 				String.format(
 					"contains(%s/%s/%s,'%s')", objectRelationship2.getName(),
@@ -2438,7 +2433,7 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 					objectFieldValue1.substring(1))),
 			getObjectDefinition3());
 		assertFilterString(
-			OBJECT_FIELD_NAME_3, objectFieldValue3,
+			OBJECT_FIELD_NAME_3, OBJECT_FIELD_VALUE_3,
 			URLCodec.encodeURL(
 				String.format(
 					"startswith(%s/%s/%s,'%s')", objectRelationship2.getName(),
@@ -2452,7 +2447,7 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 			objectEntry1.getExternalReferenceCode();
 
 		assertFilterString(
-			OBJECT_FIELD_NAME_3, objectFieldValue3,
+			OBJECT_FIELD_NAME_3, OBJECT_FIELD_VALUE_3,
 			URLCodec.encodeURL(
 				String.format(
 					"contains(%s/%s/externalReferenceCode,'%s')",
@@ -2461,7 +2456,7 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 					objectEntry1ExternalReferenceCode.substring(1))),
 			getObjectDefinition3());
 		assertFilterString(
-			OBJECT_FIELD_NAME_3, objectFieldValue3,
+			OBJECT_FIELD_NAME_3, OBJECT_FIELD_VALUE_3,
 			URLCodec.encodeURL(
 				String.format(
 					"startswith(%s/%s/externalReferenceCode,'%s')",
@@ -2476,7 +2471,7 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 			objectEntry3.getExternalReferenceCode();
 
 		assertFilterString(
-			OBJECT_FIELD_NAME_1, objectFieldValue1,
+			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1,
 			URLCodec.encodeURL(
 				String.format(
 					"contains(%s/%s/externalReferenceCode,'%s')",
@@ -2485,7 +2480,7 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 					objectEntry3ExternalReferenceCode.substring(1))),
 			getObjectDefinition1());
 		assertFilterString(
-			OBJECT_FIELD_NAME_1, objectFieldValue1,
+			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1,
 			URLCodec.encodeURL(
 				String.format(
 					"startswith(%s/%s/externalReferenceCode,'%s')",

@@ -457,25 +457,6 @@ public abstract class BaseObjectEntryResourceTestCase {
 	}
 
 	protected void assertPatchCustomObjectEntry(
-			String endpoint, JSONObject expectedJSONObject,
-			String objectFieldName, Object objectFieldValue)
-		throws Exception {
-
-		JSONAssert.assertEquals(
-			expectedJSONObject.toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					objectFieldName, objectFieldValue
-				).put(
-					"externalReferenceCode",
-					expectedJSONObject.get("externalReferenceCode")
-				).toString(),
-				endpoint, Http.Method.PATCH
-			).toString(),
-			JSONCompareMode.LENIENT);
-	}
-
-	protected void assertPatchCustomObjectEntry(
 			UnsafeFunction<JSONObject, String, Exception>
 				endpointUnsafeFunction,
 			ObjectDefinition childObjectDefinition,
@@ -604,7 +585,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 		expectedJSONObject = _cloneJSONObject(
 			expectedJSONObject, OBJECT_FIELD_NAME_BOOLEAN, !randomBoolean);
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_BOOLEAN,
 			!randomBoolean);
 
@@ -616,7 +597,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, OBJECT_FIELD_NAME_DATE,
 			dateFormat.format(date) + "T00:00:00.000Z");
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_DATE,
 			dateFormat.format(date));
 
@@ -626,7 +607,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, OBJECT_FIELD_NAME_DATE_TIME_INPUT,
 			StringUtil.removeLast(dateTimeDateFormat.format(date), "Z"));
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_DATE_TIME_INPUT,
 			dateTimeDateFormat.format(date));
 
@@ -636,7 +617,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, OBJECT_FIELD_NAME_DATE_TIME_UTC,
 			dateTimeDateFormat.format(date));
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_DATE_TIME_UTC,
 			dateTimeDateFormat.format(date));
 
@@ -645,7 +626,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 		expectedJSONObject = _cloneJSONObject(
 			expectedJSONObject, OBJECT_FIELD_NAME_DECIMAL, randomFloat + 1);
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_DECIMAL,
 			randomFloat + 1);
 
@@ -654,7 +635,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 		expectedJSONObject = _cloneJSONObject(
 			expectedJSONObject, OBJECT_FIELD_NAME_INTEGER, randomInt + 1);
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_INTEGER,
 			randomInt + 1);
 
@@ -663,7 +644,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 		expectedJSONObject = _cloneJSONObject(
 			expectedJSONObject, OBJECT_FIELD_NAME_LONG_INTEGER, randomLong + 1);
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_LONG_INTEGER,
 			randomLong + 1);
 
@@ -673,7 +654,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, OBJECT_FIELD_NAME_LONG_TEXT,
 			"b" + randomString1);
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_LONG_TEXT,
 			"b" + randomString1);
 
@@ -685,7 +666,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 				_toListTypeEntryJSONObject(_listTypeEntry2),
 				_toListTypeEntryJSONObject(_listTypeEntry3)));
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject,
 			OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 			JSONUtil.putAll(LIST_TYPE_ENTRY_KEY_2, LIST_TYPE_ENTRY_KEY_3));
@@ -696,7 +677,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, OBJECT_FIELD_NAME_PICKLIST,
 			_toListTypeEntryJSONObject(_listTypeEntry1));
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_PICKLIST,
 			LIST_TYPE_ENTRY_KEY_1);
 
@@ -706,7 +687,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, objectRelationship1ERCObjectFieldName,
 			objectEntry3.getExternalReferenceCode());
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, objectRelationship1ERCObjectFieldName,
 			objectEntry3.getExternalReferenceCode());
 
@@ -716,7 +697,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, objectRelationship2IdObjectFieldName,
 			objectEntry3.getObjectEntryId());
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, objectRelationship2IdObjectFieldName,
 			objectEntry3.getObjectEntryId());
 
@@ -728,7 +709,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, OBJECT_FIELD_NAME_PRECISION_DECIMAL,
 			bigDecimal);
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_PRECISION_DECIMAL,
 			bigDecimal);
 
@@ -738,7 +719,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			expectedJSONObject, _OBJECT_FIELD_NAME_RICH_TEXT,
 			"b" + randomString2);
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, _OBJECT_FIELD_NAME_RICH_TEXT,
 			"b" + randomString2);
 
@@ -747,7 +728,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 		expectedJSONObject = _cloneJSONObject(
 			expectedJSONObject, OBJECT_FIELD_NAME_TEXT, "b" + randomString3);
 
-		assertPatchCustomObjectEntry(
+		_assertPatchCustomObjectEntry(
 			endpoint, expectedJSONObject, OBJECT_FIELD_NAME_TEXT,
 			"b" + randomString3);
 	}
@@ -1612,6 +1593,25 @@ public abstract class BaseObjectEntryResourceTestCase {
 
 		MANY_TO_MANY, MANY_TO_ONE, ONE_TO_MANY
 
+	}
+
+	private void _assertPatchCustomObjectEntry(
+			String endpoint, JSONObject expectedJSONObject,
+			String objectFieldName, Object objectFieldValue)
+		throws Exception {
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					objectFieldName, objectFieldValue
+				).put(
+					"externalReferenceCode",
+					expectedJSONObject.get("externalReferenceCode")
+				).toString(),
+				endpoint, Http.Method.PATCH
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private JSONObject _cloneJSONObject(

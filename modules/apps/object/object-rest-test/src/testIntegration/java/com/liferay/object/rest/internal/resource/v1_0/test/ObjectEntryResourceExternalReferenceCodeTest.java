@@ -253,14 +253,12 @@ public class ObjectEntryResourceExternalReferenceCodeTest
 	public void testPatchByExternalReferenceCodeCustomObjectEntry()
 		throws Exception {
 
-		ObjectDefinition objectDefinition1 = getObjectDefinition1();
-
 		assertPatchCustomObjectEntry(
 			jsonObject ->
-				objectDefinition1.getRESTContextPath() +
+				getObjectDefinition1().getRESTContextPath() +
 					"/by-external-reference-code/" +
 						jsonObject.getString("externalReferenceCode"),
-			objectDefinition1, getObjectDefinition2(), testGroupId);
+			getObjectDefinition1(), getObjectDefinition2(), testGroupId);
 	}
 
 	@Test
@@ -345,14 +343,12 @@ public class ObjectEntryResourceExternalReferenceCodeTest
 	public void testPutByExternalReferenceCodeCustomObjectEntry()
 		throws Exception {
 
-		ObjectDefinition objectDefinition1 = getObjectDefinition1();
-
 		assertPutCustomObjectEntry(
 			jsonObject ->
-				objectDefinition1.getRESTContextPath() +
+				getObjectDefinition1().getRESTContextPath() +
 					"/by-external-reference-code/" +
 						jsonObject.getString("externalReferenceCode"),
-			objectDefinition1, getObjectDefinition2(), testGroupId);
+			getObjectDefinition1(), getObjectDefinition2(), testGroupId);
 	}
 
 	private void _testPatchPutCustomObjectEntryExternalReferenceCode(

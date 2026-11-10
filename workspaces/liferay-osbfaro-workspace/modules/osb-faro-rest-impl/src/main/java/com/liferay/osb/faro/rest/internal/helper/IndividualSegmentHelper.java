@@ -12,10 +12,9 @@ import com.liferay.osb.faro.engine.client.model.IndividualSegment;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.rest.internal.jaxrs.util.ProblemUtil;
-import com.liferay.osb.faro.rest.internal.security.permission.WorkspacePermission;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
+import com.liferay.osb.faro.util.FaroPermissionChecker;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -64,9 +63,7 @@ public class IndividualSegmentHelper {
 				_getNotFoundExceptionTitle(individualSegmentId));
 		}
 
-		if (!_workspacePermission.hasChannelPermission(
-				faroChannel, PermissionThreadLocal.getPermissionChecker())) {
-
+		if (!FaroPermissionChecker.isChannelMember(faroChannel)) {
 			throw ProblemUtil.getForbiddenException(
 				StringBundler.concat(
 					"Unable to access the individual segment with ID ",
@@ -87,8 +84,5 @@ public class IndividualSegmentHelper {
 
 	@Reference
 	private FaroChannelLocalService _faroChannelLocalService;
-
-	@Reference
-	private WorkspacePermission _workspacePermission;
 
 }

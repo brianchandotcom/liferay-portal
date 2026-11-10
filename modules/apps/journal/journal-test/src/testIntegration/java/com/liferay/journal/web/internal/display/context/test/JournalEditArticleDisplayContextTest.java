@@ -74,13 +74,14 @@ public class JournalEditArticleDisplayContextTest {
 	@Before
 	public void setUp() throws Exception {
 		_group1 = GroupTestUtil.addGroup();
-		_group2 = GroupTestUtil.addGroup();
 		_user = TestPropsValues.getUser();
 	}
 
 	@Test
 	@TestInfo("LPS-172561")
 	public void testGetFriendlyURLDuplicatedWarningMessage() throws Exception {
+		_group2 = GroupTestUtil.addGroup();
+
 		_assertGetFriendlyURLDuplicatedWarningMessage(
 			StringPool.BLANK, _group2.getGroupId());
 		_assertGetFriendlyURLDuplicatedWarningMessage(

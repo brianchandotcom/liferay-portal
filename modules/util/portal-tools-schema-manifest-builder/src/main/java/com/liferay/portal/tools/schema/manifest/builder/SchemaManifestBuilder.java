@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -337,6 +338,21 @@ public class SchemaManifestBuilder {
 
 			if (parameters.size() < 3) {
 				continue;
+			}
+
+			for (String schemaVersion : ListUtil.subList(parameters, 0, 2)) {
+				if (!StringUtil.startsWith(schemaVersion, CharPool.QUOTE) ||
+					!StringUtil.endsWith(schemaVersion, CharPool.QUOTE)) {
+
+					int newLinesCount = StringUtil.count(
+						content, 0, registerPosition, CharPool.NEW_LINE);
+
+					throw new IllegalArgumentException(
+						StringBundler.concat(
+							"Unable to parse schema version ", schemaVersion,
+							" at ", upgradeStepRegistratorClassName, ":",
+							newLinesCount + 1));
+				}
 			}
 
 			JSONArray changesJSONArray = new JSONArrayImpl();

@@ -213,8 +213,8 @@ public class ObjectEntryResourceCategorizationTest
 				depotTaxonomyCategory1.getTaxonomyVocabularyId());
 
 		_testGetObjectEntryWithTaxonomyCategories(
-			depotEntry.getGroupId(), addDepotScopedObjectDefinition(), false,
-			depotTaxonomyCategory1, depotTaxonomyCategory2);
+			depotEntry.getGroupId(), publishDepotScopedObjectDefinition(),
+			false, depotTaxonomyCategory1, depotTaxonomyCategory2);
 
 		// Site scope
 
@@ -315,14 +315,14 @@ public class ObjectEntryResourceCategorizationTest
 				jsonObject.getString("id"),
 			Http.Method.PATCH);
 
-		_assertTaxonomyCategories(
+		_assertTaxonomyCategoryBriefs(
 			jsonObject.getLong("scopeId"),
 			jsonObject.getJSONArray("taxonomyCategoryBriefs"), false,
 			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3);
 	}
 
 	@Test
-	public void testPostObjectEntryWithKeywordsAndTaxonomyCategoryIdsWhenCategorizationDisabled()
+	public void testPostObjectEntryWithKeywordsAndTaxonomyCategoryIdsWhenCategorizationIsDisabled()
 		throws Exception {
 
 		// TODO LPS-173383 Add test coverage for invalid state transitions
@@ -468,7 +468,7 @@ public class ObjectEntryResourceCategorizationTest
 		_testPostObjectEntryWithCrossSiteTaxonomyCategories();
 	}
 
-	private void _assertTaxonomyCategories(
+	private void _assertTaxonomyCategoryBriefs(
 			long groupId, JSONArray jsonArray,
 			boolean withEmbeddedTaxonomyCategory,
 			TaxonomyCategory... taxonomyCategories)
@@ -477,7 +477,7 @@ public class ObjectEntryResourceCategorizationTest
 		JSONAssert.assertEquals(
 			JSONUtil.toJSONArray(
 				taxonomyCategories,
-				taxonomyCategory -> _toTaxonomyCategoryJSONObject(
+				taxonomyCategory -> _toTaxonomyCategoryBriefJSONObject(
 					groupId, taxonomyCategory, withEmbeddedTaxonomyCategory)
 			).toString(),
 			jsonArray.toString(), JSONCompareMode.NON_EXTENSIBLE);
@@ -531,7 +531,7 @@ public class ObjectEntryResourceCategorizationTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
 
-		_assertTaxonomyCategories(
+		_assertTaxonomyCategoryBriefs(
 			jsonObject.getLong("scopeId"),
 			jsonObject.getJSONArray("taxonomyCategoryBriefs"),
 			withEmbeddedTaxonomyCategory, taxonomyCategories);
@@ -933,7 +933,7 @@ public class ObjectEntryResourceCategorizationTest
 			embeddedTaxonomyCategory.toString());
 	}
 
-	private JSONObject _toTaxonomyCategoryJSONObject(
+	private JSONObject _toTaxonomyCategoryBriefJSONObject(
 			long groupId, TaxonomyCategory taxonomyCategory,
 			boolean withEmbeddedTaxonomyCategory)
 		throws Exception {

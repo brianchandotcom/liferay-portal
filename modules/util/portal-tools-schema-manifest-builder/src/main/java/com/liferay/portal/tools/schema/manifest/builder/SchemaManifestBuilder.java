@@ -315,6 +315,20 @@ public class SchemaManifestBuilder {
 				continue;
 			}
 
+			for (DetailAST schemaVersionDetailAST :
+					parameterDetailASTs.subList(0, 2)) {
+
+				if (schemaVersionDetailAST.getType() !=
+						TokenTypes.STRING_LITERAL) {
+
+					throw new IllegalArgumentException(
+						StringBundler.concat(
+							"Unable to parse schema version at ",
+							upgradeStepRegistratorClassName, ":",
+							methodCallDetailAST.getLineNo()));
+				}
+			}
+
 			JSONArray changesJSONArray = new JSONArrayImpl();
 
 			for (DetailAST upgradeStepDetailAST :

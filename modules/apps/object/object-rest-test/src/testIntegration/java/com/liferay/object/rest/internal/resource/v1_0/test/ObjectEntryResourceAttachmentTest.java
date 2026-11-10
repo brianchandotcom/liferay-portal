@@ -145,9 +145,9 @@ public class ObjectEntryResourceAttachmentTest
 		JSONObject scopeJSONObject = JSONUtil.put(
 			"externalReferenceCode",
 			() -> {
-				Group group = groupLocalService.getGroup(testGroupId);
+				Group testGroup = groupLocalService.getGroup(testGroupId);
 
-				return group.getExternalReferenceCode();
+				return testGroup.getExternalReferenceCode();
 			}
 		).put(
 			"type", Scope.Type.SITE.getValue()
@@ -400,16 +400,16 @@ public class ObjectEntryResourceAttachmentTest
 			ObjectActionKeys.ADD_OBJECT_ENTRY,
 			getObjectDefinition1().getResourceName(), role);
 
-		String password = RandomTestUtil.randomString();
+		String userPassword = RandomTestUtil.randomString();
 		String userName = RandomTestUtil.randomString();
 
-		User user = addUser(userName, password);
+		User user = addUser(userName, userPassword);
 
 		roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			userName + "@liferay.com", password
+			userName + "@liferay.com", userPassword
 		).apply(
 			() -> {
 
@@ -899,19 +899,19 @@ public class ObjectEntryResourceAttachmentTest
 		ObjectFieldTestUtil.addCustomObjectField(
 			TestPropsValues.getUserId(), objectField);
 
-		byte[] data = new byte[60_000_000];
+		byte[] content = new byte[60_000_000];
 
 		Random random = new Random();
 
-		random.nextBytes(data);
+		random.nextBytes(content);
 
-		String base64 = Base64.encode(data);
+		String fileBase64 = Base64.encode(content);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				attachmentFieldName,
 				JSONUtil.put(
-					"fileBase64", base64
+					"fileBase64", fileBase64
 				).put(
 					"name", StringUtil.randomString() + ".txt"
 				)
@@ -924,7 +924,7 @@ public class ObjectEntryResourceAttachmentTest
 		_assertAttachmentJSONObject(
 			_dlFileEntryLocalService.getDLFileEntry(
 				testDLFileEntryModelListener.getLastFileEntryId()),
-			base64, jsonObject.getJSONObject(attachmentFieldName),
+			fileBase64, jsonObject.getJSONObject(attachmentFieldName),
 			JSONUtil.put(
 				"externalReferenceCode", "L_GLOBAL"
 			).put(
@@ -1029,16 +1029,16 @@ public class ObjectEntryResourceAttachmentTest
 			endpoint + "?nestedFields=localizedAttachment.fileBase64",
 			Http.Method.PUT);
 
-		JSONObject localizedAttachmentI18nValuesJSONObject =
-			jsonObject.getJSONObject("localizedAttachment_i18n");
+		JSONObject localizedAttachmentI18nJSONObject = jsonObject.getJSONObject(
+			"localizedAttachment_i18n");
 
 		_assertAttachmentJSONObject(
 			null, Base64.encode(fileContent1),
-			localizedAttachmentI18nValuesJSONObject.getJSONObject("en_US"),
+			localizedAttachmentI18nJSONObject.getJSONObject("en_US"),
 			jsonFactory.createJSONObject(scope.toString()));
 		_assertAttachmentJSONObject(
 			null, Base64.encode(fileContent2),
-			localizedAttachmentI18nValuesJSONObject.getJSONObject("pt_BR"),
+			localizedAttachmentI18nJSONObject.getJSONObject("pt_BR"),
 			jsonFactory.createJSONObject(scope.toString()));
 
 		// File with an existing external reference code
@@ -1073,18 +1073,18 @@ public class ObjectEntryResourceAttachmentTest
 			).toString(),
 			endpoint, Http.Method.PUT);
 
-		localizedAttachmentI18nValuesJSONObject = jsonObject.getJSONObject(
+		localizedAttachmentI18nJSONObject = jsonObject.getJSONObject(
 			"localizedAttachment_i18n");
 
 		JSONObject fileEntryJSONObject =
-			localizedAttachmentI18nValuesJSONObject.getJSONObject("en_US");
+			localizedAttachmentI18nJSONObject.getJSONObject("en_US");
 
 		Assert.assertEquals(
 			fileEntry3.getExternalReferenceCode(),
 			fileEntryJSONObject.getString("externalReferenceCode"));
 
-		fileEntryJSONObject =
-			localizedAttachmentI18nValuesJSONObject.getJSONObject("pt_BR");
+		fileEntryJSONObject = localizedAttachmentI18nJSONObject.getJSONObject(
+			"pt_BR");
 
 		Assert.assertEquals(
 			fileEntry3.getExternalReferenceCode(),
@@ -1178,20 +1178,21 @@ public class ObjectEntryResourceAttachmentTest
 	}
 
 	private void _assertJSONObjectWithAttachmentField(
-			JSONObject jsonObject1, JSONObject jsonObject2,
+			JSONObject expectedJSONObject, JSONObject jsonObject,
 			String objectFieldName)
 		throws Exception {
 
 		JSONAssert.assertEquals(
-			jsonObject1.toString(), jsonObject2.toString(),
+			expectedJSONObject.toString(), jsonObject.toString(),
 			JSONCompareMode.LENIENT);
 
-		Object object = jsonObject1.get(objectFieldName);
+		JSONObject expectedAttachmentJSONObject =
+			expectedJSONObject.getJSONObject(objectFieldName);
 
-		if (object != null) {
+		if (expectedAttachmentJSONObject != null) {
 			JSONAssert.assertEquals(
-				String.valueOf(object),
-				String.valueOf(jsonObject2.get(objectFieldName)),
+				expectedAttachmentJSONObject.toString(),
+				String.valueOf(jsonObject.get(objectFieldName)),
 				JSONCompareMode.STRICT);
 		}
 	}
@@ -1342,14 +1343,14 @@ public class ObjectEntryResourceAttachmentTest
 						if ((scope != null) &&
 							(scope.getExternalReferenceCode() != null)) {
 
-							Group group =
+							Group scopeGroup =
 								groupLocalService.
 									fetchGroupByExternalReferenceCode(
 										scope.getExternalReferenceCode(),
 										objectDefinition.getCompanyId());
 
-							if (group != null) {
-								repositoryId = group.getGroupId();
+							if (scopeGroup != null) {
+								repositoryId = scopeGroup.getGroupId();
 							}
 						}
 
@@ -1386,11 +1387,11 @@ public class ObjectEntryResourceAttachmentTest
 						objectDefinition.getScope(),
 						ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
-					Group group = groupLocalService.fetchGroup(
+					Group objectEntryGroup = groupLocalService.fetchGroup(
 						objectEntry.getGroupId());
 
 					groupExternalReferenceCode =
-						group.getExternalReferenceCode();
+						objectEntryGroup.getExternalReferenceCode();
 				}
 
 				link.setHref(
@@ -1427,15 +1428,15 @@ public class ObjectEntryResourceAttachmentTest
 					return null;
 				}
 
-				Group group = groupLocalService.getGroup(
+				Group dlFileEntryGroup = groupLocalService.getGroup(
 					dlFileEntry.getGroupId());
 
 				Scope.Type type =
-					(group.getType() == GroupConstants.TYPE_DEPOT) ?
+					(dlFileEntryGroup.getType() == GroupConstants.TYPE_DEPOT) ?
 						Scope.Type.ASSET_LIBRARY : Scope.Type.SITE;
 
 				Scope scope = Scope.ofReference(
-					group.getExternalReferenceCode(), type);
+					dlFileEntryGroup.getExternalReferenceCode(), type);
 
 				return JSONFactoryUtil.createJSONObject(scope.toString());
 			}
@@ -1497,7 +1498,7 @@ public class ObjectEntryResourceAttachmentTest
 
 		RawMetadataProcessorUtil.saveMetadata(fileEntry.getFileVersion());
 
-		JSONObject responseJSONObject = HTTPTestUtil.invokeToJSONObject(
+		objectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				getObjectDefinition1().getRESTContextPath(), "/",
@@ -1506,10 +1507,10 @@ public class ObjectEntryResourceAttachmentTest
 				".metadata"),
 			Http.Method.GET);
 
-		JSONObject jsonObject = responseJSONObject.getJSONObject(
+		JSONObject attachmentJSONObject = objectEntryJSONObject.getJSONObject(
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1);
 
-		return jsonObject.getJSONObject("metadata");
+		return attachmentJSONObject.getJSONObject("metadata");
 	}
 
 	private CompanyConfigurationTemporarySwapper _swapObjectConfiguration(
@@ -1606,7 +1607,7 @@ public class ObjectEntryResourceAttachmentTest
 
 		// CMS basic document source, file from Base64
 
-		FileEntry customFileEntry1 = TempFileEntryUtil.addTempFileEntry(
+		FileEntry customFileEntry = TempFileEntryUtil.addTempFileEntry(
 			testGroupId, TestPropsValues.getUserId(), StringUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
 				StringUtil.randomString() + ".txt"),
@@ -1627,7 +1628,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null,
-				depotEntry.getGroupId(), customFileEntry1.getMimeType()),
+				depotEntry.getGroupId(), customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_CMS_BASIC_DOCUMENT_SOURCE,
 			useExternalReferenceCode);
@@ -1646,7 +1647,7 @@ public class ObjectEntryResourceAttachmentTest
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder1.getExternalReferenceCode(), dlFolder1.getGroupId(),
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -1663,7 +1664,7 @@ public class ObjectEntryResourceAttachmentTest
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder2.getExternalReferenceCode(), dlFolder2.getGroupId(),
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -1677,7 +1678,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -1690,7 +1691,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null,
-				group.getGroupId(), customFileEntry1.getMimeType()),
+				group.getGroupId(), customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -1703,7 +1704,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null, testGroupId,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -1717,7 +1718,7 @@ public class ObjectEntryResourceAttachmentTest
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), testGroupId,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -1736,7 +1737,7 @@ public class ObjectEntryResourceAttachmentTest
 
 		com.liferay.object.rest.dto.v1_0.FileEntry testFileEntry = _toFileEntry(
 			Base64::encode, fileContent, existingDLFileEntry.getFileName(),
-			null, testGroupId, customFileEntry1.getMimeType());
+			null, testGroupId, customFileEntry.getMimeType());
 
 		String externalReferenceCode1 =
 			existingDLFileEntry.getExternalReferenceCode();
@@ -1763,7 +1764,7 @@ public class ObjectEntryResourceAttachmentTest
 		testFileEntry = _toFileEntry(
 			content -> null, DLTestUtil.randomTextFileBytes(),
 			RandomTestUtil.randomString() + ".txt", null, null,
-			customFileEntry1.getMimeType());
+			customFileEntry.getMimeType());
 
 		String externalReferenceCode2 = RandomTestUtil.randomString();
 
@@ -1827,14 +1828,14 @@ public class ObjectEntryResourceAttachmentTest
 						"folder",
 						JSONFactoryUtil.createJSONObject(folder.toString())
 					).put(
-						"mimeType", customFileEntry1.getMimeType()
+						"mimeType", customFileEntry.getMimeType()
 					));
 			},
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt",
 				dlFolder1.getExternalReferenceCode(), dlFolder1.getGroupId(),
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, "fileBase64,folder", objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
@@ -1874,7 +1875,7 @@ public class ObjectEntryResourceAttachmentTest
 						Base64::encode, DLTestUtil.randomTextFileBytes(),
 						RandomTestUtil.randomString() + ".txt",
 						dlFolder.getExternalReferenceCode(),
-						dlFolder.getGroupId(), customFileEntry1.getMimeType()),
+						dlFolder.getGroupId(), customFileEntry.getMimeType()),
 					httpMethod, null, objectDefinition,
 					OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 					useExternalReferenceCode);
@@ -1896,7 +1897,7 @@ public class ObjectEntryResourceAttachmentTest
 						Base64::encode, DLTestUtil.randomTextFileBytes(),
 						RandomTestUtil.randomString() + ".txt",
 						dlFolder.getExternalReferenceCode(),
-						dlFolder.getGroupId(), customFileEntry1.getMimeType()),
+						dlFolder.getGroupId(), customFileEntry.getMimeType()),
 					httpMethod, null, objectDefinition,
 					OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 					useExternalReferenceCode);
@@ -1910,7 +1911,7 @@ public class ObjectEntryResourceAttachmentTest
 			"http://", company.getVirtualHostname(), ":",
 			PortalUtil.getPortalServerPort(false),
 			_dlURLHelper.getPreviewURL(
-				customFileEntry1, customFileEntry1.getFileVersion(), null, "",
+				customFileEntry, customFileEntry.getFileVersion(), null, "",
 				false, true));
 
 		String hostNotAllowedMessage = StringBundler.concat(
@@ -1947,7 +1948,7 @@ public class ObjectEntryResourceAttachmentTest
 						OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 				_toFileEntry(
 					RandomTestUtil.randomString() + ".txt", previewFileURL,
-					null, null, customFileEntry1.getMimeType()),
+					null, null, customFileEntry.getMimeType()),
 				httpMethod, null, objectDefinition,
 				OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				useExternalReferenceCode);
@@ -1975,7 +1976,7 @@ public class ObjectEntryResourceAttachmentTest
 						OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 				_toFileEntry(
 					RandomTestUtil.randomString() + ".txt", previewFileURL,
-					null, null, customFileEntry1.getMimeType()),
+					null, null, customFileEntry.getMimeType()),
 				httpMethod, null, objectDefinition,
 				OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				useExternalReferenceCode);
@@ -1987,13 +1988,14 @@ public class ObjectEntryResourceAttachmentTest
 						"DefaultObjectEntryManagerImpl",
 					LoggerTestUtil.ERROR)) {
 
-				String url = StringBundler.concat(
+				String hostDownFileURL = StringBundler.concat(
 					"http://", company.getVirtualHostname(), ":",
 					PortalUtil.getPortalServerPort(false) + 1);
 
 				_testPatchPutCustomObjectEntryWithInvalidFileURL(
-					"Unable to download file from " + url, url, httpMethod,
-					objectDefinition, useExternalReferenceCode);
+					"Unable to download file from " + hostDownFileURL,
+					hostDownFileURL, httpMethod, objectDefinition,
+					useExternalReferenceCode);
 			}
 
 			// Documents and media source, file from URL malformed
@@ -2003,21 +2005,22 @@ public class ObjectEntryResourceAttachmentTest
 						"DefaultObjectEntryManagerImpl",
 					LoggerTestUtil.ERROR)) {
 
-				String url = StringBundler.concat(
+				String malformedFileURL = StringBundler.concat(
 					"http//", company.getVirtualHostname(), ":",
 					PortalUtil.getPortalServerPort(false), "/",
 					RandomTestUtil.randomString());
 
 				_testPatchPutCustomObjectEntryWithInvalidFileURL(
-					"Unable to download file from " + url, url, httpMethod,
-					objectDefinition, useExternalReferenceCode);
+					"Unable to download file from " + malformedFileURL,
+					malformedFileURL, httpMethod, objectDefinition,
+					useExternalReferenceCode);
 			}
 
 			// Documents and media source, file from URL not found
 
 			String notFoundPath = "/" + RandomTestUtil.randomString();
 
-			String httpCode404URL = StringBundler.concat(
+			String resourceNotFoundFileURL = StringBundler.concat(
 				"http://", company.getVirtualHostname(), ":",
 				PortalUtil.getPortalServerPort(false), notFoundPath);
 
@@ -2026,9 +2029,9 @@ public class ObjectEntryResourceAttachmentTest
 					LoggerTestUtil.WARN)) {
 
 				_testPatchPutCustomObjectEntryWithInvalidFileURL(
-					"Unable to download file from " + httpCode404URL +
+					"Unable to download file from " + resourceNotFoundFileURL +
 						" because of unexpected HTTP response code 404",
-					httpCode404URL, httpMethod, objectDefinition,
+					resourceNotFoundFileURL, httpMethod, objectDefinition,
 					useExternalReferenceCode);
 
 				List<LogEntry> logEntries = logCapture.getLogEntries();
@@ -2093,7 +2096,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT_SOURCE,
 			useExternalReferenceCode);
@@ -2115,7 +2118,7 @@ public class ObjectEntryResourceAttachmentTest
 				DLTestUtil.randomTextFileBytes(
 					(MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1),
 				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
 			useExternalReferenceCode);
@@ -2127,7 +2130,7 @@ public class ObjectEntryResourceAttachmentTest
 			),
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(), null, null,
-				null, customFileEntry1.getMimeType()),
+				null, customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
 			useExternalReferenceCode);
@@ -2140,7 +2143,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".err", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
 			useExternalReferenceCode);
@@ -2154,7 +2157,7 @@ public class ObjectEntryResourceAttachmentTest
 				String::new,
 				ArrayUtil.append(DLTestUtil.randomTextFileBytes(), (byte)'$'),
 				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
 			useExternalReferenceCode);
@@ -2169,7 +2172,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
 			useExternalReferenceCode);
@@ -2184,7 +2187,7 @@ public class ObjectEntryResourceAttachmentTest
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
 			useExternalReferenceCode);
@@ -2198,7 +2201,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2,
 			useExternalReferenceCode);
@@ -2213,7 +2216,7 @@ public class ObjectEntryResourceAttachmentTest
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt",
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2,
 			useExternalReferenceCode);
@@ -2224,7 +2227,7 @@ public class ObjectEntryResourceAttachmentTest
 		testFileEntry = _toFileEntry(
 			Base64::encode, DLTestUtil.randomTextFileBytes(),
 			RandomTestUtil.randomString() + ".txt", null, null,
-			customFileEntry1.getMimeType());
+			customFileEntry.getMimeType());
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -2256,7 +2259,7 @@ public class ObjectEntryResourceAttachmentTest
 		testFileEntry = _toFileEntry(
 			Base64::encode, DLTestUtil.randomTextFileBytes(),
 			RandomTestUtil.randomString() + ".txt", null, null,
-			customFileEntry1.getMimeType());
+			customFileEntry.getMimeType());
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -2303,7 +2306,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, "fileBase64,folder", objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
 			useExternalReferenceCode);
@@ -2322,7 +2325,7 @@ public class ObjectEntryResourceAttachmentTest
 			_toFileEntry(
 				Base64::encode, DLTestUtil.randomTextFileBytes(),
 				RandomTestUtil.randomString() + ".txt", null, null,
-				customFileEntry1.getMimeType()),
+				customFileEntry.getMimeType()),
 			httpMethod, "fileBase64,folder", objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_2,
 			useExternalReferenceCode);
@@ -2888,14 +2891,14 @@ public class ObjectEntryResourceAttachmentTest
 				" because protocol jar is not supported",
 			jarFileURL, objectDefinition);
 
-		String unsupportedProtocolURL = StringBundler.concat(
+		String unsupportedProtocolFileURL = StringBundler.concat(
 			"file://", company.getVirtualHostname(), ":",
 			PortalUtil.getPortalServerPort(false));
 
 		_testPostCustomObjectEntryWithInvalidFileURL(
-			"Unable to download file from " + unsupportedProtocolURL +
+			"Unable to download file from " + unsupportedProtocolFileURL +
 				" because protocol file is not supported",
-			unsupportedProtocolURL, objectDefinition);
+			unsupportedProtocolFileURL, objectDefinition);
 
 		// User computer to CMS basic document source, file from Base64
 

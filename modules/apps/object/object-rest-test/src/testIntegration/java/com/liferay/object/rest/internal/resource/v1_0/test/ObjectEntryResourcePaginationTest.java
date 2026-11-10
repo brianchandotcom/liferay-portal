@@ -85,7 +85,7 @@ public class ObjectEntryResourcePaginationTest
 	}
 
 	private void _assertPagination(
-			int expectedSize, ObjectDefinition objectDefinition)
+			int expectedTotalCount, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -98,7 +98,8 @@ public class ObjectEntryResourcePaginationTest
 
 		Assert.assertEquals(1, jsonObject.getLong("page"));
 		Assert.assertEquals(5, jsonObject.getLong("pageSize"));
-		Assert.assertEquals(expectedSize, jsonObject.getLong("totalCount"));
+		Assert.assertEquals(
+			expectedTotalCount, jsonObject.getLong("totalCount"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, objectDefinition.getRESTContextPath() + "?pageSize=-1",
@@ -106,9 +107,10 @@ public class ObjectEntryResourcePaginationTest
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
 
-		Assert.assertEquals(expectedSize, itemsJSONArray.length());
+		Assert.assertEquals(expectedTotalCount, itemsJSONArray.length());
 
-		Assert.assertEquals(expectedSize, jsonObject.getLong("totalCount"));
+		Assert.assertEquals(
+			expectedTotalCount, jsonObject.getLong("totalCount"));
 	}
 
 }

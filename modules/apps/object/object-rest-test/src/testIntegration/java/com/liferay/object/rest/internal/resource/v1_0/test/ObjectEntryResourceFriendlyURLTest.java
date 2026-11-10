@@ -118,7 +118,7 @@ public class ObjectEntryResourceFriendlyURLTest
 
 		// Without friendly URL
 
-		String friendlyURL = StringUtil.toLowerCase(
+		String friendlyUrlPath = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 		String objectFieldValue = RandomTestUtil.randomString();
 
@@ -128,7 +128,7 @@ public class ObjectEntryResourceFriendlyURLTest
 			).put(
 				"friendlyUrlPath_i18n",
 				HashMapBuilder.put(
-					"en_US", friendlyURL
+					"en_US", friendlyUrlPath
 				).build()
 			).toString(),
 			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
@@ -142,7 +142,7 @@ public class ObjectEntryResourceFriendlyURLTest
 			Http.Method.PATCH);
 
 		Assert.assertEquals(
-			friendlyURL, jsonObject.getString("friendlyUrlPath"));
+			friendlyUrlPath, jsonObject.getString("friendlyUrlPath"));
 	}
 
 	private void _assertGetObjectEntryWithFriendlyURL(

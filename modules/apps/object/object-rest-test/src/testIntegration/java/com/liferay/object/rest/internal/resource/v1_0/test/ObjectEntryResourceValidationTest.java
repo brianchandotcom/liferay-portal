@@ -98,13 +98,13 @@ public class ObjectEntryResourceValidationTest
 			getObjectDefinition1().getObjectDefinitionId(),
 			OBJECT_FIELD_NAME_TEXT);
 
-		String error = RandomTestUtil.randomString();
+		String errorMessage = RandomTestUtil.randomString();
 
 		objectValidationRuleLocalService.addObjectValidationRule(
 			StringPool.BLANK, TestPropsValues.getUserId(),
 			getObjectDefinition1().getObjectDefinitionId(), true,
 			ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY,
-			LocalizedMapUtil.getLocalizedMap(error),
+			LocalizedMapUtil.getLocalizedMap(errorMessage),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
 			StringPool.BLANK, false,
@@ -124,14 +124,14 @@ public class ObjectEntryResourceValidationTest
 					String.valueOf(textObjectField.getObjectFieldId())
 				).build()));
 
-		Integer randomInt = RandomTestUtil.randomInt();
+		Integer randomInteger = RandomTestUtil.randomInt();
 		String randomString = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			200,
 			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
-					OBJECT_FIELD_NAME_INTEGER, randomInt
+					OBJECT_FIELD_NAME_INTEGER, randomInteger
 				).put(
 					OBJECT_FIELD_NAME_TEXT, randomString
 				).toString(),
@@ -139,7 +139,7 @@ public class ObjectEntryResourceValidationTest
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"detail", "[{\"errorMessage\":\"" + error + "\"}]"
+				"detail", "[{\"errorMessage\":\"" + errorMessage + "\"}]"
 			).put(
 				"status", "BAD_REQUEST"
 			).put(
@@ -147,7 +147,7 @@ public class ObjectEntryResourceValidationTest
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					OBJECT_FIELD_NAME_INTEGER, randomInt
+					OBJECT_FIELD_NAME_INTEGER, randomInteger
 				).put(
 					OBJECT_FIELD_NAME_TEXT, randomString
 				).toString(),
@@ -203,23 +203,24 @@ public class ObjectEntryResourceValidationTest
 
 	@Test
 	public void testPostScopeScopeKeyValidate() throws Exception {
-		Group group = groupLocalService.fetchGroup(testGroupId);
+		Group testGroup = groupLocalService.fetchGroup(testGroupId);
 
 		_testPostValidate(
-			group.getExternalReferenceCode(), getSiteScopedObjectDefinition1(),
-			objectFieldLocalService.getObjectField(
-				getSiteScopedObjectDefinition1().getObjectDefinitionId(),
-				OBJECT_FIELD_NAME_1));
-
-		_testPostValidate(
-			String.valueOf(group.getGroupId()),
+			testGroup.getExternalReferenceCode(),
 			getSiteScopedObjectDefinition1(),
 			objectFieldLocalService.getObjectField(
 				getSiteScopedObjectDefinition1().getObjectDefinitionId(),
 				OBJECT_FIELD_NAME_1));
 
 		_testPostValidate(
-			group.getGroupKey(), getSiteScopedObjectDefinition1(),
+			String.valueOf(testGroup.getGroupId()),
+			getSiteScopedObjectDefinition1(),
+			objectFieldLocalService.getObjectField(
+				getSiteScopedObjectDefinition1().getObjectDefinitionId(),
+				OBJECT_FIELD_NAME_1));
+
+		_testPostValidate(
+			testGroup.getGroupKey(), getSiteScopedObjectDefinition1(),
 			objectFieldLocalService.getObjectField(
 				getSiteScopedObjectDefinition1().getObjectDefinitionId(),
 				OBJECT_FIELD_NAME_1));

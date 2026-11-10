@@ -6,6 +6,16 @@
 package com.liferay.document.library.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import java.util.Calendar;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.document.library.kernel.service.DLTrashLocalService;
+import com.liferay.document.library.kernel.exception.RequiredFileException;
+import com.liferay.document.library.kernel.exception.FileNameException;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileEntryExpirationDateException;
 import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -531,45 +541,154 @@ public class EditFileEntryMVCActionCommandTest {
 	}
 
 	@Test
-	public void testProcessActionCheckIn()
-		throws PortalException, PortletException {
+	public void testProcessActionAddWithDuplicateURLTitle() throws Exception {
+		String urlTitle = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
+		_addFileEntry(urlTitle);
+
+		_assertURLTitleChangedMessage(urlTitle);
+
+		FileEntry fileEntry = _addFileEntry(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		_dlTrashLocalService.moveFileEntryToTrash(
+			TestPropsValues.getUserId(), fileEntry.getRepositoryId(),
+			fileEntry.getFileEntryId());
+
+		_assertURLTitleChangedMessage(
+			_getURLTitle(fileEntry.getFileEntryId()));
+	}
+
+	@Test
+	public void testProcessActionAddWithInvalidExpirationDate()
+		throws Exception {
+
+		Calendar calendar = Calendar.getInstance();
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				_CONTENT_BYTES, RandomTestUtil.randomString() + ".txt",
+				HashMapBuilder.putAll(
+					_getParameters(
+						Constants.ADD, 0, _group.getGroupId(), new String[0])
+				).put(
+					"expirationDateAmPm",
+					new String[] {String.valueOf(Calendar.AM)}
+				).put(
+					"expirationDateDay",
+					new String[] {
+						String.valueOf(calendar.get(Calendar.DAY_OF_MONTH))
+					}
+				).put(
+					"expirationDateHour", new String[] {"11"}
+				).put(
+					"expirationDateMinute", new String[] {"00"}
+				).put(
+					"expirationDateMonth",
+					new String[] {String.valueOf(calendar.get(Calendar.MONTH))}
+				).put(
+					"expirationDateYear",
+					new String[] {
+						String.valueOf(calendar.get(Calendar.YEAR) - 1)
+					}
+				).put(
+					"neverExpire", new String[] {Boolean.FALSE.toString()}
+				).put(
+					"title", new String[] {RandomTestUtil.randomString()}
+				).build());
+
+		PortletException portletException = Assert.assertThrows(
+			PortletException.class,
+			() -> _processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse()));
+
+		Assert.assertTrue(
+			portletException.getCause() instanceof
+				FileEntryExpirationDateException);
+
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest,
+				FileEntryExpirationDateException.class));
+	}
+
+	@Test
+	public void testProcessActionAddWithInvalidFileName() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				"Document_1.txt", "document_1_Edit.jpg");
+
+		_processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest,
+				FileExtensionException.MismatchExtension.class));
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest, RequiredFileException.class));
+
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
+			"Document_1.txt", "<>.txt");
+
+		_processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest, FileNameException.class));
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest, RequiredFileException.class));
+
+		MockLiferayPortletActionRequest
+			withoutExtensionMockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest(
+					"Document_1.jpg", "Document_1");
+
+		PortletException portletException = Assert.assertThrows(
+			PortletException.class,
+			() -> _processAction(
+				withoutExtensionMockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse()));
+
+		Throwable throwable = portletException.getCause();
+
+		Class<?> clazz = throwable.getClass();
+
+		Assert.assertEquals(
+			"com.liferay.document.library.web.internal.exception." +
+				"FileNameExtensionException",
+			clazz.getName());
+		Assert.assertTrue(
+			SessionErrors.contains(
+				withoutExtensionMockLiferayPortletActionRequest,
+				RequiredFileException.class));
+	}
+
+	@Test
+	public void testProcessActionCheckIn() throws Exception {
 		FileEntry initialFileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
 			null, null, ServiceContextTestUtil.getServiceContext());
 
-		_dlAppService.checkOutFileEntry(
-			initialFileEntry.getFileEntryId(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_editFileEntryMVCActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(
-				HashMapBuilder.putAll(
-					_getParameters(
-						Constants.CHECKIN, initialFileEntry.getFolderId(),
-						initialFileEntry.getRepositoryId(),
-						new String[] {initialFileEntry.getFileName()})
-				).put(
-					"changeLog", new String[] {"New Version"}
-				).put(
-					"rowIdsFileEntry",
-					new String[] {
-						String.valueOf(initialFileEntry.getFileEntryId())
-					}
-				).put(
-					"versionIncrease",
-					new String[] {String.valueOf(DLVersionNumberIncrease.MAJOR)}
-				).build()),
-			new MockLiferayPortletActionResponse());
-
-		FileEntry actualFileEntry = _dlAppLocalService.getFileEntry(
-			initialFileEntry.getFileEntryId());
-
-		FileVersion fileVersion = actualFileEntry.getFileVersion();
+		FileVersion fileVersion = _checkInFileEntry(
+			"New Version", DLVersionNumberIncrease.MAJOR, initialFileEntry);
 
 		Assert.assertEquals("New Version", fileVersion.getChangeLog());
+		Assert.assertEquals("2.0", fileVersion.getVersion());
+
+		fileVersion = _checkInFileEntry(
+			RandomTestUtil.randomString(), DLVersionNumberIncrease.NONE,
+			initialFileEntry);
+
+		Assert.assertEquals("2.0", fileVersion.getVersion());
 	}
 
 	@Test
@@ -601,6 +720,16 @@ public class EditFileEntryMVCActionCommandTest {
 			initialFileEntry.getFileEntryId());
 
 		Assert.assertTrue(actualFileEntry.isCheckedOut());
+	}
+
+	private FileEntry _addFileEntry(String urlTitle) throws Exception {
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), urlTitle, StringPool.BLANK,
+			StringPool.BLANK, _CONTENT_BYTES, null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	private DLFileEntryType _addFileEntryType(DDMFormField ddmFormField)
@@ -636,6 +765,74 @@ public class EditFileEntryMVCActionCommandTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(fileEntry.getFileEntryId()), role.getRoleId(),
 				ActionKeys.VIEW));
+	}
+
+	private void _assertURLTitleChangedMessage(String urlTitle)
+		throws Exception {
+
+		String fileName = RandomTestUtil.randomString() + ".txt";
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				_CONTENT_BYTES, fileName,
+				HashMapBuilder.putAll(
+					_getParameters(
+						Constants.ADD, 0, _group.getGroupId(), new String[0])
+				).put(
+					"title", new String[] {RandomTestUtil.randomString()}
+				).put(
+					"urlTitle", new String[] {urlTitle}
+				).build());
+
+		_processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntryByFileName(
+			_group.getGroupId(), 0, fileName);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"The friendly URL <strong>", urlTitle,
+				"</strong> was changed to <strong>", urlTitle,
+				"-1</strong> to ensure uniqueness."),
+			SessionMessages.get(
+				_portal.getHttpServletRequest(mockLiferayPortletActionRequest),
+				"friendlyURLChanged_requestProcessedWarning"));
+		Assert.assertEquals(
+			urlTitle + "-1", _getURLTitle(fileEntry.getFileEntryId()));
+	}
+
+	private FileVersion _checkInFileEntry(
+			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
+			FileEntry fileEntry)
+		throws Exception {
+
+		_dlAppService.checkOutFileEntry(
+			fileEntry.getFileEntryId(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_editFileEntryMVCActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(
+				HashMapBuilder.putAll(
+					_getParameters(
+						Constants.CHECKIN, fileEntry.getFolderId(),
+						fileEntry.getRepositoryId(),
+						new String[] {fileEntry.getFileName()})
+				).put(
+					"changeLog", new String[] {changeLog}
+				).put(
+					"rowIdsFileEntry",
+					new String[] {String.valueOf(fileEntry.getFileEntryId())}
+				).put(
+					"versionIncrease",
+					new String[] {String.valueOf(dlVersionNumberIncrease)}
+				).build()),
+			new MockLiferayPortletActionResponse());
+
+		fileEntry = _dlAppLocalService.getFileEntry(fileEntry.getFileEntryId());
+
+		return fileEntry.getFileVersion();
 	}
 
 	private MockMultipartHttpServletRequest
@@ -743,6 +940,22 @@ public class EditFileEntryMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			String fileName, String sourceFileName)
+		throws Exception {
+
+		return _getMockLiferayPortletActionRequest(
+			_CONTENT_BYTES, fileName,
+			HashMapBuilder.putAll(
+				_getParameters(
+					Constants.ADD, 0, _group.getGroupId(), new String[0])
+			).put(
+				"fileName", new String[] {sourceFileName}
+			).put(
+				"title", new String[] {RandomTestUtil.randomString()}
+			).build());
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
 			MockMultipartHttpServletRequest mockMultipartHttpServletRequest,
 			Map<String, String[]> parameters)
 		throws PortalException {
@@ -832,6 +1045,14 @@ public class EditFileEntryMVCActionCommandTest {
 		return themeDisplay;
 	}
 
+	private String _getURLTitle(long fileEntryId) {
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class), fileEntryId);
+
+		return friendlyURLEntry.getUrlTitle();
+	}
+
 	private void _processAction(
 			MockLiferayPortletActionRequest mockLiferayPortletActionRequest,
 			MockLiferayPortletActionResponse mockLiferayPortletActionResponse)
@@ -905,8 +1126,14 @@ public class EditFileEntryMVCActionCommandTest {
 	@Inject
 	private DLFileEntryTypeService _dlFileEntryTypeService;
 
+	@Inject
+	private DLTrashLocalService _dlTrashLocalService;
+
 	@Inject(filter = "mvc.command.name=/document_library/edit_file_entry")
 	private MVCActionCommand _editFileEntryMVCActionCommand;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

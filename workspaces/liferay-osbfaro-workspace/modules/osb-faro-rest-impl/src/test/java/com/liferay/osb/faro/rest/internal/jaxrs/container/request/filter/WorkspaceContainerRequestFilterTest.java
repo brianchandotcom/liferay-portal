@@ -239,10 +239,16 @@ public class WorkspaceContainerRequestFilterTest {
 	private Response _filter(String channelId, Long groupId, long userId) {
 		User user = Mockito.mock(User.class);
 
+		boolean guestUser = false;
+
+		if (userId == _USER_ID_GUEST) {
+			guestUser = true;
+		}
+
 		Mockito.when(
 			user.isGuestUser()
 		).thenReturn(
-			userId == _USER_ID_GUEST
+			guestUser
 		);
 
 		PermissionChecker permissionChecker = Mockito.mock(
@@ -260,10 +266,16 @@ public class WorkspaceContainerRequestFilterTest {
 			userId
 		);
 
+		boolean omniadmin = false;
+
+		if (userId == _USER_ID_OMNIADMIN) {
+			omniadmin = true;
+		}
+
 		Mockito.when(
 			permissionChecker.isOmniadmin()
 		).thenReturn(
-			userId == _USER_ID_OMNIADMIN
+			omniadmin
 		);
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);

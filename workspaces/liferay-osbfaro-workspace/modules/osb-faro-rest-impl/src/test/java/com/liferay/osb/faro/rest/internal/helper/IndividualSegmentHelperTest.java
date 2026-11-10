@@ -331,10 +331,16 @@ public class IndividualSegmentHelperTest {
 			userId
 		);
 
+		boolean omniadmin = false;
+
+		if (userId == _USER_ID_OMNIADMIN) {
+			omniadmin = true;
+		}
+
 		Mockito.when(
 			permissionChecker.isOmniadmin()
 		).thenReturn(
-			userId == _USER_ID_OMNIADMIN
+			omniadmin
 		);
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);

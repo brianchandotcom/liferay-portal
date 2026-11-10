@@ -216,10 +216,16 @@ public class FaroPermissionCheckerTest {
 			userId
 		);
 
+		boolean omniadmin = false;
+
+		if (userId == _USER_ID_OMNIADMIN) {
+			omniadmin = true;
+		}
+
 		Mockito.when(
 			permissionChecker.isOmniadmin()
 		).thenReturn(
-			userId == _USER_ID_OMNIADMIN
+			omniadmin
 		);
 
 		return permissionChecker;

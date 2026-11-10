@@ -99,7 +99,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -302,9 +301,10 @@ public class ObjectEntryResourceAttachmentTest
 		FileEntry pdfFileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(),
+			RandomTestUtil.randomString() + ".pdf",
+			ContentTypes.APPLICATION_PDF, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/document.pdf"), null,
 			null, null, ServiceContextTestUtil.getServiceContext());
 
@@ -439,7 +439,7 @@ public class ObjectEntryResourceAttachmentTest
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
-						jsonFactory.createJSONObject(fileEntry1.toString())
+						JSONFactoryUtil.createJSONObject(fileEntry1.toString())
 					).toString(),
 					endpoint, Http.Method.PATCH);
 
@@ -474,7 +474,7 @@ public class ObjectEntryResourceAttachmentTest
 				JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
-						jsonFactory.createJSONObject(fileEntry2.toString())
+						JSONFactoryUtil.createJSONObject(fileEntry2.toString())
 					).toString(),
 					endpoint, Http.Method.PATCH);
 
@@ -490,7 +490,7 @@ public class ObjectEntryResourceAttachmentTest
 					dlFileEntry, null,
 					jsonObject.getJSONObject(
 						OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1),
-					jsonFactory.createJSONObject(scope.toString()));
+					JSONFactoryUtil.createJSONObject(scope.toString()));
 
 				userLocalService.deleteGroupUser(
 					group.getGroupId(), user.getUserId());
@@ -510,7 +510,7 @@ public class ObjectEntryResourceAttachmentTest
 				jsonObject = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER_TO_DOCS_AND_MEDIA_SOURCE_1,
-						jsonFactory.createJSONObject(fileEntry3.toString())
+						JSONFactoryUtil.createJSONObject(fileEntry3.toString())
 					).toString(),
 					endpoint, Http.Method.PATCH);
 
@@ -754,7 +754,7 @@ public class ObjectEntryResourceAttachmentTest
 								ObjectFieldSettingConstants.
 									NAME_SHOW_FILES_IN_LIBRARY
 							).value(
-								Boolean.TRUE.toString()
+								StringPool.TRUE
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
@@ -889,7 +889,7 @@ public class ObjectEntryResourceAttachmentTest
 				).name(
 					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
 				).value(
-					String.valueOf(100)
+					"100"
 				).build()),
 			false);
 
@@ -913,7 +913,7 @@ public class ObjectEntryResourceAttachmentTest
 				JSONUtil.put(
 					"fileBase64", fileBase64
 				).put(
-					"name", StringUtil.randomString() + ".txt"
+					"name", RandomTestUtil.randomString() + ".txt"
 				)
 			).toString(),
 			StringBundler.concat(
@@ -985,7 +985,7 @@ public class ObjectEntryResourceAttachmentTest
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			String.valueOf(jsonFactory.createJSONObject()),
+			JSONFactoryUtil.getNullJSON(),
 			objectDefinition.getRESTContextPath(), Http.Method.POST);
 
 		byte[] fileContent1 = DLTestUtil.randomTextFileBytes();
@@ -1035,11 +1035,11 @@ public class ObjectEntryResourceAttachmentTest
 		_assertAttachmentJSONObject(
 			null, Base64.encode(fileContent1),
 			localizedAttachmentI18nJSONObject.getJSONObject("en_US"),
-			jsonFactory.createJSONObject(scope.toString()));
+			JSONFactoryUtil.createJSONObject(scope.toString()));
 		_assertAttachmentJSONObject(
 			null, Base64.encode(fileContent2),
 			localizedAttachmentI18nJSONObject.getJSONObject("pt_BR"),
-			jsonFactory.createJSONObject(scope.toString()));
+			JSONFactoryUtil.createJSONObject(scope.toString()));
 
 		// File with an existing external reference code
 
@@ -1134,9 +1134,10 @@ public class ObjectEntryResourceAttachmentTest
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, contentType,
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), content, null,
-			null, null, ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			content, null, null, null,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _assertAttachmentJSONObject(
@@ -1449,11 +1450,11 @@ public class ObjectEntryResourceAttachmentTest
 		String fileSource = ObjectFieldSettingUtil.getValue(
 			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
 
-		if ((Objects.equals(
+		if ((StringUtil.equals(
 				fileSource,
 				ObjectFieldSettingConstants.
 					VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT) ||
-			 Objects.equals(
+			 StringUtil.equals(
 				 fileSource,
 				 ObjectFieldSettingConstants.
 					 VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) &&
@@ -1608,9 +1609,10 @@ public class ObjectEntryResourceAttachmentTest
 		// CMS basic document source, file from Base64
 
 		FileEntry customFileEntry = TempFileEntryUtil.addTempFileEntry(
-			testGroupId, TestPropsValues.getUserId(), StringUtil.randomString(),
+			testGroupId, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
-				StringUtil.randomString() + ".txt"),
+				RandomTestUtil.randomString() + ".txt"),
 			FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
 			ContentTypes.TEXT_PLAIN);
 		DepotEntry depotEntry = depotEntryLocalService.addDepotEntry(
@@ -1911,8 +1913,8 @@ public class ObjectEntryResourceAttachmentTest
 			"http://", company.getVirtualHostname(), ":",
 			PortalUtil.getPortalServerPort(false),
 			_dlURLHelper.getPreviewURL(
-				customFileEntry, customFileEntry.getFileVersion(), null, "",
-				false, true));
+				customFileEntry, customFileEntry.getFileVersion(), null,
+				StringPool.BLANK, false, true));
 
 		String hostNotAllowedMessage = StringBundler.concat(
 			"Unable to download file from ", previewFileURL, " because host ",
@@ -2420,9 +2422,10 @@ public class ObjectEntryResourceAttachmentTest
 		// CMS basic document source, file from Base64
 
 		FileEntry customFileEntry1 = TempFileEntryUtil.addTempFileEntry(
-			testGroupId, TestPropsValues.getUserId(), StringUtil.randomString(),
+			testGroupId, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(),
 			TempFileEntryUtil.getTempFileName(
-				StringUtil.randomString() + ".txt"),
+				RandomTestUtil.randomString() + ".txt"),
 			FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
 			ContentTypes.TEXT_PLAIN);
 		DepotEntry depotEntry = depotEntryLocalService.addDepotEntry(
@@ -2705,7 +2708,7 @@ public class ObjectEntryResourceAttachmentTest
 
 		FileEntry customFileEntry2 = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), testGroupId,
-			dlFolder3.getFolderId(), StringUtil.randomString() + ".jpg",
+			dlFolder3.getFolderId(), RandomTestUtil.randomString() + ".jpg",
 			ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			null, ServiceContextTestUtil.getServiceContext());
@@ -2736,8 +2739,8 @@ public class ObjectEntryResourceAttachmentTest
 			"http://", company.getVirtualHostname(), ":",
 			PortalUtil.getPortalServerPort(false),
 			_dlURLHelper.getPreviewURL(
-				customFileEntry1, customFileEntry1.getFileVersion(), null, "",
-				false, true));
+				customFileEntry1, customFileEntry1.getFileVersion(), null,
+				StringPool.BLANK, false, true));
 
 		String hostNotAllowedMessage = StringBundler.concat(
 			"Unable to download file from ", previewFileURL, " because host ",

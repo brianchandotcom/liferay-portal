@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -223,6 +224,8 @@ public class DBCopyTablesProcess {
 			Statement statement = targetConnection.createStatement()) {
 
 			Map<String, String> indexTypes = _getIndexTypes(sourceConnection);
+			Map<String, List<IndexMetadata>> sourceIndexMetadatasMap =
+				_getSourceIndexMetadatasMap(sourceConnection);
 
 			DatabaseMetaData databaseMetaData = targetConnection.getMetaData();
 
@@ -271,7 +274,8 @@ public class DBCopyTablesProcess {
 					entry.getValue(), StringUtil::toLowerCase);
 
 				for (IndexMetadata indexMetadata :
-						_getIndexMetadatas(sourceConnection, tableName)) {
+						sourceIndexMetadatasMap.getOrDefault(
+							tableName, Collections.emptyList())) {
 
 					String indexName = indexMetadata.getIndexName();
 
@@ -867,57 +871,72 @@ public class DBCopyTablesProcess {
 			Connection connection, String tableName)
 		throws SQLException {
 
-		List<IndexMetadata> indexMetadatas = new ArrayList<>();
-
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getIndexInfo(
 				connection.getCatalog(), connection.getSchema(), tableName,
 				false, true)) {
 
-			String[] columnNames = new String[0];
-			String previousIndexName = null;
-			boolean unique = false;
+			Map<String, List<IndexMetadata>> indexMetadatasMap =
+				_getIndexMetadatasMap(resultSet);
 
-			while (resultSet.next()) {
-				if (resultSet.getShort("ORDINAL_POSITION") == 0) {
-					continue;
-				}
+			return indexMetadatasMap.getOrDefault(tableName, new ArrayList<>());
+		}
+	}
 
-				String indexName = resultSet.getString("INDEX_NAME");
+	private Map<String, List<IndexMetadata>> _getIndexMetadatasMap(
+			ResultSet resultSet)
+		throws SQLException {
 
-				if ((previousIndexName != null) &&
-					!previousIndexName.equals(indexName)) {
+		Map<String, List<String>> columnNamesMap = new LinkedHashMap<>();
+		Map<String, String> tableNames = new HashMap<>();
+		Set<String> uniqueIndexNames = new HashSet<>();
 
-					indexMetadatas.add(
-						new IndexMetadata(
-							previousIndexName,
-							StringUtil.toLowerCase(tableName), unique,
-							columnNames));
-
-					columnNames = new String[0];
-				}
-
-				previousIndexName = indexName;
-
-				unique = !resultSet.getBoolean("NON_UNIQUE");
-
-				columnNames = ArrayUtil.append(
-					columnNames,
-					StringUtil.toLowerCase(
-						GetterUtil.getString(
-							resultSet.getString("COLUMN_NAME"))));
+		while (resultSet.next()) {
+			if (resultSet.getShort("ORDINAL_POSITION") == 0) {
+				continue;
 			}
 
-			if (previousIndexName != null) {
-				indexMetadatas.add(
-					new IndexMetadata(
-						previousIndexName, StringUtil.toLowerCase(tableName),
-						unique, columnNames));
+			String indexName = resultSet.getString("INDEX_NAME");
+
+			List<String> columnNames = columnNamesMap.computeIfAbsent(
+				indexName, key -> new ArrayList<>());
+
+			columnNames.add(
+				StringUtil.toLowerCase(
+					GetterUtil.getString(resultSet.getString("COLUMN_NAME"))));
+
+			tableNames.put(indexName, resultSet.getString("TABLE_NAME"));
+
+			if (resultSet.getBoolean("NON_UNIQUE")) {
+				continue;
 			}
+
+			uniqueIndexNames.add(indexName);
 		}
 
-		return indexMetadatas;
+		Map<String, List<IndexMetadata>> indexMetadatasMap = new TreeMap<>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		for (Map.Entry<String, List<String>> entry :
+				columnNamesMap.entrySet()) {
+
+			String indexName = entry.getKey();
+
+			String tableName = tableNames.get(indexName);
+
+			List<IndexMetadata> indexMetadatas =
+				indexMetadatasMap.computeIfAbsent(
+					tableName, key -> new ArrayList<>());
+
+			indexMetadatas.add(
+				new IndexMetadata(
+					indexName, StringUtil.toLowerCase(tableName),
+					uniqueIndexNames.contains(indexName),
+					ArrayUtil.toStringArray(entry.getValue())));
+		}
+
+		return indexMetadatasMap;
 	}
 
 	private Map<String, String> _getIndexTypes(Connection connection)
@@ -1063,6 +1082,48 @@ public class DBCopyTablesProcess {
 
 	private String _getSanitizedString(String value) {
 		return StringUtil.removeSubstring(value, StringPool.NULL_CHAR);
+	}
+
+	private Map<String, List<IndexMetadata>> _getSourceIndexMetadatasMap(
+			Connection connection)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		String databaseProductName = databaseMetaData.getDatabaseProductName();
+
+		if (databaseProductName.equals("Oracle")) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select all_indexes.table_name as TABLE_NAME, ",
+							"all_indexes.index_name as INDEX_NAME, ",
+							"decode(all_indexes.uniqueness, 'UNIQUE', 0, 1) ",
+							"as NON_UNIQUE, all_ind_columns.column_name as ",
+							"COLUMN_NAME, all_ind_columns.column_position as ",
+							"ORDINAL_POSITION from all_indexes inner join ",
+							"all_ind_columns on all_ind_columns.index_owner = ",
+							"all_indexes.owner and all_ind_columns.index_name ",
+							"= all_indexes.index_name where ",
+							"all_indexes.table_owner = ? order by TABLE_NAME, ",
+							"NON_UNIQUE, INDEX_NAME, ORDINAL_POSITION"))) {
+
+				preparedStatement.setString(1, connection.getSchema());
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					return _getIndexMetadatasMap(resultSet);
+				}
+			}
+		}
+
+		Map<String, List<IndexMetadata>> indexMetadatasMap = new HashMap<>();
+
+		for (String tableName : _sourceColumnNamesMap.keySet()) {
+			indexMetadatasMap.put(
+				tableName, _getIndexMetadatas(connection, tableName));
+		}
+
+		return indexMetadatasMap;
 	}
 
 	private Set<String> _getViews(DataSource dataSource) throws Exception {

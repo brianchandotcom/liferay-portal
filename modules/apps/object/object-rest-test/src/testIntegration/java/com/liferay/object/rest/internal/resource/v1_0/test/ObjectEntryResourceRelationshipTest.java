@@ -505,7 +505,7 @@ public class ObjectEntryResourceRelationshipTest
 					objectRelationship1.getName(), "/c%252Fd"),
 				Http.Method.PUT));
 
-		// Slash on the both sides
+		// Slash on both sides
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
@@ -1065,7 +1065,7 @@ public class ObjectEntryResourceRelationshipTest
 					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 				objectField);
 
-		// priority(ERC) > priority(invalid id)
+		// Priority(ERC) > priority(invalid ID)
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -1089,7 +1089,7 @@ public class ObjectEntryResourceRelationshipTest
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		//  priority(id) > priority(ERC)
+		// Priority(ID) > priority(ERC)
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -1113,7 +1113,7 @@ public class ObjectEntryResourceRelationshipTest
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// priority(relationshipName) > priority(id) > priority(ERC)
+		// Priority(relationshipName) > priority(ID) > priority(ERC)
 
 		String objectRelationshipName = objectRelationship.getName();
 
@@ -1172,7 +1172,7 @@ public class ObjectEntryResourceRelationshipTest
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.WARN)) {
 
-			// invalid ERC
+			// Invalid ERC
 
 			JSONAssert.assertEquals(
 				JSONUtil.put(
@@ -1190,7 +1190,7 @@ public class ObjectEntryResourceRelationshipTest
 				).toString(),
 				JSONCompareMode.LENIENT);
 
-			// priority(invalid id) > priority(invalid ERC)
+			// Priority(invalid ID) > priority(invalid ERC)
 
 			JSONAssert.assertEquals(
 				JSONUtil.put(

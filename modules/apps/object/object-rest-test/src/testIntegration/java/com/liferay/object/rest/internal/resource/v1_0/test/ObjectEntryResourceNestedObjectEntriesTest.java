@@ -287,7 +287,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		_assertEquals(nestedObjectEntriesJSONArray);
 
-		// Company-Site scope: with 'scopeKey'
+		// Company to site scope: with 'scopeKey'
 
 		objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
 			getObjectDefinition1(), getSiteScopedObjectDefinition2(),
@@ -338,7 +338,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 		_assertEquals(nestedObjectEntriesJSONArray);
 
-		// Company-Site scope: with empty 'scopeKey'
+		// Company to site scope: with empty 'scopeKey'
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -362,7 +362,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			).toString(),
 			jsonObject.toString(), JSONCompareMode.LENIENT);
 
-		// Company-Site scope: with nonexistent 'scopeKey'
+		// Company to site scope: with nonexistent 'scopeKey'
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -386,7 +386,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			).toString(),
 			jsonObject.toString(), JSONCompareMode.LENIENT);
 
-		// Company-Site scope: without 'scopeKey'
+		// Company to site scope: without 'scopeKey'
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

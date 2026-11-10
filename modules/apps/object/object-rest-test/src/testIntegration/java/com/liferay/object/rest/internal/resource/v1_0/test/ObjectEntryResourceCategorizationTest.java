@@ -822,7 +822,7 @@ public class ObjectEntryResourceCategorizationTest
 
 		assetVocabularyLocalService.deleteVocabulary(foreignAssetVocabulary);
 
-		// Cannot add a category to a company-scoped entry
+		// Cannot add a category to a company scoped entry
 
 		Assert.assertEquals(
 			400,
@@ -866,7 +866,7 @@ public class ObjectEntryResourceCategorizationTest
 					RandomTestUtil.randomString()),
 				Http.Method.PUT));
 
-		// No empty category created
+		// No empty category is created
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 

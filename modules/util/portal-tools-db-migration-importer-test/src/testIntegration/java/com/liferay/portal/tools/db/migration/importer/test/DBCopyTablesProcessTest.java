@@ -7,6 +7,8 @@ package com.liferay.portal.tools.db.migration.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
@@ -26,6 +28,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.migration.importer.DBCopyTablesProcess;
 import com.liferay.portal.tools.db.migration.importer.jdbc.AutoBatchPreparedStatementUtil;
+
+import java.io.PrintStream;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -169,7 +173,8 @@ public class DBCopyTablesProcessTest {
 	public void testAddCustomPrimaryKeysAndIndexes() throws Exception {
 		_sourceDB.runSQL(
 			"create table TestTable (id INTEGER not null primary key, " +
-				"charColumn VARCHAR(75), testColumn VARCHAR(75))");
+				"charColumn VARCHAR(75), testColumn VARCHAR(75), textColumn " +
+					"VARCHAR(75))");
 		_sourceDB.runSQL(
 			"create index IX_TEST_3 on TestTable (id, testColumn)");
 		_sourceDB.runSQL("create index TestTable on TestTable (charColumn)");
@@ -178,6 +183,13 @@ public class DBCopyTablesProcessTest {
 				" on TestTable (testColumn)");
 		_sourceDB.runSQL(
 			"create unique index IX_TEST_1 on TestTable (testColumn, id)");
+		_sourceDB.runSQL(
+			"create unique index IX_TEST_5 on TestTable (charColumn, id)");
+		_sourceDB.runSQL(
+			"create index IX_TEST_6 on TestTable (textColumn, id)");
+		_sourceDB.runSQL(
+			"create index IX_" + RandomTestUtil.randomString(61) +
+				" on TestTable (textColumn, charColumn)");
 
 		DBType dbType = _sourceDB.getDBType();
 		String indexName = "IX_" + RandomTestUtil.randomInt();
@@ -214,12 +226,45 @@ public class DBCopyTablesProcessTest {
 					"676))");
 			_targetDB.runSQL(
 				connection,
+				"create index ix_test_5 on testtable (charcolumn, id)");
+			_targetDB.runSQL(
+				connection,
+				"create index ix_test_6 on testtable (id, textcolumn)");
+			_targetDB.runSQL(
+				connection,
 				StringBundler.concat(
 					"insert into testtable (id, testcolumn) values (",
 					_TABLE_SIZE + 1, ", '", values[0], "')"));
 		}
 
-		dbCopyTablesProcess.addCustomPrimaryKeysAndIndexes();
+		PrintStream printStream = System.out;
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		System.setOut(new PrintStream(unsyncByteArrayOutputStream, true));
+
+		try {
+			dbCopyTablesProcess.addCustomPrimaryKeysAndIndexes();
+		}
+		finally {
+			System.setOut(printStream);
+		}
+
+		Assert.assertEquals(
+			Arrays.asList(
+				"unable to create unique index ix_test_5 on table testtable " +
+					"in the default schema because index ix_test_5 already " +
+						"exists on the same columns"),
+			TransformUtil.transformToList(
+				StringUtil.splitLines(unsyncByteArrayOutputStream.toString()),
+				message -> {
+					if (!message.startsWith("Unable to create unique index ")) {
+						return null;
+					}
+
+					return StringUtil.toLowerCase(message);
+				}));
 
 		try (Connection connection = _targetDataSource.getConnection();
 
@@ -242,12 +287,20 @@ public class DBCopyTablesProcessTest {
 
 			Assert.assertEquals(
 				Arrays.asList(
+					"CREATE INDEX ix_906fecd9 ON testtable USING btree " +
+						"(textcolumn, charcolumn)",
 					"CREATE INDEX ix_e1d669e2 ON testtable USING btree " +
 						"(charcolumn)",
+					"CREATE INDEX ix_f3ce9708 ON testtable USING btree " +
+						"(textcolumn, id)",
 					"CREATE UNIQUE INDEX ix_test_1 ON testtable USING btree " +
 						"(testcolumn, id)",
 					"CREATE INDEX ix_test_3 ON testtable USING btree (id, " +
 						"\"left\"((testcolumn)::text, 676))",
+					"CREATE INDEX ix_test_5 ON testtable USING btree " +
+						"(charcolumn, id)",
+					"CREATE INDEX ix_test_6 ON testtable USING btree (id, " +
+						"textcolumn)",
 					"CREATE UNIQUE INDEX testtable_pkey ON testtable USING " +
 						"btree (id)"),
 				indexDefinitions);

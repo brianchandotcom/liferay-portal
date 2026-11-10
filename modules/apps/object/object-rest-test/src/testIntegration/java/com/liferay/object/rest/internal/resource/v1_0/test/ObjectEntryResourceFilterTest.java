@@ -93,7 +93,7 @@ public class ObjectEntryResourceFilterTest
 		objectEntry1.setModifiedDate(
 			dateTimeDateFormat.parse("2023-09-20T10:00:00.150Z"));
 
-		objectEntry1 = objectEntryLocalService.updateObjectEntry(objectEntry1);
+		objectEntryLocalService.updateObjectEntry(objectEntry1);
 
 		objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			getObjectDefinition1(), OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_2);
@@ -103,7 +103,7 @@ public class ObjectEntryResourceFilterTest
 		objectEntry2.setModifiedDate(
 			dateTimeDateFormat.parse("2023-09-20T10:05:00.450Z"));
 
-		objectEntry2 = objectEntryLocalService.updateObjectEntry(objectEntry2);
+		objectEntryLocalService.updateObjectEntry(objectEntry2);
 
 		objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			getObjectDefinition1(), OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_3);
@@ -111,7 +111,7 @@ public class ObjectEntryResourceFilterTest
 		objectEntry3.setCreateDate(null);
 		objectEntry3.setModifiedDate(null);
 
-		objectEntry3 = objectEntryLocalService.updateObjectEntry(objectEntry3);
+		objectEntryLocalService.updateObjectEntry(objectEntry3);
 
 		_testGetObjectEntriesFilteredBySystemDate("dateCreated");
 		_testGetObjectEntriesFilteredBySystemDate("dateModified");

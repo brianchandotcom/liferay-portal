@@ -56,7 +56,7 @@ public class Creator implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The user's additional name, which can be used as a middle name. Read-only; taken from the user's middle name.",
+		description = "The user's additional name, which can be used as a middle name. Read only; taken from the user's middle name.",
 		example = "Paul"
 	)
 	public String getAdditionalName() {
@@ -93,7 +93,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The user's additional name, which can be used as a middle name. Read-only; taken from the user's middle name."
+		description = "The user's additional name, which can be used as a middle name. Read only; taken from the user's middle name."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
@@ -102,7 +102,7 @@ public class Creator implements Serializable {
 	private Supplier<String> _additionalNameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The type of the referenced content. Read-only; always UserAccount, because the creator is always a user.",
+		description = "The type of the referenced content. Read only; always UserAccount, because the creator is always a user.",
 		example = "UserAccount"
 	)
 	public String getContentType() {
@@ -139,7 +139,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The type of the referenced content. Read-only; always UserAccount, because the creator is always a user."
+		description = "The type of the referenced content. Read only; always UserAccount, because the creator is always a user."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
@@ -148,7 +148,7 @@ public class Creator implements Serializable {
 	private Supplier<String> _contentTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The user's external reference code. Read-only; the batch engine matches the creator by this code on import.",
+		description = "The user's external reference code. Read only; the batch engine matches the creator by this code on import.",
 		example = "AB-34098-789-N"
 	)
 	public String getExternalReferenceCode() {
@@ -185,7 +185,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The user's external reference code. Read-only; the batch engine matches the creator by this code on import."
+		description = "The user's external reference code. Read only; the batch engine matches the creator by this code on import."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String externalReferenceCode;
@@ -280,7 +280,7 @@ public class Creator implements Serializable {
 	private Supplier<String> _givenNameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The user's ID. Read-only; the batch engine falls back to this identifier when the external reference code does not match a user on import.",
+		description = "The user's ID. Read only; the batch engine falls back to this identifier when the external reference code does not match a user on import.",
 		example = "20132"
 	)
 	public Long getId() {
@@ -315,7 +315,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The user's ID. Read-only; the batch engine falls back to this identifier when the external reference code does not match a user on import."
+		description = "The user's ID. Read only; the batch engine falls back to this identifier when the external reference code does not match a user on import."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
@@ -324,7 +324,7 @@ public class Creator implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A relative URL to the user's profile image. Read-only; omitted when the user has no portrait.",
+		description = "A relative URL to the user's profile image. Read only; omitted when the user has no portrait.",
 		example = "/image/user_portrait?screenName=john.smith"
 	)
 	public String getImage() {
@@ -361,7 +361,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A relative URL to the user's profile image. Read-only; omitted when the user has no portrait."
+		description = "A relative URL to the user's profile image. Read only; omitted when the user has no portrait."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
@@ -411,7 +411,7 @@ public class Creator implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A relative URL to the user's profile. Read-only; resolved from the user's personal site.",
+		description = "A relative URL to the user's profile. Read only; resolved from the user's personal site.",
 		example = "/web/john.smith"
 	)
 	public String getProfileURL() {
@@ -448,7 +448,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A relative URL to the user's profile. Read-only; resolved from the user's personal site."
+		description = "A relative URL to the user's profile. Read only; resolved from the user's personal site."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
@@ -745,4 +745,4 @@ public class Creator implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:493210095
+// LIFERAY-REST-BUILDER-HASH:-1815305983

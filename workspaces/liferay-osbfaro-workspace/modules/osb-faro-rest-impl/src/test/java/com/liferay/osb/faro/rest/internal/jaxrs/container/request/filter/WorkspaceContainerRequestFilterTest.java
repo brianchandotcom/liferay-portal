@@ -396,11 +396,11 @@ public class WorkspaceContainerRequestFilterTest {
 
 	private static final long _CHANNEL_GROUP_ID = RandomTestUtil.randomLong();
 
-	private static final String _CHANNEL_ID_ALL_USERS =
-		String.valueOf(RandomTestUtil.randomLong());
+	private static final String _CHANNEL_ID_ALL_USERS = String.valueOf(
+		RandomTestUtil.randomLong());
 
-	private static final String _CHANNEL_ID_SELECT_USERS =
-		String.valueOf(RandomTestUtil.randomLong());
+	private static final String _CHANNEL_ID_SELECT_USERS = String.valueOf(
+		RandomTestUtil.randomLong());
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 

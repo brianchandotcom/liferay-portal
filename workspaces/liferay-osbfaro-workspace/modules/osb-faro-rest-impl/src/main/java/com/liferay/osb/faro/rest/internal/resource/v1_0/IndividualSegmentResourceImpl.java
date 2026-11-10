@@ -84,7 +84,7 @@ public class IndividualSegmentResourceImpl
 		List<String> excludedChannelIds = Collections.emptyList();
 
 		if (Validator.isNull(channelId)) {
-			excludedChannelIds = _getInaccessibleChannelIds(
+			excludedChannelIds = _getExcludedChannelIds(
 				faroProject.getGroupId());
 		}
 

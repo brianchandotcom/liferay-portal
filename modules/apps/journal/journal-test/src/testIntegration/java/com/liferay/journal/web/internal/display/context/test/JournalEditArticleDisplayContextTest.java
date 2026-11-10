@@ -172,24 +172,24 @@ public class JournalEditArticleDisplayContextTest {
 			long groupId, Map<Locale, String> friendlyURLMap)
 		throws Exception {
 
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.CHINA, RandomTestUtil.randomString()
-		).put(
-			LocaleUtil.GERMANY, RandomTestUtil.randomString()
-		).put(
-			LocaleUtil.JAPAN, RandomTestUtil.randomString()
-		).put(
-			LocaleUtil.SPAIN, RandomTestUtil.randomString()
-		).put(
-			LocaleUtil.US, RandomTestUtil.randomString()
-		).build();
 		Map<Locale, String> contentMap = HashMapBuilder.put(
 			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		return JournalTestUtil.addArticle(
 			null, groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, true, titleMap,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, true,
+			HashMapBuilder.put(
+				LocaleUtil.CHINA, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.GERMANY, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.JAPAN, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
 			contentMap, friendlyURLMap, contentMap, null, LocaleUtil.US, null,
 			null, false, true,
 			ServiceContextTestUtil.getServiceContext(groupId));

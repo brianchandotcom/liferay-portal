@@ -217,6 +217,28 @@ public class SchemaManifestBuilderTest {
 	}
 
 	@Test
+	public void testGetHistoryJSONArrayWithNonliteralSchemaVersion()
+		throws Exception {
+
+		_copyUpgradeStepRegistratorFile(
+			"NonliteralSchemaVersionUpgradeStepRegistrator");
+
+		try {
+			_schemaManifestBuilder.getHistoryJSONArray(_baseDir);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to parse schema version at ",
+					"com.liferay.test.internal.upgrade.registry.",
+					"NonliteralSchemaVersionUpgradeStepRegistrator:19"),
+				illegalArgumentException.getMessage());
+		}
+	}
+
+	@Test
 	public void testGetHistoryJSONArrayWithoutRegisterCalls() throws Exception {
 		_copyUpgradeStepRegistratorFile("InitializationUpgradeStepRegistrator");
 

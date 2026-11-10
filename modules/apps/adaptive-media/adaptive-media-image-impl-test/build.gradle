@@ -3,5 +3,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-api")
 	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-image-api")
 	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-image-impl")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

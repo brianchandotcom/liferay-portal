@@ -2934,40 +2934,6 @@ public class JournalArticleLocalServiceTest {
 			journalArticle.getContent(), true, true, serviceContext);
 	}
 
-	@Test(expected = ArticleExpirationDateException.class)
-	public void testUpdateArticleWithPastExpirationDate() throws Exception {
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		journalArticle = _journalArticleLocalService.expireArticle(
-			journalArticle.getUserId(), journalArticle.getGroupId(),
-			journalArticle.getArticleId(), journalArticle.getVersion(), null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		User user = TestPropsValues.getUser();
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			user.getTimeZone());
-
-		calendar.setTime(journalArticle.getExpirationDate());
-
-		_journalArticleLocalService.updateArticle(
-			journalArticle.getUserId(), journalArticle.getGroupId(),
-			journalArticle.getFolderId(), journalArticle.getArticleId(),
-			journalArticle.getVersion(), journalArticle.getTitleMap(),
-			journalArticle.getDescriptionMap(), null,
-			journalArticle.getContent(), journalArticle.getDDMTemplateKey(),
-			journalArticle.getLayoutUuid(), 0, 0, 0, 0, 0,
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE),
-			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-			calendar.get(Calendar.MINUTE), false, 0, 0, 0, 0, 0, true,
-			journalArticle.isIndexable(), journalArticle.isSmallImage(), 0,
-			journalArticle.getSmallImageSource(),
-			journalArticle.getSmallImageURL(), null, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
 	@Test
 	@TestInfo("LPS-162071")
 	public void testUpdateArticleWithJournalArticleField() throws Exception {
@@ -3028,6 +2994,39 @@ public class JournalArticleLocalServiceTest {
 		JSONAssert.assertEquals(
 			valueJSONObject.toString(), value.getString(LocaleUtil.US),
 			JSONCompareMode.STRICT);
+	}
+
+	@Test(expected = ArticleExpirationDateException.class)
+	public void testUpdateArticleWithPastExpirationDate() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		journalArticle = _journalArticleLocalService.expireArticle(
+			journalArticle.getUserId(), journalArticle.getGroupId(),
+			journalArticle.getArticleId(), journalArticle.getVersion(), null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		User user = TestPropsValues.getUser();
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
+
+		calendar.setTime(journalArticle.getExpirationDate());
+
+		_journalArticleLocalService.updateArticle(
+			journalArticle.getUserId(), journalArticle.getGroupId(),
+			journalArticle.getFolderId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), journalArticle.getTitleMap(),
+			journalArticle.getDescriptionMap(), null,
+			journalArticle.getContent(), journalArticle.getDDMTemplateKey(),
+			journalArticle.getLayoutUuid(), 0, 0, 0, 0, 0,
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), false, 0, 0, 0, 0, 0, true,
+			journalArticle.isIndexable(), journalArticle.isSmallImage(), 0,
+			journalArticle.getSmallImageSource(),
+			journalArticle.getSmallImageURL(), null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Test
@@ -3518,22 +3517,22 @@ public class JournalArticleLocalServiceTest {
 			journalArticle.getUrlTitle() + urlTitleSuffix,
 			journalArticle1.getUrlTitle());
 
-		AssetDisplayPageEntry assetDisplayPageEntry =
+		AssetDisplayPageEntry assetDisplayPageEntry1 =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				journalArticle.getGroupId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle.getResourcePrimKey());
-		AssetDisplayPageEntry assetDisplayPageEntry1 =
+		AssetDisplayPageEntry assetDisplayPageEntry2 =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				journalArticle1.getGroupId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				journalArticle1.getResourcePrimKey());
 
 		Assert.assertEquals(
-			assetDisplayPageEntry.getLayoutPageTemplateEntryId(),
-			assetDisplayPageEntry1.getLayoutPageTemplateEntryId());
+			assetDisplayPageEntry1.getLayoutPageTemplateEntryId(),
+			assetDisplayPageEntry2.getLayoutPageTemplateEntryId());
 		Assert.assertEquals(
-			assetDisplayPageEntry.getType(), assetDisplayPageEntry1.getType());
+			assetDisplayPageEntry1.getType(), assetDisplayPageEntry2.getType());
 
 		List<ResourcePermission> oldResourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(

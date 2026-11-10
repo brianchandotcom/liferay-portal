@@ -73,7 +73,7 @@ public class JournalEditArticleDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group1 = GroupTestUtil.addGroup();
 		_group2 = GroupTestUtil.addGroup();
 		_user = TestPropsValues.getUser();
 	}
@@ -84,8 +84,8 @@ public class JournalEditArticleDisplayContextTest {
 		_assertGetFriendlyURLDuplicatedWarningMessage(
 			StringPool.BLANK, _group2.getGroupId());
 		_assertGetFriendlyURLDuplicatedWarningMessage(
-			"The URL used in English (United States) already exists in " +
-				"other sites or asset libraries.",
+			"The URL used in English (United States) already exists in other " +
+				"sites or asset libraries.",
 			_group2.getGroupId(), LocaleUtil.US);
 		_assertGetFriendlyURLDuplicatedWarningMessage(
 			"The URL used in English (United States), Chinese (China) and " +
@@ -127,14 +127,14 @@ public class JournalEditArticleDisplayContextTest {
 	public void testIsShowPublishModal() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group1.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
 		RenderRequest mockLiferayPortletRenderRequest =
@@ -189,9 +189,9 @@ public class JournalEditArticleDisplayContextTest {
 
 		return JournalTestUtil.addArticle(
 			null, groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, true,
-			titleMap, contentMap, friendlyURLMap, contentMap, null,
-			LocaleUtil.US, null, null, false, true,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, true, titleMap,
+			contentMap, friendlyURLMap, contentMap, null, LocaleUtil.US, null,
+			null, false, true,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
@@ -218,7 +218,7 @@ public class JournalEditArticleDisplayContextTest {
 			).build());
 
 		JournalArticle journalArticle = _addArticle(
-			_group.getGroupId(),
+			_group1.getGroupId(),
 			HashMapBuilder.put(
 				LocaleUtil.CHINA,
 				_getFriendlyURL(
@@ -294,11 +294,11 @@ public class JournalEditArticleDisplayContextTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
+			_companyLocalService.getCompany(_group1.getCompanyId()));
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setScopeGroupId(_group1.getGroupId());
 		themeDisplay.setUser(_user);
 
 		mockLiferayPortletRenderRequest.setAttribute(
@@ -319,7 +319,7 @@ public class JournalEditArticleDisplayContextTest {
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@DeleteAfterTestRun
-	private Group _group;
+	private Group _group1;
 
 	@DeleteAfterTestRun
 	private Group _group2;

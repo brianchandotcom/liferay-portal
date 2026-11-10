@@ -9,9 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,7 +26,9 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -85,6 +89,7 @@ public class UpdateArticleMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPS-172561")
 	public void testProcessAction() throws Exception {
 		_processAction(_getMockLiferayPortletActionRequest());
 
@@ -146,6 +151,31 @@ public class UpdateArticleMVCActionCommandTest {
 			portletPreferences.getValue("articleExternalReferenceCode", null));
 		Assert.assertNull(
 			portletPreferences.getValue("groupExternalReferenceCode", null));
+
+		_group2 = GroupTestUtil.addGroup();
+
+		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
+			_group2.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
+			journalArticle2.getArticleId(),
+			HashMapBuilder.put(
+				LocaleUtil.US, journalArticle3.getUrlTitle()
+			).build());
+
+		mockLiferayPortletActionRequest.setParameter(
+			"version", String.valueOf(journalArticle2.getVersion()));
+
+		_processAction(mockLiferayPortletActionRequest);
+
+		Assert.assertEquals(
+			"The content has been published but might cause errors. The " +
+				"URL used in English (United States) already exists in " +
+					"other sites or asset libraries.",
+			SessionMessages.get(
+				mockLiferayPortletActionRequest.getHttpServletRequest(),
+				"friendlyURLDuplicated_requestProcessedWarning"));
 	}
 
 	@Test
@@ -341,6 +371,9 @@ public class UpdateArticleMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private Group _group2;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

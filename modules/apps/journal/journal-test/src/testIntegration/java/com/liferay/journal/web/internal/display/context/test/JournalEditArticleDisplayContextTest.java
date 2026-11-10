@@ -6,9 +6,14 @@
 package com.liferay.journal.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -17,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,8 +32,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -38,6 +47,9 @@ import com.liferay.portlet.test.MockLiferayPortletContext;
 
 import jakarta.portlet.Portlet;
 import jakarta.portlet.RenderRequest;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -62,7 +74,52 @@ public class JournalEditArticleDisplayContextTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+		_group2 = GroupTestUtil.addGroup();
 		_user = TestPropsValues.getUser();
+	}
+
+	@Test
+	@TestInfo("LPS-172561")
+	public void testGetFriendlyURLDuplicatedWarningMessage() throws Exception {
+		_assertGetFriendlyURLDuplicatedWarningMessage(
+			StringPool.BLANK, _group2.getGroupId());
+		_assertGetFriendlyURLDuplicatedWarningMessage(
+			"The URL used in English (United States) already exists in " +
+				"other sites or asset libraries.",
+			_group2.getGroupId(), LocaleUtil.US);
+		_assertGetFriendlyURLDuplicatedWarningMessage(
+			"The URL used in English (United States), Chinese (China) and " +
+				"Japanese (Japan) already exists in other sites or asset " +
+					"libraries.",
+			_group2.getGroupId(), LocaleUtil.CHINA, LocaleUtil.JAPAN,
+			LocaleUtil.US);
+		_assertGetFriendlyURLDuplicatedWarningMessage(
+			"The URL used in English (United States), Chinese (China), " +
+				"Japanese (Japan) and 1 more translations already exist in " +
+					"other sites or asset libraries.",
+			_group2.getGroupId(), LocaleUtil.CHINA, LocaleUtil.GERMANY,
+			LocaleUtil.JAPAN, LocaleUtil.US);
+		_assertGetFriendlyURLDuplicatedWarningMessage(
+			"The URL used in English (United States), Chinese (China), " +
+				"Spanish (Spain) and 2 more translations already exist in " +
+					"other sites or asset libraries.",
+			_group2.getGroupId(), LocaleUtil.CHINA, LocaleUtil.GERMANY,
+			LocaleUtil.JAPAN, LocaleUtil.SPAIN, LocaleUtil.US);
+
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertGetFriendlyURLDuplicatedWarningMessage(
+			"The URL used in Spanish (Spain) already exists in other sites " +
+				"or asset libraries.",
+			_depotEntry.getGroupId(), LocaleUtil.SPAIN);
 	}
 
 	@FeatureFlag("LPD-11228")
@@ -110,6 +167,108 @@ public class JournalEditArticleDisplayContextTest {
 				new Class<?>[0]));
 	}
 
+	private JournalArticle _addArticle(
+			long groupId, Map<Locale, String> friendlyURLMap)
+		throws Exception {
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.CHINA, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.GERMANY, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.JAPAN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.SPAIN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		Map<Locale, String> contentMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		return JournalTestUtil.addArticle(
+			null, groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, true,
+			titleMap, contentMap, friendlyURLMap, contentMap, null,
+			LocaleUtil.US, null, null, false, true,
+			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	private void _assertGetFriendlyURLDuplicatedWarningMessage(
+			String expectedFriendlyURLDuplicatedWarningMessage, long groupId,
+			Locale... duplicatedLocales)
+		throws Exception {
+
+		String friendlyURL = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		_addArticle(
+			groupId,
+			HashMapBuilder.put(
+				LocaleUtil.CHINA, friendlyURL + "-zh"
+			).put(
+				LocaleUtil.GERMANY, friendlyURL + "-de"
+			).put(
+				LocaleUtil.JAPAN, friendlyURL + "-ja"
+			).put(
+				LocaleUtil.SPAIN, friendlyURL + "-es"
+			).put(
+				LocaleUtil.US, friendlyURL + "-en"
+			).build());
+
+		JournalArticle journalArticle = _addArticle(
+			_group.getGroupId(),
+			HashMapBuilder.put(
+				LocaleUtil.CHINA,
+				_getFriendlyURL(
+					duplicatedLocales, friendlyURL + "-zh", LocaleUtil.CHINA)
+			).put(
+				LocaleUtil.GERMANY,
+				_getFriendlyURL(
+					duplicatedLocales, friendlyURL + "-de", LocaleUtil.GERMANY)
+			).put(
+				LocaleUtil.JAPAN,
+				_getFriendlyURL(
+					duplicatedLocales, friendlyURL + "-ja", LocaleUtil.JAPAN)
+			).put(
+				LocaleUtil.SPAIN,
+				_getFriendlyURL(
+					duplicatedLocales, friendlyURL + "-es", LocaleUtil.SPAIN)
+			).put(
+				LocaleUtil.US,
+				_getFriendlyURL(
+					duplicatedLocales, friendlyURL + "-en", LocaleUtil.US)
+			).build());
+
+		RenderRequest renderRequest = _getMockLiferayPortletRenderRequest(
+			journalArticle);
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		mvcPortlet.render(
+			renderRequest, new MockLiferayPortletRenderResponse());
+
+		Assert.assertEquals(
+			expectedFriendlyURLDuplicatedWarningMessage,
+			ReflectionTestUtil.invoke(
+				renderRequest.getAttribute(
+					"com.liferay.journal.web.internal.display.context." +
+						"JournalEditArticleDisplayContext"),
+				"getFriendlyURLDuplicatedWarningMessage", new Class<?>[0]));
+	}
+
+	private String _getFriendlyURL(
+		Locale[] duplicatedLocales, String duplicatedFriendlyURL,
+		Locale locale) {
+
+		if (ArrayUtil.contains(duplicatedLocales, locale)) {
+			return duplicatedFriendlyURL;
+		}
+
+		return StringUtil.toLowerCase(RandomTestUtil.randomString());
+	}
+
 	private RenderRequest _getMockLiferayPortletRenderRequest(
 			JournalArticle journalArticle)
 		throws Exception {
@@ -154,7 +313,16 @@ public class JournalEditArticleDisplayContextTest {
 	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private Group _group2;
 
 	@Inject(
 		filter = "component.name=com.liferay.journal.web.internal.portlet.JournalPortlet"

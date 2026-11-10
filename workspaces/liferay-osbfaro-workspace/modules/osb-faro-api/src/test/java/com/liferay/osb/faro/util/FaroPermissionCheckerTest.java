@@ -49,14 +49,14 @@ public class FaroPermissionCheckerTest {
 			RoleConstants.SITE_ADMINISTRATOR, FaroUserConstants.STATUS_APPROVED,
 			_USER_ID_ADMINISTRATOR);
 		_mockFaroUser(
+			RoleConstants.SITE_ADMINISTRATOR, FaroUserConstants.STATUS_PENDING,
+			_USER_ID_PENDING_ADMINISTRATOR);
+		_mockFaroUser(
 			RoleConstants.SITE_MEMBER, FaroUserConstants.STATUS_APPROVED,
 			_USER_ID_MEMBER);
 		_mockFaroUser(
 			RoleConstants.SITE_OWNER, FaroUserConstants.STATUS_APPROVED,
 			_USER_ID_OWNER);
-		_mockFaroUser(
-			RoleConstants.SITE_ADMINISTRATOR, FaroUserConstants.STATUS_PENDING,
-			_USER_ID_PENDING_ADMINISTRATOR);
 	}
 
 	@After

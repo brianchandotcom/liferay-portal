@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
@@ -56,11 +56,26 @@ public class ScheduleLaunchMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
-		Date publishDate = new Date(
-			ParamUtil.getLong(actionRequest, "publishTime"));
+		long launchSetId = ParamUtil.getLong(actionRequest, "launchSetId");
 
-		if (publishDate.getTime() <
-				(System.currentTimeMillis() + Time.MINUTE)) {
+		try {
+			_objectEntryService.checkModelResourcePermission(
+				_objectEntryLocalService.getObjectEntry(launchSetId),
+				ActionKeys.UPDATE);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			Date publishDate = new Date(
+				ParamUtil.getLong(actionRequest, "publishTime"));
+
+			_launchSetPublisher.schedulePublish(
+				publishDate, launchSetId, themeDisplay.getUserId());
+		}
+		catch (SchedulerException schedulerException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(schedulerException);
+			}
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
@@ -72,20 +87,6 @@ public class ScheduleLaunchMVCActionCommand
 							"the-future")));
 
 			return;
-		}
-
-		long launchSetId = ParamUtil.getLong(actionRequest, "launchSetId");
-
-		try {
-			_objectEntryService.checkModelResourcePermission(
-				_objectEntryLocalService.getObjectEntry(launchSetId),
-				ActionKeys.UPDATE);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			_launchSetPublisher.schedulePublish(
-				publishDate, launchSetId, themeDisplay.getUserId());
 		}
 		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);

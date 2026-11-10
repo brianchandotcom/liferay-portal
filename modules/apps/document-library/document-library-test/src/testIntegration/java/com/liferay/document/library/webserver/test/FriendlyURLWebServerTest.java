@@ -6,6 +6,11 @@
 package com.liferay.document.library.webserver.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ContentDispositionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.BaseWebServerTestCase;
@@ -190,6 +195,90 @@ public class FriendlyURLWebServerTest extends BaseWebServerTestCase {
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 	}
 
+	@Test
+	public void testServiceWithFileEntryWithoutExtension() throws Exception {
+		byte[] bytes = FileUtil.getBytes(getClass(), "dependencies/test.pdf");
+
+		FileEntry fileEntry = _addFileEntry(
+			bytes, RandomTestUtil.randomString(), ContentTypes.APPLICATION_PDF,
+			RandomTestUtil.randomString());
+
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_INLINE, fileEntry,
+			StringBundler.concat(
+				StringPool.SLASH, fileEntry.getGroupId(), StringPool.SLASH,
+				fileEntry.getFolderId(), StringPool.SLASH, fileEntry.getTitle(),
+				StringPool.SLASH, fileEntry.getUuid()));
+	}
+
+	@Test
+	public void testServiceWithFileName() throws Exception {
+		byte[] bytes = RandomTestUtil.randomBytes();
+		String nameBase = RandomTestUtil.randomString();
+
+		FileEntry fileEntry = _addFileEntry(
+			bytes, nameBase + " .doc", ContentTypes.APPLICATION_MSWORD,
+			RandomTestUtil.randomString());
+
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT, fileEntry,
+			String.format("/%s/0/%s+.doc", group.getGroupId(), nameBase));
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT, fileEntry,
+			String.format(
+				"/%s/0/%s", group.getGroupId(), fileEntry.getTitle()));
+
+		String title = fileEntry.getTitle();
+
+		fileEntry = _dlAppLocalService.updateFileEntry(
+			TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+			RandomTestUtil.randomString() + ".doc",
+			ContentTypes.APPLICATION_MSWORD, RandomTestUtil.randomString(),
+			null, StringPool.BLANK, StringPool.BLANK,
+			DLVersionNumberIncrease.MINOR, (byte[])null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT, fileEntry,
+			String.format(
+				"/%s/0/%s", group.getGroupId(), fileEntry.getFileName()));
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT, fileEntry,
+			String.format(
+				"/%s/0/%s", group.getGroupId(), fileEntry.getTitle()));
+
+		MockHttpServletResponse mockHttpServletResponse = service(
+			Method.GET, String.format("/%s/0/%s", group.getGroupId(), title),
+			Collections.emptyMap(), Collections.emptyMap(),
+			TestPropsValues.getUser(), null);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
+
+		bytes = FileUtil.getBytes(getClass(), "dependencies/liferay.jpg");
+
+		fileEntry = _addFileEntry(
+			bytes, RandomTestUtil.randomString() + ".jpg",
+			ContentTypes.IMAGE_JPEG, RandomTestUtil.randomString());
+
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_INLINE, fileEntry,
+			String.format(
+				"/%s/0/%s", group.getGroupId(), fileEntry.getTitle()));
+	}
+
+	private FileEntry _addFileEntry(
+			byte[] bytes, String fileName, String mimeType, String title)
+		throws Exception {
+
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType, title,
+			null, StringPool.BLANK, StringPool.BLANK, bytes, null, null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
 	private FileEntry _addFileEntry(String fileName, String urlTitle)
 		throws Exception {
 
@@ -201,6 +290,25 @@ public class FriendlyURLWebServerTest extends BaseWebServerTestCase {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			(byte[])null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
+	private void _assertService(
+			byte[] bytes, String contentDispositionType, FileEntry fileEntry,
+			String path)
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse = service(
+			Method.GET, path, Collections.emptyMap(), Collections.emptyMap(),
+			TestPropsValues.getUser(), null);
+
+		Assert.assertArrayEquals(
+			bytes, mockHttpServletResponse.getContentAsByteArray());
+		Assert.assertEquals(
+			ContentDispositionUtil.getContentDispositionHeaderValue(
+				contentDispositionType, fileEntry.getFileName()),
+			mockHttpServletResponse.getHeader(HttpHeaders.CONTENT_DISPOSITION));
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 	}
 
 	private MockHttpServletRequest _createMockHttpServletRequest(String path)

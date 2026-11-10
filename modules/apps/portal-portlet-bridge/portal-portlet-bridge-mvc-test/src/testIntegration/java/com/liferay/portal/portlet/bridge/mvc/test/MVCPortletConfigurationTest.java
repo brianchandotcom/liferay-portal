@@ -105,29 +105,6 @@ public class MVCPortletConfigurationTest {
 	}
 
 	@Test
-	public void testDoDispatchDoesNotServeConfigTemplateUnderViewMode()
-		throws Exception {
-
-		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-template", configTemplate
-			).put(
-				"jakarta.portlet.init-param.view-template", viewTemplate
-			).put(
-				"jakarta.portlet.name",
-				"testPortlet" + RandomTestUtil.randomString()
-			).build());
-
-		mvcPortlet.dispatch(
-			_createRenderRequest(configTemplate), new MockRenderResponse());
-
-		Assert.assertEquals(viewTemplate, mvcPortlet.getIncludedPath());
-	}
-
-	@Test
 	public void testDoDispatchDoesNotServeConfigurationJSPInitParamUnderViewMode()
 		throws Exception {
 
@@ -191,80 +168,38 @@ public class MVCPortletConfigurationTest {
 	}
 
 	@Test
-	public void testDoDispatchDoesNotServeMetaInfResourcesConfigTemplateUnderViewMode()
+	public void testDoDispatchDoesNotServeConfigurationJSPUnderViewMode()
 		throws Exception {
 
-		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-template", configTemplate
-			).put(
-				"jakarta.portlet.init-param.view-template", viewTemplate
-			).put(
-				"jakarta.portlet.name",
-				"testPortlet" + RandomTestUtil.randomString()
-			).build());
-
-		mvcPortlet.dispatch(
-			_createRenderRequest("/META-INF/resources" + configTemplate),
-			new MockRenderResponse());
-
-		Assert.assertEquals(viewTemplate, mvcPortlet.getIncludedPath());
-	}
-
-	@Test
-	public void testDoDispatchDoesNotServeNestedConfigurationJSPUnderViewMode()
-		throws Exception {
+		// Config template
 
 		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-		String nestedConfigurationJSP = StringBundler.concat(
-			"/", RandomTestUtil.randomString(), "/configuration/",
-			RandomTestUtil.randomString(), ".jsp");
-		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-template", configTemplate
-			).put(
-				"jakarta.portlet.init-param.view-template", viewTemplate
-			).put(
-				"jakarta.portlet.name",
-				"testPortlet" + RandomTestUtil.randomString()
-			).build());
+		_testDoDispatchDoesNotServeConfigurationJSPUnderViewMode(
+			configTemplate, configTemplate);
 
-		mvcPortlet.dispatch(
-			_createRenderRequest(nestedConfigurationJSP),
-			new MockRenderResponse());
+		// Meta-INF resources config template
 
-		Assert.assertEquals(viewTemplate, mvcPortlet.getIncludedPath());
-	}
+		String metaInfResourcesConfigTemplate =
+			"/" + RandomTestUtil.randomString() + ".jsp";
 
-	@Test
-	public void testDoDispatchDoesNotServeSiblingConfigurationJSPUnderViewMode()
-		throws Exception {
+		_testDoDispatchDoesNotServeConfigurationJSPUnderViewMode(
+			metaInfResourcesConfigTemplate,
+			"/META-INF/resources" + metaInfResourcesConfigTemplate);
 
-		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-		String siblingConfigurationJSP =
-			"/" + RandomTestUtil.randomString() + "/configuration.jsp";
-		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
+		// Nested configuration JSP
 
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.config-template", configTemplate
-			).put(
-				"jakarta.portlet.init-param.view-template", viewTemplate
-			).put(
-				"jakarta.portlet.name",
-				"testPortlet" + RandomTestUtil.randomString()
-			).build());
+		_testDoDispatchDoesNotServeConfigurationJSPUnderViewMode(
+			"/" + RandomTestUtil.randomString() + ".jsp",
+			StringBundler.concat(
+				"/", RandomTestUtil.randomString(), "/configuration/",
+				RandomTestUtil.randomString(), ".jsp"));
 
-		mvcPortlet.dispatch(
-			_createRenderRequest(siblingConfigurationJSP),
-			new MockRenderResponse());
+		// Sibling configuration JSP
 
-		Assert.assertEquals(viewTemplate, mvcPortlet.getIncludedPath());
+		_testDoDispatchDoesNotServeConfigurationJSPUnderViewMode(
+			"/" + RandomTestUtil.randomString() + ".jsp",
+			"/" + RandomTestUtil.randomString() + "/configuration.jsp");
 	}
 
 	@Test
@@ -356,6 +291,28 @@ public class MVCPortletConfigurationTest {
 			Portlet.class, mvcPortlet, properties);
 
 		return mvcPortlet;
+	}
+
+	private void _testDoDispatchDoesNotServeConfigurationJSPUnderViewMode(
+			String configTemplate, String path)
+		throws Exception {
+
+		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
+
+		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"jakarta.portlet.init-param.config-template", configTemplate
+			).put(
+				"jakarta.portlet.init-param.view-template", viewTemplate
+			).put(
+				"jakarta.portlet.name",
+				"testPortlet" + RandomTestUtil.randomString()
+			).build());
+
+		mvcPortlet.dispatch(
+			_createRenderRequest(path), new MockRenderResponse());
+
+		Assert.assertEquals(viewTemplate, mvcPortlet.getIncludedPath());
 	}
 
 	private final BundleContext _bundleContext;

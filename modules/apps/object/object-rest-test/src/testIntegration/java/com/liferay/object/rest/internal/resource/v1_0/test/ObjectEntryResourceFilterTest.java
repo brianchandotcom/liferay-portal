@@ -673,8 +673,6 @@ public class ObjectEntryResourceFilterTest
 	private void _testGetObjectEntriesFilteredBySystemDate(String fieldName)
 		throws Exception {
 
-		// eq
-
 		assertFilterString(
 			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1,
 			URLCodec.encodeURL(fieldName + " eq 2023-09-20T10:00:00.999Z"),
@@ -695,8 +693,6 @@ public class ObjectEntryResourceFilterTest
 			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_3,
 			URLCodec.encodeURL(fieldName + " eq null"), getObjectDefinition1());
 
-		// ge
-
 		_assertFilteredObjectEntries(
 			2, fieldName + " ge 2023-09-20T10:00:00.999Z");
 		_assertFilteredObjectEntries(2, fieldName + " ge 2023-09-20T10:00:00Z");
@@ -704,8 +700,6 @@ public class ObjectEntryResourceFilterTest
 			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_2,
 			URLCodec.encodeURL(fieldName + " ge 2023-09-20T10:00:01Z"),
 			getObjectDefinition1());
-
-		// gt
 
 		assertFilterString(
 			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_2,
@@ -716,12 +710,8 @@ public class ObjectEntryResourceFilterTest
 			URLCodec.encodeURL(fieldName + " gt 2023-09-20T10:00:00Z"),
 			getObjectDefinition1());
 
-		// in
-
 		_assertFilteredObjectEntries(
 			2, fieldName + " in (2023-09-20T10:05:00Z, 2023-09-20T10:00:00Z)");
-
-		// le
 
 		assertFilterString(
 			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1,
@@ -731,8 +721,6 @@ public class ObjectEntryResourceFilterTest
 			2, fieldName + " le 2023-09-20T10:05:00.999Z");
 		_assertFilteredObjectEntries(2, fieldName + " le 2023-09-20T10:05:00Z");
 
-		// lt
-
 		assertFilterString(
 			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1,
 			URLCodec.encodeURL(fieldName + " lt 2023-09-20T10:05:00.999Z"),
@@ -741,8 +729,6 @@ public class ObjectEntryResourceFilterTest
 			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1,
 			URLCodec.encodeURL(fieldName + " lt 2023-09-20T10:05:00Z"),
 			getObjectDefinition1());
-
-		// ne
 
 		assertFilterString(
 			OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_2,

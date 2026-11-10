@@ -787,7 +787,7 @@ public abstract class BaseObjectEntryResourceTestCase {
 			endpoint, expectedJSONObject, objectRelationship1ERCObjectFieldName,
 			objectEntry3.getExternalReferenceCode());
 
-		// Relationship Id field
+		// Relationship ID field
 
 		expectedJSONObject = _cloneJSONObject(
 			expectedJSONObject, objectRelationship2IdObjectFieldName,

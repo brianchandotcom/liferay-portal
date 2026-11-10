@@ -10,7 +10,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.BaseWebServerTestCase;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
@@ -205,10 +204,9 @@ public class FriendlyURLWebServerTest extends BaseWebServerTestCase {
 
 		_assertService(
 			bytes, HttpHeaders.CONTENT_DISPOSITION_INLINE, fileEntry,
-			StringBundler.concat(
-				StringPool.SLASH, fileEntry.getGroupId(), StringPool.SLASH,
-				fileEntry.getFolderId(), StringPool.SLASH, fileEntry.getTitle(),
-				StringPool.SLASH, fileEntry.getUuid()));
+			String.format(
+				"/%s/%s/%s/%s", fileEntry.getGroupId(), fileEntry.getFolderId(),
+				fileEntry.getTitle(), fileEntry.getUuid()));
 	}
 
 	@Test
@@ -222,11 +220,11 @@ public class FriendlyURLWebServerTest extends BaseWebServerTestCase {
 
 		_assertService(
 			bytes, HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT, fileEntry,
-			String.format("/%s/0/%s+.doc", group.getGroupId(), nameBase));
-		_assertService(
-			bytes, HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT, fileEntry,
 			String.format(
 				"/%s/0/%s", group.getGroupId(), fileEntry.getTitle()));
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT, fileEntry,
+			String.format("/%s/0/%s+.doc", group.getGroupId(), nameBase));
 
 		String title = fileEntry.getTitle();
 

@@ -548,10 +548,7 @@ public class ObjectEntryResourceAttachmentTest
 			).put(
 				OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				_toFileEntryJSONObject(
-					DLTestUtil.randomTextFileBytes(),
-					RandomTestUtil.randomString() + ".txt", null,
-					ContentTypes.TEXT_PLAIN,
-					OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)
+					null, OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)
 			).toString(),
 			getEndpoint(getObjectDefinition1(), testGroupId), Http.Method.POST);
 
@@ -916,9 +913,7 @@ public class ObjectEntryResourceAttachmentTest
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
-			_createObjectDefinitionWithLocalizedAttachmentField(
-				"localizedAttachment", ObjectDefinitionTestUtil.getRandomName(),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+			_createObjectDefinitionWithLocalizedAttachmentField();
 
 		byte[] fileContent = DLTestUtil.randomTextFileBytes();
 
@@ -955,9 +950,7 @@ public class ObjectEntryResourceAttachmentTest
 		// File with a nonexistent external reference code
 
 		ObjectDefinition objectDefinition =
-			_createObjectDefinitionWithLocalizedAttachmentField(
-				"localizedAttachment", ObjectDefinitionTestUtil.getRandomName(),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+			_createObjectDefinitionWithLocalizedAttachmentField();
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONFactoryUtil.getNullJSON(),
@@ -1174,21 +1167,21 @@ public class ObjectEntryResourceAttachmentTest
 	}
 
 	private ObjectDefinition
-			_createObjectDefinitionWithLocalizedAttachmentField(
-				String attachmentFieldName, String objectDefinitionName,
-				String scope)
+			_createObjectDefinitionWithLocalizedAttachmentField()
 		throws Exception {
+
+		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
 		return ObjectDefinitionTestUtil.publishObjectDefinition(
 			objectDefinitionName,
 			Collections.singletonList(
 				new AttachmentObjectFieldBuilder(
 				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(attachmentFieldName)
+					LocalizedMapUtil.getLocalizedMap("localizedAttachment")
 				).localized(
 					true
 				).name(
-					attachmentFieldName
+					"localizedAttachment"
 				).objectFieldSettings(
 					Arrays.asList(
 						new ObjectFieldSettingBuilder(
@@ -1226,7 +1219,8 @@ public class ObjectEntryResourceAttachmentTest
 							StringPool.SLASH + objectDefinitionName
 						).build())
 				).build()),
-			scope, TestPropsValues.getUserId());
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			TestPropsValues.getUserId());
 	}
 
 	private DLFolder _getDLFolder(
@@ -1513,10 +1507,7 @@ public class ObjectEntryResourceAttachmentTest
 			).put(
 				OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				_toFileEntryJSONObject(
-					DLTestUtil.randomTextFileBytes(),
-					RandomTestUtil.randomString() + ".txt", null,
-					ContentTypes.TEXT_PLAIN,
-					OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)
+					null, OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)
 			).toString(),
 			getEndpoint(getObjectDefinition1(), testGroupId), Http.Method.POST);
 
@@ -1777,8 +1768,6 @@ public class ObjectEntryResourceAttachmentTest
 					).put(
 						"folder",
 						JSONFactoryUtil.createJSONObject(folder.toString())
-					).put(
-						"mimeType", customFileEntry.getMimeType()
 					));
 			},
 			_toFileEntry(
@@ -1898,7 +1887,7 @@ public class ObjectEntryResourceAttachmentTest
 						OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 				_toFileEntry(
 					RandomTestUtil.randomString() + ".txt", previewFileURL,
-					null, null, customFileEntry.getMimeType()),
+					null, customFileEntry.getMimeType()),
 				httpMethod, null, objectDefinition,
 				OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				useExternalReferenceCode);
@@ -1926,7 +1915,7 @@ public class ObjectEntryResourceAttachmentTest
 						OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 				_toFileEntry(
 					RandomTestUtil.randomString() + ".txt", previewFileURL,
-					null, null, customFileEntry.getMimeType()),
+					null, customFileEntry.getMimeType()),
 				httpMethod, null, objectDefinition,
 				OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 				useExternalReferenceCode);
@@ -2233,11 +2222,7 @@ public class ObjectEntryResourceAttachmentTest
 				OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 			).put(
 				objectFieldName,
-				_toFileEntryJSONObject(
-					DLTestUtil.randomTextFileBytes(),
-					RandomTestUtil.randomString() + ".txt",
-					fileEntry.getFolder(), ContentTypes.TEXT_PLAIN,
-					objectFieldName)
+				_toFileEntryJSONObject(fileEntry.getFolder(), objectFieldName)
 			).toString(),
 			getEndpoint(objectDefinition, testGroupId), Http.Method.POST);
 
@@ -2293,7 +2278,7 @@ public class ObjectEntryResourceAttachmentTest
 				"title", expectedTitle
 			),
 			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt", fileURL, null, null,
+				RandomTestUtil.randomString() + ".txt", fileURL, null,
 				ContentTypes.TEXT_PLAIN),
 			httpMethod, null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
@@ -2517,8 +2502,6 @@ public class ObjectEntryResourceAttachmentTest
 					).put(
 						"folder",
 						JSONFactoryUtil.createJSONObject(folder.toString())
-					).put(
-						"mimeType", fileEntry.getMimeType()
 					));
 			},
 			_toFileEntry(
@@ -2665,7 +2648,7 @@ public class ObjectEntryResourceAttachmentTest
 						OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 				_toFileEntry(
 					RandomTestUtil.randomString() + ".txt", previewFileURL,
-					null, group.getGroupId(), customFileEntry1.getMimeType()),
+					group.getGroupId(), customFileEntry1.getMimeType()),
 				null, objectDefinition,
 				OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 		}
@@ -2690,7 +2673,7 @@ public class ObjectEntryResourceAttachmentTest
 						null, fileEntry, objectDefinition,
 						OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)),
 				_toFileEntry(
-					customFileEntry1.getTitle(), previewFileURL, null,
+					customFileEntry1.getTitle(), previewFileURL,
 					group.getGroupId(), customFileEntry1.getMimeType()),
 				null, objectDefinition,
 				OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
@@ -3094,7 +3077,7 @@ public class ObjectEntryResourceAttachmentTest
 				"title", expectedTitle
 			),
 			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt", fileURL, null,
+				RandomTestUtil.randomString() + ".txt", fileURL,
 				group.getGroupId(), ContentTypes.TEXT_PLAIN),
 			null, objectDefinition,
 			OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
@@ -3194,8 +3177,7 @@ public class ObjectEntryResourceAttachmentTest
 	}
 
 	private com.liferay.object.rest.dto.v1_0.FileEntry _toFileEntry(
-		String fileName, String fileURL, String folderExternalReferenceCode,
-		Long folderSiteId, String mimeType) {
+		String fileName, String fileURL, Long folderSiteId, String mimeType) {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
@@ -3204,10 +3186,9 @@ public class ObjectEntryResourceAttachmentTest
 		fileEntry.setMimeType(mimeType);
 		fileEntry.setName(fileName);
 
-		if ((folderExternalReferenceCode != null) || (folderSiteId != null)) {
+		if (folderSiteId != null) {
 			Folder folder = new Folder();
 
-			folder.setExternalReferenceCode(folderExternalReferenceCode);
 			folder.setSiteId(folderSiteId);
 
 			fileEntry.setFolder(folder);
@@ -3217,16 +3198,16 @@ public class ObjectEntryResourceAttachmentTest
 	}
 
 	private JSONObject _toFileEntryJSONObject(
-			byte[] fileContent, String fileName, Folder folder, String mimeType,
-			String objectFieldName)
+			Folder folder, String objectFieldName)
 		throws Exception {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry =
 			new com.liferay.object.rest.dto.v1_0.FileEntry();
 
-		fileEntry.setFileBase64(Base64.encode(fileContent));
-		fileEntry.setMimeType(mimeType);
-		fileEntry.setName(fileName);
+		fileEntry.setFileBase64(
+			Base64.encode(DLTestUtil.randomTextFileBytes()));
+		fileEntry.setMimeType(ContentTypes.TEXT_PLAIN);
+		fileEntry.setName(RandomTestUtil.randomString() + ".txt");
 
 		if (StringUtil.equals(
 				objectFieldName,

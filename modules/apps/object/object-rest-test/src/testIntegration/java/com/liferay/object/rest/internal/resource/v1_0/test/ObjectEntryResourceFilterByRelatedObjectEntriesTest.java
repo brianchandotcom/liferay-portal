@@ -1367,9 +1367,7 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 				String type)
 		throws Exception {
 
-		objectRelationship1 = addObjectRelationshipAndRelateObjectEntries(
-			getObjectDefinition1(), getObjectDefinition2(),
-			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(), type);
+		objectRelationship1 = addObjectRelationshipAndRelateObjectEntries(type);
 
 		// Custom object field
 

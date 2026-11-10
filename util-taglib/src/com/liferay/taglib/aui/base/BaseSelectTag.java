@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.JspException;
 
 import java.util.Map;
+import java.util.function.ToLongFunction;
 
 /**
  * @author Eduardo Lundgren
@@ -147,6 +148,10 @@ public abstract class BaseSelectTag extends BaseValidatorTagSupport {
 		return _value;
 	}
 
+	public ToLongFunction<Object> getValueFunction() {
+		return _valueFunction;
+	}
+
 	public String getWrapperCssClass() {
 		return _wrapperCssClass;
 	}
@@ -271,6 +276,10 @@ public abstract class BaseSelectTag extends BaseValidatorTagSupport {
 		_value = value;
 	}
 
+	public <T> void setValueFunction(ToLongFunction<T> valueFunction) {
+		_valueFunction = (ToLongFunction<Object>)valueFunction;
+	}
+
 	public void setWrapperCssClass(String wrapperCssClass) {
 		_wrapperCssClass = wrapperCssClass;
 	}
@@ -309,6 +318,7 @@ public abstract class BaseSelectTag extends BaseValidatorTagSupport {
 		_title = null;
 		_useNamespace = true;
 		_value = null;
+		_valueFunction = null;
 		_wrapperCssClass = null;
 	}
 
@@ -362,6 +372,8 @@ public abstract class BaseSelectTag extends BaseValidatorTagSupport {
 			httpServletRequest, "useNamespace", _useNamespace);
 		setNamespacedAttribute(httpServletRequest, "value", _value);
 		setNamespacedAttribute(
+			httpServletRequest, "valueFunction", _valueFunction);
+		setNamespacedAttribute(
 			httpServletRequest, "wrapperCssClass", _wrapperCssClass);
 	}
 
@@ -402,6 +414,7 @@ public abstract class BaseSelectTag extends BaseValidatorTagSupport {
 	private String _title;
 	private boolean _useNamespace = true;
 	private Object _value;
+	private ToLongFunction<Object> _valueFunction;
 	private String _wrapperCssClass;
 
 }

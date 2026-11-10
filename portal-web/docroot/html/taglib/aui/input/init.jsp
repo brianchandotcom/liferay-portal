@@ -61,6 +61,7 @@ java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttri
 java.lang.String type = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:type"));
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:useNamespace")), true);
 java.lang.Object value = (java.lang.Object)request.getAttribute("aui:input:value");
+java.util.function.Function<java.lang.Object, java.lang.String> valueFunction = (java.util.function.Function<java.lang.Object, java.lang.String>)request.getAttribute("aui:input:valueFunction");
 boolean wrappedField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:wrappedField")));
 java.lang.String wrapperCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:wrapperCssClass"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:input:dynamicAttributes");

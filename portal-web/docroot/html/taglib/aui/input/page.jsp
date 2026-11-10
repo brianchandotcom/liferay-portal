@@ -268,7 +268,7 @@ boolean choiceField = checkboxField || radioField;
 			valueString = BeanPropertiesUtil.getStringSilent(bean, name);
 		}
 		else if (!ignoreRequestValue && (Validator.isNull(type) || _TYPES.contains(type))) {
-			valueString = BeanParamUtil.getString(bean, request, name, AUIUtil.getBeanPropertyFunction(name, valueString), valueString);
+			valueString = BeanParamUtil.getString(bean, request, name, valueFunction, valueString);
 
 			if (Validator.isNotNull(fieldParam)) {
 				valueString = ParamUtil.getString(request, fieldParam, valueString);

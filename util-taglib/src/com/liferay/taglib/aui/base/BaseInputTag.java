@@ -12,6 +12,7 @@ import jakarta.servlet.jsp.JspException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Eduardo Lundgren
@@ -234,6 +235,10 @@ public abstract class BaseInputTag extends BaseValidatorTagSupport {
 
 	public Object getValue() {
 		return _value;
+	}
+
+	public Function<Object, ?> getValueFunction() {
+		return _valueFunction;
 	}
 
 	public boolean getWrappedField() {
@@ -470,6 +475,10 @@ public abstract class BaseInputTag extends BaseValidatorTagSupport {
 		_value = value;
 	}
 
+	public <T> void setValueFunction(Function<T, ?> valueFunction) {
+		_valueFunction = (Function<Object, ?>)valueFunction;
+	}
+
 	public void setWrappedField(boolean wrappedField) {
 		_wrappedField = wrappedField;
 	}
@@ -536,6 +545,7 @@ public abstract class BaseInputTag extends BaseValidatorTagSupport {
 		_type = null;
 		_useNamespace = true;
 		_value = null;
+		_valueFunction = null;
 		_wrappedField = false;
 		_wrapperCssClass = null;
 	}
@@ -620,6 +630,8 @@ public abstract class BaseInputTag extends BaseValidatorTagSupport {
 			httpServletRequest, "useNamespace", _useNamespace);
 		setNamespacedAttribute(httpServletRequest, "value", _value);
 		setNamespacedAttribute(
+			httpServletRequest, "valueFunction", _valueFunction);
+		setNamespacedAttribute(
 			httpServletRequest, "wrappedField", _wrappedField);
 		setNamespacedAttribute(
 			httpServletRequest, "wrapperCssClass", _wrapperCssClass);
@@ -683,6 +695,7 @@ public abstract class BaseInputTag extends BaseValidatorTagSupport {
 	private String _type;
 	private boolean _useNamespace = true;
 	private Object _value;
+	private Function<Object, ?> _valueFunction;
 	private boolean _wrappedField;
 	private String _wrapperCssClass;
 

@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Julio Camarero
@@ -314,6 +315,9 @@ public class InputTag extends BaseInputTag {
 		httpServletRequest.setAttribute(
 			getAttributeNamespace() + "value", getValue());
 
+		setNamespacedAttribute(
+			httpServletRequest, "valueFunction", _getValueFunction());
+
 		Map<String, ValidatorTag> validatorTags = getValidatorTags();
 
 		if ((validatorTags != null) &&
@@ -322,6 +326,24 @@ public class InputTag extends BaseInputTag {
 			setNamespacedAttribute(
 				httpServletRequest, "required", Boolean.TRUE.toString());
 		}
+	}
+
+	private Function<Object, String> _getValueFunction() {
+		Function<Object, ?> valueFunction = getValueFunction();
+
+		if (valueFunction == null) {
+			return AUIUtil.getBeanPropertyFunction(getName(), null);
+		}
+
+		return bean -> {
+			Object value = valueFunction.apply(bean);
+
+			if (value == null) {
+				return null;
+			}
+
+			return String.valueOf(value);
+		};
 	}
 
 	private void _updateFormCheckboxNames() {

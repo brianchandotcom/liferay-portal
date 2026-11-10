@@ -204,6 +204,12 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 			httpServletRequest, "title", String.valueOf(title));
 		setNamespacedAttribute(httpServletRequest, "value", value);
 
+		if (Validator.isNotNull(listType) && (getValueFunction() == null)) {
+			setNamespacedAttribute(
+				httpServletRequest, "valueFunction",
+				AUIUtil.getBeanPropertyToLongFunction(listTypeFieldName));
+		}
+
 		if (Validator.isNotNull(bodyContent)) {
 			setNamespacedAttribute(
 				httpServletRequest, "bodyContent", bodyContent.getString());

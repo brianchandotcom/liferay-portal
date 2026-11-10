@@ -950,6 +950,12 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
+			<description>A function that reads the value for the input from the bean, such as <![CDATA[<code>BlogsEntry::getSubtitle</code>]]>.</description>
+			<name>valueFunction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to wrap the input component in a <![CDATA[<code>div</code>]]>, that can be styled. The default value is <![CDATA[<code>false</code>]]>. If the <![CDATA[<code>wrapperCssClass</code>]]> attribute is configured, the value is set automatically to <![CDATA[<code>true</code>]]>.</description>
 			<name>wrappedField</name>
 			<required>false</required>
@@ -1413,6 +1419,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description>A function that reads the selected list type ID from the bean, such as <![CDATA[<code>Phone::getListTypeId</code>]]>. It is used with the <![CDATA[<code>listType</code>]]> attribute.</description>
+			<name>valueFunction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>A CSS class for styling the <![CDATA[<code>div</code>]]> that wraps the select field.</description>

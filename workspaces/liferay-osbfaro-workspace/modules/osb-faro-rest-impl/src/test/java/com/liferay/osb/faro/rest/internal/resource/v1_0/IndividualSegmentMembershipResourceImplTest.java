@@ -91,15 +91,17 @@ public class IndividualSegmentMembershipResourceImplTest {
 	public void testGetWorkspaceGroupIndividualSegmentMembershipsPage()
 		throws Exception {
 
-		Page<IndividualSegmentMembership> page =
+		Page<IndividualSegmentMembership> individualSegmentMembershipsPage =
 			_individualSegmentMembershipResourceImpl.
 				getWorkspaceGroupIndividualSegmentMembershipsPage(
 					_GROUP_ID, _INDIVIDUAL_SEGMENT_ID_ALL_USERS,
 					Pagination.of(1, 20), null);
 
 		Assert.assertEquals(
-			List.of(_individualSegmentMembership), page.getItems());
-		Assert.assertEquals(1, page.getTotalCount());
+			List.of(_individualSegmentMembership),
+			individualSegmentMembershipsPage.getItems());
+		Assert.assertEquals(
+			1, individualSegmentMembershipsPage.getTotalCount());
 
 		Mockito.verify(
 			_individualSegmentHelper

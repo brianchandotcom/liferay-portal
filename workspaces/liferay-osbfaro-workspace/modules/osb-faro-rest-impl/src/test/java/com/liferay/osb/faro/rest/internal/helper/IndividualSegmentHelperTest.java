@@ -16,7 +16,6 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalServiceUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -169,11 +168,9 @@ public class IndividualSegmentHelperTest {
 			Assert.fail();
 		}
 		catch (ForbiddenException forbiddenException) {
-			String expectedTitle = StringBundler.concat(
-				"Unable to access the individual segment with ID ",
-				_INDIVIDUAL_SEGMENT_ID_SELECT_USERS,
-				". Call \"getWorkspaceGroupChannelIndividualSegmentsPage\" to ",
-				"list the individual segments you can use.");
+			String expectedTitle =
+				"Unable to access the individual segment with ID " +
+					_INDIVIDUAL_SEGMENT_ID_SELECT_USERS;
 
 			Assert.assertEquals(expectedTitle, forbiddenException.getMessage());
 

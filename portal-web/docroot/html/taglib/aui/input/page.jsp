@@ -282,7 +282,7 @@ boolean choiceField = checkboxField || radioField;
 					activeLanguageIds="<%= activeLanguageIds %>"
 					adminMode="<%= adminMode %>"
 					autoFocus="<%= autoFocus %>"
-					availableLocales='<%= LanguageUtil.getAvailableLocales(BeanPropertiesUtil.getLongSilent(bean, "groupId", themeDisplay.getSiteGroupId())) %>'
+					availableLocales="<%= LanguageUtil.getAvailableLocales(AUIUtil.getGroupId(bean, themeDisplay.getSiteGroupId())) %>"
 					cssClass="<%= fieldCssClass %>"
 					defaultLanguageId="<%= defaultLanguageId %>"
 					disabled="<%= disabled %>"

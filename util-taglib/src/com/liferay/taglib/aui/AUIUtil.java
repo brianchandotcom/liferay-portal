@@ -10,6 +10,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -211,6 +213,30 @@ public class AUIUtil {
 
 			return GetterUtil.DEFAULT_LONG;
 		};
+	}
+
+	@SuppressWarnings("unchecked")
+	public static long getGroupId(Object bean, long defaultGroupId) {
+		if (bean instanceof GroupedModel groupedModel) {
+			return groupedModel.getGroupId();
+		}
+
+		if (bean instanceof BaseModel<?> baseModel) {
+			Map<String, Function<?, Object>> attributeGetterFunctions =
+				(Map<String, Function<?, Object>>)
+					baseModel.getAttributeGetterFunctions();
+
+			Function<Object, Object> attributeGetterFunction =
+				(Function<Object, Object>)attributeGetterFunctions.get(
+					"groupId");
+
+			if (attributeGetterFunction != null) {
+				return GetterUtil.getLong(
+					attributeGetterFunction.apply(baseModel), defaultGroupId);
+			}
+		}
+
+		return defaultGroupId;
 	}
 
 	public static String getNamespace(HttpServletRequest httpServletRequest) {

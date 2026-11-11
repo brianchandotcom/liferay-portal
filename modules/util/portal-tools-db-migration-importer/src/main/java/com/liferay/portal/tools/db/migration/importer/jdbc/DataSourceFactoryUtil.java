@@ -29,13 +29,10 @@ public class DataSourceFactoryUtil {
 			String partitionName)
 		throws Exception {
 
-		String driverClassName = "com.mysql.cj.jdbc.Driver";
+		String driverClassName = "org.mariadb.jdbc.Driver";
 
 		if (jdbcURL.contains("db2")) {
 			driverClassName = "com.ibm.db2.jcc.DB2Driver";
-		}
-		else if (jdbcURL.contains("mariadb")) {
-			driverClassName = "org.mariadb.jdbc.Driver";
 		}
 		else if (jdbcURL.contains("oracle")) {
 			driverClassName = "oracle.jdbc.OracleDriver";
@@ -54,7 +51,8 @@ public class DataSourceFactoryUtil {
 		hikariConfig.setConnectionTimeout(30000);
 		hikariConfig.setDriverClassName(driverClassName);
 		hikariConfig.setIdleTimeout(600000);
-		hikariConfig.setJdbcUrl(jdbcURL);
+		hikariConfig.setJdbcUrl(
+			StringUtil.replaceFirst(jdbcURL, "jdbc:mysql:", "jdbc:mariadb:"));
 		hikariConfig.setMaxLifetime(0);
 		hikariConfig.setMaximumPoolSize(10);
 		hikariConfig.setMinimumIdle(10);

@@ -35,18 +35,27 @@ Import parameters:
 - `--target-password <arg>` Set the target database user password.
 - `--target-user <arg>` Set the target database user.
 
+MySQL sources:
+
+- A MySQL source is read with the MariaDB driver, and a `jdbc:mysql:` URL is changed to `jdbc:mariadb:`.
+- Options that only MySQL Connector/J supports, such as `serverTimezone`, are ignored.
+- Add `sslMode=trust` to the source JDBC URL to encrypt the connection without verifying the server certificate, or `sslMode=verify-full` to encrypt it and verify a certificate issued for the server's hostname by a CA that the JVM trusts or that `serverSslCert` points to.
+- `useSSL=true` is read as `sslMode=verify-full`, so it fails with the self signed certificate that MySQL generates.
+- Before the server has cached the password of a `caching_sha2_password` user, for example for a new user or after a server restart, the user can log in over an encrypted connection or with `allowPublicKeyRetrieval=true`.
+- Zero dates are copied as null.
+
 ## Examples
 
 On Unix:
 
 ```
-./db_migration_importer.sh --path "/directory/" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
-./db_migration_importer.sh --jdbc-batch-size 600 --jdbc-fetch-size 1600 --path "/directory/" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
+./db_migration_importer.sh --path "/directory" --source-jdbc-url "jdbc:mysql://localhost:3306/schema?sslMode=trust" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
+./db_migration_importer.sh --jdbc-batch-size 600 --jdbc-fetch-size 1600 --path "/directory" --source-jdbc-url "jdbc:mysql://localhost:3306/schema?sslMode=trust" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
 ```
 
 On Windows:
 
 ```
-db_migration_importer.bat --path "C:\directory" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
-db_migration_importer.bat --jdbc-batch-size 600 --jdbc-fetch-size 1600 --path "C:\directory" --source-jdbc-url "jdbc:mysql://localhost:3306/schema" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
+db_migration_importer.bat --path "C:\directory" --source-jdbc-url "jdbc:mysql://localhost:3306/schema?sslMode=trust" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
+db_migration_importer.bat --jdbc-batch-size 600 --jdbc-fetch-size 1600 --path "C:\directory" --source-jdbc-url "jdbc:mysql://localhost:3306/schema?sslMode=trust" --source-password "xyz123" --source-user "xyz123" --target-jdbc-url "jdbc:postgresql://localhost:5432/schema" --target-password "xyz321" --target-user "xyz321"
 ```

@@ -614,60 +614,17 @@ public class EditFileEntryMVCActionCommandTest {
 
 	@Test
 	public void testProcessActionAddWithInvalidFileName() throws Exception {
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(
-				"Document_1.txt", "document_1_Edit.jpg");
-
-		_processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest,
-				FileExtensionException.MismatchExtension.class));
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest, RequiredFileException.class));
-
-		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
-			"Document_1.txt", "<>.txt");
-
-		_processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest, FileNameException.class));
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest, RequiredFileException.class));
-
-		MockLiferayPortletActionRequest
-			withoutExtensionMockLiferayPortletActionRequest =
-				_getMockLiferayPortletActionRequest(
-					"Document_1.jpg", "Document_1");
-
-		PortletException portletException = Assert.assertThrows(
-			PortletException.class,
-			() -> _processAction(
-				withoutExtensionMockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse()));
-
-		Throwable throwable = portletException.getCause();
-
-		Class<?> clazz = throwable.getClass();
-
-		Assert.assertEquals(
-			"com.liferay.document.library.web.internal.exception." +
-				"FileNameExtensionException",
-			clazz.getName());
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				withoutExtensionMockLiferayPortletActionRequest,
-				RequiredFileException.class));
+		_assertFileNameExtensionException("", "Document_1.jpg");
+		_assertFileNameExtensionException("Document_1", "Document_1.jpg");
+		_assertSessionErrors(
+			FileExtensionException.MismatchExtension.class,
+			"document_1_Edit.jpg", "Document_1.txt");
+		_assertSessionErrors(
+			FileNameException.class, ":\"?.doc", "Document_1.doc");
+		_assertSessionErrors(
+			FileNameException.class, "<>.txt", "Document_1.txt");
+		_assertSessionErrors(
+			FileNameException.class, "\\\\\\///.jpg", "Document_1.jpg");
 	}
 
 	@Test
@@ -754,6 +711,33 @@ public class EditFileEntryMVCActionCommandTest {
 				_group, TestPropsValues.getUserId()));
 	}
 
+	private void _assertFileNameExtensionException(
+			String fileName, String sourceFileName)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(fileName, sourceFileName);
+
+		PortletException portletException = Assert.assertThrows(
+			PortletException.class,
+			() -> _processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse()));
+
+		Throwable throwable = portletException.getCause();
+
+		Class<?> clazz = throwable.getClass();
+
+		Assert.assertEquals(
+			"com.liferay.document.library.web.internal.exception." +
+				"FileNameExtensionException",
+			clazz.getName());
+
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest, RequiredFileException.class));
+	}
+
 	private void _assertNoViewPermission(FileEntry fileEntry, String roleName)
 		throws Exception {
 
@@ -765,6 +749,25 @@ public class EditFileEntryMVCActionCommandTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(fileEntry.getFileEntryId()), role.getRoleId(),
 				ActionKeys.VIEW));
+	}
+
+	private void _assertSessionErrors(
+			Class<?> exceptionClass, String fileName, String sourceFileName)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(fileName, sourceFileName);
+
+		_processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest, exceptionClass));
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest, RequiredFileException.class));
 	}
 
 	private void _assertURLTitleChangedMessage(String urlTitle)
@@ -975,12 +978,12 @@ public class EditFileEntryMVCActionCommandTest {
 		throws Exception {
 
 		return _getMockLiferayPortletActionRequest(
-			_CONTENT_BYTES, fileName,
+			_CONTENT_BYTES, sourceFileName,
 			HashMapBuilder.putAll(
 				_getParameters(
 					Constants.ADD, 0, _group.getGroupId(), new String[0])
 			).put(
-				"fileName", new String[] {sourceFileName}
+				"fileName", new String[] {fileName}
 			).put(
 				"title", new String[] {RandomTestUtil.randomString()}
 			).build());

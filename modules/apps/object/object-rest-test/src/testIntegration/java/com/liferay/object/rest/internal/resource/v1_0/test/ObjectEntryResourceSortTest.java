@@ -991,7 +991,6 @@ public class ObjectEntryResourceSortTest
 				String.format(
 					"%s/%s", objectRelationship1.getName(),
 					OBJECT_FIELD_NAME_TEXT));
-
 			_testSortByManyToOneRelationshipCustomObjectFields(
 				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
 				endpoint3, depth2JSONObject1, depth2JSONObject2,
@@ -1263,6 +1262,9 @@ public class ObjectEntryResourceSortTest
 			_testSortByFieldNamesAndId(
 				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format("%s/status", objectRelationship1.getName()));
+			_testSortByFieldNamesAndId(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format("%s/userId", objectRelationship1.getName()));
 
 			// Depth 2
 
@@ -1302,9 +1304,6 @@ public class ObjectEntryResourceSortTest
 				String.format(
 					"%s/%s/status", objectRelationship1.getName(),
 					objectRelationship2.getName()));
-			_testSortByFieldNamesAndId(
-				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
-				String.format("%s/userId", objectRelationship1.getName()));
 
 			// Sort by several fields
 
@@ -1858,7 +1857,6 @@ public class ObjectEntryResourceSortTest
 				String.format(
 					"%s/%s", objectRelationship1.getName(),
 					OBJECT_FIELD_NAME_TEXT));
-
 			_testSortByOneToManyRelationshipCustomObjectFields(
 				endpoint1, jsonObject1, jsonObject2, endpoint3,
 				depth2JSONObject1, depth2JSONObject2, depth2JSONObject3,
@@ -2183,6 +2181,9 @@ public class ObjectEntryResourceSortTest
 			_testSortByFieldNames(
 				endpoint1, jsonObject2, jsonObject1,
 				String.format("%s/status", objectRelationship1.getName()));
+			_testSortByFieldNames(
+				endpoint1, jsonObject2, jsonObject1,
+				String.format("%s/userId", objectRelationship1.getName()));
 
 			// Depth 2
 
@@ -2222,9 +2223,6 @@ public class ObjectEntryResourceSortTest
 				String.format(
 					"%s/%s/status", objectRelationship1.getName(),
 					objectRelationship2.getName()));
-			_testSortByFieldNames(
-				endpoint1, jsonObject2, jsonObject1,
-				String.format("%s/userId", objectRelationship1.getName()));
 
 			// Sort by several fields
 

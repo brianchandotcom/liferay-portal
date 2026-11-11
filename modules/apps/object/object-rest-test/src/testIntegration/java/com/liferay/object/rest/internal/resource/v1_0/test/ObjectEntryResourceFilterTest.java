@@ -209,6 +209,7 @@ public class ObjectEntryResourceFilterTest
 		_assertFilteredObjectEntries(
 			3,
 			String.format("%s/any()", OBJECT_FIELD_NAME_MULTISELECT_PICKLIST));
+
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
@@ -233,6 +234,7 @@ public class ObjectEntryResourceFilterTest
 				"%s/any(k:contains(k,'%s'))",
 				OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				RandomTestUtil.randomString()));
+
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
@@ -268,6 +270,7 @@ public class ObjectEntryResourceFilterTest
 			String.format(
 				"%s/any(k:k eq '%s')", OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				RandomTestUtil.randomString()));
+
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
@@ -286,6 +289,7 @@ public class ObjectEntryResourceFilterTest
 				"%s/any(k:k in ('%s', '%s'))",
 				OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
+
 		_assertFilteredObjectEntries(
 			2,
 			String.format(
@@ -306,6 +310,7 @@ public class ObjectEntryResourceFilterTest
 			String.format(
 				"%s/any(k:k ne '%s')", OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				RandomTestUtil.randomString()));
+
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
@@ -345,6 +350,7 @@ public class ObjectEntryResourceFilterTest
 				"%s/any(k:startswith(k,'%s'))",
 				OBJECT_FIELD_NAME_MULTISELECT_PICKLIST,
 				RandomTestUtil.randomString()));
+
 		_assertFilteredObjectEntries(
 			1,
 			String.format(
@@ -499,6 +505,7 @@ public class ObjectEntryResourceFilterTest
 			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3);
 
 		_assertFilteredObjectEntries(3, "taxonomyCategoryIds/any()");
+
 		_assertFilteredObjectEntries(0, "taxonomyCategoryIds/any(k:k eq 1234)");
 		_assertFilteredObjectEntries(
 			3,

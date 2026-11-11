@@ -216,6 +216,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [BeanParamUtil Getter](validations/branch/bean-param-util-getter.md)
 
+1. [AUI Value Function](validations/branch/aui-value-function.md)
+
 1. [HTML Escaping](validations/branch/html-escaping.md)
 
 1. [Unused DS Lifecycle Parameter](validations/branch/unused-ds-lifecycle-parameter.md)

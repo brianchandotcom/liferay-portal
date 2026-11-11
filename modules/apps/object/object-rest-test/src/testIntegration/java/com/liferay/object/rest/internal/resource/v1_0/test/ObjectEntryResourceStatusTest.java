@@ -123,6 +123,8 @@ public class ObjectEntryResourceStatusTest
 
 		// With code inside status
 
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
 		Assert.assertEquals(
 			200,
 			HTTPTestUtil.invokeToHttpCode(
@@ -131,7 +133,7 @@ public class ObjectEntryResourceStatusTest
 				).put(
 					"status", JSONUtil.put("code", 0)
 				).toString(),
-				getObjectDefinition1().getRESTContextPath(), Http.Method.POST));
+				objectDefinition.getRESTContextPath(), Http.Method.POST));
 
 		// Without code inside status
 
@@ -143,7 +145,7 @@ public class ObjectEntryResourceStatusTest
 				).put(
 					"status", JSONUtil.put("label", "approved")
 				).toString(),
-				getObjectDefinition1().getRESTContextPath(), Http.Method.POST));
+				objectDefinition.getRESTContextPath(), Http.Method.POST));
 
 		// Without status
 
@@ -153,7 +155,7 @@ public class ObjectEntryResourceStatusTest
 				JSONUtil.put(
 					OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 				).toString(),
-				getObjectDefinition1().getRESTContextPath(), Http.Method.POST));
+				objectDefinition.getRESTContextPath(), Http.Method.POST));
 	}
 
 	@Test
@@ -161,9 +163,11 @@ public class ObjectEntryResourceStatusTest
 	public void testPutByExternalReferenceCodeRestoreNotInTrash()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
 		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
-			getObjectDefinition1().getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
@@ -184,7 +188,7 @@ public class ObjectEntryResourceStatusTest
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(
-					getObjectDefinition1().getRESTContextPath(),
+					objectDefinition.getRESTContextPath(),
 					"/by-external-reference-code/",
 					objectEntry.getExternalReferenceCode(), "/restore"),
 				Http.Method.PUT

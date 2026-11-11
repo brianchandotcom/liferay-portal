@@ -115,6 +115,10 @@ definition {
 
 		var pageName = "Page Revision Page";
 
+		task ("Enable widget pages") {
+			PagesAdmin.enableWidgetPages();
+		}
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
@@ -306,6 +310,10 @@ definition {
 		property test.run.type = "single";
 
 		var pageName = "New Site Page Name";
+
+		task ("Enable widget pages") {
+			PagesAdmin.enableWidgetPages();
+		}
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",

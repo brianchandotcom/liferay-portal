@@ -79,6 +79,7 @@ public class InputTagTest {
 		inputTag.setAttributes(mockHttpServletRequest);
 
 		_assertValueFunction("1", group, mockHttpServletRequest);
+		_assertValueFunction(null, null, mockHttpServletRequest);
 
 		inputTag.setValueFunction(Group::getGroupKey);
 

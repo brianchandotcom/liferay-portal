@@ -671,7 +671,6 @@ public class ObjectEntryServiceTest {
 		throws Exception {
 
 		FileEntry fileEntry = _addFileEntry();
-
 		ObjectEntry objectEntry = _addObjectEntry(_user);
 
 		_setUser(_user);
@@ -1428,7 +1427,6 @@ public class ObjectEntryServiceTest {
 		throws Exception {
 
 		FileEntry fileEntry = _addFileEntry();
-
 		ObjectEntry objectEntry = _addObjectEntry(_user);
 
 		_setUser(_user);
@@ -1456,7 +1454,6 @@ public class ObjectEntryServiceTest {
 		throws Exception {
 
 		FileEntry fileEntry = _addFileEntry();
-
 		ObjectEntry objectEntry = _addObjectEntry(_user);
 
 		_setUser(_user);
@@ -1591,7 +1588,6 @@ public class ObjectEntryServiceTest {
 		throws Exception {
 
 		FileEntry fileEntry1 = _addFileEntry();
-
 		ObjectEntry objectEntry1 = _addObjectEntry(_user);
 
 		_setUser(_user);

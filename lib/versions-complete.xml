@@ -4818,17 +4818,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.tools.db.migration.importer.jar!mysql-connector-j.jar</file-name>
-				<version>8.3.0</version>
-				<project-name>Oracle Corporation's JDBC and XDevAPI Driver for MySQL</project-name>
-				<project-url>http://dev.mysql.com/doc/connector-j/en/</project-url>
-				<licenses>
-					<license>
-						<license-name>The GNU General Public License, v2 with Universal FOSS Exception, v1.0</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.tools.db.migration.importer.jar!postgresql.jar</file-name>
 				<version>42.7.14</version>
 				<project-name>PostgreSQL JDBC Driver</project-name>

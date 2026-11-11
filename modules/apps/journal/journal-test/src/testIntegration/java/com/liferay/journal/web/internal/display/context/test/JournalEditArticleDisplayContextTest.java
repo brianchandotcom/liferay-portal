@@ -6,6 +6,10 @@
 package com.liferay.journal.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -13,6 +17,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -25,6 +31,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -127,6 +134,37 @@ public class JournalEditArticleDisplayContextTest {
 				).build()));
 	}
 
+	@FeatureFlag("LPD-57283")
+	@Test
+	public void testGetSelectAssetDisplayPageContext() throws Exception {
+		Group designLibraryGroup = _addConnectedDesignLibraryGroup();
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				designLibraryGroup.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				journalArticle.getDDMStructureKey(), true,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Map<String, Object> selectAssetDisplayPageContext =
+			ReflectionTestUtil.invoke(
+				_getJournalEditArticleDisplayContext(
+					HashMapBuilder.put(
+						"articleId", journalArticle.getArticleId()
+					).put(
+						"resourcePrimKey",
+						String.valueOf(journalArticle.getResourcePrimKey())
+					).build()),
+				"getSelectAssetDisplayPageContext", new Class<?>[0]);
+
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getName(),
+			selectAssetDisplayPageContext.get("defaultDisplayPageName"));
+	}
+
 	@FeatureFlag("LPD-11228")
 	@Test
 	public void testIsShowPublishModal() throws Exception {
@@ -165,6 +203,22 @@ public class JournalEditArticleDisplayContextTest {
 			ReflectionTestUtil.invoke(
 				journalEditArticleDisplayContext, "_isShowPublishModal",
 				new Class<?>[0]));
+	}
+
+	private Group _addConnectedDesignLibraryGroup() throws Exception {
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-57283");
+
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_DESIGN_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		return _depotEntry.getGroup();
 	}
 
 	private Object _getDDMTemplate(Map<String, String> parameters)
@@ -227,6 +281,15 @@ public class JournalEditArticleDisplayContextTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

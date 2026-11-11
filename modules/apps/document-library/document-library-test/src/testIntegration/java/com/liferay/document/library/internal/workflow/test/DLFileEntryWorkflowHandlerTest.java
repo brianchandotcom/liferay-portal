@@ -7,6 +7,10 @@ package com.liferay.document.library.internal.workflow.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -32,11 +36,13 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -51,6 +57,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -99,6 +106,7 @@ public class DLFileEntryWorkflowHandlerTest {
 		_user = TestPropsValues.getUser();
 	}
 
+	@FeatureFlag("LPD-57283")
 	@Test
 	public void testContributeWorkflowContext() throws Exception {
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
@@ -110,38 +118,8 @@ public class DLFileEntryWorkflowHandlerTest {
 
 		_serviceContext.setAttribute(DDMFormValues.class.getName(), null);
 
-		_addLayoutPageTemplateEntry();
-
-		FileEntry fileEntry = _addFileEntry(null, null);
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_PENDING, dlFileEntry.getStatus());
-
-		WorkflowInstance workflowInstance = _approveWorkflowTask(dlFileEntry);
-
-		dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-			dlFileEntry.getFileEntryId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, dlFileEntry.getStatus());
-
-		Map<String, Serializable> approvedWorkflowContext =
-			workflowInstance.getWorkflowContext();
-
-		ServiceContext serviceContext =
-			(ServiceContext)approvedWorkflowContext.get(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
-
-		Map<String, Serializable> attributes = serviceContext.getAttributes();
-
-		Assert.assertFalse(
-			attributes.containsKey(DDMFormValues.class.getName()));
-
-		Assert.assertNotEquals(
-			StringPool.BLANK,
-			approvedWorkflowContext.get(WorkflowConstants.CONTEXT_URL));
+		_testContributeWorkflowContextWithDesignLibraryDefaultDisplayPage();
+		_testContributeWorkflowContextWithSiteDefaultDisplayPage();
 	}
 
 	@Test
@@ -319,6 +297,22 @@ public class DLFileEntryWorkflowHandlerTest {
 			WorkflowConstants.STATUS_DENIED, fileVersion.getStatus());
 	}
 
+	private Group _addConnectedDesignLibraryGroup() throws Exception {
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-57283");
+
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_DESIGN_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		return _depotEntry.getGroup();
+	}
+
 	private FileEntry _addFileEntry(Date displayDate, Date expirationDate)
 		throws PortalException {
 
@@ -331,7 +325,7 @@ public class DLFileEntryWorkflowHandlerTest {
 			_serviceContext);
 	}
 
-	private void _addLayoutPageTemplateEntry() throws Exception {
+	private void _addLayoutPageTemplateEntry(long groupId) throws Exception {
 		String name = StringUtil.randomString();
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
@@ -339,13 +333,13 @@ public class DLFileEntryWorkflowHandlerTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), groupId, 0,
 				name.toLowerCase(LocaleUtil.ROOT),
 				PortalUtil.getClassNameId(FileEntry.class.getName()),
 				dlFileEntryType.getFileEntryTypeKey(), name,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0L, 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
+					groupId, TestPropsValues.getUserId()));
 
 		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
@@ -426,6 +420,67 @@ public class DLFileEntryWorkflowHandlerTest {
 		return themeDisplay;
 	}
 
+	private void _testContributeWorkflowContextWithDesignLibraryDefaultDisplayPage()
+		throws Exception {
+
+		Group designLibraryGroup = _addConnectedDesignLibraryGroup();
+
+		_addLayoutPageTemplateEntry(designLibraryGroup.getGroupId());
+
+		FileEntry fileEntry = _addFileEntry(null, null);
+
+		WorkflowInstance workflowInstance = _approveWorkflowTask(
+			(DLFileEntry)fileEntry.getModel());
+
+		Map<String, Serializable> approvedWorkflowContext =
+			workflowInstance.getWorkflowContext();
+
+		ServiceContext serviceContext =
+			(ServiceContext)approvedWorkflowContext.get(
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				serviceContext.getAttribute("hasAssetDisplayPage")));
+	}
+
+	private void _testContributeWorkflowContextWithSiteDefaultDisplayPage()
+		throws Exception {
+
+		_addLayoutPageTemplateEntry(_group.getGroupId());
+
+		FileEntry fileEntry = _addFileEntry(null, null);
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, dlFileEntry.getStatus());
+
+		WorkflowInstance workflowInstance = _approveWorkflowTask(dlFileEntry);
+
+		dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			dlFileEntry.getFileEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, dlFileEntry.getStatus());
+
+		Map<String, Serializable> approvedWorkflowContext =
+			workflowInstance.getWorkflowContext();
+
+		ServiceContext serviceContext =
+			(ServiceContext)approvedWorkflowContext.get(
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+
+		Assert.assertFalse(
+			attributes.containsKey(DDMFormValues.class.getName()));
+
+		Assert.assertNotEquals(
+			StringPool.BLANK,
+			approvedWorkflowContext.get(WorkflowConstants.CONTEXT_URL));
+	}
+
 	private void _updateStatus(FileVersion fileVersion, int status)
 		throws PortalException {
 
@@ -448,6 +503,15 @@ public class DLFileEntryWorkflowHandlerTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private DLAppService _dlAppService;

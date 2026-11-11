@@ -166,6 +166,10 @@ $multi-step-progress-bar-fixed-width: 100px !default;
 
 	.kaleo-process-export-dialog,
 	.kaleo-process-preview-fields-dialog {
+		&.modal-hidden {
+			display: none;
+		}
+
 		.modal-content {
 			.modal-body {
 				overflow-y: auto;

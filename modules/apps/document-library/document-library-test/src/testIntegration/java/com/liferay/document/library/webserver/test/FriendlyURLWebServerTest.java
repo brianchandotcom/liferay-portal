@@ -195,21 +195,6 @@ public class FriendlyURLWebServerTest extends BaseWebServerTestCase {
 	}
 
 	@Test
-	public void testServiceWithFileEntryWithoutExtension() throws Exception {
-		byte[] bytes = FileUtil.getBytes(getClass(), "dependencies/test.pdf");
-
-		FileEntry fileEntry = _addFileEntry(
-			bytes, RandomTestUtil.randomString(), ContentTypes.APPLICATION_PDF,
-			RandomTestUtil.randomString());
-
-		_assertService(
-			bytes, HttpHeaders.CONTENT_DISPOSITION_INLINE, fileEntry,
-			String.format(
-				"/%s/%s/%s/%s", fileEntry.getGroupId(), fileEntry.getFolderId(),
-				fileEntry.getTitle(), fileEntry.getUuid()));
-	}
-
-	@Test
 	public void testServiceWithFileName() throws Exception {
 		byte[] bytes = RandomTestUtil.randomBytes();
 		String nameBase = RandomTestUtil.randomString();
@@ -264,6 +249,31 @@ public class FriendlyURLWebServerTest extends BaseWebServerTestCase {
 			bytes, HttpHeaders.CONTENT_DISPOSITION_INLINE, fileEntry,
 			String.format(
 				"/%s/0/%s", group.getGroupId(), fileEntry.getTitle()));
+	}
+
+	@Test
+	public void testServiceWithLatestVersionURL() throws Exception {
+		byte[] bytes = FileUtil.getBytes(getClass(), "dependencies/test.pdf");
+		String title = RandomTestUtil.randomString() + ".pdf";
+
+		FileEntry fileEntry = _addFileEntry(
+			bytes, title, ContentTypes.APPLICATION_PDF, title);
+
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_INLINE, fileEntry,
+			String.format(
+				"/%s/%s/%s/%s", fileEntry.getGroupId(), fileEntry.getFolderId(),
+				fileEntry.getTitle(), fileEntry.getUuid()));
+
+		fileEntry = _addFileEntry(
+			bytes, RandomTestUtil.randomString(), ContentTypes.APPLICATION_PDF,
+			RandomTestUtil.randomString());
+
+		_assertService(
+			bytes, HttpHeaders.CONTENT_DISPOSITION_INLINE, fileEntry,
+			String.format(
+				"/%s/%s/%s/%s", fileEntry.getGroupId(), fileEntry.getFolderId(),
+				fileEntry.getTitle(), fileEntry.getUuid()));
 	}
 
 	private FileEntry _addFileEntry(

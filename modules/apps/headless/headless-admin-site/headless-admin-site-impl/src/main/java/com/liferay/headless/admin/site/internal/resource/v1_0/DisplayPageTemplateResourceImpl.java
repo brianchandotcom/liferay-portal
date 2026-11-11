@@ -466,6 +466,25 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
+	public DisplayPageTemplate putDesignLibraryDisplayPageTemplate(
+			String designLibraryExternalReferenceCode,
+			String displayPageTemplateExternalReferenceCode,
+			DisplayPageTemplate displayPageTemplate)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry(
+				displayPageTemplateExternalReferenceCode,
+				_getDesignLibraryGroupId(designLibraryExternalReferenceCode));
+
+		return _toDesignLibraryDisplayPageTemplate(
+			designLibraryExternalReferenceCode,
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				displayPageTemplate.getName()));
+	}
+
+	@Override
 	public Page<Permission> putDesignLibraryDisplayPageTemplatePermissionsPage(
 			String designLibraryExternalReferenceCode,
 			String displayPageTemplateExternalReferenceCode,

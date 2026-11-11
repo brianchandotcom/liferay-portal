@@ -376,6 +376,26 @@ public class MasterPageResourceImpl
 	}
 
 	@Override
+	public MasterPage putDesignLibraryMasterPage(
+			String designLibraryExternalReferenceCode,
+			String masterPageExternalReferenceCode, MasterPage masterPage)
+		throws Exception {
+
+		EnabledUtil.checkDesignLibraryMasterPagesEnabled(contextCompany);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry(
+				masterPageExternalReferenceCode,
+				_getDesignLibraryGroupId(designLibraryExternalReferenceCode));
+
+		return _toDesignLibraryMasterPage(
+			designLibraryExternalReferenceCode,
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				masterPage.getName()));
+	}
+
+	@Override
 	public Page<Permission> putDesignLibraryMasterPagePermissionsPage(
 			String designLibraryExternalReferenceCode,
 			String masterPageExternalReferenceCode, Permission[] permissions)

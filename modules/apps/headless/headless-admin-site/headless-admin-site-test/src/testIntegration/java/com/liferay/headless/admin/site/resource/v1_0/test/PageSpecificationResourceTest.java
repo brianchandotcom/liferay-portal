@@ -410,13 +410,13 @@ public class PageSpecificationResourceTest
 		_testPatchSitePageSpecificationWithMismatchedPageSpecification(
 			serviceContext);
 
-		String externalReferenceCode = RandomTestUtil.randomString();
-
 		ContentPageSpecification contentPageSpecification =
 			new ContentPageSpecification();
 
 		contentPageSpecification.setType(
 			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		ProblemExceptionTestUtil.assertProblemException(
 			"NOT_FOUND", null,

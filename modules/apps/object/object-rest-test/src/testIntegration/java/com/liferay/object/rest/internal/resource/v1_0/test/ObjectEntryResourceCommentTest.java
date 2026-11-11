@@ -400,10 +400,12 @@ public class ObjectEntryResourceCommentTest
 			Http.Method httpMethod)
 		throws Exception {
 
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
 		ObjectEntry serviceBuilderObjectEntry =
 			objectEntryLocalService.addObjectEntry(
 				0, TestPropsValues.getUserId(),
-				getObjectDefinition1().getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
@@ -448,7 +450,7 @@ public class ObjectEntryResourceCommentTest
 			};
 
 		ObjectEntryResource objectEntryResource = getObjectEntryResource(
-			getObjectDefinition1(), TestPropsValues.getUser());
+			objectDefinition, TestPropsValues.getUser());
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {

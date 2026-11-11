@@ -83,6 +83,8 @@ public class ObjectEntryResourceObjectFieldTest
 	public void testGetObjectEntriesPageWithAssigneeObjectField()
 		throws Exception {
 
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
 		ObjectFieldUtil.addCustomObjectField(
 			new AssigneeObjectFieldBuilder(
 			).labelMap(
@@ -90,7 +92,7 @@ public class ObjectEntryResourceObjectFieldTest
 			).name(
 				"assignee"
 			).objectDefinitionId(
-				getObjectDefinition1().getObjectDefinitionId()
+				objectDefinition.getObjectDefinitionId()
 			).userId(
 				TestPropsValues.getUserId()
 			).build());
@@ -130,7 +132,7 @@ public class ObjectEntryResourceObjectFieldTest
 					"type", "Role"
 				).build()
 			).toString(),
-			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"assignee",
@@ -140,7 +142,7 @@ public class ObjectEntryResourceObjectFieldTest
 					"type", "User"
 				).build()
 			).toString(),
-			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
 
 		User user2 = UserTestUtil.addUser();
 
@@ -161,7 +163,7 @@ public class ObjectEntryResourceObjectFieldTest
 					"type", "Role"
 				).build()
 			).toString(),
-			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"assignee",
@@ -171,12 +173,12 @@ public class ObjectEntryResourceObjectFieldTest
 					"type", "User"
 				).build()
 			).toString(),
-			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
-				getObjectDefinition1().getRESTContextPath(),
+				objectDefinition.getRESTContextPath(),
 				"?assigneeUserExternalReferenceCode=",
 				user1.getExternalReferenceCode(), "&sort=",
 				URLCodec.encodeURL("id:asc")),
@@ -199,7 +201,7 @@ public class ObjectEntryResourceObjectFieldTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
-				getObjectDefinition1().getRESTContextPath(),
+				objectDefinition.getRESTContextPath(),
 				"?assigneeUserExternalReferenceCode=",
 				user2.getExternalReferenceCode(), "&sort=",
 				URLCodec.encodeURL("id:asc")),
@@ -221,7 +223,7 @@ public class ObjectEntryResourceObjectFieldTest
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
-			getObjectDefinition1().getRESTContextPath() +
+			objectDefinition.getRESTContextPath() +
 				"?assigneeUserExternalReferenceCode=" +
 					RandomTestUtil.randomString(),
 			Http.Method.GET);
@@ -611,6 +613,8 @@ public class ObjectEntryResourceObjectFieldTest
 			String dateTimeString, String expectedDateTimeUTCString)
 		throws Exception {
 
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT, "2000-07-27T11:00:00.000"
@@ -623,7 +627,7 @@ public class ObjectEntryResourceObjectFieldTest
 				).put(
 					OBJECT_FIELD_NAME_DATE_TIME_UTC, dateTimeString
 				).toString(),
-				getObjectDefinition1().getRESTContextPath(), Http.Method.POST
+				objectDefinition.getRESTContextPath(), Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
 	}

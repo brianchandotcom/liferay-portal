@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -103,7 +104,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_DATE, dateFormat.format(randomDate1)
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(randomDate2)
+				dateTimeFormat.format(randomDate2)
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat
 			).put(
@@ -149,7 +150,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
+				dateTimeFormat.format(
 					new Date(
 						randomDate2.getTime() +
 							(RandomTestUtil.randomInt(1, 60) * 1000)))
@@ -287,7 +288,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_DATE, dateFormat.format(randomDate1)
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(randomDate2)
+				dateTimeFormat.format(randomDate2)
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat
 			).put(
@@ -317,8 +318,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 2000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 2000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 2
 			).put(
@@ -347,7 +347,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_DATE, dateFormat.format(randomDate1)
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(randomDate2)
+				dateTimeFormat.format(randomDate2)
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat
 			).put(
@@ -377,8 +377,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 2000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 2000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 2
 			).put(
@@ -409,8 +408,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 1000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 1000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 1
 			).put(
@@ -441,8 +439,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (3 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 3000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 3000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 3
 			).put(
@@ -672,7 +669,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_DATE, dateFormat.format(randomDate1)
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(randomDate2)
+				dateTimeFormat.format(randomDate2)
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat
 			).put(
@@ -702,8 +699,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 2000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 2000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 2
 			).put(
@@ -732,7 +728,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_DATE, dateFormat.format(randomDate1)
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(randomDate2)
+				dateTimeFormat.format(randomDate2)
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat
 			).put(
@@ -762,8 +758,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 2000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 2000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 2
 			).put(
@@ -1074,9 +1069,13 @@ public class ObjectEntryResourceSortTest
 		addResourcePermission(
 			ActionKeys.VIEW, getObjectDefinition3().getClassName(), role);
 
-		User user1 = addUser("test1", "test1");
-		User user2 = addUser("test2", "test2");
-		User user3 = addUser("test3", "test3");
+		String password = RandomTestUtil.randomString();
+		String randomString = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		User user1 = addUser("test1" + randomString, password);
+		User user2 = addUser("test2" + randomString, password);
+		User user3 = addUser("test3" + randomString, password);
 
 		roleLocalService.addUserRole(user1.getUserId(), role.getRoleId());
 		roleLocalService.addUserRole(user2.getUserId(), role.getRoleId());
@@ -1103,7 +1102,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test3@liferay.com", "test3"
+			user3.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -1118,7 +1117,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -1132,7 +1131,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -1147,7 +1146,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test1@liferay.com", "test1"
+			user1.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -1187,7 +1186,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test3@liferay.com", "test3"
+			user3.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -1200,7 +1199,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -1213,7 +1212,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -1226,7 +1225,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test1@liferay.com", "test1"
+			user1.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -1390,7 +1389,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_DATE, dateFormat.format(randomDate1)
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(randomDate2)
+				dateTimeFormat.format(randomDate2)
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat
 			).put(
@@ -1420,8 +1419,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 2000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 2000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 2
 			).put(
@@ -1452,8 +1450,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 1000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 1000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 1
 			).put(
@@ -1484,8 +1481,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (3 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 3000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 3000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 3
 			).put(
@@ -1514,7 +1510,7 @@ public class ObjectEntryResourceSortTest
 				OBJECT_FIELD_NAME_DATE, dateFormat.format(randomDate1)
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(randomDate2)
+				dateTimeFormat.format(randomDate2)
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat
 			).put(
@@ -1544,8 +1540,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (2 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 2000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 2000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 2
 			).put(
@@ -1576,8 +1571,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 1000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 1000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 1
 			).put(
@@ -1608,8 +1602,7 @@ public class ObjectEntryResourceSortTest
 					new Date(randomDate1.getTime() + (3 * 24 * 3600 * 1000)))
 			).put(
 				OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-				dateTimeDateFormat.format(
-					new Date(randomDate2.getTime() + 3000))
+				dateTimeFormat.format(new Date(randomDate2.getTime() + 3000))
 			).put(
 				OBJECT_FIELD_NAME_DECIMAL, randomFloat + 3
 			).put(
@@ -1942,9 +1935,13 @@ public class ObjectEntryResourceSortTest
 		addResourcePermission(
 			ActionKeys.VIEW, getObjectDefinition1().getClassName(), role);
 
-		User user1 = addUser("test1", "test1");
-		User user2 = addUser("test2", "test2");
-		User user3 = addUser("test3", "test3");
+		String password = RandomTestUtil.randomString();
+		String randomString = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		User user1 = addUser("test1" + randomString, password);
+		User user2 = addUser("test2" + randomString, password);
+		User user3 = addUser("test3" + randomString, password);
 
 		roleLocalService.addUserRole(user1.getUserId(), role.getRoleId());
 		roleLocalService.addUserRole(user2.getUserId(), role.getRoleId());
@@ -1971,7 +1968,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test3@liferay.com", "test3"
+			user3.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -1986,7 +1983,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -2001,7 +1998,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[2] = HTTPTestUtil.invokeToJSONObject(
@@ -2013,7 +2010,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test1@liferay.com", "test1"
+			user1.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[3] = HTTPTestUtil.invokeToJSONObject(
@@ -2027,7 +2024,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test3@liferay.com", "test3"
+			user3.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -2042,7 +2039,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -2057,7 +2054,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[2] = HTTPTestUtil.invokeToJSONObject(
@@ -2069,7 +2066,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test1@liferay.com", "test1"
+			user1.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[3] = HTTPTestUtil.invokeToJSONObject(
@@ -2109,7 +2106,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test3@liferay.com", "test3"
+			user3.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -2122,7 +2119,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -2135,7 +2132,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test3@liferay.com", "test3"
+			user3.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -2148,7 +2145,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				depth2JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -2284,8 +2281,12 @@ public class ObjectEntryResourceSortTest
 			ObjectActionKeys.ADD_OBJECT_ENTRY,
 			getObjectDefinition1().getResourceName(), role);
 
-		User user1 = addUser("test1", "test1");
-		User user2 = addUser("test2", "test2");
+		String password = RandomTestUtil.randomString();
+		String randomString = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		User user1 = addUser("test1" + randomString, password);
+		User user2 = addUser("test2" + randomString, password);
 
 		roleLocalService.addUserRole(user1.getUserId(), role.getRoleId());
 		roleLocalService.addUserRole(user2.getUserId(), role.getRoleId());
@@ -2301,7 +2302,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				jsonObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -2316,7 +2317,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test1@liferay.com", "test1"
+			user1.getEmailAddress(), password
 		).apply(
 			() ->
 				jsonObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -2328,7 +2329,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test1@liferay.com", "test1"
+			user1.getEmailAddress(), password
 		).apply(
 			() ->
 				jsonObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -2341,7 +2342,7 @@ public class ObjectEntryResourceSortTest
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			user2.getEmailAddress(), password
 		).apply(
 			() ->
 				jsonObjects[0] = HTTPTestUtil.invokeToJSONObject(

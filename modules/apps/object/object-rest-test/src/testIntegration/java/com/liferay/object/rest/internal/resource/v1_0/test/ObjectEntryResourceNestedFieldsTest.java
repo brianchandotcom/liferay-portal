@@ -27,7 +27,7 @@ import com.liferay.object.rest.test.util.UserAccountTestUtil;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectEntryServiceWrapper;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
-import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -506,14 +507,18 @@ public class ObjectEntryResourceNestedFieldsTest
 			getObjectDefinition4(), OBJECT_FIELD_NAME_TEXT,
 			OBJECT_FIELD_VALUE_4);
 
-		userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
-			systemObjectDefinitionManager,
-			HashMapBuilder.<String, Serializable>put(
-				OBJECT_FIELD_NAME_2, String.valueOf(OBJECT_FIELD_VALUE_2)
-			).build());
+		SystemObjectDefinitionManager userSystemObjectDefinitionManager =
+			getUserSystemObjectDefinitionManager();
+
+		JSONObject userAccountJSONObject =
+			UserAccountTestUtil.addUserAccountJSONObject(
+				userSystemObjectDefinitionManager,
+				HashMapBuilder.<String, Serializable>put(
+					OBJECT_FIELD_NAME_2, String.valueOf(OBJECT_FIELD_VALUE_2)
+				).build());
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+			userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		userAccountJSONObject = HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -524,13 +529,13 @@ public class ObjectEntryResourceNestedFieldsTest
 
 		ObjectRelationship objectRelationship1 =
 			addObjectRelationshipAndRelateObjectEntries(
-				getObjectDefinition1(), userSystemObjectDefinition,
+				getObjectDefinition1(), getUserSystemObjectDefinition(),
 				objectEntry1.getPrimaryKey(),
 				userAccountJSONObject.getLong("id"),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		ObjectRelationship objectRelationship2 =
 			addObjectRelationshipAndRelateObjectEntries(
-				userSystemObjectDefinition, getObjectDefinition2(),
+				getUserSystemObjectDefinition(), getObjectDefinition2(),
 				userAccountJSONObject.getLong("id"),
 				objectEntry2.getPrimaryKey(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
@@ -542,13 +547,13 @@ public class ObjectEntryResourceNestedFieldsTest
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		ObjectRelationship objectRelationship4 =
 			addObjectRelationshipAndRelateObjectEntries(
-				getObjectDefinition3(), userSystemObjectDefinition,
+				getObjectDefinition3(), getUserSystemObjectDefinition(),
 				objectEntry3.getPrimaryKey(),
 				userAccountJSONObject.getLong("id"),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		ObjectRelationship objectRelationship5 =
 			addObjectRelationshipAndRelateObjectEntries(
-				userSystemObjectDefinition, getObjectDefinition4(),
+				getUserSystemObjectDefinition(), getObjectDefinition4(),
 				userAccountJSONObject.getLong("id"),
 				objectEntry4.getPrimaryKey(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -664,7 +669,7 @@ public class ObjectEntryResourceNestedFieldsTest
 
 		String relationshipFieldName = StringBundler.concat(
 			"r_", objectRelationship5.getName(), "_",
-			userSystemObjectDefinition.getPKObjectFieldName());
+			getUserSystemObjectDefinition().getPKObjectFieldName());
 
 		String relationshipFieldNameNestedFieldName = StringUtil.removeLast(
 			relationshipFieldName, "Id");
@@ -745,13 +750,14 @@ public class ObjectEntryResourceNestedFieldsTest
 
 		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			getObjectDefinition1(), OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1);
-		userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
-			systemObjectDefinitionManager, Collections.emptyMap());
+		JSONObject userAccountJSONObject =
+			UserAccountTestUtil.addUserAccountJSONObject(
+				getUserSystemObjectDefinitionManager(), Collections.emptyMap());
 
 		ObjectRelationship objectRelationship =
 			addObjectRelationshipAndRelateObjectEntries(
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-				userSystemObjectDefinition, getObjectDefinition1(),
+				getUserSystemObjectDefinition(), getObjectDefinition1(),
 				userAccountJSONObject.getLong("id"),
 				objectEntry1.getPrimaryKey(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
@@ -777,7 +783,7 @@ public class ObjectEntryResourceNestedFieldsTest
 
 		objectRelationship = addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-			userSystemObjectDefinition, getObjectDefinition1(),
+			getUserSystemObjectDefinition(), getObjectDefinition1(),
 			userAccountJSONObject.getLong("id"), objectEntry1.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
@@ -799,7 +805,7 @@ public class ObjectEntryResourceNestedFieldsTest
 
 		objectRelationship = addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-			getObjectDefinition1(), userSystemObjectDefinition,
+			getObjectDefinition1(), getUserSystemObjectDefinition(),
 			objectEntry1.getPrimaryKey(), userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
@@ -1039,12 +1045,15 @@ public class ObjectEntryResourceNestedFieldsTest
 							LocaleUtil.US, "List Type Entry Key 2"))),
 				new ServiceContext());
 
+		String randomString = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, null, true, false,
 				true, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				"A" + randomString, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
@@ -1896,7 +1905,9 @@ public class ObjectEntryResourceNestedFieldsTest
 
 		String password = RandomTestUtil.randomString();
 
-		User user = addUser(RandomTestUtil.randomString(), password);
+		User user = addUser(
+			RandomTestUtil.randomString(UniqueStringRandomizerBumper.INSTANCE),
+			password);
 
 		userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
 

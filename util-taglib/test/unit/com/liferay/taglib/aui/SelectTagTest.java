@@ -50,18 +50,13 @@ public class SelectTagTest {
 		Phone phone = new PhoneWrapper(null) {
 
 			@Override
-			public long getListTypeId() {
-				return 1;
-			}
-
-			@Override
 			public long getPhoneId() {
 				return 2;
 			}
 
 		};
 
-		_assertValueFunction(1, mockHttpServletRequest, phone);
+		_assertValueFunction(0, mockHttpServletRequest, phone);
 
 		selectTag.setValueFunction(Phone::getPhoneId);
 
@@ -74,6 +69,8 @@ public class SelectTagTest {
 
 		selectTag.setAttributes(mockHttpServletRequest);
 
+		Assert.assertEquals(
+			"true", mockHttpServletRequest.getAttribute("numericValue"));
 		Assert.assertEquals("2", mockHttpServletRequest.getAttribute("value"));
 	}
 

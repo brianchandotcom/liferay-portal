@@ -6,7 +6,6 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
@@ -186,20 +185,20 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 
 		String value = String.valueOf(getValue());
 
+		boolean numericValue = false;
+
 		if (Validator.isNull(listType)) {
-			if (bean != null) {
-				Function<Object, ?> valueFunction = getValueFunction();
+			Function<Object, ?> valueFunction = getValueFunction();
 
-				if (valueFunction == null) {
-					value = BeanPropertiesUtil.getStringSilent(
-						bean, name, value);
+			if ((bean != null) && (valueFunction != null)) {
+				Object beanValue = valueFunction.apply(bean);
+
+				if (beanValue != null) {
+					value = String.valueOf(beanValue);
 				}
-				else {
-					Object beanValue = valueFunction.apply(bean);
 
-					if (beanValue != null) {
-						value = String.valueOf(beanValue);
-					}
+				if (beanValue instanceof Number) {
+					numericValue = true;
 				}
 			}
 
@@ -216,12 +215,13 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 			httpServletRequest, "listTypeFieldName", listTypeFieldName);
 		setNamespacedAttribute(httpServletRequest, "model", getModel());
 		setNamespacedAttribute(
+			httpServletRequest, "numericValue", numericValue);
+		setNamespacedAttribute(
 			httpServletRequest, "title", String.valueOf(title));
 		setNamespacedAttribute(httpServletRequest, "value", value);
 
 		setNamespacedAttribute(
-			httpServletRequest, "valueFunction",
-			_getValueFunction(listTypeFieldName));
+			httpServletRequest, "valueFunction", _getValueFunction());
 
 		if (Validator.isNotNull(bodyContent)) {
 			setNamespacedAttribute(
@@ -238,11 +238,11 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 		}
 	}
 
-	private ToLongFunction<Object> _getValueFunction(String listTypeFieldName) {
+	private ToLongFunction<Object> _getValueFunction() {
 		Function<Object, ?> valueFunction = getValueFunction();
 
 		if (valueFunction == null) {
-			return AUIUtil.getBeanPropertyToLongFunction(listTypeFieldName);
+			return bean -> 0;
 		}
 
 		return bean -> GetterUtil.getLong(valueFunction.apply(bean));

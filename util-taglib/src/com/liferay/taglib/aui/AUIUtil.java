@@ -8,13 +8,10 @@ package com.liferay.taglib.aui;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.portlet.PortletRequest;
@@ -22,11 +19,8 @@ import jakarta.portlet.PortletResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.lang.reflect.Method;
-
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.ToLongFunction;
 
 /**
  * @author Shuyang Zhou
@@ -173,48 +167,6 @@ public class AUIUtil {
 		return null;
 	}
 
-	public static Function<Object, String> getBeanPropertyFunction(
-		String name, String defaultValue) {
-
-		return bean -> {
-			try {
-				Object value = _getBeanProperty(bean, name);
-
-				if (value != null) {
-					return String.valueOf(value);
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-
-			return defaultValue;
-		};
-	}
-
-	public static ToLongFunction<Object> getBeanPropertyToLongFunction(
-		String name) {
-
-		return bean -> {
-			try {
-				return GetterUtil.getLong(_getBeanProperty(bean, name));
-			}
-			catch (Exception exception) {
-				Class<?> clazz = bean.getClass();
-
-				_log.error(
-					StringBundler.concat(
-						"Unable to get property ", name, " of ",
-						clazz.getName()),
-					exception);
-			}
-
-			return GetterUtil.DEFAULT_LONG;
-		};
-	}
-
 	@SuppressWarnings("unchecked")
 	public static long getGroupId(Object bean, long defaultGroupId) {
 		if (bean instanceof GroupedModel groupedModel) {
@@ -301,20 +253,7 @@ public class AUIUtil {
 		return new String(chars);
 	}
 
-	private static Object _getBeanProperty(Object bean, String name)
-		throws Exception {
-
-		Class<?> clazz = bean.getClass();
-
-		Method method = clazz.getMethod(
-			"get" + StringUtil.upperCaseFirstLetter(name));
-
-		return method.invoke(bean);
-	}
-
 	private static final boolean[] _VALID_CHARS = new boolean[128];
-
-	private static final Log _log = LogFactoryUtil.getLog(AUIUtil.class);
 
 	static {
 		for (int i = 'a'; i <= 'z'; i++) {

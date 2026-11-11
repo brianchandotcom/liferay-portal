@@ -7,6 +7,7 @@ package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupWrapper;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.function.Function;
@@ -33,7 +34,7 @@ public class InputTagTest {
 	public void testSetAttributes() {
 		InputTag inputTag = new InputTag();
 
-		inputTag.setName("typeSettings");
+		inputTag.setName(RandomTestUtil.randomString());
 		inputTag.setPageContext(new MockPageContext());
 		inputTag.setType("textarea");
 
@@ -59,18 +60,7 @@ public class InputTagTest {
 				return "overloaded";
 			}
 
-			@Override
-			public String getTypeSettings() {
-				return "by name";
-			}
-
 		};
-
-		_assertValueFunction("by name", group, mockHttpServletRequest);
-
-		inputTag.setName("groupKey");
-
-		inputTag.setAttributes(mockHttpServletRequest);
 
 		_assertValueFunction(null, group, mockHttpServletRequest);
 

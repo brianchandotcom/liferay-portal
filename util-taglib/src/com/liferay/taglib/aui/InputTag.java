@@ -332,7 +332,7 @@ public class InputTag extends BaseInputTag {
 		Function<Object, ?> valueFunction = getValueFunction();
 
 		if (valueFunction == null) {
-			return AUIUtil.getBeanPropertyFunction(getName(), null);
+			return bean -> null;
 		}
 
 		return bean -> {

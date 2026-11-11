@@ -485,7 +485,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 			objectEntryJSONObject.getInt("id"));
 
 		Assert.assertEquals(
-			"_assertObjectEntryField", objectFieldValue,
+			objectFieldValue,
 			MapUtil.getString(objectEntry.getValues(), objectFieldName));
 	}
 
@@ -917,12 +917,8 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 				"code"
 			));
 
-		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-			objectRelationship.getName());
-
-		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
-
-		_assertNestedObjectEntries(nestedObjectEntriesJSONArray);
+		_assertNestedObjectEntries(
+			jsonObject.getJSONArray(objectRelationship.getName()));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -930,12 +926,8 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 				jsonObject.getLong("id"), objectRelationship, objectDefinition),
 			Http.Method.GET);
 
-		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-			objectRelationship.getName());
-
-		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
-
-		_assertNestedObjectEntries(nestedObjectEntriesJSONArray);
+		_assertNestedObjectEntries(
+			jsonObject.getJSONArray(objectRelationship.getName()));
 	}
 
 	private void

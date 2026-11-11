@@ -6,7 +6,7 @@ application:
     name: Liferay.Site.DSR.Analytics.REST
 author: Gianmarco Brunialti
 clientDir: ../digital-sales-room-analytics-rest-client/src/main/java
-compatibilityVersion: 16
+compatibilityVersion: 17
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false

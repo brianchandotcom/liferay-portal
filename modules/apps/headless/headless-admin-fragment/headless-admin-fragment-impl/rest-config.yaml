@@ -6,7 +6,7 @@ application:
     name: Liferay.Headless.Admin.Fragment
 author: Rubén Pulido
 clientDir: ../headless-admin-fragment-client/src/main/java
-compatibilityVersion: 16
+compatibilityVersion: 17
 forcePredictableOperationId: true
 generateBatch: true
 generateGraphQL: false

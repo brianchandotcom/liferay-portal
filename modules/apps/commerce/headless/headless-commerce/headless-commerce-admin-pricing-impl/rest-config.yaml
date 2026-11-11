@@ -6,7 +6,7 @@ application:
     name: Liferay.Headless.Commerce.Admin.Pricing
 author: Zoltán Takács
 clientDir: ../headless-commerce-admin-pricing-client/src/main/java
-compatibilityVersion: 16
+compatibilityVersion: 17
 forcePredictableSchemaPropertyName: false
 generatePermissions: true
 javaEEPackage: jakarta

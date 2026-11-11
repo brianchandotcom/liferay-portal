@@ -68,6 +68,13 @@ public class SelectTagTest {
 		selectTag.setAttributes(mockHttpServletRequest);
 
 		_assertValueFunction(2, mockHttpServletRequest, phone);
+
+		selectTag.setBean(phone);
+		selectTag.setListType(null);
+
+		selectTag.setAttributes(mockHttpServletRequest);
+
+		Assert.assertEquals("2", mockHttpServletRequest.getAttribute("value"));
 	}
 
 	private void _assertValueFunction(

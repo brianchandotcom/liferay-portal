@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -82,12 +83,16 @@ public class ObjectEntryResourceCategorizationTest
 
 	@Test
 	public void testGetObjectEntryWithKeywords() throws Exception {
-		String tagName1 =
-			"tag1" + StringUtil.toLowerCase(RandomTestUtil.randomString());
-		String tagName2 =
-			"tag2" + StringUtil.toLowerCase(RandomTestUtil.randomString());
-		String tagName3 =
-			"tag3" + StringUtil.toLowerCase(RandomTestUtil.randomString());
+		String randomString1 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+		String randomString2 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+		String randomString3 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		String tagName1 = "tag1" + StringUtil.toLowerCase(randomString1);
+		String tagName2 = "tag2" + StringUtil.toLowerCase(randomString2);
+		String tagName3 = "tag3" + StringUtil.toLowerCase(randomString3);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -159,7 +164,9 @@ public class ObjectEntryResourceCategorizationTest
 		AssetVocabulary companyAssetVocabulary =
 			assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), company.getGroupId(),
-				RandomTestUtil.randomString(), new ServiceContext());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
 
 		TaxonomyCategory companyTaxonomyCategory1 =
 			postTaxonomyVocabularyTaxonomyCategory(
@@ -212,7 +219,7 @@ public class ObjectEntryResourceCategorizationTest
 
 		TaxonomyCategory siteTaxonomyCategory1 =
 			postTaxonomyVocabularyTaxonomyCategory(
-				testGroupId, assetVocabulary.getVocabularyId());
+				testGroupId, getAssetVocabulary().getVocabularyId());
 
 		TaxonomyCategory siteTaxonomyCategory2 =
 			_postTaxonomyCategoryTaxonomyCategory(siteTaxonomyCategory1);
@@ -224,12 +231,16 @@ public class ObjectEntryResourceCategorizationTest
 
 	@Test
 	public void testPatchObjectEntryWithKeywords() throws Exception {
-		String tagName1 =
-			"tag1" + StringUtil.toLowerCase(RandomTestUtil.randomString());
-		String tagName2 =
-			"tag2" + StringUtil.toLowerCase(RandomTestUtil.randomString());
-		String tagName3 =
-			"tag3" + StringUtil.toLowerCase(RandomTestUtil.randomString());
+		String randomString1 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+		String randomString2 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+		String randomString3 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		String tagName1 = "tag1" + StringUtil.toLowerCase(randomString1);
+		String tagName2 = "tag2" + StringUtil.toLowerCase(randomString2);
+		String tagName3 = "tag3" + StringUtil.toLowerCase(randomString3);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -266,7 +277,9 @@ public class ObjectEntryResourceCategorizationTest
 		AssetVocabulary companyAssetVocabulary =
 			assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), company.getGroupId(),
-				RandomTestUtil.randomString(), new ServiceContext());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
 
 		TaxonomyCategory taxonomyCategory1 =
 			postTaxonomyVocabularyTaxonomyCategory(
@@ -318,52 +331,41 @@ public class ObjectEntryResourceCategorizationTest
 
 		objectDefinition.setEnableCategorization(false);
 
-		objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
+		objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 
-		try {
-			TaxonomyCategory taxonomyCategory =
-				postTaxonomyVocabularyTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory =
+			postTaxonomyVocabularyTaxonomyCategory();
 
-			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"keywords", JSONUtil.putAll("tag")
-				).put(
-					"taxonomyCategoryIds",
-					JSONUtil.putAll(taxonomyCategory.getId())
-				).toString(),
-				getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"keywords", JSONUtil.putAll("tag")
+			).put(
+				"taxonomyCategoryIds", JSONUtil.putAll(taxonomyCategory.getId())
+			).toString(),
+			getObjectDefinition1().getRESTContextPath(), Http.Method.POST);
 
-			Assert.assertFalse(jsonObject.has("keywords"));
-			Assert.assertFalse(jsonObject.has("taxonomyCategoryBriefs"));
+		Assert.assertFalse(jsonObject.has("keywords"));
+		Assert.assertFalse(jsonObject.has("taxonomyCategoryBriefs"));
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			getObjectDefinition1().getClassName(), jsonObject.getLong("id"));
+
+		List<AssetTag> assetEntryAssetTags =
+			AssetTagLocalServiceUtil.getAssetEntryAssetTags(
+				assetEntry.getEntryId());
+
+		Assert.assertEquals(
+			assetEntryAssetTags.toString(), 0, assetEntryAssetTags.size());
+
+		List<AssetCategory> assetCategories =
+			AssetCategoryLocalServiceUtil.getCategories(
 				getObjectDefinition1().getClassName(),
 				jsonObject.getLong("id"));
 
-			List<AssetTag> assetEntryAssetTags =
-				AssetTagLocalServiceUtil.getAssetEntryAssetTags(
-					assetEntry.getEntryId());
-
-			Assert.assertEquals(
-				assetEntryAssetTags.toString(), 0, assetEntryAssetTags.size());
-
-			List<AssetCategory> assetCategories =
-				AssetCategoryLocalServiceUtil.getCategories(
-					getObjectDefinition1().getClassName(),
-					jsonObject.getLong("id"));
-
-			Assert.assertEquals(
-				assetCategories.toString(), 0, assetCategories.size());
-		}
-		finally {
-			objectDefinition.setEnableCategorization(true);
-
-			objectDefinitionLocalService.updateObjectDefinition(
-				objectDefinition);
-		}
+		Assert.assertEquals(
+			assetCategories.toString(), 0, assetCategories.size());
 	}
 
 	@Test
@@ -374,7 +376,9 @@ public class ObjectEntryResourceCategorizationTest
 		AssetVocabulary companyAssetVocabulary =
 			assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), company.getGroupId(),
-				RandomTestUtil.randomString(), new ServiceContext());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
 
 		long classNameId = classNameLocalService.getClassNameId(
 			getObjectDefinition1().getClassName());
@@ -573,7 +577,9 @@ public class ObjectEntryResourceCategorizationTest
 		AssetVocabulary siteAssetVocabulary =
 			assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), group.getGroupId(),
-				RandomTestUtil.randomString(), new ServiceContext());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
 
 		TaxonomyCategory siteTaxonomyCategory =
 			postTaxonomyVocabularyTaxonomyCategory(
@@ -603,7 +609,9 @@ public class ObjectEntryResourceCategorizationTest
 		AssetVocabulary allSpacesAssetVocabulary =
 			assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), group.getGroupId(),
-				RandomTestUtil.randomString(), new ServiceContext());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
 
 		AssetVocabularyGroupRelLocalServiceUtil.addAssetVocabularyGroupRel(
 			GroupConstants.ANY_PARENT_GROUP_ID,
@@ -636,7 +644,9 @@ public class ObjectEntryResourceCategorizationTest
 		AssetVocabulary sharedAssetVocabulary =
 			assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), group.getGroupId(),
-				RandomTestUtil.randomString(), new ServiceContext());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
 
 		AssetVocabularyGroupRelLocalServiceUtil.addAssetVocabularyGroupRel(
 			testGroupId, sharedAssetVocabulary.getVocabularyId(),
@@ -691,7 +701,9 @@ public class ObjectEntryResourceCategorizationTest
 		AssetVocabulary systemAssetVocabulary =
 			assetVocabularyLocalService.addVocabulary(
 				null, TestPropsValues.getUserId(), group.getGroupId(),
-				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				null,
 				HashMapBuilder.put(
 					LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
 				).build(),
@@ -750,7 +762,9 @@ public class ObjectEntryResourceCategorizationTest
 		AssetVocabulary foreignAssetVocabulary =
 			assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), group.getGroupId(),
-				RandomTestUtil.randomString(), new ServiceContext());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
 
 		TaxonomyCategory foreignTaxonomyCategory =
 			postTaxonomyVocabularyTaxonomyCategory(
@@ -829,7 +843,8 @@ public class ObjectEntryResourceCategorizationTest
 
 		// No empty category is created
 
-		String externalReferenceCode = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
 
 		Assert.assertNull(
 			AssetCategoryLocalServiceUtil.

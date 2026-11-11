@@ -3376,9 +3376,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<User> getUsersByRoleId(long roleId, int start, int end)
-		throws PortalException {
-
+	public List<User> getUsersByRoleId(long roleId, int start, int end) {
 		return dslQuery(
 			DSLQueryFactoryUtil.select(
 				UserTable.INSTANCE
@@ -5124,8 +5122,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public User updateExternalReferenceCode(
-			User user, String externalReferenceCode)
-		throws PortalException {
+		User user, String externalReferenceCode) {
 
 		user.setExternalReferenceCode(externalReferenceCode);
 
@@ -5387,9 +5384,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	)
 	@Override
 	@Transactional(enabled = false)
-	public User updateLastLogin(User user, String loginIP)
-		throws PortalException {
-
+	public User updateLastLogin(User user, String loginIP) {
 		user.setLoginIP(loginIP);
 		user.setLastLoginIP(user.getLoginIP());
 		user.setFailedLoginAttempts(0);

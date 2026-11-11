@@ -851,7 +851,7 @@ public class ThumbnailsOSGiCommandsTest {
 				}
 
 				addFileToStore(
-					fileVersion.getCompanyId(), PREVIEW_PATH,
+					fileVersion.getCompanyId(),
 					getPreviewFilePath(fileVersion, type), file);
 			}
 			finally {
@@ -891,7 +891,7 @@ public class ThumbnailsOSGiCommandsTest {
 			try {
 				file = FileUtil.createTempFile(inputStream);
 
-				addFileToStore(companyId, THUMBNAIL_PATH, filePath, file);
+				addFileToStore(companyId, filePath, file);
 			}
 			finally {
 				FileUtil.delete(file);

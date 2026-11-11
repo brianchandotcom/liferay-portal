@@ -336,6 +336,10 @@ public class InputTag extends BaseInputTag {
 		}
 
 		return bean -> {
+			if (bean == null) {
+				return null;
+			}
+
 			Object value = valueFunction.apply(bean);
 
 			if (value == null) {

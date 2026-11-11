@@ -5412,6 +5412,100 @@ paths:
                                 $ref: "#/components/schemas/DisplayPageTemplate"
             tags: ["DisplayPageTemplate"]
             x-feature-flag: LPD-57283
+        patch:
+            # @review
+            description:
+                Updates the name of the display page template of a design library. The operation ignores the other fields of the request body.
+            operationId: patchDesignLibraryDisplayPageTemplate
+            parameters:
+                -   in: path
+                    name: designLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: displayPageTemplateExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DisplayPageTemplate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DisplayPageTemplate"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DisplayPageTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DisplayPageTemplate"
+            tags: ["DisplayPageTemplate"]
+            x-feature-flag: LPD-57283
+        put:
+            # @review
+            description:
+                Updates the name of the display page template of a design library. The operation ignores the other fields of the request body. The display page template must exist.
+            operationId: putDesignLibraryDisplayPageTemplate
+            parameters:
+                -   in: path
+                    name: designLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: displayPageTemplateExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DisplayPageTemplate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DisplayPageTemplate"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DisplayPageTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DisplayPageTemplate"
+            tags: ["DisplayPageTemplate"]
+            x-feature-flag: LPD-57283
     "/design-libraries/{designLibraryExternalReferenceCode}/display-page-templates/{displayPageTemplateExternalReferenceCode}/copy":
         post:
             # @review
@@ -5698,6 +5792,100 @@ paths:
                     name: restrictFields
                     schema:
                         type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+            tags: ["MasterPage"]
+            x-feature-flag: LPD-57283
+        patch:
+            # @review
+            description:
+                Updates the name of the master page of a design library. The operation ignores the other fields of the request body.
+            operationId: patchDesignLibraryMasterPage
+            parameters:
+                -   in: path
+                    name: designLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: masterPageExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MasterPage"
+            tags: ["MasterPage"]
+            x-feature-flag: LPD-57283
+        put:
+            # @review
+            description:
+                Updates the name of the master page of a design library. The operation ignores the other fields of the request body. The master page must exist.
+            operationId: putDesignLibraryMasterPage
+            parameters:
+                -   in: path
+                    name: designLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: masterPageExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MasterPage"
             responses:
                 200:
                     content:

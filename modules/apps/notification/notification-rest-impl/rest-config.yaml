@@ -6,7 +6,7 @@ application:
     name: Liferay.Notification.REST
 author: Gabriel Albuquerque
 clientDir: ../notification-rest-client/src/main/java
-compatibilityVersion: 16
+compatibilityVersion: 17
 forcePredictableOperationId: true
 javaEEPackage: jakarta
 testDir: ../notification-rest-test/src/testIntegration/java

@@ -6,7 +6,7 @@ application:
     name: Liferay.FIPS.REST
 author: Lucas Miranda
 clientDir: ../portal-security-fips-rest-client/src/main/java
-compatibilityVersion: 16
+compatibilityVersion: 17
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false

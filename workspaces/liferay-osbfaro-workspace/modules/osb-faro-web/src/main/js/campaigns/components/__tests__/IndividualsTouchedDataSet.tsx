@@ -158,7 +158,7 @@ describe('IndividualsTouchedDataSet', () => {
 			expect.objectContaining({
 				description:
 					'Check back later to verify if data has been received from your data sources.',
-				title: 'No individuals were found.',
+				title: 'No Individuals Were Found',
 			})
 		);
 	});

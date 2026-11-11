@@ -298,7 +298,7 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 					]}
 					delta={delta}
 					emptyTitle={getFormattedTitle(
-						Liferay.Language.get('recommendations').toLowerCase()
+						Liferay.Language.get('recommendations')
 					)}
 					entityLabel={Liferay.Language.get('recommendations')}
 					error={error}

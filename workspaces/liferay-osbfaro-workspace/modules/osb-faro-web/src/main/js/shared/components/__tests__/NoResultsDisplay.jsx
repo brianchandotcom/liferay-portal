@@ -68,13 +68,13 @@ describe('NoResultsDisplay', () => {
 
 describe('NoResultsDisplay - getFormattedTitle util', () => {
 	it('should return formatted title', () => {
-		expect(getFormattedTitle()).toEqual('No items were found.');
+		expect(getFormattedTitle()).toEqual('No Items Were Found');
 	});
 
 	it('should return formatted title passing a title', () => {
 		expect(
 			getFormattedTitle(
-				undefined,
+				Liferay.Language.get('items').toLowerCase(),
 				Liferay.Language.get(
 					'there-are-no-x-that-match-the-selected-criteria'
 				)
@@ -84,7 +84,7 @@ describe('NoResultsDisplay - getFormattedTitle util', () => {
 
 	it('should return formatted title passing a name', () => {
 		expect(getFormattedTitle(Liferay.Language.get('segments'))).toEqual(
-			'No Segments were found.'
+			'No Segments Were Found'
 		);
 	});
 });

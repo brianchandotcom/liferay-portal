@@ -200,7 +200,7 @@ describe('PagePathCard', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Path Analysis')).toBeInTheDocument();
-		expect(getByText('No data was found.')).toBeInTheDocument();
+		expect(getByText('No Data Was Found')).toBeInTheDocument();
 		expect(
 			getByText(
 				'Check back later to verify if data has been received from your data sources.'

@@ -88,7 +88,7 @@ const NoResultsDisplay: React.FC<INoResultsDisplayProps> = ({
 type GetFormattedTitle = (name?: string, title?: string) => string;
 
 export const getFormattedTitle: GetFormattedTitle = (
-	name = Liferay.Language.get('items').toLowerCase(),
+	name = Liferay.Language.get('items'),
 	title = Liferay.Language.get('no-x-were-found')
 ) => sub(title, [name]) as string;
 

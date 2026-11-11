@@ -84,9 +84,7 @@ describe('IndividualsDataSet', () => {
 		expect(lastFDSProps.emptyState.description).toBe(
 			'No activities were found on the selected period.'
 		);
-		expect(lastFDSProps.emptyState.title).toBe(
-			'No individuals were found.'
-		);
+		expect(lastFDSProps.emptyState.title).toBe('No Individuals Were Found');
 	});
 
 	it('should configure the dataset with pagination shown', () => {

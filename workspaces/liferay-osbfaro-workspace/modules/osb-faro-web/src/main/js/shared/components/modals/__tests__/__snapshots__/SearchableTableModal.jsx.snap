@@ -141,7 +141,7 @@ exports[`SearchableTableModal should render 1`] = `
                 <div
                   class="h4 mb-3 no-results-title"
                 >
-                  No items were found.
+                  No Items Were Found
                 </div>
               </div>
             </div>

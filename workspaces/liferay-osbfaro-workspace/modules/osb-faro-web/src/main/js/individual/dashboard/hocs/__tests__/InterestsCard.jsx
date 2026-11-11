@@ -76,7 +76,7 @@ describe('InterestsCard', () => {
 
 		await waitFor(() =>
 			expect(
-				getByText('No interests were found.')
+				getByText('No Interests Were Found')
 			).toBeInTheDocument()
 		);
 	});

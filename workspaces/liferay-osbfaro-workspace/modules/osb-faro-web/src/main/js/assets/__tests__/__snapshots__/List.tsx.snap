@@ -155,7 +155,7 @@ exports[`List rendering should match the snapshot 1`] = `
             <div
               data-testid="fds-empty-state-title"
             >
-              No assets were found.
+              No Assets Were Found
             </div>
             <div
               data-testid="fds-empty-state-description"

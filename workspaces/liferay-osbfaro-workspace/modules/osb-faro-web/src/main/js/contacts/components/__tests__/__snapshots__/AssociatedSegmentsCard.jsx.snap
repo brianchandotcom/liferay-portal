@@ -218,7 +218,7 @@ exports[`AssociatedSegmentsCard should render with an no results display 1`] = `
           <div
             class="h4 mb-3 no-results-title"
           >
-            No items were found.
+            No Items Were Found
           </div>
         </div>
       </div>

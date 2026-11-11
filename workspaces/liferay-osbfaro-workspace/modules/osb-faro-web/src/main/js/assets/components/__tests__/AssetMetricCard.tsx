@@ -183,9 +183,7 @@ describe('AssetMetricCard', () => {
 
 			await waitForLoadingToBeRemoved(container);
 
-			expect(
-				getByText('No visitors data was found.')
-			).toBeInTheDocument();
+			expect(getByText('No Visitors Data Was Found')).toBeInTheDocument();
 
 			expect(
 				getByText('Learn more about visitor behavior.')

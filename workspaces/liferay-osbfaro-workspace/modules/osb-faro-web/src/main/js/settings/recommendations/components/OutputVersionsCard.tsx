@@ -88,9 +88,7 @@ const TableWithData = compose(
 	withLoading(),
 	withError({page: false}),
 	withEmpty({
-		emptyTitle: getFormattedTitle(
-			Liferay.Language.get('output-versions').toLowerCase()
-		),
+		emptyTitle: getFormattedTitle(Liferay.Language.get('output-versions')),
 	})
 )(Table);
 

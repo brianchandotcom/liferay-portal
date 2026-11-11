@@ -204,8 +204,8 @@ public class ObjectEntryResourceValidationTest
 		Group testGroup = groupLocalService.fetchGroup(testGroupId);
 
 		_testPostValidate(
-			String.valueOf(testGroup.getGroupId()),
-			getSiteScopedObjectDefinition1(), objectField);
+			String.valueOf(testGroupId), getSiteScopedObjectDefinition1(),
+			objectField);
 		_testPostValidate(
 			testGroup.getExternalReferenceCode(),
 			getSiteScopedObjectDefinition1(), objectField);

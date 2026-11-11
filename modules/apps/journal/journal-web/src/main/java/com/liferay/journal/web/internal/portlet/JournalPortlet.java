@@ -384,14 +384,15 @@ public class JournalPortlet extends MVCPortlet {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
-		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
-			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+		JournalArticle journalArticle =
+			_journalArticleLocalService.fetchLatestArticle(
+				groupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
-		if (article == null) {
-			article = _journalArticleLocalService.getLatestArticle(
+		if (journalArticle == null) {
+			journalArticle = _journalArticleLocalService.getLatestArticle(
 				groupId, articleId, WorkflowConstants.STATUS_ANY);
 		}
 
@@ -400,13 +401,13 @@ public class JournalPortlet extends MVCPortlet {
 				WebKeys.THEME_DISPLAY);
 
 		if (!JournalArticlePermission.contains(
-				themeDisplay.getPermissionChecker(), article,
+				themeDisplay.getPermissionChecker(), journalArticle,
 				ActionKeys.VIEW)) {
 
 			throw new PrincipalException.MustHavePermission(
 				themeDisplay.getPermissionChecker(),
-				JournalArticle.class.getName(), article.getResourcePrimKey(),
-				ActionKeys.VIEW);
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(), ActionKeys.VIEW);
 		}
 	}
 

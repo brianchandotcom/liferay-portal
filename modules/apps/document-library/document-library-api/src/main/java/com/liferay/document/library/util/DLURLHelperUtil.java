@@ -50,6 +50,16 @@ public class DLURLHelperUtil {
 			absoluteURL);
 	}
 
+	public static String getDownloadURL(
+		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
+		String queryString, boolean appendVersion, boolean appendModifiedDate,
+		boolean absoluteURL) {
+
+		return getDLURLHelper().getDownloadURL(
+			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
+			appendModifiedDate, absoluteURL);
+	}
+
 	public static String getFileEntryControlPanelLink(
 			PortletRequest portletRequest, long fileEntryId)
 		throws PortalException {

@@ -248,8 +248,7 @@ public class ObjectEntryResourceRelationshipTest
 		_testPostCustomObjectEntryWithManyToOneRelationshipPriorities(
 			systemObjectJSONObject1, systemObjectJSONObject2,
 			() -> JSONFactoryUtil.createJSONObject(
-				UserAccountTestUtil.randomUserAccount(
-				).toString()),
+				String.valueOf(UserAccountTestUtil.randomUserAccount())),
 			objectRelationship2);
 	}
 
@@ -1142,7 +1141,7 @@ public class ObjectEntryResourceRelationshipTest
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		ObjectField objectField = objectFieldLocalService.fetchObjectField(
+		ObjectField objectField = objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
 		JSONAssert.assertEquals(

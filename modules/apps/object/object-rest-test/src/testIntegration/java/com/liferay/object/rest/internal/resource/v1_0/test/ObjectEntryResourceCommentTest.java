@@ -266,7 +266,7 @@ public class ObjectEntryResourceCommentTest
 		String endpoint = getEndpoint(objectDefinition, groupId);
 
 		if (nestedFields) {
-			endpoint = endpoint + "?nestedFields=systemProperties.comments";
+			endpoint += "?nestedFields=systemProperties.comments";
 		}
 
 		JSONArray jsonArray = JSONUtil.getValueAsJSONArray(

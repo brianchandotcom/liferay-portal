@@ -103,14 +103,8 @@ public class ObjectEntryResourcePermissionTest
 		HTTPTestUtil.customize(
 		).withGuest(
 		).apply(
-			() -> {
-				JSONObject actionsJSONObject2 =
-					_getObjectEntriesPageActionsJSONObject();
-
-				Assert.assertTrue(
-					actionsJSONObject2.keySet(
-					).isEmpty());
-			}
+			() -> Assert.assertTrue(
+				JSONUtil.isEmpty(_getObjectEntriesPageActionsJSONObject()))
 		);
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -134,14 +128,14 @@ public class ObjectEntryResourcePermissionTest
 			user.getEmailAddress(), password
 		).apply(
 			() -> {
-				JSONObject actionsJSONObject3 =
+				JSONObject actionsJSONObject2 =
 					_getObjectEntriesPageActionsJSONObject();
 
-				Assert.assertFalse(actionsJSONObject3.isNull("create"));
-				Assert.assertFalse(actionsJSONObject3.isNull("createBatch"));
-				Assert.assertTrue(actionsJSONObject3.isNull("deleteBatch"));
-				Assert.assertFalse(actionsJSONObject3.isNull("get"));
-				Assert.assertTrue(actionsJSONObject3.isNull("updateBatch"));
+				Assert.assertFalse(actionsJSONObject2.isNull("create"));
+				Assert.assertFalse(actionsJSONObject2.isNull("createBatch"));
+				Assert.assertTrue(actionsJSONObject2.isNull("deleteBatch"));
+				Assert.assertFalse(actionsJSONObject2.isNull("get"));
+				Assert.assertTrue(actionsJSONObject2.isNull("updateBatch"));
 			}
 		);
 
@@ -155,14 +149,14 @@ public class ObjectEntryResourcePermissionTest
 			user.getEmailAddress(), password
 		).apply(
 			() -> {
-				JSONObject actionsJSONObject4 =
+				JSONObject actionsJSONObject3 =
 					_getObjectEntriesPageActionsJSONObject();
 
-				Assert.assertFalse(actionsJSONObject4.isNull("create"));
-				Assert.assertFalse(actionsJSONObject4.isNull("createBatch"));
-				Assert.assertFalse(actionsJSONObject4.isNull("deleteBatch"));
-				Assert.assertFalse(actionsJSONObject4.isNull("get"));
-				Assert.assertFalse(actionsJSONObject4.isNull("updateBatch"));
+				Assert.assertFalse(actionsJSONObject3.isNull("create"));
+				Assert.assertFalse(actionsJSONObject3.isNull("createBatch"));
+				Assert.assertFalse(actionsJSONObject3.isNull("deleteBatch"));
+				Assert.assertFalse(actionsJSONObject3.isNull("get"));
+				Assert.assertFalse(actionsJSONObject3.isNull("updateBatch"));
 			}
 		);
 	}
@@ -892,10 +886,6 @@ public class ObjectEntryResourcePermissionTest
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, getObjectDefinition4().getRESTContextPath(), Http.Method.GET);
 
-		if (!jsonObject.has("actions")) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
 		return jsonObject.getJSONObject("actions");
 	}
 
@@ -935,7 +925,7 @@ public class ObjectEntryResourcePermissionTest
 					objectEntryJSONObject.getString("externalReferenceCode");
 
 		if (nestedFields) {
-			endpoint = endpoint + "?nestedFields=permissions";
+			endpoint += "?nestedFields=permissions";
 		}
 
 		return HTTPTestUtil.invokeToJSONObject(
@@ -957,7 +947,7 @@ public class ObjectEntryResourcePermissionTest
 				objectEntryJSONObject.getLong("id");
 
 		if (nestedFields) {
-			endpoint = endpoint + "?nestedFields=permissions";
+			endpoint += "?nestedFields=permissions";
 		}
 
 		return HTTPTestUtil.invokeToJSONObject(
@@ -976,7 +966,7 @@ public class ObjectEntryResourcePermissionTest
 		String endpoint = getObjectDefinition1().getRESTContextPath();
 
 		if (nestedFields) {
-			endpoint = endpoint + "?nestedFields=permissions";
+			endpoint += "?nestedFields=permissions";
 		}
 
 		return HTTPTestUtil.invokeToJSONObject(

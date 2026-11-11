@@ -11,6 +11,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import java.io.Serializable;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,6 +19,12 @@ import java.util.Set;
  * @author Marcela Cunha
  */
 public class ObjectEntryThreadLocal {
+
+	public static void addDeleteObjectEntryId(long objectEntryId) {
+		List<Long> deleteObjectEntryIds = _deleteObjectEntryIds.get();
+
+		deleteObjectEntryIds.add(objectEntryId);
+	}
 
 	public static void addValidatedObjectEntryId(long objectEntryId) {
 		Set<Long> validatedObjectEntryIds = _validatedObjectEntryIds.get();
@@ -27,6 +34,10 @@ public class ObjectEntryThreadLocal {
 
 	public static void clearExpandoBridgeAttributes() {
 		_expandoBridgeAttributes.remove();
+	}
+
+	public static List<Long> getDeleteObjectEntryIds() {
+		return _deleteObjectEntryIds.get();
 	}
 
 	public static Map<String, Serializable> getExpandoBridgeAttributes() {
@@ -61,6 +72,12 @@ public class ObjectEntryThreadLocal {
 		Set<Long> validatedObjectEntryIds = _validatedObjectEntryIds.get();
 
 		return validatedObjectEntryIds.contains(objectEntryId);
+	}
+
+	public static SafeCloseable setDeleteObjectEntryIdsWithSafeCloseable(
+		List<Long> deleteObjectEntryIds) {
+
+		return _deleteObjectEntryIds.setWithSafeCloseable(deleteObjectEntryIds);
 	}
 
 	public static SafeCloseable setDisassociateRelatedModelsWithSafeCloseable(
@@ -108,6 +125,10 @@ public class ObjectEntryThreadLocal {
 		_skipReadOnlyObjectFieldsValidation.set(skipReadOnlyValidation);
 	}
 
+	private static final CentralizedThreadLocal<List<Long>>
+		_deleteObjectEntryIds = new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class + "._deleteObjectEntryIds",
+			() -> null);
 	private static final CentralizedThreadLocal<Boolean>
 		_disassociateRelatedModels = new CentralizedThreadLocal<>(
 			ObjectEntryThreadLocal.class + "._disassociateRelatedModels",

@@ -492,6 +492,24 @@ public class ObjectEntryResourceRelationshipTest
 					null,
 					StringBundler.concat(
 						getObjectDefinition1().getRESTContextPath(),
+						"/by-external-reference-code/a%252Fb/",
+						objectRelationship.getName(), "/c/d"),
+					Http.Method.PUT));
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null,
+					StringBundler.concat(
+						getObjectDefinition1().getRESTContextPath(),
+						"/by-external-reference-code/a/b/",
+						objectRelationship.getName(), "/c%252Fd"),
+					Http.Method.PUT));
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null,
+					StringBundler.concat(
+						getObjectDefinition1().getRESTContextPath(),
 						"/by-external-reference-code/a/b/",
 						objectRelationship.getName(), "/c/d"),
 					Http.Method.PUT));
@@ -506,31 +524,6 @@ public class ObjectEntryResourceRelationshipTest
 					"/by-external-reference-code/a%252Fb/",
 					objectRelationship.getName(), "/c%252Fd"),
 				Http.Method.PUT));
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
-
-			Assert.assertEquals(
-				404,
-				HTTPTestUtil.invokeToHttpCode(
-					null,
-					StringBundler.concat(
-						getObjectDefinition1().getRESTContextPath(),
-						"/by-external-reference-code/a%252Fb/",
-						objectRelationship.getName(), "/c/d"),
-					Http.Method.PUT));
-			Assert.assertEquals(
-				404,
-				HTTPTestUtil.invokeToHttpCode(
-					null,
-					StringBundler.concat(
-						getObjectDefinition1().getRESTContextPath(),
-						"/by-external-reference-code/a/b/",
-						objectRelationship.getName(), "/c%252Fd"),
-					Http.Method.PUT));
-		}
 	}
 
 	@Test

@@ -474,14 +474,14 @@ components:
                     type: integer
                 dateCreated:
                     description:
-                        Creation timestamp in ISO 8601 (UTC). Read only; set when the channel is first persisted. Filterable and sortable via the OData query parameter.
+                        The creation timestamp in ISO 8601 (UTC) of the channel. It is read only and set when the channel is first persisted. Filterable and sortable via the OData query parameter.
                     example: 2017-07-21T19:30:00Z
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
                     description:
-                        Last modification timestamp in ISO 8601 (UTC). Read only; updated on each save. Filterable and sortable via the OData query parameter.
+                        The last modification timestamp in ISO 8601 (UTC) of the channel. It is read only and updated on each save. Filterable and sortable via the OData query parameter.
                     example: 2017-07-21T19:30:00Z
                     format: date-time
                     readOnly: true

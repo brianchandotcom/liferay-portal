@@ -10,6 +10,9 @@
 
 <%
 java.lang.Object bean = (java.lang.Object)request.getAttribute("aui:workflow-status:bean");
+long classPK = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:workflow-status:classPK")));
+long companyId = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:workflow-status:companyId")));
+long groupId = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:workflow-status:groupId")));
 java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:helpMessage"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:id"));
 java.lang.String markupView = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:markupView"));

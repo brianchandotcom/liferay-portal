@@ -105,7 +105,7 @@ export const TopPagesEmptyState: React.FC = () => (
 			'pages-will-appear-here-when-available'
 		)}
 		small
-		title={Liferay.Language.get('no-pages-available')}
+		title={Liferay.Language.get('no-pages-are-available')}
 	/>
 );
 

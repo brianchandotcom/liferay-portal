@@ -13,7 +13,7 @@ const DATA_FLOW_ACTIVE: ConnectorStatusItem = {
 	icon: 'plug',
 	iconDisplayType: 'success',
 	secondaryText: Liferay.Language.get('data-received-successfully'),
-	title: Liferay.Language.get('data-flow-established'),
+	title: Liferay.Language.get('the-data-flow-was-established'),
 };
 
 const DATA_SOURCE_DISCONNECTED: ConnectorStatusItem = {
@@ -21,7 +21,7 @@ const DATA_SOURCE_DISCONNECTED: ConnectorStatusItem = {
 	icon: 'plug',
 	iconDisplayType: 'secondary',
 	secondaryText: Liferay.Language.get('token-revoked-successfully'),
-	title: Liferay.Language.get('data-source-disconnected'),
+	title: Liferay.Language.get('the-data-source-is-disconnected'),
 };
 
 const INACTIVE_DATA_FLOW: ConnectorStatusItem = {
@@ -31,7 +31,7 @@ const INACTIVE_DATA_FLOW: ConnectorStatusItem = {
 	secondaryText: Liferay.Language.get(
 		'there-were-no-activities-in-the-past-90-days'
 	),
-	title: Liferay.Language.get('inactive-data-flow'),
+	title: Liferay.Language.get('the-data-flow-is-inactive'),
 };
 
 const LISTENING: ConnectorStatusItem = {
@@ -51,7 +51,7 @@ const TOKEN_GENERATED: ConnectorStatusItem = {
 	secondaryText: Liferay.Language.get(
 		'liferay-data-platform-setup-completed'
 	),
-	title: Liferay.Language.get('token-generated'),
+	title: Liferay.Language.get('the-token-was-generated'),
 };
 
 export function getInitialLogEntries(

@@ -165,7 +165,7 @@ describe('CreateLifecycle', () => {
 			renderWithStore();
 
 			expect(
-				screen.getByText(/no account data available/i)
+				screen.getByText(/no account data is available/i)
 			).toBeInTheDocument();
 			expect(
 				screen.getByRole('heading', {name: /^lifecycles$/i})
@@ -215,7 +215,9 @@ describe('CreateLifecycle', () => {
 	it('starts with no stages and the empty state', () => {
 		renderPage();
 
-		expect(screen.getByText(/no stages yet/i)).toBeInTheDocument();
+		expect(
+			screen.getByText(/there are no stages yet/i)
+		).toBeInTheDocument();
 		expect(screen.queryByRole('group', {name: /^stage 1$/i})).toBeNull();
 		expect(
 			(screen.getByLabelText(/^stages/i) as HTMLInputElement).value
@@ -259,7 +261,9 @@ describe('CreateLifecycle', () => {
 
 		fireEvent.click(screen.getByRole('button', {name: /remove.stage 1/i}));
 
-		expect(screen.getByText(/no stages yet/i)).toBeInTheDocument();
+		expect(
+			screen.getByText(/there are no stages yet/i)
+		).toBeInTheDocument();
 		expect(
 			screen.getByRole('group', {name: /configuration summary/i})
 		).toHaveAttribute('aria-current', 'true');

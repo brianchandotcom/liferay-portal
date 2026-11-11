@@ -221,7 +221,7 @@ describe('LifecycleRedirect', () => {
 			renderPage();
 
 			expect(
-				screen.getByText(/no data sources connected/i)
+				screen.getByText(/no data sources are connected/i)
 			).toBeInTheDocument();
 			expect(screen.queryByText(/configure a new lifecycle/i)).toBeNull();
 		});
@@ -254,7 +254,7 @@ describe('LifecycleRedirect', () => {
 			renderPage();
 
 			expect(
-				screen.getByText(/no account data available/i)
+				screen.getByText(/no account data is available/i)
 			).toBeInTheDocument();
 			expect(
 				screen.getByRole('heading', {name: /^lifecycles$/i})
@@ -270,9 +270,11 @@ describe('LifecycleRedirect', () => {
 			renderPage();
 
 			expect(
-				screen.getByText(/no data sources connected/i)
+				screen.getByText(/no data sources are connected/i)
 			).toBeInTheDocument();
-			expect(screen.queryByText(/no account data available/i)).toBeNull();
+			expect(
+				screen.queryByText(/no account data is available/i)
+			).toBeNull();
 		});
 
 		it('shows an error with reload when the account metrics fail', () => {
@@ -283,7 +285,9 @@ describe('LifecycleRedirect', () => {
 			expect(
 				screen.getByText(/an.unexpected.error.occurred/i)
 			).toBeInTheDocument();
-			expect(screen.queryByText(/no account data available/i)).toBeNull();
+			expect(
+				screen.queryByText(/no account data is available/i)
+			).toBeNull();
 
 			fireEvent.click(screen.getByRole('button', {name: /reload/i}));
 

@@ -364,7 +364,7 @@ describe('BaseLifecycle', () => {
 
 			expect(screen.getByText('404')).toBeInTheDocument();
 			expect(
-				screen.getByText(/dashboard not found/i)
+				screen.getByText(/dashboard was not found/i)
 			).toBeInTheDocument();
 			expect(
 				screen.getByText(/lifecycle dashboard you are looking for/i)
@@ -424,8 +424,8 @@ describe('BaseLifecycle', () => {
 
 		renderPage();
 
-		expect(screen.queryByText('No Data Sources Connected')).toBeNull();
-		expect(screen.queryByText('No Account Data Available')).toBeNull();
+		expect(screen.queryByText('No Data Sources Are Connected')).toBeNull();
+		expect(screen.queryByText('No Account Data Is Available')).toBeNull();
 		expect(screen.queryByTestId('overview-section')).toBeNull();
 	});
 
@@ -436,7 +436,7 @@ describe('BaseLifecycle', () => {
 
 		renderPage();
 
-		expect(screen.queryByText('No Account Data Available')).toBeNull();
+		expect(screen.queryByText('No Account Data Is Available')).toBeNull();
 		expect(screen.queryByTestId('overview-section')).toBeNull();
 	});
 
@@ -456,7 +456,9 @@ describe('BaseLifecycle', () => {
 			expect(
 				screen.getByText(/an.unexpected.error.occurred/i)
 			).toBeInTheDocument();
-			expect(screen.queryByText('No Account Data Available')).toBeNull();
+			expect(
+				screen.queryByText('No Account Data Is Available')
+			).toBeNull();
 			expect(screen.queryByText('Growth Hub')).toBeNull();
 		});
 
@@ -491,11 +493,11 @@ describe('BaseLifecycle', () => {
 			mockedUseDataSources.mockReturnValue({empty: true, loading: false});
 		});
 
-		it('renders the "No Data Sources Connected" empty state', () => {
+		it('renders the "No Data Sources Are Connected" empty state', () => {
 			renderPage();
 
 			expect(
-				screen.getByText('No Data Sources Connected')
+				screen.getByText('No Data Sources Are Connected')
 			).toBeInTheDocument();
 			expect(
 				screen.getByText(
@@ -567,11 +569,11 @@ describe('BaseLifecycle', () => {
 			).toBeNull();
 		});
 
-		it('renders the "No Account Data Available" empty state', () => {
+		it('renders the "No Account Data Is Available" empty state', () => {
 			renderPage();
 
 			expect(
-				screen.getByText('No Account Data Available')
+				screen.getByText('No Account Data Is Available')
 			).toBeInTheDocument();
 			expect(
 				screen.getByText(
@@ -979,7 +981,7 @@ describe('BaseLifecycle', () => {
 		expect(
 			screen.getByText(/^\S+ \d+, \d{4} – \S+ \d+, \d{4}$/)
 		).toBeInTheDocument();
-		expect(screen.queryByText('No Account Data Available')).toBeNull();
+		expect(screen.queryByText('No Account Data Is Available')).toBeNull();
 	});
 
 	describe('when the panel is open beside the dashboard', () => {

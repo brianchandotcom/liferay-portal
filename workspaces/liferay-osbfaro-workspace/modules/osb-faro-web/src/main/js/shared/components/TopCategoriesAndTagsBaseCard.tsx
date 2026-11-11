@@ -89,8 +89,10 @@ const TabContent: React.FC<ITabContentProps> = ({
 					small
 					title={
 						isCategory
-							? Liferay.Language.get('no-categories-available')
-							: Liferay.Language.get('no-tags-available')
+							? Liferay.Language.get(
+									'no-categories-are-available'
+								)
+							: Liferay.Language.get('no-tags-are-available')
 					}
 				/>
 			</StatesRenderer.Empty>

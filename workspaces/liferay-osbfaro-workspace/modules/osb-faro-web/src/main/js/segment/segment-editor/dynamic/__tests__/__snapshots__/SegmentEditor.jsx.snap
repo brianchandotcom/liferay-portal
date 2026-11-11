@@ -391,7 +391,7 @@ exports[`SegmentEditor should render 1`] = `
                             <h3
                               class="text-5 font-weight-bold"
                             >
-                              No Conditions Yet
+                              There Are No Conditions Yet
                             </h3>
                           </div>
                           <div

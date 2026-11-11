@@ -73,7 +73,9 @@ export const EmptyDropZone: React.FC<IEmptyDropZoneProps> = ({
 							'to-create-a-new-segment-drag-items-from-the-conditions-library-and-drop-them-here'
 						)}
 						dropState={dropState}
-						title={Liferay.Language.get('no-conditions-yet')}
+						title={Liferay.Language.get(
+							'there-are-no-conditions-yet'
+						)}
 					/>
 				</div>
 			)}

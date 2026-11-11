@@ -89,7 +89,7 @@ const notificationStrategies = new Map<string, Function>([
 			),
 			onClose,
 			stripe,
-			title: Liferay.Language.get('limit-reached'),
+			title: Liferay.Language.get('the-limit-has-been-reached'),
 		}),
 	],
 ]);

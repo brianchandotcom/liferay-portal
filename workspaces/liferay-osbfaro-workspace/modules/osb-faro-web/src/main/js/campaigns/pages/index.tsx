@@ -98,7 +98,9 @@ const Campaigns: React.FC = () => {
 								)
 					}
 					groupId={groupId!}
-					title={Liferay.Language.get('no-campaign-data-available')}
+					title={Liferay.Language.get(
+						'no-campaign-data-is-available'
+					)}
 				/>
 			);
 		}

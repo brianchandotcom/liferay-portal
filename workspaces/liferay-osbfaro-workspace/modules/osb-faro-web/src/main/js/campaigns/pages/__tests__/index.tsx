@@ -315,7 +315,7 @@ describe('Campaigns', () => {
 		it('should explain that no campaign data is available', () => {
 			const {getByText} = renderCampaigns();
 
-			expect(getByText(/no campaign data available/i)).toBeTruthy();
+			expect(getByText(/no campaign data is available/i)).toBeTruthy();
 		});
 
 		it('should replace the overview, the table and the range selector', () => {
@@ -359,7 +359,7 @@ describe('Campaigns', () => {
 
 			const {queryByTestId, queryByText} = renderCampaigns();
 
-			expect(queryByText(/no campaign data available/i)).toBeNull();
+			expect(queryByText(/no campaign data is available/i)).toBeNull();
 			expect(queryByTestId('campaigns-data-set')).toBeNull();
 		});
 	});

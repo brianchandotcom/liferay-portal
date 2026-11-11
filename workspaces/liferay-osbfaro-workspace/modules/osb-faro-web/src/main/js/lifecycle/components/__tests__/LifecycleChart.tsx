@@ -144,7 +144,7 @@ describe('LifecycleChart', () => {
 		const {container} = renderChart({error: true, stages: sampleStages});
 
 		expect(
-			screen.getByText(/no lifecycle data available/i)
+			screen.getByText(/no lifecycle data is available/i)
 		).toBeInTheDocument();
 		expect(container.querySelector('.stage-metrics')).toBeNull();
 	});

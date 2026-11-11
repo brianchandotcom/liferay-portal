@@ -224,7 +224,9 @@ describe('LifecycleConditionsPanel', () => {
 
 		renderPanel({onAddStage, stageConfigs: []});
 
-		expect(screen.getByText(/no stages yet/i)).toBeInTheDocument();
+		expect(
+			screen.getByText(/there are no stages yet/i)
+		).toBeInTheDocument();
 		expect(
 			screen.getByText(/add stages to define its structure/i)
 		).toBeInTheDocument();
@@ -240,7 +242,7 @@ describe('LifecycleConditionsPanel', () => {
 
 		renderPanel({onAddStage});
 
-		expect(screen.queryByText(/no stages yet/i)).toBeNull();
+		expect(screen.queryByText(/there are no stages yet/i)).toBeNull();
 
 		fireEvent.click(screen.getByRole('button', {name: /add.stage/i}));
 

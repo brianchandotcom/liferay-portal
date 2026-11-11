@@ -126,7 +126,7 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 								)}
 								small
 								title={Liferay.Language.get(
-									'no-account-attributes-available'
+									'no-account-attributes-are-available'
 								)}
 							/>
 						</StatesRenderer.Empty>

@@ -174,7 +174,7 @@ describe('EditLifecycle', () => {
 			renderWithStore();
 
 			expect(
-				screen.getByText(/no account data available/i)
+				screen.getByText(/no account data is available/i)
 			).toBeInTheDocument();
 			expect(
 				screen.getByRole('heading', {name: /^lifecycles$/i})
@@ -517,7 +517,9 @@ describe('EditLifecycle', () => {
 		);
 
 		expect(screen.queryByText(/edit lifecycle/i)).toBeNull();
-		expect(screen.getByText(/dashboard not found/i)).toBeInTheDocument();
+		expect(
+			screen.getByText(/dashboard was not found/i)
+		).toBeInTheDocument();
 		expect(
 			screen.getByRole('link', {name: /go to lifecycles/i})
 		).toHaveAttribute(

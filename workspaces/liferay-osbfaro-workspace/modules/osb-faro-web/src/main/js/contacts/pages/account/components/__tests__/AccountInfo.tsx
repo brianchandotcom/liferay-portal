@@ -134,7 +134,7 @@ describe('AccountInfo', () => {
 			render(<AccountInfo />);
 
 			expect(
-				screen.getByText('No Account Attributes Available')
+				screen.getByText('No Account Attributes Are Available')
 			).toBeInTheDocument();
 			expect(
 				screen.getByText(
@@ -155,7 +155,7 @@ describe('AccountInfo', () => {
 			render(<AccountInfo account={{}} />);
 
 			expect(
-				screen.getByText('No Account Attributes Available')
+				screen.getByText('No Account Attributes Are Available')
 			).toBeInTheDocument();
 		});
 
@@ -173,7 +173,7 @@ describe('AccountInfo', () => {
 			);
 
 			expect(
-				screen.getByText('No Account Attributes Available')
+				screen.getByText('No Account Attributes Are Available')
 			).toBeInTheDocument();
 			expect(screen.queryByText('–')).not.toBeInTheDocument();
 		});
@@ -182,7 +182,7 @@ describe('AccountInfo', () => {
 			render(<AccountInfo account={{annualRevenue: 0}} />);
 
 			expect(
-				screen.queryByText('No Account Attributes Available')
+				screen.queryByText('No Account Attributes Are Available')
 			).not.toBeInTheDocument();
 			expect(screen.getByText('0')).toBeInTheDocument();
 		});

@@ -182,7 +182,7 @@ describe('TopPagesCard', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
-			await screen.findByText('No Pages Available')
+			await screen.findByText('No Pages Are Available')
 		).toBeInTheDocument();
 		expect(
 			screen.getByText('Pages will appear here when available.')
@@ -194,7 +194,7 @@ describe('TopPagesCard', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		await screen.findByText('No Pages Available');
+		await screen.findByText('No Pages Are Available');
 
 		expect(container.querySelector('.c-empty-state')).toHaveClass(
 			'c-empty-state-sm',

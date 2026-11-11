@@ -48,7 +48,7 @@ describe('Event Analysis Editor', () => {
 			container.querySelector('.canvas-root.event-analysis-editor-root')
 		).toBeInTheDocument();
 		expect(getByText('Analysis Insights')).toBeInTheDocument();
-		expect(getByText('No Conditions Yet')).toBeInTheDocument();
+		expect(getByText('There Are No Conditions Yet')).toBeInTheDocument();
 		expect(
 			getByText(
 				'To create a new analysis, select an event, then add filters and breakdowns for more detail.'

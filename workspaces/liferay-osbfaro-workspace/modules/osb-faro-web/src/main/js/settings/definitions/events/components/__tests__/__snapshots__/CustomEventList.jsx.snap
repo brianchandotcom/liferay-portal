@@ -382,7 +382,7 @@ exports[`CustomEventList should render alert notification 1`] = `
         <strong
           class="lead"
         >
-          Limit Reached:
+          The Limit Has Been Reached:
         </strong>
         <span>
           100 event limit reached, resulting in blocked events.

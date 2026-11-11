@@ -319,7 +319,7 @@ describe('TopCategoriesAndTags', () => {
 			renderTopCategoriesAndTags();
 
 			expect(
-				screen.getAllByText('No Categories Available').length
+				screen.getAllByText('No Categories Are Available').length
 			).toBeGreaterThan(0);
 		});
 
@@ -331,7 +331,7 @@ describe('TopCategoriesAndTags', () => {
 			fireEvent.click(screen.getByRole('tab', {name: 'Tag'}));
 
 			expect(
-				screen.getAllByText('No Tags Available').length
+				screen.getAllByText('No Tags Are Available').length
 			).toBeGreaterThan(0);
 		});
 	});

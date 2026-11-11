@@ -163,7 +163,7 @@ const LifecycleStructure: React.FC<ILifecycleStructureProps> = ({
 						'to-create-a-new-lifecycle-add-stages-to-define-its-structure'
 					)}
 					small
-					title={Liferay.Language.get('no-stages-yet')}
+					title={Liferay.Language.get('there-are-no-stages-yet')}
 				>
 					<ClayButton
 						displayType="secondary"

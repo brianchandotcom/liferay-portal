@@ -97,8 +97,8 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 					small
 					title={
 						isFiles
-							? Liferay.Language.get('no-files-available')
-							: Liferay.Language.get('no-assets-available')
+							? Liferay.Language.get('no-files-are-available')
+							: Liferay.Language.get('no-assets-are-available')
 					}
 				/>
 			</StatesRenderer.Empty>

@@ -109,7 +109,7 @@ describe('AttributesCriteriaTabs', () => {
 
 		fireEvent.click(screen.getByText('Custom'));
 
-		expect(screen.getByText('no-custom-fields-yet')).toBeInTheDocument();
+		expect(screen.getByText('there-are-no-custom-fields-yet')).toBeInTheDocument();
 		expect(
 			screen.getByText('learn-more-about-fields').closest('a')
 		).toHaveAttribute(

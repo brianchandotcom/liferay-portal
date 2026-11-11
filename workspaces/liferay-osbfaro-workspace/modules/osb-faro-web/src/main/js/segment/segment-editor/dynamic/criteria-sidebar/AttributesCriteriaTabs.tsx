@@ -53,7 +53,7 @@ const AttributesCriteriaTabs: React.FC<IAttributesCriteriaTabsProps> = ({
 									),
 								},
 								title: Liferay.Language.get(
-									'no-custom-fields-yet'
+									'there-are-no-custom-fields-yet'
 								),
 							}
 				)}

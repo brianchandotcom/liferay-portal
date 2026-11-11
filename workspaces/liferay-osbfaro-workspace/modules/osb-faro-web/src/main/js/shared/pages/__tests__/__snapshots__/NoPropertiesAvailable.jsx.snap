@@ -35,7 +35,7 @@ exports[`NoPropertiesAvailable should render 1`] = `
                 data-tooltip="false"
                 title=""
               >
-                No Properties Available
+                No Properties Are Available
               </span>
             </h1>
           </span>

@@ -180,7 +180,7 @@ describe('SegmentEditor', () => {
 		expect(screen.queryByText('Order')).not.toBeInTheDocument();
 
 		expect(screen.getByText('Segment Conditions')).toBeInTheDocument();
-		expect(screen.getByText('No Conditions Yet')).toBeInTheDocument();
+		expect(screen.getByText('There Are No Conditions Yet')).toBeInTheDocument();
 		expect(
 			screen.getByText(
 				'To create a new segment, drag items from the Conditions Library and drop them here.'
@@ -217,7 +217,7 @@ describe('SegmentEditor', () => {
 			).toBeChecked();
 		});
 
-		expect(screen.getByText('No Conditions Yet')).toBeInTheDocument();
+		expect(screen.getByText('There Are No Conditions Yet')).toBeInTheDocument();
 	});
 
 	it('explains the sequential order in a popover next to the toggle', () => {

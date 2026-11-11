@@ -180,7 +180,7 @@ const UserList: React.FC<IUserListProps> = ({
 			'all-users-in-this-workspace-have-already-been-added-to-this-property'
 		),
 		noResultsIcon: null,
-		noResultsTitle: Liferay.Language.get('no-users-to-add'),
+		noResultsTitle: Liferay.Language.get('there-are-no-users-to-add'),
 		onClose: () => {
 			addUsersModal.onOpenChange(false);
 
@@ -273,7 +273,7 @@ const UserList: React.FC<IUserListProps> = ({
 					}}
 					primary
 					spacer
-					title={Liferay.Language.get('no-users-added')}
+					title={Liferay.Language.get('no-users-have-been-added')}
 				/>
 			),
 			orderIOMap,
@@ -470,7 +470,9 @@ const UserList: React.FC<IUserListProps> = ({
 					onSubmit={() => noUsersModal.onOpenChange(false)}
 					submitButtonDisplay="warning"
 					submitMessage={Liferay.Language.get('close')}
-					title={Liferay.Language.get('no-users-in-property')}
+					title={Liferay.Language.get(
+						'there-are-no-users-in-this-property'
+					)}
 					type="warning"
 				/>
 			)}

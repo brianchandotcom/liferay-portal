@@ -64,7 +64,7 @@ const EventsCriteriaTabs: React.FC<IEventsCriteriaTabsProps> = ({
 				href: URLConstants.CustomEventsDocumentation,
 				label: Liferay.Language.get('learn-more-about-events'),
 			},
-			title: Liferay.Language.get('no-custom-events-yet'),
+			title: Liferay.Language.get('there-are-no-custom-events-yet'),
 		});
 	};
 

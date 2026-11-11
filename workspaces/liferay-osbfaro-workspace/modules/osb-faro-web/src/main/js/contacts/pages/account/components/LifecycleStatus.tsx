@@ -105,7 +105,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 							)}
 							small
 							title={Liferay.Language.get(
-								'no-lifecycle-data-available'
+								'no-lifecycle-data-is-available'
 							)}
 						/>
 					</StatesRenderer.Empty>

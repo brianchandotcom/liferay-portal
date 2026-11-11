@@ -441,7 +441,7 @@ describe('LifecycleStatus', () => {
 			const {container} = render(<LifecycleStatus />);
 
 			expect(
-				screen.getByText('No Lifecycle Data Available')
+				screen.getByText('No Lifecycle Data Is Available')
 			).toBeInTheDocument();
 			expect(
 				screen.getByText('Lifecycle data will appear here when synced.')
@@ -469,7 +469,7 @@ describe('LifecycleStatus', () => {
 			render(<LifecycleStatus />);
 
 			expect(
-				screen.getByText('No Lifecycle Data Available')
+				screen.getByText('No Lifecycle Data Is Available')
 			).toBeInTheDocument();
 		});
 	});

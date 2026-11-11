@@ -63,7 +63,7 @@ export const SummaryWinnerCard: React.FC<{
 						),
 					]) as any
 				}
-				title={Liferay.Language.get('winner-declared')}
+				title={Liferay.Language.get('a-winner-was-declared')}
 			/>
 
 			{winnerVariant && winnerVariant?.control ? (

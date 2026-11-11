@@ -94,7 +94,7 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 					description={Liferay.Language.get(
 						'to-create-a-new-analysis-select-an-event-then-add-filters-and-breakdowns-for-more-detail'
 					)}
-					title={Liferay.Language.get('no-conditions-yet')}
+					title={Liferay.Language.get('there-are-no-conditions-yet')}
 				/>
 			)}
 		</Canvas.Body>

@@ -283,7 +283,9 @@ const LifecycleChart = ({
 						'lifecycle-data-will-appear-here-when-synced'
 					)}
 					small
-					title={Liferay.Language.get('no-lifecycle-data-available')}
+					title={Liferay.Language.get(
+						'no-lifecycle-data-is-available'
+					)}
 				/>
 			);
 		}

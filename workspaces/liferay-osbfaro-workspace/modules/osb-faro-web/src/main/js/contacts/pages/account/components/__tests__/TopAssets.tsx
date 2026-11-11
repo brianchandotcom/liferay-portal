@@ -539,7 +539,7 @@ describe('TopAssets', () => {
 
 			expect(tabPanel.querySelector('.loading-root')).toBeNull();
 			expect(
-				within(tabPanel).getAllByText('No Assets Available').length
+				within(tabPanel).getAllByText('No Assets Are Available').length
 			).toBeGreaterThan(0);
 		});
 
@@ -607,7 +607,7 @@ describe('TopAssets', () => {
 			renderTopAssets();
 
 			expect(
-				screen.getAllByText('No Assets Available').length
+				screen.getAllByText('No Assets Are Available').length
 			).toBeGreaterThan(0);
 		});
 
@@ -619,7 +619,7 @@ describe('TopAssets', () => {
 			fireEvent.click(screen.getByRole('tab', {name: 'Files'}));
 
 			expect(
-				screen.getAllByText('No Files Available').length
+				screen.getAllByText('No Files Are Available').length
 			).toBeGreaterThan(0);
 		});
 

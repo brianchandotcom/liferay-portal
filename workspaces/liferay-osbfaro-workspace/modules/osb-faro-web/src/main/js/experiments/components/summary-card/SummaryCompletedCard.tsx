@@ -75,7 +75,7 @@ export const SummaryCompletedCard: React.FC<{
 						)}
 					</div>
 				)}
-				title={Liferay.Language.get('test-complete')}
+				title={Liferay.Language.get('the-test-is-complete')}
 			/>
 
 			<SummaryAlert symbol="check-circle">

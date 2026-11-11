@@ -186,7 +186,7 @@ describe('TopPagesCard', () => {
 		renderTopPagesCardWithoutIndividual();
 
 		expect(
-			await screen.findByText('No Pages Available')
+			await screen.findByText('No Pages Are Available')
 		).toBeInTheDocument();
 		expect(screen.queryByText('An unexpected error occurred.')).toBeNull();
 	});
@@ -197,7 +197,7 @@ describe('TopPagesCard', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
-			await screen.findByText('No Pages Available')
+			await screen.findByText('No Pages Are Available')
 		).toBeInTheDocument();
 		expect(
 			screen.getByText('Pages will appear here when available.')

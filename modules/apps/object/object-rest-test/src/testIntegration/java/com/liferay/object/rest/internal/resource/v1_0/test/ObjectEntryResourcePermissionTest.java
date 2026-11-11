@@ -288,10 +288,10 @@ public class ObjectEntryResourcePermissionTest
 		actionsJSONObject = _getObjectEntryActionsJSONObject(
 			objectDefinition, objectEntry, user, password);
 
+		Assert.assertTrue(actionsJSONObject.has("share"));
+
 		_sharingEntryLocalService.deleteSharingEntry(
 			sharingEntry.getSharingEntryId());
-
-		Assert.assertTrue(actionsJSONObject.has("share"));
 
 		userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
 

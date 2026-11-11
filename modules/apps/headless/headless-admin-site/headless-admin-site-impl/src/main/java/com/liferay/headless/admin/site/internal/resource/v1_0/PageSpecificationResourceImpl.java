@@ -56,7 +56,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
-import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.List;
@@ -117,17 +116,9 @@ public class PageSpecificationResourceImpl
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
-				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+				getLayoutPageTemplateEntryByExternalReferenceCode(
 					displayPageTemplateExternalReferenceCode,
 					_getGroupId(siteExternalReferenceCode));
-
-		if (layoutPageTemplateEntry == null) {
-			throw new NotFoundException(
-				StringBundler.concat(
-					"No display page template exists with the external ",
-					"reference code \"",
-					displayPageTemplateExternalReferenceCode, "\""));
-		}
 
 		if (!Objects.equals(
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
@@ -156,16 +147,9 @@ public class PageSpecificationResourceImpl
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
-				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+				getLayoutPageTemplateEntryByExternalReferenceCode(
 					masterPageExternalReferenceCode,
 					_getGroupId(siteExternalReferenceCode));
-
-		if (layoutPageTemplateEntry == null) {
-			throw new NotFoundException(
-				StringBundler.concat(
-					"No master page exists with the external reference code \"",
-					masterPageExternalReferenceCode, "\""));
-		}
 
 		if (!Objects.equals(
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
@@ -216,18 +200,11 @@ public class PageSpecificationResourceImpl
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
-				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+				getLayoutPageTemplateEntryByExternalReferenceCode(
 					pageTemplateExternalReferenceCode,
 					GroupUtil.getGroupId(
 						true, true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
-
-		if (layoutPageTemplateEntry == null) {
-			throw new NotFoundException(
-				StringBundler.concat(
-					"No page template exists with the external reference code ",
-					"\"", pageTemplateExternalReferenceCode, "\""));
-		}
 
 		if (!Objects.equals(
 				LayoutPageTemplateEntryTypeConstants.BASIC,
@@ -302,13 +279,6 @@ public class PageSpecificationResourceImpl
 				true, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
 
-		if (layout == null) {
-			throw new NotFoundException(
-				StringBundler.concat(
-					"No site page exists with the external reference code \"",
-					sitePageExternalReferenceCode, "\""));
-		}
-
 		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
 			layout.isTypeUtility()) {
 
@@ -344,18 +314,11 @@ public class PageSpecificationResourceImpl
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.
-				fetchLayoutUtilityPageEntryByExternalReferenceCode(
+				getLayoutUtilityPageEntryByExternalReferenceCode(
 					utilityPageExternalReferenceCode,
 					GroupUtil.getGroupId(
 						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
-
-		if (layoutUtilityPageEntry == null) {
-			throw new NotFoundException(
-				StringBundler.concat(
-					"No utility page exists with the external reference code ",
-					"\"", utilityPageExternalReferenceCode, "\""));
-		}
 
 		return Page.of(
 			_toPageSpecifications(
@@ -565,17 +528,8 @@ public class PageSpecificationResourceImpl
 				layoutPageTemplateEntry.getPlid());
 		}
 
-		Layout layout = _layoutService.fetchLayoutByExternalReferenceCode(
+		return _layoutService.getLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
-
-		if (layout == null) {
-			throw new NotFoundException(
-				StringBundler.concat(
-					"No page specification exists with the external reference ",
-					"code \"", pageSpecificationExternalReferenceCode, "\""));
-		}
-
-		return layout;
 	}
 
 	private String _getTypeName(PageSpecification pageSpecification) {

@@ -8068,9 +8068,7 @@ public class PortalImpl implements Portal {
 		return sb.toString();
 	}
 
-	private Group _getLayoutGroup(Layout layout, ThemeDisplay themeDisplay)
-		throws PortalException {
-
+	private Group _getLayoutGroup(Layout layout, ThemeDisplay themeDisplay) {
 		if (themeDisplay == null) {
 			return layout.getGroup();
 		}

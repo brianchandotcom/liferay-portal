@@ -169,7 +169,6 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 
 			_testPostCustomObjectEntryWithInvalidNestedCustomObjectEntriesInManyToOneRelationship(
 				objectRelationship);
-
 			_testPostCustomObjectEntryWithInvalidNestedCustomObjectEntriesInXToManyRelationship(
 				objectRelationship);
 		}
@@ -933,7 +932,7 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			getNestedFieldsEndpoint(
-				jsonObject.getLong("id"), objectRelationship, objectDefinition),
+				objectDefinition, jsonObject.getLong("id"), objectRelationship),
 			Http.Method.GET);
 
 		_assertNestedObjectEntries(
@@ -1135,8 +1134,8 @@ public class ObjectEntryResourceNestedObjectEntriesTest
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			getNestedFieldsEndpoint(
-				objectEntry.getPrimaryKey(), objectRelationship,
-				getObjectDefinition1()),
+				getObjectDefinition1(), objectEntry.getPrimaryKey(),
+				objectRelationship),
 			Http.Method.GET);
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(

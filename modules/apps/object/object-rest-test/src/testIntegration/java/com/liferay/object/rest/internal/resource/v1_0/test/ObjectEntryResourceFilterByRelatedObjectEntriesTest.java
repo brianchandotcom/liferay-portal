@@ -556,8 +556,6 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 	public void testFilterObjectEntriesByRelatedSystemObjectEntriesFields()
 		throws Exception {
 
-		// Many to many relationship
-
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			getObjectDefinition1(), OBJECT_FIELD_NAME_1, OBJECT_FIELD_VALUE_1);
 
@@ -567,6 +565,8 @@ public class ObjectEntryResourceFilterByRelatedObjectEntriesTest
 				HashMapBuilder.<String, Serializable>put(
 					OBJECT_FIELD_NAME_2, String.valueOf(OBJECT_FIELD_VALUE_2)
 				).build());
+
+		// Many to many relationship
 
 		ObjectRelationship objectRelationship =
 			addObjectRelationshipAndRelateObjectEntries(

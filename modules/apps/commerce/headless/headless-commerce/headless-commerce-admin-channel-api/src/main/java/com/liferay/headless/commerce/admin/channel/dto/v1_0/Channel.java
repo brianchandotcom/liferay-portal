@@ -348,7 +348,7 @@ public class Channel implements Serializable {
 	private Supplier<Long> _currencyIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Creation timestamp in ISO 8601 (UTC). Read only; set when the channel is first persisted. Filterable and sortable via the OData query parameter.",
+		description = "The creation timestamp in ISO 8601 (UTC) of the channel. It is read only and set when the channel is first persisted. Filterable and sortable via the OData query parameter.",
 		example = "2017-07-21"
 	)
 	public Date getDateCreated() {
@@ -385,7 +385,7 @@ public class Channel implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Creation timestamp in ISO 8601 (UTC). Read only; set when the channel is first persisted. Filterable and sortable via the OData query parameter."
+		description = "The creation timestamp in ISO 8601 (UTC) of the channel. It is read only and set when the channel is first persisted. Filterable and sortable via the OData query parameter."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
@@ -394,7 +394,7 @@ public class Channel implements Serializable {
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Last modification timestamp in ISO 8601 (UTC). Read only; updated on each save. Filterable and sortable via the OData query parameter.",
+		description = "The last modification timestamp in ISO 8601 (UTC) of the channel. It is read only and updated on each save. Filterable and sortable via the OData query parameter.",
 		example = "2017-07-21"
 	)
 	public Date getDateModified() {
@@ -431,7 +431,7 @@ public class Channel implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Last modification timestamp in ISO 8601 (UTC). Read only; updated on each save. Filterable and sortable via the OData query parameter."
+		description = "The last modification timestamp in ISO 8601 (UTC) of the channel. It is read only and updated on each save. Filterable and sortable via the OData query parameter."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
@@ -1076,4 +1076,4 @@ public class Channel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-116166141
+// LIFERAY-REST-BUILDER-HASH:1501469365

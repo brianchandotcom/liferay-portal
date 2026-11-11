@@ -1312,10 +1312,10 @@
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
-				<description>A function that reads the selected list type ID from the bean, such as <![CDATA[<code>Phone::getListTypeId</code>]]>. It is used with the <![CDATA[<code>listType</code>]]> attribute.</description>
+				<description>A function that reads the value for the select from the bean, such as <![CDATA[<code>Phone::getListTypeId</code>]]>. With the <![CDATA[<code>listType</code>]]> attribute, it reads the selected list type ID.</description>
 				<name>valueFunction</name>
-				<inputType>java.util.function.ToLongFunction</inputType>
-				<outputType>java.util.function.ToLongFunction</outputType>
+				<inputType>java.util.function.Function</inputType>
+				<outputType>java.util.function.Function</outputType>
 			</attribute>
 			<attribute>
 				<description>A CSS class for styling the <![CDATA[<code>div</code>]]> that wraps the select field.</description>

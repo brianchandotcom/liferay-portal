@@ -1421,7 +1421,7 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description>A function that reads the selected list type ID from the bean, such as <![CDATA[<code>Phone::getListTypeId</code>]]>. It is used with the <![CDATA[<code>listType</code>]]> attribute.</description>
+			<description>A function that reads the value for the select from the bean, such as <![CDATA[<code>Phone::getListTypeId</code>]]>. With the <![CDATA[<code>listType</code>]]> attribute, it reads the selected list type ID.</description>
 			<name>valueFunction</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

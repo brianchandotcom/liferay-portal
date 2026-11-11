@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
@@ -23,6 +24,8 @@ import jakarta.servlet.jsp.tagext.BodyTag;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.ToLongFunction;
 
 /**
  * @author Julio Camarero
@@ -185,7 +188,19 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 
 		if (Validator.isNull(listType)) {
 			if (bean != null) {
-				value = BeanPropertiesUtil.getStringSilent(bean, name, value);
+				Function<Object, ?> valueFunction = getValueFunction();
+
+				if (valueFunction == null) {
+					value = BeanPropertiesUtil.getStringSilent(
+						bean, name, value);
+				}
+				else {
+					Object beanValue = valueFunction.apply(bean);
+
+					if (beanValue != null) {
+						value = String.valueOf(beanValue);
+					}
+				}
 			}
 
 			if (!getIgnoreRequestValue()) {
@@ -204,11 +219,9 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 			httpServletRequest, "title", String.valueOf(title));
 		setNamespacedAttribute(httpServletRequest, "value", value);
 
-		if (Validator.isNotNull(listType) && (getValueFunction() == null)) {
-			setNamespacedAttribute(
-				httpServletRequest, "valueFunction",
-				AUIUtil.getBeanPropertyToLongFunction(listTypeFieldName));
-		}
+		setNamespacedAttribute(
+			httpServletRequest, "valueFunction",
+			_getValueFunction(listTypeFieldName));
 
 		if (Validator.isNotNull(bodyContent)) {
 			setNamespacedAttribute(
@@ -223,6 +236,16 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 			setNamespacedAttribute(
 				httpServletRequest, "required", Boolean.TRUE.toString());
 		}
+	}
+
+	private ToLongFunction<Object> _getValueFunction(String listTypeFieldName) {
+		Function<Object, ?> valueFunction = getValueFunction();
+
+		if (valueFunction == null) {
+			return AUIUtil.getBeanPropertyToLongFunction(listTypeFieldName);
+		}
+
+		return bean -> GetterUtil.getLong(valueFunction.apply(bean));
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

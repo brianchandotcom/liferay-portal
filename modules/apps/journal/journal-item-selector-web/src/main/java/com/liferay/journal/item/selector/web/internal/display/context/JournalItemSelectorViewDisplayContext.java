@@ -15,8 +15,6 @@ import com.liferay.journal.item.selector.web.internal.JournalItemSelectorView;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -52,9 +50,6 @@ public class JournalItemSelectorViewDisplayContext {
 		_journalItemSelectorView = journalItemSelectorView;
 		_portletURL = portletURL;
 		_search = search;
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			httpServletRequest);
 	}
 
 	public Folder fetchAttachmentsFolder(long userId, long groupId) {
@@ -104,10 +99,8 @@ public class JournalItemSelectorViewDisplayContext {
 
 	public OrderByComparator<?> getOrderByComparator() {
 		return DLUtil.getRepositoryModelOrderByComparator(
-			RepositoryEntryBrowserTagUtil.getOrderByCol(
-				_httpServletRequest, _portalPreferences),
-			RepositoryEntryBrowserTagUtil.getOrderByType(
-				_httpServletRequest, _portalPreferences));
+			RepositoryEntryBrowserTagUtil.getOrderByCol(_httpServletRequest),
+			RepositoryEntryBrowserTagUtil.getOrderByType(_httpServletRequest));
 	}
 
 	public PortletURL getPortletURL(
@@ -164,7 +157,6 @@ public class JournalItemSelectorViewDisplayContext {
 		_itemSelectorReturnTypeResolverHandler;
 	private final JournalItemSelectorCriterion _journalItemSelectorCriterion;
 	private final JournalItemSelectorView _journalItemSelectorView;
-	private final PortalPreferences _portalPreferences;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 	private String _selectedTab;

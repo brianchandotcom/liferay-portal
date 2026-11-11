@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
-import openCreationModal from '../../src/main/resources/META-INF/resources/js/openCreationModal';
+import openModuleModal from '../../src/main/resources/META-INF/resources/js/openModuleModal';
 
 const mockLoadModule = jest.fn();
 const mockOpenModal = jest.fn();
@@ -20,9 +20,7 @@ jest.mock('frontend-js-web', () => ({
 	loadModule: (module: string) => mockLoadModule(module),
 }));
 
-const CREATION_ITEM = {
-	id: 'add-foo',
-	label: 'new-foo',
+const MODULE_ITEM = {
 	module: 'http://localhost/foo-web',
 	moduleProps: {name: 'foo'},
 };
@@ -33,7 +31,7 @@ function renderModalContent() {
 	return render(<ContentComponent closeModal={() => {}} />);
 }
 
-describe('openCreationModal', () => {
+describe('openModuleModal', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 	});
@@ -47,9 +45,9 @@ describe('openCreationModal', () => {
 			})
 		);
 
-		const opened = openCreationModal(CREATION_ITEM);
+		const opened = openModuleModal(MODULE_ITEM);
 
-		expect(mockLoadModule).toHaveBeenCalledWith(CREATION_ITEM.module);
+		expect(mockLoadModule).toHaveBeenCalledWith(MODULE_ITEM.module);
 		expect(mockOpenModal).not.toHaveBeenCalled();
 
 		resolveLoadModule(() => <div />);
@@ -64,7 +62,7 @@ describe('openCreationModal', () => {
 			<div>{name}</div>
 		));
 
-		await openCreationModal(CREATION_ITEM);
+		await openModuleModal(MODULE_ITEM);
 
 		renderModalContent();
 
@@ -80,7 +78,7 @@ describe('openCreationModal', () => {
 			)
 		);
 
-		await openCreationModal(CREATION_ITEM);
+		await openModuleModal(MODULE_ITEM);
 
 		const ContentComponent =
 			mockOpenModal.mock.calls[0][0].contentComponent;
@@ -99,7 +97,7 @@ describe('openCreationModal', () => {
 
 		mockLoadModule.mockRejectedValue(new Error('unreachable'));
 
-		await openCreationModal(CREATION_ITEM);
+		await openModuleModal(MODULE_ITEM);
 
 		expect(mockOpenModal).not.toHaveBeenCalled();
 		expect(consoleError).toHaveBeenCalled();

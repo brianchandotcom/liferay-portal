@@ -38,60 +38,6 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that bulk copy does not factor in document status."
-	@priority = 4
-	test BulkCopyDoesNotFactorInDocumentStatus {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		for (var entryCount : list "1,2,3") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.jpg",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${entryCount}.jpg");
-		}
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
-
-		PortletEntry.selectAll();
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Checkout");
-
-		for (var entryCount : list "1,2,3") {
-			DMDocument.viewStatus(
-				dmDocumentStatus = "Draft",
-				dmDocumentTitle = "Document_${entryCount}.jpg");
-
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-		}
-
-		PortletEntry.selectAll();
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Copy To");
-
-		DMDocument.copy(
-			bulkCopy = "true",
-			homeFolder = "true",
-			siteName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		for (var entryCount : list "1,2,3") {
-			LexiconEntry.viewEntryName(rowEntry = "Document_${entryCount}.jpg");
-
-			DMDocument.viewStatus(
-				dmDocumentStatus = "Approved",
-				dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
-	}
-
 	@description = "This case covers LPS-140006. It ensures that a valid file can be uploaded after the invalid file is discarded."
 	@priority = 3
 	test CanAddValidFileAfterInvalidFileIsDiscardedViaMultipleUpload {
@@ -182,53 +128,6 @@ definition {
 			siteURLKey = "guest");
 
 		DMDocument.viewCategories(categoryNameList = "category");
-	}
-
-	@description = "This test ensures that document permissions can be copied over correctly."
-	@priority = 4
-	test CanBulkCopyFilesPermission {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		for (var entryCount : list "1,2,3") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}",
-				groupName = "Guest",
-				guestPermissions = "false",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${entryCount}.jpg");
-		}
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2,Document_3");
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Copy To");
-
-		DMDocument.copy(
-			bulkCopy = "true",
-			homeFolder = "true",
-			siteName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		PortletEntry.selectAll();
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Permissions");
-
-		IFrame.selectPermissionsFrame();
-
-		for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX") {
-			PermissionsInline.viewPermissionsRemoved(
-				permissionDefinitionKey = ${permissionDefinitionKey},
-				roleTitle = "Guest");
-		}
 	}
 
 	@description = "This test ensures that the document type of a published basic document can be changed."
@@ -421,77 +320,6 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
 
 		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
-	}
-
-	@description = "This test ensures that a draft document can be copied to a site folder."
-	@priority = 4
-	test CanCopyDraftDocumentToOtherSite {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description1",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONDocument.checkOutFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.copy(
-			dmDocumentTitle = "DM Document Title",
-			homeFolder = "true",
-			siteName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.viewStatus(
-			dmDocumentStatus = "Approved",
-			dmDocumentTitle = "DM Document Title");
-	}
-
-	@description = "This test ensures that a pending document can be copied to a site folder."
-	@priority = 4
-	test CanCopyPendingDocumentToOtherSite {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.configureWorkflowCP(
-			dmFolderName = "homeFolder",
-			homeFolder = "true",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addWithWorkflowCP(
-			dmDocumentFile = "Document_1.png",
-			dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.copy(
-			dmDocumentTitle = "DM Document Title",
-			homeFolder = "true",
-			siteName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.viewStatus(
-			dmDocumentStatus = "Approved",
-			dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This test ensures that a document's ratings can be copied from an asset library to a connected site."

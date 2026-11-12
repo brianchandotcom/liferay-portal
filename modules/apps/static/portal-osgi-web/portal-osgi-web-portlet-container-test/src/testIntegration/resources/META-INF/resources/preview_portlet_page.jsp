@@ -5,4 +5,9 @@
  */
 --%>
 
-PREVIEW_PAGE_MARKER
+<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+
+<liferay-portlet:runtime
+	persistSettings="<%= false %>"
+	portletName='<%= (String)request.getAttribute("liferay-portlet:preview:portletName") %>'
+/>

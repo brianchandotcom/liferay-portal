@@ -28,6 +28,7 @@ import jakarta.portlet.PortletContext;
 import jakarta.portlet.PortletException;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletRequestDispatcher;
+import jakarta.portlet.PortletResponse;
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
@@ -76,11 +77,13 @@ public class RenderRequestPortletContainerTest
 				"jakarta.portlet.name", TEST_PORTLET_ID
 			).build());
 
+		CapturingMVCPortlet capturingMVCPortlet = new CapturingMVCPortlet();
+		String viewPath = "/" + RandomTestUtil.randomString() + ".jsp";
+
 		setUpPortlet(
-			new MVCPortlet(),
+			capturingMVCPortlet,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.view-template",
-				"/configuration_mode_test/view.jsp"
+				"jakarta.portlet.init-param.view-template", viewPath
 			).build(),
 			TEST_PORTLET_ID);
 
@@ -100,10 +103,7 @@ public class RenderRequestPortletContainerTest
 
 		Assert.assertEquals(200, response.getCode());
 
-		String body = response.getBody();
-
-		Assert.assertFalse(body.contains("DEFAULT_CONFIGURATION_JSP_MARKER"));
-		Assert.assertTrue(body.contains("VIEW_TEMPLATE_MARKER"));
+		Assert.assertEquals(viewPath, capturingMVCPortlet.getIncludedPath());
 	}
 
 	@Test
@@ -113,8 +113,10 @@ public class RenderRequestPortletContainerTest
 		String testPreviewPortletId =
 			"testPreviewPortletId" + RandomTestUtil.randomString();
 
+		TestPortlet testPreviewPortlet = new TestPortlet();
+
 		setUpPortlet(
-			new TestPortlet(), new HashMapDictionary<String, Object>(),
+			testPreviewPortlet, new HashMapDictionary<String, Object>(),
 			testPreviewPortletId, false);
 
 		testPortlet = new TestPortlet() {
@@ -152,9 +154,7 @@ public class RenderRequestPortletContainerTest
 
 		Assert.assertEquals(200, response.getCode());
 
-		String body = response.getBody();
-
-		Assert.assertFalse(body.contains("PREVIEW_PAGE_MARKER"));
+		Assert.assertFalse(testPreviewPortlet.isCalledRender());
 	}
 
 	@Test
@@ -335,6 +335,24 @@ public class RenderRequestPortletContainerTest
 		Assert.assertEquals(200, response.getCode());
 
 		Assert.assertTrue(testRuntimePortlet.isCalledRender());
+	}
+
+	private static class CapturingMVCPortlet extends MVCPortlet {
+
+		public String getIncludedPath() {
+			return _includedPath;
+		}
+
+		@Override
+		protected void include(
+			String path, PortletRequest portletRequest,
+			PortletResponse portletResponse, String lifecycle) {
+
+			_includedPath = path;
+		}
+
+		private String _includedPath;
+
 	}
 
 }

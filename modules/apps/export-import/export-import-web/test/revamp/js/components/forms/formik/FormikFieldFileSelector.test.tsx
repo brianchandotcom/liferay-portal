@@ -65,7 +65,7 @@ describe('FormikFieldFileSelector', () => {
 		expect(screen.getByText('uploading...')).toBeInTheDocument();
 		expect(screen.getByRole('progressbar')).toHaveAttribute(
 			'aria-valuenow',
-			'40'
+			'32'
 		);
 	});
 
@@ -96,10 +96,10 @@ describe('FormikFieldFileSelector', () => {
 		expect(screen.getByRole('progressbar')).toHaveAccessibleName(
 			'validating'
 		);
-		expect(screen.getByText('35%')).toBeInTheDocument();
+		expect(screen.getByText('87%')).toBeInTheDocument();
 	});
 
-	it('keeps a single full progress bar when the upload turns into the validation', async () => {
+	it('continues the same progress bar when the upload turns into the validation', async () => {
 		const {upload} = renderFileSelector();
 
 		await uploadFile();
@@ -115,9 +115,9 @@ describe('FormikFieldFileSelector', () => {
 		expect(screen.getAllByRole('progressbar')).toHaveLength(1);
 		expect(screen.getByRole('progressbar')).toHaveAttribute(
 			'aria-valuenow',
-			'99.99'
+			'80'
 		);
-		expect(screen.getByText('0%')).toBeInTheDocument();
+		expect(screen.getByText('80%')).toBeInTheDocument();
 	});
 
 	it('does not show a completed bar while the server is still validating', async () => {
@@ -131,7 +131,7 @@ describe('FormikFieldFileSelector', () => {
 
 		expect(screen.getByRole('progressbar')).toHaveAttribute(
 			'aria-valuenow',
-			'99.99'
+			'99'
 		);
 		expect(screen.getByRole('progressbar')).not.toHaveAccessibleName(
 			'Complete'

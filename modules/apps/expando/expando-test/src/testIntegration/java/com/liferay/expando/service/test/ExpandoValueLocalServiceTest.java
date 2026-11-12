@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -40,11 +41,13 @@ import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -418,6 +421,70 @@ public class ExpandoValueLocalServiceTest {
 	}
 
 	@Test
+	public void testGetData() throws Exception {
+		long classPK = _counterLocalService.increment();
+
+		Map<Integer, Object> values = HashMapBuilder.<Integer, Object>put(
+			ExpandoColumnConstants.GEOLOCATION,
+			JSONUtil.put(
+				"latitude", RandomTestUtil.randomDouble()
+			).put(
+				"longitude", RandomTestUtil.randomDouble()
+			)
+		).put(
+			ExpandoColumnConstants.STRING, RandomTestUtil.randomString()
+		).put(
+			ExpandoColumnConstants.STRING_ARRAY,
+			new String[] {
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
+			}
+		).put(
+			ExpandoColumnConstants.STRING_LOCALIZED,
+			HashMapBuilder.put(
+				_enLocale, RandomTestUtil.randomString()
+			).put(
+				_ptLocale, RandomTestUtil.randomString()
+			).build()
+		).build();
+
+		List<String> columnNames = new ArrayList<>();
+
+		for (Map.Entry<Integer, Object> entry : values.entrySet()) {
+			ExpandoColumn column = ExpandoTestUtil.addColumn(
+				_expandoTable, "column" + entry.getKey(), entry.getKey());
+
+			ExpandoTestUtil.addValue(
+				_expandoTable, column, classPK, entry.getValue());
+
+			columnNames.add(column.getName());
+		}
+
+		_assertGetData(columnNames, classPK);
+	}
+
+	@Test
+	public void testGetDataWithoutValues() throws Exception {
+		long classPK = _counterLocalService.increment();
+
+		List<String> columnNames = new ArrayList<>();
+
+		for (int type : ExpandoColumnConstants.TYPES) {
+			ExpandoColumn column = ExpandoTestUtil.addColumn(
+				_expandoTable, "column" + type, type);
+
+			columnNames.add(column.getName());
+		}
+
+		ExpandoColumn column = ExpandoTestUtil.addColumn(
+			_expandoTable, "columnWithDefault", ExpandoColumnConstants.STRING,
+			RandomTestUtil.randomString());
+
+		columnNames.add(column.getName());
+
+		_assertGetData(columnNames, classPK);
+	}
+
+	@Test
 	public void testGetDefaultColumnValue() throws Exception {
 		ExpandoColumn column = ExpandoTestUtil.addColumn(
 			_expandoTable, "Test Column",
@@ -492,6 +559,49 @@ public class ExpandoValueLocalServiceTest {
 
 		Assert.assertEquals(Arrays.toString(enValues), 2, enValues.length);
 		Assert.assertEquals("Hi, Joe", enValues[1]);
+	}
+
+	private void _assertGetData(List<String> columnNames, long classPK)
+		throws Exception {
+
+		_assertGetData(
+			columnNames, classPK,
+			_expandoValueLocalService.getData(
+				TestPropsValues.getCompanyId(),
+				PortalUtil.getClassName(_classNameId), _expandoTable.getName(),
+				columnNames, classPK));
+		_assertGetData(
+			columnNames, classPK,
+			_expandoValueLocalService.getData(
+				TestPropsValues.getCompanyId(),
+				PortalUtil.getClassName(_classNameId), _expandoTable.getName(),
+				classPK));
+	}
+
+	private void _assertGetData(
+			List<String> columnNames, long classPK,
+			Map<String, Serializable> data)
+		throws Exception {
+
+		Assert.assertEquals(data.toString(), columnNames.size(), data.size());
+
+		for (String columnName : columnNames) {
+			Serializable expectedValue = _expandoValueLocalService.getData(
+				TestPropsValues.getCompanyId(),
+				PortalUtil.getClassName(_classNameId), _expandoTable.getName(),
+				columnName, classPK);
+			Serializable value = data.get(columnName);
+
+			if (expectedValue instanceof JSONObject) {
+				Assert.assertEquals(
+					columnName, expectedValue.toString(), value.toString());
+
+				continue;
+			}
+
+			Assert.assertTrue(
+				columnName, Objects.deepEquals(expectedValue, value));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

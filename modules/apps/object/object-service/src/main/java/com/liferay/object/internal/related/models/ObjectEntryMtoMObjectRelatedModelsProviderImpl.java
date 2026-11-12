@@ -77,8 +77,16 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			!objectRelationship.isReverse()) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
+				ObjectEntry curObjectEntry =
+					_objectEntryService.fetchObjectEntry(
+						objectEntry.getObjectEntryId());
+
+				if (curObjectEntry == null) {
+					continue;
+				}
+
 				_objectEntryService.deleteObjectEntry(
-					objectEntry.getObjectEntryId());
+					curObjectEntry.getObjectEntryId());
 			}
 		}
 	}
@@ -203,8 +211,16 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			!objectRelationship.isReverse()) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
+				ObjectEntry curObjectEntry =
+					_objectEntryService.fetchObjectEntry(
+						objectEntry.getObjectEntryId());
+
+				if ((curObjectEntry == null) || curObjectEntry.isInTrash()) {
+					continue;
+				}
+
 				_objectEntryService.moveObjectEntryToTrash(
-					objectEntry, new ServiceContext());
+					curObjectEntry, new ServiceContext());
 			}
 		}
 	}

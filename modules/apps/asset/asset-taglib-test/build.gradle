@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationImplementation project(":apps:asset:asset-taglib")
+	testIntegrationImplementation project(":apps:depot:depot-api")
 	testIntegrationImplementation project(":apps:journal:journal-api")
 	testIntegrationImplementation project(":apps:journal:journal-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")

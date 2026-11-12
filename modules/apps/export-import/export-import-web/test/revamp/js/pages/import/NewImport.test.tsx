@@ -273,6 +273,23 @@ describe('NewImport', () => {
 		);
 	});
 
+	it('deletes the validated upload when the wizard is cancelled', async () => {
+		fetch.mockResponseOnce('');
+
+		renderComponent();
+
+		await uploadFile('site.lar');
+
+		await user.click(await screen.findByRole('link', {name: 'cancel'}));
+
+		await waitFor(() =>
+			expect(fetch).toHaveBeenCalledWith(
+				'/o/export-import/v1.0/import-uploads/upload',
+				expect.objectContaining({keepalive: true, method: 'DELETE'})
+			)
+		);
+	});
+
 	it('resumes the interrupted upload when the same file is selected again', async () => {
 		mockInterruptedUpload();
 

@@ -57,10 +57,8 @@ export default function FileSelectionStep({
 		if (!currentFile) {
 			if (importUploadIdRef.current) {
 				ImportUploadService.deleteImportUpload(
-					ImportUploadService.getImportUploadURL(
-						importUploadAPIURL,
-						importUploadIdRef.current
-					)
+					importUploadAPIURL,
+					importUploadIdRef.current
 				);
 
 				importUploadIdRef.current = undefined;

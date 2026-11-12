@@ -41,6 +41,7 @@ interface IAccountsDataSetProps {
 interface ILifecycleStageFieldValue {
 	externalReferenceCode: string;
 	id: string;
+	name?: string;
 	stageName?: string;
 	stageType?: LifecycleStages;
 }
@@ -83,8 +84,9 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 		lifecycleStageFieldValues?.items ?? [];
 
 	const lifecycleStageItems = lifecycleStages.map(
-		({externalReferenceCode, stageName, stageType}) => ({
+		({externalReferenceCode, name, stageName, stageType}) => ({
 			label:
+				name ??
 				stageName ??
 				(stageType && lifecycleStagesLabelMap[stageType]?.label) ??
 				externalReferenceCode,
@@ -186,7 +188,9 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 									entityFieldType: 'string',
 									id: 'lifecycleStatus',
 									items: lifecycleStageItems,
-									label: Liferay.Language.get('status'),
+									label: Liferay.Language.get(
+										'lifecycle-stage'
+									),
 									multiple: true,
 									name: 'status',
 									preloadedData: buildSelectionPreloadedData(

@@ -27,9 +27,11 @@ export function WizardStep({children}: WizardStepProps) {
 export function Wizard({
 	backURL,
 	children,
+	onCancel,
 }: {
 	backURL: string;
 	children: React.ReactElement<WizardStepProps>[];
+	onCancel?: (values: FormikValues) => void;
 }) {
 	const [stepNumber, setStepNumber] = useState(0);
 	const [formState, setFormState] = useState({});
@@ -131,6 +133,7 @@ export function Wizard({
 						continueDisabled={
 							isStepValid && !isStepValid(formik.values)
 						}
+						onCancel={onCancel && (() => onCancel(formik.values))}
 						onPrevious={stepNumber > 0 ? previous : undefined}
 					/>
 				</Form>

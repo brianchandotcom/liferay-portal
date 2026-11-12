@@ -170,6 +170,7 @@ async function deleteResource(url: string): Promise<RequestResult<void>> {
 	try {
 		const response = await fetch(url, {
 			headers: HEADERS,
+			keepalive: true,
 			method: 'DELETE',
 		});
 

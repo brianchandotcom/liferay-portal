@@ -71,8 +71,16 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
+				ObjectEntry curObjectEntry =
+					_objectEntryService.fetchObjectEntry(
+						objectEntry.getObjectEntryId());
+
+				if (curObjectEntry == null) {
+					continue;
+				}
+
 				_objectEntryService.deleteObjectEntry(
-					objectEntry.getObjectEntryId());
+					curObjectEntry.getObjectEntryId());
 			}
 		}
 		else if (Objects.equals(
@@ -219,8 +227,16 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
+				ObjectEntry curObjectEntry =
+					_objectEntryService.fetchObjectEntry(
+						objectEntry.getObjectEntryId());
+
+				if ((curObjectEntry == null) || curObjectEntry.isInTrash()) {
+					continue;
+				}
+
 				_objectEntryService.moveObjectEntryToTrash(
-					objectEntry, new ServiceContext());
+					curObjectEntry, new ServiceContext());
 			}
 		}
 		else if (Objects.equals(

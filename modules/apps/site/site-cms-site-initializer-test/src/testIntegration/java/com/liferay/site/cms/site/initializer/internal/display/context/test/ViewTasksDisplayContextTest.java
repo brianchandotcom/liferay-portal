@@ -42,6 +42,18 @@ public class ViewTasksDisplayContextTest extends BaseDisplayContextTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
+	public void testGetAPIURL() throws Exception {
+		String apiURL = ReflectionTestUtil.invoke(
+			_getSectionDisplayContext(getMockHttpServletRequest()), "getAPIURL",
+			new Class<?>[0]);
+
+		Assert.assertTrue(
+			apiURL,
+			apiURL.contains(
+				"&filter=cmsTask eq true or cmpProjectTask eq true&"));
+	}
+
+	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			ReflectionTestUtil.invoke(

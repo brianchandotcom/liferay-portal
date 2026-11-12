@@ -15,12 +15,14 @@ function Footer({
 	actionButtonSymbol,
 	backURL,
 	continueDisabled,
+	onCancel,
 	onPrevious,
 }: {
 	actionButtonLabel?: string;
 	actionButtonSymbol?: string;
 	backURL: string;
 	continueDisabled?: boolean;
+	onCancel?: () => void;
 	onPrevious?: () => void;
 }) {
 	const {isSubmitting, isValid, status} = useFormikContext();
@@ -46,7 +48,12 @@ function Footer({
 
 				<ClayLayout.Col lg={onPrevious && 8}>
 					<div className="d-flex justify-content-end">
-						<ClayLink button displayType="secondary" href={backURL}>
+						<ClayLink
+							button
+							displayType="secondary"
+							href={backURL}
+							onClick={onCancel}
+						>
 							{Liferay.Language.get('cancel')}
 						</ClayLink>
 

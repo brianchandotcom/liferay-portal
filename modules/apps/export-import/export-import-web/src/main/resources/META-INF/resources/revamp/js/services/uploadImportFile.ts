@@ -81,7 +81,7 @@ async function withRetries<T>(
 async function uploadChunks(
 	file: File,
 	importUpload: ImportUpload,
-	importUploadURL: string,
+	importUploadAPIURL: string,
 	onProgress: (progress: UploadProgress) => void,
 	signal?: AbortSignal
 ): Promise<RequestResult<ImportUpload>> {
@@ -102,7 +102,8 @@ async function uploadChunks(
 				ImportUploadService.putImportUploadChunk(
 					file.slice(start, start + importUpload.chunkSize),
 					chunkIndex,
-					importUploadURL,
+					importUploadAPIURL,
+					importUpload.id,
 					(loadedBytes) =>
 						onProgress({
 							percent: Math.min(
@@ -128,7 +129,8 @@ async function uploadChunks(
 }
 
 async function waitForValidation(
-	importUploadURL: string,
+	importUploadAPIURL: string,
+	importUploadId: string,
 	onProgress: (progress: UploadProgress) => void,
 	signal?: AbortSignal
 ): Promise<RequestResult<ImportUpload>> {
@@ -136,7 +138,11 @@ async function waitForValidation(
 
 	while (!signal?.aborted) {
 		const result = await withRetries(
-			() => ImportUploadService.getImportUpload(importUploadURL),
+			() =>
+				ImportUploadService.getImportUpload(
+					importUploadAPIURL,
+					importUploadId
+				),
 			signal
 		);
 
@@ -151,7 +157,10 @@ async function waitForValidation(
 		const {errorMessage, percentage, status} = result.data;
 
 		if (status === 'FAILED') {
-			ImportUploadService.deleteImportUpload(importUploadURL);
+			ImportUploadService.deleteImportUpload(
+				importUploadAPIURL,
+				importUploadId
+			);
 
 			return {
 				data: null,
@@ -184,9 +193,13 @@ async function waitForValidation(
 
 async function getResumableImportUpload(
 	file: File,
-	importUploadURL: string
+	importUploadAPIURL: string,
+	importUploadId: string
 ): Promise<ImportUpload | null> {
-	const result = await ImportUploadService.getImportUpload(importUploadURL);
+	const result = await ImportUploadService.getImportUpload(
+		importUploadAPIURL,
+		importUploadId
+	);
 
 	if (
 		!result.data ||
@@ -218,10 +231,8 @@ export async function uploadImportFile({
 	let importUpload = importUploadId
 		? await getResumableImportUpload(
 				file,
-				ImportUploadService.getImportUploadURL(
-					importUploadAPIURL,
-					importUploadId
-				)
+				importUploadAPIURL,
+				importUploadId
 			)
 		: null;
 
@@ -242,15 +253,12 @@ export async function uploadImportFile({
 		importUpload = postResult.data;
 	}
 
-	onImportUpload?.(importUpload.id);
+	const uploadId = importUpload.id;
 
-	const importUploadURL = ImportUploadService.getImportUploadURL(
-		importUploadAPIURL,
-		importUpload.id
-	);
+	onImportUpload?.(uploadId);
 
 	const handleAbort = () => {
-		ImportUploadService.deleteImportUpload(importUploadURL);
+		ImportUploadService.deleteImportUpload(importUploadAPIURL, uploadId);
 	};
 
 	if (signal?.aborted) {
@@ -266,7 +274,7 @@ export async function uploadImportFile({
 			const uploadResult = await uploadChunks(
 				file,
 				importUpload,
-				importUploadURL,
+				importUploadAPIURL,
 				onProgress,
 				signal
 			);
@@ -285,14 +293,18 @@ export async function uploadImportFile({
 					};
 				}
 
-				ImportUploadService.deleteImportUpload(importUploadURL);
+				ImportUploadService.deleteImportUpload(
+					importUploadAPIURL,
+					uploadId
+				);
 
 				return uploadResult;
 			}
 		}
 
 		const result = await waitForValidation(
-			importUploadURL,
+			importUploadAPIURL,
+			uploadId,
 			onProgress,
 			signal
 		);

@@ -7,6 +7,7 @@ import React, {useState} from 'react';
 
 import {Wizard, WizardStep} from '../../components/Wizard';
 import {ContentSelection} from '../../components/forms/content_selector/ContentSelector';
+import ImportUploadService from '../../services/ImportUploadService';
 import {postImportProcess} from '../../services/postImportProcess';
 import {ImportPreview} from '../../types/exportImportPreview';
 import {DataStrategy, UserIdStrategy} from '../../types/exportImportProcess';
@@ -44,7 +45,17 @@ export function NewImport({
 	>();
 
 	return (
-		<Wizard backURL={backURL}>
+		<Wizard
+			backURL={backURL}
+			onCancel={(values) => {
+				if (values.importUploadId) {
+					ImportUploadService.deleteImportUpload(
+						importUploadAPIURL,
+						values.importUploadId
+					);
+				}
+			}}
+		>
 			<WizardStep
 				initialValues={{
 					fileSelector: undefined,

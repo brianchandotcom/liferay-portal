@@ -84,7 +84,7 @@ public class MVCPortletConfigurationTest {
 			},
 			portletId);
 
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
+		CapturingMVCPortlet capturingMVCPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"jakarta.portlet.name", portletId
 			).build());
@@ -97,25 +97,26 @@ public class MVCPortletConfigurationTest {
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 
-		mvcPortlet.dispatch(
+		capturingMVCPortlet.dispatch(
 			mockLiferayPortletRenderRequest, new MockRenderResponse());
 
 		Assert.assertFalse(invoked.get());
-		Assert.assertEquals(viewPath, mvcPortlet.getIncludedPath());
+		Assert.assertEquals(viewPath, capturingMVCPortlet.getIncludedPath());
 	}
 
 	@Test
 	public void testDoDispatchDoesNotServeConfigurationJSPInitParamUnderViewMode()
 		throws Exception {
 
-		String configJSP = "/" + RandomTestUtil.randomString() + ".jsp";
 		String portletId = "testPortlet" + RandomTestUtil.randomString();
-		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
 		_registerConfigurationAction(
 			new DefaultConfigurationAction(), portletId);
 
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
+		String configJSP = "/" + RandomTestUtil.randomString() + ".jsp";
+		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
+
+		CapturingMVCPortlet capturingMVCPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"jakarta.portlet.init-param.config-jsp", configJSP
 			).put(
@@ -130,10 +131,11 @@ public class MVCPortletConfigurationTest {
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 
-		mvcPortlet.dispatch(
+		capturingMVCPortlet.dispatch(
 			mockLiferayPortletRenderRequest, new MockRenderResponse());
 
-		Assert.assertEquals(viewTemplate, mvcPortlet.getIncludedPath());
+		Assert.assertEquals(
+			viewTemplate, capturingMVCPortlet.getIncludedPath());
 	}
 
 	@Test
@@ -141,11 +143,9 @@ public class MVCPortletConfigurationTest {
 		throws Exception {
 
 		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
-		String siblingConfigurationJSP =
-			"/" + RandomTestUtil.randomString() + "/configuration.jsp";
 		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
+		CapturingMVCPortlet capturingMVCPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"jakarta.portlet.init-param.config-template", configTemplate
 			).put(
@@ -155,16 +155,20 @@ public class MVCPortletConfigurationTest {
 				"testPortlet" + RandomTestUtil.randomString()
 			).build());
 
+		String siblingConfigurationJSP =
+			"/" + RandomTestUtil.randomString() + "/configuration.jsp";
+
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_createRenderRequest(siblingConfigurationJSP);
 
 		mockLiferayPortletRenderRequest.setParameter(
 			"cmd", RandomTestUtil.randomString());
 
-		mvcPortlet.dispatch(
+		capturingMVCPortlet.dispatch(
 			mockLiferayPortletRenderRequest, new MockRenderResponse());
 
-		Assert.assertEquals(viewTemplate, mvcPortlet.getIncludedPath());
+		Assert.assertEquals(
+			viewTemplate, capturingMVCPortlet.getIncludedPath());
 	}
 
 	@Test
@@ -208,7 +212,7 @@ public class MVCPortletConfigurationTest {
 
 		String configTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
+		CapturingMVCPortlet capturingMVCPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"jakarta.portlet.init-param.config-template", configTemplate
 			).put(
@@ -221,21 +225,17 @@ public class MVCPortletConfigurationTest {
 
 		mockLiferayResourceRequest.setParameter("mvcPath", configTemplate);
 
-		mvcPortlet.serveResource(
+		capturingMVCPortlet.serveResource(
 			mockLiferayResourceRequest, new MockLiferayResourceResponse());
 
-		Assert.assertNull(mvcPortlet.getIncludedPath());
+		Assert.assertNull(capturingMVCPortlet.getIncludedPath());
 	}
 
 	@Test
 	public void testServeResourceDoesNotServeNestedConfigurationJSPOutsideConfigMode()
 		throws Exception {
 
-		String nestedConfigurationJSP = StringBundler.concat(
-			"/", RandomTestUtil.randomString(), "/configuration/",
-			RandomTestUtil.randomString(), ".jsp");
-
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
+		CapturingMVCPortlet capturingMVCPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"jakarta.portlet.init-param.config-template",
 				"/" + RandomTestUtil.randomString() + ".jsp"
@@ -247,13 +247,17 @@ public class MVCPortletConfigurationTest {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
+		String nestedConfigurationJSP = StringBundler.concat(
+			"/", RandomTestUtil.randomString(), "/configuration/",
+			RandomTestUtil.randomString(), ".jsp");
+
 		mockLiferayResourceRequest.setParameter(
 			"mvcPath", nestedConfigurationJSP);
 
-		mvcPortlet.serveResource(
+		capturingMVCPortlet.serveResource(
 			mockLiferayResourceRequest, new MockLiferayResourceResponse());
 
-		Assert.assertNull(mvcPortlet.getIncludedPath());
+		Assert.assertNull(capturingMVCPortlet.getIncludedPath());
 	}
 
 	@Rule
@@ -285,21 +289,21 @@ public class MVCPortletConfigurationTest {
 	private CapturingMVCPortlet _registerMVCPortlet(
 		Dictionary<String, Object> properties) {
 
-		CapturingMVCPortlet mvcPortlet = new CapturingMVCPortlet();
+		CapturingMVCPortlet capturingMVCPortlet = new CapturingMVCPortlet();
 
 		_portletServiceRegistration = _bundleContext.registerService(
-			Portlet.class, mvcPortlet, properties);
+			Portlet.class, capturingMVCPortlet, properties);
 
-		return mvcPortlet;
+		return capturingMVCPortlet;
 	}
 
 	private void _testDoDispatchDoesNotServeConfigurationJSPUnderViewMode(
-			String configTemplate, String path)
+			String configTemplate, String mvcPath)
 		throws Exception {
 
 		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
-		CapturingMVCPortlet mvcPortlet = _registerMVCPortlet(
+		CapturingMVCPortlet capturingMVCPortlet = _registerMVCPortlet(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"jakarta.portlet.init-param.config-template", configTemplate
 			).put(
@@ -309,10 +313,11 @@ public class MVCPortletConfigurationTest {
 				"testPortlet" + RandomTestUtil.randomString()
 			).build());
 
-		mvcPortlet.dispatch(
-			_createRenderRequest(path), new MockRenderResponse());
+		capturingMVCPortlet.dispatch(
+			_createRenderRequest(mvcPath), new MockRenderResponse());
 
-		Assert.assertEquals(viewTemplate, mvcPortlet.getIncludedPath());
+		Assert.assertEquals(
+			viewTemplate, capturingMVCPortlet.getIncludedPath());
 	}
 
 	private final BundleContext _bundleContext;

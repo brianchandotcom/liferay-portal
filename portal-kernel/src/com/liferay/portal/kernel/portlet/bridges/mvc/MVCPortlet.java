@@ -353,7 +353,7 @@ public class MVCPortlet extends LiferayPortlet {
 		String path = getPath(resourceRequest, resourceResponse);
 
 		if ((path != null) &&
-			!_isUnauthorizedConfigurationPath(resourceRequest, path)) {
+			!_isUnauthorizedConfigurationPath(path, resourceRequest)) {
 
 			include(
 				path, resourceRequest, resourceResponse,
@@ -496,7 +496,7 @@ public class MVCPortlet extends LiferayPortlet {
 		String path = getPath(renderRequest, renderResponse);
 
 		if ((path != null) &&
-			!_isUnauthorizedConfigurationPath(renderRequest, path)) {
+			!_isUnauthorizedConfigurationPath(path, renderRequest)) {
 
 			WindowState windowState = renderRequest.getWindowState();
 
@@ -822,7 +822,7 @@ public class MVCPortlet extends LiferayPortlet {
 	}
 
 	private boolean _isUnauthorizedConfigurationPath(
-		PortletRequest portletRequest, String path) {
+		String path, PortletRequest portletRequest) {
 
 		PortletMode portletMode = portletRequest.getPortletMode();
 

@@ -78,12 +78,12 @@ public class RenderRequestPortletContainerTest
 			).build());
 
 		CapturingMVCPortlet capturingMVCPortlet = new CapturingMVCPortlet();
-		String viewPath = "/" + RandomTestUtil.randomString() + ".jsp";
+		String viewTemplate = "/" + RandomTestUtil.randomString() + ".jsp";
 
 		setUpPortlet(
 			capturingMVCPortlet,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"jakarta.portlet.init-param.view-template", viewPath
+				"jakarta.portlet.init-param.view-template", viewTemplate
 			).build(),
 			TEST_PORTLET_ID);
 
@@ -103,17 +103,17 @@ public class RenderRequestPortletContainerTest
 
 		Assert.assertEquals(200, response.getCode());
 
-		Assert.assertEquals(viewPath, capturingMVCPortlet.getIncludedPath());
+		Assert.assertEquals(
+			viewTemplate, capturingMVCPortlet.getIncludedPath());
 	}
 
 	@Test
 	public void testDoTagDoesNotRenderPortletWithoutConfigurationPermission()
 		throws Exception {
 
+		TestPortlet testPreviewPortlet = new TestPortlet();
 		String testPreviewPortletId =
 			"testPreviewPortletId" + RandomTestUtil.randomString();
-
-		TestPortlet testPreviewPortlet = new TestPortlet();
 
 		setUpPortlet(
 			testPreviewPortlet, new HashMapDictionary<String, Object>(),

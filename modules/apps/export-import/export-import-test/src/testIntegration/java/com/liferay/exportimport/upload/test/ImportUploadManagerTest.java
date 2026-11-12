@@ -82,7 +82,7 @@ public class ImportUploadManagerTest {
 	@Test
 	public void testDeleteImportUpload() throws Exception {
 		ImportUploadEntry importUploadEntry = _addImportUpload(
-			_getRandomBytes(10));
+			_getRandomBytes(RandomTestUtil.randomInt(1, 100)));
 
 		_importUploadManager.deleteImportUpload(
 			_group.getGroupId(), importUploadEntry.getImportUploadId(),

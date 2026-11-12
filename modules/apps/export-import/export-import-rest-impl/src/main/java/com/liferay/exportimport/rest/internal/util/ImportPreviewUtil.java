@@ -67,8 +67,9 @@ import java.util.TimeZone;
 public class ImportPreviewUtil {
 
 	public static ImportPreview getImportPreview(
-			String author, File file, String fileName, long fileSize,
-			Locale locale, String portletId, Group scopeGroup, long userId)
+			String authorName, File file, Locale locale, String portletId,
+			Group scopeGroup, String uploadFileName, long uploadFileSize,
+			long userId)
 		throws Exception {
 
 		ZipReaderFactory zipReaderFactory = _zipReaderFactorySnapshot.get();
@@ -111,13 +112,13 @@ public class ImportPreviewUtil {
 					setAssetLibraries(
 						() -> _getAssetLibraries(
 							scopeGroup.getCompanyId(), exportImportGroups));
-					setAuthor(() -> author);
+					setAuthor(() -> authorName);
 					setDeletionCount(
 						() -> PortletDataHandlerUtil.getDeletionCount(
 							importPortletDataHandlers));
 					setExportDate(manifestSummary::getExportDate);
-					setFileName(() -> fileName);
-					setFileSize(() -> fileSize);
+					setFileName(() -> uploadFileName);
+					setFileSize(() -> uploadFileSize);
 					setPortletDataHandlers(() -> importPortletDataHandlers);
 					setSites(
 						() -> _getSites(

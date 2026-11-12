@@ -134,10 +134,10 @@ public class ImportPreviewBackgroundTaskExecutor
 				BackgroundTaskConstants.STATUS_SUCCESSFUL,
 				ImportPreviewUtil.toJSON(
 					ImportPreviewUtil.getImportPreview(
-						user.getFullName(), file,
-						importUploadEntry.getFileName(),
-						importUploadEntry.getSize(), locale,
+						user.getFullName(), file, locale,
 						importUploadEntry.getPortletId(), scopeGroup,
+						importUploadEntry.getFileName(),
+						importUploadEntry.getSize(),
 						backgroundTask.getUserId())));
 		}
 		finally {

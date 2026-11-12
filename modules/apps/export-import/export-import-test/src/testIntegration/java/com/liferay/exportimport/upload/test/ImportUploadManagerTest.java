@@ -54,10 +54,9 @@ public class ImportUploadManagerTest {
 	public void testAddImportUpload() throws Exception {
 		String fileName = RandomTestUtil.randomString() + ".lar";
 
-		ImportUpload importUpload =
-			_importUploadManager.addImportUpload(
-				RandomTestUtil.randomString(), fileName, _group.getGroupId(), 0,
-				null, 10, TestPropsValues.getUserId());
+		ImportUpload importUpload = _importUploadManager.addImportUpload(
+			RandomTestUtil.randomString(), fileName, _group.getGroupId(), 0,
+			null, 10, TestPropsValues.getUserId());
 
 		importUpload = _importUploadManager.fetchImportUpload(
 			_group.getGroupId(), importUpload.getImportUploadId(),
@@ -82,7 +81,7 @@ public class ImportUploadManagerTest {
 	@Test
 	public void testDeleteImportUpload() throws Exception {
 		ImportUpload importUpload = _addImportUpload(
-			_getRandomBytes(10));
+			_getRandomBytes(RandomTestUtil.randomInt(1, 100)));
 
 		_importUploadManager.deleteImportUpload(
 			_group.getGroupId(), importUpload.getImportUploadId(),
@@ -115,11 +114,10 @@ public class ImportUploadManagerTest {
 
 			byte[] bytes = _getRandomBytes(1027);
 
-			ImportUpload importUpload =
-				_importUploadManager.addImportUpload(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString() + ".lar", _group.getGroupId(),
-					0, null, bytes.length, TestPropsValues.getUserId());
+			ImportUpload importUpload = _importUploadManager.addImportUpload(
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".lar", _group.getGroupId(), 0,
+				null, bytes.length, TestPropsValues.getUserId());
 
 			int chunkSize = (int)importUpload.getChunkSize();
 
@@ -152,8 +150,7 @@ public class ImportUploadManagerTest {
 			_importUploadManager.writeTo(
 				bytesWritten -> {
 				},
-				file, _group.getGroupId(),
-				importUpload.getImportUploadId(),
+				file, _group.getGroupId(), importUpload.getImportUploadId(),
 				TestPropsValues.getUserId());
 
 			Assert.assertArrayEquals(bytes, FileUtil.getBytes(file));
@@ -164,11 +161,10 @@ public class ImportUploadManagerTest {
 
 	@Test
 	public void testPutChunkWithWrongSize() throws Exception {
-		ImportUpload importUpload =
-			_importUploadManager.addImportUpload(
-				RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".lar", _group.getGroupId(), 0,
-				null, 10, TestPropsValues.getUserId());
+		ImportUpload importUpload = _importUploadManager.addImportUpload(
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + ".lar", _group.getGroupId(), 0,
+			null, 10, TestPropsValues.getUserId());
 
 		Assert.assertThrows(
 			ImportUploadException.class,
@@ -182,16 +178,14 @@ public class ImportUploadManagerTest {
 				_group.getGroupId(), importUpload.getImportUploadId(),
 				TestPropsValues.getUserId());
 
-		Assert.assertEquals(
-			0, fetchedImportUpload.getUploadedChunksCount());
+		Assert.assertEquals(0, fetchedImportUpload.getUploadedChunksCount());
 	}
 
 	private ImportUpload _addImportUpload(byte[] bytes) throws Exception {
-		ImportUpload importUpload =
-			_importUploadManager.addImportUpload(
-				RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + ".lar", _group.getGroupId(), 0,
-				null, bytes.length, TestPropsValues.getUserId());
+		ImportUpload importUpload = _importUploadManager.addImportUpload(
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + ".lar", _group.getGroupId(), 0,
+			null, bytes.length, TestPropsValues.getUserId());
 
 		return _importUploadManager.putChunk(
 			0, _group.getGroupId(), importUpload,

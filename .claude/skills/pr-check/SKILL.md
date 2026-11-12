@@ -212,8 +212,6 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Empty Service Properties](validations/branch/empty-service-properties.md)
 
-1. [Empty SafeCloseable](validations/branch/empty-safe-closeable.md)
-
 1. [BeanParamUtil Getter](validations/branch/bean-param-util-getter.md)
 
 1. [HTML Escaping](validations/branch/html-escaping.md)

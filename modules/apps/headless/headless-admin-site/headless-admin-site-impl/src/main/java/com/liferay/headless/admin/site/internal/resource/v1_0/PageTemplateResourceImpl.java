@@ -38,7 +38,6 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
@@ -618,7 +617,8 @@ public class PageTemplateResourceImpl
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) ^
 			  (groupId != contextCompany.getGroupId()))) {
 
-			throw new LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException();
+			throw new IllegalArgumentException(
+				"The page template set does not belong to this site");
 		}
 
 		ServiceContext serviceContext = _getServiceContext(

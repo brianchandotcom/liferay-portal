@@ -792,8 +792,8 @@ public class LayoutUtil {
 
 		if (itemExternalReference.getScope() != null) {
 			throw new IllegalArgumentException(
-				"The master page references do not belong to the same scope " +
-					"as the current page");
+				"The master page reference does not belong to the same scope " +
+					"as the target page");
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -820,7 +820,10 @@ public class LayoutUtil {
 				layoutPageTemplateEntry.getType())) {
 
 			throw new IllegalArgumentException(
-				"The master page reference does not point to a master page");
+				StringBundler.concat(
+					"The external reference code \"",
+					itemExternalReference.getExternalReferenceCode(),
+					"\" does not point to a master page"));
 		}
 
 		if (layoutPageTemplateEntry == null) {
@@ -1156,6 +1159,8 @@ public class LayoutUtil {
 
 		Settings settings = SettingsUtil.getSettings(pageSpecification);
 
+		_validateThemeSettings(settings);
+
 		_updateClientExtensions(cetManager, layout, settings, serviceContext);
 
 		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
@@ -1483,6 +1488,25 @@ public class LayoutUtil {
 		return LayoutServiceUtil.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			unicodeProperties.toString());
+	}
+
+	private static void _validateThemeSettings(Settings settings) {
+		if ((settings == null) ||
+			MapUtil.isEmpty(settings.getThemeSettings())) {
+
+			return;
+		}
+
+		Map<String, String> themeSettings = settings.getThemeSettings();
+
+		for (String key : themeSettings.keySet()) {
+			if (!key.startsWith("lfr-theme:")) {
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"The theme setting \"", key,
+						"\" must start with \"lfr-theme:\""));
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutUtil.class);

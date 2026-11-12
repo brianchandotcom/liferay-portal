@@ -393,26 +393,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkOutFile(dmDocumentTitle = null, groupName = null) {
-		Variables.assertDefined(parameterList = ${dmDocumentTitle});
-
-		var portalURL = JSONCompany.getPortalURL();
-		var fileEntryId = JSONDocument.getFileEntryId(
-			dmDocumentTitle = ${dmDocumentTitle},
-			groupId = ${groupId},
-			groupName = ${groupName});
-		var userLoginInfo = JSONUtil2.formatJSONUser();
-
-		var curl = '''
-			${portalURL}/api/jsonws/dlapp/check-out-file-entry \
-				-u ${userLoginInfo} \
-				-d fileEntryId=${fileEntryId}
-		''';
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
-	}
-
-	@summary = "Default summary"
 	macro deleteFile(dmDocumentTitle = null, groupName = null, folderName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 

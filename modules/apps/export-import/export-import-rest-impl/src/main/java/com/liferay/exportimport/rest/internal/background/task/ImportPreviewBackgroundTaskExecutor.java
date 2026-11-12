@@ -70,10 +70,9 @@ public class ImportPreviewBackgroundTaskExecutor
 		String importUploadId = MapUtil.getString(
 			taskContextMap, "importUploadId");
 
-		ImportUpload importUpload =
-			_importUploadManager.fetchImportUpload(
-				backgroundTask.getGroupId(), importUploadId,
-				backgroundTask.getUserId());
+		ImportUpload importUpload = _importUploadManager.fetchImportUpload(
+			backgroundTask.getGroupId(), importUploadId,
+			backgroundTask.getUserId());
 
 		if (importUpload == null) {
 			return new BackgroundTaskResult(
@@ -116,9 +115,8 @@ public class ImportPreviewBackgroundTaskExecutor
 			try {
 				ImportPreviewUtil.validateImportFile(
 					file, scopeGroup.getGroupId(), locale,
-					importUpload.getPlid(),
-					importUpload.getPortletId(), user.getTimeZone(),
-					backgroundTask.getUserId());
+					importUpload.getPlid(), importUpload.getPortletId(),
+					user.getTimeZone(), backgroundTask.getUserId());
 			}
 			catch (BadRequestException badRequestException) {
 				return new BackgroundTaskResult(
@@ -134,10 +132,9 @@ public class ImportPreviewBackgroundTaskExecutor
 				BackgroundTaskConstants.STATUS_SUCCESSFUL,
 				ImportPreviewUtil.toJSON(
 					ImportPreviewUtil.getImportPreview(
-						user.getFullName(), file,
-						importUpload.getFileName(),
-						importUpload.getSize(), locale,
+						user.getFullName(), file, locale,
 						importUpload.getPortletId(), scopeGroup,
+						importUpload.getFileName(), importUpload.getSize(),
 						backgroundTask.getUserId())));
 		}
 		finally {

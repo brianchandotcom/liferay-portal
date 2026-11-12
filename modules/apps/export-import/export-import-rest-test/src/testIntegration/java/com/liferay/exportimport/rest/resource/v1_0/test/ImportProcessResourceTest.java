@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -363,12 +364,28 @@ public class ImportProcessResourceTest
 					null,
 					_toInstanceImportProcessRequest(importProcessRequest)));
 		_testPostImportProcessWithImportUpload(
-			_importUploadResource::getImportUploadHttpResponse, companyGroup,
+			contentLayout -> _exportLayoutAsFile(
+				companyGroup.getGroupId(), false, null,
+				testGroup.getExternalReferenceCode()),
+			_importUploadResource::getImportUploadHttpResponse, testGroup,
 			"/o/export-import/v1.0/import-uploads",
-			importProcessRequest ->
-				importProcessResource.postImportProcessHttpResponse(
-					null,
-					_toInstanceImportProcessRequest(importProcessRequest)),
+			importProcessRequest -> {
+				InstanceImportProcessRequest instanceImportProcessRequest =
+					_toInstanceImportProcessRequest(importProcessRequest);
+
+				instanceImportProcessRequest.setSites(
+					new Site[] {
+						new Site() {
+							{
+								externalReferenceCode =
+									testGroup.getExternalReferenceCode();
+							}
+						}
+					});
+
+				return importProcessResource.postImportProcessHttpResponse(
+					null, instanceImportProcessRequest);
+			},
 			importUploadRequest -> _importUploadResource.postImportUpload(
 				null, importUploadRequest));
 	}
@@ -466,6 +483,9 @@ public class ImportProcessResourceTest
 			importProcessRequest -> importProcessResource.postSiteImportProcess(
 				externalReferenceCode, null, null, importProcessRequest));
 		_testPostImportProcessWithImportUpload(
+			contentLayout -> _exportLayoutAsFile(
+				testGroup.getGroupId(), false,
+				new long[] {contentLayout.getLayoutId()}),
 			importUploadId ->
 				_importUploadResource.getSiteImportUploadHttpResponse(
 					externalReferenceCode, importUploadId),
@@ -652,7 +672,8 @@ public class ImportProcessResourceTest
 	}
 
 	private File _exportLayoutAsFile(
-			long groupId, boolean privateLayout, long[] layoutIds)
+			long groupId, boolean privateLayout, long[] layoutIds,
+			String... groupExternalReferenceCodes)
 		throws Exception {
 
 		Map<String, Serializable> parameterMap =
@@ -661,6 +682,17 @@ public class ImportProcessResourceTest
 					TestPropsValues.getUser(), groupId, privateLayout,
 					layoutIds,
 					HashMapBuilder.put(
+						PortletDataHandlerKeys.GROUP_EXTERNAL_REFERENCE_CODES,
+						() -> {
+							if (ArrayUtil.isNotEmpty(
+									groupExternalReferenceCodes)) {
+
+								return groupExternalReferenceCodes;
+							}
+
+							return null;
+						}
+					).put(
 						PortletDataHandlerKeys.PORTLET_DATA,
 						new String[] {Boolean.TRUE.toString()}
 					).put(
@@ -944,6 +976,7 @@ public class ImportProcessResourceTest
 	}
 
 	private void _testPostImportProcessWithImportUpload(
+			UnsafeFunction<Layout, File, Exception> exportLayoutUnsafeFunction,
 			UnsafeFunction<String, HttpInvoker.HttpResponse, Exception>
 				getImportUploadHttpResponseUnsafeFunction,
 			Group group, String importUploadsURL,
@@ -956,8 +989,7 @@ public class ImportProcessResourceTest
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
-		File file = _exportLayoutAsFile(
-			group.getGroupId(), false, new long[] {layout.getLayoutId()});
+		File file = exportLayoutUnsafeFunction.apply(layout);
 
 		_layoutLocalService.deleteLayout(
 			layout, ServiceContextTestUtil.getServiceContext());

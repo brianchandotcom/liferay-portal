@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -34,7 +35,9 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -252,7 +255,10 @@ public class
 	}
 
 	@Test
+	@TestInfo("LPS-182788")
 	public void testCopyFileShouldCopyRatingsEntries() throws Exception {
+		_testCopyFileShouldCopyRatingsEntriesParentGroup();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -635,6 +641,47 @@ public class
 					className, fileEntry.getFileEntryId())));
 	}
 
+	private void _testCopyFileShouldCopyRatingsEntriesParentGroup()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		FileEntry fileEntry1 = dlAppService.addFileEntry(
+			RandomTestUtil.randomString(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
+			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
+			null, serviceContext);
+
+		String className = DLFileEntryConstants.getClassName();
+
+		_ratingsEntryLocalService.updateEntry(
+			TestPropsValues.getUserId(), className, fileEntry1.getFileEntryId(),
+			0.4D, serviceContext);
+
+		FileEntry fileEntry2 = dlAppService.copyFileEntry(
+			fileEntry1.getFileEntryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_childGroup.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
+
+		RatingsEntry ratingsEntry = _ratingsEntryLocalService.getEntry(
+			TestPropsValues.getUserId(), className,
+			fileEntry2.getFileEntryId());
+
+		Assert.assertEquals(0.4D, ratingsEntry.getScore(), 0);
+
+		RatingsStats ratingsStats = _ratingsStatsLocalService.getStats(
+			className, fileEntry2.getFileEntryId());
+
+		Assert.assertEquals(0.4D, ratingsStats.getAverageScore(), 0);
+		Assert.assertEquals(1, ratingsStats.getTotalEntries());
+	}
+
 	private AssetCategory _assetCategory;
 
 	@Inject
@@ -659,6 +706,9 @@ public class
 
 	@Inject
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Inject
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	private Folder _targetParentFolder;
 

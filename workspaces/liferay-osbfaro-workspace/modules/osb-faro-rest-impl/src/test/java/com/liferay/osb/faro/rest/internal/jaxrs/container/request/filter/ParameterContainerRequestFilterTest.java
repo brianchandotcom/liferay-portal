@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.rest.internal.jaxrs.container.request.filter;
 
 import com.liferay.osb.faro.rest.resource.v1_0.AccountLifecycleStageTransitionResource;
+import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentMembershipResource;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -35,22 +36,9 @@ public class ParameterContainerRequestFilterTest {
 
 	@Before
 	public void setUp() {
-		for (Method method :
-				AccountLifecycleStageTransitionResource.class.getMethods()) {
-
-			if (!Objects.equals(
-					method.getName(),
-					"getWorkspaceGroupAccountLifecycleStageTransitionsPage")) {
-
-				continue;
-			}
-
-			Mockito.when(
-				_resourceInfo.getResourceMethod()
-			).thenReturn(
-				method
-			);
-		}
+		_setResourceMethod(
+			AccountLifecycleStageTransitionResource.class,
+			"getWorkspaceGroupAccountLifecycleStageTransitionsPage");
 
 		ReflectionTestUtil.setFieldValue(
 			_parameterContainerRequestFilter, "_resourceInfo", _resourceInfo);
@@ -88,9 +76,25 @@ public class ParameterContainerRequestFilterTest {
 					}
 				}));
 		_assertTitle(
+			"\"sort\" accepts only one column on this endpoint",
+			_filter("sort", "accountName:asc,transitionDate:desc"));
+		_assertTitle(
 			"\"sort\" must be a comma separated list of \"column:asc\" or " +
 				"\"column:desc\" expressions",
 			_filter("sort", "accountName:sideways"));
+	}
+
+	@Test
+	public void testFilterWithUnsortableResourceMethod() {
+		_setResourceMethod(
+			IndividualSegmentMembershipResource.class,
+			"getWorkspaceGroupIndividualSegmentMembershipsPage");
+
+		Assert.assertNull(_filter(null, null));
+
+		_assertTitle(
+			"\"sort\" is not supported by this endpoint",
+			_filter("sort", "accountName:asc"));
 	}
 
 	private void _assertTitle(String expectedTitle, Response response) {
@@ -155,6 +159,20 @@ public class ParameterContainerRequestFilterTest {
 		}
 
 		return _filter(queryParameters);
+	}
+
+	private void _setResourceMethod(Class<?> clazz, String methodName) {
+		for (Method method : clazz.getMethods()) {
+			if (!Objects.equals(method.getName(), methodName)) {
+				continue;
+			}
+
+			Mockito.when(
+				_resourceInfo.getResourceMethod()
+			).thenReturn(
+				method
+			);
+		}
 	}
 
 	private final ParameterContainerRequestFilter

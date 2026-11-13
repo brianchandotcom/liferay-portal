@@ -44,15 +44,13 @@ public class FaroEngineClientExceptionMapper
 				Response.Status.NOT_FOUND.getReasonPhrase());
 		}
 
-		int status = faroEngineClientException.getStatus();
-
 		if ((faroEngineClientException instanceof InvalidFilterException) ||
-			((status >= HttpServletResponse.SC_BAD_REQUEST) &&
-			 (status < HttpServletResponse.SC_INTERNAL_SERVER_ERROR))) {
+			(faroEngineClientException.getStatus() ==
+				HttpServletResponse.SC_BAD_REQUEST)) {
 
 			return new Problem(
 				Response.Status.BAD_REQUEST,
-				"Check the parameter values against the tool description");
+				"One or more parameter values are invalid");
 		}
 
 		_log.error(faroEngineClientException);

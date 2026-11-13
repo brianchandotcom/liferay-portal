@@ -32,6 +32,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -41,17 +42,14 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.net.URLDecoder;
@@ -93,26 +91,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	@Before
 	public void setUp() {
 		super.setUp();
-
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
-		Mockito.when(
-			themeDisplay.getCompanyId()
-		).thenReturn(
-			0L
-		);
-
-		Mockito.when(
-			themeDisplay.getUser()
-		).thenReturn(
-			Mockito.mock(User.class)
-		);
 
 		_resetFDSSerializer();
 	}
@@ -838,7 +816,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			ListUtil.fromArray(objectEntry)
 		);
 
-		// Resolved tokens
+		// All tokens resolved
 
 		JSONArray jsonArray = _customFDSSerializer.serializeFilters(
 			FDS_NAMES[0], httpServletRequest,
@@ -848,7 +826,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
 		Assert.assertEquals(
-			"/o" + REST_APPLICATION + "/scopes/0/items/42",
+			StringBundler.concat(
+				"/o", REST_APPLICATION, "/scopes/", SCOPE_GROUP_ID,
+				"/items/42"),
 			jsonObject.getString("apiURL"));
 
 		// Token mapped manually and left empty
@@ -864,6 +844,24 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)));
 
 		Assert.assertEquals(0, jsonArray.length());
+
+		// Token mapped to an empty string
+
+		jsonArray = _customFDSSerializer.serializeFilters(
+			FDS_NAMES[0], httpServletRequest,
+			Collections.singletonMap(
+				externalReferenceCode,
+				JSONUtil.put(
+					"itemId", "42"
+				).put(
+					"scopeKey", StringPool.BLANK
+				)));
+
+		jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			"/o" + REST_APPLICATION + "/scopes//items/42",
+			jsonObject.getString("apiURL"));
 
 		// Unresolved token
 
@@ -881,6 +879,57 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			FDS_NAMES[0], httpServletRequest, null);
 
 		Assert.assertEquals(0, jsonArray.length());
+
+		// Item proxy
+
+		String apiURL = RandomTestUtil.randomString();
+
+		SystemFDSSerializer systemFDSSerializer = Mockito.mock(
+			SystemFDSSerializer.class);
+
+		JSONObject tokenResolutionsJSONObject = JSONUtil.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		Mockito.when(
+			systemFDSSerializer.serializeFilters(
+				FDS_NAMES[1], httpServletRequest,
+				Collections.singletonMap(
+					FIELD_NAMES[0], tokenResolutionsJSONObject))
+		).thenReturn(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"apiURL", apiURL
+				).put(
+					"id", FIELD_NAMES[0]
+				))
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "_systemFDSSerializer", systemFDSSerializer);
+
+		ObjectEntry itemProxyObjectEntry = _createItemProxyObjectEntry(
+			RandomTestUtil.randomString());
+
+		Mockito.when(
+			_customFDSSerializer.getSortedRelatedObjectEntries(
+				Mockito.eq(FDS_NAMES[0]), Mockito.eq(httpServletRequest),
+				Mockito.any(), Mockito.eq("filtersOrder"),
+				Mockito.eq("dataSetToDataSetClientExtensionFilters"),
+				Mockito.eq("dataSetToDataSetDateFilters"),
+				Mockito.eq("dataSetToDataSetSelectionFilters"))
+		).thenReturn(
+			ListUtil.fromArray(itemProxyObjectEntry)
+		);
+
+		jsonArray = _customFDSSerializer.serializeFilters(
+			FDS_NAMES[0], httpServletRequest,
+			Collections.singletonMap(
+				itemProxyObjectEntry.getExternalReferenceCode(),
+				tokenResolutionsJSONObject));
+
+		jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(apiURL, jsonObject.getString("apiURL"));
 	}
 
 	@Test
@@ -1184,6 +1233,39 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
+		String itemProxyAPIURL = RandomTestUtil.randomString();
+
+		ObjectEntry itemProxyObjectEntry = _createItemProxyObjectEntry(
+			RandomTestUtil.randomString());
+
+		String itemProxyInterpolatedAPIURL = RandomTestUtil.randomString();
+
+		SystemFDSSerializer systemFDSSerializer = Mockito.mock(
+			SystemFDSSerializer.class);
+
+		Mockito.when(
+			systemFDSSerializer.serializeSelectionFilterAPIURLs(
+				FDS_NAMES[1], httpServletRequest, false, null)
+		).thenReturn(
+			Collections.singletonMap(FIELD_NAMES[0], itemProxyAPIURL)
+		);
+
+		JSONObject tokenResolutionsJSONObject = JSONUtil.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		Mockito.when(
+			systemFDSSerializer.serializeSelectionFilterAPIURLs(
+				FDS_NAMES[1], httpServletRequest, true,
+				Collections.singletonMap(
+					FIELD_NAMES[0], tokenResolutionsJSONObject))
+		).thenReturn(
+			Collections.singletonMap(
+				FIELD_NAMES[0], itemProxyInterpolatedAPIURL)
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "_systemFDSSerializer", systemFDSSerializer);
+
 		Mockito.when(
 			_customFDSSerializer.createFDSAPIURLBuilder(
 				Mockito.eq(httpServletRequest), Mockito.anyString(),
@@ -1200,9 +1282,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 					externalReferenceCode, REST_APPLICATION,
 					"/scopes/{scopeKey}/items/{itemId}",
 					"API_REST_APPLICATION"),
-				_createSelectionFilterObjectEntry(
-					RandomTestUtil.randomString(), REST_APPLICATION,
-					REST_ENDPOINT, "ITEM_PROXY"),
+				itemProxyObjectEntry,
 				_createSelectionFilterObjectEntry(
 					RandomTestUtil.randomString(), null, null,
 					"OBJECT_PICKLIST"),
@@ -1218,19 +1298,32 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		).thenCallRealMethod();
 
 		Assert.assertEquals(
-			Collections.singletonMap(
+			HashMapBuilder.put(
 				externalReferenceCode,
-				"/o" + REST_APPLICATION + "/scopes/{scopeKey}/items/{itemId}"),
+				"/o" + REST_APPLICATION + "/scopes/{scopeKey}/items/{itemId}"
+			).put(
+				itemProxyObjectEntry.getExternalReferenceCode(), itemProxyAPIURL
+			).build(),
 			_customFDSSerializer.serializeSelectionFilterAPIURLs(
 				FDS_NAMES[0], httpServletRequest, false, null));
 		Assert.assertEquals(
-			Collections.singletonMap(
+			HashMapBuilder.put(
 				externalReferenceCode,
-				"/o" + REST_APPLICATION + "/scopes/0/items/42"),
+				StringBundler.concat(
+					"/o", REST_APPLICATION, "/scopes/", SCOPE_GROUP_ID,
+					"/items/42")
+			).put(
+				itemProxyObjectEntry.getExternalReferenceCode(),
+				itemProxyInterpolatedAPIURL
+			).build(),
 			_customFDSSerializer.serializeSelectionFilterAPIURLs(
 				FDS_NAMES[0], httpServletRequest, true,
-				Collections.singletonMap(
-					externalReferenceCode, JSONUtil.put("itemId", "42"))));
+				HashMapBuilder.<String, JSONObject>put(
+					externalReferenceCode, JSONUtil.put("itemId", "42")
+				).put(
+					itemProxyObjectEntry.getExternalReferenceCode(),
+					tokenResolutionsJSONObject
+				).build()));
 	}
 
 	@Test
@@ -2020,6 +2113,21 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		}
 
 		return false;
+	}
+
+	private ObjectEntry _createItemProxyObjectEntry(
+		String externalReferenceCode) {
+
+		ObjectEntry objectEntry = _createSelectionFilterObjectEntry(
+			externalReferenceCode, null, null, "ITEM_PROXY");
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		properties.put("fieldName", FIELD_NAMES[0]);
+		properties.put(
+			"r_dataSetToDataSetSelectionFilters_l_dataSetERC", FDS_NAMES[1]);
+
+		return objectEntry;
 	}
 
 	private ObjectEntry _createProxyObjectEntry(

@@ -48,18 +48,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -74,8 +72,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -109,20 +105,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		systemFDSSerializer.fdsAPIURLResolverRegistry =
 			new FDSAPIURLResolverRegistryImpl(serviceTrackerMap);
-
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
-		Mockito.when(
-			themeDisplay.getUser()
-		).thenReturn(
-			Mockito.mock(User.class)
-		);
 
 		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
 
@@ -169,20 +151,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		systemFDSSerializer.fdsAPIURLResolverRegistry =
 			new FDSAPIURLResolverRegistryImpl(serviceTrackerMap);
-
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
-		Mockito.when(
-			themeDisplay.getUser()
-		).thenReturn(
-			Mockito.mock(User.class)
-		);
 
 		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
 
@@ -739,32 +707,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Selection filter with tokens
 
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		long scopeGroupId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			themeDisplay.getScopeGroupId()
-		).thenReturn(
-			scopeGroupId
-		);
-
-		Mockito.when(
-			themeDisplay.getUser()
-		).thenReturn(
-			Mockito.mock(User.class)
-		);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
 		_registerServices(
 			_registerFDSFilter(
 				_createSelectionFDSFilter(
-					"/o/app/{siteId}/{foo}/endpoint", true, IDS[0]),
+					"/o/app/{siteId}/{" + _TOKEN_NAME + "}/endpoint", true,
+					IDS[0]),
 				FDS_NAMES[0]),
 			bundleContext.registerService(
 				FDSFilterContextContributor.class,
@@ -775,12 +722,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		JSONArray jsonArray = systemFDSSerializer.serializeFilters(
 			FDS_NAMES[0], httpServletRequest,
-			Collections.singletonMap(IDS[0], JSONUtil.put("foo", "bar")));
+			Collections.singletonMap(
+				IDS[0], JSONUtil.put(_TOKEN_NAME, _TOKEN_VALUE)));
 
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
 		Assert.assertEquals(
-			"/o/app/" + scopeGroupId + "/bar/endpoint",
+			StringBundler.concat(
+				"/o/app/", SCOPE_GROUP_ID, "/", _TOKEN_VALUE, "/endpoint"),
 			jsonObject.getString("apiURL"));
 
 		JSONAssert.assertEquals(
@@ -1332,46 +1281,29 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		systemFDSSerializer.fdsFilterRegistry = new FDSFilterRegistryImpl(
 			serviceTrackerMap);
 
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		long scopeGroupId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			themeDisplay.getScopeGroupId()
-		).thenReturn(
-			scopeGroupId
-		);
-
-		Mockito.when(
-			themeDisplay.getUser()
-		).thenReturn(
-			Mockito.mock(User.class)
-		);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
 		_registerServices(
 			_registerFDSFilter(
 				_createSelectionFDSFilter(
-					"/o/app/{siteId}/{foo}/endpoint", true, IDS[0]),
+					"/o/app/{siteId}/{" + _TOKEN_NAME + "}/endpoint", true,
+					IDS[0]),
 				FDS_NAMES[0]),
 			_registerFDSFilter(
 				_createSelectionFDSFilter(URL, false, IDS[1]), FDS_NAMES[0]));
 
 		Assert.assertEquals(
-			Collections.singletonMap(IDS[0], "/o/app/{siteId}/{foo}/endpoint"),
+			Collections.singletonMap(
+				IDS[0], "/o/app/{siteId}/{" + _TOKEN_NAME + "}/endpoint"),
 			systemFDSSerializer.serializeSelectionFilterAPIURLs(
 				FDS_NAMES[0], httpServletRequest, false, null));
 		Assert.assertEquals(
 			Collections.singletonMap(
-				IDS[0], "/o/app/" + scopeGroupId + "/bar/endpoint"),
+				IDS[0],
+				StringBundler.concat(
+					"/o/app/", SCOPE_GROUP_ID, "/", _TOKEN_VALUE, "/endpoint")),
 			systemFDSSerializer.serializeSelectionFilterAPIURLs(
 				FDS_NAMES[0], httpServletRequest, true,
-				Collections.singletonMap(IDS[0], JSONUtil.put("foo", "bar"))));
+				Collections.singletonMap(
+					IDS[0], JSONUtil.put(_TOKEN_NAME, _TOKEN_VALUE))));
 
 		_unregisterServices();
 
@@ -2101,6 +2033,10 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_serviceRegistrations.clear();
 	}
+
+	private static final String _TOKEN_NAME = RandomTestUtil.randomString();
+
+	private static final String _TOKEN_VALUE = RandomTestUtil.randomString();
 
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();

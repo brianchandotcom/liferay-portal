@@ -10,12 +10,17 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 
 export class TaskPage {
 	readonly apiHelpers: ApiHelpers;
+	readonly breadcrumb: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly moreActionsButton: Locator;
+	readonly newSubtaskButton: Locator;
 	readonly page: Page;
+	readonly subtasksSection: Locator;
+	readonly subtasksTitle: Locator;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
+		this.breadcrumb = page.getByRole('navigation', {name: 'Breadcrumb'});
 		this.deleteMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Delete',
@@ -24,6 +29,19 @@ export class TaskPage {
 			name: 'More Actions',
 		});
 		this.page = page;
+		this.subtasksTitle = page.getByRole('heading', {name: /^Subtasks/});
+
+		this.subtasksSection = page
+			.locator('.cms-section')
+			.filter({has: this.subtasksTitle});
+
+		this.newSubtaskButton = this.subtasksSection.getByRole('button', {
+			name: 'New Subtask',
+		});
+	}
+
+	getSubtaskRow(title: string) {
+		return this.subtasksSection.getByRole('row').filter({hasText: title});
 	}
 
 	async goto(taskId: number) {
@@ -44,6 +62,15 @@ export class TaskPage {
 		await clickAndExpectToBeVisible({
 			target: this.deleteMenuItem,
 			trigger: this.moreActionsButton,
+		});
+	}
+
+	async openSubtaskActions(title: string) {
+		await clickAndExpectToBeVisible({
+			target: this.deleteMenuItem,
+			trigger: this.getSubtaskRow(title).getByRole('button', {
+				name: `${title} Actions`,
+			}),
 		});
 	}
 }

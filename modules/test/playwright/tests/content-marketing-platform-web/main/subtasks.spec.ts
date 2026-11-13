@@ -622,3 +622,283 @@ test(
 		});
 	}
 );
+
+test(
+	'List the subtasks of a task',
+	{tag: ['@LPD-114771']},
+	async ({apiHelpers, page, taskPage}) => {
+		const project = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				title: getRandomString(),
+			},
+			cmpProject
+		);
+
+		const parentTask = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+				title: getRandomString(),
+			},
+			cmpTask,
+			project.scopeKey
+		);
+
+		const subtasks = [];
+
+		for (let i = 0; i < 2; i++) {
+			subtasks.push(
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+						r_cmpTaskToCMPTasks_c_cmpTaskId: parentTask.id,
+						title: getRandomString(),
+					},
+					cmpTask,
+					project.scopeKey
+				)
+			);
+		}
+
+		const subSubtask = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+				r_cmpTaskToCMPTasks_c_cmpTaskId: subtasks[0].id,
+				title: getRandomString(),
+			},
+			cmpTask,
+			project.scopeKey
+		);
+
+		await test.step('List only the direct subtasks of the task', async () => {
+			await taskPage.goto(parentTask.id);
+
+			await expect(taskPage.subtasksTitle).toHaveText('Subtasks (2)');
+
+			for (const subtask of subtasks) {
+				await expect(
+					taskPage.getSubtaskRow(subtask.title)
+				).toBeVisible();
+			}
+
+			await expect(taskPage.getSubtaskRow(subSubtask.title)).toBeHidden();
+		});
+
+		await test.step('Update the count after deleting a subtask', async () => {
+			await taskPage.openSubtaskActions(subtasks[1].title);
+
+			await taskPage.deleteMenuItem.click();
+
+			await page
+				.getByRole('alert')
+				.filter({hasText: 'You are about to delete'})
+				.getByRole('button', {name: 'Delete'})
+				.click();
+
+			await expect(taskPage.subtasksTitle).toHaveText('Subtasks (1)');
+		});
+
+		await test.step('List the subtasks of a subtask', async () => {
+			await taskPage.goto(subtasks[0].id);
+
+			await expect(taskPage.subtasksTitle).toHaveText('Subtasks (1)');
+			await expect(
+				taskPage.getSubtaskRow(subSubtask.title)
+			).toBeVisible();
+		});
+
+		await test.step('Hide the subtasks section on a third level item', async () => {
+			await taskPage.goto(subSubtask.id);
+
+			await expect(
+				taskPage.breadcrumb.getByText(subSubtask.title, {exact: true})
+			).toBeVisible();
+			await expect(taskPage.subtasksTitle).toBeHidden();
+		});
+
+		await test.step('Open the subtask editor from the New Subtask button', async () => {
+			await taskPage.goto(parentTask.id);
+
+			await taskPage.newSubtaskButton.click();
+
+			await expect(
+				page.getByRole('heading', {name: 'New Subtask'})
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Show the parent tasks in the breadcrumb',
+	{tag: ['@LPD-114771']},
+	async ({apiHelpers, taskPage}) => {
+		const project = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				title: getRandomString(),
+			},
+			cmpProject
+		);
+
+		const parentTask = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+				title: getRandomString(),
+			},
+			cmpTask,
+			project.scopeKey
+		);
+
+		const subtask = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+				r_cmpTaskToCMPTasks_c_cmpTaskId: parentTask.id,
+				title: getRandomString(),
+			},
+			cmpTask,
+			project.scopeKey
+		);
+
+		const subSubtask = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+				r_cmpTaskToCMPTasks_c_cmpTaskId: subtask.id,
+				title: getRandomString(),
+			},
+			cmpTask,
+			project.scopeKey
+		);
+
+		await test.step('Show the path from the project to the item', async () => {
+			await taskPage.goto(subSubtask.id);
+
+			await taskPage.breadcrumb
+				.getByRole('button', {name: 'See full nested'})
+				.click();
+
+			await expect(taskPage.breadcrumb.getByRole('listitem')).toHaveText([
+				'Projects',
+				project.title,
+				parentTask.title,
+				subtask.title,
+				subSubtask.title,
+			]);
+		});
+
+		await test.step('Go to a parent task from the breadcrumb', async () => {
+			await taskPage.breadcrumb
+				.getByRole('link', {name: parentTask.title})
+				.click();
+
+			await taskPage.page.waitForURL(`**/e/task/*/${parentTask.id}`);
+
+			await expect(taskPage.breadcrumb.getByRole('listitem')).toHaveText([
+				'Projects',
+				project.title,
+				parentTask.title,
+			]);
+		});
+	}
+);
+
+test(
+	'Watch a subtask',
+	{tag: ['@LPD-114771']},
+	async ({apiHelpers, page, taskPage, tasksPage}) => {
+		const project = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				title: getRandomString(),
+			},
+			cmpProject
+		);
+
+		const parentTask = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+				title: getRandomString(),
+			},
+			cmpTask,
+			project.scopeKey
+		);
+
+		const subtask = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+				r_cmpTaskToCMPTasks_c_cmpTaskId: parentTask.id,
+				title: getRandomString(),
+			},
+			cmpTask,
+			project.scopeKey
+		);
+
+		await test.step('Show the task labels in the task header actions', async () => {
+			await taskPage.goto(parentTask.id);
+
+			await taskPage.openMoreActions();
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Watch Task'})
+			).toBeVisible();
+
+			await page.keyboard.press('Escape');
+		});
+
+		await test.step('Show the subtask labels in All Tasks', async () => {
+			await tasksPage.goto();
+
+			await tasksPage.allTasksTab.click();
+
+			await tasksPage
+				.getItem(subtask.title)
+				.getByRole('button', {name: `${subtask.title} Actions`})
+				.click();
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Watch Subtask'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('menuitem', {name: 'Watch Task'})
+			).toBeHidden();
+
+			await page.keyboard.press('Escape');
+		});
+
+		await test.step('Watch the subtask from the subtasks section', async () => {
+			await taskPage.goto(parentTask.id);
+
+			await taskPage.openSubtaskActions(subtask.title);
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Watch Task'})
+			).toBeHidden();
+
+			await page.getByRole('menuitem', {name: 'Watch Subtask'}).click();
+
+			await waitForAlert(page, 'Success');
+
+			await taskPage.openSubtaskActions(subtask.title);
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Stop Watching Subtask'})
+			).toBeVisible();
+
+			await page.keyboard.press('Escape');
+		});
+
+		await test.step('Stop watching the subtask from its header actions', async () => {
+			await taskPage.goto(subtask.id);
+
+			await taskPage.openMoreActions();
+
+			await page
+				.getByRole('menuitem', {name: 'Stop Watching Subtask'})
+				.click();
+
+			await waitForAlert(page, 'Success');
+
+			await taskPage.openMoreActions();
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Watch Subtask'})
+			).toBeVisible();
+		});
+	}
+);

@@ -244,7 +244,7 @@ export default function Breadcrumb({
 						)}
 					</div>
 				) : (
-					<ClayBreadcrumb className="p-0" items={breadcrumbItems} />
+					<ClayBreadcrumb className="px-0" items={breadcrumbItems} />
 				)}
 			</div>
 

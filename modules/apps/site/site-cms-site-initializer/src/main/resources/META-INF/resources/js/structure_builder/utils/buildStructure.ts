@@ -27,6 +27,10 @@ import getUuid from './getUuid';
 import isCustomObjectField from './isCustomObjectField';
 import isField from './isField';
 import isSystemFieldName from './isSystemFieldName';
+import {
+	REPEATABLE_GROUP_BOX_NAME_PREFIX,
+	isRepeatableGroup,
+} from './repeatableGroups';
 import sortChildren from './state/sortChildren';
 
 export default function buildStructure({
@@ -125,7 +129,9 @@ export function buildChildren({
 
 			children.set(relatedContent.uuid, relatedContent);
 		}
-		else if (isRepeatableGroup(objectRelationship, objectDefinitions)) {
+		else if (
+			isRepeatableGroupRelationship(objectRelationship, objectDefinitions)
+		) {
 			const repeatableGroup = buildRepeatableGroup({
 				ancestors: [
 					...ancestors,
@@ -207,6 +213,28 @@ function applyLayout({
 			.map((field) => [field.name, field])
 	);
 
+	const repeatableGroups = new Map(
+		Array.from(children.values())
+			.filter(isRepeatableGroup)
+			.map((repeatableGroup) => [
+				repeatableGroup.relationshipName,
+				repeatableGroup,
+			])
+	);
+
+	const getRepeatableGroup = (objectLayoutBox: ObjectLayoutBox) => {
+		const name =
+			objectLayoutBox.name?.[Liferay.ThemeDisplay.getDefaultLanguageId()];
+
+		if (!name?.startsWith(REPEATABLE_GROUP_BOX_NAME_PREFIX)) {
+			return undefined;
+		}
+
+		return repeatableGroups.get(
+			name.substring(REPEATABLE_GROUP_BOX_NAME_PREFIX.length)
+		);
+	};
+
 	const takeFields = (objectLayoutBox: ObjectLayoutBox, groupParent: Uuid) =>
 		objectLayoutBox.objectLayoutRows.flatMap((objectLayoutRow) =>
 			objectLayoutRow.objectLayoutColumns.flatMap(
@@ -238,7 +266,14 @@ function applyLayout({
 		const groupChildren: StructureChild[] = [];
 
 		for (const objectLayoutBox of objectLayoutTab.objectLayoutBoxes) {
-			if (objectLayoutBox.collapsable && objectLayoutBox.name) {
+			const repeatableGroup = getRepeatableGroup(objectLayoutBox);
+
+			if (repeatableGroup) {
+				nextChildren.delete(repeatableGroup.uuid);
+
+				groupChildren.push({...repeatableGroup, parent: uuid});
+			}
+			else if (objectLayoutBox.collapsable && objectLayoutBox.name) {
 				const nestedUuid = getUuid();
 
 				groupChildren.push(
@@ -600,7 +635,7 @@ export function getWorkflows(objectDefinition: ObjectDefinition) {
 	return workflows;
 }
 
-function isRepeatableGroup(
+function isRepeatableGroupRelationship(
 	objectRelationship: ObjectRelationship,
 	objectDefinitions: ObjectDefinitions
 ) {
@@ -643,7 +678,10 @@ function getRelatedContentObjectRelationships(
 				!(
 					objectDefinition.externalReferenceCode ===
 						mainObjectDefinition.externalReferenceCode &&
-					isRepeatableGroup(objectRelationship, objectDefinitions)
+					isRepeatableGroupRelationship(
+						objectRelationship,
+						objectDefinitions
+					)
 				)
 			) {
 				relationships.push(objectRelationship);

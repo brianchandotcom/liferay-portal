@@ -11,6 +11,10 @@ import {Action, State} from '../contexts/StateContext';
 import {Group, Structure} from '../types/Structure';
 import {getChildrenUuids} from './getChildrenUuids';
 import isLocked from './isLocked';
+import {
+	canContainRepeatableGroup,
+	hasRepeatableGroups,
+} from './repeatableGroups';
 
 export default async function handleUpdateGroup({
 	dispatch,
@@ -30,10 +34,14 @@ export default async function handleUpdateGroup({
 	if (isRepeatable !== undefined && group.isRepeatable !== isRepeatable) {
 		const uuids = Array.from(getChildrenUuids({root: group}));
 
-		if (isRepeatable && group.parent !== structure.uuid) {
+		if (
+			isRepeatable &&
+			(!canContainRepeatableGroup({structure, uuid: group.parent}) ||
+				hasRepeatableGroups(group.children))
+		) {
 			openToast({
 				message: Liferay.Language.get(
-					'a-group-can-only-be-repeatable-at-the-first-level'
+					'repeatable-groups-can-only-be-placed-at-the-first-level-or-inside-a-tab'
 				),
 				type: 'danger',
 			});

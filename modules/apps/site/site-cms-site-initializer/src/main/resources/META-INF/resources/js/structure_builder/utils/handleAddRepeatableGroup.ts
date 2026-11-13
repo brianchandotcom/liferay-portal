@@ -14,6 +14,7 @@ import {Uuid} from '../types/Uuid';
 import exceedsMaxNesting, {getMaxNesting} from './exceedsMaxNesting';
 import findChild from './findChild';
 import getUndeletableChildren from './getUndeletableChildren';
+import {canContainRepeatableGroup} from './repeatableGroups';
 
 export default async function handleAddRepeatableGroup({
 	dispatch,
@@ -91,6 +92,17 @@ export default async function handleAddRepeatableGroup({
 	}
 
 	const [parent] = parents;
+
+	if (!canContainRepeatableGroup({structure, uuid: parent.uuid})) {
+		openToast({
+			message: Liferay.Language.get(
+				'repeatable-groups-can-only-be-placed-at-the-first-level-or-inside-a-tab'
+			),
+			type: 'danger',
+		});
+
+		return;
+	}
 
 	if (
 		exceedsMaxNesting({

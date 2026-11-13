@@ -5,7 +5,7 @@
 
 import {ObjectRelationship} from '../../common/types/ObjectDefinition';
 import {RelatedContent, RepeatableGroup, Structure} from '../types/Structure';
-import isRepeatableGroup from './isRepeatableGroup';
+import {isRepeatableGroup} from './repeatableGroups';
 
 export default function buildObjectRelationships({
 	children,
@@ -43,6 +43,11 @@ function getRelatedContents(
 		if (isRepeatableGroup(child)) {
 			relatedContents.push(
 				...getRelatedContents(child.children, child.erc)
+			);
+		}
+		else if (child.type === 'group') {
+			relatedContents.push(
+				...getRelatedContents(child.children, parentERC)
 			);
 		}
 		else if (child.type === 'related-content') {

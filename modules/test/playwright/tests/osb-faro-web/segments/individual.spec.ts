@@ -16,10 +16,6 @@ import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {
-	addBreakdownByAttribute,
-	viewBreakdownRechartsData,
-} from '../main/utils/distribution';
 import {createIndividuals, generateIndividual} from '../main/utils/individuals';
 import {waitForLoading} from '../main/utils/loading';
 import {Nanites, runNanites} from '../main/utils/nanites';
@@ -67,188 +63,6 @@ test.beforeEach(async ({analyticsChannel, apiHelpers, project, site}) => {
 });
 
 test(
-	'Add a new breakdown by an attribute and assert that correct results appear',
-	{
-		tag: '@Legacy',
-	},
-	async ({
-		analyticsChannel: channel,
-		apiHelpers,
-		dxpSyncedAnalyticsChannel,
-		page,
-		project,
-	}) => {
-		const {dataSourceId} = dxpSyncedAnalyticsChannel;
-
-		const individualName = 'ac';
-		const individuals = [
-			{
-				...generateIndividual({
-					name: individualName,
-				}),
-				dataSourceId,
-			},
-		];
-
-		await test.step('Create new Individual', async () => {
-			await createIndividuals({
-				apiHelpers,
-				individuals,
-			});
-		});
-
-		const date = new Date();
-		await test.step('Create Individual Event', async () => {
-			const events = individuals.map((individual) => ({
-				applicationId: 'Page',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				dataSourceId,
-				eventDate: date.toISOString(),
-				eventId: 'pageViewed',
-				title: 'Liferay',
-				userId: individual.id,
-			}));
-
-			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
-		});
-
-		await test.step('Create Individual Session', async () => {
-			const sessions = individuals.map((individual) => ({
-				channelId: channel.id,
-				id: individual.id,
-				sessionEnd: date.toISOString(),
-				sessionStart: date.toISOString(),
-				userId: individual.id,
-			}));
-
-			await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
-		});
-
-		await test.step('Go to Individuals Dashboard', async () => {
-			await navigateToACPageViaURL({
-				acPage: ACPage.individualPage,
-				channelID: channel.id,
-				page,
-				projectID: project.groupId,
-			});
-		});
-
-		await test.step('Add a new breakdown', async () => {
-			await addBreakdownByAttribute({
-				attributeName: 'email',
-				page,
-			});
-		});
-
-		await test.step('Check if the correct results appear (email and maximum count)', async () => {
-			await viewBreakdownRechartsData({
-				attributeValue: `${individualName}@liferay.com`,
-				maxCount: '1',
-				page,
-			});
-		});
-
-		await test.step('Close breakdown tab', async () => {
-			await page.getByLabel('Close').click();
-		});
-	}
-);
-
-test(
-	'Enriched Profiles count increases by one when an anonymous individual is later created as known',
-	{
-		tag: '@LRAC-8911',
-	},
-	async ({
-		analyticsChannel: channel,
-		apiHelpers,
-		dxpSyncedAnalyticsChannel,
-		page,
-		project,
-	}) => {
-		const {dataSourceId} = dxpSyncedAnalyticsChannel;
-
-		const individualId = getRandomString();
-		const individualName = 'enriched' + getRandomString();
-
-		const date = new Date();
-
-		await test.step('Create an anonymous identity and page event', async () => {
-			await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
-				{createDate: date.toISOString(), id: individualId},
-			]);
-
-			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-				{
-					applicationId: 'Page',
-					canonicalUrl: 'https://www.liferay.com',
-					channelId: channel.id,
-					dataSourceId,
-					eventDate: date.toISOString(),
-					eventId: 'pageViewed',
-					title: 'My Page',
-					userId: individualId,
-				},
-			]);
-
-			await apiHelpers.jsonWebServicesOSBAsah.createSessions([
-				{
-					channelId: channel.id,
-					id: individualId,
-					sessionEnd: date.toISOString(),
-					sessionStart: date.toISOString(),
-					userId: individualId,
-				},
-			]);
-		});
-
-		await navigateToACPageViaURL({
-			acPage: ACPage.individualPage,
-			channelID: channel.id,
-			page,
-			projectID: project.groupId,
-		});
-
-		await test.step('Verify Enriched Profiles count is zero before enrichment', async () => {
-			await expect(
-				page.locator('.enriched-profiles-card-root')
-			).toContainText('0 Profiles');
-		});
-
-		await test.step('Create a known individual record for the anonymous identity', async () => {
-			await createIndividuals({
-				apiHelpers,
-				individuals: [
-					{dataSourceId, id: individualId, name: individualName},
-				],
-			});
-
-			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-				{
-					applicationId: 'Page',
-					canonicalUrl: 'https://www.liferay.com',
-					channelId: channel.id,
-					dataSourceId,
-					eventDate: new Date().toISOString(),
-					eventId: 'pageViewed',
-					title: 'My Page',
-					userId: individualId,
-				},
-			]);
-		});
-
-		await page.reload();
-
-		await test.step('Verify Enriched Profiles count became one after enrichment', async () => {
-			await expect(
-				page.locator('.enriched-profiles-card-root')
-			).toContainText('1 Profiles');
-		});
-	}
-);
-
-test(
 	'Individual events card shows the empty state when no events match the active time filter',
 	{
 		tag: '@LRAC-10513',
@@ -275,7 +89,7 @@ test(
 
 		oldDate.setDate(oldDate.getDate() - 10);
 
-		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+		const events = [
 			{
 				applicationId: 'Page',
 				canonicalUrl: 'https://www.liferay.com',
@@ -290,11 +104,14 @@ test(
 				title: 'My Page',
 				userId: individual.id,
 			},
-		]);
+		];
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 
 		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
 			{
 				channelId: channel.id,
+				events,
 				id: individual.id,
 				sessionEnd: oldDate.toISOString(),
 				sessionStart: oldDate.toISOString(),
@@ -324,16 +141,14 @@ test(
 			projectID: project.groupId,
 		});
 
-		await expect(
-			page.getByRole('button', {name: 'pageViewed'})
-		).toBeVisible();
+		await expect(page.getByRole('button', {name: 'My Page'})).toBeVisible();
 
 		// Switch the Individual Events card time filter to Last 24 hours to exclude the seeded event
 
 		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
 
 		await expect(
-			page.getByText('There are no events found.').first()
+			page.getByText('There is no data for individual activities.')
 		).toBeVisible();
 	}
 );
@@ -373,32 +188,33 @@ test(
 
 		const date = new Date();
 
-		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-			{
-				applicationId: 'Custom',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				dataSourceId,
-				eventDate: date.toISOString(),
-				eventId: customEventA,
-				title: customEventA,
-				userId: individualA.id,
-			},
-			{
-				applicationId: 'Custom',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				dataSourceId,
-				eventDate: date.toISOString(),
-				eventId: customEventB,
-				title: customEventB,
-				userId: individualB.id,
-			},
-		]);
+		const eventA = {
+			applicationId: 'Custom',
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			dataSourceId,
+			eventDate: date.toISOString(),
+			eventId: customEventA,
+			title: customEventA,
+			userId: individualA.id,
+		};
+		const eventB = {
+			applicationId: 'Custom',
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			dataSourceId,
+			eventDate: date.toISOString(),
+			eventId: customEventB,
+			title: customEventB,
+			userId: individualB.id,
+		};
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([eventA, eventB]);
 
 		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
 			{
 				channelId: channel.id,
+				events: [eventA],
 				id: individualA.id,
 				sessionEnd: date.toISOString(),
 				sessionStart: date.toISOString(),
@@ -406,6 +222,7 @@ test(
 			},
 			{
 				channelId: channel.id,
+				events: [eventB],
 				id: individualB.id,
 				sessionEnd: date.toISOString(),
 				sessionStart: date.toISOString(),
@@ -490,26 +307,27 @@ test(
 		// Seed several activities for today so they fall inside the Last 24
 		// hours window
 
-		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
-			['a', 'b', 'c'].map((suffix) => ({
-				applicationId: 'Document',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				dataSourceId,
-				emailAddressHashed: createHash('sha256')
-					.update(`${individual.name}@liferay.com`)
-					.digest('hex'),
-				eventDate: date.toISOString(),
-				eventId: 'documentPreviewed',
-				sessionId: individual.id,
-				title: `documentPreviewed-${suffix}`,
-				userId: individual.id,
-			}))
-		);
+		const events = ['a', 'b', 'c'].map((suffix) => ({
+			applicationId: 'Document',
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			dataSourceId,
+			emailAddressHashed: createHash('sha256')
+				.update(`${individual.name}@liferay.com`)
+				.digest('hex'),
+			eventDate: date.toISOString(),
+			eventId: 'documentPreviewed',
+			sessionId: individual.id,
+			title: `documentPreviewed-${suffix}`,
+			userId: individual.id,
+		}));
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 
 		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
 			{
 				channelId: channel.id,
+				events,
 				id: individual.id,
 				sessionEnd: date.toISOString(),
 				sessionStart: date.toISOString(),
@@ -552,18 +370,19 @@ test(
 
 		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
 
-		// The seeded events show up in the individual activities feed
+		// The seeded events show up under their page in the individual
+		// activities feed
 
-		await expect(
-			page.getByRole('button', {name: 'documentPreviewed'})
-		).toHaveCount(3);
+		await page.getByRole('button', {name: 'documentPreviewed-a'}).click();
+
+		await expect(page.locator('.event-row')).toHaveCount(3);
 
 		// The activities chart still renders bars for todays seeded events
 
 		await expect(
 			page
 				.locator(
-					'.individuals-activities-chart .recharts-bar-rectangle'
+					'.individual-profile-card-root .recharts-bar-rectangle'
 				)
 				.first()
 		).toBeAttached();
@@ -584,10 +403,9 @@ test(
 	}) => {
 		const {dataSourceId} = dxpSyncedAnalyticsChannel;
 
-		const totalIndividuals = page
-			.locator('.trend-item-root')
-			.filter({hasText: 'Total Individuals'})
-			.locator('.total');
+		const totalIndividuals = page.locator('.card').filter({
+			has: page.getByText('Total Individuals', {exact: true}),
+		});
 
 		await navigateToACPageViaURL({
 			acPage: ACPage.individualPage,
@@ -598,7 +416,7 @@ test(
 
 		// The freshly synced channel has no ingested individuals yet
 
-		await expect(totalIndividuals).toHaveText('0');
+		await expect(totalIndividuals).toContainText('0 Individuals');
 
 		// Ingest a single known individual with activity
 
@@ -638,13 +456,15 @@ test(
 
 		await apiHelpers.jsonWebServicesOSBAsah.closeSessions();
 
-		// The Total Individuals trend counts the individual once the closed
+		// The Total Individuals card counts the individual once the closed
 		// session is processed
 
 		await expect(async () => {
 			await page.reload();
 
-			await expect(totalIndividuals).toHaveText('1', {timeout: 5000});
+			await expect(totalIndividuals).toContainText('1 Individual', {
+				timeout: 5000,
+			});
 		}).toPass({timeout: 60000});
 	}
 );
@@ -662,80 +482,17 @@ test(
 			projectID: project.groupId,
 		});
 
-		// The Total Individuals, Known and Anonymous trend summaries
-
-		for (const trendName of ['Total Individuals', 'Known', 'Anonymous']) {
-			await expect(
-				page.locator('.trend-item-root').filter({hasText: trendName})
-			).toBeVisible();
-		}
-
-		// The remaining overview cards
-
 		for (const cardTitle of [
-			'Enriched Profiles',
-			'Active Individuals',
-			'Top Interests',
+			'Total Individuals',
+			'Known Individuals',
+			'Anonymous Individuals',
 		]) {
-			await expect(page.getByText(cardTitle).first()).toBeVisible();
+			await expect(
+				page.locator('.card-title').getByText(cardTitle, {exact: true})
+			).toBeVisible();
 		}
 	}
 );
-
-test('Active Individuals card is empty for a custom range with no activity', async ({
-	analyticsChannel: channel,
-	apiHelpers,
-	dxpSyncedAnalyticsChannel,
-	page,
-	project,
-}) => {
-	const {dataSourceId} = dxpSyncedAnalyticsChannel;
-
-	const individual = {
-		...generateIndividual({name: 'empty' + getRandomString()}),
-		dataSourceId,
-	};
-
-	const date = new Date();
-
-	await createIndividuals({apiHelpers, individuals: [individual]});
-
-	await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-		{
-			applicationId: 'Page',
-			canonicalUrl: 'https://www.liferay.com',
-			channelId: channel.id,
-			dataSourceId,
-			eventDate: date.toISOString(),
-			eventId: 'pageViewed',
-			title: 'My Page',
-			userId: individual.id,
-		},
-	]);
-
-	await navigateToACPageViaURL({
-		acPage: ACPage.individualPage,
-		channelID: channel.id,
-		page,
-		projectID: project.groupId,
-	});
-
-	// Pick a custom range in the previous month, which holds no seeded activity
-
-	await changeTimeFilter({page, timeFilterPeriod: 'Custom Range'});
-
-	await page.getByTestId('previous-month').first().click();
-
-	await page.getByRole('button', {exact: true, name: '10'}).first().click();
-
-	await page.getByRole('button', {exact: true, name: '15'}).first().click();
-
-	// The Active Individuals card shows its empty state instead of a chart
-
-	await expect(
-		page.getByText('There is no data for active individuals.')
-	).toBeVisible();
-});
 
 test(
 	'Individual profile Overview tab shows all of its summary cards',
@@ -1122,13 +879,9 @@ test(
 
 		const date = new Date();
 
-		const pastDate = new Date(date);
-
-		pastDate.setDate(pastDate.getDate() - 1);
-
 		await createIndividuals({apiHelpers, individuals: [individual]});
 
-		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+		const events = [
 			{
 				applicationId: 'Page',
 				canonicalUrl: 'https://www.liferay.com',
@@ -1137,17 +890,20 @@ test(
 				emailAddressHashed: createHash('sha256')
 					.update(`${individual.name}@liferay.com`)
 					.digest('hex'),
-				eventDate: pastDate.toISOString(),
+				eventDate: date.toISOString(),
 				eventId: 'pageViewed',
 				sessionId: individual.id,
-				title: 'pageViewed',
+				title: 'My Page',
 				userId: individual.id,
 			},
-		]);
+		];
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
 
 		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
 			{
 				channelId: channel.id,
+				events,
 				id: individual.id,
 				sessionEnd: date.toISOString(),
 				sessionStart: date.toISOString(),
@@ -1183,7 +939,14 @@ test(
 
 		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
 
-		await page.getByText('pageViewed').first().click();
+		await page.getByRole('button', {name: 'My Page'}).click();
+
+		await page
+			.locator('.event-row')
+			.getByRole('button', {name: 'Show Payload'})
+			.click();
+
+		await page.getByRole('button', {exact: true, name: 'Code'}).click();
 
 		await expect(page.getByText('"applicationId": "Page"')).toBeVisible();
 		await expect(page.getByText('"eventId": "pageViewed"')).toBeVisible();

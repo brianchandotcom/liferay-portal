@@ -1,9 +1,14 @@
 {
 	"devDependencies": {
-		"@playwright/test": "1.55.1"
+		"@playwright/test": "1.55.1",
+		"@types/node": "24.19.2",
+		"typescript": "5.7.2"
 	},
 	"name": "playwright-tests",
 	"private": true,
+	"scripts": {
+		"typecheck": "tsc"
+	},
 	"version": "0.0.0",
 	"workspaces": [
 		"liferay"

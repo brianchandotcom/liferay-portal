@@ -18,6 +18,8 @@ Starting Liferay takes several minutes. To keep it between runs, run `liferay/st
 
 Each run writes an HTML report to `playwright-report` and a JUnit report to `test-results/TEST-playwright.xml` for CI.
 
+Run `yarn typecheck` to typecheck the tests, `liferay/core`, and the configuration.
+
 ## Configuration
 
 The tests run against `PORTAL_URL`, which defaults to `http://localhost:8080`, and sign in with `LIFERAY_USER_PASSWORD`, which defaults to `test`. To change them, set them in `playwright/.env.local`.
@@ -32,6 +34,7 @@ Everything in `playwright/liferay` is synced from the Liferay Sample Workspace a
 playwright
 ├── package.json             The Playwright version and the packages the tests use
 ├── playwright.config.ts     How the tests run
+├── tsconfig.json
 ├── yarn.lock
 ├── tests                    The tests
 └── liferay                  Synced; do not edit
@@ -40,7 +43,8 @@ playwright
     ├── globalSetup.ts       Starts Liferay when it is not running
     ├── package.json         The packages core needs
     ├── start.sh             Starts Liferay for the tests
-    └── stop.sh              Removes that Liferay and its data
+    ├── stop.sh              Removes that Liferay and its data
+    └── tsconfig.base.json   The defaults tsconfig.json starts from
 ```
 
 When Playwright is first synced into a workspace, the files outside `liferay` start as copies of the Liferay Sample Workspace's. Later syncs never change them.
@@ -65,6 +69,7 @@ Change `playwright/package.json`:
 {
 	"devDependencies": {
 		"@playwright/test": "1.55.1",
+		"@types/node": "24.19.2",
 		"typescript": "5.7.2"
 	},
 	"name": "playwright-tests",

@@ -68,6 +68,7 @@ function refresh_workspaces {
 			"${PWD}/liferay-sample-workspace/playwright/.gitignore" \
 			"${PWD}/liferay-sample-workspace/playwright/package.json" \
 			"${PWD}/liferay-sample-workspace/playwright/playwright.config.ts" \
+			"${PWD}/liferay-sample-workspace/playwright/tsconfig.json" \
 			"${PWD}/liferay-sample-workspace/playwright/yarn.lock" \
 			"${workspace_dir}/playwright/"
 	done

@@ -1188,12 +1188,12 @@ public class ExpandoValueLocalServiceImpl
 				table.getTableId(), columnNames.toArray(new String[0]));
 		}
 
+		if (columns.isEmpty()) {
+			return new HashMap<>();
+		}
+
 		Map<String, Serializable> attributeValues = new HashMap<>(
 			(int)(columnNames.size() * 1.4));
-
-		if (columns.isEmpty()) {
-			return attributeValues;
-		}
 
 		Map<Long, ExpandoValue> values = new HashMap<>();
 

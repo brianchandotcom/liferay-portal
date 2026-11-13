@@ -39,6 +39,7 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTa
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.annotation.Generated;
 
@@ -482,6 +483,28 @@ public class Mutation {
 			channelResource ->
 				channelResource.putChannelByExternalReferenceCode(
 					externalReferenceCode, channel));
+	}
+
+	@GraphQLField(
+		description = "Replaces the role permissions granted on the channel identified by ID. Roles missing from the request lose their individual permissions. Requires the PERMISSIONS action on the channel."
+	)
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateChannelPermissionsPage(
+				@GraphQLName("channelId") Long channelId,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_channelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			channelResource -> {
+				Page paginationPage = channelResource.putChannelPermissionsPage(
+					channelId, permissions);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -1461,4 +1484,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1954632304
+// LIFERAY-REST-BUILDER-HASH:-1594843883

@@ -11,11 +11,14 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.exportimport.constants.ExportImportConstants;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.AccountAddressChannel;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.internal.odata.entity.v1_0.ChannelEntityModel;
@@ -40,6 +43,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,10 +54,15 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/channel.properties",
-	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = ChannelResource.class
+	property = {
+		"export.import.vulcan.batch.engine.task.item.delegate=true",
+		"nested.field.support=true"
+	},
+	scope = ServiceScope.PROTOTYPE, service = ChannelResource.class
 )
-public class ChannelResourceImpl extends BaseChannelResourceImpl {
+public class ChannelResourceImpl
+	extends BaseChannelResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<Channel> {
 
 	@Override
 	public void deleteChannel(Long channelId) throws Exception {
@@ -71,7 +80,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		if (commerceChannel == null) {
 			throw new NoSuchChannelException(
-				"Unable to find product with external reference code " +
+				"Unable to find channel with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -92,56 +101,50 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	}
 
 	@Override
-	public Channel getChannel(Long channelId) throws Exception {
-		CommerceChannel commerceChannel =
-			_commerceChannelService.fetchCommerceChannel(channelId);
-
-		if (commerceChannel == null) {
-			throw new NoSuchChannelException();
-		}
-
-		return _toChannel(commerceChannel);
-	}
-
-	@Override
-	public Channel getChannelByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
-
-		CommerceChannel commerceChannel =
-			_commerceChannelService.fetchCommerceChannelByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (commerceChannel == null) {
-			throw new NoSuchChannelException(
-				"Unable to find product with external reference code " +
-					externalReferenceCode);
-		}
-
-		return _toChannel(commerceChannel);
-	}
-
-	@Override
-	public Page<Channel> getChannelsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		return SearchUtil.search(
-			Collections.emptyMap(),
-			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CommerceChannel.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
-			sorts,
-			document -> _toChannel(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
-	}
-
-	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor<CommerceChannel> getExportImportDescriptor() {
+		return new ExportImportDescriptor<>() {
+
+			@Override
+			public String getKey() {
+				return ChannelResourceImpl.class.getName();
+			}
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "channels";
+			}
+
+			@Override
+			public Class<CommerceChannel> getModelClass() {
+				return CommerceChannel.class;
+			}
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of("creator");
+			}
+
+			@Override
+			public String getPortletId() {
+				return CPPortletKeys.COMMERCE_CHANNELS;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return ExportImportConstants.SECTION_KEY_STORE_MANAGEMENT;
+			}
+
+		};
 	}
 
 	@Override
@@ -196,7 +199,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		if (commerceChannel == null) {
 			throw new NoSuchChannelException(
-				"Unable to find product with external reference code " +
+				"Unable to find channel with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -235,7 +238,55 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	}
 
 	@Override
-	public Channel postChannel(Channel channel) throws Exception {
+	protected Channel doGetChannel(Long channelId) throws Exception {
+		CommerceChannel commerceChannel =
+			_commerceChannelService.fetchCommerceChannel(channelId);
+
+		if (commerceChannel == null) {
+			throw new NoSuchChannelException();
+		}
+
+		return _toChannel(commerceChannel);
+	}
+
+	@Override
+	protected Channel doGetChannelByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.fetchCommerceChannelByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceChannel == null) {
+			throw new NoSuchChannelException(
+				"Unable to find channel with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toChannel(commerceChannel);
+	}
+
+	@Override
+	protected Page<Channel> doGetChannelsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			CommerceChannel.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			sorts,
+			document -> _toChannel(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	protected Channel doPostChannel(Channel channel) throws Exception {
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), channel.getCurrencyCode(),
@@ -253,14 +304,14 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	}
 
 	@Override
-	public Channel putChannel(Long channelId, Channel channel)
+	protected Channel doPutChannel(Long channelId, Channel channel)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
 			_commerceChannelService.fetchCommerceChannel(channelId);
 
 		if (commerceChannel == null) {
-			return postChannel(channel);
+			return doPostChannel(channel);
 		}
 
 		CommerceCurrency commerceCurrency =
@@ -283,7 +334,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	}
 
 	@Override
-	public Channel putChannelByExternalReferenceCode(
+	protected Channel doPutChannelByExternalReferenceCode(
 			String externalReferenceCode, Channel channel)
 		throws Exception {
 
@@ -313,6 +364,16 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 				channel.getType(), typeSettingsUnicodeProperties,
 				commerceCurrency.getCode(),
 				_serviceContextHelper.getServiceContext()));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) {
+		return 0L;
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return CommerceChannel.class.getName();
 	}
 
 	private long _getAccountEntryId(Channel channel, long defaultAccountEntryId)

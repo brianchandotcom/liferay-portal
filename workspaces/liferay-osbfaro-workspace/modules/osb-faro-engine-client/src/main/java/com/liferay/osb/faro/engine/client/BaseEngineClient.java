@@ -18,7 +18,6 @@ import com.liferay.osb.faro.engine.client.http.client.CacheClientHttpRequestInte
 import com.liferay.osb.faro.engine.client.http.client.ClientHttpRequestFactoryUtil;
 import com.liferay.osb.faro.engine.client.http.client.LoggingClientHttpRequestInterceptor;
 import com.liferay.osb.faro.engine.client.http.client.OriginClientHttpRequestInterceptor;
-import com.liferay.osb.faro.engine.client.http.client.SSLHandshakeExceptionHttpRequestInterceptor;
 import com.liferay.osb.faro.engine.client.mixin.ResourceMixin;
 import com.liferay.osb.faro.engine.client.model.BulkRequest;
 import com.liferay.osb.faro.engine.client.model.Rels;
@@ -88,6 +87,13 @@ public abstract class BaseEngineClient {
 
 	@Activate
 	protected void activate() {
+		_backgroundHttpComponentsClientHttpRequestFactory =
+			ClientHttpRequestFactoryUtil.
+				createHttpComponentsClientHttpRequestFactory(
+					FaroPropsValues.OSB_ASAH_BACKEND_CONNECT_TIMEOUT_MILLIS,
+					FaroPropsValues.OSB_ASAH_BACKEND_MAX_CONNECTIONS,
+					FaroPropsValues.
+						OSB_ASAH_BACKEND_BACKGROUND_RESPONSE_TIMEOUT_MILLIS);
 		_httpComponentsClientHttpRequestFactory =
 			ClientHttpRequestFactoryUtil.
 				createHttpComponentsClientHttpRequestFactory(
@@ -220,6 +226,7 @@ public abstract class BaseEngineClient {
 
 	@Deactivate
 	protected void deactivate() throws Exception {
+		_backgroundHttpComponentsClientHttpRequestFactory.destroy();
 		_httpComponentsClientHttpRequestFactory.destroy();
 	}
 
@@ -339,6 +346,15 @@ public abstract class BaseEngineClient {
 		return responseEntity.getBody();
 	}
 
+	protected RestTemplate getBackgroundRestTemplate(FaroProject faroProject) {
+		RestTemplate restTemplate = getRestTemplate(faroProject);
+
+		restTemplate.setRequestFactory(
+			_backgroundHttpComponentsClientHttpRequestFactory);
+
+		return restTemplate;
+	}
+
 	protected Cache getCache() {
 		if (!FaroThreadLocal.isCacheEnabled()) {
 			return null;
@@ -402,8 +418,6 @@ public abstract class BaseEngineClient {
 			new LoggingClientHttpRequestInterceptor());
 		clientHttpRequestInterceptors.add(
 			new OriginClientHttpRequestInterceptor());
-		clientHttpRequestInterceptors.add(
-			new SSLHandshakeExceptionHttpRequestInterceptor());
 
 		restTemplate.setInterceptors(clientHttpRequestInterceptors);
 
@@ -421,14 +435,15 @@ public abstract class BaseEngineClient {
 
 		restTemplate.setMessageConverters(httpMessageConverters);
 
-		if (FaroThreadLocal.getOrigin() != null) {
+		if ((FaroThreadLocal.getFaroRequestAudit() != null) ||
+			(FaroThreadLocal.getOrigin() != null)) {
+
 			restTemplate.setRequestFactory(
 				_httpComponentsClientHttpRequestFactory);
 		}
 		else {
 			restTemplate.setRequestFactory(
-				ClientHttpRequestFactoryUtil.
-					createHttpComponentsClientHttpRequestFactory());
+				_backgroundHttpComponentsClientHttpRequestFactory);
 		}
 
 		restTemplate.setUriTemplateHandler(new UriBuilderFactory());
@@ -729,6 +744,8 @@ public abstract class BaseEngineClient {
 	private static final Map<String, String> _urlPaths =
 		new ConcurrentHashMap<>();
 
+	private HttpComponentsClientHttpRequestFactory
+		_backgroundHttpComponentsClientHttpRequestFactory;
 	private String _engineURL;
 	private HttpComponentsClientHttpRequestFactory
 		_httpComponentsClientHttpRequestFactory;

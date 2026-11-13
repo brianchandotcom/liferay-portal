@@ -121,7 +121,7 @@ public class JSResolveModulesServletTest {
 	}
 
 	private MockHttpServletResponse _service(
-			Long maxRequestLength, boolean post, String queryString)
+			Long maxRequestLength, boolean post, String requestString)
 		throws Exception {
 
 		Mockito.clearInvocations(_browserModulesResolver);
@@ -151,12 +151,12 @@ public class JSResolveModulesServletTest {
 
 		if (post) {
 			mockHttpServletRequest.setContent(
-				queryString.getBytes(StandardCharsets.UTF_8));
+				requestString.getBytes(StandardCharsets.UTF_8));
 		}
 		else {
 			mockHttpServletRequest.setParameters(
-				HttpComponentsUtil.getParameterMap(queryString));
-			mockHttpServletRequest.setQueryString(queryString);
+				HttpComponentsUtil.getParameterMap(requestString));
+			mockHttpServletRequest.setQueryString(requestString);
 		}
 
 		MockHttpServletResponse mockHttpServletResponse =

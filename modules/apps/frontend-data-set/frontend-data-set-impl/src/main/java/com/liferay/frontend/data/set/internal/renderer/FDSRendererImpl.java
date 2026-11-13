@@ -160,7 +160,8 @@ public class FDSRendererImpl implements FDSRenderer {
 						String additionalAPIURLParameters =
 							fdsSerializer.serializeAdditionalAPIURLParameters(
 								fdsName, httpServletRequest, true,
-								(JSONObject)props.get("tokenResolutions"));
+								(JSONObject)props.get(
+									"apiURLTokenResolutions"));
 
 						if (Validator.isNull(additionalAPIURLParameters)) {
 							return null;
@@ -173,7 +174,7 @@ public class FDSRendererImpl implements FDSRenderer {
 					() -> {
 						String apiURL = fdsSerializer.serializeAPIURL(
 							fdsName, httpServletRequest, true,
-							(JSONObject)props.get("tokenResolutions"));
+							(JSONObject)props.get("apiURLTokenResolutions"));
 
 						if (Validator.isNull(apiURL)) {
 							return null;
@@ -216,7 +217,7 @@ public class FDSRendererImpl implements FDSRenderer {
 							fdsSerializer.serializeFilters(
 								fdsName, httpServletRequest,
 								(Map<String, JSONObject>)props.get(
-									"selectionFilterTokenResolutions"));
+									"selectionFilterAPIURLTokenResolutions"));
 
 						if (JSONUtil.isEmpty(filtersJSONArray)) {
 							return null;

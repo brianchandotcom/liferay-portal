@@ -31,6 +31,7 @@ playwright
 ├── yarn.lock
 ├── tests                    The tests
 └── liferay                  Synced; do not edit
+    ├── baseConfig.ts        The defaults playwright.config.ts starts from
     ├── core                 A copy of modules/test/playwright/core from Liferay Portal
     ├── globalSetup.ts       Starts Liferay when it is not running
     └── package.json         The packages core needs
@@ -75,3 +76,20 @@ Change `playwright/package.json`:
 Keep `"workspaces": ["liferay"]`. It adds the packages that `liferay/core` needs, which `liferay/package.json` lists and which change along with `liferay/core`. That file never lists `@playwright/test`, so the Playwright version is always this workspace's choice.
 
 Run `yarn install` after a change, and commit `yarn.lock`.
+
+## Changing How the Tests Run
+
+Change `playwright/playwright.config.ts`. It spreads `baseConfig` and then sets what this workspace needs, for example more workers or video on failure:
+
+```typescript
+export default defineConfig({
+	...baseConfig,
+	use: {
+		...baseConfig.use,
+		video: 'retain-on-failure',
+	},
+	workers: process.env.CI ? 2 : undefined,
+});
+```
+
+Keep `globalSetup` from `baseConfig`. It starts Liferay when it is not running.

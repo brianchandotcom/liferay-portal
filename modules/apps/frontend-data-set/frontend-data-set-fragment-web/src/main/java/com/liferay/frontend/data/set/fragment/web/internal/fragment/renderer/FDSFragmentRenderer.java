@@ -307,10 +307,19 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 				_fdsRenderer.render(
 					HashMapBuilder.<String, Object>put(
+						"apiURLTokenResolutions",
+						() -> {
+							if (hasTokens) {
+								return fdsAPIURLTokenResolutionsJSONObject;
+							}
+
+							return null;
+						}
+					).put(
 						"namespace",
 						fragmentRendererContext.getFragmentElementId()
 					).put(
-						"selectionFilterTokenResolutions",
+						"selectionFilterAPIURLTokenResolutions",
 						() -> {
 							if (selectionFilterTokenResolutionsJSONObjects.
 									isEmpty()) {
@@ -322,15 +331,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						}
 					).put(
 						"style", "fluid"
-					).put(
-						"tokenResolutions",
-						() -> {
-							if (hasTokens) {
-								return fdsAPIURLTokenResolutionsJSONObject;
-							}
-
-							return null;
-						}
 					).build(),
 					componentId, externalReferenceCode, httpServletRequest,
 					httpServletResponse, true, null, printWriter);

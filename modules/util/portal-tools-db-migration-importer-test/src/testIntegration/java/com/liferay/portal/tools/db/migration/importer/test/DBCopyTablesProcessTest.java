@@ -7,6 +7,8 @@ package com.liferay.portal.tools.db.migration.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
@@ -22,10 +24,13 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.migration.importer.DBCopyTablesProcess;
 import com.liferay.portal.tools.db.migration.importer.jdbc.AutoBatchPreparedStatementUtil;
+
+import java.io.PrintStream;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -107,7 +112,7 @@ public class DBCopyTablesProcessTest {
 
 									return databaseMetaData.getColumns(
 										catalog, schemaPattern,
-										"%" + _sourceTableName,
+										"%" + _sourceTableName + "%",
 										columnNamePattern);
 								}
 
@@ -162,6 +167,189 @@ public class DBCopyTablesProcessTest {
 				"drop table if exists \"" +
 					StringUtil.toLowerCase(_sourceTableName) + "\"");
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-110216")
+	public void testAddCustomPrimaryKeysAndIndexes() throws Exception {
+		_sourceDB.runSQL(
+			"create table TestTable (id INTEGER not null primary key, " +
+				"charColumn VARCHAR(75), longColumn VARCHAR(700), testColumn " +
+					"VARCHAR(75), textColumn VARCHAR(75))");
+
+		_sourceDB.runSQL(
+			new String[] {
+				"create index IX_" + RandomTestUtil.randomString(61) +
+					" on TestTable (textColumn, charColumn)",
+				"create index IX_LEFT_MATCH on TestTable (id, testColumn)",
+				"create index IX_LONG_COLUMN on TestTable (longColumn)",
+				"create index TestTable on TestTable (charColumn)",
+				"create unique index IX_DUPLICATE on TestTable (testColumn)",
+				"create unique index IX_UNIQUE on TestTable (testColumn, id)",
+				"create unique index IX_UNIQUE_MISMATCH on TestTable " +
+					"(charColumn, id)"
+			});
+
+		List<String> expectedIndexDefinitions = ListUtil.fromArray(
+			"CREATE INDEX ix_906fecd9 ON testtable USING btree (textcolumn, " +
+				"charcolumn)",
+			"CREATE INDEX ix_e1d669e2 ON testtable USING btree (charcolumn)",
+			"CREATE INDEX ix_left_match ON testtable USING btree (id, " +
+				"\"left\"((testcolumn)::text, 676))",
+			"CREATE INDEX ix_long_column ON testtable USING btree " +
+				"(\"left\"((longcolumn)::text, 676))",
+			"CREATE INDEX ix_unique_mismatch ON testtable USING btree " +
+				"(charcolumn, id)",
+			"CREATE UNIQUE INDEX ix_unique ON testtable USING btree " +
+				"(testcolumn, id)",
+			"CREATE UNIQUE INDEX testtable_pkey ON testtable USING btree (id)");
+		List<String> expectedMessages = ListUtil.fromArray(
+			"created index ix_long_column on table testtable in the default " +
+				"schema as a btree index on (left(\"longcolumn\", 676))",
+			"unable to create unique index ix_unique_mismatch on table " +
+				"testtable in the default schema because index " +
+					"ix_unique_mismatch already exists on the same columns");
+
+		DBType dbType = _sourceDB.getDBType();
+
+		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
+			_sourceDB.runSQL(
+				"create fulltext index IX_TYPED on TestTable (charColumn, " +
+					"longColumn)");
+
+			if (dbType == DBType.MYSQL) {
+				_sourceDB.runSQL(
+					"create index IX_EXPRESSION on TestTable " +
+						"((upper(testColumn)))");
+
+				expectedMessages.add(
+					"unable to create index ix_expression on table testtable " +
+						"in the default schema because one of its columns is " +
+							"an expression");
+			}
+
+			expectedIndexDefinitions.add(
+				"CREATE INDEX ix_typed ON testtable USING btree (charcolumn, " +
+					"\"left\"((longcolumn)::text, 676))");
+			expectedMessages.add(
+				"created fulltext index ix_typed on table testtable in the " +
+					"default schema as a btree index on (\"charcolumn\", " +
+						"left(\"longcolumn\", 676))");
+		}
+		else if (dbType == DBType.ORACLE) {
+			_sourceDB.runSQL(
+				new String[] {
+					"create index IX_EXPRESSION on TestTable " +
+						"(upper(testColumn))",
+					"create index IX_TYPED on TestTable (textColumn) " +
+						"indextype is ctxsys.context"
+				});
+
+			expectedIndexDefinitions.add(
+				"CREATE INDEX ix_typed ON testtable USING btree (textcolumn)");
+			expectedMessages.add(
+				"created ctxsys.context index ix_typed on table testtable in " +
+					"the default schema as a btree index on (\"textcolumn\")");
+			expectedMessages.add(
+				"unable to create index ix_expression on table testtable in " +
+					"the default schema because one of its columns is an " +
+						"expression");
+		}
+		else if (dbType == DBType.SQLSERVER) {
+			_sourceDB.runSQL(
+				"create unique index IX_TYPED on TestTable (textColumn) " +
+					"where textColumn is not null");
+
+			expectedIndexDefinitions.add(
+				"CREATE INDEX ix_typed ON testtable USING btree (textcolumn)");
+			expectedMessages.add(
+				"created filtered index ix_typed on table testtable in the " +
+					"default schema as a btree index on (\"textcolumn\")");
+		}
+
+		String[] values = RandomTestUtil.randomStrings(_TABLE_SIZE);
+
+		_insertValues(values);
+
+		DBCopyTablesProcess dbCopyTablesProcess = new DBCopyTablesProcess(
+			_sourceDataSource, _targetDataSource);
+
+		dbCopyTablesProcess.run();
+
+		try (Connection connection = _targetDataSource.getConnection()) {
+			_targetDB.runSQL(
+				connection,
+				new String[] {
+					"create index ix_left_match on testtable (id, " +
+						"left(testcolumn, 676))",
+					"create index ix_unique_mismatch on testtable " +
+						"(charcolumn, id)",
+					StringBundler.concat(
+						"insert into testtable (id, testcolumn) values (",
+						_TABLE_SIZE + 1, ", '", values[0], "')")
+				});
+		}
+
+		PrintStream printStream = System.out;
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		System.setOut(new PrintStream(unsyncByteArrayOutputStream, true));
+
+		try {
+			dbCopyTablesProcess.addCustomPrimaryKeysAndIndexes();
+		}
+		finally {
+			System.setOut(printStream);
+		}
+
+		Assert.assertEquals(
+			ListUtil.sort(expectedMessages),
+			ListUtil.sort(
+				TransformUtil.transformToList(
+					StringUtil.splitLines(
+						unsyncByteArrayOutputStream.toString()),
+					message -> {
+						if (message.startsWith("Renaming ") ||
+							message.contains(": ")) {
+
+							return null;
+						}
+
+						return StringUtil.toLowerCase(message);
+					})));
+
+		try (Connection connection = _targetDataSource.getConnection();
+
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select replace(indexdef, current_schema() || '.', '') as " +
+					"indexDefinition from pg_indexes where schemaname = " +
+						"current_schema() and tablename = ?")) {
+
+			preparedStatement.setString(1, _targetTableName);
+
+			List<String> indexDefinitions = new ArrayList<>();
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					indexDefinitions.add(
+						resultSet.getString("indexDefinition"));
+				}
+			}
+
+			Assert.assertEquals(
+				ListUtil.sort(expectedIndexDefinitions),
+				ListUtil.sort(indexDefinitions));
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-110216")
+	public void testAddCustomPrimaryKeysAndIndexesInPartition()
+		throws Exception {
+
+		_testInPartition(this::testAddCustomPrimaryKeysAndIndexes);
 	}
 
 	@Test
@@ -513,7 +701,11 @@ public class DBCopyTablesProcessTest {
 	public void testRunWithToolTables() throws Exception {
 		Assume.assumeTrue(_sourceDB.getDBType() == DBType.ORACLE);
 
-		_sourceDB.runSQL("create table TestTable (id INTEGER)");
+		_sourceDB.runSQL(
+			"create table TestTable (id INTEGER, testColumn VARCHAR(75))");
+		_sourceDB.runSQL(
+			"create index TestTable_Text on TestTable (testColumn) indextype " +
+				"is ctxsys.context");
 		_sourceDB.runSQL(
 			"create materialized view log on TestTable with rowid");
 
@@ -525,7 +717,7 @@ public class DBCopyTablesProcessTest {
 				"select relname from pg_class where relname like ? order by " +
 					"relname")) {
 
-			preparedStatement.setString(1, "%testtable");
+			preparedStatement.setString(1, "%testtable%");
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());

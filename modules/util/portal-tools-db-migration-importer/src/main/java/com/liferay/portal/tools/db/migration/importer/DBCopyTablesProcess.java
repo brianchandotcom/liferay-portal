@@ -11,8 +11,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,8 +48,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -81,6 +86,12 @@ public class DBCopyTablesProcess {
 		else {
 			_partitionMessage = " in partition " + partitionName;
 		}
+	}
+
+	public void addCustomPrimaryKeysAndIndexes() throws Exception {
+		_addCustomPrimaryKeys();
+
+		_addCustomIndexes();
 	}
 
 	public void run() throws Exception {
@@ -193,6 +204,8 @@ public class DBCopyTablesProcess {
 						"create table ",
 						_getQuotedName(StringUtil.toLowerCase(entry.getKey())),
 						" (", StringUtil.merge(entry.getValue()), ")"));
+
+				_customTableNames.add(entry.getKey());
 			}
 		}
 
@@ -201,6 +214,253 @@ public class DBCopyTablesProcess {
 
 		_loadColumnNamesMap(
 			_targetColumnNamesMap, _targetColumnsType, _targetDataSource);
+	}
+
+	private void _addCustomIndexes() throws Exception {
+		try (Connection sourceConnection = _sourceDataSource.getConnection();
+
+			Connection targetConnection = _targetDataSource.getConnection();
+
+			Statement statement = targetConnection.createStatement()) {
+
+			DatabaseMetaData databaseMetaData = targetConnection.getMetaData();
+
+			Set<String> longColumnNames = new HashSet<>();
+
+			try (ResultSet resultSet = databaseMetaData.getColumns(
+					targetConnection.getCatalog(), targetConnection.getSchema(),
+					null, null)) {
+
+				while (resultSet.next()) {
+					if ((resultSet.getInt("DATA_TYPE") != Types.VARCHAR) ||
+						(resultSet.getInt("COLUMN_SIZE") <=
+							_POSTGRESQL_STRING_INDEX_MAX_LENGTH)) {
+
+						continue;
+					}
+
+					longColumnNames.add(
+						resultSet.getString("TABLE_NAME") + "." +
+							resultSet.getString("COLUMN_NAME"));
+				}
+			}
+
+			Set<String> targetNames = new HashSet<>();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					targetConnection.getCatalog(), targetConnection.getSchema(),
+					null, null)) {
+
+				while (resultSet.next()) {
+					targetNames.add(resultSet.getString("TABLE_NAME"));
+				}
+			}
+
+			Map<String, String> indexTypes = _getIndexTypes(sourceConnection);
+			Map<String, List<IndexMetadata>> sourceIndexMetadatasMap =
+				_getSourceIndexMetadatasMap(sourceConnection);
+
+			for (Map.Entry<String, List<String>> entry :
+					_sourceColumnNamesMap.entrySet()) {
+
+				String tableName = entry.getKey();
+
+				String targetTableName = StringUtil.toLowerCase(tableName);
+
+				List<IndexMetadata> targetIndexMetadatas = _getIndexMetadatas(
+					targetConnection, targetTableName);
+
+				List<String> columnNames = ListUtil.toList(
+					entry.getValue(), StringUtil::toLowerCase);
+
+				for (IndexMetadata indexMetadata :
+						sourceIndexMetadatasMap.getOrDefault(
+							tableName, Collections.emptyList())) {
+
+					String indexName = indexMetadata.getIndexName();
+
+					List<IndexMetadata> matchingIndexMetadatas =
+						ListUtil.filter(
+							targetIndexMetadatas,
+							targetIndexMetadata ->
+								targetIndexMetadata.equals(indexMetadata) ||
+								(StringUtil.equalsIgnoreCase(
+									targetIndexMetadata.getIndexName(),
+									indexName) &&
+								 !columnNames.containsAll(
+									 ListUtil.fromArray(
+										 targetIndexMetadata.
+											 getColumnNames()))));
+
+					if (!matchingIndexMetadatas.isEmpty()) {
+						IndexMetadata matchingIndexMetadata =
+							matchingIndexMetadatas.get(0);
+
+						if (indexMetadata.isUnique() &&
+							!matchingIndexMetadata.isUnique()) {
+
+							System.out.println(
+								StringBundler.concat(
+									"Unable to create unique index ", indexName,
+									" on table ", tableName, _partitionMessage,
+									" because index ",
+									matchingIndexMetadata.getIndexName(),
+									" already exists on the same columns"));
+						}
+
+						continue;
+					}
+
+					List<String> indexColumnNames = ListUtil.fromArray(
+						indexMetadata.getColumnNames());
+
+					if (!columnNames.containsAll(indexColumnNames)) {
+						System.out.println(
+							StringBundler.concat(
+								"Unable to create index ", indexName,
+								" on table ", tableName, _partitionMessage,
+								" because one of its columns is an ",
+								"expression"));
+
+						continue;
+					}
+
+					String targetIndexName = StringUtil.toLowerCase(indexName);
+
+					if (_isLongName(targetIndexName) ||
+						targetNames.contains(targetIndexName)) {
+
+						targetIndexName = StringUtil.toLowerCase(
+							IndexMetadataFactoryUtil.createIndexName(
+								targetTableName,
+								indexMetadata.getColumnNames()));
+
+						System.out.println(
+							StringBundler.concat(
+								"Renaming index ", indexName, " on table ",
+								tableName, _partitionMessage, " to ",
+								targetIndexName,
+								" because its name is longer than ",
+								_POSTGRESQL_NAME_MAX_LENGTH,
+								" bytes or a relation with the same name ",
+								"already exists"));
+					}
+
+					String indexColumnsSQL = StringUtil.merge(
+						ListUtil.toList(
+							indexColumnNames,
+							indexColumnName -> {
+								if (!longColumnNames.contains(
+										targetTableName + "." +
+											indexColumnName)) {
+
+									return _getQuotedName(indexColumnName);
+								}
+
+								return StringBundler.concat(
+									"left(", _getQuotedName(indexColumnName),
+									", ", _POSTGRESQL_STRING_INDEX_MAX_LENGTH,
+									")");
+							}),
+						", ");
+
+					String indexType = indexTypes.get(
+						tableName + "." + indexName);
+
+					String uniqueSQL = StringPool.BLANK;
+
+					if (indexMetadata.isUnique() &&
+						!Objects.equals(indexType, "filtered")) {
+
+						uniqueSQL = "unique ";
+					}
+
+					try {
+						statement.executeUpdate(
+							StringBundler.concat(
+								"create ", uniqueSQL, "index ",
+								_getQuotedName(targetIndexName), " on ",
+								_getQuotedName(targetTableName), " (",
+								indexColumnsSQL, ")"));
+					}
+					catch (SQLException sqlException) {
+						System.out.println(
+							StringBundler.concat(
+								"Unable to create index ", indexName,
+								" on table ", tableName, _partitionMessage,
+								": ", sqlException.getMessage()));
+
+						continue;
+					}
+
+					if ((indexType != null) ||
+						indexColumnsSQL.contains("left(")) {
+
+						System.out.println(
+							StringBundler.concat(
+								"Created ",
+								(indexType == null) ? "" : indexType + " ",
+								"index ", indexName, " on table ", tableName,
+								_partitionMessage, " as a ", uniqueSQL,
+								"btree index on (", indexColumnsSQL, ")"));
+					}
+
+					targetIndexMetadatas.add(indexMetadata);
+					targetNames.add(targetIndexName);
+				}
+			}
+		}
+	}
+
+	private void _addCustomPrimaryKeys() throws Exception {
+		try (Connection sourceConnection = _sourceDataSource.getConnection();
+
+			Connection targetConnection = _targetDataSource.getConnection();
+
+			Statement statement = targetConnection.createStatement()) {
+
+			DatabaseMetaData databaseMetaData = sourceConnection.getMetaData();
+
+			for (String customTableName : _customTableNames) {
+				Map<Integer, String> primaryKeyColumnNamesMap = new TreeMap<>();
+
+				try (ResultSet resultSet = databaseMetaData.getPrimaryKeys(
+						sourceConnection.getCatalog(),
+						sourceConnection.getSchema(), customTableName)) {
+
+					while (resultSet.next()) {
+						primaryKeyColumnNamesMap.put(
+							resultSet.getInt("KEY_SEQ"),
+							_getQuotedName(
+								StringUtil.toLowerCase(
+									resultSet.getString("COLUMN_NAME"))));
+					}
+				}
+
+				if (primaryKeyColumnNamesMap.isEmpty()) {
+					continue;
+				}
+
+				try {
+					statement.executeUpdate(
+						StringBundler.concat(
+							"alter table ",
+							_getQuotedName(
+								StringUtil.toLowerCase(customTableName)),
+							" add primary key (",
+							StringUtil.merge(
+								primaryKeyColumnNamesMap.values(), ", "),
+							")"));
+				}
+				catch (SQLException sqlException) {
+					System.out.println(
+						StringBundler.concat(
+							"Unable to add primary key to table ",
+							customTableName, _partitionMessage, ": ",
+							sqlException.getMessage()));
+				}
+			}
+		}
 	}
 
 	private void _copyTable(String sourceTableName, String targetTableName)
@@ -607,6 +867,135 @@ public class DBCopyTablesProcess {
 				resultSet.getInt("DECIMAL_DIGITS")));
 	}
 
+	private List<IndexMetadata> _getIndexMetadatas(
+			Connection connection, String tableName)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		try (ResultSet resultSet = databaseMetaData.getIndexInfo(
+				connection.getCatalog(), connection.getSchema(), tableName,
+				false, true)) {
+
+			Map<String, List<IndexMetadata>> indexMetadatasMap =
+				_getIndexMetadatasMap(resultSet);
+
+			return indexMetadatasMap.getOrDefault(tableName, new ArrayList<>());
+		}
+	}
+
+	private Map<String, List<IndexMetadata>> _getIndexMetadatasMap(
+			ResultSet resultSet)
+		throws SQLException {
+
+		Map<String, List<String>> columnNamesMap = new LinkedHashMap<>();
+		Map<String, String> tableNames = new HashMap<>();
+		Set<String> uniqueIndexNames = new HashSet<>();
+
+		while (resultSet.next()) {
+			if (resultSet.getShort("ORDINAL_POSITION") == 0) {
+				continue;
+			}
+
+			String indexName = resultSet.getString("INDEX_NAME");
+
+			List<String> columnNames = columnNamesMap.computeIfAbsent(
+				indexName, key -> new ArrayList<>());
+
+			columnNames.add(
+				StringUtil.toLowerCase(
+					GetterUtil.getString(resultSet.getString("COLUMN_NAME"))));
+
+			tableNames.put(indexName, resultSet.getString("TABLE_NAME"));
+
+			if (resultSet.getBoolean("NON_UNIQUE")) {
+				continue;
+			}
+
+			uniqueIndexNames.add(indexName);
+		}
+
+		Map<String, List<IndexMetadata>> indexMetadatasMap = new TreeMap<>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		for (Map.Entry<String, List<String>> entry :
+				columnNamesMap.entrySet()) {
+
+			String indexName = entry.getKey();
+
+			String tableName = tableNames.get(indexName);
+
+			List<IndexMetadata> indexMetadatas =
+				indexMetadatasMap.computeIfAbsent(
+					tableName, key -> new ArrayList<>());
+
+			indexMetadatas.add(
+				new IndexMetadata(
+					indexName, StringUtil.toLowerCase(tableName),
+					uniqueIndexNames.contains(indexName),
+					ArrayUtil.toStringArray(entry.getValue())));
+		}
+
+		return indexMetadatasMap;
+	}
+
+	private Map<String, String> _getIndexTypes(Connection connection)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		String databaseProductName = databaseMetaData.getDatabaseProductName();
+
+		String schemaName = null;
+		String sql = null;
+
+		if (databaseProductName.equals("MariaDB") ||
+			databaseProductName.equals("MySQL")) {
+
+			schemaName = connection.getCatalog();
+			sql =
+				"select distinct table_name, index_name, index_type from " +
+					"information_schema.statistics where table_schema = ? " +
+						"and index_type not in ('BTREE', 'HASH')";
+		}
+		else if (databaseProductName.equals("Microsoft SQL Server")) {
+			schemaName = connection.getSchema();
+			sql =
+				"select object_name(object_id), name, 'filtered' from " +
+					"sys.indexes where has_filter = 1 and " +
+						"object_schema_name(object_id) = ?";
+		}
+		else if (databaseProductName.equals("Oracle")) {
+			schemaName = connection.getSchema();
+			sql =
+				"select table_name, index_name, ityp_owner || '.' || " +
+					"ityp_name from all_indexes where owner = ? and " +
+						"index_type = 'DOMAIN'";
+		}
+		else {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String> indexTypes = new TreeMap<>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
+
+			preparedStatement.setString(1, schemaName);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					indexTypes.put(
+						resultSet.getString(1) + "." + resultSet.getString(2),
+						resultSet.getString(3));
+				}
+			}
+		}
+
+		return indexTypes;
+	}
+
 	private String _getPostgreSQLColumnType(
 		int columnSize, int dataType, int decimalDigits) {
 
@@ -693,6 +1082,48 @@ public class DBCopyTablesProcess {
 
 	private String _getSanitizedString(String value) {
 		return StringUtil.removeSubstring(value, StringPool.NULL_CHAR);
+	}
+
+	private Map<String, List<IndexMetadata>> _getSourceIndexMetadatasMap(
+			Connection connection)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		String databaseProductName = databaseMetaData.getDatabaseProductName();
+
+		if (databaseProductName.equals("Oracle")) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select all_indexes.table_name as TABLE_NAME, ",
+							"all_indexes.index_name as INDEX_NAME, ",
+							"decode(all_indexes.uniqueness, 'UNIQUE', 0, 1) ",
+							"as NON_UNIQUE, all_ind_columns.column_name as ",
+							"COLUMN_NAME, all_ind_columns.column_position as ",
+							"ORDINAL_POSITION from all_indexes inner join ",
+							"all_ind_columns on all_ind_columns.index_owner = ",
+							"all_indexes.owner and all_ind_columns.index_name ",
+							"= all_indexes.index_name where ",
+							"all_indexes.table_owner = ? order by TABLE_NAME, ",
+							"NON_UNIQUE, INDEX_NAME, ORDINAL_POSITION"))) {
+
+				preparedStatement.setString(1, connection.getSchema());
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					return _getIndexMetadatasMap(resultSet);
+				}
+			}
+		}
+
+		Map<String, List<IndexMetadata>> indexMetadatasMap = new HashMap<>();
+
+		for (String tableName : _sourceColumnNamesMap.keySet()) {
+			indexMetadatasMap.put(
+				tableName, _getIndexMetadatas(connection, tableName));
+		}
+
+		return indexMetadatasMap;
 	}
 
 	private Set<String> _getViews(DataSource dataSource) throws Exception {
@@ -792,9 +1223,13 @@ public class DBCopyTablesProcess {
 				sql = "select name from sys.tables where is_ms_shipped = 1";
 			}
 			else if (databaseProductName.equals("Oracle")) {
-				sql =
-					"select job_name from user_datapump_jobs union select " +
-						"log_table from user_mview_logs";
+				sql = StringBundler.concat(
+					"select job_name from user_datapump_jobs union select ",
+					"log_table from user_mview_logs union select ",
+					"user_tables.table_name from user_tables inner join ",
+					"user_indexes on user_tables.table_name like 'DR$' || ",
+					"user_indexes.index_name || '$%' where ",
+					"user_indexes.index_type = 'DOMAIN'");
 			}
 
 			if (sql != null) {
@@ -915,6 +1350,8 @@ public class DBCopyTablesProcess {
 
 	private static final int _POSTGRESQL_NAME_MAX_LENGTH = 63;
 
+	private static final int _POSTGRESQL_STRING_INDEX_MAX_LENGTH = 676;
+
 	private static final int _SQL_TYPE_ORACLE_BINARY_DOUBLE = 101;
 
 	private static final int _SQL_TYPE_ORACLE_BINARY_FLOAT = 100;
@@ -926,6 +1363,8 @@ public class DBCopyTablesProcess {
 
 	private static final int _SQL_TYPE_SQL_SERVER_DATETIMEOFFSET = -155;
 
+	private final Set<String> _customTableNames = new TreeSet<>(
+		String.CASE_INSENSITIVE_ORDER);
 	private final String _partitionMessage;
 	private final Map<String, List<String>> _sourceColumnNamesMap =
 		new TreeMap<>(String.CASE_INSENSITIVE_ORDER);

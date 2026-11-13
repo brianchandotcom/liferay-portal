@@ -422,8 +422,6 @@ public class ExpandoValueLocalServiceTest {
 
 	@Test
 	public void testGetData() throws Exception {
-		long classPK = _counterLocalService.increment();
-
 		Map<Integer, Object> values = HashMapBuilder.<Integer, Object>put(
 			ExpandoColumnConstants.GEOLOCATION,
 			JSONUtil.put(
@@ -447,6 +445,7 @@ public class ExpandoValueLocalServiceTest {
 			).build()
 		).build();
 
+		long classPK = _counterLocalService.increment();
 		List<String> columnNames = new ArrayList<>();
 
 		for (Map.Entry<Integer, Object> entry : values.entrySet()) {
@@ -459,13 +458,11 @@ public class ExpandoValueLocalServiceTest {
 			columnNames.add(column.getName());
 		}
 
-		_assertGetData(columnNames, classPK);
+		_assertGetData(classPK, columnNames);
 	}
 
 	@Test
 	public void testGetDataWithoutValues() throws Exception {
-		long classPK = _counterLocalService.increment();
-
 		List<String> columnNames = new ArrayList<>();
 
 		for (int type : ExpandoColumnConstants.TYPES) {
@@ -476,12 +473,14 @@ public class ExpandoValueLocalServiceTest {
 		}
 
 		ExpandoColumn column = ExpandoTestUtil.addColumn(
-			_expandoTable, "columnWithDefault", ExpandoColumnConstants.STRING,
-			RandomTestUtil.randomString());
+			_expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING, RandomTestUtil.randomString());
 
 		columnNames.add(column.getName());
 
-		_assertGetData(columnNames, classPK);
+		long classPK = _counterLocalService.increment();
+
+		_assertGetData(classPK, columnNames);
 	}
 
 	@Test
@@ -561,25 +560,25 @@ public class ExpandoValueLocalServiceTest {
 		Assert.assertEquals("Hi, Joe", enValues[1]);
 	}
 
-	private void _assertGetData(List<String> columnNames, long classPK)
+	private void _assertGetData(long classPK, List<String> columnNames)
 		throws Exception {
 
 		_assertGetData(
-			columnNames, classPK,
-			_expandoValueLocalService.getData(
-				TestPropsValues.getCompanyId(),
-				PortalUtil.getClassName(_classNameId), _expandoTable.getName(),
-				columnNames, classPK));
-		_assertGetData(
-			columnNames, classPK,
+			classPK, columnNames,
 			_expandoValueLocalService.getData(
 				TestPropsValues.getCompanyId(),
 				PortalUtil.getClassName(_classNameId), _expandoTable.getName(),
 				classPK));
+		_assertGetData(
+			classPK, columnNames,
+			_expandoValueLocalService.getData(
+				TestPropsValues.getCompanyId(),
+				PortalUtil.getClassName(_classNameId), _expandoTable.getName(),
+				columnNames, classPK));
 	}
 
 	private void _assertGetData(
-			List<String> columnNames, long classPK,
+			long classPK, List<String> columnNames,
 			Map<String, Serializable> data)
 		throws Exception {
 
@@ -599,8 +598,7 @@ public class ExpandoValueLocalServiceTest {
 				continue;
 			}
 
-			Assert.assertTrue(
-				columnName, Objects.deepEquals(expectedValue, value));
+			Assert.assertTrue(Objects.deepEquals(expectedValue, value));
 		}
 	}
 

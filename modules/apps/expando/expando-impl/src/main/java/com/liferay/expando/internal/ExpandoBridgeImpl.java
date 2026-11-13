@@ -240,14 +240,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public Map<String, Serializable> getAttributes(boolean secure) {
-		Map<String, Serializable> attributeValues = null;
+		Map<String, Serializable> attributes = null;
 
 		try {
-			attributeValues = ExpandoValueLocalServiceUtil.getData(
+			attributes = ExpandoValueLocalServiceUtil.getData(
 				_companyId, _className,
 				ExpandoTableConstants.DEFAULT_TABLE_NAME, _classPK);
 
-			if (secure && !attributeValues.isEmpty()) {
+			if (secure && !attributes.isEmpty()) {
 				PermissionChecker permissionChecker =
 					GuestOrUserUtil.getPermissionChecker();
 
@@ -258,7 +258,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 						continue;
 					}
 
-					attributeValues.remove(column.getName());
+					attributes.remove(column.getName());
 				}
 			}
 		}
@@ -266,7 +266,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			ReflectionUtil.throwException(exception);
 		}
 
-		return attributeValues;
+		return attributes;
 	}
 
 	@Override

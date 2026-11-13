@@ -531,10 +531,10 @@ public class CustomFDSSerializer
 						relatedObjectEntry),
 					"dataSetToDataSetSelectionFilters")) {
 
-			String apiURL = null;
-
 			String sourceType = MapUtil.getString(
 				objectEntry.getProperties(), "sourceType");
+
+			String apiURL = null;
 
 			if (Objects.equals(sourceType, "API_REST_APPLICATION")) {
 				apiURL = _getSelectionFilterAPIURL(

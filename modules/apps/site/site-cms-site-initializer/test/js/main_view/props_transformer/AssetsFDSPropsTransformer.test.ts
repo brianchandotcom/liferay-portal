@@ -7,6 +7,7 @@ import {
 	ASSET_STATUS_TO_DISPLAY_TYPE,
 	OBJECT_ENTRY_CLASS_NAME,
 } from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
+import {getScopeExternalReferenceCode} from '../../../../src/main/resources/META-INF/resources/js/common/utils/getScopeExternalReferenceCode';
 import {openCMSModal} from '../../../../src/main/resources/META-INF/resources/js/common/utils/openCMSModal';
 import openResetAssetPermissionModal from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/ResetPermissionModalContent';
 import AssetNavigationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/asset_navigation_view/AssetNavigationModalContent';
@@ -492,6 +493,181 @@ describe('AssetsFDSPropsTransformer', () => {
 			});
 
 			expect(shareAction).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('space membership lock', () => {
+		const memberAssetLibraries = [
+			{externalReferenceCode: 'SPACE_A', groupId: 1, name: 'Space A'},
+		];
+
+		const buildItem = (id: number, scopeExternalReferenceCode: string) => ({
+			embedded: {
+				id,
+				systemProperties: {
+					scope: {externalReferenceCode: scopeExternalReferenceCode},
+				},
+			},
+			entryClassName: OBJECT_ENTRY_CLASS_NAME,
+		});
+
+		const lockedItem = buildItem(2, 'SPACE_B');
+
+		const memberItem = buildItem(1, 'SPACE_A');
+
+		const titleActions = [{data: {id: 'actionLink'}, href: '/edit'}];
+
+		const getTransformedProps = (itemsActions: any[] = []) =>
+			AssetsFDSPropsTransformer({
+				additionalProps: {
+					...mockAdditionalProps,
+					assetLibraries: memberAssetLibraries,
+					editableImageMIMETypes: ['image/png'],
+				},
+				creationMenu: {primaryItems: []},
+				hideManagementBarInEmptyState: false,
+				id: 'com.liferay.site.cms.site.initializer-allSection',
+				itemsActions,
+				views: [],
+			});
+
+		const getTitleRendererElement = (itemData: any) => {
+			const {customRenderers} = getTransformedProps();
+
+			const titleRenderer = customRenderers.tableCell.find(
+				(renderer: any) =>
+					renderer.name === 'simpleActionLinkTableCellRenderer'
+			);
+
+			return (titleRenderer as any).component({
+				actions: titleActions,
+				itemData,
+				options: {actionId: 'actionLink'},
+				value: 'title',
+			});
+		};
+
+		beforeEach(() => {
+			jest.clearAllMocks();
+
+			(getScopeExternalReferenceCode as jest.Mock).mockImplementation(
+				(item) =>
+					item?.embedded?.systemProperties?.scope
+						?.externalReferenceCode
+			);
+		});
+
+		afterEach(() => {
+			(getScopeExternalReferenceCode as jest.Mock).mockReset();
+		});
+
+		it('does not pass actions to the title for an asset from another Space', () => {
+			expect(getTitleRendererElement(lockedItem).props.actions).toEqual(
+				[]
+			);
+		});
+
+		it('excludes assets from other Spaces from the asset navigation modal', async () => {
+			const items = [memberItem, lockedItem];
+
+			await getTransformedProps().onActionDropdownItemClick({
+				action: {data: {id: 'view-content'}},
+				event: {preventDefault: jest.fn()} as any,
+				itemData: memberItem as any,
+				items,
+				loadData: jest.fn(),
+			});
+
+			(openCMSModal as jest.Mock).mock.calls[0][0].contentComponent();
+
+			expect(AssetNavigationModalContent).toHaveBeenCalledWith(
+				expect.objectContaining({currentIndex: 0, items: [memberItem]})
+			);
+		});
+
+		it('hides the edit action for an asset from another Space', () => {
+			const {itemsActions} = getTransformedProps([
+				{data: {id: 'actionLink'}},
+			]);
+
+			const [editAction] = itemsActions;
+
+			expect(editAction.isVisible(lockedItem)).toBe(false);
+			expect(editAction.isVisible(memberItem)).toBe(true);
+		});
+
+		it('hides the edit image action for an asset from another Space', () => {
+			const {itemsActions} = getTransformedProps([
+				{data: {id: 'edit-image'}},
+			]);
+
+			const [editImageAction] = itemsActions;
+
+			const imageFile = {link: {href: 'url'}, mimeType: 'image/png'};
+
+			expect(
+				editImageAction.isVisible({
+					...lockedItem,
+					embedded: {...lockedItem.embedded, file: imageFile},
+				})
+			).toBe(false);
+			expect(
+				editImageAction.isVisible({
+					...memberItem,
+					embedded: {...memberItem.embedded, file: imageFile},
+				})
+			).toBe(true);
+		});
+
+		it('hides the translation actions for an asset from another Space', () => {
+			const {itemsActions} = getTransformedProps([
+				{data: {id: 'export-for-translation'}},
+				{data: {id: 'import-translation'}},
+				{data: {id: 'translate'}},
+			]);
+
+			itemsActions.forEach((translationAction: any) => {
+				expect(translationAction.isVisible(lockedItem)).toBe(false);
+				expect(translationAction.isVisible(memberItem)).toBe(true);
+			});
+		});
+
+		it('hides the view content action for an asset from another Space', () => {
+			const {itemsActions} = getTransformedProps([
+				{data: {id: 'view-content'}},
+			]);
+
+			const [viewContentAction] = itemsActions;
+
+			expect(viewContentAction.isVisible(lockedItem)).toBe(false);
+			expect(viewContentAction.isVisible(memberItem)).toBe(true);
+		});
+
+		it('hides the view file action for an asset from another Space', () => {
+			const {itemsActions} = getTransformedProps([
+				{data: {id: 'view-file'}},
+			]);
+
+			const [viewFileAction] = itemsActions;
+
+			const lockedFileItem = {
+				...lockedItem,
+				embedded: {...lockedItem.embedded, file: {link: {href: 'url'}}},
+			};
+
+			const memberFileItem = {
+				...memberItem,
+				embedded: {...memberItem.embedded, file: {link: {href: 'url'}}},
+			};
+
+			expect(viewFileAction.isVisible(lockedFileItem)).toBe(false);
+			expect(viewFileAction.isVisible(memberFileItem)).toBe(true);
+		});
+
+		it('passes actions to the title for an asset from a Space the user is a member of', () => {
+			expect(getTitleRendererElement(memberItem).props.actions).toBe(
+				titleActions
+			);
 		});
 	});
 });

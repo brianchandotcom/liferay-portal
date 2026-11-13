@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -27,12 +28,14 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -330,6 +333,50 @@ public class ObjectEntryModelListenerTest {
 	}
 
 	@Test
+	public void testOnBeforeCreate() throws Exception {
+
+		// A member of the linked asset's space can link the asset
+
+		ObjectEntry cmpTaskObjectEntry = CMPTestUtil.addCMPTaskObjectEntry();
+
+		User user1 = UserTestUtil.addUser(cmpTaskObjectEntry.getGroupId());
+
+		_userLocalService.addGroupUser(
+			_depotEntry.getGroupId(), user1.getUserId());
+
+		ObjectEntry cmsBasicWebContentObjectEntry =
+			CMPTestUtil.addCMSBasicWebContentObjectEntry(
+				_depotEntry, RandomTestUtil.randomString());
+
+		Assert.assertNotNull(
+			CMPTestUtil.addCMPTaskLinkObjectEntry(
+				cmpTaskObjectEntry, cmsBasicWebContentObjectEntry,
+				user1.getUserId()));
+
+		// A user who is not a member of the linked asset's space cannot link
+		// the asset
+
+		User user2 = UserTestUtil.addUser(cmpTaskObjectEntry.getGroupId());
+
+		try {
+			CMPTestUtil.addCMPTaskLinkObjectEntry(
+				cmpTaskObjectEntry, cmsBasicWebContentObjectEntry,
+				user2.getUserId());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			Throwable throwable = modelListenerException.getCause();
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"User ", user2.getUserId(), " must be a member of space ",
+					_depotEntry.getGroupId(), " to link its assets"),
+				throwable.getMessage());
+		}
+	}
+
+	@Test
 	public void testOnBeforeRemove() throws Exception {
 
 		// Deleting a CMS object entry deletes its links
@@ -384,6 +431,89 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				cmpTaskLinkObjectEntry.getObjectEntryId()));
+	}
+
+	@Test
+	public void testOnBeforeUpdate() throws Exception {
+
+		// A member of the linked asset's space can repoint another user's link
+		// to an asset in that space
+
+		ObjectEntry cmpTaskObjectEntry = CMPTestUtil.addCMPTaskObjectEntry();
+
+		User user1 = UserTestUtil.addUser(cmpTaskObjectEntry.getGroupId());
+
+		_userLocalService.addGroupUser(
+			_depotEntry.getGroupId(), user1.getUserId());
+
+		ObjectEntry cmpTaskLinkObjectEntry =
+			CMPTestUtil.addCMPTaskLinkObjectEntry(
+				cmpTaskObjectEntry,
+				CMPTestUtil.addCMSBasicWebContentObjectEntry(
+					_depotEntry, RandomTestUtil.randomString()),
+				user1.getUserId());
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		User user2 = UserTestUtil.addUser(cmpTaskObjectEntry.getGroupId());
+
+		_userLocalService.addGroupUser(
+			depotEntry.getGroupId(), user2.getUserId());
+
+		UserTestUtil.setUser(user2);
+
+		Assert.assertNotNull(
+			_updateCMPTaskLinkObjectEntry(
+				cmpTaskLinkObjectEntry,
+				CMPTestUtil.addCMSBasicWebContentObjectEntry(
+					depotEntry, RandomTestUtil.randomString()),
+				user2.getUserId()));
+
+		// A user who is not a member of the linked asset's space cannot repoint
+		// another user's link to that asset
+
+		try {
+			_updateCMPTaskLinkObjectEntry(
+				cmpTaskLinkObjectEntry,
+				CMPTestUtil.addCMSBasicWebContentObjectEntry(
+					_depotEntry, RandomTestUtil.randomString()),
+				user2.getUserId());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			Throwable throwable = modelListenerException.getCause();
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"User ", user2.getUserId(), " must be a member of space ",
+					_depotEntry.getGroupId(), " to link its assets"),
+				throwable.getMessage());
+		}
+
+		// With no principal, a link can be repointed to an asset in its owner's
+		// space
+
+		ObjectEntry cmsBasicWebContentObjectEntry =
+			CMPTestUtil.addCMSBasicWebContentObjectEntry(
+				_depotEntry, RandomTestUtil.randomString());
+
+		PrincipalThreadLocal.setName(null);
+
+		Assert.assertNotNull(
+			_updateCMPTaskLinkObjectEntry(
+				cmpTaskLinkObjectEntry, cmsBasicWebContentObjectEntry,
+				user1.getUserId()));
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	private void _assertCompletionRate(
@@ -814,6 +944,28 @@ public class ObjectEntryModelListenerTest {
 				cmpProjectObjectEntry.getGroupId()));
 	}
 
+	private ObjectEntry _updateCMPTaskLinkObjectEntry(
+			ObjectEntry cmpTaskLinkObjectEntry, ObjectEntry linkedObjectEntry,
+			long userId)
+		throws Exception {
+
+		Group group = _groupLocalService.getGroup(
+			linkedObjectEntry.getGroupId());
+
+		return _objectEntryLocalService.partialUpdateObjectEntry(
+			userId, cmpTaskLinkObjectEntry.getObjectEntryId(),
+			cmpTaskLinkObjectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"classExternalReferenceCode",
+				linkedObjectEntry.getExternalReferenceCode()
+			).put(
+				"className", linkedObjectEntry.getModelClassName()
+			).put(
+				"groupExternalReferenceCode", group.getExternalReferenceCode()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private ObjectEntry _updateDescription(
 			ObjectEntry cmpProjectObjectEntry, String description, long userId)
 		throws Exception {
@@ -869,5 +1021,8 @@ public class ObjectEntryModelListenerTest {
 
 	@Inject
 	private StagingLocalService _stagingLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

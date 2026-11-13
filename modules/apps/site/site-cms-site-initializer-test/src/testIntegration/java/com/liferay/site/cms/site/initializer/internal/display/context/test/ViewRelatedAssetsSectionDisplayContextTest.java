@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
@@ -20,6 +21,8 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -102,6 +106,11 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 			_getViewRelatedAssetsSectionDisplayContext(mockHttpServletRequest),
 			"getAdditionalProps", new Class<?>[0]);
 
+		Map<String, Object> breadcrumbProps =
+			(Map<String, Object>)additionalProps.get("breadcrumbProps");
+
+		Assert.assertNotNull(breadcrumbProps.get("breadcrumbItems"));
+
 		Assert.assertEquals(
 			HashMapBuilder.<String, Object>put(
 				"objectEntryId", String.valueOf(_objectEntry.getObjectEntryId())
@@ -118,16 +127,7 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 
 	@Test
 	public void testGetCreationMenu() throws Exception {
-		_depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId()));
+		_addDepotEntry();
 
 		CreationMenu creationMenu = ReflectionTestUtil.invoke(
 			_getViewRelatedAssetsSectionDisplayContext(
@@ -198,6 +198,41 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 	}
 
 	@Test
+	public void testGetCreationMenuFiltersBySpaceMembership() throws Exception {
+
+		// A member of a space sees assets from that space only
+
+		DepotEntry memberDepotEntry = _addDepotEntry();
+		User user1 = UserTestUtil.addUser();
+
+		_userLocalService.addGroupUser(
+			memberDepotEntry.getGroupId(), user1.getUserId());
+
+		DepotEntry nonmemberDepotEntry = _addDepotEntry();
+
+		String searchAPIURL = _getSearchAPIURL(user1);
+
+		Assert.assertTrue(
+			searchAPIURL.contains(
+				"groupIds/any(g:g in (" + memberDepotEntry.getGroupId() +
+					"))"));
+
+		// A user who is not a member of any space sees no space's assets
+
+		User user2 = UserTestUtil.addUser();
+
+		searchAPIURL = _getSearchAPIURL(user2);
+
+		Assert.assertTrue(searchAPIURL.contains("groupIds/any(g:g in (-1))"));
+
+		_depotEntryLocalService.deleteDepotEntry(memberDepotEntry);
+		_depotEntryLocalService.deleteDepotEntry(nonmemberDepotEntry);
+
+		_userLocalService.deleteUser(user1);
+		_userLocalService.deleteUser(user2);
+	}
+
+	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			ReflectionTestUtil.invoke(
@@ -223,6 +258,36 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 			"chain-broken", "unlink-asset",
 			"Remove from " + _objectDefinition.getLabel(LocaleUtil.US), null,
 			fdsActionDropdownItems.get(4));
+	}
+
+	private DepotEntry _addDepotEntry() throws Exception {
+		return _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private String _getSearchAPIURL(User user) throws Exception {
+		CreationMenu creationMenu = ReflectionTestUtil.invoke(
+			_getViewRelatedAssetsSectionDisplayContext(
+				getMockHttpServletRequest(user)),
+			"getCreationMenu", new Class<?>[0]);
+
+		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
+			"primaryItems");
+
+		DropdownItem selectDropdownItem = dropdownItems.get(1);
+
+		Map<String, Object> selectData =
+			(Map<String, Object>)selectDropdownItem.get("data");
+
+		return (String)selectData.get("searchAPIURL");
 	}
 
 	private Object _getViewRelatedAssetsSectionDisplayContext(
@@ -259,5 +324,8 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

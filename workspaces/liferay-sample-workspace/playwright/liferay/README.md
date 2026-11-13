@@ -14,6 +14,8 @@ npx playwright test
 
 If Liferay is not already running, the tests start it in Docker with `scripts/bootstrap.sh` and remove it, including its data, when they finish.
 
+Each run writes an HTML report to `playwright-report` and a JUnit report to `test-results/TEST-playwright.xml` for CI.
+
 ## Configuration
 
 The tests run against `PORTAL_URL`, which defaults to `http://localhost:8080`, and sign in with `LIFERAY_USER_PASSWORD`, which defaults to `test`. To change them, set them in `playwright/.env.local`.

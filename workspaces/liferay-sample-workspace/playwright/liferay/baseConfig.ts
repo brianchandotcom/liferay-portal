@@ -16,7 +16,11 @@ export const baseConfig: PlaywrightTestConfig = {
 	},
 	forbidOnly: !!process.env.CI,
 	globalSetup: join(__dirname, 'globalSetup.ts'),
-	reporter: [['html', {open: 'never'}]],
+	reporter: [
+		['html', {open: 'never'}],
+		['junit', {outputFile: 'test-results/TEST-playwright.xml'}],
+		['list'],
+	],
 	retries: process.env.CI ? 1 : 0,
 	testDir: './tests',
 	timeout: 90 * 1000,

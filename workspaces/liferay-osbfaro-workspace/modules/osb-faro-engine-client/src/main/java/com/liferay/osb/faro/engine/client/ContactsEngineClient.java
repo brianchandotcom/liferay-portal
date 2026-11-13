@@ -34,6 +34,7 @@ import com.liferay.osb.faro.engine.client.model.BigQueryPrice;
 import com.liferay.osb.faro.engine.client.model.BlockedKeyword;
 import com.liferay.osb.faro.engine.client.model.Campaign;
 import com.liferay.osb.faro.engine.client.model.CampaignMetric;
+import com.liferay.osb.faro.engine.client.model.CampaignName;
 import com.liferay.osb.faro.engine.client.model.CatalogField;
 import com.liferay.osb.faro.engine.client.model.Channel;
 import com.liferay.osb.faro.engine.client.model.ChannelDataSource;
@@ -245,7 +246,7 @@ public interface ContactsEngineClient {
 		throws FaroEngineClientException;
 
 	public List<AccountMetric> getAccountMetrics(
-		FaroProject faroProject, Long channelId);
+		FaroProject faroProject, String campaignId, Long channelId);
 
 	public Results<AccountName> getAccountNames(
 		FaroProject faroProject, String assetId, String assetTitle,
@@ -257,14 +258,14 @@ public interface ContactsEngineClient {
 		throws FaroEngineClientException;
 
 	public Results<Account> getAccounts(
-		FaroProject faroProject, String accountLifecycleId, String channelId,
-		String filterString, boolean includeAnonymousUsers, String query,
-		String rangeEnd, Integer rangeKey, String rangeStart, String segmentId,
-		int cur, int delta, String sortString);
-
-	public Results<Account> getAccounts(
 		FaroProject faroProject, String channelId, String filterString,
 		String query, int cur, int delta, String sortString);
+
+	public Results<Account> getAccounts(
+		FaroProject faroProject, String accountLifecycleId, String campaignId,
+		String channelId, String filterString, boolean includeAnonymousUsers,
+		String query, String rangeEnd, Integer rangeKey, String rangeStart,
+		String segmentId, int cur, int delta, String sortString);
 
 	public List<AcquisitionParameter> getAcquisitionParameters(
 		FaroProject faroProject, String channelId);
@@ -372,6 +373,10 @@ public interface ContactsEngineClient {
 			FaroProject faroProject, String accountIds, long channelId,
 			String rangeEnd, Integer rangeKey, String rangeStart)
 		throws FaroEngineClientException;
+
+	public Results<CampaignName> getCampaignNames(
+		FaroProject faroProject, Long channelId, String query, int cur,
+		int delta);
 
 	public Results<Campaign> getCampaigns(
 		FaroProject faroProject, long channelId, String filterString,
@@ -549,12 +554,13 @@ public interface ContactsEngineClient {
 
 	public Results<Individual> getIndividuals(
 		FaroProject faroProject, String accountId, List<String> accountTypes,
-		String activityStatus, String channelId, String dataSourceId,
-		List<String> fields, String filterString, boolean includeAnonymousUsers,
-		String individualSegmentId, List<String> individualTypes,
-		String interestName, String notIndividualSegmentId, String query,
-		String rangeEnd, Integer rangeKey, String rangeStart, int cur,
-		int delta, List<OrderByField> orderByFields);
+		String activityStatus, String campaignId, String channelId,
+		String dataSourceId, List<String> fields, String filterString,
+		boolean includeAnonymousUsers, String individualSegmentId,
+		List<String> individualTypes, String interestName,
+		String notIndividualSegmentId, String query, String rangeEnd,
+		Integer rangeKey, String rangeStart, int cur, int delta,
+		List<OrderByField> orderByFields);
 
 	public Results<Individual> getIndividualsByIndividualSegment(
 		FaroProject faroProject, String individualSegmentsId, String query,

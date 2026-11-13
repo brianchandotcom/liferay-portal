@@ -85,9 +85,13 @@ public class NestedFieldsSetterUtil {
 			return;
 		}
 
-		_setFieldValues(
-			item, nestedFieldsContext.getNestedFields(), nestedFieldsContext,
-			nestedFieldsSetterCustomizer);
+		List<Object> items = _getItems(item);
+
+		for (String nestedField : nestedFieldsContext.getNestedFields()) {
+			_setFieldValues(
+				items, nestedField, nestedFieldsContext,
+				nestedFieldsSetterCustomizer, Collections.emptyMap());
+		}
 	}
 
 	public interface NestedFieldsSetterCustomizer {
@@ -226,58 +230,57 @@ public class NestedFieldsSetterUtil {
 	}
 
 	private static void _setFieldValues(
-			Object entity, List<String> nestedFields,
+			List<Object> items, String nestedField,
 			NestedFieldsContext nestedFieldsContext,
-			NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer)
+			NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer,
+			Map<String, Object> parentPathParameters)
 		throws Exception {
 
-		List<Object> items = _getItems(entity);
+		String childNestedField = null;
 
-		for (String nestedField : nestedFields) {
-			String childNestedField = null;
+		int index = nestedField.indexOf(".");
 
-			int index = nestedField.indexOf(".");
+		if (index != -1) {
+			childNestedField = nestedField.substring(index + 1);
 
-			if (index != -1) {
-				childNestedField = nestedField.substring(index + 1);
+			nestedField = nestedField.substring(0, index);
+		}
 
-				nestedField = nestedField.substring(0, index);
+		for (Object item : items) {
+			Class<?> itemClass = item.getClass();
+
+			Field field = _getField(itemClass, nestedField);
+
+			if (field == null) {
+				continue;
 			}
 
-			for (Object item : items) {
-				Class<?> itemClass = item.getClass();
+			field.setAccessible(true);
 
-				Field field = _getField(itemClass, nestedField);
+			NestedFieldGetter nestedFieldGetter = _getNestedFieldGetter(
+				nestedField, itemClass, nestedFieldsContext);
 
-				if (field == null) {
-					continue;
-				}
-
-				field.setAccessible(true);
-
-				NestedFieldGetter nestedFieldGetter = _getNestedFieldGetter(
-					nestedField, itemClass, nestedFieldsContext);
-
-				if (nestedFieldGetter == null) {
-					continue;
-				}
-
-				Object value = _adaptToFieldType(
-					field.getType(),
-					nestedFieldGetter.getValue(
-						nestedField, item, nestedFieldsContext,
-						nestedFieldsSetterCustomizer));
-
-				field.set(item, value);
-
-				if ((childNestedField == null) || (value == null)) {
-					continue;
-				}
-
-				_setFieldValues(
-					value, Collections.singletonList(childNestedField),
-					nestedFieldsContext, nestedFieldsSetterCustomizer);
+			if (nestedFieldGetter == null) {
+				continue;
 			}
+
+			NestedFieldValue nestedFieldValue = nestedFieldGetter.getValue(
+				nestedField, item, nestedFieldsContext,
+				nestedFieldsSetterCustomizer, parentPathParameters);
+
+			Object value = _adaptToFieldType(
+				field.getType(), nestedFieldValue.getValue());
+
+			field.set(item, value);
+
+			if ((childNestedField == null) || (value == null)) {
+				continue;
+			}
+
+			_setFieldValues(
+				_getItems(value), childNestedField, nestedFieldsContext,
+				nestedFieldsSetterCustomizer,
+				nestedFieldValue.getPathParameters());
 		}
 	}
 
@@ -357,18 +360,27 @@ public class NestedFieldsSetterUtil {
 					nestedField.value(), parentClass,
 					_getAPIVersion(resourceClass.getSuperclass()));
 
+				Map.Entry<String, Class<?>>[]
+					resourceMethodArgumentNameTypeEntries =
+						_getResourceMethodArgumentNameTypeEntries(
+							resourceClass, resourceMethod);
+				String[] resourceMethodPathParameterNames =
+					_getResourceMethodPathParameterNames(
+						resourceClass, resourceMethod);
+
 				ServiceObjects<Object> serviceObjects =
 					_bundleContext.getServiceObjects(serviceReference);
 
 				nestedFieldGetters.put(
 					factoryKey,
 					(fieldName, item, nestedFieldsContext,
-					 nestedFieldsSetterCustomizer) -> _getNestedFieldValue(
-						fieldName, item, nestedFieldsContext,
-						nestedFieldsSetterCustomizer, resourceMethod,
-						_getResourceMethodArgNameTypeEntries(
-							resourceClass, resourceMethod),
-						serviceObjects));
+					 nestedFieldsSetterCustomizer, parentPathParameters) ->
+						_getNestedFieldValue(
+							fieldName, item, nestedFieldsContext,
+							nestedFieldsSetterCustomizer, parentPathParameters,
+							resourceMethod,
+							resourceMethodArgumentNameTypeEntries,
+							resourceMethodPathParameterNames, serviceObjects));
 			}
 
 			if (nestedFieldGetters.isEmpty()) {
@@ -400,7 +412,7 @@ public class NestedFieldsSetterUtil {
 			_bundleContext = bundleContext;
 		}
 
-		private Object _convert(String value, Class<?> type) {
+		private Object _convert(Class<?> type, Object value) {
 			if (value == null) {
 				return null;
 			}
@@ -424,15 +436,15 @@ public class NestedFieldsSetterUtil {
 			return null;
 		}
 
-		private Object _getMethodArgValueFromItem(
+		private Object _getMethodArgumentValueFromItem(
 				Object item,
-				Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry)
+				Map.Entry<String, Class<?>> resourceMethodArgumentNameTypeEntry)
 			throws Exception {
 
-			String argName = resourceMethodArgNameTypeEntry.getKey();
+			String argumentName = resourceMethodArgumentNameTypeEntry.getKey();
 
 			String methodName =
-				"get" + StringUtil.upperCaseFirstLetter(argName);
+				"get" + StringUtil.upperCaseFirstLetter(argumentName);
 
 			List<Class<?>> itemClasses = new ArrayList<>();
 
@@ -447,7 +459,7 @@ public class NestedFieldsSetterUtil {
 					if (StringUtil.equals(method.getName(), methodName) &&
 						Objects.equals(
 							method.getReturnType(),
-							resourceMethodArgNameTypeEntry.getValue()) &&
+							resourceMethodArgumentNameTypeEntry.getValue()) &&
 						(method.getParameterCount() == 0)) {
 
 						return method.invoke(item);
@@ -458,88 +470,101 @@ public class NestedFieldsSetterUtil {
 			return null;
 		}
 
-		private Object _getMethodArgValueFromRequest(
+		private Object _getMethodArgumentValueFromRequest(
 			ContextDataInjector contextDataInjector, String fieldName,
-			Map.Entry<String, Class<?>> resourceMethodArgNameTypeEntry,
-			NestedFieldsContext nestedFieldsContext) {
+			NestedFieldsContext nestedFieldsContext,
+			Map<String, Object> parentPathParameters,
+			Map.Entry<String, Class<?>> resourceMethodArgumentNameTypeEntry) {
 
-			Object argValue = null;
+			Object argumentValue = null;
 
-			Class<?> resourceMethodArgType =
-				resourceMethodArgNameTypeEntry.getValue();
+			Class<?> resourceMethodArgumentType =
+				resourceMethodArgumentNameTypeEntry.getValue();
 
 			Object context = contextDataInjector.getValue(
-				resourceMethodArgType);
+				resourceMethodArgumentType);
 
 			if (context != null) {
-				argValue = context;
+				argumentValue = context;
+			}
+			else if (parentPathParameters.containsKey(
+						resourceMethodArgumentNameTypeEntry.getKey())) {
+
+				argumentValue = _convert(
+					resourceMethodArgumentType,
+					parentPathParameters.get(
+						resourceMethodArgumentNameTypeEntry.getKey()));
 			}
 			else {
 				MultivaluedMap<String, String> pathParameters =
 					nestedFieldsContext.getPathParameters();
 
-				argValue = _convert(
+				argumentValue = _convert(
+					resourceMethodArgumentType,
 					pathParameters.getFirst(
-						resourceMethodArgNameTypeEntry.getKey()),
-					resourceMethodArgType);
+						resourceMethodArgumentNameTypeEntry.getKey()));
 
-				if (argValue == null) {
+				if (argumentValue == null) {
 					MultivaluedMap<String, String> queryParameters =
 						nestedFieldsContext.getQueryParameters();
 
-					argValue = _convert(
+					argumentValue = _convert(
+						resourceMethodArgumentType,
 						queryParameters.getFirst(
 							fieldName + StringPool.PERIOD +
-								resourceMethodArgNameTypeEntry.getKey()),
-						resourceMethodArgType);
+								resourceMethodArgumentNameTypeEntry.getKey()));
 				}
 			}
 
-			return argValue;
+			return argumentValue;
 		}
 
-		private Object[] _getMethodArgs(
+		private Object[] _getMethodArguments(
 				ContextDataInjector contextDataInjector, String fieldName,
 				Object item, NestedFieldsContext nestedFieldsContext,
-				Method resourceMethod,
-				Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries)
+				Map<String, Object> parentPathParameters, Method resourceMethod,
+				Map.Entry<String, Class<?>>[]
+					resourceMethodArgumentNameTypeEntries)
 			throws Exception {
 
-			Object[] args = new Object[resourceMethod.getParameterCount()];
+			Object[] arguments = new Object[resourceMethod.getParameterCount()];
 
 			for (int i = 0; i < resourceMethod.getParameterCount(); i++) {
-				if (resourceMethodArgNameTypeEntries[i] == null) {
+				if (resourceMethodArgumentNameTypeEntries[i] == null) {
 					continue;
 				}
 
-				args[i] = _getMethodArgValueFromItem(
-					item, resourceMethodArgNameTypeEntries[i]);
+				arguments[i] = _getMethodArgumentValueFromItem(
+					item, resourceMethodArgumentNameTypeEntries[i]);
 
-				if (args[i] != null) {
+				if (arguments[i] != null) {
 					continue;
 				}
 
-				args[i] = _getMethodArgValueFromRequest(
-					contextDataInjector, fieldName,
-					resourceMethodArgNameTypeEntries[i], nestedFieldsContext);
+				arguments[i] = _getMethodArgumentValueFromRequest(
+					contextDataInjector, fieldName, nestedFieldsContext,
+					parentPathParameters,
+					resourceMethodArgumentNameTypeEntries[i]);
 			}
 
-			return args;
+			return arguments;
 		}
 
-		private Object _getNestedFieldValue(
+		private NestedFieldValue _getNestedFieldValue(
 				String fieldName, Object item,
 				NestedFieldsContext nestedFieldsContext,
 				NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer,
-				Method resourceMethod,
-				Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries,
+				Map<String, Object> parentPathParameters, Method resourceMethod,
+				Map.Entry<String, Class<?>>[]
+					resourceMethodArgumentNameTypeEntries,
+				String[] resourceMethodPathParameterNames,
 				ServiceObjects<Object> serviceObjects)
 			throws Exception {
 
 			if (!FeatureFlagUtil.isEnabled(
 					CompanyThreadLocal.getCompanyId(), resourceMethod)) {
 
-				return null;
+				return new NestedFieldValue(parentPathParameters, null);
 			}
 
 			Object resource = serviceObjects.getService();
@@ -555,28 +580,36 @@ public class NestedFieldsSetterUtil {
 
 				contextDataInjector.inject(resource);
 
-				Object[] args = _getMethodArgs(
+				Object[] arguments = _getMethodArguments(
 					contextDataInjector, fieldName, item, nestedFieldsContext,
-					resourceMethod, resourceMethodArgNameTypeEntries);
+					parentPathParameters, resourceMethod,
+					resourceMethodArgumentNameTypeEntries);
 
-				return resourceMethod.invoke(resource, args);
+				Map<String, Object> childPathParameters = new HashMap<>(
+					parentPathParameters);
+
+				for (int i = 0; i < arguments.length; i++) {
+					if ((resourceMethodPathParameterNames[i] == null) ||
+						(arguments[i] == null)) {
+
+						continue;
+					}
+
+					childPathParameters.put(
+						resourceMethodPathParameterNames[i], arguments[i]);
+				}
+
+				return new NestedFieldValue(
+					childPathParameters,
+					resourceMethod.invoke(resource, arguments));
 			}
 			finally {
 				serviceObjects.ungetService(resource);
 			}
 		}
 
-		private Map.Entry<String, Class<?>>[]
-			_getResourceMethodArgNameTypeEntries(
-				Class<?> resourceClass, Method resourceMethod) {
-
-			Parameter[] resourceMethodParameters =
-				resourceMethod.getParameters();
-
-			Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries =
-				new Map.Entry[resourceMethodParameters.length];
-
-			Parameter[] parentParameters = null;
+		private Parameter[] _getParentParameters(
+			Class<?> resourceClass, Method resourceMethod) {
 
 			try {
 				Class<?> parentResourceClass = resourceClass.getSuperclass();
@@ -585,13 +618,30 @@ public class NestedFieldsSetterUtil {
 					resourceMethod.getName(),
 					resourceMethod.getParameterTypes());
 
-				parentParameters = parentResourceMethod.getParameters();
+				return parentResourceMethod.getParameters();
 			}
 			catch (NoSuchMethodException noSuchMethodException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(noSuchMethodException);
 				}
 			}
+
+			return null;
+		}
+
+		private Map.Entry<String, Class<?>>[]
+			_getResourceMethodArgumentNameTypeEntries(
+				Class<?> resourceClass, Method resourceMethod) {
+
+			Parameter[] resourceMethodParameters =
+				resourceMethod.getParameters();
+
+			Map.Entry<String, Class<?>>[]
+				resourceMethodArgumentNameTypeEntries =
+					new Map.Entry[resourceMethodParameters.length];
+
+			Parameter[] parentParameters = _getParentParameters(
+				resourceClass, resourceMethod);
 
 			for (int i = 0; i < resourceMethodParameters.length; i++) {
 				Parameter parameter = resourceMethodParameters[i];
@@ -606,7 +656,7 @@ public class NestedFieldsSetterUtil {
 						Context.class, parameter, parentParameters, i);
 
 					if (context != null) {
-						resourceMethodArgNameTypeEntries[i] =
+						resourceMethodArgumentNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								parameter.getName(), parameterType);
 					}
@@ -615,7 +665,7 @@ public class NestedFieldsSetterUtil {
 						PathParam.class, parameter, parentParameters, i);
 
 					if (pathParam != null) {
-						resourceMethodArgNameTypeEntries[i] =
+						resourceMethodArgumentNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								pathParam.value(), parameterType);
 					}
@@ -624,24 +674,73 @@ public class NestedFieldsSetterUtil {
 						QueryParam.class, parameter, parentParameters, i);
 
 					if (queryParam != null) {
-						resourceMethodArgNameTypeEntries[i] =
+						resourceMethodArgumentNameTypeEntries[i] =
 							new AbstractMap.SimpleImmutableEntry<>(
 								queryParam.value(), parameterType);
 					}
 				}
 				else {
-					resourceMethodArgNameTypeEntries[i] =
+					resourceMethodArgumentNameTypeEntries[i] =
 						new AbstractMap.SimpleImmutableEntry<>(
 							nestedFieldId.value(), parameterType);
 				}
 			}
 
-			return resourceMethodArgNameTypeEntries;
+			return resourceMethodArgumentNameTypeEntries;
+		}
+
+		private String[] _getResourceMethodPathParameterNames(
+			Class<?> resourceClass, Method resourceMethod) {
+
+			Parameter[] resourceMethodParameters =
+				resourceMethod.getParameters();
+
+			String[] resourceMethodPathParameterNames =
+				new String[resourceMethodParameters.length];
+
+			Parameter[] parentParameters = _getParentParameters(
+				resourceClass, resourceMethod);
+
+			for (int i = 0; i < resourceMethodParameters.length; i++) {
+				PathParam pathParam = _getAnnotation(
+					PathParam.class, resourceMethodParameters[i],
+					parentParameters, i);
+
+				if (pathParam == null) {
+					continue;
+				}
+
+				resourceMethodPathParameterNames[i] = pathParam.value();
+			}
+
+			return resourceMethodPathParameterNames;
 		}
 
 		private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 		private final BundleContext _bundleContext;
+
+	}
+
+	private static class NestedFieldValue {
+
+		public Map<String, Object> getPathParameters() {
+			return _pathParameters;
+		}
+
+		public Object getValue() {
+			return _value;
+		}
+
+		private NestedFieldValue(
+			Map<String, Object> pathParameters, Object value) {
+
+			_pathParameters = pathParameters;
+			_value = value;
+		}
+
+		private final Map<String, Object> _pathParameters;
+		private final Object _value;
 
 	}
 
@@ -657,10 +756,11 @@ public class NestedFieldsSetterUtil {
 
 	private interface NestedFieldGetter {
 
-		public Object getValue(
+		public NestedFieldValue getValue(
 				String fieldName, Object item,
 				NestedFieldsContext nestedFieldsContext,
-				NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer)
+				NestedFieldsSetterCustomizer nestedFieldsSetterCustomizer,
+				Map<String, Object> parentPathParameters)
 			throws Exception;
 
 	}

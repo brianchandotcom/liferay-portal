@@ -11,11 +11,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -33,6 +38,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -54,6 +60,8 @@ import jakarta.portlet.ResourceResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -112,7 +120,9 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testGetPanelCategoriesJSONArray() {
+	public void testGetPanelCategoriesJSONArray() throws Exception {
+		_setCompanyAdmin();
+
 		JSONArray panelCategoriesJSONArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPanelCategoriesJSONArray",
 			new Class<?>[] {
@@ -145,6 +155,56 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetSitesJSONObjectWithCompanyAdmin() throws Exception {
+		_setCompanyAdmin();
+
+		Group group = _addGroup();
+
+		_userLocalService.unsetGroupUsers(
+			group.getGroupId(), new long[] {TestPropsValues.getUserId()},
+			ServiceContextTestUtil.getServiceContext());
+
+		Company company = _themeDisplay.getCompany();
+
+		Group companyGroup = company.getGroup();
+
+		_setRecentGroupsValue(
+			_mockHttpServletRequest,
+			StringUtil.merge(
+				new long[] {group.getGroupId(), companyGroup.getGroupId()}));
+
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		JSONArray mySitesJSONArray = jsonObject.getJSONArray("mySites");
+
+		Assert.assertEquals(1, mySitesJSONArray.length());
+
+		_assertGroupKeys(
+			Arrays.asList(group, companyGroup),
+			jsonObject.getJSONArray("recentSites"));
+
+		Assert.assertTrue(jsonObject.has("viewAllURL"));
+	}
+
+	@Test
+	public void testGetSitesJSONObjectWithGroupViewPermission()
+		throws Exception {
+
+		_role = RoleTestUtil.addRole(
+			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR,
+			Group.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.VIEW);
+
+		_userLocalService.addRoleUser(_role.getRoleId(), _user);
+
+		_setUser(_user);
+
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		Assert.assertTrue(jsonObject.has("mySites"));
+	}
+
+	@Test
 	public void testGetSitesJSONObjectWithMySites() throws Exception {
 		_addMySiteGroups(1);
 
@@ -174,6 +234,50 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetSitesJSONObjectWithNonmemberRecentSites()
+		throws Exception {
+
+		_addMySiteGroups(2);
+
+		Group group = _addGroup();
+
+		_setRecentGroupsValue(
+			_mockHttpServletRequest, String.valueOf(group.getGroupId()));
+
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		_assertGroupKeys(
+			Collections.singletonList(group),
+			jsonObject.getJSONArray("recentSites"));
+		_assertGroupKeys(
+			_groups.subList(0, 2), jsonObject.getJSONArray("mySites"));
+
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+	}
+
+	@Test
+	public void testGetSitesJSONObjectWithNonnavigableMySites()
+		throws Exception {
+
+		_addMySiteGroups(2);
+
+		Group group = GroupTestUtil.addGroup();
+
+		_groups.add(group);
+
+		_userLocalService.setGroupUsers(
+			group.getGroupId(), new long[] {_user.getUserId()});
+
+		JSONObject jsonObject = _getSitesJSONObject();
+
+		_assertGroupKeys(
+			_groups.subList(0, 2), jsonObject.getJSONArray("mySites"));
+
+		Assert.assertFalse(jsonObject.has("recentSites"));
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+	}
+
+	@Test
 	public void testGetSitesJSONObjectWithRecentSites() throws Exception {
 		_addRecentGroups(3);
 
@@ -184,13 +288,32 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 		_testGetSitesJSONObjectWithRecentSitesAndMaxPlus1Sites();
 	}
 
+	@Test
+	public void testHasGroupURL() throws Exception {
+		Assert.assertTrue(_hasGroupURL(_addGroup()));
+
+		Group group = GroupTestUtil.addGroup();
+
+		LayoutTestUtil.addTypePortletLayout(group, true);
+
+		_groups.add(group);
+
+		Assert.assertFalse(_hasGroupURL(group));
+	}
+
+	private Group _addGroup() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		LayoutTestUtil.addTypePortletLayout(group);
+
+		_groups.add(group);
+
+		return group;
+	}
+
 	private void _addMySiteGroups(int max) throws Exception {
 		for (int i = 0; i < max; i++) {
-			Group group = GroupTestUtil.addGroup();
-
-			LayoutTestUtil.addTypePortletLayout(group);
-
-			_groups.add(group);
+			Group group = _addGroup();
 
 			_userLocalService.setGroupUsers(
 				group.getGroupId(), new long[] {_user.getUserId()});
@@ -199,11 +322,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 
 	private void _addRecentGroups(int max) throws Exception {
 		for (int i = 0; i < max; i++) {
-			Group group = GroupTestUtil.addGroup();
-
-			LayoutTestUtil.addTypePortletLayout(group);
-
-			_groups.add(group);
+			Group group = _addGroup();
 
 			_recentGroups.add(group);
 
@@ -267,6 +386,19 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 		return themeDisplay;
 	}
 
+	private boolean _hasGroupURL(Group group) {
+		return ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_hasGroupURL",
+			new Class<?>[] {
+				Group.class, ResourceRequest.class, ThemeDisplay.class
+			},
+			group, _mockPortletRequest, _themeDisplay);
+	}
+
+	private void _setCompanyAdmin() throws Exception {
+		_setUser(TestPropsValues.getUser());
+	}
+
 	private void _setRecentGroupsValue(
 		HttpServletRequest httpServletRequest, String value) {
 
@@ -275,21 +407,27 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	}
 
 	private void _setUser() throws Exception {
-		_user = _addUser();
-
-		_themeDisplay.setUser(_user);
-
 		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(_user.getUserId());
-
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
+		_user = _addUser();
+
+		_setUser(_user);
 
 		_setRecentGroupsValue(_mockHttpServletRequest, StringPool.BLANK);
+	}
+
+	private void _setUser(User user) throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		_themeDisplay.setPermissionChecker(permissionChecker);
+
+		_themeDisplay.setUser(user);
+
+		PrincipalThreadLocal.setName(user.getUserId());
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
 
 	private void _testGetSitesJSONObjectWithMySitesAnd1Site() {
@@ -393,6 +531,10 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	private RecentGroupManager _recentGroupManager;
 
 	private final List<Group> _recentGroups = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private Role _role;
+
 	private ThemeDisplay _themeDisplay;
 	private User _user;
 

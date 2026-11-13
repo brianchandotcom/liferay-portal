@@ -112,6 +112,43 @@ import type {FDSVisualizationMode} from '@liferay/js-api/data-set';
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
 
+const getTableFields = (
+	views: Array<IView>
+): Array<IField & {fieldName: string}> | undefined => {
+	const view = views.find(
+		({name}) => name && name.toLowerCase().includes('table')
+	);
+
+	if (!view) {
+		return undefined;
+	}
+
+	const fields = (view.schema as ITableSchema | undefined)?.fields ?? [];
+
+	return fields.map((field: IField) => ({
+		...field,
+		fieldName: String(field.fieldName).replaceAll('.', ','),
+	}));
+};
+
+const getDefaultVisibleFieldNames = (
+	views: Array<IView>
+): VisibleFieldNames => {
+	const defaultVisibleFieldNames: VisibleFieldNames = {};
+
+	const fields = getTableFields(views) ?? [];
+
+	if (!fields.some(({hidden}) => hidden)) {
+		return defaultVisibleFieldNames;
+	}
+
+	fields.forEach(({fieldName, hidden}) => {
+		defaultVisibleFieldNames[fieldName] = !hidden;
+	});
+
+	return defaultVisibleFieldNames;
+};
+
 const getSnapshotByERC = (
 	snapshots: Array<ISnapshots> | undefined,
 	erc: string
@@ -346,28 +383,18 @@ const FrontendDataSetContent = ({
 	const [getVisibleFields, updateVisibleFields] = useConfigInURL({
 		configInURLBehavior,
 		configReader: (visibleFieldNames: VisibleFieldNames | undefined) => {
-			const view = views.find(
-				({name}) => name && name.toLowerCase().includes('table')
-			);
+			const fields = getTableFields(views);
 
-			if (view && visibleFieldNames) {
-				const tableSchema = view.schema as ITableSchema;
-
+			if (fields && visibleFieldNames) {
 				const updatedVisibleFieldNames: VisibleFieldNames = {};
 
-				tableSchema.fields.forEach((field: IField) => {
-					let fieldName: string = String(field.fieldName);
-
-					if (fieldName.includes('.')) {
-						fieldName = fieldName.replaceAll('.', ',');
-					}
-
+				fields.forEach(({fieldName, hidden}) => {
 					if (visibleFieldNames[fieldName] !== undefined) {
 						updatedVisibleFieldNames[fieldName] =
 							visibleFieldNames[fieldName];
 					}
 					else {
-						updatedVisibleFieldNames[fieldName] = true;
+						updatedVisibleFieldNames[fieldName] = !hidden;
 					}
 				});
 
@@ -608,15 +635,12 @@ const FrontendDataSetContent = ({
 			...initialActiveView,
 		};
 
-		let initialVisibleFieldNames = {};
+		const defaultVisibleFieldNames = getDefaultVisibleFieldNames(views);
 
-		const visibleFieldNames = getVisibleFields();
+		defaultSnapshot.visibleFieldNames = defaultVisibleFieldNames;
 
-		defaultSnapshot.visibleFieldNames = initialVisibleFieldNames;
-
-		if (visibleFieldNames) {
-			initialVisibleFieldNames = visibleFieldNames;
-		}
+		const initialVisibleFieldNames =
+			getVisibleFields() || defaultVisibleFieldNames;
 
 		const view = getView();
 

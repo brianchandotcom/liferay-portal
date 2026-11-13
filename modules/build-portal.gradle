@@ -9,19 +9,13 @@ buildscript {
 
 apply plugin: BaselinePlugin
 
+apply from: "../modules/build-portal-common.gradle"
+
 Properties bndProperties = GUtil.loadProperties(file("bnd.bnd"))
 
 archivesBaseName = "com.liferay." + name.replace('-' as char, '.' as char)
 group = "com.liferay.portal"
 version = bndProperties.getProperty("Bundle-Version")
-
-classes {
-	dependsOn = []
-}
-
-compileJava {
-	enabled = false
-}
 
 jar {
 	archiveFileName = "${project.name}.jar"
@@ -29,35 +23,15 @@ jar {
 	enabled = false
 }
 
-reporting {
-	baseDir = "../baseline-reports"
-}
-
-repositories {
-	maven {
-		url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
-	}
-}
-
-sourceSets {
-	main {
-		java {
-			srcDirs = ["src"]
-		}
-
-		resources {
-			srcDirs = ["src"]
-		}
-	}
-}
-
 tasks.withType(BaselineTask) {
 	ignoreFailures = true
 
+	File baselineReportsDir = file("../baseline-reports")
+
 	if (name == "baseline") {
-		logFileName = "${project.name}.log"
+		logFileName = new File(baselineReportsDir, "${project.name}.log")
 	}
 	else {
-		logFileName = project.name + "-" + name.substring(8) + ".log"
+		logFileName = new File(baselineReportsDir, project.name + "-" + name.substring(8) + ".log")
 	}
 }

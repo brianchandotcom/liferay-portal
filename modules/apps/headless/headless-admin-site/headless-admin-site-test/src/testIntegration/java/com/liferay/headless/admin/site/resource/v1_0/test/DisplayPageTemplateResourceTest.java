@@ -376,20 +376,6 @@ public class DisplayPageTemplateResourceTest
 			_addDesignLibraryDisplayPageTemplate(
 				designLibraryExternalReferenceCode);
 
-		Map<String, Map<String, String>> actions =
-			displayPageTemplate.getActions();
-
-		Map<String, String> updateAction = actions.get("update");
-
-		String updateHref = updateAction.get("href");
-
-		Assert.assertTrue(
-			updateHref.endsWith(
-				"/display-page-templates/" +
-					displayPageTemplate.getExternalReferenceCode()));
-
-		Assert.assertEquals("PATCH", updateAction.get("method"));
-
 		String newName = RandomTestUtil.randomString();
 
 		DisplayPageTemplate patchDisplayPageTemplate =
@@ -414,8 +400,6 @@ public class DisplayPageTemplateResourceTest
 			getDisplayPageTemplate.getMarkedAsDefault());
 		Assert.assertEquals(newName, getDisplayPageTemplate.getName());
 
-		_testPatchDesignLibraryDisplayPageTemplateWithDuplicateName(
-			designLibraryExternalReferenceCode, newName);
 		_assertProblemException(
 			"BAD_REQUEST", "Name must not be empty.",
 			() ->
@@ -425,9 +409,12 @@ public class DisplayPageTemplateResourceTest
 						displayPageTemplate.getExternalReferenceCode(),
 						new DisplayPageTemplate() {
 							{
-								setName("");
+								setName(StringPool.BLANK);
 							}
 						}));
+
+		_testPatchDesignLibraryDisplayPageTemplateWithDuplicateName(
+			designLibraryExternalReferenceCode, newName);
 	}
 
 	@Override
@@ -2046,6 +2033,17 @@ public class DisplayPageTemplateResourceTest
 		Assert.assertTrue(actions.containsKey("get"));
 		Assert.assertTrue(actions.containsKey("permissions"));
 		Assert.assertTrue(actions.containsKey("update"));
+
+		Map<String, String> updateAction = actions.get("update");
+
+		String updateHref = updateAction.get("href");
+
+		Assert.assertTrue(
+			updateHref.endsWith(
+				"/display-page-templates/" +
+					displayPageTemplate.getExternalReferenceCode()));
+
+		Assert.assertEquals("PATCH", updateAction.get("method"));
 	}
 
 	private void _testGetDesignLibraryDisplayPageTemplateWithNestedFields()

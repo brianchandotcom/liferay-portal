@@ -412,18 +412,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			designLibraryExternalReferenceCode,
 			WorkflowConstants.STATUS_APPROVED);
 
-		Map<String, Map<String, String>> actions = masterPage.getActions();
-
-		Map<String, String> updateAction = actions.get("update");
-
-		String updateHref = updateAction.get("href");
-
-		Assert.assertTrue(
-			updateHref.endsWith(
-				"/master-pages/" + masterPage.getExternalReferenceCode()));
-
-		Assert.assertEquals("PATCH", updateAction.get("method"));
-
 		String newName = RandomTestUtil.randomString();
 
 		MasterPage patchMasterPage =
@@ -448,8 +436,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			getMasterPage.getMarkedAsDefault());
 		Assert.assertEquals(newName, getMasterPage.getName());
 
-		_testPatchDesignLibraryMasterPageWithDuplicateName(
-			designLibraryExternalReferenceCode, newName);
 		ProblemExceptionTestUtil.assertProblemException(
 			"BAD_REQUEST", "Name must not be empty.",
 			() -> masterPageResource.patchDesignLibraryMasterPage(
@@ -457,9 +443,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				masterPage.getExternalReferenceCode(),
 				new MasterPage() {
 					{
-						setName("");
+						setName(StringPool.BLANK);
 					}
 				}));
+
+		_testPatchDesignLibraryMasterPageWithDuplicateName(
+			designLibraryExternalReferenceCode, newName);
 	}
 
 	@Override
@@ -1596,6 +1585,16 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		Assert.assertTrue(actions.containsKey("permissions"));
 		Assert.assertFalse(actions.containsKey("unmarkAsDefault"));
 		Assert.assertTrue(actions.containsKey("update"));
+
+		Map<String, String> updateAction = actions.get("update");
+
+		String updateHref = updateAction.get("href");
+
+		Assert.assertTrue(
+			updateHref.endsWith(
+				"/master-pages/" + masterPage.getExternalReferenceCode()));
+
+		Assert.assertEquals("PATCH", updateAction.get("method"));
 	}
 
 	private void _testGetDesignLibraryMasterPageWithNestedFields()

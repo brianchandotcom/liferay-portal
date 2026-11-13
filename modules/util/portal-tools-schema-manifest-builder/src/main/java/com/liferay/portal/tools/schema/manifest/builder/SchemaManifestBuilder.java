@@ -5,31 +5,48 @@
 
 package com.liferay.portal.tools.schema.manifest.builder;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.osgi.framework.Version;
 
 /**
  * @author Luis Ortiz
@@ -69,13 +86,19 @@ public class SchemaManifestBuilder {
 	}
 
 	public void build() throws IOException {
+		JSONArray historyJSONArray = getHistoryJSONArray(_baseDir);
+
 		String module = _module;
 
 		if (Validator.isNull(module)) {
 			module = getBundleSymbolicName(new File(_baseDir, "bnd.bnd"));
 		}
 
-		write(_manifestFile, getManifestJSONObject(module));
+		write(
+			_manifestFile,
+			getManifestJSONObject(
+				historyJSONArray, isInitializationRegistered(_baseDir),
+				module));
 	}
 
 	protected String getBundleSymbolicName(File bndFile) throws IOException {
@@ -102,20 +125,103 @@ public class SchemaManifestBuilder {
 		return bundleSymbolicName;
 	}
 
-	protected JSONObject getManifestJSONObject(String module) {
+	protected JSONArray getHistoryJSONArray(File baseDir) throws IOException {
+		JSONArray historyJSONArray = new JSONArrayImpl();
+
+		for (File upgradeStepRegistratorFile :
+				_getUpgradeStepRegistratorFiles(baseDir)) {
+
+			_addHistory(historyJSONArray, upgradeStepRegistratorFile);
+		}
+
+		return historyJSONArray;
+	}
+
+	protected JSONObject getManifestJSONObject(
+		JSONArray historyJSONArray, boolean initializationRegistered,
+		String module) {
+
 		JSONObject manifestJSONObject = new JSONObjectImpl();
 
-		return manifestJSONObject.put(
+		manifestJSONObject.put(
 			"description",
 			StringBundler.concat(
 				"Database changes manifest of one Liferay module, generated ",
-				"by Liferay Schema Manifest Builder. Do not edit it by hand. ",
-				"Top level keys: 'module' is the module's ",
-				"Bundle-SymbolicName, or 'portal' for portal core; ",
-				"'timestamp' is when the content last changed.")
+				"by Liferay Schema Manifest Builder from its upgrade steps. ",
+				"Do not edit it by hand. Top level keys: 'history' stores the ",
+				"upgrade steps that move a database between schema versions; ",
+				"'module' is the module's Bundle-SymbolicName, or 'portal' ",
+				"for portal core; 'schemaVersion' is the current schema ",
+				"version; 'timestamp' is when the content last changed. ",
+				"Rules: 'history' is a SET of edges, not a sequence: array ",
+				"order is not meaningful, several edges may share a ",
+				"'toSchemaVersion', and only one applies to any given ",
+				"database. Compute the upgrade path by following ",
+				"'fromSchemaVersion'/'toSchemaVersion'. 'history' only holds ",
+				"the steps registered with 'register': a fresh install is ",
+				"created directly at 'schemaVersion'. 'changes' inside an ",
+				"edge IS ordered, in execution order. Schema versions are ",
+				"opaque strings: never compare or sort them. A change's ",
+				"'className' is the class that implements the step; for an ",
+				"anonymous class it is its binary name, '<registrator>$<n>'; ",
+				"for a step returned by a method call it is the class or type ",
+				"the method is called on, such as UpgradeProcessFactory; for ",
+				"a lambda, or a step whose class cannot be resolved, it is ",
+				"the registrator. The edge's 'registratorClassName' plus the ",
+				"change's 'registratorLine' is where the step is declared; ",
+				"for a step created by UpgradeProcessFactory directly in the ",
+				"'register' call, an upgrade log entry '<class>:<line> - ...' ",
+				"matches the change whose edge 'registratorClassName' is ",
+				"<class> and whose 'registratorLine' is <line>. ",
+				"'customChange' means the step's effect could NOT be ",
+				"determined, not that it made no change. A database's own ",
+				"schemaVersion for this module is in its Release_ table, in ",
+				"the row where servletContextName equals 'module'.")
+		).put(
+			"history", historyJSONArray
 		).put(
 			"module", module
 		);
+
+		String schemaVersion = getSchemaVersion(
+			historyJSONArray, initializationRegistered);
+
+		if (schemaVersion != null) {
+			manifestJSONObject.put("schemaVersion", schemaVersion);
+		}
+
+		return manifestJSONObject;
+	}
+
+	protected String getSchemaVersion(
+		JSONArray historyJSONArray, boolean initializationRegistered) {
+
+		Version schemaVersion = null;
+
+		for (int i = 0; i < historyJSONArray.length(); i++) {
+			JSONObject edgeJSONObject = historyJSONArray.getJSONObject(i);
+
+			Version toSchemaVersion = Version.parseVersion(
+				edgeJSONObject.getString("toSchemaVersion"));
+
+			if ((schemaVersion != null) &&
+				(schemaVersion.compareTo(toSchemaVersion) >= 0)) {
+
+				continue;
+			}
+
+			schemaVersion = toSchemaVersion;
+		}
+
+		if (schemaVersion != null) {
+			return schemaVersion.toString();
+		}
+
+		if (initializationRegistered) {
+			return "1.0.0";
+		}
+
+		return null;
 	}
 
 	protected String getTimestamp(String content) {
@@ -126,6 +232,31 @@ public class SchemaManifestBuilder {
 		}
 
 		return null;
+	}
+
+	protected boolean isInitializationRegistered(File baseDir)
+		throws IOException {
+
+		for (File upgradeStepRegistratorFile :
+				_getUpgradeStepRegistratorFiles(baseDir)) {
+
+			String content = _read(upgradeStepRegistratorFile);
+
+			Matcher matcher = _implementsUpgradeStepRegistratorPattern.matcher(
+				content);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			matcher = _registerInitializationPattern.matcher(content);
+
+			if (matcher.find()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected void write(File manifestFile, JSONObject manifestJSONObject)
@@ -165,6 +296,526 @@ public class SchemaManifestBuilder {
 		System.out.println("Writing " + manifestFile);
 	}
 
+	private void _addHistory(
+			JSONArray historyJSONArray, File upgradeStepRegistratorFile)
+		throws IOException {
+
+		String content = _read(upgradeStepRegistratorFile);
+
+		Matcher matcher = _implementsUpgradeStepRegistratorPattern.matcher(
+			content);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		String fileName = upgradeStepRegistratorFile.getName();
+
+		String packageName = ToolsUtil.getPackagePath(
+			upgradeStepRegistratorFile);
+
+		String upgradeStepRegistratorClassName =
+			packageName + StringPool.PERIOD +
+				StringUtil.removeLast(fileName, ".java");
+
+		List<Integer> anonymousClassPositions = _getAnonymousClassPositions(
+			content);
+		Map<String, String> importedClassNames = _getImportedClassNames(
+			content);
+
+		int registerPosition = -1;
+
+		while (true) {
+			registerPosition = content.indexOf(
+				".register(", registerPosition + 1);
+
+			if (registerPosition == -1) {
+				break;
+			}
+
+			List<String> parameters = _getParameters(
+				content.substring(registerPosition));
+
+			if (parameters.size() < 3) {
+				continue;
+			}
+
+			for (String schemaVersion : ListUtil.subList(parameters, 0, 2)) {
+				if (!StringUtil.startsWith(schemaVersion, CharPool.QUOTE) ||
+					!StringUtil.endsWith(schemaVersion, CharPool.QUOTE)) {
+
+					int newLinesCount = StringUtil.count(
+						content, 0, registerPosition, CharPool.NEW_LINE);
+
+					throw new IllegalArgumentException(
+						StringBundler.concat(
+							"Unable to parse schema version ", schemaVersion,
+							" at ", upgradeStepRegistratorClassName, ":",
+							newLinesCount + 1));
+				}
+			}
+
+			JSONArray changesJSONArray = new JSONArrayImpl();
+
+			int parameterPosition = content.indexOf(
+				parameters.get(1), registerPosition);
+
+			for (int i = 2; i < parameters.size(); i++) {
+				String parameter = parameters.get(i);
+
+				parameterPosition = content.indexOf(
+					parameter, parameterPosition);
+
+				int newLinesCount = StringUtil.count(
+					content, 0, parameterPosition, CharPool.NEW_LINE);
+
+				changesJSONArray.put(
+					new JSONObjectImpl(
+					).put(
+						"className",
+						_getUpgradeStepClassName(
+							anonymousClassPositions, content,
+							importedClassNames, packageName, parameter,
+							parameterPosition, upgradeStepRegistratorClassName)
+					).put(
+						"op", "customChange"
+					).put(
+						"registratorLine", newLinesCount + 1
+					));
+
+				parameterPosition += parameter.length();
+			}
+
+			historyJSONArray.put(
+				new JSONObjectImpl(
+				).put(
+					"changes", changesJSONArray
+				).put(
+					"fromSchemaVersion", StringUtil.unquote(parameters.get(0))
+				).put(
+					"registratorClassName", upgradeStepRegistratorClassName
+				).put(
+					"toSchemaVersion", StringUtil.unquote(parameters.get(1))
+				));
+		}
+	}
+
+	private List<Integer> _getAnonymousClassPositions(String content) {
+		List<Integer> anonymousClassPositions = new ArrayList<>();
+
+		Matcher matcher = _constructorPattern.matcher(content);
+
+		int closeCurlyBraceIndex = -1;
+
+		while (matcher.find()) {
+			int constructorPosition = matcher.start();
+
+			if ((constructorPosition < closeCurlyBraceIndex) ||
+				ToolsUtil.isInsideQuotes(content, constructorPosition)) {
+
+				continue;
+			}
+
+			int openParenthesisIndex = matcher.end() - 1;
+
+			String parametersString = _getParametersString(
+				content.substring(openParenthesisIndex));
+
+			int trailingContentIndex =
+				openParenthesisIndex + parametersString.length() + 2;
+
+			String trailingContent = StringUtil.trim(
+				content.substring(trailingContentIndex));
+
+			if (!trailingContent.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+				continue;
+			}
+
+			anonymousClassPositions.add(constructorPosition);
+
+			int openCurlyBraceIndex = content.indexOf(
+				CharPool.OPEN_CURLY_BRACE, trailingContentIndex);
+
+			closeCurlyBraceIndex = openCurlyBraceIndex;
+
+			while (true) {
+				closeCurlyBraceIndex = content.indexOf(
+					CharPool.CLOSE_CURLY_BRACE, closeCurlyBraceIndex + 1);
+
+				String anonymousClassBody = content.substring(
+					openCurlyBraceIndex, closeCurlyBraceIndex + 1);
+
+				if (ToolsUtil.getLevel(anonymousClassBody, "{", "}") == 0) {
+					break;
+				}
+			}
+		}
+
+		return anonymousClassPositions;
+	}
+
+	private String _getFullyQualifiedClassName(
+		String className, Map<String, String> importedClassNames,
+		String packageName) {
+
+		className = StringUtil.removeChars(
+			className, CharPool.NEW_LINE, CharPool.SPACE, CharPool.TAB);
+
+		if (className.contains(StringPool.PERIOD)) {
+			return className;
+		}
+
+		String fullyQualifiedClassName = importedClassNames.get(className);
+
+		if (fullyQualifiedClassName != null) {
+			return fullyQualifiedClassName;
+		}
+
+		return packageName + StringPool.PERIOD + className;
+	}
+
+	private Map<String, String> _getImportedClassNames(String content) {
+		Map<String, String> importedClassNames = new HashMap<>();
+
+		Matcher matcher = _importPattern.matcher(content);
+
+		while (matcher.find()) {
+			importedClassNames.put(matcher.group(2), matcher.group(1));
+		}
+
+		return importedClassNames;
+	}
+
+	private List<String> _getParameters(String methodCall) {
+		List<String> parameters = new ArrayList<>();
+
+		String parametersString = StringUtil.trim(
+			_getParametersString(methodCall));
+
+		if (parametersString.equals(StringPool.BLANK)) {
+			return parameters;
+		}
+
+		int index = -1;
+
+		while (true) {
+			index = parametersString.indexOf(StringPool.COMMA, index + 1);
+
+			if (index == -1) {
+				parameters.add(StringUtil.trim(parametersString));
+
+				return parameters;
+			}
+
+			if (ToolsUtil.isInsideQuotes(parametersString, index)) {
+				continue;
+			}
+
+			String parameter = StringUtil.replace(
+				parametersString.substring(0, index), "->",
+				_LAMBDA_SYMBOL_PLACEHOLDER);
+
+			if ((ToolsUtil.getLevel(parameter, "(", ")") != 0) ||
+				(ToolsUtil.getLevel(parameter, "<", ">") != 0) ||
+				(ToolsUtil.getLevel(parameter, "{", "}") != 0)) {
+
+				continue;
+			}
+
+			parameter = StringUtil.replace(
+				parameter, _LAMBDA_SYMBOL_PLACEHOLDER, "->");
+
+			parameters.add(StringUtil.trim(parameter));
+
+			parametersString = parametersString.substring(index + 1);
+
+			index = -1;
+		}
+	}
+
+	private String _getParametersString(String methodCall) {
+		int index = -1;
+		String parametersString = null;
+
+		while (true) {
+			index = methodCall.indexOf(StringPool.CLOSE_PARENTHESIS, index + 1);
+
+			parametersString = methodCall.substring(0, index + 1);
+
+			if ((ToolsUtil.getLevel(parametersString, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(parametersString, "{", "}") == 0)) {
+
+				break;
+			}
+		}
+
+		index = parametersString.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		return parametersString.substring(
+			index + 1, parametersString.length() - 1);
+	}
+
+	private String _getUpgradeStepClassName(
+		List<Integer> anonymousClassPositions, String content,
+		Map<String, String> importedClassNames, String packageName,
+		String upgradeStepExpression, int upgradeStepExpressionPosition,
+		String upgradeStepRegistratorClassName) {
+
+		Matcher matcher = _lambdaPattern.matcher(upgradeStepExpression);
+
+		if (matcher.find()) {
+			return upgradeStepRegistratorClassName;
+		}
+
+		matcher = _castPattern.matcher(upgradeStepExpression);
+
+		if (matcher.find()) {
+			upgradeStepExpression = upgradeStepExpression.substring(
+				matcher.end());
+			upgradeStepExpressionPosition += matcher.end();
+		}
+
+		int openParenthesisIndex = upgradeStepExpression.indexOf(
+			CharPool.OPEN_PARENTHESIS);
+
+		if (upgradeStepExpression.startsWith("new ")) {
+			String parametersString = _getParametersString(
+				upgradeStepExpression);
+
+			String trailingContent = StringUtil.trim(
+				upgradeStepExpression.substring(
+					openParenthesisIndex + parametersString.length() + 2));
+
+			if (trailingContent.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+				int index = anonymousClassPositions.indexOf(
+					upgradeStepExpressionPosition);
+
+				if (index == -1) {
+					throw new IllegalStateException(
+						"Unable to find the anonymous class at position " +
+							upgradeStepExpressionPosition);
+				}
+
+				return upgradeStepRegistratorClassName + StringPool.DOLLAR +
+					(index + 1);
+			}
+
+			String className = upgradeStepExpression.substring(
+				4, openParenthesisIndex);
+
+			int index = className.indexOf(CharPool.LESS_THAN);
+
+			if (index != -1) {
+				className = className.substring(0, index);
+			}
+
+			return _getFullyQualifiedClassName(
+				className, importedClassNames, packageName);
+		}
+
+		if (openParenthesisIndex != -1) {
+			String qualifiedMethodName = upgradeStepExpression.substring(
+				0, openParenthesisIndex);
+
+			int index = qualifiedMethodName.lastIndexOf(CharPool.PERIOD);
+
+			if (index == -1) {
+				return upgradeStepRegistratorClassName;
+			}
+
+			String receiverName = StringUtil.trim(
+				qualifiedMethodName.substring(0, index));
+
+			if (_isVariableName(receiverName)) {
+				String variableTypeName = _getVariableTypeName(
+					receiverName, content);
+
+				if (variableTypeName == null) {
+					return upgradeStepRegistratorClassName;
+				}
+
+				return _getFullyQualifiedClassName(
+					variableTypeName, importedClassNames, packageName);
+			}
+
+			return _getFullyQualifiedClassName(
+				receiverName, importedClassNames, packageName);
+		}
+
+		int initializerPosition = _getVariableInitializerPosition(
+			upgradeStepExpression, content);
+
+		if (initializerPosition == -1) {
+			String variableTypeName = _getVariableTypeName(
+				upgradeStepExpression, content);
+
+			if (variableTypeName == null) {
+				return upgradeStepRegistratorClassName;
+			}
+
+			return _getFullyQualifiedClassName(
+				variableTypeName, importedClassNames, packageName);
+		}
+
+		return _getUpgradeStepClassName(
+			anonymousClassPositions, content, importedClassNames, packageName,
+			_getVariableInitializer(initializerPosition, content),
+			initializerPosition, upgradeStepRegistratorClassName);
+	}
+
+	private List<File> _getUpgradeStepRegistratorFiles(File baseDir)
+		throws IOException {
+
+		List<File> upgradeStepRegistratorFiles = new ArrayList<>();
+
+		File javaDir = new File(baseDir, "src/main/java");
+
+		if (!javaDir.isDirectory()) {
+			return upgradeStepRegistratorFiles;
+		}
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		PathMatcher pathMatcher = fileSystem.getPathMatcher(
+			"glob:**/upgrade/registry/*UpgradeStepRegistrator.java");
+
+		Files.walkFileTree(
+			javaDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+					Path filePath, BasicFileAttributes basicFileAttributes) {
+
+					if (pathMatcher.matches(filePath)) {
+						upgradeStepRegistratorFiles.add(filePath.toFile());
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		Collections.sort(upgradeStepRegistratorFiles);
+
+		return upgradeStepRegistratorFiles;
+	}
+
+	private String _getVariableInitializer(int position, String content) {
+		int index = position;
+
+		while (true) {
+			index = content.indexOf(CharPool.SEMICOLON, index + 1);
+
+			String initializer = content.substring(position, index);
+
+			if ((ToolsUtil.getLevel(initializer, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(initializer, "{", "}") == 0)) {
+
+				return StringUtil.trim(initializer);
+			}
+		}
+	}
+
+	private int _getVariableInitializerPosition(String name, String content) {
+		Pattern pattern = Pattern.compile(
+			"\\b" + Pattern.quote(name) + "\\s*=(?!=)\\s*");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return -1;
+		}
+
+		return matcher.end();
+	}
+
+	private String _getVariableTypeName(String name, String content) {
+		Pattern pattern = Pattern.compile(
+			"([\\w.]+)(?:<[^;=]*>)?\\s+" + Pattern.quote(name) + "\\s*[;=]");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group(1);
+	}
+
+	private boolean _isVariableName(String name) {
+		char c = name.charAt(0);
+
+		if (((c == CharPool.UNDERLINE) || Character.isLowerCase(c)) &&
+			!name.contains(StringPool.PERIOD)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _read(File file) throws IOException {
+		String content = new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+
+		content = StringUtil.replace(
+			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+
+		return _removeComments(content);
+	}
+
+	private String _removeComments(String content) {
+		int index = 0;
+
+		while (true) {
+			Matcher matcher = _commentPattern.matcher(content);
+
+			if (!matcher.find(index)) {
+				return content;
+			}
+
+			int start = matcher.start();
+
+			if (ToolsUtil.isInsideQuotes(content, start)) {
+				index = start + 1;
+
+				continue;
+			}
+
+			char[] chars = content.toCharArray();
+
+			for (int i = start; i < matcher.end(); i++) {
+				if (chars[i] == CharPool.NEW_LINE) {
+					continue;
+				}
+
+				chars[i] = CharPool.SPACE;
+			}
+
+			content = new String(chars);
+
+			index = matcher.end();
+		}
+	}
+
+	private static final String _LAMBDA_SYMBOL_PLACEHOLDER =
+		"_LAMBDA_SYMBOL_PLACEHOLDER_";
+
+	private static final Pattern _castPattern = Pattern.compile(
+		"^\\(\\s*[\\w.]+\\s*\\)\\s*");
+	private static final Pattern _commentPattern = Pattern.compile(
+		"//[^\\n]*|/\\*[\\s\\S]*?\\*/");
+	private static final Pattern _constructorPattern = Pattern.compile(
+		"\\bnew\\s+[\\w.\\s]+(?:<[^;{]*?>)?\\s*\\(");
+	private static final Pattern _implementsUpgradeStepRegistratorPattern =
+		Pattern.compile("\\bimplements\\s[^{]*\\bUpgradeStepRegistrator\\b");
+	private static final Pattern _importPattern = Pattern.compile(
+		"^import ([\\w.]+\\.(\\w+));", Pattern.MULTILINE);
+	private static final Pattern _lambdaPattern = Pattern.compile(
+		"^(\\([\\w\\s,]*\\)|\\w+)\\s*->");
+	private static final Pattern _registerInitializationPattern =
+		Pattern.compile("\\.registerInitialization\\(\\s*\\)");
 	private static final Pattern _timestampPattern = Pattern.compile(
 		"^\t\"timestamp\": \"([^\"]*)\"", Pattern.MULTILINE);
 

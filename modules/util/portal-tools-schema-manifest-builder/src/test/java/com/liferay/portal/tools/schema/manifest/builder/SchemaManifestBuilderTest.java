@@ -7,11 +7,16 @@ package com.liferay.portal.tools.schema.manifest.builder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.json.JSONArrayImpl;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.io.File;
+
+import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -96,6 +101,24 @@ public class SchemaManifestBuilderTest {
 	}
 
 	@Test
+	public void testBuildWithInitializationUpgradeStepRegistrator()
+		throws Exception {
+
+		_writeBndFile(RandomTestUtil.randomString());
+
+		_copyUpgradeStepRegistratorFile("InitializationUpgradeStepRegistrator");
+
+		_schemaManifestBuilder.build();
+
+		JSONObject manifestJSONObject = new JSONObjectImpl(
+			_read(_manifestFile));
+
+		Assert.assertEquals(
+			"[]", String.valueOf(manifestJSONObject.get("history")));
+		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
+	}
+
+	@Test
 	public void testBuildWithModule() throws Exception {
 		_writeBndFile(RandomTestUtil.randomString());
 
@@ -107,6 +130,26 @@ public class SchemaManifestBuilderTest {
 		schemaManifestBuilder.build();
 
 		_assertManifest(module);
+	}
+
+	@Test
+	public void testBuildWithUpgradeStepRegistrator() throws Exception {
+		String module = RandomTestUtil.randomString();
+
+		_writeBndFile(module);
+
+		_copyUpgradeStepRegistratorFile("TestUpgradeStepRegistrator");
+
+		_schemaManifestBuilder.build();
+
+		JSONObject manifestJSONObject = new JSONObjectImpl(
+			_read(_manifestFile));
+
+		Assert.assertEquals(
+			_read("expected/TestUpgradeStepRegistrator.json"),
+			JSONUtil.toString(manifestJSONObject.getJSONArray("history")));
+		Assert.assertEquals(module, manifestJSONObject.get("module"));
+		Assert.assertEquals("2.0.0", manifestJSONObject.get("schemaVersion"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -137,27 +180,137 @@ public class SchemaManifestBuilderTest {
 		throws Exception {
 
 		File bndFile = new File(_baseDir, "bnd.bnd");
-		String bundleNameString = StringBundler.concat(
+		String content = StringBundler.concat(
 			"Bundle-Name: ", RandomTestUtil.randomString(), "\n");
 
-		Files.write(
-			bndFile.toPath(),
-			bundleNameString.getBytes(StandardCharsets.UTF_8));
+		Files.write(bndFile.toPath(), content.getBytes(StandardCharsets.UTF_8));
 
 		_schemaManifestBuilder.getBundleSymbolicName(bndFile);
 	}
 
 	@Test
+	public void testGetHistoryJSONArray() throws Exception {
+		_copyUpgradeStepRegistratorFile("TestUpgradeStepRegistrator");
+
+		Assert.assertEquals(
+			_read("expected/TestUpgradeStepRegistrator.json"),
+			JSONUtil.toString(
+				_schemaManifestBuilder.getHistoryJSONArray(_baseDir)));
+	}
+
+	@Test
+	public void testGetHistoryJSONArrayWithCRLFLineEndings() throws Exception {
+		File upgradeStepRegistratorFile = _copyUpgradeStepRegistratorFile(
+			"TestUpgradeStepRegistrator");
+
+		String content = StringUtil.replace(
+			_read(upgradeStepRegistratorFile), "\n", "\r\n");
+
+		Files.write(
+			upgradeStepRegistratorFile.toPath(),
+			content.getBytes(StandardCharsets.UTF_8));
+
+		Assert.assertEquals(
+			_read("expected/TestUpgradeStepRegistrator.json"),
+			JSONUtil.toString(
+				_schemaManifestBuilder.getHistoryJSONArray(_baseDir)));
+	}
+
+	@Test
+	public void testGetHistoryJSONArrayWithNonliteralSchemaVersion()
+		throws Exception {
+
+		_copyUpgradeStepRegistratorFile(
+			"NonliteralSchemaVersionUpgradeStepRegistrator");
+
+		try {
+			_schemaManifestBuilder.getHistoryJSONArray(_baseDir);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to parse schema version _SCHEMA_VERSION_1_0_0 at ",
+					"com.liferay.test.internal.upgrade.registry.",
+					"NonliteralSchemaVersionUpgradeStepRegistrator:8"),
+				illegalArgumentException.getMessage());
+		}
+	}
+
+	@Test
+	public void testGetHistoryJSONArrayWithoutRegisterCalls() throws Exception {
+		_copyUpgradeStepRegistratorFile("InitializationUpgradeStepRegistrator");
+
+		JSONArray historyJSONArray = _schemaManifestBuilder.getHistoryJSONArray(
+			_baseDir);
+
+		Assert.assertEquals(0, historyJSONArray.length());
+	}
+
+	@Test
 	public void testGetManifestJSONObject() {
+		JSONArray historyJSONArray = _getHistoryJSONArray("1.0.0");
 		String module = RandomTestUtil.randomString();
 
 		JSONObject manifestJSONObject =
-			_schemaManifestBuilder.getManifestJSONObject(module);
+			_schemaManifestBuilder.getManifestJSONObject(
+				historyJSONArray, false, module);
 
 		Assert.assertEquals(
 			_DESCRIPTION, manifestJSONObject.get("description"));
+		Assert.assertEquals(
+			historyJSONArray.toString(),
+			String.valueOf(manifestJSONObject.get("history")));
 		Assert.assertEquals(module, manifestJSONObject.get("module"));
+		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
 		Assert.assertFalse(manifestJSONObject.has("timestamp"));
+	}
+
+	@Test
+	public void testGetManifestJSONObjectWithInitialization() {
+		JSONObject manifestJSONObject =
+			_schemaManifestBuilder.getManifestJSONObject(
+				new JSONArrayImpl(), true, RandomTestUtil.randomString());
+
+		Assert.assertEquals("1.0.0", manifestJSONObject.get("schemaVersion"));
+	}
+
+	@Test
+	public void testGetManifestJSONObjectWithoutHistory() {
+		JSONObject manifestJSONObject =
+			_schemaManifestBuilder.getManifestJSONObject(
+				new JSONArrayImpl(), false, RandomTestUtil.randomString());
+
+		Assert.assertFalse(manifestJSONObject.has("schemaVersion"));
+	}
+
+	@Test
+	public void testGetSchemaVersion() {
+		Assert.assertEquals(
+			"1.10.0",
+			_schemaManifestBuilder.getSchemaVersion(
+				_getHistoryJSONArray(
+					"1.0.0", "1.10.0", "1.0.0.step-1", "1.9.0"),
+				false));
+	}
+
+	@Test
+	public void testGetSchemaVersionWithInitialization() {
+		Assert.assertEquals(
+			"1.0.0",
+			_schemaManifestBuilder.getSchemaVersion(new JSONArrayImpl(), true));
+		Assert.assertEquals(
+			"1.10.0",
+			_schemaManifestBuilder.getSchemaVersion(
+				_getHistoryJSONArray("1.0.0", "1.10.0"), true));
+	}
+
+	@Test
+	public void testGetSchemaVersionWithoutHistory() {
+		Assert.assertNull(
+			_schemaManifestBuilder.getSchemaVersion(
+				new JSONArrayImpl(), false));
 	}
 
 	@Test
@@ -183,12 +336,29 @@ public class SchemaManifestBuilderTest {
 	}
 
 	@Test
+	public void testIsInitializationRegistered() throws Exception {
+		_copyUpgradeStepRegistratorFile("InitializationUpgradeStepRegistrator");
+
+		Assert.assertTrue(
+			_schemaManifestBuilder.isInitializationRegistered(_baseDir));
+	}
+
+	@Test
+	public void testIsInitializationRegisteredWithoutRegisterInitialization()
+		throws Exception {
+
+		Assert.assertFalse(
+			_schemaManifestBuilder.isInitializationRegistered(_baseDir));
+	}
+
+	@Test
 	public void testWrite() throws Exception {
 		String module = RandomTestUtil.randomString();
 
 		_schemaManifestBuilder.write(
 			_manifestFile,
-			_schemaManifestBuilder.getManifestJSONObject(module));
+			_schemaManifestBuilder.getManifestJSONObject(
+				new JSONArrayImpl(), false, module));
 
 		String content = _read(_manifestFile);
 
@@ -198,7 +368,8 @@ public class SchemaManifestBuilderTest {
 
 		_schemaManifestBuilder.write(
 			_manifestFile,
-			_schemaManifestBuilder.getManifestJSONObject(module));
+			_schemaManifestBuilder.getManifestJSONObject(
+				new JSONArrayImpl(), false, module));
 
 		Assert.assertEquals(content, _read(_manifestFile));
 	}
@@ -210,7 +381,7 @@ public class SchemaManifestBuilderTest {
 
 		JSONObject manifestJSONObject =
 			_schemaManifestBuilder.getManifestJSONObject(
-				RandomTestUtil.randomString());
+				new JSONArrayImpl(), false, RandomTestUtil.randomString());
 
 		manifestJSONObject.put("timestamp", timestamp);
 
@@ -224,7 +395,8 @@ public class SchemaManifestBuilderTest {
 
 		_schemaManifestBuilder.write(
 			_manifestFile,
-			_schemaManifestBuilder.getManifestJSONObject(module));
+			_schemaManifestBuilder.getManifestJSONObject(
+				new JSONArrayImpl(), false, module));
 
 		Assert.assertNotEquals(timestamp, _assertManifest(module));
 	}
@@ -244,16 +416,59 @@ public class SchemaManifestBuilderTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"{\n\t\"description\": \"", _DESCRIPTION,
-				"\",\n\t\"module\": \"", module, "\",\n\t\"timestamp\": \"",
-				timestamp, "\"\n}"),
+				"\",\n\t\"history\": [\n\t],\n\t\"module\": \"", module,
+				"\",\n\t\"timestamp\": \"", timestamp, "\"\n}"),
 			content);
 
 		return timestamp;
 	}
 
+	private File _copyUpgradeStepRegistratorFile(String className)
+		throws Exception {
+
+		File upgradeStepRegistratorFile = new File(
+			_baseDir,
+			"src/main/java/com/liferay/test/internal/upgrade/registry/" +
+				className + ".java");
+
+		File upgradeStepRegistratorDir =
+			upgradeStepRegistratorFile.getParentFile();
+
+		upgradeStepRegistratorDir.mkdirs();
+
+		String content = _read(className + ".testjava");
+
+		Files.write(
+			upgradeStepRegistratorFile.toPath(),
+			content.getBytes(StandardCharsets.UTF_8));
+
+		return upgradeStepRegistratorFile;
+	}
+
+	private JSONArray _getHistoryJSONArray(String... toSchemaVersions) {
+		JSONArray historyJSONArray = new JSONArrayImpl();
+
+		for (String toSchemaVersion : toSchemaVersions) {
+			JSONObject edgeJSONObject = new JSONObjectImpl();
+
+			edgeJSONObject.put("toSchemaVersion", toSchemaVersion);
+
+			historyJSONArray.put(edgeJSONObject);
+		}
+
+		return historyJSONArray;
+	}
+
 	private String _read(File file) throws Exception {
 		return new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+	}
+
+	private String _read(String fileName) throws Exception {
+		URL url = SchemaManifestBuilderTest.class.getResource(
+			"dependencies/" + fileName);
+
+		return _read(new File(url.toURI()));
 	}
 
 	private void _writeBndFile(String bundleSymbolicName) throws Exception {
@@ -272,9 +487,33 @@ public class SchemaManifestBuilderTest {
 
 	private static final String _DESCRIPTION = StringBundler.concat(
 		"Database changes manifest of one Liferay module, generated by ",
-		"Liferay Schema Manifest Builder. Do not edit it by hand. Top level ",
-		"keys: 'module' is the module's Bundle-SymbolicName, or 'portal' for ",
-		"portal core; 'timestamp' is when the content last changed.");
+		"Liferay Schema Manifest Builder from its upgrade steps. Do not edit ",
+		"it by hand. Top level keys: 'history' stores the upgrade steps that ",
+		"move a database between schema versions; 'module' is the module's ",
+		"Bundle-SymbolicName, or 'portal' for portal core; 'schemaVersion' is ",
+		"the current schema version; 'timestamp' is when the content last ",
+		"changed. Rules: 'history' is a SET of edges, not a sequence: array ",
+		"order is not meaningful, several edges may share a ",
+		"'toSchemaVersion', and only one applies to any given database. ",
+		"Compute the upgrade path by following ",
+		"'fromSchemaVersion'/'toSchemaVersion'. 'history' only holds the ",
+		"steps registered with 'register': a fresh install is created ",
+		"directly at 'schemaVersion'. 'changes' inside an edge IS ordered, in ",
+		"execution order. Schema versions are opaque strings: never compare ",
+		"or sort them. A change's 'className' is the class that implements ",
+		"the step; for an anonymous class it is its binary name, ",
+		"'<registrator>$<n>'; for a step returned by a method call it is the ",
+		"class or type the method is called on, such as ",
+		"UpgradeProcessFactory; for a lambda, or a step whose class cannot be ",
+		"resolved, it is the registrator. The edge's 'registratorClassName' ",
+		"plus the change's 'registratorLine' is where the step is declared; ",
+		"for a step created by UpgradeProcessFactory directly in the ",
+		"'register' call, an upgrade log entry '<class>:<line> - ...' matches ",
+		"the change whose edge 'registratorClassName' is <class> and whose ",
+		"'registratorLine' is <line>. 'customChange' means the step's effect ",
+		"could NOT be determined, not that it made no change. A database's ",
+		"own schemaVersion for this module is in its Release_ table, in the ",
+		"row where servletContextName equals 'module'.");
 
 	private static final String _MANIFEST_FILE_NAME =
 		"src/main/resources/META-INF/schema/manifest.json";

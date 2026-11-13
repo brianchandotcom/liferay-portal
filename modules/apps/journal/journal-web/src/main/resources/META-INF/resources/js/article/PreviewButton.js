@@ -10,9 +10,12 @@ import React, {useEffect, useRef, useState} from 'react';
 export default function PreviewButton({
 	disabled,
 	getPreviewURL,
+	hasFormChanges,
+	markFormSaved,
 	namespace,
 	newArticle,
 	saveAsDraftURL,
+	takeFormSnapshot,
 }) {
 	const [articleId, setArticleId] = useState(
 		document.getElementById(`${namespace}articleId`).value
@@ -67,11 +70,18 @@ export default function PreviewButton({
 				const form = document.getElementById(`${namespace}fm1`);
 
 				const formData = new FormData(form);
+				const formSnapshot = takeFormSnapshot();
 
-				formData.append(
-					`${namespace}cmd`,
-					newArticle && !articleId ? 'add' : 'update'
-				);
+				let cmd = 'update';
+
+				if (newArticle && !articleId) {
+					cmd = 'add';
+				}
+				else if (!hasFormChanges()) {
+					cmd = 'preview';
+				}
+
+				formData.append(`${namespace}cmd`, cmd);
 
 				return Liferay.Util.fetch(saveAsDraftURL, {
 					body: formData,
@@ -92,6 +102,9 @@ export default function PreviewButton({
 							});
 						}
 						else {
+							const formChangedWhileSaving =
+								hasFormChanges(formSnapshot);
+
 							updateJournalInput({
 								name: 'formDate',
 								namespace,
@@ -119,6 +132,10 @@ export default function PreviewButton({
 									});
 								}
 							);
+
+							if (!formChangedWhileSaving) {
+								markFormSaved();
+							}
 
 							openModal({
 								title: Liferay.Language.get('preview'),

@@ -28,6 +28,7 @@ import deleteTasksBulkAction from '../../utils/deleteTasksBulkAction';
 import getCMPProjectObjectEntryIds from '../../utils/getCMPProjectObjectEntryIds';
 import {getFormattedLabel} from '../../utils/getFormattedText';
 import {openCMPModal} from '../../utils/openCMPModal';
+import {addSubtaskWatchActions} from '../../utils/subtaskWatchActions';
 import {
 	getDeleteTaskConfirmationMessage,
 	getSubtasksCount,
@@ -278,7 +279,7 @@ export default function AllTasksFDSPropsTransformer({
 		},
 		hideManagementBarInEmptyState: true,
 		id,
-		itemsActions: styleActions(itemsActions),
+		itemsActions: addSubtaskWatchActions(styleActions(itemsActions)),
 		async onActionDropdownItemClick({
 			action,
 			itemData,

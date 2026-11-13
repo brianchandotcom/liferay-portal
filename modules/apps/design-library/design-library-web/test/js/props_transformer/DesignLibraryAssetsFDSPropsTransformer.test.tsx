@@ -229,13 +229,23 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 		expect(mockOpenModal).not.toHaveBeenCalled();
 	});
 
-	it('opens the module modal declared by the clicked row action', () => {
+	it('opens the module modal of a row action that declares a module', () => {
 		const loadData = jest.fn();
+		const {onActionDropdownItemClick} =
+			DesignLibraryAssetsFDSPropsTransformer(BASE_PROPS);
 		const preventDefault = jest.fn();
 
-		DesignLibraryAssetsFDSPropsTransformer(
-			BASE_PROPS
-		).onActionDropdownItemClick({
+		onActionDropdownItemClick({
+			action: {data: {id: 'edit'}},
+			event: {preventDefault},
+			itemData: DELETABLE_ITEM,
+			loadData,
+		});
+
+		expect(mockOpenModuleModal).not.toHaveBeenCalled();
+		expect(preventDefault).not.toHaveBeenCalled();
+
+		onActionDropdownItemClick({
 			action: {
 				data: {
 					id: 'rename',
@@ -257,21 +267,5 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 				title: 'rename-foo',
 			},
 		});
-	});
-
-	it('ignores row actions that declare no module', () => {
-		const preventDefault = jest.fn();
-
-		DesignLibraryAssetsFDSPropsTransformer(
-			BASE_PROPS
-		).onActionDropdownItemClick({
-			action: {data: {id: 'edit'}},
-			event: {preventDefault},
-			itemData: DELETABLE_ITEM,
-			loadData: jest.fn(),
-		});
-
-		expect(mockOpenModuleModal).not.toHaveBeenCalled();
-		expect(preventDefault).not.toHaveBeenCalled();
 	});
 });

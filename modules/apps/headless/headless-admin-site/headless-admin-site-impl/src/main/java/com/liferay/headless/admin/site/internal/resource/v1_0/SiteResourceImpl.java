@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.asset.categories.thread.local.AssetVocabularyThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
@@ -1305,6 +1306,9 @@ public class SiteResourceImpl
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		boolean skipRequiredCategoryValidation =
+			AssetVocabularyThreadLocal.isSkipRequiredCategoryValidation();
+
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					contextCompany, permissionChecker.getUser())) {
@@ -1317,6 +1321,13 @@ public class SiteResourceImpl
 					site.getExternalReferenceCode());
 			}
 
+			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(true);
+
+			ServiceContext serviceContext = _getServiceContext();
+
+			serviceContext.setAssetCategoryIds(null);
+			serviceContext.setAssetTagNames(null);
+
 			Group updatedGroup = _groupService.updateGroup(
 				group.getGroupId(),
 				_getParentGroupId(
@@ -1327,7 +1338,7 @@ public class SiteResourceImpl
 				_isManualMembership(site.getManualMembership()),
 				_getMembershipRestriction(site.getMembershipRestriction()),
 				_getFriendlyUrlPath(group, site), false,
-				_isActive(site.getActive()), _getServiceContext());
+				_isActive(site.getActive()), serviceContext);
 
 			LiveUsers.joinGroup(
 				contextCompany.getCompanyId(), updatedGroup.getGroupId(),
@@ -1341,6 +1352,9 @@ public class SiteResourceImpl
 			throw exception;
 		}
 		finally {
+			AssetVocabularyThreadLocal.setSkipRequiredCategoryValidation(
+				skipRequiredCategoryValidation);
+
 			ServiceContextThreadLocal.popServiceContext();
 		}
 	}

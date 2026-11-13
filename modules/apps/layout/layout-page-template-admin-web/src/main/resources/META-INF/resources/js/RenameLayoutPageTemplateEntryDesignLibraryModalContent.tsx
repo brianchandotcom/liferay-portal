@@ -36,11 +36,11 @@ export default function RenameLayoutPageTemplateEntryDesignLibraryModalContent({
 
 		setLoading(true);
 
-		const {href, method} = itemData.actions.update;
-
 		try {
+			const {href, method} = itemData.actions.update;
+
 			const response = await fetch(href, {
-				body: JSON.stringify({name}),
+				body: JSON.stringify({name: name.trim()}),
 				headers: {
 					'Accept': 'application/json',
 					'Accept-Language':

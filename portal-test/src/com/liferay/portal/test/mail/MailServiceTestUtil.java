@@ -11,6 +11,8 @@ import com.dumbster.smtp.mailstores.RollingMailStore;
 
 import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
@@ -19,6 +21,7 @@ import com.liferay.portal.test.mail.impl.MailMessageImpl;
 
 import jakarta.mail.Session;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -34,6 +37,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Adam Brandizzi
@@ -178,6 +184,8 @@ public class MailServiceTestUtil {
 
 				}));
 
+		_sendBlacklistAutoCloseable = _emptySendBlacklist();
+
 		_smtpServer = new SmtpServer();
 
 		_smtpServer.setMailStore(
@@ -219,6 +227,8 @@ public class MailServiceTestUtil {
 
 		_smtpServer = null;
 
+		_sendBlacklistAutoCloseable.close();
+
 		if (_originalSessions != null) {
 			Object mailService = MailServiceUtil.getService();
 
@@ -233,6 +243,45 @@ public class MailServiceTestUtil {
 
 			_originalSessions = null;
 		}
+	}
+
+	private static AutoCloseable _emptySendBlacklist() throws Exception {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		ServiceReference<?>[] serviceReferences =
+			bundleContext.getServiceReferences(
+				MessageListener.class.getName(),
+				"(component.name=com.liferay.mail.messaging.internal." +
+					"MailMessageListener)");
+
+		ServiceReference<?> serviceReference = serviceReferences[0];
+
+		Object mailMessageListener = bundleContext.getService(serviceReference);
+
+		Class<?> clazz = mailMessageListener.getClass();
+
+		Field field = ReflectionTestUtil.getField(
+			clazz, "_mailSettingSystemConfiguration");
+
+		Object mailSettingSystemConfiguration = field.get(mailMessageListener);
+
+		field.set(
+			mailMessageListener,
+			ProxyUtil.newProxyInstance(
+				clazz.getClassLoader(), new Class<?>[] {field.getType()},
+				(proxy, method, args) -> {
+					if (Objects.equals(method.getName(), "sendBlacklist")) {
+						return new String[0];
+					}
+
+					return method.invoke(mailSettingSystemConfiguration, args);
+				}));
+
+		return () -> {
+			field.set(mailMessageListener, mailSettingSystemConfiguration);
+
+			bundleContext.ungetService(serviceReference);
+		};
 	}
 
 	private static int _getFreePort() throws Exception {
@@ -266,6 +315,7 @@ public class MailServiceTestUtil {
 	private static final int _START_PORT = 3241;
 
 	private static Map<Long, Session> _originalSessions;
+	private static AutoCloseable _sendBlacklistAutoCloseable;
 	private static SmtpServer _smtpServer;
 
 }

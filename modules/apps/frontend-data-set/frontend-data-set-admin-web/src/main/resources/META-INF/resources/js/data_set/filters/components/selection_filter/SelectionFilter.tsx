@@ -129,9 +129,7 @@ function Body({
 	const isValidSingleMode =
 		multiple || (!multiple && !(preselectedValues.length > 1));
 
-	const hasSourceTokens =
-		sourceType === ESelectionFilterSourceType.API_REST_APPLICATION &&
-		hasTokens(source);
+	const hasSourceTokens = hasTokens(source);
 
 	const isi18nFilterLabelsValid = (
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>

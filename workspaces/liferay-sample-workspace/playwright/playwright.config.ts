@@ -5,7 +5,7 @@
 
 import {defineConfig, devices} from '@playwright/test';
 
-import {liferayConfig} from './core/liferayConfig';
+import {liferayConfig} from './liferay/core/liferayConfig';
 
 const {baseUrl} = liferayConfig.environment;
 
@@ -14,7 +14,7 @@ export default defineConfig({
 		timeout: 15 * 1000,
 	},
 	forbidOnly: !!process.env.CI,
-	globalSetup: './globalSetup.ts',
+	globalSetup: './liferay/globalSetup.ts',
 	reporter: [['html', {open: 'never'}]],
 	retries: process.env.CI ? 1 : 0,
 	testDir: './tests',

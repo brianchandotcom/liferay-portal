@@ -1,0 +1,8 @@
+{
+	"devDependencies": {
+		"dotenv": "16.6.1"
+	},
+	"name": "@liferay/liferay-sample-workspace-playwright",
+	"private": true,
+	"version": "0.0.0"
+}

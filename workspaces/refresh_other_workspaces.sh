@@ -35,9 +35,7 @@ function refresh_workspaces {
 			--exclude .github \
 			--exclude /README.md \
 			--exclude /package.json \
-			--exclude /playwright/.env.local \
-			--exclude /playwright/env \
-			--exclude /playwright/tests \
+			--exclude /playwright \
 			--exclude /yarn.lock \
 			--exclude Jenkinsfile \
 			--exclude build.gradle \
@@ -55,13 +53,23 @@ function refresh_workspaces {
 			--exclude themes \
 			"${PWD}/liferay-sample-workspace/" "${workspace_dir}"
 
+		mkdir -p "${workspace_dir}/playwright"
+
+		rsync \
+			--archive \
+			--delete \
+			--exclude node_modules \
+			"${PWD}/liferay-sample-workspace/playwright/liferay" \
+			"${workspace_dir}/playwright/"
+
 		rsync \
 			--archive \
 			--ignore-existing \
-			"${PWD}/liferay-sample-workspace/playwright/tests/.yarnrc" \
-			"${PWD}/liferay-sample-workspace/playwright/tests/package.json" \
-			"${PWD}/liferay-sample-workspace/playwright/tests/yarn.lock" \
-			"${workspace_dir}/playwright/tests/"
+			"${PWD}/liferay-sample-workspace/playwright/.gitignore" \
+			"${PWD}/liferay-sample-workspace/playwright/package.json" \
+			"${PWD}/liferay-sample-workspace/playwright/playwright.config.ts" \
+			"${PWD}/liferay-sample-workspace/playwright/yarn.lock" \
+			"${workspace_dir}/playwright/"
 	done
 }
 

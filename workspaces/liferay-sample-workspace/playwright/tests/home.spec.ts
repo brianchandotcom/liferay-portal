@@ -5,7 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {loginTest} from '../core/fixtures/loginTest';
+import {loginTest} from '../liferay/core/fixtures/loginTest';
 
 const test = mergeTests(loginTest());
 

@@ -63,7 +63,7 @@ export default async function globalSetup() {
 	}
 
 	try {
-		execFileSync(join(__dirname, '..', 'scripts', 'bootstrap.sh'), {
+		execFileSync(join(__dirname, '..', '..', 'scripts', 'bootstrap.sh'), {
 			env: {
 				...process.env,
 				COMPOSE_PROJECT_NAME,

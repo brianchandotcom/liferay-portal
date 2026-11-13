@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import BasePage from 'shared/components/base-page';
+import CampaignDropdown from 'shared/components/CampaignDropdown';
 import Card from 'shared/components/Card';
 import ClayIcon from 'shared/components/Icon';
 import ClayLayout from '@clayui/layout';
@@ -21,6 +22,7 @@ import {SectionHeader} from 'shared/components/SectionHeader';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {toThousands} from 'shared/util/numbers';
+import {useCampaignFilter} from 'shared/hooks/useCampaignFilter';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
@@ -128,6 +130,8 @@ const IndividualsOverviewCDP = () => {
 
 	const currentUser = useCurrentUser();
 
+	const {campaignId, campaignName, setCampaign} = useCampaignFilter();
+
 	const dataSourceStates = useDataSources();
 
 	const authorized = currentUser.isAdmin();
@@ -142,6 +146,7 @@ const IndividualsOverviewCDP = () => {
 	const {data, loading} = useQuery(IndividualMetricsQuery, {
 		fetchPolicy: 'network-only',
 		variables: {
+			campaignId,
 			channelId,
 			interval: INTERVAL_KEY_MAP.week,
 			rangeKey: 30,
@@ -151,6 +156,14 @@ const IndividualsOverviewCDP = () => {
 	return (
 		<>
 			<BasePage.SubHeader>
+				{dataSourceData?.total > 0 && (
+					<CampaignDropdown
+						initialCampaignId={campaignId}
+						initialCampaignName={campaignName}
+						onFilterChange={setCampaign}
+					/>
+				)}
+
 				<div className="d-flex justify-content-end w-100">
 					<DownloadStaticCSVReport
 						disabled={!!dataSourceStates.empty}
@@ -238,7 +251,10 @@ const IndividualsOverviewCDP = () => {
 							title={Liferay.Language.get('individuals')}
 						/>
 
-						<IndividualsList />
+						<IndividualsList
+							campaignId={campaignId}
+							onClearFilters={() => setCampaign(null)}
+						/>
 					</>
 				)}
 			</BasePage.Body>

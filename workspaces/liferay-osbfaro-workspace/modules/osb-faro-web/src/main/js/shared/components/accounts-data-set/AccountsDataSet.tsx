@@ -24,6 +24,8 @@ interface IAccountsDataSetProps {
 	accountLifecycleId?: string;
 	allLifecycles?: boolean;
 	apiURL: string;
+	campaignId?: string;
+	campaignName?: string;
 	channelId: string;
 	countryFilter?: string;
 	dataSetId?: string;
@@ -55,6 +57,8 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	accountLifecycleId,
 	allLifecycles = false,
 	apiURL,
+	campaignId,
+	campaignName,
 	channelId,
 	countryFilter,
 	dataSetId = 'accounts-list-dataset',
@@ -223,6 +227,23 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 								},
 							]
 						: []),
+					...(campaignId
+						? [
+								{
+									apiURL: `/o/faro/contacts/${groupId}/campaigns/campaign-names?channelId=${channelId}`,
+									entityFieldType: 'string',
+									id: 'campaignId',
+									itemKey: 'id',
+									itemLabel: 'name',
+									label: Liferay.Language.get('campaign'),
+									preloadedData: buildSelectionPreloadedData(
+										campaignId,
+										campaignName
+									),
+									type: 'selection' as const,
+								},
+							]
+						: []),
 					{
 						apiURL: `/o/faro/contacts/${groupId}/account/fds_field_values?channelId=${channelId}&fieldMappingFieldName=industry`,
 						entityFieldType: 'string',
@@ -263,6 +284,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 				]}
 				id={dataSetId}
 				key={[
+					campaignId,
 					countryFilter,
 					industryFilter,
 					lifecycleStageFilter,

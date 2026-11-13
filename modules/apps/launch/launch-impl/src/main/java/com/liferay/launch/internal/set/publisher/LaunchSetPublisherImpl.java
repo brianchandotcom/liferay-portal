@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -119,10 +121,17 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 				"Launch set " + launchSetId + " must be open to be scheduled");
 		}
 
-		if ((date == null) || !date.after(new Date())) {
-			throw new PortalException(
+		if ((date == null) ||
+			(date.getTime() < (System.currentTimeMillis() + Time.MINUTE))) {
+
+			SchedulerException schedulerException = new SchedulerException(
 				"Launch set " + launchSetId +
-					" must be scheduled for a future date");
+					" must be scheduled at least one minute in the future");
+
+			schedulerException.setType(
+				SchedulerException.TYPE_INVALID_START_DATE);
+
+			throw schedulerException;
 		}
 
 		ServiceContext serviceContext = _createServiceContext(

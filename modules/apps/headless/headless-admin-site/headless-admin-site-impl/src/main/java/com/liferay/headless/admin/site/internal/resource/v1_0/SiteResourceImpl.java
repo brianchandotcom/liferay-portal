@@ -1309,14 +1309,6 @@ public class SiteResourceImpl
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					contextCompany, permissionChecker.getUser())) {
 
-			if ((group.isCompany() || group.isControlPanel() ||
-				 group.isGuest()) &&
-				!_isActive(site.getActive())) {
-
-				throw new RequiredGroupException.MustNotDeactivateSystemGroup(
-					site.getExternalReferenceCode());
-			}
-
 			Group updatedGroup = _groupService.updateGroup(
 				group.getGroupId(),
 				_getParentGroupId(

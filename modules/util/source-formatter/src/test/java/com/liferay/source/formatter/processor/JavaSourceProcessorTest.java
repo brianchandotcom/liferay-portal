@@ -743,6 +743,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMVCRenderCommandViewTemplate() throws Exception {
+		test(
+			"MVCRenderCommandViewTemplate.testjava",
+			"The MVC render command only maps \"/\" to \"/view.jsp\"; set " +
+				"\"jakarta.portlet.init-param.view-template=/view.jsp\" on " +
+					"the portlet and remove the command",
+			21);
+	}
+
+	@Test
 	public void testMapBuilderGenerics() throws Exception {
 		test("MapBuilderGenerics.testjava");
 	}

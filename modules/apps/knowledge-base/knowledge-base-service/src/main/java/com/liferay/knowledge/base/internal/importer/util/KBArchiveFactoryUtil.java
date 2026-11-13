@@ -10,9 +10,12 @@ import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.internal.importer.KBArchive;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,12 +58,21 @@ public class KBArchiveFactoryUtil {
 
 		Collections.sort(entries);
 
+		String[] articleExtensions =
+			kbGroupServiceConfiguration.markdownImporterArticleExtensions();
+
+		String markdownImporterArticleIntro =
+			kbGroupServiceConfiguration.markdownImporterArticleIntro();
+
+		int index = markdownImporterArticleIntro.lastIndexOf(CharPool.PERIOD);
+
+		String markdownImporterArticleIntroWithoutExtension =
+			(index > 0) ? markdownImporterArticleIntro.substring(0, index) :
+				markdownImporterArticleIntro;
+
 		KBArchiveState kbArchiveState = new KBArchiveState(zipReader);
 
 		for (String entry : entries) {
-			String[] articleExtensions =
-				kbGroupServiceConfiguration.markdownImporterArticleExtensions();
-
 			if (!ArrayUtil.exists(articleExtensions, entry::endsWith)) {
 				continue;
 			}
@@ -71,21 +83,41 @@ public class KBArchiveFactoryUtil {
 
 			kbArchiveState.setCurrentFolder(entryParentPath);
 
-			String markdownImporterArticleIntro =
-				kbGroupServiceConfiguration.markdownImporterArticleIntro();
-
 			String entryFileName = String.valueOf(entryPath.getFileName());
 
-			if (entryFileName.endsWith(markdownImporterArticleIntro)) {
-				kbArchiveState.setCurrentFolderIntroFile(entryPath);
+			if (entryFileName.endsWith(markdownImporterArticleIntro) ||
+				ArrayUtil.exists(
+					articleExtensions,
+					articleExtension -> entryFileName.endsWith(
+						markdownImporterArticleIntroWithoutExtension +
+							articleExtension))) {
+
+				KBArchive.File currentFolderIntroFile =
+					kbArchiveState.getCurrentFolderIntroFile();
+
+				if (currentFolderIntroFile == null) {
+					kbArchiveState.setCurrentFolderIntroFile(entryPath);
+
+					continue;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Importing ", entry, " as an article because ",
+							currentFolderIntroFile.getName(),
+							" is already the intro file of its folder"));
+				}
 			}
-			else {
-				kbArchiveState.addCurrentFolderFile(entryPath);
-			}
+
+			kbArchiveState.addCurrentFolderFile(entryPath);
 		}
 
 		return new KBArchiveImpl(kbArchiveState.getFolders());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KBArchiveFactoryUtil.class);
 
 	private static final class FileImpl implements KBArchive.File {
 
@@ -177,6 +209,10 @@ public class KBArchiveFactoryUtil {
 
 		public void addCurrentFolderFile(Path path) {
 			_currentFolderFiles.add(new FileImpl(path.toString(), _zipReader));
+		}
+
+		public KBArchive.File getCurrentFolderIntroFile() {
+			return _currentFolderIntroFile;
 		}
 
 		public Collection<KBArchive.Folder> getFolders() {

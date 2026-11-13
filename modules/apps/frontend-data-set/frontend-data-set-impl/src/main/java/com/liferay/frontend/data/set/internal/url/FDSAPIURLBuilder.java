@@ -82,7 +82,7 @@ public class FDSAPIURLBuilder {
 		StringBundler sb = new StringBundler(
 			4 + (_queryStringItems.size() * 2));
 
-		if (_apiURL != null) {
+		if (Validator.isNotNull(_apiURL)) {
 			sb.append(_apiURL);
 		}
 		else {
@@ -93,7 +93,7 @@ public class FDSAPIURLBuilder {
 			sb.append(_restEndpoint);
 		}
 
-		if ((_apiURL != null) && !_queryStringItems.isEmpty() &&
+		if (Validator.isNotNull(_apiURL) && !_queryStringItems.isEmpty() &&
 			(_apiURL.indexOf(CharPool.QUESTION) != -1)) {
 
 			sb.append(CharPool.AMPERSAND);
@@ -205,7 +205,7 @@ public class FDSAPIURLBuilder {
 
 		FDSAPIURLResolver fdsAPIURLResolver = null;
 
-		if (_restApplication != null) {
+		if (Validator.isNotNull(_restApplication)) {
 			fdsAPIURLResolver = _fdsAPIURLResolverRegistry.getFDSAPIURLResolver(
 				_restApplication, _restSchema);
 		}

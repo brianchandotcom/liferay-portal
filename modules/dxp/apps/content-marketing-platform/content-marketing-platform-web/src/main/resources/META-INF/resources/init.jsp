@@ -5,6 +5,8 @@
  */
 --%>
 
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
@@ -20,6 +22,7 @@ page import="com.liferay.content.marketing.platform.web.internal.display.context
 page import="com.liferay.content.marketing.platform.web.internal.display.context.ViewProjectSponsorAssigneeSectionDisplayContext" %><%@
 page import="com.liferay.content.marketing.platform.web.internal.display.context.ViewProjectTasksSectionDisplayContext" %><%@
 page import="com.liferay.content.marketing.platform.web.internal.display.context.ViewProjectsSectionDisplayContext" %><%@
+page import="com.liferay.content.marketing.platform.web.internal.display.context.ViewSubtasksSectionDisplayContext" %><%@
 page import="com.liferay.content.marketing.platform.web.internal.display.context.ViewTaskInfoSummarySectionDisplayContext" %><%@
 page import="com.liferay.content.marketing.platform.web.internal.display.context.ViewWorkflowTasksSectionDisplayContext" %>
 

@@ -12,7 +12,9 @@ npx playwright install chromium
 npx playwright test
 ```
 
-If Liferay is not already running, the tests start it in Docker with `scripts/bootstrap.sh` and remove it, including its data, when they finish.
+If Liferay is not already running, the tests start it in Docker with `liferay/start.sh` and remove it, including its data, when they finish.
+
+Starting Liferay takes several minutes. To keep it between runs, run `liferay/start.sh` before the tests and `liferay/stop.sh` when done. The tests never remove a Liferay they did not start.
 
 Each run writes an HTML report to `playwright-report` and a JUnit report to `test-results/TEST-playwright.xml` for CI.
 
@@ -36,7 +38,9 @@ playwright
     ├── baseConfig.ts        The defaults playwright.config.ts starts from
     ├── core                 A copy of modules/test/playwright/core from Liferay Portal
     ├── globalSetup.ts       Starts Liferay when it is not running
-    └── package.json         The packages core needs
+    ├── package.json         The packages core needs
+    ├── start.sh             Starts Liferay for the tests
+    └── stop.sh              Removes that Liferay and its data
 ```
 
 When Playwright is first synced into a workspace, the files outside `liferay` start as copies of the Liferay Sample Workspace's. Later syncs never change them.

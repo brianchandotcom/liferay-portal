@@ -8,8 +8,6 @@ import {join} from 'path';
 
 import {liferayConfig} from './core/liferayConfig';
 
-const COMPOSE_PROJECT_NAME = 'liferay-playwright-stack';
-
 const {baseUrl, port} = liferayConfig.environment;
 
 async function isLiferayRunning() {
@@ -24,17 +22,7 @@ async function isLiferayRunning() {
 }
 
 function stopLiferay() {
-	execFileSync(
-		'docker',
-		[
-			'compose',
-			'--project-name',
-			COMPOSE_PROJECT_NAME,
-			'down',
-			'--volumes',
-		],
-		{stdio: 'inherit'}
-	);
+	execFileSync(join(__dirname, 'stop.sh'), {stdio: 'inherit'});
 }
 
 export default async function globalSetup() {
@@ -63,13 +51,10 @@ export default async function globalSetup() {
 	}
 
 	try {
-		execFileSync(join(__dirname, '..', '..', 'scripts', 'bootstrap.sh'), {
+		execFileSync(join(__dirname, 'start.sh'), {
 			env: {
 				...process.env,
-				COMPOSE_PROJECT_NAME,
-				LIFERAY_COMPOSE_OVERRIDES: 'playwright',
 				LIFERAY_HTTP_PORT: port,
-				LIFERAY_IMAGE: 'liferay:playwright',
 			},
 			stdio: 'inherit',
 		});

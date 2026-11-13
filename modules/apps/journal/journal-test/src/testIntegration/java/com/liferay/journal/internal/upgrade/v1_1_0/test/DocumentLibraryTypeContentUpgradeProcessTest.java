@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -81,9 +84,11 @@ public class DocumentLibraryTypeContentUpgradeProcessTest {
 	public void testConvertContentWithImageGalleryTypeAndMissingFileEntry()
 		throws Exception {
 
-		Element dynamicElementElement = _convertContent(
-			"image_gallery",
-			_getImageGalleryURL(RandomTestUtil.randomString()));
+		String missingFileEntryURL = _getImageGalleryURL(
+			RandomTestUtil.randomString());
+
+		Element dynamicElementElement = _convertContentWithMissingFileEntry(
+			missingFileEntryURL, "image_gallery", missingFileEntryURL);
 
 		Assert.assertEquals(
 			"document_library", dynamicElementElement.attributeValue("type"));
@@ -99,9 +104,12 @@ public class DocumentLibraryTypeContentUpgradeProcessTest {
 	public void testConvertContentWithImageGalleryTypeAndSomeMissingFileEntries()
 		throws Exception {
 
-		Element dynamicElementElement = _convertContent(
-			"image_gallery", _getImageGalleryURL(_fileEntry.getUuid()),
-			_getImageGalleryURL(RandomTestUtil.randomString()));
+		String missingFileEntryURL = _getImageGalleryURL(
+			RandomTestUtil.randomString());
+
+		Element dynamicElementElement = _convertContentWithMissingFileEntry(
+			missingFileEntryURL, "image_gallery",
+			_getImageGalleryURL(_fileEntry.getUuid()), missingFileEntryURL);
 
 		Assert.assertEquals(
 			"document_library", dynamicElementElement.attributeValue("type"));
@@ -157,6 +165,31 @@ public class DocumentLibraryTypeContentUpgradeProcessTest {
 		Element rootElement = document.getRootElement();
 
 		return rootElement.element("dynamic-element");
+	}
+
+	private Element _convertContentWithMissingFileEntry(
+			String missingFileEntryURL, String type, String... urls)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.journal.internal.upgrade.helper." +
+					"JournalArticleImageUpgradeHelper",
+				LoggerTestUtil.WARN)) {
+
+			Element dynamicElementElement = _convertContent(type, urls);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Unable to get file entry from URL " + missingFileEntryURL,
+				logEntry.getMessage());
+
+			return dynamicElementElement;
+		}
 	}
 
 	private String _getContent(String type, String... urls) {

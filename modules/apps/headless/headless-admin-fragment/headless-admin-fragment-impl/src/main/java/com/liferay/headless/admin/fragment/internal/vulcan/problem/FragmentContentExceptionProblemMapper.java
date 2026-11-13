@@ -6,14 +6,11 @@
 package com.liferay.headless.admin.fragment.internal.vulcan.problem;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemMapper;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
@@ -26,32 +23,10 @@ public class FragmentContentExceptionProblemMapper
 	public Problem getProblem(
 		FragmentEntryContentException fragmentEntryContentException) {
 
-		return new Problem() {
-
-			@Override
-			public String getDetail(Locale locale) {
-				return fragmentEntryContentException.getLocalizedMessage();
-			}
-
-			@Override
-			public Status getStatus() {
-				return Status.BAD_REQUEST;
-			}
-
-			@Override
-			public String getTitle(Locale locale) {
-				return _language.get(locale, "fragment-html-is-invalid");
-			}
-
-			@Override
-			public String getType() {
-				return FragmentEntryContentException.class.getName();
-			}
-
-		};
+		return ProblemUtil.getProblem(
+			locale -> fragmentEntryContentException.getLocalizedMessage(),
+			Problem.Status.BAD_REQUEST, fragmentEntryContentException,
+			locale -> LanguageUtil.get(locale, "fragment-html-is-invalid"));
 	}
-
-	@Reference
-	private Language _language;
 
 }

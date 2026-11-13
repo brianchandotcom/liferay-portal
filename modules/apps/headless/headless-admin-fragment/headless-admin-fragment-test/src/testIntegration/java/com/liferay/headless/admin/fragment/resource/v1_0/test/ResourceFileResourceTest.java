@@ -21,11 +21,16 @@ import com.liferay.headless.admin.fragment.client.problem.Problem;
 import com.liferay.headless.admin.fragment.client.resource.v1_0.ResourceFileResource;
 import com.liferay.headless.admin.fragment.client.resource.v1_0.ResourceFolderResource;
 import com.liferay.headless.admin.fragment.resource.v1_0.test.util.URLFetchSecurityCompanyConfigurationUtil;
+import com.liferay.headless.batch.engine.client.dto.v1_0.FailedItem;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
@@ -72,6 +77,7 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -248,12 +254,13 @@ public class ResourceFileResourceTest extends BaseResourceFileResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo({"LPD-88395", "LPD-107149", "LPD-110076"})
+	@TestInfo({"LPD-88395", "LPD-107149", "LPD-107755", "LPD-110076"})
 	public void testPostSiteResourceFile() throws Exception {
 		super.testPostSiteResourceFile();
 
 		_testPostSiteResourceFile();
 		_testPostSiteResourceFileBatch();
+		_testPostSiteResourceFileBatchFailedItems();
 		_testPostSiteResourceFileBatchFileURLReferenceURLFetchSecurity();
 		_testPostSiteResourceFileDuplicateExternalReferenceCodeProblemException();
 		_testPostSiteResourceFileFileURLReferenceFileBase64();
@@ -270,6 +277,8 @@ public class ResourceFileResourceTest extends BaseResourceFileResourceTestCase {
 		_testPostSiteResourceFileFragmentSetExternalReferenceCode();
 		_testPostSiteResourceFileFragmentSetExternalReferenceCodeNullProblemException();
 		_testPostSiteResourceFileFragmentSetNonexistentProblemException();
+		_testPostSiteResourceFileNameDuplicateProblemException();
+		_testPostSiteResourceFileNameDuplicateResourceFolderProblemException();
 		_testPostSiteResourceFileNameNullProblemException();
 		_testPostSiteResourceFileResourceFolderAndResourceFolderExternalReferenceCode();
 		_testPostSiteResourceFileResourceFolderExternalReferenceCode();
@@ -280,7 +289,9 @@ public class ResourceFileResourceTest extends BaseResourceFileResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo({"LPD-88395", "LPD-102182", "LPD-107149", "LPD-110076"})
+	@TestInfo(
+		{"LPD-88395", "LPD-102182", "LPD-107149", "LPD-107755", "LPD-110076"}
+	)
 	public void testPutSiteResourceFile() throws Exception {
 		_testPutSiteResourceFile();
 		_testPutSiteResourceFileBatch();
@@ -291,6 +302,8 @@ public class ResourceFileResourceTest extends BaseResourceFileResourceTestCase {
 		_testPutSiteResourceFileFileURLReferenceURL();
 		_testPutSiteResourceFileFileURLReferenceURLFetchSecurity();
 		_testPutSiteResourceFileName();
+		_testPutSiteResourceFileNameDuplicateProblemException();
+		_testPutSiteResourceFileNameDuplicateResourceFolderProblemException();
 		_testPutSiteResourceFileNameNullProblemException();
 		_testPutSiteResourceFilePortletFileProblemException();
 		_testPutSiteResourceFileResourceFolderExternalReferenceCode();
@@ -1567,6 +1580,71 @@ public class ResourceFileResourceTest extends BaseResourceFileResourceTestCase {
 			irrelevantGroup.getGroupId());
 	}
 
+	private void _testPostSiteResourceFileBatchFailedItems() throws Exception {
+		ResourceFile postResourceFile =
+			resourceFileResource.postSiteResourceFile(
+				testGroup.getExternalReferenceCode(),
+				_randomResourceFile(_getFragmentSetExternalReferenceCode()));
+		ResourceFolder postResourceFolder = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFile resourceFile1 = _randomResourceFile(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFile1.setExternalReferenceCode(
+			postResourceFile.getExternalReferenceCode());
+
+		ResourceFile resourceFile2 = _randomResourceFile(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFile2.setName(postResourceFile.getName());
+
+		ResourceFile resourceFile3 = _randomResourceFile(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFile3.setName(postResourceFolder.getName());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			JSONObject jsonObject = waitForFinish(
+				"COMPLETED",
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.putAll(
+						JSONFactoryUtil.createJSONObject(
+							resourceFile1.toString()),
+						JSONFactoryUtil.createJSONObject(
+							resourceFile2.toString()),
+						JSONFactoryUtil.createJSONObject(
+							resourceFile3.toString())
+					).toString(),
+					StringBundler.concat(
+						"headless-admin-fragment/v1.0/sites/",
+						testGroup.getExternalReferenceCode(),
+						"/resource-files/batch",
+						"?importStrategy=ON_ERROR_CONTINUE"),
+					Http.Method.POST));
+
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			Assert.assertEquals(
+				Arrays.asList(
+					StringBundler.concat(
+						"Duplicate file entry external reference code ",
+						postResourceFile.getExternalReferenceCode(),
+						" in group ", testGroup.getGroupId()),
+					"A file entry already exists with title " +
+						postResourceFile.getName(),
+					"A folder already exists with name " +
+						postResourceFolder.getName()),
+				TransformUtil.transformToList(
+					importTask.getFailedItems(), FailedItem::getMessage));
+		}
+	}
+
 	private void _testPostSiteResourceFileBatchFileURLReferenceURLFetchSecurity()
 		throws Exception {
 
@@ -1889,6 +1967,42 @@ public class ResourceFileResourceTest extends BaseResourceFileResourceTestCase {
 			() -> resourceFileResource.postSiteResourceFile(
 				testGroup.getExternalReferenceCode(), resourceFile),
 			fragmentSetExternalReferenceCode);
+	}
+
+	private void _testPostSiteResourceFileNameDuplicateProblemException()
+		throws Exception {
+
+		ResourceFile postResourceFile =
+			resourceFileResource.postSiteResourceFile(
+				testGroup.getExternalReferenceCode(),
+				_randomResourceFile(_getFragmentSetExternalReferenceCode()));
+
+		ResourceFile resourceFile = _randomResourceFile(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFile.setName(postResourceFile.getName());
+
+		_assertProblemException(
+			"CONFLICT", "a-resource-file-with-that-name-already-exists",
+			() -> resourceFileResource.postSiteResourceFile(
+				testGroup.getExternalReferenceCode(), resourceFile));
+	}
+
+	private void _testPostSiteResourceFileNameDuplicateResourceFolderProblemException()
+		throws Exception {
+
+		ResourceFolder postResourceFolder = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFile resourceFile = _randomResourceFile(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFile.setName(postResourceFolder.getName());
+
+		_assertProblemException(
+			"CONFLICT", "a-resource-folder-with-that-name-already-exists",
+			() -> resourceFileResource.postSiteResourceFile(
+				testGroup.getExternalReferenceCode(), resourceFile));
 	}
 
 	private void _testPostSiteResourceFileNameNullProblemException()
@@ -2413,6 +2527,53 @@ public class ResourceFileResourceTest extends BaseResourceFileResourceTestCase {
 		_assertContent(
 			bytes, postResourceFile.getExternalReferenceCode(),
 			testGroup.getGroupId());
+	}
+
+	private void _testPutSiteResourceFileNameDuplicateProblemException()
+		throws Exception {
+
+		ResourceFile postResourceFile1 =
+			resourceFileResource.postSiteResourceFile(
+				testGroup.getExternalReferenceCode(),
+				_randomResourceFile(_getFragmentSetExternalReferenceCode()));
+		ResourceFile postResourceFile2 =
+			resourceFileResource.postSiteResourceFile(
+				testGroup.getExternalReferenceCode(),
+				_randomResourceFile(_getFragmentSetExternalReferenceCode()));
+
+		ResourceFile resourceFile = _randomResourceFile(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFile.setName(postResourceFile1.getName());
+
+		_assertProblemException(
+			"CONFLICT", "a-resource-file-with-that-name-already-exists",
+			() -> resourceFileResource.putSiteResourceFile(
+				testGroup.getExternalReferenceCode(),
+				postResourceFile2.getExternalReferenceCode(), resourceFile));
+	}
+
+	private void _testPutSiteResourceFileNameDuplicateResourceFolderProblemException()
+		throws Exception {
+
+		ResourceFolder postResourceFolder = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFile postResourceFile =
+			resourceFileResource.postSiteResourceFile(
+				testGroup.getExternalReferenceCode(),
+				_randomResourceFile(_getFragmentSetExternalReferenceCode()));
+
+		ResourceFile resourceFile = _randomResourceFile(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFile.setName(postResourceFolder.getName());
+
+		_assertProblemException(
+			"CONFLICT", "a-resource-folder-with-that-name-already-exists",
+			() -> resourceFileResource.putSiteResourceFile(
+				testGroup.getExternalReferenceCode(),
+				postResourceFile.getExternalReferenceCode(), resourceFile));
 	}
 
 	private void _testPutSiteResourceFileNameNullProblemException()

@@ -17,18 +17,23 @@ import com.liferay.headless.admin.fragment.client.pagination.Page;
 import com.liferay.headless.admin.fragment.client.pagination.Pagination;
 import com.liferay.headless.admin.fragment.client.problem.Problem;
 import com.liferay.headless.admin.fragment.client.resource.v1_0.ResourceFolderResource;
+import com.liferay.headless.batch.engine.client.dto.v1_0.FailedItem;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,6 +53,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -55,6 +62,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,12 +175,13 @@ public class ResourceFolderResourceTest
 
 	@Override
 	@Test
-	@TestInfo({"LPD-88395", "LPD-88489"})
+	@TestInfo({"LPD-88395", "LPD-88489", "LPD-107754", "LPD-107755"})
 	public void testPostSiteResourceFolder() throws Exception {
 		super.testPostSiteResourceFolder();
 
 		_testPostSiteResourceFolder();
 		_testPostSiteResourceFolderBatch();
+		_testPostSiteResourceFolderBatchFailedItems();
 		_testPostSiteResourceFolderBatchLazyReferencingParentResourceFolder();
 		_testPostSiteResourceFolderDuplicateExternalReferenceCodeProblemException();
 		_testPostSiteResourceFolderFragmentSetAndFragmentSetExternalReferenceCode();
@@ -180,6 +189,9 @@ public class ResourceFolderResourceTest
 		_testPostSiteResourceFolderFragmentSetExternalReferenceCode();
 		_testPostSiteResourceFolderFragmentSetExternalReferenceCodeNullProblemException();
 		_testPostSiteResourceFolderFragmentSetNonexistentProblemException();
+		_testPostSiteResourceFolderNameDuplicateProblemException();
+		_testPostSiteResourceFolderNameDuplicateResourceFileProblemException();
+		_testPostSiteResourceFolderNameInvalidProblemException();
 		_testPostSiteResourceFolderParentResourceFolderAndParentResourceFolderExternalReferenceCode();
 		_testPostSiteResourceFolderParentResourceFolderAndParentResourceFolderExternalReferenceCodeProblemException();
 		_testPostSiteResourceFolderParentResourceFolderExternalReferenceCode();
@@ -192,10 +204,15 @@ public class ResourceFolderResourceTest
 
 	@Override
 	@Test
-	@TestInfo({"LPD-88395", "LPD-88489", "LPD-102182"})
+	@TestInfo(
+		{"LPD-88395", "LPD-88489", "LPD-102182", "LPD-107754", "LPD-107755"}
+	)
 	public void testPutSiteResourceFolder() throws Exception {
 		_testPutSiteResourceFolder();
 		_testPutSiteResourceFolderDocumentLibraryFolderProblemException();
+		_testPutSiteResourceFolderNameDuplicateProblemException();
+		_testPutSiteResourceFolderNameDuplicateResourceFileProblemException();
+		_testPutSiteResourceFolderNameInvalidProblemException();
 		_testPutSiteResourceFolderParentResourceFolderExternalReferenceCode();
 		_testPutSiteResourceFolderPortletFolderProblemException();
 		_testPutSiteResourceFolderWithoutPermissionsProblemException();
@@ -317,6 +334,26 @@ public class ResourceFolderResourceTest
 
 		return resourceFolderResource.postSiteResourceFolder(
 			testGroup.getExternalReferenceCode(), resourceFolder);
+	}
+
+	private FileEntry _addFileEntry(String fragmentSetExternalReferenceCode)
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.
+				getFragmentCollectionByExternalReferenceCode(
+					fragmentSetExternalReferenceCode, testGroup.getGroupId());
+
+		Folder folder = _dlAppLocalService.getFolder(
+			fragmentCollection.getResourcesFolderId(true));
+
+		return _dlAppLocalService.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			folder.getRepositoryId(), folder.getFolderId(),
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM, RandomTestUtil.randomBytes(),
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 	}
 
 	private Folder _addFolder(String name) throws Exception {
@@ -1169,6 +1206,80 @@ public class ResourceFolderResourceTest
 					irrelevantGroup.getGroupId()));
 	}
 
+	private void _testPostSiteResourceFolderBatchFailedItems()
+		throws Exception {
+
+		FileEntry fileEntry = _addFileEntry(
+			_getFragmentSetExternalReferenceCode());
+		ResourceFolder postResourceFolder = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFolder resourceFolder1 = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder1.setExternalReferenceCode(
+			postResourceFolder.getExternalReferenceCode());
+
+		ResourceFolder resourceFolder2 = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder2.setName(postResourceFolder.getName());
+
+		ResourceFolder resourceFolder3 = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder3.setName(fileEntry.getTitle());
+
+		ResourceFolder resourceFolder4 = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder4.setName(StringPool.DOUBLE_PERIOD);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			JSONObject jsonObject = waitForFinish(
+				"COMPLETED",
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.putAll(
+						JSONFactoryUtil.createJSONObject(
+							resourceFolder1.toString()),
+						JSONFactoryUtil.createJSONObject(
+							resourceFolder2.toString()),
+						JSONFactoryUtil.createJSONObject(
+							resourceFolder3.toString()),
+						JSONFactoryUtil.createJSONObject(
+							resourceFolder4.toString())
+					).toString(),
+					StringBundler.concat(
+						"headless-admin-fragment/v1.0/sites/",
+						testGroup.getExternalReferenceCode(),
+						"/resource-folders/batch",
+						"?importStrategy=ON_ERROR_CONTINUE"),
+					Http.Method.POST));
+
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			Assert.assertEquals(
+				Arrays.asList(
+					StringBundler.concat(
+						"Duplicate document library folder with external ",
+						"reference code ",
+						postResourceFolder.getExternalReferenceCode(),
+						" and group ", testGroup.getGroupId()),
+					"A folder already exists with name " +
+						postResourceFolder.getName(),
+					"A file entry already exists with title " +
+						fileEntry.getTitle(),
+					"Invalid folder name .."),
+				TransformUtil.transformToList(
+					importTask.getFailedItems(), FailedItem::getMessage));
+		}
+	}
+
 	private void _testPostSiteResourceFolderBatchLazyReferencingParentResourceFolder()
 		throws Exception {
 
@@ -1375,6 +1486,68 @@ public class ResourceFolderResourceTest
 			() -> resourceFolderResource.postSiteResourceFolder(
 				testGroup.getExternalReferenceCode(), resourceFolder),
 			fragmentSetExternalReferenceCode);
+	}
+
+	private void _testPostSiteResourceFolderNameDuplicateProblemException()
+		throws Exception {
+
+		ResourceFolder postResourceFolder = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFolder resourceFolder = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder.setName(postResourceFolder.getName());
+
+		_assertProblemException(
+			"CONFLICT", "a-resource-folder-with-that-name-already-exists",
+			() -> resourceFolderResource.postSiteResourceFolder(
+				testGroup.getExternalReferenceCode(), resourceFolder));
+	}
+
+	private void _testPostSiteResourceFolderNameDuplicateResourceFileProblemException()
+		throws Exception {
+
+		FileEntry fileEntry = _addFileEntry(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFolder resourceFolder = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder.setName(fileEntry.getTitle());
+
+		_assertProblemException(
+			"CONFLICT", "a-resource-file-with-that-name-already-exists",
+			() -> resourceFolderResource.postSiteResourceFolder(
+				testGroup.getExternalReferenceCode(), resourceFolder));
+	}
+
+	private void _testPostSiteResourceFolderNameInvalidProblemException()
+		throws Exception {
+
+		_testPostSiteResourceFolderNameInvalidProblemException(
+			StringBundler.concat(
+				RandomTestUtil.randomString(), StringPool.SLASH,
+				RandomTestUtil.randomString()));
+		_testPostSiteResourceFolderNameInvalidProblemException(
+			StringPool.BLANK);
+		_testPostSiteResourceFolderNameInvalidProblemException(
+			StringPool.DOUBLE_PERIOD);
+	}
+
+	private void _testPostSiteResourceFolderNameInvalidProblemException(
+			String name)
+		throws Exception {
+
+		ResourceFolder resourceFolder = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder.setName(name);
+
+		_assertProblemException(
+			"resource-folder-name-is-invalid",
+			() -> resourceFolderResource.postSiteResourceFolder(
+				testGroup.getExternalReferenceCode(), resourceFolder));
 	}
 
 	private void _testPostSiteResourceFolderParentResourceFolderAndParentResourceFolderExternalReferenceCode()
@@ -1695,6 +1868,78 @@ public class ResourceFolderResourceTest
 			() -> resourceFolderResource.putSiteResourceFolder(
 				testGroup.getExternalReferenceCode(),
 				folder.getExternalReferenceCode(), resourceFolder));
+	}
+
+	private void _testPutSiteResourceFolderNameDuplicateProblemException()
+		throws Exception {
+
+		ResourceFolder postResourceFolder1 = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+		ResourceFolder postResourceFolder2 = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFolder resourceFolder = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder.setName(postResourceFolder1.getName());
+
+		_assertProblemException(
+			"CONFLICT", "a-resource-folder-with-that-name-already-exists",
+			() -> resourceFolderResource.putSiteResourceFolder(
+				testGroup.getExternalReferenceCode(),
+				postResourceFolder2.getExternalReferenceCode(),
+				resourceFolder));
+	}
+
+	private void _testPutSiteResourceFolderNameDuplicateResourceFileProblemException()
+		throws Exception {
+
+		FileEntry fileEntry = _addFileEntry(
+			_getFragmentSetExternalReferenceCode());
+		ResourceFolder postResourceFolder = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFolder resourceFolder = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder.setName(fileEntry.getTitle());
+
+		_assertProblemException(
+			"CONFLICT", "a-resource-file-with-that-name-already-exists",
+			() -> resourceFolderResource.putSiteResourceFolder(
+				testGroup.getExternalReferenceCode(),
+				postResourceFolder.getExternalReferenceCode(), resourceFolder));
+	}
+
+	private void _testPutSiteResourceFolderNameInvalidProblemException()
+		throws Exception {
+
+		_testPutSiteResourceFolderNameInvalidProblemException(
+			StringBundler.concat(
+				RandomTestUtil.randomString(), StringPool.SLASH,
+				RandomTestUtil.randomString()));
+		_testPutSiteResourceFolderNameInvalidProblemException(StringPool.BLANK);
+		_testPutSiteResourceFolderNameInvalidProblemException(
+			StringPool.DOUBLE_PERIOD);
+	}
+
+	private void _testPutSiteResourceFolderNameInvalidProblemException(
+			String name)
+		throws Exception {
+
+		ResourceFolder postResourceFolder = _postSiteResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		ResourceFolder resourceFolder = _randomResourceFolder(
+			_getFragmentSetExternalReferenceCode());
+
+		resourceFolder.setName(name);
+
+		_assertProblemException(
+			"resource-folder-name-is-invalid",
+			() -> resourceFolderResource.putSiteResourceFolder(
+				testGroup.getExternalReferenceCode(),
+				postResourceFolder.getExternalReferenceCode(), resourceFolder));
 	}
 
 	private void _testPutSiteResourceFolderParentResourceFolderExternalReferenceCode()

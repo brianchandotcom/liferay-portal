@@ -75,3 +75,39 @@ export async function fetchCampaignMetrics({
 		path: `contacts/${groupId}/campaigns/metrics`,
 	});
 }
+
+export interface IAccountCampaign {
+	campaignName: string;
+	id: string;
+	individualsTouched: number;
+	lastTouchDate: string | number;
+}
+
+interface IFetchTopCampaigns {
+	accountId: string;
+	channelId: string;
+	groupId: string;
+	rangeQueryValues?: {[key: string]: any};
+}
+
+/**
+ * The campaigns that touched the account, already ranked by the backend: by
+ * the individuals of the account they touched, then by the most recent touch.
+ */
+export async function fetchTopCampaigns({
+	accountId,
+	channelId,
+	groupId,
+	rangeQueryValues,
+}: IFetchTopCampaigns): Promise<IAccountCampaign[]> {
+	return sendRequest({
+		data: {
+			channelId,
+			filter: `accountId in ('${accountId}')`,
+			size: 5,
+			...rangeQueryValues,
+		},
+		method: 'GET',
+		path: `contacts/${groupId}/campaigns/top`,
+	});
+}

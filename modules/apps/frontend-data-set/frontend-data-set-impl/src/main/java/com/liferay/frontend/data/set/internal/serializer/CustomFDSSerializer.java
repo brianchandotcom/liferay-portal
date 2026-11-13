@@ -531,19 +531,26 @@ public class CustomFDSSerializer
 						relatedObjectEntry),
 					"dataSetToDataSetSelectionFilters")) {
 
-			if (!Objects.equals(
-					MapUtil.getString(
-						objectEntry.getProperties(), "sourceType"),
-					"API_REST_APPLICATION")) {
+			String apiURL = null;
 
-				continue;
+			String sourceType = MapUtil.getString(
+				objectEntry.getProperties(), "sourceType");
+
+			if (Objects.equals(sourceType, "API_REST_APPLICATION")) {
+				apiURL = _getSelectionFilterAPIURL(
+					httpServletRequest, interpolate, objectEntry,
+					selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+			}
+			else if (Objects.equals(
+						sourceType,
+						FDSEntryItemImportPolicy.ITEM_PROXY.toString())) {
+
+				apiURL = _getProxySelectionFilterAPIURL(
+					httpServletRequest, interpolate, objectEntry,
+					selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 			}
 
-			String apiURL = _getSelectionFilterAPIURL(
-				httpServletRequest, interpolate, objectEntry,
-				selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
-
-			if (apiURL == null) {
+			if (Validator.isNull(apiURL)) {
 				continue;
 			}
 
@@ -1101,6 +1108,14 @@ public class CustomFDSSerializer
 		return enabledVisualizationModeJSONObjects;
 	}
 
+	private String _getFieldName(ObjectEntry objectEntry) {
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		String fieldName = String.valueOf(properties.get("fieldName"));
+
+		return fieldName.replaceAll("(\\[\\]|\\.)", StringPool.FORWARD_SLASH);
+	}
+
 	private Object _getListTypeEntryKey(
 		String entityFieldType, ListTypeEntry listTypeEntry) {
 
@@ -1165,6 +1180,43 @@ public class CustomFDSSerializer
 		}
 
 		return objectEntry;
+	}
+
+	private String _getProxySelectionFilterAPIURL(
+		HttpServletRequest httpServletRequest, boolean interpolate,
+		ObjectEntry objectEntry,
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+
+		String fieldName = _getFieldName(objectEntry);
+
+		Map<String, String> selectionFilterAPIURLs =
+			_systemFDSSerializer.serializeSelectionFilterAPIURLs(
+				MapUtil.getString(
+					objectEntry.getProperties(),
+					"r_dataSetToDataSetSelectionFilters_l_dataSetERC"),
+				httpServletRequest, interpolate,
+				_getProxyTokenResolutionsJSONObjects(
+					fieldName, objectEntry, selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
+
+		return selectionFilterAPIURLs.get(fieldName);
+	}
+
+	private Map<String, JSONObject> _getProxyTokenResolutionsJSONObjects(
+		String fieldName, ObjectEntry objectEntry,
+		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+
+		if (selectionFilterFDSAPIURLTokenResolutionsJSONObjects == null) {
+			return null;
+		}
+
+		JSONObject tokenResolutionsJSONObject = selectionFilterFDSAPIURLTokenResolutionsJSONObjects.get(
+			objectEntry.getExternalReferenceCode());
+
+		if (tokenResolutionsJSONObject == null) {
+			return null;
+		}
+
+		return Collections.singletonMap(fieldName, tokenResolutionsJSONObject);
 	}
 
 	private Collection<ObjectEntry> _getRelatedObjectEntries(
@@ -1326,10 +1378,7 @@ public class CustomFDSSerializer
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		String fieldName = String.valueOf(properties.get("fieldName"));
-
-		fieldName = fieldName.replaceAll(
-			"(\\[\\]|\\.)", StringPool.FORWARD_SLASH);
+		String fieldName = _getFieldName(objectEntry);
 
 		String clientExtensionEntryERC = MapUtil.getString(
 			properties, "clientExtensionEntryERC");
@@ -1458,7 +1507,9 @@ public class CustomFDSSerializer
 				MapUtil.getString(
 					properties,
 					"r_dataSetToDataSetSelectionFilters_l_dataSetERC"),
-				httpServletRequest, null);
+				httpServletRequest,
+				_getProxyTokenResolutionsJSONObjects(
+					fieldName, objectEntry, selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1523,7 +1574,7 @@ public class CustomFDSSerializer
 				httpServletRequest, true, objectEntry,
 				selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
-			if (apiURL == null) {
+			if (Validator.isNull(apiURL)) {
 				apiURL = source;
 			}
 

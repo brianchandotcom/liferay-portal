@@ -345,17 +345,15 @@ public class SystemFDSSerializer
 		Map<String, String> selectionFilterAPIURLs = new LinkedHashMap<>();
 
 		for (FDSFilter fdsFilter : fdsFilterRegistry.getFDSFilters(fdsName)) {
-			String apiURL = _getSelectionFilterAPIURL(fdsFilter);
+			String apiURL = _buildSelectionFilterAPIURL(
+				_getSelectionFilterAPIURL(fdsFilter), fdsFilter,
+				httpServletRequest, interpolate, selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
-			if (apiURL == null) {
+			if (Validator.isNull(apiURL)) {
 				continue;
 			}
 
-			selectionFilterAPIURLs.put(
-				fdsFilter.getId(),
-				_buildSelectionFilterAPIURL(
-					apiURL, fdsFilter, httpServletRequest, interpolate,
-					selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
+			selectionFilterAPIURLs.put(fdsFilter.getId(), apiURL);
 		}
 
 		return selectionFilterAPIURLs;
@@ -540,6 +538,10 @@ public class SystemFDSSerializer
 		HttpServletRequest httpServletRequest, boolean interpolate,
 		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
+		if (Validator.isNull(apiURL)) {
+			return null;
+		}
+
 		JSONObject tokenResolutionsJSONObject = null;
 
 		if (selectionFilterFDSAPIURLTokenResolutionsJSONObjects != null) {
@@ -580,6 +582,10 @@ public class SystemFDSSerializer
 	}
 
 	private boolean _hasTokens(String apiURL) {
+		if (Validator.isNull(apiURL)) {
+			return false;
+		}
+
 		Matcher matcher = _pattern.matcher(apiURL);
 
 		return matcher.find();
@@ -600,24 +606,20 @@ public class SystemFDSSerializer
 				continue;
 			}
 
-			String apiURL = _getSelectionFilterAPIURL(fdsFilter);
+			String apiURL = _buildSelectionFilterAPIURL(
+				_getSelectionFilterAPIURL(fdsFilter), fdsFilter,
+				httpServletRequest, true, selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
-			if ((apiURL != null) && _hasTokens(apiURL)) {
-				apiURL = _buildSelectionFilterAPIURL(
-					apiURL, fdsFilter, httpServletRequest, true,
-					selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
-
-				if (_hasTokens(apiURL)) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Omitting selection filter ", fdsFilter.getId(),
-								" because its API URL has unresolved tokens: ",
-								apiURL));
-					}
-
-					continue;
+			if (_hasTokens(apiURL)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Omitting selection filter ", fdsFilter.getId(),
+							" because its API URL has unresolved tokens: ",
+							apiURL));
 				}
+
+				continue;
 			}
 
 			JSONObject jsonObject = JSONUtil.put(
@@ -656,7 +658,7 @@ public class SystemFDSSerializer
 				}
 			}
 
-			if (apiURL != null) {
+			if (Validator.isNotNull(apiURL)) {
 				jsonObject.put("apiURL", apiURL);
 			}
 

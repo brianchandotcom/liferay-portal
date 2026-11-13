@@ -1,13 +1,20 @@
+import * as API from 'shared/api';
 import React from 'react';
 import TopCampaigns from '../TopCampaigns';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {useParams} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
+let lastFrontendDataSetProps: any;
+
 jest.mock('@liferay/frontend-data-set-web', () => ({
 	...jest.requireActual('@liferay/frontend-data-set-web'),
-	FrontendDataSet: () => <div data-testid="fds-component" />,
+	FrontendDataSet: (props: any) => {
+		lastFrontendDataSetProps = props;
+
+		return <div data-testid="fds-component" />;
+	},
 }));
 
 jest.mock('shared/components/dropdown-range-key/DropdownRangeKey', () => ({
@@ -24,6 +31,7 @@ jest.mock('react-router-dom', () => ({
 	useParams: jest.fn(),
 }));
 
+const fetchTopCampaigns = API.campaigns.fetchTopCampaigns as jest.Mock;
 const mockedUseParams = useParams as jest.Mock;
 
 const getViewAllHref = () =>
@@ -31,11 +39,63 @@ const getViewAllHref = () =>
 
 describe('TopCampaigns', () => {
 	beforeEach(() => {
+		fetchTopCampaigns.mockClear();
+		lastFrontendDataSetProps = undefined;
+
 		mockedUseParams.mockReturnValue({
 			channelId: '456',
 			groupId: '23',
 			id: 'acc-1',
 		});
+	});
+
+	it('should request the top campaigns of the account', async () => {
+		render(<TopCampaigns accountName="IQVIA" />);
+
+		await waitFor(() =>
+			expect(fetchTopCampaigns).toHaveBeenCalledWith(
+				expect.objectContaining({
+					accountId: 'acc-1',
+					channelId: '456',
+					groupId: '23',
+				})
+			)
+		);
+	});
+
+	it('should list the campaigns in the order the backend ranked them', async () => {
+		const campaigns = [
+			{
+				campaignName: 'Spring Launch',
+				id: 'c-2',
+				individualsTouched: 8,
+				lastTouchDate: '2026-11-01',
+			},
+			{
+				campaignName: 'Webinar',
+				id: 'c-1',
+				individualsTouched: 3,
+				lastTouchDate: '2026-11-05',
+			},
+		];
+
+		fetchTopCampaigns.mockResolvedValueOnce(campaigns);
+
+		render(<TopCampaigns accountName="IQVIA" />);
+
+		await screen.findByTestId('fds-component');
+
+		expect(lastFrontendDataSetProps.items).toEqual(campaigns);
+		expect(lastFrontendDataSetProps.apiURL).toBeUndefined();
+		expect(lastFrontendDataSetProps.sorts).toBeUndefined();
+	});
+
+	it('should not request the top campaigns while the account id is missing', () => {
+		mockedUseParams.mockReturnValue({channelId: '456', groupId: '23'});
+
+		render(<TopCampaigns accountName="IQVIA" />);
+
+		expect(fetchTopCampaigns).not.toHaveBeenCalled();
 	});
 
 	it('should render the card title', () => {

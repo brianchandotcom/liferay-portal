@@ -5,26 +5,18 @@
 
 package com.liferay.osb.faro.rest.internal.jaxrs.container.request.filter;
 
-import com.liferay.osb.faro.constants.FaroChannelConstants;
-import com.liferay.osb.faro.constants.FaroUserConstants;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroProject;
-import com.liferay.osb.faro.model.FaroUser;
+import com.liferay.osb.faro.rest.internal.jaxrs.util.ProblemUtil;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
-import com.liferay.osb.faro.service.FaroUserLocalService;
-import com.liferay.portal.kernel.model.Role;
+import com.liferay.osb.faro.util.FaroPermissionChecker;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import jakarta.annotation.Priority;
 
@@ -34,7 +26,6 @@ import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
@@ -104,8 +95,8 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 				return;
 			}
 
-			if (!_isWorkspaceMember(
-					faroProject.getGroupId(), permissionChecker.getUserId())) {
+			if (!FaroPermissionChecker.isGroupMember(
+					faroProject.getGroupId(), permissionChecker)) {
 
 				_abort(
 					containerRequestContext, Response.Status.FORBIDDEN,
@@ -134,13 +125,14 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 		if (faroChannel == null) {
 			_abort(
 				containerRequestContext, Response.Status.NOT_FOUND,
-				"No property was found with channel ID " + channelId +
-					" in the workspace with group ID " + groupId);
+				StringBundler.concat(
+					"No property was found with channel ID ", channelId,
+					" in the workspace with group ID ", groupId));
 
 			return;
 		}
 
-		if (!_hasChannelPermission(faroChannel, permissionChecker)) {
+		if (!FaroPermissionChecker.isChannelMember(faroChannel)) {
 			_abort(
 				containerRequestContext, Response.Status.FORBIDDEN,
 				"Unable to access the property with channel ID " + channelId);
@@ -152,27 +144,7 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 		String title) {
 
 		containerRequestContext.abortWith(
-			Response.status(
-				status
-			).entity(
-				new Problem(status, title)
-			).type(
-				MediaType.APPLICATION_JSON
-			).build());
-	}
-
-	private boolean _hasChannelPermission(
-		FaroChannel faroChannel, PermissionChecker permissionChecker) {
-
-		if (faroChannel.getPermissionType() ==
-				FaroChannelConstants.PERMISSION_ALL_USERS) {
-
-			return true;
-		}
-
-		return ListUtil.isNotEmpty(
-			_userGroupRoleLocalService.getUserGroupRoles(
-				permissionChecker.getUserId(), faroChannel.getGroupId()));
+			ProblemUtil.toResponse(status, title));
 	}
 
 	private boolean _isGuestUser(PermissionChecker permissionChecker) {
@@ -185,46 +157,13 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 		return false;
 	}
 
-	private boolean _isWorkspaceMember(long groupId, long userId) {
-		FaroUser faroUser = _faroUserLocalService.fetchFaroUser(
-			groupId, userId);
-
-		if ((faroUser == null) ||
-			(faroUser.getStatus() != FaroUserConstants.STATUS_APPROVED)) {
-
-			return false;
-		}
-
-		Role role = _roleLocalService.fetchRole(faroUser.getRoleId());
-
-		if (role == null) {
-			return false;
-		}
-
-		return ArrayUtil.contains(_WORKSPACE_ROLE_NAMES, role.getName());
-	}
-
-	private static final String[] _WORKSPACE_ROLE_NAMES = {
-		RoleConstants.SITE_ADMINISTRATOR, RoleConstants.SITE_MEMBER,
-		RoleConstants.SITE_OWNER
-	};
-
 	@Reference
 	private FaroChannelLocalService _faroChannelLocalService;
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;
 
-	@Reference
-	private FaroUserLocalService _faroUserLocalService;
-
 	@Context
 	private HttpServletRequest _httpServletRequest;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

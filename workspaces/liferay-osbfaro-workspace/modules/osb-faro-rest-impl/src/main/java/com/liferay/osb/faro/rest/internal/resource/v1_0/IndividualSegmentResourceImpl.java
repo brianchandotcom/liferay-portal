@@ -6,20 +6,28 @@
 package com.liferay.osb.faro.rest.internal.resource.v1_0;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
-import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
-import com.liferay.osb.faro.engine.client.exception.NoSuchEntryException;
 import com.liferay.osb.faro.engine.client.model.Results;
+import com.liferay.osb.faro.model.FaroChannel;
+import com.liferay.osb.faro.model.FaroChannelTable;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.rest.dto.v1_0.IndividualSegment;
 import com.liferay.osb.faro.rest.internal.dto.v1_0.converter.FaroDTOConverterContext;
 import com.liferay.osb.faro.rest.internal.dto.v1_0.util.FaroPaginationUtil;
+import com.liferay.osb.faro.rest.internal.helper.IndividualSegmentHelper;
 import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentResource;
+import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import jakarta.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,10 +81,17 @@ public class IndividualSegmentResourceImpl
 		FaroProject faroProject =
 			_faroProjectLocalService.getFaroProjectByGroupId(groupId);
 
+		List<String> excludedChannelIds = Collections.emptyList();
+
+		if (Validator.isNull(channelId)) {
+			excludedChannelIds = _getExcludedChannelIds(
+				faroProject.getGroupId());
+		}
+
 		Results<com.liferay.osb.faro.engine.client.model.IndividualSegment>
 			results = _contactsEngineClient.getIndividualIndividualSegments(
-				faroProject, channelId, individualId, search, status,
-				FaroPaginationUtil.getCur(pagination),
+				faroProject, channelId, excludedChannelIds, individualId,
+				search, status, FaroPaginationUtil.getCur(pagination),
 				FaroPaginationUtil.getDelta(pagination), null);
 
 		return Page.of(
@@ -96,34 +111,46 @@ public class IndividualSegmentResourceImpl
 			Long groupId, String individualSegmentId)
 		throws Exception {
 
-		com.liferay.osb.faro.engine.client.model.IndividualSegment
-			individualSegment = null;
-
-		try {
-			individualSegment = _contactsEngineClient.getIndividualSegment(
-				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				individualSegmentId, false);
-		}
-		catch (FaroEngineClientException faroEngineClientException) {
-			if (faroEngineClientException.getStatus() ==
-					HttpServletResponse.SC_BAD_REQUEST) {
-
-				throw new NoSuchEntryException(faroEngineClientException);
-			}
-
-			throw faroEngineClientException;
-		}
-
 		return _individualSegmentDTOConverter.toDTO(
 			new FaroDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				individualSegmentId,
 				contextAcceptLanguage.getPreferredLocale()),
-			individualSegment);
+			_individualSegmentHelper.getIndividualSegment(
+				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				individualSegmentId));
+	}
+
+	private List<String> _getExcludedChannelIds(long groupId) {
+		Set<String> accessibleChannelIds = new HashSet<>(
+			transform(
+				_faroChannelLocalService.search(
+					groupId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				FaroChannel::getChannelId));
+
+		return transform(
+			_faroChannelLocalService.<List<FaroChannel>>dslQuery(
+				DSLQueryFactoryUtil.select(
+					FaroChannelTable.INSTANCE
+				).from(
+					FaroChannelTable.INSTANCE
+				).where(
+					FaroChannelTable.INSTANCE.workspaceGroupId.eq(groupId)
+				)),
+			faroChannel -> {
+				if (accessibleChannelIds.contains(faroChannel.getChannelId())) {
+					return null;
+				}
+
+				return faroChannel.getChannelId();
+			});
 	}
 
 	@Reference
 	private ContactsEngineClient _contactsEngineClient;
+
+	@Reference
+	private FaroChannelLocalService _faroChannelLocalService;
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;
@@ -134,6 +161,9 @@ public class IndividualSegmentResourceImpl
 	private DTOConverter
 		<com.liferay.osb.faro.engine.client.model.IndividualSegment,
 		 IndividualSegment> _individualSegmentDTOConverter;
+
+	@Reference
+	private IndividualSegmentHelper _individualSegmentHelper;
 
 }
 

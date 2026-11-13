@@ -2808,9 +2808,9 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<IndividualSegment> getIndividualIndividualSegments(
-		FaroProject faroProject, String channelId, String individualId,
-		String query, String status, int cur, int delta,
-		List<OrderByField> orderByFields) {
+		FaroProject faroProject, String channelId,
+		List<String> excludedChannelIds, String individualId, String query,
+		String status, int cur, int delta, List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields,
@@ -2824,6 +2824,12 @@ public class ContactsEngineClientImpl
 			filterBuilder.addFilter(
 				"channelId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
 				Long.valueOf(channelId));
+		}
+
+		for (String excludedChannelId : excludedChannelIds) {
+			filterBuilder.addFilter(
+				"channelId", FilterConstants.COMPARISON_OPERATOR_NOT_EQUALS,
+				GetterUtil.getLong(excludedChannelId));
 		}
 
 		filterBuilder.addFilter(
@@ -2843,6 +2849,17 @@ public class ContactsEngineClientImpl
 			uriVariables);
 
 		return pagedModel.getResults();
+	}
+
+	@Override
+	public Results<IndividualSegment> getIndividualIndividualSegments(
+		FaroProject faroProject, String channelId, String individualId,
+		String query, String status, int cur, int delta,
+		List<OrderByField> orderByFields) {
+
+		return getIndividualIndividualSegments(
+			faroProject, channelId, Collections.emptyList(), individualId,
+			query, status, cur, delta, orderByFields);
 	}
 
 	@Override

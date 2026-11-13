@@ -8,6 +8,8 @@ package com.liferay.osb.faro.engine.client.internal;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
+import com.liferay.osb.faro.engine.client.model.PagedModel;
+import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
@@ -22,6 +24,7 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 
 /**
@@ -61,6 +64,37 @@ public class ContactsEngineClientImplTest {
 					RandomTestUtil.randomString())));
 	}
 
+	@Test
+	public void testGetIndividualIndividualSegmentsWithChannelId() {
+		long channelId = RandomTestUtil.randomLong();
+
+		_contactsEngineClientImpl.getIndividualIndividualSegments(
+			Mockito.mock(FaroProject.class), String.valueOf(channelId),
+			RandomTestUtil.randomString(), null, null, 1, 20, null);
+
+		String filter = String.valueOf(_uriVariables.get("filter"));
+
+		Assert.assertFalse(filter.contains(" ne "));
+		Assert.assertTrue(filter.contains("channelId eq " + channelId));
+	}
+
+	@Test
+	public void testGetIndividualIndividualSegmentsWithExcludedChannelIds() {
+		long channelId1 = RandomTestUtil.randomLong();
+		long channelId2 = RandomTestUtil.randomLong();
+
+		_contactsEngineClientImpl.getIndividualIndividualSegments(
+			Mockito.mock(FaroProject.class), null,
+			Arrays.asList(
+				String.valueOf(channelId1), String.valueOf(channelId2)),
+			RandomTestUtil.randomString(), null, null, 1, 20, null);
+
+		String filter = String.valueOf(_uriVariables.get("filter"));
+
+		Assert.assertTrue(filter.contains("channelId ne " + channelId1));
+		Assert.assertTrue(filter.contains("channelId ne " + channelId2));
+	}
+
 	private final ContactsEngineClientImpl _contactsEngineClientImpl =
 		new ContactsEngineClientImpl() {
 
@@ -73,8 +107,28 @@ public class ContactsEngineClientImplTest {
 				return (List<T>)_fieldNamesList;
 			}
 
+			@Override
+			protected <T> T get(
+				FaroProject faroProject, String type,
+				ParameterizedTypeReference<T> parameterizedTypeReference,
+				Map<String, Object> uriVariables) {
+
+				_uriVariables = uriVariables;
+
+				PagedModel<?, ?> pagedModel = Mockito.mock(PagedModel.class);
+
+				Mockito.doReturn(
+					new Results<>(Collections.emptyList(), 0)
+				).when(
+					pagedModel
+				).getResults();
+
+				return (T)pagedModel;
+			}
+
 		};
 
 	private List<List<String>> _fieldNamesList;
+	private Map<String, Object> _uriVariables;
 
 }

@@ -18,7 +18,7 @@ CommerceChannelDisplayContext commerceChannelDisplayContext = (CommerceChannelDi
 
 	<aui:model-context bean="<%= commerceChannelDisplayContext.getCommerceChannel() %>" model="<%= CommerceChannel.class %>" />
 
-	<aui:input name="commerceChannelId" type="hidden" />
+	<aui:input name="commerceChannelId" type="hidden" valueFunction="<%= CommerceChannel::getCommerceChannelId %>" />
 
-	<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" valueFunction="<%= CommerceChannel::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

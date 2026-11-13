@@ -21,7 +21,7 @@ CommerceReturn commerceReturn = commerceReturnEditDisplayContext.getCommerceRetu
 
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="requestProcessed" type="hidden" value='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>' />
-		<aui:input name="primaryKey" type="hidden" />
+		<aui:input name="primaryKey" type="hidden" valueFunction="<%= ObjectEntry::getPrimaryKey %>" />
 
 		<aui:input name="note" type="textarea" value="<%= commerceReturn.getNote() %>" wrapperCssClass="form-group-item" />
 	</aui:form>

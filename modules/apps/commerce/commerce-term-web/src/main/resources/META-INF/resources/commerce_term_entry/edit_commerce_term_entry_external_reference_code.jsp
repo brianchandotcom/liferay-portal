@@ -21,5 +21,5 @@ CommerceTermEntry commerceTermEntry = commerceTermEntryDisplayContext.getCommerc
 
 	<aui:model-context bean="<%= commerceTermEntry %>" model="<%= CommerceTermEntry.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= commerceTermEntry.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= commerceTermEntry.getExternalReferenceCode() %>" valueFunction="<%= CommerceTermEntry::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

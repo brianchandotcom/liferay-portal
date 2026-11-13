@@ -83,9 +83,9 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					</c:otherwise>
 				</c:choose>
 
-				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="name" localized="<%= true %>" name="nameMapAsXML" required="<%= true %>" type="text" />
+				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="name" localized="<%= true %>" name="nameMapAsXML" required="<%= true %>" type="text" valueFunction="<%= CPDefinition::getNameMapAsXML %>" />
 
-				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="short-description" localized="<%= true %>" name="shortDescriptionMapAsXML" resizable="<%= true %>" type="textarea" />
+				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="short-description" localized="<%= true %>" name="shortDescriptionMapAsXML" resizable="<%= true %>" type="textarea" valueFunction="<%= CPDefinition::getShortDescriptionMapAsXML %>" />
 
 				<%
 				String descriptionMapAsXML = StringPool.BLANK;
@@ -134,11 +134,11 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					/>
 				</div>
 
-				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="meta-title" localized="<%= true %>" name="metaTitleMapAsXML" type="text" />
+				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="meta-title" localized="<%= true %>" name="metaTitleMapAsXML" type="text" valueFunction="<%= CPDefinition::getMetaTitleMapAsXML %>" />
 
-				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="meta-description" localized="<%= true %>" name="metaDescriptionMapAsXML" type="textarea" />
+				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="meta-description" localized="<%= true %>" name="metaDescriptionMapAsXML" type="textarea" valueFunction="<%= CPDefinition::getMetaDescriptionMapAsXML %>" />
 
-				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="meta-keywords" localized="<%= true %>" name="metaKeywordsMapAsXML" type="textarea" />
+				<aui:input defaultLanguageId="<%= defaultLanguageId %>" label="meta-keywords" localized="<%= true %>" name="metaKeywordsMapAsXML" type="textarea" valueFunction="<%= CPDefinition::getMetaKeywordsMapAsXML %>" />
 			</commerce-ui:panel>
 		</div>
 

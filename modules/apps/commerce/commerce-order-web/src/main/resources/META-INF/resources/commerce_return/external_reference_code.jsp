@@ -19,7 +19,7 @@ CommerceReturn commerceReturn = commerceReturnEditDisplayContext.getCommerceRetu
 	<aui:model-context bean="<%= commerceReturn.getObjectEntry() %>" model="<%= ObjectEntry.class %>" />
 
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="primaryKey" type="hidden" />
+	<aui:input name="primaryKey" type="hidden" valueFunction="<%= ObjectEntry::getPrimaryKey %>" />
 
-	<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" valueFunction="<%= ObjectEntry::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

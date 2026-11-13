@@ -55,7 +55,7 @@ if ((commerceOrderType != null) && (commerceOrderType.getExpirationDate() != nul
 
 				<div class="row">
 					<div class="col">
-						<aui:input localized="<%= true %>" name="description" type="textarea" value="<%= commerceOrderType.getDescription(locale) %>" />
+						<aui:input localized="<%= true %>" name="description" type="textarea" value="<%= commerceOrderType.getDescription(locale) %>" valueFunction="<%= (CommerceOrderType curCommerceOrderType) -> curCommerceOrderType.getDescription() %>" />
 					</div>
 				</div>
 			</commerce-ui:panel>

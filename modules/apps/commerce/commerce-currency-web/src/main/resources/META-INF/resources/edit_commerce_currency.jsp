@@ -36,7 +36,7 @@ boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary",
 				<aui:fieldset>
 					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="name" />
 
-					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" readonly="<%= (commerceCurrency != null) ? true : false %>" type="text">
+					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" readonly="<%= (commerceCurrency != null) ? true : false %>" type="text" valueFunction="<%= CommerceCurrency::getCode %>">
 						<aui:validator name="required" />
 					</aui:input>
 
@@ -54,7 +54,7 @@ boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary",
 						<aui:validator name="min">0</aui:validator>
 					</aui:input>
 
-					<aui:select bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="roundingMode">
+					<aui:select bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="roundingMode" valueFunction="<%= CommerceCurrency::getRoundingMode %>">
 
 						<%
 						for (RoundingMode curRoundingMode : RoundingMode.values()) {

@@ -64,7 +64,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 
 				<aui:input name="description" wrapperCssClass="commerce-product-option-description" />
 
-				<aui:select label="option-field-type" name="commerceOptionTypeKey" showEmptyOption="<%= true %>">
+				<aui:select label="option-field-type" name="commerceOptionTypeKey" showEmptyOption="<%= true %>" valueFunction="<%= CPOption::getCommerceOptionTypeKey %>">
 
 					<%
 					for (CommerceOptionType commerceOptionType : commerceOptionTypes) {

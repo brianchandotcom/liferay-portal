@@ -104,7 +104,7 @@ boolean released = patcherFixPack.getStatus() == WorkflowConstants.STATUS_FIX_PA
 			</p>
 		</div>
 
-		<aui:select disabled="<%= released %>" name="status" showEmptyOption="<%= false %>">
+		<aui:select disabled="<%= released %>" name="status" showEmptyOption="<%= false %>" valueFunction="<%= PatcherFixPack::getStatus %>">
 			<c:if test="<%= patcherFixPack.getStatus() != WorkflowConstants.STATUS_FIX_PACK_RELEASED %>">
 				<aui:option label="<%= WorkflowConstants.LABEL_FIX_PACK_UNDER_DEVELOPMENT %>" value="<%= WorkflowConstants.STATUS_FIX_PACK_UNDER_DEVELOPMENT %>" />
 				<aui:option label="<%= WorkflowConstants.LABEL_FIX_PACK_FROZEN %>" value="<%= WorkflowConstants.STATUS_FIX_PACK_FROZEN %>" />

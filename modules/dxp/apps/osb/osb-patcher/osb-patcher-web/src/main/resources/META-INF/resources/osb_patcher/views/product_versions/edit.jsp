@@ -35,7 +35,7 @@ PatcherProductVersion patcherProductVersion = PatcherProductVersionLocalServiceU
 	<liferay-frontend:edit-form-body>
 		<aui:input name="name" />
 
-		<aui:select label="fix-delivery-method" name="fixDeliveryMethod">
+		<aui:select label="fix-delivery-method" name="fixDeliveryMethod" valueFunction="<%= PatcherProductVersion::getFixDeliveryMethod %>">
 			<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_FIX_PACK_20 %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_FIX_PACK_20 %>" />
 			<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_FIX_PACK_30 %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_FIX_PACK_30 %>" />
 			<aui:option label="<%= PatcherProductVersionConstants.LABEL_FIX_DELIVERY_METHOD_MARKETPLACE_RELEASE %>" value="<%= PatcherProductVersionConstants.TYPE_FIX_DELIVERY_METHOD_MARKETPLACE_RELEASE %>" />

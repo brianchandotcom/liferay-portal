@@ -61,7 +61,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 					<div class="password-policy-options" id="<portlet:namespace />changeableSettings">
 						<aui:input disabled="<%= cryptoOfficerPasswordPolicy %>" helpMessage="change-required-help" inlineLabel="right" labelCssClass="simple-toggle-switch" name="changeRequired" type="toggle-switch" value="<%= passwordPolicy.isChangeRequired() %>" />
 
-						<aui:select helpMessage="minimum-age-help" label="minimum-age" name="minAge">
+						<aui:select helpMessage="minimum-age-help" label="minimum-age" name="minAge" valueFunction="<%= PasswordPolicy::getMinAge %>">
 							<aui:option label="none" value="0" />
 
 							<%
@@ -80,7 +80,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 						</aui:select>
 					</div>
 
-					<aui:select helpMessage="reset-ticket-max-age-help" name="resetTicketMaxAge">
+					<aui:select helpMessage="reset-ticket-max-age-help" name="resetTicketMaxAge" valueFunction="<%= PasswordPolicy::getResetTicketMaxAge %>">
 						<aui:option label="eternal" value="0" />
 
 						<%
@@ -139,7 +139,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 					<aui:input helpMessage="enable-history-help" inlineLabel="right" label="enable-history" labelCssClass="simple-toggle-switch" name="history" type="toggle-switch" value="<%= passwordPolicy.isHistory() %>" />
 
 					<div class="password-policy-options" id="<portlet:namespace />historySettings">
-						<aui:select helpMessage="history-count-help" name="historyCount">
+						<aui:select helpMessage="history-count-help" name="historyCount" valueFunction="<%= PasswordPolicy::getHistoryCount %>">
 
 							<%
 							for (int i = 2; i < 25; i++) {
@@ -164,7 +164,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 					<aui:input helpMessage="enable-expiration-help" inlineLabel="right" label="enable-expiration" labelCssClass="simple-toggle-switch" name="expireable" type="toggle-switch" value="<%= passwordPolicy.isExpireable() %>" />
 
 					<div class="password-policy-options" id="<portlet:namespace />expirationSettings">
-						<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
+						<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge" valueFunction="<%= PasswordPolicy::getMaxAge %>">
 
 							<%
 							for (long duration : _sort(passwordPoliciesConfiguration.maximumAgeDurations())) {
@@ -178,7 +178,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 
 						</aui:select>
 
-						<aui:select helpMessage="warning-time-help" name="warningTime">
+						<aui:select helpMessage="warning-time-help" name="warningTime" valueFunction="<%= PasswordPolicy::getWarningTime %>">
 
 							<%
 							for (long duration : _sort(passwordPoliciesConfiguration.expirationWarningTimeDurations())) {
@@ -208,7 +208,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 					<div class="password-policy-options" id="<portlet:namespace />lockoutSettings">
 						<aui:input disabled="<%= cryptoOfficerPasswordPolicy %>" helpMessage="maximum-failure-help" label="maximum-failure" name="maxFailure" />
 
-						<aui:select helpMessage="reset-failure-count-help" name="resetFailureCount">
+						<aui:select helpMessage="reset-failure-count-help" name="resetFailureCount" valueFunction="<%= PasswordPolicy::getResetFailureCount %>">
 
 							<%
 							for (long duration : _sort(passwordPoliciesConfiguration.resetFailureDurations())) {
@@ -222,7 +222,7 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 
 						</aui:select>
 
-						<aui:select helpMessage="lockout-duration-help" name="lockoutDuration">
+						<aui:select helpMessage="lockout-duration-help" name="lockoutDuration" valueFunction="<%= PasswordPolicy::getLockoutDuration %>">
 							<aui:option label="until-unlocked-by-an-administrator" value="0" />
 
 							<%

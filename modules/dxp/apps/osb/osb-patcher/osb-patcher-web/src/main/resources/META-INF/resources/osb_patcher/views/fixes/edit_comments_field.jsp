@@ -25,7 +25,7 @@ PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(patcherFixId)
 	<aui:input name="patcherFixId" type="hidden" value="<%= patcherFix.getPatcherFixId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:input name="comments" type="textarea" />
+		<aui:input name="comments" type="textarea" valueFunction="<%= PatcherFix::getComments %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

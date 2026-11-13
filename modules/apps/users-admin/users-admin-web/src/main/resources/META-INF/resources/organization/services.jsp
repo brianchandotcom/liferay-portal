@@ -124,7 +124,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 			<div class="row-fields">
 				<aui:input name='<%= "orgLaborId" + orgLaborsIndex %>' type="hidden" />
 
-				<aui:select label="type" listType="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" name='<%= "orgLaborListTypeId" + orgLaborsIndex %>' />
+				<aui:select label="type" listType="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" name='<%= "orgLaborListTypeId" + orgLaborsIndex %>' valueFunction="<%= OrgLabor::getListTypeId %>" />
 
 				<%
 				for (int j = 0; j < days.length; j++) {

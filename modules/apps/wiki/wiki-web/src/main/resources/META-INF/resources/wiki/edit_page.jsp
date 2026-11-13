@@ -202,7 +202,7 @@ if (portletTitleBasedNavigation) {
 							<c:choose>
 								<c:when test="<%= editTitle %>">
 									<div class="entry-title">
-										<aui:input label='<%= LanguageUtil.get(request, "title") %>' name="title" type="text" value="<%= HtmlUtil.escape(title) %>" />
+										<aui:input label='<%= LanguageUtil.get(request, "title") %>' name="title" type="text" value="<%= HtmlUtil.escape(title) %>" valueFunction="<%= WikiPage::getTitle %>" />
 									</div>
 								</c:when>
 								<c:otherwise>
@@ -232,7 +232,7 @@ if (portletTitleBasedNavigation) {
 										<liferay-ui:message key="the-format-of-this-page-is-not-supported-the-page-content-will-be-shown-unformatted" />
 									</div>
 
-									<aui:input name="content" type="textarea" value="<%= wikiPage.getContent() %>" />
+									<aui:input name="content" type="textarea" value="<%= wikiPage.getContent() %>" valueFunction="<%= WikiPage::getContent %>" />
 
 								<%
 								}
@@ -304,7 +304,7 @@ if (portletTitleBasedNavigation) {
 
 							<c:choose>
 								<c:when test="<%= !formats.isEmpty() %>">
-									<aui:select changesContext="<%= true %>" name="format">
+									<aui:select changesContext="<%= true %>" name="format" valueFunction="<%= WikiPage::getFormat %>">
 
 										<%
 										for (String format : formats) {

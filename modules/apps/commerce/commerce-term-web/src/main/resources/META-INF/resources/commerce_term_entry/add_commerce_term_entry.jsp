@@ -22,7 +22,7 @@ CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermE
 
 		<aui:input name="name" required="<%= true %>" />
 
-		<aui:select name="type" required="<%= true %>">
+		<aui:select name="type" required="<%= true %>" valueFunction="<%= CommerceTermEntry::getType %>">
 
 			<%
 			for (CommerceTermEntryType commerceTermEntryType : commerceTermEntryDisplayContext.getCommerceTermEntryTypes()) {

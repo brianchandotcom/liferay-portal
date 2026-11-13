@@ -37,7 +37,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type", Com
 				>
 					<aui:input name="name" required="<%= true %>" />
 
-					<aui:select disabled="<%= true %>" name="type" required="<%= true %>">
+					<aui:select disabled="<%= true %>" name="type" required="<%= true %>" valueFunction="<%= CommerceDiscountRule::getType %>">
 
 						<%
 						for (CommerceDiscountRuleType commerceDiscountRuleType : commerceDiscountRuleDisplayContext.getCommerceDiscountRuleTypes()) {

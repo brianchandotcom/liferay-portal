@@ -19,19 +19,19 @@
 		>
 			<div class="row">
 				<div class="col-4">
-					<aui:input label="coupon-code" name="couponCode" type="text" value="<%= commerceDiscount.getCouponCode() %>">
+					<aui:input label="coupon-code" name="couponCode" type="text" value="<%= commerceDiscount.getCouponCode() %>" valueFunction="<%= CommerceDiscount::getCouponCode %>">
 					</aui:input>
 				</div>
 
 				<div class="col-4">
-					<aui:input helpMessage="define-the-total-number-of-times-this-coupon-code-can-be-used" label="maximum-total-uses" name="limitationTimes" type="text" value="<%= commerceDiscount.getLimitationTimes() %>">
+					<aui:input helpMessage="define-the-total-number-of-times-this-coupon-code-can-be-used" label="maximum-total-uses" name="limitationTimes" type="text" value="<%= commerceDiscount.getLimitationTimes() %>" valueFunction="<%= CommerceDiscount::getLimitationTimes %>">
 						<aui:validator name="min">0</aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 				</div>
 
 				<div class="col-4">
-					<aui:input helpMessage="define-the-maximum-number-of-times-this-coupon-code-can-be-used-by-an-account" label="maximum-uses-per-account" name="limitationTimesPerAccount" type="text" value="<%= commerceDiscount.getLimitationTimesPerAccount() %>">
+					<aui:input helpMessage="define-the-maximum-number-of-times-this-coupon-code-can-be-used-by-an-account" label="maximum-uses-per-account" name="limitationTimesPerAccount" type="text" value="<%= commerceDiscount.getLimitationTimesPerAccount() %>" valueFunction="<%= CommerceDiscount::getLimitationTimesPerAccount %>">
 						<aui:validator name="min">0</aui:validator>
 						<aui:validator name="number" />
 					</aui:input>

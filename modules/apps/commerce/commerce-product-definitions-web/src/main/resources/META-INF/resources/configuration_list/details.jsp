@@ -25,7 +25,7 @@ long templateCPConfigurationEntryId = cpConfigurationListDisplayContext.getTempl
 			>
 				<div class="row">
 					<div class="col-12">
-						<aui:input data-qa-id="nameInput" formName="fm" name="name" type="text">
+						<aui:input data-qa-id="nameInput" formName="fm" name="name" type="text" valueFunction="<%= CPConfigurationList::getName %>">
 							<aui:validator name="required" />
 						</aui:input>
 					</div>
@@ -41,7 +41,7 @@ long templateCPConfigurationEntryId = cpConfigurationListDisplayContext.getTempl
 					</c:if>
 
 					<div class="col-12">
-						<aui:input data-qa-id="priorityInput" formName="fm" name="priority" type="text">
+						<aui:input data-qa-id="priorityInput" formName="fm" name="priority" type="text" valueFunction="<%= CPConfigurationList::getPriority %>">
 							<aui:validator name="number" />
 						</aui:input>
 					</div>

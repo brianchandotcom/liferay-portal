@@ -25,7 +25,7 @@ PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patch
 	<aui:input name="patcherBuildId" type="hidden" value="<%= patcherBuild.getPatcherBuildId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:select name="qaStatus" showEmptyOption="<%= false %>">
+		<aui:select name="qaStatus" showEmptyOption="<%= false %>" valueFunction="<%= PatcherBuild::getQaStatus %>">
 			<aui:option label="<%= WorkflowConstants.LABEL_BUILD_QA_ANALYSIS_NEEDED %>" value="<%= WorkflowConstants.STATUS_BUILD_QA_ANALYSIS_NEEDED %>" />
 			<aui:option label="<%= WorkflowConstants.LABEL_BUILD_QA_ANALYSIS_NEEDED_SMOKE_ONLY %>" value="<%= WorkflowConstants.STATUS_BUILD_QA_ANALYSIS_NEEDED_SMOKE_ONLY %>" />
 			<aui:option label="<%= WorkflowConstants.LABEL_BUILD_QA_ANALYSIS_STARTED %>" value="<%= WorkflowConstants.STATUS_BUILD_QA_ANALYSIS_STARTED %>" />
@@ -42,7 +42,7 @@ PatcherBuild patcherBuild = PatcherBuildLocalServiceUtil.fetchPatcherBuild(patch
 			<aui:option label="<%= WorkflowConstants.LABEL_BUILD_QA_PENDING_SMOKE_ONLY %>" value="<%= WorkflowConstants.STATUS_BUILD_QA_PENDING_SMOKE_ONLY %>" />
 		</aui:select>
 
-		<aui:input name="qaComments" type="textarea" />
+		<aui:input name="qaComments" type="textarea" valueFunction="<%= PatcherBuild::getQaComments %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

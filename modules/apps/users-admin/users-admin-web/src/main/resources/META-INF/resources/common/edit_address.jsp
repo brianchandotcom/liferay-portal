@@ -58,7 +58,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + editContactInformationDisplayContext.getClassName() + ListTypeConstants.ADDRESS %>" message="please-select-a-type" />
 
-				<aui:select label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.ADDRESS %>" listTypeFieldName="listTypeId" name="addressListTypeId" />
+				<aui:select label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.ADDRESS %>" listTypeFieldName="listTypeId" name="addressListTypeId" valueFunction="<%= Address::getListTypeId %>" />
 
 				<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
 

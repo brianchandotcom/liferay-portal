@@ -21,5 +21,5 @@ CommercePaymentEntry commercePaymentEntry = commercePaymentEntryDisplayContext.g
 
 	<aui:model-context bean="<%= commercePaymentEntry %>" model="<%= CommercePaymentEntry.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" valueFunction="<%= CommercePaymentEntry::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

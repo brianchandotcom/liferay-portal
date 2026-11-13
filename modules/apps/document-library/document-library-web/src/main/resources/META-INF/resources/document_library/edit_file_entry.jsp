@@ -329,7 +329,7 @@ renderResponse.setTitle(headerTitle);
 
 					<c:if test="<%= dlEditFileEntryDisplayContext.isFileNameVisible() %>">
 						<div>
-							<aui:input label="file-name" name="fileName" type="text" />
+							<aui:input label="file-name" name="fileName" type="text" valueFunction="<%= FileVersion::getFileName %>" />
 
 							<c:if test="<%= fileVersion != null %>">
 								<react:component

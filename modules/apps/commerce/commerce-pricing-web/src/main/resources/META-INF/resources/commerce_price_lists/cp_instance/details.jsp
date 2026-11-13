@@ -44,7 +44,7 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 					</div>
 				</div>
 
-				<aui:select disabled="<%= true %>" label="unit-of-measure" name="unitOfMeasureKey">
+				<aui:select disabled="<%= true %>" label="unit-of-measure" name="unitOfMeasureKey" valueFunction="<%= CommercePriceEntry::getUnitOfMeasureKey %>">
 
 					<%
 					String unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();

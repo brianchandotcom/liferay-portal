@@ -52,7 +52,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 				</liferay-ui:error>
 
 				<aui:fieldset label="general">
-					<aui:input helpMessage="oauth-client-as-local-metadata-issuer-help" label="oauth-client-as-local-metadata-issuer" name="issuer" required="<%= true %>" type="text" />
+					<aui:input helpMessage="oauth-client-as-local-metadata-issuer-help" label="oauth-client-as-local-metadata-issuer" name="issuer" required="<%= true %>" type="text" valueFunction="<%= OAuthClientASLocalMetadata::getIssuer %>" />
 
 					<aui:input helpMessage="oauth-client-as-local-metadata-supported-scopes-help" label="oauth-client-as-local-metadata-supported-scopes" name="supportedScopes" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.SUPPORTED_SCOPES) %>" />
 
@@ -70,7 +70,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 
 					<aui:input label="oauth-client-as-local-metadata-registration-endpoint" name="registrationEndpoint" type="text" value="<%= (String)request.getAttribute(OAuthClientWebKeys.REGISTRATION_ENDPOINT) %>" />
 
-					<aui:input helpMessage="oauth-client-as-local-well-known-uri-oauth-authorization-server-help" label="oauth-client-as-local-well-known-uri-oauth-authorization-server" name="oAuthASLocalWellKnownURI" readonly="true" type="text" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI() : \"\" %>" />
+					<aui:input helpMessage="oauth-client-as-local-well-known-uri-oauth-authorization-server-help" label="oauth-client-as-local-well-known-uri-oauth-authorization-server" name="oAuthASLocalWellKnownURI" readonly="true" type="text" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI() : \"\" %>" valueFunction="<%= OAuthClientASLocalMetadata::getOAuthASLocalWellKnownURI %>" />
 
 					<%
 					JSONObject jsonObject = JSONUtil.put(
@@ -84,7 +84,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 					);
 					%>
 
-					<aui:input helpMessage="oauth-client-as-local-metadata-json-oauth-authorization-server-help" label="oauth-client-as-local-metadata-json-oauth-authorization-server" name="oAuthASMetadataJSON" readonly="true" style="min-height: 600px;" type="textarea" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASMetadataJSON() : jsonObject.toString() %>" />
+					<aui:input helpMessage="oauth-client-as-local-metadata-json-oauth-authorization-server-help" label="oauth-client-as-local-metadata-json-oauth-authorization-server" name="oAuthASMetadataJSON" readonly="true" style="min-height: 600px;" type="textarea" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASMetadataJSON() : jsonObject.toString() %>" valueFunction="<%= OAuthClientASLocalMetadata::getOAuthASMetadataJSON %>" />
 				</aui:fieldset>
 
 				<aui:fieldset label="oauth-client-as-local-openid-configuration">
@@ -92,7 +92,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 
 					<aui:input label="oauth-client-as-local-metadata-userinfo-endpoint" name="userInfoEndpoint" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.USER_INFO_ENDPOINT) %>" />
 
-					<aui:input helpMessage="oauth-client-as-local-well-known-uri-openid-configuration-help" label="oauth-client-as-local-well-known-uri-openid-configuration" name="localWellKnownURI" readonly="true" type="text" />
+					<aui:input helpMessage="oauth-client-as-local-well-known-uri-openid-configuration-help" label="oauth-client-as-local-well-known-uri-openid-configuration" name="localWellKnownURI" readonly="true" type="text" valueFunction="<%= OAuthClientASLocalMetadata::getLocalWellKnownURI %>" />
 
 					<aui:input
 						helpMessage="oauth-client-as-local-metadata-json-openid-configuration-help"
@@ -116,6 +116,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 								"userInfoEndpoint", ""
 							)
 						%>'
+						valueFunction="<%= OAuthClientASLocalMetadata::getMetadataJSON %>"
 					/>
 				</aui:fieldset>
 

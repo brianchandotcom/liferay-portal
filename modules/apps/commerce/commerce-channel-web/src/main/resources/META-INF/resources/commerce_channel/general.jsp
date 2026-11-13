@@ -47,7 +47,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			>
 				<aui:input name="name" />
 
-				<aui:select label="currency" name="commerceCurrencyCode" required="<%= true %>" title="currency">
+				<aui:select label="currency" name="commerceCurrencyCode" required="<%= true %>" title="currency" valueFunction="<%= CommerceChannel::getCommerceCurrencyCode %>">
 
 					<%
 					for (CommerceCurrency commerceCurrency : commerceCurrencies) {
@@ -75,7 +75,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 				</aui:select>
 
-				<aui:select disabled="<%= !commerceChannelDisplayContext.hasManageLinkSupplierPermission() %>" label="link-channel-to-a-supplier" name="accountEntryId" showEmptyOption="<%= true %>">
+				<aui:select disabled="<%= !commerceChannelDisplayContext.hasManageLinkSupplierPermission() %>" label="link-channel-to-a-supplier" name="accountEntryId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceChannel::getAccountEntryId %>">
 
 					<%
 					for (AccountEntry accountEntry : commerceChannelDisplayContext.getSupplierAccountEntries()) {
@@ -101,7 +101,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 				<div class="mb-4" id="autocomplete-root"></div>
 
-				<aui:select label="price-type" name="priceDisplayType">
+				<aui:select label="price-type" name="priceDisplayType" valueFunction="<%= CommerceChannel::getPriceDisplayType %>">
 
 					<%
 					String priceDisplayType = commerceChannel.getPriceDisplayType();
@@ -111,7 +111,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					<aui:option label="gross-price" selected="<%= priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE) %>" value="<%= CommercePricingConstants.TAX_INCLUDED_IN_PRICE %>" />
 				</aui:select>
 
-				<aui:select label="discounts-target-price-type" name="discountsTargetNetPrice">
+				<aui:select label="discounts-target-price-type" name="discountsTargetNetPrice" valueFunction="<%= CommerceChannel::getDiscountsTargetNetPrice %>">
 					<aui:option label="net-price" selected="<%= commerceChannel.isDiscountsTargetNetPrice() %>" value="true" />
 					<aui:option label="gross-price" selected="<%= !commerceChannel.isDiscountsTargetNetPrice() %>" value="false" />
 				</aui:select>
@@ -285,7 +285,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
 						<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-						<aui:input name="fileEntryId" type="hidden" />
+						<aui:input name="fileEntryId" type="hidden" valueFunction="<%= FileEntry::getFileEntryId %>" />
 
 						<label><liferay-ui:message key="print-order-template" /></label>
 

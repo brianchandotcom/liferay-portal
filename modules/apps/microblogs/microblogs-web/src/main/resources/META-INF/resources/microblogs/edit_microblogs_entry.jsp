@@ -134,7 +134,7 @@ if (comment) {
 		<c:when test="<%= repost %>">
 			<aui:input name="type" type="hidden" value="<%= MicroblogsEntryConstants.TYPE_REPOST %>" />
 
-			<aui:input name="content" type="hidden" />
+			<aui:input name="content" type="hidden" valueFunction="<%= MicroblogsEntry::getContent %>" />
 		</c:when>
 		<c:when test="<%= comment %>">
 			<aui:input name="type" type="hidden" value="<%= MicroblogsEntryConstants.TYPE_REPLY %>" />
@@ -167,7 +167,7 @@ if (comment) {
 			<div class="highlighter-content <%= (comment || edit || repost) ? StringPool.BLANK : "textbox" %>" id="<portlet:namespace />highlighterContent<%= formId %>"></div>
 		</div>
 
-		<aui:input label="" name="content" type="hidden" />
+		<aui:input label="" name="content" type="hidden" valueFunction="<%= MicroblogsEntry::getContent %>" />
 	</c:if>
 
 	<span class="microblogs-countdown-holder">
@@ -201,7 +201,7 @@ if (comment) {
 			}
 			%>
 
-			<aui:select inlineLabel="<%= Boolean.TRUE.toString() %>" label="viewable-by" name="socialRelationType" onChange='<%= liferayPortletResponse.getNamespace() + "relationTypeOnChange(event);" %>' value="<%= socialRelationType %>">
+			<aui:select inlineLabel="<%= Boolean.TRUE.toString() %>" label="viewable-by" name="socialRelationType" onChange='<%= liferayPortletResponse.getNamespace() + "relationTypeOnChange(event);" %>' value="<%= socialRelationType %>" valueFunction="<%= MicroblogsEntry::getSocialRelationType %>">
 				<aui:option label="everyone" value="<%= MicroblogsEntryConstants.TYPE_EVERYONE %>" />
 				<aui:option label="connections" value="<%= SocialRelationConstants.TYPE_BI_CONNECTION %>" />
 				<aui:option label="followers" value="<%= SocialRelationConstants.TYPE_UNI_FOLLOWER %>" />

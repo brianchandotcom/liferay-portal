@@ -74,7 +74,7 @@ if (dispatchTrigger != null) {
 
 						<c:choose>
 							<c:when test="<%= ClusterExecutorUtil.isEnabled() && !dispatchTriggerDisplayContext.isClusterModeSingle(dispatchTrigger.getDispatchTaskExecutorType()) %>">
-								<aui:select label="task-execution-cluster-mode" name="dispatchTaskClusterMode">
+								<aui:select label="task-execution-cluster-mode" name="dispatchTaskClusterMode" valueFunction="<%= DispatchTrigger::getDispatchTaskClusterMode %>">
 
 									<%
 									for (DispatchTaskClusterMode dispatchTaskClusterMode : DispatchTaskClusterMode.values()) {
@@ -101,7 +101,7 @@ if (dispatchTrigger != null) {
 								}
 								%>
 
-								<aui:select disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-a-clustered-environment" label="task-execution-cluster-mode" name="dispatchTaskClusterMode">
+								<aui:select disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-a-clustered-environment" label="task-execution-cluster-mode" name="dispatchTaskClusterMode" valueFunction="<%= DispatchTrigger::getDispatchTaskClusterMode %>">
 									<aui:option label="<%= dispatchTaskClusterMode.getLabel() %>" />
 								</aui:select>
 							</c:otherwise>
@@ -109,7 +109,7 @@ if (dispatchTrigger != null) {
 
 						<aui:input name="overlapAllowed" />
 
-						<aui:select label="time-zone" name="timeZoneId">
+						<aui:select label="time-zone" name="timeZoneId" valueFunction="<%= DispatchTrigger::getTimeZoneId %>">
 
 							<%
 							String dispatchTriggerTimeZoneId = dispatchTrigger.getTimeZoneId();

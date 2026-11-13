@@ -212,7 +212,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 								title="details"
 							>
 								<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
-									<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+									<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language" valueFunction="<%= DDMTemplate::getLanguage %>">
 
 										<%
 										for (String languageType : ddmDisplay.getTemplateLanguageTypes()) {
@@ -257,7 +257,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
 								<c:choose>
 									<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-										<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode">
+										<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode" valueFunction="<%= DDMTemplate::getMode %>">
 											<aui:option label="create" />
 											<aui:option label="edit" />
 										</aui:select>

@@ -28,16 +28,16 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 		<aui:input helpMessage="privacy-policy-url-help" name="privacyPolicyURL" />
 	</c:if>
 
-	<aui:select helpMessage="client-authentication-method-help" label="client-authentication-method" name="clientAuthenticationMethod" required="<%= true %>">
+	<aui:select helpMessage="client-authentication-method-help" label="client-authentication-method" name="clientAuthenticationMethod" required="<%= true %>" valueFunction="<%= OAuth2Application::getClientAuthenticationMethod %>">
 		<aui:option label="client-secret-basic-or-post" value="client_secret_post" />
 		<aui:option label="none" value="none" />
 		<aui:option label="client-secret-jwt" value="client_secret_jwt" />
 		<aui:option label="private-key-jwt" value="private_key_jwt" />
 	</aui:select>
 
-	<aui:input cssClass="jwks-textarea" helpMessage="json-web-key-set-help" label="JSON Web Key Set" name="jwks" type="textarea" />
+	<aui:input cssClass="jwks-textarea" helpMessage="json-web-key-set-help" label="JSON Web Key Set" name="jwks" type="textarea" valueFunction="<%= OAuth2Application::getJwks %>" />
 
-	<aui:select helpMessage="client-profile-help" name="clientProfile">
+	<aui:select helpMessage="client-profile-help" name="clientProfile" valueFunction="<%= OAuth2Application::getClientProfile %>">
 
 		<%
 		ClientProfile[] clientProfiles = oAuth2AdminPortletDisplayContext.getSortedClientProfiles();
@@ -161,12 +161,12 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 						<c:when test="<%= oAuth2Application != null %>">
 							<aui:input name="clientCredentialUserId" type="hidden" value="<%= oAuth2Application.getClientCredentialUserId() %>" />
 
-							<aui:input disabled="<%= true %>" label="" name="clientCredentialUserName" type="text" />
+							<aui:input disabled="<%= true %>" label="" name="clientCredentialUserName" type="text" valueFunction="<%= OAuth2Application::getClientCredentialUserName %>" />
 						</c:when>
 						<c:otherwise>
 							<aui:input name="clientCredentialUserId" type="hidden" value="<%= user.getUserId() %>" />
 
-							<aui:input disabled="<%= true %>" label="" name="clientCredentialUserName" type="text" value="<%= user.getScreenName() %>" />
+							<aui:input disabled="<%= true %>" label="" name="clientCredentialUserName" type="text" value="<%= user.getScreenName() %>" valueFunction="<%= OAuth2Application::getClientCredentialUserName %>" />
 						</c:otherwise>
 					</c:choose>
 

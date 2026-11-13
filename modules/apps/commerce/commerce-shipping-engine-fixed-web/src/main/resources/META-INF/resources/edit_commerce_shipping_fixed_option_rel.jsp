@@ -36,7 +36,7 @@ CommerceShippingFixedOptionRel commerceShippingFixedOptionRel = commerceShipping
 		>
 			<div class="row">
 				<div class="col-md-4">
-					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="country" model="<%= CommerceShippingFixedOptionRel.class %>" name="countryId" showEmptyOption="<%= true %>">
+					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="country" model="<%= CommerceShippingFixedOptionRel.class %>" name="countryId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceShippingFixedOptionRel::getCountryId %>">
 
 						<%
 						for (Country country : commerceShippingFixedOptionRelsDisplayContext.getCountries()) {
@@ -52,7 +52,7 @@ CommerceShippingFixedOptionRel commerceShippingFixedOptionRel = commerceShipping
 				</div>
 
 				<div class="col-md-4">
-					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="region" model="<%= CommerceShippingFixedOptionRel.class %>" name="regionId" showEmptyOption="<%= true %>">
+					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="region" model="<%= CommerceShippingFixedOptionRel.class %>" name="regionId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceShippingFixedOptionRel::getRegionId %>">
 
 						<%
 						for (Region region : commerceShippingFixedOptionRelsDisplayContext.getRegions()) {

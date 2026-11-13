@@ -361,7 +361,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 									<aui:validator errorMessage='<%= LanguageUtil.format(resourceBundle, "the-x-field-is-required", "content", true) %>' name="required" />
 								</liferay-editor:editor>
 
-								<aui:input name="content" type="hidden" />
+								<aui:input name="content" type="hidden" valueFunction="<%= KBArticle::getContent %>" />
 							</div>
 						</aui:fieldset>
 

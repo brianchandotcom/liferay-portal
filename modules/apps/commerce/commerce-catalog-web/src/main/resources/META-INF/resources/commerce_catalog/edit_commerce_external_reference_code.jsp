@@ -21,5 +21,5 @@ CommerceCatalog commerceCatalog = commerceCatalogDisplayContext.getCommerceCatal
 
 	<aui:model-context bean="<%= commerceCatalog %>" model="<%= CommerceCatalog.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= HtmlUtil.escape(commerceCatalog.getExternalReferenceCode()) %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= HtmlUtil.escape(commerceCatalog.getExternalReferenceCode()) %>" valueFunction="<%= CommerceCatalog::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

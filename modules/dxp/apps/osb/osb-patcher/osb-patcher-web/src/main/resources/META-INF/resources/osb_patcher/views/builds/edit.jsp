@@ -139,9 +139,9 @@ patcherBuildTickets.retainAll(cumulativeFixedIssues);
 			</p>
 		</div>
 
-		<aui:input name="supportTicket" type="text" />
+		<aui:input name="supportTicket" type="text" valueFunction="<%= PatcherBuild::getSupportTicket %>" />
 
-		<aui:select name="type">
+		<aui:select name="type" valueFunction="<%= PatcherBuild::getType %>">
 			<aui:option label="<%= PatcherBuildConstants.LABEL_OFFICIAL %>" value="<%= PatcherBuildConstants.TYPE_OFFICIAL %>" />
 			<aui:option label="<%= PatcherBuildConstants.LABEL_DEBUG %>" value="<%= PatcherBuildConstants.TYPE_DEBUG %>" />
 			<aui:option label="<%= PatcherBuildConstants.LABEL_IGNORE %>" value="<%= PatcherBuildConstants.TYPE_IGNORE %>" />

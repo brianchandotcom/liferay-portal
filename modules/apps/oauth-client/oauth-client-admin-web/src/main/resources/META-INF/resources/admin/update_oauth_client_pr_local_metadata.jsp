@@ -48,7 +48,7 @@ renderResponse.setTitle((oAuthClientPRLocalMetadata == null) ? LanguageUtil.get(
 				</liferay-ui:error>
 
 				<aui:fieldset label="general">
-					<aui:input helpMessage="oauth-client-pr-local-metadata-resource-help" label="resource" name="protectedResourceURI" required="<%= true %>" type="text" />
+					<aui:input helpMessage="oauth-client-pr-local-metadata-resource-help" label="resource" name="protectedResourceURI" required="<%= true %>" type="text" valueFunction="<%= OAuthClientPRLocalMetadata::getProtectedResourceURI %>" />
 
 					<aui:input label="resource-name" name="resourceName" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.RESOURCE_NAME) %>" />
 
@@ -62,9 +62,9 @@ renderResponse.setTitle((oAuthClientPRLocalMetadata == null) ? LanguageUtil.get(
 				<aui:fieldset label="publishing[noun]">
 					<aui:input checked="<%= (oAuthClientPRLocalMetadata != null) ? oAuthClientPRLocalMetadata.getLocalWellKnownEnabled() : false %>" label="enable" name="localWellKnownEnabled" type="checkbox" />
 
-					<aui:input helpMessage="oauth-client-pr-local-well-known-uri-help" label="oauth-client-pr-local-well-known-uri" name="localWellKnownURI" readonly="true" type="text" value="<%= (oAuthClientPRLocalMetadata != null) ? oAuthClientPRLocalMetadata.getLocalWellKnownURI() : StringPool.BLANK %>" />
+					<aui:input helpMessage="oauth-client-pr-local-well-known-uri-help" label="oauth-client-pr-local-well-known-uri" name="localWellKnownURI" readonly="true" type="text" value="<%= (oAuthClientPRLocalMetadata != null) ? oAuthClientPRLocalMetadata.getLocalWellKnownURI() : StringPool.BLANK %>" valueFunction="<%= OAuthClientPRLocalMetadata::getLocalWellKnownURI %>" />
 
-					<aui:input label="oauth-client-pr-local-metadata-json" name="metadataJSON" readonly="true" style="min-height: 240px;" type="textarea" value="<%= (oAuthClientPRLocalMetadata != null) ? oAuthClientPRLocalMetadata.getMetadataJSON() : StringPool.BLANK %>" />
+					<aui:input label="oauth-client-pr-local-metadata-json" name="metadataJSON" readonly="true" style="min-height: 240px;" type="textarea" value="<%= (oAuthClientPRLocalMetadata != null) ? oAuthClientPRLocalMetadata.getMetadataJSON() : StringPool.BLANK %>" valueFunction="<%= OAuthClientPRLocalMetadata::getMetadataJSON %>" />
 				</aui:fieldset>
 
 				<aui:button-row>

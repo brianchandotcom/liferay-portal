@@ -69,7 +69,7 @@ renderResponse.setTitle(title);
 			collapsible="<%= true %>"
 			label="details"
 		>
-			<aui:input disabled="<%= assetCategoriesDisplayContext.isSystemCategory(category) %>" label="name" localized="<%= true %>" name="title" placeholder="name" required="<%= true %>" type="text" value="<%= (category == null) ? StringPool.BLANK : assetCategoriesDisplayContext.getCategoryLocalizationXML(category) %>">
+			<aui:input disabled="<%= assetCategoriesDisplayContext.isSystemCategory(category) %>" label="name" localized="<%= true %>" name="title" placeholder="name" required="<%= true %>" type="text" value="<%= (category == null) ? StringPool.BLANK : assetCategoriesDisplayContext.getCategoryLocalizationXML(category) %>" valueFunction="<%= (AssetCategory assetCategory) -> assetCategory.getTitle() %>">
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AssetCategory.class.getName(), "name") %></aui:validator>
 			</aui:input>
 

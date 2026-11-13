@@ -21,5 +21,5 @@ CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommerc
 
 	<aui:model-context bean="<%= commercePriceList %>" model="<%= CommercePriceList.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= commercePriceList.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= commercePriceList.getExternalReferenceCode() %>" valueFunction="<%= CommercePriceList::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

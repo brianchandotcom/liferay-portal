@@ -21,5 +21,5 @@ CommerceInventoryWarehouse commerceInventoryWarehouse = commerceInventoryWarehou
 
 	<aui:model-context bean="<%= commerceInventoryWarehouse %>" model="<%= CommerceInventoryWarehouse.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= commerceInventoryWarehouse.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= commerceInventoryWarehouse.getExternalReferenceCode() %>" valueFunction="<%= CommerceInventoryWarehouse::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

@@ -59,7 +59,7 @@ renderResponse.setTitle(headerTitle);
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="repository-configuration">
 					<c:choose>
 						<c:when test="<%= repository == null %>">
-							<aui:select id="repositoryTypes" label="repository-type" name="className">
+							<aui:select id="repositoryTypes" label="repository-type" name="className" valueFunction="<%= Repository::getClassName %>">
 
 								<%
 								for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions(themeDisplay.getCompanyId())) {

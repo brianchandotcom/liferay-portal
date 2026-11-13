@@ -17,9 +17,9 @@ List<CommerceCatalog> commerceCatalogs = cpConfigurationListDisplayContext.getCo
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= cpConfigurationListDisplayContext.getCPConfigurationList() %>" model="<%= CPConfigurationList.class %>" />
 
-		<aui:input name="name" required="<%= true %>" type="text" />
+		<aui:input name="name" required="<%= true %>" type="text" valueFunction="<%= CPConfigurationList::getName %>" />
 
-		<aui:input name="priority" required="<%= true %>" type="number">
+		<aui:input name="priority" required="<%= true %>" type="number" valueFunction="<%= CPConfigurationList::getPriority %>">
 			<aui:validator name="number" />
 		</aui:input>
 

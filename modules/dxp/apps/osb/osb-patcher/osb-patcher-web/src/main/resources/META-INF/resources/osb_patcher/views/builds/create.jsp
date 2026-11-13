@@ -44,7 +44,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 					</p>
 				</div>
 
-				<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "productVersionOnChange(this.value);" %>' required="<%= true %>" showEmptyOption="<%= true %>">
+				<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "productVersionOnChange(this.value);" %>' required="<%= true %>" showEmptyOption="<%= true %>" valueFunction="<%= PatcherBuild::getPatcherProductVersionId %>">
 
 					<%
 					for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
@@ -58,11 +58,11 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 
 				</aui:select>
 
-				<aui:select label="project-version" name="patcherProjectVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "projectVersionOnChange(this.value);" %>' required="<%= true %>" />
+				<aui:select label="project-version" name="patcherProjectVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "projectVersionOnChange(this.value);" %>' required="<%= true %>" valueFunction="<%= PatcherBuild::getPatcherProjectVersionId %>" />
 
-				<aui:input label="account-code" name="accountEntryCode" required="<%= true %>" type="text" />
+				<aui:input label="account-code" name="accountEntryCode" required="<%= true %>" type="text" valueFunction="<%= PatcherBuild::getAccountEntryCode %>" />
 
-				<aui:input helpMessage="the-support-ticket-must-contain-only-the-jira-service-management-ticket-id" name="supportTicket" type="text">
+				<aui:input helpMessage="the-support-ticket-must-contain-only-the-jira-service-management-ticket-id" name="supportTicket" type="text" valueFunction="<%= PatcherBuild::getSupportTicket %>">
 					<aui:validator errorMessage="the-jira-service-management-ticket-format-is-invalid" name="custom">
 						function(val) {
 							return val.match('<%= PatcherConstants.JSM_SUPPORT_TICKET_NAME_REGEX %>');
@@ -70,7 +70,7 @@ PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 					</aui:validator>
 				</aui:input>
 
-				<aui:select name="type">
+				<aui:select name="type" valueFunction="<%= PatcherBuild::getType %>">
 					<aui:option label="<%= PatcherBuildConstants.LABEL_OFFICIAL %>" value="<%= PatcherBuildConstants.TYPE_OFFICIAL %>" />
 					<aui:option label="<%= PatcherBuildConstants.LABEL_DEBUG %>" value="<%= PatcherBuildConstants.TYPE_DEBUG %>" />
 					<aui:option label="<%= PatcherBuildConstants.LABEL_IGNORE %>" value="<%= PatcherBuildConstants.TYPE_IGNORE %>" />

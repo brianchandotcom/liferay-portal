@@ -62,7 +62,7 @@ AccountEntry accountEntry = commerceAddressDisplayContext.getAccountEntry();
 
 				<aui:input label="postal-code" name="zip" />
 
-				<aui:select label="country" name="countryId" showEmptyOption="<%= true %>">
+				<aui:select label="country" name="countryId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceAddress::getCountryId %>">
 
 					<%
 					for (Country country : commerceAddressDisplayContext.getCountries()) {
@@ -76,7 +76,7 @@ AccountEntry accountEntry = commerceAddressDisplayContext.getAccountEntry();
 
 				</aui:select>
 
-				<aui:select label="region" name="regionId" showEmptyOption="<%= true %>">
+				<aui:select label="region" name="regionId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceAddress::getRegionId %>">
 
 					<%
 					for (Region region : commerceAddressDisplayContext.getRegions()) {

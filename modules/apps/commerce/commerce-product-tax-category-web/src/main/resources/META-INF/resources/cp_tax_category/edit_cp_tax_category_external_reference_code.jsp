@@ -23,5 +23,5 @@ CPTaxCategory cpTaxCategory = cpTaxCategoryDisplayContext.getCPTaxCategory();
 
 	<aui:model-context bean="<%= cpTaxCategory %>" model="<%= CPTaxCategory.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= cpTaxCategory.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= cpTaxCategory.getExternalReferenceCode() %>" valueFunction="<%= CPTaxCategory::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

@@ -215,7 +215,7 @@ if (portletTitleBasedNavigation) {
 							</c:otherwise>
 						</c:choose>
 
-						<aui:input name="body" type="hidden" />
+						<aui:input name="body" type="hidden" valueFunction="<%= (MBMessage mbMessage) -> mbMessage.getBody() %>" />
 					</aui:field-wrapper>
 				</aui:fieldset>
 
@@ -355,7 +355,7 @@ if (portletTitleBasedNavigation) {
 						double threadPriority = BeanParamUtil.getDouble(message, request, "priority", MBMessage::getPriority);
 						%>
 
-						<aui:select name="priority">
+						<aui:select name="priority" valueFunction="<%= MBMessage::getPriority %>">
 							<aui:option value="" />
 
 							<%

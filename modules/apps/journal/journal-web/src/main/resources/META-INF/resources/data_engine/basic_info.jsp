@@ -23,7 +23,7 @@ if (ddmStructure != null) {
 
 <aui:input disabled="<%= journalEditDDMStructuresDisplayContext.isStructureKeyInputDisabled() %>" name="structureKey" />
 
-<aui:input activeLanguageIds="<%= journalEditDDMStructuresDisplayContext.getAvailableLanguageIds() %>" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" languagesDropdownDirection="downleft" localized="<%= true %>" name="description" type="text" />
+<aui:input activeLanguageIds="<%= journalEditDDMStructuresDisplayContext.getAvailableLanguageIds() %>" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" languagesDropdownDirection="downleft" localized="<%= true %>" name="description" type="text" valueFunction="<%= (DDMStructure curDDMStructure) -> curDDMStructure.getDescription() %>" />
 
 <c:if test="<%= ddmStructure != null %>">
 	<portlet:resourceURL id="/journal/get_ddm_structure" var="getDDMStructureURL">

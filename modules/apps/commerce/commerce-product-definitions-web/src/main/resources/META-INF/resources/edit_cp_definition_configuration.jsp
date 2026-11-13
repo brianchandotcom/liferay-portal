@@ -70,7 +70,7 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 					<liferay-ui:error exception="<%= CPDefinitionInventoryQuantityException.class %>" message="please-enter-a-valid-quantity" />
 
 					<div class="col-6">
-						<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine">
+						<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine" valueFunction="<%= CPDefinitionInventory::getCPDefinitionInventoryEngine %>">
 
 							<%
 							for (CPDefinitionInventoryEngine cpDefinitionInventoryEngine : cpDefinitionConfigurationDisplayContext.getCPDefinitionInventoryEngines()) {
@@ -132,7 +132,7 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 					</div>
 
 					<div class="col-6">
-						<aui:select label="low-stock-action" name="lowStockActivity">
+						<aui:select label="low-stock-action" name="lowStockActivity" valueFunction="<%= CPDefinitionInventory::getLowStockActivity %>">
 							<aui:option selected="<%= cpDefinitionInventory == null %>" value="" />
 
 							<%

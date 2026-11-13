@@ -64,7 +64,7 @@ CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplay
 						</div>
 
 						<div class="col-6">
-							<aui:input label="key" name="key" required="<%= true %>" type="text" />
+							<aui:input label="key" name="key" required="<%= true %>" type="text" valueFunction="<%= CPInstanceUnitOfMeasure::getKey %>" />
 						</div>
 					</div>
 
@@ -72,7 +72,7 @@ CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplay
 						<c:when test="<%= cpInstanceUnitOfMeasure.isPrimary() %>">
 							<div class="row">
 								<div class="col-6">
-									<aui:input label="decimal-allowed-precision" name="precision" required="<%= true %>" type="text" value="0">
+									<aui:input label="decimal-allowed-precision" name="precision" required="<%= true %>" type="text" value="0" valueFunction="<%= CPInstanceUnitOfMeasure::getPrecision %>">
 										<aui:validator name="digits" />
 										<aui:validator name="min">0</aui:validator>
 									</aui:input>
@@ -88,7 +88,7 @@ CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplay
 
 							<div class="row">
 								<div class="col-6">
-									<aui:input helpMessage="priority-help" label="priority" name="priority" type="text">
+									<aui:input helpMessage="priority-help" label="priority" name="priority" type="text" valueFunction="<%= CPInstanceUnitOfMeasure::getPriority %>">
 										<aui:validator name="number" />
 									</aui:input>
 								</div>
@@ -120,7 +120,7 @@ CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplay
 								</div>
 
 								<div class="col-6">
-									<aui:input label="decimal-allowed-precision" name="precision" required="<%= true %>" type="text">
+									<aui:input label="decimal-allowed-precision" name="precision" required="<%= true %>" type="text" valueFunction="<%= CPInstanceUnitOfMeasure::getPrecision %>">
 										<aui:validator name="digits" />
 										<aui:validator name="min">0</aui:validator>
 									</aui:input>
@@ -136,7 +136,7 @@ CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplay
 								</div>
 
 								<div class="col-6">
-									<aui:input helpMessage="priority-help" label="priority" name="priority" type="text">
+									<aui:input helpMessage="priority-help" label="priority" name="priority" type="text" valueFunction="<%= CPInstanceUnitOfMeasure::getPriority %>">
 										<aui:validator name="number" />
 									</aui:input>
 								</div>

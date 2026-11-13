@@ -13,7 +13,7 @@
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
 
 <aui:fieldset>
-	<aui:select name="activationStatus">
+	<aui:select name="activationStatus" valueFunction="<%= CPDefinitionVirtualSetting::getActivationStatus %>">
 
 		<%
 		for (int activationStatus : cpDefinitionVirtualSettingDisplayContext.getActivationStatuses()) {

@@ -155,8 +155,8 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 							</div>
 
 							<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
-							<aui:input id="openGraphImageFileEntryERC" name="openGraphImageFileEntryERC" type="hidden" />
-							<aui:input id="openGraphImageFileEntryScopeERC" name="openGraphImageFileEntryScopeERC" type="hidden" />
+							<aui:input id="openGraphImageFileEntryERC" name="openGraphImageFileEntryERC" type="hidden" valueFunction="<%= LayoutSEOEntry::getOpenGraphImageFileEntryERC %>" />
+							<aui:input id="openGraphImageFileEntryScopeERC" name="openGraphImageFileEntryScopeERC" type="hidden" valueFunction="<%= LayoutSEOEntry::getOpenGraphImageFileEntryScopeERC %>" />
 						</div>
 
 						<div class="form-group">

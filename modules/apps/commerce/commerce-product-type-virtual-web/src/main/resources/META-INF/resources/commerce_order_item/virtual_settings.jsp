@@ -67,7 +67,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 	<commerce-ui:panel
 		title='<%= LanguageUtil.get(request, "activation-status") %>'
 	>
-		<aui:select name="activationStatus">
+		<aui:select name="activationStatus" valueFunction="<%= CommerceVirtualOrderItem::getActivationStatus %>">
 
 			<%
 			for (int activationStatus : commerceVirtualOrderItemEditDisplayContext.getActivationStatuses()) {

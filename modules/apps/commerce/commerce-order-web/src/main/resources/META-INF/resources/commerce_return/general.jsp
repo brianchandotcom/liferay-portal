@@ -23,7 +23,7 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 
 	<aui:model-context bean="<%= commerceReturn.getObjectEntry() %>" model="<%= ObjectEntry.class %>" />
 
-	<aui:input name="primaryKey" type="hidden" />
+	<aui:input name="primaryKey" type="hidden" valueFunction="<%= ObjectEntry::getPrimaryKey %>" />
 
 	<div class="row">
 		<div class="col-12">

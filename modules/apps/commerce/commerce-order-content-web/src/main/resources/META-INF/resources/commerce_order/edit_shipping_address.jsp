@@ -41,13 +41,13 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 
 		<aui:input name="street3" wrapperCssClass="form-group-item" />
 
-		<aui:select label="country" name="countryId" wrapperCssClass="form-group-item" />
+		<aui:select label="country" name="countryId" valueFunction="<%= CommerceAddress::getCountryId %>" wrapperCssClass="form-group-item" />
 
 		<aui:input name="zip" wrapperCssClass="form-group-item" />
 
 		<aui:input name="city" wrapperCssClass="form-group-item" />
 
-		<aui:select label="region" name="regionId" wrapperCssClass="form-group-item" />
+		<aui:select label="region" name="regionId" valueFunction="<%= CommerceAddress::getRegionId %>" wrapperCssClass="form-group-item" />
 	</aui:form>
 </commerce-ui:modal-content>
 

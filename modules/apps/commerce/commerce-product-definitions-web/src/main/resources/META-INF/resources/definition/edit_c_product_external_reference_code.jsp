@@ -21,5 +21,5 @@ CProduct cProduct = cpDefinitionsDisplayContext.getCProduct();
 
 	<aui:model-context bean="<%= cProduct %>" model="<%= CProduct.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= cProduct.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= cProduct.getExternalReferenceCode() %>" valueFunction="<%= CProduct::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

@@ -21,5 +21,5 @@ COREntry corEntry = corEntryDisplayContext.getCOREntry();
 
 	<aui:model-context bean="<%= corEntry %>" model="<%= COREntry.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= corEntry.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= corEntry.getExternalReferenceCode() %>" valueFunction="<%= COREntry::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

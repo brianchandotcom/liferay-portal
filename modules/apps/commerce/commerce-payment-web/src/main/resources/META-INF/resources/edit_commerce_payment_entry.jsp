@@ -222,7 +222,7 @@ portletDisplay.setURLBack(backURL);
 				>
 					<div class="row">
 						<div class="col-12">
-							<aui:select disabled="<%= commercePaymentEntryDisplayContext.isDisabled() %>" label="reason" name="reasonKey" required="<%= true %>" showEmptyOption="<%= true %>">
+							<aui:select disabled="<%= commercePaymentEntryDisplayContext.isDisabled() %>" label="reason" name="reasonKey" required="<%= true %>" showEmptyOption="<%= true %>" valueFunction="<%= CommercePaymentEntry::getReasonKey %>">
 
 								<%
 								for (CommercePaymentEntryRefundType commercePaymentEntryRefundType : commercePaymentEntryDisplayContext.getCommercePaymentEntryRefundTypes()) {

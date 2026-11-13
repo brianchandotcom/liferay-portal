@@ -90,7 +90,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 				%>
 
 				<c:if test="<%= subtypes.length > 0 %>">
-					<aui:select name="subtype">
+					<aui:select name="subtype" valueFunction="<%= Role::getSubtype %>">
 
 						<%
 						for (String curSubtype : subtypes) {

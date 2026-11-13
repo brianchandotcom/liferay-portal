@@ -56,7 +56,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + editContactInformationDisplayContext.getClassName() + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
 
-				<aui:select inlineField="<%= true %>" label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.WEBSITE %>" listTypeFieldName="listTypeId" name="websiteListTypeId" />
+				<aui:select inlineField="<%= true %>" label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.WEBSITE %>" listTypeFieldName="listTypeId" name="websiteListTypeId" valueFunction="<%= Website::getListTypeId %>" />
 
 				<liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
 

@@ -92,7 +92,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 				</div>
 
 				<div class="col-12">
-					<aui:select label="field-type" name="commerceOptionTypeKey" showEmptyOption="<%= true %>">
+					<aui:select label="field-type" name="commerceOptionTypeKey" showEmptyOption="<%= true %>" valueFunction="<%= CPDefinitionOptionRel::getCommerceOptionTypeKey %>">
 
 						<%
 						for (CommerceOptionType commerceOptionType : cpDefinitionOptionRelDisplayContext.getCommerceOptionTypes()) {
@@ -108,14 +108,14 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 				</div>
 
 				<div class="col-12">
-					<aui:select name="priceType" showEmptyOption="<%= true %>">
+					<aui:select name="priceType" showEmptyOption="<%= true %>" valueFunction="<%= CPDefinitionOptionRel::getPriceType %>">
 						<aui:option label="static" selected="<%= (cpDefinitionOptionRel != null) && priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC) %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC %>" />
 						<aui:option label="dynamic" selected="<%= (cpDefinitionOptionRel != null) && priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC) %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC %>" />
 					</aui:select>
 				</div>
 
 				<div class="<%= cpDefinitionOptionRel.isDefinedExternally() ? "col-12" : "col-12 hide" %>">
-					<aui:select label="collection-provider" name="infoItemServiceKey" onChange='<%= liferayPortletResponse.getNamespace() + "selectCollectionProvider();" %>' showEmptyOption="<%= true %>">
+					<aui:select label="collection-provider" name="infoItemServiceKey" onChange='<%= liferayPortletResponse.getNamespace() + "selectCollectionProvider();" %>' showEmptyOption="<%= true %>" valueFunction="<%= CPDefinitionOptionRel::getInfoItemServiceKey %>">
 
 						<%
 						for (RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider : cpDefinitionOptionRelDisplayContext.getRelatedInfoItemCollectionProviders()) {

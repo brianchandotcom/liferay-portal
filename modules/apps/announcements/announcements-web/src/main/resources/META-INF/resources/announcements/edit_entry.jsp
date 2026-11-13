@@ -70,7 +70,7 @@ if (portletTitleBasedNavigation) {
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
-					<aui:input autocomplete="off" id="titleEditor" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" title="" type="text" value="<%= HtmlUtil.escape(title) %>">
+					<aui:input autocomplete="off" id="titleEditor" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" title="" type="text" value="<%= HtmlUtil.escape(title) %>" valueFunction="<%= AnnouncementsEntry::getTitle %>">
 						<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AnnouncementsEntry.class.getName(), "title") %></aui:validator>
 					</aui:input>
 
@@ -82,7 +82,7 @@ if (portletTitleBasedNavigation) {
 						required="<%= true %>"
 					/>
 
-					<aui:input name="content" type="hidden" />
+					<aui:input name="content" type="hidden" valueFunction="<%= AnnouncementsEntry::getContent %>" />
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
@@ -114,7 +114,7 @@ if (portletTitleBasedNavigation) {
 
 					<aui:input name="url" />
 
-					<aui:select name="type">
+					<aui:select name="type" valueFunction="<%= AnnouncementsEntry::getType %>">
 
 						<%
 						for (String curType : AnnouncementsEntryConstants.TYPES) {
@@ -130,12 +130,12 @@ if (portletTitleBasedNavigation) {
 
 					<c:choose>
 						<c:when test="<%= alert %>">
-							<aui:select disabled="<%= true %>" name="priority">
+							<aui:select disabled="<%= true %>" name="priority" valueFunction="<%= AnnouncementsEntry::getPriority %>">
 								<aui:option label="important" selected="<%= true %>" value="1" />
 							</aui:select>
 						</c:when>
 						<c:otherwise>
-							<aui:select name="priority">
+							<aui:select name="priority" valueFunction="<%= AnnouncementsEntry::getPriority %>">
 								<aui:option label="normal[priority]" selected="<%= (entry != null) && (entry.getPriority() == 0) %>" value="0" />
 								<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
 							</aui:select>

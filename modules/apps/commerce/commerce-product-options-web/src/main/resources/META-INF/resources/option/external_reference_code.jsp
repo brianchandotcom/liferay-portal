@@ -21,5 +21,5 @@ CPOption cpOption = cpOptionDisplayContext.getCPOption();
 
 	<aui:model-context bean="<%= cpOption %>" model="<%= CPOption.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= cpOption.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= cpOption.getExternalReferenceCode() %>" valueFunction="<%= CPOption::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

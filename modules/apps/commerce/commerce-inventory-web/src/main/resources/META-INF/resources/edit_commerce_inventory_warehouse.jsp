@@ -32,12 +32,12 @@ CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventor
 
 		<aui:model-context bean="<%= commerceInventoryWarehouseItem %>" model="<%= CommerceInventoryWarehouseItem.class %>" />
 
-		<aui:input name="quantity" required="<%= true %>" type="text">
+		<aui:input name="quantity" required="<%= true %>" type="text" valueFunction="<%= CommerceInventoryWarehouseItem::getQuantity %>">
 			<aui:validator name="min">1</aui:validator>
 			<aui:validator name="number" />
 		</aui:input>
 
-		<aui:select label="warehouse" name="commerceInventoryWarehouseId" required="<%= true %>">
+		<aui:select label="warehouse" name="commerceInventoryWarehouseId" required="<%= true %>" valueFunction="<%= CommerceInventoryWarehouseItem::getCommerceInventoryWarehouseId %>">
 
 			<%
 			for (CommerceInventoryWarehouse commerceInventoryWarehouse : commerceInventoryDisplayContext.getCommerceInventoryWarehouses()) {

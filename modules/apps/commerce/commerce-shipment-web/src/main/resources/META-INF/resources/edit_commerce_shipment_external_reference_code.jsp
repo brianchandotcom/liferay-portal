@@ -23,5 +23,5 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 
 	<aui:model-context bean="<%= commerceShipment %>" model="<%= CommerceShipment.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= commerceShipment.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= commerceShipment.getExternalReferenceCode() %>" valueFunction="<%= CommerceShipment::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

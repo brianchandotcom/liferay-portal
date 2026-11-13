@@ -119,7 +119,7 @@ if (portletTitleBasedNavigation) {
 
 					<aui:input name="description" />
 
-					<aui:select name="displayStyle">
+					<aui:select name="displayStyle" valueFunction="<%= MBCategory::getDisplayStyle %>">
 
 						<%
 						for (int i = 0; i < MBCategoryConstants.DISPLAY_STYLES.length; i++) {

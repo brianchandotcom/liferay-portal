@@ -83,7 +83,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "subscriptionEnabled" %>'
 		title='<%= LanguageUtil.get(request, "payment-subscription") %>'
 	>
-		<aui:select name="subscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectSubscriptionType(this);" %>'>
+		<aui:select name="subscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectSubscriptionType(this);" %>' valueFunction="<%= CPDefinition::getSubscriptionType %>">
 
 			<%
 			for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {
@@ -179,7 +179,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "deliverySubscriptionEnabled" %>'
 		title='<%= LanguageUtil.get(request, "delivery-subscription") %>'
 	>
-		<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectDeliverySubscriptionType(this);" %>'>
+		<aui:select label="subscription-type" name="deliverySubscriptionType" onChange='<%= liferayPortletResponse.getNamespace() + "selectDeliverySubscriptionType(this);" %>' valueFunction="<%= CPDefinition::getDeliverySubscriptionType %>">
 
 			<%
 			for (CPSubscriptionType curCPSubscriptionType : cpSubscriptionTypes) {

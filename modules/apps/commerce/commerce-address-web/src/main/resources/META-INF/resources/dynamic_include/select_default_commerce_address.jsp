@@ -34,9 +34,9 @@ int type = commerceChannelAccountEntryRelDisplayContext.getType();
 
 		<aui:model-context bean="<%= commerceChannelAccountEntryRelDisplayContext.fetchCommerceChannelAccountEntryRel() %>" model="<%= CommerceChannelAccountEntryRel.class %>" />
 
-		<aui:select label="channel" name="commerceChannelId" />
+		<aui:select label="channel" name="commerceChannelId" valueFunction="<%= CommerceChannelAccountEntryRel::getCommerceChannelId %>" />
 
-		<aui:select label="<%= commerceChannelAccountEntryRelDisplayContext.getAddressSelectLabel(type) %>" name="classPK" required="<%= true %>" />
+		<aui:select label="<%= commerceChannelAccountEntryRelDisplayContext.getAddressSelectLabel(type) %>" name="classPK" required="<%= true %>" valueFunction="<%= CommerceChannelAccountEntryRel::getClassPK %>" />
 	</aui:form>
 </commerce-ui:modal-content>
 

@@ -42,7 +42,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
-					<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
+					<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" valueFunction="<%= KBTemplate::getTitle %>" />
 
 					<liferay-editor:editor
 						contents="<%= content %>"
@@ -54,7 +54,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 						<aui:validator errorMessage='<%= LanguageUtil.format(resourceBundle, "the-x-field-is-required", "content", true) %>' name="required" />
 					</liferay-editor:editor>
 
-					<aui:input name="content" type="hidden" />
+					<aui:input name="content" type="hidden" valueFunction="<%= KBTemplate::getContent %>" />
 				</aui:fieldset>
 
 				<c:if test="<%= kbTemplate == null %>">

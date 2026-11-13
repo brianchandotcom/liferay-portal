@@ -54,7 +54,7 @@ if (dispatchTrigger != null) {
 				<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
 				<aui:fieldset>
-					<aui:input cssClass="<%= cssClass %>" name="name" readonly="<%= readonly %>" required="<%= true %>" type="text" />
+					<aui:input cssClass="<%= cssClass %>" name="name" readonly="<%= readonly %>" required="<%= true %>" type="text" valueFunction="<%= DispatchTrigger::getName %>" />
 				</aui:fieldset>
 
 				<div id="<portlet:namespace />dispatchTaskSettingsEditor"></div>

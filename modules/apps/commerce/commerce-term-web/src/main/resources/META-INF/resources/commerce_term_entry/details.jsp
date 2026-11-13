@@ -46,7 +46,7 @@ if ((commerceTermEntry != null) && (commerceTermEntry.getExpirationDate() != nul
 			>
 				<div class="row">
 					<div class="col">
-						<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" label="title" localized="<%= true %>" name="labelMapAsXML" required="<%= true %>" type="text" />
+						<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" label="title" localized="<%= true %>" name="labelMapAsXML" required="<%= true %>" type="text" valueFunction="<%= CommerceTermEntry::getLabelMapAsXML %>" />
 
 						<aui:input name="priority" />
 
@@ -54,7 +54,7 @@ if ((commerceTermEntry != null) && (commerceTermEntry.getExpirationDate() != nul
 					</div>
 
 					<div class="col-auto">
-						<aui:select disabled="<%= true %>" label="type" name="type" required="<%= true %>">
+						<aui:select disabled="<%= true %>" label="type" name="type" required="<%= true %>" valueFunction="<%= CommerceTermEntry::getType %>">
 
 							<%
 							for (CommerceTermEntryType commerceTermEntryType : commerceTermEntryDisplayContext.getCommerceTermEntryTypes()) {
@@ -68,7 +68,7 @@ if ((commerceTermEntry != null) && (commerceTermEntry.getExpirationDate() != nul
 
 						</aui:select>
 
-						<aui:input disabled="<%= true %>" label="key" name="name" type="text" />
+						<aui:input disabled="<%= true %>" label="key" name="name" type="text" valueFunction="<%= CommerceTermEntry::getName %>" />
 					</div>
 				</div>
 

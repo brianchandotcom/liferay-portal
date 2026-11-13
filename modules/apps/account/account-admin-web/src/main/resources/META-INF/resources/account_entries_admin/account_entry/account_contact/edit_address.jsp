@@ -58,7 +58,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 				<liferay-ui:error key='<%= NoSuchListTypeException.class.getName() + editContactInformationDisplayContext.getClassName() + ".contact" + ListTypeConstants.ADDRESS %>' message="please-select-a-type" />
 
-				<aui:select label="type" listType='<%= editContactInformationDisplayContext.getClassName() + ".contact" + ListTypeConstants.ADDRESS %>' listTypeFieldName="listTypeId" name="listTypeId" />
+				<aui:select label="type" listType='<%= editContactInformationDisplayContext.getClassName() + ".contact" + ListTypeConstants.ADDRESS %>' listTypeFieldName="listTypeId" name="listTypeId" valueFunction="<%= Address::getListTypeId %>" />
 
 				<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
 
@@ -74,7 +74,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 				<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-				<aui:select label="country" name="countryId" required="<%= true %>">
+				<aui:select label="country" name="countryId" required="<%= true %>" valueFunction="<%= Address::getCountryId %>">
 					<aui:validator errorMessage='<%= LanguageUtil.get(request, "this-field-is-required") %>' name="custom">
 						function(val) {
 							if (Number(val) !== 0) {
@@ -101,7 +101,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 					</span>
 				</label>
 
-				<aui:select label="" name="regionId">
+				<aui:select label="" name="regionId" valueFunction="<%= Address::getRegionId %>">
 					<aui:validator errorMessage='<%= LanguageUtil.get(request, "this-field-is-required") %>' name="custom">
 						function(val, fieldNode) {
 							if (fieldNode.length === 1) {

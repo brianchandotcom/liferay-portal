@@ -21,5 +21,5 @@ CommerceOrderType commerceOrderType = commerceOrderTypeDisplayContext.getCommerc
 
 	<aui:model-context bean="<%= commerceOrderType %>" model="<%= CommerceOrderType.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= commerceOrderType.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= commerceOrderType.getExternalReferenceCode() %>" valueFunction="<%= CommerceOrderType::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

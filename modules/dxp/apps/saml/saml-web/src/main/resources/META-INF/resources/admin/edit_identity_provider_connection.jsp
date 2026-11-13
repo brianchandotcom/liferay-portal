@@ -93,7 +93,7 @@ else {
 	</aui:fieldset>
 
 	<aui:fieldset label="name-identifier">
-		<aui:select label="name-identifier-format" name="nameIdFormat">
+		<aui:select label="name-identifier-format" name="nameIdFormat" valueFunction="<%= SamlSpIdpConnection::getNameIdFormat %>">
 			<aui:option label="email-address" value="<%= nameIdTypeValues.getEmail() %>" />
 			<aui:option label="encrypted" value="<%= nameIdTypeValues.getEncrypted() %>" />
 			<aui:option label="entity" value="<%= nameIdTypeValues.getEntity() %>" />

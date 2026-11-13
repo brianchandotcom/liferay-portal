@@ -47,7 +47,7 @@ String commerceRegionCode = BeanParamUtil.getString(commerceInventoryWarehouse, 
 			>
 				<aui:input disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" localized="<%= true %>" name="name" required="<%= true %>" value="<%= commerceInventoryWarehouse.getName(locale) %>" />
 
-				<aui:input disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" localized="<%= true %>" name="description" type="textarea" value="<%= commerceInventoryWarehouse.getDescription(locale) %>" />
+				<aui:input disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" localized="<%= true %>" name="description" type="textarea" value="<%= commerceInventoryWarehouse.getDescription(locale) %>" valueFunction="<%= (CommerceInventoryWarehouse curCommerceInventoryWarehouse) -> curCommerceInventoryWarehouse.getDescription() %>" />
 
 				<aui:input disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" label='<%= HtmlUtil.escape("active") %>' name="active" type="toggle-switch" value="<%= commerceInventoryWarehouse.isActive() %>" />
 			</commerce-ui:panel>
@@ -92,7 +92,7 @@ String commerceRegionCode = BeanParamUtil.getString(commerceInventoryWarehouse, 
 
 						<aui:input disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" name="street3" />
 
-						<aui:select disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" label="region" name="commerceRegionCode" />
+						<aui:select disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" label="region" name="commerceRegionCode" valueFunction="<%= CommerceInventoryWarehouse::getCommerceRegionCode %>" />
 
 						<aui:input disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" name="city" />
 					</div>
@@ -100,7 +100,7 @@ String commerceRegionCode = BeanParamUtil.getString(commerceInventoryWarehouse, 
 					<div class="col-lg-6">
 						<aui:input disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" name="street2" />
 
-						<aui:select disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" label="country" name="countryTwoLettersISOCode" />
+						<aui:select disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" label="country" name="countryTwoLettersISOCode" valueFunction="<%= CommerceInventoryWarehouse::getCountryTwoLettersISOCode %>" />
 
 						<aui:input disabled="<%= !cIWarehousesDisplayContext.hasPermission() %>" label="postal-code" name="zip" />
 					</div>

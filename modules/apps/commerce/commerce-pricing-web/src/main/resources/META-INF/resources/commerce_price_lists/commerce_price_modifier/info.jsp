@@ -48,7 +48,7 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 	>
 		<aui:input label="name" name="title" required="<%= true %>" />
 
-		<aui:select name="target" required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:select name="target" required="<%= true %>" showEmptyOption="<%= true %>" valueFunction="<%= CommercePriceModifier::getTarget %>">
 
 			<%
 			for (String target : CommercePriceModifierConstants.TARGETS) {
@@ -62,7 +62,7 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 
 		</aui:select>
 
-		<aui:select label='<%= LanguageUtil.get(request, "modifier") %>' name="modifierType" onChange='<%= liferayPortletResponse.getNamespace() + "selectType();" %>' showEmptyOption="<%= true %>">
+		<aui:select label='<%= LanguageUtil.get(request, "modifier") %>' name="modifierType" onChange='<%= liferayPortletResponse.getNamespace() + "selectType();" %>' showEmptyOption="<%= true %>" valueFunction="<%= CommercePriceModifier::getModifierType %>">
 
 			<%
 			for (CommercePriceModifierType commercePriceModifierType : commercePriceListDisplayContext.getCommercePriceModifierTypes()) {
@@ -77,7 +77,7 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 
 		</aui:select>
 
-		<aui:input label='<%= LanguageUtil.get(request, "amount") %>' name="modifierAmount" suffix="<%= amountSuffix %>" type="text" value="<%= commerceCurrency.round(commercePriceModifier.getModifierAmount()) %>">
+		<aui:input label='<%= LanguageUtil.get(request, "amount") %>' name="modifierAmount" suffix="<%= amountSuffix %>" type="text" value="<%= commerceCurrency.round(commercePriceModifier.getModifierAmount()) %>" valueFunction="<%= CommercePriceModifier::getModifierAmount %>">
 			<aui:validator name="number" />
 		</aui:input>
 

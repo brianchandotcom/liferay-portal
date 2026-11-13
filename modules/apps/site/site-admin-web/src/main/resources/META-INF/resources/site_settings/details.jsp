@@ -172,7 +172,7 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		<aui:input inlineLabel="right" label="limit-membership-to-members-of-the-parent-site" labelCssClass="simple-toggle-switch" name="membershipRestriction" type="toggle-switch" value="<%= membershipRestriction %>" />
 	</div>
 
-	<aui:select label="membership-type" name="type">
+	<aui:select label="membership-type" name="type" valueFunction="<%= Group::getType %>">
 		<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
 		<aui:option label="restricted" value="<%= GroupConstants.TYPE_SITE_RESTRICTED %>" />
 		<aui:option label="private" value="<%= GroupConstants.TYPE_SITE_PRIVATE %>" />

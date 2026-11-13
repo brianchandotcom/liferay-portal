@@ -294,7 +294,7 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 								<c:choose>
 									<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
 										<div class="commerce-list">
-											<aui:select aria-label='<%= LanguageUtil.get(request, "billing-address") %>' cssClass="commerce-input" inlineField="<%= true %>" label="" name="billingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
+											<aui:select aria-label='<%= LanguageUtil.get(request, "billing-address") %>' cssClass="commerce-input" inlineField="<%= true %>" label="" name="billingAddressId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceOrder::getBillingAddressId %>" wrappedField="<%= false %>">
 
 												<%
 												for (CommerceAddress commerceAddress : billingAddresses) {
@@ -341,7 +341,7 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 							<c:choose>
 								<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
 									<div class="commerce-list">
-										<aui:select aria-label='<%= LanguageUtil.get(request, "shipping-address") %>' cssClass="commerce-input" inlineField="<%= true %>" label="" name="shippingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
+										<aui:select aria-label='<%= LanguageUtil.get(request, "shipping-address") %>' cssClass="commerce-input" inlineField="<%= true %>" label="" name="shippingAddressId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceOrder::getShippingAddressId %>" wrappedField="<%= false %>">
 
 											<%
 											for (CommerceAddress commerceAddress : shippingAddresses) {

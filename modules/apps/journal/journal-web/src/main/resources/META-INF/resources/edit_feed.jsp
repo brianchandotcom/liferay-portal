@@ -270,12 +270,12 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 			<aui:input label="maximum-items-to-display" name="delta" value="10" />
 
-			<aui:select label="order-by-column" name="orderByCol">
+			<aui:select label="order-by-column" name="orderByCol" valueFunction="<%= JournalFeed::getOrderByCol %>">
 				<aui:option label="modified-date" />
 				<aui:option label="display-date" />
 			</aui:select>
 
-			<aui:select name="orderByType">
+			<aui:select name="orderByType" valueFunction="<%= JournalFeed::getOrderByType %>">
 				<aui:option label="ascending" value="asc" />
 				<aui:option label="descending" value="desc" />
 			</aui:select>

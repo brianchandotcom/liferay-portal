@@ -31,7 +31,7 @@ PatcherProjectVersion patcherProjectVersion = patcherProjectVersionsDisplayConte
 		<aui:input name="redirect" type="hidden" value="<%= patcherProjectVersionsDisplayContext.getRedirect() %>" />
 		<aui:input name="patcherProjectVersionId" type="hidden" value="<%= patcherProjectVersion.getPatcherProjectVersionId() %>" />
 
-		<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "toggleFixedIssuesField();" + liferayPortletResponse.getNamespace() + "toggleHideCheckbox();" %>'>
+		<aui:select label="product-version" name="patcherProductVersionId" onChange='<%= liferayPortletResponse.getNamespace() + "toggleFixedIssuesField();" + liferayPortletResponse.getNamespace() + "toggleHideCheckbox();" %>' valueFunction="<%= PatcherProjectVersion::getPatcherProductVersionId %>">
 
 			<%
 			for (PatcherProductVersion patcherProductVersion : PatcherProductVersionUtil.getPatcherProductVersions()) {
@@ -56,7 +56,7 @@ PatcherProjectVersion patcherProjectVersion = patcherProjectVersionsDisplayConte
 		<aui:input name="repositoryName" />
 
 		<span class="hide" id="<portlet:namespace />displayingFixedIssues">
-			<aui:input name="fixedIssues" type="textarea" />
+			<aui:input name="fixedIssues" type="textarea" valueFunction="<%= PatcherProjectVersion::getFixedIssues %>" />
 		</span>
 
 		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">

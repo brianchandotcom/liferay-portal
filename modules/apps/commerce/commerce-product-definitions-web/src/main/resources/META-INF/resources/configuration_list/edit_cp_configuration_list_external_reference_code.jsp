@@ -21,5 +21,5 @@ CPConfigurationList cpConfigurationList = cpConfigurationListDisplayContext.getC
 
 	<aui:model-context bean="<%= cpConfigurationList %>" model="<%= CPConfigurationList.class %>" />
 
-	<aui:input name="externalReferenceCode" type="text" value="<%= cpConfigurationList.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" value="<%= cpConfigurationList.getExternalReferenceCode() %>" valueFunction="<%= CPConfigurationList::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

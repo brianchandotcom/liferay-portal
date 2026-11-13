@@ -68,7 +68,7 @@ if (calendarResource != null) {
 					<aui:input name="description" />
 
 					<c:if test="<%= calendars != null %>">
-						<aui:select label="default-calendar" name="defaultCalendarId" value="<%= calendarResource.getDefaultCalendarId() %>">
+						<aui:select label="default-calendar" name="defaultCalendarId" value="<%= calendarResource.getDefaultCalendarId() %>" valueFunction="<%= CalendarResource::getDefaultCalendarId %>">
 
 							<%
 							for (Calendar calendar : calendars) {

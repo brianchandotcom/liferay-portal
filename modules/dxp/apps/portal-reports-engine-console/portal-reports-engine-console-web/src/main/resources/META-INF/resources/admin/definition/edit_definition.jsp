@@ -57,7 +57,7 @@ else {
 
 	<aui:input name="redirect" type="hidden" value="<%= definitionsURL %>" />
 	<aui:input name="viewDefinitionsURL" type="hidden" value="<%= viewDefinitionsURL %>" />
-	<aui:input name="definitionId" type="hidden" />
+	<aui:input name="definitionId" type="hidden" valueFunction="<%= Definition::getDefinitionId %>" />
 
 	<c:if test="<%= definition != null %>">
 		<div class="management-bar management-bar-light navbar navbar-expand-md">
@@ -86,7 +86,7 @@ else {
 
 				<aui:input name="description" />
 
-				<aui:select label="data-source-name" name="sourceId">
+				<aui:select label="data-source-name" name="sourceId" valueFunction="<%= Definition::getSourceId %>">
 					<aui:option label="<%= ReportDataSourceType.PORTAL.getValue() %>" selected="<%= sourceId == 0 %>" value="<%= 0 %>" />
 
 					<%
@@ -117,7 +117,7 @@ else {
 			</aui:fieldset>
 
 			<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="report-parameters">
-				<aui:input cssClass="report-parameters" name="reportParameters" type="hidden" />
+				<aui:input cssClass="report-parameters" name="reportParameters" type="hidden" valueFunction="<%= Definition::getReportParameters %>" />
 
 				<clay:row>
 					<clay:col

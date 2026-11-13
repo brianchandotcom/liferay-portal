@@ -52,7 +52,7 @@ renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(
 
 		<aui:input name="name" />
 
-		<aui:input name="description" type="textarea" />
+		<aui:input name="description" type="textarea" valueFunction="<%= Address::getDescription %>" />
 
 		<aui:select label="type" name="addressListTypeId">
 
@@ -156,7 +156,7 @@ renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(
 			</div>
 
 			<div class="form-group-item">
-				<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(Phone.class.getName(), "number") %>' name="phoneNumber" type="text" />
+				<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(Phone.class.getName(), "number") %>' name="phoneNumber" type="text" valueFunction="<%= Address::getPhoneNumber %>" />
 			</div>
 		</div>
 	</liferay-frontend:edit-form-body>

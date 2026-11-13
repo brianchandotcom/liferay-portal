@@ -47,7 +47,7 @@ if (organization != null) {
 	<c:when test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS %>">
 		<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_STATUS %>" message="please-select-a-type" />
 
-		<aui:select label="status" listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>" listTypeFieldName="statusListTypeId" name="statusId" showEmptyOption="<%= false %>" />
+		<aui:select label="status" listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>" listTypeFieldName="statusListTypeId" name="statusId" showEmptyOption="<%= false %>" valueFunction="<%= Organization::getStatusListTypeId %>" />
 	</c:when>
 	<c:otherwise>
 		<aui:input name="statusId" type="hidden" value="<%= (organization != null) ? organization.getStatusListTypeId() : ListTypeServiceUtil.getListTypeId(themeDisplay.getCompanyId(), ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, ListTypeConstants.ORGANIZATION_STATUS) %>" />
@@ -56,7 +56,7 @@ if (organization != null) {
 
 <c:choose>
 	<c:when test="<%= (organization == null) && (organizationsTypes.length > 1) %>">
-		<aui:select name="type">
+		<aui:select name="type" valueFunction="<%= Organization::getType %>">
 
 			<%
 			for (String curType : organizationsTypes) {
@@ -83,9 +83,9 @@ if (organization != null) {
 <liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
 <div class="<%= OrganizationLocalServiceUtil.isCountryEnabled(type) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />countryDiv">
-	<aui:select label="country" name="countryId" required="<%= OrganizationLocalServiceUtil.isCountryRequired(type) %>" />
+	<aui:select label="country" name="countryId" required="<%= OrganizationLocalServiceUtil.isCountryRequired(type) %>" valueFunction="<%= Organization::getCountryId %>" />
 
-	<aui:select label="region" name="regionId" />
+	<aui:select label="region" name="regionId" valueFunction="<%= Organization::getRegionId %>" />
 </div>
 
 <liferay-frontend:component

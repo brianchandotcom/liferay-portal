@@ -93,7 +93,7 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 		<div class="form-group-autofit">
 			<aui:input disabled="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" label="address[postal]" name="street1" placeholder="address" wrapperCssClass="form-group-item" />
 
-			<aui:select disabled="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" label="country" name="countryId" placeholder="country" title="country" wrapperCssClass="form-group-item">
+			<aui:select disabled="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" label="country" name="countryId" placeholder="country" title="country" valueFunction="<%= CommerceAddress::getCountryId %>" wrapperCssClass="form-group-item">
 				<aui:validator errorMessage='<%= LanguageUtil.get(request, "please-enter-a-valid-country") %>' name="min">1</aui:validator>
 			</aui:select>
 		</div>
@@ -123,7 +123,7 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 
 			<aui:input disabled="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" label="city" name="city" placeholder="city" wrapperCssClass="form-group-item" />
 
-			<aui:select disabled="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" label="region" name="regionId" placeholder="region" title="region" wrapperCssClass="form-group-item" />
+			<aui:select disabled="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" label="region" name="regionId" placeholder="region" title="region" valueFunction="<%= CommerceAddress::getRegionId %>" wrapperCssClass="form-group-item" />
 
 			<aui:input disabled="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" id="commerceRegionIdInput" label="region" name="regionId" placeholder="regionId" title="region" wrapperCssClass="d-none form-group-item" />
 

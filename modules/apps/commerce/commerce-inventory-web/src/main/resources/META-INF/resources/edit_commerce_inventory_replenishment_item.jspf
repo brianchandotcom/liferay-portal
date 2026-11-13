@@ -23,7 +23,7 @@
 </aui:input>
 
 <c:if test="<%= commerceInventoryReplenishmentItem == null %>">
-	<aui:select label="destination" name="commerceInventoryWarehouseId" required="<%= true %>">
+	<aui:select label="destination" name="commerceInventoryWarehouseId" required="<%= true %>" valueFunction="<%= CommerceInventoryReplenishmentItem::getCommerceInventoryWarehouseId %>">
 
 		<%
 		for (CommerceInventoryWarehouse commerceInventoryWarehouse : commerceInventoryDisplayContext.getCommerceInventoryWarehouses()) {

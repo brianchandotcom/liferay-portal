@@ -35,7 +35,7 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 
 	<aui:model-context bean="<%= source %>" model="<%= Source.class %>" />
 
-	<aui:input name="sourceId" type="hidden" />
+	<aui:input name="sourceId" type="hidden" valueFunction="<%= Source::getSourceId %>" />
 
 	<div class="sheet">
 		<div class="panel-group panel-group-flush">

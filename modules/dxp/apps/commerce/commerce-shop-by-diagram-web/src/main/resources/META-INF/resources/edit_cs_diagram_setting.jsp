@@ -38,7 +38,7 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 				elementClasses="flex-fill"
 				title='<%= LanguageUtil.get(resourceBundle, "diagram-settings") %>'
 			>
-				<aui:select bean="<%= csDiagramSetting %>" label="type" model="<%= CSDiagramSetting.class %>" name="type">
+				<aui:select bean="<%= csDiagramSetting %>" label="type" model="<%= CSDiagramSetting.class %>" name="type" valueFunction="<%= CSDiagramSetting::getType %>">
 
 					<%
 					for (CSDiagramType curCSDiagramType : csDiagramSettingDisplayContext.getCSDiagramTypes()) {

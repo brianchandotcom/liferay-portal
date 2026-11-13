@@ -37,7 +37,7 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 
 	<aui:input label="postal-code" name="zip" />
 
-	<aui:select label="country" name="countryId" showEmptyOption="<%= true %>">
+	<aui:select label="country" name="countryId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceAddress::getCountryId %>">
 
 		<%
 		for (Country country : commerceShipmentDisplayContext.getCountries()) {
@@ -51,7 +51,7 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 
 	</aui:select>
 
-	<aui:select label="region" name="regionId" showEmptyOption="<%= true %>">
+	<aui:select label="region" name="regionId" showEmptyOption="<%= true %>" valueFunction="<%= CommerceAddress::getRegionId %>">
 
 		<%
 		for (Region region : commerceShipmentDisplayContext.getRegions(shippingAddress.getCountryId())) {

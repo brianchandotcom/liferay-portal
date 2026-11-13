@@ -41,7 +41,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataMetadataJSONException)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-metadata-json-x" />
 				</liferay-ui:error>
 
-				<aui:input helpMessage="oauth-client-as-local-well-known-uri-help" label="oauth-client-as-local-well-known-uri" name="localWellKnownURI" readonly="true" type="text" />
+				<aui:input helpMessage="oauth-client-as-local-well-known-uri-help" label="oauth-client-as-local-well-known-uri" name="localWellKnownURI" readonly="true" type="text" valueFunction="<%= OAuthClientASLocalMetadata::getLocalWellKnownURI %>" />
 
 				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-as-local-well-known-uri-suffix-help", "openid-configuration", false) %>' label="oauth-client-as-local-well-known-uri-suffix" name="oAuthClientASLocalWellKnowURISuffix" readonly="true" type="text" value="openid-configuration" />
 
@@ -66,6 +66,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 							"userInfoEndpoint", ""
 						)
 					%>'
+					valueFunction="<%= OAuthClientASLocalMetadata::getMetadataJSON %>"
 				/>
 
 				<aui:button-row>

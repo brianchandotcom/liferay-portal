@@ -143,7 +143,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				</div>
 
 				<div class="col-4">
-					<aui:input min="0" name="quantity" type="text" wrapperCssClass="mb-0">
+					<aui:input min="0" name="quantity" type="text" valueFunction="<%= CPDefinitionOptionValueRel::getQuantity %>" wrapperCssClass="mb-0">
 						<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
 							function(val) {
 								if (Number(val) > 0) {

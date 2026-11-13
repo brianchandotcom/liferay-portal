@@ -54,11 +54,11 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-configurations" /></h3>
 
-				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" type="text" />
+				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" type="text" valueFunction="<%= OAuthClientEntry::getAuthServerWellKnownURI %>" />
 
-				<aui:input helpMessage="metadata-cache-time-help" label="metadata-cache-time" name="metadataCacheTime" type="text" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getMetadataCacheTime() : OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT %>" />
+				<aui:input helpMessage="metadata-cache-time-help" label="metadata-cache-time" name="metadataCacheTime" type="text" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getMetadataCacheTime() : OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT %>" valueFunction="<%= OAuthClientEntry::getMetadataCacheTime %>" />
 
-				<aui:input helpMessage="token-connection-timeout-help" label="token-connection-timeout" name="tokenConnectionTimeout" type="text" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getTokenConnectionTimeout() : OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT %>" />
+				<aui:input helpMessage="token-connection-timeout-help" label="token-connection-timeout" name="tokenConnectionTimeout" type="text" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getTokenConnectionTimeout() : OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT %>" valueFunction="<%= OAuthClientEntry::getTokenConnectionTimeout %>" />
 
 				<aui:input
 					cssClass="client-info-textarea"
@@ -81,6 +81,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 							"subject_type", "public"
 						)
 					%>'
+					valueFunction="<%= OAuthClientEntry::getInfoJSON %>"
 				/>
 
 				<aui:input name="oAuthClientEntryId" type="hidden" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getOAuthClientEntryId() : 0 %>" />
@@ -102,6 +103,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 							"scope", "openid email profile"
 						)
 					%>'
+					valueFunction="<%= OAuthClientEntry::getAuthRequestParametersJSON %>"
 				/>
 
 				<aui:input
@@ -117,6 +119,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 							"resource", JSONUtil.put("")
 						)
 					%>'
+					valueFunction="<%= OAuthClientEntry::getTokenRequestParametersJSON %>"
 				/>
 
 				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-oidc-specific-configurations" /></h3>
@@ -127,13 +130,13 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 					String matcherField = (oAuthClientEntry != null) ? oAuthClientEntry.getMatcherField() : "email";
 					%>
 
-					<aui:select helpMessage="matcher-field-help" label="matcher-field" name="matcherField" required="<%= true %>" type="text">
+					<aui:select helpMessage="matcher-field-help" label="matcher-field" name="matcherField" required="<%= true %>" type="text" valueFunction="<%= OAuthClientEntry::getMatcherField %>">
 						<aui:option label="email" selected='<%= Objects.equals(matcherField, "email") %>' value="email" />
 						<aui:option label="screen-name" selected='<%= Objects.equals(matcherField, "screenName") %>' value="screenName" />
 					</aui:select>
 				</c:if>
 
-				<aui:input cssClass="info-mapper-textarea" helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="OIDCUserInfoMapperJSON" type="textarea" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" />
+				<aui:input cssClass="info-mapper-textarea" helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="OIDCUserInfoMapperJSON" type="textarea" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" valueFunction="<%= OAuthClientEntry::getOIDCUserInfoMapperJSON %>" />
 
 				<c:if test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-49855") %>'>
 					<div class="lfr-form-rows" id="<portlet:namespace />customClaimsContentBox">

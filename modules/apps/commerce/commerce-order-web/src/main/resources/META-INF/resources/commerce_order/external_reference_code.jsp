@@ -17,7 +17,7 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 	<aui:model-context bean="<%= commerceOrderEditDisplayContext.getCommerceOrder() %>" model="<%= CommerceOrder.class %>" />
 
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceOrderId" type="hidden" />
+	<aui:input name="commerceOrderId" type="hidden" valueFunction="<%= CommerceOrder::getCommerceOrderId %>" />
 
-	<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
+	<aui:input name="externalReferenceCode" type="text" valueFunction="<%= CommerceOrder::getExternalReferenceCode %>" wrapperCssClass="form-group-item" />
 </aui:form>

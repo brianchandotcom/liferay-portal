@@ -86,7 +86,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 
 							<div class="input-group">
 								<div class="input-group-item">
-									<aui:input disabled="<%= dlEditFolderDisplayContext.isERCFieldEnabled() %>" label="" name="externalReferenceCode" type="text" />
+									<aui:input disabled="<%= dlEditFolderDisplayContext.isERCFieldEnabled() %>" label="" name="externalReferenceCode" type="text" valueFunction="<%= Folder::getExternalReferenceCode %>" />
 								</div>
 							</div>
 						</aui:field-wrapper>

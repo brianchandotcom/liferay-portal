@@ -320,7 +320,7 @@ while (manageableCalendarsIterator.hasNext()) {
 					displayTitle='<%= LanguageUtil.get(request, "details") %>'
 				>
 					<div class="panel-body">
-						<aui:select label="calendar" name="calendarId">
+						<aui:select label="calendar" name="calendarId" valueFunction="<%= CalendarBooking::getCalendarId %>">
 
 							<%
 							for (Calendar curCalendar : manageableCalendars) {

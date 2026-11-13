@@ -33,7 +33,7 @@ PatcherFixComponent patcherFixComponent = PatcherFixComponentLocalServiceUtil.fe
 	<aui:input name="patcherFixComponentId" type="hidden" value="<%= patcherFixComponent.getPatcherFixComponentId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:input name="name" type="text" value="<%= patcherFixComponent.getName() %>" />
+		<aui:input name="name" type="text" value="<%= patcherFixComponent.getName() %>" valueFunction="<%= PatcherFixComponent::getName %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

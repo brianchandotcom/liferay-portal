@@ -350,7 +350,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 					>
 						<div class="c-gap-4 d-flex flex-column panel-body">
 							<div id="<portlet:namespace />titleMapAsXMLWrapper">
-								<aui:input cssClass="form-control-inline form-control-sm" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label='<%= LanguageUtil.get(request, "title") %>' languagesDropdownDirection="down" languagesDropdownVisible="<%= false %>" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
+								<aui:input cssClass="form-control-inline form-control-sm" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label='<%= LanguageUtil.get(request, "title") %>' languagesDropdownDirection="down" languagesDropdownVisible="<%= false %>" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" valueFunction="<%= JournalArticle::getTitleMapAsXML %>" wrapperCssClass="article-content-title mb-0" />
 							</div>
 
 							<div id="<portlet:namespace />descriptionMapAsXMLWrapper">

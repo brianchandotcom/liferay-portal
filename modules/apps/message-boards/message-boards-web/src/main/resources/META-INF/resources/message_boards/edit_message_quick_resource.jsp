@@ -158,7 +158,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				skipEditorLoading="<%= true %>"
 			/>
 
-			<aui:input name="body" type="hidden" />
+			<aui:input name="body" type="hidden" valueFunction="<%= (MBMessage mbMessage) -> mbMessage.getBody() %>" />
 
 			<c:if test="<%= captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
 				<liferay-captcha:captcha />
@@ -216,7 +216,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		</portlet:renderURL>
 
 		<aui:form action="<%= advancedReplyURL %>" cssClass="hide" method="post" name='<%= "advancedReplyFm" + parentMessageId %>'>
-			<aui:input name="body" type="hidden" />
+			<aui:input name="body" type="hidden" valueFunction="<%= (MBMessage curMBMessage) -> curMBMessage.getBody() %>" />
 		</aui:form>
 	</div>
 </div>

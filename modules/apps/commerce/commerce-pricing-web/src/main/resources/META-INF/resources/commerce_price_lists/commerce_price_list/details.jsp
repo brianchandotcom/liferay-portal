@@ -106,7 +106,7 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 					module="{detailsAutocomplete} from commerce-pricing-web"
 				/>
 
-				<aui:select label="price-type" name="netPrice">
+				<aui:select label="price-type" name="netPrice" valueFunction="<%= CommercePriceList::getNetPrice %>">
 
 					<%
 					boolean netPrice = true;

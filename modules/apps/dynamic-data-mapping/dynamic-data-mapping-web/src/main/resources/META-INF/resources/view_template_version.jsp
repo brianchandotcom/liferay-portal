@@ -74,7 +74,7 @@ PortletURL backURL = PortletURLBuilder.createRenderURL(
 			<%@ include file="/form_builder.jspf" %>
 		</c:when>
 		<c:otherwise>
-			<aui:input cssClass="script" disabled="<%= true %>" name="script" type="textarea" />
+			<aui:input cssClass="script" disabled="<%= true %>" name="script" type="textarea" valueFunction="<%= DDMTemplateVersion::getScript %>" />
 		</c:otherwise>
 	</c:choose>
 

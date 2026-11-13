@@ -47,7 +47,7 @@ String type = BeanParamUtil.getString(corEntry, renderRequest, "type", COREntry:
 					</div>
 
 					<div class="col-auto">
-						<aui:select disabled="<%= true %>" label="type" name="type" required="<%= true %>">
+						<aui:select disabled="<%= true %>" label="type" name="type" required="<%= true %>" valueFunction="<%= COREntry::getType %>">
 
 							<%
 							for (COREntryType corEntryType : corEntryDisplayContext.getCOREntryTypes()) {
@@ -69,7 +69,7 @@ String type = BeanParamUtil.getString(corEntry, renderRequest, "type", COREntry:
 
 				<div class="row">
 					<div class="col">
-						<aui:input name="description" type="textarea" value="<%= corEntry.getDescription() %>" />
+						<aui:input name="description" type="textarea" value="<%= corEntry.getDescription() %>" valueFunction="<%= COREntry::getDescription %>" />
 					</div>
 				</div>
 

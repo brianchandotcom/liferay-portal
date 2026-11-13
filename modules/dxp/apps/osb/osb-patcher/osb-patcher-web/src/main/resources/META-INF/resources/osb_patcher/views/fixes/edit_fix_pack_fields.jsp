@@ -42,7 +42,7 @@ PatcherFix patcherFix = patcherEditFixPackFieldsDisplayContext.getPatcherFix();
 			<liferay-ui:message key="fix-pack-schedule" />
 		</h5>
 
-		<aui:select disabled="<%= patcherEditFixPackFieldsDisplayContext.isDisabled() %>" name="fixPackStatus" showEmptyOption="<%= false %>">
+		<aui:select disabled="<%= patcherEditFixPackFieldsDisplayContext.isDisabled() %>" name="fixPackStatus" showEmptyOption="<%= false %>" valueFunction="<%= PatcherFix::getFixPackStatus %>">
 			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_READY %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_READY %>" />
 			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_GENERATED %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_GENERATED %>" />
 			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_MULTI_COMPONENT %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_MULTI_COMPONENT %>" />

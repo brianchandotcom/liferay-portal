@@ -26,7 +26,7 @@ CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerc
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderId() %>" />
 			<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
-			<aui:input bean="<%= commerceOrderItem %>" name="quantity" type="hidden" />
+			<aui:input bean="<%= commerceOrderItem %>" name="quantity" type="hidden" valueFunction="<%= CommerceOrderItem::getQuantity %>" />
 
 			<liferay-ui:error-marker
 				key="<%= WebKeys.ERROR_SECTION %>"

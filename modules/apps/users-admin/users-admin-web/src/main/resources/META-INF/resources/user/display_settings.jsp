@@ -9,6 +9,6 @@
 
 <aui:model-context bean="<%= (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER) %>" model="<%= User.class %>" />
 
-<aui:input label="time-zone" name="timeZoneId" type="timeZone" />
+<aui:input label="time-zone" name="timeZoneId" type="timeZone" valueFunction="<%= User::getTimeZoneId %>" />
 
 <aui:input name="greeting" />

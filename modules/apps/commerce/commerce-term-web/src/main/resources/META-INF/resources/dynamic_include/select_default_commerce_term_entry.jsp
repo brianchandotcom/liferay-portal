@@ -32,7 +32,7 @@ CommerceChannelAccountEntryRel commerceChannelAccountEntryRel = commerceChannelA
 
 		<aui:model-context bean="<%= commerceChannelAccountEntryRelDisplayContext.fetchCommerceChannelAccountEntryRel() %>" model="<%= CommerceChannelAccountEntryRel.class %>" />
 
-		<aui:select label="channel" name="commerceChannelId">
+		<aui:select label="channel" name="commerceChannelId" valueFunction="<%= CommerceChannelAccountEntryRel::getCommerceChannelId %>">
 			<aui:option label="<%= LanguageUtil.get(request, commerceChannelAccountEntryRelDisplayContext.getCommerceChannelsEmptyOptionKey()) %>" selected="<%= commerceChannelAccountEntryRelDisplayContext.isCommerceChannelSelected(0) %>" value="0" />
 
 			<%
@@ -49,7 +49,7 @@ CommerceChannelAccountEntryRel commerceChannelAccountEntryRel = commerceChannelA
 
 		<aui:input checked="<%= (commerceChannelAccountEntryRel == null) ? false : commerceChannelAccountEntryRel.isOverrideEligibility() %>" helpMessage="override-eligibility-help" label="override-eligibility" name="overrideEligibility" type="toggle-switch" />
 
-		<aui:select label="term[condition]" name="classPK" required="<%= true %>">
+		<aui:select label="term[condition]" name="classPK" required="<%= true %>" valueFunction="<%= CommerceChannelAccountEntryRel::getClassPK %>">
 
 			<%
 			for (CommerceTermEntry commerceTermEntry : commerceChannelAccountEntryRelDisplayContext.getCommerceTermEntries()) {

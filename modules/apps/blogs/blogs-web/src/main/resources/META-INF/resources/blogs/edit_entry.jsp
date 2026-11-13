@@ -87,7 +87,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 							/>
 						</div>
 
-						<aui:input name="coverImageCaption" type="hidden" />
+						<aui:input name="coverImageCaption" type="hidden" valueFunction="<%= BlogsEntry::getCoverImageCaption %>" />
 
 						<clay:col
 							cssClass="mx-md-auto"
@@ -115,13 +115,13 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 								int titleMaxLength = ModelHintsUtil.getMaxLength(BlogsEntry.class.getName(), "title");
 								%>
 
-								<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-title form-control-unstyled" label="" maxlength="<%= String.valueOf(titleMaxLength) %>" name="title" placeholder='<%= LanguageUtil.get(request, "title") + " *" %>' type="textarea" value="<%= HtmlUtil.escape(blogsEditEntryDisplayContext.getTitle()) %>">
+								<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-title form-control-unstyled" label="" maxlength="<%= String.valueOf(titleMaxLength) %>" name="title" placeholder='<%= LanguageUtil.get(request, "title") + " *" %>' type="textarea" value="<%= HtmlUtil.escape(blogsEditEntryDisplayContext.getTitle()) %>" valueFunction="<%= BlogsEntry::getTitle %>">
 									<aui:validator errorMessage='<%= LanguageUtil.format(resourceBundle, "the-x-field-is-required", "title", true) %>' name="required" />
 								</aui:input>
 							</div>
 
 							<div class="entry-subtitle">
-								<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-subtitle form-control-unstyled" label="" name="subtitle" placeholder='<%= LanguageUtil.get(request, "subtitle") %>' type="textarea" />
+								<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-subtitle form-control-unstyled" label="" name="subtitle" placeholder='<%= LanguageUtil.get(request, "subtitle") %>' type="textarea" valueFunction="<%= BlogsEntry::getSubtitle %>" />
 							</div>
 
 							<div class="entry-content form-group">
@@ -137,7 +137,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 								</liferay-editor:editor>
 							</div>
 
-							<aui:input name="content" type="hidden" />
+							<aui:input name="content" type="hidden" valueFunction="<%= BlogsEntry::getContent %>" />
 						</clay:col>
 					</aui:fieldset>
 
@@ -273,7 +273,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 							</div>
 
 							<div class="entry-description form-group">
-								<aui:input disabled="<%= !blogsEditEntryDisplayContext.isCustomAbstract() %>" label="description" name="description" required="<%= true %>" type="text" value="<%= blogsEditEntryDisplayContext.getDescription() %>" />
+								<aui:input disabled="<%= !blogsEditEntryDisplayContext.isCustomAbstract() %>" label="description" name="description" required="<%= true %>" type="text" value="<%= blogsEditEntryDisplayContext.getDescription() %>" valueFunction="<%= BlogsEntry::getDescription %>" />
 							</div>
 
 							<div class="clearfix">

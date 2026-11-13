@@ -27,6 +27,8 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		Alert.closeMessage(messageType = "SUCCESS_DISMISSIBLE");
+
 		if (${sitePageType} == "Embedded") {
 			PagesAdmin._addPageTypeEmbedded(pageTypeURL = ${pageTypeURL});
 		}
@@ -97,6 +99,10 @@ definition {
 
 		if (isSet(sitePageType) || isSet(inheritChanges) || isSet(openGraph)) {
 			Button.click(button = "Save");
+
+			AssertElementPresent(
+				key_successMessage = "The page was updated successfully.",
+				locator1 = "Message#SUCCESS_SPECIFIC");
 		}
 	}
 

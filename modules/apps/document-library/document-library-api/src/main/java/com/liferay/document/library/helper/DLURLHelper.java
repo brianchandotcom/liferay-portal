@@ -24,7 +24,8 @@ public interface DLURLHelper {
 
 	public String getDownloadURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendVersion, boolean absoluteURL);
+		String queryString, boolean appendVersion, boolean appendModifiedDate,
+		boolean absoluteURL);
 
 	public String getFileEntryControlPanelLink(
 			PortletRequest portletRequest, long fileEntryId)

@@ -54,15 +54,6 @@ public class AMMessageListenerTest {
 				CTCollectionThreadLocal.getCTCollectionId())
 		).when(
 			_amProcessor
-		).cleanUp(
-			Mockito.any()
-		);
-
-		Mockito.doAnswer(
-			invocation -> _ctCollectionIds.add(
-				CTCollectionThreadLocal.getCTCollectionId())
-		).when(
-			_amProcessor
 		).process(
 			Mockito.any()
 		);
@@ -70,21 +61,11 @@ public class AMMessageListenerTest {
 
 	@Test
 	public void testDoReceive() throws Exception {
-		_testDoReceive(AMProcessorCommand.CLEAN_UP);
-		_testDoReceive(AMProcessorCommand.PROCESS);
-	}
-
-	private void _testDoReceive(AMProcessorCommand amProcessorCommand)
-		throws Exception {
-
-		_ctCollectionIds.clear();
-
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
 		Message message = new Message();
 
 		message.put("className", _CLASS_NAME);
-		message.put("command", amProcessorCommand);
 
 		long messageCTCollectionId = RandomTestUtil.randomLong();
 

@@ -6,7 +6,6 @@
 package com.liferay.adaptive.media.web.internal.processor;
 
 import com.liferay.adaptive.media.web.internal.constants.AMDestinationNames;
-import com.liferay.adaptive.media.web.internal.messaging.AMProcessorCommand;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
@@ -48,32 +47,6 @@ public class AMAsyncProcessorImplTest {
 	}
 
 	@Test
-	public void testTriggerCleanUp() throws Exception {
-		String modelId = RandomTestUtil.randomString();
-
-		TransactionCallbackUtil.TRANSACTION_LIFECYCLE_LISTENER.created(
-			_transactionAttribute, _transactionStatus);
-
-		_amAsyncProcessorImpl.triggerCleanUp(new Object(), modelId);
-
-		TransactionCallbackUtil.TRANSACTION_LIFECYCLE_LISTENER.rollbacked(
-			_transactionAttribute, _transactionStatus, null);
-
-		long ctCollectionId = RandomTestUtil.randomLong();
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId)) {
-
-			_amAsyncProcessorImpl.triggerCleanUp(new Object(), modelId);
-		}
-
-		AMAsyncProcessorImpl.cleanQueue(AMProcessorCommand.CLEAN_UP, modelId);
-
-		_assertMessage(AMProcessorCommand.CLEAN_UP, ctCollectionId, modelId);
-	}
-
-	@Test
 	public void testTriggerProcess() throws Exception {
 		String modelId = RandomTestUtil.randomString();
 
@@ -94,15 +67,12 @@ public class AMAsyncProcessorImplTest {
 			_amAsyncProcessorImpl.triggerProcess(new Object(), modelId);
 		}
 
-		AMAsyncProcessorImpl.cleanQueue(AMProcessorCommand.PROCESS, modelId);
+		AMAsyncProcessorImpl.cleanQueue(modelId);
 
-		_assertMessage(AMProcessorCommand.PROCESS, ctCollectionId, modelId);
+		_assertMessage(ctCollectionId, modelId);
 	}
 
-	private void _assertMessage(
-		AMProcessorCommand amProcessorCommand, long ctCollectionId,
-		String modelId) {
-
+	private void _assertMessage(long ctCollectionId, String modelId) {
 		ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(
 			Message.class);
 
@@ -115,7 +85,6 @@ public class AMAsyncProcessorImplTest {
 
 		Message message = argumentCaptor.getValue();
 
-		Assert.assertEquals(amProcessorCommand, message.get("command"));
 		Assert.assertEquals(ctCollectionId, message.getLong("ctCollectionId"));
 		Assert.assertEquals(modelId, message.getString("modelId"));
 	}

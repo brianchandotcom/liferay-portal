@@ -60,7 +60,7 @@ function refresh_workspaces {
 			--delete \
 			--exclude node_modules \
 			"${PWD}/liferay-sample-workspace/playwright/liferay" \
-			"${workspace_dir}/playwright/"
+			"${workspace_dir}/playwright"
 
 		rsync \
 			--archive \
@@ -70,7 +70,7 @@ function refresh_workspaces {
 			"${PWD}/liferay-sample-workspace/playwright/playwright.config.ts" \
 			"${PWD}/liferay-sample-workspace/playwright/tsconfig.json" \
 			"${PWD}/liferay-sample-workspace/playwright/yarn.lock" \
-			"${workspace_dir}/playwright/"
+			"${workspace_dir}/playwright"
 	done
 }
 

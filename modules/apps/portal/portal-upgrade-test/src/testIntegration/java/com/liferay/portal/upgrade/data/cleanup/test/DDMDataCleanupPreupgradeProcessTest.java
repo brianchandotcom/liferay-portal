@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.DataCleanupTestUtil;
@@ -124,7 +123,7 @@ public class DDMDataCleanupPreupgradeProcessTest
 		_journalArticleResourceLocalService.deleteArticleResource(
 			group.getGroupId(), journalArticle.getArticleId());
 
-		_groupLocalService.deleteGroup(group);
+		GroupTestUtil.deleteGroupAndSystemEvent(group);
 
 		UpgradeProcess upgradeProcess =
 			new ResourcePermissionDataCleanupPreupgradeProcess();
@@ -250,7 +249,7 @@ public class DDMDataCleanupPreupgradeProcessTest
 
 		upgrade();
 
-		_groupLocalService.deleteGroup(group);
+		GroupTestUtil.deleteGroupAndSystemEvent(group);
 
 		UpgradeProcess upgradeProcess =
 			new ResourcePermissionDataCleanupPreupgradeProcess();
@@ -453,9 +452,6 @@ public class DDMDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JournalArticleResourceLocalService

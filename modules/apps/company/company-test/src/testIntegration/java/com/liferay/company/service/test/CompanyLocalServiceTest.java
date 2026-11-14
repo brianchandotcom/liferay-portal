@@ -1238,7 +1238,7 @@ public class CompanyLocalServiceTest {
 		finally {
 			_resetCompanyLocales(_company.getCompanyId());
 
-			GroupTestUtil.deleteGroup(group);
+			GroupTestUtil.deleteGroupAndSystemEvent(group);
 
 			safeCloseable.close();
 		}
@@ -1684,7 +1684,7 @@ public class CompanyLocalServiceTest {
 					_company.getType(), _company.getSize());
 
 				if (group != null) {
-					GroupTestUtil.deleteGroup(group);
+					GroupTestUtil.deleteGroupAndSystemEvent(group);
 				}
 			}
 		}
@@ -1835,7 +1835,7 @@ public class CompanyLocalServiceTest {
 					new String[] {hostname}, true);
 			}
 			finally {
-				_groupLocalService.deleteGroup(group);
+				GroupTestUtil.deleteGroupAndSystemEvent(group);
 			}
 		}
 	}

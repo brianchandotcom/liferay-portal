@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -69,7 +68,7 @@ public class JournalDataCleanupPreupgradeProcessTest
 	@After
 	public void tearDown() throws Exception {
 		if (_group != null) {
-			_groupLocalService.deleteGroup(_group);
+			GroupTestUtil.deleteGroupAndSystemEvent(_group);
 		}
 
 		_classNamesSavepointSafeCloseable.close();
@@ -182,9 +181,6 @@ public class JournalDataCleanupPreupgradeProcessTest
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	private Group _group;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

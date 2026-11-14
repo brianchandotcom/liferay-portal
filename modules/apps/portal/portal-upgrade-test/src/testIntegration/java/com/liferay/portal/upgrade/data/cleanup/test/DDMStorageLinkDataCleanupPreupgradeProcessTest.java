@@ -17,7 +17,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.DataCleanupTestUtil;
@@ -164,7 +163,7 @@ public class DDMStorageLinkDataCleanupPreupgradeProcessTest
 		_ddmTemplateLocalService.deleteTemplate(
 			journalArticle.getDDMTemplate());
 
-		_groupLocalService.deleteGroup(group);
+		GroupTestUtil.deleteGroupAndSystemEvent(group);
 	}
 
 	@Test
@@ -236,8 +235,5 @@ public class DDMStorageLinkDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 }

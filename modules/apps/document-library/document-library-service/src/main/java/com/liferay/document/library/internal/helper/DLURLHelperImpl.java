@@ -67,17 +67,8 @@ public class DLURLHelperImpl implements DLURLHelper {
 		String queryString) {
 
 		return getDownloadURL(
-			fileEntry, fileVersion, themeDisplay, queryString, true, true);
-	}
-
-	@Override
-	public String getDownloadURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendVersion, boolean absoluteURL) {
-
-		return getDownloadURL(
-			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
-			false, absoluteURL);
+			fileEntry, fileVersion, themeDisplay, queryString, true, false,
+			true);
 	}
 
 	@Override

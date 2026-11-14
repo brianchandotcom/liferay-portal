@@ -82,16 +82,16 @@ public class SiteInitializerUtil {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		User user = _getUser(companyId);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
+
 		try {
-			User user = _getUser(companyId);
-
-			PrincipalThreadLocal.setName(user.getUserId());
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
-			ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
-
 			siteInitializer.initialize(group.getGroupId());
 		}
 		finally {

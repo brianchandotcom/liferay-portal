@@ -22,6 +22,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -290,42 +291,43 @@ public class CMPTestUtil {
 
 		String originalName = PrincipalThreadLocal.getName();
 
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+		User user = TestPropsValues.getUser();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
-			ServiceContextThreadLocal.pushServiceContext(
-				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		PrincipalThreadLocal.setName(user.getUserId());
 
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						group.getCompanyId())) {
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-				SiteInitializerRegistry siteInitializerRegistry =
-					_siteInitializerRegistrySnapshot.get();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					group.getCompanyId())) {
 
-				SiteInitializer siteInitializer =
-					siteInitializerRegistry.getSiteInitializer(
-						_BUNDLE_SYMBOLIC_NAME);
+			SiteInitializerRegistry siteInitializerRegistry =
+				_siteInitializerRegistrySnapshot.get();
 
-				siteInitializer.initialize(group.getGroupId());
+			SiteInitializer siteInitializer =
+				siteInitializerRegistry.getSiteInitializer(
+					_BUNDLE_SYMBOLIC_NAME);
 
-				if (processBatchEngine) {
-					BatchEngineTestUtil.processBatchEngineUnits(
-						_BUNDLE_SYMBOLIC_NAME, clazz,
-						new String[] {
-							"." + _BUNDLE_SYMBOLIC_NAME +
-								".internal.batch.00.list.type.definition",
-							"." + _BUNDLE_SYMBOLIC_NAME +
-								".internal.batch.01.notification.template",
-							"." + _BUNDLE_SYMBOLIC_NAME +
-								".internal.batch.02.object.folder",
-							"." + _BUNDLE_SYMBOLIC_NAME +
-								".internal.batch.03.object.definition"
-						});
-				}
+			siteInitializer.initialize(group.getGroupId());
+
+			if (processBatchEngine) {
+				BatchEngineTestUtil.processBatchEngineUnits(
+					_BUNDLE_SYMBOLIC_NAME, clazz,
+					new String[] {
+						"." + _BUNDLE_SYMBOLIC_NAME +
+							".internal.batch.00.list.type.definition",
+						"." + _BUNDLE_SYMBOLIC_NAME +
+							".internal.batch.01.notification.template",
+						"." + _BUNDLE_SYMBOLIC_NAME +
+							".internal.batch.02.object.folder",
+						"." + _BUNDLE_SYMBOLIC_NAME +
+							".internal.batch.03.object.definition"
+					});
 			}
 		}
 		finally {

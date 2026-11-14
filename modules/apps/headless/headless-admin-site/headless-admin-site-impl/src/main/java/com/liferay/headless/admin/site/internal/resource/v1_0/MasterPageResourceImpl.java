@@ -355,14 +355,10 @@ public class MasterPageResourceImpl
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.
-				fetchLayoutPageTemplateEntryByExternalReferenceCode(
-					pageTemplateExternalReferenceCode,
-					GroupUtil.getStagingAwareGroupId(
-						contextCompany.getCompanyId(),
-						siteExternalReferenceCode));
-
-		_validateMasterPage(layoutPageTemplateEntry);
+			_getLayoutPageTemplateEntry(
+				pageTemplateExternalReferenceCode,
+				GroupUtil.getStagingAwareGroupId(
+					contextCompany.getCompanyId(), siteExternalReferenceCode));
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
 			DTOConverterContextUtil.getDTOConverterContext(
@@ -462,6 +458,8 @@ public class MasterPageResourceImpl
 			return _addMasterPage(groupId, masterPage);
 		}
 
+		_validateMasterPage(layoutPageTemplateEntry);
+
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
@@ -529,10 +527,9 @@ public class MasterPageResourceImpl
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.
-				getLayoutPageTemplateEntryByExternalReferenceCode(
-					externalReferenceCode,
-					getPermissionCheckerGroupId(groupExternalReferenceCode));
+			_getLayoutPageTemplateEntry(
+				externalReferenceCode,
+				getPermissionCheckerGroupId(groupExternalReferenceCode));
 
 		return layoutPageTemplateEntry.getPrimaryKey();
 	}

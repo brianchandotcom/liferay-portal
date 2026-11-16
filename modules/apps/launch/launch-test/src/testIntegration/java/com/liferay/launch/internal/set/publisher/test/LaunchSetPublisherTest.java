@@ -773,6 +773,53 @@ public class LaunchSetPublisherTest {
 		_assertScheduledDateAndStatus(
 			date, WorkflowConstants.STATUS_SCHEDULED, failedLaunchSetId);
 
+		// Launch set rescheduled after a manual publish of it failed
+
+		ObjectEntry rescheduledLaunchSetObjectEntry =
+			_addLaunchSetObjectEntry();
+
+		long rescheduledLaunchSetId =
+			rescheduledLaunchSetObjectEntry.getObjectEntryId();
+
+		String className = RandomTestUtil.randomString();
+
+		ObjectEntry rescheduledLaunchEntryObjectEntry =
+			_addLaunchEntryObjectEntry(
+				rescheduledLaunchSetId, className, RandomTestUtil.randomInt(),
+				RandomTestUtil.randomString());
+
+		_launchSetPublisher.schedulePublish(
+			new Date(System.currentTimeMillis() + Time.DAY),
+			rescheduledLaunchSetId, TestPropsValues.getUserId());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
+
+			_launchSetPublisher.publish(
+				rescheduledLaunchSetId, TestPropsValues.getUserId());
+
+			_assertLogEntries(
+				PortalException.class,
+				"No launch entry manager exists for " + className,
+				rescheduledLaunchEntryObjectEntry, rescheduledLaunchSetId,
+				logCapture);
+		}
+
+		_assertPublishErrorsCount(1, rescheduledLaunchSetId);
+
+		date = new Date(System.currentTimeMillis() + (2 * Time.DAY));
+
+		_launchSetPublisher.schedulePublish(
+			date, rescheduledLaunchSetId, TestPropsValues.getUserId());
+
+		_assertScheduledDateAndStatus(
+			date, WorkflowConstants.STATUS_SCHEDULED, rescheduledLaunchSetId);
+
+		_launchSetPublisher.unschedulePublish(rescheduledLaunchSetId);
+
+		_assertScheduledDateAndStatus(
+			null, WorkflowConstants.STATUS_DRAFT, rescheduledLaunchSetId);
+
 		// Launch set that is being published
 
 		ObjectEntry publishingLaunchSetObjectEntry = _addLaunchSetObjectEntry();

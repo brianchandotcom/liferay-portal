@@ -72,7 +72,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.http.HttpInvoker;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
-import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentImageValueSerDes;
@@ -83,6 +82,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPage
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ProblemExceptionTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
@@ -115,7 +115,6 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
@@ -522,7 +521,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePageWithFormFragmentPageElements();
 		LazyReferencingTestUtil.executeWithLazyReferencingSafeCloseable(
 			this::_testPutSiteSitePageWithMissingTaxonomyCategories);
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
 			"NOT_FOUND", null,
 			this::_testPutSiteSitePageWithMissingTaxonomyCategories);
 		_testPutSiteSitePageWithPageElements();
@@ -872,7 +871,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		for (Layout layout : layouts) {
-			_assertProblemException(
+			ProblemExceptionTestUtil.assertProblemException(
+				"BAD_REQUEST",
 				expectedTitle,
 				() -> sitePageResource.deleteSiteSitePage(
 					testGroup.getExternalReferenceCode(),
@@ -1236,7 +1236,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			String expectedTitle, SitePage sitePage)
 		throws Exception {
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
 			expectedTitle,
 			() -> sitePageResource.patchSiteSitePage(
 				testGroup.getExternalReferenceCode(),
@@ -1247,7 +1248,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			String expectedTitle, Layout layout)
 		throws Exception {
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
 			expectedTitle,
 			() -> sitePageResource.postSiteSitePagePageSpecification(
 				testGroup.getExternalReferenceCode(),
@@ -1272,30 +1274,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
-	private void _assertProblemException(
-			String expectedStatus, String expectedTitle,
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		try {
-			unsafeRunnable.run();
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals(expectedStatus, problem.getStatus());
-			Assert.assertEquals(expectedTitle, problem.getTitle());
-		}
-	}
-
-	private void _assertProblemException(
-			String expectedTitle, UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		_assertProblemException("BAD_REQUEST", expectedTitle, unsafeRunnable);
-	}
-
 	private void _assertPutSiteSitePageProblemException(
 			String expectedTitle, ServiceContext serviceContext,
 			Layout... layouts)
@@ -1314,7 +1292,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			String expectedTitle, SitePage sitePage)
 		throws Exception {
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
 			expectedTitle,
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
@@ -2654,7 +2633,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			Layout layout = LayoutTestUtil.addTypePortletLayout(
 				testGroup, true);
 
-			_assertProblemException(
+			ProblemExceptionTestUtil.assertProblemException(
+				"BAD_REQUEST",
 				"Feature flag LPD-38869 is disabled for company " +
 					testCompany.getCompanyId(),
 				() -> sitePageResource.getSiteSitePageSitePagesPage(
@@ -2974,7 +2954,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						layout.getExternalReferenceCode() + "'",
 					Pagination.of(1, 10), null));
 
-			_assertProblemException(
+			ProblemExceptionTestUtil.assertProblemException(
+				"BAD_REQUEST",
 				"Feature flag LPD-38869 is disabled for company " +
 					testCompany.getCompanyId(),
 				() -> sitePageResource.getSiteSitePagesPage(
@@ -3140,7 +3121,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
 			"A single content page specification cannot be applied to an " +
 				"existing page",
 			() -> sitePageResource.patchSiteSitePage(
@@ -3668,7 +3650,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				SitePage.Type.CONTENT_PAGE,
 				StringUtil.toLowerCase(RandomTestUtil.randomString())));
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
 			"The private page setting does not match the target page's privacy",
 			() -> sitePageResource.postSiteSitePage(
 				testGroup.getExternalReferenceCode(), !privateLayout,
@@ -3905,7 +3888,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		sitemapSettings.setPagePriority(RandomTestUtil.randomDouble() + 1);
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
 			"pageSettings.seoSettings.sitemapSettings.pagePriority must be " +
 				"less than or equal to 1\n",
 			() -> sitePageResource.postSiteSitePage(
@@ -3966,7 +3950,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				publishedContentPageSpecification, draftContentPageSpecification
 			});
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
 			StringBundler.concat(
 				"Site page external reference code ",
 				sitePage.getExternalReferenceCode(),
@@ -4173,7 +4158,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			Assert.assertTrue(layout.isPrivateLayout());
 
-			_assertProblemException(
+			ProblemExceptionTestUtil.assertProblemException(
+				"BAD_REQUEST",
 				"Feature flag LPD-38869 is disabled for company " +
 					testCompany.getCompanyId(),
 				() -> sitePageResource.postSiteSitePage(
@@ -4574,7 +4560,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		getSitePage.setPageSpecifications(
 			() -> new PageSpecification[] {pageSpecifications[0]});
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
 			"A single content page specification cannot be applied to an " +
 				"existing page",
 			() -> sitePageResource.putSiteSitePage(
@@ -4716,7 +4703,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Layout layout = _createEmptyLayout(sitePage);
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
 			"CONFLICT",
 			_language.format(
 				LocaleUtil.getDefault(),
@@ -4754,7 +4741,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		pageSettings.setPriority(0);
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
 			"CONFLICT",
 			_language.format(
 				LocaleUtil.getDefault(), "the-first-page-cannot-be-of-type-x",
@@ -5661,7 +5648,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			Assert.assertTrue(layout.isPrivateLayout());
 
-			_assertProblemException(
+			ProblemExceptionTestUtil.assertProblemException(
+				"BAD_REQUEST",
 				"Feature flag LPD-38869 is disabled for company " +
 					testCompany.getCompanyId(),
 				() -> sitePageResource.putSiteSitePage(

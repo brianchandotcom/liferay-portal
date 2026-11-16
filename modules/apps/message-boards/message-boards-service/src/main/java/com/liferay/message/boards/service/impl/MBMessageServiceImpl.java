@@ -493,6 +493,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			QueryDefinition<MBMessage> queryDefinition)
 		throws PortalException {
 
+		_checkChildMessagesPermission(parentMessageId, queryDefinition);
+
 		if (queryDefinition.isIncludeOwner() &&
 			(queryDefinition.getOwnerUserId() != 0)) {
 
@@ -508,6 +510,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long parentMessageId, boolean flatten,
 			QueryDefinition<MBMessage> queryDefinition)
 		throws PortalException {
+
+		_checkChildMessagesPermission(parentMessageId, queryDefinition);
 
 		if (queryDefinition.isIncludeOwner() &&
 			(queryDefinition.getOwnerUserId() != 0)) {
@@ -953,6 +957,28 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		return mbMessageLocalService.updateMessage(
 			getGuestOrUserId(), messageId, subject, body, inputStreamOVPs,
 			priority, allowPingbacks, serviceContext);
+	}
+
+	private void _checkChildMessagesPermission(
+			long parentMessageId, QueryDefinition<MBMessage> queryDefinition)
+		throws PortalException {
+
+		MBMessage parentMessage = mbMessagePersistence.findByPrimaryKey(
+			parentMessageId);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		_messageModelResourcePermission.check(
+			permissionChecker, parentMessage, ActionKeys.VIEW);
+
+		if (permissionChecker.isContentReviewer(
+				permissionChecker.getCompanyId(), parentMessage.getGroupId())) {
+
+			return;
+		}
+
+		queryDefinition.setIncludeOwner(true);
+		queryDefinition.setOwnerUserId(getUserId());
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED, false);
 	}
 
 	private void _checkReplyToPermission(

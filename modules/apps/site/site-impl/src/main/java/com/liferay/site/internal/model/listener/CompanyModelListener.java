@@ -5,10 +5,14 @@
 
 package com.liferay.site.internal.model.listener;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.site.service.SiteSitemapRegenerationEntryLocalService;
+import com.liferay.site.storage.helper.SitemapStorageHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -23,10 +27,25 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	public void onBeforeRemove(Company company) {
 		_siteSitemapRegenerationEntryLocalService.
 			deleteSiteSitemapRegenerationEntries(company.getCompanyId());
+
+		try {
+			_sitemapStorageHelper.deleteSitemaps(company.getCompanyId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompanyModelListener.class);
 
 	@Reference
 	private SiteSitemapRegenerationEntryLocalService
 		_siteSitemapRegenerationEntryLocalService;
+
+	@Reference
+	private SitemapStorageHelper _sitemapStorageHelper;
 
 }

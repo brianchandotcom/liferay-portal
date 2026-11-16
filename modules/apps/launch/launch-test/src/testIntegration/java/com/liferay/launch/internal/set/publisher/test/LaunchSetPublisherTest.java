@@ -700,7 +700,7 @@ public class LaunchSetPublisherTest {
 	}
 
 	@Test
-	public void testSchedulePublish() throws Exception {
+	public void testSchedulePublish() throws Throwable {
 		long launchSetId = _launchSetObjectEntry.getObjectEntryId();
 
 		ObjectEntry launchEntryObjectEntry = _addLaunchEntryObjectEntry(
@@ -772,6 +772,37 @@ public class LaunchSetPublisherTest {
 		_assertPublishErrorsCount(0, failedLaunchSetId);
 		_assertScheduledDateAndStatus(
 			date, WorkflowConstants.STATUS_SCHEDULED, failedLaunchSetId);
+
+		// Launch set that is being published
+
+		ObjectEntry publishingLaunchSetObjectEntry = _addLaunchSetObjectEntry();
+
+		long publishingLaunchSetId =
+			publishingLaunchSetObjectEntry.getObjectEntryId();
+
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			() -> {
+				_launchSetPublisher.publish(
+					publishingLaunchSetId, TestPropsValues.getUserId());
+
+				PortalException portalException = Assert.assertThrows(
+					PortalException.class,
+					() -> _launchSetPublisher.schedulePublish(
+						new Date(System.currentTimeMillis() + Time.DAY),
+						publishingLaunchSetId, TestPropsValues.getUserId()));
+
+				Assert.assertEquals(
+					"Launch set " + publishingLaunchSetId +
+						" is already being published",
+					portalException.getMessage());
+
+				_assertScheduledDateAndStatus(
+					null, WorkflowConstants.STATUS_DRAFT,
+					publishingLaunchSetId);
+
+				return null;
+			});
 	}
 
 	@Test

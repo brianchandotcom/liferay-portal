@@ -7,6 +7,7 @@ package com.liferay.launch.internal.set.publisher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -16,13 +17,17 @@ import com.liferay.launch.set.publisher.LaunchSetPublisher;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -46,10 +51,12 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -65,6 +72,7 @@ import java.io.Serializable;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -76,6 +84,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alejandro Tardín
@@ -115,6 +128,11 @@ public class LaunchSetPublisherTest {
 				backgroundTask.getBackgroundTaskId());
 		}
 
+		if (_failedLaunchSetObjectEntry != null) {
+			_launchSetPublisher.unschedulePublish(
+				_failedLaunchSetObjectEntry.getObjectEntryId());
+		}
+
 		_launchSetPublisher.unschedulePublish(
 			_launchSetObjectEntry.getObjectEntryId());
 
@@ -123,6 +141,159 @@ public class LaunchSetPublisherTest {
 
 	@Test
 	public void testPublish() throws Throwable {
+
+		// Launch entry whose publish fails with a blank message
+
+		_assertPublishErrorMessage(
+			PortalException.class.getName(), StringPool.SPACE);
+
+		// Launch entry whose publish fails with a long message
+
+		String longMessage = RandomTestUtil.randomString(70000);
+
+		_assertPublishErrorMessage(
+			longMessage.substring(0, 65000), longMessage);
+
+		// Launch entry whose publish fails with a long message of characters
+		// outside the BMP
+
+		longMessage = "a" + "\uD83D\uDE00".repeat(35000);
+
+		_assertPublishErrorMessage(
+			longMessage.substring(0, 64999), longMessage);
+
+		// Launch entry whose publish fails with a message at the length limit
+
+		longMessage = RandomTestUtil.randomString(65000);
+
+		_assertPublishErrorMessage(longMessage, longMessage);
+
+		// Launch entry with a title longer than a text field
+
+		String longTitle = RandomTestUtil.randomString(300);
+
+		JournalArticle longTitleJournalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, longTitle,
+			RandomTestUtil.randomString());
+
+		ObjectEntry longTitleLaunchSetObjectEntry = _addLaunchSetObjectEntry();
+
+		long longTitleLaunchSetId =
+			longTitleLaunchSetObjectEntry.getObjectEntryId();
+
+		ObjectEntry longTitleLaunchEntryObjectEntry =
+			_addLaunchEntryObjectEntry(
+				longTitleLaunchSetId, JournalArticle.class.getName(),
+				longTitleJournalArticle.getResourcePrimKey(),
+				String.valueOf(longTitleJournalArticle.getVersion()));
+
+		long longTitleDraftId = MapUtil.getLong(
+			_getValues(longTitleLaunchEntryObjectEntry), "draftId");
+
+		LaunchEntryManager launchEntryManager =
+			_getJournalArticleLaunchEntryManager();
+
+		launchEntryManager.deleteDraft(
+			longTitleJournalArticle.getResourcePrimKey(), longTitleDraftId);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
+
+			_launchSetPublisher.publish(
+				longTitleLaunchSetId, TestPropsValues.getUserId());
+
+			_assertLogEntries(
+				NoSuchArticleException.class,
+				"No JournalArticle exists with the key {resourcePrimKey=" +
+					longTitleDraftId + "}",
+				longTitleLaunchEntryObjectEntry, longTitleLaunchSetId,
+				logCapture);
+		}
+
+		_assertBackgroundTaskStatuses(
+			longTitleLaunchSetId, BackgroundTaskConstants.STATUS_FAILED);
+
+		List<ObjectEntry> launchSetErrorObjectEntries =
+			_getLaunchSetErrorObjectEntries(longTitleLaunchSetObjectEntry);
+
+		Assert.assertEquals(
+			launchSetErrorObjectEntries.toString(), 1,
+			launchSetErrorObjectEntries.size());
+
+		ObjectEntry launchSetErrorObjectEntry = launchSetErrorObjectEntries.get(
+			0);
+
+		Map<String, Serializable> values =
+			launchSetErrorObjectEntry.getValues();
+
+		Assert.assertEquals(
+			longTitleLaunchEntryObjectEntry.getObjectEntryId(),
+			MapUtil.getLong(values, "launchEntryId"));
+		Assert.assertEquals(
+			longTitle, MapUtil.getString(values, "launchEntryTitle"));
+
+		// Launch set approved by another publish while this one fails
+
+		ObjectEntry concurrentLaunchSetObjectEntry = _addLaunchSetObjectEntry();
+
+		long concurrentLaunchSetId =
+			concurrentLaunchSetObjectEntry.getObjectEntryId();
+
+		String concurrentClassName = RandomTestUtil.randomString();
+
+		ObjectEntry concurrentLaunchEntryObjectEntry =
+			_addLaunchEntryObjectEntry(
+				concurrentLaunchSetId, concurrentClassName,
+				RandomTestUtil.randomInt(), null);
+
+		String concurrentMessage = RandomTestUtil.randomString();
+
+		ServiceRegistration<LaunchEntryManager> serviceRegistration =
+			_registerLaunchEntryManager(
+				concurrentClassName,
+				() -> {
+					TransactionInvokerUtil.invoke(
+						_requiresNewTransactionConfig,
+						() -> _objectEntryLocalService.updateStatus(
+							TestPropsValues.getUserId(), concurrentLaunchSetId,
+							WorkflowConstants.STATUS_APPROVED,
+							_serviceContext));
+
+					throw new PortalException(concurrentMessage);
+				});
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
+
+			_launchSetPublisher.publish(
+				concurrentLaunchSetId, TestPropsValues.getUserId());
+
+			_assertLogEntries(
+				PortalException.class, concurrentMessage,
+				concurrentLaunchEntryObjectEntry, concurrentLaunchSetId,
+				logCapture);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		_assertBackgroundTaskStatuses(
+			concurrentLaunchSetId, BackgroundTaskConstants.STATUS_FAILED);
+
+		concurrentLaunchSetObjectEntry =
+			_objectEntryLocalService.getObjectEntry(concurrentLaunchSetId);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			concurrentLaunchSetObjectEntry.getStatus());
+
+		launchSetErrorObjectEntries = _getLaunchSetErrorObjectEntries(
+			concurrentLaunchSetObjectEntry);
+
+		Assert.assertEquals(
+			launchSetErrorObjectEntries.toString(), 0,
+			launchSetErrorObjectEntries.size());
 
 		// Launch set deleted before its background task runs
 
@@ -313,7 +484,7 @@ public class LaunchSetPublisherTest {
 			WorkflowConstants.STATUS_DRAFT,
 			unscheduledLaunchSetObjectEntry.getStatus());
 
-		// Launch set with a launch entry that has no launch entry manager
+		// Launch set with launch entries that have no launch entry manager
 
 		long launchSetId = _launchSetObjectEntry.getObjectEntryId();
 
@@ -330,10 +501,16 @@ public class LaunchSetPublisherTest {
 
 		long draftId = _updateLaunchDraft(launchEntryObjectEntry, title);
 
-		String unknownClassName = RandomTestUtil.randomString();
+		String unknownClassName1 = RandomTestUtil.randomString();
 
-		ObjectEntry unknownLaunchEntryObjectEntry = _addLaunchEntryObjectEntry(
-			launchSetId, unknownClassName, RandomTestUtil.randomInt(),
+		ObjectEntry unknownLaunchEntryObjectEntry1 = _addLaunchEntryObjectEntry(
+			launchSetId, unknownClassName1, RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString());
+
+		String unknownClassName2 = RandomTestUtil.randomString();
+
+		ObjectEntry unknownLaunchEntryObjectEntry2 = _addLaunchEntryObjectEntry(
+			launchSetId, unknownClassName2, RandomTestUtil.randomInt(),
 			RandomTestUtil.randomString());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -355,29 +532,46 @@ public class LaunchSetPublisherTest {
 			"redirect", "/" + RandomTestUtil.randomString());
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.ERROR)) {
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
 
 			_mvcActionCommand.processAction(
 				mockLiferayPortletActionRequest, new MockActionResponse());
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+			Map<String, LogEntry> logEntriesMap = _getLogEntriesMap(
+				3, logCapture);
 
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Throwable throwable = logEntry.getThrowable();
-
-			Assert.assertEquals(
-				"No launch entry manager exists for " + unknownClassName,
-				throwable.getMessage());
+			_assertLogEntry(
+				PortalException.class,
+				"No launch entry manager exists for " + unknownClassName1,
+				logEntriesMap,
+				"Unable to publish launch entry " +
+					unknownLaunchEntryObjectEntry1.getObjectEntryId(),
+				"WARN");
+			_assertLogEntry(
+				PortalException.class,
+				"No launch entry manager exists for " + unknownClassName2,
+				logEntriesMap,
+				"Unable to publish launch entry " +
+					unknownLaunchEntryObjectEntry2.getObjectEntryId(),
+				"WARN");
+			_assertLogEntry(
+				PortalException.class,
+				"Unable to publish 2 launch entries of launch set " +
+					launchSetId,
+				logEntriesMap, "Unable to publish launch set " + launchSetId,
+				"ERROR");
 		}
 
 		_assertBackgroundTaskStatuses(
 			launchSetId, BackgroundTaskConstants.STATUS_FAILED);
 
-		LaunchEntryManager launchEntryManager =
-			_getJournalArticleLaunchEntryManager();
+		List<BackgroundTask> backgroundTasks = _getBackgroundTasks(launchSetId);
+
+		BackgroundTask backgroundTask = backgroundTasks.get(0);
+
+		Assert.assertEquals(
+			"Unable to publish 2 launch entries of launch set " + launchSetId,
+			backgroundTask.getStatusMessage());
 
 		LaunchEntryManager.Version version =
 			launchEntryManager.fetchPublishedVersion(
@@ -387,17 +581,40 @@ public class LaunchSetPublisherTest {
 			String.valueOf(journalArticle.getVersion()),
 			version.getVersionKey());
 
+		Assert.assertEquals(
+			draftId,
+			MapUtil.getLong(_getValues(launchEntryObjectEntry), "draftId"));
+
 		ObjectEntry launchSetObjectEntry =
 			_objectEntryLocalService.getObjectEntry(launchSetId);
 
-		Assert.assertNotEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			launchSetObjectEntry.getStatus());
+		Assert.assertEquals(
+			2,
+			MapUtil.getLong(
+				launchSetObjectEntry.getValues(), "publishErrorsCount"));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, launchSetObjectEntry.getStatus());
+
+		launchSetErrorObjectEntries = _getLaunchSetErrorObjectEntries(
+			launchSetObjectEntry);
+
+		Assert.assertEquals(
+			launchSetErrorObjectEntries.toString(), 2,
+			launchSetErrorObjectEntries.size());
+
+		_assertLaunchSetError(
+			unknownLaunchEntryObjectEntry1, launchSetErrorObjectEntries,
+			"No launch entry manager exists for " + unknownClassName1);
+		_assertLaunchSetError(
+			unknownLaunchEntryObjectEntry2, launchSetErrorObjectEntries,
+			"No launch entry manager exists for " + unknownClassName2);
 
 		// Launch set with launch entries that can all be published
 
 		_objectEntryLocalService.deleteObjectEntry(
-			unknownLaunchEntryObjectEntry);
+			unknownLaunchEntryObjectEntry1);
+		_objectEntryLocalService.deleteObjectEntry(
+			unknownLaunchEntryObjectEntry2);
 
 		_launchSetPublisher.publish(launchSetId, TestPropsValues.getUserId());
 
@@ -422,8 +639,19 @@ public class LaunchSetPublisherTest {
 			launchSetId);
 
 		Assert.assertEquals(
+			0,
+			MapUtil.getLong(
+				launchSetObjectEntry.getValues(), "publishErrorsCount"));
+		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			launchSetObjectEntry.getStatus());
+
+		launchSetErrorObjectEntries = _getLaunchSetErrorObjectEntries(
+			launchSetObjectEntry);
+
+		Assert.assertEquals(
+			launchSetErrorObjectEntries.toString(), 0,
+			launchSetErrorObjectEntries.size());
 
 		// Object entry that is not a launch set
 
@@ -501,21 +729,49 @@ public class LaunchSetPublisherTest {
 			() -> _launchSetPublisher.schedulePublish(
 				null, launchSetId, TestPropsValues.getUserId()));
 
-		_assertScheduledDateAndStatus(null, WorkflowConstants.STATUS_DRAFT);
+		_assertScheduledDateAndStatus(
+			null, WorkflowConstants.STATUS_DRAFT, launchSetId);
 
 		Date date = new Date(System.currentTimeMillis() + (Time.MINUTE * 2));
 
 		_launchSetPublisher.schedulePublish(
 			date, launchSetId, TestPropsValues.getUserId());
 
-		_assertScheduledDateAndStatus(date, WorkflowConstants.STATUS_SCHEDULED);
+		_assertScheduledDateAndStatus(
+			date, WorkflowConstants.STATUS_SCHEDULED, launchSetId);
 
 		Assert.assertThrows(
 			PortalException.class,
 			() -> _launchSetPublisher.schedulePublish(
 				new Date(System.currentTimeMillis() + Time.DAY), launchSetId,
 				TestPropsValues.getUserId()));
-		_assertScheduledDateAndStatus(date, WorkflowConstants.STATUS_SCHEDULED);
+		_assertScheduledDateAndStatus(
+			date, WorkflowConstants.STATUS_SCHEDULED, launchSetId);
+
+		// Failed launch set
+
+		_failedLaunchSetObjectEntry = _addFailedLaunchSetObjectEntry();
+
+		long failedLaunchSetId = _failedLaunchSetObjectEntry.getObjectEntryId();
+
+		Assert.assertThrows(
+			PortalException.class,
+			() -> _launchSetPublisher.schedulePublish(
+				new Date(System.currentTimeMillis() - Time.DAY),
+				failedLaunchSetId, TestPropsValues.getUserId()));
+
+		_assertPublishErrorsCount(1, failedLaunchSetId);
+		_assertScheduledDateAndStatus(
+			null, WorkflowConstants.STATUS_DRAFT, failedLaunchSetId);
+
+		date = new Date(System.currentTimeMillis() + Time.DAY);
+
+		_launchSetPublisher.schedulePublish(
+			date, failedLaunchSetId, TestPropsValues.getUserId());
+
+		_assertPublishErrorsCount(0, failedLaunchSetId);
+		_assertScheduledDateAndStatus(
+			date, WorkflowConstants.STATUS_SCHEDULED, failedLaunchSetId);
 	}
 
 	@Test
@@ -533,7 +789,8 @@ public class LaunchSetPublisherTest {
 
 		_launchSetPublisher.unschedulePublish(launchSetId);
 
-		_assertScheduledDateAndStatus(null, WorkflowConstants.STATUS_DRAFT);
+		_assertScheduledDateAndStatus(
+			null, WorkflowConstants.STATUS_DRAFT, launchSetId);
 
 		_launchSetPublisher.schedulePublish(
 			new Date(System.currentTimeMillis() + Time.DAY), launchSetId,
@@ -541,14 +798,63 @@ public class LaunchSetPublisherTest {
 
 		_launchSetPublisher.unschedulePublish(launchSetId);
 
-		_assertScheduledDateAndStatus(null, WorkflowConstants.STATUS_DRAFT);
+		_assertScheduledDateAndStatus(
+			null, WorkflowConstants.STATUS_DRAFT, launchSetId);
 
 		Date date = new Date(System.currentTimeMillis() + Time.WEEK);
 
 		_launchSetPublisher.schedulePublish(
 			date, launchSetId, TestPropsValues.getUserId());
 
-		_assertScheduledDateAndStatus(date, WorkflowConstants.STATUS_SCHEDULED);
+		_assertScheduledDateAndStatus(
+			date, WorkflowConstants.STATUS_SCHEDULED, launchSetId);
+
+		// Failed launch set
+
+		ObjectEntry failedLaunchSetObjectEntry =
+			_addFailedLaunchSetObjectEntry();
+
+		long failedLaunchSetId = failedLaunchSetObjectEntry.getObjectEntryId();
+
+		_launchSetPublisher.schedulePublish(
+			new Date(System.currentTimeMillis() + Time.DAY), failedLaunchSetId,
+			TestPropsValues.getUserId());
+
+		_launchSetPublisher.unschedulePublish(failedLaunchSetId);
+
+		_assertPublishErrorsCount(0, failedLaunchSetId);
+		_assertScheduledDateAndStatus(
+			null, WorkflowConstants.STATUS_DRAFT, failedLaunchSetId);
+	}
+
+	private ObjectEntry _addFailedLaunchSetObjectEntry() throws Exception {
+		ObjectEntry launchSetObjectEntry = _addLaunchSetObjectEntry();
+
+		long launchSetId = launchSetObjectEntry.getObjectEntryId();
+
+		String className = RandomTestUtil.randomString();
+
+		ObjectEntry launchEntryObjectEntry = _addLaunchEntryObjectEntry(
+			launchSetId, className, RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
+
+			_launchSetPublisher.publish(
+				launchSetId, TestPropsValues.getUserId());
+
+			_assertLogEntries(
+				PortalException.class,
+				"No launch entry manager exists for " + className,
+				launchEntryObjectEntry, launchSetId, logCapture);
+		}
+
+		_assertBackgroundTaskStatuses(
+			launchSetId, BackgroundTaskConstants.STATUS_FAILED);
+		_assertPublishErrorsCount(1, launchSetId);
+
+		return launchSetObjectEntry;
 	}
 
 	private ObjectEntry _addLaunchEntryObjectEntry(
@@ -619,6 +925,136 @@ public class LaunchSetPublisherTest {
 		}
 	}
 
+	private void _assertLaunchSetError(
+		ObjectEntry launchEntryObjectEntry,
+		List<ObjectEntry> launchSetErrorObjectEntries, String message) {
+
+		Map<String, Serializable> values = null;
+
+		for (ObjectEntry launchSetErrorObjectEntry :
+				launchSetErrorObjectEntries) {
+
+			long launchEntryId = MapUtil.getLong(
+				launchSetErrorObjectEntry.getValues(), "launchEntryId");
+
+			if (launchEntryId == launchEntryObjectEntry.getObjectEntryId()) {
+				values = launchSetErrorObjectEntry.getValues();
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(launchSetErrorObjectEntries.toString(), values);
+		Assert.assertEquals(
+			StringPool.BLANK, MapUtil.getString(values, "launchEntryTitle"));
+		Assert.assertEquals(message, MapUtil.getString(values, "message"));
+		Assert.assertEquals("error", MapUtil.getString(values, "severity"));
+	}
+
+	private void _assertLogEntries(
+		Class<?> exceptionClass, String exceptionMessage,
+		ObjectEntry launchEntryObjectEntry, long launchSetId,
+		LogCapture logCapture) {
+
+		Map<String, LogEntry> logEntriesMap = _getLogEntriesMap(2, logCapture);
+
+		_assertLogEntry(
+			exceptionClass, exceptionMessage, logEntriesMap,
+			"Unable to publish launch entry " +
+				launchEntryObjectEntry.getObjectEntryId(),
+			"WARN");
+		_assertLogEntry(
+			PortalException.class,
+			"Unable to publish 1 launch entries of launch set " + launchSetId,
+			logEntriesMap, "Unable to publish launch set " + launchSetId,
+			"ERROR");
+	}
+
+	private void _assertLogEntry(
+		Class<?> exceptionClass, String exceptionMessage,
+		Map<String, LogEntry> logEntriesMap, String message, String priority) {
+
+		LogEntry logEntry = logEntriesMap.get(message);
+
+		Assert.assertNotNull(logEntriesMap.toString(), logEntry);
+		Assert.assertEquals(priority, logEntry.getPriority());
+
+		Throwable throwable = logEntry.getThrowable();
+
+		Assert.assertSame(exceptionClass, throwable.getClass());
+		Assert.assertEquals(exceptionMessage, throwable.getMessage());
+		Assert.assertArrayEquals(new Throwable[0], throwable.getSuppressed());
+	}
+
+	private void _assertPublishErrorMessage(
+			String expectedMessage, String message)
+		throws Exception {
+
+		ObjectEntry launchSetObjectEntry = _addLaunchSetObjectEntry();
+
+		long launchSetId = launchSetObjectEntry.getObjectEntryId();
+
+		String className = RandomTestUtil.randomString();
+
+		ObjectEntry launchEntryObjectEntry = _addLaunchEntryObjectEntry(
+			launchSetId, className, RandomTestUtil.randomInt(), null);
+
+		ServiceRegistration<LaunchEntryManager> serviceRegistration =
+			_registerLaunchEntryManager(
+				className,
+				() -> {
+					throw new PortalException(message);
+				});
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
+
+			_launchSetPublisher.publish(
+				launchSetId, TestPropsValues.getUserId());
+
+			_assertLogEntries(
+				PortalException.class, message, launchEntryObjectEntry,
+				launchSetId, logCapture);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		_assertBackgroundTaskStatuses(
+			launchSetId, BackgroundTaskConstants.STATUS_FAILED);
+		_assertPublishErrorsCount(1, launchSetId);
+
+		launchSetObjectEntry = _objectEntryLocalService.getObjectEntry(
+			launchSetId);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, launchSetObjectEntry.getStatus());
+
+		List<ObjectEntry> launchSetErrorObjectEntries =
+			_getLaunchSetErrorObjectEntries(launchSetObjectEntry);
+
+		Assert.assertEquals(
+			launchSetErrorObjectEntries.toString(), 1,
+			launchSetErrorObjectEntries.size());
+
+		_assertLaunchSetError(
+			launchEntryObjectEntry, launchSetErrorObjectEntries,
+			expectedMessage);
+	}
+
+	private void _assertPublishErrorsCount(
+			long expectedPublishErrorsCount, long launchSetId)
+		throws Exception {
+
+		ObjectEntry launchSetObjectEntry =
+			_objectEntryLocalService.getObjectEntry(launchSetId);
+
+		Assert.assertEquals(
+			expectedPublishErrorsCount,
+			MapUtil.getLong(
+				launchSetObjectEntry.getValues(), "publishErrorsCount"));
+	}
+
 	private void _assertPublishFails(long launchSetId, String messageSuffix) {
 		PortalException portalException = Assert.assertThrows(
 			PortalException.class,
@@ -648,10 +1084,8 @@ public class LaunchSetPublisherTest {
 	}
 
 	private void _assertScheduledDateAndStatus(
-			Date expectedDate, int expectedStatus)
+			Date expectedDate, int expectedStatus, long launchSetId)
 		throws Exception {
-
-		long launchSetId = _launchSetObjectEntry.getObjectEntryId();
 
 		ObjectEntry launchSetObjectEntry =
 			_objectEntryLocalService.getObjectEntry(launchSetId);
@@ -703,6 +1137,39 @@ public class LaunchSetPublisherTest {
 			JournalArticle.class.getName());
 	}
 
+	private List<ObjectEntry> _getLaunchSetErrorObjectEntries(
+			ObjectEntry launchSetObjectEntry)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				launchSetObjectEntry.getObjectDefinitionId(),
+				"launchSetToLaunchSetErrors");
+
+		return _objectEntryLocalService.getOneToManyObjectEntries(
+			launchSetObjectEntry.getGroupId(),
+			objectRelationship.getObjectRelationshipId(), null, false,
+			launchSetObjectEntry.getObjectEntryId(), true, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	private Map<String, LogEntry> _getLogEntriesMap(
+		int expectedCount, LogCapture logCapture) {
+
+		Map<String, LogEntry> logEntriesMap = new HashMap<>();
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(
+			logEntries.toString(), expectedCount, logEntries.size());
+
+		for (LogEntry logEntry : logEntries) {
+			logEntriesMap.put(logEntry.getMessage(), logEntry);
+		}
+
+		return logEntriesMap;
+	}
+
 	private String _getTitle(JournalArticle journalArticle) throws Exception {
 		JournalArticle latestJournalArticle =
 			_journalArticleLocalService.getLatestArticle(
@@ -720,6 +1187,31 @@ public class LaunchSetPublisherTest {
 				objectEntry.getObjectEntryId());
 
 		return reloadedObjectEntry.getValues();
+	}
+
+	private ServiceRegistration<LaunchEntryManager> _registerLaunchEntryManager(
+		String className,
+		UnsafeSupplier<LaunchEntryManager.Version, Throwable> unsafeSupplier) {
+
+		Bundle bundle = FrameworkUtil.getBundle(LaunchSetPublisherTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return bundleContext.registerService(
+			LaunchEntryManager.class,
+			(LaunchEntryManager)ProxyUtil.newProxyInstance(
+				LaunchEntryManager.class.getClassLoader(),
+				new Class<?>[] {LaunchEntryManager.class},
+				(proxy, method, arguments) -> {
+					if (Objects.equals(method.getName(), "publishDraft")) {
+						return unsafeSupplier.get();
+					}
+
+					return null;
+				}),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"launch.entry.manager.class.name", className
+			).build());
 	}
 
 	private long _updateLaunchDraft(
@@ -760,6 +1252,9 @@ public class LaunchSetPublisherTest {
 		"com.liferay.launch.internal.background.task." +
 			"LaunchSetPublishBackgroundTaskExecutor";
 
+	private static final TransactionConfig _requiresNewTransactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
@@ -767,6 +1262,7 @@ public class LaunchSetPublisherTest {
 	@Inject
 	private BackgroundTaskManager _backgroundTaskManager;
 
+	private ObjectEntry _failedLaunchSetObjectEntry;
 	private Group _group;
 
 	@Inject
@@ -791,6 +1287,9 @@ public class LaunchSetPublisherTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private Portal _portal;

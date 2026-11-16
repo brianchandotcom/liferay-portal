@@ -389,7 +389,7 @@ public class SitePageResourceImpl
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		if (privateLayout) {
+		if (GetterUtil.getBoolean(privateLayout)) {
 			EnabledUtil.checkPrivateLayoutEnabled(groupId);
 		}
 
@@ -417,7 +417,8 @@ public class SitePageResourceImpl
 				searchContext.setAttribute(Field.TITLE, search);
 				searchContext.setAttribute(Field.TYPE, _TYPES);
 				searchContext.setAttribute(
-					"privateLayout", privateLayout.toString());
+					"privateLayout",
+					String.valueOf(GetterUtil.getBoolean(privateLayout)));
 				searchContext.setAttribute(
 					"status", WorkflowConstants.STATUS_ANY);
 				searchContext.setAttribute(
@@ -440,6 +441,8 @@ public class SitePageResourceImpl
 			String siteExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception {
+
+		privateLayout = GetterUtil.getBoolean(privateLayout);
 
 		long groupId = GroupUtil.getGroupId(
 			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -464,6 +467,8 @@ public class SitePageResourceImpl
 			String sitePageExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception {
+
+		privateLayout = GetterUtil.getBoolean(privateLayout);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);

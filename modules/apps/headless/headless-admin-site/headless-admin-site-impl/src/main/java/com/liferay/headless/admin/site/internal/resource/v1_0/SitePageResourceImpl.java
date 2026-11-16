@@ -10,15 +10,23 @@ import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.headless.admin.site.dto.v1_0.BasicFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.EmbeddedPageSettings;
+import com.liferay.headless.admin.site.dto.v1_0.FormFragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentInstance;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToPagePageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.OpenGraphSettings;
+import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
@@ -31,6 +39,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContex
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
+import com.liferay.headless.admin.site.internal.exception.DuplicateUUIDException;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
@@ -86,6 +95,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.validation.ValidationException;
 
@@ -490,6 +501,10 @@ public class SitePageResourceImpl
 			layout.getGroupId(), layout.isPrivateLayout(), sitePage);
 
 		if (layout.isTypeEmpty()) {
+			_validateSitePageUUIDAvailable(
+				layout.getGroupId(), layout, layout.isPrivateLayout(),
+				sitePage);
+
 			layout = _layoutService.convertEmptyLayout(
 				layout.getPlid(), layout.getNameMap(),
 				SitePageTypeUtil.toInternalType(sitePage.getType()),
@@ -586,6 +601,10 @@ public class SitePageResourceImpl
 
 		_validatePageSpecificationExternalReferenceCode(
 			serviceContext, sitePage);
+
+		_validateSitePageUUIDAvailable(groupId, null, privateLayout, sitePage);
+
+		_validatePageExperienceUUIDsAvailable(groupId, null, sitePage);
 
 		Layout layout = null;
 
@@ -731,6 +750,28 @@ public class SitePageResourceImpl
 
 		if (pageSettings instanceof WidgetPageSettings widgetPageSettings) {
 			return widgetPageSettings.getDefaultAssetPublisherPortletId();
+		}
+
+		return null;
+	}
+
+	private FragmentInstance _getFragmentInstance(
+		PageElementDefinition pageElementDefinition) {
+
+		if (pageElementDefinition instanceof
+				BasicFragmentInstancePageElementDefinition
+					basicFragmentInstancePageElementDefinition) {
+
+			return basicFragmentInstancePageElementDefinition.
+				getFragmentInstance();
+		}
+
+		if (pageElementDefinition instanceof
+				FormFragmentInstancePageElementDefinition
+					formFragmentInstancePageElementDefinition) {
+
+			return formFragmentInstancePageElementDefinition.
+				getFragmentInstance();
 		}
 
 		return null;
@@ -1100,6 +1141,24 @@ public class SitePageResourceImpl
 			pageSettings.getHiddenFromNavigation(), defaultValue);
 	}
 
+	private boolean _isSitePagePlid(Layout layout, long plid) {
+		if (layout == null) {
+			return false;
+		}
+
+		if (plid == layout.getPlid()) {
+			return true;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if ((draftLayout != null) && (plid == draftLayout.getPlid())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private SitePage _toSitePage(Layout layout) throws Exception {
 		return _sitePageDTOConverter.toDTO(
 			DTOConverterContextUtil.getDTOConverterContext(
@@ -1115,6 +1174,9 @@ public class SitePageResourceImpl
 
 		_validatePageSpecificationExternalReferenceCode(
 			serviceContext, sitePage);
+
+		_validatePageExperienceUUIDsAvailable(
+			layout.getGroupId(), layout, sitePage);
 
 		Map<Locale, String> nameMap = layout.getNameMap();
 
@@ -1300,6 +1362,90 @@ public class SitePageResourceImpl
 			serviceContext);
 	}
 
+	private void _validateFragmentInstanceUUIDsAvailable(
+			long groupId, Layout layout, PageElement[] pageElements)
+		throws Exception {
+
+		if (pageElements == null) {
+			return;
+		}
+
+		for (PageElement pageElement : pageElements) {
+			FragmentInstance fragmentInstance = _getFragmentInstance(
+				pageElement.getPageElementDefinition());
+
+			if (fragmentInstance != null) {
+				String uuid = fragmentInstance.getUuid();
+
+				if (Validator.isNotNull(uuid)) {
+					FragmentEntryLink fragmentEntryLink =
+						_fragmentEntryLinkLocalService.
+							fetchFragmentEntryLinkByUuidAndGroupId(
+								uuid, groupId);
+
+					if ((fragmentEntryLink != null) &&
+						!_isSitePagePlid(layout, fragmentEntryLink.getPlid())) {
+
+						throw new DuplicateUUIDException(
+							"fragment instance", uuid);
+					}
+				}
+			}
+
+			_validateFragmentInstanceUUIDsAvailable(
+				groupId, layout, pageElement.getPageElements());
+		}
+	}
+
+	private void _validatePageExperienceUUIDsAvailable(
+			long groupId, Layout layout, SitePage sitePage)
+		throws Exception {
+
+		PageSpecification[] pageSpecifications =
+			sitePage.getPageSpecifications();
+
+		if (pageSpecifications == null) {
+			return;
+		}
+
+		for (PageSpecification pageSpecification : pageSpecifications) {
+			if (!(pageSpecification instanceof
+					ContentPageSpecification contentPageSpecification)) {
+
+				continue;
+			}
+
+			PageExperience[] pageExperiences =
+				contentPageSpecification.getPageExperiences();
+
+			if (pageExperiences == null) {
+				continue;
+			}
+
+			for (PageExperience pageExperience : pageExperiences) {
+				String uuid = pageExperience.getUuid();
+
+				if (Validator.isNotNull(uuid)) {
+					SegmentsExperience segmentsExperience =
+						_segmentsExperienceLocalService.
+							fetchSegmentsExperienceByUuidAndGroupId(
+								uuid, groupId);
+
+					if ((segmentsExperience != null) &&
+						!_isSitePagePlid(
+							layout, segmentsExperience.getPlid())) {
+
+						throw new DuplicateUUIDException(
+							"page experience", uuid);
+					}
+				}
+
+				_validateFragmentInstanceUUIDsAvailable(
+					groupId, layout, pageExperience.getPageElements());
+			}
+		}
+	}
+
 	private void _validatePageSpecificationExternalReferenceCode(
 		ServiceContext serviceContext, SitePage sitePage) {
 
@@ -1371,6 +1517,28 @@ public class SitePageResourceImpl
 			sitePage::getExternalReferenceCode);
 	}
 
+	private void _validateSitePageUUIDAvailable(
+			long groupId, Layout layout, boolean privateLayout,
+			SitePage sitePage)
+		throws Exception {
+
+		String uuid = sitePage.getUuid();
+
+		if (Validator.isNull(uuid)) {
+			return;
+		}
+
+		Layout duplicateLayout =
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
+				uuid, groupId, privateLayout);
+
+		if ((duplicateLayout != null) &&
+			!_isSitePagePlid(layout, duplicateLayout.getPlid())) {
+
+			throw new DuplicateUUIDException("site page", uuid);
+		}
+	}
+
 	private static final String[] _TYPES = {
 		LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 		LayoutConstants.TYPE_LINK_TO_LAYOUT, LayoutConstants.TYPE_NODE,
@@ -1387,6 +1555,9 @@ public class SitePageResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
@@ -1412,6 +1583,9 @@ public class SitePageResourceImpl
 	)
 	private DTOConverter<Layout, PageSpecification>
 		_pageSpecificationDTOConverter;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.SitePageDTOConverter)"

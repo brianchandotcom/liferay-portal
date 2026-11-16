@@ -153,6 +153,111 @@
 			"titleObjectFieldName": "className"
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#L1R1",
+			"enableCategorization": false,
+			"enableIndexSearch": true,
+			"externalReferenceCode": "L_LAUNCH_SET_ERROR",
+			"label": {
+				"en_US": "Launch Set Error"
+			},
+			"name": "LaunchSetError",
+			"objectDefinitionSettings": [
+				{
+					"name": "visible",
+					"value": "false"
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"defaultValue": "0",
+					"externalReferenceCode": "LAUNCH_ENTRY_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Launch Entry ID"
+					},
+					"name": "launchEntryId",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "LAUNCH_ENTRY_TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Launch Entry Title"
+					},
+					"name": "launchEntryTitle",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "MESSAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Message"
+					},
+					"name": "message",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SEVERITY",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "Severity"
+					},
+					"name": "severity",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Launch Set Errors"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
 			"className": "com.liferay.object.model.ObjectDefinition#L1S1",
 			"enableCategorization": false,
 			"enableIndexSearch": true,
@@ -207,6 +312,32 @@
 					"system": true,
 					"type": "String",
 					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "PUBLISH_ERRORS_COUNT",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Publish Errors Count"
+					},
+					"name": "publishErrorsCount",
+					"objectFieldSettings": [
+						{
+							"name": "function",
+							"value": "COUNT"
+						},
+						{
+							"name": "objectRelationshipName",
+							"value": "launchSetToLaunchSetErrors"
+						}
+					],
+					"readOnly": "true",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
 				},
 				{
 					"DBType": "DateTime",
@@ -265,6 +396,49 @@
 							{
 								"name": "objectRelationshipERCObjectFieldName",
 								"value": "r_launchSetToLaunchEntries_c_launchSetERC"
+							}
+						],
+						"relationshipType": "oneToMany",
+						"required": true,
+						"system": true,
+						"type": "Long"
+					},
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_LAUNCH_SET_TO_L_LAUNCH_SET_ERROR",
+					"label": {
+						"en_US": "Launch Set to Launch Set Errors"
+					},
+					"name": "launchSetToLaunchSetErrors",
+					"objectDefinitionExternalReferenceCode1": "L_LAUNCH_SET",
+					"objectDefinitionExternalReferenceCode2": "L_LAUNCH_SET_ERROR",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "LaunchSetError",
+					"objectDefinitionScope2": "company",
+					"objectDefinitionSystem2": true,
+					"objectField": {
+						"DBType": "Long",
+						"businessType": "Relationship",
+						"externalReferenceCode": "LAUNCH_SET_TO_LAUNCH_SET_ERROR",
+						"indexed": true,
+						"indexedAsKeyword": false,
+						"label": {
+							"en_US": "Launch Set to Launch Set Errors"
+						},
+						"name": "r_launchSetToLaunchSetErrors_c_launchSetId",
+						"objectFieldSettings": [
+							{
+								"name": "objectDefinition1ShortName",
+								"value": "LaunchSet"
+							},
+							{
+								"name": "objectRelationshipERCObjectFieldName",
+								"value": "r_launchSetToLaunchSetErrors_c_launchSetERC"
 							}
 						],
 						"relationshipType": "oneToMany",

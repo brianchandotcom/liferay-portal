@@ -253,6 +253,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"LaunchSet", "/launch-sets"
 		).put(
+			"LaunchSetError", "/launch-set-errors"
+		).put(
 			"MCPServerProfile", "/mcp/server-profiles"
 		).put(
 			"MCPServerProfileDataMask", "/mcp/server-profile-data-masks"

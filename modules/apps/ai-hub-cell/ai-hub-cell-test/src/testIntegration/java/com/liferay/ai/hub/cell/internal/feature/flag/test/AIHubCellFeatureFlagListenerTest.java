@@ -281,10 +281,9 @@ public class AIHubCellFeatureFlagListenerTest {
 
 	@Test
 	public void testOnValueWithLocalServiceURL() throws Exception {
-		User user = TestPropsValues.getUser();
-
 		String clientId = RandomTestUtil.randomString();
 		String clientSecret = RandomTestUtil.randomString();
+		User user = TestPropsValues.getUser();
 
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(

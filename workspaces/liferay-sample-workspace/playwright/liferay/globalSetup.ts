@@ -30,26 +30,6 @@ export default async function globalSetup() {
 		return;
 	}
 
-	const containerIds = execFileSync(
-		'docker',
-		[
-			'ps',
-			'--all',
-			'--filter',
-			'name=^database$',
-			'--filter',
-			'name=^liferay$',
-			'--quiet',
-		],
-		{encoding: 'utf8'}
-	);
-
-	if (containerIds.trim()) {
-		throw new Error(
-			'Liferay is not running, and an existing "database" or "liferay" container prevents the tests from starting their own. Set "PORTAL_URL" to that Liferay, or remove the containers with "docker rm --force database liferay".'
-		);
-	}
-
 	try {
 		execFileSync(join(__dirname, 'start.sh'), {
 			env: {

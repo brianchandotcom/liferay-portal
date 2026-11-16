@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class SitePageTypeUtil {
 
-	public static SitePage.Type toExternalType(String internalType) {
+	public static SitePage.Type fetchExternalType(String internalType) {
 		Set<SitePage.Type> externalTypes =
 			_externalToInternalValuesMap.keySet();
 
@@ -31,7 +31,18 @@ public class SitePageTypeUtil {
 			}
 		}
 
-		throw new UnsupportedOperationException();
+		return null;
+	}
+
+	public static SitePage.Type toExternalType(String internalType) {
+		SitePage.Type externalType = fetchExternalType(internalType);
+
+		if (externalType != null) {
+			return externalType;
+		}
+
+		throw new IllegalArgumentException(
+			"Unsupported site page type \"" + internalType + "\"");
 	}
 
 	public static String toInternalType(SitePage.Type externalType) {
@@ -41,7 +52,8 @@ public class SitePageTypeUtil {
 			return internalType;
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"Unsupported site page type \"" + externalType + "\"");
 	}
 
 	private static final Map<SitePage.Type, String>

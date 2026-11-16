@@ -10,11 +10,14 @@ import com.liferay.launch.internal.constants.LaunchDestinationNames;
 import com.liferay.launch.internal.set.util.LaunchSetUtil;
 import com.liferay.launch.set.publisher.LaunchSetPublisher;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -106,6 +109,8 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 			throw schedulerException;
 		}
 
+		_deleteLaunchSetErrors(launchSetObjectEntry);
+
 		ServiceContext serviceContext = _createServiceContext(
 			launchSetObjectEntry, userId);
 
@@ -170,6 +175,26 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 		return serviceContext;
 	}
 
+	private void _deleteLaunchSetErrors(ObjectEntry launchSetObjectEntry)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				launchSetObjectEntry.getObjectDefinitionId(),
+				"launchSetToLaunchSetErrors");
+
+		for (ObjectEntry launchSetErrorObjectEntry :
+				_objectEntryLocalService.getOneToManyObjectEntries(
+					launchSetObjectEntry.getGroupId(),
+					objectRelationship.getObjectRelationshipId(), null, false,
+					launchSetObjectEntry.getObjectEntryId(), true, null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			_objectEntryLocalService.deleteObjectEntry(
+				launchSetErrorObjectEntry);
+		}
+	}
+
 	private String _getJobName(ObjectEntry launchSetObjectEntry) {
 		return StringBundler.concat(
 			launchSetObjectEntry.getObjectEntryId(), StringPool.AT,
@@ -196,6 +221,9 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

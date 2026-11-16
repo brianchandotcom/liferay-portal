@@ -91,6 +91,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -169,6 +171,13 @@ public class SitemapManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_originalMaxTotalSize = ReflectionTestUtil.getAndSetFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", 0L);
+
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -184,8 +193,21 @@ public class SitemapManagerTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_sitemapManager.deleteRegenerateSitemapScheduledJobs(
-			TestPropsValues.getCompanyId());
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
+		ReflectionTestUtil.setFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", _originalMaxTotalSize);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.scheduler.quartz.internal." +
+					"QuartzSchedulerEngine",
+				LoggerTestUtil.OFF)) {
+
+			_sitemapManager.deleteRegenerateSitemapScheduledJobs(
+				TestPropsValues.getCompanyId());
+		}
 
 		if (_group != null) {
 			_sitemapStorageHelper.deleteSitemaps(
@@ -656,6 +678,53 @@ public class SitemapManagerTest {
 				_themeDisplay);
 
 			Assert.assertNull(xml);
+		}
+	}
+
+	@Test
+	public void testSitemapByAssetTypeServesOnDemandSitemapWithPortalCacheStorage()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"cachedGenerationEnabled", true
+						).put(
+							"xmlSitemapIndexEnabled", true
+						).put(
+							"xmlSitemapIndexMode",
+							SitemapConstants.INDEX_MODE_ASSET_TYPE
+						).build())) {
+
+			ReflectionTestUtil.setFieldValue(
+				_sitemapStorageHelper, "_maxTotalSize", _originalMaxTotalSize);
+
+			_sitemapStorageHelper.moveSitemapFilesToPortalCache();
+
+			Assert.assertTrue(_sitemapStorageHelper.isPortalCacheStorage());
+
+			String xml = _sitemapManager.getSitemap(
+				_layoutClassNameId, null, _group.getGroupId(), 1, false,
+				_themeDisplay);
+
+			Assert.assertEquals(1, StringUtil.count(xml, "<loc>"));
+
+			xml = _sitemapManager.getSitemap(
+				0, null, _group.getGroupId(), 1, false, _themeDisplay);
+
+			Assert.assertTrue(xml.contains("<sitemapindex"));
+
+			_sitemapManager.regenerateSitemap(
+				SitemapConstants.ASSET_TYPE_KEY_PAGES,
+				TestPropsValues.getCompanyId(), _group.getGroupId());
+
+			Assert.assertNull(
+				_sitemapManager.getSitemap(
+					_layoutClassNameId, null, _group.getGroupId(), 2, false,
+					_themeDisplay));
 		}
 	}
 
@@ -2896,6 +2965,8 @@ public class SitemapManagerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private long _originalMaxTotalSize;
 
 	@Inject
 	private Portal _portal;

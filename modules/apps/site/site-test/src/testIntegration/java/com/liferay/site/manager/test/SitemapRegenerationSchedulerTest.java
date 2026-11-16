@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -138,6 +139,13 @@ public class SitemapRegenerationSchedulerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_originalMaxTotalSize = ReflectionTestUtil.getAndSetFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", 0L);
+
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
 		_deleteSiteSitemapRegenerationEntries();
 
 		_group = GroupTestUtil.addGroup();
@@ -145,6 +153,13 @@ public class SitemapRegenerationSchedulerTest {
 
 	@After
 	public void tearDown() throws Exception {
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
+		ReflectionTestUtil.setFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", _originalMaxTotalSize);
+
 		_deleteRegenerateSitemapScheduledJobs();
 
 		_deleteSiteSitemapRegenerationEntries();
@@ -1001,6 +1016,32 @@ public class SitemapRegenerationSchedulerTest {
 	}
 
 	@Test
+	public void testScheduleRegenerateSitemapWithPortalCacheStorage()
+		throws Exception {
+
+		LayoutTestUtil.addTypePortletLayout(_group);
+
+		ReflectionTestUtil.setFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", _originalMaxTotalSize);
+
+		_sitemapManager.scheduleRegenerateSitemap(
+			SitemapConstants.ASSET_TYPE_KEY_PAGES,
+			TestPropsValues.getCompanyId(), _group.getGroupId(), new Date());
+
+		IdempotentRetryAssert.retryAssert(
+			30, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertTrue(
+					_sitemapStorageHelper.hasSitemapFile(
+						TestPropsValues.getCompanyId(), _group.getGroupId(),
+						SitemapConstants.ASSET_TYPE_KEY_PAGES, 1));
+				Assert.assertTrue(_sitemapStorageHelper.isPortalCacheStorage());
+
+				return null;
+			});
+	}
+
+	@Test
 	public void testScheduleRegenerateSitemapWithUpdateAssetCategory()
 		throws Exception {
 
@@ -1509,6 +1550,8 @@ public class SitemapRegenerationSchedulerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private long _originalMaxTotalSize;
 
 	@Inject
 	private Portal _portal;

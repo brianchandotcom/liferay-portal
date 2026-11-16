@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -103,6 +105,13 @@ public class SitemapStrutsActionTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_originalMaxTotalSize = ReflectionTestUtil.getAndSetFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", 0L);
+
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -118,6 +127,13 @@ public class SitemapStrutsActionTest {
 
 	@After
 	public void tearDown() throws Exception {
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
+		ReflectionTestUtil.setFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", _originalMaxTotalSize);
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.scheduler.quartz.internal." +
 					"QuartzSchedulerEngine",
@@ -366,6 +382,43 @@ public class SitemapStrutsActionTest {
 		}
 	}
 
+	@Test
+	public void testExecuteWithPageLayoutSitemapFromPortalCache()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"cachedGenerationEnabled", true
+						).put(
+							"xmlSitemapIndexEnabled", true
+						).put(
+							"xmlSitemapIndexMode",
+							SitemapConstants.INDEX_MODE_PAGE_LAYOUT
+						).build())) {
+
+			ReflectionTestUtil.setFieldValue(
+				_sitemapStorageHelper, "_maxTotalSize", _originalMaxTotalSize);
+
+			_sitemapStorageHelper.moveSitemapFilesToPortalCache();
+
+			Assert.assertTrue(_sitemapStorageHelper.isPortalCacheStorage());
+
+			MockHttpServletResponse mockHttpServletResponse = _executeRequest(
+				null, _layout.getUuid());
+
+			Assert.assertEquals(200, mockHttpServletResponse.getStatus());
+
+			mockHttpServletResponse = _executeRequest(
+				null, PortalUUIDUtil.generate());
+
+			Assert.assertEquals(404, mockHttpServletResponse.getStatus());
+		}
+	}
+
 	private JournalArticle _addJournalArticle() throws Exception {
 		Locale locale = LocaleUtil.getSiteDefault();
 
@@ -459,6 +512,7 @@ public class SitemapStrutsActionTest {
 	private Group _group;
 
 	private Layout _layout;
+	private long _originalMaxTotalSize;
 
 	@Inject
 	private Portal _portal;

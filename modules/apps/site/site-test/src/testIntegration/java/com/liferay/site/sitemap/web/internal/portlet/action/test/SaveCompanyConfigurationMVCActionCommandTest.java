@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -66,6 +67,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -147,8 +149,25 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 		PrincipalThreadLocal.setName(_originalName);
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		_originalMaxTotalSize = ReflectionTestUtil.getAndSetFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", 0L);
+
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+	}
+
 	@After
 	public void tearDown() throws Exception {
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
+		ReflectionTestUtil.setFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", _originalMaxTotalSize);
+
 		_deleteRegenerateSitemapScheduledJobs();
 
 		_sitemapStorageHelper.deleteSitemaps(_company.getCompanyId());
@@ -749,6 +768,8 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private long _originalMaxTotalSize;
 
 	@Inject
 	private SchedulerEngineHelper _schedulerEngineHelper;

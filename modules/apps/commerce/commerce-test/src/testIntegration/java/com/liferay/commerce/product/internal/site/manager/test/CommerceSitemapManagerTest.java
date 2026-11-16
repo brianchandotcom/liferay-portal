@@ -50,6 +50,7 @@ import com.liferay.site.storage.helper.SitemapStorageHelper;
 
 import java.time.OffsetDateTime;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -74,6 +75,13 @@ public class CommerceSitemapManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_originalMaxTotalSize = ReflectionTestUtil.getAndSetFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", 0L);
+
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
 		_group = GroupTestUtil.addGroup();
 
 		_company = CompanyLocalServiceUtil.getCompany(_group.getCompanyId());
@@ -113,6 +121,16 @@ public class CommerceSitemapManagerTest {
 		_themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(_user);
+	}
+
+	@After
+	public void tearDown() {
+		ReflectionTestUtil.invoke(
+			_sitemapStorageHelper, "_moveSitemapFilesToDLStore",
+			new Class<?>[0]);
+
+		ReflectionTestUtil.setFieldValue(
+			_sitemapStorageHelper, "_maxTotalSize", _originalMaxTotalSize);
 	}
 
 	@Test
@@ -286,6 +304,8 @@ public class CommerceSitemapManagerTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	private long _originalMaxTotalSize;
 
 	@Inject
 	private SAXReader _saxReader;

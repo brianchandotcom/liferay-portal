@@ -173,7 +173,6 @@ public class UserSystemObjectRelatedModelsProviderTest
 
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
-
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 
@@ -196,17 +195,18 @@ public class UserSystemObjectRelatedModelsProviderTest
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		User user1 = UserTestUtil.addUser();
-		User user2 = UserTestUtil.addUser();
-
-		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			0, objectDefinition1.getObjectDefinitionId(),
-			Collections.emptyMap());
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			0, objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				_getObjectFieldName(objectRelationship2), user1.getUserId()
 			).build());
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinition1.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		User user2 = UserTestUtil.addUser();
 
 		Map<String, Serializable> values =
 			HashMapBuilder.<String, Serializable>put(

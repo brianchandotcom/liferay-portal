@@ -102,8 +102,22 @@ public abstract class BaseSystemObjectRelatedModelsProviderImpl
 				deletionType,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
 
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(
+						systemObjectDefinitionManager.getModelClassName());
+
 			for (BaseModel<T> baseModel : relatedModels) {
-				systemObjectDefinitionManager.deleteBaseModel(baseModel);
+				BaseModel<?> relatedBaseModel =
+					(BaseModel<?>)
+						persistedModelLocalService.fetchPersistedModel(
+							baseModel.getPrimaryKeyObj());
+
+				if (relatedBaseModel == null) {
+					continue;
+				}
+
+				systemObjectDefinitionManager.deleteBaseModel(relatedBaseModel);
 			}
 		}
 		else if (Objects.equals(

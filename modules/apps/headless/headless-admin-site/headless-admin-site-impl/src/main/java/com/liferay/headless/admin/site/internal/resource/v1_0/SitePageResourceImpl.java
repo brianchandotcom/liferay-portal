@@ -97,8 +97,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import jakarta.validation.ValidationException;
-
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
@@ -585,7 +583,7 @@ public class SitePageResourceImpl
 			if (!(pageSpecifications[0] instanceof
 					ContentPageSpecification contentPageSpecification)) {
 
-				throw new ValidationException(
+				throw new IllegalArgumentException(
 					"The page specification type does not match the content " +
 						"page type");
 			}
@@ -1466,7 +1464,7 @@ public class SitePageResourceImpl
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE) &&
 			(pageSpecifications.length == 1)) {
 
-			throw new ValidationException(
+			throw new IllegalArgumentException(
 				"A single content page specification cannot be applied to an " +
 					"existing page");
 		}
@@ -1496,10 +1494,15 @@ public class SitePageResourceImpl
 
 			publishedPageSpecification = pageSpecifications[0];
 		}
+		else if (Objects.equals(
+					sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
+
+			throw new IllegalArgumentException(
+				"Exactly two page specifications are required");
+		}
 		else {
-			throw new ValidationException(
-				"The number of page specifications does not match the page " +
-					"type requirements");
+			throw new IllegalArgumentException(
+				"Exactly one page specification is required");
 		}
 
 		if ((publishedPageSpecification.getExternalReferenceCode() != null) &&
@@ -1507,13 +1510,9 @@ public class SitePageResourceImpl
 				sitePage.getExternalReferenceCode(),
 				publishedPageSpecification.getExternalReferenceCode())) {
 
-			throw new ValidationException(
-				StringBundler.concat(
-					"Site page external reference code ",
-					sitePage.getExternalReferenceCode(),
-					" does not match published page specification external ",
-					"reference code ",
-					publishedPageSpecification.getExternalReferenceCode()));
+			throw new IllegalArgumentException(
+				"The published page specification's external reference code " +
+					"does not match the site page's external reference code");
 		}
 
 		publishedPageSpecification.setExternalReferenceCode(

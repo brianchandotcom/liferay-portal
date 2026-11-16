@@ -3959,12 +3959,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ProblemExceptionTestUtil.assertProblemException(
 			"BAD_REQUEST",
-			StringBundler.concat(
-				"Site page external reference code ",
-				sitePage.getExternalReferenceCode(),
-				" does not match published page specification external ",
-				"reference code ",
-				publishedContentPageSpecification.getExternalReferenceCode()),
+			"The published page specification's external reference code does " +
+				"not match the site page's external reference code",
 			() -> sitePageResource.postSiteSitePage(
 				testGroup.getExternalReferenceCode(), false, sitePage));
 	}

@@ -897,43 +897,69 @@ public class ObjectRelatedModelsProviderTest {
 		_objectDefinitions.add(objectDefinition1);
 		_objectDefinitions.add(objectDefinition2);
 
-		_addObjectRelationship(
-			objectDefinition1, objectDefinition2,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			relationshipType);
+		ObjectRelationship objectRelationship1 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, null, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false, relationshipType, null);
+		ObjectRelationship objectRelationship2 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				objectDefinition2.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, null, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false, relationshipType, null);
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			objectDefinition1, Collections.emptyMap());
-
-		ObjectEntry objectEntry2 = _addRelatedObjectEntry(
-			objectDefinition2, objectEntry1, relationshipType);
-		ObjectEntry objectEntry3 = _addRelatedObjectEntry(
-			objectDefinition2, objectEntry1, relationshipType);
-
-		_addObjectRelationship(
-			objectDefinition2, objectDefinition2,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			relationshipType);
 
 		if (StringUtil.equals(
 				relationshipType,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
+			ObjectEntry objectEntry2 = _addObjectEntry(
+				objectDefinition2, Collections.emptyMap());
+			ObjectEntry objectEntry3 = _addObjectEntry(
+				objectDefinition2, Collections.emptyMap());
+
 			ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
-				_objectRelationship.getObjectRelationshipId(),
+				objectRelationship1.getObjectRelationshipId(),
+				objectEntry1.getObjectEntryId(),
+				objectEntry2.getObjectEntryId());
+			ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
+				objectRelationship1.getObjectRelationshipId(),
+				objectEntry1.getObjectEntryId(),
+				objectEntry3.getObjectEntryId());
+			ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
+				objectRelationship2.getObjectRelationshipId(),
 				objectEntry2.getObjectEntryId(),
 				objectEntry3.getObjectEntryId());
+
+			return Arrays.asList(objectEntry1, objectEntry2, objectEntry3);
 		}
-		else {
-			_objectEntryLocalService.partialUpdateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry3.getObjectEntryId(),
-				objectEntry3.getObjectEntryFolderId(),
-				HashMapBuilder.<String, Serializable>put(
-					_relationshipObjectField.getName(),
-					objectEntry2.getObjectEntryId()
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
-		}
+
+		ObjectField objectField1 = _objectFieldLocalService.getObjectField(
+			objectRelationship1.getObjectFieldId2());
+		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+			objectRelationship2.getObjectFieldId2());
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			objectDefinition2,
+			HashMapBuilder.<String, Serializable>put(
+				objectField1.getName(), objectEntry1.getObjectEntryId()
+			).build());
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			objectDefinition2,
+			HashMapBuilder.<String, Serializable>put(
+				objectField1.getName(), objectEntry1.getObjectEntryId()
+			).put(
+				objectField2.getName(), objectEntry2.getObjectEntryId()
+			).build());
 
 		return Arrays.asList(objectEntry1, objectEntry2, objectEntry3);
 	}
@@ -1200,7 +1226,7 @@ public class ObjectRelatedModelsProviderTest {
 		objectEntries = _addCascadeObjectEntries(relationshipType);
 
 		_objectEntryLocalService.moveObjectEntryToTrash(
-			TestPropsValues.getUserId(), objectEntries.get(1),
+			TestPropsValues.getUserId(), objectEntries.get(2),
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectEntryLocalService.moveObjectEntryToTrash(

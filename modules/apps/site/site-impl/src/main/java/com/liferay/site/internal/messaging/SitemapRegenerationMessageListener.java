@@ -9,11 +9,16 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.DestinationStatistics;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.site.internal.constants.SitemapDestinationNames;
 import com.liferay.site.manager.SitemapManager;
+import com.liferay.site.storage.helper.SitemapStorageHelper;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -33,14 +38,14 @@ public class SitemapRegenerationMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		Destination destination = _destinationFactory.createDestination(
+		_destination = _destinationFactory.createDestination(
 			DestinationConfiguration.createSerialDestinationConfiguration(
 				SitemapDestinationNames.SITEMAP_REGENERATION));
 
 		_serviceRegistration = bundleContext.registerService(
-			Destination.class, destination,
+			Destination.class, _destination,
 			MapUtil.singletonDictionary(
-				"destination.name", destination.getName()));
+				"destination.name", _destination.getName()));
 	}
 
 	@Deactivate
@@ -53,14 +58,49 @@ public class SitemapRegenerationMessageListener extends BaseMessageListener {
 		_sitemapManager.regenerateSitemap(
 			message.getString("childSitemapKey"), message.getLong("companyId"),
 			message.getLong("groupId"));
+
+		if (!_isRegenerateSitemapPending()) {
+			_sitemapStorageHelper.moveSitemapFilesToPortalCache();
+		}
 	}
+
+	private boolean _isRegenerateSitemapPending() throws Exception {
+		DestinationStatistics destinationStatistics =
+			_destination.getDestinationStatistics();
+
+		if (destinationStatistics.getPendingMessageCount() > 0) {
+			return true;
+		}
+
+		for (SchedulerResponse schedulerResponse :
+				_schedulerEngineHelper.getScheduledJobs(
+					SitemapDestinationNames.SITEMAP_REGENERATION,
+					StorageType.PERSISTED)) {
+
+			if (_schedulerEngineHelper.getNextFireDate(schedulerResponse) !=
+					null) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private Destination _destination;
 
 	@Reference
 	private DestinationFactory _destinationFactory;
+
+	@Reference
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	private ServiceRegistration<Destination> _serviceRegistration;
 
 	@Reference
 	private SitemapManager _sitemapManager;
+
+	@Reference
+	private SitemapStorageHelper _sitemapStorageHelper;
 
 }

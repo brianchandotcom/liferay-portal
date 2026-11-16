@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -78,7 +79,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 			for (ObjectEntry objectEntry : relatedModels) {
 				ObjectEntry curObjectEntry =
-					_objectEntryService.fetchObjectEntry(
+					ObjectEntryLocalServiceUtil.fetchObjectEntry(
 						objectEntry.getObjectEntryId());
 
 				if (curObjectEntry == null) {
@@ -86,7 +87,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 				}
 
 				_objectEntryService.deleteObjectEntry(
-					curObjectEntry.getObjectEntryId());
+					objectEntry.getObjectEntryId());
 			}
 		}
 	}
@@ -212,7 +213,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 			for (ObjectEntry objectEntry : relatedModels) {
 				ObjectEntry curObjectEntry =
-					_objectEntryService.fetchObjectEntry(
+					ObjectEntryLocalServiceUtil.fetchObjectEntry(
 						objectEntry.getObjectEntryId());
 
 				if ((curObjectEntry == null) || curObjectEntry.isInTrash()) {

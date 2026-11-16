@@ -1318,6 +1318,38 @@
 					"type": "oneToMany"
 				}
 			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "javaDelegate#CMPTask#depth",
+					"engineLabel": "Depth",
+					"errorLabel": {
+						"en_US": "A subtask cannot have more than two levels."
+					},
+					"externalReferenceCode": "L_CMP_TASK_DEPTH",
+					"name": {
+						"en_US": "Task Depth"
+					},
+					"objectDefinitionExternalReferenceCode": "L_CMP_TASK",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#CMPTask#parent",
+					"engineLabel": "Parent",
+					"errorLabel": {
+						"en_US": "The parent task cannot be set or changed."
+					},
+					"externalReferenceCode": "L_CMP_TASK_PARENT",
+					"name": {
+						"en_US": "Task Parent"
+					},
+					"objectDefinitionExternalReferenceCode": "L_CMP_TASK",
+					"outputType": "fullValidation",
+					"system": true
+				}
+			],
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {

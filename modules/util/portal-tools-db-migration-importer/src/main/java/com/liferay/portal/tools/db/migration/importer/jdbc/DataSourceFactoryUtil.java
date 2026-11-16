@@ -48,6 +48,12 @@ public class DataSourceFactoryUtil {
 
 		HikariConfig hikariConfig = new HikariConfig();
 
+		if (jdbcURL.startsWith("jdbc:mysql:") &&
+			!jdbcURL.contains("useSSL=false")) {
+
+			hikariConfig.addDataSourceProperty("sslMode", "trust");
+		}
+
 		hikariConfig.setConnectionTimeout(30000);
 		hikariConfig.setDriverClassName(driverClassName);
 		hikariConfig.setIdleTimeout(600000);

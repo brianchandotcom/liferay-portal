@@ -944,14 +944,15 @@ public class ObjectRelatedModelsProviderTest {
 
 		ObjectField objectField1 = _objectFieldLocalService.getObjectField(
 			objectRelationship1.getObjectFieldId2());
-		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
-			objectRelationship2.getObjectFieldId2());
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			objectDefinition2,
 			HashMapBuilder.<String, Serializable>put(
 				objectField1.getName(), objectEntry1.getObjectEntryId()
 			).build());
+
+		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+			objectRelationship2.getObjectFieldId2());
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			objectDefinition2,

@@ -7,8 +7,10 @@ package com.liferay.launch.internal.background.task;
 
 import com.liferay.launch.entry.manager.LaunchEntryManager;
 import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
+import com.liferay.launch.internal.helper.LaunchSetErrorHelper;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -35,12 +37,16 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -123,6 +129,9 @@ public class LaunchSetPublishBackgroundTaskExecutor
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
+		List<Map<String, Serializable>> launchSetErrorValuesMaps =
+			new ArrayList<>();
+
 		try {
 			Group group = _groupLocalService.getGroup(
 				launchSetObjectEntry.getCompanyId(), GroupConstants.GUEST);
@@ -138,6 +147,7 @@ public class LaunchSetPublishBackgroundTaskExecutor
 				_transactionConfig,
 				() -> {
 					_publish(
+						launchSetErrorValuesMaps,
 						_objectEntryLocalService.getObjectEntry(launchSetId),
 						serviceContext);
 
@@ -145,21 +155,24 @@ public class LaunchSetPublishBackgroundTaskExecutor
 				});
 		}
 		catch (Throwable throwable) {
+			if (launchSetErrorValuesMaps.isEmpty()) {
+				launchSetErrorValuesMaps.add(
+					_launchSetErrorHelper.getLaunchSetErrorValues(
+						null, throwable));
+			}
+
+			try {
+				_launchSetErrorHelper.markPublishFailed(
+					launchSetErrorValuesMaps, launchSetObjectEntry, userId);
+			}
+			catch (Throwable throwable2) {
+				throwable.addSuppressed(throwable2);
+			}
+
 			_log.error(
 				"Unable to publish launch set " +
 					launchSetObjectEntry.getObjectEntryId(),
 				throwable);
-
-			long statusByUserId = userId;
-
-			if (_userLocalService.fetchUser(userId) == null) {
-				statusByUserId = _userLocalService.getGuestUserId(
-					launchSetObjectEntry.getCompanyId());
-			}
-
-			_objectEntryLocalService.updateStatus(
-				statusByUserId, launchSetObjectEntry.getObjectEntryId(),
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			return new BackgroundTaskResult(
 				BackgroundTaskConstants.STATUS_FAILED, throwable.getMessage());
@@ -178,9 +191,20 @@ public class LaunchSetPublishBackgroundTaskExecutor
 		return null;
 	}
 
+	@Activate
+	protected void activate() {
+		_launchSetErrorHelper = new LaunchSetErrorHelper(
+			_launchEntryManagerRegistry, _objectDefinitionLocalService,
+			_objectEntryLocalService, _objectRelationshipLocalService,
+			_userLocalService);
+	}
+
 	private void _publish(
+			List<Map<String, Serializable>> launchSetErrorValuesMaps,
 			ObjectEntry launchSetObjectEntry, ServiceContext serviceContext)
 		throws PortalException {
+
+		_launchSetErrorHelper.deleteLaunchSetErrors(launchSetObjectEntry);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.getObjectRelationship(
@@ -197,29 +221,42 @@ public class LaunchSetPublishBackgroundTaskExecutor
 			Map<String, Serializable> values =
 				launchEntryObjectEntry.getValues();
 
-			String className = MapUtil.getString(values, "className");
+			if ((MapUtil.getLong(values, "draftId") == 0) &&
+				Validator.isNotNull(MapUtil.getString(values, "versionKey"))) {
 
-			LaunchEntryManager launchEntryManager =
-				_launchEntryManagerRegistry.getLaunchEntryManager(className);
-
-			if (launchEntryManager == null) {
-				throw new PortalException(
-					"No launch entry manager exists for " + className);
+				continue;
 			}
 
-			LaunchEntryManager.Version version =
-				launchEntryManager.publishDraft(
-					MapUtil.getLong(values, "classPK"),
-					MapUtil.getLong(values, "draftId"));
+			try {
+				TransactionInvokerUtil.invoke(
+					_nestedTransactionConfig,
+					() -> {
+						_publishLaunchEntryObjectEntry(
+							launchEntryObjectEntry, serviceContext);
 
-			values.put("draftId", 0L);
-			values.put("versionKey", version.getVersionKey());
+						return null;
+					});
+			}
+			catch (Throwable throwable) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to publish launch entry " +
+							launchEntryObjectEntry.getObjectEntryId(),
+						throwable);
+				}
 
-			_objectEntryLocalService.updateObjectEntry(
-				serviceContext.getUserId(),
-				launchEntryObjectEntry.getObjectEntryId(),
-				launchEntryObjectEntry.getObjectEntryFolderId(), values,
-				serviceContext);
+				launchSetErrorValuesMaps.add(
+					_launchSetErrorHelper.getLaunchSetErrorValues(
+						launchEntryObjectEntry, throwable));
+			}
+		}
+
+		if (!launchSetErrorValuesMaps.isEmpty()) {
+			throw new PortalException(
+				StringBundler.concat(
+					"Unable to publish ", launchSetErrorValuesMaps.size(),
+					" launch entries of launch set ",
+					launchSetObjectEntry.getObjectEntryId()));
 		}
 
 		_objectEntryLocalService.updateStatus(
@@ -227,25 +264,56 @@ public class LaunchSetPublishBackgroundTaskExecutor
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
+	private void _publishLaunchEntryObjectEntry(
+			ObjectEntry launchEntryObjectEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> values = launchEntryObjectEntry.getValues();
+
+		String className = MapUtil.getString(values, "className");
+
+		LaunchEntryManager launchEntryManager =
+			_launchEntryManagerRegistry.getLaunchEntryManager(className);
+
+		if (launchEntryManager == null) {
+			throw new PortalException(
+				"No launch entry manager exists for " + className);
+		}
+
+		LaunchEntryManager.Version version = launchEntryManager.publishDraft(
+			MapUtil.getLong(values, "classPK"),
+			MapUtil.getLong(values, "draftId"));
+
+		values.put("draftId", 0L);
+		values.put("versionKey", version.getVersionKey());
+
+		_objectEntryLocalService.updateObjectEntry(
+			serviceContext.getUserId(),
+			launchEntryObjectEntry.getObjectEntryId(),
+			launchEntryObjectEntry.getObjectEntryFolderId(), values,
+			serviceContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LaunchSetPublishBackgroundTaskExecutor.class);
 
-	private static final TransactionConfig _transactionConfig;
-
-	static {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setPropagation(Propagation.REQUIRED);
-		builder.setRollbackForClasses(Exception.class);
-
-		_transactionConfig = builder.build();
-	}
+	private static final TransactionConfig _nestedTransactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.NESTED, new Class<?>[] {Exception.class});
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LaunchEntryManagerRegistry _launchEntryManagerRegistry;
+
+	private LaunchSetErrorHelper _launchSetErrorHelper;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

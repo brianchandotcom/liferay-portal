@@ -390,6 +390,13 @@ public class TestrayServer {
 		return requestPost(false, urlPath, requestData);
 	}
 
+	public void setCommunicationFailureNotificationEnabled(
+		boolean communicationFailureNotificationEnabled) {
+
+		_communicationFailureNotificationEnabled =
+			communicationFailureNotificationEnabled;
+	}
+
 	public void setHTTPAuthorization(
 		JenkinsResultsParserUtil.HTTPAuthorization httpAuthorization) {
 
@@ -690,6 +697,10 @@ public class TestrayServer {
 	}
 
 	private void _sendCommunicationFailureNotification(String message) {
+		if (!_communicationFailureNotificationEnabled) {
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(message);
@@ -714,6 +725,7 @@ public class TestrayServer {
 	private static final Pattern _urlPattern = Pattern.compile(
 		"(?<url>https?://.*)/+");
 
+	private boolean _communicationFailureNotificationEnabled = true;
 	private JenkinsResultsParserUtil.HTTPAuthorization _httpAuthorization;
 	private final Map<Long, TestrayCaseType> _testrayCaseTypesId =
 		new HashMap<>();

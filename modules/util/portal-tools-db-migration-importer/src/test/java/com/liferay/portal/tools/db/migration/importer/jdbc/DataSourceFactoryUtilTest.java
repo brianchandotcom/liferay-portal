@@ -43,6 +43,12 @@ public class DataSourceFactoryUtilTest {
 
 			Mockito.verify(
 				hikariConfig
+			).addDataSourceProperty(
+				"sslMode", "trust"
+			);
+
+			Mockito.verify(
+				hikariConfig
 			).setDriverClassName(
 				"org.mariadb.jdbc.Driver"
 			);
@@ -51,6 +57,20 @@ public class DataSourceFactoryUtilTest {
 				hikariConfig
 			).setJdbcUrl(
 				"jdbc:mariadb://localhost/lportal"
+			);
+
+			DataSourceFactoryUtil.initDataSource(
+				"jdbc:mysql://localhost/lportal?useSSL=false",
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			hikariConfigs = hikariConfigMockedConstruction.constructed();
+
+			hikariConfig = hikariConfigs.get(1);
+
+			Mockito.verify(
+				hikariConfig, Mockito.never()
+			).addDataSourceProperty(
+				Mockito.anyString(), Mockito.any()
 			);
 		}
 	}

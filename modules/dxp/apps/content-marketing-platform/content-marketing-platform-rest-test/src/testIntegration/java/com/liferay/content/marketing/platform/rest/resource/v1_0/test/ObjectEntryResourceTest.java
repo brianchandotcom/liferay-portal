@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -187,6 +188,7 @@ public class ObjectEntryResourceTest {
 		_testPostCMPTaskLinkObjectEntry();
 	}
 
+	@FeatureFlag("LPD-107678")
 	@Test
 	public void testPostCMPTaskObjectEntry() throws Exception {
 		JSONObject cmpProjectObjectEntryJSONObject =
@@ -217,6 +219,23 @@ public class ObjectEntryResourceTest {
 				).toString(),
 				_cmpTaskObjectDefinition.getRESTContextPath() + "/scopes/" +
 					depotEntry.getGroupId(),
+				Http.Method.POST));
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"r_cmpProjectToCMPTasks_c_cmpProjectERC",
+					cmpProjectObjectEntryJSONObject.getString(
+						"externalReferenceCode")
+				).put(
+					"r_cmpTaskToCMPTasks_c_cmpTaskERC",
+					RandomTestUtil.randomString()
+				).put(
+					"title", RandomTestUtil.randomString()
+				).toString(),
+				_cmpTaskObjectDefinition.getRESTContextPath() + "/scopes/" +
+					cmpProjectObjectEntryJSONObject.getLong("scopeId"),
 				Http.Method.POST));
 
 		JSONObject cmpTaskObjectEntryJSONObject =

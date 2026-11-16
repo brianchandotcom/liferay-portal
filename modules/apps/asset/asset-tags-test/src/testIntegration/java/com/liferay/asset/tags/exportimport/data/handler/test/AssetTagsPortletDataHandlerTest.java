@@ -88,9 +88,14 @@ public class AssetTagsPortletDataHandlerTest
 
 		File larFile = _exportLayout();
 
-		assetTag.setExternalReferenceCode(RandomTestUtil.randomString());
+		_assetTagLocalService.updateTag(
+			assetTag.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			assetTag.getTagId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 
-		_assetTagLocalService.updateAssetTag(assetTag);
+		_assetTagLocalService.addTag(
+			"", TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			assetTag.getName(), ServiceContextTestUtil.getServiceContext());
 
 		ExportImportConfiguration exportImportConfiguration =
 			_setUpExportImportConfiguration();
@@ -149,9 +154,14 @@ public class AssetTagsPortletDataHandlerTest
 		File larFile = _exportImportLocalService.exportPortletInfoAsFile(
 			exportImportConfiguration);
 
-		assetTag.setExternalReferenceCode(RandomTestUtil.randomString());
+		_assetTagLocalService.updateTag(
+			assetTag.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			assetTag.getTagId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 
-		_assetTagLocalService.updateAssetTag(assetTag);
+		_assetTagLocalService.addTag(
+			"", TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			assetTag.getName(), ServiceContextTestUtil.getServiceContext());
 
 		exportImportConfiguration =
 			_exportImportConfigurationLocalService.

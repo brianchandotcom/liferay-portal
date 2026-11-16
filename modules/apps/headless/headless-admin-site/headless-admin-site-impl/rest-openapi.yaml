@@ -9997,6 +9997,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SitePage"
+                400:
+                    description:
+                        "The request is invalid. For example, the site page type is missing or unsupported, the page specifications do not match the site page type, the external reference code or a UUID is already in use, or the friendly URL is malformed."
+                409:
+                    description:
+                        "The friendly URL is already in use or matches a reserved keyword, or the site page type is not allowed for this site page."
             # @review
             tags: ["SitePage"]
     "/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}":
@@ -10021,6 +10027,15 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+                400:
+                    description:
+                        "This page type cannot be modified through this endpoint."
+                404:
+                    description:
+                        "The requested site page could not be found."
+                409:
+                    description:
+                        "The site page cannot be deleted because the site page that would become the first one is not allowed in that position."
             tags: ["SitePage"]
         get:
             # @review
@@ -10059,6 +10074,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SitePage"
+                400:
+                    description:
+                        "This page type cannot be modified through this endpoint."
+                404:
+                    description:
+                        "The requested site page could not be found."
             tags: ["SitePage"]
         patch:
             # @review
@@ -10110,6 +10131,15 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SitePage"
+                400:
+                    description:
+                        "The request is invalid. For example, the site page type is missing or unsupported, the page specifications do not match the site page type, the external reference code or a UUID is already in use, or the friendly URL is malformed."
+                404:
+                    description:
+                        "The requested site page could not be found."
+                409:
+                    description:
+                        "The friendly URL is already in use or matches a reserved keyword, or the site page type is not allowed for this site page."
             tags: ["SitePage"]
         put:
             # @review
@@ -10161,6 +10191,12 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/SitePage"
+                400:
+                    description:
+                        "The request is invalid. For example, the site page type is missing or unsupported, the page specifications do not match the site page type, the external reference code or a UUID is already in use, or the friendly URL is malformed."
+                409:
+                    description:
+                        "The friendly URL is already in use or matches a reserved keyword, or the site page type is not allowed for this site page."
             tags: ["SitePage"]
     "/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/friendly-url-history":
         get:

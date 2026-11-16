@@ -206,8 +206,7 @@ public class PublishLaunchMVCActionCommandTest {
 		Object error = SessionErrors.get(
 			mockLiferayPortletActionRequest, PortalException.class.getName());
 
-		Assert.assertTrue(
-			String.valueOf(error), error instanceof PortalException);
+		Assert.assertTrue(error instanceof PortalException);
 
 		return (PortalException)error;
 	}

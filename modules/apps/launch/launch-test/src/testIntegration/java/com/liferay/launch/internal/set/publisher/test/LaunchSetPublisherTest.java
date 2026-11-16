@@ -254,7 +254,9 @@ public class LaunchSetPublisherTest {
 				concurrentClassName,
 				() -> {
 					TransactionInvokerUtil.invoke(
-						_requiresNewTransactionConfig,
+						TransactionConfig.Factory.create(
+							Propagation.REQUIRES_NEW,
+							new Class<?>[] {Exception.class}),
 						() -> _objectEntryLocalService.updateStatus(
 							TestPropsValues.getUserId(), concurrentLaunchSetId,
 							WorkflowConstants.STATUS_APPROVED,
@@ -1037,15 +1039,15 @@ public class LaunchSetPublisherTest {
 		Map<String, LogEntry> logEntriesMap = _getLogEntriesMap(2, logCapture);
 
 		_assertLogEntry(
-			exceptionClass, exceptionMessage, logEntriesMap,
-			"Unable to publish launch entry " +
-				launchEntryObjectEntry.getObjectEntryId(),
-			"WARN");
-		_assertLogEntry(
 			PortalException.class,
 			"Unable to publish 1 launch entries of launch set " + launchSetId,
 			logEntriesMap, "Unable to publish launch set " + launchSetId,
 			"ERROR");
+		_assertLogEntry(
+			exceptionClass, exceptionMessage, logEntriesMap,
+			"Unable to publish launch entry " +
+				launchEntryObjectEntry.getObjectEntryId(),
+			"WARN");
 	}
 
 	private void _assertLogEntry(
@@ -1330,9 +1332,6 @@ public class LaunchSetPublisherTest {
 		"com.liferay.launch.internal.background.task." +
 			"LaunchSetPublishBackgroundTaskExecutor";
 
-	private static final TransactionConfig _requiresNewTransactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});

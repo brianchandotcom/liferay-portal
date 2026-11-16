@@ -227,13 +227,13 @@ public class LaunchSetErrorHelper {
 			return s;
 		}
 
-		int endIndex = 65000;
+		int index = 65000;
 
-		if (Character.isHighSurrogate(s.charAt(endIndex - 1))) {
-			endIndex--;
+		if (Character.isHighSurrogate(s.charAt(index - 1))) {
+			index--;
 		}
 
-		return s.substring(0, endIndex);
+		return s.substring(0, index);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

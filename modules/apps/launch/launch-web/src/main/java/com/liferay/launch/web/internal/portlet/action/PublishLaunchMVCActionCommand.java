@@ -39,10 +39,10 @@ public class PublishLaunchMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			_launchSetPublisher.publish(
 				ParamUtil.getLong(actionRequest, "launchSetId"),
 				themeDisplay.getUserId());

@@ -56,6 +56,10 @@ public interface SitemapStorageHelper {
 
 	public boolean hasSitemapFiles(long companyId) throws PortalException;
 
+	public boolean isPortalCacheStorage() throws PortalException;
+
+	public void moveSitemapFilesToPortalCache() throws PortalException;
+
 	public void storeLastRegenerateSitemapDateFile(long companyId)
 		throws PortalException;
 

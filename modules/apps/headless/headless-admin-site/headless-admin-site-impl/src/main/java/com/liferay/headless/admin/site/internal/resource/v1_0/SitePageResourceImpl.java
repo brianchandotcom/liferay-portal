@@ -387,7 +387,9 @@ public class SitePageResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (privateLayout) {
+		boolean privateLayoutValue = GetterUtil.getBoolean(privateLayout);
+
+		if (privateLayoutValue) {
 			EnabledUtil.checkPrivateLayoutEnabled(contextCompany);
 		}
 
@@ -418,7 +420,7 @@ public class SitePageResourceImpl
 				searchContext.setAttribute(Field.TITLE, search);
 				searchContext.setAttribute(Field.TYPE, _TYPES);
 				searchContext.setAttribute(
-					"privateLayout", privateLayout.toString());
+					"privateLayout", String.valueOf(privateLayoutValue));
 				searchContext.setAttribute(
 					"status", WorkflowConstants.STATUS_ANY);
 				searchContext.setAttribute(
@@ -441,6 +443,8 @@ public class SitePageResourceImpl
 			String siteExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception {
+
+		privateLayout = GetterUtil.getBoolean(privateLayout);
 
 		if (privateLayout) {
 			EnabledUtil.checkPrivateLayoutEnabled(contextCompany);
@@ -465,6 +469,8 @@ public class SitePageResourceImpl
 			String sitePageExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception {
+
+		privateLayout = GetterUtil.getBoolean(privateLayout);
 
 		if (privateLayout) {
 			EnabledUtil.checkPrivateLayoutEnabled(contextCompany);

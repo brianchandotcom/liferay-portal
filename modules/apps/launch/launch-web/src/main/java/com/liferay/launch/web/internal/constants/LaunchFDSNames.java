@@ -13,6 +13,9 @@ public class LaunchFDSNames {
 	public static final String LAUNCH_ENTRIES =
 		LaunchPortletKeys.LAUNCH + "-launchEntries";
 
+	public static final String LAUNCH_SET_ERRORS =
+		LaunchPortletKeys.LAUNCH + "-launchSetErrors";
+
 	public static final String LAUNCH_SETS =
 		LaunchPortletKeys.LAUNCH + "-launchSets";
 

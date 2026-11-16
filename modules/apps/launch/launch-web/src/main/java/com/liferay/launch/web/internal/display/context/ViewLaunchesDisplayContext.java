@@ -12,6 +12,7 @@ import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.launch.web.internal.constants.LaunchFDSNames;
+import com.liferay.launch.web.internal.constants.LaunchScreenNavigationConstants;
 import com.liferay.launch.web.internal.util.LaunchTimeZoneUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -90,7 +91,12 @@ public class ViewLaunchesDisplayContext {
 			new FDSActionDropdownItem(
 				"#", "date-time", "unschedule",
 				LanguageUtil.get(_httpServletRequest, "unschedule"), "get",
-				"update", null));
+				"update", null),
+			new FDSActionDropdownItem(
+				_getViewLaunchErrorDetailsURL(), "warning",
+				"view-error-details",
+				LanguageUtil.get(_httpServletRequest, "view-error-details"),
+				"get", null, null));
 	}
 
 	public String getFDSName() {
@@ -134,6 +140,21 @@ public class ViewLaunchesDisplayContext {
 			"/launch/unschedule_launch"
 		).setParameter(
 			"launchSetId", "{id}"
+		).buildString();
+	}
+
+	private String _getViewLaunchErrorDetailsURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/launch/view_launch"
+		).setParameter(
+			"launchSetId", "{id}"
+		).setParameter(
+			"launchSetName", "{name}"
+		).setParameter(
+			"screenNavigationCategoryKey",
+			LaunchScreenNavigationConstants.CATEGORY_KEY_ERROR_DETAILS
 		).buildString();
 	}
 

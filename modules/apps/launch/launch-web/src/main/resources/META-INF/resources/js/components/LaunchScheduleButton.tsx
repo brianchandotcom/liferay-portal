@@ -9,6 +9,7 @@ import ClayLabel from '@clayui/label';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
+import {LaunchStatus} from '../api/launches';
 import openScheduleLaunchModal from '../modals/openScheduleLaunchModal';
 import {formatDateTime} from '../util/dateTime';
 
@@ -16,8 +17,8 @@ import type {TimeZoneOption} from '../util/dateTime';
 
 interface Props {
 	launchName: string;
+	launchStatus: LaunchStatus;
 	portletNamespace: string;
-	published: boolean;
 	scheduleLaunchURL: string;
 	scheduledDate: string | null;
 	timeZoneId: string;
@@ -26,8 +27,8 @@ interface Props {
 
 export default function LaunchScheduleButton({
 	launchName,
+	launchStatus,
 	portletNamespace,
-	published,
 	scheduleLaunchURL,
 	scheduledDate,
 	timeZoneId,
@@ -45,7 +46,7 @@ export default function LaunchScheduleButton({
 		);
 	}
 
-	if (published) {
+	if (launchStatus !== 'failed' && launchStatus !== 'open') {
 		return null;
 	}
 

@@ -6,6 +6,9 @@
 package com.liferay.launch.web.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
+import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -44,6 +48,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -136,6 +141,31 @@ public class ViewLaunchDisplayContext {
 		return LaunchFDSNames.LAUNCH_ENTRIES;
 	}
 
+	public String getLaunchSetErrorsAPIURL() {
+		String filterString = URLCodec.encodeURL(
+			StringBundler.concat(
+				"r_launchSetToLaunchSetErrors_c_launchSetId eq '",
+				getLaunchSetId(), "'"));
+
+		return "/o/launch-set-errors?filter=" + filterString;
+	}
+
+	public String getLaunchSetErrorsFDSName() {
+		return LaunchFDSNames.LAUNCH_SET_ERRORS;
+	}
+
+	public FDSSortItemList getLaunchSetErrorsFDSSortItemList() {
+		return FDSSortItemListBuilder.add(
+			FDSSortItemBuilder.setDirection(
+				"desc"
+			).setKey(
+				"dateCreated"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "date")
+			).build()
+		).build();
+	}
+
 	public long getLaunchSetId() {
 		if (_launchSetId == null) {
 			_launchSetId = ParamUtil.getLong(
@@ -147,6 +177,15 @@ public class ViewLaunchDisplayContext {
 
 	public String getLaunchSetName() {
 		return ParamUtil.getString(_httpServletRequest, "launchSetName");
+	}
+
+	public String getLaunchStatus() {
+		if (_launchStatus == null) {
+			_launchStatus = _getLaunchStatus(
+				_objectEntryLocalService.fetchObjectEntry(getLaunchSetId()));
+		}
+
+		return _launchStatus;
 	}
 
 	public String getPreviewPageItemSelectedEventName() {
@@ -260,16 +299,7 @@ public class ViewLaunchDisplayContext {
 	}
 
 	public boolean isPublished() {
-		if (_published == null) {
-			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				getLaunchSetId());
-
-			_published =
-				(objectEntry != null) &&
-				(objectEntry.getStatus() == WorkflowConstants.STATUS_APPROVED);
-		}
-
-		return _published;
+		return Objects.equals(getLaunchStatus(), "published");
 	}
 
 	private String _getClassName(LaunchEntryManager launchEntryManager) {
@@ -325,6 +355,28 @@ public class ViewLaunchDisplayContext {
 		return launchEntryManagers;
 	}
 
+	private String _getLaunchStatus(ObjectEntry objectEntry) {
+		if (objectEntry == null) {
+			return "open";
+		}
+
+		if (objectEntry.isApproved()) {
+			return "published";
+		}
+
+		if (objectEntry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return "scheduled";
+		}
+
+		if (MapUtil.getLong(objectEntry.getValues(), "publishErrorsCount") >
+				0) {
+
+			return "failed";
+		}
+
+		return "open";
+	}
+
 	private Locale _getLocale() {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
@@ -348,8 +400,8 @@ public class ViewLaunchDisplayContext {
 	private final ItemSelector _itemSelector;
 	private final LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 	private Long _launchSetId;
+	private String _launchStatus;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ObjectEntryLocalService _objectEntryLocalService;
-	private Boolean _published;
 
 }

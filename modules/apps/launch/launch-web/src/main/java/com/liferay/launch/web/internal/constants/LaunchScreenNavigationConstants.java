@@ -14,6 +14,8 @@ public class LaunchScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_ENTRIES = "entries";
 
+	public static final String CATEGORY_KEY_ERROR_DETAILS = "error-details";
+
 	public static final String SCREEN_NAVIGATION_KEY_LAUNCH = "launch";
 
 }

@@ -157,6 +157,9 @@ const columns = {
 				</div>
 			);
 		},
+	assetTypeRenderer: ({itemData, value}: {itemData: any; value?: string}) => (
+		<span>{itemData.assetTypeLabel ?? value}</span>
+	),
 };
 
 const assetsEmptyStateDescription = (
@@ -186,6 +189,7 @@ const TABLE_FIELDS = [
 		truncate: true,
 	},
 	{
+		contentRenderer: 'assetTypeRenderer',
 		fieldName: 'assetType',
 		label: Liferay.Language.get('type'),
 		sortable: true,
@@ -498,6 +502,7 @@ const List = () => {
 								segmentId,
 								segmentName,
 							}),
+							assetTypeRenderer: columns.assetTypeRenderer,
 						}}
 						emptyState={{
 							description:

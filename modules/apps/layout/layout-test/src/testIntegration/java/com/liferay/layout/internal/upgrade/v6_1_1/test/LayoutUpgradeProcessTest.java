@@ -134,7 +134,7 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 		_group = GroupTestUtil.addGroup();
 
-		_updateLayoutSetPrototypesLinks(
+		_updateLayoutSetPrototypeLinks(
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), true);
 
 		_mergeLayoutSetPrototypeLayouts();
@@ -248,7 +248,7 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		Group group = GroupTestUtil.addGroup();
 
 		try {
-			_updateLayoutSetPrototypesLinks(group, 0, false);
+			_updateLayoutSetPrototypeLinks(group, 0, false);
 
 			_mergeLayoutSetPrototypeLayouts();
 
@@ -654,7 +654,7 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		_layoutLocalService.updateLayout(layout);
 	}
 
-	private void _updateLayoutSetPrototypesLinks(
+	private void _updateLayoutSetPrototypeLinks(
 			Group group, long publicLayoutSetPrototypeId,
 			boolean publicLayoutSetPrototypeLinkEnabled)
 		throws Exception {

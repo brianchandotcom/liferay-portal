@@ -652,7 +652,7 @@ public class DBUpgrader {
 			company -> {
 				long companyId = company.getCompanyId();
 
-				String keyString = CompanyKeyResolverUtil.regenerateKey(
+				String keyString = CompanyKeyResolverUtil.generateKey(
 					companyId, company.getKey());
 
 				try (Connection connection = DataAccess.getConnection();

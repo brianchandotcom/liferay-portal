@@ -59,14 +59,6 @@ public class IndividualSegmentResourceImplTest {
 					IndividualSegment();
 
 		Mockito.when(
-			_individualSegmentDTOConverter.toDTO(
-				Mockito.any(DTOConverterContext.class),
-				Mockito.eq(individualSegment))
-		).thenReturn(
-			_individualSegment
-		);
-
-		Mockito.when(
 			_individualSegmentHelper.getIndividualSegment(
 				_faroProject, _INDIVIDUAL_SEGMENT_ID_ALL_USERS)
 		).thenReturn(
@@ -78,6 +70,14 @@ public class IndividualSegmentResourceImplTest {
 				_faroProject, _INDIVIDUAL_SEGMENT_ID_SELECT_USERS)
 		).thenThrow(
 			new ForbiddenException()
+		);
+
+		Mockito.when(
+			_individualSegmentDTOConverter.toDTO(
+				Mockito.any(DTOConverterContext.class),
+				Mockito.eq(individualSegment))
+		).thenReturn(
+			_individualSegment
 		);
 
 		_individualSegmentResourceImpl.setContextAcceptLanguage(

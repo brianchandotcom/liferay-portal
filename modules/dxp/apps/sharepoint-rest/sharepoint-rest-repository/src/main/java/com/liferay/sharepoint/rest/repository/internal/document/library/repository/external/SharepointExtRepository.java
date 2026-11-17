@@ -361,6 +361,22 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 	}
 
+	public List<ExtRepositoryFolder> getExtRepositoryFoldersWithChildCounts(
+			String extRepositoryFolderKey)
+		throws PortalException {
+
+		try {
+			String url = _sharepointURLHelper.getFoldersWithChildCountsURL(
+				extRepositoryFolderKey);
+
+			return _sharepointServerResponseConverter.getExtRepositoryFolders(
+				_getJSONObject(url));
+		}
+		catch (UnirestException unirestException) {
+			throw new PortalException(unirestException);
+		}
+	}
+
 	@Override
 	public <T extends ExtRepositoryObject> T getExtRepositoryObject(
 			ExtRepositoryObjectType<T> extRepositoryObjectType,

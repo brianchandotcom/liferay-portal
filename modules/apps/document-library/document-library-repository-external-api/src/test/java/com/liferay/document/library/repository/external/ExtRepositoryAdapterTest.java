@@ -378,6 +378,42 @@ public class ExtRepositoryAdapterTest {
 		_testGetPassword(password, password);
 	}
 
+	@Test
+	public void testMoveFileEntry() throws Exception {
+		ExtRepositoryAdapter extRepositoryAdapter = _getExtRepositoryAdapter();
+
+		ExtRepositoryFileEntry extRepositoryFileEntry = Mockito.mock(
+			ExtRepositoryFileEntry.class);
+		String extRepositoryModelKey = RandomTestUtil.randomString();
+
+		Mockito.when(
+			extRepositoryFileEntry.getExtRepositoryModelKey()
+		).thenReturn(
+			extRepositoryModelKey
+		);
+
+		Mockito.doReturn(
+			extRepositoryFileEntry
+		).when(
+			_extRepository
+		).moveExtRepositoryObject(
+			Mockito.eq(ExtRepositoryObjectType.FILE), Mockito.anyString(),
+			Mockito.anyString(), Mockito.any()
+		);
+
+		long fileEntryId = _fileEntryIds.get(0);
+
+		extRepositoryAdapter.moveFileEntry(
+			RandomTestUtil.randomLong(), fileEntryId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null);
+
+		Mockito.verify(
+			_repositoryEntryLocalService
+		).updateRepositoryEntry(
+			fileEntryId, extRepositoryModelKey
+		);
+	}
+
 	private void _assertCheckAssetEntry(List<Long> fileEntryIds)
 		throws Exception {
 

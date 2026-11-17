@@ -6,7 +6,10 @@
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.oauth2.Token;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.key.secret.SecretResolverUtil;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
 
@@ -25,7 +28,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -51,9 +53,7 @@ public class SharepointRepositoryTokenBroker {
 
 		URL url = confidentialClientApplication.getAuthorizationRequestUrl(
 			AuthorizationRequestUrlParameters.builder(
-				redirectUri,
-				Collections.singleton(
-					_sharepointRepositoryConfiguration.scope())
+				redirectUri, _getScopes()
 			).responseMode(
 				ResponseMode.QUERY
 			).prompt(
@@ -80,8 +80,7 @@ public class SharepointRepositoryTokenBroker {
 				AuthorizationCodeParameters.builder(
 					code, new URI(redirectURL)
 				).scopes(
-					Collections.singleton(
-						_sharepointRepositoryConfiguration.scope())
+					_getScopes()
 				).build()
 			).get();
 
@@ -106,9 +105,7 @@ public class SharepointRepositoryTokenBroker {
 		IAuthenticationResult iAuthenticationResult =
 			confidentialClientApplication.acquireTokenSilently(
 				SilentParameters.builder(
-					Collections.singleton(
-						_sharepointRepositoryConfiguration.scope()),
-					_getIAccount(confidentialClientApplication)
+					_getScopes(), _getIAccount(confidentialClientApplication)
 				).build()
 			).get();
 
@@ -145,6 +142,18 @@ public class SharepointRepositoryTokenBroker {
 		Iterator<IAccount> iterator = iAccounts.iterator();
 
 		return iterator.next();
+	}
+
+	private Set<String> _getScopes() {
+		Set<String> scopes = SetUtil.fromArray(
+			StringUtil.split(
+				_sharepointRepositoryConfiguration.scope(), CharPool.SPACE));
+
+		scopes.remove("offline_access");
+		scopes.remove("openid");
+		scopes.remove("profile");
+
+		return scopes;
 	}
 
 	private final SharepointRepositoryConfiguration

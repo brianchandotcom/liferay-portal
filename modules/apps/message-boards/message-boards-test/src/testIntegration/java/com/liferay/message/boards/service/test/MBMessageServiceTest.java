@@ -327,12 +327,12 @@ public class MBMessageServiceTest {
 						mbMessage.getMessageId(), false,
 						new QueryDefinition<>(WorkflowConstants.STATUS_ANY)));
 
-			Assert.assertEquals(
-				MBMessage.class.getName(), mustHavePermission.resourceName);
-			Assert.assertEquals(
-				mbMessage.getMessageId(), mustHavePermission.resourceId);
 			Assert.assertArrayEquals(
 				new String[] {ActionKeys.VIEW}, mustHavePermission.actionId);
+			Assert.assertEquals(
+				mbMessage.getMessageId(), mustHavePermission.resourceId);
+			Assert.assertEquals(
+				MBMessage.class.getName(), mustHavePermission.resourceName);
 		}
 	}
 
@@ -377,12 +377,12 @@ public class MBMessageServiceTest {
 						mbMessage.getMessageId(), false,
 						new QueryDefinition<>(WorkflowConstants.STATUS_ANY)));
 
-			Assert.assertEquals(
-				MBMessage.class.getName(), mustHavePermission.resourceName);
-			Assert.assertEquals(
-				mbMessage.getMessageId(), mustHavePermission.resourceId);
 			Assert.assertArrayEquals(
 				new String[] {ActionKeys.VIEW}, mustHavePermission.actionId);
+			Assert.assertEquals(
+				mbMessage.getMessageId(), mustHavePermission.resourceId);
+			Assert.assertEquals(
+				MBMessage.class.getName(), mustHavePermission.resourceName);
 		}
 	}
 

@@ -10,7 +10,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
 
-import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -158,13 +158,18 @@ public class TestrayResultsXMLClientTestrayImporter
 		simpleDateFormat.setTimeZone(
 			TimeZone.getTimeZone("America/Los_Angeles"));
 
-		try {
-			return simpleDateFormat.parse(dateString);
-		}
-		catch (ParseException parseException) {
+		ParsePosition parsePosition = new ParsePosition(0);
+
+		Date date = simpleDateFormat.parse(dateString, parsePosition);
+
+		if ((date == null) ||
+			(parsePosition.getIndex() != dateString.length())) {
+
 			throw new RuntimeException(
-				"Invalid testray.build.date " + dateString, parseException);
+				"Invalid testray.build.date " + dateString);
 		}
+
+		return date;
 	}
 
 	private final File _testrayResultsDir;

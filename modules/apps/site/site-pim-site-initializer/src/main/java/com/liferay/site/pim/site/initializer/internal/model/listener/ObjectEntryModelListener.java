@@ -531,11 +531,13 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				"\"channelFieldName\" is invalid", "x-is-invalid");
 		}
 
-		List<String> allowedFieldMappingTypes =
-			pimConnectorChannelField.getAllowedFieldMappingTypes();
+		List<String> additionalPIMFieldMappingTypes =
+			pimConnectorChannelField.getAdditionalPIMFieldMappingTypes();
+		String type = MapUtil.getString(values, "type");
 
-		if (!allowedFieldMappingTypes.contains(
-				MapUtil.getString(values, "type"))) {
+		if (!additionalPIMFieldMappingTypes.contains(type) &&
+			!Objects.equals(type, "dynamicValue") &&
+			!Objects.equals(type, "fixedValue")) {
 
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				Collections.singletonList("type"), "\"type\" is invalid",

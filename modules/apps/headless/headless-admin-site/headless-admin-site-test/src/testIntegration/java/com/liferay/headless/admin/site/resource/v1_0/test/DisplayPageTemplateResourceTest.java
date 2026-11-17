@@ -228,7 +228,7 @@ public class DisplayPageTemplateResourceTest
 		_enableLocalStaging(irrelevantGroup);
 
 		_assertProblemException(
-			"BAD_REQUEST", null,
+			"BAD_REQUEST", "The site does not support this operation",
 			() -> displayPageTemplateResource.deleteSiteDisplayPageTemplate(
 				irrelevantGroup.getExternalReferenceCode(),
 				liveGroupDisplayPageTemplate.getExternalReferenceCode()));
@@ -537,7 +537,7 @@ public class DisplayPageTemplateResourceTest
 		_enableLocalStaging();
 
 		_assertProblemException(
-			"BAD_REQUEST", null,
+			"BAD_REQUEST", "The site does not support this operation",
 			() -> displayPageTemplateResource.patchSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
 				expectedDisplayPageTemplate.getExternalReferenceCode(),
@@ -1047,7 +1047,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplate, fileEntry);
 
 		_assertProblemException(
-			"BAD_REQUEST", null,
+			"BAD_REQUEST", "The site does not support this operation",
 			() -> displayPageTemplateResource.putSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
 				displayPageTemplate.getExternalReferenceCode(),

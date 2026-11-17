@@ -84,9 +84,11 @@ public class EditFragmentEntryLinkCommentMVCActionCommandTest {
 
 		_layout = layout.fetchDraftLayout();
 
+		long fragmentEntryLinkId = RandomTestUtil.randomLong();
+
 		long parentCommentId = _commentManager.addComment(
 			_user.getUserId(), _group.getGroupId(),
-			FragmentEntryLink.class.getName(), RandomTestUtil.randomLong(),
+			FragmentEntryLink.class.getName(), fragmentEntryLinkId,
 			RandomTestUtil.randomString(),
 			_getFunction(
 				_getActionRequest(null, null, "false"), _getThemeDisplay()));
@@ -95,8 +97,8 @@ public class EditFragmentEntryLinkCommentMVCActionCommandTest {
 
 		long childCommentId = _commentManager.addComment(
 			null, _user.getUserId(), FragmentEntryLink.class.getName(),
-			RandomTestUtil.randomLong(), _user.getFullName(), parentCommentId,
-			null, RandomTestUtil.randomString(),
+			fragmentEntryLinkId, _user.getFullName(), parentCommentId, null,
+			RandomTestUtil.randomString(),
 			_getFunction(
 				_getActionRequest(null, null, "false"), _getThemeDisplay()));
 

@@ -493,7 +493,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			QueryDefinition<MBMessage> queryDefinition)
 		throws PortalException {
 
-		_checkChildMessagesPermission(parentMessageId, queryDefinition);
+		_checkPermissionAndRestrictQueryDefinition(
+			parentMessageId, queryDefinition);
 
 		if (queryDefinition.isIncludeOwner() &&
 			(queryDefinition.getOwnerUserId() != 0)) {
@@ -511,7 +512,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			QueryDefinition<MBMessage> queryDefinition)
 		throws PortalException {
 
-		_checkChildMessagesPermission(parentMessageId, queryDefinition);
+		_checkPermissionAndRestrictQueryDefinition(
+			parentMessageId, queryDefinition);
 
 		if (queryDefinition.isIncludeOwner() &&
 			(queryDefinition.getOwnerUserId() != 0)) {
@@ -959,7 +961,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			priority, allowPingbacks, serviceContext);
 	}
 
-	private void _checkChildMessagesPermission(
+	private void _checkPermissionAndRestrictQueryDefinition(
 			long parentMessageId, QueryDefinition<MBMessage> queryDefinition)
 		throws PortalException {
 

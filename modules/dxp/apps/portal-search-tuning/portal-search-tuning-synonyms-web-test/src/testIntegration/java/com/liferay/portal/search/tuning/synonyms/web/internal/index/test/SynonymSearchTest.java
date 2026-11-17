@@ -126,9 +126,9 @@ public class SynonymSearchTest {
 	@Test
 	public void testSearchQuotedPhrase() {
 		_assertSearch(
-			1, "\"denunciado pelo Ministério Público\"", LocaleUtil.BRAZIL);
-		_assertSearch(
 			1, "\"Ministério Público de Santa Catarina\"", LocaleUtil.BRAZIL);
+		_assertSearch(
+			1, "\"denunciado pelo Ministério Público\"", LocaleUtil.BRAZIL);
 		_assertSearch(1, "\"perseguido pelo bichano\"", LocaleUtil.BRAZIL);
 		_assertSearch(1, "\"perseguido pelo gato\"", LocaleUtil.BRAZIL);
 		_assertSearch(2, "\"Tribunal de Justiça\"", LocaleUtil.BRAZIL);

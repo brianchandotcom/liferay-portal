@@ -142,7 +142,6 @@ public class FullTextQueryBuilder {
 		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
 		booleanQuery.addShouldQueryClauses(query);
-
 		booleanQuery.addShouldQueryClauses(builder.build(field, phrase));
 
 		return booleanQuery;

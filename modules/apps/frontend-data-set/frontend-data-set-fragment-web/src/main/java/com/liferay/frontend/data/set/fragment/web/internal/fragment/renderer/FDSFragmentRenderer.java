@@ -137,17 +137,16 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			ObjectEntry dataSetObjectEntry = _getDataSetObjectEntry(
 				fragmentRendererContext, externalReferenceCode);
 
-			if ((dataSetObjectEntry == null) &&
-				fragmentRendererContext.isEditMode()) {
-
-				printWriter.write(
-					StringBundler.concat(
-						"<div class=\"portlet-msg-info\">",
-						_language.get(httpServletRequest, "select-a-data-set"),
-						"</div>"));
-			}
-
 			if (dataSetObjectEntry == null) {
+				if (fragmentRendererContext.isEditMode()) {
+					printWriter.write(
+						StringBundler.concat(
+							"<div class=\"portlet-msg-info\">",
+							_language.get(
+								httpServletRequest, "select-a-data-set"),
+							"</div>"));
+				}
+
 				return;
 			}
 

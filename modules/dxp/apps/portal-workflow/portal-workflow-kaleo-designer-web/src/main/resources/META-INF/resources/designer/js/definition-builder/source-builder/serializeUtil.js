@@ -801,6 +801,12 @@ function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 
 		if (item.type === 'service') {
 			buffer.push(
+				XMLUtil.create(
+					'input-variables',
+					cdata(jsonStringify(item.data.inputVariables || []))
+				)
+			);
+			buffer.push(
 				createTagWithEscapedContent(
 					'java-delegate',
 					item.data.javaDelegate || ''
@@ -808,6 +814,13 @@ function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 			);
 
 			appendXMLLabels(buffer, item.data.label);
+
+			buffer.push(
+				XMLUtil.create(
+					'output-variables',
+					cdata(jsonStringify(item.data.outputVariables || []))
+				)
+			);
 		}
 
 		const nodeTransitions = transitions.filter(

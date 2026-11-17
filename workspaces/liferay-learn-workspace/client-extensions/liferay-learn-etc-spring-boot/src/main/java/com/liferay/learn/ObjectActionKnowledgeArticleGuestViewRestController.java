@@ -106,7 +106,7 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 			"actionIds"
 		).toList();
 
-		if (actionIds.contains(ActionKeys.VIEW) == approved) {
+		if (actionIds.contains(ActionKeys.VIEW) && approved) {
 			return;
 		}
 

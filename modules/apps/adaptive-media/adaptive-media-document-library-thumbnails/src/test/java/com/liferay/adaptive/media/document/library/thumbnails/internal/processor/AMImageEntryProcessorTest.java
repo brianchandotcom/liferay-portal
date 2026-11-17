@@ -8,9 +8,11 @@ package com.liferay.adaptive.media.document.library.thumbnails.internal.processo
 import com.liferay.adaptive.media.AdaptiveMedia;
 import com.liferay.adaptive.media.document.library.thumbnails.internal.configuration.AMSystemImagesConfiguration;
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
+import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -59,6 +61,9 @@ public class AMImageEntryProcessorTest {
 			_amImageEntryProcessor, "_amAsyncProcessorLocator",
 			_amAsyncProcessorLocator);
 		ReflectionTestUtil.setFieldValue(
+			_amImageEntryProcessor, "_amImageEntryLocalService",
+			_amImageEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
 			_amImageEntryProcessor, "_amImageFinder", _amImageFinder);
 		ReflectionTestUtil.setFieldValue(
 			_amImageEntryProcessor, "_amImageValidator", _amImageValidator);
@@ -69,6 +74,37 @@ public class AMImageEntryProcessorTest {
 			PrefsPropsUtil.class, "_prefsProps", _prefsProps);
 	}
 
+	@Test
+	public void testCleanUp() throws Exception {
+
+		// External file version
+
+		Mockito.when(
+			_fileVersion.getModel()
+		).thenReturn(
+			null
+		);
+
+		_amImageEntryProcessor.cleanUp(_fileVersion);
+
+		Mockito.verify(
+			_amImageEntryLocalService
+		).deleteAMImageEntryFileVersion(
+			_fileVersion
+		);
+
+		// Local file version
+
+		Mockito.when(
+			_fileVersion.getModel()
+		).thenReturn(
+			Mockito.mock(DLFileVersion.class)
+		);
+
+		_amImageEntryProcessor.cleanUp(_fileVersion);
+
+		Mockito.verifyNoMoreInteractions(_amImageEntryLocalService);
+	}
 
 	@Test
 	public void testGetPreviewAsStream() throws Exception {
@@ -247,6 +283,8 @@ public class AMImageEntryProcessorTest {
 		Mockito.mock(AMAsyncProcessor.class);
 	private final AMAsyncProcessorLocator _amAsyncProcessorLocator =
 		Mockito.mock(AMAsyncProcessorLocator.class);
+	private final AMImageEntryLocalService _amImageEntryLocalService =
+		Mockito.mock(AMImageEntryLocalService.class);
 	private AMImageEntryProcessor _amImageEntryProcessor;
 	private final AMImageFinder _amImageFinder = Mockito.mock(
 		AMImageFinder.class);

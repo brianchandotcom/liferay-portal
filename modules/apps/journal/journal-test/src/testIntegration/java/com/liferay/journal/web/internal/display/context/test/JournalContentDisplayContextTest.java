@@ -258,16 +258,16 @@ public class JournalContentDisplayContextTest {
 	private void _testGetArticleGroupIdFromPortletPreferencesRenderParameter()
 		throws Exception {
 
-		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
+		_childGroup = GroupTestUtil.addGroup(_group.getGroupId());
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.journal.content.web.internal.configuration." +
 						"JournalContentPortletInstanceConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
-						"companyId", String.valueOf(childGroup.getCompanyId())
+						"companyId", String.valueOf(_childGroup.getCompanyId())
 					).put(
-						"groupId", String.valueOf(childGroup.getGroupId())
+						"groupId", String.valueOf(_childGroup.getGroupId())
 					).build())) {
 
 			MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
@@ -282,7 +282,7 @@ public class JournalContentDisplayContextTest {
 			Assert.assertEquals(
 				_getArticleGroupIdFromJournalContentDisplayContext(
 					mockLiferayPortletRenderRequest),
-				childGroup.getGroupId());
+				_childGroup.getGroupId());
 		}
 	}
 
@@ -345,6 +345,9 @@ public class JournalContentDisplayContextTest {
 	private void _testGetArticleWithoutParameters() throws Exception {
 		Assert.assertNull(_getArticle(_getMockLiferayPortletRenderRequest()));
 	}
+
+	@DeleteAfterTestRun
+	private Group _childGroup;
 
 	private Company _company;
 

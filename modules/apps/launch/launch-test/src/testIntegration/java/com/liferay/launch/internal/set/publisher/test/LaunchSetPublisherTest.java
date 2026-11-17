@@ -76,6 +76,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -905,6 +906,65 @@ public class LaunchSetPublisherTest {
 		_assertPublishErrorsCount(0, failedLaunchSetId);
 		_assertScheduledDateAndStatus(
 			null, WorkflowConstants.STATUS_DRAFT, failedLaunchSetId);
+
+		// Launch set that is being published
+
+		ObjectEntry publishingLaunchSetObjectEntry = _addLaunchSetObjectEntry();
+
+		long publishingLaunchSetId =
+			publishingLaunchSetObjectEntry.getObjectEntryId();
+
+		String publishingClassName = RandomTestUtil.randomString();
+
+		ObjectEntry publishingLaunchEntryObjectEntry =
+			_addLaunchEntryObjectEntry(
+				publishingLaunchSetId, publishingClassName,
+				RandomTestUtil.randomInt(), null);
+
+		_launchSetPublisher.schedulePublish(
+			new Date(System.currentTimeMillis() + Time.DAY),
+			publishingLaunchSetId, TestPropsValues.getUserId());
+
+		String publishingMessage = RandomTestUtil.randomString();
+		AtomicReference<PortalException> portalExceptionAtomicReference =
+			new AtomicReference<>();
+
+		ServiceRegistration<LaunchEntryManager> serviceRegistration =
+			_registerLaunchEntryManager(
+				publishingClassName,
+				() -> {
+					portalExceptionAtomicReference.set(
+						Assert.assertThrows(
+							PortalException.class,
+							() -> _launchSetPublisher.unschedulePublish(
+								publishingLaunchSetId)));
+
+					throw new PortalException(publishingMessage);
+				});
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
+
+			_launchSetPublisher.publish(
+				publishingLaunchSetId, TestPropsValues.getUserId());
+
+			_assertLogEntries(
+				PortalException.class, publishingMessage,
+				publishingLaunchEntryObjectEntry, publishingLaunchSetId,
+				logCapture);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		PortalException portalException = portalExceptionAtomicReference.get();
+
+		Assert.assertEquals(
+			"Launch set " + publishingLaunchSetId +
+				" is already being published",
+			portalException.getMessage());
+
+		_launchSetPublisher.unschedulePublish(publishingLaunchSetId);
 	}
 
 	private ObjectEntry _addFailedLaunchSetObjectEntry() throws Exception {

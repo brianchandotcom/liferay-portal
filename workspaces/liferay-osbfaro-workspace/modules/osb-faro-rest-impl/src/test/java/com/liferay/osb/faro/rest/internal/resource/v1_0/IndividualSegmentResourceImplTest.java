@@ -127,14 +127,6 @@ public class IndividualSegmentResourceImplTest {
 			_CHANNEL_ID_SELECT_USERS
 		);
 
-		Mockito.doReturn(
-			Arrays.asList(accessibleFaroChannel, inaccessibleFaroChannel)
-		).when(
-			_faroChannelLocalService
-		).dslQuery(
-			Mockito.any(DSLQuery.class)
-		);
-
 		Mockito.when(
 			_contactsEngineClient.getIndividualIndividualSegments(
 				Mockito.eq(_faroProject), Mockito.any(), Mockito.anyList(),
@@ -142,6 +134,14 @@ public class IndividualSegmentResourceImplTest {
 				Mockito.anyInt(), Mockito.anyInt(), Mockito.any())
 		).thenReturn(
 			new Results<>(Collections.emptyList(), 0)
+		);
+
+		Mockito.doReturn(
+			Arrays.asList(accessibleFaroChannel, inaccessibleFaroChannel)
+		).when(
+			_faroChannelLocalService
+		).dslQuery(
+			Mockito.any(DSLQuery.class)
 		);
 
 		_individualSegmentResourceImpl.

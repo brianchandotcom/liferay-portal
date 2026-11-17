@@ -6,6 +6,7 @@
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external;
 
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.repository.authorization.oauth2.Token;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
 import com.liferay.document.library.repository.external.CredentialsProvider;
@@ -149,9 +150,26 @@ public class SharepointExtRepository implements ExtRepository {
 			String changeLog)
 		throws PortalException {
 
+		DLVersionNumberIncrease dlVersionNumberIncrease =
+			DLVersionNumberIncrease.MINOR;
+
+		if (createMajorVersion) {
+			dlVersionNumberIncrease = DLVersionNumberIncrease.MAJOR;
+		}
+
+		checkInExtRepositoryFileEntry(
+			extRepositoryFileEntryKey, dlVersionNumberIncrease, changeLog);
+	}
+
+	@Override
+	public void checkInExtRepositoryFileEntry(
+			String extRepositoryFileEntryKey,
+			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog)
+		throws PortalException {
+
 		try {
 			String url = _sharepointURLHelper.getCheckInFileURL(
-				extRepositoryFileEntryKey, createMajorVersion, changeLog);
+				extRepositoryFileEntryKey, dlVersionNumberIncrease, changeLog);
 
 			_post(url);
 		}

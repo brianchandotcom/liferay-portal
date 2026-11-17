@@ -262,7 +262,7 @@ public class ExportImportProcessDisplayContext {
 			return Scope.PORTLET;
 		}
 
-		if (ScopeUtil.isInstanceScoped(_group)) {
+		if (ScopeUtil.isCompanyScoped(_group)) {
 			return Scope.COMPANY;
 		}
 
@@ -338,7 +338,7 @@ public class ExportImportProcessDisplayContext {
 					portletId, layout.getExternalReferenceCode(), null);
 			}
 
-			if (ScopeUtil.isInstanceScoped(_group)) {
+			if (ScopeUtil.isCompanyScoped(_group)) {
 				return exportPreviewResource.getExportPreview(
 					null, null, null, portletId, null);
 			}

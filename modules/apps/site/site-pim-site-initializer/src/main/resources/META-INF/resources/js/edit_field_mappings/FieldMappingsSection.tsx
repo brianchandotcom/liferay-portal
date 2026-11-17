@@ -12,7 +12,7 @@ import newFieldMapping from './newFieldMapping';
 import {IFieldMapping, IObjectDefinition} from './types';
 
 interface IProps {
-	allowedFieldMappingTypes: string[];
+	additionalFieldMappingTypes: string[];
 	fieldMappings: IFieldMapping[];
 	objectDefinitions: IObjectDefinition[];
 	setFieldMappings: React.Dispatch<React.SetStateAction<IFieldMapping[]>>;
@@ -20,7 +20,7 @@ interface IProps {
 }
 
 export default function FieldMappingsSection({
-	allowedFieldMappingTypes,
+	additionalFieldMappingTypes,
 	fieldMappings,
 	objectDefinitions,
 	setFieldMappings,
@@ -68,7 +68,9 @@ export default function FieldMappingsSection({
 
 					{fieldMappings.map((fieldMapping, index) => (
 						<FieldMappingRow
-							allowedFieldMappingTypes={allowedFieldMappingTypes}
+							additionalFieldMappingTypes={
+								additionalFieldMappingTypes
+							}
 							deletable={fieldMappings.length > 1}
 							fieldMapping={fieldMapping}
 							index={index}

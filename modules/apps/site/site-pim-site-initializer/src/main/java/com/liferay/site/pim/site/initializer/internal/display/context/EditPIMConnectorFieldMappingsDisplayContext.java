@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.pim.site.initializer.connector.PIMConnector;
 import com.liferay.site.pim.site.initializer.connector.PIMConnectorChannelField;
 import com.liferay.site.pim.site.initializer.connector.PIMConnectorRegistry;
-import com.liferay.site.pim.site.initializer.constants.PIMConnectorFieldMappingTypeConstants;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectFolderConstants;
 import com.liferay.site.pim.site.initializer.internal.util.PIMConnectorFieldMappingRulesUtil;
 import com.liferay.site.pim.site.initializer.internal.util.PIMConnectorFieldMappingsUtil;
@@ -85,18 +84,18 @@ public class EditPIMConnectorFieldMappingsDisplayContext {
 		).put(
 			"channelField", _channelField
 		).put(
-			"channelFieldAllowedFieldMappingTypes",
+			"channelFieldAdditionalFieldMappingTypes",
 			() -> {
 				if (pimConnectorChannelField == null) {
-					return JSONUtil.putAll(
-						PIMConnectorFieldMappingTypeConstants.DYNAMIC_VALUE,
-						PIMConnectorFieldMappingTypeConstants.FIXED_VALUE);
+					return null;
 				}
 
-				List<String> allowedFieldMappingTypes =
-					pimConnectorChannelField.getAllowedFieldMappingTypes();
+				List<String> additionalPIMFieldMappingTypes =
+					pimConnectorChannelField.
+						getAdditionalPIMFieldMappingTypes();
 
-				return JSONUtil.putAll(allowedFieldMappingTypes.toArray());
+				return JSONUtil.putAll(
+					additionalPIMFieldMappingTypes.toArray());
 			}
 		).put(
 			"channelFieldLabel",

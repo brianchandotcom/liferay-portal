@@ -54,10 +54,10 @@ function fixedValue(value = '') {
 }
 
 function FieldMappingsSectionWrapper({
-	allowedFieldMappingTypes = ['dynamicValue', 'fixedValue'],
+	additionalFieldMappingTypes = [],
 	initialFieldMappings,
 }: {
-	allowedFieldMappingTypes?: string[];
+	additionalFieldMappingTypes?: string[];
 	initialFieldMappings: IFieldMapping[];
 }) {
 	const [fieldMappings, setFieldMappings] =
@@ -65,7 +65,7 @@ function FieldMappingsSectionWrapper({
 
 	return (
 		<FieldMappingsSection
-			allowedFieldMappingTypes={allowedFieldMappingTypes}
+			additionalFieldMappingTypes={additionalFieldMappingTypes}
 			fieldMappings={fieldMappings}
 			objectDefinitions={OBJECT_DEFINITIONS}
 			setFieldMappings={setFieldMappings}
@@ -90,23 +90,23 @@ describe('FieldMappingsSection', () => {
 		).toBeInTheDocument();
 	});
 
-	it('offers only the allowed field mapping types of the channel field', () => {
+	it('offers the additional field mapping types of the channel field', () => {
 		render(
 			<FieldMappingsSectionWrapper
-				allowedFieldMappingTypes={['categories']}
+				additionalFieldMappingTypes={['categories']}
 				initialFieldMappings={[dynamicValue()]}
 			/>
 		);
 
 		expect(
+			screen.getByRole('option', {name: 'SKU (sku)'})
+		).toBeInTheDocument();
+		expect(
 			screen.getByRole('option', {name: 'categories'})
 		).toBeInTheDocument();
 		expect(
-			screen.queryByRole('option', {name: 'SKU (sku)'})
-		).not.toBeInTheDocument();
-		expect(
-			screen.queryByRole('option', {name: 'fixed-value'})
-		).not.toBeInTheDocument();
+			screen.getByRole('option', {name: 'fixed-value'})
+		).toBeInTheDocument();
 		expect(
 			screen.queryByRole('option', {name: 'tags'})
 		).not.toBeInTheDocument();

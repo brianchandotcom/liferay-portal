@@ -487,7 +487,7 @@ public class PIMConnectorChannelFieldFDSDataProviderTest {
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField(
-					Collections.emptyList(), "Tags", true, "tags", false,
+					"Tags", true, "tags", false,
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT))
 		);
 
@@ -646,10 +646,10 @@ public class PIMConnectorChannelFieldFDSDataProviderTest {
 		).thenReturn(
 			Arrays.asList(
 				new PIMConnectorChannelField(
-					Collections.emptyList(), "Name", false, "name", true,
+					"Name", false, "name", true,
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT),
 				new PIMConnectorChannelField(
-					Collections.emptyList(), "SKU", false, "skus[].sku", false,
+					"SKU", false, "skus[].sku", false,
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT))
 		);
 

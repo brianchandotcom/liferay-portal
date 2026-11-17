@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.pim.site.initializer.connector.PIMConnectorChannelField;
-import com.liferay.site.pim.site.initializer.constants.PIMConnectorFieldMappingTypeConstants;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConstants;
 
 import java.io.Serializable;
@@ -140,18 +139,10 @@ public class PIMConnectorFieldMappingRulesUtil {
 			return true;
 		}
 
-		List<String> allowedFieldMappingTypes =
-			pimConnectorChannelField.getAllowedFieldMappingTypes();
+		List<String> additionalPIMFieldMappingTypes =
+			pimConnectorChannelField.getAdditionalPIMFieldMappingTypes();
 
-		if (allowedFieldMappingTypes.contains(
-				PIMConnectorFieldMappingTypeConstants.CATEGORIES) ||
-			allowedFieldMappingTypes.contains(
-				PIMConnectorFieldMappingTypeConstants.TAGS)) {
-
-			return true;
-		}
-
-		return false;
+		return !additionalPIMFieldMappingTypes.isEmpty();
 	}
 
 	private static String _encodeURL(int length, String value) {

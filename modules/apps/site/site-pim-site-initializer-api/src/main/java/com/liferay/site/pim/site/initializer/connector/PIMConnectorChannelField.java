@@ -18,11 +18,11 @@ import java.util.Locale;
 public class PIMConnectorChannelField {
 
 	public PIMConnectorChannelField(
-		List<String> allowedFieldMappingTypes, String labelKey,
+		List<String> additionalFieldMappingTypes, String labelKey,
 		boolean multiple, String name, boolean required, String type) {
 
-		_allowedFieldMappingTypes = Collections.unmodifiableList(
-			allowedFieldMappingTypes);
+		_additionalFieldMappingTypes = Collections.unmodifiableList(
+			additionalFieldMappingTypes);
 		_labelKey = labelKey;
 		_multiple = multiple;
 		_name = name;
@@ -30,8 +30,15 @@ public class PIMConnectorChannelField {
 		_type = type;
 	}
 
-	public List<String> getAllowedFieldMappingTypes() {
-		return _allowedFieldMappingTypes;
+	public PIMConnectorChannelField(
+		String labelKey, boolean multiple, String name, boolean required,
+		String type) {
+
+		this(Collections.emptyList(), labelKey, multiple, name, required, type);
+	}
+
+	public List<String> getAdditionalFieldMappingTypes() {
+		return _additionalFieldMappingTypes;
 	}
 
 	public String getLabel(Locale locale) {
@@ -54,7 +61,7 @@ public class PIMConnectorChannelField {
 		return _required;
 	}
 
-	private final List<String> _allowedFieldMappingTypes;
+	private final List<String> _additionalFieldMappingTypes;
 	private final String _labelKey;
 	private final boolean _multiple;
 	private final String _name;

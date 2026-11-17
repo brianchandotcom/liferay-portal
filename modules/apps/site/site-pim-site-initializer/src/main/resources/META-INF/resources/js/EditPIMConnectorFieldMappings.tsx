@@ -34,7 +34,7 @@ interface IProps {
 	apiURL: string;
 	backURL: string;
 	channelField: string;
-	channelFieldAllowedFieldMappingTypes: string[];
+	channelFieldAdditionalFieldMappingTypes: string[];
 	channelFieldLabel: string;
 	fieldMappings: IFieldMapping[];
 	mappingRule: IMappingRule | null;
@@ -82,7 +82,7 @@ export default function EditPIMConnectorFieldMappings({
 	apiURL,
 	backURL,
 	channelField,
-	channelFieldAllowedFieldMappingTypes = [],
+	channelFieldAdditionalFieldMappingTypes = [],
 	channelFieldLabel,
 	fieldMappings: initialFieldMappings = [],
 	mappingRule: initialMappingRule,
@@ -277,8 +277,8 @@ export default function EditPIMConnectorFieldMappings({
 					{
 						component: (
 							<FieldMappingsSection
-								allowedFieldMappingTypes={
-									channelFieldAllowedFieldMappingTypes
+								additionalFieldMappingTypes={
+									channelFieldAdditionalFieldMappingTypes
 								}
 								fieldMappings={fieldMappings}
 								objectDefinitions={objectDefinitions}

@@ -330,8 +330,7 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField(
-					Collections.emptyList(), RandomTestUtil.randomString(),
-					true, _CHANNEL_FIELD, true,
+					RandomTestUtil.randomString(), true, _CHANNEL_FIELD, true,
 					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER))
 		);
 
@@ -375,7 +374,7 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 			Arrays.asList("categories"),
 			JSONUtil.toStringList(
 				(JSONArray)reactData.get(
-					"channelFieldAllowedFieldMappingTypes")));
+					"channelFieldAdditionalFieldMappingTypes")));
 
 		_objectDefinitionLocalServiceUtilMockedStatic.when(
 			() ->
@@ -412,11 +411,8 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 
 		reactData = editPIMConnectorFieldMappingsDisplayContext.getReactData();
 
-		Assert.assertEquals(
-			Arrays.asList("dynamicValue", "fixedValue"),
-			JSONUtil.toStringList(
-				(JSONArray)reactData.get(
-					"channelFieldAllowedFieldMappingTypes")));
+		Assert.assertNull(
+			reactData.get("channelFieldAdditionalFieldMappingTypes"));
 		Assert.assertEquals(_CHANNEL_FIELD, reactData.get("channelFieldLabel"));
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -501,7 +497,7 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField(
-					Collections.emptyList(), "SKU", false, _CHANNEL_FIELD, true,
+					"SKU", false, _CHANNEL_FIELD, true,
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT))
 		);
 

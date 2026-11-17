@@ -62,7 +62,7 @@ const PROPS = {
 	apiURL: '/o/pim/connector-field-mappings',
 	backURL: '/web/cms/field-mappings?objectEntryId=42',
 	channelField: 'skus[].sku',
-	channelFieldAllowedFieldMappingTypes: ['dynamicValue', 'fixedValue'],
+	channelFieldAdditionalFieldMappingTypes: [],
 	channelFieldLabel: 'SKU',
 	fieldMappings: [],
 	mappingRule: null,
@@ -243,11 +243,7 @@ describe('EditPIMConnectorFieldMappings', () => {
 		render(
 			<EditPIMConnectorFieldMappings
 				{...PROPS}
-				channelFieldAllowedFieldMappingTypes={[
-					'dynamicValue',
-					'fixedValue',
-					'tags',
-				]}
+				channelFieldAdditionalFieldMappingTypes={['tags']}
 			/>
 		);
 
@@ -305,7 +301,7 @@ describe('EditPIMConnectorFieldMappings', () => {
 		render(
 			<EditPIMConnectorFieldMappings
 				{...PROPS}
-				channelFieldAllowedFieldMappingTypes={['categories']}
+				channelFieldAdditionalFieldMappingTypes={['categories']}
 				fieldMappings={[
 					{
 						id: 7,

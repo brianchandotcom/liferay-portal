@@ -190,8 +190,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					externalReferenceCode, httpServletRequest, true,
 					fdsAPIURLTokenResolutionsJSONObject));
 
-			boolean resolved = unresolvedTokenNames.isEmpty();
-
 			boolean hasTokens = _hasTokens(fdsAPIURL);
 
 			String componentId = externalReferenceCode;
@@ -215,7 +213,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					componentId, fragmentEntryLink, httpServletRequest,
 					printWriter);
 
-				if (hasTokens && !resolved) {
+				if (hasTokens && !unresolvedTokenNames.isEmpty()) {
 					Set<String> unresolvedContextTokenNames =
 						_getUnresolvedContextTokenNames(
 							apiURLTokenMappingsJSONObject, httpServletRequest,
@@ -243,7 +241,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				}
 			}
 
-			if (resolved) {
+			if (unresolvedTokenNames.isEmpty()) {
 				Map<String, JSONObject>
 					selectionFilterTokenResolutionsJSONObjects =
 						_getSelectionFilterTokenResolutionsJSONObjects(

@@ -123,11 +123,11 @@ public class WorkspaceContainerRequestFilterTest {
 
 	@Test
 	public void testFilter() {
-		Assert.assertNull(_filter(null, null, _USER_ID_MEMBER));
-		Assert.assertNull(_filter(null, _GROUP_ID, _USER_ID_MEMBER));
 		Assert.assertNull(
 			_filter(_CHANNEL_ID_ALL_USERS, _GROUP_ID, _USER_ID_MEMBER));
+		Assert.assertNull(_filter(null, _GROUP_ID, _USER_ID_MEMBER));
 		Assert.assertNull(_filter(null, _GROUP_ID, _USER_ID_OMNIADMIN));
+		Assert.assertNull(_filter(null, null, _USER_ID_MEMBER));
 
 		_assertResponseStatus(
 			_filter(RandomTestUtil.randomString(), _GROUP_ID, _USER_ID_MEMBER),

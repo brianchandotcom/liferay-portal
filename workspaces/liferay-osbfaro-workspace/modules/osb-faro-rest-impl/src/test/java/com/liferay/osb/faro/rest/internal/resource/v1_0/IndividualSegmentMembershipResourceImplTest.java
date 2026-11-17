@@ -36,18 +36,6 @@ public class IndividualSegmentMembershipResourceImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		com.liferay.osb.faro.engine.client.model.IndividualSegmentMembership
-			individualSegmentMembership =
-				new com.liferay.osb.faro.engine.client.model.
-					IndividualSegmentMembership();
-
-		Mockito.when(
-			_contactsEngineClient.getIndividualSegmentMemberships(
-				_faroProject, _INDIVIDUAL_SEGMENT_ID_ALL_USERS, 1, 20, null)
-		).thenReturn(
-			new Results<>(List.of(individualSegmentMembership), 1)
-		);
-
 		Mockito.when(
 			_faroProjectLocalService.getFaroProjectByGroupId(_GROUP_ID)
 		).thenReturn(
@@ -59,6 +47,18 @@ public class IndividualSegmentMembershipResourceImplTest {
 				_faroProject, _INDIVIDUAL_SEGMENT_ID_SELECT_USERS)
 		).thenThrow(
 			new ForbiddenException()
+		);
+
+		com.liferay.osb.faro.engine.client.model.IndividualSegmentMembership
+			individualSegmentMembership =
+				new com.liferay.osb.faro.engine.client.model.
+					IndividualSegmentMembership();
+
+		Mockito.when(
+			_contactsEngineClient.getIndividualSegmentMemberships(
+				_faroProject, _INDIVIDUAL_SEGMENT_ID_ALL_USERS, 1, 20, null)
+		).thenReturn(
+			new Results<>(List.of(individualSegmentMembership), 1)
 		);
 
 		Mockito.when(

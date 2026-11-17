@@ -19,7 +19,7 @@ import {
 } from './types';
 
 interface IProps {
-	allowedFieldMappingTypes: string[];
+	additionalFieldMappingTypes: string[];
 	deletable: boolean;
 	fieldMapping: IFieldMapping;
 	index: number;
@@ -31,7 +31,7 @@ interface IProps {
 }
 
 export default function FieldMappingRow({
-	allowedFieldMappingTypes,
+	additionalFieldMappingTypes,
 	deletable,
 	fieldMapping,
 	index,
@@ -145,39 +145,34 @@ export default function FieldMappingRow({
 							value=""
 						/>
 
-						{allowedFieldMappingTypes.includes(
-							TYPE_DYNAMIC_VALUE
-						) &&
-							objectFields.map((objectField) => (
-								<ClaySelect.Option
-									key={objectField.name}
-									label={`${objectField.label} (${objectField.name})`}
-									value={objectField.name}
-								/>
-							))}
+						{objectFields.map((objectField) => (
+							<ClaySelect.Option
+								key={objectField.name}
+								label={`${objectField.label} (${objectField.name})`}
+								value={objectField.name}
+							/>
+						))}
 
-						{allowedFieldMappingTypes.includes(TYPE_CATEGORIES) && (
+						{additionalFieldMappingTypes.includes(
+							TYPE_CATEGORIES
+						) && (
 							<ClaySelect.Option
 								label={Liferay.Language.get('categories')}
 								value={TYPE_CATEGORIES}
 							/>
 						)}
 
-						{allowedFieldMappingTypes.includes(TYPE_TAGS) && (
+						{additionalFieldMappingTypes.includes(TYPE_TAGS) && (
 							<ClaySelect.Option
 								label={Liferay.Language.get('tags')}
 								value={TYPE_TAGS}
 							/>
 						)}
 
-						{allowedFieldMappingTypes.includes(
-							TYPE_FIXED_VALUE
-						) && (
-							<ClaySelect.Option
-								label={Liferay.Language.get('fixed-value')}
-								value={TYPE_FIXED_VALUE}
-							/>
-						)}
+						<ClaySelect.Option
+							label={Liferay.Language.get('fixed-value')}
+							value={TYPE_FIXED_VALUE}
+						/>
 					</ClaySelect>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>

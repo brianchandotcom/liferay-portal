@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.pim.site.initializer.connector.PIMConnector;
 import com.liferay.site.pim.site.initializer.connector.PIMConnectorChannelField;
-import com.liferay.site.pim.site.initializer.constants.PIMConnectorFieldMappingTypeConstants;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConstants;
 
 import java.io.Serializable;
@@ -296,14 +295,12 @@ public class PIMConnectorFieldMappingsUtil {
 
 	public static boolean isCategories(ObjectEntry objectEntry) {
 		return Objects.equals(
-			MapUtil.getString(objectEntry.getValues(), "type"),
-			PIMConnectorFieldMappingTypeConstants.CATEGORIES);
+			MapUtil.getString(objectEntry.getValues(), "type"), "categories");
 	}
 
 	public static boolean isFixedValue(ObjectEntry objectEntry) {
 		return Objects.equals(
-			MapUtil.getString(objectEntry.getValues(), "type"),
-			PIMConnectorFieldMappingTypeConstants.FIXED_VALUE);
+			MapUtil.getString(objectEntry.getValues(), "type"), "fixedValue");
 	}
 
 	public static boolean isMappingComplete(
@@ -358,8 +355,7 @@ public class PIMConnectorFieldMappingsUtil {
 
 	public static boolean isTags(ObjectEntry objectEntry) {
 		return Objects.equals(
-			MapUtil.getString(objectEntry.getValues(), "type"),
-			PIMConnectorFieldMappingTypeConstants.TAGS);
+			MapUtil.getString(objectEntry.getValues(), "type"), "tags");
 	}
 
 	private static boolean _isMapped(ObjectEntry objectEntry) {

@@ -5,7 +5,6 @@
 
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external;
 
-import com.liferay.document.library.repository.external.ExtRepository;
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;
@@ -13,6 +12,7 @@ import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointFolder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,7 +43,8 @@ public class SharepointCachingExtRepositoryTest {
 
 	@Test
 	public void testGetExtRepositoryObjects() throws Exception {
-		ExtRepository extRepository = Mockito.mock(ExtRepository.class);
+		SharepointExtRepository sharepointExtRepository = Mockito.mock(
+			SharepointExtRepository.class);
 
 		String extRepositoryFolderKey = "/" + RandomTestUtil.randomString();
 
@@ -52,7 +53,7 @@ public class SharepointCachingExtRepositoryTest {
 				Mockito.mock(ExtRepositoryFileEntry.class));
 
 		Mockito.when(
-			extRepository.getExtRepositoryObjects(
+			sharepointExtRepository.getExtRepositoryObjects(
 				ExtRepositoryObjectType.FILE, extRepositoryFolderKey)
 		).thenReturn(
 			extRepositoryFileEntries
@@ -62,14 +63,14 @@ public class SharepointCachingExtRepositoryTest {
 			Collections.singletonList(Mockito.mock(ExtRepositoryFolder.class));
 
 		Mockito.when(
-			extRepository.getExtRepositoryObjects(
+			sharepointExtRepository.getExtRepositoryObjects(
 				ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey)
 		).thenReturn(
 			extRepositoryFolders
 		);
 
 		SharepointCachingExtRepository sharepointCachingExtRepository =
-			new SharepointCachingExtRepository(extRepository);
+			new SharepointCachingExtRepository(sharepointExtRepository);
 
 		for (int i = 0; i < 2; i++) {
 			Assert.assertSame(
@@ -89,22 +90,102 @@ public class SharepointCachingExtRepositoryTest {
 		}
 
 		Mockito.verify(
-			extRepository
+			sharepointExtRepository
 		).getExtRepositoryObjects(
 			ExtRepositoryObjectType.FILE, extRepositoryFolderKey
 		);
 
 		Mockito.verify(
-			extRepository
+			sharepointExtRepository
 		).getExtRepositoryObjects(
 			ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey
 		);
 
 		Mockito.verify(
-			extRepository, Mockito.never()
+			sharepointExtRepository, Mockito.never()
 		).getExtRepositoryObjects(
 			ExtRepositoryObjectType.OBJECT, extRepositoryFolderKey
 		);
+	}
+
+	@Test
+	public void testGetExtRepositoryObjectsCount() throws Exception {
+
+		// Counted folders
+
+		SharepointExtRepository sharepointExtRepository = Mockito.mock(
+			SharepointExtRepository.class);
+
+		String extRepositoryFolderKey = "/" + RandomTestUtil.randomString();
+
+		String countedExtRepositoryFolderKey =
+			extRepositoryFolderKey + "/" + RandomTestUtil.randomString();
+		String uncountedExtRepositoryFolderKey =
+			extRepositoryFolderKey + "/" + RandomTestUtil.randomString();
+
+		Mockito.when(
+			sharepointExtRepository.getExtRepositoryObjects(
+				ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey)
+		).thenReturn(
+			Arrays.asList(
+				_getSharepointFolder(countedExtRepositoryFolderKey, null, null),
+				_getSharepointFolder(
+					uncountedExtRepositoryFolderKey, null, null))
+		);
+
+		Mockito.when(
+			sharepointExtRepository.getExtRepositoryFoldersWithChildrenCount(
+				extRepositoryFolderKey)
+		).thenReturn(
+			Collections.singletonList(
+				_getSharepointFolder(countedExtRepositoryFolderKey, 3, 2))
+		);
+
+		int extRepositoryObjectsCount = RandomTestUtil.randomInt();
+
+		Mockito.when(
+			sharepointExtRepository.getExtRepositoryObjectsCount(
+				Mockito.eq(ExtRepositoryObjectType.FILE), Mockito.anyString())
+		).thenReturn(
+			extRepositoryObjectsCount
+		);
+
+		SharepointCachingExtRepository sharepointCachingExtRepository =
+			new SharepointCachingExtRepository(sharepointExtRepository);
+
+		sharepointCachingExtRepository.getExtRepositoryObjects(
+			ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey);
+
+		Assert.assertEquals(
+			3,
+			sharepointCachingExtRepository.getExtRepositoryObjectsCount(
+				ExtRepositoryObjectType.FILE, countedExtRepositoryFolderKey));
+		Assert.assertEquals(
+			2,
+			sharepointCachingExtRepository.getExtRepositoryObjectsCount(
+				ExtRepositoryObjectType.FOLDER, countedExtRepositoryFolderKey));
+		Assert.assertEquals(
+			extRepositoryObjectsCount,
+			sharepointCachingExtRepository.getExtRepositoryObjectsCount(
+				ExtRepositoryObjectType.FILE, uncountedExtRepositoryFolderKey));
+
+		Mockito.verify(
+			sharepointExtRepository
+		).getExtRepositoryFoldersWithChildrenCount(
+			extRepositoryFolderKey
+		);
+
+		// Moved file
+
+		sharepointCachingExtRepository.moveExtRepositoryObject(
+			ExtRepositoryObjectType.FILE,
+			countedExtRepositoryFolderKey + "/" + RandomTestUtil.randomString(),
+			uncountedExtRepositoryFolderKey, RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			extRepositoryObjectsCount,
+			sharepointCachingExtRepository.getExtRepositoryObjectsCount(
+				ExtRepositoryObjectType.FILE, countedExtRepositoryFolderKey));
 	}
 
 	@Test
@@ -112,13 +193,14 @@ public class SharepointCachingExtRepositoryTest {
 
 		// Cached folder
 
-		ExtRepository extRepository = Mockito.mock(ExtRepository.class);
+		SharepointExtRepository sharepointExtRepository = Mockito.mock(
+			SharepointExtRepository.class);
 
 		ExtRepositoryFolder extRepositoryFolder = Mockito.mock(
 			ExtRepositoryFolder.class);
 
 		Mockito.when(
-			extRepository.getExtRepositoryParentFolder(
+			sharepointExtRepository.getExtRepositoryParentFolder(
 				Mockito.any(ExtRepositoryObject.class))
 		).thenReturn(
 			extRepositoryFolder
@@ -127,13 +209,13 @@ public class SharepointCachingExtRepositoryTest {
 		String rootFolderKey = "/" + RandomTestUtil.randomString();
 
 		Mockito.when(
-			extRepository.getRootFolderKey()
+			sharepointExtRepository.getRootFolderKey()
 		).thenReturn(
 			rootFolderKey
 		);
 
 		SharepointCachingExtRepository sharepointCachingExtRepository =
-			new SharepointCachingExtRepository(extRepository);
+			new SharepointCachingExtRepository(sharepointExtRepository);
 
 		String extRepositoryFolderKey = "/" + RandomTestUtil.randomString();
 
@@ -141,7 +223,7 @@ public class SharepointCachingExtRepositoryTest {
 			ExtRepositoryFolder.class);
 
 		Mockito.when(
-			extRepository.getExtRepositoryObject(
+			sharepointExtRepository.getExtRepositoryObject(
 				ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey)
 		).thenReturn(
 			cachedExtRepositoryFolder
@@ -158,7 +240,7 @@ public class SharepointCachingExtRepositoryTest {
 						RandomTestUtil.randomString())));
 
 		Mockito.verify(
-			extRepository, Mockito.never()
+			sharepointExtRepository, Mockito.never()
 		).getExtRepositoryParentFolder(
 			Mockito.any(ExtRepositoryObject.class)
 		);
@@ -166,7 +248,7 @@ public class SharepointCachingExtRepositoryTest {
 		// Root folder
 
 		Mockito.when(
-			extRepository.getExtRepositoryObject(
+			sharepointExtRepository.getExtRepositoryObject(
 				ExtRepositoryObjectType.FOLDER, rootFolderKey)
 		).thenReturn(
 			Mockito.mock(ExtRepositoryFolder.class)
@@ -182,7 +264,7 @@ public class SharepointCachingExtRepositoryTest {
 					rootFolderKey + "/" + RandomTestUtil.randomString())));
 
 		Mockito.verify(
-			extRepository
+			sharepointExtRepository
 		).getExtRepositoryParentFolder(
 			Mockito.any(ExtRepositoryObject.class)
 		);
@@ -201,7 +283,7 @@ public class SharepointCachingExtRepositoryTest {
 		}
 
 		Mockito.verify(
-			extRepository, Mockito.times(2)
+			sharepointExtRepository, Mockito.times(2)
 		).getExtRepositoryParentFolder(
 			Mockito.any(ExtRepositoryObject.class)
 		);
@@ -220,6 +302,16 @@ public class SharepointCachingExtRepositoryTest {
 		);
 
 		return extRepositoryObject;
+	}
+
+	private SharepointFolder _getSharepointFolder(
+		String extRepositoryModelKey, Integer filesCount,
+		Integer foldersCount) {
+
+		return new SharepointFolder(
+			extRepositoryModelKey, RandomTestUtil.randomString(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(),
+			RandomTestUtil.randomLong(), filesCount, foldersCount);
 	}
 
 }

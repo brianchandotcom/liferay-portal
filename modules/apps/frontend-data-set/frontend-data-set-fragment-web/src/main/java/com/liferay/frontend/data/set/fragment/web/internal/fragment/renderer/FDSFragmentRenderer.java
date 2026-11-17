@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -167,15 +168,11 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
-			String componentId = externalReferenceCode;
-
 			String fdsAPIURL = _fdsRenderer.getFDSAPIURL(
 				externalReferenceCode, httpServletRequest, false, null);
 
-			boolean hasTokens = _hasTokens(fdsAPIURL);
-
 			JSONObject apiURLTokenMappingsJSONObject = _getJSONObject(
-				(String)_fragmentEntryConfigurationParser.getFieldValue(
+				_fragmentEntryConfigurationParser.getFieldValue(
 					configurationJSONObject, editableValuesJSONObject,
 					fragmentRendererContext.getLocale(),
 					"apiURLTokenMappings"));
@@ -188,21 +185,16 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					fdsAPIURL, apiURLTokenMappingsJSONObject,
 					autoResolvedFDSAPIURL, httpServletRequest);
 
-			Map<String, JSONObject> selectionFilterTokenResolutionsJSONObjects =
-				_getSelectionFilterTokenResolutionsJSONObjects(
-					externalReferenceCode, httpServletRequest,
-					_getJSONObject(
-						(String)_fragmentEntryConfigurationParser.getFieldValue(
-							configurationJSONObject, editableValuesJSONObject,
-							fragmentRendererContext.getLocale(),
-							"selectionFilterAPIURLTokenMappings")));
-
 			Set<String> unresolvedTokenNames = _getTokenNames(
 				_fdsRenderer.getFDSAPIURL(
 					externalReferenceCode, httpServletRequest, true,
 					fdsAPIURLTokenResolutionsJSONObject));
 
 			boolean resolved = unresolvedTokenNames.isEmpty();
+
+			boolean hasTokens = _hasTokens(fdsAPIURL);
+
+			String componentId = externalReferenceCode;
 
 			if (fragmentRendererContext.isEditMode()) {
 				if (hasTokens) {
@@ -252,6 +244,17 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			}
 
 			if (resolved) {
+				Map<String, JSONObject>
+					selectionFilterTokenResolutionsJSONObjects =
+						_getSelectionFilterTokenResolutionsJSONObjects(
+							externalReferenceCode, httpServletRequest,
+							_getJSONObject(
+								_fragmentEntryConfigurationParser.getFieldValue(
+									configurationJSONObject,
+									editableValuesJSONObject,
+									fragmentRendererContext.getLocale(),
+									"selectionFilterAPIURLTokenMappings")));
+
 				printWriter.write("<div>");
 
 				_fdsRenderer.render(
@@ -472,18 +475,20 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
-	private JSONObject _getJSONObject(String value) {
+	private JSONObject _getJSONObject(Object value) {
 		if (Validator.isNull(value)) {
 			return _jsonFactory.createJSONObject();
 		}
 
+		String valueString = GetterUtil.getString(value);
+
 		try {
-			return _jsonFactory.createJSONObject(value);
+			return _jsonFactory.createJSONObject(valueString);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to create JSON object from: " + value,
+					"Unable to create JSON object from: " + valueString,
 					jsonException);
 			}
 		}

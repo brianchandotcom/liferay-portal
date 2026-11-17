@@ -237,6 +237,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 								!unresolvedContextTokenNames.isEmpty()
 							).build(),
 							httpServletRequest, printWriter);
+
+						return;
 					}
 				}
 			}

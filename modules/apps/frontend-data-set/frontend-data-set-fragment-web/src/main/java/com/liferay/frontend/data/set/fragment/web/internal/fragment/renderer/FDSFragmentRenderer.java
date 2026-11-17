@@ -124,71 +124,18 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			FragmentEntryLink fragmentEntryLink =
-				fragmentRendererContext.getFragmentEntryLink();
-
-			ObjectDefinition dataSetObjectDefinition =
-				_dataSetObjectDefinitionLocalService.
-					fetchObjectDefinitionByExternalReferenceCode(
-						"L_DATA_SET", fragmentEntryLink.getCompanyId());
-
-			if (fragmentRendererContext.isEditMode()) {
-				_writeClassName(
-					dataSetObjectDefinition, fragmentRendererContext);
-			}
-
 			JSONObject configurationJSONObject = getConfigurationJSONObject(
 				fragmentRendererContext);
 
-			JSONObject editableValuesJSONObject = null;
+			JSONObject editableValuesJSONObject = _getEditableValuesJSONObject(
+				fragmentRendererContext);
 
-			if (fragmentRendererContext.isEditMode()) {
-				editableValuesJSONObject =
-					fragmentRendererContext.
-						getModifiableEditableValuesJSONObject();
-			}
-			else {
-				editableValuesJSONObject =
-					fragmentEntryLink.getEditableValuesJSONObject();
-			}
+			String externalReferenceCode = _getExternalReferenceCode(
+				configurationJSONObject, editableValuesJSONObject,
+				fragmentRendererContext.getLocale());
 
-			JSONObject itemSelectorJSONObject =
-				(JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
-					configurationJSONObject, editableValuesJSONObject,
-					fragmentRendererContext.getLocale(), "itemSelector");
-
-			String externalReferenceCode = itemSelectorJSONObject.getString(
-				"externalReferenceCode");
-
-			ObjectEntry dataSetObjectEntry = null;
-
-			if (Validator.isNotNull(externalReferenceCode)) {
-				try {
-					DefaultObjectEntryManager defaultObjectEntryManager =
-						DefaultObjectEntryManagerProvider.provide(
-							_dataSetObjectEntryManagerRegistry.
-								getObjectEntryManager(
-									dataSetObjectDefinition.getCompanyId(),
-									dataSetObjectDefinition.getStorageType()));
-
-					dataSetObjectEntry =
-						defaultObjectEntryManager.getObjectEntry(
-							fragmentEntryLink.getCompanyId(),
-							new DefaultDTOConverterContext(
-								false, null, null, null, null,
-								LocaleUtil.getMostRelevantLocale(), null, null),
-							externalReferenceCode, dataSetObjectDefinition,
-							null);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get frontend data set with external " +
-								"reference code " + externalReferenceCode,
-							exception);
-					}
-				}
-			}
+			ObjectEntry dataSetObjectEntry = _getDataSetObjectEntry(
+				fragmentRendererContext, externalReferenceCode);
 
 			if ((dataSetObjectEntry == null) &&
 				fragmentRendererContext.isEditMode()) {
@@ -265,6 +212,9 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 							fdsAPIURL, autoResolvedFDSAPIURL),
 						fragmentRendererContext);
 				}
+
+				FragmentEntryLink fragmentEntryLink =
+					fragmentRendererContext.getFragmentEntryLink();
 
 				componentId = StringBundler.concat(
 					componentId, StringPool.DASH,
@@ -390,6 +340,67 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return configurationValuesJSONObject;
 	}
 
+	private ObjectEntry _getDataSetObjectEntry(
+		FragmentRendererContext fragmentRendererContext,
+		String externalReferenceCode) {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		ObjectDefinition dataSetObjectDefinition =
+			_dataSetObjectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET", fragmentEntryLink.getCompanyId());
+
+		if (fragmentRendererContext.isEditMode()) {
+			_writeClassName(dataSetObjectDefinition, fragmentRendererContext);
+		}
+
+		ObjectEntry dataSetObjectEntry = null;
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			try {
+				DefaultObjectEntryManager defaultObjectEntryManager =
+					DefaultObjectEntryManagerProvider.provide(
+						_dataSetObjectEntryManagerRegistry.
+							getObjectEntryManager(
+								dataSetObjectDefinition.getCompanyId(),
+								dataSetObjectDefinition.getStorageType()));
+
+				dataSetObjectEntry = defaultObjectEntryManager.getObjectEntry(
+					fragmentEntryLink.getCompanyId(),
+					new DefaultDTOConverterContext(
+						false, null, null, null, null,
+						LocaleUtil.getMostRelevantLocale(), null, null),
+					externalReferenceCode, dataSetObjectDefinition, null);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get frontend data set with external " +
+							"reference code " + externalReferenceCode,
+						exception);
+				}
+			}
+		}
+
+		return dataSetObjectEntry;
+	}
+
+	private JSONObject _getEditableValuesJSONObject(
+		FragmentRendererContext fragmentRendererContext) {
+
+		if (fragmentRendererContext.isEditMode()) {
+			return fragmentRendererContext.
+				getModifiableEditableValuesJSONObject();
+		}
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		return fragmentEntryLink.getEditableValuesJSONObject();
+	}
+
 	private String _getExternalReferenceCode(InfoItemDetails infoItemDetails) {
 		if (infoItemDetails == null) {
 			return null;
@@ -409,6 +420,18 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			(ERCInfoItemIdentifier)infoItemIdentifier;
 
 		return ercInfoItemIdentifier.getExternalReferenceCode();
+	}
+
+	private String _getExternalReferenceCode(
+		JSONObject configurationJSONObject, JSONObject editableValuesJSONObject,
+		Locale locale) {
+
+		JSONObject itemSelectorJSONObject =
+			(JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
+				configurationJSONObject, editableValuesJSONObject, locale,
+				"itemSelector");
+
+		return itemSelectorJSONObject.getString("externalReferenceCode");
 	}
 
 	private InfoItemDetails _getInfoItemDetails(

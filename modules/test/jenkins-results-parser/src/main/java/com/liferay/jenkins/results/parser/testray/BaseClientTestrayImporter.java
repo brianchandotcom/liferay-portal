@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.util.Date;
 import java.util.List;
 
@@ -152,15 +155,14 @@ public abstract class BaseClientTestrayImporter {
 	protected void uploadResults(
 		List<File> resultsFiles, TestrayBuild testrayBuild) {
 
-		File testrayResultsDir = new File("testray-results");
-
-		File resultsTarGzFile = new File(
-			JenkinsResultsParserUtil.combine(
-				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
-				"-", String.valueOf(testrayBuild.getId()), "-results.tar.gz"));
+		File tempDir = null;
 
 		try {
-			JenkinsResultsParserUtil.delete(testrayResultsDir);
+			Path path = Files.createTempDirectory("testray-results-");
+
+			tempDir = path.toFile();
+
+			File testrayResultsDir = new File(tempDir, "testray-results");
 
 			testrayResultsDir.mkdirs();
 
@@ -169,6 +171,14 @@ public abstract class BaseClientTestrayImporter {
 					resultsFile,
 					new File(testrayResultsDir, resultsFile.getName()));
 			}
+
+			File resultsTarGzFile = new File(
+				tempDir,
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(
+						JenkinsResultsParserUtil.getCurrentTimeMillis()),
+					"-", String.valueOf(testrayBuild.getId()),
+					"-results.tar.gz"));
 
 			JenkinsResultsParserUtil.tarGzip(
 				testrayResultsDir, resultsTarGzFile);
@@ -180,8 +190,9 @@ public abstract class BaseClientTestrayImporter {
 			throw new RuntimeException(ioException);
 		}
 		finally {
-			JenkinsResultsParserUtil.delete(testrayResultsDir);
-			JenkinsResultsParserUtil.delete(resultsTarGzFile);
+			if (tempDir != null) {
+				JenkinsResultsParserUtil.delete(tempDir);
+			}
 		}
 	}
 

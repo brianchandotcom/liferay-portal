@@ -195,13 +195,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			String componentId = externalReferenceCode;
 
 			if (fragmentRendererContext.isEditMode()) {
-				if (hasTokens) {
-					_writeAutoResolvedTokenNames(
-						_getAutoResolvedTokenNames(
-							fdsAPIURL, autoResolvedFDSAPIURL),
-						fragmentRendererContext);
-				}
-
 				FragmentEntryLink fragmentEntryLink =
 					fragmentRendererContext.getFragmentEntryLink();
 
@@ -213,31 +206,38 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					componentId, fragmentEntryLink, httpServletRequest,
 					printWriter);
 
-				if (hasTokens && !unresolvedTokenNames.isEmpty()) {
-					Set<String> unresolvedContextTokenNames =
-						_getUnresolvedContextTokenNames(
-							apiURLTokenMappingsJSONObject, httpServletRequest,
-							unresolvedTokenNames);
+				if (hasTokens) {
+					_writeAutoResolvedTokenNames(
+						_getAutoResolvedTokenNames(
+							fdsAPIURL, autoResolvedFDSAPIURL),
+						fragmentRendererContext);
 
-					_reactRenderer.renderReact(
-						new ComponentDescriptor(
-							"{UnresolvedDataSetPreview} from " +
-								"frontend-data-set-fragment-web",
-							componentId, null, true),
-						HashMapBuilder.<String, Object>put(
-							"apiURL",
-							_fdsRenderer.getFDSAPIURL(
-								externalReferenceCode, httpServletRequest, true,
-								fdsAPIURLTokenResolutionsJSONObject)
-						).put(
-							"hasUnmappedTokens",
-							unresolvedTokenNames.size() >
-								unresolvedContextTokenNames.size()
-						).put(
-							"hasUnresolvedContextTokens",
-							!unresolvedContextTokenNames.isEmpty()
-						).build(),
-						httpServletRequest, printWriter);
+					if (!unresolvedTokenNames.isEmpty()) {
+						Set<String> unresolvedContextTokenNames =
+							_getUnresolvedContextTokenNames(
+								apiURLTokenMappingsJSONObject,
+								httpServletRequest, unresolvedTokenNames);
+
+						_reactRenderer.renderReact(
+							new ComponentDescriptor(
+								"{UnresolvedDataSetPreview} from " +
+									"frontend-data-set-fragment-web",
+								componentId, null, true),
+							HashMapBuilder.<String, Object>put(
+								"apiURL",
+								_fdsRenderer.getFDSAPIURL(
+									externalReferenceCode, httpServletRequest,
+									true, fdsAPIURLTokenResolutionsJSONObject)
+							).put(
+								"hasUnmappedTokens",
+								unresolvedTokenNames.size() >
+									unresolvedContextTokenNames.size()
+							).put(
+								"hasUnresolvedContextTokens",
+								!unresolvedContextTokenNames.isEmpty()
+							).build(),
+							httpServletRequest, printWriter);
+					}
 				}
 			}
 

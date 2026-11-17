@@ -6,6 +6,9 @@
 package com.liferay.document.library.repository.external;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.document.library.kernel.processor.DLProcessorHelper;
+import com.liferay.document.library.kernel.processor.DLProcessorHelperUtil;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.repository.external.model.ExtRepositoryFileVersionAdapter;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -33,6 +36,8 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +64,17 @@ public class ExtRepositoryAdapterTest {
 
 	@Before
 	public void setUp() {
+		_dlProcessorHelperSnapshot = ReflectionTestUtil.getAndSetFieldValue(
+			DLProcessorHelperUtil.class, "_dlProcessorHelperSnapshot",
+			new Snapshot<DLProcessorHelper>(
+				DLProcessorHelperUtil.class, DLProcessorHelper.class) {
+
+				@Override
+				public DLProcessorHelper get() {
+					return _dlProcessorHelper;
+				}
+
+			});
 		_dlRepositoryGuestPassword = GetterUtil.getString(
 			PropsUtil.get(PropsKeys.DL_REPOSITORY_GUEST_PASSWORD));
 		_secretResolverSnapshot = ReflectionTestUtil.getAndSetFieldValue(
@@ -78,11 +94,50 @@ public class ExtRepositoryAdapterTest {
 	public void tearDown() {
 		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 
+		ReflectionTestUtil.setFieldValue(
+			DLProcessorHelperUtil.class, "_dlProcessorHelperSnapshot",
+			_dlProcessorHelperSnapshot);
+
 		PropsUtil.set(
 			PropsKeys.DL_REPOSITORY_GUEST_PASSWORD, _dlRepositoryGuestPassword);
 		ReflectionTestUtil.setFieldValue(
 			SecretResolverUtil.class, "_secretResolverSnapshot",
 			_secretResolverSnapshot);
+	}
+
+	@Test
+	public void testCheckInFileEntry() throws Exception {
+		ExtRepositoryAdapter extRepositoryAdapter = _getExtRepositoryAdapter();
+
+		Mockito.doNothing(
+		).when(
+			_extRepository
+		).checkInExtRepositoryFileEntry(
+			Mockito.anyString(), Mockito.any(DLVersionNumberIncrease.class),
+			Mockito.anyString()
+		);
+
+		String changeLog = RandomTestUtil.randomString();
+
+		extRepositoryAdapter.checkInFileEntry(
+			RandomTestUtil.randomLong(), _fileEntryIds.get(0),
+			DLVersionNumberIncrease.NONE, changeLog, null);
+
+		ExtRepositoryFileEntry extRepositoryFileEntry =
+			_extRepositoryFileEntries.get(0);
+
+		Mockito.verify(
+			_extRepository
+		).checkInExtRepositoryFileEntry(
+			extRepositoryFileEntry.getExtRepositoryModelKey(),
+			DLVersionNumberIncrease.NONE, changeLog
+		);
+
+		Mockito.verify(
+			_dlProcessorHelper, Mockito.times(2)
+		).cleanUp(
+			Mockito.any(FileVersion.class)
+		);
 	}
 
 	@Test
@@ -416,6 +471,60 @@ public class ExtRepositoryAdapterTest {
 		);
 	}
 
+	@Test
+	public void testUpdateFileEntry() throws Exception {
+		ExtRepositoryAdapter extRepositoryAdapter = _getExtRepositoryAdapter();
+
+		ExtRepositoryFileEntry extRepositoryFileEntry =
+			_extRepositoryFileEntries.get(0);
+
+		String title = RandomTestUtil.randomString();
+
+		Mockito.when(
+			extRepositoryFileEntry.getTitle()
+		).thenReturn(
+			title
+		);
+
+		Mockito.doNothing(
+		).when(
+			_extRepository
+		).checkInExtRepositoryFileEntry(
+			Mockito.anyString(), Mockito.any(DLVersionNumberIncrease.class),
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			extRepositoryFileEntry
+		).when(
+			_extRepository
+		).updateExtRepositoryFileEntry(
+			Mockito.anyString(), Mockito.anyString(),
+			Mockito.any(InputStream.class)
+		);
+
+		String changeLog = RandomTestUtil.randomString();
+
+		extRepositoryAdapter.updateFileEntry(
+			RandomTestUtil.randomLong(), _fileEntryIds.get(0),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), title,
+			null, null, changeLog, DLVersionNumberIncrease.NONE,
+			Mockito.mock(InputStream.class), 0, null, null, null, null);
+
+		Mockito.verify(
+			_extRepository
+		).checkInExtRepositoryFileEntry(
+			extRepositoryFileEntry.getExtRepositoryModelKey(),
+			DLVersionNumberIncrease.NONE, changeLog
+		);
+
+		Mockito.verify(
+			_dlProcessorHelper, Mockito.times(2)
+		).cleanUp(
+			Mockito.any(FileVersion.class)
+		);
+	}
+
 	private void _assertCheckedAssetEntries(List<Long> fileEntryIds)
 		throws Exception {
 
@@ -570,6 +679,9 @@ public class ExtRepositoryAdapterTest {
 
 	private final DLAppHelperLocalService _dlAppHelperLocalService =
 		Mockito.mock(DLAppHelperLocalService.class);
+	private final DLProcessorHelper _dlProcessorHelper = Mockito.mock(
+		DLProcessorHelper.class);
+	private Snapshot<DLProcessorHelper> _dlProcessorHelperSnapshot;
 	private String _dlRepositoryGuestPassword;
 	private final ExtRepository _extRepository = Mockito.mock(
 		ExtRepository.class,

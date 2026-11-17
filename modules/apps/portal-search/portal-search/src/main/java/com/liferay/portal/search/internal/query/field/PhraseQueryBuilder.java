@@ -32,6 +32,10 @@ public class PhraseQueryBuilder {
 
 		matchQuery.setType(type);
 
+		if (_analyzer != null) {
+			matchQuery.setAnalyzer(_analyzer);
+		}
+
 		if (_boost != null) {
 			matchQuery.setBoost(_boost);
 		}
@@ -45,6 +49,10 @@ public class PhraseQueryBuilder {
 		}
 
 		return matchQuery;
+	}
+
+	public void setAnalyzer(String analyzer) {
+		_analyzer = analyzer;
 	}
 
 	public void setBoost(float boost) {
@@ -67,6 +75,7 @@ public class PhraseQueryBuilder {
 		_trailingStarAware = trailingStarAware;
 	}
 
+	private String _analyzer;
 	private Float _boost;
 	private Integer _maxExpansions;
 	private boolean _prefix;

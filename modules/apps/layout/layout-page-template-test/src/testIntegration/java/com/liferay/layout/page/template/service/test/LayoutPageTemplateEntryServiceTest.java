@@ -12,6 +12,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTy
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryPlidException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryPreviewFileEntryIdException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -21,6 +22,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -45,6 +48,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -293,6 +297,58 @@ public class LayoutPageTemplateEntryServiceTest {
 			layoutPrototype.getName(LocaleUtil.getMostRelevantLocale()));
 	}
 
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithLayoutPrototypeId()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				null, _group1.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				null, 0, null, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0, false,
+				RandomTestUtil.randomLong(), 0, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Assert.assertEquals(0, layoutPageTemplateEntry.getLayoutPrototypeId());
+	}
+
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlid() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(layout.getPlid());
+
+		Assert.assertEquals(
+			layout.getPlid(), layoutPageTemplateEntry.getPlid());
+	}
+
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlidFromAnotherGroup()
+		throws Exception {
+
+		_group2 = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group2);
+
+		try {
+			_addLayoutPageTemplateEntry(layout.getPlid());
+
+			Assert.fail();
+		}
+		catch (LayoutPageTemplateEntryPlidException
+					layoutPageTemplateEntryPlidException) {
+
+			Assert.assertEquals(
+				layout.getPlid(), layoutPageTemplateEntryPlidException.plid);
+		}
+	}
+
 	@Test(expected = LayoutPageTemplateEntryPreviewFileEntryIdException.class)
 	public void testAddLayoutPageTemplateEntryWithPreviewFileEntryFromDifferentGroup()
 		throws Exception {
@@ -304,7 +360,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			null, 0, null, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.BASIC,
-			fileEntry.getFileEntryId(), false, 0, 0, 0,
+			fileEntry.getFileEntryId(), false, 0, 0,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
@@ -1315,6 +1371,17 @@ public class LayoutPageTemplateEntryServiceTest {
 		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			fileEntry.getFileEntryId());
+	}
+
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(long plid)
+		throws Exception {
+
+		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+			null, _group1.getGroupId(),
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			null, 0, null, RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.BASIC, 0, false, plid, 0,
+			WorkflowConstants.STATUS_DRAFT, _serviceContext);
 	}
 
 	private FileEntry _addPreviewFileEntry(Group group) throws Exception {

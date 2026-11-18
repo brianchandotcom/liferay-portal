@@ -12,6 +12,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -24,6 +25,8 @@ import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -54,6 +57,123 @@ public class FragmentDisplayContextTest {
 	@After
 	public void tearDown() {
 		_fragmentPermissionMockedStatic.close();
+	}
+
+	@Test
+	@TestInfo("LPD-111343")
+	public void testGetAIAssistantProps() {
+		long fragmentCollectionId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionId")
+		).thenReturn(
+			String.valueOf(fragmentCollectionId)
+		);
+
+		long groupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_themeDisplay.getScopeGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Group group = Mockito.mock(Group.class);
+
+		String siteExternalReferenceCode = RandomTestUtil.randomString();
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			siteExternalReferenceCode
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroup()
+		).thenReturn(
+			group
+		);
+
+		String fragmentPortletNamespace = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_renderResponse.getNamespace()
+		).thenReturn(
+			fragmentPortletNamespace
+		);
+
+		FragmentCollection fragmentCollection = Mockito.mock(
+			FragmentCollection.class);
+
+		String fragmentSetExternalReferenceCode = RandomTestUtil.randomString();
+
+		Mockito.when(
+			fragmentCollection.getExternalReferenceCode()
+		).thenReturn(
+			fragmentSetExternalReferenceCode
+		);
+
+		Mockito.when(
+			fragmentCollection.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		try (MockedStatic<FragmentCollectionLocalServiceUtil>
+				fragmentCollectionLocalServiceUtilMockedStatic =
+					Mockito.mockStatic(
+						FragmentCollectionLocalServiceUtil.class)) {
+
+			fragmentCollectionLocalServiceUtilMockedStatic.when(
+				() ->
+					FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+						fragmentCollectionId)
+			).thenReturn(
+				fragmentCollection
+			);
+
+			FragmentDisplayContext fragmentDisplayContext =
+				new FragmentDisplayContext(
+					_httpServletRequest, _renderRequest, _renderResponse);
+
+			Map<String, Object> aiAssistantProps =
+				fragmentDisplayContext.getAIAssistantProps();
+
+			Assert.assertEquals(
+				fragmentPortletNamespace,
+				aiAssistantProps.get("fragmentPortletNamespace"));
+			Assert.assertEquals(
+				fragmentSetExternalReferenceCode,
+				aiAssistantProps.get("fragmentSetExternalReferenceCode"));
+			Assert.assertEquals(
+				siteExternalReferenceCode,
+				aiAssistantProps.get("siteExternalReferenceCode"));
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-111343")
+	public void testGetAIAssistantPropsWithoutBasicFragmentCollection() {
+		FragmentCollection fragmentCollection = Mockito.mock(
+			FragmentCollection.class);
+
+		long companyGroupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			fragmentCollection.getGroupId()
+		).thenReturn(
+			companyGroupId
+		);
+
+		Mockito.when(
+			_themeDisplay.getCompanyGroupId()
+		).thenReturn(
+			companyGroupId
+		);
+
+		_testGetAIAssistantPropsWithoutFragmentSetExternalReferenceCode(
+			fragmentCollection);
+		_testGetAIAssistantPropsWithoutFragmentSetExternalReferenceCode(null);
 	}
 
 	@Test
@@ -348,6 +468,50 @@ public class FragmentDisplayContextTest {
 		).thenReturn(
 			Mockito.mock(PermissionChecker.class)
 		);
+	}
+
+	private void
+		_testGetAIAssistantPropsWithoutFragmentSetExternalReferenceCode(
+			FragmentCollection fragmentCollection) {
+
+		long fragmentCollectionId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionId")
+		).thenReturn(
+			String.valueOf(fragmentCollectionId)
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroup()
+		).thenReturn(
+			Mockito.mock(Group.class)
+		);
+
+		try (MockedStatic<FragmentCollectionLocalServiceUtil>
+				fragmentCollectionLocalServiceUtilMockedStatic =
+					Mockito.mockStatic(
+						FragmentCollectionLocalServiceUtil.class)) {
+
+			fragmentCollectionLocalServiceUtilMockedStatic.when(
+				() ->
+					FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+						fragmentCollectionId)
+			).thenReturn(
+				fragmentCollection
+			);
+
+			FragmentDisplayContext fragmentDisplayContext =
+				new FragmentDisplayContext(
+					_httpServletRequest, _renderRequest, _renderResponse);
+
+			Map<String, Object> aiAssistantProps =
+				fragmentDisplayContext.getAIAssistantProps();
+
+			Assert.assertFalse(
+				aiAssistantProps.containsKey(
+					"fragmentSetExternalReferenceCode"));
+		}
 	}
 
 	private final FragmentComposition _fragmentComposition = Mockito.mock(

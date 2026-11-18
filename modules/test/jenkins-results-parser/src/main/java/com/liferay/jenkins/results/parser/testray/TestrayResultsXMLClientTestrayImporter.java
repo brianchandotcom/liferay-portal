@@ -136,12 +136,18 @@ public class TestrayResultsXMLClientTestrayImporter
 	private TestrayBuild _getTestrayBuild(File resultsFile) throws Exception {
 		Map<String, String> properties = _getTestSuiteProperties(resultsFile);
 
+		String testrayBuildSHA = properties.get("git.id");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildSHA)) {
+			testrayBuildSHA = null;
+		}
+
 		return getTestrayBuild(
 			_toDate(
 				_getRequiredProperty(
 					properties, "testray.build.date", resultsFile)),
 			_getRequiredProperty(properties, "testray.build.name", resultsFile),
-			properties.get("git.id"),
+			testrayBuildSHA,
 			_getRequiredProperty(
 				properties, "testray.product.version", resultsFile),
 			_getRequiredProperty(

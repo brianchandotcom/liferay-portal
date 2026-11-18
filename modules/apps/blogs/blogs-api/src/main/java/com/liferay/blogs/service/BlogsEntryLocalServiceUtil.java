@@ -41,6 +41,18 @@ public class BlogsEntryLocalServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			addAttachmentFileEntry(
 				String externalReferenceCode, long userId, long groupId,
+				long entryId, String fileName, String mimeType,
+				InputStream inputStream)
+		throws PortalException {
+
+		return getService().addAttachmentFileEntry(
+			externalReferenceCode, userId, groupId, entryId, fileName, mimeType,
+			inputStream);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			addAttachmentFileEntry(
+				String externalReferenceCode, long userId, long groupId,
 				String fileName, String mimeType, InputStream inputStream)
 		throws PortalException {
 
@@ -883,4 +895,4 @@ public class BlogsEntryLocalServiceUtil {
 			BlogsEntryLocalServiceUtil.class, BlogsEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1791826934
+// LIFERAY-SERVICE-BUILDER-HASH:-2003418504

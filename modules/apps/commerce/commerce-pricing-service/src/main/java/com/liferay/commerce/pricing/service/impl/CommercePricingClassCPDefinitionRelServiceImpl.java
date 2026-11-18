@@ -55,14 +55,9 @@ public class CommercePricingClassCPDefinitionRelServiceImpl
 					commercePricingClassCPDefinitionRel)
 		throws PortalException {
 
-		_commercePricingClassResourcePermission.check(
-			getPermissionChecker(),
-			commercePricingClassCPDefinitionRel.getCommercePricingClassId(),
-			ActionKeys.UPDATE);
-
-		return commercePricingClassCPDefinitionRelLocalService.
-			deleteCommercePricingClassCPDefinitionRel(
-				commercePricingClassCPDefinitionRel);
+		return deleteCommercePricingClassCPDefinitionRel(
+			commercePricingClassCPDefinitionRel.
+				getCommercePricingClassCPDefinitionRelId());
 	}
 
 	@Override

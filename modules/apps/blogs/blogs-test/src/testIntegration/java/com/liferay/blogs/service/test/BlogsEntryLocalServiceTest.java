@@ -48,9 +48,13 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -79,6 +83,7 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
@@ -86,6 +91,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -133,6 +139,36 @@ public class BlogsEntryLocalServiceTest {
 		_user = TestPropsValues.getUser();
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
+	}
+
+	@Test
+	@TestInfo("LPD-116068")
+	public void testAddAttachmentFileEntryToDraftEntry() throws Exception {
+		_creatorUser = UserTestUtil.addUser(_group.getGroupId());
+		_groupUser = UserTestUtil.addUser(_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, _creatorUser.getUserId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		BlogsEntry entry = _blogsEntryLocalService.addEntry(
+			_creatorUser.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		FileEntry fileEntry = _addAttachmentFileEntry(entry);
+
+		Assert.assertTrue(_containsViewPermission(fileEntry, _creatorUser));
+		Assert.assertFalse(_containsViewPermission(fileEntry, _groupUser));
+		Assert.assertFalse(_containsGuestViewPermission(fileEntry));
+
+		_blogsEntryLocalService.updateStatus(
+			_creatorUser.getUserId(), entry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
+
+		Assert.assertTrue(_containsGuestViewPermission(fileEntry));
 	}
 
 	@Test
@@ -619,8 +655,9 @@ public class BlogsEntryLocalServiceTest {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)portletFileEntry.getModel();
 
-		Assert.assertEquals(StringPool.BLANK, dlFileEntry.getClassName());
-		Assert.assertEquals(0, dlFileEntry.getClassPK());
+		Assert.assertEquals(
+			BlogsEntry.class.getName(), dlFileEntry.getClassName());
+		Assert.assertEquals(entry.getEntryId(), dlFileEntry.getClassPK());
 
 		Folder folder = portletFileEntry.getFolder();
 
@@ -721,6 +758,52 @@ public class BlogsEntryLocalServiceTest {
 		catch (Exception exception) {
 			Assert.assertTrue(exception instanceof NoSuchEntryException);
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-116068")
+	public void testDeleteEntryWithAttachmentFileEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		BlogsEntry entry = _blogsEntryLocalService.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		FileEntry fileEntry = _addAttachmentFileEntry(entry);
+
+		BlogsEntry otherEntry = _blogsEntryLocalService.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		FileEntry otherFileEntry = _addAttachmentFileEntry(otherEntry);
+
+		_blogsEntryLocalService.deleteEntry(entry);
+
+		FileEntry portletFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(
+				fileEntry.getFileEntryId());
+
+		DLFileEntry dlFileEntry = (DLFileEntry)portletFileEntry.getModel();
+
+		Assert.assertEquals(0, dlFileEntry.getClassNameId());
+		Assert.assertEquals(0, dlFileEntry.getClassPK());
+
+		Assert.assertTrue(_containsGuestViewPermission(portletFileEntry));
+
+		FileEntry otherPortletFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(
+				otherFileEntry.getFileEntryId());
+
+		DLFileEntry otherDLFileEntry =
+			(DLFileEntry)otherPortletFileEntry.getModel();
+
+		Assert.assertEquals(
+			otherEntry.getEntryId(), otherDLFileEntry.getClassPK());
+
+		Assert.assertFalse(_containsGuestViewPermission(otherPortletFileEntry));
 	}
 
 	@Test
@@ -1647,6 +1730,16 @@ public class BlogsEntryLocalServiceTest {
 		assertBlogsEntriesStatus(actualBlogsEntries, statusInTrash);
 	}
 
+	private FileEntry _addAttachmentFileEntry(BlogsEntry entry)
+		throws Exception {
+
+		return _blogsEntryLocalService.addAttachmentFileEntry(
+			null, entry.getUserId(), entry.getGroupId(), entry.getEntryId(),
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			new UnsyncByteArrayInputStream(new byte[0]));
+	}
+
 	private FileEntry _addAttachmentFileEntry(
 			String externalReferenceCode, String fileName)
 		throws Exception {
@@ -1679,6 +1772,21 @@ public class BlogsEntryLocalServiceTest {
 			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
+	}
+
+	private boolean _containsGuestViewPermission(FileEntry fileEntry)
+		throws Exception {
+
+		return _containsViewPermission(
+			fileEntry, _userLocalService.getGuestUser(_group.getCompanyId()));
+	}
+
+	private boolean _containsViewPermission(FileEntry fileEntry, User user)
+		throws Exception {
+
+		return _fileEntryModelResourcePermission.contains(
+			PermissionCheckerFactoryUtil.create(user),
+			fileEntry.getFileEntryId(), ActionKeys.VIEW);
 	}
 
 	private AssetVocabularySettingsHelper _getAssetVocabularySettingsHelper(
@@ -1741,8 +1849,17 @@ public class BlogsEntryLocalServiceTest {
 	@DeleteAfterTestRun
 	private User _creatorUser;
 
+	@Inject(
+		filter = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
+	)
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private User _groupUser;
 
 	private final QueryDefinition<BlogsEntry> _statusAnyQueryDefinition =
 		new QueryDefinition<>(
@@ -1757,5 +1874,8 @@ public class BlogsEntryLocalServiceTest {
 			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

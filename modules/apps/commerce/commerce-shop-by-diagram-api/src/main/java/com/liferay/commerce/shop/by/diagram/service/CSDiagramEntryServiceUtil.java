@@ -54,6 +54,12 @@ public class CSDiagramEntryServiceUtil {
 		getService().deleteCSDiagramEntry(csDiagramEntry);
 	}
 
+	public static void deleteCSDiagramEntry(long csDiagramEntryId)
+		throws PortalException {
+
+		getService().deleteCSDiagramEntry(csDiagramEntryId);
+	}
+
 	public static CSDiagramEntry fetchCSDiagramEntry(
 			long cpDefinitionId, String sequence)
 		throws PortalException {
@@ -131,4 +137,4 @@ public class CSDiagramEntryServiceUtil {
 			CSDiagramEntryServiceUtil.class, CSDiagramEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1555756497
+// LIFERAY-SERVICE-BUILDER-HASH:-2111784116

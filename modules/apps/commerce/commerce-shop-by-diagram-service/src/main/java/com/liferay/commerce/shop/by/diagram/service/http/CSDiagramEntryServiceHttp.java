@@ -161,6 +161,42 @@ public class CSDiagramEntryServiceHttp {
 		}
 	}
 
+	public static void deleteCSDiagramEntry(
+			HttpPrincipal httpPrincipal, long csDiagramEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CSDiagramEntryServiceUtil.class, "deleteCSDiagramEntry",
+				_deleteCSDiagramEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, csDiagramEntryId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry
 			fetchCSDiagramEntry(
 				HttpPrincipal httpPrincipal, long cpDefinitionId,
@@ -170,7 +206,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "fetchCSDiagramEntry",
-				_fetchCSDiagramEntryParameterTypes3);
+				_fetchCSDiagramEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, sequence);
@@ -217,7 +253,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCProductCSDiagramEntries",
-				_getCProductCSDiagramEntriesParameterTypes4);
+				_getCProductCSDiagramEntriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cProductId, start, end, orderByComparator);
@@ -260,7 +296,7 @@ public class CSDiagramEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class,
 				"getCProductCSDiagramEntriesCount",
-				_getCProductCSDiagramEntriesCountParameterTypes5);
+				_getCProductCSDiagramEntriesCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cProductId);
@@ -303,7 +339,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntries",
-				_getCSDiagramEntriesParameterTypes6);
+				_getCSDiagramEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, start, end);
@@ -345,7 +381,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntriesCount",
-				_getCSDiagramEntriesCountParameterTypes7);
+				_getCSDiagramEntriesCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId);
@@ -386,7 +422,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntry",
-				_getCSDiagramEntryParameterTypes8);
+				_getCSDiagramEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramEntryId);
@@ -429,7 +465,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "getCSDiagramEntry",
-				_getCSDiagramEntryParameterTypes9);
+				_getCSDiagramEntryParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, sequence);
@@ -474,7 +510,7 @@ public class CSDiagramEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CSDiagramEntryServiceUtil.class, "updateCSDiagramEntry",
-				_updateCSDiagramEntryParameterTypes10);
+				_updateCSDiagramEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, csDiagramEntryId, cpInstanceId, cProductId, diagram,
@@ -524,26 +560,28 @@ public class CSDiagramEntryServiceHttp {
 		new Class[] {
 			com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry.class
 		};
-	private static final Class<?>[] _fetchCSDiagramEntryParameterTypes3 =
+	private static final Class<?>[] _deleteCSDiagramEntryParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _fetchCSDiagramEntryParameterTypes4 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_getCProductCSDiagramEntriesParameterTypes4 = new Class[] {
+		_getCProductCSDiagramEntriesParameterTypes5 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCProductCSDiagramEntriesCountParameterTypes5 = new Class[] {
+		_getCProductCSDiagramEntriesCountParameterTypes6 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCSDiagramEntriesParameterTypes6 =
+	private static final Class<?>[] _getCSDiagramEntriesParameterTypes7 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getCSDiagramEntriesCountParameterTypes7 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getCSDiagramEntryParameterTypes8 =
+	private static final Class<?>[] _getCSDiagramEntriesCountParameterTypes8 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getCSDiagramEntryParameterTypes9 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getCSDiagramEntryParameterTypes10 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateCSDiagramEntryParameterTypes10 =
+	private static final Class<?>[] _updateCSDiagramEntryParameterTypes11 =
 		new Class[] {
 			long.class, long.class, long.class, boolean.class, int.class,
 			String.class, String.class,
@@ -551,4 +589,4 @@ public class CSDiagramEntryServiceHttp {
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1297501184
+// LIFERAY-SERVICE-BUILDER-HASH:-115594180

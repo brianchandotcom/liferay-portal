@@ -17,11 +17,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
-import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManager;
 import com.liferay.portal.security.key.secret.SecretResolver;
 import com.liferay.portal.security.key.secret.exception.SecretException;
@@ -72,7 +68,14 @@ public class MFATimeBasedOTPEntryLocalServiceImpl
 		mfaTimeBasedOTPEntry.setCreateDate(new Date());
 		mfaTimeBasedOTPEntry.setAlgorithm(algorithm);
 
-		_setSharedSecret(mfaTimeBasedOTPEntry, sharedSecret);
+		mfaTimeBasedOTPEntry.setSharedSecret(
+			_secretResolver.store(
+				mfaTimeBasedOTPEntry.getCompanyId(),
+				StringBundler.concat(
+					MFATimeBasedOTPEntry.class.getSimpleName(),
+					StringPool.SLASH,
+					mfaTimeBasedOTPEntry.getMfaTimeBasedOTPEntryId()),
+				sharedSecret));
 
 		return mfaTimeBasedOTPEntryPersistence.update(mfaTimeBasedOTPEntry);
 	}
@@ -186,37 +189,6 @@ public class MFATimeBasedOTPEntryLocalServiceImpl
 		mfaTimeBasedOTPEntry.setLastValidTOTP(lastValidTOTP);
 
 		return mfaTimeBasedOTPEntryPersistence.update(mfaTimeBasedOTPEntry);
-	}
-
-	private String _getSecretIdentifier(
-		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
-
-		return StringBundler.concat(
-			MFATimeBasedOTPEntry.class.getSimpleName(), StringPool.SLASH,
-			mfaTimeBasedOTPEntry.getMfaTimeBasedOTPEntryId());
-	}
-
-	private void _setSharedSecret(
-			MFATimeBasedOTPEntry mfaTimeBasedOTPEntry, String sharedSecret)
-		throws PortalException {
-
-		if (Validator.isNull(sharedSecret) || !PropsValues.FIPS_ENABLED) {
-			mfaTimeBasedOTPEntry.setSharedSecret(sharedSecret);
-
-			return;
-		}
-
-		KeyReference keyReference = new KeyReference(
-			_getSecretIdentifier(mfaTimeBasedOTPEntry), StringPool.STAR,
-			KeyReference.Type.SECRET);
-
-		mfaTimeBasedOTPEntry.setSharedSecret(
-			KeyReferenceUtil.toKeyReferenceString(keyReference));
-
-		try (Secret secret = new Secret(keyReference, sharedSecret)) {
-			_secretManager.putSecret(
-				mfaTimeBasedOTPEntry.getCompanyId(), secret);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

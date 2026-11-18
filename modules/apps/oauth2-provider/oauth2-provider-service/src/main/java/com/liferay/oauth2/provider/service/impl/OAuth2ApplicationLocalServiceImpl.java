@@ -68,13 +68,10 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
-import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManager;
 import com.liferay.portal.security.key.secret.SecretResolver;
 
@@ -882,25 +879,13 @@ public class OAuth2ApplicationLocalServiceImpl
 	}
 
 	private void _setClientSecret(
-			String clientSecret, OAuth2Application oAuth2Application)
-		throws PortalException {
-
-		if (Validator.isNull(clientSecret) || !PropsValues.FIPS_ENABLED) {
-			oAuth2Application.setClientSecret(clientSecret);
-
-			return;
-		}
-
-		KeyReference keyReference = new KeyReference(
-			String.valueOf(oAuth2Application.getOAuth2ApplicationId()),
-			StringPool.STAR, KeyReference.Type.SECRET);
+		String clientSecret, OAuth2Application oAuth2Application) {
 
 		oAuth2Application.setClientSecret(
-			KeyReferenceUtil.toKeyReferenceString(keyReference));
-
-		try (Secret secret = new Secret(keyReference, clientSecret)) {
-			_secretManager.putSecret(oAuth2Application.getCompanyId(), secret);
-		}
+			_secretResolver.store(
+				oAuth2Application.getCompanyId(),
+				String.valueOf(oAuth2Application.getOAuth2ApplicationId()),
+				clientSecret));
 	}
 
 	private void _validate(

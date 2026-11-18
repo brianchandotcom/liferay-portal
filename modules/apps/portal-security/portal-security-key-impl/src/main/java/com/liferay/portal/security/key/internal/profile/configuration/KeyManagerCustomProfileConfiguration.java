@@ -35,10 +35,7 @@ public interface KeyManagerCustomProfileConfiguration {
 	)
 	public String companyKEKProviderId();
 
-	@Meta.AD(
-		deflt = "db-company-secret", name = "company-secret-provider-id",
-		required = false
-	)
+	@Meta.AD(deflt = "", name = "company-secret-provider-id", required = false)
 	public String companySecretProviderId();
 
 	@Meta.AD(
@@ -53,10 +50,7 @@ public interface KeyManagerCustomProfileConfiguration {
 	)
 	public String systemKEKProviderId();
 
-	@Meta.AD(
-		deflt = "db-system-secret", name = "system-secret-provider-id",
-		required = false
-	)
+	@Meta.AD(deflt = "", name = "system-secret-provider-id", required = false)
 	public String systemSecretProviderId();
 
 }

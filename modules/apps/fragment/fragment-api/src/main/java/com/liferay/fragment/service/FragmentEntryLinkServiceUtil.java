@@ -29,6 +29,25 @@ public class FragmentEntryLinkServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentEntryLinkServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static FragmentEntryLink addFragmentEntryLink(
+			String externalReferenceCode, long groupId, String fragmentEntryERC,
+			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
+			String editableValues, String rendererKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addFragmentEntryLink(
+			externalReferenceCode, groupId, fragmentEntryERC,
+			fragmentEntryScopeERC, segmentsExperienceId, plid, editableValues,
+			rendererKey, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFragmentEntryLink(String, long, String, String, long,
+	 long, String, String, ServiceContext)}
+	 */
+	@Deprecated
+	public static FragmentEntryLink addFragmentEntryLink(
 			String externalReferenceCode, long groupId,
 			String originalFragmentEntryLinkERC, String fragmentEntryERC,
 			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
@@ -110,4 +129,4 @@ public class FragmentEntryLinkServiceUtil {
 			FragmentEntryLinkServiceUtil.class, FragmentEntryLinkService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2134443574
+// LIFERAY-SERVICE-BUILDER-HASH:1481237177

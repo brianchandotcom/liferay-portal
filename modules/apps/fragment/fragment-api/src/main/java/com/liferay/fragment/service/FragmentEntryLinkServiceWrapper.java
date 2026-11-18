@@ -31,6 +31,26 @@ public class FragmentEntryLinkServiceWrapper
 
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(
+			String externalReferenceCode, long groupId, String fragmentEntryERC,
+			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
+			String editableValues, String rendererKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentEntryLinkService.addFragmentEntryLink(
+			externalReferenceCode, groupId, fragmentEntryERC,
+			fragmentEntryScopeERC, segmentsExperienceId, plid, editableValues,
+			rendererKey, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFragmentEntryLink(String, long, String, String, long,
+	 long, String, String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FragmentEntryLink addFragmentEntryLink(
 			String externalReferenceCode, long groupId,
 			String originalFragmentEntryLinkERC, String fragmentEntryERC,
 			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
@@ -127,4 +147,4 @@ public class FragmentEntryLinkServiceWrapper
 	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1669956514
+// LIFERAY-SERVICE-BUILDER-HASH:-570555650

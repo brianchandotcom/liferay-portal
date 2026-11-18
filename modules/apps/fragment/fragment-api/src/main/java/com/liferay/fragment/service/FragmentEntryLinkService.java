@@ -44,6 +44,19 @@ public interface FragmentEntryLinkService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentEntryLinkServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the fragment entry link remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link FragmentEntryLinkServiceUtil} if injection and service tracking are not available.
 	 */
 	public FragmentEntryLink addFragmentEntryLink(
+			String externalReferenceCode, long groupId, String fragmentEntryERC,
+			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
+			String editableValues, String rendererKey,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFragmentEntryLink(String, long, String, String, long,
+	 long, String, String, ServiceContext)}
+	 */
+	@Deprecated
+	public FragmentEntryLink addFragmentEntryLink(
 			String externalReferenceCode, long groupId,
 			String originalFragmentEntryLinkERC, String fragmentEntryERC,
 			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
@@ -85,4 +98,4 @@ public interface FragmentEntryLinkService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1550798949
+// LIFERAY-SERVICE-BUILDER-HASH:-1094248109

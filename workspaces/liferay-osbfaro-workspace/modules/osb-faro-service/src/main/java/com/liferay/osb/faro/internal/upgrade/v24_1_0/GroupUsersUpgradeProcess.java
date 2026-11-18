@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.internal.upgrade.v24_1_0;
 
 import com.liferay.osb.faro.constants.FaroUserConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -48,9 +49,10 @@ public class GroupUsersUpgradeProcess extends UpgradeProcess {
 					if (user == null) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to add user " + liveUserId +
-									" to group " + groupId +
-										" because the user does not exist");
+								StringBundler.concat(
+									"Unable to add user ", liveUserId,
+									" to group ", groupId,
+									" because the user does not exist"));
 						}
 
 						continue;

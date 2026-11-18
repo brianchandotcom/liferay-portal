@@ -98,6 +98,20 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddTimeBasedOTPEntry() throws Exception {
+		String algorithm = RandomTestUtil.randomString();
+
+		_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
+			_user.getUserId(), algorithm, RandomTestUtil.randomString());
+
+		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
+			_mfaTimeBasedOTPEntryLocalService.fetchMFATimeBasedOTPEntryByUserId(
+				_user.getUserId());
+
+		Assert.assertEquals(algorithm, mfaTimeBasedOTPEntry.getAlgorithm());
+	}
+
+	@Test
 	public void testAddTimeBasedOTPEntryUsesAPortableSecretIdentifier()
 		throws Exception {
 
@@ -107,7 +121,8 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 			MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
 				_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
-					_user.getUserId(), RandomTestUtil.randomString());
+					_user.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
 
 			String secretIdentifier = _getSecretIdentifier(
 				mfaTimeBasedOTPEntry);
@@ -133,7 +148,8 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 			try {
 				_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
-					_user.getUserId(), RandomTestUtil.randomString());
+					_user.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
 
 				Assert.fail();
 			}
@@ -167,7 +183,7 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 		try {
 			_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
-				_user.getUserId(),
+				_user.getUserId(), RandomTestUtil.randomString(),
 				KeyReferenceUtil.toKeyReferenceString(
 					new KeyReference(
 						RandomTestUtil.randomString(), StringPool.STAR,
@@ -191,7 +207,8 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 			MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
 				_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
-					_user.getUserId(), RandomTestUtil.randomString());
+					_user.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
 
 			long companyId = mfaTimeBasedOTPEntry.getCompanyId();
 			String secretIdentifier = _getSecretIdentifier(
@@ -224,7 +241,8 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 			MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
 				_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
-					_user.getUserId(), RandomTestUtil.randomString());
+					_user.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
 
 			long companyId = mfaTimeBasedOTPEntry.getCompanyId();
 			String secretIdentifier = _getSecretIdentifier(
@@ -252,7 +270,8 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 			MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
 				_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
-					_user.getUserId(), sharedSecret);
+					_user.getUserId(), RandomTestUtil.randomString(),
+					sharedSecret);
 
 			Assert.assertEquals(
 				sharedSecret,
@@ -272,7 +291,7 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
 			_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
-				_user.getUserId(), sharedSecret);
+				_user.getUserId(), RandomTestUtil.randomString(), sharedSecret);
 
 		Assert.assertEquals(
 			sharedSecret, mfaTimeBasedOTPEntry.getSharedSecret());
@@ -290,7 +309,7 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 
 		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
 			_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
-				_user.getUserId(), sharedSecret);
+				_user.getUserId(), RandomTestUtil.randomString(), sharedSecret);
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -301,6 +320,24 @@ public class MFATimeBasedOTPEntryLocalServiceTest {
 				_mfaTimeBasedOTPEntryLocalService.getPlaintextSharedSecret(
 					mfaTimeBasedOTPEntry));
 		}
+	}
+
+	@Test
+	public void testUpdateAlgorithm() throws Exception {
+		_mfaTimeBasedOTPEntryLocalService.addTimeBasedOTPEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		String algorithm = RandomTestUtil.randomString();
+
+		_mfaTimeBasedOTPEntryLocalService.updateAlgorithm(
+			_user.getUserId(), algorithm);
+
+		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
+			_mfaTimeBasedOTPEntryLocalService.fetchMFATimeBasedOTPEntryByUserId(
+				_user.getUserId());
+
+		Assert.assertEquals(algorithm, mfaTimeBasedOTPEntry.getAlgorithm());
 	}
 
 	private String _getSecretIdentifier(

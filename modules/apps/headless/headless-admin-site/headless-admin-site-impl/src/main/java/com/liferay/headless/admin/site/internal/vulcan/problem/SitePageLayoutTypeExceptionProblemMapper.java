@@ -5,14 +5,15 @@
 
 package com.liferay.headless.admin.site.internal.vulcan.problem;
 
+import com.liferay.headless.admin.site.dto.v1_0.SitePage;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemMapper;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,42 +28,65 @@ public class SitePageLayoutTypeExceptionProblemMapper
 	@Override
 	public Problem getProblem(LayoutTypeException layoutTypeException) {
 		return ProblemUtil.getProblem(
-			_getLayoutTypeExceptionMessage(
-				layoutTypeException.getMessage(), layoutTypeException.getType(),
-				GetterUtil.getString(layoutTypeException.getLayoutType()),
-				LocaleUtil.getMostRelevantLocale()),
-			Problem.Status.CONFLICT, layoutTypeException);
+			_getMessage(layoutTypeException), Problem.Status.CONFLICT,
+			layoutTypeException);
 	}
 
-	private String _getLayoutTypeExceptionMessage(
-		String defaultMessage, int exceptionType, String layoutType,
-		Locale locale) {
+	private String _getMessage(LayoutTypeException layoutTypeException) {
+		int type = layoutTypeException.getType();
 
-		if (exceptionType == LayoutTypeException.FIRST_LAYOUT) {
+		if (type == LayoutTypeException.FIRST_LAYOUT) {
+			String pageType = _getPageType(layoutTypeException);
+
+			if (Validator.isNull(pageType)) {
+				return "The first page cannot be of this type";
+			}
+
 			return _language.format(
-				locale, "the-first-page-cannot-be-of-type-x",
-				_language.get(locale, "layout.types." + layoutType));
+				LocaleUtil.US, "the-first-page-cannot-be-of-type-x", pageType,
+				false);
 		}
 
-		if (exceptionType == LayoutTypeException.FIRST_LAYOUT_PERMISSION) {
+		if (type == LayoutTypeException.FIRST_LAYOUT_PERMISSION) {
 			return _language.get(
-				locale, "the-first-page-should-be-visible-for-guest-users");
+				LocaleUtil.US,
+				"the-first-page-should-be-visible-for-guest-users");
 		}
 
-		if (exceptionType == LayoutTypeException.NOT_PARENTABLE) {
+		if (type == LayoutTypeException.NOT_PARENTABLE) {
 			return _language.get(
-				locale,
+				LocaleUtil.US,
 				"a-page-cannot-become-a-child-of-a-page-that-is-not-" +
 					"parentable");
 		}
 
-		if (exceptionType == LayoutTypeException.TYPE_NOT_ALLOWED) {
+		if (type == LayoutTypeException.TYPE_NOT_ALLOWED) {
+			String pageType = _getPageType(layoutTypeException);
+
+			if (Validator.isNull(pageType)) {
+				return "An empty page cannot be converted to this type";
+			}
+
 			return _language.format(
-				locale, "an-empty-page-cannot-be-converted-to-x",
-				_language.get(locale, "layout.types." + layoutType));
+				LocaleUtil.US, "an-empty-page-cannot-be-converted-to-x",
+				pageType, false);
 		}
 
-		return defaultMessage;
+		return layoutTypeException.getMessage();
+	}
+
+	private String _getPageType(LayoutTypeException layoutTypeException) {
+		String layoutType = GetterUtil.getString(
+			layoutTypeException.getLayoutType());
+
+		SitePage.Type externalType = SitePageTypeUtil.fetchExternalType(
+			layoutType);
+
+		if (externalType == null) {
+			return layoutType;
+		}
+
+		return externalType.getValue();
 	}
 
 	@Reference

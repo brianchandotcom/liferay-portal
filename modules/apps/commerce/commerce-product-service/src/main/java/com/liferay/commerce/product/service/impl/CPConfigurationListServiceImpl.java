@@ -93,11 +93,8 @@ public class CPConfigurationListServiceImpl
 			CPConfigurationList cpConfigurationList)
 		throws PortalException {
 
-		_checkCommerceCatalog(
-			cpConfigurationList.getGroupId(), ActionKeys.UPDATE);
-
-		return cpConfigurationListLocalService.deleteCPConfigurationList(
-			cpConfigurationList);
+		return deleteCPConfigurationList(
+			cpConfigurationList.getCPConfigurationListId());
 	}
 
 	@Override

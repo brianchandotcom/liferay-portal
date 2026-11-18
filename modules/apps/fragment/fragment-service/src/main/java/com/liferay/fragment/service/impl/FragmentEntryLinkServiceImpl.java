@@ -40,6 +40,28 @@ public class FragmentEntryLinkServiceImpl
 
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(
+			String externalReferenceCode, long groupId, String fragmentEntryERC,
+			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
+			String editableValues, String rendererKey,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_checkPermission(groupId, plid, false, true);
+
+		return fragmentEntryLinkLocalService.addFragmentEntryLink(
+			externalReferenceCode, getUserId(), groupId, fragmentEntryERC,
+			fragmentEntryScopeERC, segmentsExperienceId, plid, editableValues,
+			rendererKey, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFragmentEntryLink(String, long, String, String, long,
+	 *             long, String, String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FragmentEntryLink addFragmentEntryLink(
 			String externalReferenceCode, long groupId,
 			String originalFragmentEntryLinkERC, String fragmentEntryERC,
 			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
@@ -48,14 +70,10 @@ public class FragmentEntryLinkServiceImpl
 			String rendererKey, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkPermission(groupId, plid, false, true);
-
-		return fragmentEntryLinkLocalService.addFragmentEntryLink(
-			externalReferenceCode, getUserId(), groupId,
-			originalFragmentEntryLinkERC, fragmentEntryERC,
-			fragmentEntryScopeERC, segmentsExperienceId, plid, css, html, js,
-			configuration, editableValues, namespace, position, rendererKey,
-			type, serviceContext);
+		return addFragmentEntryLink(
+			externalReferenceCode, groupId, fragmentEntryERC,
+			fragmentEntryScopeERC, segmentsExperienceId, plid, editableValues,
+			rendererKey, serviceContext);
 	}
 
 	@Override

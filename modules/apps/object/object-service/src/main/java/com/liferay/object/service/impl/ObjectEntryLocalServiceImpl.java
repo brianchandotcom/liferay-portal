@@ -1015,7 +1015,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public ObjectEntry fetchManyToOneObjectEntry(
+	public ObjectEntry fetchRelatedObjectEntry(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
@@ -1025,7 +1025,10 @@ public class ObjectEntryLocalServiceImpl
 
 		if (!Objects.equals(
 				objectRelationship.getType(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+			!Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -1069,12 +1072,12 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
-		DSLQuery dslQuery = _getFetchManyToOneObjectEntryDSLQuery(
+		DSLQuery dslQuery = _getFetchRelatedObjectEntryDSLQuery(
 			dynamicObjectDefinitionTable, groupId, objectRelationship,
 			primaryKey, dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Get one to many related object entries: " + dslQuery);
+			_log.debug("Get related object entries: " + dslQuery);
 		}
 
 		List<ObjectEntry> objectEntries = objectEntryPersistence.dslQuery(
@@ -1556,7 +1559,7 @@ public class ObjectEntryLocalServiceImpl
 		Table table = _objectFieldLocalService.getTable(
 			objectDefinitionId, aggregationTerm);
 
-		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
+		DSLQuery dslQuery = _getRelatedObjectEntriesGroupByStep(
 			DSLQueryFactoryUtil.select(
 				table.getColumn(objectField.getDBColumnName()),
 				DSLFunctionFactoryUtil.countDistinct(
@@ -1581,13 +1584,13 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectEntry> getOneToManyObjectEntries(
+	public List<ObjectEntry> getRelatedObjectEntries(
 			long groupId, long objectRelationshipId, Predicate predicate,
 			boolean preferApproved, long primaryKey, boolean related,
 			String search, int start, int end, Sort[] sorts)
 		throws PortalException {
 
-		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
+		DSLQuery dslQuery = _getRelatedObjectEntriesGroupByStep(
 			DSLQueryFactoryUtil.select(ObjectEntryTable.INSTANCE), groupId,
 			objectRelationshipId, predicate, preferApproved, primaryKey,
 			related, search
@@ -1612,20 +1615,19 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public int getOneToManyObjectEntriesCount(
+	public int getRelatedObjectEntriesCount(
 			long groupId, long objectRelationshipId, Predicate predicate,
 			long primaryKey, boolean related, String search)
 		throws PortalException {
 
-		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
+		DSLQuery dslQuery = _getRelatedObjectEntriesGroupByStep(
 			DSLQueryFactoryUtil.countDistinct(
 				ObjectEntryTable.INSTANCE.objectEntryId),
 			groupId, objectRelationshipId, predicate, false, primaryKey,
 			related, search);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Get one to many related object entries count: " + dslQuery);
+			_log.debug("Get related object entries count: " + dslQuery);
 		}
 
 		return objectEntryPersistence.dslQueryCount(dslQuery);
@@ -3925,7 +3927,7 @@ public class ObjectEntryLocalServiceImpl
 				ObjectRelationshipUtil.getObjectRelationshipFieldName(
 					objectDefinition, objectRelationship.getName());
 
-			List<ObjectEntry> relatedObjectEntries = getOneToManyObjectEntries(
+			List<ObjectEntry> relatedObjectEntries = getRelatedObjectEntries(
 				sourceObjectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(), null, false,
 				sourceObjectEntry.getObjectEntryId(), true, null,
@@ -5039,7 +5041,7 @@ public class ObjectEntryLocalServiceImpl
 		return null;
 	}
 
-	private DSLQuery _getFetchManyToOneObjectEntryDSLQuery(
+	private DSLQuery _getFetchRelatedObjectEntryDSLQuery(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 			long groupId, ObjectRelationship objectRelationship,
 			long primaryKey,
@@ -5769,7 +5771,7 @@ public class ObjectEntryLocalServiceImpl
 			objectFieldPredicate, preferredLanguageId);
 	}
 
-	private GroupByStep _getOneToManyObjectEntriesGroupByStep(
+	private GroupByStep _getRelatedObjectEntriesGroupByStep(
 			FromStep fromStep, long groupId, long objectRelationshipId,
 			Predicate predicate, boolean preferApproved, long primaryKey,
 			boolean related, String search)

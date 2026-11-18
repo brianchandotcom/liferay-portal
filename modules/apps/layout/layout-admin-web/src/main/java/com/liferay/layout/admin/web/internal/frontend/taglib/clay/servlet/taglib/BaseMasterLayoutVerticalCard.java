@@ -34,8 +34,7 @@ public abstract class BaseMasterLayoutVerticalCard implements VerticalCard {
 		this.renderResponse = renderResponse;
 
 		httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-
-		themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -70,13 +69,8 @@ public abstract class BaseMasterLayoutVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public String getImageAlt() {
-		return getTitle();
-	}
-
-	@Override
 	public String getImageSrc() {
-		return layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
+		return layoutPageTemplateEntry.getImagePreviewURL(_themeDisplay);
 	}
 
 	@Override
@@ -94,9 +88,10 @@ public abstract class BaseMasterLayoutVerticalCard implements VerticalCard {
 	protected final HttpServletRequest httpServletRequest;
 	protected final LayoutPageTemplateEntry layoutPageTemplateEntry;
 	protected final RenderResponse renderResponse;
-	protected final ThemeDisplay themeDisplay;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseMasterLayoutVerticalCard.class);
+
+	private final ThemeDisplay _themeDisplay;
 
 }

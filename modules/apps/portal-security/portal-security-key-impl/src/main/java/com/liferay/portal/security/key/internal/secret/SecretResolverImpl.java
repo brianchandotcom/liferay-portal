@@ -12,7 +12,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.fips.FIPSAuditEvent;
+import com.liferay.portal.kernel.security.fips.FIPSAuditUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -121,15 +126,6 @@ public class SecretResolverImpl implements SecretResolver {
 			return value;
 		}
 
-		if (!identifier.startsWith("config/") &&
-			!identifier.startsWith(_IDENTIFIER_PREFIX_PREFERENCE)) {
-
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"Unable to store \"", identifier,
-					"\" because its namespace is not supported"));
-		}
-
 		try {
 			if (KeyReferenceUtil.isKeyReference(value)) {
 				KeyReference keyReference = KeyReferenceUtil.parseKeyReference(
@@ -161,6 +157,27 @@ public class SecretResolverImpl implements SecretResolver {
 						"\""));
 			}
 
+			if (!_hasSecretProviderId(companyId)) {
+				FIPSAuditEvent fipsAuditEvent = new FIPSAuditEvent(
+					"secret-store-skipped", FIPSAuditEvent.Severity.WARNING);
+
+				fipsAuditEvent.put("company-id", companyId);
+				fipsAuditEvent.put(
+					"identifier", GetterUtil.getString(identifier));
+
+				FIPSAuditUtil.write(fipsAuditEvent);
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							identifier, " was stored in plaintext because no ",
+							"secret provider is configured for company ",
+							companyId));
+				}
+
+				return value;
+			}
+
 			try (Secret secret = new Secret(
 					new KeyReference(
 						identifier, StringPool.STAR, KeyReference.Type.SECRET),
@@ -187,7 +204,27 @@ public class SecretResolverImpl implements SecretResolver {
 			PortalCacheManagerNames.SINGLE_VM, PORTAL_CACHE_NAME);
 	}
 
+	private boolean _hasSecretProviderId(long companyId) {
+		KeyManagerProfile keyManagerProfile =
+			_keyManagerProfileRegistry.getActiveKeyManagerProfile();
+
+		if (keyManagerProfile == null) {
+			return false;
+		}
+
+		if (companyId == CompanyConstants.SYSTEM) {
+			return Validator.isNotNull(
+				keyManagerProfile.getSystemSecretProviderId());
+		}
+
+		return Validator.isNotNull(
+			keyManagerProfile.getCompanySecretProviderId());
+	}
+
 	private static final String _IDENTIFIER_PREFIX_PREFERENCE = "preference/";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SecretResolverImpl.class);
 
 	@Reference
 	private KeyManagerProfileRegistry _keyManagerProfileRegistry;

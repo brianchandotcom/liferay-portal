@@ -6,6 +6,7 @@
 package com.liferay.sharing.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ClassName;
@@ -596,6 +597,50 @@ public class SharingEntryServiceTest {
 		Assert.assertNull(
 			_sharingEntryLocalService.fetchSharingEntry(
 				sharingEntry.getSharingEntryId()));
+	}
+
+	@Test
+	@TestInfo("LPD-116189")
+	public void testDeleteSharingEntryWithSharingEntryFromAnotherGroup()
+		throws Exception {
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		SharingEntry sharingEntry1 = _sharingEntryLocalService.addSharingEntry(
+			null, _fromUser.getUserId(), 0, 0, _toUser.getUserId(),
+			_classNameId, group2.getGroupId(), group2.getGroupId(), false,
+			Collections.singletonList(SharingEntryAction.VIEW), null,
+			_serviceContext);
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		SharingEntry sharingEntry2 =
+			_sharingEntryLocalService.createSharingEntry(
+				sharingEntry1.getSharingEntryId());
+
+		sharingEntry2.setGroupId(group1.getGroupId());
+		sharingEntry2.setClassNameId(_classNameId);
+		sharingEntry2.setClassPK(group1.getGroupId());
+
+		User user = UserTestUtil.addGroupAdminUser(group1);
+
+		UserTestUtil.setUser(user);
+
+		PrincipalException principalException = Assert.assertThrows(
+			PrincipalException.class,
+			() -> _sharingEntryService.deleteSharingEntry(sharingEntry2));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"User ", user.getUserId(),
+				" does not have permission to manage collaborators of entry ",
+				"with class name ", _classNameId, " and class PK ",
+				group2.getGroupId()),
+			principalException.getMessage());
+
+		Assert.assertNotNull(
+			_sharingEntryLocalService.fetchSharingEntry(
+				sharingEntry1.getSharingEntryId()));
 	}
 
 	@Test

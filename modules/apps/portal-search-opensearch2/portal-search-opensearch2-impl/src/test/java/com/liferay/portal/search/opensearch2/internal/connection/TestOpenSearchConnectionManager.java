@@ -9,7 +9,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
@@ -56,12 +55,8 @@ public class TestOpenSearchConnectionManager
 
 		activate();
 
-		OpenSearchConnectionsHolderImpl openSearchConnectionsHolderImpl =
+		super.openSearchConnectionsHolder =
 			new OpenSearchConnectionsHolderImpl();
-
-		openSearchConnectionsHolderImpl.http = Mockito.mock(Http.class);
-
-		super.openSearchConnectionsHolder = openSearchConnectionsHolderImpl;
 
 		ReflectionTestUtil.setFieldValue(
 			this, "_clusterExecutor", Mockito.mock(ClusterExecutor.class));

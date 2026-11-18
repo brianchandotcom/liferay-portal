@@ -379,6 +379,13 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 				"Provider " + getProviderId() + " is not enabled");
 		}
 
+		if (Validator.isNull(
+				awsSecretsManagerSecretProviderContext.getAWSRegion())) {
+
+			throw new SecretException(
+				"Provider " + getProviderId() + " has no AWS region");
+		}
+
 		if (!isAllowedCompany(companyId)) {
 			throw new SecretException(
 				StringBundler.concat(

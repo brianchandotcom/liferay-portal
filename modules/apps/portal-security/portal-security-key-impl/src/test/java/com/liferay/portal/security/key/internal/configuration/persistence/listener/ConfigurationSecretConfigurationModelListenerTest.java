@@ -5,11 +5,13 @@
 
 package com.liferay.portal.security.key.internal.configuration.persistence.listener;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.fips.FIPSAuditEvent;
 import com.liferay.portal.kernel.security.fips.FIPSAuditUtil;
@@ -159,6 +161,8 @@ public class ConfigurationSecretConfigurationModelListenerTest {
 		);
 
 		_testOnBeforeSaveWhenConfigurationHasNoMetatype();
+		_testOnBeforeSaveWhenConfigurationIsInstalledFromFile();
+		_testOnBeforeSaveWhenFileValueIsUnchanged();
 		_testOnBeforeSaveWhenKeyManagerProfileIsInactive();
 
 		_setUpKeyManagerProfileRegistry(_keyManagerProfile);
@@ -167,6 +171,7 @@ public class ConfigurationSecretConfigurationModelListenerTest {
 		_testOnBeforeSaveWhenScopeIsCompany();
 		_testOnBeforeSaveWhenScopeIsGroup();
 		_testOnBeforeSaveWhenStoreFails();
+		_testOnBeforeSaveWhenValueIsPlaceholder();
 	}
 
 	private void _assertOnBeforeSaveFails(String value) throws Exception {
@@ -223,6 +228,25 @@ public class ConfigurationSecretConfigurationModelListenerTest {
 		}
 
 		Assert.assertEquals(value, properties.get("credential"));
+	}
+
+	private void _assertOnBeforeSaveKeepsValue(String value) throws Exception {
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"credential", value
+			).build();
+
+		_configurationSecretConfigurationModelListener.onBeforeSave(
+			_PID, properties);
+
+		Assert.assertEquals(value, properties.get("credential"));
+
+		Mockito.verify(
+			_secretResolver, Mockito.never()
+		).store(
+			Mockito.anyLong(), Mockito.any(SecretContext.class),
+			Mockito.eq(value)
+		);
 	}
 
 	private ExtendedAttributeDefinition _createExtendedAttributeDefinition(
@@ -500,6 +524,89 @@ public class ConfigurationSecretConfigurationModelListenerTest {
 		Mockito.verifyNoInteractions(_secretResolver);
 	}
 
+	private void _testOnBeforeSaveWhenConfigurationIsInstalledFromFile()
+		throws Exception {
+
+		String value = RandomTestUtil.randomString();
+
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+				RandomTestUtil.randomString()
+			).put(
+				"credential", value
+			).build();
+
+		try (MockedStatic<FIPSAuditUtil> fipsAuditUtilMockedStatic =
+				Mockito.mockStatic(FIPSAuditUtil.class)) {
+
+			_configurationSecretConfigurationModelListener.onBeforeSave(
+				_PID, properties);
+
+			ArgumentCaptor<FIPSAuditEvent> argumentCaptor =
+				ArgumentCaptor.forClass(FIPSAuditEvent.class);
+
+			fipsAuditUtilMockedStatic.verify(
+				() -> FIPSAuditUtil.write(argumentCaptor.capture()));
+
+			FIPSAuditEvent fipsAuditEvent = argumentCaptor.getValue();
+
+			Assert.assertEquals(
+				"configuration-secret-store-skipped",
+				fipsAuditEvent.getEventType());
+			Assert.assertEquals(
+				HashMapBuilder.<String, Object>put(
+					"configuration-pid", _PID
+				).put(
+					"property-id", "credential"
+				).build(),
+				fipsAuditEvent.getFields());
+		}
+
+		Assert.assertEquals(value, properties.get("credential"));
+
+		Mockito.verifyNoInteractions(_secretResolver);
+	}
+
+	private void _testOnBeforeSaveWhenFileValueIsUnchanged() throws Exception {
+		String value = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_configuration.getProperties()
+		).thenReturn(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"credential", value
+			).build()
+		);
+
+		Mockito.when(
+			_configurationAdmin.listConfigurations("(service.pid=" + _PID + ")")
+		).thenReturn(
+			new Configuration[] {_configuration}
+		);
+
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
+				RandomTestUtil.randomString()
+			).put(
+				"credential", value
+			).build();
+
+		try (MockedStatic<FIPSAuditUtil> fipsAuditUtilMockedStatic =
+				Mockito.mockStatic(FIPSAuditUtil.class)) {
+
+			_configurationSecretConfigurationModelListener.onBeforeSave(
+				_PID, properties);
+
+			fipsAuditUtilMockedStatic.verifyNoInteractions();
+		}
+
+		Assert.assertEquals(value, properties.get("credential"));
+
+		Mockito.verifyNoInteractions(_secretResolver);
+	}
+
 	private void _testOnBeforeSaveWhenKeyManagerProfileIsInactive()
 		throws Exception {
 
@@ -581,6 +688,17 @@ public class ConfigurationSecretConfigurationModelListenerTest {
 
 	private void _testOnBeforeSaveWhenStoreFails() throws Exception {
 		_assertOnBeforeSaveFails(RandomTestUtil.randomString());
+	}
+
+	private void _testOnBeforeSaveWhenValueIsPlaceholder() throws Exception {
+		_assertOnBeforeSaveKeepsValue(
+			"$[env:" + RandomTestUtil.randomString() + "]");
+		_assertOnBeforeSaveKeepsValue(
+			"$[prop:" + RandomTestUtil.randomString() + "]");
+		_assertOnBeforeSaveKeepsValue(
+			StringBundler.concat(
+				RandomTestUtil.randomString(), "$[secret:",
+				RandomTestUtil.randomString(), "]"));
 	}
 
 	private static final String _PID = "com.liferay.test.Configuration";

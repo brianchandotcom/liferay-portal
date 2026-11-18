@@ -9,6 +9,8 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
@@ -570,10 +572,10 @@ public class FIPSModeValidator {
 		}
 	}
 
-	private static void _validatePlaintextSecrets() {
+	private static void _validatePlaintextSecrets(List<String> sources) {
 		List<String> messages = new ArrayList<>();
 
-		for (String source : PropsUtil.getLoadedSources()) {
+		for (String source : sources) {
 			String fileName = source.substring(source.lastIndexOf('/') + 1);
 
 			if (fileName.equals("portal.properties")) {
@@ -596,10 +598,10 @@ public class FIPSModeValidator {
 			}
 		}
 
-		if (!messages.isEmpty()) {
-			throw new SecurityException(
+		if (!messages.isEmpty() && _log.isWarnEnabled()) {
+			_log.warn(
 				"A plaintext value for " + StringUtil.merge(messages, ", ") +
-					" is not allowed in FIPS mode");
+					" is kept in FIPS mode");
 		}
 	}
 
@@ -625,7 +627,7 @@ public class FIPSModeValidator {
 		_validatePasswordsEncryptionAlgorithm(
 			PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM));
 		_validatePasswordsMinLength();
-		_validatePlaintextSecrets();
+		_validatePlaintextSecrets(PropsUtil.getLoadedSources());
 		validateSessionTimeout(PropsValues.SESSION_TIMEOUT);
 	}
 
@@ -709,6 +711,9 @@ public class FIPSModeValidator {
 
 	private static final int _PASSWORDS_ENCRYPTION_ALGORITHM_ROUNDS_MIN =
 		1300000;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FIPSModeValidator.class);
 
 	private static final Set<String> _allowedAlgorithms = Set.of(
 		"AES", "HmacSHA256", "HmacSHA384", "HmacSHA512", "PBKDF2WithHmacSHA256",

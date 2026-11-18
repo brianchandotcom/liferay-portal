@@ -1,0 +1,14 @@
+apiDir: ../launch-rest-api/src/main/java
+apiPackagePath: com.liferay.launch.rest
+application:
+    baseURI: /launches
+    className: LaunchesApplication
+    name: Liferay.Launches.REST
+author: Alberto Moreno
+clientDir: ../launch-rest-client/src/main/java
+compatibilityVersion: 17
+forcePredictableOperationId: true
+generateBatch: false
+generateGraphQL: false
+javaEEPackage: jakarta
+testDir: ../launch-rest-test/src/testIntegration/java

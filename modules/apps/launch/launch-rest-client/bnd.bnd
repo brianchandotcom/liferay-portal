@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Launch REST Client
+Bundle-SymbolicName: com.liferay.launch.rest.client
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.launch.rest.client.function

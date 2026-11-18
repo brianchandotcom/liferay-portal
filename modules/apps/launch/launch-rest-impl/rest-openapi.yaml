@@ -1,0 +1,38 @@
+info:
+    description:
+        "API for publishing Launches. A Launch groups specific versions of assets, such as web content and pages, so that they go live together. This API covers only publishing: Launches and their assets are created and managed in the Launches application, which also shows each Launch's ID and status. Publishing runs in the background, so a publish request returns as soon as the publish is queued, and the Launch's status shows Published once it completes. The API is available only while the Launches feature is enabled. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.launch.rest.client', and version '1.0.0'."
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Launches
+    version: v1.0
+    x-feature-flag: LPD-72278
+openapi: 3.0.1
+paths:
+    "/launches/{launchId}/publish":
+        post:
+            description:
+                "Publishes the In Progress Launch with the given ID, exactly as publishing it from the Launches application does. The publish runs in the background and makes every asset in the Launch live together, so a failure publishes nothing. The request returns as soon as the publish is queued and does not wait for it to finish. Responds 202 with no body once the publish is queued, 400 when the Launch has no assets, and 404 when no Launch has the given ID. Only an In Progress Launch can be published: a Launch that is Scheduled, already Published, or already being published is rejected with 409, and the response's title says which. To publish a Scheduled Launch now, unschedule it first."
+            parameters:
+                -   in: path
+                    description:
+                        The ID of the Launch to publish, as shown in the Launches application.
+                    name: launchId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                202:
+                    description:
+                        The publish was queued and runs in the background. The response has no body.
+                400:
+                    description:
+                        The Launch has no assets, so there is nothing to publish. Add at least one asset to the Launch first.
+                404:
+                    description:
+                        No Launch exists with the given ID.
+                409:
+                    description:
+                        The Launch cannot be published in its current state, because it is Scheduled, already Published, or already being published. The response's title says which.
+            tags: ["Launch"]

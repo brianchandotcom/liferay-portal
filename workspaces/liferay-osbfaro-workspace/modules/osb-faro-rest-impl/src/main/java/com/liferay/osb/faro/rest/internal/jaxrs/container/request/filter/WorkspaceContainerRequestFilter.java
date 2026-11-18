@@ -11,7 +11,6 @@ import com.liferay.osb.faro.rest.internal.jaxrs.util.ProblemUtil;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.util.FaroPermissionChecker;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -125,9 +124,8 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 		if (faroChannel == null) {
 			_abort(
 				containerRequestContext, Response.Status.NOT_FOUND,
-				StringBundler.concat(
-					"No property was found with channel ID ", channelId,
-					" in the workspace with group ID ", groupId));
+				"No property was found with channel ID " + channelId +
+					" in the workspace with group ID " + groupId);
 
 			return;
 		}

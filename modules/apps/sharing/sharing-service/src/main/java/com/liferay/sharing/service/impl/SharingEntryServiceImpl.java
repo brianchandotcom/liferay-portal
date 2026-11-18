@@ -153,11 +153,21 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 	public SharingEntry deleteSharingEntry(SharingEntry sharingEntry)
 		throws PortalException {
 
-		sharingPermission.checkManageCollaboratorsPermission(
-			getPermissionChecker(), sharingEntry.getClassNameId(),
-			sharingEntry.getClassPK(), sharingEntry.getGroupId());
+		SharingEntry originalSharingEntry =
+			sharingEntryPersistence.fetchByPrimaryKey(
+				sharingEntry.getSharingEntryId());
 
-		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+		if (originalSharingEntry == null) {
+			return sharingEntry;
+		}
+
+		sharingPermission.checkManageCollaboratorsPermission(
+			getPermissionChecker(), originalSharingEntry.getClassNameId(),
+			originalSharingEntry.getClassPK(),
+			originalSharingEntry.getGroupId());
+
+		return sharingEntryLocalService.deleteSharingEntry(
+			originalSharingEntry);
 	}
 
 	@Override

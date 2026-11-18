@@ -30,6 +30,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeBiFunction;
@@ -429,6 +430,12 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
 			spaceDepotGroup.getGroupId(),
 			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+	}
+
+	@Test
+	@TestInfo("LPD-116161")
+	public void testDeleteLayoutPageTemplateEntry() throws Exception {
+		_testDeleteLayoutPageTemplateEntryDoesNotDeleteLayoutFromAnotherGroup();
 	}
 
 	@Test
@@ -1117,6 +1124,34 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		Assert.assertEquals(0, layoutPageTemplateEntry.getClassTypeId());
 
 		_assertDDMStructureLinks(layoutPageTemplateEntry);
+	}
+
+	private void _testDeleteLayoutPageTemplateEntryDoesNotDeleteLayoutFromAnotherGroup()
+		throws Exception {
+
+		_group2 = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group2);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				null, 0, null, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0, false, 0, 0, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		layoutPageTemplateEntry.setPlid(layout.getPlid());
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
+
+		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+
+		Assert.assertNotNull(_layoutLocalService.fetchLayout(layout.getPlid()));
 	}
 
 	private void _testDeleteLayoutPageTemplateEntryWithDDMStructureClassType()

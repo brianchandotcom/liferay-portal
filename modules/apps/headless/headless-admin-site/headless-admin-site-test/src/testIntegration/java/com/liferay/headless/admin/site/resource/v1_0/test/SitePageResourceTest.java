@@ -125,7 +125,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -2087,6 +2086,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					});
 			}
 		};
+	}
+
+	private SitePageResource _getSitePageResource(Locale locale)
+		throws Exception {
+
+		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		return _getSitePageResource(
+			locale, "pageSpecifications", user.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD);
 	}
 
 	private SitePageResource _getSitePageResource(
@@ -4543,9 +4552,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					putSitePage.getPageSpecifications()));
 
 		_testPutSiteSitePageWithEmptyLayoutAndLayoutTypeException(
-			_getRandomSitePage(SitePage.Type.EMBEDDED_PAGE));
+			_getRandomSitePage(SitePage.Type.EMBEDDED_PAGE),
+			_getSitePageResource("pageSpecifications"));
 		_testPutSiteSitePageWithEmptyLayoutAndLayoutTypeException(
-			_getRandomSitePage(SitePage.Type.LINK_TO_URL_PAGE));
+			_getRandomSitePage(SitePage.Type.EMBEDDED_PAGE),
+			_getSitePageResource(LocaleUtil.SPAIN));
+		_testPutSiteSitePageWithEmptyLayoutAndLayoutTypeException(
+			_getRandomSitePage(SitePage.Type.LINK_TO_URL_PAGE),
+			_getSitePageResource("pageSpecifications"));
 	}
 
 	private void _testPutSiteSitePageWithEmptyLayout(
@@ -4579,23 +4593,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testPutSiteSitePageWithEmptyLayoutAndLayoutTypeException(
-			SitePage sitePage)
+			SitePage sitePage, SitePageResource sitePageResource)
 		throws Exception {
-
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
 
 		Layout layout = _createEmptyLayout(sitePage);
 
 		ProblemExceptionTestUtil.assertProblemException(
 			"CONFLICT",
-			_language.format(
-				LocaleUtil.getDefault(),
-				"an-empty-page-cannot-be-converted-to-x",
-				_language.get(
-					LocaleUtil.getDefault(),
-					"layout.types." +
-						_externalToInternalValuesMap.get(sitePage.getType()))),
+			"An empty site page cannot be converted to type \"" +
+				sitePage.getType() + "\"",
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), false, sitePage));
@@ -4627,11 +4633,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ProblemExceptionTestUtil.assertProblemException(
 			"CONFLICT",
-			_language.format(
-				LocaleUtil.getDefault(), "the-first-page-cannot-be-of-type-x",
-				_language.get(
-					LocaleUtil.getDefault(),
-					"layout.types." + LayoutConstants.TYPE_NODE)),
+			"The first site page cannot be of type \"PageSetPage\"",
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), layout.isPrivateLayout(),
@@ -6005,12 +6007,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"));
 	}
 
-	private static final Map<SitePage.Type, String>
-		_externalToInternalValuesMap = HashMapBuilder.put(
-			SitePage.Type.EMBEDDED_PAGE, LayoutConstants.TYPE_EMBEDDED
-		).put(
-			SitePage.Type.LINK_TO_URL_PAGE, LayoutConstants.TYPE_URL
-		).build();
 	private static final List<SitePage.Type> _types = Arrays.asList(
 		SitePage.Type.CONTENT_PAGE, SitePage.Type.WIDGET_PAGE);
 
@@ -6046,9 +6042,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private JSONFactory _jsonFactory;
-
-	@Inject
-	private Language _language;
 
 	@Inject
 	private LayoutContentVersionLocalService _layoutContentVersionLocalService;

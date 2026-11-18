@@ -17,6 +17,7 @@ import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
 import com.amazonaws.services.secretsmanager.model.SecretListEntry;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -268,6 +269,37 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 			StringBundler.concat(
 				"liferay/", CompanyConstants.SYSTEM, "/", secretIdentifier),
 			createSecretRequest.getName());
+	}
+
+	@Test
+	public void testPutSecretWhenAWSRegionIsBlank() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			_awsSecretsManagerSystemSecretProvider,
+			"_awsSecretsManagerSecretProviderContext",
+			new AWSSecretsManagerSecretProviderContext(
+				null, _awsClientManager, StringPool.BLANK,
+				new AWSSecretsManagerFIPSValidator(false, false), true,
+				RandomTestUtil.randomLong(), _SECRET_ARN_TEMPLATE));
+
+		SecretException secretException = Assert.assertThrows(
+			SecretException.class,
+			() -> _awsSecretsManagerSystemSecretProvider.putSecret(
+				CompanyConstants.SYSTEM,
+				new Secret(
+					RandomTestUtil.randomBytes(),
+					new KeyReference(
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString(),
+						KeyReference.Type.SECRET))));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Provider ",
+				_awsSecretsManagerSystemSecretProvider.getProviderId(),
+				" has no AWS region"),
+			secretException.getMessage());
+
+		Mockito.verifyNoInteractions(_awsSecretsManager);
 	}
 
 	private void _setAWSSecretsManagerSecretProviderContext(

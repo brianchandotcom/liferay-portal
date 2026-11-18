@@ -9,8 +9,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.fips.FIPSAuditEvent;
+import com.liferay.portal.kernel.security.fips.FIPSAuditUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
@@ -19,8 +22,12 @@ import com.liferay.portal.security.key.secret.SecretManager;
 import com.liferay.portal.security.key.secret.exception.SecretException;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
@@ -29,7 +36,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
@@ -239,6 +248,14 @@ public class SecretResolverImplTest {
 
 	@Test
 	public void testStore() throws Exception {
+		Mockito.when(
+			_keyManagerProfile.getCompanySecretProviderId()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		_setUpKeyManagerProfileRegistry(_keyManagerProfile);
+
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					PropsValues.class, "FIPS_ENABLED", true)) {
@@ -248,12 +265,16 @@ public class SecretResolverImplTest {
 			Mockito.clearInvocations(_secretManager);
 
 			_testStoreWhenFIPSIsDisabled();
-			_testStoreWhenIdentifierNamespaceIsUnsupported();
+			_testStoreWhenKeyManagerProfileIsInactive();
+
+			_setUpKeyManagerProfileRegistry(_keyManagerProfile);
+
 			_testStoreWhenKeyReferenceIsInvalid();
 			_testStoreWhenSecretManagerFails();
 
 			Mockito.reset(_secretManager);
 
+			_testStoreWhenSecretProviderIdIsBlank();
 			_testStoreWhenValueIsBlank();
 			_testStoreWhenValueReferencesAnotherKey();
 			_testStoreWhenValueReferencesAnotherNamespace();
@@ -335,6 +356,52 @@ public class SecretResolverImplTest {
 		Assert.assertTrue(secret.isDestroyed());
 	}
 
+	private void _assertStoreKeepsPlaintext(long companyId) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SecretResolverImpl.class.getName(), LoggerTestUtil.WARN);
+			MockedStatic<FIPSAuditUtil> fipsAuditUtilMockedStatic =
+				Mockito.mockStatic(FIPSAuditUtil.class)) {
+
+			String identifier = RandomTestUtil.randomString();
+			String value = RandomTestUtil.randomString();
+
+			Assert.assertEquals(
+				value, _secretResolverImpl.store(companyId, identifier, value));
+
+			ArgumentCaptor<FIPSAuditEvent> argumentCaptor =
+				ArgumentCaptor.forClass(FIPSAuditEvent.class);
+
+			fipsAuditUtilMockedStatic.verify(
+				() -> FIPSAuditUtil.write(argumentCaptor.capture()));
+
+			FIPSAuditEvent fipsAuditEvent = argumentCaptor.getValue();
+
+			Assert.assertEquals(
+				"secret-store-skipped", fipsAuditEvent.getEventType());
+			Assert.assertEquals(
+				HashMapBuilder.<String, Object>put(
+					"company-id", companyId
+				).put(
+					"identifier", identifier
+				).build(),
+				fipsAuditEvent.getFields());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					identifier, " was stored in plaintext because no secret ",
+					"provider is configured for company ", companyId),
+				logEntry.getMessage());
+		}
+
+		Mockito.verifyNoInteractions(_secretManager);
+	}
+
 	private void _assertStoreKeepsValue(
 		String identifier, String keyReferenceIdentifier) {
 
@@ -360,6 +427,16 @@ public class SecretResolverImplTest {
 		Mockito.verifyNoInteractions(_secretManager);
 	}
 
+	private void _setUpKeyManagerProfileRegistry(
+		KeyManagerProfile keyManagerProfile) {
+
+		Mockito.when(
+			_keyManagerProfileRegistry.getActiveKeyManagerProfile()
+		).thenReturn(
+			keyManagerProfile
+		);
+	}
+
 	private void _testStore() throws Exception {
 		_assertStore(
 			StringBundler.concat(
@@ -368,6 +445,10 @@ public class SecretResolverImplTest {
 		_assertStore(
 			StringBundler.concat(
 				"preference/", RandomTestUtil.randomString(), StringPool.SLASH,
+				RandomTestUtil.randomString()));
+		_assertStore(
+			StringBundler.concat(
+				RandomTestUtil.randomString(), StringPool.SLASH,
 				RandomTestUtil.randomString()));
 	}
 
@@ -388,17 +469,10 @@ public class SecretResolverImplTest {
 		}
 	}
 
-	private void _testStoreWhenIdentifierNamespaceIsUnsupported() {
-		Assert.assertThrows(
-			IllegalArgumentException.class,
-			() -> _secretResolverImpl.store(
-				RandomTestUtil.randomLong(),
-				StringBundler.concat(
-					RandomTestUtil.randomString(), StringPool.SLASH,
-					RandomTestUtil.randomString()),
-				RandomTestUtil.randomString()));
+	private void _testStoreWhenKeyManagerProfileIsInactive() {
+		_setUpKeyManagerProfileRegistry(null);
 
-		Mockito.verifyNoInteractions(_secretManager);
+		_assertStoreKeepsPlaintext(RandomTestUtil.randomLong());
 	}
 
 	private void _testStoreWhenKeyReferenceIsInvalid() {
@@ -434,6 +508,24 @@ public class SecretResolverImplTest {
 						"config/", RandomTestUtil.randomString(),
 						StringPool.SLASH, RandomTestUtil.randomString()),
 					RandomTestUtil.randomString())));
+	}
+
+	private void _testStoreWhenSecretProviderIdIsBlank() {
+		Mockito.when(
+			_keyManagerProfile.getSystemSecretProviderId()
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		_assertStoreKeepsPlaintext(CompanyConstants.SYSTEM);
+
+		Mockito.when(
+			_keyManagerProfile.getCompanySecretProviderId()
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		_assertStoreKeepsPlaintext(RandomTestUtil.randomLong());
 	}
 
 	private void _testStoreWhenValueIsBlank() {

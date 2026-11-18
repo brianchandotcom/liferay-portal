@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
@@ -17,10 +18,17 @@ import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.security.Provider;
 import java.security.Security;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -631,6 +639,47 @@ public class FIPSModeValidatorTest {
 							"\" to be at least",
 					"_validatePasswordsMinLength", new Class<?>[0]);
 			}
+		}
+	}
+
+	@Test
+	public void testValidatePlaintextSecrets() throws Exception {
+		String obfuscatedKey = RandomTestUtil.randomString();
+		Path path = Files.createTempFile(null, ".properties");
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"ADMIN_OBFUSCATED_PROPERTIES",
+					new String[] {obfuscatedKey});
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				FIPSModeValidator.class.getName(), LoggerTestUtil.WARN)) {
+
+			Files.write(
+				path,
+				Collections.singletonList(
+					StringBundler.concat(
+						obfuscatedKey, StringPool.EQUAL,
+						RandomTestUtil.randomString())));
+
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_validatePlaintextSecrets",
+				new Class<?>[] {List.class},
+				Collections.singletonList(String.valueOf(path.toUri())));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"A plaintext value for property \"", obfuscatedKey,
+					"\" in \"", path.getFileName(), "\" is kept in FIPS mode"),
+				logEntry.getMessage());
+		}
+		finally {
+			Files.delete(path);
 		}
 	}
 

@@ -29,7 +29,7 @@ import org.mockito.Mockito;
 /**
  * @author Olivia Yu
  */
-public class OpenSearchConnectionsHolderImplTest {
+public class OpenSearchConnectionConfigurationActivationHandlerTest {
 
 	@ClassRule
 	@Rule
@@ -41,12 +41,6 @@ public class OpenSearchConnectionsHolderImplTest {
 		_configurableUtilMockedStatic = Mockito.mockStatic(
 			ConfigurableUtil.class);
 
-		_openSearchConnectionsHolderImpl.http = _http;
-
-		ReflectionTestUtil.setFieldValue(
-			_openSearchConnectionsHolderImpl, "_secretResolver",
-			_secretResolver);
-
 		_configurableUtilMockedStatic.when(
 			() -> ConfigurableUtil.createConfigurable(
 				Mockito.eq(OpenSearchConnectionConfiguration.class),
@@ -54,6 +48,9 @@ public class OpenSearchConnectionsHolderImplTest {
 		).thenReturn(
 			_openSearchConnectionConfiguration
 		);
+
+		_openSearchConnectionManagerImpl.openSearchConnectionsHolder =
+			_openSearchConnectionsHolderImpl;
 	}
 
 	@After
@@ -201,7 +198,7 @@ public class OpenSearchConnectionsHolderImplTest {
 		String resolvedProxyPassword = _mockResolve(proxyPassword);
 		String resolvedTruststorePassword = _mockResolve(truststorePassword);
 
-		_openSearchConnectionsHolderImpl.activate(new HashMap<>());
+		_activate();
 
 		OpenSearchConnection openSearchConnection =
 			_openSearchConnectionsHolderImpl.getOpenSearchConnection(
@@ -265,6 +262,73 @@ public class OpenSearchConnectionsHolderImplTest {
 		Assert.assertEquals(proxyUserName, proxyConfig.getUserName());
 	}
 
+	@Test
+	public void testActivateWithMultipleConfigurations() {
+		String connectionId1 = RandomTestUtil.randomString();
+		String connectionId2 = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_openSearchConnectionConfiguration.connectionId()
+		).thenReturn(
+			connectionId1, connectionId2
+		);
+
+		_activate();
+		_activate();
+
+		Assert.assertNotNull(
+			_openSearchConnectionsHolderImpl.getOpenSearchConnection(
+				connectionId1));
+		Assert.assertNotNull(
+			_openSearchConnectionsHolderImpl.getOpenSearchConnection(
+				connectionId2));
+	}
+
+	@Test
+	public void testDeactivate() {
+		String connectionId1 = RandomTestUtil.randomString();
+		String connectionId2 = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_openSearchConnectionConfiguration.connectionId()
+		).thenReturn(
+			connectionId1, connectionId2
+		);
+
+		OpenSearchConnectionConfigurationActivationHandler
+			openSearchConnectionConfigurationActivationHandler = _activate();
+
+		_activate();
+
+		openSearchConnectionConfigurationActivationHandler.deactivate();
+
+		Assert.assertNull(
+			_openSearchConnectionsHolderImpl.getOpenSearchConnection(
+				connectionId1));
+		Assert.assertNotNull(
+			_openSearchConnectionsHolderImpl.getOpenSearchConnection(
+				connectionId2));
+	}
+
+	private OpenSearchConnectionConfigurationActivationHandler _activate() {
+		OpenSearchConnectionConfigurationActivationHandler
+			openSearchConnectionConfigurationActivationHandler =
+				new OpenSearchConnectionConfigurationActivationHandler();
+
+		openSearchConnectionConfigurationActivationHandler.http = _http;
+		openSearchConnectionConfigurationActivationHandler.
+			openSearchConnectionManager = _openSearchConnectionManagerImpl;
+
+		ReflectionTestUtil.setFieldValue(
+			openSearchConnectionConfigurationActivationHandler,
+			"_secretResolver", _secretResolver);
+
+		openSearchConnectionConfigurationActivationHandler.activate(
+			new HashMap<>());
+
+		return openSearchConnectionConfigurationActivationHandler;
+	}
+
 	private String _mockResolve(String value) {
 		String resolvedValue = RandomTestUtil.randomString();
 
@@ -282,6 +346,9 @@ public class OpenSearchConnectionsHolderImplTest {
 	private final OpenSearchConnectionConfiguration
 		_openSearchConnectionConfiguration = Mockito.mock(
 			OpenSearchConnectionConfiguration.class);
+	private final OpenSearchConnectionManagerImpl
+		_openSearchConnectionManagerImpl =
+			new OpenSearchConnectionManagerImpl();
 	private final OpenSearchConnectionsHolderImpl
 		_openSearchConnectionsHolderImpl =
 			new OpenSearchConnectionsHolderImpl();

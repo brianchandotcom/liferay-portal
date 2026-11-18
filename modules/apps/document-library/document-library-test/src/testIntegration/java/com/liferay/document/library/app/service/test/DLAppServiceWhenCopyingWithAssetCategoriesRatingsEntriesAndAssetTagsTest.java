@@ -650,8 +650,8 @@ public class
 		FileEntry fileEntry1 = dlAppService.addFileEntry(
 			RandomTestUtil.randomString(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
-			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
 			null, serviceContext);
 

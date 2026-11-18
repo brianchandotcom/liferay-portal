@@ -300,7 +300,8 @@ public class DLAppServiceWhenCopyingAFileEntryTest extends BaseDLAppTestCase {
 
 	private void _testShouldSucceedWithCheckedOutFileEntry() throws Exception {
 		FileEntry sourceFileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString());
 
 		dlAppService.checkOutFileEntry(
 			sourceFileEntry.getFileEntryId(),
@@ -341,7 +342,8 @@ public class DLAppServiceWhenCopyingAFileEntryTest extends BaseDLAppTestCase {
 			StringPool.BLANK, serviceContext);
 
 		FileEntry sourceFileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString());
 
 		FileEntry targetFileEntry = dlAppService.copyFileEntry(
 			sourceFileEntry.getFileEntryId(),
@@ -365,8 +367,8 @@ public class DLAppServiceWhenCopyingAFileEntryTest extends BaseDLAppTestCase {
 		FileEntry sourceFileEntry = dlAppService.addFileEntry(
 			null, group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
-			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, null, 0, null, null, null, serviceContext);
 
 		FileEntry targetFileEntry = dlAppService.copyFileEntry(

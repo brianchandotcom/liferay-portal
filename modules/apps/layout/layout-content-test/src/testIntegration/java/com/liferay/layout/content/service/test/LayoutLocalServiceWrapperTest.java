@@ -8,10 +8,14 @@ package com.liferay.layout.content.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.model.LayoutContentVersion;
 import com.liferay.layout.content.service.LayoutContentVersionLocalService;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -19,23 +23,36 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.LockedLayoutException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 
@@ -124,6 +141,119 @@ public class LayoutLocalServiceWrapperTest {
 		}
 	}
 
+	@Test
+	@TestInfo("LPD-115007")
+	public void testCopyLayoutContentWithLayoutLockedByOtherUser()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		User user1 = UserTestUtil.addGroupAdminUser(_group);
+
+		_layoutLockManager.getLock(draftLayout, user1.getUserId());
+
+		User user2 = UserTestUtil.addGroupAdminUser(_group);
+
+		_assertCopyLayoutContentLocked(
+			layout, draftLayout, user2,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user2.getUserId()));
+		_assertCopyLayoutContentLocked(
+			layout, draftLayout, user2, _getServiceContext());
+
+		_assertCopyLayoutContentLocked(
+			layout, draftLayout, _userLocalService.getUser(layout.getUserId()),
+			_getServiceContext());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user1, PermissionCheckerFactoryUtil.create(user1))) {
+
+			_copyLayoutContent(_getServiceContext(), layout, draftLayout);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-115007")
+	public void testCopyLayoutContentWithUserFromOtherCompany()
+		throws Exception {
+
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addCompanyAdminUser(company);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			user.getUserId(),
+			_groupLocalService.getGroup(
+				company.getCompanyId(), GroupConstants.GUEST));
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			"{}", draftLayout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
+		_copyLayoutContent(
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
+			draftLayout, layout);
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				layout.getGroupId(), layout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
+
+		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
+
+		Assert.assertEquals(user.getUserId(), fragmentEntryLink.getUserId());
+	}
+
+	private void _assertCopyLayoutContentLocked(
+			Layout sourceLayout, Layout targetLayout, User user,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
+
+			_copyLayoutContent(serviceContext, sourceLayout, targetLayout);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception.getCause() instanceof LockedLayoutException);
+		}
+	}
+
+	private void _copyLayoutContent(
+			ServiceContext serviceContext, Layout sourceLayout,
+			Layout targetLayout)
+		throws Exception {
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	private ServiceContext _getServiceContext() {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(_group.getCompanyId());
+		serviceContext.setScopeGroupId(_group.getGroupId());
+
+		return serviceContext;
+	}
+
 	private SafeCloseable _swapInitialRequestSyncUtilWithSafeCloseable() {
 		DefaultNoticeableFuture<Void>
 			originalSyncCallableDefaultNoticeableFuture =
@@ -165,8 +295,14 @@ public class LayoutLocalServiceWrapperTest {
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
 
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutContentVersionLocalService _layoutContentVersionLocalService;
@@ -175,7 +311,16 @@ public class LayoutLocalServiceWrapperTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private LayoutLockManager _layoutLockManager;
+
+	@Inject
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

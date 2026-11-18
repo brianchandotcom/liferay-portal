@@ -26,6 +26,7 @@ import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
 import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManager;
+import com.liferay.portal.security.key.secret.SecretResolver;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -179,6 +180,16 @@ public class MarketplaceUtil {
 		return secretManager;
 	}
 
+	private static SecretResolver _getSecretResolver() {
+		SecretResolver secretResolver = _secretResolverSnapshot.get();
+
+		if (secretResolver == null) {
+			throw new IllegalStateException("Secret resolver is unavailable");
+		}
+
+		return secretResolver;
+	}
+
 	private static String _storeToken(long companyId, String name, String token)
 		throws Exception {
 
@@ -202,16 +213,9 @@ public class MarketplaceUtil {
 			identifier = keyReference.getIdentifier();
 		}
 
-		SecretManager secretManager = _getSecretManager();
+		SecretResolver secretResolver = _getSecretResolver();
 
-		try (Secret secret = new Secret(
-				new KeyReference(
-					identifier, StringPool.STAR, KeyReference.Type.SECRET),
-				token)) {
-
-			return KeyReferenceUtil.toKeyReferenceString(
-				secretManager.putSecret(companyId, secret));
-		}
+		return secretResolver.store(companyId, identifier, token);
 	}
 
 	private static final String[] _TOKEN_NAMES = {
@@ -223,5 +227,7 @@ public class MarketplaceUtil {
 
 	private static final Snapshot<SecretManager> _secretManagerSnapshot =
 		new Snapshot<>(MarketplaceUtil.class, SecretManager.class, null, true);
+	private static final Snapshot<SecretResolver> _secretResolverSnapshot =
+		new Snapshot<>(MarketplaceUtil.class, SecretResolver.class, null, true);
 
 }

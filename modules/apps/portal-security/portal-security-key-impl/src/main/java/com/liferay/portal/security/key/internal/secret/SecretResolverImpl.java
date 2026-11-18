@@ -13,9 +13,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.fips.FIPSAuditEvent;
 import com.liferay.portal.kernel.security.fips.FIPSAuditUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -170,17 +173,10 @@ public class SecretResolverImpl implements SecretResolver {
 
 			String secretIdentifier = _getSecretIdentifier(secretContext);
 
-			try (Secret secret = new Secret(
-					new KeyReference(
-						secretIdentifier, StringPool.STAR,
-						KeyReference.Type.SECRET),
-					value)) {
-
-				return _putSecret(
-					_getScopeCompanyId(
-						companyId, secretIdentifier, "store", secretContext),
-					secret);
-			}
+			return _store(
+				_getScopeCompanyId(
+					companyId, secretIdentifier, "store", secretContext),
+				secretIdentifier, value);
 		}
 		catch (SecretException secretException) {
 			return ReflectionUtil.throwException(secretException);
@@ -191,15 +187,6 @@ public class SecretResolverImpl implements SecretResolver {
 	public String store(long companyId, String identifier, String value) {
 		if (!PropsValues.FIPS_ENABLED || Validator.isNull(value)) {
 			return value;
-		}
-
-		if (!identifier.startsWith("config/") &&
-			!identifier.startsWith(_IDENTIFIER_PREFIX_PREFERENCE)) {
-
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"Unable to store \"", identifier,
-					"\" because its namespace is not supported"));
 		}
 
 		try {
@@ -233,13 +220,7 @@ public class SecretResolverImpl implements SecretResolver {
 						"\""));
 			}
 
-			try (Secret secret = new Secret(
-					new KeyReference(
-						identifier, StringPool.STAR, KeyReference.Type.SECRET),
-					value)) {
-
-				return _putSecret(companyId, secret);
-			}
+			return _store(companyId, identifier, value);
 		}
 		catch (SecretException secretException) {
 			return ReflectionUtil.throwException(secretException);
@@ -316,14 +297,60 @@ public class SecretResolverImpl implements SecretResolver {
 			properties::get);
 	}
 
-	private String _putSecret(long companyId, Secret secret)
+	private boolean _hasSecretProviderId(long companyId) {
+		KeyManagerProfile keyManagerProfile =
+			_keyManagerProfileRegistry.getActiveKeyManagerProfile();
+
+		if (keyManagerProfile == null) {
+			return false;
+		}
+
+		if (companyId == CompanyConstants.SYSTEM) {
+			return Validator.isNotNull(
+				keyManagerProfile.getSystemSecretProviderId());
+		}
+
+		return Validator.isNotNull(
+			keyManagerProfile.getCompanySecretProviderId());
+	}
+
+	private String _store(long companyId, String identifier, String value)
 		throws SecretException {
 
-		return KeyReferenceUtil.toKeyReferenceString(
-			_secretManager.putSecret(companyId, secret));
+		if (!_hasSecretProviderId(companyId)) {
+			FIPSAuditEvent fipsAuditEvent = new FIPSAuditEvent(
+				"secret-store-skipped", FIPSAuditEvent.Severity.WARNING);
+
+			fipsAuditEvent.put("company-id", companyId);
+			fipsAuditEvent.put("identifier", GetterUtil.getString(identifier));
+
+			FIPSAuditUtil.write(fipsAuditEvent);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						identifier, " was stored in plaintext because no ",
+						"secret provider is configured for company ",
+						companyId));
+			}
+
+			return value;
+		}
+
+		try (Secret secret = new Secret(
+				new KeyReference(
+					identifier, StringPool.STAR, KeyReference.Type.SECRET),
+				value)) {
+
+			return KeyReferenceUtil.toKeyReferenceString(
+				_secretManager.putSecret(companyId, secret));
+		}
 	}
 
 	private static final String _IDENTIFIER_PREFIX_PREFERENCE = "preference/";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SecretResolverImpl.class);
 
 	@Reference
 	private KeyManagerProfileRegistry _keyManagerProfileRegistry;

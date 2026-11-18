@@ -1058,7 +1058,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"modules/src/testIntegration/java/com/liferay/persistence/call" +
 				"/PersistenceCall.testjava",
-			message, 20);
+			message, 19);
 		test(
 			SourceProcessorTestParameters.create(
 				"modules/PersistenceCall.testjava"

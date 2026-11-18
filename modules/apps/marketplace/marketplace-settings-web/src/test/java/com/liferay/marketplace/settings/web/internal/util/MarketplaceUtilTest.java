@@ -21,6 +21,7 @@ import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
 import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManager;
+import com.liferay.portal.security.key.secret.SecretResolver;
 import com.liferay.portal.security.key.secret.exception.SecretException;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -66,6 +67,17 @@ public class MarketplaceUtilTest {
 				}
 
 			});
+		_secretResolverSnapshot = ReflectionTestUtil.getAndSetFieldValue(
+			MarketplaceUtil.class, "_secretResolverSnapshot",
+			new Snapshot<SecretResolver>(
+				MarketplaceUtil.class, SecretResolver.class) {
+
+				@Override
+				public SecretResolver get() {
+					return _secretResolver;
+				}
+
+			});
 	}
 
 	@After
@@ -73,6 +85,9 @@ public class MarketplaceUtilTest {
 		ReflectionTestUtil.setFieldValue(
 			MarketplaceUtil.class, "_secretManagerSnapshot",
 			_secretManagerSnapshot);
+		ReflectionTestUtil.setFieldValue(
+			MarketplaceUtil.class, "_secretResolverSnapshot",
+			_secretResolverSnapshot);
 		ReflectionTestUtil.setFieldValue(
 			PrefsPropsUtil.class, "_prefsProps", _prefsProps);
 	}
@@ -239,23 +254,13 @@ public class MarketplaceUtilTest {
 		String providerId = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_secretManager.putSecret(
-				Mockito.eq(companyId), Mockito.any(Secret.class))
+			_secretResolver.store(
+				Mockito.eq(companyId), Mockito.anyString(), Mockito.eq(token))
 		).thenAnswer(
-			invocationOnMock -> {
-				Secret secret = invocationOnMock.getArgument(1);
-
-				Assert.assertEquals(token, new String(secret.getChars()));
-
-				KeyReference keyReference = secret.getKeyReference();
-
-				Assert.assertEquals(
-					StringPool.STAR, keyReference.getProviderId());
-
-				return new KeyReference(
-					keyReference.getIdentifier(), providerId,
-					KeyReference.Type.SECRET);
-			}
+			invocationOnMock -> KeyReferenceUtil.toKeyReferenceString(
+				new KeyReference(
+					invocationOnMock.getArgument(1), providerId,
+					KeyReference.Type.SECRET))
 		);
 
 		try (AutoCloseable autoCloseable =
@@ -271,7 +276,7 @@ public class MarketplaceUtilTest {
 				_storeToken(
 					companyId, "marketplaceRefreshToken", StringPool.BLANK));
 
-			Mockito.verifyNoInteractions(_secretManager);
+			Mockito.verifyNoInteractions(_secretResolver);
 
 			String uuid = RandomTestUtil.randomString();
 
@@ -318,10 +323,13 @@ public class MarketplaceUtilTest {
 			SecretException secretException = new SecretException();
 
 			Mockito.when(
-				_secretManager.putSecret(
-					Mockito.eq(companyId), Mockito.any(Secret.class))
-			).thenThrow(
-				secretException
+				_secretResolver.store(
+					Mockito.eq(companyId), Mockito.anyString(),
+					Mockito.eq(token))
+			).thenAnswer(
+				invocationOnMock -> {
+					throw secretException;
+				}
 			);
 
 			Assert.assertSame(
@@ -391,5 +399,8 @@ public class MarketplaceUtilTest {
 	private final SecretManager _secretManager = Mockito.mock(
 		SecretManager.class);
 	private Snapshot<SecretManager> _secretManagerSnapshot;
+	private final SecretResolver _secretResolver = Mockito.mock(
+		SecretResolver.class);
+	private Snapshot<SecretResolver> _secretResolverSnapshot;
 
 }

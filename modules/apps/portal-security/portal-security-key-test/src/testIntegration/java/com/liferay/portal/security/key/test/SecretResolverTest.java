@@ -88,7 +88,7 @@ public class SecretResolverTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companySecretProviderId", _SECRET_PROVIDER_ID
 			).put(
-				"systemSecretProviderId", _SECRET_PROVIDER_ID
+				"systemSecretProviderId", RandomTestUtil.randomString()
 			).build());
 	}
 

@@ -67,10 +67,9 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		String friendlyURLPath = _getFriendlyURLPath(
 			authorization, dtoKey, valuesJSONObject);
 
+		JSONObject dtoJSONObject = jsonObject.getJSONObject(dtoKey);
 		EntryType entryType = _entryTypes.get(dtoKey);
 		long objectEntryId = objectEntryJSONObject.getLong("id");
-
-		JSONObject dtoJSONObject = jsonObject.getJSONObject(dtoKey);
 
 		_patchFriendlyURL(
 			authorization, dtoJSONObject.getString("friendlyUrlPath"),
@@ -281,12 +280,12 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 			return _parentDTOKey;
 		}
 
-		public String getRESTPath() {
-			return _restPath;
-		}
-
 		public String getRelationshipFieldName() {
 			return _relationshipFieldName;
+		}
+
+		public String getRESTPath() {
+			return _restPath;
 		}
 
 		private final String _parentDTOKey;

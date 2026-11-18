@@ -280,12 +280,12 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 			return _parentDTOKey;
 		}
 
-		public String getRelationshipFieldName() {
-			return _relationshipFieldName;
-		}
-
 		public String getRESTPath() {
 			return _restPath;
+		}
+
+		public String getRelationshipFieldName() {
+			return _relationshipFieldName;
 		}
 
 		private final String _parentDTOKey;

@@ -11,6 +11,7 @@ import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.model.EntityModelPagedModel;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.lang.reflect.Type;
 
@@ -131,7 +132,7 @@ public class ContactsEngineClientImplTest {
 			RandomTestUtil.randomString(), null, null,
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(), null);
 
-		String filter = String.valueOf(_uriVariables.get("filter"));
+		String filter = GetterUtil.getString(_uriVariables.get("filter"));
 
 		Assert.assertFalse(filter.contains(" ne "));
 		Assert.assertTrue(filter.contains("channelId eq " + channelId));
@@ -149,7 +150,7 @@ public class ContactsEngineClientImplTest {
 			RandomTestUtil.randomString(), null, null,
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(), null);
 
-		String filter = String.valueOf(_uriVariables.get("filter"));
+		String filter = GetterUtil.getString(_uriVariables.get("filter"));
 
 		Assert.assertTrue(filter.contains("channelId ne " + channelId1));
 		Assert.assertTrue(filter.contains("channelId ne " + channelId2));

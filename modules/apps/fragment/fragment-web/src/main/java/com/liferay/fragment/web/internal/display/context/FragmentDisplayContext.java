@@ -115,9 +115,9 @@ public class FragmentDisplayContext {
 		).put(
 			"siteExternalReferenceCode",
 			() -> {
-				Group group = _themeDisplay.getScopeGroup();
+				Group scopeGroup = _themeDisplay.getScopeGroup();
 
-				return group.getExternalReferenceCode();
+				return scopeGroup.getExternalReferenceCode();
 			}
 		).build();
 	}

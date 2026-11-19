@@ -184,11 +184,10 @@ public class EditFragmentEntryDisplayContext {
 			return _fragmentEntryId;
 		}
 
-		long fragmentEntryId = ParamUtil.getLong(
-			_httpServletRequest, "fragmentEntryId");
-
 		String externalReferenceCode = ParamUtil.getString(
 			_httpServletRequest, "externalReferenceCode");
+		long fragmentEntryId = ParamUtil.getLong(
+			_httpServletRequest, "fragmentEntryId");
 
 		if ((fragmentEntryId == 0) &&
 			Validator.isNotNull(externalReferenceCode)) {

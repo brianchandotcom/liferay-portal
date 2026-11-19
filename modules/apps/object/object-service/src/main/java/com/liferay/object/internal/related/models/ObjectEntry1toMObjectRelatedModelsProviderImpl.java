@@ -81,7 +81,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				}
 
 				_objectEntryService.deleteObjectEntry(
-					objectEntry.getObjectEntryId());
+					curObjectEntry.getObjectEntryId());
 			}
 		}
 		else if (Objects.equals(

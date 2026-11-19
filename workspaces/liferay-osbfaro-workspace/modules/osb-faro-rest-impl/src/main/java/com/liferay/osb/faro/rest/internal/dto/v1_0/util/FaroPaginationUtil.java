@@ -38,6 +38,10 @@ public class FaroPaginationUtil {
 		return pagination.getPageSize();
 	}
 
+	public static int getPageIndex(Pagination pagination) {
+		return Math.max(0, getCur(pagination) - 1);
+	}
+
 	public static Map<String, Object> toGraphQLSort(
 		Sort defaultSort, Sort[] sorts) {
 

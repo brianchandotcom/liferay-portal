@@ -179,7 +179,7 @@ public class FaroPermissionCheckerTest {
 		return faroChannel;
 	}
 
-	private void _mockFaroUser(String roleName, int status, long userId) {
+	private FaroUser _mockFaroUser(String roleName, int status, long userId) {
 		FaroUser faroUser = Mockito.mock(FaroUser.class);
 
 		Mockito.when(
@@ -213,6 +213,8 @@ public class FaroPermissionCheckerTest {
 		).thenReturn(
 			role
 		);
+
+		return faroUser;
 	}
 
 	private PermissionChecker _mockPermissionChecker(long userId) {

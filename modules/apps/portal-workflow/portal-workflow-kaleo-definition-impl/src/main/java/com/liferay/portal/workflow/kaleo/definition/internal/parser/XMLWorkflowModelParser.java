@@ -28,6 +28,7 @@ import com.liferay.portal.workflow.kaleo.definition.AIHubAgent;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.ActionAware;
 import com.liferay.portal.workflow.kaleo.definition.AddressRecipient;
+import com.liferay.portal.workflow.kaleo.definition.AskAUser;
 import com.liferay.portal.workflow.kaleo.definition.AssigneesRecipient;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
@@ -220,6 +221,16 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		).toString();
 	}
 
+	private String _normalizeJSONObjectJSON(String json) throws Exception {
+		if (Validator.isNull(json)) {
+			return json;
+		}
+
+		return _jsonFactory.createJSONObject(
+			json
+		).toString();
+	}
+
 	private Definition _parse(Document document) throws Exception {
 		Element rootElement = document.getRootElement();
 
@@ -242,6 +253,12 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		for (Element aiHubAgentElement : aiHubAgentElements) {
 			definition.addNode(_parseAIHubAgent(aiHubAgentElement));
+		}
+
+		List<Element> askAUserElements = rootElement.elements("ask-a-user");
+
+		for (Element askAUserElement : askAUserElements) {
+			definition.addNode(_parseAskAUser(askAUserElement));
 		}
 
 		List<Element> conditionElements = rootElement.elements("condition");
@@ -301,9 +318,9 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		_parseTransitions(
 			definition, aiDecisionElements, aiHubAgentElements,
-			conditionElements, forkElements, httpRequestElements, joinElements,
-			joinXorElements, llmElements, serviceElements, stateElements,
-			taskElements);
+			askAUserElements, conditionElements, forkElements,
+			httpRequestElements, joinElements, joinXorElements, llmElements,
+			serviceElements, stateElements, taskElements);
 
 		return definition;
 	}
@@ -476,6 +493,42 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			"notification");
 
 		_parseNotificationElements(notificationElements, node);
+	}
+
+	private AskAUser _parseAskAUser(Element askAUserElement) throws Exception {
+		AskAUser askAUser = new AskAUser(
+			StringUtil.trim(askAUserElement.elementText("description")),
+			askAUserElement.elementTextTrim("name"));
+
+		askAUser.setLabelMap(_parseLabels(askAUserElement.element("labels")));
+		askAUser.setMetadata(askAUserElement.elementTextTrim("metadata"));
+
+		Set<Setting> settings = new HashSet<>();
+
+		String inputVariables = _normalizeJSONArrayJSON(
+			askAUserElement.elementTextTrim("input-variables"));
+
+		if (inputVariables != null) {
+			settings.add(new Setting("inputVariables", inputVariables));
+		}
+
+		String outputVariables = _normalizeJSONArrayJSON(
+			askAUserElement.elementTextTrim("output-variables"));
+
+		if (outputVariables != null) {
+			settings.add(new Setting("outputVariables", outputVariables));
+		}
+
+		String question = _normalizeJSONObjectJSON(
+			askAUserElement.elementTextTrim("question"));
+
+		if (question != null) {
+			settings.add(new Setting("question", question));
+		}
+
+		askAUser.setSettings(settings);
+
+		return askAUser;
 	}
 
 	private Set<Assignment> _parseAssignments(Element assignmentsElement)
@@ -1319,11 +1372,12 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	private void _parseTransitions(
 			Definition definition, List<Element> aiDecisionElements,
-			List<Element> aiHubAgentElements, List<Element> conditionElements,
-			List<Element> forkElements, List<Element> httpRequestElements,
-			List<Element> joinElements, List<Element> joinXorElements,
-			List<Element> llmElements, List<Element> serviceElements,
-			List<Element> stateElements, List<Element> taskElements)
+			List<Element> aiHubAgentElements, List<Element> askAUserElements,
+			List<Element> conditionElements, List<Element> forkElements,
+			List<Element> httpRequestElements, List<Element> joinElements,
+			List<Element> joinXorElements, List<Element> llmElements,
+			List<Element> serviceElements, List<Element> stateElements,
+			List<Element> taskElements)
 		throws Exception {
 
 		for (Element aiDecisionElement : aiDecisionElements) {
@@ -1332,6 +1386,10 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		for (Element aiHubAgentElement : aiHubAgentElements) {
 			_parseTransition(definition, aiHubAgentElement);
+		}
+
+		for (Element askAUserElement : askAUserElements) {
+			_parseTransition(definition, askAUserElement);
 		}
 
 		for (Element conditionElement : conditionElements) {

@@ -16,4 +16,5 @@ export {default as FragmentServiceConfiguration} from './FragmentServiceConfigur
 export {default as ImportFragments} from './ImportFragments';
 export {default as ViewContributedFragmentEntriesManagementToolbarPropsTransformer} from './ViewContributedFragmentEntriesManagementToolbarPropsTransformer';
 export {default as ViewFragmentEntriesManagementToolbarPropsTransformer} from './ViewFragmentEntriesManagementToolbarPropsTransformer';
+export {default as FragmentAIAssistantTriggerButton} from './ai_assistant/FragmentAIAssistantTriggerButton';
 export {default as FragmentEditor} from './fragment-editor/FragmentEditor';

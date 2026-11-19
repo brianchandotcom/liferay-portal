@@ -105,6 +105,7 @@ public class IndividualSegmentResourceImplTest {
 		throws Exception {
 
 		FaroChannel accessibleFaroChannel = Mockito.mock(FaroChannel.class);
+		FaroChannel inaccessibleFaroChannel = Mockito.mock(FaroChannel.class);
 
 		Mockito.when(
 			accessibleFaroChannel.getChannelId()
@@ -118,8 +119,6 @@ public class IndividualSegmentResourceImplTest {
 		).thenReturn(
 			List.of(accessibleFaroChannel)
 		);
-
-		FaroChannel inaccessibleFaroChannel = Mockito.mock(FaroChannel.class);
 
 		Mockito.when(
 			inaccessibleFaroChannel.getChannelId()

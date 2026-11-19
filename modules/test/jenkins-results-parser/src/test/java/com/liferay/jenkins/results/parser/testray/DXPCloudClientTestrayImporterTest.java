@@ -62,9 +62,11 @@ public class DXPCloudClientTestrayImporterTest
 			JenkinsResultsParserUtil.combine(
 				"<testsuites><testsuite name=\"", testSuiteName,
 				"\"><testcase classname=\"", testSuiteName, "\" name=\"",
-				RandomTestUtil.randomString(), "\" time=\"1.234\"/>",
+				RandomTestUtil.randomString(), "\" time=\"",
+				String.valueOf(RandomTestUtil.randomInt()), "\"/>",
 				"<testcase classname=\"", testSuiteName, "\" name=\"",
-				RandomTestUtil.randomString(), "\" time=\"2.5\"><failure ",
+				RandomTestUtil.randomString(), "\" time=\"",
+				String.valueOf(RandomTestUtil.randomInt()), "\"><failure ",
 				"message=\"", failureMessage, "\" type=\"FAILURE\"/>",
 				"</testcase></testsuite></testsuites>"));
 

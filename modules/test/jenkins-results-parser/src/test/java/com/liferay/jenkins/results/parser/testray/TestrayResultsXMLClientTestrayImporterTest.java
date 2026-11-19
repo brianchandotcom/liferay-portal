@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
@@ -185,14 +184,13 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 		_writeResultsFile(resultsFile2, testSuiteProperties2);
 
+		String randomString = RandomTestUtil.randomString();
+
 		Files.write(
 			new File(
 				testrayResultsDir, RandomTestUtil.randomString() + ".txt"
 			).toPath(),
-			RandomTestUtil.randomString(
-			).getBytes(
-				StandardCharsets.UTF_8
-			));
+			randomString.getBytes(StandardCharsets.UTF_8));
 
 		TestrayResultsXMLClientTestrayImporter.main(new String[0]);
 
@@ -259,7 +257,12 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 	@Test
 	public void testImportResultsFailure() throws Exception {
-		for (String propertyName : _requiredPropertyNames) {
+		for (String propertyName :
+				Arrays.asList(
+					"testray.build.date", "testray.build.name",
+					"testray.build.type", "testray.product.version",
+					"testray.project.name")) {
+
 			Map<String, String> testSuiteProperties = _newTestSuiteProperties();
 
 			testSuiteProperties.remove(propertyName);
@@ -271,14 +274,15 @@ public class TestrayResultsXMLClientTestrayImporterTest
 			_testImportResultsFailure(_toResultsXML(testSuiteProperties));
 		}
 
-		for (String testrayBuildDate :
+		for (String testrayBuildDateString :
 				Arrays.asList(
 					"2026-01-15 10:00:00" + RandomTestUtil.randomString(),
 					"2026-02-30 10:00:00", "2026/01/15 10:00:00")) {
 
 			Map<String, String> testSuiteProperties = _newTestSuiteProperties();
 
-			testSuiteProperties.put("testray.build.date", testrayBuildDate);
+			testSuiteProperties.put(
+				"testray.build.date", testrayBuildDateString);
 
 			_testImportResultsFailure(_toResultsXML(testSuiteProperties));
 		}
@@ -299,14 +303,13 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 		_environmentMap.put("testrayResultsDir", testrayResultsDir.getPath());
 
+		String randomString = RandomTestUtil.randomString();
+
 		Files.write(
 			new File(
 				testrayResultsDir, RandomTestUtil.randomString() + ".txt"
 			).toPath(),
-			RandomTestUtil.randomString(
-			).getBytes(
-				StandardCharsets.UTF_8
-			));
+			randomString.getBytes(StandardCharsets.UTF_8));
 
 		RuntimeException runtimeException = Assert.assertThrows(
 			RuntimeException.class,
@@ -463,7 +466,7 @@ public class TestrayResultsXMLClientTestrayImporterTest
 	}
 
 	private void _testImportResultsBuildDate(
-			Date expectedTestrayBuildDate, String testrayBuildDate)
+			Date expectedTestrayBuildDate, String testrayBuildDateString)
 		throws Exception {
 
 		File testrayResultsDir = temporaryFolder.newFolder();
@@ -472,7 +475,7 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 		Map<String, String> testSuiteProperties = _newTestSuiteProperties();
 
-		testSuiteProperties.put("testray.build.date", testrayBuildDate);
+		testSuiteProperties.put("testray.build.date", testrayBuildDateString);
 
 		_writeResultsFile(
 			new File(testrayResultsDir, RandomTestUtil.randomString() + ".xml"),
@@ -583,7 +586,9 @@ public class TestrayResultsXMLClientTestrayImporterTest
 		sb.append("  </properties>\n  <testcase>\n    <metrics>\n");
 		sb.append("      <metric name=\"");
 		sb.append(RandomTestUtil.randomString());
-		sb.append("\" unit=\"ms\" value=\"");
+		sb.append("\" unit=\"");
+		sb.append(RandomTestUtil.randomString());
+		sb.append("\" value=\"");
 		sb.append(RandomTestUtil.randomInt());
 		sb.append("\"/>\n    </metrics>\n  </testcase>\n</testsuite>\n");
 
@@ -598,18 +603,10 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 		dir.mkdirs();
 
-		Files.write(
-			file.toPath(),
-			_toResultsXML(
-				testSuiteProperties
-			).getBytes(
-				StandardCharsets.UTF_8
-			));
-	}
+		String resultsXML = _toResultsXML(testSuiteProperties);
 
-	private static final List<String> _requiredPropertyNames = Arrays.asList(
-		"testray.build.date", "testray.build.name", "testray.build.type",
-		"testray.product.version", "testray.project.name");
+		Files.write(file.toPath(), resultsXML.getBytes(StandardCharsets.UTF_8));
+	}
 
 	private final Map<String, String> _environmentMap = new HashMap<>();
 	private final Map<String, byte[]> _resultsTarGzFileContents =

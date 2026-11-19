@@ -669,7 +669,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No filter
 
-		_mockSerializeFilters(FDS_NAMES[0], null);
+		_mockSerializeFilters(FDS_NAMES[0]);
 
 		JSONAssert.assertEquals(
 			"[]",
@@ -793,8 +793,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 	@Test
 	public void testSerializeFiltersWithTokenResolutions() throws Exception {
-		_mockSerializeFilters(FDS_NAMES[0], null);
-
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _createSelectionFilterObjectEntry(
@@ -805,16 +803,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		properties.put("preselectedValues", "[]");
 
-		Mockito.when(
-			_customFDSSerializer.getSortedRelatedObjectEntries(
-				Mockito.eq(FDS_NAMES[0]), Mockito.eq(httpServletRequest),
-				Mockito.any(), Mockito.eq("filtersOrder"),
-				Mockito.eq("dataSetToDataSetClientExtensionFilters"),
-				Mockito.eq("dataSetToDataSetDateFilters"),
-				Mockito.eq("dataSetToDataSetSelectionFilters"))
-		).thenReturn(
-			ListUtil.fromArray(objectEntry)
-		);
+		_mockSerializeFilters(FDS_NAMES[0], objectEntry);
 
 		// All tokens resolved
 
@@ -910,16 +899,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		ObjectEntry itemProxyObjectEntry = _createItemProxyObjectEntry(
 			RandomTestUtil.randomString());
 
-		Mockito.when(
-			_customFDSSerializer.getSortedRelatedObjectEntries(
-				Mockito.eq(FDS_NAMES[0]), Mockito.eq(httpServletRequest),
-				Mockito.any(), Mockito.eq("filtersOrder"),
-				Mockito.eq("dataSetToDataSetClientExtensionFilters"),
-				Mockito.eq("dataSetToDataSetDateFilters"),
-				Mockito.eq("dataSetToDataSetSelectionFilters"))
-		).thenReturn(
-			ListUtil.fromArray(itemProxyObjectEntry)
-		);
+		_mockSerializeFilters(FDS_NAMES[0], itemProxyObjectEntry);
 
 		jsonArray = _customFDSSerializer.serializeFilters(
 			FDS_NAMES[0], httpServletRequest,
@@ -2345,6 +2325,16 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	private void _mockSerializeFilters(
 		String fdsName, Map<String, Object> properties) {
 
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(properties);
+
+		_mockSerializeFilters(fdsName, objectEntry);
+	}
+
+	private void _mockSerializeFilters(
+		String fdsName, ObjectEntry... objectEntries) {
+
 		_customFDSSerializer.fdsAPIURLResolverRegistry = Mockito.mock(
 			FDSAPIURLResolverRegistry.class);
 
@@ -2360,16 +2350,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				Mockito.any())
 		).thenCallRealMethod();
 
-		List<ObjectEntry> objectEntries = new ArrayList<>();
-
-		if (properties != null) {
-			ObjectEntry objectEntry = new ObjectEntry();
-
-			objectEntry.setProperties(properties);
-
-			objectEntries.add(objectEntry);
-		}
-
 		Mockito.when(
 			_customFDSSerializer.getSortedRelatedObjectEntries(
 				Mockito.eq(fdsName), Mockito.eq(httpServletRequest),
@@ -2378,7 +2358,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				Mockito.eq("dataSetToDataSetDateFilters"),
 				Mockito.eq("dataSetToDataSetSelectionFilters"))
 		).thenReturn(
-			objectEntries
+			ListUtil.fromArray(objectEntries)
 		);
 	}
 

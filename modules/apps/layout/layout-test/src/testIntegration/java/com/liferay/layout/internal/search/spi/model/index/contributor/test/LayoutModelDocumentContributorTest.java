@@ -415,6 +415,30 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-115999")
+	public void testReindexPublishedLayoutWithCaptcha() throws Exception {
+		String elementText = RandomTestUtil.randomString();
+
+		_setUpLayout(elementText, false, null);
+
+		_addFragmentEntryLinkToLayout(
+			"{}", "[@liferay_captcha[\"captcha\"] /]", _draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		List<LogEntry> logEntries = _reindexLogEntries(_layout);
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			elementText, _locale);
+
+		Assert.assertEquals(
+			elementText,
+			document.get(Field.getLocalizedName(_locale, Field.CONTENT)));
+	}
+
+	@Test
 	public void testReindexPublishedLayoutWithFragmentEntryLinkTypePortlet()
 		throws Exception {
 

@@ -195,16 +195,13 @@ public class LaunchSetPublishBackgroundTaskExecutor
 	protected void activate() {
 		_launchSetErrorHelper = new LaunchSetErrorHelper(
 			_launchEntryManagerRegistry, _objectDefinitionLocalService,
-			_objectEntryLocalService, _objectRelationshipLocalService,
-			_userLocalService);
+			_objectEntryLocalService, _userLocalService);
 	}
 
 	private void _publish(
 			List<Map<String, Serializable>> launchSetErrorValuesMaps,
 			ObjectEntry launchSetObjectEntry, ServiceContext serviceContext)
 		throws PortalException {
-
-		_launchSetErrorHelper.deleteLaunchSetErrors(launchSetObjectEntry);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.getObjectRelationship(

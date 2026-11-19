@@ -61,6 +61,8 @@ public class LaunchSetPublisherImpl implements LaunchSetPublisher {
 
 		_validateNotBeingPublished(launchSetId);
 
+		_deleteLaunchSetErrors(launchSetObjectEntry);
+
 		_backgroundTaskManager.addBackgroundTask(
 			userId, BackgroundTaskConstants.GROUP_ID_DEFAULT,
 			String.valueOf(launchSetId), null,

@@ -9,12 +9,9 @@ import com.liferay.launch.entry.manager.LaunchEntryManager;
 import com.liferay.launch.entry.manager.LaunchEntryManagerRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,34 +40,12 @@ public class LaunchSetErrorHelper {
 		LaunchEntryManagerRegistry launchEntryManagerRegistry,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
-		ObjectRelationshipLocalService objectRelationshipLocalService,
 		UserLocalService userLocalService) {
 
 		_launchEntryManagerRegistry = launchEntryManagerRegistry;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
-		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_userLocalService = userLocalService;
-	}
-
-	public void deleteLaunchSetErrors(ObjectEntry launchSetObjectEntry)
-		throws PortalException {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.getObjectRelationship(
-				launchSetObjectEntry.getObjectDefinitionId(),
-				"launchSetToLaunchSetErrors");
-
-		for (ObjectEntry launchSetErrorObjectEntry :
-				_objectEntryLocalService.getOneToManyObjectEntries(
-					launchSetObjectEntry.getGroupId(),
-					objectRelationship.getObjectRelationshipId(), null, false,
-					launchSetObjectEntry.getObjectEntryId(), true, null,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			_objectEntryLocalService.deleteObjectEntry(
-				launchSetErrorObjectEntry);
-		}
 	}
 
 	public Map<String, Serializable> getLaunchSetErrorValues(
@@ -182,8 +157,6 @@ public class LaunchSetErrorHelper {
 			return;
 		}
 
-		deleteLaunchSetErrors(launchSetObjectEntry);
-
 		long statusByUserId = _getStatusByUserId(launchSetObjectEntry, userId);
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -246,8 +219,6 @@ public class LaunchSetErrorHelper {
 	private final LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
-	private final ObjectRelationshipLocalService
-		_objectRelationshipLocalService;
 	private final UserLocalService _userLocalService;
 
 }

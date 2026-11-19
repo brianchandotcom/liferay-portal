@@ -1086,8 +1086,8 @@ public class StructuredContentResourceTest
 		return DDMTemplateTestUtil.addTemplate(
 			ddmStructure.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_VM,
-			_read("test-structured-content-template.vm"), LocaleUtil.US);
+			TemplateConstants.LANG_TYPE_FTL,
+			_read("test-structured-content-template.ftl"), LocaleUtil.US);
 	}
 
 	private ExpandoColumn _addExpandoColumn(

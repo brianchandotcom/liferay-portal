@@ -76,6 +76,8 @@ public class HttpInvoker {
 		httpResponse.setMessage(httpURLConnection.getResponseMessage());
 		httpResponse.setStatusCode(httpURLConnection.getResponseCode());
 
+		httpURLConnection.disconnect();
+
 		return httpResponse;
 	}
 
@@ -370,7 +372,7 @@ public class HttpInvoker {
 
 		int responseCode = httpURLConnection.getResponseCode();
 
-		if (responseCode > 399) {
+		if (responseCode > 299) {
 			inputStream = httpURLConnection.getErrorStream();
 		}
 		else {
@@ -378,21 +380,16 @@ public class HttpInvoker {
 		}
 
 		if (inputStream != null) {
-			try {
-				byte[] bytes = new byte[8192];
+			byte[] bytes = new byte[8192];
 
-				while (true) {
-					int read = inputStream.read(bytes, 0, bytes.length);
+			while (true) {
+				int read = inputStream.read(bytes, 0, bytes.length);
 
-					if (read == -1) {
-						break;
-					}
-
-					byteArrayOutputStream.write(bytes, 0, read);
+				if (read == -1) {
+					break;
 				}
-			}
-			finally {
-				inputStream.close();
+
+				byteArrayOutputStream.write(bytes, 0, read);
 			}
 		}
 
@@ -467,4 +464,4 @@ public class HttpInvoker {
 	private String _path;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1620410843
+// LIFERAY-REST-BUILDER-HASH:-54998591

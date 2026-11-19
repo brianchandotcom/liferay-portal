@@ -122,7 +122,6 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommandTest {
 			_assertUpdateHighlightedFragment(
 				new String[] {"BASIC_COMPONENT-html"}, "BASIC_COMPONENT-html",
 				true, user2);
-
 			_assertUpdateHighlightedFragment(
 				new String[0], "BASIC_COMPONENT-html", false, user2);
 

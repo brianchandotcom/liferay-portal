@@ -48,25 +48,18 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
 			"objectEntry");
 
-		_updateGuestViewPermission(
-			objectEntryJSONObject.getInt("status") ==
-				WorkflowConstants.STATUS_APPROVED,
-			jsonObject.getLong("classPK"));
+		boolean approved = false;
 
-		return new ResponseEntity<>(json, HttpStatus.OK);
-	}
+		if (objectEntryJSONObject.getInt("status") ==
+				WorkflowConstants.STATUS_APPROVED) {
 
-	private String _getAuthorization() {
-		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-learn-etc-spring-boot-oahs");
-	}
-
-	private void _updateGuestViewPermission(
-		boolean approved, long objectEntryId) {
+			approved = true;
+		}
 
 		URI uri = UriComponentsBuilder.fromPath(
 			StringBundler.concat(
-				"/o/c/p2s3knowledgearticles/", objectEntryId, "/permissions")
+				"/o/c/p2s3knowledgearticles/", jsonObject.getLong("classPK"),
+				"/permissions")
 		).build(
 		).toUri();
 
@@ -107,7 +100,7 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 		).toList();
 
 		if (actionIds.contains(ActionKeys.VIEW) && approved) {
-			return;
+			return new ResponseEntity<>(json, HttpStatus.OK);
 		}
 
 		if (approved) {
@@ -120,6 +113,13 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 		guestPermissionJSONObject.put("actionIds", actionIds);
 
 		put(_getAuthorization(), itemsJSONArray.toString(), uri);
+
+		return new ResponseEntity<>(json, HttpStatus.OK);
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-learn-etc-spring-boot-oahs");
 	}
 
 	@Autowired

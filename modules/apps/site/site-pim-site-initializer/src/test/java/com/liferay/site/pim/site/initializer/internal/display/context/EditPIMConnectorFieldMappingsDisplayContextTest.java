@@ -357,8 +357,8 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 		).thenReturn(
 			Collections.singletonList(
 				new PIMConnectorChannelField(
-					Arrays.asList("categories"), RandomTestUtil.randomString(),
-					true, _CHANNEL_FIELD, false,
+					Collections.singletonList("categories"),
+					RandomTestUtil.randomString(), true, _CHANNEL_FIELD, false,
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT))
 		);
 
@@ -371,7 +371,7 @@ public class EditPIMConnectorFieldMappingsDisplayContextTest {
 		reactData = editPIMConnectorFieldMappingsDisplayContext.getReactData();
 
 		Assert.assertEquals(
-			Arrays.asList("categories"),
+			Collections.singletonList("categories"),
 			JSONUtil.toStringList(
 				(JSONArray)reactData.get(
 					"channelFieldAdditionalFieldMappingTypes")));

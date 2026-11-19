@@ -54,6 +54,31 @@ describe('Serializing a node with untouched variables', () => {
 		);
 	});
 
+	it('Writes empty arrays for an Ask a User node', () => {
+		const xmlDefinition = serializeDefinition(
+			XML_NAMESPACE,
+			METADATA,
+			[
+				{
+					data: {label: {en_US: 'Ask a User'}, newNode: true},
+					id: 'askAUserNode',
+					position: {x: 0, y: 0},
+					type: 'ask-a-user',
+				},
+			],
+			[]
+		);
+
+		expect(xmlDefinition).not.toContain('undefined');
+		expect(xmlDefinition).toMatch(
+			/<input-variables>[\s\S]*?\[\][\s\S]*?<\/input-variables>/
+		);
+		expect(xmlDefinition).toMatch(
+			/<output-variables>[\s\S]*?\[\][\s\S]*?<\/output-variables>/
+		);
+		expect(xmlDefinition).toContain('<question></question>');
+	});
+
 	it('Writes empty arrays for an HTTP request node', () => {
 		const xmlDefinition = serializeDefinition(
 			XML_NAMESPACE,

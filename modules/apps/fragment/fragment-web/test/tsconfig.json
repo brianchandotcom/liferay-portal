@@ -1,0 +1,85 @@
+{
+	"@generated": "7929d56435e421129017af12a82627c9a62f32f4",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"checkJs": false,
+		"composite": true,
+		"declarationDir": "../../../../.tsc/types",
+		"emitDeclarationOnly": true,
+		"jsx": "react",
+		"module": "es2022",
+		"moduleResolution": "node",
+		"paths": {
+			"@liferay/ai-hub-cell-js-components-web": [
+				"../../../ai-hub-cell/ai-hub-cell-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/ai-hub-cell-js-components-web/renderAIAssistantTrigger": [
+				"../../../ai-hub-cell/ai-hub-cell-js-components-web/src/main/resources/META-INF/resources/js/renderAIAssistantTrigger.ts"
+			],
+			"@liferay/frontend-js-codemirror-web": [
+				"../../../frontend-js/frontend-js-codemirror-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/frontend-js-react-web": [
+				"../../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/layout-js-components-web": [
+				"../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/marketplace-js-components-web": [
+				"../../../marketplace/marketplace-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"frontend-js-components-web": [
+				"../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"frontend-js-web": [
+				"../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
+			],
+			"frontend-js-web/auto_fields": [
+				"../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/auto_fields/index.js"
+			],
+			"frontend-js-web/legacy": [
+				"../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/legacy/index.ts"
+			]
+		},
+		"rootDir": "../../../..",
+		"skipLibCheck": true,
+		"sourceMap": false,
+		"strict": true,
+		"target": "esnext",
+		"tsBuildInfoFile": "../../../../.tsc/buildinfo/fragment-web-test.tsbuildinfo",
+		"typeRoots": [
+			"../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../../../../global.d.ts",
+		"../src/**/*.ts",
+		"../src/**/*.tsx"
+	],
+	"references": [
+		{
+			"path": "../../../ai-hub-cell/ai-hub-cell-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-codemirror-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../marketplace/marketplace-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
+	]
+}

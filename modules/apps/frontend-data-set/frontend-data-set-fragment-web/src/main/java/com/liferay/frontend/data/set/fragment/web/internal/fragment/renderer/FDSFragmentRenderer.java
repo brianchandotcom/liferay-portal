@@ -185,10 +185,12 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					fdsAPIURL, fdsAPIURLTokenMappingsJSONObject,
 					autoResolvedFDSAPIURL, httpServletRequest);
 
+			String resolvedFDSAPIURL = _fdsRenderer.getFDSAPIURL(
+				externalReferenceCode, httpServletRequest, true,
+				fdsAPIURLTokenResolutionsJSONObject);
+
 			Set<String> unresolvedTokenNames = _getTokenNames(
-				_fdsRenderer.getFDSAPIURL(
-					externalReferenceCode, httpServletRequest, true,
-					fdsAPIURLTokenResolutionsJSONObject));
+				resolvedFDSAPIURL);
 
 			boolean hasTokens = _hasTokens(fdsAPIURL);
 
@@ -211,74 +213,68 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						_getAutoResolvedTokenNames(
 							fdsAPIURL, autoResolvedFDSAPIURL),
 						fragmentRendererContext);
-
-					if (!unresolvedTokenNames.isEmpty()) {
-						Set<String> unresolvedContextTokenNames =
-							_getUnresolvedContextTokenNames(
-								fdsAPIURLTokenMappingsJSONObject,
-								httpServletRequest, unresolvedTokenNames);
-
-						_reactRenderer.renderReact(
-							new ComponentDescriptor(
-								"{UnresolvedDataSetPreview} from " +
-									"frontend-data-set-fragment-web",
-								componentId, null, true),
-							HashMapBuilder.<String, Object>put(
-								"apiURL",
-								_fdsRenderer.getFDSAPIURL(
-									externalReferenceCode, httpServletRequest,
-									true, fdsAPIURLTokenResolutionsJSONObject)
-							).put(
-								"hasUnmappedTokens",
-								unresolvedTokenNames.size() >
-									unresolvedContextTokenNames.size()
-							).put(
-								"hasUnresolvedContextTokens",
-								!unresolvedContextTokenNames.isEmpty()
-							).build(),
-							httpServletRequest, printWriter);
-
-						return;
-					}
 				}
 			}
 
-			if (unresolvedTokenNames.isEmpty()) {
-				printWriter.write("<div>");
+			if (!unresolvedTokenNames.isEmpty()) {
+				if (!fragmentRendererContext.isEditMode()) {
+					return;
+				}
 
-				_fdsRenderer.render(
+				Set<String> unresolvedContextTokenNames =
+					_getUnresolvedContextTokenNames(
+						fdsAPIURLTokenMappingsJSONObject, httpServletRequest,
+						unresolvedTokenNames);
+
+				_reactRenderer.renderReact(
+					new ComponentDescriptor(
+						"{UnresolvedDataSetPreview} from " +
+							"frontend-data-set-fragment-web",
+						componentId, null, true),
 					HashMapBuilder.<String, Object>put(
-						"apiURLTokenResolutions",
-						() -> {
-							if (hasTokens) {
-								return fdsAPIURLTokenResolutionsJSONObject;
-							}
-
-							return null;
-						}
+						"apiURL", resolvedFDSAPIURL
 					).put(
-						"namespace",
-						fragmentRendererContext.getFragmentElementId()
+						"hasUnmappedTokens",
+						unresolvedTokenNames.size() >
+							unresolvedContextTokenNames.size()
 					).put(
-						"selectionFilterAPIURLTokenResolutions",
-						() ->
-							_getSelectionFilterAPIURLTokenResolutionsJSONObjects(
-								externalReferenceCode, httpServletRequest,
-								_getJSONObject(
-									_fragmentEntryConfigurationParser.
-										getFieldValue(
-											configurationJSONObject,
-											editableValuesJSONObject,
-											fragmentRendererContext.getLocale(),
-											"selectionFilterAPIURLTokenMappings")))
-					).put(
-						"style", "fluid"
+						"hasUnresolvedContextTokens",
+						!unresolvedContextTokenNames.isEmpty()
 					).build(),
-					componentId, externalReferenceCode, httpServletRequest,
-					httpServletResponse, true, null, printWriter);
-
-				printWriter.write("</div>");
+					httpServletRequest, printWriter);
 			}
+
+			printWriter.write("<div>");
+
+			_fdsRenderer.render(
+				HashMapBuilder.<String, Object>put(
+					"apiURLTokenResolutions",
+					() -> {
+						if (hasTokens) {
+							return fdsAPIURLTokenResolutionsJSONObject;
+						}
+
+						return null;
+					}
+				).put(
+					"namespace", fragmentRendererContext.getFragmentElementId()
+				).put(
+					"selectionFilterAPIURLTokenResolutions",
+					() -> _getSelectionFilterAPIURLTokenResolutionsJSONObjects(
+						externalReferenceCode, httpServletRequest,
+						_getJSONObject(
+							_fragmentEntryConfigurationParser.getFieldValue(
+								configurationJSONObject,
+								editableValuesJSONObject,
+								fragmentRendererContext.getLocale(),
+								"selectionFilterAPIURLTokenMappings")))
+				).put(
+					"style", "fluid"
+				).build(),
+				componentId, externalReferenceCode, httpServletRequest,
+				httpServletResponse, true, null, printWriter);
+
+			printWriter.write("</div>");
 		}
 		catch (Exception exception) {
 			_log.error("Unable to render frontend data set", exception);

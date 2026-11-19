@@ -94,6 +94,34 @@ public class FragmentDisplayContext {
 		_updatePortletDisplay();
 	}
 
+	public Map<String, Object> getAIAssistantProps() {
+		return HashMapBuilder.<String, Object>put(
+			"fragmentPortletNamespace", _renderResponse.getNamespace()
+		).put(
+			"fragmentSetExternalReferenceCode",
+			() -> {
+				FragmentCollection fragmentCollection = getFragmentCollection();
+
+				if ((fragmentCollection == null) ||
+					!Objects.equals(
+						getFragmentType(),
+						FragmentTypeConstants.BASIC_FRAGMENT_TYPE)) {
+
+					return null;
+				}
+
+				return fragmentCollection.getExternalReferenceCode();
+			}
+		).put(
+			"siteExternalReferenceCode",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				return group.getExternalReferenceCode();
+			}
+		).build();
+	}
+
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		Map<String, Object> fragmentCollectionsViewContext =
 			getFragmentCollectionsViewContext();

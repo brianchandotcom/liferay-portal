@@ -12,6 +12,9 @@ public class FragmentWebKeys {
 
 	public static final String FRAGMENT_COLLECTIONS = "FRAGMENT_COLLECTIONS";
 
+	public static final String FRAGMENT_DISPLAY_CONTEXT =
+		"FRAGMENT_DISPLAY_CONTEXT";
+
 	public static final String INHERITED_FRAGMENT_COLLECTIONS =
 		"INHERITED_FRAGMENT_COLLECTIONS";
 

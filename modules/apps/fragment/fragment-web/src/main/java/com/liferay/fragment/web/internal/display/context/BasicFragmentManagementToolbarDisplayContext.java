@@ -255,6 +255,7 @@ public class BasicFragmentManagementToolbarDisplayContext
 		return CreationMenuBuilder.addDropdownItem(
 			() -> generateFragmentWithAIEnabled,
 			dropdownItem -> {
+				dropdownItem.put("className", "generate-with-ai");
 				dropdownItem.putData("action", "generateFragmentWithAI");
 
 				FragmentCollection fragmentCollection =

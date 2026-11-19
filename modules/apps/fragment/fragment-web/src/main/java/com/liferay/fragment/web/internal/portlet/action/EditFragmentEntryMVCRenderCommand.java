@@ -48,7 +48,6 @@ public class EditFragmentEntryMVCRenderCommand implements MVCRenderCommand {
 
 		String externalReferenceCode = ParamUtil.getString(
 			renderRequest, "externalReferenceCode");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

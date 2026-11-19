@@ -62,38 +62,6 @@ public class FragmentDisplayContextTest {
 	@Test
 	@TestInfo("LPD-111343")
 	public void testGetAIAssistantProps() {
-		long fragmentCollectionId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			_httpServletRequest.getParameter("fragmentCollectionId")
-		).thenReturn(
-			String.valueOf(fragmentCollectionId)
-		);
-
-		long groupId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			_themeDisplay.getScopeGroupId()
-		).thenReturn(
-			groupId
-		);
-
-		Group group = Mockito.mock(Group.class);
-
-		String siteExternalReferenceCode = RandomTestUtil.randomString();
-
-		Mockito.when(
-			group.getExternalReferenceCode()
-		).thenReturn(
-			siteExternalReferenceCode
-		);
-
-		Mockito.when(
-			_themeDisplay.getScopeGroup()
-		).thenReturn(
-			group
-		);
-
 		String fragmentPortletNamespace = RandomTestUtil.randomString();
 
 		Mockito.when(
@@ -102,8 +70,30 @@ public class FragmentDisplayContextTest {
 			fragmentPortletNamespace
 		);
 
+		long fragmentCollectionId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionId")
+		).thenReturn(
+			String.valueOf(fragmentCollectionId)
+		);
+
 		FragmentCollection fragmentCollection = Mockito.mock(
 			FragmentCollection.class);
+
+		long groupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			fragmentCollection.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroupId()
+		).thenReturn(
+			groupId
+		);
 
 		String fragmentSetExternalReferenceCode = RandomTestUtil.randomString();
 
@@ -113,10 +103,20 @@ public class FragmentDisplayContextTest {
 			fragmentSetExternalReferenceCode
 		);
 
+		Group scopeGroup = Mockito.mock(Group.class);
+
+		String siteExternalReferenceCode = RandomTestUtil.randomString();
+
 		Mockito.when(
-			fragmentCollection.getGroupId()
+			scopeGroup.getExternalReferenceCode()
 		).thenReturn(
-			groupId
+			siteExternalReferenceCode
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroup()
+		).thenReturn(
+			scopeGroup
 		);
 
 		try (MockedStatic<FragmentCollectionLocalServiceUtil>

@@ -76,8 +76,8 @@ public class EditFragmentEntryDisplayContextTest {
 			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertEquals(
-			fragmentCollection.getFragmentCollectionId(),
-			(long)ReflectionTestUtil.invoke(
+			Long.valueOf(fragmentCollection.getFragmentCollectionId()),
+			ReflectionTestUtil.invoke(
 				_getEditFragmentEntryDisplayContext(
 					fragmentEntry.getExternalReferenceCode()),
 				"getFragmentCollectionId", new Class<?>[0]));

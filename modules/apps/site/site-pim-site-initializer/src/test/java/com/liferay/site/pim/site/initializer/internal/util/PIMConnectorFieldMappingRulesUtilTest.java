@@ -138,7 +138,7 @@ public class PIMConnectorFieldMappingRulesUtilTest {
 		Assert.assertTrue(
 			PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySourceSupported(
 				new PIMConnectorChannelField(
-					Collections.singletonList("categories"),
+					Collections.singletonList(RandomTestUtil.randomString()),
 					RandomTestUtil.randomString(), true,
 					RandomTestUtil.randomString(), false,
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT)));

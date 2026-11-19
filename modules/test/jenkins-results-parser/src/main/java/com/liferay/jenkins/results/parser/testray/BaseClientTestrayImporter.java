@@ -45,8 +45,8 @@ public abstract class BaseClientTestrayImporter {
 				_testrayOAuth2ClientSecret)) {
 
 			throw new RuntimeException(
-				"Testray 2 requires testrayOAuth2ClientId and " +
-					"testrayOAuth2ClientSecret to be set");
+				"Testray 2 requires \"testrayOAuth2ClientId\" and " +
+					"\"testrayOAuth2ClientSecret\" to be set");
 		}
 
 		String testrayCloudBucketName = getEnvVarValue(
@@ -64,8 +64,9 @@ public abstract class BaseClientTestrayImporter {
 				testrayCloudBucketName)) {
 
 			throw new RuntimeException(
-				"Testray 2 requires GOOGLE_APPLICATION_CREDENTIALS to point " +
-					"to a credential with access to " + testrayCloudBucketName);
+				"Testray 2 requires \"GOOGLE_APPLICATION_CREDENTIALS\" to " +
+					"point to a credential with access to " +
+						testrayCloudBucketName);
 		}
 
 		_testrayCloudBucket = TestrayCloudBucket.getInstance(
@@ -153,7 +154,8 @@ public abstract class BaseClientTestrayImporter {
 	}
 
 	protected void uploadResults(
-		List<File> resultsFiles, TestrayBuild testrayBuild) {
+			List<File> resultsFiles, TestrayBuild testrayBuild)
+		throws IOException {
 
 		File tempDir = null;
 
@@ -185,9 +187,6 @@ public abstract class BaseClientTestrayImporter {
 
 			_testrayCloudBucket.createTestrayCloudObject(
 				"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
 		}
 		finally {
 			if (tempDir != null) {

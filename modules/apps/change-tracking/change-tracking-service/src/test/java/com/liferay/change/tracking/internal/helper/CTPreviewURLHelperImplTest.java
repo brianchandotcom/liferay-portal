@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.change.tracking.web.internal.portlet.action;
+package com.liferay.change.tracking.internal.helper;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.petra.string.StringBundler;
@@ -25,7 +25,7 @@ import org.mockito.Mockito;
 /**
  * @author Noor Najjar
  */
-public class GetEntryRenderDataMVCResourceCommandTest {
+public class CTPreviewURLHelperImplTest {
 
 	@ClassRule
 	@Rule
@@ -64,7 +64,7 @@ public class GetEntryRenderDataMVCResourceCommandTest {
 		portalUtil.setPortal(portal);
 
 		ReflectionTestUtil.setFieldValue(
-			_getEntryRenderDataMVCResourceCommand, "_portal", portal);
+			_ctPreviewURLHelperImpl, "_portal", portal);
 	}
 
 	@Test
@@ -318,29 +318,21 @@ public class GetEntryRenderDataMVCResourceCommandTest {
 				"\" changeType=\"diff-added-image\" /></span><img ",
 				"src=\"/documents/d/guest/z?p_l_mode=preview",
 				"&previewCTCollectionId=", _CT_COLLECTION_ID, "\" /></p>"),
-			ReflectionTestUtil.invoke(
-				_getEntryRenderDataMVCResourceCommand,
-				"_addUnifiedPreviewCTCollectionId",
-				new Class<?>[] {
-					long.class, String.class, long.class, long.class
-				},
+			_ctPreviewURLHelperImpl.addUnifiedPreviewCTCollectionId(
 				_COMPANY_ID, html, CTConstants.CT_COLLECTION_ID_PRODUCTION,
 				_CT_COLLECTION_ID));
 	}
 
 	private String _addPreviewCTCollectionId(long ctCollectionId, String html) {
-		return ReflectionTestUtil.invoke(
-			_getEntryRenderDataMVCResourceCommand, "_addPreviewCTCollectionId",
-			new Class<?>[] {long.class, long.class, String.class}, _COMPANY_ID,
-			ctCollectionId, html);
+		return _ctPreviewURLHelperImpl.addPreviewCTCollectionId(
+			_COMPANY_ID, ctCollectionId, html);
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final long _CT_COLLECTION_ID = RandomTestUtil.randomLong();
 
-	private final GetEntryRenderDataMVCResourceCommand
-		_getEntryRenderDataMVCResourceCommand =
-			new GetEntryRenderDataMVCResourceCommand();
+	private final CTPreviewURLHelperImpl _ctPreviewURLHelperImpl =
+		new CTPreviewURLHelperImpl();
 
 }

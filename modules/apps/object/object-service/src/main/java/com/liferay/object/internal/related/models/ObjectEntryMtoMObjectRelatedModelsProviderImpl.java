@@ -87,7 +87,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 				}
 
 				_objectEntryService.deleteObjectEntry(
-					objectEntry.getObjectEntryId());
+					curObjectEntry.getObjectEntryId());
 			}
 		}
 	}

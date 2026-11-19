@@ -2383,7 +2383,7 @@ paths:
     "/sites/{siteExternalReferenceCode}/publish-preview":
         get:
             description:
-                Retrieves the portlet data handlers and change counts for a Publish to Live of the specified site.
+                Retrieves the portlet data handlers and change counts for a Publish to Live of the specified site, or of one of its portlets.
             operationId: getSitePublishPreview
             parameters:
                 -   in: path
@@ -2415,6 +2415,18 @@ paths:
                         type: integer
                 -   in: query
                     description:
+                        The ID of a portlet to narrow the process to (e.g., com_liferay_journal_web_portlet_JournalPortlet).
+                    name: portletId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        The external reference code of the site page that holds the portlet. Without it, the portlet is handled as an application rather than a widget on a page.
+                    name: sitePageExternalReferenceCode
+                    schema:
+                        type: string
+                -   in: query
+                    description:
                         The start date of a DateRange filter.
                     name: startDate
                     schema:
@@ -2433,7 +2445,7 @@ paths:
     "/sites/{siteExternalReferenceCode}/publish-processes":
         get:
             description:
-                Retrieves the Publish to Live processes of the specified site.
+                Retrieves the Publish to Live processes of the specified site, or of one of its portlets.
             operationId: getSitePublishProcessesPage
             parameters:
                 -   in: path
@@ -2463,11 +2475,23 @@ paths:
                     schema:
                         type: integer
                 -   in: query
+                    description:
+                        The ID of a portlet to list only its processes.
+                    name: portletId
+                    schema:
+                        type: string
+                -   in: query
                     name: restrictFields
                     schema:
                         type: string
                 -   in: query
                     name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        The external reference code of the site page that holds the portlet, to list only the processes of that widget.
+                    name: sitePageExternalReferenceCode
                     schema:
                         type: string
                 -   in: query
@@ -2494,12 +2518,24 @@ paths:
             tags: ["PublishProcess"]
         post:
             description:
-                Starts a Publish to Live of the specified site.
+                Starts a Publish to Live of the specified site, or of one of its portlets.
             operationId: postSitePublishProcess
             parameters:
                 -   in: path
                     name: siteExternalReferenceCode
                     required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        The ID of a portlet to narrow the process to (e.g., com_liferay_journal_web_portlet_JournalPortlet).
+                    name: portletId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        The external reference code of the site page that holds the portlet. Without it, the portlet is handled as an application rather than a widget on a page.
+                    name: sitePageExternalReferenceCode
                     schema:
                         type: string
             requestBody:

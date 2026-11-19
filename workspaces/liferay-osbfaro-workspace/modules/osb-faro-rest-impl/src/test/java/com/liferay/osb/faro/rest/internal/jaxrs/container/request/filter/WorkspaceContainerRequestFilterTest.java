@@ -353,7 +353,7 @@ public class WorkspaceContainerRequestFilterTest {
 		return faroChannel;
 	}
 
-	private void _mockFaroUser(String roleName, long userId) {
+	private FaroUser _mockFaroUser(String roleName, long userId) {
 		FaroUser faroUser = Mockito.mock(FaroUser.class);
 
 		Mockito.when(
@@ -387,6 +387,8 @@ public class WorkspaceContainerRequestFilterTest {
 		).thenReturn(
 			role
 		);
+
+		return faroUser;
 	}
 
 	private static final long _CHANNEL_GROUP_ID = RandomTestUtil.randomLong();

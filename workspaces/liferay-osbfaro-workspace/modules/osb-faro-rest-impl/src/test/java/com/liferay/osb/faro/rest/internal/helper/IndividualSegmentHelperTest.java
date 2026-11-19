@@ -238,7 +238,7 @@ public class IndividualSegmentHelperTest {
 		}
 	}
 
-	private void _mockFaroChannel(String channelId, int permissionType) {
+	private FaroChannel _mockFaroChannel(String channelId, int permissionType) {
 		FaroChannel faroChannel = Mockito.mock(FaroChannel.class);
 
 		Mockito.when(
@@ -264,9 +264,11 @@ public class IndividualSegmentHelperTest {
 		).thenReturn(
 			faroChannel
 		);
+
+		return faroChannel;
 	}
 
-	private void _mockFaroUser(String roleName, long userId) {
+	private FaroUser _mockFaroUser(String roleName, long userId) {
 		FaroUser faroUser = Mockito.mock(FaroUser.class);
 
 		Mockito.when(
@@ -300,9 +302,11 @@ public class IndividualSegmentHelperTest {
 		).thenReturn(
 			role
 		);
+
+		return faroUser;
 	}
 
-	private void _mockIndividualSegment(
+	private IndividualSegment _mockIndividualSegment(
 		String channelId, String individualSegmentId) {
 
 		IndividualSegment individualSegment = new IndividualSegment();
@@ -316,6 +320,8 @@ public class IndividualSegmentHelperTest {
 		).thenReturn(
 			individualSegment
 		);
+
+		return individualSegment;
 	}
 
 	private void _setPermissionChecker(long userId) {

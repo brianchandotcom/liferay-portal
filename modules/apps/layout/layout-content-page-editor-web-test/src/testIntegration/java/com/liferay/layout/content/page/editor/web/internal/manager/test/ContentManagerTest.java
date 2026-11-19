@@ -26,14 +26,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -176,12 +177,12 @@ public class ContentManagerTest {
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
 
-		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-			_group.getGroupId(), journalArticle.getExternalReferenceCode(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			journalArticle.getResourcePrimKey(), portletId,
-			_portal.getClassNameId(Portlet.class.getName()), _layout.getPlid(),
-			new ServiceContext());
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_portletLayoutListener.onSetup(portletId, _layout.getPlid());
+
+		ServiceContextThreadLocal.popServiceContext();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -316,6 +317,11 @@ public class ContentManagerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject(
+		filter = "jakarta.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT
+	)
+	private PortletLayoutListener _portletLayoutListener;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

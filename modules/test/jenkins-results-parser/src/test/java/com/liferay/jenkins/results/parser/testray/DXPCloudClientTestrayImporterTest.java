@@ -50,6 +50,28 @@ public class DXPCloudClientTestrayImporterTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
+	public void testMainInvalidResultsFile() throws Exception {
+		File projectDir = temporaryFolder.newFolder();
+
+		JenkinsResultsParserUtil.write(
+			new File(projectDir, "test-results/TEST-playwright.xml"),
+			"<testsuites>" + RandomTestUtil.randomString());
+
+		Assert.assertThrows(
+			RuntimeException.class, () -> _runMain(projectDir, "playwright"));
+
+		testEquals(1, _keys.size());
+
+		Pattern invalidResultsFileKeyPattern = Pattern.compile(
+			"gcp/\\d{4}-\\d{2}/dxp-cloud/" + _testrayBuild.getId() +
+				"/TEST-playwright\\.xml\\.gz");
+
+		Matcher matcher = invalidResultsFileKeyPattern.matcher(_keys.get(0));
+
+		Assert.assertTrue(matcher.matches());
+	}
+
+	@Test
 	public void testMainPlaywright() throws Exception {
 		File projectDir = temporaryFolder.newFolder();
 
@@ -77,133 +99,11 @@ public class DXPCloudClientTestrayImporterTest
 			new File(projectDir, "playwright-report/index.html"),
 			"<html><body><img src=\"data/failure.png\"/></body></html>");
 
-		String testrayCloudBucketName = RandomTestUtil.randomString();
-		String testrayServerURL =
-			"https://" + RandomTestUtil.randomLowerCaseString();
+		_runMain(projectDir, "playwright");
 
-		Map<String, String> environmentMap = new HashMap<>();
-
-		environmentMap.put("projectDir", projectDir.getPath());
-		environmentMap.put("testrayBuildSHA", RandomTestUtil.randomSHA());
-		environmentMap.put("testrayCloudBucketName", testrayCloudBucketName);
-		environmentMap.put(
-			"testrayOAuth2ClientId", RandomTestUtil.randomString());
-		environmentMap.put(
-			"testrayOAuth2ClientSecret", RandomTestUtil.randomString());
-		environmentMap.put("testrayServerURL", testrayServerURL);
-		environmentMap.put("testType", "playwright");
-
-		mockEnvironment(environmentMap);
-
-		TestrayBuild testrayBuild = _mockTestrayBuild();
-
-		TestrayRoutine testrayRoutine = testrayBuild.getTestrayRoutine();
-
-		Mockito.doReturn(
-			testrayBuild
-		).when(
-			testrayRoutine
-		).createTestrayBuild(
-			Mockito.any(TestrayProductVersion.class), Mockito.anyString(),
-			Mockito.any(Date.class), Mockito.isNull(), Mockito.anyString()
-		);
-
-		TestrayProject testrayProject = testrayBuild.getTestrayProject();
+		TestrayRoutine testrayRoutine = _testrayBuild.getTestrayRoutine();
 		TestrayProductVersion testrayProductVersion =
-			testrayBuild.getTestrayProductVersion();
-
-		Mockito.doReturn(
-			testrayProductVersion
-		).when(
-			testrayProject
-		).createTestrayProductVersion(
-			Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			testrayRoutine
-		).when(
-			testrayProject
-		).createTestrayRoutine(
-			Mockito.anyString()
-		);
-
-		TestrayServer testrayServer = Mockito.mock(TestrayServer.class);
-
-		Mockito.doReturn(
-			testrayProject
-		).when(
-			testrayServer
-		).getTestrayProjectByName(
-			Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			new URL(testrayServerURL)
-		).when(
-			testrayServer
-		).getURL();
-
-		List<String> keys = new ArrayList<>();
-		Map<String, String> resultsFileContents = new HashMap<>();
-
-		TestrayCloudBucket testrayCloudBucket = Mockito.mock(
-			TestrayCloudBucket.class);
-
-		Mockito.doAnswer(
-			invocation -> {
-				String key = invocation.getArgument(0);
-
-				keys.add(key);
-
-				if (key.startsWith("inbox/")) {
-					resultsFileContents.putAll(
-						_readTarGzip(invocation.getArgument(1)));
-				}
-
-				return null;
-			}
-		).when(
-			testrayCloudBucket
-		).createTestrayCloudObject(
-			Mockito.anyString(), Mockito.any(File.class)
-		);
-
-		String testrayCloudBaseURL =
-			"https://" + RandomTestUtil.randomLowerCaseString();
-
-		Mockito.doReturn(
-			testrayCloudBaseURL
-		).when(
-			testrayCloudBucket
-		).getTestrayCloudBaseURL();
-
-		try (MockedStatic<TestrayCloudBucket> testrayCloudBucketMockedStatic =
-				Mockito.mockStatic(TestrayCloudBucket.class);
-			MockedStatic<TestrayFactory> testrayFactoryMockedStatic =
-				Mockito.mockStatic(TestrayFactory.class)) {
-
-			testrayCloudBucketMockedStatic.when(
-				() -> TestrayCloudBucket.getInstance(testrayCloudBucketName)
-			).thenReturn(
-				testrayCloudBucket
-			);
-
-			testrayCloudBucketMockedStatic.when(
-				() -> TestrayCloudBucket.hasGoogleApplicationCredentials(
-					testrayCloudBucketName)
-			).thenReturn(
-				true
-			);
-
-			testrayFactoryMockedStatic.when(
-				() -> TestrayFactory.newTestrayServer(testrayServerURL)
-			).thenReturn(
-				testrayServer
-			);
-
-			DXPCloudClientTestrayImporter.main(new String[0]);
-		}
+			_testrayBuild.getTestrayProductVersion();
 
 		Mockito.verify(
 			testrayRoutine
@@ -211,17 +111,17 @@ public class DXPCloudClientTestrayImporterTest
 			Mockito.eq(testrayProductVersion),
 			Mockito.startsWith("DXP Cloud Client Build - "),
 			Mockito.any(Date.class), Mockito.isNull(),
-			Mockito.eq(environmentMap.get("testrayBuildSHA"))
+			Mockito.eq(_testrayBuildSHA)
 		);
 
 		Document document = Dom4JUtil.parse(
-			resultsFileContents.get(
-				"TESTS-dxp-cloud-client-" + testrayBuild.getId() + ".xml"));
+			_resultsFileContents.get(
+				"TESTS-dxp-cloud-client-" + _testrayBuild.getId() + ".xml"));
 
 		Element rootElement = document.getRootElement();
 
 		testEquals(
-			testrayBuild.getName(),
+			_testrayBuild.getName(),
 			_getPropertyValue(rootElement, "testray.build.name"));
 		testEquals(
 			testrayRoutine.getName(),
@@ -229,9 +129,13 @@ public class DXPCloudClientTestrayImporterTest
 		testEquals(
 			testrayProductVersion.getName(),
 			_getPropertyValue(rootElement, "testray.product.version"));
+
+		TestrayProject testrayProject = _testrayBuild.getTestrayProject();
+
 		testEquals(
 			testrayProject.getName(),
 			_getPropertyValue(rootElement, "testray.project.name"));
+
 		testEquals(
 			"Google Chrome 86|CentOS 7",
 			_getPropertyValue(rootElement, "testray.run.id"));
@@ -257,7 +161,7 @@ public class DXPCloudClientTestrayImporterTest
 		testEquals(2, testcaseElements.size());
 
 		Pattern attachmentKeyPattern = Pattern.compile(
-			"gcp/\\d{4}-\\d{2}/dxp-cloud/" + testrayBuild.getId() +
+			"gcp/\\d{4}-\\d{2}/dxp-cloud/" + _testrayBuild.getId() +
 				"/playwright-report/(data/failure\\.png|index\\.html)\\.gz");
 
 		for (Element testcaseElement : testcaseElements) {
@@ -273,16 +177,15 @@ public class DXPCloudClientTestrayImporterTest
 
 				String key = fileElement.attributeValue("value");
 
-				Matcher attachmentKeyMatcher = attachmentKeyPattern.matcher(
-					key);
+				Matcher matcher = attachmentKeyPattern.matcher(key);
 
-				Assert.assertTrue(attachmentKeyMatcher.matches());
+				Assert.assertTrue(matcher.matches());
 
-				Assert.assertTrue(keys.contains(key));
+				Assert.assertTrue(_keys.contains(key));
 
 				testEquals(
 					JenkinsResultsParserUtil.combine(
-						testrayCloudBaseURL, "/", key, "?authuser=0"),
+						_testrayCloudBaseURL, "/", key, "?authuser=0"),
 					fileElement.attributeValue("url"));
 			}
 
@@ -313,17 +216,17 @@ public class DXPCloudClientTestrayImporterTest
 			_getPropertyValue(
 				failedTestcaseElement, "testray.testcase.status"));
 
-		testEquals(5, keys.size());
+		testEquals(5, _keys.size());
 
 		Pattern inboxKeyPattern = Pattern.compile(
-			"inbox/\\d+-" + testrayBuild.getId() + "-results\\.tar\\.gz");
+			"inbox/\\d+-" + _testrayBuild.getId() + "-results\\.tar\\.gz");
 
 		int inboxKeysCount = 0;
 
-		for (String key : keys) {
-			Matcher inboxKeyMatcher = inboxKeyPattern.matcher(key);
+		for (String key : _keys) {
+			Matcher matcher = inboxKeyPattern.matcher(key);
 
-			if (!inboxKeyMatcher.matches()) {
+			if (!matcher.matches()) {
 				continue;
 			}
 
@@ -331,6 +234,91 @@ public class DXPCloudClientTestrayImporterTest
 		}
 
 		testEquals(1, inboxKeysCount);
+	}
+
+	@Test
+	public void testMainPoshi() throws Exception {
+		File projectDir = temporaryFolder.newFolder();
+
+		String poshiLog = RandomTestUtil.randomString();
+		String testName = JenkinsResultsParserUtil.combine(
+			RandomTestUtil.randomString(), "#", RandomTestUtil.randomString());
+
+		JenkinsResultsParserUtil.write(
+			new File(
+				projectDir,
+				"test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml"),
+			JenkinsResultsParserUtil.combine(
+				"<testsuite><testcase classname=\"",
+				RandomTestUtil.randomString(), "\" name=\"test[", testName,
+				"]\"><system-out>", poshiLog,
+				"</system-out></testcase></testsuite>"));
+
+		File testDir = new File(
+			projectDir, "test-results/" + testName.replace("#", "_"));
+
+		for (String fileName :
+				Arrays.asList("console.txt", "index.html", "summary.html")) {
+
+			JenkinsResultsParserUtil.write(
+				new File(testDir, fileName), RandomTestUtil.randomString());
+		}
+
+		_runMain(projectDir, "poshi");
+
+		Document document = Dom4JUtil.parse(
+			_resultsFileContents.get(
+				"TESTS-dxp-cloud-client-" + _testrayBuild.getId() + ".xml"));
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> testcaseElements = rootElement.elements("testcase");
+
+		testEquals(1, testcaseElements.size());
+
+		Element testcaseElement = testcaseElements.get(0);
+
+		testEquals(
+			testName,
+			_getPropertyValue(testcaseElement, "testray.testcase.name"));
+
+		List<String> attachmentNames = new ArrayList<>();
+		Pattern attachmentKeyPattern = Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"gcp/\\d{4}-\\d{2}/dxp-cloud/",
+				String.valueOf(_testrayBuild.getId()), "/",
+				Pattern.quote(testDir.getName()),
+				"/(console\\.txt|index\\.html|poshi-log\\.txt|summary\\.html)",
+				"\\.gz"));
+		Element attachmentsElement = testcaseElement.element("attachments");
+
+		for (Element fileElement : attachmentsElement.elements("file")) {
+			attachmentNames.add(fileElement.attributeValue("name"));
+
+			String key = fileElement.attributeValue("value");
+
+			Matcher matcher = attachmentKeyPattern.matcher(key);
+
+			Assert.assertTrue(matcher.matches());
+
+			Assert.assertTrue(_keys.contains(key));
+
+			testEquals(
+				JenkinsResultsParserUtil.combine(
+					_testrayCloudBaseURL, "/", key, "?authuser=0"),
+				fileElement.attributeValue("url"));
+		}
+
+		attachmentNames.sort(null);
+
+		testEquals(
+			Arrays.asList(
+				"Poshi Console", "Poshi Log", "Poshi Report", "Poshi Summary"),
+			attachmentNames);
+
+		testEquals(poshiLog, read(testDir, "poshi-log.txt"));
+
+		testEquals(5, _keys.size());
 	}
 
 	@Rule
@@ -431,5 +419,140 @@ public class DXPCloudClientTestrayImporterTest
 
 		return fileContents;
 	}
+
+	private void _runMain(File projectDir, String testType) throws Exception {
+		String testrayCloudBucketName = RandomTestUtil.randomString();
+		String testrayServerURL =
+			"https://" + RandomTestUtil.randomLowerCaseString();
+
+		_testrayBuildSHA = RandomTestUtil.randomSHA();
+
+		Map<String, String> environmentMap = new HashMap<>();
+
+		environmentMap.put("projectDir", projectDir.getPath());
+		environmentMap.put("testrayBuildSHA", _testrayBuildSHA);
+		environmentMap.put("testrayCloudBucketName", testrayCloudBucketName);
+		environmentMap.put(
+			"testrayOAuth2ClientId", RandomTestUtil.randomString());
+		environmentMap.put(
+			"testrayOAuth2ClientSecret", RandomTestUtil.randomString());
+		environmentMap.put("testrayServerURL", testrayServerURL);
+		environmentMap.put("testType", testType);
+
+		mockEnvironment(environmentMap);
+
+		_testrayBuild = _mockTestrayBuild();
+
+		TestrayRoutine testrayRoutine = _testrayBuild.getTestrayRoutine();
+
+		Mockito.doReturn(
+			_testrayBuild
+		).when(
+			testrayRoutine
+		).createTestrayBuild(
+			Mockito.any(TestrayProductVersion.class), Mockito.anyString(),
+			Mockito.any(Date.class), Mockito.isNull(), Mockito.anyString()
+		);
+
+		TestrayProject testrayProject = _testrayBuild.getTestrayProject();
+		TestrayProductVersion testrayProductVersion =
+			_testrayBuild.getTestrayProductVersion();
+
+		Mockito.doReturn(
+			testrayProductVersion
+		).when(
+			testrayProject
+		).createTestrayProductVersion(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			testrayRoutine
+		).when(
+			testrayProject
+		).createTestrayRoutine(
+			Mockito.anyString()
+		);
+
+		TestrayServer testrayServer = Mockito.mock(TestrayServer.class);
+
+		Mockito.doReturn(
+			testrayProject
+		).when(
+			testrayServer
+		).getTestrayProjectByName(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			new URL(testrayServerURL)
+		).when(
+			testrayServer
+		).getURL();
+
+		TestrayCloudBucket testrayCloudBucket = Mockito.mock(
+			TestrayCloudBucket.class);
+
+		Mockito.doAnswer(
+			invocation -> {
+				String key = invocation.getArgument(0);
+
+				_keys.add(key);
+
+				if (key.startsWith("inbox/")) {
+					_resultsFileContents.putAll(
+						_readTarGzip(invocation.getArgument(1)));
+				}
+
+				return null;
+			}
+		).when(
+			testrayCloudBucket
+		).createTestrayCloudObject(
+			Mockito.anyString(), Mockito.any(File.class)
+		);
+
+		_testrayCloudBaseURL =
+			"https://" + RandomTestUtil.randomLowerCaseString();
+
+		Mockito.doReturn(
+			_testrayCloudBaseURL
+		).when(
+			testrayCloudBucket
+		).getTestrayCloudBaseURL();
+
+		try (MockedStatic<TestrayCloudBucket> testrayCloudBucketMockedStatic =
+				Mockito.mockStatic(TestrayCloudBucket.class);
+			MockedStatic<TestrayFactory> testrayFactoryMockedStatic =
+				Mockito.mockStatic(TestrayFactory.class)) {
+
+			testrayCloudBucketMockedStatic.when(
+				() -> TestrayCloudBucket.getInstance(testrayCloudBucketName)
+			).thenReturn(
+				testrayCloudBucket
+			);
+
+			testrayCloudBucketMockedStatic.when(
+				() -> TestrayCloudBucket.hasGoogleApplicationCredentials(
+					testrayCloudBucketName)
+			).thenReturn(
+				true
+			);
+
+			testrayFactoryMockedStatic.when(
+				() -> TestrayFactory.newTestrayServer(testrayServerURL)
+			).thenReturn(
+				testrayServer
+			);
+
+			DXPCloudClientTestrayImporter.main(new String[0]);
+		}
+	}
+
+	private final List<String> _keys = new ArrayList<>();
+	private final Map<String, String> _resultsFileContents = new HashMap<>();
+	private TestrayBuild _testrayBuild;
+	private String _testrayBuildSHA;
+	private String _testrayCloudBaseURL;
 
 }

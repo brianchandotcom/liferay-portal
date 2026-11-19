@@ -7,6 +7,8 @@ package com.liferay.portal.security.audit.storage.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -14,6 +16,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.model.AuditEventPseudonymField;
+import com.liferay.portal.security.audit.storage.service.AuditEventAccountEntryRelLocalService;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
 import com.liferay.portal.security.audit.storage.service.AuditEventPseudonymFieldLocalService;
 import com.liferay.portal.test.rule.Inject;
@@ -40,10 +43,16 @@ public class CompanyModelListenerTest {
 	public void testOnAfterRemove() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
+		AuditMessage auditMessage = new AuditMessage(
+			company.getCompanyId(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		auditMessage.setUserAccountEntryIds(
+			new long[] {RandomTestUtil.randomLong()});
+
 		AuditEvent auditEvent = _auditEventLocalService.addAuditEvent(
-			new AuditMessage(
-				company.getCompanyId(), RandomTestUtil.randomLong(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
+			auditMessage);
+
 		AuditEventPseudonymField auditEventPseudonymField =
 			_auditEventPseudonymFieldLocalService.addAuditEventPseudonymField(
 				company.getCompanyId(), RandomTestUtil.randomString(),
@@ -54,10 +63,27 @@ public class CompanyModelListenerTest {
 		Assert.assertNull(
 			_auditEventLocalService.fetchAuditEvent(
 				auditEvent.getAuditEventId()));
+
+		DynamicQuery dynamicQuery =
+			_auditEventAccountEntryRelLocalService.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"auditEventId", auditEvent.getAuditEventId()));
+
+		Assert.assertEquals(
+			0,
+			_auditEventAccountEntryRelLocalService.dynamicQueryCount(
+				dynamicQuery));
+
 		Assert.assertNull(
 			_auditEventPseudonymFieldLocalService.fetchAuditEventPseudonymField(
 				auditEventPseudonymField.getAuditEventPseudonymFieldId()));
 	}
+
+	@Inject
+	private AuditEventAccountEntryRelLocalService
+		_auditEventAccountEntryRelLocalService;
 
 	@Inject
 	private AuditEventLocalService _auditEventLocalService;

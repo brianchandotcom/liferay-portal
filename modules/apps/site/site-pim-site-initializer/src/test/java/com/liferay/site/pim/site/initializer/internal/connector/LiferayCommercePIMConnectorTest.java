@@ -1741,7 +1741,7 @@ public class LiferayCommercePIMConnectorTest {
 			pimProductObjectEntry1);
 
 		Assert.assertEquals(
-			Arrays.asList(assetTagName1),
+			Collections.singletonList(assetTagName1),
 			JSONUtil.toStringList(jsonObject.getJSONArray("tags")));
 
 		pimProductObjectEntry1 = _mockPIMProductObjectEntry(
@@ -1764,13 +1764,6 @@ public class LiferayCommercePIMConnectorTest {
 	}
 
 	private void _testExecuteWithTopicVocabulary() throws Exception {
-		AssetVocabulary assetVocabulary = _mockAssetVocabulary(
-			AssetVocabularyConstants.EXTERNAL_REFERENCE_CODE_TOPIC,
-			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
-
-		AssetCategory assetCategory = _mockAssetCategory(
-			assetVocabulary, RandomTestUtil.randomString());
-
 		String sourceFieldName = RandomTestUtil.randomString();
 		String value1 = StringBundler.concat(
 			RandomTestUtil.randomString(), StringPool.SLASH,
@@ -1781,6 +1774,13 @@ public class LiferayCommercePIMConnectorTest {
 			HashMapBuilder.<String, Serializable>put(
 				sourceFieldName, value1
 			).build());
+
+		AssetVocabulary assetVocabulary = _mockAssetVocabulary(
+			AssetVocabularyConstants.EXTERNAL_REFERENCE_CODE_TOPIC,
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
+
+		AssetCategory assetCategory = _mockAssetCategory(
+			assetVocabulary, RandomTestUtil.randomString());
 
 		_mockAssetCategories(pimProductObjectEntry, assetCategory);
 
@@ -1905,7 +1905,7 @@ public class LiferayCommercePIMConnectorTest {
 				"SKU-1", Collections.<String, Serializable>emptyMap()));
 
 		Assert.assertEquals(
-			Arrays.asList(externalReferenceCode2),
+			Collections.singletonList(externalReferenceCode2),
 			JSONUtil.toStringList(
 				jsonObject1.getJSONArray("categories"),
 				"externalReferenceCode"));

@@ -8,12 +8,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentDisplayContext portletFragmentDisplayContext = (FragmentDisplayContext)request.getAttribute(FragmentWebKeys.FRAGMENT_DISPLAY_CONTEXT);
+FragmentDisplayContext fragmentDisplayContext = (FragmentDisplayContext)request.getAttribute(FragmentWebKeys.FRAGMENT_DISPLAY_CONTEXT);
 %>
 
 <li class="control-menu-nav-item">
 	<react:component
 		module="{FragmentAIAssistantTriggerButton} from fragment-web"
-		props="<%= portletFragmentDisplayContext.getAIAssistantProps() %>"
+		props="<%= fragmentDisplayContext.getAIAssistantProps() %>"
 	/>
 </li>

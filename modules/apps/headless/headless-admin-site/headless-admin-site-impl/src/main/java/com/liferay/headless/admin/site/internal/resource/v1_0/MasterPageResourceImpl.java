@@ -534,7 +534,7 @@ public class MasterPageResourceImpl
 			FileEntryUtil.getPreviewFileEntryId(
 				groupId, LayoutAdminPortletKeys.GROUP_PAGES,
 				masterPage.getThumbnailURLReference(), contextUser.getUserId()),
-			defaultTemplate, 0,
+			defaultTemplate,
 			_getLayoutPlid(groupId, masterPage, serviceContext), 0,
 			PageSpecificationUtil.getPublishedStatus(
 				masterPage.getPageSpecifications()),

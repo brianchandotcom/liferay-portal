@@ -82,14 +82,14 @@ public class TestrayResultsXMLClientTestrayImporter
 		String testrayResultsDirPath = getEnvVarValue("testrayResultsDir");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayResultsDirPath)) {
-			throw new RuntimeException("testrayResultsDir is not set");
+			throw new RuntimeException("\"testrayResultsDir\" is not set");
 		}
 
 		_testrayResultsDir = new File(testrayResultsDirPath);
 
 		if (!_testrayResultsDir.isDirectory()) {
 			throw new RuntimeException(
-				"Could not find directory '" + testrayResultsDirPath + "'");
+				"Unable to find directory " + testrayResultsDirPath);
 		}
 	}
 
@@ -134,9 +134,10 @@ public class TestrayResultsXMLClientTestrayImporter
 	}
 
 	private TestrayBuild _getTestrayBuild(File resultsFile) throws Exception {
-		Map<String, String> properties = _getTestSuiteProperties(resultsFile);
+		Map<String, String> testSuiteProperties = _getTestSuiteProperties(
+			resultsFile);
 
-		String testrayBuildSHA = properties.get("git.id");
+		String testrayBuildSHA = testSuiteProperties.get("git.id");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildSHA)) {
 			testrayBuildSHA = null;
@@ -145,15 +146,16 @@ public class TestrayResultsXMLClientTestrayImporter
 		return getTestrayBuild(
 			_toDate(
 				_getRequiredProperty(
-					properties, "testray.build.date", resultsFile)),
-			_getRequiredProperty(properties, "testray.build.name", resultsFile),
+					testSuiteProperties, "testray.build.date", resultsFile)),
+			_getRequiredProperty(
+				testSuiteProperties, "testray.build.name", resultsFile),
 			testrayBuildSHA,
 			_getRequiredProperty(
-				properties, "testray.product.version", resultsFile),
+				testSuiteProperties, "testray.product.version", resultsFile),
 			_getRequiredProperty(
-				properties, "testray.project.name", resultsFile),
+				testSuiteProperties, "testray.project.name", resultsFile),
 			_getRequiredProperty(
-				properties, "testray.build.type", resultsFile));
+				testSuiteProperties, "testray.build.type", resultsFile));
 	}
 
 	private Date _toDate(String dateString) {
@@ -172,7 +174,7 @@ public class TestrayResultsXMLClientTestrayImporter
 			(parsePosition.getIndex() != dateString.length())) {
 
 			throw new RuntimeException(
-				"Invalid testray.build.date " + dateString);
+				"Invalid \"testray.build.date\" " + dateString);
 		}
 
 		return date;

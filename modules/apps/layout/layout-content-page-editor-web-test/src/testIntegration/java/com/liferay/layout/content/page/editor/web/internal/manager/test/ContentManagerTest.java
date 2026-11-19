@@ -12,6 +12,9 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.manager.ContentManager;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -23,8 +26,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -41,7 +46,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -134,6 +141,83 @@ public class ContentManagerTest {
 				_layout.getPlid()));
 
 		Assert.assertEquals(1, jsonArray.length());
+	}
+
+	@Test
+	@TestInfo("LPD-116508")
+	public void testGetPageContentsJSONArrayWithPortletUsage()
+		throws Exception {
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				draftLayout, JournalContentPortletKeys.JOURNAL_CONTENT);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		String portletId = PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0);
+
+		LayoutTestUtil.updateLayoutPortletPreferences(
+			draftLayout, portletId,
+			HashMapBuilder.put(
+				"articleExternalReferenceCode",
+				journalArticle.getExternalReferenceCode()
+			).build());
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
+
+		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+			_group.getGroupId(), journalArticle.getExternalReferenceCode(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			journalArticle.getResourcePrimKey(), portletId,
+			_portal.getClassNameId(Portlet.class.getName()), _layout.getPlid(),
+			new ServiceContext());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_RESPONSE,
+			new MockLiferayResourceResponse());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			ContentLayoutTestUtil.getThemeDisplay(
+				_companyLocalService.fetchCompany(
+					TestPropsValues.getCompanyId()),
+				_group, _layout));
+
+		JSONArray jsonArray = ReflectionTestUtil.invoke(
+			_contentManager, "getPageContentsJSONArray",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class, long.class,
+				long.class
+			},
+			mockHttpServletRequest, new MockHttpServletResponse(),
+			_layout.getPlid(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()));
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			journalArticle.getTitle(LocaleUtil.getSiteDefault()),
+			jsonObject.getString("title"));
+
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+
+		Assert.assertTrue(actionsJSONObject.has("editURL"));
 	}
 
 	@Test

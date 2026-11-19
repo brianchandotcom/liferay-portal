@@ -7,6 +7,18 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
+<%
+Map<String, Object> dlVersionNumberIncreaseValues = HashMapBuilder.<String, Object>put(
+	"MAJOR", DLVersionNumberIncrease.MAJOR
+).put(
+	"NONE", DLVersionNumberIncrease.NONE
+).build();
+
+if (DLRepositoryUtil.isMinorVersionEnabled(GetterUtil.getLong(request.getAttribute("edit_file_entry.jsp-repositoryId")))) {
+	dlVersionNumberIncreaseValues.put("MINOR", DLVersionNumberIncrease.MINOR);
+}
+%>
+
 <div>
 	<react:component
 		module="{Checkin} from document-library-web"
@@ -14,14 +26,7 @@
 			HashMapBuilder.<String, Object>put(
 				"checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))
 			).put(
-				"dlVersionNumberIncreaseValues",
-				HashMapBuilder.<String, Object>put(
-					"MAJOR", DLVersionNumberIncrease.MAJOR
-				).put(
-					"MINOR", DLVersionNumberIncrease.MINOR
-				).put(
-					"NONE", DLVersionNumberIncrease.NONE
-				).build()
+				"dlVersionNumberIncreaseValues", dlVersionNumberIncreaseValues
 			).build()
 		%>'
 	/>

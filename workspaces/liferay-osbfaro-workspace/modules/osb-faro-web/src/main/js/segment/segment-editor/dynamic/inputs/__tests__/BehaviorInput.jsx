@@ -90,14 +90,14 @@ describe('BehaviorInput', () => {
 		fireEvent.click(getByText('at least'));
 		fireEvent.click(getByText('ever'));
 
-		expect(getAllByText('at least')[1]).toBeTruthy();
-		expect(getByText('at most')).toBeTruthy();
+		expect(getAllByText('at least')[1]).toBeInTheDocument();
+		expect(getByText('at most')).toBeInTheDocument();
 
-		expect(getByText('since')).toBeTruthy();
-		expect(getByText('before')).toBeTruthy();
-		expect(getByText('between')).toBeTruthy();
-		expect(getAllByText('ever')[1]).toBeTruthy();
-		expect(getAllByText('on')[0]).toBeTruthy();
+		expect(getByText('since')).toBeInTheDocument();
+		expect(getByText('before')).toBeInTheDocument();
+		expect(getByText('between')).toBeInTheDocument();
+		expect(getAllByText('ever')[1]).toBeInTheDocument();
+		expect(getAllByText('on')[0]).toBeInTheDocument();
 
 		expect(container).toMatchSnapshot();
 	});
@@ -126,8 +126,8 @@ describe('BehaviorInput', () => {
 			/>
 		);
 
-		expect(getByText('Account')).toBeTruthy();
-		expect(getByText('at least one individual who triggered')).toBeTruthy();
+		expect(getByText('Account')).toBeInTheDocument();
+		expect(getByText('at least one individual who triggered')).toBeInTheDocument();
 		expect(queryByText('Individual')).toBeNull();
 	});
 
@@ -136,7 +136,7 @@ describe('BehaviorInput', () => {
 			<DefaultComponent segmentCategory={SegmentCategories.Individual} />
 		);
 
-		expect(getByText('Individual')).toBeTruthy();
+		expect(getByText('Individual')).toBeInTheDocument();
 		expect(queryByText('at least one individual who triggered')).toBeNull();
 	});
 
@@ -147,7 +147,7 @@ describe('BehaviorInput', () => {
 
 		expect(
 			container.querySelector('.form-group-item-shrink.has-error')
-		).toBeTruthy();
+		).toBeInTheDocument();
 	});
 
 	describe('handlePageAssetSelect', () => {
@@ -287,13 +287,13 @@ describe('BehaviorInput', () => {
 		]);
 
 		it('should disable the "Add Event Attribute" button until an asset type is selected', () => {
-			const {getByText} = render(
+			const {getByRole} = render(
 				<DefaultComponent value={valueWithoutAssetType} />
 			);
 
 			expect(
-				getByText('Add Event Attribute').closest('button').disabled
-			).toBe(true);
+				getByRole('button', {name: 'Add Event Attribute'})
+			).toBeDisabled();
 		});
 
 		it('should keep the "Add Event Attribute" button when there is no event to read attributes from', () => {
@@ -304,14 +304,23 @@ describe('BehaviorInput', () => {
 			fireEvent.click(getByText('Add Event Attribute'));
 
 			expect(queryByTestId('attribute-filter-section')).toBeNull();
-			expect(getByText('Add Event Attribute')).toBeTruthy();
+			expect(getByText('Add Event Attribute')).toBeInTheDocument();
 		});
 
 		it('should show the "Add Event Attribute" button when there is no attribute criterion', () => {
 			const {getByText, queryByTestId} = render(<DefaultComponent />);
 
-			expect(getByText('Add Event Attribute')).toBeTruthy();
+			expect(getByText('Add Event Attribute')).toBeInTheDocument();
 			expect(queryByTestId('attribute-filter-section')).toBeNull();
+		});
+
+		it('should not render the attribute filter in a real time segment', () => {
+			const {queryByTestId, queryByText} = render(
+				<DefaultComponent segmentType={SegmentTypes.RealTime} />
+			);
+
+			expect(queryByTestId('attribute-filter-section')).toBeNull();
+			expect(queryByText('Add Event Attribute')).toBeNull();
 		});
 
 		it('should reveal the attribute filter section when the button is clicked', () => {
@@ -321,7 +330,7 @@ describe('BehaviorInput', () => {
 
 			fireEvent.click(getByText('Add Event Attribute'));
 
-			expect(getByTestId('attribute-filter-section')).toBeTruthy();
+			expect(getByTestId('attribute-filter-section')).toBeInTheDocument();
 			expect(queryByText('Add Event Attribute')).toBeNull();
 		});
 
@@ -350,7 +359,7 @@ describe('BehaviorInput', () => {
 				<DefaultComponent value={valueWithAttribute} />
 			);
 
-			expect(getByTestId('attribute-filter-section')).toBeTruthy();
+			expect(getByTestId('attribute-filter-section')).toBeInTheDocument();
 			expect(queryByText('Add Event Attribute')).toBeNull();
 		});
 
@@ -379,7 +388,7 @@ describe('BehaviorInput', () => {
 				<DefaultComponent value={valueWithPlaceholder} />
 			);
 
-			expect(getByText('Add Event Attribute')).toBeTruthy();
+			expect(getByText('Add Event Attribute')).toBeInTheDocument();
 			expect(queryByTestId('attribute-filter-section')).toBeNull();
 		});
 

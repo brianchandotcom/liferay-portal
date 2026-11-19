@@ -4764,17 +4764,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					layout.getPlid());
 
 		if (layoutPageTemplateEntryLayout == null) {
-			if (Validator.isNotNull(masterLayoutPageTemplateEntryScopeERC)) {
-				throw new MasterLayoutException(
-					StringBundler.concat(
-						"Unable to find master layout page template entry ",
-						"with external reference code ",
-						masterLayoutPageTemplateEntryERC,
-						" and scope external reference code ",
-						masterLayoutPageTemplateEntryScopeERC, " for group ",
-						layout.getGroupId()));
-			}
-
 			return;
 		}
 

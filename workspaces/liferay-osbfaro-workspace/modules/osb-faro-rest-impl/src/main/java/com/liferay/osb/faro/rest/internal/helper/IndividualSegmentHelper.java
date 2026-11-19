@@ -62,7 +62,9 @@ public class IndividualSegmentHelper {
 				_getNotFoundExceptionTitle(individualSegmentId));
 		}
 
-		if (!FaroPermissionChecker.isChannelMember(faroChannel)) {
+		if (!FaroPermissionChecker.hasFaroChannelAccessPermission(
+				faroChannel)) {
+
 			throw ProblemUtil.getForbiddenException(
 				"Unable to access the individual segment with ID " +
 					individualSegmentId);

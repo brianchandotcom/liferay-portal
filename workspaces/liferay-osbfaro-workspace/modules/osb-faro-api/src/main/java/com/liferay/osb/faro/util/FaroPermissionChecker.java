@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class FaroPermissionChecker {
 
-	public static boolean isChannelMember(FaroChannel faroChannel) {
+	public static boolean hasFaroChannelAccessPermission(
+		FaroChannel faroChannel) {
+
 		if ((faroChannel.getPermissionType() ==
 				FaroChannelConstants.PERMISSION_ALL_USERS) ||
 			isGroupAdmin(faroChannel.getWorkspaceGroupId())) {

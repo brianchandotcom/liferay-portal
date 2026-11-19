@@ -115,9 +115,17 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 		MultivaluedMap<String, String> pathParameters,
 		MultivaluedMap<String, String> queryParameters) {
 
-		for (String name : new String[] {"individualSegmentId", "segmentId"}) {
+		for (String name :
+				new String[] {
+					"eventDefinitionId", "individualSegmentId", "segmentId"
+				}) {
+
 			_validateId(name, pathParameters.getFirst(name));
 			_validateId(name, queryParameters.getFirst(name));
+		}
+
+		for (String name : new String[] {"blocked", "hidden"}) {
+			_validateBoolean(name, queryParameters.getFirst(name));
 		}
 
 		for (Map.Entry<String, String[]> entry : _validValues.entrySet()) {
@@ -133,6 +141,16 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 			queryParameters.getFirst("rangeEnd"),
 			queryParameters.getFirst("rangeStart"));
 		_validateSort(queryParameters.getFirst("sort"));
+	}
+
+	private void _validateBoolean(String name, String value) {
+		if ((value != null) && !StringUtil.equalsIgnoreCase(value, "false") &&
+			!StringUtil.equalsIgnoreCase(value, "true")) {
+
+			throw new BadRequestException(
+				StringBundler.concat(
+					"\"", name, "\" must be one of false, true"));
+		}
 	}
 
 	private void _validateId(String name, String value) {
@@ -296,11 +314,21 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 				"viewsMetric", "visitorsMetric"
 			}
 		).put(
+			"getWorkspaceGroupEventAttributeDefinitionsPage",
+			new String[] {"name"}
+		).put(
+			"getWorkspaceGroupEventDefinitionsPage",
+			new String[] {"displayName", "name"}
+		).put(
 			"getWorkspaceGroupIndividualSegmentMembershipsPage", new String[0]
 		).build();
 	private static final Map<String, String[]> _validValues =
 		HashMapBuilder.put(
 			"activityStatus", new String[] {"ACTIVE", "INACTIVE"}
+		).put(
+			"attributeType", new String[] {"ALL", "GLOBAL", "LOCAL"}
+		).put(
+			"eventType", new String[] {"ALL", "CUSTOM", "DEFAULT"}
 		).put(
 			"interval", _getNames(Interval.values())
 		).put(

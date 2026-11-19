@@ -130,7 +130,9 @@ public class WorkspaceContainerRequestFilter implements ContainerRequestFilter {
 			return;
 		}
 
-		if (!FaroPermissionChecker.isChannelMember(faroChannel)) {
+		if (!FaroPermissionChecker.hasFaroChannelAccessPermission(
+				faroChannel)) {
+
 			_abort(
 				containerRequestContext, Response.Status.FORBIDDEN,
 				"Unable to access the property with channel ID " + channelId);

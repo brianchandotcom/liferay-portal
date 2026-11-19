@@ -69,47 +69,55 @@ public class FaroPermissionCheckerTest {
 	}
 
 	@Test
-	public void testIsChannelMemberWithAllUsersFaroChannel() {
+	public void testHasFaroChannelAccessPermissionWithAllUsersFaroChannel() {
 		FaroChannel faroChannel = _mockFaroChannel(
 			FaroChannelConstants.PERMISSION_ALL_USERS);
 
 		_setPermissionChecker(_USER_ID_MEMBER);
 
-		Assert.assertTrue(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertTrue(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 
 		_setPermissionChecker(_USER_ID_OUTSIDER);
 
-		Assert.assertTrue(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertTrue(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 	}
 
 	@Test
-	public void testIsChannelMemberWithSelectUsersFaroChannel() {
+	public void testHasFaroChannelAccessPermissionWithSelectUsersFaroChannel() {
 		FaroChannel faroChannel = _mockFaroChannel(
 			FaroChannelConstants.PERMISSION_SELECT_USERS);
 
 		_setPermissionChecker(_USER_ID_ADMINISTRATOR);
 
-		Assert.assertTrue(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertTrue(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 
 		_setPermissionChecker(_USER_ID_MEMBER);
 
-		Assert.assertFalse(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertFalse(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 
 		_setPermissionChecker(_USER_ID_OMNIADMIN);
 
-		Assert.assertTrue(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertTrue(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 
 		_setPermissionChecker(_USER_ID_OUTSIDER);
 
-		Assert.assertFalse(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertFalse(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 
 		_setPermissionChecker(_USER_ID_OWNER);
 
-		Assert.assertTrue(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertTrue(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 
 		_setPermissionChecker(_USER_ID_PENDING_ADMINISTRATOR);
 
-		Assert.assertFalse(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertFalse(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 
 		_userGroupRoleLocalServiceUtilMockedStatic.when(
 			() -> UserGroupRoleLocalServiceUtil.getUserGroupRoles(
@@ -120,7 +128,8 @@ public class FaroPermissionCheckerTest {
 
 		_setPermissionChecker(_USER_ID_MEMBER);
 
-		Assert.assertTrue(FaroPermissionChecker.isChannelMember(faroChannel));
+		Assert.assertTrue(
+			FaroPermissionChecker.hasFaroChannelAccessPermission(faroChannel));
 	}
 
 	@Test

@@ -135,7 +135,7 @@ public class GraphQLFaroController extends BaseFaroController {
 				url.substring(0, url.lastIndexOf(uri.getPath())));
 	}
 
-	private boolean _hasChannelPermission(
+	private boolean _hasFaroChannelAccessPermission(
 		FaroProject faroProject, String channelId) {
 
 		if ((channelId == null) || channelId.isEmpty()) {
@@ -149,7 +149,8 @@ public class GraphQLFaroController extends BaseFaroController {
 			return false;
 		}
 
-		return FaroPermissionChecker.isChannelMember(faroChannel);
+		return FaroPermissionChecker.hasFaroChannelAccessPermission(
+			faroChannel);
 	}
 
 	private boolean _hasPermission(FaroProject faroProject, String body) {
@@ -162,7 +163,7 @@ public class GraphQLFaroController extends BaseFaroController {
 			if (variablesMap != null) {
 				String channelId = MapUtil.getString(variablesMap, "channelId");
 
-				if (!_hasChannelPermission(faroProject, channelId)) {
+				if (!_hasFaroChannelAccessPermission(faroProject, channelId)) {
 					return false;
 				}
 			}
@@ -174,7 +175,7 @@ public class GraphQLFaroController extends BaseFaroController {
 			if (matcher.find()) {
 				String channelId = matcher.group(_CHANNEL_ID_INDEX);
 
-				if (!_hasChannelPermission(faroProject, channelId)) {
+				if (!_hasFaroChannelAccessPermission(faroProject, channelId)) {
 					return false;
 				}
 			}

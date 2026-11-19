@@ -147,7 +147,7 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 		}
 	}
 
-	private boolean _hasChannelPermission(
+	private boolean _hasFaroChannelAccessPermission(
 		FaroProject faroProject, String channelId) {
 
 		if ((channelId == null) || channelId.isEmpty()) {
@@ -161,7 +161,8 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 			return false;
 		}
 
-		return FaroPermissionChecker.isChannelMember(faroChannel);
+		return FaroPermissionChecker.hasFaroChannelAccessPermission(
+			faroChannel);
 	}
 
 	private boolean _hasPermission(String body) {
@@ -176,7 +177,7 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 			if (variablesMap != null) {
 				String channelId = MapUtil.getString(variablesMap, "channelId");
 
-				if (!_hasChannelPermission(faroProject, channelId)) {
+				if (!_hasFaroChannelAccessPermission(faroProject, channelId)) {
 					return false;
 				}
 			}
@@ -188,7 +189,7 @@ public class GraphQLAsahServlet extends BaseAsahServlet {
 			if (matcher.find()) {
 				String channelId = matcher.group(_CHANNEL_ID_INDEX);
 
-				if (!_hasChannelPermission(faroProject, channelId)) {
+				if (!_hasFaroChannelAccessPermission(faroProject, channelId)) {
 					return false;
 				}
 			}

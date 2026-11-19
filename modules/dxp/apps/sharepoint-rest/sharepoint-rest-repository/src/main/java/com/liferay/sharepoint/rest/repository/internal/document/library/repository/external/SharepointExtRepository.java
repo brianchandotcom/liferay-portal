@@ -587,6 +587,20 @@ public class SharepointExtRepository implements ExtRepository {
 				_sharepointURLHelper, this, _siteAbsoluteURL, _libraryPath);
 	}
 
+	public boolean isMinorVersionEnabled() throws PortalException {
+		try {
+			JSONObject jsonObject = _getJSONObject(
+				_sharepointURLHelper.getListURL(_libraryPath));
+
+			JSONObject dJSONObject = jsonObject.getJSONObject("d");
+
+			return dJSONObject.getBoolean("EnableMinorVersions");
+		}
+		catch (JSONException | UnirestException exception) {
+			throw new PortalException(exception);
+		}
+	}
+
 	@Override
 	public <T extends ExtRepositoryObject> T moveExtRepositoryObject(
 			ExtRepositoryObjectType<T> extRepositoryObjectType,

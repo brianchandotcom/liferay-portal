@@ -5,6 +5,7 @@
 
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayNav from '@clayui/nav';
 import ClayTabs from '@clayui/tabs';
 import {useIsMounted, usePrevious} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-components-web';
@@ -190,33 +191,33 @@ const FragmentEditor = ({
 	return (
 		<div className="fragment-editor-container">
 			<div className="fragment-editor__toolbar nav-bar-container">
-				<div className="navbar navbar-expand navbar-underline navigation-bar navigation-bar-light">
+				<div className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 					<div className="container-fluid">
-						<div className="navbar-nav">
-							<ClayTabs>
-								<ClayTabs.Item
+						<ClayNav className="navbar-nav" role="tablist">
+							<ClayNav.Item>
+								<ClayNav.Link
 									active={activeTabKeyValue === 0}
-									innerProps={{
-										'aria-controls': 'code',
-										'aria-expanded': 'true',
-									}}
+									aria-controls="code"
+									aria-selected={activeTabKeyValue === 0}
 									onClick={() => setActiveTabKeyValue(0)}
+									role="tab"
 								>
 									{Liferay.Language.get('code')}
-								</ClayTabs.Item>
+								</ClayNav.Link>
+							</ClayNav.Item>
 
-								<ClayTabs.Item
+							<ClayNav.Item>
+								<ClayNav.Link
 									active={activeTabKeyValue === 1}
-									innerProps={{
-										'aria-controls': 'configuration',
-										'aria-expanded': 'false',
-									}}
+									aria-controls="configuration"
+									aria-selected={activeTabKeyValue === 1}
 									onClick={() => setActiveTabKeyValue(1)}
+									role="tab"
 								>
 									{Liferay.Language.get('configuration')}
-								</ClayTabs.Item>
-							</ClayTabs>
-						</div>
+								</ClayNav.Link>
+							</ClayNav.Item>
+						</ClayNav>
 
 						<div className="align-items-center btn-group btn-group-nowrap d-flex float-right">
 							{readOnly ? (

@@ -8,6 +8,7 @@
 		"@clayui/layout": "^3.167.0",
 		"@clayui/link": "^3.167.0",
 		"@clayui/modal": "^3.167.0",
+		"@clayui/nav": "^3.167.0",
 		"@clayui/table": "^3.167.0",
 		"@clayui/tabs": "^3.167.0",
 		"@liferay/ai-hub-cell-js-components-web": "*",

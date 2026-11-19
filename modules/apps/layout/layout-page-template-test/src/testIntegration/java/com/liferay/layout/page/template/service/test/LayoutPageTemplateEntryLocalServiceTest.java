@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -435,6 +436,7 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 	@Test
 	@TestInfo("LPD-116161")
 	public void testDeleteLayoutPageTemplateEntry() throws Exception {
+		_testDeleteLayoutPageTemplateEntryDeletesWidgetPageTemplateLayout();
 		_testDeleteLayoutPageTemplateEntryDoesNotDeleteLayoutFromAnotherGroup();
 	}
 
@@ -1126,6 +1128,40 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		_assertDDMStructureLinks(layoutPageTemplateEntry);
 	}
 
+	private void _testDeleteLayoutPageTemplateEntryDeletesWidgetPageTemplateLayout()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				null, 0, null, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Group group = _groupLocalService.fetchGroup(layout.getGroupId());
+
+		Assert.assertTrue(group.isLayoutPrototype());
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getLayoutPrototypeId(), group.getClassPK());
+
+		Assert.assertNotEquals(
+			layoutPageTemplateEntry.getGroupId(), layout.getGroupId());
+
+		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+
+		Assert.assertNull(
+			_layoutLocalService.fetchLayout(layoutPageTemplateEntry.getPlid()));
+		Assert.assertNull(
+			_layoutPrototypeLocalService.fetchLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId()));
+	}
+
 	private void _testDeleteLayoutPageTemplateEntryDoesNotDeleteLayoutFromAnotherGroup()
 		throws Exception {
 
@@ -1324,6 +1360,9 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Inject
 	private Portal _portal;

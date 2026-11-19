@@ -402,6 +402,57 @@ public class LayoutReferencesExportImportContentProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-116508")
+	public void testExportPublicPageURLWithFriendlyURLSeparator()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+
+		Layout exportLayout = LayoutTestUtil.addTypePortletLayout(exportGroup);
+
+		String url = StringBundler.concat(
+			_getCompanyHostPortalURL(exportGroup),
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			exportGroup.getFriendlyURL(), exportLayout.getFriendlyURL(),
+			Portal.FRIENDLY_URL_SEPARATOR,
+			"com_liferay_site_navigation_language_web_portlet_",
+			"SiteNavigationLanguagePortlet");
+
+		String content = _CONTENT_PREFIX + url + _CONTENT_POSTFIX;
+
+		_layoutReferencesExportImportContentProcessor.validateContentReferences(
+			exportGroup.getGroupId(), content);
+
+		PortletDataContext exportPortletDataContext =
+			PortletDataContextFactoryUtil.createExportPortletDataContext(
+				exportGroup.getCompanyId(), exportGroup.getGroupId(),
+				new HashMap<>(),
+				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
+				new TestReaderWriter());
+
+		Element rootElement = SAXReaderUtil.createElement("root");
+
+		exportPortletDataContext.setExportDataRootElement(rootElement);
+		exportPortletDataContext.setMissingReferencesElement(
+			rootElement.addElement("missing-references"));
+
+		_layoutReferencesExportImportContentProcessor.
+			replaceExportContentReferences(
+				exportPortletDataContext,
+				JournalTestUtil.addArticle(
+					exportGroup.getGroupId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()),
+				content, true, false);
+
+		Assert.assertNotNull(
+			exportPortletDataContext.getMissingReferenceElement(exportLayout));
+		Assert.assertEquals(
+			url,
+			_exportAndImportLayoutURL(
+				url, exportGroup, GroupTestUtil.addGroup()));
+	}
+
+	@Test
 	public void testExportPublicPagesVirtualHostImportDefaultGroupNoVirtualHost()
 		throws Exception {
 

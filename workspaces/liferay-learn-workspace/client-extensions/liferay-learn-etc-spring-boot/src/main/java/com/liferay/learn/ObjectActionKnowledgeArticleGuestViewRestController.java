@@ -45,17 +45,6 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 
 		JSONObject jsonObject = new JSONObject(json);
 
-		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
-			"objectEntry");
-
-		boolean approved = false;
-
-		if (objectEntryJSONObject.getInt("status") ==
-				WorkflowConstants.STATUS_APPROVED) {
-
-			approved = true;
-		}
-
 		URI uri = UriComponentsBuilder.fromPath(
 			StringBundler.concat(
 				"/o/c/p2s3knowledgearticles/", jsonObject.getLong("classPK"),
@@ -98,6 +87,17 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 		List<Object> actionIds = guestPermissionJSONObject.getJSONArray(
 			"actionIds"
 		).toList();
+
+		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
+			"objectEntry");
+
+		boolean approved = false;
+
+		if (objectEntryJSONObject.getInt("status") ==
+				WorkflowConstants.STATUS_APPROVED) {
+
+			approved = true;
+		}
 
 		if (actionIds.contains(ActionKeys.VIEW) && approved) {
 			return new ResponseEntity<>(json, HttpStatus.OK);

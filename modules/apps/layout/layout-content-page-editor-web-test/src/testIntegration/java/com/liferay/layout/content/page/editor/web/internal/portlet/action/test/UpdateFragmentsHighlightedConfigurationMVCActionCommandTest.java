@@ -229,15 +229,12 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommandTest {
 		_assertUpdateHighlightedFragment(
 			new String[] {"BASIC_COMPONENT-heading"}, "BASIC_COMPONENT-heading",
 			true, user);
-
 		_assertUpdateHighlightedFragment(
 			new String[] {"BASIC_COMPONENT-heading", "BASIC_COMPONENT-html"},
 			"BASIC_COMPONENT-html", true, user);
-
 		_assertUpdateHighlightedFragment(
 			new String[] {"BASIC_COMPONENT-heading"}, "BASIC_COMPONENT-html",
 			false, user);
-
 		_assertUpdateHighlightedFragment(
 			new String[0], "BASIC_COMPONENT-heading", false, user);
 	}
@@ -285,7 +282,6 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommandTest {
 
 		_assertUpdateHighlightedFragment(
 			new String[0], "BASIC_COMPONENT-html", true, user);
-
 		_assertUpdateHighlightedFragment(
 			new String[] {"BASIC_COMPONENT-heading"}, "BASIC_COMPONENT-heading",
 			true, user);

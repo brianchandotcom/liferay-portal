@@ -21,7 +21,7 @@
 	}
 }
 
-.creation-menu-dropdown .dropdown-item[data-action='generateFragmentWithAI'] {
+.dropdown-item.generate-with-ai {
 	color: $purple;
 
 	&.focus,

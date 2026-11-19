@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {GENERATE_FIELD_VALUE_AGENT_EXTERNAL_REFERENCE_CODE} from '../../../../src/main/resources/META-INF/resources/js/AIAssistantChat/events';
+import {
+	EDIT_FRAGMENT_AGENT_EXTERNAL_REFERENCE_CODE,
+	GENERATE_FIELD_VALUE_AGENT_EXTERNAL_REFERENCE_CODE,
+} from '../../../../src/main/resources/META-INF/resources/js/AIAssistantChat/events';
 import {AgentComponent} from '../../../../src/main/resources/META-INF/resources/js/AIAssistantChat/types';
 import resolveMessage from '../../../../src/main/resources/META-INF/resources/js/AIAssistantChat/utils/resolveMessage';
 
@@ -80,6 +83,34 @@ describe('resolveMessage', () => {
 		});
 	});
 
+	it('resolves a fragment code message from the edit fragment agent', () => {
+		const fragmentCode = {css: '.title {color: red;}', summary: 'Done.'};
+
+		expect(
+			resolveMessage({
+				agentDefinitionExternalReferenceCodes: [
+					EDIT_FRAGMENT_AGENT_EXTERNAL_REFERENCE_CODE,
+				],
+				sender: 'assistant',
+				text: JSON.stringify(fragmentCode),
+			})
+		).toEqual({fragmentCode, type: 'fragment-code'});
+	});
+
+	it('resolves a fragment code message that clears a field', () => {
+		const fragmentCode = {js: '', summary: 'Done.'};
+
+		expect(
+			resolveMessage({
+				agentDefinitionExternalReferenceCodes: [
+					EDIT_FRAGMENT_AGENT_EXTERNAL_REFERENCE_CODE,
+				],
+				sender: 'assistant',
+				text: '```json\n' + JSON.stringify(fragmentCode) + '\n```',
+			})
+		).toEqual({fragmentCode, type: 'fragment-code'});
+	});
+
 	it('resolves a message carrying a quick replies component', () => {
 		expect(
 			resolveMessage({
@@ -142,6 +173,18 @@ describe('resolveMessage', () => {
 		});
 	});
 
+	it('resolves an edit fragment agent message without code as an assistant message', () => {
+		expect(
+			resolveMessage({
+				agentDefinitionExternalReferenceCodes: [
+					EDIT_FRAGMENT_AGENT_EXTERNAL_REFERENCE_CODE,
+				],
+				sender: 'assistant',
+				text: JSON.stringify({summary: 'Nothing to change.'}),
+			})
+		).toEqual({type: 'assistant'});
+	});
+
 	it('resolves an error message as an assistant message', () => {
 		expect(
 			resolveMessage({error: true, sender: 'assistant', text: ''})
@@ -164,6 +207,16 @@ describe('resolveMessage', () => {
 				agentDefinitionExternalReferenceCodes: ['L_SOMETHING_ELSE'],
 				sender: 'assistant',
 				text: JSON.stringify({headline: 'A headline'}),
+			})
+		).toEqual({type: 'assistant'});
+	});
+
+	it('resolves fragment code from other agents as a plain assistant message', () => {
+		expect(
+			resolveMessage({
+				agentDefinitionExternalReferenceCodes: ['L_SOMETHING_ELSE'],
+				sender: 'assistant',
+				text: JSON.stringify({css: '.title {color: red;}'}),
 			})
 		).toEqual({type: 'assistant'});
 	});

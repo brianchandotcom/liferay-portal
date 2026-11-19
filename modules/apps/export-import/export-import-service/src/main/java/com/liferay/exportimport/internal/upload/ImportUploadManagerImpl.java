@@ -91,7 +91,7 @@ public class ImportUploadManagerImpl implements ImportUploadManager {
 		long maxAllowableSize = DLValidatorUtil.getMaxAllowableSize(
 			groupId, ContentTypes.APPLICATION_OCTET_STREAM);
 
-		long chunkSize = _CHUNK_SIZE;
+		long chunkSize = 32 * 1024 * 1024;
 
 		if ((maxAllowableSize > 0) && (maxAllowableSize < chunkSize)) {
 			chunkSize = maxAllowableSize;
@@ -444,8 +444,6 @@ public class ImportUploadManagerImpl implements ImportUploadManager {
 	}
 
 	private static final int _BUFFER_SIZE = 65536;
-
-	private static final long _CHUNK_SIZE = 32 * 1024 * 1024;
 
 	private static final String _METADATA_FILE_NAME = "upload.json";
 

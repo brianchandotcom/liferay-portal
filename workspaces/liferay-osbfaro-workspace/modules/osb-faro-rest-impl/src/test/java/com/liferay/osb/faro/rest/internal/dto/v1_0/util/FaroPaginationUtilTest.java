@@ -8,7 +8,9 @@ package com.liferay.osb.faro.rest.internal.dto.v1_0.util;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -18,6 +20,37 @@ import org.junit.Test;
  * @author Leslie Wong
  */
 public class FaroPaginationUtilTest {
+
+	@Test
+	public void testPaginate() {
+		List<String> items = List.of(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			items.subList(2, 4),
+			FaroPaginationUtil.paginate(items, Pagination.of(2, 2)));
+	}
+
+	@Test
+	public void testPaginatePastEnd() {
+		List<String> items = Collections.nCopies(
+			20, RandomTestUtil.randomString());
+
+		List<String> paginatedItems = FaroPaginationUtil.paginate(
+			items, Pagination.of(2, 20));
+
+		Assert.assertTrue(paginatedItems.toString(), paginatedItems.isEmpty());
+	}
+
+	@Test
+	public void testPaginateWithoutPagination() {
+		List<String> items = List.of(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		Assert.assertSame(items, FaroPaginationUtil.paginate(items, null));
+	}
 
 	@Test
 	public void testToOrderByFields() {

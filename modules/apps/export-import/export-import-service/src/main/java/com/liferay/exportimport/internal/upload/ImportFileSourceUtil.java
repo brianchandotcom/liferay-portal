@@ -3,16 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.exportimport.internal.background.task;
+package com.liferay.exportimport.internal.upload;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.upload.ImportUpload;
 import com.liferay.exportimport.upload.ImportUploadManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -25,22 +26,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jaime León
  */
-@Component(service = ImportFileSourceHelper.class)
-public class ImportFileSourceHelper {
+public class ImportFileSourceUtil {
 
-	public List<ImportFileSource> getImportFileSources(
+	public static List<ImportFileSource> getImportFileSources(
 			BackgroundTask backgroundTask, Locale locale)
 		throws Exception {
 
 		List<ImportFileSource> importFileSources = TransformUtil.transform(
 			backgroundTask.getAttachmentsFileEntries(),
-			this::_toImportFileSource);
+			ImportFileSourceUtil::_toImportFileSource);
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -52,11 +49,11 @@ public class ImportFileSourceHelper {
 			try {
 				importFileSources.add(
 					_toImportFileSource(
-						_dlAppLocalService.getFileEntry(tempFileEntryId)));
+						DLAppLocalServiceUtil.getFileEntry(tempFileEntryId)));
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				throw new PortalException(
-					_language.get(
+					LanguageUtil.get(
 						locale,
 						"the-uploaded-file-has-expired-please-upload-it-again"),
 					noSuchFileEntryException);
@@ -72,29 +69,32 @@ public class ImportFileSourceHelper {
 
 		long uploadGroupId = MapUtil.getLong(taskContextMap, "uploadGroupId");
 
-		ImportUpload importUpload = _importUploadManager.fetchImportUpload(
+		ImportUploadManager importUploadManager =
+			_importUploadManagerSnapshot.get();
+
+		ImportUpload importUpload = importUploadManager.fetchImportUpload(
 			uploadGroupId, importUploadId, backgroundTask.getUserId());
 
 		if ((importUpload == null) || !importUpload.isComplete()) {
 			throw new PortalException(
-				_language.get(
+				LanguageUtil.get(
 					locale,
 					"the-uploaded-file-has-expired-please-upload-it-again"));
 		}
 
 		importFileSources.add(
 			new ImportFileSource(
-				() -> _importUploadManager.deleteImportUpload(
+				() -> importUploadManager.deleteImportUpload(
 					uploadGroupId, importUploadId, backgroundTask.getUserId()),
 				importUpload.getFileName(),
-				file -> _importUploadManager.writeTo(
+				file -> importUploadManager.writeTo(
 					file, uploadGroupId, importUploadId,
 					backgroundTask.getUserId())));
 
 		return importFileSources;
 	}
 
-	private ImportFileSource _toImportFileSource(FileEntry fileEntry) {
+	private static ImportFileSource _toImportFileSource(FileEntry fileEntry) {
 		return new ImportFileSource(
 			() -> PortletFileRepositoryUtil.deletePortletFileEntry(
 				fileEntry.getFileEntryId()),
@@ -102,13 +102,8 @@ public class ImportFileSourceHelper {
 			file -> FileUtil.write(file, fileEntry.getContentStream()));
 	}
 
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private ImportUploadManager _importUploadManager;
-
-	@Reference
-	private Language _language;
+	private static final Snapshot<ImportUploadManager>
+		_importUploadManagerSnapshot = new Snapshot<>(
+			ImportFileSourceUtil.class, ImportUploadManager.class);
 
 }

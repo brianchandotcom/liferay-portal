@@ -6,6 +6,8 @@
 package com.liferay.exportimport.internal.background.task;
 
 import com.liferay.exportimport.internal.background.task.display.PortletExportImportBackgroundTaskDisplay;
+import com.liferay.exportimport.internal.upload.ImportFileSource;
+import com.liferay.exportimport.internal.upload.ImportFileSourceUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportIOException;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
@@ -64,7 +66,7 @@ public class PortletImportBackgroundTaskExecutor
 		File file = null;
 
 		for (ImportFileSource importFileSource :
-				_importFileSourceHelper.getImportFileSources(
+				ImportFileSourceUtil.getImportFileSources(
 					backgroundTask, getLocale(backgroundTask))) {
 
 			try {
@@ -131,9 +133,6 @@ public class PortletImportBackgroundTaskExecutor
 	@Reference
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
-
-	@Reference
-	private ImportFileSourceHelper _importFileSourceHelper;
 
 	private class PortletImportCallable implements Callable<Void> {
 

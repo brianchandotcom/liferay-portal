@@ -333,7 +333,7 @@ public class ImportUploadResourceImpl extends BaseImportUploadResourceImpl {
 
 		if (importUpload == null) {
 			throw new NotFoundException(
-				"No upload exists with ID " + importUploadId);
+				"No import upload exists with ID " + importUploadId);
 		}
 
 		Group scopeGroup = _getScopeGroup(group, importUpload);

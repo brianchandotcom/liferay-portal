@@ -1072,20 +1072,19 @@ public class ImportProcessResourceTest
 					backgroundTask.getStatus());
 			});
 
-		Assert.assertNotNull(
-			_layoutLocalService.fetchLayoutByUuidAndGroupId(
-				layout.getUuid(), group.getGroupId(), false));
-
-		assertHttpResponseStatusCode(
-			404,
-			getImportUploadHttpResponseUnsafeFunction.apply(
-				importUpload.getId()));
 		Assert.assertEquals(
 			0,
 			_backgroundTaskLocalService.getBackgroundTasksCount(
 				group.getGroupId(), importUpload.getId(),
 				ExportImportBackgroundTaskExecutorNames.
 					IMPORT_PREVIEW_BACKGROUND_TASK_EXECUTOR));
+		Assert.assertNotNull(
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
+				layout.getUuid(), group.getGroupId(), false));
+		assertHttpResponseStatusCode(
+			404,
+			getImportUploadHttpResponseUnsafeFunction.apply(
+				importUpload.getId()));
 	}
 
 	private void _testPostImportProcessWithLayoutSet(

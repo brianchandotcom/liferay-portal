@@ -41,9 +41,12 @@ public class DBCopyTablesProcessTest {
 	@TestInfo("LPD-110028")
 	public void testCopyTable() throws Exception {
 		DataSource dataSource = Mockito.mock(DataSource.class);
+
 		Connection connection = Mockito.mock(Connection.class);
+
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
+
 		JdbcStatement jdbcStatement = Mockito.mock(JdbcStatement.class);
 
 		Mockito.when(

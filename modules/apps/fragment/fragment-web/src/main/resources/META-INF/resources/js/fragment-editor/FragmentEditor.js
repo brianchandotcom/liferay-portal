@@ -7,10 +7,14 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayNav from '@clayui/nav';
 import ClayTabs from '@clayui/tabs';
+import {
+	AIAssistantTriggerButton,
+	APPLY_FRAGMENT_CODE_EVENT,
+} from '@liferay/ai-hub-cell-js-components-web';
 import {useIsMounted, usePrevious} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-components-web';
 import {debounce, fetch, navigate, sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';
 import EmbeddedWidgetsModal from './EmbeddedWidgetsModal';
@@ -54,55 +58,39 @@ const FragmentEditor = ({
 }) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 	const [changesStatus, setChangesStatus] = useState(null);
-	const [configuration, setConfiguration] = useState(initialConfiguration);
-	const [css, setCss] = useState(initialCSS);
-	const [html, setHtml] = useState(initialHTML);
-	const [js, setJs] = useState(initialJS);
 	const [fieldTypes, setFieldTypes] = useState(initialFieldTypes);
-	const previousConfiguration =
-		usePrevious(configuration) || initialConfiguration;
-	const previousCss = usePrevious(css) || initialCSS;
-	const previousFieldTypes = usePrevious(fieldTypes) || initialFieldTypes;
-	const previousHtml = usePrevious(html) || initialHTML;
-	const previousJs = usePrevious(js) || initialJS;
 
-	const [previewData, setPreviewData] = useState({
+	const [code, setCode] = useState(() => ({
 		configuration: initialConfiguration,
 		css: initialCSS,
 		html: initialHTML,
 		js: initialJS,
-	});
+	}));
+
+	const codeRef = useRef(code);
+
+	const [loadedCode, setLoadedCode] = useState(code);
+	const [previewData, setPreviewData] = useState(code);
+
+	const previousCode = usePrevious(code) || code;
+	const previousFieldTypes = usePrevious(fieldTypes) || initialFieldTypes;
 
 	const isMounted = useIsMounted();
 
 	const contentHasChanged = useCallback(() => {
 		return (
-			previousConfiguration !== configuration ||
-			previousCss !== css ||
-			previousFieldTypes.length !== fieldTypes.length ||
-			previousHtml !== html ||
-			previousJs !== js
+			previousCode !== code ||
+			previousFieldTypes.length !== fieldTypes.length
 		);
-	}, [
-		configuration,
-		css,
-		fieldTypes,
-		html,
-		previousCss,
-		previousConfiguration,
-		previousFieldTypes,
-		previousHtml,
-		previousJs,
-		js,
-	]);
+	}, [code, fieldTypes, previousCode, previousFieldTypes]);
 
 	const widgetRegex = new RegExp('<lfr-widget(?:-[^>]+)?>', 'g');
 
 	const handlePublishClick = () => {
 		if (
 			!Liferay.FeatureFlags['LPD-40535'] &&
-			(widgetRegex.test(html) ||
-				html.includes('[@liferay_portlet["runtime"]'))
+			(widgetRegex.test(code.html) ||
+				code.html.includes('[@liferay_portlet["runtime"]'))
 		) {
 			EmbeddedWidgetsModal({learnMessageHTML, onPublish: publish});
 		}
@@ -153,19 +141,38 @@ const FragmentEditor = ({
 	};
 
 	useEffect(() => {
+		codeRef.current = code;
+	}, [code]);
+
+	useEffect(() => {
+		const applyFragmentCodeHandler = Liferay.on(
+			APPLY_FRAGMENT_CODE_EVENT,
+			({configuration, css, html, js}) => {
+				setLoadedCode((loadedCode) => ({
+					configuration: configuration
+						? JSON.stringify(configuration, null, '\t')
+						: loadedCode.configuration,
+					css: css ?? loadedCode.css,
+					html: html ?? loadedCode.html,
+					js: js ?? loadedCode.js,
+				}));
+			}
+		);
+
+		return () => applyFragmentCodeHandler.detach();
+	}, []);
+
+	useEffect(() => {
 		if (contentHasChanged()) {
 			setChangesStatus(CHANGES_STATUS.unsaved);
 			debouncedSaveDraft({
+				...code,
 				allowedStatusDraft: allowedStatus.draft,
-				configuration,
-				css,
 				editUrl: urls.edit,
 				fieldTypes,
 				fragmentCollectionId,
 				fragmentEntryId,
-				html,
 				isMounted,
-				js,
 				name,
 				namespace,
 				setChangesStatus,
@@ -174,15 +181,12 @@ const FragmentEditor = ({
 		}
 	}, [
 		allowedStatus.draft,
-		configuration,
+		code,
 		contentHasChanged,
-		css,
 		fieldTypes,
 		fragmentCollectionId,
 		fragmentEntryId,
-		html,
 		isMounted,
-		js,
 		name,
 		namespace,
 		urls.edit,
@@ -259,6 +263,34 @@ const FragmentEditor = ({
 										</span>
 									</div>
 
+									{Liferay.FeatureFlags['LPD-62272'] &&
+										Liferay.FeatureFlags['LPD-94003'] && (
+											<div className="btn-group-item mr-2">
+												<AIAssistantTriggerButton
+													chatbotExternalReferenceCode="L_EDIT_FRAGMENT_CHATBOT"
+													getContext={() => ({
+														fragmentCSS:
+															codeRef.current.css,
+														fragmentConfiguration:
+															codeRef.current
+																.configuration,
+														fragmentHTML:
+															codeRef.current
+																.html,
+														fragmentJS:
+															codeRef.current.js,
+													})}
+													greeting={Liferay.Language.get(
+														'hi-i-can-help-you-edit-this-fragment'
+													)}
+													hideLabel
+													instructionDefinitionScope=""
+													presentation="sidebar"
+													pushContainer="#main-content"
+												/>
+											</div>
+										)}
+
 									<div className="btn-group-item">
 										<button
 											className="btn btn-primary btn-sm"
@@ -288,21 +320,25 @@ const FragmentEditor = ({
 					<div className="fragment-editor">
 						<div className="html source-editor">
 							<CodeMirrorEditor
-								content={initialHTML}
+								content={loadedCode.html}
 								customDataAttributes={dataAttributes}
 								customEntities={htmlEditorCustomEntities}
 								customTags={autocompleteTags}
 								mode="html"
-								onChange={setHtml}
+								onChange={(html) =>
+									setCode((current) => ({...current, html}))
+								}
 								readOnly={readOnly}
 							/>
 						</div>
 
 						<div className="css source-editor">
 							<CodeMirrorEditor
-								content={initialCSS}
+								content={loadedCode.css}
 								mode="css"
-								onChange={setCss}
+								onChange={(css) =>
+									setCode((current) => ({...current, css}))
+								}
 								readOnly={readOnly}
 							/>
 						</div>
@@ -321,9 +357,11 @@ const FragmentEditor = ({
 									'const fragmentElement = ...;',
 									'const configuration = ...;',
 								]}
-								content={initialJS}
+								content={loadedCode.js}
 								mode="javascript"
-								onChange={setJs}
+								onChange={(js) =>
+									setCode((current) => ({...current, js}))
+								}
 								readOnly={readOnly}
 							/>
 						</div>
@@ -379,9 +417,14 @@ const FragmentEditor = ({
 									)}
 
 									<CodeMirrorEditor
-										content={initialConfiguration}
+										content={loadedCode.configuration}
 										mode="json"
-										onChange={setConfiguration}
+										onChange={(configuration) =>
+											setCode((current) => ({
+												...current,
+												configuration,
+											}))
+										}
 										readOnly={readOnly}
 										showHeader={false}
 									/>

@@ -15,10 +15,10 @@ export const GENERATE_FIELD_VALUE_AGENT_EXTERNAL_REFERENCE_CODE =
 	'L_GENERATE_FIELD_VALUE';
 
 export interface ApplyFragmentCodePayload {
-	configuration: object;
-	css: string;
-	html: string;
-	js: string;
+	configuration?: object | null;
+	css?: string | null;
+	html?: string | null;
+	js?: string | null;
 	summary: string;
 }
 

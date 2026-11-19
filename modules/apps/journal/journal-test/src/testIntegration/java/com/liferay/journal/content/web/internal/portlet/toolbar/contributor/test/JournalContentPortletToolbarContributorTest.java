@@ -120,13 +120,15 @@ public class JournalContentPortletToolbarContributorTest {
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		List<Menu> menus = _portletToolbarContributor.getPortletTitleMenus(
-			mockLiferayPortletRenderRequest,
-			new MockLiferayPortletRenderResponse());
+		List<Menu> portletTitleMenus =
+			_portletToolbarContributor.getPortletTitleMenus(
+				mockLiferayPortletRenderRequest,
+				new MockLiferayPortletRenderResponse());
 
-		Assert.assertEquals(menus.toString(), 1, menus.size());
+		Assert.assertEquals(
+			portletTitleMenus.toString(), 1, portletTitleMenus.size());
 
-		Menu menu = menus.get(0);
+		Menu menu = portletTitleMenus.get(0);
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 

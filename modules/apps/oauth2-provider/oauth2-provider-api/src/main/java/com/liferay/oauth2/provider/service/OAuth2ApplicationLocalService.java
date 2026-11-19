@@ -413,4 +413,4 @@ public interface OAuth2ApplicationLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1581353399
+// LIFERAY-SERVICE-BUILDER-HASH:185796831

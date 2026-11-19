@@ -577,7 +577,7 @@ public class PageTemplateResourceImpl
 					groupId, LayoutAdminPortletKeys.GROUP_PAGES,
 					contentPageTemplate.getThumbnailURLReference(),
 					contextUser.getUserId()),
-				false, 0,
+				false,
 				_getLayoutPlid(contentPageTemplate, groupId, serviceContext), 0,
 				PageSpecificationUtil.getPublishedStatus(
 					contentPageTemplate.getPageSpecifications()),

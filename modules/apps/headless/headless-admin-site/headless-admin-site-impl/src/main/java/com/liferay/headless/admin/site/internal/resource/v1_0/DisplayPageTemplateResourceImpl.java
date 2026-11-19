@@ -690,7 +690,7 @@ public class DisplayPageTemplateResourceImpl
 				groupId, LayoutAdminPortletKeys.GROUP_PAGES,
 				displayPageTemplate.getThumbnailURLReference(),
 				contextUser.getUserId()),
-			GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()), 0,
+			GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
 			layout.getPlid(), 0,
 			PageSpecificationUtil.getPublishedStatus(
 				displayPageTemplate.getPageSpecifications()),

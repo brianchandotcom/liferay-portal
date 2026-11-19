@@ -24,7 +24,9 @@ if (liveGroup == null) {
 	liveGroup = group;
 }
 
-PublishProcessDisplayContext publishProcessDisplayContext = new PublishProcessDisplayContext(liveGroup, locale, publishSourceGroup);
+String portletId = ParamUtil.getString(request, "portletId");
+
+PublishProcessDisplayContext publishProcessDisplayContext = new PublishProcessDisplayContext(liveGroup, locale, ParamUtil.getLong(request, "plid"), portletId, publishSourceGroup);
 
 renderResponse.setTitle(publishProcessDisplayContext.getTitle(scheduledPublishProcessId));
 %>
@@ -50,15 +52,18 @@ renderResponse.setTitle(publishProcessDisplayContext.getTitle(scheduledPublishPr
 				"pageTreeModalConfiguration", publishProcessDisplayContext.getPageTreeModalConfiguration()
 			).put(
 				"processesBackURL",
-				PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setTabs1(
-					"processes"
-				).buildString()
+				Validator.isNull(portletId) ?
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setTabs1(
+						"processes"
+					).buildString() : backURL
 			).put(
 				"publishPreviewAPIURL", publishProcessDisplayContext.getPublishPreviewAPIURL()
 			).put(
 				"publishProcessAPIURL", publishProcessDisplayContext.getPublishProcessAPIURL()
+			).put(
+				"remote", liveGroup.isStagedRemotely()
 			).put(
 				"remoteConnection", publishProcessDisplayContext.getRemoteConnectionJSONObject()
 			).put(

@@ -71,7 +71,12 @@ export function getFragmentCode(
 				.trim()
 		);
 
-		if (typeof json?.html === 'string') {
+		if (
+			(json?.configuration && typeof json.configuration === 'object') ||
+			typeof json?.css === 'string' ||
+			typeof json?.html === 'string' ||
+			typeof json?.js === 'string'
+		) {
 			return json;
 		}
 	}

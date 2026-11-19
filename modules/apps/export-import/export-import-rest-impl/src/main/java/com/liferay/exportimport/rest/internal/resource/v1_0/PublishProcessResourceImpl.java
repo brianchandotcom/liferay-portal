@@ -109,7 +109,7 @@ public class PublishProcessResourceImpl extends BasePublishProcessResourceImpl {
 
 		PermissionUtil.checkPublishPermission(
 			backgroundTask.getGroupId(),
-			PermissionUtil.getPublishGroupActionId(backgroundTask));
+			PermissionUtil.getViewPublishGroupActionId(backgroundTask));
 
 		BackgroundTaskUtil.checkTaskExecutorClassName(
 			backgroundTask, _CLASS_NAMES_TASK_EXECUTOR);
@@ -126,7 +126,7 @@ public class PublishProcessResourceImpl extends BasePublishProcessResourceImpl {
 
 		PermissionUtil.checkPublishPermission(
 			backgroundTask.getGroupId(),
-			PermissionUtil.getPublishGroupActionId(backgroundTask));
+			PermissionUtil.getViewPublishGroupActionId(backgroundTask));
 
 		BackgroundTaskUtil.checkTaskExecutorClassName(
 			backgroundTask, _CLASS_NAMES_TASK_EXECUTOR);
@@ -165,7 +165,7 @@ public class PublishProcessResourceImpl extends BasePublishProcessResourceImpl {
 
 		PermissionUtil.checkPublishPermission(
 			scopeGroup.getGroupId(),
-			PermissionUtil.getPublishGroupActionId(portletId));
+			PermissionUtil.getViewPublishGroupActionId(portletId));
 
 		List<Long> groupIds = _getPublishGroupIds(scopeGroup);
 

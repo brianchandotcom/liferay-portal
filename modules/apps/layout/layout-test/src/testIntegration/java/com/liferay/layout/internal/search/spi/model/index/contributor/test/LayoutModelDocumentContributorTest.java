@@ -220,6 +220,7 @@ public class LayoutModelDocumentContributorTest {
 	@Test
 	public void testReindexPublishedLayout() throws Exception {
 		_assertReindexPublishedLayout(null);
+		_testReindexPublishedLayoutWithCaptcha();
 	}
 
 	@Test
@@ -865,6 +866,31 @@ public class LayoutModelDocumentContributorTest {
 		portletPreferences.store();
 
 		_assertPortletPreferences(journalArticle, _draftLayout, portletId);
+	}
+
+	private void _testReindexPublishedLayoutWithCaptcha() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		String elementText = RandomTestUtil.randomString();
+
+		_addFragmentEntryLinkToLayout(
+			"{}", elementText + "[@liferay_captcha[\"captcha\"] /]",
+			draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		List<LogEntry> logEntries = _reindexLayoutsLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			elementText, _locale);
+
+		Assert.assertEquals(
+			elementText,
+			document.get(Field.getLocalizedName(_locale, Field.CONTENT)));
 	}
 
 	private static final String _CLASS_NAME_INCLUDE_TAG =

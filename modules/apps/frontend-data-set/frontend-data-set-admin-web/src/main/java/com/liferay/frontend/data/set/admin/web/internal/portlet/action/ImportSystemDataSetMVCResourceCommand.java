@@ -1016,7 +1016,7 @@ public class ImportSystemDataSetMVCResourceCommand
 				"Skipping ", itemType, " ", dropdownItem.get("label"),
 				" and its nested items for frontend data set ",
 				objectEntry.getExternalReferenceCode(),
-				" because it has no data ID"));
+				" because \"data.id\" is null"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

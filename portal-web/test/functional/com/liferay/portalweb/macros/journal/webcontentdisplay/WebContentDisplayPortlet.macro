@@ -96,23 +96,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureScope(scopeSelection = null, portletName = null) {
-		Portlet.gotoPortletOptions(
-			portletName = ${portletName},
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Configuration#NAVIGATION_SCOPE");
-
-		Select(
-			locator1 = "Select#SCOPE",
-			value1 = "regexp:.*${scopeSelection}.*");
-
-		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
 	macro configureSetup(userToolNameList = null, metadataNameList = null, enableViewCountIncrement = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -364,25 +347,6 @@ definition {
 				key_webContentTitle = ${webContentTitle},
 				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
 		}
-	}
-
-	@summary = "Default summary"
-	macro viewConfigureScope(scopeSelection = null) {
-		AssertElementPresent(
-			key_portletName = "Web Content Display (${scopeSelection})",
-			locator1 = "Portlet#TITLE");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display (${scopeSelection})",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "Configuration#NAVIGATION_SCOPE");
-
-		AssertSelectedLabel(
-			locator1 = "Select#SCOPE",
-			value1 = ${scopeSelection});
 	}
 
 	@summary = "Default summary"

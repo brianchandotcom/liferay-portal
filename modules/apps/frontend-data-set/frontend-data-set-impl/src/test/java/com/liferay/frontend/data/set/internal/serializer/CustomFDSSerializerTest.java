@@ -820,55 +820,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"/items/42"),
 			jsonObject.getString("apiURL"));
 
-		// Token mapped manually and left empty
-
-		jsonArray = _customFDSSerializer.serializeFilters(
-			FDS_NAMES[0], httpServletRequest,
-			Collections.singletonMap(
-				externalReferenceCode,
-				JSONUtil.put(
-					"itemId", "42"
-				).put(
-					"scopeKey", JSONFactoryUtil.createJSONObject()
-				)));
-
-		Assert.assertEquals(0, jsonArray.length());
-
-		// Token mapped to an empty string
-
-		jsonArray = _customFDSSerializer.serializeFilters(
-			FDS_NAMES[0], httpServletRequest,
-			Collections.singletonMap(
-				externalReferenceCode,
-				JSONUtil.put(
-					"itemId", "42"
-				).put(
-					"scopeKey", StringPool.BLANK
-				)));
-
-		jsonObject = jsonArray.getJSONObject(0);
-
-		Assert.assertEquals(
-			"/o" + REST_APPLICATION + "/scopes//items/42",
-			jsonObject.getString("apiURL"));
-
-		// Unresolved token
-
-		jsonArray = _customFDSSerializer.serializeFilters(
-			FDS_NAMES[0], httpServletRequest);
-
-		Assert.assertEquals(0, jsonArray.length());
-
-		// Source with unresolved tokens
-
-		properties.remove("restApplication");
-		properties.put("source", "/o/app/items/{itemId}");
-
-		jsonArray = _customFDSSerializer.serializeFilters(
-			FDS_NAMES[0], httpServletRequest);
-
-		Assert.assertEquals(0, jsonArray.length());
-
 		// Item proxy
 
 		String apiURL = RandomTestUtil.randomString();
@@ -910,6 +861,64 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		jsonObject = jsonArray.getJSONObject(0);
 
 		Assert.assertEquals(apiURL, jsonObject.getString("apiURL"));
+
+		// Source with unresolved tokens
+
+		ObjectEntry sourceObjectEntry = _createSelectionFilterObjectEntry(
+			RandomTestUtil.randomString(), null, null, "API_REST_APPLICATION");
+
+		Map<String, Object> sourceProperties =
+			sourceObjectEntry.getProperties();
+
+		sourceProperties.put("source", "/o/app/items/{itemId}");
+
+		_mockSerializeFilters(FDS_NAMES[0], sourceObjectEntry);
+
+		jsonArray = _customFDSSerializer.serializeFilters(
+			FDS_NAMES[0], httpServletRequest);
+
+		Assert.assertEquals(0, jsonArray.length());
+
+		// Token mapped manually and left empty
+
+		_mockSerializeFilters(FDS_NAMES[0], objectEntry);
+
+		jsonArray = _customFDSSerializer.serializeFilters(
+			FDS_NAMES[0], httpServletRequest,
+			Collections.singletonMap(
+				externalReferenceCode,
+				JSONUtil.put(
+					"itemId", "42"
+				).put(
+					"scopeKey", JSONFactoryUtil.createJSONObject()
+				)));
+
+		Assert.assertEquals(0, jsonArray.length());
+
+		// Token mapped to an empty string
+
+		jsonArray = _customFDSSerializer.serializeFilters(
+			FDS_NAMES[0], httpServletRequest,
+			Collections.singletonMap(
+				externalReferenceCode,
+				JSONUtil.put(
+					"itemId", "42"
+				).put(
+					"scopeKey", StringPool.BLANK
+				)));
+
+		jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			"/o" + REST_APPLICATION + "/scopes//items/42",
+			jsonObject.getString("apiURL"));
+
+		// Unresolved token
+
+		jsonArray = _customFDSSerializer.serializeFilters(
+			FDS_NAMES[0], httpServletRequest);
+
+		Assert.assertEquals(0, jsonArray.length());
 	}
 
 	@Test

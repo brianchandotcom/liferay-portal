@@ -171,7 +171,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			String fdsAPIURL = _fdsRenderer.getFDSAPIURL(
 				externalReferenceCode, httpServletRequest, false, null);
 
-			JSONObject apiURLTokenMappingsJSONObject = _getJSONObject(
+			JSONObject fdsAPIURLTokenMappingsJSONObject = _getJSONObject(
 				_fragmentEntryConfigurationParser.getFieldValue(
 					configurationJSONObject, editableValuesJSONObject,
 					fragmentRendererContext.getLocale(),
@@ -182,7 +182,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 			JSONObject fdsAPIURLTokenResolutionsJSONObject =
 				_getTokenResolutionsJSONObject(
-					fdsAPIURL, apiURLTokenMappingsJSONObject,
+					fdsAPIURL, fdsAPIURLTokenMappingsJSONObject,
 					autoResolvedFDSAPIURL, httpServletRequest);
 
 			Set<String> unresolvedTokenNames = _getTokenNames(
@@ -215,7 +215,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					if (!unresolvedTokenNames.isEmpty()) {
 						Set<String> unresolvedContextTokenNames =
 							_getUnresolvedContextTokenNames(
-								apiURLTokenMappingsJSONObject,
+								fdsAPIURLTokenMappingsJSONObject,
 								httpServletRequest, unresolvedTokenNames);
 
 						_reactRenderer.renderReact(
@@ -244,17 +244,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			}
 
 			if (unresolvedTokenNames.isEmpty()) {
-				Map<String, JSONObject>
-					selectionFilterTokenResolutionsJSONObjects =
-						_getSelectionFilterTokenResolutionsJSONObjects(
-							externalReferenceCode, httpServletRequest,
-							_getJSONObject(
-								_fragmentEntryConfigurationParser.getFieldValue(
-									configurationJSONObject,
-									editableValuesJSONObject,
-									fragmentRendererContext.getLocale(),
-									"selectionFilterAPIURLTokenMappings")));
-
 				printWriter.write("<div>");
 
 				_fdsRenderer.render(
@@ -272,15 +261,16 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						fragmentRendererContext.getFragmentElementId()
 					).put(
 						"selectionFilterAPIURLTokenResolutions",
-						() -> {
-							if (selectionFilterTokenResolutionsJSONObjects.
-									isEmpty()) {
-
-								return null;
-							}
-
-							return selectionFilterTokenResolutionsJSONObjects;
-						}
+						() ->
+							_getSelectionFilterAPIURLTokenResolutionsJSONObjects(
+								externalReferenceCode, httpServletRequest,
+								_getJSONObject(
+									_fragmentEntryConfigurationParser.
+										getFieldValue(
+											configurationJSONObject,
+											editableValuesJSONObject,
+											fragmentRendererContext.getLocale(),
+											"selectionFilterAPIURLTokenMappings")))
 					).put(
 						"style", "fluid"
 					).build(),
@@ -497,7 +487,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Map<String, JSONObject>
-		_getSelectionFilterTokenResolutionsJSONObjects(
+		_getSelectionFilterAPIURLTokenResolutionsJSONObjects(
 			String externalReferenceCode, HttpServletRequest httpServletRequest,
 			JSONObject selectionFilterAPIURLTokenMappingsJSONObject) {
 
@@ -539,6 +529,10 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					apiURL, apiURLTokenMappingsJSONObject,
 					autoResolvedSelectionFilterFDSAPIURLs.get(entry.getKey()),
 					httpServletRequest));
+		}
+
+		if (selectionFilterTokenResolutionsJSONObjects.isEmpty()) {
+			return null;
 		}
 
 		return selectionFilterTokenResolutionsJSONObjects;

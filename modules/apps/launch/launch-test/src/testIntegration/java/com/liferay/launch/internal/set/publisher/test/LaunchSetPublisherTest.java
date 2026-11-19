@@ -619,7 +619,16 @@ public class LaunchSetPublisherTest {
 		_objectEntryLocalService.deleteObjectEntry(
 			unknownLaunchEntryObjectEntry2);
 
-		_launchSetPublisher.publish(launchSetId, TestPropsValues.getUserId());
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			() -> {
+				_launchSetPublisher.publish(
+					launchSetId, TestPropsValues.getUserId());
+
+				_assertPublishErrorsCount(0, launchSetId);
+
+				return null;
+			});
 
 		_assertBackgroundTaskStatuses(
 			launchSetId, BackgroundTaskConstants.STATUS_FAILED,

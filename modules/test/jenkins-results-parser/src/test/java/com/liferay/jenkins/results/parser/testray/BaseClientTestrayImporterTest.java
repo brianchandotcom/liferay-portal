@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.RandomTestUtil;
 import com.liferay.jenkins.results.parser.ReflectionTestUtil;
+import com.liferay.poshi.core.util.GetterUtil;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -278,9 +279,6 @@ public class BaseClientTestrayImporterTest
 			JenkinsResultsParserUtil.write(
 				workingTestrayResultsFile, RandomTestUtil.randomString());
 
-			BaseClientTestrayImporter baseClientTestrayImporter =
-				_newBaseClientTestrayImporter();
-
 			long testrayBuildId = RandomTestUtil.randomLong();
 
 			TestrayBuild testrayBuild = Mockito.mock(TestrayBuild.class);
@@ -313,6 +311,9 @@ public class BaseClientTestrayImporterTest
 
 			long startTimeMillis = System.currentTimeMillis();
 
+			BaseClientTestrayImporter baseClientTestrayImporter =
+				_newBaseClientTestrayImporter();
+
 			baseClientTestrayImporter.uploadResults(resultsFiles, testrayBuild);
 
 			long endTimeMillis = System.currentTimeMillis();
@@ -331,7 +332,7 @@ public class BaseClientTestrayImporterTest
 
 			Assert.assertTrue(matcher.matches());
 
-			long millis = Long.valueOf(matcher.group("millis"));
+			long millis = GetterUtil.getLong(matcher.group("millis"));
 
 			Assert.assertTrue(
 				(millis >= startTimeMillis) && (millis <= endTimeMillis));
@@ -517,9 +518,6 @@ public class BaseClientTestrayImporterTest
 		String environmentValue, String expectedValue,
 		String systemPropertyValue) {
 
-		BaseClientTestrayImporter baseClientTestrayImporter =
-			_newBaseClientTestrayImporter();
-
 		String varName = RandomTestUtil.randomString();
 
 		if (environmentValue != null) {
@@ -529,6 +527,9 @@ public class BaseClientTestrayImporterTest
 		if (systemPropertyValue != null) {
 			System.setProperty(varName, systemPropertyValue);
 		}
+
+		BaseClientTestrayImporter baseClientTestrayImporter =
+			_newBaseClientTestrayImporter();
 
 		testEquals(
 			expectedValue, baseClientTestrayImporter.getEnvVarValue(varName));

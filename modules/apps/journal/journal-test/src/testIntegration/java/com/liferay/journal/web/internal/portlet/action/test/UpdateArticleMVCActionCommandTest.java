@@ -92,6 +92,7 @@ public class UpdateArticleMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-116508")
 	public void testProcessAction() throws Exception {
 		_processAction(_getMockLiferayPortletActionRequest());
 
@@ -153,6 +154,8 @@ public class UpdateArticleMVCActionCommandTest {
 			portletPreferences.getValue("articleExternalReferenceCode", null));
 		Assert.assertNull(
 			portletPreferences.getValue("groupExternalReferenceCode", null));
+
+		_testProcessActionWithLayoutScope();
 	}
 
 	@Test
@@ -469,6 +472,23 @@ public class UpdateArticleMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			Group group, Layout layout, String portletResource)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setParameter(
+			"groupId", String.valueOf(group.getGroupId()));
+		mockLiferayPortletActionRequest.setParameter(
+			"portletResource", portletResource);
+		mockLiferayPortletActionRequest.setParameter(
+			"refererPlid", String.valueOf(layout.getPlid()));
+
+		return mockLiferayPortletActionRequest;
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
 			String articleId, Map<Locale, String> friendlyURLMap)
 		throws Exception {
 
@@ -565,6 +585,69 @@ public class UpdateArticleMVCActionCommandTest {
 
 					return method.invoke(_portal, args);
 				}));
+	}
+
+	private void _testProcessActionWithLayoutScope() throws Exception {
+		_group2 = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group2);
+
+		Group scopeGroup = GroupTestUtil.addGroup(
+			TestPropsValues.getUserId(), layout);
+
+		Company company = _companyLocalService.getCompany(
+			_group2.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		String portletResource = LayoutTestUtil.addPortletToLayout(
+			layout, JournalContentPortletKeys.JOURNAL_CONTENT,
+			HashMapBuilder.put(
+				"groupExternalReferenceCode",
+				new String[] {companyGroup.getExternalReferenceCode()}
+			).put(
+				"lfrScopeLayoutUuid", new String[] {layout.getUuid()}
+			).put(
+				"lfrScopeType", new String[] {"layout"}
+			).build());
+
+		_processAction(
+			_getMockLiferayPortletActionRequest(
+				scopeGroup, layout, portletResource));
+
+		JournalArticle journalArticle1 =
+			_journalArticleLocalService.fetchArticleByUrlTitle(
+				scopeGroup.getGroupId(), "title");
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, portletResource);
+
+		Assert.assertEquals(
+			journalArticle1.getExternalReferenceCode(),
+			portletPreferences.getValue("articleExternalReferenceCode", null));
+		Assert.assertEquals(
+			scopeGroup.getExternalReferenceCode(),
+			portletPreferences.getValue("groupExternalReferenceCode", null));
+
+		_processAction(
+			_getMockLiferayPortletActionRequest(
+				_group2, layout, portletResource));
+
+		JournalArticle journalArticle2 =
+			_journalArticleLocalService.fetchArticleByUrlTitle(
+				_group2.getGroupId(), "title");
+
+		portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, portletResource);
+
+		Assert.assertEquals(
+			journalArticle2.getExternalReferenceCode(),
+			portletPreferences.getValue("articleExternalReferenceCode", null));
+		Assert.assertEquals(
+			_group2.getExternalReferenceCode(),
+			portletPreferences.getValue("groupExternalReferenceCode", null));
 	}
 
 	@Inject

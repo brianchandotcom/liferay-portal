@@ -4767,11 +4767,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			if (Validator.isNotNull(masterLayoutPageTemplateEntryScopeERC)) {
 				throw new MasterLayoutException(
 					StringBundler.concat(
-						"Unable to find master page with external reference ",
-						"code ", masterLayoutPageTemplateEntryERC,
-						" in a design library with external reference code ",
-						masterLayoutPageTemplateEntryScopeERC,
-						" connected to group ", layout.getGroupId()));
+						"Unable to find master layout page template entry ",
+						"with external reference code ",
+						masterLayoutPageTemplateEntryERC,
+						" and scope external reference code ",
+						masterLayoutPageTemplateEntryScopeERC, " for group ",
+						layout.getGroupId()));
 			}
 
 			return;

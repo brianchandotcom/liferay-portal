@@ -15,6 +15,12 @@
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/fragment_entry/by_external_reference_code/{externalReferenceCode}/edit</pattern>
+		<ignored-parameter name="redirect" />
+		<implicit-parameter name="mvcRenderCommandName">/fragment/edit_fragment_entry</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}/fragment_entry/{fragmentEntryId:\d+}/group_usages</pattern>
 		<implicit-parameter name="mvcRenderCommandName">/fragment/view_group_fragment_entry_usages</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>

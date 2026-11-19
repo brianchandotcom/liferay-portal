@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
@@ -45,6 +46,29 @@ public class EditFragmentEntryMVCRenderCommand implements MVCRenderCommand {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 
+		String externalReferenceCode = ParamUtil.getString(
+			renderRequest, "externalReferenceCode");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if ((fragmentEntry == null) &&
+			Validator.isNotNull(externalReferenceCode)) {
+
+			fragmentEntry =
+				_fragmentEntryLocalService.
+					fetchFragmentEntryByExternalReferenceCode(
+						externalReferenceCode, themeDisplay.getScopeGroupId());
+
+			if (fragmentEntry == null) {
+				fragmentEntry =
+					_fragmentEntryLocalService.
+						fetchFragmentEntryByExternalReferenceCode(
+							externalReferenceCode,
+							themeDisplay.getScopeGroupId(), false);
+			}
+		}
+
 		if (fragmentEntry == null) {
 			String fragmentEntryKey = ParamUtil.getString(
 				renderRequest, "fragmentEntryKey");
@@ -53,9 +77,6 @@ public class EditFragmentEntryMVCRenderCommand implements MVCRenderCommand {
 				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryKey);
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		if ((fragmentEntry == null) ||
 			!_portletResourcePermission.contains(

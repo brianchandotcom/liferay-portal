@@ -84,10 +84,6 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 			itemsJSONArray.put(guestPermissionJSONObject);
 		}
 
-		List<Object> actionIds = guestPermissionJSONObject.getJSONArray(
-			"actionIds"
-		).toList();
-
 		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
 			"objectEntry");
 
@@ -98,6 +94,10 @@ public class ObjectActionKnowledgeArticleGuestViewRestController
 
 			approved = true;
 		}
+
+		List<Object> actionIds = guestPermissionJSONObject.getJSONArray(
+			"actionIds"
+		).toList();
 
 		if (actionIds.contains(ActionKeys.VIEW) && approved) {
 			return new ResponseEntity<>(json, HttpStatus.OK);

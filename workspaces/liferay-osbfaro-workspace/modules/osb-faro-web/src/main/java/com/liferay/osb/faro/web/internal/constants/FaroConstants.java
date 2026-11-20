@@ -10,11 +10,20 @@ package com.liferay.osb.faro.web.internal.constants;
  */
 public class FaroConstants {
 
+	public static final String[] AC_FRIENDLY_URLS = {
+		"/asset-known-individuals", "/page-known-individuals"
+	};
+
 	public static final String APPLICATION_ASAH = "asah";
 
 	public static final String APPLICATION_CONTACTS = "contacts";
 
 	public static final String APPLICATION_MAIN = "main";
+
+	public static final String[] LDP_FRIENDLY_URLS = {
+		"/accounts", "/asset-accounts", "/campaigns", "/lifecycles",
+		"/page-accounts"
+	};
 
 	public static final String[] LDP_MENU_FRIENDLY_URLS = {
 		"/accounts", "/campaigns", "/lifecycles"

@@ -8,11 +8,20 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.DefaultFragmentReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
@@ -34,11 +43,16 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailHttpServ
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.URLFetchSecurityCompanyConfigurationUtil;
+import com.liferay.layout.helper.DropZoneAllowedFragmentEntriesHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.DesignLibraryTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
@@ -92,6 +106,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -623,6 +638,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		Assert.assertNull(postMasterPage.getThumbnailURLReference());
 
 		_testPostSiteMasterPageWithDropZonePageElement();
+		_testPostSiteMasterPageWithDropZonePageElementFromDifferentGroup();
 		_testPostSiteMasterPageWithInvalidPageSpecifications();
 		_testPostSiteMasterPageWithMismatchedPageSpecifications();
 		_testPostSiteMasterPageWithPageSpecifications();
@@ -2237,6 +2253,108 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				testGroup.getExternalReferenceCode(), masterPage));
 	}
 
+	private void _testPostSiteMasterPageWithDropZonePageElementFromDifferentGroup()
+		throws Exception {
+
+		PageElement pageElement = PageElementsTestUtil.getDropZonePageElement(
+			RandomTestUtil.randomString(), testGroup.getGroupId(),
+			testCompany.getGroupId(), testGroup.getGroupId());
+
+		MasterPageResource masterPageResource = _getMasterPageResource();
+
+		MasterPage masterPage = masterPageResource.postSiteMasterPage(
+			testGroup.getExternalReferenceCode(),
+			_getMasterPage(new PageElement[] {pageElement}));
+
+		masterPage = masterPageResource.getSiteMasterPage(
+			testGroup.getExternalReferenceCode(),
+			masterPage.getExternalReferenceCode());
+
+		Group group = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				serviceContext);
+
+		List<String> fragmentEntryKeys = new ArrayList<>();
+
+		DropZonePageElementDefinition dropZonePageElementDefinition =
+			(DropZonePageElementDefinition)
+				pageElement.getPageElementDefinition();
+
+		for (FragmentReference fragmentReference :
+				dropZonePageElementDefinition.getAllowedFragmentReferences()) {
+
+			if (fragmentReference instanceof DefaultFragmentReference) {
+				DefaultFragmentReference defaultFragmentReference =
+					(DefaultFragmentReference)fragmentReference;
+
+				fragmentEntryKeys.add(
+					defaultFragmentReference.getDefaultFragmentKey());
+
+				continue;
+			}
+
+			FragmentItemExternalReference fragmentItemExternalReference =
+				(FragmentItemExternalReference)fragmentReference;
+
+			if (fragmentItemExternalReference.getScope() != null) {
+				FragmentEntry fragmentEntry =
+					_fragmentEntryLocalService.
+						getFragmentEntryByExternalReferenceCode(
+							fragmentItemExternalReference.
+								getExternalReferenceCode(),
+							testCompany.getGroupId());
+
+				fragmentEntryKeys.add(fragmentEntry.getFragmentEntryKey());
+
+				continue;
+			}
+
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLocalService.addFragmentEntry(
+					fragmentItemExternalReference.getExternalReferenceCode(),
+					TestPropsValues.getUserId(), group.getGroupId(),
+					fragmentCollection.getFragmentCollectionId(),
+					StringPool.BLANK, RandomTestUtil.randomString(),
+					StringPool.BLANK, RandomTestUtil.randomString(),
+					StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
+					false, FragmentConstants.TYPE_COMPONENT, null,
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			fragmentEntryKeys.add(fragmentEntry.getFragmentEntryKey());
+		}
+
+		masterPage = masterPageResource.postSiteMasterPage(
+			group.getExternalReferenceCode(), masterPage);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					masterPage.getExternalReferenceCode(), group.getGroupId());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					group.getGroupId(), layoutPageTemplateEntry.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		Assert.assertEquals(
+			fragmentEntryKeys,
+			_dropZoneAllowedFragmentEntriesHelper.getFragmentEntryKeys(
+				group.getCompanyId(),
+				(DropZoneLayoutStructureItem)
+					layoutStructure.getDropZoneLayoutStructureItem(),
+				group.getGroupId()));
+	}
+
 	private void _testPostSiteMasterPageWithInvalidPageSpecifications()
 		throws Exception {
 
@@ -2954,7 +3072,17 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	private Group _designLibraryGroup;
 
 	@Inject
+	private DropZoneAllowedFragmentEntriesHelper
+		_dropZoneAllowedFragmentEntriesHelper;
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
@@ -2967,6 +3095,10 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;

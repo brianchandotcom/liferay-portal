@@ -16,6 +16,10 @@ public class FaroConstants {
 
 	public static final String APPLICATION_MAIN = "main";
 
+	public static final String[] LDP_MENU_FRIENDLY_URLS = {
+		"/accounts", "/campaigns", "/lifecycles"
+	};
+
 	public static final int TYPE_ACCOUNT = 0;
 
 	public static final int TYPE_DATA_SOURCE = 1;

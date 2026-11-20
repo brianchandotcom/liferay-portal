@@ -103,10 +103,6 @@ public class GetLayoutsStrutsActionTest {
 
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
-		RoleTestUtil.addResourcePermission(
-			_role, Layout.class.getName(), ResourceConstants.SCOPE_GROUP,
-			String.valueOf(_group.getGroupId()), ActionKeys.VIEW);
-
 		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
 			_companyLocalService.getCompany(_group.getCompanyId()), _group,
 			_layoutLocalService.getLayout(
@@ -181,7 +177,7 @@ public class GetLayoutsStrutsActionTest {
 	}
 
 	@Test
-	@TestInfo("LPS-106110")
+	@TestInfo({"LPD-116824", "LPS-106110"})
 	public void testGetLayoutsStrutsActionWithPagination() throws Exception {
 		Map<Long, List<Long>> layoutIdsMap = _getLayoutIdsMap(
 			_COUNT_ROOT_LAYOUTS, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);

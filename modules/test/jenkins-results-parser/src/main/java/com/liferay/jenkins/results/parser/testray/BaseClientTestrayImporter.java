@@ -44,7 +44,7 @@ public abstract class BaseClientTestrayImporter
 				_testrayOAuth2ClientSecret)) {
 
 			throw new RuntimeException(
-				"Testray 2 requires \"testrayOAuth2ClientId\" and " +
+				"Testray requires \"testrayOAuth2ClientId\" and " +
 					"\"testrayOAuth2ClientSecret\" to be set");
 		}
 
@@ -63,7 +63,7 @@ public abstract class BaseClientTestrayImporter
 				testrayCloudBucketName)) {
 
 			throw new RuntimeException(
-				"Testray 2 requires \"GOOGLE_APPLICATION_CREDENTIALS\" to " +
+				"Testray requires \"GOOGLE_APPLICATION_CREDENTIALS\" to " +
 					"point to a credential with access to " +
 						testrayCloudBucketName);
 		}

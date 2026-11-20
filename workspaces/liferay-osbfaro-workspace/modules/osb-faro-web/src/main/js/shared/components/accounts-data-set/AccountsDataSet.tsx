@@ -15,6 +15,7 @@ import {
 	lifecycleStagesLabelMap,
 } from 'contacts/pages/account/utils/constants';
 import {buildViews} from './utils';
+import {getPeriodFilterLabel} from 'shared/util/filter';
 import {IAccountLifecycleStage} from 'shared/api/lifecycle';
 import {ICatalogField} from 'shared/api/catalog';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
@@ -218,7 +219,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 					{
 						id: 'rangeKey',
 						items: rangeSelectors,
-						label: Liferay.Language.get('active-individuals'),
+						label: getPeriodFilterLabel(campaignId),
 						name: 'rangeKey',
 						preloadedData: buildSelectionPreloadedData(
 							rangeKeyFilter,

@@ -22,6 +22,7 @@ import {
 	RelationalOperators,
 } from 'segment/segment-editor/dynamic/utils/constants';
 import {FilterByType, FilterInputType, FilterOptionType} from 'shared/types';
+import {getPeriodFilterLabel} from 'shared/util/filter';
 import {IndividualsListCDPColumns} from 'shared/util/table-columns';
 import {Map, Set} from 'immutable';
 import {RangeKeyTimeRanges, Sizes} from 'shared/util/constants';
@@ -58,10 +59,10 @@ const ORDER_BY_OPTIONS = [
 	},
 ];
 
-const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
+const getDefaultFilterByOptions = (campaignId?: string): FilterOptionType[] => [
 	{
 		key: 'activeUsers',
-		label: Liferay.Language.get('active-individuals'),
+		label: getPeriodFilterLabel(campaignId),
 		type: 'radio' as FilterInputType,
 		values: [
 			{
@@ -178,6 +179,8 @@ const IndividualsList: React.FC<IIndividualsListProps> = ({
 	const FILTER_BY_OPTIONS: FilterOptionType[] = useMemo(() => {
 		const countries = countriesData?.items;
 
+		const defaultFilterByOptions = getDefaultFilterByOptions(campaignId);
+
 		if (countries?.length) {
 			return [
 				{
@@ -188,12 +191,12 @@ const IndividualsList: React.FC<IIndividualsListProps> = ({
 						value: country,
 					})),
 				},
-				...DEFAULT_FILTER_BY_OPTIONS,
+				...defaultFilterByOptions,
 			];
 		}
 
-		return DEFAULT_FILTER_BY_OPTIONS;
-	}, [countriesData, countriesLoading]);
+		return defaultFilterByOptions;
+	}, [campaignId, countriesData, countriesLoading]);
 
 	const activeUsersValue =
 		paginationParams.filterBy.get('activeUsers')?.first() ?? null;

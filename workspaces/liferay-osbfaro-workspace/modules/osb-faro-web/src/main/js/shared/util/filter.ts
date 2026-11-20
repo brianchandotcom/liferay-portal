@@ -17,3 +17,8 @@ export const getFilters = (
 				: acc,
 		{devices: 'Any', location: 'Any'}
 	);
+
+export const getPeriodFilterLabel = (campaignId?: string) =>
+	campaignId
+		? Liferay.Language.get('touched-in')
+		: Liferay.Language.get('active-individuals');

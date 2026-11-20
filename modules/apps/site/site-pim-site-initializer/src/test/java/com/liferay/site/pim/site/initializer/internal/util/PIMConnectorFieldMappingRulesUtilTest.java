@@ -101,17 +101,18 @@ public class PIMConnectorFieldMappingRulesUtilTest {
 	}
 
 	@Test
-	public void testIsMappingRulesSupported() {
+	public void testIsFieldMappingRulesSupported() {
 		Assert.assertFalse(
-			PIMConnectorFieldMappingRulesUtil.isMappingRulesSupported(null));
+			PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
+				null));
 		Assert.assertFalse(
-			PIMConnectorFieldMappingRulesUtil.isMappingRulesSupported(
+			PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
 				new PIMConnectorChannelField(
 					RandomTestUtil.randomString(), true,
 					RandomTestUtil.randomString(), false,
 					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER)));
 		Assert.assertTrue(
-			PIMConnectorFieldMappingRulesUtil.isMappingRulesSupported(
+			PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
 				new PIMConnectorChannelField(
 					RandomTestUtil.randomString(), true,
 					RandomTestUtil.randomString(), false,

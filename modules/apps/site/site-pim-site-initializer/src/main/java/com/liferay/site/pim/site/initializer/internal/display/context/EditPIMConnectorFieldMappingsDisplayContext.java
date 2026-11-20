@@ -219,7 +219,7 @@ public class EditPIMConnectorFieldMappingsDisplayContext {
 			PIMConnectorChannelField pimConnectorChannelField)
 		throws Exception {
 
-		if (!PIMConnectorFieldMappingRulesUtil.isMappingRulesSupported(
+		if (!PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
 				pimConnectorChannelField)) {
 
 			return null;

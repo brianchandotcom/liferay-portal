@@ -7,20 +7,20 @@ import ClayForm from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import React from 'react';
 
-import FieldMappingRow from './FieldMappingRow';
+import PIMFieldMappingRow from './PIMFieldMappingRow';
 import newFieldMapping from './newFieldMapping';
 import {IFieldMapping, IObjectDefinition} from './types';
 
 interface IProps {
-	additionalFieldMappingTypes: string[];
+	channelFieldAdditionalFieldMappingTypes: string[];
 	fieldMappings: IFieldMapping[];
 	objectDefinitions: IObjectDefinition[];
 	setFieldMappings: React.Dispatch<React.SetStateAction<IFieldMapping[]>>;
 	spritemap: string;
 }
 
-export default function FieldMappingsSection({
-	additionalFieldMappingTypes,
+export default function PIMFieldMappingsSection({
+	channelFieldAdditionalFieldMappingTypes,
 	fieldMappings,
 	objectDefinitions,
 	setFieldMappings,
@@ -67,9 +67,9 @@ export default function FieldMappingsSection({
 					</div>
 
 					{fieldMappings.map((fieldMapping, index) => (
-						<FieldMappingRow
-							additionalFieldMappingTypes={
-								additionalFieldMappingTypes
+						<PIMFieldMappingRow
+							channelFieldAdditionalFieldMappingTypes={
+								channelFieldAdditionalFieldMappingTypes
 							}
 							deletable={fieldMappings.length > 1}
 							fieldMapping={fieldMapping}

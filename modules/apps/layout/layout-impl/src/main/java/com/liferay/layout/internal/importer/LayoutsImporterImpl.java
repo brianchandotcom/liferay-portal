@@ -24,7 +24,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -47,6 +46,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.helper.DropZoneAllowedFragmentEntriesHelper;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
@@ -359,10 +359,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			new ContainerLayoutStructureItemImporter());
 		_addLayoutStructureItemImporter(
 			new DropZoneLayoutStructureItemImporter(
-				_companyLocalService, _depotEntryLocalService,
-				_fragmentCollectionContributorRegistry,
-				_fragmentCollectionLocalService, _fragmentEntryLocalService,
-				_fragmentRendererRegistry));
+				_dropZoneAllowedFragmentEntriesHelper));
 		_addLayoutStructureItemImporter(new FormLayoutStructureItemImporter());
 		_addLayoutStructureItemImporter(
 			new FormRelationshipLayoutStructureItemImporter());
@@ -2500,11 +2497,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private DLAppService _dlAppService;
 
 	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
+	private DropZoneAllowedFragmentEntriesHelper
+		_dropZoneAllowedFragmentEntriesHelper;
 
 	@Reference
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;

@@ -5,31 +5,19 @@
 
 package com.liferay.layout.internal.importer.structure.util;
 
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
-import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.renderer.FragmentRendererRegistry;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.helper.DropZoneAllowedFragmentEntriesHelper;
 import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.internal.importer.exception.DropzoneLayoutStructureItemException;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ScopeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,21 +32,11 @@ public class DropZoneLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {
 
 	public DropZoneLayoutStructureItemImporter(
-		CompanyLocalService companyLocalService,
-		DepotEntryLocalService depotEntryLocalService,
-		FragmentCollectionContributorRegistry
-			fragmentCollectionContributorRegistry,
-		FragmentCollectionLocalService fragmentCollectionLocalService,
-		FragmentEntryLocalService fragmentEntryLocalService,
-		FragmentRendererRegistry fragmentRendererRegistry) {
+		DropZoneAllowedFragmentEntriesHelper
+			dropZoneAllowedFragmentEntriesHelper) {
 
-		_companyLocalService = companyLocalService;
-		_depotEntryLocalService = depotEntryLocalService;
-		_fragmentCollectionContributorRegistry =
-			fragmentCollectionContributorRegistry;
-		_fragmentCollectionLocalService = fragmentCollectionLocalService;
-		_fragmentEntryLocalService = fragmentEntryLocalService;
-		_fragmentRendererRegistry = fragmentRendererRegistry;
+		_dropZoneAllowedFragmentEntriesHelper =
+			dropZoneAllowedFragmentEntriesHelper;
 	}
 
 	@Override
@@ -127,18 +105,21 @@ public class DropZoneLayoutStructureItemImporter
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();
 
-		long[] groupIds = _getGroupIds(
-			layout.getCompanyId(), layout.getGroupId());
+		JSONObject itemConfigJSONObject =
+			_dropZoneAllowedFragmentEntriesHelper.normalizeItemConfigJSONObject(
+				layout.getCompanyId(),
+				JSONUtil.put(
+					"fragmentEntryKeys",
+					JSONFactoryUtil.createJSONArray(
+						ListUtil.unique(
+							TransformUtil.transform(
+								allowedFragments,
+								allowedFragmentMap -> allowedFragmentMap.get(
+									_KEY_KEY))))),
+				layout.getGroupId());
 
 		dropZoneLayoutStructureItem.setFragmentEntriesJSONArray(
-			JSONUtil.toJSONArray(
-				ListUtil.unique(
-					TransformUtil.transform(
-						allowedFragments,
-						allowedFragmentMap -> allowedFragmentMap.get(
-							_KEY_KEY))),
-				fragmentEntryKey -> _toFragmentEntryJSONObject(
-					fragmentEntryKey, groupIds, layout.getGroupId())));
+			itemConfigJSONObject.getJSONArray("fragmentEntries"));
 
 		return dropZoneLayoutStructureItem;
 	}
@@ -148,72 +129,13 @@ public class DropZoneLayoutStructureItemImporter
 		return PageElement.Type.DROP_ZONE;
 	}
 
-	private FragmentEntry _fetchFragmentEntry(
-		String fragmentKey, long[] groupIds) {
-
-		for (long groupId : groupIds) {
-			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.fetchFragmentEntry(
-					groupId, fragmentKey);
-
-			if (fragmentEntry != null) {
-				return fragmentEntry;
-			}
-		}
-
-		return null;
-	}
-
-	private long[] _getGroupIds(long companyId, long groupId) throws Exception {
-		Company company = _companyLocalService.getCompany(companyId);
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-57283")) {
-			return new long[] {groupId, company.getGroupId()};
-		}
-
-		return ArrayUtil.append(
-			new long[] {groupId},
-			TransformUtil.transformToLongArray(
-				_depotEntryLocalService.getGroupConnectedDepotEntries(
-					groupId, DepotConstants.TYPE_DESIGN_LIBRARY,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-				DepotEntry::getGroupId),
-			new long[] {company.getGroupId()});
-	}
-
-	private JSONObject _toFragmentEntryJSONObject(
-			String fragmentEntryKey, long[] groupIds, long scopeGroupId)
-		throws Exception {
-
-		FragmentEntry fragmentEntry = _fetchFragmentEntry(
-			fragmentEntryKey, groupIds);
-
-		if (fragmentEntry != null) {
-			return JSONUtil.put(
-				"fragmentEntryERC", fragmentEntry.getExternalReferenceCode()
-			).put(
-				"fragmentEntryScopeERC",
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					fragmentEntry.getGroupId(), scopeGroupId)
-			);
-		}
-
-		return JSONUtil.put("fragmentEntryRendererKey", fragmentEntryKey);
-	}
-
 	private static final String _KEY_ALLOWED_FRAGMENTS = "allowedFragments";
 
 	private static final String _KEY_KEY = "key";
 
 	private static final String _KEY_UNALLOWED_FRAGMENTS = "unallowedFragments";
 
-	private final CompanyLocalService _companyLocalService;
-	private final DepotEntryLocalService _depotEntryLocalService;
-	private final FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
-	private final FragmentCollectionLocalService
-		_fragmentCollectionLocalService;
-	private final FragmentEntryLocalService _fragmentEntryLocalService;
-	private final FragmentRendererRegistry _fragmentRendererRegistry;
+	private final DropZoneAllowedFragmentEntriesHelper
+		_dropZoneAllowedFragmentEntriesHelper;
 
 }

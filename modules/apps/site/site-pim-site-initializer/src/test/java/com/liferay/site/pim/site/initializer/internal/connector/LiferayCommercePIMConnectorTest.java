@@ -197,9 +197,9 @@ public class LiferayCommercePIMConnectorTest {
 		_testExecuteWithProductOptions();
 		_testExecuteWithProductSpecifications();
 		_testExecuteWithTags();
-		_testExecuteWithTopicVocabulary();
 		_testExecuteWithTrailingSlashURL();
 		_testExecuteWithVariantPIMLinks();
+		_testExecuteWithVocabulary();
 		_testExecuteWithoutUnitOfMeasure();
 	}
 
@@ -351,16 +351,6 @@ public class LiferayCommercePIMConnectorTest {
 			pimFieldMappingRuleObjectEntriesMap, pimProductObjectEntriesMap);
 	}
 
-	private JSONObject _getBodyContentJSONObject(String location)
-		throws Exception {
-
-		Http.Options options = _getOptions(location);
-
-		Http.Body body = options.getBody();
-
-		return JSONFactoryUtil.createJSONObject(body.getContent());
-	}
-
 	private Http.Options _getOptions(String location) {
 		List<Http.Options> matchingOptions = ListUtil.filter(
 			_options,
@@ -402,6 +392,16 @@ public class LiferayCommercePIMConnectorTest {
 		return jsonArray.getJSONObject(0);
 	}
 
+	private JSONObject _getRequestBodyJSONObject(String location)
+		throws Exception {
+
+		Http.Options options = _getOptions(location);
+
+		Http.Body body = options.getBody();
+
+		return JSONFactoryUtil.createJSONObject(body.getContent());
+	}
+
 	private List<ObjectEntry> _getRequiredObjectEntries(
 		ObjectEntry... objectEntries) {
 
@@ -433,7 +433,7 @@ public class LiferayCommercePIMConnectorTest {
 		return jsonArray.getJSONObject(index);
 	}
 
-	private List<String> _getTaxonomyPaths() {
+	private List<String> _getTaxonomyRequestPaths() {
 		return TransformUtil.transform(
 			_options,
 			options -> {
@@ -989,9 +989,9 @@ public class LiferayCommercePIMConnectorTest {
 					assetCategory2.getExternalReferenceCode(),
 				"PUT /taxonomy-categories/by-external-reference-code/" +
 					assetCategory3.getExternalReferenceCode()),
-			_getTaxonomyPaths());
+			_getTaxonomyRequestPaths());
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-vocabularies/by-external-reference-code/" +
 				assetVocabulary.getExternalReferenceCode());
 
@@ -1002,7 +1002,7 @@ public class LiferayCommercePIMConnectorTest {
 		Assert.assertEquals("Anyone", jsonObject1.getString("viewableBy"));
 		Assert.assertEquals("PUBLIC", jsonObject1.getString("visibilityType"));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				assetCategory1.getExternalReferenceCode());
 
@@ -1025,7 +1025,7 @@ public class LiferayCommercePIMConnectorTest {
 
 		Assert.assertEquals("Anyone", jsonObject1.getString("viewableBy"));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				assetCategory2.getExternalReferenceCode());
 
@@ -1035,7 +1035,7 @@ public class LiferayCommercePIMConnectorTest {
 			assetCategory1.getExternalReferenceCode(),
 			jsonObject2.getString("externalReferenceCode"));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				assetCategory3.getExternalReferenceCode());
 
@@ -1059,7 +1059,8 @@ public class LiferayCommercePIMConnectorTest {
 
 		Assert.assertEquals(jsonArray.toString(), 0, jsonArray.length());
 
-		Assert.assertEquals(Collections.emptyList(), _getTaxonomyPaths());
+		Assert.assertEquals(
+			Collections.emptyList(), _getTaxonomyRequestPaths());
 	}
 
 	private void _testExecuteWithErrors() throws Exception {
@@ -1763,7 +1764,61 @@ public class LiferayCommercePIMConnectorTest {
 		Assert.assertEquals(jsonArray.toString(), 0, jsonArray.length());
 	}
 
-	private void _testExecuteWithTopicVocabulary() throws Exception {
+	private void _testExecuteWithTrailingSlashURL() throws Exception {
+		_execute(
+			HashMapBuilder.<String, Serializable>put(
+				"clientId", RandomTestUtil.randomString()
+			).put(
+				"clientSecret", RandomTestUtil.randomString()
+			).put(
+				"url", "https://example.com//"
+			).build(),
+			_getRequiredObjectEntries(),
+			Collections.<String, ObjectEntry>emptyMap(),
+			HashMapBuilder.put(
+				"SKU-1",
+				Arrays.asList(
+					_mockPIMProductObjectEntry(
+						"SKU-1",
+						HashMapBuilder.<String, Serializable>put(
+							"sku", "SKU-1"
+						).put(
+							"title", RandomTestUtil.randomString()
+						).build()))
+			).build());
+
+		Http.Options options = _getOptions("/o/oauth2/token");
+
+		Assert.assertEquals(
+			"https://example.com/o/oauth2/token", options.getLocation());
+	}
+
+	private void _testExecuteWithVariantPIMLinks() throws Exception {
+		JSONObject jsonObject = _getProductJSONObject(
+			"CLUSTER-1", _getRequiredObjectEntries(),
+			Collections.<String, ObjectEntry>emptyMap(),
+			_mockPIMProductObjectEntry(
+				"SKU-1", Collections.<String, Serializable>emptyMap()),
+			_mockPIMProductObjectEntry(
+				"SKU-2", Collections.<String, Serializable>emptyMap()));
+
+		Assert.assertEquals(
+			"CLUSTER-1", jsonObject.getString("externalReferenceCode"));
+
+		JSONObject skuJSONObject = _getSkuJSONObject(0, jsonObject);
+
+		Assert.assertEquals(
+			"SKU-1", skuJSONObject.getString("externalReferenceCode"));
+		Assert.assertEquals("SKU-1", skuJSONObject.getString("sku"));
+
+		skuJSONObject = _getSkuJSONObject(1, jsonObject);
+
+		Assert.assertEquals(
+			"SKU-2", skuJSONObject.getString("externalReferenceCode"));
+		Assert.assertEquals("SKU-2", skuJSONObject.getString("sku"));
+	}
+
+	private void _testExecuteWithVocabulary() throws Exception {
 		String sourceFieldName = RandomTestUtil.randomString();
 		String value1 = StringBundler.concat(
 			RandomTestUtil.randomString(), StringPool.SLASH,
@@ -1855,9 +1910,9 @@ public class LiferayCommercePIMConnectorTest {
 					externalReferenceCode1,
 				"PUT /taxonomy-categories/by-external-reference-code/" +
 					externalReferenceCode2),
-			SetUtil.fromList(_getTaxonomyPaths()));
+			SetUtil.fromList(_getTaxonomyRequestPaths()));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				assetCategory.getExternalReferenceCode());
 
@@ -1865,7 +1920,7 @@ public class LiferayCommercePIMConnectorTest {
 			assetCategory.getTitle(LocaleUtil.US),
 			jsonObject1.getString("name"));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				externalReferenceCode1);
 
@@ -1916,63 +1971,9 @@ public class LiferayCommercePIMConnectorTest {
 				"PUT /taxonomy-vocabularies/by-external-reference-code/L_TOPIC",
 				"PUT /taxonomy-categories/by-external-reference-code/" +
 					externalReferenceCode2),
-			_getTaxonomyPaths());
+			_getTaxonomyRequestPaths());
 
 		_mockHttp(Collections.emptyMap());
-	}
-
-	private void _testExecuteWithTrailingSlashURL() throws Exception {
-		_execute(
-			HashMapBuilder.<String, Serializable>put(
-				"clientId", RandomTestUtil.randomString()
-			).put(
-				"clientSecret", RandomTestUtil.randomString()
-			).put(
-				"url", "https://example.com//"
-			).build(),
-			_getRequiredObjectEntries(),
-			Collections.<String, ObjectEntry>emptyMap(),
-			HashMapBuilder.put(
-				"SKU-1",
-				Arrays.asList(
-					_mockPIMProductObjectEntry(
-						"SKU-1",
-						HashMapBuilder.<String, Serializable>put(
-							"sku", "SKU-1"
-						).put(
-							"title", RandomTestUtil.randomString()
-						).build()))
-			).build());
-
-		Http.Options options = _getOptions("/o/oauth2/token");
-
-		Assert.assertEquals(
-			"https://example.com/o/oauth2/token", options.getLocation());
-	}
-
-	private void _testExecuteWithVariantPIMLinks() throws Exception {
-		JSONObject jsonObject = _getProductJSONObject(
-			"CLUSTER-1", _getRequiredObjectEntries(),
-			Collections.<String, ObjectEntry>emptyMap(),
-			_mockPIMProductObjectEntry(
-				"SKU-1", Collections.<String, Serializable>emptyMap()),
-			_mockPIMProductObjectEntry(
-				"SKU-2", Collections.<String, Serializable>emptyMap()));
-
-		Assert.assertEquals(
-			"CLUSTER-1", jsonObject.getString("externalReferenceCode"));
-
-		JSONObject skuJSONObject = _getSkuJSONObject(0, jsonObject);
-
-		Assert.assertEquals(
-			"SKU-1", skuJSONObject.getString("externalReferenceCode"));
-		Assert.assertEquals("SKU-1", skuJSONObject.getString("sku"));
-
-		skuJSONObject = _getSkuJSONObject(1, jsonObject);
-
-		Assert.assertEquals(
-			"SKU-2", skuJSONObject.getString("externalReferenceCode"));
-		Assert.assertEquals("SKU-2", skuJSONObject.getString("sku"));
 	}
 
 	private void _testExecuteWithoutUnitOfMeasure() throws Exception {

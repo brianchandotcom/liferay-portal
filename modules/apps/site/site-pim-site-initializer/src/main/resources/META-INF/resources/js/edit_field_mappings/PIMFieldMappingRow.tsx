@@ -19,7 +19,7 @@ import {
 } from './types';
 
 interface IProps {
-	additionalFieldMappingTypes: string[];
+	channelFieldAdditionalFieldMappingTypes: string[];
 	deletable: boolean;
 	fieldMapping: IFieldMapping;
 	index: number;
@@ -30,8 +30,8 @@ interface IProps {
 	spritemap: string;
 }
 
-export default function FieldMappingRow({
-	additionalFieldMappingTypes,
+export default function PIMFieldMappingRow({
+	channelFieldAdditionalFieldMappingTypes,
 	deletable,
 	fieldMapping,
 	index,
@@ -153,7 +153,7 @@ export default function FieldMappingRow({
 							/>
 						))}
 
-						{additionalFieldMappingTypes.includes(
+						{channelFieldAdditionalFieldMappingTypes.includes(
 							TYPE_CATEGORIES
 						) && (
 							<ClaySelect.Option
@@ -162,7 +162,9 @@ export default function FieldMappingRow({
 							/>
 						)}
 
-						{additionalFieldMappingTypes.includes(TYPE_TAGS) && (
+						{channelFieldAdditionalFieldMappingTypes.includes(
+							TYPE_TAGS
+						) && (
 							<ClaySelect.Option
 								label={Liferay.Language.get('tags')}
 								value={TYPE_TAGS}

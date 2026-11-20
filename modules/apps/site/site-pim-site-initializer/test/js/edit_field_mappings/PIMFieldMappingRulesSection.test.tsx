@@ -8,7 +8,7 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import MappingRulesSection from '../../../src/main/resources/META-INF/resources/js/edit_field_mappings/MappingRulesSection';
+import PIMFieldMappingRulesSection from '../../../src/main/resources/META-INF/resources/js/edit_field_mappings/PIMFieldMappingRulesSection';
 
 const MAPPING_RULE = {
 	id: 0,
@@ -20,10 +20,10 @@ const MAPPING_RULE = {
 	useFirstNonemptySource: false,
 };
 
-describe('MappingRulesSection', () => {
+describe('PIMFieldMappingRulesSection', () => {
 	it('disables the rules of a channel field that is not text', () => {
 		render(
-			<MappingRulesSection
+			<PIMFieldMappingRulesSection
 				disabled={true}
 				mappingRule={MAPPING_RULE}
 				onChange={jest.fn()}
@@ -47,7 +47,7 @@ describe('MappingRulesSection', () => {
 
 	it('hides the fallback of a channel field that does not support it', () => {
 		render(
-			<MappingRulesSection
+			<PIMFieldMappingRulesSection
 				mappingRule={MAPPING_RULE}
 				onChange={jest.fn()}
 				useFirstNonemptySourceSupported={false}
@@ -63,7 +63,7 @@ describe('MappingRulesSection', () => {
 		const onChange = jest.fn();
 
 		render(
-			<MappingRulesSection
+			<PIMFieldMappingRulesSection
 				mappingRule={MAPPING_RULE}
 				onChange={onChange}
 				useFirstNonemptySourceSupported={true}

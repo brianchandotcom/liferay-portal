@@ -55,7 +55,7 @@ public class EventAttributeDefinitionResourceImpl
 					).put(
 						"keyword", search
 					).put(
-						"page", FaroPaginationUtil.getPageIndex(pagination)
+						"page", FaroPaginationUtil.getGraphQLPage(pagination)
 					).put(
 						"size", FaroPaginationUtil.getDelta(pagination)
 					).put(

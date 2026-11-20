@@ -263,8 +263,9 @@ public class DXPCloudClientTestrayImporter extends BaseClientTestrayImporter {
 			Element testCaseResultElement)
 		throws Exception {
 
-		File testDir = new File(_projectDir, "playwright-report");
 		Element attachmentsElement = Dom4JUtil.getNewElement("attachments");
+
+		File testDir = new File(_projectDir, "playwright-report");
 
 		if (_testType.equals("poshi")) {
 			Matcher matcher = _pattern.matcher(

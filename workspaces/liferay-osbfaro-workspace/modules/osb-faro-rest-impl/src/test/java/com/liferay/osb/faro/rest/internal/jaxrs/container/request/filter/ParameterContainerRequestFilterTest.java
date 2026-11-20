@@ -61,6 +61,12 @@ public class ParameterContainerRequestFilterTest {
 			"\"rangeEnd\" and \"rangeStart\" must be set together",
 			_filter("rangeStart", "2026-10-01"));
 		_assertTitle(
+			"\"rangeStart\" must not be after \"rangeEnd\"",
+			_filter(_getRangeQueryParameters("2026-10-01", "2026-10-20")));
+		_assertTitle(
+			"Date range must be at most 180 days",
+			_filter(_getRangeQueryParameters("2026-10-02", "2026-04-05")));
+		_assertTitle(
 			"\"sort\" accepts only one column on this endpoint",
 			_filter("sort", "accountName:asc,transitionDate:desc"));
 		_assertTitle(
@@ -72,12 +78,6 @@ public class ParameterContainerRequestFilterTest {
 				"accountId, accountName, fromAccountLifecycleStageId, " +
 					"toAccountLifecycleStageId, transitionDate",
 			_filter("sort", "bogusColumn:desc"));
-		_assertTitle(
-			"\"rangeStart\" must not be after \"rangeEnd\"",
-			_filter(_getRangeQueryParameters("2026-10-01", "2026-10-20")));
-		_assertTitle(
-			"Date range must be at most 180 days",
-			_filter(_getRangeQueryParameters("2026-10-02", "2026-04-05")));
 	}
 
 	@Test

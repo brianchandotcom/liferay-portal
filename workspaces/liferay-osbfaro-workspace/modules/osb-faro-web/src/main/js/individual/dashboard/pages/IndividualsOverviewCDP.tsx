@@ -10,7 +10,7 @@ import IndividualsList from './IndividualsList';
 import Loading from 'shared/components/Loading';
 import MetricCard from 'shared/components/MetricCard';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React from 'react';
+import React, {useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {Text as ClayText} from '@clayui/core';
 import {CSVType} from 'shared/components/download-report/utils';
@@ -134,6 +134,8 @@ const IndividualsOverviewCDP = () => {
 
 	const {campaignId, campaignName, setCampaign} = useCampaignFilter();
 
+	const [rangeKey, setRangeKey] = useState<number | null>(30);
+
 	const dataSourceStates = useDataSources();
 
 	const authorized = currentUser.isAdmin();
@@ -145,15 +147,19 @@ const IndividualsOverviewCDP = () => {
 			groupId,
 		},
 	});
+	const metricsRangeKey = campaignId && rangeKey ? rangeKey : 30;
+
 	const {data, loading} = useQuery(IndividualMetricsQuery, {
 		fetchPolicy: 'network-only',
 		variables: {
 			campaignId,
 			channelId,
 			interval: INTERVAL_KEY_MAP.week,
-			rangeKey: 30,
+			rangeKey: metricsRangeKey,
 		},
 	});
+
+	const trendLabelRenderer = campaignId ? undefined : renderTrendLabel;
 
 	return (
 		<>
@@ -210,7 +216,7 @@ const IndividualsOverviewCDP = () => {
 									)}
 									loading={loading}
 									minHeight={198}
-									renderTrendLabel={renderTrendLabel}
+									renderTrendLabel={trendLabelRenderer}
 									title={Liferay.Language.get(
 										'known-individuals'
 									)}
@@ -232,7 +238,7 @@ const IndividualsOverviewCDP = () => {
 									)}
 									loading={loading}
 									minHeight={198}
-									renderTrendLabel={renderTrendLabel}
+									renderTrendLabel={trendLabelRenderer}
 									title={Liferay.Language.get(
 										'anonymous-individuals'
 									)}
@@ -256,6 +262,7 @@ const IndividualsOverviewCDP = () => {
 						<IndividualsList
 							campaignId={campaignId}
 							onClearFilters={() => setCampaign(null)}
+							onRangeKeyChange={setRangeKey}
 						/>
 					</>
 				)}

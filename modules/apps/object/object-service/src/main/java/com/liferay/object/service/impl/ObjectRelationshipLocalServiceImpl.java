@@ -399,13 +399,15 @@ public class ObjectRelationshipLocalServiceImpl
 		if (!PortalInstances.isCurrentCompanyInDeletionProcess() &&
 			objectRelationship.isEdge()) {
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionPersistence.fetchByPrimaryKey(
-					objectRelationship.getObjectDefinitionId1());
+			ObjectDefinition objectDefinition = null;
 
-			if ((objectDefinition == null) ||
-				!(PortalRunMode.isTestMode() && objectDefinition.isSystem())) {
+			if (PortalRunMode.isTestMode()) {
+				objectDefinition =
+					_objectDefinitionPersistence.fetchByPrimaryKey(
+						objectRelationship.getObjectDefinitionId1());
+			}
 
+			if ((objectDefinition == null) || !objectDefinition.isSystem()) {
 				throw new ObjectRelationshipEdgeException(
 					"Edge object relationships cannot be deleted",
 					"edge-object-relationships-cannot-be-deleted");

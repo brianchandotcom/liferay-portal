@@ -67,13 +67,12 @@ public class HttpInvokerTest {
 				"(com.liferay.portal.tools.rest.builder.test.client)",
 			_userAgent.get());
 
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 		String userAgent = RandomTestUtil.randomString();
 
-		_invoke(
-			HttpInvoker.newHttpInvoker(
-			).header(
-				"user-agent", userAgent
-			));
+		httpInvoker.header("user-agent", userAgent);
+
+		_invoke(httpInvoker);
 
 		Assert.assertEquals(userAgent, _userAgent.get());
 	}
@@ -81,9 +80,9 @@ public class HttpInvokerTest {
 	private void _invoke(HttpInvoker httpInvoker) throws Exception {
 		InetSocketAddress inetSocketAddress = _httpServer.getAddress();
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.path(
-			"http://localhost:" + inetSocketAddress.getPort() + "/"
-		).invoke();
+		httpInvoker.path("http://localhost:" + inetSocketAddress.getPort());
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		Assert.assertEquals(204, httpResponse.getStatusCode());
 	}

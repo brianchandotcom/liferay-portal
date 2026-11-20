@@ -11,6 +11,8 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -117,8 +119,8 @@ public class DXPCloudClientTestrayImporter extends BaseClientTestrayImporter {
 		}
 	}
 
-	private Element _getPoshiLogAttachmentElement(
-		Element testCaseResultElement) {
+	private Element _getPoshiLogAttachmentElement(Element testCaseResultElement)
+		throws Exception {
 
 		File xmlFile = new File(
 			_projectDir,
@@ -243,7 +245,7 @@ public class DXPCloudClientTestrayImporter extends BaseClientTestrayImporter {
 		return element;
 	}
 
-	private String _getRelativeURLPath() {
+	private String _getRelativeURLPath() throws MalformedURLException {
 		if (_relativeURLPath != null) {
 			return _relativeURLPath;
 		}
@@ -258,7 +260,8 @@ public class DXPCloudClientTestrayImporter extends BaseClientTestrayImporter {
 	}
 
 	private Element _getTestCaseAttachmentsElement(
-		Element testCaseResultElement) {
+			Element testCaseResultElement)
+		throws Exception {
 
 		File testDir = new File(_projectDir, "playwright-report");
 		Element attachmentsElement = Dom4JUtil.getNewElement("attachments");
@@ -441,7 +444,7 @@ public class DXPCloudClientTestrayImporter extends BaseClientTestrayImporter {
 		return _getPropertiesElement(properties);
 	}
 
-	private List<Element> _getTestCaseResultElements() {
+	private List<Element> _getTestCaseResultElements() throws Exception {
 		File xmlFile = new File(
 			_projectDir,
 			"test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml");
@@ -531,7 +534,7 @@ public class DXPCloudClientTestrayImporter extends BaseClientTestrayImporter {
 		return environmentsElement;
 	}
 
-	private Element _getTestSuitePropertiesElement() {
+	private Element _getTestSuitePropertiesElement() throws Exception {
 		TestrayBuild testrayBuild = _getTestrayBuild();
 
 		TestrayProductVersion testrayProductVersion =
@@ -559,7 +562,7 @@ public class DXPCloudClientTestrayImporter extends BaseClientTestrayImporter {
 		return _getPropertiesElement(properties);
 	}
 
-	private TestrayBuild _getTestrayBuild() {
+	private TestrayBuild _getTestrayBuild() throws MalformedURLException {
 		if (_testrayBuild != null) {
 			return _testrayBuild;
 		}
@@ -757,7 +760,9 @@ public class DXPCloudClientTestrayImporter extends BaseClientTestrayImporter {
 		}
 	}
 
-	private void _uploadInvalidXMLFile(File xmlFile) {
+	private void _uploadInvalidXMLFile(File xmlFile)
+		throws MalformedURLException {
+
 		File xmlGzipFile = new File(
 			xmlFile.getParentFile(), xmlFile.getName() + ".gz");
 

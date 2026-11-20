@@ -1,7 +1,7 @@
 import Card from 'shared/components/Card';
 import DataValue from 'shared/components/DataValue';
 import Loading from 'shared/components/Loading';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
 	columns,
 	EMPTY_STATE_IMAGE,
@@ -34,6 +34,7 @@ interface IAccountsDataSetProps {
 	groupId: string;
 	industryFilter?: string;
 	lifecycleStageFilter?: string;
+	onRangeKeyChange?: (rangeKey?: string) => void;
 	rangeKeyFilter?: RangeKeyTimeRanges;
 	segmentFilter?: string;
 	segmentName?: string;
@@ -48,6 +49,8 @@ export const buildSelectionPreloadedData = (value?: string, label?: string) =>
 			}
 		: undefined;
 
+const RANGE_KEY_ODATA_PREFIX = "rangeKey eq '";
+
 const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	accountLifecycleId,
 	allLifecycles = false,
@@ -61,6 +64,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	groupId,
 	industryFilter,
 	lifecycleStageFilter,
+	onRangeKeyChange,
 	rangeKeyFilter,
 	segmentFilter,
 	segmentName,
@@ -76,6 +80,27 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 		channelId,
 		groupId,
 	});
+
+	const additionalAPIURLParametersTransformer = useCallback(
+		({
+			additionalAPIURLParameters,
+			odataFiltersStrings = [],
+		}: {
+			additionalAPIURLParameters?: string;
+			odataFiltersStrings?: string[];
+		}) => {
+			const rangeKeyOdataString = odataFiltersStrings.find(
+				(odataString) => odataString.startsWith(RANGE_KEY_ODATA_PREFIX)
+			);
+
+			onRangeKeyChange?.(
+				rangeKeyOdataString?.slice(RANGE_KEY_ODATA_PREFIX.length, -1)
+			);
+
+			return additionalAPIURLParameters;
+		},
+		[onRangeKeyChange]
+	);
 
 	const preloadedRangeSelector = rangeSelectors.find(
 		({value}) => value === rangeKeyFilter
@@ -100,6 +125,9 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	return (
 		<Card minHeight={300}>
 			<FrontendDataSet
+				additionalAPIURLParametersTransformer={
+					additionalAPIURLParametersTransformer
+				}
 				apiURL={apiURL}
 				customDataRenderers={{
 					accountLifecycleStageRenderer: ({

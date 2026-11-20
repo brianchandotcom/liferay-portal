@@ -20,12 +20,16 @@ const renderAccountValue = (metric?: Metric) =>
 		[toThousands(metric?.value ?? 0)]
 	);
 
-const TotalAccounts = ({
-	campaignId,
-	groupId,
-}: {
+interface ITotalAccountsProps {
 	campaignId?: string;
 	groupId: string;
+	rangeKey?: string;
+}
+
+const TotalAccounts: React.FC<ITotalAccountsProps> = ({
+	campaignId,
+	groupId,
+	rangeKey,
 }) => {
 	const {channelId} = useParams<{
 		channelId: string;
@@ -36,6 +40,7 @@ const TotalAccounts = ({
 			campaignId,
 			channelId,
 			groupId,
+			rangeKey: campaignId ? rangeKey : undefined,
 		},
 	});
 
@@ -67,35 +72,41 @@ const TotalAccounts = ({
 				/>
 			</ClayLayout.Col>
 
-			<ClayLayout.Col lg={4} md={12}>
-				<MetricCard
-					description={Liferay.Language.get(
-						'displays-all-new-accounts-included-in-this-property'
-					)}
-					loading={loading}
-					minHeight={160}
-					renderTrendLabel={renderTrendLabel}
-					title={Liferay.Language.get('new-accounts')}
-					trend={getMetric(AccountMetricType.New)?.trend}
-					value={renderAccountValue(getMetric(AccountMetricType.New))}
-				/>
-			</ClayLayout.Col>
+			{!campaignId && (
+				<>
+					<ClayLayout.Col lg={4} md={12}>
+						<MetricCard
+							description={Liferay.Language.get(
+								'displays-all-new-accounts-included-in-this-property'
+							)}
+							loading={loading}
+							minHeight={160}
+							renderTrendLabel={renderTrendLabel}
+							title={Liferay.Language.get('new-accounts')}
+							trend={getMetric(AccountMetricType.New)?.trend}
+							value={renderAccountValue(
+								getMetric(AccountMetricType.New)
+							)}
+						/>
+					</ClayLayout.Col>
 
-			<ClayLayout.Col lg={4} md={12}>
-				<MetricCard
-					description={Liferay.Language.get(
-						'displays-all-active-accounts-included-in-this-property'
-					)}
-					loading={loading}
-					minHeight={160}
-					renderTrendLabel={renderTrendLabel}
-					title={Liferay.Language.get('active-accounts')}
-					trend={getMetric(AccountMetricType.Active)?.trend}
-					value={renderAccountValue(
-						getMetric(AccountMetricType.Active)
-					)}
-				/>
-			</ClayLayout.Col>
+					<ClayLayout.Col lg={4} md={12}>
+						<MetricCard
+							description={Liferay.Language.get(
+								'displays-all-active-accounts-included-in-this-property'
+							)}
+							loading={loading}
+							minHeight={160}
+							renderTrendLabel={renderTrendLabel}
+							title={Liferay.Language.get('active-accounts')}
+							trend={getMetric(AccountMetricType.Active)?.trend}
+							value={renderAccountValue(
+								getMetric(AccountMetricType.Active)
+							)}
+						/>
+					</ClayLayout.Col>
+				</>
+			)}
 		</ClayLayout.Row>
 	);
 };

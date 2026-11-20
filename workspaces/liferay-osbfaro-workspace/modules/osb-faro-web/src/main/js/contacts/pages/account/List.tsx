@@ -6,7 +6,7 @@ import CampaignDropdown from 'shared/components/CampaignDropdown';
 import Link from '@clayui/link';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import TotalAccounts from 'contacts/components/account/TotalAccounts';
 import URLConstants from 'shared/util/url-constants';
 import {addAlert} from 'shared/actions/alerts';
@@ -35,6 +35,9 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 	const {campaignId, campaignName, setCampaign} = useCampaignFilter();
 
 	const dispatch = useDispatch();
+	const [rangeKey, setRangeKey] = useState<string | undefined>(
+		RangeKeyTimeRanges.Last30Days
+	);
 	const {selectedChannel} = useChannelContext();
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
@@ -172,6 +175,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						<TotalAccounts
 							campaignId={campaignId}
 							groupId={groupId}
+							rangeKey={rangeKey}
 						/>
 
 						<SectionHeader
@@ -193,6 +197,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 								channelId={channelId}
 								fieldCatalog={fieldCatalogData?.items}
 								groupId={groupId}
+								onRangeKeyChange={setRangeKey}
 								rangeKeyFilter={RangeKeyTimeRanges.Last30Days}
 							/>
 						)}

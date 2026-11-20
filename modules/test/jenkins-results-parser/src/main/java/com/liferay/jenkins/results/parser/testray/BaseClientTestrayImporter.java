@@ -87,7 +87,7 @@ public abstract class BaseClientTestrayImporter
 		String testrayProductVersionName, String testrayProjectName,
 		String testrayRoutineName) {
 
-		TestrayServer testrayServer = getTestrayServer();
+		TestrayServer testrayServer = _getTestrayServer();
 
 		TestrayProject testrayProject = testrayServer.getTestrayProjectByName(
 			testrayProjectName);
@@ -113,31 +113,6 @@ public abstract class BaseClientTestrayImporter
 
 	protected TestrayCloudBucket getTestrayCloudBucket() {
 		return _testrayCloudBucket;
-	}
-
-	protected TestrayServer getTestrayServer() {
-		if (_testrayServer != null) {
-			return _testrayServer;
-		}
-
-		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
-			_testrayServerURL);
-
-		testrayServer.setCommunicationFailureNotificationEnabled(false);
-
-		try {
-			testrayServer.setHTTPAuthorization(
-				new JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization(
-					_testrayOAuth2ClientId, _testrayOAuth2ClientSecret,
-					new URL(testrayServer.getURL() + "/o/oauth2/token")));
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
-
-		_testrayServer = testrayServer;
-
-		return _testrayServer;
 	}
 
 	protected String uploadAttachment(File file, String key) {
@@ -192,6 +167,31 @@ public abstract class BaseClientTestrayImporter
 				JenkinsResultsParserUtil.delete(tempDir);
 			}
 		}
+	}
+
+	private TestrayServer _getTestrayServer() {
+		if (_testrayServer != null) {
+			return _testrayServer;
+		}
+
+		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
+			_testrayServerURL);
+
+		testrayServer.setCommunicationFailureNotificationEnabled(false);
+
+		try {
+			testrayServer.setHTTPAuthorization(
+				new JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization(
+					_testrayOAuth2ClientId, _testrayOAuth2ClientSecret,
+					new URL(testrayServer.getURL() + "/o/oauth2/token")));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+
+		_testrayServer = testrayServer;
+
+		return _testrayServer;
 	}
 
 	private final TestrayCloudBucket _testrayCloudBucket;

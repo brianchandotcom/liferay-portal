@@ -38,16 +38,26 @@ public class ContactsEngineClientImplTest {
 	public void testGetAccountMetrics() {
 		String campaignId = RandomTestUtil.randomString();
 		long channelId = RandomTestUtil.randomLong();
+		String rangeEnd = RandomTestUtil.randomString();
+		int rangeKey = RandomTestUtil.randomInt();
+		String rangeStart = RandomTestUtil.randomString();
 
 		_contactsEngineClientImpl.getAccountMetrics(
-			_faroProject, campaignId, channelId, null, null, null);
+			_faroProject, campaignId, channelId, rangeEnd, rangeKey,
+			rangeStart);
 
 		Assert.assertEquals(campaignId, _uriVariables.get("campaignId"));
+		Assert.assertEquals(rangeEnd, _uriVariables.get("rangeEnd"));
+		Assert.assertEquals(rangeKey, _uriVariables.get("rangeKey"));
+		Assert.assertEquals(rangeStart, _uriVariables.get("rangeStart"));
 
 		_contactsEngineClientImpl.getAccountMetrics(
 			_faroProject, null, channelId, null, null, null);
 
 		Assert.assertFalse(_uriVariables.containsKey("campaignId"));
+		Assert.assertFalse(_uriVariables.containsKey("rangeEnd"));
+		Assert.assertFalse(_uriVariables.containsKey("rangeKey"));
+		Assert.assertFalse(_uriVariables.containsKey("rangeStart"));
 	}
 
 	@Test

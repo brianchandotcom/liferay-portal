@@ -62,10 +62,14 @@ public class AccountFaroControllerTest {
 			new AccountMetric());
 		String campaignId = RandomTestUtil.randomString();
 		long channelId = RandomTestUtil.randomLong();
+		String rangeEnd = RandomTestUtil.randomString();
+		Integer rangeKey = RandomTestUtil.randomInt();
+		String rangeStart = RandomTestUtil.randomString();
 
 		Mockito.when(
 			_contactsEngineClient.getAccountMetrics(
-				_faroProject, campaignId, channelId, null, null, null)
+				_faroProject, campaignId, channelId, rangeEnd, rangeKey,
+				rangeStart)
 		).thenReturn(
 			accountMetrics
 		);
@@ -75,7 +79,8 @@ public class AccountFaroControllerTest {
 		Assert.assertSame(
 			accountMetrics,
 			_accountFaroController.getAccountMetrics(
-				groupId, campaignId, channelId, null, null, null));
+				groupId, campaignId, channelId, rangeEnd, rangeKey,
+				rangeStart));
 
 		Mockito.verify(
 			_faroProjectLocalService

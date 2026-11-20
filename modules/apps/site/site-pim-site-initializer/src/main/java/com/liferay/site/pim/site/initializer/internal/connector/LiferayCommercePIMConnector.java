@@ -184,11 +184,11 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 					entry.getKey(), entry.getValue());
 			}
 
-			_putTaxonomyVocabularies(
+			_putSiteTaxonomyVocabularies(
 				assetCategoriesMap.values(),
 				pimConnectorObjectEntry.getCompanyId(),
 				liferayCommercePIMClient, topicTaxonomyCategoryNamesMap);
-			_putTaxonomyCategories(
+			_putSiteTaxonomyCategories(
 				assetCategoriesMap.values(), liferayCommercePIMClient,
 				topicTaxonomyCategoryNamesMap);
 
@@ -437,13 +437,13 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 			"skus",
 			() -> JSONUtil.toJSONArray(
 				pimProductObjectEntries,
-				curPIMProductObjectEntry -> _createSkuJSONObject(
-					curPIMProductObjectEntry.getExternalReferenceCode(),
+				skuPIMProductObjectEntry -> _createSkuJSONObject(
+					skuPIMProductObjectEntry.getExternalReferenceCode(),
 					objectDefinition, pimFieldMappingObjectEntriesMap,
 					pimFieldMappingRuleObjectEntriesMap,
 					valuesList.get(
 						pimProductObjectEntries.indexOf(
-							curPIMProductObjectEntry))))
+							skuPIMProductObjectEntry))))
 		).put(
 			"tags",
 			() -> _createTagsJSONArray(
@@ -708,27 +708,27 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 			objectDefinition, _PIM_CONNECTOR_CHANNEL_FIELD_TAGS,
 			pimFieldMappingObjectEntriesMap, pimFieldMappingRuleObjectEntry,
 			(pimFieldMappingObjectEntry, pimConnectorChannelFieldValuesMap) -> {
-				List<String> sourceValues = null;
+				List<String> tagNames = null;
 
 				if (PIMConnectorFieldMappingsUtil.isTags(
 						pimFieldMappingObjectEntry)) {
 
-					sourceValues = TransformUtil.transform(
+					tagNames = TransformUtil.transform(
 						_assetTagLocalService.getTags(
 							objectDefinition.getClassName(),
 							pimProductObjectEntry.getObjectEntryId()),
 						AssetTag::getName);
 				}
 				else {
-					sourceValues = Collections.singletonList(
+					tagNames = Collections.singletonList(
 						PIMConnectorFieldMappingsUtil.getValue(
 							objectDefinition, pimFieldMappingObjectEntry,
 							values));
 				}
 
-				for (String sourceValue : sourceValues) {
+				for (String tagName : tagNames) {
 					String value = PIMConnectorFieldMappingRulesUtil.applyRules(
-						pimFieldMappingRuleObjectEntry, sourceValue);
+						pimFieldMappingRuleObjectEntry, tagName);
 
 					if (Validator.isNull(value)) {
 						continue;
@@ -739,7 +739,7 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 			});
 	}
 
-	private void _putTaxonomyCategories(
+	private void _putSiteTaxonomyCategories(
 			Collection<AssetCategory> assetCategories,
 			LiferayCommercePIMClient liferayCommercePIMClient,
 			Map<String, String> topicTaxonomyCategoryNamesMap)
@@ -826,7 +826,7 @@ public class LiferayCommercePIMConnector extends BasePIMConnector {
 		}
 	}
 
-	private void _putTaxonomyVocabularies(
+	private void _putSiteTaxonomyVocabularies(
 			Collection<AssetCategory> assetCategories, long companyId,
 			LiferayCommercePIMClient liferayCommercePIMClient,
 			Map<String, String> topicTaxonomyCategoryNamesMap)

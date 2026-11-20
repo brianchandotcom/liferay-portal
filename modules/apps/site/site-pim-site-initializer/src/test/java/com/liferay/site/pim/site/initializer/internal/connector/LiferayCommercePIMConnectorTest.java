@@ -351,16 +351,6 @@ public class LiferayCommercePIMConnectorTest {
 			pimFieldMappingRuleObjectEntriesMap, pimProductObjectEntriesMap);
 	}
 
-	private JSONObject _getBodyContentJSONObject(String location)
-		throws Exception {
-
-		Http.Options options = _getOptions(location);
-
-		Http.Body body = options.getBody();
-
-		return JSONFactoryUtil.createJSONObject(body.getContent());
-	}
-
 	private Http.Options _getOptions(String location) {
 		List<Http.Options> matchingOptions = ListUtil.filter(
 			_options,
@@ -402,6 +392,16 @@ public class LiferayCommercePIMConnectorTest {
 		return jsonArray.getJSONObject(0);
 	}
 
+	private JSONObject _getRequestBodyJSONObject(String location)
+		throws Exception {
+
+		Http.Options options = _getOptions(location);
+
+		Http.Body body = options.getBody();
+
+		return JSONFactoryUtil.createJSONObject(body.getContent());
+	}
+
 	private List<ObjectEntry> _getRequiredObjectEntries(
 		ObjectEntry... objectEntries) {
 
@@ -433,7 +433,7 @@ public class LiferayCommercePIMConnectorTest {
 		return jsonArray.getJSONObject(index);
 	}
 
-	private List<String> _getTaxonomyPaths() {
+	private List<String> _getTaxonomyRequestPaths() {
 		return TransformUtil.transform(
 			_options,
 			options -> {
@@ -992,9 +992,9 @@ public class LiferayCommercePIMConnectorTest {
 					assetCategory2.getExternalReferenceCode(),
 				"PUT /taxonomy-categories/by-external-reference-code/" +
 					assetCategory3.getExternalReferenceCode()),
-			_getTaxonomyPaths());
+			_getTaxonomyRequestPaths());
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-vocabularies/by-external-reference-code/" +
 				assetVocabulary.getExternalReferenceCode());
 
@@ -1005,7 +1005,7 @@ public class LiferayCommercePIMConnectorTest {
 		Assert.assertEquals("Anyone", jsonObject1.getString("viewableBy"));
 		Assert.assertEquals("PUBLIC", jsonObject1.getString("visibilityType"));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				assetCategory1.getExternalReferenceCode());
 
@@ -1028,7 +1028,7 @@ public class LiferayCommercePIMConnectorTest {
 
 		Assert.assertEquals("Anyone", jsonObject1.getString("viewableBy"));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				assetCategory2.getExternalReferenceCode());
 
@@ -1038,7 +1038,7 @@ public class LiferayCommercePIMConnectorTest {
 			assetCategory1.getExternalReferenceCode(),
 			jsonObject2.getString("externalReferenceCode"));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				assetCategory3.getExternalReferenceCode());
 
@@ -1062,7 +1062,8 @@ public class LiferayCommercePIMConnectorTest {
 
 		Assert.assertEquals(jsonArray.toString(), 0, jsonArray.length());
 
-		Assert.assertEquals(Collections.emptyList(), _getTaxonomyPaths());
+		Assert.assertEquals(
+			Collections.emptyList(), _getTaxonomyRequestPaths());
 	}
 
 	private void _testExecuteWithErrors() throws Exception {
@@ -1858,9 +1859,9 @@ public class LiferayCommercePIMConnectorTest {
 					externalReferenceCode1,
 				"PUT /taxonomy-categories/by-external-reference-code/" +
 					externalReferenceCode2),
-			SetUtil.fromList(_getTaxonomyPaths()));
+			SetUtil.fromList(_getTaxonomyRequestPaths()));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				assetCategory.getExternalReferenceCode());
 
@@ -1868,7 +1869,7 @@ public class LiferayCommercePIMConnectorTest {
 			assetCategory.getTitle(LocaleUtil.US),
 			jsonObject1.getString("name"));
 
-		jsonObject1 = _getBodyContentJSONObject(
+		jsonObject1 = _getRequestBodyJSONObject(
 			"/taxonomy-categories/by-external-reference-code/" +
 				externalReferenceCode1);
 
@@ -1919,7 +1920,7 @@ public class LiferayCommercePIMConnectorTest {
 				"PUT /taxonomy-vocabularies/by-external-reference-code/L_TOPIC",
 				"PUT /taxonomy-categories/by-external-reference-code/" +
 					externalReferenceCode2),
-			_getTaxonomyPaths());
+			_getTaxonomyRequestPaths());
 
 		_mockHttp(Collections.emptyMap());
 	}

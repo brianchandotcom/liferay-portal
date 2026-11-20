@@ -105,7 +105,7 @@ public class PIMConnectorFieldMappingRulesUtil {
 		return objectEntriesMap;
 	}
 
-	public static boolean isMappingRulesSupported(
+	public static boolean isFieldMappingRulesSupported(
 		PIMConnectorChannelField pimConnectorChannelField) {
 
 		if ((pimConnectorChannelField != null) &&

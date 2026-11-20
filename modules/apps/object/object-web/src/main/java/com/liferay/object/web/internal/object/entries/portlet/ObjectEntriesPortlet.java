@@ -84,6 +84,15 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Override
+	protected String getTitle(RenderRequest renderRequest) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_objectDefinitionId);
+
+		return objectDefinition.getPluralLabel(renderRequest.getLocale());
+	}
+
 	private ObjectDefinition _getObjectDefinition(
 		ObjectDefinition objectDefinition, RenderRequest renderRequest) {
 

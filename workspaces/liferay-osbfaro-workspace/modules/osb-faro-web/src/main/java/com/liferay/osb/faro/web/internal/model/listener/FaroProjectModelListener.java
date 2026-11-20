@@ -46,6 +46,11 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 					faroProject.getGroupId(), true,
 					FaroConstants.LDP_MENU_FRIENDLY_URLS);
 			}
+
+			if (faroProject.isRecommendationsEnabled()) {
+				_updateLayouts(
+					faroProject.getGroupId(), false, "/recommendations");
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -78,6 +83,15 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 						faroProject.getGroupId(), true,
 						FaroConstants.LDP_MENU_FRIENDLY_URLS);
 				}
+			}
+
+			if (originalFaroProject.isRecommendationsEnabled() !=
+					faroProject.isRecommendationsEnabled()) {
+
+				_updateLayouts(
+					faroProject.getGroupId(),
+					!faroProject.isRecommendationsEnabled(),
+					"/recommendations");
 			}
 		}
 		catch (Exception exception) {

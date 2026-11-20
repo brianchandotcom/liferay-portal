@@ -123,8 +123,8 @@ public class BaseClientTestrayImporterTest
 			RuntimeException.class, this::_newBaseClientTestrayImporter);
 
 		testEquals(
-			"Testray 2 requires \"GOOGLE_APPLICATION_CREDENTIALS\" to point " +
-				"to a credential with access to " + testrayCloudBucketName,
+			"Testray requires \"GOOGLE_APPLICATION_CREDENTIALS\" to point to " +
+				"a credential with access to " + testrayCloudBucketName,
 			runtimeException.getMessage());
 
 		_testrayCloudBucketMockedStatic.verify(
@@ -468,7 +468,7 @@ public class BaseClientTestrayImporterTest
 			RuntimeException.class, throwingRunnable);
 
 		testEquals(
-			"Testray 2 requires \"testrayOAuth2ClientId\" and " +
+			"Testray requires \"testrayOAuth2ClientId\" and " +
 				"\"testrayOAuth2ClientSecret\" to be set",
 			runtimeException.getMessage());
 

@@ -337,31 +337,6 @@ public class DXPCloudClientTestrayImporterTest
 	}
 
 	private TestrayBuild _mockTestrayBuild() {
-		TestrayProductVersion testrayProductVersion = Mockito.mock(
-			TestrayProductVersion.class);
-
-		Mockito.doReturn(
-			RandomTestUtil.randomString()
-		).when(
-			testrayProductVersion
-		).getName();
-
-		TestrayProject testrayProject = Mockito.mock(TestrayProject.class);
-
-		Mockito.doReturn(
-			RandomTestUtil.randomString()
-		).when(
-			testrayProject
-		).getName();
-
-		TestrayRoutine testrayRoutine = Mockito.mock(TestrayRoutine.class);
-
-		Mockito.doReturn(
-			RandomTestUtil.randomString()
-		).when(
-			testrayRoutine
-		).getName();
-
 		TestrayBuild testrayBuild = Mockito.mock(TestrayBuild.class);
 
 		Mockito.doReturn(
@@ -376,11 +351,22 @@ public class DXPCloudClientTestrayImporterTest
 			testrayBuild
 		).getName();
 
+		TestrayProductVersion testrayProductVersion = Mockito.mock(
+			TestrayProductVersion.class);
+
 		Mockito.doReturn(
 			testrayProductVersion
 		).when(
 			testrayBuild
 		).getTestrayProductVersion();
+
+		Mockito.doReturn(
+			RandomTestUtil.randomString()
+		).when(
+			testrayProductVersion
+		).getName();
+
+		TestrayProject testrayProject = Mockito.mock(TestrayProject.class);
 
 		Mockito.doReturn(
 			testrayProject
@@ -389,10 +375,24 @@ public class DXPCloudClientTestrayImporterTest
 		).getTestrayProject();
 
 		Mockito.doReturn(
+			RandomTestUtil.randomString()
+		).when(
+			testrayProject
+		).getName();
+
+		TestrayRoutine testrayRoutine = Mockito.mock(TestrayRoutine.class);
+
+		Mockito.doReturn(
 			testrayRoutine
 		).when(
 			testrayBuild
 		).getTestrayRoutine();
+
+		Mockito.doReturn(
+			RandomTestUtil.randomString()
+		).when(
+			testrayRoutine
+		).getName();
 
 		return testrayBuild;
 	}
@@ -441,57 +441,16 @@ public class DXPCloudClientTestrayImporterTest
 
 		mockEnvironment(environmentMap);
 
-		_testrayBuild = _mockTestrayBuild();
-
-		TestrayRoutine testrayRoutine = _testrayBuild.getTestrayRoutine();
-
-		Mockito.doReturn(
-			_testrayBuild
-		).when(
-			testrayRoutine
-		).createTestrayBuild(
-			Mockito.any(TestrayProductVersion.class), Mockito.anyString(),
-			Mockito.any(Date.class), Mockito.isNull(), Mockito.anyString()
-		);
-
-		TestrayProject testrayProject = _testrayBuild.getTestrayProject();
-		TestrayProductVersion testrayProductVersion =
-			_testrayBuild.getTestrayProductVersion();
-
-		Mockito.doReturn(
-			testrayProductVersion
-		).when(
-			testrayProject
-		).createTestrayProductVersion(
-			Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			testrayRoutine
-		).when(
-			testrayProject
-		).createTestrayRoutine(
-			Mockito.anyString()
-		);
-
-		TestrayServer testrayServer = Mockito.mock(TestrayServer.class);
-
-		Mockito.doReturn(
-			testrayProject
-		).when(
-			testrayServer
-		).getTestrayProjectByName(
-			Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			new URL(testrayServerURL)
-		).when(
-			testrayServer
-		).getURL();
-
 		TestrayCloudBucket testrayCloudBucket = Mockito.mock(
 			TestrayCloudBucket.class);
+		TestrayServer testrayServer = Mockito.mock(TestrayServer.class);
+
+		_testrayBuild = _mockTestrayBuild();
+
+		TestrayProductVersion testrayProductVersion =
+			_testrayBuild.getTestrayProductVersion();
+		TestrayProject testrayProject = _testrayBuild.getTestrayProject();
+		TestrayRoutine testrayRoutine = _testrayBuild.getTestrayRoutine();
 
 		Mockito.doAnswer(
 			invocation -> {
@@ -520,6 +479,45 @@ public class DXPCloudClientTestrayImporterTest
 		).when(
 			testrayCloudBucket
 		).getTestrayCloudBaseURL();
+
+		Mockito.doReturn(
+			testrayProductVersion
+		).when(
+			testrayProject
+		).createTestrayProductVersion(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			testrayRoutine
+		).when(
+			testrayProject
+		).createTestrayRoutine(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			_testrayBuild
+		).when(
+			testrayRoutine
+		).createTestrayBuild(
+			Mockito.any(TestrayProductVersion.class), Mockito.anyString(),
+			Mockito.any(Date.class), Mockito.isNull(), Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			testrayProject
+		).when(
+			testrayServer
+		).getTestrayProjectByName(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			new URL(testrayServerURL)
+		).when(
+			testrayServer
+		).getURL();
 
 		try (MockedStatic<TestrayCloudBucket> testrayCloudBucketMockedStatic =
 				Mockito.mockStatic(TestrayCloudBucket.class);

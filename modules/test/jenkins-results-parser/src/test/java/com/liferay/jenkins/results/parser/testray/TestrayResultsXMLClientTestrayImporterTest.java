@@ -63,6 +63,19 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 		mockEnvironment(_environmentMap);
 
+		Mockito.doAnswer(
+			invocation -> {
+				_resultsTarGzFileContents.putAll(
+					_readTarGzip(invocation.getArgument(1)));
+
+				return null;
+			}
+		).when(
+			_testrayCloudBucket
+		).createTestrayCloudObject(
+			Mockito.anyString(), Mockito.any(File.class)
+		);
+
 		Mockito.doReturn(
 			_testrayProductVersion
 		).when(
@@ -101,19 +114,6 @@ public class TestrayResultsXMLClientTestrayImporterTest
 		).when(
 			_testrayServer
 		).getURL();
-
-		Mockito.doAnswer(
-			invocation -> {
-				_resultsTarGzFileContents.putAll(
-					_readTarGzip(invocation.getArgument(1)));
-
-				return null;
-			}
-		).when(
-			_testrayCloudBucket
-		).createTestrayCloudObject(
-			Mockito.anyString(), Mockito.any(File.class)
-		);
 
 		_testrayCloudBucketMockedStatic = Mockito.mockStatic(
 			TestrayCloudBucket.class);

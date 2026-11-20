@@ -4,6 +4,20 @@ liferay-one-instance-settings-auth-login:
     promptEnabled: true
     siteExternalReferenceCode: LIFERAY_ONE
     type: instanceSettings
+liferay-one-instance-settings-cloud-infra-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay One Instance Settings Cloud Infra OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything.read
+        -   Liferay.Headless.Commerce.Admin.Channel.everything.read
+        -   Liferay.Headless.Commerce.Admin.Order.everything
+        -   Liferay.Headless.Commerce.Delivery.Catalog.everything.read
+        -   Liferay.Headless.Commerce.Delivery.Order.everything.read
+        -   c_property.everything.read
+    type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
 liferay-one-instance-settings-consent-manager:
     active: true
     enabled: true
@@ -17,8 +31,59 @@ liferay-one-instance-settings-consent-panel:
     pid: com.liferay.cookies.configuration.consent.CookiesConsentConfiguration
     siteExternalReferenceCode: LIFERAY_ONE
     type: instanceSettings
+liferay-one-instance-settings-data-engineering-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay One Instance Settings Data Engineering OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.Address.everything.read
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything.read
+        -   Liferay.Headless.Commerce.Admin.Order.everything.read
+        -   Liferay.Headless.Site.everything.read
+        -   c_contract.everything.read
+        -   c_entitlement.everything.read
+        -   c_entitlementdefinition.everything.read
+        -   c_licensekey.everything.read
+        -   c_project.everything.read
+        -   c_projectmembership.everything.read
+        -   c_property.everything.read
+        -   c_subscriptionentry.everything.read
+    type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
 liferay-one-instance-settings-fragment-service:
     name: Liferay One Instance Settings Fragment Service
     pid: com.liferay.fragment.configuration.FragmentServiceConfiguration
     propagateChanges: true
     type: instanceSettings
+liferay-one-instance-settings-layout-seo-general:
+    includeInstanceName: true
+    includeSiteName: false
+    name: Liferay One Instance Settings Layout SEO General
+    pid: com.liferay.layout.seo.internal.configuration.LayoutSEOGeneralGroupConfiguration
+    type: instanceSettings
+liferay-one-instance-settings-release-team-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay One Instance Settings Release Team OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything.read
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything.write
+        -   c_project.everything.read
+        -   c_property.everything.read
+    type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
+liferay-one-instance-settings-srs-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay One Instance Settings SRS OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything.read
+        -   Liferay.Headless.Commerce.Admin.Order.everything.read
+        -   c_entitlement.everything.read
+        -   c_entitlementdefinition.everything.read
+        -   c_project.everything.read
+    type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account

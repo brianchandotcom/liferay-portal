@@ -3,82 +3,94 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-body:not(.has-edit-mode-menu) .content #main-content.layout-content {
-	margin-top: 3.5rem;
-}
+body {
+	&:not(.has-edit-mode-menu) {
+		&.has-control-menu .sticky-container-24 {
+			top: 10.5rem;
+		}
 
-body.page-maximized #main-content.columns-max,
-body .container-fluid-max-xl {
-	margin-left: auto;
-	margin-right: auto;
-	max-width: calc(
-		var(--content-max-width, 1280px) + 2 * var(--content-gutter, 1.5rem)
-	);
-	padding-left: var(--content-gutter, 1.5rem);
-	padding-right: var(--content-gutter, 1.5rem);
-}
+		.content #main-content.layout-content {
+			margin-top: 3.5rem;
+		}
 
-body nav.public-sites-navigation {
-	font-size: var(--font-size-base, 1rem);
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 101;
-
-	.adt-nav-item {
-		position: static;
-	}
-
-	.adt-navigation {
-		display: flex;
-		flex-wrap: inherit;
-		list-style: none;
-		margin-bottom: 0;
-		padding-left: 0;
-	}
-
-	.has-control-menu & {
-		margin-top: 3.5rem;
-	}
-
-	.has-control-menu.has-edit-mode-menu & {
-		margin-top: 0;
-		position: static;
-	}
-
-	.liferay-logo {
-		flex-shrink: 0;
-
-		.logo-text {
-			white-space: nowrap;
+		.sticky-container-24 {
+			top: 7rem;
 		}
 	}
 
-	.liferay-one-search {
-		width: 12rem;
-	}
-
-	.nav-items-wrapper {
-		align-items: center;
-		background-color: var(--white, #fff);
-		display: flex;
+	&.page-maximized #main-content.columns-max,
+	.container-fluid-max-xl {
 		margin-left: auto;
-		padding: 0;
+		margin-right: auto;
+		max-width: calc(
+			var(--content-max-width, 1280px) + 2 * var(--content-gutter, 1.5rem)
+		);
+		padding-left: var(--content-gutter, 1.5rem);
+		padding-right: var(--content-gutter, 1.5rem);
 	}
 
-	.primary-nav {
-		background: var(--white, #fff);
-		min-height: 4rem;
-		padding-bottom: 0.375rem;
-		padding-top: 0.375rem;
-	}
+	nav.public-sites-navigation {
+		font-size: var(--font-size-base, 1rem);
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 970;
 
-	.utility-nav {
-		max-height: 3rem;
-	}
+		.adt-nav-item {
+			position: static;
+		}
 
-	.utility-nav-container {
-		border-bottom: 1px solid var(--color-neutral-3, #c9c9cf);
+		.adt-navigation {
+			display: flex;
+			flex-wrap: inherit;
+			list-style: none;
+			margin-bottom: 0;
+			padding-left: 0;
+		}
+
+		.has-control-menu & {
+			margin-top: 3.5rem;
+		}
+
+		.has-control-menu.has-edit-mode-menu & {
+			margin-top: 0;
+			position: static;
+		}
+
+		.liferay-logo {
+			flex-shrink: 0;
+
+			.logo-text {
+				white-space: nowrap;
+			}
+		}
+
+		.liferay-one-search {
+			width: 12rem;
+		}
+
+		.nav-items-wrapper {
+			align-items: center;
+			background-color: var(--white, #fff);
+			display: flex;
+			margin-left: auto;
+			padding: 0;
+		}
+
+		.primary-nav {
+			background: var(--white, #fff);
+			min-height: 4rem;
+			padding-bottom: 0.375rem;
+			padding-top: 0.375rem;
+		}
+
+		.utility-nav {
+			max-height: 3rem;
+		}
+
+		.utility-nav-container {
+			border-bottom: 1px solid var(--color-neutral-3, #c9c9cf);
+		}
 	}
 }
 
@@ -717,8 +729,9 @@ body nav.public-sites-navigation {
 	display: flex;
 	height: 454px;
 	justify-content: center;
+	max-width: 902px;
 	position: relative;
-	width: 902px;
+	width: 100%;
 
 	&:hover .nav-button {
 		opacity: 1;
@@ -733,12 +746,23 @@ body nav.public-sites-navigation {
 	img {
 		border-radius: 8px;
 		max-height: 100%;
+		max-width: 100%;
+		object-fit: contain;
 	}
 }
 
 .marketplace-description-content {
 	font-size: 1.125rem;
 	line-height: 2rem;
+	overflow-wrap: anywhere;
+
+	iframe,
+	img,
+	table,
+	video {
+		height: auto;
+		max-width: 100%;
+	}
 }
 
 .marketplace-section-title {
@@ -967,7 +991,7 @@ body nav.public-sites-navigation {
 	justify-content: flex-start;
 	margin-top: var(--spacer-4);
 	max-height: 86px;
-	max-width: 902px;
+	max-width: 100%;
 }
 
 .view-full-gallery {

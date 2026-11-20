@@ -327,6 +327,8 @@ public class HttpInvoker {
 			httpURLConnection.setRequestProperty("Content-Type", _contentType);
 		}
 
+		httpURLConnection.setRequestProperty("User-Agent", "Liferay REST Client (${configYAML.apiPackagePath}.client)");
+
 		for (Map.Entry<String, String> header : _headers.entrySet()) {
 			httpURLConnection.setRequestProperty(header.getKey(), header.getValue());
 		}

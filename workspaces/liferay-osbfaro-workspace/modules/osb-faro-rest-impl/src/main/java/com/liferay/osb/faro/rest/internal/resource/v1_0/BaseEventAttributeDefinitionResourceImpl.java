@@ -85,7 +85,7 @@ public abstract class BaseEventAttributeDefinitionResourceImpl
 				name = "pageSize"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "Free-text search across attribute name, display name, and description, ignoring case. Empty or null returns all attributes.",
+				description = "Free text search across attribute name, display name, and description, ignoring case. Empty or null returns all attributes.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
 			),
@@ -583,4 +583,4 @@ public abstract class BaseEventAttributeDefinitionResourceImpl
 		LogFactoryUtil.getLog(BaseEventAttributeDefinitionResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1635941501
+// LIFERAY-REST-BUILDER-HASH:-1582710800

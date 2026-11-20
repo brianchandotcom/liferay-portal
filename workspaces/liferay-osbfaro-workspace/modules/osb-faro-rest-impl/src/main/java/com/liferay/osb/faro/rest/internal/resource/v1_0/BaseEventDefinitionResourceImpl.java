@@ -90,7 +90,7 @@ public abstract class BaseEventDefinitionResourceImpl
 				name = "pageSize"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "Free-text search across event name, display name, and description, ignoring case (name only when `blocked` is true). Empty or null returns all event definitions.",
+				description = "Free text search across event name, display name, and description, ignoring case (name only when `blocked` is true). Empty or null returns all event definitions.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
 			),
@@ -588,4 +588,4 @@ public abstract class BaseEventDefinitionResourceImpl
 		LogFactoryUtil.getLog(BaseEventDefinitionResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:947781892
+// LIFERAY-REST-BUILDER-HASH:1989201521

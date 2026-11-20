@@ -81,8 +81,8 @@ public class TestrayServerTest extends com.liferay.jenkins.results.parser.Test {
 		throws Exception {
 
 		_testSetCommunicationFailureNotificationEnabled(false, 0);
-		_testSetCommunicationFailureNotificationEnabled(true, 1);
 		_testSetCommunicationFailureNotificationEnabled(null, 1);
+		_testSetCommunicationFailureNotificationEnabled(true, 1);
 	}
 
 	@Test

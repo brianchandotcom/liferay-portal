@@ -539,6 +539,15 @@ public class BaseClientTestrayImporterTest
 
 	private void _testGetTestrayBuild(String testrayBuildSHA) {
 		TestrayProject testrayProject = Mockito.mock(TestrayProject.class);
+		String testrayProjectName = RandomTestUtil.randomString();
+
+		Mockito.doReturn(
+			testrayProject
+		).when(
+			_testrayServer
+		).getTestrayProjectByName(
+			testrayProjectName
+		);
 
 		TestrayProductVersion testrayProductVersion = Mockito.mock(
 			TestrayProductVersion.class);
@@ -561,16 +570,6 @@ public class BaseClientTestrayImporterTest
 			testrayProject
 		).createTestrayRoutine(
 			testrayRoutineName
-		);
-
-		String testrayProjectName = RandomTestUtil.randomString();
-
-		Mockito.doReturn(
-			testrayProject
-		).when(
-			_testrayServer
-		).getTestrayProjectByName(
-			testrayProjectName
 		);
 
 		TestrayBuild testrayBuild = Mockito.mock(TestrayBuild.class);

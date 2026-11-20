@@ -1951,7 +1951,7 @@ test(
 		).toBeVisible();
 		await expect(
 			roleDefinePermissionsPage.summaryPermissionCell(
-				'Asset Library Settings > Asset Library Entry: View Site and Asset Library Administration Menu'
+				'Design Libraries > Depot Entry: View Site and Asset Library Administration Menu'
 			)
 		).toBeVisible();
 		await expect(

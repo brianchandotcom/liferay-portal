@@ -350,6 +350,10 @@ public class HttpInvoker {
 			httpURLConnection.setRequestProperty("Content-Type", _contentType);
 		}
 
+		httpURLConnection.setRequestProperty(
+			"User-Agent",
+			"Liferay REST Client (com.liferay.portal.tools.rest.builder.test.client)");
+
 		for (Map.Entry<String, String> header : _headers.entrySet()) {
 			httpURLConnection.setRequestProperty(
 				header.getKey(), header.getValue());
@@ -467,4 +471,4 @@ public class HttpInvoker {
 	private String _path;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1414699220
+// LIFERAY-REST-BUILDER-HASH:-1451065312

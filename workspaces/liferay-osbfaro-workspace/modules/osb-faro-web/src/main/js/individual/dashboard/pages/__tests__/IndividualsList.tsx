@@ -236,6 +236,48 @@ describe('Individuals List', () => {
 		);
 	});
 
+	it('reports the range key of the list', async () => {
+		(API.individuals.search as jest.Mock).mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const onRangeKeyChange = jest.fn();
+
+		render(
+			<MemoryRouter>
+				<IndividualsList onRangeKeyChange={onRangeKeyChange} />
+			</MemoryRouter>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(onRangeKeyChange).toHaveBeenCalledWith(30);
+	});
+
+	it.each([
+		{campaignId: undefined, label: 'Active Individuals'},
+		{campaignId: '7', label: 'Touched in'},
+	])(
+		'labels the range filter $label when the campaign is $campaignId',
+		async ({campaignId, label}) => {
+			(API.individuals.search as jest.Mock).mockReturnValue(
+				Promise.resolve({items: [], total: 0})
+			);
+
+			const {getByTestId, getByText} = render(
+				<MemoryRouter>
+					<IndividualsList campaignId={campaignId} />
+				</MemoryRouter>
+			);
+
+			await waitForLoadingToBeRemoved(document.body);
+
+			fireEvent.click(getByTestId('filter-button'));
+
+			expect(getByText(label)).toBeInTheDocument();
+		}
+	);
+
 	it('passes the selected range key when activeUsers filter changes', async () => {
 		(API.individuals.search as jest.Mock).mockReturnValue(
 			Promise.resolve({items: [], total: 0})

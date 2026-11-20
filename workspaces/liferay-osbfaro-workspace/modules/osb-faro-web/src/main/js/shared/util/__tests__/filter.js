@@ -1,4 +1,4 @@
-import {getFilters} from '../filter';
+import {getFilters, getPeriodFilterLabel} from '../filter';
 
 describe('Filter Utils', () => {
 	describe('getFilters', () => {
@@ -65,5 +65,17 @@ describe('Filter Utils', () => {
 				location: 'Any',
 			});
 		});
+	});
+
+	describe('getPeriodFilterLabel', () => {
+		it.each([
+			{campaignId: undefined, label: 'Active Individuals'},
+			{campaignId: '7', label: 'Touched in'},
+		])(
+			'should return $label when the campaign is $campaignId',
+			({campaignId, label}) => {
+				expect(getPeriodFilterLabel(campaignId)).toBe(label);
+			}
+		);
 	});
 });

@@ -166,6 +166,12 @@ type FakeView = {
 	schema: {fields: IViewField[]};
 };
 
+let lastAdditionalAPIURLParametersTransformer:
+	| ((loadDataArgs: {
+			additionalAPIURLParameters?: string;
+			odataFiltersStrings?: string[];
+	  }) => string | undefined)
+	| undefined;
 let lastApiURL: string | undefined;
 let lastCustomDataRenderers: FakeCustomDataRenderers | undefined;
 let lastFilters: FakeFilter[] | undefined;
@@ -182,6 +188,7 @@ const byFieldName = (name: string) =>
 jest.mock('@liferay/frontend-data-set-web', () => ({
 	...jest.requireActual('@liferay/frontend-data-set-web'),
 	FrontendDataSet: ({
+		additionalAPIURLParametersTransformer,
 		apiURL,
 		customDataRenderers,
 		filters,
@@ -189,6 +196,7 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 		sorts,
 		views,
 	}: {
+		additionalAPIURLParametersTransformer: typeof lastAdditionalAPIURLParametersTransformer;
 		apiURL: string;
 		customDataRenderers: FakeCustomDataRenderers;
 		filters: FakeFilter[];
@@ -196,6 +204,8 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 		sorts: TSort[];
 		views: FakeView[];
 	}) => {
+		lastAdditionalAPIURLParametersTransformer =
+			additionalAPIURLParametersTransformer;
 		lastApiURL = apiURL;
 		lastCustomDataRenderers = customDataRenderers;
 		lastFilters = filters;
@@ -224,6 +234,7 @@ describe('AccountsDataSet', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 		mockStages(DEFAULT_STAGE_ITEMS);
+		lastAdditionalAPIURLParametersTransformer = undefined;
 		lastApiURL = undefined;
 		lastCustomDataRenderers = undefined;
 		lastFilters = undefined;
@@ -347,6 +358,64 @@ describe('AccountsDataSet', () => {
 			selectedItems: [{label: 'Spring Sale', value: '7'}],
 		});
 	});
+
+	it('should name the rangeKey filter Active Individuals without a campaign', async () => {
+		await renderAccountsDataSet(
+			<AccountsDataSet apiURL="fake-url" channelId="123" groupId="23" />
+		);
+
+		const rangeKeyFilter = lastFilters?.find((f) => f.id === 'rangeKey');
+
+		expect(rangeKeyFilter?.label).toBe('Active Individuals');
+	});
+
+	it('should name the rangeKey filter Touched in when a campaign is selected', async () => {
+		await renderAccountsDataSet(
+			<AccountsDataSet
+				apiURL="fake-url"
+				campaignId="7"
+				channelId="123"
+				groupId="23"
+			/>
+		);
+
+		const rangeKeyFilter = lastFilters?.find((f) => f.id === 'rangeKey');
+
+		expect(rangeKeyFilter?.label).toBe('Touched in');
+	});
+
+	it.each([
+		{
+			expectedRangeKey: '90',
+			odataFiltersStrings: ["country in ('Spain')", "rangeKey eq '90'"],
+		},
+		{
+			expectedRangeKey: undefined,
+			odataFiltersStrings: ["country in ('Spain')"],
+		},
+	])(
+		'should report the range key $expectedRangeKey the data set loads with',
+		async ({expectedRangeKey, odataFiltersStrings}) => {
+			const onRangeKeyChange = jest.fn();
+
+			await renderAccountsDataSet(
+				<AccountsDataSet
+					apiURL="fake-url"
+					channelId="123"
+					groupId="23"
+					onRangeKeyChange={onRangeKeyChange}
+				/>
+			);
+
+			expect(
+				lastAdditionalAPIURLParametersTransformer?.({
+					additionalAPIURLParameters: 'foo=bar',
+					odataFiltersStrings,
+				})
+			).toBe('foo=bar');
+			expect(onRangeKeyChange).toHaveBeenCalledWith(expectedRangeKey);
+		}
+	);
 
 	it('should remount the data set when the campaign changes', async () => {
 		const {rerender} = await renderAccountsDataSet(

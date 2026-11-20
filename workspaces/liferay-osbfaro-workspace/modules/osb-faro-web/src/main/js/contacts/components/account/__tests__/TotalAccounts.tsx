@@ -86,4 +86,48 @@ describe('TotalAccounts', () => {
 			})
 		);
 	});
+
+	it('should ask for the campaign accounts within the period', () => {
+		mockMetrics();
+
+		render(<TotalAccounts campaignId="7" groupId="123" rangeKey="90" />);
+
+		const useRequest = require('shared/hooks/useRequest');
+
+		expect(useRequest.useRequest).toHaveBeenCalledWith(
+			expect.objectContaining({
+				variables: expect.objectContaining({
+					campaignId: '7',
+					rangeKey: '90',
+				}),
+			})
+		);
+	});
+
+	it('should not send the period without a campaign', () => {
+		mockMetrics();
+
+		render(<TotalAccounts groupId="123" rangeKey="90" />);
+
+		const useRequest = require('shared/hooks/useRequest');
+
+		expect(useRequest.useRequest).toHaveBeenCalledWith(
+			expect.objectContaining({
+				variables: expect.objectContaining({rangeKey: undefined}),
+			})
+		);
+	});
+
+	it('should render only the total accounts card when a campaign is selected', () => {
+		mockMetrics();
+
+		const {getByText, queryByText} = render(
+			<TotalAccounts campaignId="7" groupId="123" rangeKey="90" />
+		);
+
+		expect(getByText('Total Accounts')).toBeInTheDocument();
+		expect(queryByText('Active Accounts')).toBeNull();
+		expect(queryByText('New Accounts')).toBeNull();
+		expect(queryByText(/vs\. Previous 90 Days/)).toBeNull();
+	});
 });

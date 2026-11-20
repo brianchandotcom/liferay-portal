@@ -15,6 +15,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.fragment.web.internal.info.field.type.CaptchaInfoFieldType;
 import com.liferay.fragment.web.internal.info.field.type.FormButtonInfoFieldType;
 import com.liferay.fragment.web.internal.info.field.type.LocalizationSelectInfoFieldType;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -478,6 +480,14 @@ public class EditFragmentEntryDisplayContext {
 			"autocompleteTags",
 			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray()
 		).put(
+			"configurationSchema",
+			() -> {
+				FragmentEntryValidator fragmentEntryValidator =
+					_fragmentEntryValidatorSnapshot.get();
+
+				return fragmentEntryValidator.getConfigurationJSONSchema();
+			}
+		).put(
 			"dataAttributes",
 			_fragmentEntryProcessorRegistry.getDataAttributesJSONArray()
 		).put(
@@ -720,6 +730,11 @@ public class EditFragmentEntryDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditFragmentEntryDisplayContext.class);
+
+	private static final Snapshot<FragmentEntryValidator>
+		_fragmentEntryValidatorSnapshot = new Snapshot<>(
+			EditFragmentEntryDisplayContext.class,
+			FragmentEntryValidator.class);
 
 	private String _configurationContent;
 	private String _cssContent;

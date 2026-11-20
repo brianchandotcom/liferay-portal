@@ -573,7 +573,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			_fetchPIMConnectorChannelField(
 				channelFieldName, pimConnectorObjectEntryId);
 
-		if (!PIMConnectorFieldMappingRulesUtil.isMappingRulesSupported(
+		if (!PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
 				pimConnectorChannelField)) {
 
 			throw new ObjectEntryValuesException.InvalidObjectField(

@@ -202,6 +202,20 @@ public class PIMConnectorChannelFieldFDSDataProvider
 		return labelMap;
 	}
 
+	private String _getObjectDefinitionLabel(
+		Map<String, String> labelMap, String sourceClassName, String value) {
+
+		String objectDefinitionLabel = labelMap.get(
+			sourceClassName + StringPool.POUND);
+
+		if (Validator.isNull(objectDefinitionLabel)) {
+			return value;
+		}
+
+		return StringBundler.concat(
+			objectDefinitionLabel, StringPool.SLASH, value);
+	}
+
 	private List<PIMConnectorChannelFieldDisplay>
 			_getPIMConnectorChannelFieldDisplays(
 				FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
@@ -332,20 +346,6 @@ public class PIMConnectorChannelFieldFDSDataProvider
 			});
 	}
 
-	private String _getSourceAttribute(
-		Map<String, String> labelMap, String sourceClassName, String value) {
-
-		String objectDefinitionLabel = labelMap.get(
-			sourceClassName + StringPool.POUND);
-
-		if (Validator.isNull(objectDefinitionLabel)) {
-			return value;
-		}
-
-		return StringBundler.concat(
-			objectDefinitionLabel, StringPool.SLASH, value);
-	}
-
 	private List<String> _getSourceAttributes(
 		Map<String, String> labelMap, Locale locale,
 		List<ObjectEntry> objectEntries) {
@@ -359,7 +359,7 @@ public class PIMConnectorChannelFieldFDSDataProvider
 					values, "sourceClassName");
 
 				if (PIMConnectorFieldMappingsUtil.isCategories(objectEntry)) {
-					return _getSourceAttribute(
+					return _getObjectDefinitionLabel(
 						labelMap, sourceClassName,
 						LanguageUtil.get(locale, "categories"));
 				}
@@ -371,12 +371,12 @@ public class PIMConnectorChannelFieldFDSDataProvider
 						return null;
 					}
 
-					return _getSourceAttribute(
+					return _getObjectDefinitionLabel(
 						labelMap, sourceClassName, value);
 				}
 
 				if (PIMConnectorFieldMappingsUtil.isTags(objectEntry)) {
-					return _getSourceAttribute(
+					return _getObjectDefinitionLabel(
 						labelMap, sourceClassName,
 						LanguageUtil.get(locale, "tags"));
 				}

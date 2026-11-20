@@ -8,8 +8,8 @@ import {Toolbar, VerticalNavLayout} from '@liferay/site-cms-site-initializer';
 import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import FieldMappingsSection from './edit_field_mappings/FieldMappingsSection';
-import MappingRulesSection from './edit_field_mappings/MappingRulesSection';
+import PIMFieldMappingRulesSection from './edit_field_mappings/PIMFieldMappingRulesSection';
+import PIMFieldMappingsSection from './edit_field_mappings/PIMFieldMappingsSection';
 import getObjectFields from './edit_field_mappings/getObjectFields';
 import newFieldMapping from './edit_field_mappings/newFieldMapping';
 import {
@@ -276,8 +276,8 @@ export default function EditPIMConnectorFieldMappings({
 				items={[
 					{
 						component: (
-							<FieldMappingsSection
-								additionalFieldMappingTypes={
+							<PIMFieldMappingsSection
+								channelFieldAdditionalFieldMappingTypes={
 									channelFieldAdditionalFieldMappingTypes
 								}
 								fieldMappings={fieldMappings}
@@ -291,7 +291,7 @@ export default function EditPIMConnectorFieldMappings({
 					},
 					{
 						component: (
-							<MappingRulesSection
+							<PIMFieldMappingRulesSection
 								disabled={!initialMappingRule}
 								mappingRule={mappingRule}
 								onChange={setMappingRule}

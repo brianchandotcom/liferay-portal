@@ -24,7 +24,7 @@ interface IProps {
 	useFirstNonemptySourceSupported: boolean;
 }
 
-export default function MappingRulesSection({
+export default function PIMFieldMappingRulesSection({
 	disabled,
 	mappingRule,
 	onChange,

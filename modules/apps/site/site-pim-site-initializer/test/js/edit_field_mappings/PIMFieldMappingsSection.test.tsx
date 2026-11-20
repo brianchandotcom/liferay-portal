@@ -8,7 +8,7 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, {useState} from 'react';
 
-import FieldMappingsSection from '../../../src/main/resources/META-INF/resources/js/edit_field_mappings/FieldMappingsSection';
+import PIMFieldMappingsSection from '../../../src/main/resources/META-INF/resources/js/edit_field_mappings/PIMFieldMappingsSection';
 import {IFieldMapping} from '../../../src/main/resources/META-INF/resources/js/edit_field_mappings/types';
 
 jest.mock('@liferay/site-cms-site-initializer', () => ({
@@ -53,19 +53,21 @@ function fixedValue(value = '') {
 	};
 }
 
-function FieldMappingsSectionWrapper({
-	additionalFieldMappingTypes = [],
+function PIMFieldMappingsSectionWrapper({
+	channelFieldAdditionalFieldMappingTypes = [],
 	initialFieldMappings,
 }: {
-	additionalFieldMappingTypes?: string[];
+	channelFieldAdditionalFieldMappingTypes?: string[];
 	initialFieldMappings: IFieldMapping[];
 }) {
 	const [fieldMappings, setFieldMappings] =
 		useState<IFieldMapping[]>(initialFieldMappings);
 
 	return (
-		<FieldMappingsSection
-			additionalFieldMappingTypes={additionalFieldMappingTypes}
+		<PIMFieldMappingsSection
+			channelFieldAdditionalFieldMappingTypes={
+				channelFieldAdditionalFieldMappingTypes
+			}
 			fieldMappings={fieldMappings}
 			objectDefinitions={OBJECT_DEFINITIONS}
 			setFieldMappings={setFieldMappings}
@@ -74,10 +76,10 @@ function FieldMappingsSectionWrapper({
 	);
 }
 
-describe('FieldMappingsSection', () => {
+describe('PIMFieldMappingsSection', () => {
 	it('offers every structure field when the source is all structures', () => {
 		render(
-			<FieldMappingsSectionWrapper
+			<PIMFieldMappingsSectionWrapper
 				initialFieldMappings={[dynamicValue()]}
 			/>
 		);
@@ -92,8 +94,8 @@ describe('FieldMappingsSection', () => {
 
 	it('offers the additional field mapping types of the channel field', () => {
 		render(
-			<FieldMappingsSectionWrapper
-				additionalFieldMappingTypes={['categories']}
+			<PIMFieldMappingsSectionWrapper
+				channelFieldAdditionalFieldMappingTypes={['categories']}
 				initialFieldMappings={[dynamicValue()]}
 			/>
 		);
@@ -114,7 +116,7 @@ describe('FieldMappingsSection', () => {
 
 	it('narrows the source attributes to the selected structure', async () => {
 		render(
-			<FieldMappingsSectionWrapper
+			<PIMFieldMappingsSectionWrapper
 				initialFieldMappings={[dynamicValue()]}
 			/>
 		);
@@ -134,7 +136,7 @@ describe('FieldMappingsSection', () => {
 
 	it('asks for a value when the source attribute is a fixed one', async () => {
 		render(
-			<FieldMappingsSectionWrapper
+			<PIMFieldMappingsSectionWrapper
 				initialFieldMappings={[dynamicValue()]}
 			/>
 		);
@@ -152,7 +154,7 @@ describe('FieldMappingsSection', () => {
 
 	it('keeps the typed fixed value', async () => {
 		render(
-			<FieldMappingsSectionWrapper
+			<PIMFieldMappingsSectionWrapper
 				initialFieldMappings={[fixedValue()]}
 			/>
 		);
@@ -164,7 +166,7 @@ describe('FieldMappingsSection', () => {
 
 	it('keeps a row on its own inputs when an earlier row is deleted', async () => {
 		render(
-			<FieldMappingsSectionWrapper
+			<PIMFieldMappingsSectionWrapper
 				initialFieldMappings={[dynamicValue('sku'), fixedValue()]}
 			/>
 		);
@@ -182,7 +184,7 @@ describe('FieldMappingsSection', () => {
 
 	it('adds a field mapping row', async () => {
 		render(
-			<FieldMappingsSectionWrapper
+			<PIMFieldMappingsSectionWrapper
 				initialFieldMappings={[dynamicValue()]}
 			/>
 		);
@@ -194,7 +196,7 @@ describe('FieldMappingsSection', () => {
 
 	it('keeps the last row undeletable', () => {
 		render(
-			<FieldMappingsSectionWrapper
+			<PIMFieldMappingsSectionWrapper
 				initialFieldMappings={[dynamicValue('sku')]}
 			/>
 		);
@@ -204,7 +206,7 @@ describe('FieldMappingsSection', () => {
 
 	it('deletes a field mapping row', async () => {
 		render(
-			<FieldMappingsSectionWrapper
+			<PIMFieldMappingsSectionWrapper
 				initialFieldMappings={[
 					dynamicValue('sku'),
 					dynamicValue('title'),

@@ -108,7 +108,7 @@ public class EditFragmentEntryStrutsActionTest {
 
 		Assert.assertNull(mockHttpServletResponse.getRedirectedUrl());
 		Assert.assertEquals(
-			HttpServletResponse.SC_FORBIDDEN,
+			HttpServletResponse.SC_NOT_FOUND,
 			mockHttpServletResponse.getStatus());
 	}
 

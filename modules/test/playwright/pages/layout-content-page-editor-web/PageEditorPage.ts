@@ -1852,7 +1852,10 @@ export class PageEditorPage {
 
 		await expect(item).toBeVisible();
 
-		await item.click();
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('iframe[title="Select"]'),
+			trigger: item,
+		});
 
 		await expect(this.previewItemSelectorButton).toHaveText(itemName);
 	}

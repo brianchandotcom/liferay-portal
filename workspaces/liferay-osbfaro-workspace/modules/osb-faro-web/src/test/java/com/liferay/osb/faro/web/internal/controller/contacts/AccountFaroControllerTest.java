@@ -65,7 +65,7 @@ public class AccountFaroControllerTest {
 
 		Mockito.when(
 			_contactsEngineClient.getAccountMetrics(
-				_faroProject, campaignId, channelId)
+				_faroProject, campaignId, channelId, null, null, null)
 		).thenReturn(
 			accountMetrics
 		);
@@ -75,7 +75,7 @@ public class AccountFaroControllerTest {
 		Assert.assertSame(
 			accountMetrics,
 			_accountFaroController.getAccountMetrics(
-				groupId, campaignId, channelId));
+				groupId, campaignId, channelId, null, null, null));
 
 		Mockito.verify(
 			_faroProjectLocalService

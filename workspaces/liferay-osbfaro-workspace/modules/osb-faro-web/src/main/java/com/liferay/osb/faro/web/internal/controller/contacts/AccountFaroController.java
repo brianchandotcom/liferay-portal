@@ -126,12 +126,15 @@ public class AccountFaroController extends BaseFaroController {
 	public List<AccountMetric> getAccountMetrics(
 			@PathParam("groupId") long groupId,
 			@QueryParam("campaignId") String campaignId,
-			@QueryParam("channelId") long channelId)
+			@QueryParam("channelId") long channelId,
+			@QueryParam("rangeEnd") String rangeEnd,
+			@QueryParam("rangeKey") Integer rangeKey,
+			@QueryParam("rangeStart") String rangeStart)
 		throws Exception {
 
 		return contactsEngineClient.getAccountMetrics(
 			faroProjectLocalService.getFaroProjectByGroupId(groupId),
-			campaignId, channelId);
+			campaignId, channelId, rangeEnd, rangeKey, rangeStart);
 	}
 
 	@GET

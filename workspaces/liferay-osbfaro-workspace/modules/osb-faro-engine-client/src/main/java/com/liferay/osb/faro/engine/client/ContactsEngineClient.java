@@ -249,7 +249,8 @@ public interface ContactsEngineClient {
 		throws FaroEngineClientException;
 
 	public List<AccountMetric> getAccountMetrics(
-		FaroProject faroProject, String campaignId, Long channelId);
+		FaroProject faroProject, String campaignId, Long channelId,
+		String rangeEnd, Integer rangeKey, String rangeStart);
 
 	public Results<AccountName> getAccountNames(
 		FaroProject faroProject, String assetId, String assetTitle,

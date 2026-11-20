@@ -40,12 +40,12 @@ public class ContactsEngineClientImplTest {
 		long channelId = RandomTestUtil.randomLong();
 
 		_contactsEngineClientImpl.getAccountMetrics(
-			_faroProject, campaignId, channelId);
+			_faroProject, campaignId, channelId, null, null, null);
 
 		Assert.assertEquals(campaignId, _uriVariables.get("campaignId"));
 
 		_contactsEngineClientImpl.getAccountMetrics(
-			_faroProject, null, channelId);
+			_faroProject, null, channelId, null, null, null);
 
 		Assert.assertFalse(_uriVariables.containsKey("campaignId"));
 	}

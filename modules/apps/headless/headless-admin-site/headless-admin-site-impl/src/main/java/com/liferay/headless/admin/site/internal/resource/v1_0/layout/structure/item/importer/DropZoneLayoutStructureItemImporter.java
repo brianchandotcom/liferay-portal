@@ -149,17 +149,7 @@ public class DropZoneLayoutStructureItemImporter
 					fragmentEntryReference.getFragmentEntryERC()
 				).put(
 					"fragmentEntryScopeERC",
-					() -> {
-						if (Validator.isNull(
-								fragmentEntryReference.
-									getFragmentEntryScopeERC())) {
-
-							return null;
-						}
-
-						return fragmentEntryReference.
-							getFragmentEntryScopeERC();
-					}
+					fragmentEntryReference.getFragmentEntryScopeERC()
 				);
 			});
 	}

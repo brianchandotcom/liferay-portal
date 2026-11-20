@@ -83,9 +83,10 @@ public abstract class BaseClientTestrayImporter
 	}
 
 	protected TestrayBuild getTestrayBuild(
-		Date testrayBuildDate, String testrayBuildName, String testrayBuildSHA,
-		String testrayProductVersionName, String testrayProjectName,
-		String testrayRoutineName) {
+			Date testrayBuildDate, String testrayBuildName,
+			String testrayBuildSHA, String testrayProductVersionName,
+			String testrayProjectName, String testrayRoutineName)
+		throws MalformedURLException {
 
 		TestrayServer testrayServer = _getTestrayServer();
 
@@ -169,7 +170,7 @@ public abstract class BaseClientTestrayImporter
 		}
 	}
 
-	private TestrayServer _getTestrayServer() {
+	private TestrayServer _getTestrayServer() throws MalformedURLException {
 		if (_testrayServer != null) {
 			return _testrayServer;
 		}
@@ -179,15 +180,10 @@ public abstract class BaseClientTestrayImporter
 
 		testrayServer.setCommunicationFailureNotificationEnabled(false);
 
-		try {
-			testrayServer.setHTTPAuthorization(
-				new JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization(
-					_testrayOAuth2ClientId, _testrayOAuth2ClientSecret,
-					new URL(testrayServer.getURL() + "/o/oauth2/token")));
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
+		testrayServer.setHTTPAuthorization(
+			new JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization(
+				_testrayOAuth2ClientId, _testrayOAuth2ClientSecret,
+				new URL(testrayServer.getURL() + "/o/oauth2/token")));
 
 		_testrayServer = testrayServer;
 

@@ -16,14 +16,23 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import jakarta.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -79,6 +88,51 @@ public class ObjectEntriesPortletTest {
 		Assert.assertEquals(
 			objectDefinition.getPortletId(),
 			editableValuesJSONObject.getString("portletId"));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testGetTitle() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		String esPluralLabel = RandomTestUtil.randomString();
+		String usPluralLabel = RandomTestUtil.randomString();
+
+		objectDefinition.setPluralLabelMap(
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, esPluralLabel
+			).put(
+				LocaleUtil.US, usPluralLabel
+			).build());
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new MockLiferayPortletRenderRequest();
+
+		mockLiferayPortletRenderRequest.addPreferredLocale(LocaleUtil.SPAIN);
+
+		PortletBag portletBag = PortletBagPool.get(
+			objectDefinition.getPortletId());
+
+		Assert.assertEquals(
+			esPluralLabel,
+			ReflectionTestUtil.invoke(
+				portletBag.getPortletInstance(), "getTitle",
+				new Class<?>[] {RenderRequest.class},
+				mockLiferayPortletRenderRequest));
+
+		mockLiferayPortletRenderRequest.addPreferredLocale(LocaleUtil.US);
+
+		Assert.assertEquals(
+			usPluralLabel,
+			ReflectionTestUtil.invoke(
+				portletBag.getPortletInstance(), "getTitle",
+				new Class<?>[] {RenderRequest.class},
+				mockLiferayPortletRenderRequest));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

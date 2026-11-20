@@ -25,9 +25,8 @@ import org.apache.http.client.utils.URIBuilder;
 /**
  * @author Brittney Nguyen
  */
-public abstract class BaseClientTestrayImporter {
-
-	public abstract void importResults() throws Exception;
+public abstract class BaseClientTestrayImporter
+	implements ClientTestrayImporter {
 
 	protected BaseClientTestrayImporter() {
 		String testrayServerURL = getEnvVarValue("testrayServerURL");

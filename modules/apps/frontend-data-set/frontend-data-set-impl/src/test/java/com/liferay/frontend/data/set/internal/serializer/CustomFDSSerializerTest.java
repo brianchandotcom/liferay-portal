@@ -1198,7 +1198,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	public void testSerializeSelectionFilterAPIURLs() throws Exception {
 		_resetFDSSerializer(Mockito.mock(FDSAPIURLResolverRegistry.class));
 
-		String externalReferenceCode = RandomTestUtil.randomString();
 		String itemProxyAPIURL = RandomTestUtil.randomString();
 
 		SystemFDSSerializer systemFDSSerializer = Mockito.mock(
@@ -1236,6 +1235,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		ObjectEntry itemProxyObjectEntry = _createItemProxyObjectEntry(
 			RandomTestUtil.randomString());
+
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		Mockito.when(
 			_customFDSSerializer.getRelatedObjectEntries(

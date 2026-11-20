@@ -196,44 +196,17 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 		InOrder inOrder = Mockito.inOrder(_testrayRoutine);
 
-		for (Map<String, String> testSuiteProperties :
-				Arrays.asList(testSuiteProperties1, testSuiteProperties2)) {
-
-			Mockito.verify(
-				_testrayProject
-			).createTestrayProductVersion(
-				testSuiteProperties.get("testray.product.version")
-			);
-
-			Mockito.verify(
-				_testrayProject
-			).createTestrayRoutine(
-				testSuiteProperties.get("testray.build.type")
-			);
-
-			Mockito.verify(
-				_testrayServer
-			).getTestrayProjectByName(
-				testSuiteProperties.get("testray.project.name")
-			);
-
-			inOrder.verify(
-				_testrayRoutine
-			).createTestrayBuild(
-				Mockito.eq(_testrayProductVersion),
-				Mockito.eq(testSuiteProperties.get("testray.build.name")),
-				Mockito.any(Date.class), Mockito.isNull(),
-				Mockito.eq(testSuiteProperties.get("git.id"))
-			);
-		}
+		_verifyGetTestrayBuild(inOrder, testSuiteProperties1);
+		_verifyGetTestrayBuild(inOrder, testSuiteProperties2);
 
 		testEquals(2, _resultsTarGzFileContents.size());
 
-		for (File resultsFile : Arrays.asList(resultsFile1, resultsFile2)) {
-			Assert.assertArrayEquals(
-				Files.readAllBytes(resultsFile.toPath()),
-				_resultsTarGzFileContents.get(resultsFile.getName()));
-		}
+		Assert.assertArrayEquals(
+			Files.readAllBytes(resultsFile1.toPath()),
+			_resultsTarGzFileContents.get(resultsFile1.getName()));
+		Assert.assertArrayEquals(
+			Files.readAllBytes(resultsFile2.toPath()),
+			_resultsTarGzFileContents.get(resultsFile2.getName()));
 	}
 
 	@Test
@@ -257,38 +230,17 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 	@Test
 	public void testImportResultsFailure() throws Exception {
-		for (String propertyName :
-				Arrays.asList(
-					"testray.build.date", "testray.build.name",
-					"testray.build.type", "testray.product.version",
-					"testray.project.name")) {
-
-			Map<String, String> testSuiteProperties = _newTestSuiteProperties();
-
-			testSuiteProperties.remove(propertyName);
-
-			_testImportResultsFailure(_toResultsXML(testSuiteProperties));
-
-			testSuiteProperties.put(propertyName, "");
-
-			_testImportResultsFailure(_toResultsXML(testSuiteProperties));
-		}
-
-		for (String testrayBuildDateString :
-				Arrays.asList(
-					"2026-01-15 10:00:00" + RandomTestUtil.randomString(),
-					"2026-02-30 10:00:00", "2026/01/15 10:00:00")) {
-
-			Map<String, String> testSuiteProperties = _newTestSuiteProperties();
-
-			testSuiteProperties.put(
-				"testray.build.date", testrayBuildDateString);
-
-			_testImportResultsFailure(_toResultsXML(testSuiteProperties));
-		}
-
 		_testImportResultsFailure("<testsuite>");
 		_testImportResultsFailure("<testsuite><testcase/></testsuite>");
+		_testImportResultsFailureBuildDate(
+			"2026-01-15 10:00:00" + RandomTestUtil.randomString());
+		_testImportResultsFailureBuildDate("2026-02-30 10:00:00");
+		_testImportResultsFailureBuildDate("2026/01/15 10:00:00");
+		_testImportResultsFailureProperty("testray.build.date");
+		_testImportResultsFailureProperty("testray.build.name");
+		_testImportResultsFailureProperty("testray.build.type");
+		_testImportResultsFailureProperty("testray.product.version");
+		_testImportResultsFailureProperty("testray.project.name");
 	}
 
 	@Test
@@ -541,6 +493,31 @@ public class TestrayResultsXMLClientTestrayImporterTest
 			new ArrayList<>(_resultsTarGzFileContents.keySet()));
 	}
 
+	private void _testImportResultsFailureBuildDate(
+			String testrayBuildDateString)
+		throws Exception {
+
+		Map<String, String> testSuiteProperties = _newTestSuiteProperties();
+
+		testSuiteProperties.put("testray.build.date", testrayBuildDateString);
+
+		_testImportResultsFailure(_toResultsXML(testSuiteProperties));
+	}
+
+	private void _testImportResultsFailureProperty(String propertyName)
+		throws Exception {
+
+		Map<String, String> testSuiteProperties = _newTestSuiteProperties();
+
+		testSuiteProperties.remove(propertyName);
+
+		_testImportResultsFailure(_toResultsXML(testSuiteProperties));
+
+		testSuiteProperties.put(propertyName, "");
+
+		_testImportResultsFailure(_toResultsXML(testSuiteProperties));
+	}
+
 	private void _testImportResultsGitId(String gitId) throws Exception {
 		File testrayResultsDir = temporaryFolder.newFolder();
 
@@ -593,6 +570,37 @@ public class TestrayResultsXMLClientTestrayImporterTest
 		sb.append("\"/>\n    </metrics>\n  </testcase>\n</testsuite>\n");
 
 		return sb.toString();
+	}
+
+	private void _verifyGetTestrayBuild(
+		InOrder inOrder, Map<String, String> testSuiteProperties) {
+
+		Mockito.verify(
+			_testrayProject
+		).createTestrayProductVersion(
+			testSuiteProperties.get("testray.product.version")
+		);
+
+		Mockito.verify(
+			_testrayProject
+		).createTestrayRoutine(
+			testSuiteProperties.get("testray.build.type")
+		);
+
+		Mockito.verify(
+			_testrayServer
+		).getTestrayProjectByName(
+			testSuiteProperties.get("testray.project.name")
+		);
+
+		inOrder.verify(
+			_testrayRoutine
+		).createTestrayBuild(
+			Mockito.eq(_testrayProductVersion),
+			Mockito.eq(testSuiteProperties.get("testray.build.name")),
+			Mockito.any(Date.class), Mockito.isNull(),
+			Mockito.eq(testSuiteProperties.get("git.id"))
+		);
 	}
 
 	private void _writeResultsFile(

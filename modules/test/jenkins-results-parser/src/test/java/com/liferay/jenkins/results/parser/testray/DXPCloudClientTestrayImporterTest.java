@@ -257,12 +257,12 @@ public class DXPCloudClientTestrayImporterTest
 		File testDir = new File(
 			projectDir, "test-results/" + testName.replace("#", "_"));
 
-		for (String fileName :
-				Arrays.asList("console.txt", "index.html", "summary.html")) {
-
-			JenkinsResultsParserUtil.write(
-				new File(testDir, fileName), RandomTestUtil.randomString());
-		}
+		JenkinsResultsParserUtil.write(
+			new File(testDir, "console.txt"), RandomTestUtil.randomString());
+		JenkinsResultsParserUtil.write(
+			new File(testDir, "index.html"), RandomTestUtil.randomString());
+		JenkinsResultsParserUtil.write(
+			new File(testDir, "summary.html"), RandomTestUtil.randomString());
 
 		_runMain(projectDir, "poshi");
 

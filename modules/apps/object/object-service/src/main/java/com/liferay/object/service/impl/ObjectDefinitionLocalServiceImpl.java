@@ -549,6 +549,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (!PortalInstances.isCurrentCompanyInDeletionProcess() &&
+			!(PortalRunMode.isTestMode() && objectDefinition.isSystem()) &&
 			ArrayUtil.isNotEmpty(
 				objectDefinition.getRootObjectDefinitionIds())) {
 

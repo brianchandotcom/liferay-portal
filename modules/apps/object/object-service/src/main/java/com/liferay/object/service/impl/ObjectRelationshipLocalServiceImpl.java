@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -398,9 +399,17 @@ public class ObjectRelationshipLocalServiceImpl
 		if (!PortalInstances.isCurrentCompanyInDeletionProcess() &&
 			objectRelationship.isEdge()) {
 
-			throw new ObjectRelationshipEdgeException(
-				"Edge object relationships cannot be deleted",
-				"edge-object-relationships-cannot-be-deleted");
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.fetchByPrimaryKey(
+					objectRelationship.getObjectDefinitionId1());
+
+			if ((objectDefinition == null) ||
+				!(PortalRunMode.isTestMode() && objectDefinition.isSystem())) {
+
+				throw new ObjectRelationshipEdgeException(
+					"Edge object relationships cannot be deleted",
+					"edge-object-relationships-cannot-be-deleted");
+			}
 		}
 
 		if (objectRelationship.isReverse()) {

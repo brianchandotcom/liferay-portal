@@ -60,7 +60,8 @@ public class EditFragmentEntryStrutsAction implements StrutsAction {
 		}
 		catch (PortalException portalException) {
 			_portal.sendError(
-				portalException, httpServletRequest, httpServletResponse);
+				HttpServletResponse.SC_NOT_FOUND, portalException,
+				httpServletRequest, httpServletResponse);
 
 			return null;
 		}

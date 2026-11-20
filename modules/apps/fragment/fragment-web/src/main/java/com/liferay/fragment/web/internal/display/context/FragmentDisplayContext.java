@@ -17,6 +17,7 @@ import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.comparator.FragmentCompositionFragmentEntryNameComparator;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.fragment.web.internal.constants.FragmentTypeConstants;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.util.FragmentPortletUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -96,6 +98,14 @@ public class FragmentDisplayContext {
 
 	public Map<String, Object> getAIAssistantProps() {
 		return HashMapBuilder.<String, Object>put(
+			"configurationSchema",
+			() -> {
+				FragmentEntryValidator fragmentEntryValidator =
+					_fragmentEntryValidatorSnapshot.get();
+
+				return fragmentEntryValidator.getConfigurationJSONSchema();
+			}
+		).put(
 			"fragmentPortletNamespace", _renderResponse.getNamespace()
 		).put(
 			"fragmentSetExternalReferenceCode",
@@ -1145,6 +1155,10 @@ public class FragmentDisplayContext {
 
 		portletDisplay.setURLBack(backURL);
 	}
+
+	private static final Snapshot<FragmentEntryValidator>
+		_fragmentEntryValidatorSnapshot = new Snapshot<>(
+			FragmentDisplayContext.class, FragmentEntryValidator.class);
 
 	private SearchContainer<Object> _contributedEntriesSearchContainer;
 	private FragmentCollection _fragmentCollection;

@@ -36,6 +36,7 @@ const FragmentEditor = ({
 			draft: false,
 		},
 		autocompleteTags,
+		configurationSchema,
 		dataAttributes,
 		fieldTypes: availableFieldTypes,
 		fragmentCollectionId,
@@ -269,6 +270,7 @@ const FragmentEditor = ({
 												<AIAssistantTriggerButton
 													chatbotExternalReferenceCode="L_EDIT_FRAGMENT_CHATBOT"
 													getContext={() => ({
+														configurationSchema,
 														fragmentCSS:
 															codeRef.current.css,
 														fragmentConfiguration:

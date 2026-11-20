@@ -10,10 +10,13 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
+import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -50,6 +53,7 @@ public class FragmentDisplayContextTest {
 
 	@Before
 	public void setUp() {
+		_setUpFragmentEntryValidator();
 		_setUpHttpServletRequest();
 		_setUpThemeDisplay();
 	}
@@ -62,6 +66,14 @@ public class FragmentDisplayContextTest {
 	@Test
 	@TestInfo("LPD-111343")
 	public void testGetAIAssistantProps() {
+		String configurationSchema = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_fragmentEntryValidator.getConfigurationJSONSchema()
+		).thenReturn(
+			configurationSchema
+		);
+
 		String fragmentPortletNamespace = RandomTestUtil.randomString();
 
 		Mockito.when(
@@ -139,6 +151,9 @@ public class FragmentDisplayContextTest {
 			Map<String, Object> aiAssistantProps =
 				fragmentDisplayContext.getAIAssistantProps();
 
+			Assert.assertEquals(
+				configurationSchema,
+				aiAssistantProps.get("configurationSchema"));
 			Assert.assertEquals(
 				fragmentPortletNamespace,
 				aiAssistantProps.get("fragmentPortletNamespace"));
@@ -443,6 +458,20 @@ public class FragmentDisplayContextTest {
 		}
 	}
 
+	private void _setUpFragmentEntryValidator() {
+		ReflectionTestUtil.setFieldValue(
+			FragmentDisplayContext.class, "_fragmentEntryValidatorSnapshot",
+			new Snapshot<FragmentEntryValidator>(
+				FragmentDisplayContext.class, FragmentEntryValidator.class) {
+
+				@Override
+				public FragmentEntryValidator get() {
+					return _fragmentEntryValidator;
+				}
+
+			});
+	}
+
 	private void _setUpFragmentPermission(boolean condition) {
 		_fragmentPermissionMockedStatic.when(
 			() -> FragmentPermission.contains(
@@ -518,6 +547,8 @@ public class FragmentDisplayContextTest {
 		FragmentComposition.class);
 	private final FragmentEntry _fragmentEntry = Mockito.mock(
 		FragmentEntry.class);
+	private final FragmentEntryValidator _fragmentEntryValidator = Mockito.mock(
+		FragmentEntryValidator.class);
 	private final MockedStatic<FragmentPermission>
 		_fragmentPermissionMockedStatic = Mockito.mockStatic(
 			FragmentPermission.class);

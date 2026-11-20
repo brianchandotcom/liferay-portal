@@ -136,7 +136,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext.getLocale());
 
 			ObjectEntry dataSetObjectEntry = _getDataSetObjectEntry(
-				fragmentRendererContext, externalReferenceCode);
+				externalReferenceCode, fragmentRendererContext);
 
 			if (dataSetObjectEntry == null) {
 				if (fragmentRendererContext.isEditMode()) {
@@ -192,7 +192,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			Set<String> unresolvedTokenNames = _getTokenNames(
 				resolvedFDSAPIURL);
 
-			boolean hasTokens = _hasTokens(fdsAPIURL);
+			boolean tokensPresent = _hasTokens(fdsAPIURL);
 
 			String componentId = externalReferenceCode;
 
@@ -208,7 +208,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					componentId, fragmentEntryLink, httpServletRequest,
 					printWriter);
 
-				if (hasTokens) {
+				if (tokensPresent) {
 					_writeAutoResolvedTokenNames(
 						_getAutoResolvedTokenNames(
 							fdsAPIURL, autoResolvedFDSAPIURL),
@@ -252,7 +252,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				HashMapBuilder.<String, Object>put(
 					"apiURLTokenResolutions",
 					() -> {
-						if (hasTokens) {
+						if (tokensPresent) {
 							return fdsAPIURLTokenResolutionsJSONObject;
 						}
 
@@ -331,8 +331,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private ObjectEntry _getDataSetObjectEntry(
-		FragmentRendererContext fragmentRendererContext,
-		String externalReferenceCode) {
+		String externalReferenceCode,
+		FragmentRendererContext fragmentRendererContext) {
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();

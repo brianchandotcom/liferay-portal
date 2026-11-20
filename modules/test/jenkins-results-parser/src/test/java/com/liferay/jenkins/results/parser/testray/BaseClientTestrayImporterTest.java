@@ -537,7 +537,7 @@ public class BaseClientTestrayImporterTest
 		System.clearProperty(varName);
 	}
 
-	private void _testGetTestrayBuild(String testrayBuildSHA) {
+	private void _testGetTestrayBuild(String testrayBuildSHA) throws Exception {
 		TestrayProject testrayProject = Mockito.mock(TestrayProject.class);
 		String testrayProjectName = RandomTestUtil.randomString();
 

@@ -212,7 +212,7 @@ public class BaseClientTestrayImporterTest
 	}
 
 	@Test
-	public void testGetTestrayServer() throws Exception {
+	public void testGetTestrayBuildTestrayServer() throws Exception {
 		Properties buildProperties = new Properties();
 
 		buildProperties.setProperty(
@@ -224,12 +224,12 @@ public class BaseClientTestrayImporterTest
 
 		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
 
-		_testGetTestrayServer("https://testray.liferay.com", null);
+		_testGetTestrayBuildTestrayServer("https://testray.liferay.com", null);
 
 		String testrayServerURL =
 			"https://" + RandomTestUtil.randomLowerCaseString();
 
-		_testGetTestrayServer(testrayServerURL, testrayServerURL);
+		_testGetTestrayBuildTestrayServer(testrayServerURL, testrayServerURL);
 	}
 
 	@Test
@@ -597,7 +597,7 @@ public class BaseClientTestrayImporterTest
 				testrayRoutineName));
 	}
 
-	private void _testGetTestrayServer(
+	private void _testGetTestrayBuildTestrayServer(
 			String expectedTestrayServerURL, String testrayServerURL)
 		throws Exception {
 
@@ -609,23 +609,47 @@ public class BaseClientTestrayImporterTest
 
 		TestrayServer testrayServer = Mockito.mock(TestrayServer.class);
 
-		Mockito.doReturn(
-			new URL(expectedTestrayServerURL)
-		).when(
-			testrayServer
-		).getURL();
-
 		_testrayFactoryMockedStatic.when(
 			() -> TestrayFactory.newTestrayServer(expectedTestrayServerURL)
 		).thenReturn(
 			testrayServer
 		);
 
+		TestrayProject testrayProject = Mockito.mock(TestrayProject.class);
+
+		Mockito.doReturn(
+			Mockito.mock(TestrayRoutine.class)
+		).when(
+			testrayProject
+		).createTestrayRoutine(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			testrayProject
+		).when(
+			testrayServer
+		).getTestrayProjectByName(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			new URL(expectedTestrayServerURL)
+		).when(
+			testrayServer
+		).getURL();
+
 		BaseClientTestrayImporter baseClientTestrayImporter =
 			_newBaseClientTestrayImporter();
 
-		testSame(testrayServer, baseClientTestrayImporter.getTestrayServer());
-		testSame(testrayServer, baseClientTestrayImporter.getTestrayServer());
+		baseClientTestrayImporter.getTestrayBuild(
+			new Date(RandomTestUtil.randomLong()),
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		baseClientTestrayImporter.getTestrayBuild(
+			new Date(RandomTestUtil.randomLong()),
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_testrayFactoryMockedStatic.verify(
 			() -> TestrayFactory.newTestrayServer(expectedTestrayServerURL));

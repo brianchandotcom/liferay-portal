@@ -101,7 +101,7 @@ public class TestrayResultsXMLClientTestrayImporter
 		if (JenkinsResultsParserUtil.isNullOrEmpty(propertyValue)) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to find property ", propertyName, " in ",
+					"Unable to find property \"", propertyName, "\" in ",
 					resultsFile.getPath()));
 		}
 

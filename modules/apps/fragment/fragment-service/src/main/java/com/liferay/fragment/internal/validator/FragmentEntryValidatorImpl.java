@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -38,6 +39,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentEntryValidator.class)
 public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
+
+	@Override
+	public String getConfigurationJSONSchema() {
+		return _CONFIGURATION_JSON_SCHEMA;
+	}
 
 	@Override
 	public void validateConfiguration(JSONObject configurationJSONObject)
@@ -307,6 +313,10 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 			}
 		}
 	}
+
+	private static final String _CONFIGURATION_JSON_SCHEMA = StringUtil.read(
+		FragmentEntryValidatorImpl.class,
+		"dependencies/configuration-json-schema.json");
 
 	private static final Set<String> _allowedDependencyTypes =
 		SetUtil.fromArray("checkbox", "select", "text");

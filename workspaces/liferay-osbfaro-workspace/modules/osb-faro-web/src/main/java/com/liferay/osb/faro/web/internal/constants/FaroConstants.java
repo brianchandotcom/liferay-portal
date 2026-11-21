@@ -10,6 +10,8 @@ package com.liferay.osb.faro.web.internal.constants;
  */
 public class FaroConstants {
 
+	public static final String AC_FAVICON_FILE_ENTRY_ERC = "AC_FAVICON";
+
 	public static final String[] AC_FRIENDLY_URLS = {
 		"/asset-known-individuals", "/page-known-individuals"
 	};
@@ -20,14 +22,23 @@ public class FaroConstants {
 
 	public static final String APPLICATION_MAIN = "main";
 
+	public static final String LDP_FAVICON_FILE_ENTRY_ERC = "LDP_FAVICON";
+
 	public static final String[] LDP_FRIENDLY_URLS = {
 		"/accounts", "/asset-accounts", "/campaigns", "/lifecycles",
 		"/page-accounts"
 	};
 
+	public static final String LDP_MASTER_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY =
+		"liferay-data-platform-master";
+
 	public static final String[] LDP_MENU_FRIENDLY_URLS = {
 		"/accounts", "/campaigns", "/lifecycles"
 	};
+
+	public static final String
+		LDP_SETTINGS_MASTER_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY =
+			"liferay-data-platform-settings-master";
 
 	public static final int TYPE_ACCOUNT = 0;
 

@@ -5,6 +5,8 @@
 
 package com.liferay.osb.faro.web.internal.model.listener;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.util.FaroNavigationUtil;
@@ -45,6 +47,9 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 				_updateLayouts(
 					faroProject.getGroupId(), true,
 					FaroConstants.LDP_MENU_FRIENDLY_URLS);
+				_updateMasterLayouts(
+					FaroConstants.AC_FAVICON_FILE_ENTRY_ERC,
+					faroProject.getGroupId());
 			}
 
 			if (faroProject.isRecommendationsEnabled()) {
@@ -77,11 +82,17 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 					_updateLayouts(
 						faroProject.getGroupId(), false,
 						FaroConstants.LDP_MENU_FRIENDLY_URLS);
+					_updateMasterLayouts(
+						FaroConstants.LDP_FAVICON_FILE_ENTRY_ERC,
+						faroProject.getGroupId());
 				}
 				else {
 					_updateLayouts(
 						faroProject.getGroupId(), true,
 						FaroConstants.LDP_MENU_FRIENDLY_URLS);
+					_updateMasterLayouts(
+						FaroConstants.AC_FAVICON_FILE_ENTRY_ERC,
+						faroProject.getGroupId());
 				}
 			}
 
@@ -116,6 +127,37 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 		}
 	}
 
+	private void _updateMasterLayout(
+		String faviconFileEntryERC, long groupId,
+		String layoutPageTemplateEntryKey) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				groupId, layoutPageTemplateEntryKey);
+
+		if (layoutPageTemplateEntry == null) {
+			return;
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		layout.setFaviconFileEntryERC(faviconFileEntryERC);
+
+		_layoutLocalService.updateLayout(layout);
+	}
+
+	private void _updateMasterLayouts(
+		String faviconFileEntryERC, long groupId) {
+
+		_updateMasterLayout(
+			faviconFileEntryERC, groupId,
+			FaroConstants.LDP_MASTER_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY);
+		_updateMasterLayout(
+			faviconFileEntryERC, groupId,
+			FaroConstants.LDP_SETTINGS_MASTER_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroProjectModelListener.class);
 
@@ -124,6 +166,10 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference(
 		target = "(site.initializer.key=com.liferay.osb.faro.workspace.site.initializer)"

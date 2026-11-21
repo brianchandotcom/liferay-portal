@@ -6,8 +6,11 @@
 package com.liferay.osb.faro.rest.internal.jaxrs.container.request.filter;
 
 import com.liferay.osb.faro.rest.resource.v1_0.AccountLifecycleStageTransitionResource;
+import com.liferay.osb.faro.rest.resource.v1_0.EventAttributeDefinitionResource;
+import com.liferay.osb.faro.rest.resource.v1_0.EventDefinitionResource;
 import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentMembershipResource;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
@@ -36,7 +39,7 @@ public class ParameterContainerRequestFilterTest {
 
 	@Before
 	public void setUp() {
-		_setResourceMethod(
+		_mockGetResourceMethod(
 			AccountLifecycleStageTransitionResource.class,
 			"getWorkspaceGroupAccountLifecycleStageTransitionsPage");
 
@@ -54,27 +57,22 @@ public class ParameterContainerRequestFilterTest {
 		Assert.assertNull(_filter(null, null));
 
 		_assertTitle(
-			"Date range must be at most 180 days",
-			_filter(_getRangeQueryParameters("2026-10-02", "2026-04-05")));
-		_assertTitle(
-			"\"bogusColumn\" is not a sortable column. Sortable columns: " +
-				"accountId, accountName, fromAccountLifecycleStageId, " +
-					"toAccountLifecycleStageId, transitionDate",
-			_filter("sort", "bogusColumn:desc"));
-		_assertTitle(
 			"\"pageSize\" must be a whole number from 1 to 100",
 			_filter("pageSize", "101"));
+		_assertTitle(
+			"\"rangeKey\" must be one of \"LAST_180_DAYS\", " +
+				"\"LAST_24_HOURS\", \"LAST_28_DAYS\", \"LAST_30_DAYS\", " +
+					"\"LAST_7_DAYS\", \"LAST_90_DAYS\", \"YESTERDAY\"",
+			_filter("rangeKey", "LAST_YEAR"));
 		_assertTitle(
 			"\"rangeEnd\" and \"rangeStart\" must be set together",
 			_filter("rangeStart", "2026-10-01"));
 		_assertTitle(
-			"\"rangeKey\" must be one of LAST_180_DAYS, LAST_24_HOURS, " +
-				"LAST_28_DAYS, LAST_30_DAYS, LAST_7_DAYS, LAST_90_DAYS, " +
-					"YESTERDAY",
-			_filter("rangeKey", "LAST_YEAR"));
-		_assertTitle(
 			"\"rangeStart\" must not be after \"rangeEnd\"",
 			_filter(_getRangeQueryParameters("2026-10-01", "2026-10-20")));
+		_assertTitle(
+			"Date range must be at most 180 days",
+			_filter(_getRangeQueryParameters("2026-10-02", "2026-04-05")));
 		_assertTitle(
 			"\"sort\" accepts only one column on this endpoint",
 			_filter("sort", "accountName:asc,transitionDate:desc"));
@@ -82,11 +80,74 @@ public class ParameterContainerRequestFilterTest {
 			"\"sort\" must be a comma separated list of \"column:asc\" or " +
 				"\"column:desc\" expressions",
 			_filter("sort", "accountName:sideways"));
+		_assertTitle(
+			"\"bogusColumn\" is not a sortable column. The sortable columns " +
+				"are \"accountId\", \"accountName\", " +
+					"\"fromAccountLifecycleStageId\", " +
+						"\"toAccountLifecycleStageId\", \"transitionDate\".",
+			_filter("sort", "bogusColumn:desc"));
+	}
+
+	@Test
+	public void testFilterWithEventAttributeDefinitionResourceMethod() {
+		_mockGetResourceMethod(
+			EventAttributeDefinitionResource.class,
+			"getWorkspaceGroupEventAttributeDefinitionsPage");
+
+		Assert.assertNull(_filter("attributeType", "GLOBAL"));
+		Assert.assertNull(
+			_filter(
+				"eventDefinitionId",
+				String.valueOf(RandomTestUtil.randomLong())));
+
+		_assertTitle(
+			"\"attributeType\" must be one of \"ALL\", \"GLOBAL\", \"LOCAL\"",
+			_filter("attributeType", RandomTestUtil.randomString()));
+		_assertTitle(
+			"\"eventDefinitionId\" must be a numeric ID",
+			_filter("eventDefinitionId", RandomTestUtil.randomString()));
+		_assertTitle(
+			"\"pageSize\" must be a whole number from 1 to 100",
+			_filter("pageSize", "101"));
+		_assertTitle(
+			"\"displayName\" is not a sortable column. The sortable columns " +
+				"are \"name\".",
+			_filter("sort", "displayName:asc"));
+	}
+
+	@Test
+	public void testFilterWithEventDefinitionResourceMethod() {
+		_mockGetResourceMethod(
+			EventDefinitionResource.class,
+			"getWorkspaceGroupEventDefinitionsPage");
+
+		Assert.assertNull(_filter("blocked", "TRUE"));
+		Assert.assertNull(_filter("eventType", "CUSTOM"));
+		Assert.assertNull(_filter("hidden", "False"));
+		Assert.assertNull(_filter("pageSize", "100"));
+		Assert.assertNull(_filter("sort", "displayName:desc"));
+
+		_assertTitle(
+			"\"blocked\" must be one of \"false\", \"true\"",
+			_filter("blocked", RandomTestUtil.randomString()));
+		_assertTitle(
+			"\"eventType\" must be one of \"ALL\", \"CUSTOM\", \"DEFAULT\"",
+			_filter("eventType", RandomTestUtil.randomString()));
+		_assertTitle(
+			"\"hidden\" must be one of \"false\", \"true\"",
+			_filter("hidden", RandomTestUtil.randomString()));
+		_assertTitle(
+			"\"pageSize\" must be a whole number from 1 to 100",
+			_filter("pageSize", "101"));
+		_assertTitle(
+			"\"blockedLastSeenDate\" is not a sortable column. The sortable " +
+				"columns are \"displayName\", \"name\".",
+			_filter("sort", "blockedLastSeenDate:desc"));
 	}
 
 	@Test
 	public void testFilterWithUnsortableResourceMethod() {
-		_setResourceMethod(
+		_mockGetResourceMethod(
 			IndividualSegmentMembershipResource.class,
 			"getWorkspaceGroupIndividualSegmentMembershipsPage");
 
@@ -166,16 +227,16 @@ public class ParameterContainerRequestFilterTest {
 	private MultivaluedMap<String, String> _getRangeQueryParameters(
 		String rangeEnd, String rangeStart) {
 
-		MultivaluedMap<String, String> queryParameters =
+		MultivaluedMap<String, String> rangeQueryParameters =
 			new MultivaluedHashMap<>();
 
-		queryParameters.putSingle("rangeEnd", rangeEnd);
-		queryParameters.putSingle("rangeStart", rangeStart);
+		rangeQueryParameters.putSingle("rangeEnd", rangeEnd);
+		rangeQueryParameters.putSingle("rangeStart", rangeStart);
 
-		return queryParameters;
+		return rangeQueryParameters;
 	}
 
-	private void _setResourceMethod(Class<?> clazz, String methodName) {
+	private void _mockGetResourceMethod(Class<?> clazz, String methodName) {
 		for (Method method : clazz.getMethods()) {
 			if (!Objects.equals(method.getName(), methodName)) {
 				continue;

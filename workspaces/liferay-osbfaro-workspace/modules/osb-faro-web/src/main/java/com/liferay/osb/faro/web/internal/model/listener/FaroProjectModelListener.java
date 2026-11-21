@@ -5,6 +5,8 @@
 
 package com.liferay.osb.faro.web.internal.model.listener;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.util.FaroNavigationUtil;
 import com.liferay.osb.faro.web.internal.util.SiteInitializerUtil;
@@ -43,6 +45,7 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 			if (!FaroNavigationUtil.isLDPEnabled(faroProject)) {
 				_updateLayouts(
 					faroProject.getGroupId(), true, _LDP_FRIENDLY_URLS);
+				_updateMasterLayouts("AC_FAVICON", faroProject.getGroupId());
 			}
 
 			if (faroProject.isRecommendationsEnabled()) {
@@ -74,10 +77,14 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 				if (ldpEnabled) {
 					_updateLayouts(
 						faroProject.getGroupId(), false, _LDP_FRIENDLY_URLS);
+					_updateMasterLayouts(
+						"LDP_FAVICON", faroProject.getGroupId());
 				}
 				else {
 					_updateLayouts(
 						faroProject.getGroupId(), true, _LDP_FRIENDLY_URLS);
+					_updateMasterLayouts(
+						"AC_FAVICON", faroProject.getGroupId());
 				}
 			}
 
@@ -116,6 +123,33 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 		}
 	}
 
+	private void _updateMasterLayouts(
+		String faviconFileEntryERC, long groupId) {
+
+		for (String layoutPageTemplateEntryKey :
+				new String[] {
+					"liferay-data-platform-master",
+					"liferay-data-platform-settings-master"
+				}) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						groupId, layoutPageTemplateEntryKey);
+
+			if (layoutPageTemplateEntry == null) {
+				continue;
+			}
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
+
+			layout.setFaviconFileEntryERC(faviconFileEntryERC);
+
+			_layoutLocalService.updateLayout(layout);
+		}
+	}
+
 	private static final String[] _LDP_FRIENDLY_URLS = {
 		"/accounts", "/campaigns", "/lifecycles"
 	};
@@ -128,6 +162,10 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference(
 		target = "(site.initializer.key=com.liferay.osb.faro.workspace.site.initializer)"

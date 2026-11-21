@@ -60,9 +60,9 @@ public class ParameterContainerRequestFilterTest {
 			"\"pageSize\" must be a whole number from 1 to 100",
 			_filter("pageSize", "101"));
 		_assertTitle(
-			"\"rangeKey\" must be one of LAST_180_DAYS, LAST_24_HOURS, " +
-				"LAST_28_DAYS, LAST_30_DAYS, LAST_7_DAYS, LAST_90_DAYS, " +
-					"YESTERDAY",
+			"\"rangeKey\" must be one of \"LAST_180_DAYS\", " +
+				"\"LAST_24_HOURS\", \"LAST_28_DAYS\", \"LAST_30_DAYS\", " +
+					"\"LAST_7_DAYS\", \"LAST_90_DAYS\", \"YESTERDAY\"",
 			_filter("rangeKey", "LAST_YEAR"));
 		_assertTitle(
 			"\"rangeEnd\" and \"rangeStart\" must be set together",
@@ -81,9 +81,10 @@ public class ParameterContainerRequestFilterTest {
 				"\"column:desc\" expressions",
 			_filter("sort", "accountName:sideways"));
 		_assertTitle(
-			"\"bogusColumn\" is not a sortable column. Sortable columns: " +
-				"accountId, accountName, fromAccountLifecycleStageId, " +
-					"toAccountLifecycleStageId, transitionDate",
+			"\"bogusColumn\" is not a sortable column. The sortable columns " +
+				"are \"accountId\", \"accountName\", " +
+					"\"fromAccountLifecycleStageId\", " +
+						"\"toAccountLifecycleStageId\", \"transitionDate\".",
 			_filter("sort", "bogusColumn:desc"));
 	}
 
@@ -100,7 +101,7 @@ public class ParameterContainerRequestFilterTest {
 				String.valueOf(RandomTestUtil.randomLong())));
 
 		_assertTitle(
-			"\"attributeType\" must be one of ALL, GLOBAL, LOCAL",
+			"\"attributeType\" must be one of \"ALL\", \"GLOBAL\", \"LOCAL\"",
 			_filter("attributeType", RandomTestUtil.randomString()));
 		_assertTitle(
 			"\"eventDefinitionId\" must be a numeric ID",
@@ -109,7 +110,8 @@ public class ParameterContainerRequestFilterTest {
 			"\"pageSize\" must be a whole number from 1 to 100",
 			_filter("pageSize", "101"));
 		_assertTitle(
-			"\"displayName\" is not a sortable column. Sortable columns: name",
+			"\"displayName\" is not a sortable column. The sortable columns " +
+				"are \"name\".",
 			_filter("sort", "displayName:asc"));
 	}
 
@@ -129,7 +131,7 @@ public class ParameterContainerRequestFilterTest {
 			"\"blocked\" must be one of \"false\", \"true\"",
 			_filter("blocked", RandomTestUtil.randomString()));
 		_assertTitle(
-			"\"eventType\" must be one of ALL, CUSTOM, DEFAULT",
+			"\"eventType\" must be one of \"ALL\", \"CUSTOM\", \"DEFAULT\"",
 			_filter("eventType", RandomTestUtil.randomString()));
 		_assertTitle(
 			"\"hidden\" must be one of \"false\", \"true\"",
@@ -138,8 +140,8 @@ public class ParameterContainerRequestFilterTest {
 			"\"pageSize\" must be a whole number from 1 to 100",
 			_filter("pageSize", "101"));
 		_assertTitle(
-			"\"blockedLastSeenDate\" is not a sortable column. Sortable " +
-				"columns: displayName, name",
+			"\"blockedLastSeenDate\" is not a sortable column. The sortable " +
+				"columns are \"displayName\", \"name\".",
 			_filter("sort", "blockedLastSeenDate:desc"));
 	}
 

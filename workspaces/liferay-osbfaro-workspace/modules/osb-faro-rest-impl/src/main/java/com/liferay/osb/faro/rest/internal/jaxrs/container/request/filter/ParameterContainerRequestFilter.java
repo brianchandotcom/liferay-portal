@@ -10,7 +10,6 @@ import com.liferay.osb.faro.rest.internal.resource.v1_0.Interval;
 import com.liferay.osb.faro.rest.internal.resource.v1_0.TimeRange;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -253,10 +252,9 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 
 				throw new BadRequestException(
 					StringBundler.concat(
-						"\"", fieldName, "\" is not a sortable column. ",
-						"Sortable columns: ",
-						StringUtil.merge(
-							sortableFieldNames, StringPool.COMMA_AND_SPACE)));
+						"\"", fieldName, "\" is not a sortable column. The ",
+						"sortable columns are \"",
+						StringUtil.merge(sortableFieldNames, "\", \""), "\"."));
 			}
 		}
 	}
@@ -267,8 +265,8 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 		if ((value != null) && !ArrayUtil.contains(validValues, value)) {
 			throw new BadRequestException(
 				StringBundler.concat(
-					"\"", name, "\" must be one of ",
-					StringUtil.merge(validValues, StringPool.COMMA_AND_SPACE)));
+					"\"", name, "\" must be one of \"",
+					StringUtil.merge(validValues, "\", \""), "\""));
 		}
 	}
 

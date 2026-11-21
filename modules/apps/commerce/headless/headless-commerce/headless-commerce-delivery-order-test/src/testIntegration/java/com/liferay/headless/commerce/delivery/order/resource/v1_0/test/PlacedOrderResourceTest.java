@@ -829,9 +829,6 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;
 
-	@DeleteAfterTestRun
-	private ExpandoTable _expandoTable;
-
 	@Inject
 	private ExpandoTableLocalService _expandoTableLocalService;
 

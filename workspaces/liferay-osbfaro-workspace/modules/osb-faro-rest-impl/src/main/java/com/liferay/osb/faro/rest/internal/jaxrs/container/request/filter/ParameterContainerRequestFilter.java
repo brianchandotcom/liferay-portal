@@ -115,25 +115,17 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 		MultivaluedMap<String, String> pathParameters,
 		MultivaluedMap<String, String> queryParameters) {
 
-		for (String name :
-				new String[] {
-					"eventDefinitionId", "individualSegmentId", "segmentId"
-				}) {
-
-			_validateId(name, pathParameters.getFirst(name));
-			_validateId(name, queryParameters.getFirst(name));
-		}
-
-		for (String name : new String[] {"blocked", "hidden"}) {
-			_validateBoolean(name, queryParameters.getFirst(name));
-		}
-
-		for (Map.Entry<String, String[]> entry : _validValues.entrySet()) {
-			_validateValue(
-				entry.getKey(), entry.getValue(),
-				queryParameters.getFirst(entry.getKey()));
-		}
-
+		_validateBoolean("blocked", queryParameters.getFirst("blocked"));
+		_validateBoolean("hidden", queryParameters.getFirst("hidden"));
+		_validateId(
+			"eventDefinitionId", queryParameters.getFirst("eventDefinitionId"));
+		_validateId(
+			"individualSegmentId",
+			pathParameters.getFirst("individualSegmentId"));
+		_validateId(
+			"individualSegmentId",
+			queryParameters.getFirst("individualSegmentId"));
+		_validateId("segmentId", queryParameters.getFirst("segmentId"));
 		_validateInteger(
 			Integer.MAX_VALUE, "page", queryParameters.getFirst("page"));
 		_validateInteger(100, "pageSize", queryParameters.getFirst("pageSize"));
@@ -141,6 +133,12 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 			queryParameters.getFirst("rangeEnd"),
 			queryParameters.getFirst("rangeStart"));
 		_validateSort(queryParameters.getFirst("sort"));
+
+		for (Map.Entry<String, String[]> entry : _validValues.entrySet()) {
+			_validateValue(
+				entry.getKey(), entry.getValue(),
+				queryParameters.getFirst(entry.getKey()));
+		}
 	}
 
 	private void _validateBoolean(String name, String value) {

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.vulcan.problem;
 
+import com.liferay.headless.admin.site.internal.util.LayoutPageTemplateCollectionUtil;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemMapper;
@@ -15,16 +16,20 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier Moral
  */
 @Component(service = ProblemMapper.class)
-public class PageTemplateSetNameExceptionProblemMapper
-	implements ProblemMapper<LayoutPageTemplateCollectionNameException> {
+public class PageTemplateSetNameMustNotBeNullExceptionProblemMapper
+	implements ProblemMapper
+		<LayoutPageTemplateCollectionNameException.MustNotBeNull> {
 
 	@Override
 	public Problem getProblem(
-		LayoutPageTemplateCollectionNameException
-			layoutPageTemplateCollectionNameException) {
+		LayoutPageTemplateCollectionNameException.MustNotBeNull mustNotBeNull) {
+
+		String typeLabel = LayoutPageTemplateCollectionUtil.getTypeLabel(
+			mustNotBeNull.getType());
 
 		return ProblemUtil.getProblem(
-			layoutPageTemplateCollectionNameException);
+			"A name is required for the " + typeLabel,
+			Problem.Status.BAD_REQUEST, mustNotBeNull);
 	}
 
 }

@@ -12,21 +12,42 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class LayoutPageTemplateCollectionNameException extends PortalException {
 
-	public LayoutPageTemplateCollectionNameException() {
+	public int getType() {
+		return _type;
 	}
 
-	public LayoutPageTemplateCollectionNameException(String msg) {
+	public static class MustNotBeNull
+		extends LayoutPageTemplateCollectionNameException {
+
+		public MustNotBeNull(int type) {
+			super("Name must not be null", type);
+		}
+
+	}
+
+	public static class MustNotExceedMaximumSize
+		extends LayoutPageTemplateCollectionNameException {
+
+		public MustNotExceedMaximumSize(int nameMaxLength, int type) {
+			super("Maximum length of name exceeded " + nameMaxLength, type);
+
+			_nameMaxLength = nameMaxLength;
+		}
+
+		public int getNameMaxLength() {
+			return _nameMaxLength;
+		}
+
+		private final int _nameMaxLength;
+
+	}
+
+	private LayoutPageTemplateCollectionNameException(String msg, int type) {
 		super(msg);
+
+		_type = type;
 	}
 
-	public LayoutPageTemplateCollectionNameException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public LayoutPageTemplateCollectionNameException(Throwable throwable) {
-		super(throwable);
-	}
+	private final int _type;
 
 }

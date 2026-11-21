@@ -14,19 +14,14 @@ import com.liferay.bean.portlet.extension.BeanPortletMethodFactory;
 import com.liferay.bean.portlet.extension.BeanPortletMethodInvoker;
 import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 import com.liferay.bean.portlet.registration.portlet.BeanPortlet;
-import com.liferay.bean.portlet.registration.portlet.BeanPortletImpl;
 import com.liferay.bean.portlet.registration.portlet.DiscoveredBeanMethod;
 import com.liferay.bean.portlet.registration.portlet.Event;
-import com.liferay.bean.portlet.registration.portlet.EventImpl;
 import com.liferay.bean.portlet.registration.portlet.MultipartConfig;
 import com.liferay.bean.portlet.registration.portlet.PortletDependency;
 import com.liferay.bean.portlet.registration.portlet.Preference;
 import com.liferay.bean.portlet.registration.portlet.PublicRenderParameter;
-import com.liferay.bean.portlet.registration.portlet.PublicRenderParameterImpl;
 import com.liferay.bean.portlet.registration.portlet.app.BeanApp;
-import com.liferay.bean.portlet.registration.portlet.app.BeanAppImpl;
 import com.liferay.bean.portlet.registration.portlet.filter.BeanFilter;
-import com.liferay.bean.portlet.registration.portlet.filter.BeanFilterImpl;
 import com.liferay.bean.portlet.registration.portlet.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.registration.portlet.util.PortletQNameUtil;
 import com.liferay.bean.portlet.registration.portlet.util.PortletScannerUtil;
@@ -199,7 +194,7 @@ public class BeanPortletRegistrarUtil {
 		}
 
 		if (beanApp == null) {
-			beanApp = new BeanAppImpl(
+			beanApp = new BeanApp(
 				Collections.emptyMap(), Collections.emptySet(), null,
 				Collections.emptyList(), Collections.emptyList(),
 				Collections.emptyMap(), "3.0");
@@ -407,7 +402,7 @@ public class BeanPortletRegistrarUtil {
 			BeanFilter beanFilter = beanFilters.get(filterName);
 
 			if (beanFilter == null) {
-				beanFilter = new BeanFilterImpl(
+				beanFilter = new BeanFilter(
 					discoveredClass.asSubclass(PortletFilter.class), filterName,
 					initParams, lifecycles, portletLifecycleFilter.ordinal(),
 					portletNames);
@@ -419,7 +414,7 @@ public class BeanPortletRegistrarUtil {
 
 				initParams.putAll(beanFilter.getInitParams());
 
-				beanFilter = new BeanFilterImpl(
+				beanFilter = new BeanFilter(
 					beanFilter.getFilterClass(), beanFilter.getFilterName(),
 					initParams, lifecycles, beanFilter.getOrdinal(),
 					portletNames);
@@ -499,7 +494,7 @@ public class BeanPortletRegistrarUtil {
 						valueType = payloadClass.getName();
 					}
 
-					return new EventImpl(
+					return new Event(
 						TransformUtil.transformToList(
 							eventDefinition.alias(),
 							portletQName -> PortletQNameUtil.toQName(
@@ -517,7 +512,7 @@ public class BeanPortletRegistrarUtil {
 			PortletQName portletQName = publicRenderParameterDefinition.qname();
 
 			PublicRenderParameter publicRenderParameter =
-				new PublicRenderParameterImpl(
+				new PublicRenderParameter(
 					publicRenderParameterDefinition.identifier(),
 					new QName(
 						portletQName.namespaceURI(), portletQName.localPart()));
@@ -756,7 +751,7 @@ public class BeanPortletRegistrarUtil {
 		}
 
 		if (descriptorBeanPortlet == null) {
-			BeanPortlet annotatedBeanPortlet = new BeanPortletImpl(
+			BeanPortlet annotatedBeanPortlet = new BeanPortlet(
 				portletConfiguration.asyncSupported(), beanMethodMap,
 				containerRuntimeOptions, descriptions, displayCategory,
 				displayNames, portletConfiguration.cacheExpirationTime(),
@@ -909,7 +904,7 @@ public class BeanPortletRegistrarUtil {
 			liferayConfiguration.putAll(descriptorLiferayConfiguration);
 		}
 
-		BeanPortlet mergedBeanPortlet = new BeanPortletImpl(
+		BeanPortlet mergedBeanPortlet = new BeanPortlet(
 			asyncSupport, beanMethodMap, containerRuntimeOptions, descriptions,
 			displayCategory, displayNames, expirationCache, initParams,
 			keywords, liferayConfiguration, multipartConfig, portletClassName,
@@ -1017,7 +1012,7 @@ public class BeanPortletRegistrarUtil {
 				beanMethodMap, supportedProcessingEvents,
 				supportedPublishingEvents);
 
-			beanPortlet = new BeanPortletImpl(
+			beanPortlet = new BeanPortlet(
 				beanMethodMap, descriptorDisplayCategories.get(portletName),
 				entry.getValue(), portletName, supportedProcessingEvents,
 				supportedPublishingEvents);
@@ -1064,7 +1059,7 @@ public class BeanPortletRegistrarUtil {
 				beanMethodMap, supportedProcessingEvents,
 				supportedPublishingEvents);
 
-			beanPortlet = new BeanPortletImpl(
+			beanPortlet = new BeanPortlet(
 				beanMethodMap, descriptorDisplayCategories.get(portletName),
 				descriptorLiferayConfigurations.get(portletName), portletName,
 				supportedProcessingEvents, supportedPublishingEvents);

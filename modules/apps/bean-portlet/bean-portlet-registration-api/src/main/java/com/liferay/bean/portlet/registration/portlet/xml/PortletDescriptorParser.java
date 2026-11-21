@@ -9,18 +9,13 @@ import com.liferay.bean.portlet.extension.BeanPortletMethod;
 import com.liferay.bean.portlet.extension.BeanPortletMethodFactory;
 import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 import com.liferay.bean.portlet.registration.portlet.BeanPortlet;
-import com.liferay.bean.portlet.registration.portlet.BeanPortletImpl;
 import com.liferay.bean.portlet.registration.portlet.Event;
-import com.liferay.bean.portlet.registration.portlet.EventImpl;
 import com.liferay.bean.portlet.registration.portlet.MultipartConfig;
 import com.liferay.bean.portlet.registration.portlet.PortletDependency;
 import com.liferay.bean.portlet.registration.portlet.Preference;
 import com.liferay.bean.portlet.registration.portlet.PublicRenderParameter;
-import com.liferay.bean.portlet.registration.portlet.PublicRenderParameterImpl;
 import com.liferay.bean.portlet.registration.portlet.app.BeanApp;
-import com.liferay.bean.portlet.registration.portlet.app.BeanAppImpl;
 import com.liferay.bean.portlet.registration.portlet.filter.BeanFilter;
-import com.liferay.bean.portlet.registration.portlet.filter.BeanFilterImpl;
 import com.liferay.bean.portlet.registration.portlet.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.registration.portlet.util.PortletQNameUtil;
 import com.liferay.bean.portlet.registration.portlet.util.PortletScannerUtil;
@@ -231,7 +226,7 @@ public class PortletDescriptorParser {
 				defaultNamespace, qNameElement, nameElement);
 
 			events.add(
-				new EventImpl(
+				new Event(
 					TransformUtil.transform(
 						eventDefinitionElement.elements("alias"),
 						alias -> PortletQNameUtil.getQName(
@@ -256,7 +251,7 @@ public class PortletDescriptorParser {
 				defaultNamespace, qNameElement, nameElement);
 
 			PublicRenderParameter publicRenderParameter =
-				new PublicRenderParameterImpl(identifier, qName);
+				new PublicRenderParameter(identifier, qName);
 
 			publicRenderParameters.put(identifier, publicRenderParameter);
 		}
@@ -306,7 +301,7 @@ public class PortletDescriptorParser {
 					ordinal, listenerClassName));
 		}
 
-		return new BeanAppImpl(
+		return new BeanApp(
 			containerRuntimeOptions, validCustomPortletModes, defaultNamespace,
 			events, portletListeners, publicRenderParameters, specVersion);
 	}
@@ -332,7 +327,7 @@ public class PortletDescriptorParser {
 				initParamElement.elementText("value"));
 		}
 
-		return new BeanFilterImpl(
+		return new BeanFilter(
 			filterClass, filterName, initParams, lifecycles, ordinal,
 			portletNames);
 	}
@@ -591,7 +586,7 @@ public class PortletDescriptorParser {
 					-1));
 		}
 
-		return new BeanPortletImpl(
+		return new BeanPortlet(
 			asyncSupported, beanMethodMap, containerRuntimeOptions,
 			descriptions, categoryName, displayNames, expirationCache,
 			initParams, keywords, liferayConfiguration, multipartConfig,

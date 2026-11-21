@@ -8,6 +8,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.helper.CTPreviewURLHelper;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -184,15 +185,35 @@ public class GetLayoutContentChangesMVCResourceCommand
 							_ctDisplayRendererRegistry.getCTDisplayRenderer(
 								ctEntry.getModelClassNameId());
 
-						return _diffHtml.diff(
-							new UnsyncStringReader(
-								_getProductionPreview(
-									ctCollection, ctDisplayRenderer, ctEntry,
-									httpServletRequest, httpServletResponse)),
-							new UnsyncStringReader(
-								_getPublicationPreview(
-									ctCollection, ctDisplayRenderer, ctEntry,
-									httpServletRequest, httpServletResponse)));
+						long leftCTCollectionId =
+							CTConstants.CT_COLLECTION_ID_PRODUCTION;
+						long rightCTCollectionId =
+							ctCollection.getCtCollectionId();
+
+						if (ctCollection.getStatus() ==
+								WorkflowConstants.STATUS_APPROVED) {
+
+							leftCTCollectionId = ctEntry.getCtCollectionId();
+							rightCTCollectionId =
+								_ctEntryLocalService.getCTRowCTCollectionId(
+									ctEntry);
+						}
+
+						return _ctPreviewURLHelper.
+							addUnifiedPreviewCTCollectionId(
+								ctCollection.getCompanyId(),
+								_diffHtml.diff(
+									new UnsyncStringReader(
+										_getProductionPreview(
+											ctCollection, ctDisplayRenderer,
+											ctEntry, httpServletRequest,
+											httpServletResponse)),
+									new UnsyncStringReader(
+										_getPublicationPreview(
+											ctCollection, ctDisplayRenderer,
+											ctEntry, httpServletRequest,
+											httpServletResponse))),
+								leftCTCollectionId, rightCTCollectionId);
 					}
 				).put(
 					"viewChangeURL",
@@ -444,6 +465,9 @@ public class GetLayoutContentChangesMVCResourceCommand
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private CTPreviewURLHelper _ctPreviewURLHelper;
 
 	@Reference
 	private DiffHtml _diffHtml;

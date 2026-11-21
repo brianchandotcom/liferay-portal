@@ -116,18 +116,24 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 		MultivaluedMap<String, String> pathParameters,
 		MultivaluedMap<String, String> queryParameters) {
 
-		for (String name :
-				new String[] {
-					"eventDefinitionId", "individualSegmentId", "segmentId"
-				}) {
-
-			_validateId(name, pathParameters.getFirst(name));
-			_validateId(name, queryParameters.getFirst(name));
-		}
-
-		for (String name : new String[] {"blocked", "hidden"}) {
-			_validateBoolean(name, queryParameters.getFirst(name));
-		}
+		_validateBoolean("blocked", queryParameters.getFirst("blocked"));
+		_validateBoolean("hidden", queryParameters.getFirst("hidden"));
+		_validateId(
+			"eventDefinitionId", queryParameters.getFirst("eventDefinitionId"));
+		_validateId(
+			"individualSegmentId",
+			pathParameters.getFirst("individualSegmentId"));
+		_validateId(
+			"individualSegmentId",
+			queryParameters.getFirst("individualSegmentId"));
+		_validateId("segmentId", queryParameters.getFirst("segmentId"));
+		_validateInteger(
+			Integer.MAX_VALUE, "page", queryParameters.getFirst("page"));
+		_validateInteger(100, "pageSize", queryParameters.getFirst("pageSize"));
+		_validateRange(
+			queryParameters.getFirst("rangeEnd"),
+			queryParameters.getFirst("rangeStart"));
+		_validateSort(queryParameters.getFirst("sort"));
 
 		for (Map.Entry<String, String[]> entry : _validValues.entrySet()) {
 			List<String> values = queryParameters.get(entry.getKey());
@@ -140,14 +146,6 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 				_validateValue(entry.getKey(), entry.getValue(), value);
 			}
 		}
-
-		_validateInteger(
-			Integer.MAX_VALUE, "page", queryParameters.getFirst("page"));
-		_validateInteger(100, "pageSize", queryParameters.getFirst("pageSize"));
-		_validateRange(
-			queryParameters.getFirst("rangeEnd"),
-			queryParameters.getFirst("rangeStart"));
-		_validateSort(queryParameters.getFirst("sort"));
 	}
 
 	private void _validateBoolean(String name, String value) {

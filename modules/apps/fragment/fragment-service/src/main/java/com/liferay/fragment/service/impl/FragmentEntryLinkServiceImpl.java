@@ -54,28 +54,6 @@ public class FragmentEntryLinkServiceImpl
 			rendererKey, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addFragmentEntryLink(String, long, String, String, long,
-	 *             long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FragmentEntryLink addFragmentEntryLink(
-			String externalReferenceCode, long groupId,
-			String originalFragmentEntryLinkERC, String fragmentEntryERC,
-			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
-			String css, String html, String js, String configuration,
-			String editableValues, String namespace, int position,
-			String rendererKey, int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFragmentEntryLink(
-			externalReferenceCode, groupId, fragmentEntryERC,
-			fragmentEntryScopeERC, segmentsExperienceId, plid, editableValues,
-			rendererKey, serviceContext);
-	}
-
 	@Override
 	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
 		throws PortalException {

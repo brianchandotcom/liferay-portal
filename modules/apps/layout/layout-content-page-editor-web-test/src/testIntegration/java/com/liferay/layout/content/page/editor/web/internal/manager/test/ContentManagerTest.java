@@ -179,9 +179,7 @@ public class ContentManagerTest {
 
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
 		_portletLayoutListener.onSetup(portletId, _layout.getPlid());
-
 		ServiceContextThreadLocal.popServiceContext();
 
 		MockHttpServletRequest mockHttpServletRequest =

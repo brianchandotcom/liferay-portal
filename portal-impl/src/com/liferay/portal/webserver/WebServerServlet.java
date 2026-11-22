@@ -1762,6 +1762,7 @@ public class WebServerServlet extends HttpServlet {
 			httpServletRequest);
 
 		if (fileVersion.isApproved() ||
+			(fileVersion.getStatus() == WorkflowConstants.STATUS_IN_TRASH) ||
 			(fileVersion.getUserId() == permissionChecker.getUserId()) ||
 			permissionChecker.isContentReviewer(
 				fileVersion.getCompanyId(), fileVersion.getGroupId())) {

@@ -592,9 +592,6 @@ public class UpdateArticleMVCActionCommandTest {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group2);
 
-		Group scopeGroup = GroupTestUtil.addGroup(
-			TestPropsValues.getUserId(), layout);
-
 		Company company = _companyLocalService.getCompany(
 			_group2.getCompanyId());
 
@@ -610,6 +607,9 @@ public class UpdateArticleMVCActionCommandTest {
 			).put(
 				"lfrScopeType", new String[] {"layout"}
 			).build());
+
+		Group scopeGroup = GroupTestUtil.addGroup(
+			TestPropsValues.getUserId(), layout);
 
 		_processAction(
 			_getMockLiferayPortletActionRequest(

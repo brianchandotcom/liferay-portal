@@ -197,7 +197,7 @@ public class ContentManagerTest {
 					TestPropsValues.getCompanyId()),
 				_group, _layout));
 
-		JSONArray jsonArray = ReflectionTestUtil.invoke(
+		JSONArray pageContentsJSONArray = ReflectionTestUtil.invoke(
 			_contentManager, "getPageContentsJSONArray",
 			new Class<?>[] {
 				HttpServletRequest.class, HttpServletResponse.class, long.class,
@@ -208,9 +208,9 @@ public class ContentManagerTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()));
 
-		Assert.assertEquals(1, jsonArray.length());
+		Assert.assertEquals(1, pageContentsJSONArray.length());
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+		JSONObject jsonObject = pageContentsJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(
 			journalArticle.getTitle(LocaleUtil.getSiteDefault()),

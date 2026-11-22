@@ -89,6 +89,10 @@ public class FaroLayoutPreAction extends Action {
 
 				return !FaroNavigationUtil.isLDPEnabled(faroProject);
 			}
+
+			if (friendlyURL.equals("/recommendations")) {
+				return !faroProject.isRecommendationsEnabled();
+			}
 		}
 
 		return false;

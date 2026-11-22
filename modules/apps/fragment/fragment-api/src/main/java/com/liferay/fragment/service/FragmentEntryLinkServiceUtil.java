@@ -41,29 +41,6 @@ public class FragmentEntryLinkServiceUtil {
 			rendererKey, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addFragmentEntryLink(String, long, String, String, long,
-	 long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static FragmentEntryLink addFragmentEntryLink(
-			String externalReferenceCode, long groupId,
-			String originalFragmentEntryLinkERC, String fragmentEntryERC,
-			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
-			String css, String html, String js, String configuration,
-			String editableValues, String namespace, int position,
-			String rendererKey, int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addFragmentEntryLink(
-			externalReferenceCode, groupId, originalFragmentEntryLinkERC,
-			fragmentEntryERC, fragmentEntryScopeERC, segmentsExperienceId, plid,
-			css, html, js, configuration, editableValues, namespace, position,
-			rendererKey, type, serviceContext);
-	}
-
 	public static FragmentEntryLink deleteFragmentEntryLink(
 			long fragmentEntryLinkId)
 		throws PortalException {
@@ -129,4 +106,4 @@ public class FragmentEntryLinkServiceUtil {
 			FragmentEntryLinkServiceUtil.class, FragmentEntryLinkService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1481237177
+// LIFERAY-SERVICE-BUILDER-HASH:1780991908

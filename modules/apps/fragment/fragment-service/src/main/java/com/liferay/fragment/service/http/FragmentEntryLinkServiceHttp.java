@@ -89,57 +89,6 @@ public class FragmentEntryLinkServiceHttp {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryLink
-			addFragmentEntryLink(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, String originalFragmentEntryLinkERC,
-				String fragmentEntryERC, String fragmentEntryScopeERC,
-				long segmentsExperienceId, long plid, String css, String html,
-				String js, String configuration, String editableValues,
-				String namespace, int position, String rendererKey, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				FragmentEntryLinkServiceUtil.class, "addFragmentEntryLink",
-				_addFragmentEntryLinkParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId,
-				originalFragmentEntryLinkERC, fragmentEntryERC,
-				fragmentEntryScopeERC, segmentsExperienceId, plid, css, html,
-				js, configuration, editableValues, namespace, position,
-				rendererKey, type, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.fragment.model.FragmentEntryLink)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.fragment.model.FragmentEntryLink
 			deleteFragmentEntryLink(
 				HttpPrincipal httpPrincipal, long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -147,7 +96,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "deleteFragmentEntryLink",
-				_deleteFragmentEntryLinkParameterTypes2);
+				_deleteFragmentEntryLinkParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinkId);
@@ -189,7 +138,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "deleteFragmentEntryLink",
-				_deleteFragmentEntryLinkParameterTypes3);
+				_deleteFragmentEntryLinkParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId);
@@ -232,7 +181,7 @@ public class FragmentEntryLinkServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class,
 				"getFragmentEntryLinkByExternalReferenceCode",
-				_getFragmentEntryLinkByExternalReferenceCodeParameterTypes4);
+				_getFragmentEntryLinkByExternalReferenceCodeParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId);
@@ -273,7 +222,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "updateDeleted",
-				_updateDeletedParameterTypes5);
+				_updateDeletedParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinkId, deleted);
@@ -315,7 +264,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLink",
-				_updateFragmentEntryLinkParameterTypes6);
+				_updateFragmentEntryLinkParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinkId, editableValues);
@@ -357,7 +306,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLink",
-				_updateFragmentEntryLinkParameterTypes7);
+				_updateFragmentEntryLinkParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinkId, editableValues,
@@ -400,26 +349,19 @@ public class FragmentEntryLinkServiceHttp {
 			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _addFragmentEntryLinkParameterTypes1 =
-		new Class[] {
-			String.class, long.class, String.class, String.class, String.class,
-			long.class, long.class, String.class, String.class, String.class,
-			String.class, String.class, String.class, int.class, String.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _deleteFragmentEntryLinkParameterTypes2 =
+	private static final Class<?>[] _deleteFragmentEntryLinkParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _deleteFragmentEntryLinkParameterTypes3 =
+	private static final Class<?>[] _deleteFragmentEntryLinkParameterTypes2 =
 		new Class[] {String.class, long.class};
 	private static final Class<?>[]
-		_getFragmentEntryLinkByExternalReferenceCodeParameterTypes4 =
+		_getFragmentEntryLinkByExternalReferenceCodeParameterTypes3 =
 			new Class[] {String.class, long.class};
-	private static final Class<?>[] _updateDeletedParameterTypes5 =
+	private static final Class<?>[] _updateDeletedParameterTypes4 =
 		new Class[] {long.class, boolean.class};
-	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes6 =
+	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes5 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes7 =
+	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes6 =
 		new Class[] {long.class, String.class, boolean.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-120198738
+// LIFERAY-SERVICE-BUILDER-HASH:1580803837

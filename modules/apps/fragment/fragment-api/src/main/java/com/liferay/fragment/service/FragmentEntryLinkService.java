@@ -50,21 +50,6 @@ public interface FragmentEntryLinkService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addFragmentEntryLink(String, long, String, String, long,
-	 long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public FragmentEntryLink addFragmentEntryLink(
-			String externalReferenceCode, long groupId,
-			String originalFragmentEntryLinkERC, String fragmentEntryERC,
-			String fragmentEntryScopeERC, long segmentsExperienceId, long plid,
-			String css, String html, String js, String configuration,
-			String editableValues, String namespace, int position,
-			String rendererKey, int type, ServiceContext serviceContext)
-		throws PortalException;
-
 	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
 		throws PortalException;
 
@@ -98,4 +83,4 @@ public interface FragmentEntryLinkService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1094248109
+// LIFERAY-SERVICE-BUILDER-HASH:-1908837253

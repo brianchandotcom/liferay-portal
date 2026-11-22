@@ -6,10 +6,16 @@
 package com.liferay.dispatch.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.scheduler.SchedulerResponseManager;
+import com.liferay.dispatch.web.internal.security.permisison.resource.SchedulerResponsePermission;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -56,20 +62,72 @@ public class EditSchedulerResponseMVCActionCommand
 			ParamUtil.getString(actionRequest, "storageType"));
 
 		if (Objects.equals(cmd, "pause")) {
-			_schedulerResponseManager.pause(
-				permissionChecker, jobName, groupName, storageType);
+			_pause(permissionChecker, jobName, groupName, storageType);
 		}
 		else if (Objects.equals(cmd, "resume")) {
-			_schedulerResponseManager.resume(
-				permissionChecker, jobName, groupName, storageType);
+			_resume(permissionChecker, jobName, groupName, storageType);
 		}
 		else if (Objects.equals(cmd, "runScheduledJob")) {
-			_schedulerResponseManager.run(
-				permissionChecker, jobName, groupName, storageType);
+			_run(permissionChecker, jobName, groupName, storageType);
 		}
 	}
 
+	private void _checkPermission(
+			PermissionChecker permissionChecker, String jobName,
+			String groupName, StorageType storageType)
+		throws Exception {
+
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				jobName, groupName, storageType);
+
+		if (schedulerResponse == null) {
+			throw new SchedulerException(
+				StringBundler.concat(
+					"Unable to find scheduled job with group name \"",
+					groupName, "\" and job name \"", jobName, "\""));
+		}
+
+		if (!SchedulerResponsePermission.contains(
+				permissionChecker, schedulerResponse)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ActionKeys.UPDATE);
+		}
+	}
+
+	private void _pause(
+			PermissionChecker permissionChecker, String jobName,
+			String groupName, StorageType storageType)
+		throws Exception {
+
+		_checkPermission(permissionChecker, jobName, groupName, storageType);
+
+		_schedulerEngineHelper.pause(jobName, groupName, storageType);
+	}
+
+	private void _resume(
+			PermissionChecker permissionChecker, String jobName,
+			String groupName, StorageType storageType)
+		throws Exception {
+
+		_checkPermission(permissionChecker, jobName, groupName, storageType);
+
+		_schedulerEngineHelper.resume(jobName, groupName, storageType);
+	}
+
+	private void _run(
+			PermissionChecker permissionChecker, String jobName,
+			String groupName, StorageType storageType)
+		throws Exception {
+
+		_checkPermission(permissionChecker, jobName, groupName, storageType);
+
+		_schedulerEngineHelper.run(
+			permissionChecker.getCompanyId(), jobName, groupName, storageType);
+	}
+
 	@Reference
-	private SchedulerResponseManager _schedulerResponseManager;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

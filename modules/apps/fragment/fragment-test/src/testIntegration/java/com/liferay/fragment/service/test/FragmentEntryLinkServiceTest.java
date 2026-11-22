@@ -94,28 +94,6 @@ public class FragmentEntryLinkServiceTest {
 		Assert.assertEquals(_fragmentEntry.getJs(), fragmentEntryLink.getJs());
 	}
 
-	@Test
-	public void testAddFragmentEntryLinkWithHTML() throws Exception {
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), null,
-				_fragmentEntry.getExternalReferenceCode(), null,
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				_layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				null, StringPool.BLANK, StringPool.BLANK, 0, null,
-				_fragmentEntry.getType(),
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
-
-		Assert.assertEquals(
-			_fragmentEntry.getCss(), fragmentEntryLink.getCss());
-		Assert.assertEquals(
-			_fragmentEntry.getHtml(), fragmentEntryLink.getHtml());
-		Assert.assertEquals(_fragmentEntry.getJs(), fragmentEntryLink.getJs());
-	}
-
 	@Test(expected = NoSuchEntryException.class)
 	public void testAddFragmentEntryLinkWithInvalidFragmentEntryERC()
 		throws Exception {

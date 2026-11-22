@@ -147,7 +147,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 	}
 
 	public String getSimpleName(String jobName) {
-		return _getSimpleJobName(jobName);
+		return jobName.substring(jobName.lastIndexOf(StringPool.PERIOD) + 1);
 	}
 
 	public TriggerState getTriggerState(SchedulerResponse schedulerResponse)
@@ -212,7 +212,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 		Collections.sort(
 			schedulerResponses,
 			Comparator.comparing(
-				schedulerResponse -> _getSimpleJobName(
+				schedulerResponse -> getSimpleName(
 					schedulerResponse.getJobName())));
 
 		return schedulerResponses.subList(
@@ -226,10 +226,6 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 			permissionChecker);
 
 		return schedulerResponses.size();
-	}
-
-	private String _getSimpleJobName(String jobName) {
-		return jobName.substring(jobName.lastIndexOf(StringPool.PERIOD) + 1);
 	}
 
 	private TriggerState _getTriggerState(

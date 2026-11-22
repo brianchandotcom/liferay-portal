@@ -60,6 +60,18 @@ public class FaroLayoutPreAction extends Action {
 		}
 	}
 
+	private boolean _hasRecommendationsDisabled(Layout layout) {
+		FaroProject faroProject =
+			_faroProjectLocalService.fetchFaroProjectByGroupId(
+				layout.getGroupId());
+
+		if (faroProject == null) {
+			return false;
+		}
+
+		return !faroProject.isRecommendationsEnabled();
+	}
+
 	private boolean _isBlocked(Layout layout) throws Exception {
 		List<String> friendlyURLs = TransformUtil.transform(
 			layout.getAncestors(), Layout::getFriendlyURL);
@@ -73,6 +85,10 @@ public class FaroLayoutPreAction extends Action {
 
 			if (ArrayUtil.contains(_FRIENDLY_URLS_LDP, friendlyURL)) {
 				return _isLDPEnabled(layout, false);
+			}
+
+			if (friendlyURL.equals("/recommendations")) {
+				return _hasRecommendationsDisabled(layout);
 			}
 		}
 

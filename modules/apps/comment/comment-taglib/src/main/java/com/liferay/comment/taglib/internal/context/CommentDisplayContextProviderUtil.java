@@ -7,16 +7,20 @@ package com.liferay.comment.taglib.internal.context;
 
 import com.liferay.comment.taglib.internal.context.helper.DiscussionRequestHelper;
 import com.liferay.comment.taglib.internal.context.helper.DiscussionTaglibHelper;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.display.context.CommentDisplayContextFactory;
 import com.liferay.portal.kernel.comment.display.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.comment.display.context.CommentTreeDisplayContext;
-import com.liferay.portal.kernel.display.context.BaseDisplayContextProvider;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.util.Comparator;
 
 /**
  * @author Adolfo Pérez
@@ -39,7 +43,7 @@ public class CommentDisplayContextProviderUtil {
 				discussionPermission, discussion);
 
 		for (CommentDisplayContextFactory commentDisplayContextFactory :
-				_baseDisplayContextProvider.getDisplayContextFactories()) {
+				_commentDisplayContextFactories) {
 
 			commentSectionDisplayContext =
 				commentDisplayContextFactory.getCommentSectionDisplayContext(
@@ -67,7 +71,7 @@ public class CommentDisplayContextProviderUtil {
 				discussionPermission, discussionComment);
 
 		for (CommentDisplayContextFactory commentDisplayContextFactory :
-				_baseDisplayContextProvider.getDisplayContextFactories()) {
+				_commentDisplayContextFactories) {
 
 			commentTreeDisplayContext =
 				commentDisplayContextFactory.getCommentTreeDisplayContext(
@@ -79,9 +83,9 @@ public class CommentDisplayContextProviderUtil {
 		return commentTreeDisplayContext;
 	}
 
-	private static final BaseDisplayContextProvider
-		<CommentDisplayContextFactory> _baseDisplayContextProvider =
-			new BaseDisplayContextProvider<>(
-				CommentDisplayContextFactory.class);
+	private static final ServiceTrackerList<CommentDisplayContextFactory>
+		_commentDisplayContextFactories = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			CommentDisplayContextFactory.class, Comparator.naturalOrder());
 
 }

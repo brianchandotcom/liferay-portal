@@ -6,8 +6,11 @@
 package com.liferay.journal.internal.validation;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.exception.DuplicateFolderNameException;
+import com.liferay.journal.exception.FolderNameException;
 import com.liferay.journal.exception.InvalidDDMStructureException;
 import com.liferay.journal.exception.InvalidFolderException;
 import com.liferay.journal.model.JournalArticle;
@@ -15,16 +18,22 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
-import com.liferay.journal.util.JournalValidator;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.validation.ModelValidationResults;
 import com.liferay.portal.validation.ModelValidator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,7 +95,7 @@ public class JournalFolderModelValidator
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException {
 
-		_journalValidator.validateFolderName(name);
+		_validateFolderName(name);
 
 		JournalFolder folder = _journalFolderPersistence.fetchByG_P_N(
 			groupId, parentFolderId, name);
@@ -200,6 +209,61 @@ public class JournalFolderModelValidator
 		}
 	}
 
+	private boolean _isValidName(String name) {
+		if (Validator.isNull(name)) {
+			return false;
+		}
+
+		String[] charactersBlacklist = {};
+
+		try {
+			JournalServiceConfiguration journalServiceConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			charactersBlacklist =
+				journalServiceConfiguration.charactersblacklist();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		for (String blacklistChar : charactersBlacklist) {
+			blacklistChar = StringEscapeUtils.unescapeJava(blacklistChar);
+
+			if (name.contains(blacklistChar)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private void _validateFolderName(String folderName)
+		throws FolderNameException {
+
+		if (!_isValidName(folderName)) {
+			String message =
+				"Folder name \"" + folderName +
+					"\" contains invalid characters";
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(message);
+			}
+
+			if (!ExportImportThreadLocal.isImportInProcess()) {
+				throw new FolderNameException(message);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalFolderModelValidator.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
@@ -208,9 +272,6 @@ public class JournalFolderModelValidator
 
 	@Reference
 	private JournalFolderPersistence _journalFolderPersistence;
-
-	@Reference
-	private JournalValidator _journalValidator;
 
 	@Reference
 	private Portal _portal;

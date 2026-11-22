@@ -60,9 +60,7 @@ public class FaroLayoutPreAction extends Action {
 		}
 	}
 
-	private boolean _hasLDPPlan(Layout layout, boolean ldpEnabled)
-		throws Exception {
-
+	private boolean _hasRecommendationsDisabled(Layout layout) {
 		FaroProject faroProject =
 			_faroProjectLocalService.fetchFaroProjectByGroupId(
 				layout.getGroupId());
@@ -71,11 +69,7 @@ public class FaroLayoutPreAction extends Action {
 			return false;
 		}
 
-		if (FaroNavigationUtil.isLDPEnabled(faroProject) == ldpEnabled) {
-			return true;
-		}
-
-		return false;
+		return !faroProject.isRecommendationsEnabled();
 	}
 
 	private boolean _isBlocked(Layout layout) throws Exception {
@@ -91,7 +85,7 @@ public class FaroLayoutPreAction extends Action {
 					},
 					friendlyURL)) {
 
-				return _hasLDPPlan(layout, true);
+				return _isLDPEnabled(layout, true);
 			}
 
 			if (ArrayUtil.contains(
@@ -101,8 +95,30 @@ public class FaroLayoutPreAction extends Action {
 					},
 					friendlyURL)) {
 
-				return _hasLDPPlan(layout, false);
+				return _isLDPEnabled(layout, false);
 			}
+
+			if (friendlyURL.equals("/recommendations")) {
+				return _hasRecommendationsDisabled(layout);
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isLDPEnabled(Layout layout, boolean ldpEnabled)
+		throws Exception {
+
+		FaroProject faroProject =
+			_faroProjectLocalService.fetchFaroProjectByGroupId(
+				layout.getGroupId());
+
+		if (faroProject == null) {
+			return false;
+		}
+
+		if (FaroNavigationUtil.isLDPEnabled(faroProject) == ldpEnabled) {
+			return true;
 		}
 
 		return false;

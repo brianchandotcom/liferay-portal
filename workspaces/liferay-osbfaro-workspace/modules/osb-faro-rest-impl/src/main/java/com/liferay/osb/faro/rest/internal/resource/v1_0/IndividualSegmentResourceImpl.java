@@ -84,8 +84,7 @@ public class IndividualSegmentResourceImpl
 		List<String> excludedChannelIds = Collections.emptyList();
 
 		if (Validator.isNull(channelId)) {
-			excludedChannelIds = _getExcludedChannelIds(
-				faroProject.getGroupId());
+			excludedChannelIds = _getExcludedChannelIds(groupId);
 		}
 
 		Results<com.liferay.osb.faro.engine.client.model.IndividualSegment>

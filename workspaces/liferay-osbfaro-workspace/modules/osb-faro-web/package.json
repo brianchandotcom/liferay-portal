@@ -168,8 +168,8 @@
 		"email": "mjml -l strict --config.allowIncludes true \"src/main/templates/email/*.mjml\" -o \"../osb-faro-service/src/main/resources/com/liferay/osb/faro/dependencies\"",
 		"format": "node format.mjs",
 		"start": "cross-env FARO_ENVIRONMENT_NAME=local webpack-dev-server --config webpack.dev.js",
-		"test": "cross-env LC_ALL=en_US.UTF-8 TZ=Etc/GMT jest --maxWorkers=4",
-		"test:coverage": "cross-env LC_ALL=en_US.UTF-8 TZ=Etc/GMT jest --coverage --maxWorkers=4",
+		"test": "cross-env LC_ALL=en_US.UTF-8 TZ=Etc/GMT jest",
+		"test:coverage": "cross-env LC_ALL=en_US.UTF-8 TZ=Etc/GMT jest --coverage",
 		"webpack": "webpack --config webpack.prod.js",
 		"webpack:dev": "webpack --config webpack.dev.js"
 	},

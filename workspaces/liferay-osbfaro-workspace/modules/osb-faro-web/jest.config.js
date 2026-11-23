@@ -1,3 +1,4 @@
+const {availableParallelism} = require('node:os');
 const {TextEncoder} = require('node:util');
 
 module.exports = {
@@ -610,6 +611,13 @@ module.exports = {
 	},
 	globalSetup: '<rootDir>/src/main/js/test/global-setup.js',
 	globalTeardown: '<rootDir>/src/main/js/test/global-teardown.js',
+
+	// One worker per CPU, up to 4. CI machines have 2 to 8 CPUs, and running
+	// more workers than CPUs slows every test down until some time out. This
+	// counts the machine's CPUs and ignores Docker CPU limits, so revisit it
+	// if CI ever starts setting one.
+
+	maxWorkers: Math.min(4, availableParallelism()),
 	moduleNameMapper: {
 		'^(.+\\.svg)\\?url$': '$1',
 		'^@clayui/icon-runtime$': '@clayui/icon',

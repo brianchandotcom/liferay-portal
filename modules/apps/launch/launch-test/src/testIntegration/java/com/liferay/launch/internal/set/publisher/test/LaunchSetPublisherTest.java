@@ -192,10 +192,10 @@ public class LaunchSetPublisherTest {
 		long longTitleDraftId = MapUtil.getLong(
 			_getValues(longTitleLaunchEntryObjectEntry), "draftId");
 
-		LaunchEntryManager launchEntryManager =
+		LaunchEntryManager longTitleLaunchEntryManager =
 			_getJournalArticleLaunchEntryManager();
 
-		launchEntryManager.deleteDraft(
+		longTitleLaunchEntryManager.deleteDraft(
 			longTitleJournalArticle.getResourcePrimKey(), longTitleDraftId);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -385,25 +385,25 @@ public class LaunchSetPublisherTest {
 
 			_assertLogEntry(
 				PortalException.class,
-				"Unable to publish 1 launch entries of launch set " +
-					failedLaunchSetId,
-				logEntriesMap,
-				"Unable to publish launch set " + failedLaunchSetId, "ERROR");
-			_assertLogEntry(
-				PortalException.class,
 				"No launch entry manager exists for " + className,
 				logEntriesMap,
 				"Unable to publish launch entry " +
 					failedLaunchEntryObjectEntry.getObjectEntryId(),
 				"WARN");
+			_assertLogEntry(
+				PortalException.class,
+				"Unable to publish 1 launch entries of launch set " +
+					failedLaunchSetId,
+				logEntriesMap,
+				"Unable to publish launch set " + failedLaunchSetId, "ERROR");
 
 			String message = StringBundler.concat(
-				"Launch set ", failedLaunchSetId,
-				" failed to publish after its background task was queued");
+				"Unable to publish launch set ", failedLaunchSetId,
+				" because another publish failed after its background task ",
+				"was queued");
 
 			LogEntry logEntry = logEntriesMap.get(message);
 
-			Assert.assertNotNull(logEntriesMap.toString(), logEntry);
 			Assert.assertEquals("ERROR", logEntry.getPriority());
 			Assert.assertNull(logEntry.getThrowable());
 
@@ -650,6 +650,9 @@ public class LaunchSetPublisherTest {
 		Assert.assertEquals(
 			"Unable to publish 2 launch entries of launch set " + launchSetId,
 			backgroundTask.getStatusMessage());
+
+		LaunchEntryManager launchEntryManager =
+			_getJournalArticleLaunchEntryManager();
 
 		LaunchEntryManager.Version version =
 			launchEntryManager.fetchPublishedVersion(
@@ -1009,9 +1012,9 @@ public class LaunchSetPublisherTest {
 			new Date(System.currentTimeMillis() + Time.DAY),
 			publishingLaunchSetId, TestPropsValues.getUserId());
 
-		String publishingMessage = RandomTestUtil.randomString();
 		AtomicReference<PortalException> portalExceptionAtomicReference =
 			new AtomicReference<>();
+		String publishingMessage = RandomTestUtil.randomString();
 
 		ServiceRegistration<LaunchEntryManager> serviceRegistration =
 			_registerLaunchEntryManager(
@@ -1200,7 +1203,6 @@ public class LaunchSetPublisherTest {
 
 		LogEntry logEntry = logEntriesMap.get(message);
 
-		Assert.assertNotNull(logEntriesMap.toString(), logEntry);
 		Assert.assertEquals(priority, logEntry.getPriority());
 
 		Throwable throwable = logEntry.getThrowable();

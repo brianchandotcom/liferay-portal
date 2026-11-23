@@ -81,25 +81,16 @@ public class LaunchSetErrorHelper {
 	public void markPublishFailed(
 			List<Map<String, Serializable>> launchSetErrorValuesMaps,
 			ObjectEntry launchSetObjectEntry, long userId)
-		throws PortalException {
+		throws Throwable {
 
-		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_markPublishFailed(
-						launchSetErrorValuesMaps, launchSetObjectEntry, userId);
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			() -> {
+				_markPublishFailed(
+					launchSetErrorValuesMaps, launchSetObjectEntry, userId);
 
-					return null;
-				});
-		}
-		catch (Throwable throwable) {
-			if (throwable instanceof PortalException) {
-				throw (PortalException)throwable;
-			}
-
-			throw new PortalException(throwable);
-		}
+				return null;
+			});
 	}
 
 	private String _getLaunchEntryTitle(ObjectEntry launchEntryObjectEntry) {

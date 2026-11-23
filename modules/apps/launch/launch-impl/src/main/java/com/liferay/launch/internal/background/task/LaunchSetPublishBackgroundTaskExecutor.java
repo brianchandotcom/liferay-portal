@@ -124,8 +124,9 @@ public class LaunchSetPublishBackgroundTaskExecutor
 
 		if (publishErrorsCount > 0) {
 			String message = StringBundler.concat(
-				"Launch set ", launchSetId,
-				" failed to publish after its background task was queued");
+				"Unable to publish launch set ", launchSetId,
+				" because another publish failed after its background task ",
+				"was queued");
 
 			_log.error(message);
 

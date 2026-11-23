@@ -64,12 +64,15 @@ public class ViewAllTasksSectionDisplayContext
 
 	@Override
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&entryClassNames=");
 		sb.append(HtmlUtil.escapeURL(objectDefinition.getClassName()));
 		sb.append(StringPool.COMMA);
 		sb.append(KaleoTaskInstanceToken.class.getName());
+		sb.append("&filter=(objectDefinitionId eq ");
+		sb.append(objectDefinition.getObjectDefinitionId());
+		sb.append(" or cmsTask eq true or cmpProjectTask eq true)");
 		sb.append(getNestedFieldsAPIURLParameters("cmpProjectToCMPTasks"));
 
 		return sb.toString();

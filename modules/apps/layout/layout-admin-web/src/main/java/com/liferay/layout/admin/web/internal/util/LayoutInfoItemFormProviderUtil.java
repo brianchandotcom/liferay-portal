@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.admin.web.internal.info.item.helper;
+package com.liferay.layout.admin.web.internal.util;
 
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.info.field.InfoFieldSet;
@@ -21,22 +21,19 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public class LayoutInfoItemFormProviderHelper {
+public class LayoutInfoItemFormProviderUtil {
 
-	public LayoutInfoItemFormProviderHelper(
-		FragmentRendererController fragmentRendererController) {
-
-		_fragmentRendererController = fragmentRendererController;
-	}
-
-	public InfoForm getInfoForm() {
+	public static InfoForm getInfoForm() {
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
 		).build();
 	}
 
-	public InfoForm getInfoForm(Layout layout, long segmentsExperienceId) {
+	public static InfoForm getInfoForm(
+		FragmentRendererController fragmentRendererController, Layout layout,
+		long segmentsExperienceId) {
+
 		if (!layout.isTypeContent()) {
 			return getInfoForm();
 		}
@@ -48,7 +45,8 @@ public class LayoutInfoItemFormProviderHelper {
 		if (segmentsExperienceId != defaultSegmentsExperienceId) {
 			return InfoForm.builder(
 			).infoFieldSetEntry(
-				_getLayoutInfoFieldSet(layout, segmentsExperienceId)
+				_getLayoutInfoFieldSet(
+					fragmentRendererController, layout, segmentsExperienceId)
 			).build();
 		}
 
@@ -56,47 +54,51 @@ public class LayoutInfoItemFormProviderHelper {
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
 		).infoFieldSetEntry(
-			_getLayoutInfoFieldSet(layout, segmentsExperienceId)
+			_getLayoutInfoFieldSet(
+				fragmentRendererController, layout, segmentsExperienceId)
 		).build();
 	}
 
-	private InfoFieldSet _getBasicInformationInfoFieldSet() {
+	private static InfoFieldSet _getBasicInformationInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			LayoutInfoItemFields.nameInfoField
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "basic-information")
+			InfoLocalizedValue.localize(
+				LayoutInfoItemFormProviderUtil.class, "basic-information")
 		).name(
 			"basic-information"
 		).build();
 	}
 
-	private InfoFieldSet _getLayoutInfoFieldSet(
-		Layout layout, long segmentsExperienceId) {
+	private static InfoFieldSet _getLayoutInfoFieldSet(
+		FragmentRendererController fragmentRendererController, Layout layout,
+		long segmentsExperienceId) {
 
 		return InfoFieldSet.builder(
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "inline-content")
+			InfoLocalizedValue.localize(
+				LayoutInfoItemFormProviderUtil.class, "inline-content")
 		).infoFieldSetEntries(
-			_getLayoutInfoFieldSetEntries(layout, segmentsExperienceId)
+			_getLayoutInfoFieldSetEntries(
+				fragmentRendererController, layout, segmentsExperienceId)
 		).name(
 			"inline-content"
 		).build();
 	}
 
-	private List<InfoFieldSetEntry> _getLayoutInfoFieldSetEntries(
-		Layout layout, long segmentsExperienceId) {
+	private static List<InfoFieldSetEntry> _getLayoutInfoFieldSetEntries(
+		FragmentRendererController fragmentRendererController, Layout layout,
+		long segmentsExperienceId) {
 
 		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
 
 		InfoFieldUtil.forEachInfoField(
-			_fragmentRendererController, layout, segmentsExperienceId,
+			fragmentRendererController, layout, segmentsExperienceId,
 			(infoField, type, unsafeSupplier) -> infoFieldSetEntries.add(
 				infoField));
 
 		return infoFieldSetEntries;
 	}
-
-	private final FragmentRendererController _fragmentRendererController;
 
 }

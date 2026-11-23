@@ -68,14 +68,26 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(service = DDMFormEmailNotificationSender.class)
 public class DDMFormEmailNotificationSender {
+
+	public DDMFormEmailNotificationSender(
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
+		GroupLocalService groupLocalService, HtmlParser htmlParser,
+		Language language, MailService mailService, Portal portal,
+		PrefsProps prefsProps, UserLocalService userLocalService) {
+
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
+		_groupLocalService = groupLocalService;
+		_htmlParser = htmlParser;
+		_language = language;
+		_mailService = mailService;
+		_portal = portal;
+		_prefsProps = prefsProps;
+		_userLocalService = userLocalService;
+	}
 
 	public void sendEmailNotification(
 		DDMFormInstanceRecord ddmFormInstanceRecord,
@@ -544,28 +556,14 @@ public class DDMFormEmailNotificationSender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormEmailNotificationSender.class);
 
-	@Reference
-	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private HtmlParser _htmlParser;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private MailService _mailService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PrefsProps _prefsProps;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry;
+	private final GroupLocalService _groupLocalService;
+	private final HtmlParser _htmlParser;
+	private final Language _language;
+	private final MailService _mailService;
+	private final Portal _portal;
+	private final PrefsProps _prefsProps;
+	private final UserLocalService _userLocalService;
 
 }

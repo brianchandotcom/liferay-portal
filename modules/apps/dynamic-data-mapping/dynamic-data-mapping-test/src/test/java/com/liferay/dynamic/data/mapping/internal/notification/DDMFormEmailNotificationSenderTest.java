@@ -16,7 +16,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -43,7 +42,7 @@ public class DDMFormEmailNotificationSenderTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		_setUpDDMFormEmailNotificationSender();
 		_setUpDDMFormFieldTypeServicesRegistry();
 	}
@@ -132,15 +131,10 @@ public class DDMFormEmailNotificationSenderTest {
 		Assert.assertEquals("1", String.valueOf(fieldProperties.get("value")));
 	}
 
-	private static void _setUpDDMFormEmailNotificationSender()
-		throws Exception {
-
-		_ddmFormEmailNotificationSender = new DDMFormEmailNotificationSender();
-
-		ReflectionTestUtil.setFieldValue(
-			_ddmFormEmailNotificationSender,
-			"_ddmFormFieldTypeServicesRegistry",
-			_ddmFormFieldTypeServicesRegistry);
+	private static void _setUpDDMFormEmailNotificationSender() {
+		_ddmFormEmailNotificationSender = new DDMFormEmailNotificationSender(
+			_ddmFormFieldTypeServicesRegistry, null, null, null, null, null,
+			null, null);
 	}
 
 	private static void _setUpDDMFormFieldTypeServicesRegistry() {

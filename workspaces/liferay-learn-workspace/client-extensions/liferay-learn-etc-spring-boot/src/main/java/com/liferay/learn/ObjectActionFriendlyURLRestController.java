@@ -227,7 +227,6 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 				JSONObject childJSONObject = itemsJSONArray.getJSONObject(i);
 
 				long childObjectEntryId = childJSONObject.getLong("id");
-
 				String childFriendlyURLPath =
 					friendlyURLPath + "/" +
 						_normalizeSlug(childJSONObject.getString("title"));
@@ -280,12 +279,12 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 			return _parentDTOKey;
 		}
 
-		public String getRESTPath() {
-			return _restPath;
-		}
-
 		public String getRelationshipFieldName() {
 			return _relationshipFieldName;
+		}
+
+		public String getRESTPath() {
+			return _restPath;
 		}
 
 		private final String _parentDTOKey;

@@ -70,7 +70,7 @@ public class GetContentItemCommentStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_discussionPermission.checkAddPermission(
+		_discussionPermission.checkViewPermission(
 			themeDisplay.getPermissionChecker(), themeDisplay.getCompanyId(),
 			themeDisplay.getScopeGroupId(), className1, classPK);
 

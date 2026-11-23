@@ -226,10 +226,10 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject childJSONObject = itemsJSONArray.getJSONObject(i);
 
-				long childObjectEntryId = childJSONObject.getLong("id");
 				String childFriendlyURLPath =
 					friendlyURLPath + "/" +
 						_normalizeSlug(childJSONObject.getString("title"));
+				long childObjectEntryId = childJSONObject.getLong("id");
 
 				_patchFriendlyURL(
 					authorization, childJSONObject.getString("friendlyUrlPath"),

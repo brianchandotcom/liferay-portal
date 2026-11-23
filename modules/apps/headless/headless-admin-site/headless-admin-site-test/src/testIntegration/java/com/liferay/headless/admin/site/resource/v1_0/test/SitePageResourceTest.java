@@ -1558,11 +1558,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ContentPageSpecification contentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				externalReferenceCode, null, null,
-				new PageExperience[] {pageExperience}, testGroup.getGroupId(),
+				externalReferenceCode, null, null, null, testGroup.getGroupId(),
 				PageSpecification.Status.APPROVED);
 
-		pageExperience.setPageElements(() -> new PageElement[] {pageElement});
+		contentPageSpecification.setPageExperiences(
+			() -> new PageExperience[] {pageExperience});
 
 		sitePage.setPageSpecifications(
 			() -> new PageSpecification[] {contentPageSpecification});

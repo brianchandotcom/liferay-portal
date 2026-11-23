@@ -368,8 +368,9 @@ public class ViewLaunchDisplayContext {
 			return "scheduled";
 		}
 
-		if (MapUtil.getLong(objectEntry.getValues(), "publishErrorsCount") >
-				0) {
+		if (objectEntry.isDraft() &&
+			(MapUtil.getLong(objectEntry.getValues(), "publishErrorsCount") >
+				0)) {
 
 			return "failed";
 		}

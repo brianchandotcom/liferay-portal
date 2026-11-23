@@ -41,6 +41,8 @@ export type LaunchStatus = 'failed' | 'open' | 'published' | 'scheduled';
 
 const WORKFLOW_STATUS_APPROVED = 0;
 
+const WORKFLOW_STATUS_DRAFT = 2;
+
 const WORKFLOW_STATUS_SCHEDULED = 7;
 
 export function getLaunchStatus(launch: Launch): LaunchStatus {
@@ -52,7 +54,10 @@ export function getLaunchStatus(launch: Launch): LaunchStatus {
 		return 'scheduled';
 	}
 
-	if (Number(launch.publishErrorsCount) > 0) {
+	if (
+		launch.status?.code === WORKFLOW_STATUS_DRAFT &&
+		Number(launch.publishErrorsCount) > 0
+	) {
 		return 'failed';
 	}
 

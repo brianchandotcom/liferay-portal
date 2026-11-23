@@ -6,14 +6,12 @@
 package com.liferay.frontend.taglib.sample.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.frontend.spa.FrontendSPA;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "dynamic.include.key=/html/common/themes/top_head.jsp#pre",
 	service = DynamicInclude.class
 )
-public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class SampleTopHeadJSPDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -70,21 +68,6 @@ public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 			printWriter.println("color:rgb(1, 2, 3)!important}</style>");
 		}
-	}
-
-	@Override
-	protected String getJspPath() {
-		return null;
-	}
-
-	@Override
-	protected Log getLog() {
-		return null;
-	}
-
-	@Override
-	protected ServletContext getServletContext() {
-		return null;
 	}
 
 	@Reference

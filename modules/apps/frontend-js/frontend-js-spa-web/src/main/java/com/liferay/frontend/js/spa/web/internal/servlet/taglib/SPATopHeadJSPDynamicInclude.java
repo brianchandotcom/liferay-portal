@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -75,7 +74,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	property = "dynamic.include.key=/html/common/themes/top_head.jsp#post",
 	service = DynamicInclude.class
 )
-public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class SPATopHeadJSPDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -203,21 +202,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		}
 
 		_navigationExceptionSelectorTracker = null;
-	}
-
-	@Override
-	protected String getJspPath() {
-		return null;
-	}
-
-	@Override
-	protected Log getLog() {
-		return null;
-	}
-
-	@Override
-	protected ServletContext getServletContext() {
-		return null;
 	}
 
 	private JSONArray _getExcludedPathsJSONArray(

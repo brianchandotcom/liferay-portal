@@ -5,21 +5,17 @@
 
 package com.liferay.dynamic.data.mapping.form.analytics.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -29,12 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = DynamicInclude.class
 )
 public class DDMFormAnalyticsTopHeadJSPDynamicInclude
-	extends BaseJSPDynamicInclude {
-
-	@Override
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
+	extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -50,26 +41,8 @@ public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}
 
-	@Override
-	protected String getJspPath() {
-		return null;
-	}
-
-	@Override
-	protected Log getLog() {
-		return _log;
-	}
-
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		DDMFormAnalyticsTopHeadJSPDynamicInclude.class,
 		"/META-INF/resources/form_analytics.tmpl");
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormAnalyticsTopHeadJSPDynamicInclude.class);
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.form.analytics)"
-	)
-	private ServletContext _servletContext;
 
 }

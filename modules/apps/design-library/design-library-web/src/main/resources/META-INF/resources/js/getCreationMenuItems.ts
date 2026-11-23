@@ -6,7 +6,11 @@
 import openModuleModal from './openModuleModal';
 import {DesignLibraryResourceType} from './types';
 
-type CreationMenuItem = {href?: string; label: string; onClick?: () => void};
+export type CreationMenuItem = {
+	href?: string;
+	label: string;
+	onClick?: () => void;
+};
 
 export default function getCreationMenuItems(
 	resourceTypes: DesignLibraryResourceType[]

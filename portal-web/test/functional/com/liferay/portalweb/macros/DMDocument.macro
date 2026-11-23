@@ -829,23 +829,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertNoZipFileFromTempFolder(appServer = null, fileNamePattern = null) {
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var fileName = StringUtil.split("**/${fileNamePattern}");
-
-		var tempFile = "${liferayHome}/${appServer}/temp/${fileName}";
-
-		var tempFileExists = FileUtil.exists(${tempFile});
-
-		if (${tempFileExists} == "false") {
-			echo("There are no temporary zip files");
-		}
-		else {
-			fail("There is a temporary zip file");
-		}
-	}
-
-	@summary = "Default summary"
 	macro cancelCheckoutCP(dmDocumentTitle = null, dmRepositoryName = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
@@ -1410,13 +1393,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteDocumentLibraryFolder() {
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-		FileUtil.delete("${liferayHome}/data/document_library");
-	}
-
-	@summary = "Default summary"
 	macro deletePG(dmDocumentTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
@@ -1448,13 +1424,6 @@ definition {
 		AssertElementNotPresent(
 			key_mgDocumentTitle = ${mgDocumentTitle},
 			locator1 = "MediaGallery#IMAGE_TITLE");
-	}
-
-	@summary = "Default summary"
-	macro deleteTempFolder(appServer = null) {
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-		FileUtil.delete("${liferayHome}/${appServer}/temp");
 	}
 
 	@summary = "Default summary"

@@ -24,7 +24,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.ws.rs.ForbiddenException;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -130,7 +129,7 @@ public class IndividualSegmentResourceImplTest {
 		);
 
 		Mockito.doReturn(
-			Arrays.asList(accessibleFaroChannel, inaccessibleFaroChannel)
+			List.of(accessibleFaroChannel, inaccessibleFaroChannel)
 		).when(
 			_faroChannelLocalService
 		).dslQuery(
@@ -152,9 +151,8 @@ public class IndividualSegmentResourceImplTest {
 		Mockito.verify(
 			_contactsEngineClient
 		).getIndividualIndividualSegments(
-			_faroProject, null,
-			Collections.singletonList(_CHANNEL_ID_SELECT_USERS), _INDIVIDUAL_ID,
-			null, null, 1, 20, null
+			_faroProject, null, List.of(_CHANNEL_ID_SELECT_USERS),
+			_INDIVIDUAL_ID, null, null, 1, 20, null
 		);
 
 		_individualSegmentResourceImpl.

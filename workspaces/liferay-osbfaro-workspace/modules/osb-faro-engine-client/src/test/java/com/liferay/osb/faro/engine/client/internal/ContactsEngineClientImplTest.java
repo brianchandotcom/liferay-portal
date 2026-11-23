@@ -166,8 +166,7 @@ public class ContactsEngineClientImplTest {
 
 		_contactsEngineClientImpl.getIndividualIndividualSegments(
 			_faroProject, null,
-			Arrays.asList(
-				String.valueOf(channelId1), String.valueOf(channelId2)),
+			List.of(String.valueOf(channelId1), String.valueOf(channelId2)),
 			RandomTestUtil.randomString(), null, null,
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(), null);
 

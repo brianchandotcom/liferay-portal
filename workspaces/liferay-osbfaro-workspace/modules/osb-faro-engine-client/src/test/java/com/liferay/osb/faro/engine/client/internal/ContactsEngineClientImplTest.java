@@ -153,10 +153,10 @@ public class ContactsEngineClientImplTest {
 			RandomTestUtil.randomString(), null, null,
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(), null);
 
-		String filter = GetterUtil.getString(_uriVariables.get("filter"));
+		String filterString = GetterUtil.getString(_uriVariables.get("filter"));
 
-		Assert.assertFalse(filter.contains(" ne "));
-		Assert.assertTrue(filter.contains("channelId eq " + channelId));
+		Assert.assertFalse(filterString.contains(" ne "));
+		Assert.assertTrue(filterString.contains("channelId eq " + channelId));
 	}
 
 	@Test
@@ -171,10 +171,10 @@ public class ContactsEngineClientImplTest {
 			RandomTestUtil.randomString(), null, null,
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(), null);
 
-		String filter = GetterUtil.getString(_uriVariables.get("filter"));
+		String filterString = GetterUtil.getString(_uriVariables.get("filter"));
 
-		Assert.assertTrue(filter.contains("channelId ne " + channelId1));
-		Assert.assertTrue(filter.contains("channelId ne " + channelId2));
+		Assert.assertTrue(filterString.contains("channelId ne " + channelId1));
+		Assert.assertTrue(filterString.contains("channelId ne " + channelId2));
 	}
 
 	@Test

@@ -17,10 +17,10 @@ describe('InterestPagesList', () => {
 			</MemoryRouter>
 		);
 
-		await waitFor(() => {});
-
-		expect(
-			container.querySelector('.searchable-table-root')
-		).toBeInTheDocument();
+		await waitFor(() =>
+			expect(
+				container.querySelector('.searchable-table-root')
+			).toBeInTheDocument()
+		);
 	});
 });

@@ -38,14 +38,22 @@ const PANELS = {
 const AssetNavigationCommentsPanel = ({
 	additionalProps: {commentsProps},
 	item,
+	readOnly,
 }: {
 	additionalProps: any;
 	item: ISearchAssetObjectEntry;
+	readOnly: boolean;
 }) => {
 	const {
 		embedded: {id},
 		entryClassName,
 	}: ISearchAssetObjectEntry = item;
+
+	const commentsURLs = getAssetCommentsURLs(
+		commentsProps,
+		entryClassName,
+		id
+	);
 
 	return (
 		<>
@@ -55,7 +63,9 @@ const AssetNavigationCommentsPanel = ({
 
 			<CommentsPanel
 				{...commentsProps}
-				{...getAssetCommentsURLs(commentsProps, entryClassName, id)}
+				{...commentsURLs}
+				addCommentURL={readOnly ? '' : commentsURLs.addCommentURL}
+				readOnly={readOnly}
 			/>
 		</>
 	);
@@ -149,9 +159,10 @@ export default function AssetNavigationModalContent({
 
 	const activePanel = openSidePanel ? currentPanel : null;
 
-	const showCommentsPanel =
-		!showInfoPanel &&
-		(currentItem.actionIds?.includes(SharingPermission.Comment) ?? true);
+	const showCommentsPanel = !showInfoPanel;
+
+	const canComment =
+		currentItem.actionIds?.includes(SharingPermission.Comment) ?? true;
 
 	return (
 		<>
@@ -191,6 +202,7 @@ export default function AssetNavigationModalContent({
 							<AssetNavigationCommentsPanel
 								additionalProps={additionalProps as any}
 								item={currentItem}
+								readOnly={!canComment}
 							/>
 						) : showInfoPanel ? (
 							<AssetTypeInfoPanel

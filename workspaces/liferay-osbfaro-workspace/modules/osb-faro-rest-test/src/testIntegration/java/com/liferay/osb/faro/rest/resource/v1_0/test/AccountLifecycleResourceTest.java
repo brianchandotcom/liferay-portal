@@ -216,8 +216,7 @@ public class AccountLifecycleResourceTest
 				HttpComponentsUtil.getParameter(location, name, false)));
 	}
 
-	private String _getWorkspaceGroupChannelAccountLifecyclesPage(
-			String search, String sortString)
+	private String _getLocation(String search, String sortString)
 		throws Exception {
 
 		accountLifecycleResource.getWorkspaceGroupChannelAccountLifecyclesPage(
@@ -232,8 +231,7 @@ public class AccountLifecycleResourceTest
 
 		String search = RandomTestUtil.randomString();
 
-		String location = _getWorkspaceGroupChannelAccountLifecyclesPage(
-			search, "dateModified:asc");
+		String location = _getLocation(search, "dateModified:asc");
 
 		_assertParameter(_CHANNEL_ID, location, "channelId");
 		_assertParameter("1", location, "page");
@@ -245,19 +243,17 @@ public class AccountLifecycleResourceTest
 	private void _testGetWorkspaceGroupChannelAccountLifecyclesPageWithSort()
 		throws Exception {
 
-		String location = _getWorkspaceGroupChannelAccountLifecyclesPage(
-			RandomTestUtil.randomString(), "id:desc");
-
-		_assertParameter("id,desc", location, "sort");
+		_assertParameter(
+			"id,desc", _getLocation(RandomTestUtil.randomString(), "id:desc"),
+			"sort");
 	}
 
 	private void _testGetWorkspaceGroupChannelAccountLifecyclesPageWithoutSort()
 		throws Exception {
 
-		String location = _getWorkspaceGroupChannelAccountLifecyclesPage(
-			RandomTestUtil.randomString(), null);
-
-		_assertParameter("name,asc", location, "sort");
+		_assertParameter(
+			"name,asc", _getLocation(RandomTestUtil.randomString(), null),
+			"sort");
 	}
 
 	private static final String _CHANNEL_ID = String.valueOf(

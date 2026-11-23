@@ -32,6 +32,10 @@ public class AccountLifecycleDTOConverterTest {
 	public void testToDTO() {
 		Assert.assertNull(_accountLifecycleDTOConverter.toDTO(null, null));
 
+		com.liferay.osb.faro.engine.client.model.AccountLifecycle
+			engineClientAccountLifecycle =
+				new com.liferay.osb.faro.engine.client.model.AccountLifecycle();
+
 		com.liferay.osb.faro.engine.client.model.AccountLifecycleStage
 			engineClientAccountLifecycleStage =
 				new com.liferay.osb.faro.engine.client.model.
@@ -47,12 +51,9 @@ public class AccountLifecycleDTOConverterTest {
 		engineClientAccountLifecycleStage.setPosition(
 			RandomTestUtil.randomInt());
 
-		com.liferay.osb.faro.engine.client.model.AccountLifecycle
-			engineClientAccountLifecycle =
-				new com.liferay.osb.faro.engine.client.model.AccountLifecycle();
-
 		engineClientAccountLifecycle.setAccountLifecycleStages(
 			Collections.singletonList(engineClientAccountLifecycleStage));
+
 		engineClientAccountLifecycle.setDefaultAccountLifecycle(
 			RandomTestUtil.randomBoolean());
 		engineClientAccountLifecycle.setDescription(

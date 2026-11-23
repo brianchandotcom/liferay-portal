@@ -31,28 +31,31 @@ public class AccountLifecycleHelper {
 		FaroProject faroProject, String channelId, String accountLifecycleId) {
 
 		try {
-			long channelIdLong = GetterUtil.getLong(channelId);
+			long parsedChannelId = GetterUtil.getLong(channelId);
 
-			if (channelIdLong > 0) {
-				AccountLifecycle accountLifecycle =
-					_contactsEngineClient.getAccountLifecycle(
-						faroProject, accountLifecycleId);
+			if (parsedChannelId <= 0) {
+				throw ProblemUtil.getNotFoundException(
+					_getNotFoundExceptionTitle(accountLifecycleId));
+			}
 
-				Results<AccountLifecycle> results =
-					_contactsEngineClient.getAccountLifecycles(
-						faroProject, channelIdLong, null,
-						accountLifecycle.getExternalReferenceCode(), null, 1, 1,
-						null);
+			AccountLifecycle accountLifecycle =
+				_contactsEngineClient.getAccountLifecycle(
+					faroProject, accountLifecycleId);
 
-				for (AccountLifecycle channelAccountLifecycle :
-						results.getItems()) {
+			Results<AccountLifecycle> results =
+				_contactsEngineClient.getAccountLifecycles(
+					faroProject, parsedChannelId, null,
+					accountLifecycle.getExternalReferenceCode(), null, 1, 1,
+					null);
 
-					if (Objects.equals(
-							channelAccountLifecycle.getId(),
-							accountLifecycle.getId())) {
+			for (AccountLifecycle channelAccountLifecycle :
+					results.getItems()) {
 
-						return accountLifecycle;
-					}
+				if (Objects.equals(
+						channelAccountLifecycle.getId(),
+						accountLifecycle.getId())) {
+
+					return accountLifecycle;
 				}
 			}
 

@@ -11,8 +11,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,9 +44,12 @@ public class AccountLifecycleDTOConverter
 		return new AccountLifecycle() {
 			{
 				setAccountLifecycleStages(
-					() -> _toAccountLifecycleStages(
-						dtoConverterContext,
-						accountLifecycle.getAccountLifecycleStages()));
+					() -> TransformUtil.transformToArray(
+						accountLifecycle.getAccountLifecycleStages(),
+						accountLifecycleStage ->
+							_accountLifecycleStageDTOConverter.toDTO(
+								dtoConverterContext, accountLifecycleStage),
+						AccountLifecycleStage.class));
 				setDateModified(accountLifecycle::getModifiedDate);
 				setDefaultAccountLifecycle(
 					accountLifecycle::isDefaultAccountLifecycle);
@@ -57,18 +58,6 @@ public class AccountLifecycleDTOConverter
 				setName(accountLifecycle::getName);
 			}
 		};
-	}
-
-	private AccountLifecycleStage[] _toAccountLifecycleStages(
-		DTOConverterContext dtoConverterContext,
-		List<com.liferay.osb.faro.engine.client.model.AccountLifecycleStage>
-			accountLifecycleStages) {
-
-		return TransformUtil.transformToArray(
-			accountLifecycleStages,
-			accountLifecycleStage -> _accountLifecycleStageDTOConverter.toDTO(
-				dtoConverterContext, accountLifecycleStage),
-			AccountLifecycleStage.class);
 	}
 
 	@Reference(

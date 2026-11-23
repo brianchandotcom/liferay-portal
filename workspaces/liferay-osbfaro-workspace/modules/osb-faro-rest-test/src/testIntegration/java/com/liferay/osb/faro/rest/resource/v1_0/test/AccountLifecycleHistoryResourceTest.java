@@ -14,6 +14,7 @@ import com.liferay.osb.faro.rest.client.problem.Problem;
 import com.liferay.osb.faro.rest.resource.v1_0.test.util.ContactsEngineHttpServer;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -211,8 +212,9 @@ public class AccountLifecycleHistoryResourceTest
 	}
 
 	private String _getAccountLifecycleStatusPath() {
-		return "/account-lifecycles/" + _ACCOUNT_LIFECYCLE_ID + "/accounts/" +
-			_ACCOUNT_ID + "/status";
+		return StringBundler.concat(
+			"/account-lifecycles/", _ACCOUNT_LIFECYCLE_ID, "/accounts/",
+			_ACCOUNT_ID, "/status");
 	}
 
 	private void _testGetWorkspaceGroupChannelAccountAccountLifecycleHistoryWithAccountLifecycleOfAnotherChannel()

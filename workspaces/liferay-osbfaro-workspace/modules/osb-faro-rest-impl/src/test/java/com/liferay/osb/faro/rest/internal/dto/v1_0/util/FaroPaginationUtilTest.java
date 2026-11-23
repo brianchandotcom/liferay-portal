@@ -41,7 +41,7 @@ public class FaroPaginationUtilTest {
 		List<String> paginatedItems = FaroPaginationUtil.paginate(
 			items, Pagination.of(2, 20));
 
-		Assert.assertTrue(paginatedItems.toString(), paginatedItems.isEmpty());
+		Assert.assertTrue(paginatedItems.isEmpty());
 	}
 
 	@Test

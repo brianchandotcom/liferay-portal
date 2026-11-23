@@ -13,8 +13,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,26 +43,18 @@ public class AccountLifecycleHistoryDTOConverter
 		return new AccountLifecycleHistory() {
 			{
 				setAccountLifecycleStageHistories(
-					() -> _toAccountLifecycleStageHistories(
-						dtoConverterContext,
+					() -> TransformUtil.transformToArray(
 						accountLifecycleStatus.
-							getAccountLifecycleStageStatuses()));
+							getAccountLifecycleStageStatuses(),
+						accountLifecycleStageStatus ->
+							_accountLifecycleStageHistoryDTOConverter.toDTO(
+								dtoConverterContext,
+								accountLifecycleStageStatus),
+						AccountLifecycleStageHistory.class));
 				setId(accountLifecycleStatus::getId);
 				setName(accountLifecycleStatus::getName);
 			}
 		};
-	}
-
-	private AccountLifecycleStageHistory[] _toAccountLifecycleStageHistories(
-		DTOConverterContext dtoConverterContext,
-		List<AccountLifecycleStageStatus> accountLifecycleStageStatuses) {
-
-		return TransformUtil.transformToArray(
-			accountLifecycleStageStatuses,
-			accountLifecycleStageStatus ->
-				_accountLifecycleStageHistoryDTOConverter.toDTO(
-					dtoConverterContext, accountLifecycleStageStatus),
-			AccountLifecycleStageHistory.class);
 	}
 
 	@Reference(

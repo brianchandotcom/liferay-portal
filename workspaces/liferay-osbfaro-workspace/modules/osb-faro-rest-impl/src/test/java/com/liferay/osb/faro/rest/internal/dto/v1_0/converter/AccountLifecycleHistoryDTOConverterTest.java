@@ -36,6 +36,9 @@ public class AccountLifecycleHistoryDTOConverterTest {
 		Assert.assertNull(
 			_accountLifecycleHistoryDTOConverter.toDTO(null, null));
 
+		AccountLifecycleStatus accountLifecycleStatus =
+			new AccountLifecycleStatus();
+
 		AccountLifecycleStageStatus accountLifecycleStageStatus =
 			new AccountLifecycleStageStatus();
 
@@ -43,11 +46,9 @@ public class AccountLifecycleHistoryDTOConverterTest {
 		accountLifecycleStageStatus.setName(RandomTestUtil.randomString());
 		accountLifecycleStageStatus.setStartDate(RandomTestUtil.nextDate());
 
-		AccountLifecycleStatus accountLifecycleStatus =
-			new AccountLifecycleStatus();
-
 		accountLifecycleStatus.setAccountLifecycleStageStatuses(
 			Collections.singletonList(accountLifecycleStageStatus));
+
 		accountLifecycleStatus.setId(RandomTestUtil.randomString());
 		accountLifecycleStatus.setName(RandomTestUtil.randomString());
 

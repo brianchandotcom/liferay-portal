@@ -3,30 +3,36 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import {ComponentProps} from 'react';
-
-import getCreationMenuItems from './getCreationMenuItems';
+import getCreationMenuItems, {CreationMenuItem} from './getCreationMenuItems';
 import {DesignLibraryResourceType} from './types';
 
-type CreationMenuItems = ComponentProps<typeof ClayDropDownWithItems>['items'];
+type CreationMenuSubmenu = {
+	items: CreationMenuItem[];
+	label: string;
+	type: 'contextual';
+};
 
 export default function getGroupedCreationMenuItems(
 	resourceTypes: DesignLibraryResourceType[]
-): CreationMenuItems {
-	return resourceTypes.flatMap<CreationMenuItems[number]>((resourceType) => {
-		const creationMenuItems = getCreationMenuItems([resourceType]);
+): Array<CreationMenuSubmenu | CreationMenuItem> {
+	return resourceTypes.flatMap<CreationMenuSubmenu | CreationMenuItem>(
+		(resourceType) => {
+			const creationMenuItems = getCreationMenuItems([resourceType]);
 
-		if (creationMenuItems.length > 1) {
-			return [
-				{
-					items: creationMenuItems,
-					label: resourceType.creationItemsGroupLabel,
-					type: 'contextual',
-				},
-			];
+			if (
+				creationMenuItems.length > 1 &&
+				resourceType.creationItemsGroupLabel
+			) {
+				return [
+					{
+						items: creationMenuItems,
+						label: resourceType.creationItemsGroupLabel,
+						type: 'contextual',
+					},
+				];
+			}
+
+			return creationMenuItems;
 		}
-
-		return creationMenuItems;
-	});
+	);
 }

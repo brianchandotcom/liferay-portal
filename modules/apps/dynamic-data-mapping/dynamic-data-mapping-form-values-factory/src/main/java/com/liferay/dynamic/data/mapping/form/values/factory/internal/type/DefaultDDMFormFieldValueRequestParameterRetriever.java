@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.form.field.type;
+package com.liferay.dynamic.data.mapping.form.values.factory.internal.type;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import jakarta.servlet.http.HttpServletRequest;

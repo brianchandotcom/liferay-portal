@@ -75,7 +75,7 @@ public class IndividualSegmentMembershipChangeMetricResourceImplTest {
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
 	private static final String _INDIVIDUAL_SEGMENT_ID_SELECT_USERS =
-		String.valueOf(RandomTestUtil.randomLong());
+		RandomTestUtil.randomString();
 
 	private final ContactsEngineClient _contactsEngineClient = Mockito.mock(
 		ContactsEngineClient.class);

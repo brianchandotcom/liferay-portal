@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -137,8 +138,8 @@ public class DLAdminDisplayContextTest {
 		serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
 
-		_addFileEntry(parentFolder1, serviceContext);
-		_addFileEntry(parentFolder2, serviceContext);
+		_addFileEntry(parentFolder1.getFolderId(), serviceContext);
+		_addFileEntry(parentFolder2.getFolderId(), serviceContext);
 
 		SearchContainer<Object> searchContainer = _getSearchContainer(
 			_getMockLiferayPortletActionRequest(
@@ -146,6 +147,101 @@ public class DLAdminDisplayContextTest {
 				null, null));
 
 		Assert.assertEquals(1, searchContainer.getTotal());
+	}
+
+	@Test
+	@TestInfo("LPS-154979")
+	public void testGetSearchContainerWithFilterByAssetCategoryIds()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(), "Vocabulary",
+				new ServiceContext());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		_addFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		Folder folder = DLAppTestUtil.addFolder(_group.getGroupId());
+
+		FileEntry fileEntry = _addFileEntry(
+			folder.getFolderId(), serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory2.getCategoryId()});
+
+		_addFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		_assertSearchContainer(
+			fileEntry,
+			_getMockLiferayPortletActionRequest(
+				folder.getFolderId(), "assetCategoryId",
+				String.valueOf(assetCategory2.getCategoryId())));
+		_assertSearchContainer(
+			fileEntry,
+			_getMockLiferayPortletActionRequest(
+				folder.getFolderId(), "assetCategoryId",
+				String.valueOf(assetCategory1.getCategoryId()),
+				String.valueOf(assetCategory2.getCategoryId())));
+	}
+
+	@Test
+	@TestInfo("LPS-182194")
+	public void testGetSearchContainerWithFilterByAssetTagIds()
+		throws Exception {
+
+		String assetTagName1 = RandomTestUtil.randomString();
+		String assetTagName2 = RandomTestUtil.randomString();
+		String assetTagName3 = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAssetTagNames(
+			new String[] {assetTagName1, assetTagName2});
+
+		FileEntry fileEntry = _addFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		serviceContext.setAssetTagNames(
+			new String[] {assetTagName1, assetTagName3});
+
+		_addFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		_assertSearchContainer(
+			fileEntry,
+			_getMockLiferayPortletActionRequest(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "assetTagId",
+				assetTagName1, assetTagName2));
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			_getMockLiferayPortletActionRequest(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "assetTagId",
+				assetTagName1, assetTagName2, assetTagName3));
+
+		Assert.assertEquals(
+			"there-are-no-documents-or-media-files-in-this-folder",
+			searchContainer.getEmptyResultsMessage());
+		Assert.assertEquals(0, searchContainer.getTotal());
 	}
 
 	@Test
@@ -166,8 +262,8 @@ public class DLAdminDisplayContextTest {
 
 		serviceContext.setAssetTagNames(new String[] {assetTagName});
 
-		_addFileEntry(parentFolder1, serviceContext);
-		_addFileEntry(parentFolder2, serviceContext);
+		_addFileEntry(parentFolder1.getFolderId(), serviceContext);
+		_addFileEntry(parentFolder2.getFolderId(), serviceContext);
 
 		SearchContainer<Object> searchContainer = _getSearchContainer(
 			_getMockLiferayPortletActionRequest(
@@ -221,16 +317,33 @@ public class DLAdminDisplayContextTest {
 			content.getBytes(), null, null, null, serviceContext);
 	}
 
-	private void _addFileEntry(
-			Folder parentFolder, ServiceContext serviceContext)
+	private FileEntry _addFileEntry(
+			long folderId, ServiceContext serviceContext)
 		throws Exception {
 
-		_dlAppService.addFileEntry(
-			null, _group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
-			null, serviceContext);
+		return _dlAppService.addFileEntry(
+			null, _group.getGroupId(), folderId, RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			BaseDLAppTestCase.CONTENT.getBytes(), null, null, null,
+			serviceContext);
+	}
+
+	private void _assertSearchContainer(
+		FileEntry fileEntry,
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest) {
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			mockLiferayPortletActionRequest);
+
+		List<Object> results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
+
+		FileEntry resultFileEntry = (FileEntry)results.get(0);
+
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(), resultFileEntry.getFileEntryId());
 	}
 
 	private Object _getDLAdminDisplayContext(
@@ -293,6 +406,20 @@ public class DLAdminDisplayContextTest {
 		if (Validator.isNotNull(tagName)) {
 			mockLiferayPortletActionRequest.setParameter("tag", tagName);
 		}
+
+		return mockLiferayPortletActionRequest;
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			long folderId, String name, String... values)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(name, values);
+		mockLiferayPortletActionRequest.setParameter(
+			"folderId", String.valueOf(folderId));
 
 		return mockLiferayPortletActionRequest;
 	}

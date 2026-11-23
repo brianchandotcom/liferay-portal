@@ -5,6 +5,8 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_2;
 
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormDeserializeUtil;
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
@@ -15,10 +17,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesSerializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
 import com.liferay.petra.string.StringBundler;

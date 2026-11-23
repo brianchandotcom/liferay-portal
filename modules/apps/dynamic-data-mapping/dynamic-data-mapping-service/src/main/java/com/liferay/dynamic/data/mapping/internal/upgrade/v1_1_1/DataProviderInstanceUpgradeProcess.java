@@ -6,6 +6,7 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_1;
 
 import com.liferay.dynamic.data.mapping.data.provider.settings.DDMDataProviderSettingsProvider;
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
@@ -13,7 +14,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesSerializeUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.CharPool;

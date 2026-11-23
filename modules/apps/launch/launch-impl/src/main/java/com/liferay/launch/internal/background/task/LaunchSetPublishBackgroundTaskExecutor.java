@@ -119,6 +119,20 @@ public class LaunchSetPublishBackgroundTaskExecutor
 				BackgroundTaskConstants.STATUS_FAILED, message);
 		}
 
+		long publishErrorsCount = MapUtil.getLong(
+			launchSetObjectEntry.getValues(), "publishErrorsCount");
+
+		if (publishErrorsCount > 0) {
+			String message = StringBundler.concat(
+				"Launch set ", launchSetId,
+				" failed to publish after its background task was queued");
+
+			_log.error(message);
+
+			return new BackgroundTaskResult(
+				BackgroundTaskConstants.STATUS_FAILED, message);
+		}
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(launchSetObjectEntry.getCompanyId());

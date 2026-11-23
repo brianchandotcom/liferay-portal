@@ -347,6 +347,81 @@ public class LaunchSetPublisherTest {
 			Assert.assertEquals(message, backgroundTask.getStatusMessage());
 		}
 
+		// Launch set that failed to publish before its background task runs
+
+		ObjectEntry failedLaunchSetObjectEntry = _addLaunchSetObjectEntry();
+
+		long failedLaunchSetId = failedLaunchSetObjectEntry.getObjectEntryId();
+
+		String className = RandomTestUtil.randomString();
+
+		ObjectEntry failedLaunchEntryObjectEntry = _addLaunchEntryObjectEntry(
+			failedLaunchSetId, className, RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
+
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					for (int i = 0; i < 2; i++) {
+						_backgroundTaskManager.addBackgroundTask(
+							TestPropsValues.getUserId(),
+							BackgroundTaskConstants.GROUP_ID_DEFAULT,
+							String.valueOf(failedLaunchSetId),
+							_BACKGROUND_TASK_EXECUTOR_CLASS_NAME,
+							HashMapBuilder.<String, Serializable>put(
+								"launchSetId", failedLaunchSetId
+							).build(),
+							_serviceContext);
+					}
+
+					return null;
+				});
+
+			Map<String, LogEntry> logEntriesMap = _getLogEntriesMap(
+				3, logCapture);
+
+			_assertLogEntry(
+				PortalException.class,
+				"Unable to publish 1 launch entries of launch set " +
+					failedLaunchSetId,
+				logEntriesMap,
+				"Unable to publish launch set " + failedLaunchSetId, "ERROR");
+			_assertLogEntry(
+				PortalException.class,
+				"No launch entry manager exists for " + className,
+				logEntriesMap,
+				"Unable to publish launch entry " +
+					failedLaunchEntryObjectEntry.getObjectEntryId(),
+				"WARN");
+
+			String message = StringBundler.concat(
+				"Launch set ", failedLaunchSetId,
+				" failed to publish after its background task was queued");
+
+			LogEntry logEntry = logEntriesMap.get(message);
+
+			Assert.assertNotNull(logEntriesMap.toString(), logEntry);
+			Assert.assertEquals("ERROR", logEntry.getPriority());
+			Assert.assertNull(logEntry.getThrowable());
+
+			_assertBackgroundTaskStatuses(
+				failedLaunchSetId, BackgroundTaskConstants.STATUS_FAILED,
+				BackgroundTaskConstants.STATUS_FAILED);
+
+			List<BackgroundTask> backgroundTasks = ListUtil.sort(
+				_getBackgroundTasks(failedLaunchSetId),
+				Comparator.comparingLong(BackgroundTask::getBackgroundTaskId));
+
+			BackgroundTask backgroundTask = backgroundTasks.get(1);
+
+			Assert.assertEquals(message, backgroundTask.getStatusMessage());
+		}
+
+		_assertPublishErrorsCount(1, failedLaunchSetId);
+
 		// Launch set that is already being published
 
 		ObjectEntry publishingLaunchSetObjectEntry = _addLaunchSetObjectEntry();

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.admin.web.internal.info.item.helper;
+package com.liferay.layout.admin.web.internal.util;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -24,18 +24,11 @@ import java.util.Set;
 /**
  * @author Adolfo Pérez
  */
-public class LayoutInfoItemLanguagesProviderHelper {
+public class LayoutInfoItemLanguagesProviderUtil {
 
-	public LayoutInfoItemLanguagesProviderHelper(
-		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
-		Language language) {
-
-		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
-		_language = language;
-	}
-
-	public String[] getAvailableLanguageIds(
-			Layout layout, long segmentsExperienceId)
+	public static String[] getAvailableLanguageIds(
+			FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
+			Language language, Layout layout, long segmentsExperienceId)
 		throws PortalException {
 
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
@@ -44,11 +37,11 @@ public class LayoutInfoItemLanguagesProviderHelper {
 
 		Set<String> availableLocalesIds = new HashSet<>();
 
-		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
+		Set<Locale> siteAvailableLocales = language.getAvailableLocales(
 			layout.getGroupId());
 
 		List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(
-			layout, segmentsExperienceId);
+			fragmentEntryLinkLocalService, layout, segmentsExperienceId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			JSONObject editableValuesJSONObject =
@@ -58,7 +51,7 @@ public class LayoutInfoItemLanguagesProviderHelper {
 				availableLocalesIds.addAll(
 					_getTranslatableFragmentLanguagesIds(
 						editableValuesJSONObject, translatableFragment,
-						siteAvailableLocales));
+						language, siteAvailableLocales));
 			}
 		}
 
@@ -67,11 +60,12 @@ public class LayoutInfoItemLanguagesProviderHelper {
 		return availableLocalesIds.toArray(new String[0]);
 	}
 
-	public String getDefaultLanguageId(Layout layout) {
+	public static String getDefaultLanguageId(Layout layout) {
 		return layout.getDefaultLanguageId();
 	}
 
-	private List<FragmentEntryLink> _getFragmentEntryLinks(
+	private static List<FragmentEntryLink> _getFragmentEntryLinks(
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		Layout layout, long segmentsExperienceId) {
 
 		long defaultSegmentsExperienceId =
@@ -79,17 +73,18 @@ public class LayoutInfoItemLanguagesProviderHelper {
 				layout.getPlid());
 
 		if (segmentsExperienceId == defaultSegmentsExperienceId) {
-			return _fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+			return fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				layout.getGroupId(), layout.getPlid());
 		}
 
-		return _fragmentEntryLinkLocalService.
+		return fragmentEntryLinkLocalService.
 			getFragmentEntryLinksBySegmentsExperienceId(
 				layout.getGroupId(), segmentsExperienceId, layout.getPlid());
 	}
 
-	private Set<String> _getTranslatableFragmentLanguagesIds(
-		JSONObject jsonObject, String key, Set<Locale> siteAvailableLocales) {
+	private static Set<String> _getTranslatableFragmentLanguagesIds(
+		JSONObject jsonObject, String key, Language language,
+		Set<Locale> siteAvailableLocales) {
 
 		Set<String> availableLocalesIds = new HashSet<>();
 
@@ -121,7 +116,7 @@ public class LayoutInfoItemLanguagesProviderHelper {
 
 			for (Locale siteAvailableLocale : siteAvailableLocales) {
 				Object valueObject = editableValueJSONObject.get(
-					_language.getLanguageId(siteAvailableLocale));
+					language.getLanguageId(siteAvailableLocale));
 
 				if (valueObject == null) {
 					continue;
@@ -140,8 +135,5 @@ public class LayoutInfoItemLanguagesProviderHelper {
 			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 	};
-
-	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-	private final Language _language;
 
 }

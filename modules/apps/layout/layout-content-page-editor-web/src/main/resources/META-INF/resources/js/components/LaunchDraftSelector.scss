@@ -1,0 +1,31 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+@import 'atlas-variables';
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin .launch-draft-selector {
+		max-width: 250px;
+	}
+
+	.launch-draft-selector__menu {
+		max-width: 250px;
+		min-width: 250px;
+	}
+
+	.cadmin .launch-draft-selector,
+	.launch-draft-selector__menu {
+		.launch-draft-selector__icon {
+			&--launch {
+				color: $cyan-d2;
+			}
+
+			&--main {
+				color: $red-d2;
+			}
+		}
+	}
+}

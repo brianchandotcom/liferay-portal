@@ -6,10 +6,12 @@
 package com.liferay.document.library.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.language.Language;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.ContentDispositionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -46,6 +49,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,10 +62,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -93,13 +106,59 @@ public class DownloadEntriesMVCResourceCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPS-126110")
 	public void testServeResource() throws Exception {
 		_testServeResourceDownloadEntries();
 		_testServeResourceDownloadEntry();
+		_testServeResourceDownloadFileEntries();
 		_testServeResourceDownloadFolder();
 		_testServeResourceDownloadFolderWithJapaneseNames();
 		_testServeResourceDownloadFolderWithoutShortcutTargetPermission();
 		_testServeResourceMaxSizeToDownload();
+	}
+
+	@Test
+	@TestInfo("LPS-144687")
+	public void testServeResourceWithoutStoreFiles() throws Exception {
+		long[] fileEntryIds = new long[3];
+
+		for (int i = 0; i < fileEntryIds.length; i++) {
+			FileEntry fileEntry = _addFileEntry(
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt",
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			DLStoreUtil.deleteFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName());
+
+			fileEntryIds[i] = fileEntry.getFileEntryId();
+		}
+
+		Set<String> zipFileNames = _getTempZipFileNames();
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayResourceRequest(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"/document_library/download_entry");
+
+		mockLiferayResourceRequest.setParameter(
+			"rowIdsFileEntry", StringUtil.merge(fileEntryIds));
+
+		try {
+			_serveResource(mockLiferayResourceRequest);
+
+			Assert.fail();
+		}
+		catch (PortletException portletException) {
+			Assert.assertTrue(
+				String.valueOf(portletException.getCause()),
+				portletException.getCause() instanceof NoSuchFileException);
+		}
+
+		Assert.assertEquals(zipFileNames, _getTempZipFileNames());
 	}
 
 	private FileEntry _addFileEntry(
@@ -186,6 +245,31 @@ public class DownloadEntriesMVCResourceCommandTest {
 		mockLiferayResourceRequest.setParameter(name, String.valueOf(value));
 
 		return mockLiferayResourceRequest;
+	}
+
+	private Set<String> _getTempZipFileNames() throws Exception {
+		Set<String> zipFileNames = new HashSet<>();
+
+		Files.walkFileTree(
+			Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					String fileName = path.toString();
+
+					if (fileName.endsWith(".zip")) {
+						zipFileNames.add(fileName);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return zipFileNames;
 	}
 
 	private Map<String, String> _getZipEntries(byte[] bytes) throws Exception {
@@ -329,6 +413,50 @@ public class DownloadEntriesMVCResourceCommandTest {
 		_assertServeResourceWithoutDownloadPermission(
 			folder.getFolderId(), "rowIdsFileEntry",
 			fileEntry.getFileEntryId());
+	}
+
+	private void _testServeResourceDownloadFileEntries() throws Exception {
+		FileEntry fileEntry1 = _addFileEntry(
+			"image 1", "Document_1.jpg",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		FileEntry fileEntry2 = _addFileEntry(
+			"image 2", "Document_2.jpg",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayResourceRequest(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"/document_library/download_entry");
+
+		mockLiferayResourceRequest.setParameter(
+			"rowIdsFileEntry",
+			StringUtil.merge(
+				new long[] {
+					fileEntry1.getFileEntryId(), fileEntry2.getFileEntryId()
+				}));
+
+		Map<String, String> properties = new HashMap<>();
+
+		Map<String, String> zipEntries = _getZipEntries(
+			_serveResource(
+				mockLiferayResourceRequest,
+				new MockLiferayResourceResponse() {
+
+					@Override
+					public void setProperty(String name, String value) {
+						properties.put(name, value);
+					}
+
+				}));
+
+		Assert.assertEquals(
+			ContentDispositionUtil.getContentDispositionHeaderValue(
+				_group.getDescriptiveName() + ".zip"),
+			properties.get(HttpHeaders.CONTENT_DISPOSITION));
+
+		Assert.assertEquals("image 1", zipEntries.get("Document_1.jpg"));
+		Assert.assertEquals("image 2", zipEntries.get("Document_2.jpg"));
+		Assert.assertEquals(zipEntries.toString(), 2, zipEntries.size());
 	}
 
 	private void _testServeResourceDownloadFolder() throws Exception {

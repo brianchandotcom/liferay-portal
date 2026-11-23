@@ -720,32 +720,6 @@ definition {
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 	}
 
-	@description = "This ensures that multiple documents can be downloaded simultaneously."
-	@priority = 5
-	@refactordone
-	test CanDownloadMultipleFilesSimultaneously {
-		property portal.acceptance = "true";
-
-		HeadlessSite.addSite(siteName = "Site_1");
-
-		for (var entryCount : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.jpg",
-				groupName = "Site_1",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${entryCount}.jpg");
-		}
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site_1");
-
-		DMDocument.downloadMultipleCP(dmDocumentTitleList = "Document_1.jpg,Document_2.jpg");
-
-		AssertTextNotPresent(value1 = "The requested resource could not be found.");
-
-		DMDocument.assertFileNameFromTempFolder(fileName = "Site_1.zip");
-	}
-
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."
 	@e2etest
 	@priority = 5
@@ -2188,33 +2162,6 @@ definition {
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewInlineImage(uploadFileName = "static-gif");
-	}
-
-	@description = "This test covers LPS-144687. It validates that a temp zip is not created if NoSuchFileException occurs during a download."
-	@priority = 4
-	test NoZipFileIsCreatedIfDownloadResultsInError {
-		DMDocument.deleteTempFolder(appServer = "tomcat-10.1.61");
-
-		for (var num : list "1,2,3") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title${num}",
-				groupName = "Guest",
-				mimeType = "application/msword",
-				sourceFileName = "Document_${num}.doc");
-		}
-
-		DMDocument.deleteDocumentLibraryFolder();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.downloadMultipleCP(dmDocumentTitleList = "DM Document Title1,DM Document Title2,DM Document Title3");
-
-		AssertConsoleTextPresent(value1 = "com.liferay.document.library.kernel.exception.NoSuchFileException");
-
-		DMDocument.assertNoZipFileFromTempFolder(
-			appServer = "tomcat-10.1.61",
-			fileNamePattern = "*.zip");
 	}
 
 	@description = "This a ticket for LPS-154955. Verify tree image is available when Liferay is deployed. Skip the instance for performance improvement."

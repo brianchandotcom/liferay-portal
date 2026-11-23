@@ -140,6 +140,52 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 		]);
 	});
 
+	it('groups the creation items of a type in a submenu', () => {
+		const {creationMenu} = DesignLibraryAssetsFDSPropsTransformer({
+			...BASE_PROPS,
+			additionalProps: {
+				resourceTypes: [
+					{
+						...STYLE_BOOK_RESOURCE_TYPE,
+						creationItems: [
+							creationItem('add-style-book', 'new-style-book'),
+						],
+						creationItemsGroupLabel: 'Style Books',
+					},
+					{
+						...FRAGMENT_RESOURCE_TYPE,
+						creationItems: [
+							creationItem(
+								'add-basic-fragment',
+								'new-basic-fragment'
+							),
+							creationItem(
+								'add-fragment-set',
+								'new-fragment-set'
+							),
+						],
+						creationItemsGroupLabel: 'Fragments',
+					},
+				],
+			},
+		});
+
+		expect(
+			creationMenu?.primaryItems.map((item) => ({
+				items: item.items?.map((nestedItem) => nestedItem.label),
+				label: item.label,
+				type: item.type,
+			}))
+		).toEqual([
+			{items: undefined, label: 'new-style-book', type: undefined},
+			{
+				items: ['new-basic-fragment', 'new-fragment-set'],
+				label: 'Fragments',
+				type: 'contextual',
+			},
+		]);
+	});
+
 	it('omits the creation menu when no type contributes creation items', () => {
 		expect(
 			DesignLibraryAssetsFDSPropsTransformer({

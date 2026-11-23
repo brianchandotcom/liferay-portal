@@ -23,13 +23,15 @@ import java.util.regex.Pattern;
 /**
  * @author Lino Alves
  */
-public class WorkflowContextUpgradeHelper {
+public class WorkflowContextUpgradeHelperUtil {
 
-	public Set<Map.Entry<String, String>> getRenamedClassNamesEntrySet() {
+	public static Set<Map.Entry<String, String>>
+		getRenamedClassNamesEntrySet() {
+
 		return _classNamesMap.entrySet();
 	}
 
-	public boolean isEntryClassNameRenamed(
+	public static boolean isEntryClassNameRenamed(
 		Map<String, Serializable> workflowContext) {
 
 		String oldEntryClassName = (String)workflowContext.get(
@@ -42,7 +44,7 @@ public class WorkflowContextUpgradeHelper {
 		return false;
 	}
 
-	public Map<String, Serializable> renameEntryClassName(
+	public static Map<String, Serializable> renameEntryClassName(
 		Map<String, Serializable> workflowContext) {
 
 		Map<String, Serializable> newWorkflowContext = new HashMap<>(
@@ -60,7 +62,7 @@ public class WorkflowContextUpgradeHelper {
 		return newWorkflowContext;
 	}
 
-	public String renamePortalClassNames(String workflowContextJSON) {
+	public static String renamePortalClassNames(String workflowContextJSON) {
 		Matcher matcher = _javaClassPattern.matcher(workflowContextJSON);
 
 		Set<String> oldSubs = new TreeSet<>();
@@ -103,7 +105,7 @@ public class WorkflowContextUpgradeHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowContextUpgradeHelper.class);
+		WorkflowContextUpgradeHelperUtil.class);
 
 	private static final Map<String, String> _classNamesMap =
 		HashMapBuilder.put(

@@ -607,9 +607,9 @@ public class TestrayResultsXMLClientTestrayImporterTest
 			File file, Map<String, String> testSuiteProperties)
 		throws Exception {
 
-		File dir = file.getParentFile();
+		File parentFile = file.getParentFile();
 
-		dir.mkdirs();
+		parentFile.mkdirs();
 
 		String resultsXML = _toResultsXML(testSuiteProperties);
 

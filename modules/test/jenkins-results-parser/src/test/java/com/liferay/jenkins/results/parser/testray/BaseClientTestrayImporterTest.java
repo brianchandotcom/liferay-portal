@@ -289,8 +289,8 @@ public class BaseClientTestrayImporterTest
 				testrayBuild
 			).getId();
 
-			List<File> resultsTarGzFiles = new ArrayList<>();
 			Map<String, byte[]> resultsTarGzFileContents = new HashMap<>();
+			List<File> resultsTarGzFiles = new ArrayList<>();
 
 			Mockito.doAnswer(
 				invocation -> {
@@ -402,9 +402,9 @@ public class BaseClientTestrayImporterTest
 
 		File absoluteResultsTarGzFile = resultsTarGzFile.getAbsoluteFile();
 
-		File tempDir = absoluteResultsTarGzFile.getParentFile();
+		File parentFile = absoluteResultsTarGzFile.getParentFile();
 
-		Assert.assertFalse(tempDir.exists());
+		Assert.assertFalse(parentFile.exists());
 	}
 
 	private BaseClientTestrayImporter _newBaseClientTestrayImporter() {
@@ -539,40 +539,11 @@ public class BaseClientTestrayImporterTest
 
 	private void _testGetTestrayBuild(String testrayBuildSHA) throws Exception {
 		TestrayProject testrayProject = Mockito.mock(TestrayProject.class);
-		String testrayProjectName = RandomTestUtil.randomString();
-
-		Mockito.doReturn(
-			testrayProject
-		).when(
-			_testrayServer
-		).getTestrayProjectByName(
-			testrayProjectName
-		);
-
 		TestrayProductVersion testrayProductVersion = Mockito.mock(
 			TestrayProductVersion.class);
-		String testrayProductVersionName = RandomTestUtil.randomString();
-
-		Mockito.doReturn(
-			testrayProductVersion
-		).when(
-			testrayProject
-		).createTestrayProductVersion(
-			testrayProductVersionName
-		);
-
 		TestrayRoutine testrayRoutine = Mockito.mock(TestrayRoutine.class);
-		String testrayRoutineName = RandomTestUtil.randomString();
-
-		Mockito.doReturn(
-			testrayRoutine
-		).when(
-			testrayProject
-		).createTestrayRoutine(
-			testrayRoutineName
-		);
-
 		TestrayBuild testrayBuild = Mockito.mock(TestrayBuild.class);
+
 		Date testrayBuildDate = new Date(RandomTestUtil.randomLong());
 		String testrayBuildName = RandomTestUtil.randomString();
 
@@ -583,6 +554,36 @@ public class BaseClientTestrayImporterTest
 		).createTestrayBuild(
 			testrayProductVersion, testrayBuildName, testrayBuildDate, null,
 			testrayBuildSHA
+		);
+
+		String testrayProductVersionName = RandomTestUtil.randomString();
+
+		Mockito.doReturn(
+			testrayProductVersion
+		).when(
+			testrayProject
+		).createTestrayProductVersion(
+			testrayProductVersionName
+		);
+
+		String testrayRoutineName = RandomTestUtil.randomString();
+
+		Mockito.doReturn(
+			testrayRoutine
+		).when(
+			testrayProject
+		).createTestrayRoutine(
+			testrayRoutineName
+		);
+
+		String testrayProjectName = RandomTestUtil.randomString();
+
+		Mockito.doReturn(
+			testrayProject
+		).when(
+			_testrayServer
+		).getTestrayProjectByName(
+			testrayProjectName
 		);
 
 		BaseClientTestrayImporter baseClientTestrayImporter =

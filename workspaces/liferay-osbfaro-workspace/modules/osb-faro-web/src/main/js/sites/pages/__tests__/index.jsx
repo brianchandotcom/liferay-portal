@@ -16,6 +16,8 @@ import {Routes} from 'shared/util/router';
 import {User} from 'shared/util/records';
 import {UserRoleNames} from 'shared/util/constants';
 
+jest.mock('../Overview', () => () => null);
+
 const MEMBER_USER = new User(
 	data.mockUser(23, {roleName: UserRoleNames.Member})
 );

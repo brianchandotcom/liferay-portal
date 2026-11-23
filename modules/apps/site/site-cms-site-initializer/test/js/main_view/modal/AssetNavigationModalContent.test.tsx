@@ -254,21 +254,23 @@ describe('AssetNavigationModalContent', () => {
 			expect(screen.getByText('add-comment')).toBeInTheDocument();
 		});
 
-		it('comment panel is hidden if sharing item has no permission', () => {
+		it('comments panel is read-only if sharing item has no comment permission', () => {
+			addParams.mockReturnValue('/my-random-add-url?someParams');
+
 			const {getByLabelText, queryByText} = renderComponentInSharing({
 				...DEFAULT_PROPS,
 				items: [item1, item2, sharingItem],
 			});
 
-			expect(getByLabelText('show-comments')).toBeInTheDocument();
+			fireEvent.click(getByLabelText('previous'));
+
+			fireEvent.click(getByLabelText('show-comments'));
+
+			expect(queryByText('add-comment')).not.toBeInTheDocument();
 
 			fireEvent.click(getByLabelText('previous'));
 
-			expect(queryByText('show-comments')).not.toBeInTheDocument();
-
-			fireEvent.click(getByLabelText('previous'));
-
-			expect(getByLabelText('show-comments')).toBeInTheDocument();
+			expect(screen.getByText('add-comment')).toBeInTheDocument();
 		});
 	});
 });

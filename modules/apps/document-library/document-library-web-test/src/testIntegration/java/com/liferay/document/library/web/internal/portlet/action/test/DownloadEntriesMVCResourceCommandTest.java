@@ -122,7 +122,7 @@ public class DownloadEntriesMVCResourceCommandTest {
 	public void testServeResourceWithoutStoreFiles() throws Exception {
 		long[] fileEntryIds = new long[3];
 
-		for (int i = 0; i < fileEntryIds.length; i++) {
+		for (int index = 0; index < fileEntryIds.length; index++) {
 			FileEntry fileEntry = _addFileEntry(
 				RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + ".txt",
@@ -134,7 +134,7 @@ public class DownloadEntriesMVCResourceCommandTest {
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName());
 
-			fileEntryIds[i] = fileEntry.getFileEntryId();
+			fileEntryIds[index] = fileEntry.getFileEntryId();
 		}
 
 		Set<String> zipFileNames = _getTempZipFileNames();
@@ -154,7 +154,6 @@ public class DownloadEntriesMVCResourceCommandTest {
 		}
 		catch (PortletException portletException) {
 			Assert.assertTrue(
-				String.valueOf(portletException.getCause()),
 				portletException.getCause() instanceof NoSuchFileException);
 		}
 

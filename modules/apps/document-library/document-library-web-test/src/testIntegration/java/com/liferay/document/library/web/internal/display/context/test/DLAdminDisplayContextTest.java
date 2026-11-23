@@ -124,8 +124,8 @@ public class DLAdminDisplayContextTest {
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(), "Vocabulary",
-				new ServiceContext());
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -156,8 +156,8 @@ public class DLAdminDisplayContextTest {
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(), "Vocabulary",
-				new ServiceContext());
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -194,12 +194,12 @@ public class DLAdminDisplayContextTest {
 			fileEntry,
 			_getMockLiferayPortletActionRequest(
 				folder.getFolderId(), "assetCategoryId",
+				String.valueOf(assetCategory1.getCategoryId()),
 				String.valueOf(assetCategory2.getCategoryId())));
 		_assertSearchContainer(
 			fileEntry,
 			_getMockLiferayPortletActionRequest(
 				folder.getFolderId(), "assetCategoryId",
-				String.valueOf(assetCategory1.getCategoryId()),
 				String.valueOf(assetCategory2.getCategoryId())));
 	}
 
@@ -208,18 +208,19 @@ public class DLAdminDisplayContextTest {
 	public void testGetSearchContainerWithFilterByAssetTagIds()
 		throws Exception {
 
-		String assetTagName1 = RandomTestUtil.randomString();
-		String assetTagName2 = RandomTestUtil.randomString();
-		String assetTagName3 = RandomTestUtil.randomString();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		String assetTagName1 = RandomTestUtil.randomString();
+		String assetTagName2 = RandomTestUtil.randomString();
 
 		serviceContext.setAssetTagNames(
 			new String[] {assetTagName1, assetTagName2});
 
 		FileEntry fileEntry = _addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		String assetTagName3 = RandomTestUtil.randomString();
 
 		serviceContext.setAssetTagNames(
 			new String[] {assetTagName1, assetTagName3});

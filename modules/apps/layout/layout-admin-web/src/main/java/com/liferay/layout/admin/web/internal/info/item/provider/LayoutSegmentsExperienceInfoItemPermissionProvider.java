@@ -9,7 +9,7 @@ import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemPermissionProviderHelper;
+import com.liferay.layout.admin.web.internal.util.LayoutInfoItemPermissionProviderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,10 +39,10 @@ public class LayoutSegmentsExperienceInfoItemPermissionProvider
 			(ClassPKInfoItemIdentifier)
 				infoItemReference.getInfoItemIdentifier();
 
-		return _layoutInfoItemPermissionProviderHelper.hasPermission(
-			permissionChecker,
+		return LayoutInfoItemPermissionProviderUtil.hasPermission(
+			actionId,
 			_getInfoItemReference(classPKInfoItemIdentifier.getClassPK()),
-			actionId);
+			_layoutModelResourcePermission, permissionChecker);
 	}
 
 	@Override
@@ -52,15 +51,9 @@ public class LayoutSegmentsExperienceInfoItemPermissionProvider
 			SegmentsExperience segmentsExperience, String actionId)
 		throws InfoItemPermissionException {
 
-		return _layoutInfoItemPermissionProviderHelper.hasPermission(
-			permissionChecker, _getLayout(segmentsExperience), actionId);
-	}
-
-	@Activate
-	protected void activate() {
-		_layoutInfoItemPermissionProviderHelper =
-			new LayoutInfoItemPermissionProviderHelper(
-				_layoutModelResourcePermission);
+		return LayoutInfoItemPermissionProviderUtil.hasPermission(
+			actionId, _getLayout(segmentsExperience),
+			_layoutModelResourcePermission, permissionChecker);
 	}
 
 	private InfoItemReference _getInfoItemReference(long segmentsExperienceId) {
@@ -99,9 +92,6 @@ public class LayoutSegmentsExperienceInfoItemPermissionProvider
 			return ReflectionUtil.throwException(portalException);
 		}
 	}
-
-	private volatile LayoutInfoItemPermissionProviderHelper
-		_layoutInfoItemPermissionProviderHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

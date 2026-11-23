@@ -433,7 +433,6 @@ describe('List', () => {
 			await renderList();
 
 			const link = screen.getByRole('link', {
-				exact: false,
 				name: /learn more about assets/i,
 			});
 

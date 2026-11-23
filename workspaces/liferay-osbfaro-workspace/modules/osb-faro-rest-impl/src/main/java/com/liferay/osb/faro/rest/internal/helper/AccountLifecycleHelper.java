@@ -31,13 +31,13 @@ public class AccountLifecycleHelper {
 		FaroProject faroProject, String channelId, String accountLifecycleId) {
 
 		try {
-			AccountLifecycle accountLifecycle =
-				_contactsEngineClient.getAccountLifecycle(
-					faroProject, accountLifecycleId);
-
 			long channelIdLong = GetterUtil.getLong(channelId);
 
 			if (channelIdLong > 0) {
+				AccountLifecycle accountLifecycle =
+					_contactsEngineClient.getAccountLifecycle(
+						faroProject, accountLifecycleId);
+
 				Results<AccountLifecycle> results =
 					_contactsEngineClient.getAccountLifecycles(
 						faroProject, channelIdLong, null,

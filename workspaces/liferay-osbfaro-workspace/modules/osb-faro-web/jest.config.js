@@ -609,6 +609,8 @@ module.exports = {
 			},
 		},
 	},
+	globalSetup: '<rootDir>/src/main/js/test/global-setup.js',
+	globalTeardown: '<rootDir>/src/main/js/test/global-teardown.js',
 	moduleNameMapper: {
 		'^(.+\\.svg)\\?url$': '$1',
 		'^@clayui/icon-runtime$': '@clayui/icon',

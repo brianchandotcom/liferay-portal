@@ -53,7 +53,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = FDSRenderer.class)
 public class FDSRendererImpl implements FDSRenderer {
 
-	public String getFDSAPIURL(
+	@Override
+	public String getAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate, JSONObject tokenResolutionsJSONObject) {
 

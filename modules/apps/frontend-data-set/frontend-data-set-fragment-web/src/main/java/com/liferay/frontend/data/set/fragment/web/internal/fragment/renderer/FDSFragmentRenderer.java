@@ -168,7 +168,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
-			String fdsAPIURL = _fdsRenderer.getFDSAPIURL(
+			String fdsAPIURL = _fdsRenderer.getAPIURL(
 				externalReferenceCode, httpServletRequest, false, null);
 
 			JSONObject fdsAPIURLTokenMappingsJSONObject = _getJSONObject(
@@ -177,7 +177,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext.getLocale(),
 					"apiURLTokenMappings"));
 
-			String autoResolvedFDSAPIURL = _fdsRenderer.getFDSAPIURL(
+			String autoResolvedFDSAPIURL = _fdsRenderer.getAPIURL(
 				externalReferenceCode, httpServletRequest, true, null);
 
 			JSONObject fdsAPIURLTokenResolutionsJSONObject =
@@ -185,7 +185,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					fdsAPIURL, fdsAPIURLTokenMappingsJSONObject,
 					autoResolvedFDSAPIURL, httpServletRequest);
 
-			String resolvedFDSAPIURL = _fdsRenderer.getFDSAPIURL(
+			String resolvedFDSAPIURL = _fdsRenderer.getAPIURL(
 				externalReferenceCode, httpServletRequest, true,
 				fdsAPIURLTokenResolutionsJSONObject);
 

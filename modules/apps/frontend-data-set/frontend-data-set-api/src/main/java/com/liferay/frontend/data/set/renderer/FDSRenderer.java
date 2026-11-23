@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public interface FDSRenderer {
 
-	public String getFDSAPIURL(
+	public String getAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate, JSONObject tokenResolutionsJSONObject);
 

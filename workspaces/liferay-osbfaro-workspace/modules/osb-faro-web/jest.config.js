@@ -1,7 +1,6 @@
 const {TextEncoder} = require('node:util');
 
 module.exports = {
-	collectCoverage: true,
 	collectCoverageFrom: [
 		'!<rootDir>/src/main/js/(api-docs|ui-kit)/**/*.{js,jsx,tsx}',
 		'!<rootDir>/src/main/js/shared/api/*.{js,ts}',

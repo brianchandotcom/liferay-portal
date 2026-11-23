@@ -162,7 +162,7 @@ public class WorkspaceContainerRequestFilterTest {
 	}
 
 	@Test
-	public void testFilterWithAllUsersChannelId() {
+	public void testFilterWithAllUsersFaroChannel() {
 		Assert.assertNull(
 			_filter(_CHANNEL_ID_ALL_USERS, _GROUP_ID, _USER_ID_ADMINISTRATOR));
 		Assert.assertNull(
@@ -182,7 +182,7 @@ public class WorkspaceContainerRequestFilterTest {
 	}
 
 	@Test
-	public void testFilterWithSelectUsersChannelId() {
+	public void testFilterWithSelectUsersFaroChannel() {
 		Assert.assertNull(
 			_filter(
 				_CHANNEL_ID_SELECT_USERS, _GROUP_ID, _USER_ID_ADMINISTRATOR));

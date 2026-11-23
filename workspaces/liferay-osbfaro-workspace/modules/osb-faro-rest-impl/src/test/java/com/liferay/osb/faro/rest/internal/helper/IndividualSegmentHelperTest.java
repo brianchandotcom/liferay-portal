@@ -68,7 +68,7 @@ public class IndividualSegmentHelperTest {
 
 		_mockIndividualSegment(
 			RandomTestUtil.randomString(),
-			_INDIVIDUAL_SEGMENT_ID_UNKNOWN_CHANNEL);
+			_INDIVIDUAL_SEGMENT_ID_MISSING_FARO_CHANNEL);
 		_mockIndividualSegment(
 			_CHANNEL_ID_ALL_USERS, _INDIVIDUAL_SEGMENT_ID_ALL_USERS);
 		_mockIndividualSegment(
@@ -102,7 +102,7 @@ public class IndividualSegmentHelperTest {
 	}
 
 	@Test
-	public void testGetIndividualSegmentWithEngineException() {
+	public void testGetIndividualSegmentWithFaroEngineClientException() {
 		Mockito.when(
 			_contactsEngineClient.getIndividualSegment(
 				_faroProject, _INDIVIDUAL_SEGMENT_ID_BAD_REQUEST, false)
@@ -144,7 +144,14 @@ public class IndividualSegmentHelperTest {
 	}
 
 	@Test
-	public void testGetIndividualSegmentWithSelectUsersChannel() {
+	public void testGetIndividualSegmentWithMissingFaroChannel() {
+		_setPermissionChecker(_USER_ID_OMNIADMIN);
+
+		_assertNotFoundException(_INDIVIDUAL_SEGMENT_ID_MISSING_FARO_CHANNEL);
+	}
+
+	@Test
+	public void testGetIndividualSegmentWithSelectUsersFaroChannel() {
 		_setPermissionChecker(_USER_ID_ADMINISTRATOR);
 
 		_assertGetIndividualSegment(_INDIVIDUAL_SEGMENT_ID_SELECT_USERS);
@@ -191,13 +198,6 @@ public class IndividualSegmentHelperTest {
 		);
 
 		_assertGetIndividualSegment(_INDIVIDUAL_SEGMENT_ID_SELECT_USERS);
-	}
-
-	@Test
-	public void testGetIndividualSegmentWithUnknownChannel() {
-		_setPermissionChecker(_USER_ID_OMNIADMIN);
-
-		_assertNotFoundException(_INDIVIDUAL_SEGMENT_ID_UNKNOWN_CHANNEL);
 	}
 
 	private void _assertGetIndividualSegment(String individualSegmentId) {
@@ -359,6 +359,9 @@ public class IndividualSegmentHelperTest {
 	private static final String _INDIVIDUAL_SEGMENT_ID_BAD_REQUEST =
 		RandomTestUtil.randomString();
 
+	private static final String _INDIVIDUAL_SEGMENT_ID_MISSING_FARO_CHANNEL =
+		RandomTestUtil.randomString();
+
 	private static final String _INDIVIDUAL_SEGMENT_ID_NO_CHANNEL =
 		RandomTestUtil.randomString();
 
@@ -369,9 +372,6 @@ public class IndividualSegmentHelperTest {
 		RandomTestUtil.randomString();
 
 	private static final String _INDIVIDUAL_SEGMENT_ID_SERVER_ERROR =
-		RandomTestUtil.randomString();
-
-	private static final String _INDIVIDUAL_SEGMENT_ID_UNKNOWN_CHANNEL =
 		RandomTestUtil.randomString();
 
 	private static final long _USER_ID_ADMINISTRATOR =

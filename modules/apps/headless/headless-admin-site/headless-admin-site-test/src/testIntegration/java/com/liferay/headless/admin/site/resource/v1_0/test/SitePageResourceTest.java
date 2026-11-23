@@ -2089,44 +2089,42 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		};
 	}
 
+	private SitePageResource _getSitePageResource(
+		Locale locale, String nestedFields, String userLogin,
+		String userPassword) {
+
+		SitePageResource.Builder builder = SitePageResource.builder(
+		).authentication(
+			userLogin, userPassword
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			locale
+		);
+
+		if (nestedFields != null) {
+			builder.parameters("nestedFields", nestedFields);
+		}
+
+		return builder.build();
+	}
+
 	private SitePageResource _getSitePageResource(String nestedFields)
 		throws Exception {
 
 		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		return _getSitePageResource(
-			nestedFields, user.getEmailAddress(),
+			LocaleUtil.getDefault(), nestedFields, user.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD);
 	}
 
 	private SitePageResource _getSitePageResource(
 		String userLogin, String userPassword) {
 
-		return SitePageResource.builder(
-		).authentication(
-			userLogin, userPassword
-		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-	}
-
-	private SitePageResource _getSitePageResource(
-		String nestedFields, String userLogin, String userPassword) {
-
-		return SitePageResource.builder(
-		).authentication(
-			userLogin, userPassword
-		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).parameters(
-			"nestedFields", nestedFields
-		).build();
+		return _getSitePageResource(
+			LocaleUtil.getDefault(), null, userLogin, userPassword);
 	}
 
 	private SitePage _getSitePageWithPageElements(PageElement[] pageElements)
@@ -4326,7 +4324,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_layoutLockManager.getLock(draftLayout, user.getUserId());
 
 		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications", user.getEmailAddress(), password);
+			LocaleUtil.getDefault(), "pageSpecifications",
+			user.getEmailAddress(), password);
 
 		SitePage sitePage = sitePageResource.getSiteSitePage(
 			testGroup.getExternalReferenceCode(),
@@ -5600,15 +5599,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_userLocalService.updatePassword(
 			user.getUserId(), password, password, false, true);
 
-		SitePageResource userSitePageResource = SitePageResource.builder(
-		).authentication(
-			user.getEmailAddress(), password
-		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
+		SitePageResource userSitePageResource = _getSitePageResource(
+			user.getEmailAddress(), password);
 
 		SitePage sitePage = sitePageResource.postSiteSitePage(
 			testGroup.getExternalReferenceCode(), false,

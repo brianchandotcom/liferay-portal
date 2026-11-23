@@ -50,8 +50,20 @@ jest.mock(
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/content_editor/components/panels/CommentsPanel',
 	() =>
-		function CommentsPanel() {
-			return <div data-testid="comments-panel" />;
+		function CommentsPanel({
+			addCommentURL,
+			readOnly,
+		}: {
+			addCommentURL: string;
+			readOnly: boolean;
+		}) {
+			return (
+				<div
+					data-add-comment-url={addCommentURL}
+					data-readonly={String(readOnly)}
+					data-testid="comments-panel"
+				/>
+			);
 		}
 );
 
@@ -157,16 +169,23 @@ describe('ViewAsset', () => {
 		});
 	});
 
-	it('does not render comments button when hasCommentPermission is false', async () => {
+	it('renders comments panel in read-only mode when hasCommentPermission is false', async () => {
 		render(<ViewAsset {...defaultProps} hasCommentPermission={false} />);
 
 		await waitFor(() => {
-			expect(screen.getByText('Mock Asset Title')).toBeInTheDocument();
+			expect(
+				screen.getByRole('button', {name: 'show-comments'})
+			).toBeInTheDocument();
 		});
 
-		expect(
-			screen.queryByRole('button', {name: 'show-comments'})
-		).not.toBeInTheDocument();
+		await userEvent.click(
+			screen.getByRole('button', {name: 'show-comments'})
+		);
+
+		const commentsPanel = screen.getByTestId('comments-panel');
+
+		expect(commentsPanel).toHaveAttribute('data-add-comment-url', '');
+		expect(commentsPanel).toHaveAttribute('data-readonly', 'true');
 	});
 
 	it('opens side panel when clicking comments button', async () => {
@@ -185,7 +204,10 @@ describe('ViewAsset', () => {
 		await userEvent.click(commentsButton);
 
 		expect(screen.getByText('comments')).toBeInTheDocument();
-		expect(screen.getByTestId('comments-panel')).toBeInTheDocument();
+		expect(screen.getByTestId('comments-panel')).toHaveAttribute(
+			'data-readonly',
+			'false'
+		);
 	});
 
 	it('transforms item if it does not have embedded property', async () => {

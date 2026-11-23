@@ -26,16 +26,25 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -78,19 +87,7 @@ public class GetContentItemCommentStrutsActionTest {
 
 		ObjectEntry objectEntry = _addObjectEntry(depotEntry);
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		Comment comment = _commentManager.fetchComment(
-			_commentManager.addComment(
-				TestPropsValues.getUserId(), depotEntry.getGroupId(),
-				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-				RandomTestUtil.randomString(),
-				new IdentityServiceContextFunction(
-					ServiceContextTestUtil.getServiceContext(
-						depotEntry.getGroupId(),
-						TestPropsValues.getUserId()))));
+		Comment comment = _addComment(depotEntry, objectEntry);
 
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
@@ -109,9 +106,7 @@ public class GetContentItemCommentStrutsActionTest {
 			comment.getCommentId(), 0,
 			ServiceContextTestUtil.getServiceContext());
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(
-			_groupLocalService.getGroup(
-				TestPropsValues.getCompanyId(), GroupConstants.CMS));
+		Layout layout = _addLayout();
 
 		_testExecute(layout, objectEntry, false, true, user1);
 		_testExecute(layout, objectEntry, true, false, user2);
@@ -119,6 +114,62 @@ public class GetContentItemCommentStrutsActionTest {
 		User user3 = UserTestUtil.addCompanyAdminUser(company);
 
 		_testExecute(layout, objectEntry, false, false, user3);
+	}
+
+	@Test
+	public void testExecuteWithViewPermission() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		ObjectEntry objectEntry = _addObjectEntry(depotEntry);
+
+		Comment comment = _addComment(depotEntry, objectEntry);
+
+		JSONArray jsonArray = _execute(
+			_addLayout(), objectEntry, _addUser(objectEntry, ActionKeys.VIEW));
+
+		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			comment.getCommentId(), jsonObject.getLong("commentId"));
+	}
+
+	@Test
+	public void testExecuteWithoutViewPermission() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		ObjectEntry objectEntry = _addObjectEntry(depotEntry);
+
+		_addComment(depotEntry, objectEntry);
+
+		try {
+			_execute(_addLayout(), objectEntry, _addUser(objectEntry));
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			Assert.assertArrayEquals(
+				new String[] {ActionKeys.VIEW}, principalException.actionId);
+		}
+	}
+
+	private Comment _addComment(DepotEntry depotEntry, ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		return _commentManager.fetchComment(
+			_commentManager.addComment(
+				TestPropsValues.getUserId(), depotEntry.getGroupId(),
+				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+				RandomTestUtil.randomString(),
+				new IdentityServiceContextFunction(
+					ServiceContextTestUtil.getServiceContext(
+						depotEntry.getGroupId(),
+						TestPropsValues.getUserId()))));
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -131,6 +182,12 @@ public class GetContentItemCommentStrutsActionTest {
 			).build(),
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private Layout _addLayout() throws Exception {
+		return LayoutTestUtil.addTypeContentLayout(
+			_groupLocalService.getGroup(
+				TestPropsValues.getCompanyId(), GroupConstants.CMS));
 	}
 
 	private ObjectEntry _addObjectEntry(DepotEntry depotEntry)
@@ -166,6 +223,39 @@ public class GetContentItemCommentStrutsActionTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext(
 				depotEntry.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private User _addUser(ObjectEntry objectEntry, String... actionIds)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		// CMS grants VIEW to every signed-in user by default
+
+		Role userRole = _roleLocalService.getRole(
+			objectEntry.getCompanyId(), RoleConstants.USER);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			objectEntry.getCompanyId(), objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry.getObjectEntryId()),
+			userRole.getRoleId(), new String[0]);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			objectEntry.getCompanyId(), objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry.getObjectEntryId()), role.getRoleId(),
+			actionIds);
+
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.addRoleUser(role.getRoleId(), user);
+
+		return user;
 	}
 
 	private JSONArray _execute(
@@ -260,5 +350,14 @@ public class GetContentItemCommentStrutsActionTest {
 
 	@Inject
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

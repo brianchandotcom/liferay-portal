@@ -24,7 +24,6 @@ import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
-import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
 
@@ -147,9 +146,6 @@ public class RankingIndexReindexer implements IndexReindexer {
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;
 
 	@Reference
-	protected RankingPinBuilderFactory rankingPinBuilderFactory;
-
-	@Reference
 	protected SearchCapabilities searchCapabilities;
 
 	private Ranking _buildRanking(long classPK) throws Exception {
@@ -189,12 +185,9 @@ public class RankingIndexReindexer implements IndexReindexer {
 		JSONUtil.toList(
 			jsonArray,
 			jsonObject -> pins.add(
-				rankingPinBuilderFactory.builder(
-				).documentId(
-					jsonObject.getString("documentId")
-				).position(
-					jsonObject.getInt("position")
-				).build()));
+				new PinImpl(
+					jsonObject.getString("documentId"),
+					jsonObject.getInt("position"))));
 
 		return pins;
 	}

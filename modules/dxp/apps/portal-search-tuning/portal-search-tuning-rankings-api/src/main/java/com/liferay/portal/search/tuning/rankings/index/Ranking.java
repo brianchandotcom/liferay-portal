@@ -76,16 +76,6 @@ public interface Ranking {
 
 		public int getPosition();
 
-		public interface Builder {
-
-			public Pin build();
-
-			public Builder documentId(String documentId);
-
-			public Builder position(int position);
-
-		}
-
 	}
 
 }

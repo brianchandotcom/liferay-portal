@@ -53,13 +53,6 @@ public class WorkspaceContainerRequestFilterTest {
 	public void setUp() {
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
-		_faroUserLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			FaroUserLocalServiceUtil.class);
-		_roleLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			RoleLocalServiceUtil.class);
-		_userGroupRoleLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			UserGroupRoleLocalServiceUtil.class);
-
 		FaroChannel allUsersFaroChannel = _mockFaroChannel(
 			FaroChannelConstants.PERMISSION_ALL_USERS);
 		FaroChannel selectUsersFaroChannel = _mockFaroChannel(
@@ -115,10 +108,11 @@ public class WorkspaceContainerRequestFilterTest {
 	@After
 	public void tearDown() {
 		_faroUserLocalServiceUtilMockedStatic.close();
-		_roleLocalServiceUtilMockedStatic.close();
-		_userGroupRoleLocalServiceUtilMockedStatic.close();
 
 		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+
+		_roleLocalServiceUtilMockedStatic.close();
+		_userGroupRoleLocalServiceUtilMockedStatic.close();
 	}
 
 	@Test
@@ -419,13 +413,16 @@ public class WorkspaceContainerRequestFilterTest {
 	private final FaroProject _faroProject = Mockito.mock(FaroProject.class);
 	private final FaroProjectLocalService _faroProjectLocalService =
 		Mockito.mock(FaroProjectLocalService.class);
-	private MockedStatic<FaroUserLocalServiceUtil>
-		_faroUserLocalServiceUtilMockedStatic;
+	private final MockedStatic<FaroUserLocalServiceUtil>
+		_faroUserLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			FaroUserLocalServiceUtil.class);
 	private PermissionChecker _permissionChecker;
-	private MockedStatic<RoleLocalServiceUtil>
-		_roleLocalServiceUtilMockedStatic;
-	private MockedStatic<UserGroupRoleLocalServiceUtil>
-		_userGroupRoleLocalServiceUtilMockedStatic;
+	private final MockedStatic<RoleLocalServiceUtil>
+		_roleLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			RoleLocalServiceUtil.class);
+	private final MockedStatic<UserGroupRoleLocalServiceUtil>
+		_userGroupRoleLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			UserGroupRoleLocalServiceUtil.class);
 	private final WorkspaceContainerRequestFilter
 		_workspaceContainerRequestFilter =
 			new WorkspaceContainerRequestFilter();

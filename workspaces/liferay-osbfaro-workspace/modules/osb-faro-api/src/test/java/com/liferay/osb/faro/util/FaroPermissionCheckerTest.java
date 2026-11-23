@@ -38,13 +38,6 @@ public class FaroPermissionCheckerTest {
 	public void setUp() {
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
-		_faroUserLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			FaroUserLocalServiceUtil.class);
-		_roleLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			RoleLocalServiceUtil.class);
-		_userGroupRoleLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			UserGroupRoleLocalServiceUtil.class);
-
 		_mockFaroUser(
 			RoleConstants.SITE_ADMINISTRATOR, FaroUserConstants.STATUS_APPROVED,
 			_USER_ID_ADMINISTRATOR);
@@ -62,10 +55,11 @@ public class FaroPermissionCheckerTest {
 	@After
 	public void tearDown() {
 		_faroUserLocalServiceUtilMockedStatic.close();
-		_roleLocalServiceUtilMockedStatic.close();
-		_userGroupRoleLocalServiceUtilMockedStatic.close();
 
 		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+
+		_roleLocalServiceUtilMockedStatic.close();
+		_userGroupRoleLocalServiceUtilMockedStatic.close();
 	}
 
 	@Test
@@ -265,12 +259,15 @@ public class FaroPermissionCheckerTest {
 	private static final long _USER_ID_PENDING_ADMINISTRATOR =
 		RandomTestUtil.randomLong();
 
-	private MockedStatic<FaroUserLocalServiceUtil>
-		_faroUserLocalServiceUtilMockedStatic;
+	private final MockedStatic<FaroUserLocalServiceUtil>
+		_faroUserLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			FaroUserLocalServiceUtil.class);
 	private PermissionChecker _permissionChecker;
-	private MockedStatic<RoleLocalServiceUtil>
-		_roleLocalServiceUtilMockedStatic;
-	private MockedStatic<UserGroupRoleLocalServiceUtil>
-		_userGroupRoleLocalServiceUtilMockedStatic;
+	private final MockedStatic<RoleLocalServiceUtil>
+		_roleLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			RoleLocalServiceUtil.class);
+	private final MockedStatic<UserGroupRoleLocalServiceUtil>
+		_userGroupRoleLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			UserGroupRoleLocalServiceUtil.class);
 
 }

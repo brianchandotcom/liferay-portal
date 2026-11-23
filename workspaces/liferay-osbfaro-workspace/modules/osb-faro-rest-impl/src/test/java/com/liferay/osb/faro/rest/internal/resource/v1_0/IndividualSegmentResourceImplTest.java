@@ -188,6 +188,11 @@ public class IndividualSegmentResourceImplTest {
 			_individualSegment,
 			_individualSegmentResourceImpl.getWorkspaceGroupIndividualSegment(
 				_GROUP_ID, _INDIVIDUAL_SEGMENT_ID_ALL_USERS));
+	}
+
+	@Test
+	public void testGetWorkspaceGroupIndividualSegmentWithForbiddenException()
+		throws Exception {
 
 		try {
 			_individualSegmentResourceImpl.getWorkspaceGroupIndividualSegment(
@@ -197,7 +202,7 @@ public class IndividualSegmentResourceImplTest {
 		}
 		catch (ForbiddenException forbiddenException) {
 			Mockito.verify(
-				_individualSegmentDTOConverter, Mockito.times(1)
+				_individualSegmentDTOConverter, Mockito.never()
 			).toDTO(
 				Mockito.any(DTOConverterContext.class), Mockito.any()
 			);

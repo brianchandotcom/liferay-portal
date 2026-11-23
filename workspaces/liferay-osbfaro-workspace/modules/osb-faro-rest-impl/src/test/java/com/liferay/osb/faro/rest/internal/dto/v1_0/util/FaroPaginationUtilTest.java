@@ -34,7 +34,7 @@ public class FaroPaginationUtilTest {
 	}
 
 	@Test
-	public void testPaginatePastEnd() {
+	public void testPaginateWithStartPositionPastEnd() {
 		List<String> items = Collections.nCopies(
 			20, RandomTestUtil.randomString());
 

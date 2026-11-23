@@ -55,12 +55,6 @@ public class AccountLifecycleHistoryDTOConverterTest {
 			_accountLifecycleHistoryDTOConverter.toDTO(
 				null, accountLifecycleStatus);
 
-		Assert.assertEquals(
-			accountLifecycleStatus.getId(), accountLifecycleHistory.getId());
-		Assert.assertEquals(
-			accountLifecycleStatus.getName(),
-			accountLifecycleHistory.getName());
-
 		AccountLifecycleStageHistory[] accountLifecycleStageHistories =
 			accountLifecycleHistory.getAccountLifecycleStageHistories();
 
@@ -81,6 +75,12 @@ public class AccountLifecycleHistoryDTOConverterTest {
 		Assert.assertEquals(
 			accountLifecycleStageStatus.getStartDate(),
 			accountLifecycleStageHistory.getStartDate());
+
+		Assert.assertEquals(
+			accountLifecycleStatus.getId(), accountLifecycleHistory.getId());
+		Assert.assertEquals(
+			accountLifecycleStatus.getName(),
+			accountLifecycleHistory.getName());
 	}
 
 	private final AccountLifecycleHistoryDTOConverter

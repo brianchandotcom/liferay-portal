@@ -53,7 +53,7 @@ public class AccountLifecycleHelperTest {
 	}
 
 	@Test
-	public void testGetAccountLifecycleFromAnotherChannel() {
+	public void testGetAccountLifecycleWithAnotherChannel() {
 		AccountLifecycle accountLifecycle = _mockAccountLifecycle(
 			RandomTestUtil.randomString());
 
@@ -70,33 +70,6 @@ public class AccountLifecycleHelperTest {
 
 		_assertNotFoundException(
 			accountLifecycle.getId(), String.valueOf(_CHANNEL_ID));
-	}
-
-	@Test
-	public void testGetAccountLifecycleNotFound() {
-		String accountLifecycleId1 = RandomTestUtil.randomString();
-
-		Mockito.when(
-			_contactsEngineClient.getAccountLifecycle(
-				_faroProject, accountLifecycleId1)
-		).thenThrow(
-			new NoSuchEntryException(RandomTestUtil.randomString())
-		);
-
-		_assertNotFoundException(
-			accountLifecycleId1, String.valueOf(_CHANNEL_ID));
-
-		String accountLifecycleId2 = RandomTestUtil.randomString();
-
-		Mockito.when(
-			_contactsEngineClient.getAccountLifecycle(
-				_faroProject, accountLifecycleId2)
-		).thenThrow(
-			new FaroEngineClientException(RandomTestUtil.randomString(), 400)
-		);
-
-		_assertNotFoundException(
-			accountLifecycleId2, String.valueOf(_CHANNEL_ID));
 	}
 
 	@Test
@@ -122,6 +95,33 @@ public class AccountLifecycleHelperTest {
 			Assert.assertSame(
 				faroEngineClientException1, faroEngineClientException2);
 		}
+	}
+
+	@Test
+	public void testGetAccountLifecycleWithNonexistentAccountLifecycle() {
+		String accountLifecycleId1 = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_contactsEngineClient.getAccountLifecycle(
+				_faroProject, accountLifecycleId1)
+		).thenThrow(
+			new NoSuchEntryException(RandomTestUtil.randomString())
+		);
+
+		_assertNotFoundException(
+			accountLifecycleId1, String.valueOf(_CHANNEL_ID));
+
+		String accountLifecycleId2 = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_contactsEngineClient.getAccountLifecycle(
+				_faroProject, accountLifecycleId2)
+		).thenThrow(
+			new FaroEngineClientException(RandomTestUtil.randomString(), 400)
+		);
+
+		_assertNotFoundException(
+			accountLifecycleId2, String.valueOf(_CHANNEL_ID));
 	}
 
 	private void _assertNotFoundException(

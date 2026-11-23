@@ -4879,11 +4879,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_getRandomSitePage(SitePage.Type.EMBEDDED_PAGE),
 			_getSitePageResource("pageSpecifications"));
 		_testPutSiteSitePageWithEmptyLayoutAndLayoutTypeException(
-			_getRandomSitePage(SitePage.Type.LINK_TO_URL_PAGE),
-			_getSitePageResource("pageSpecifications"));
-		_testPutSiteSitePageWithEmptyLayoutAndLayoutTypeException(
 			_getRandomSitePage(SitePage.Type.EMBEDDED_PAGE),
 			_getSitePageResource(LocaleUtil.SPAIN));
+		_testPutSiteSitePageWithEmptyLayoutAndLayoutTypeException(
+			_getRandomSitePage(SitePage.Type.LINK_TO_URL_PAGE),
+			_getSitePageResource("pageSpecifications"));
 	}
 
 	private void _testPutSiteSitePageWithEmptyLayout(

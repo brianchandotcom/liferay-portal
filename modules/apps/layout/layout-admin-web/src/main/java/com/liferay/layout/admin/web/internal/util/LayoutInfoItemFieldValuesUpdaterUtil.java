@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.admin.web.internal.info.item.helper;
+package com.liferay.layout.admin.web.internal.util;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -31,32 +31,29 @@ import java.util.regex.Pattern;
 /**
  * @author Adolfo Pérez
  */
-public class LayoutInfoItemFieldValuesUpdaterHelper {
+public class LayoutInfoItemFieldValuesUpdaterUtil {
 
-	public LayoutInfoItemFieldValuesUpdaterHelper(
+	public static Layout updateFromInfoItemFieldValues(
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
-		LayoutLocalService layoutLocalService) {
+		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		LayoutLocalService layoutLocalService, long segmentsExperienceId) {
 
-		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
-		_layoutLocalService = layoutLocalService;
-	}
-
-	public Layout updateFromInfoItemFieldValues(
-		Layout layout, InfoItemFieldValues infoItemFieldValues,
-		long segmentsExperienceId) {
-
-		_updateFragmentEntryLinks(infoItemFieldValues);
+		_updateFragmentEntryLinks(
+			fragmentEntryLinkLocalService, infoItemFieldValues);
 
 		if (layout.isDraftLayout()) {
 			_updateLayout(
-				_layoutLocalService.fetchLayout(layout.getClassPK()),
-				infoItemFieldValues, segmentsExperienceId);
+				infoItemFieldValues,
+				layoutLocalService.fetchLayout(layout.getClassPK()),
+				layoutLocalService, segmentsExperienceId);
 		}
 
-		return _updateLayout(layout, infoItemFieldValues, segmentsExperienceId);
+		return _updateLayout(
+			infoItemFieldValues, layout, layoutLocalService,
+			segmentsExperienceId);
 	}
 
-	private Map<Locale, String> _getFieldMap(
+	private static Map<Locale, String> _getFieldMap(
 		String fieldName, InfoItemFieldValues infoItemFieldValues,
 		Map<Locale, String> initialValue) {
 
@@ -75,7 +72,7 @@ public class LayoutInfoItemFieldValuesUpdaterHelper {
 		return fieldMap;
 	}
 
-	private void _updateEditableValuesJSONObject(
+	private static void _updateEditableValuesJSONObject(
 		JSONObject jsonObject, String fieldName,
 		InfoFieldValue<Object> infoFieldValue) {
 
@@ -105,7 +102,8 @@ public class LayoutInfoItemFieldValuesUpdaterHelper {
 		}
 	}
 
-	private void _updateFragmentEntryLinks(
+	private static void _updateFragmentEntryLinks(
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		InfoItemFieldValues infoItemFieldValues) {
 
 		Map<FragmentEntryLink, JSONObject> editableValuesJSONObjects =
@@ -124,7 +122,7 @@ public class LayoutInfoItemFieldValuesUpdaterHelper {
 			}
 
 			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					GetterUtil.getLong(matcher.group("id")));
 
 			if (fragmentEntryLink == null) {
@@ -153,14 +151,14 @@ public class LayoutInfoItemFieldValuesUpdaterHelper {
 
 			fragmentEntryLink.setEditableValues(jsonObject.toString());
 
-			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				fragmentEntryLink);
 		}
 	}
 
-	private Layout _updateLayout(
-		Layout layout, InfoItemFieldValues infoItemFieldValues,
-		long segmentsExperienceId) {
+	private static Layout _updateLayout(
+		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		LayoutLocalService layoutLocalService, long segmentsExperienceId) {
 
 		if (layout == null) {
 			return null;
@@ -181,13 +179,10 @@ public class LayoutInfoItemFieldValuesUpdaterHelper {
 			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 
-		return _layoutLocalService.updateLayout(layout);
+		return layoutLocalService.updateLayout(layout);
 	}
 
 	private static final Pattern _fragmentEntryLinkInfoFieldPattern =
 		Pattern.compile("(?<id>\\d+):(?<name>.+)");
-
-	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-	private final LayoutLocalService _layoutLocalService;
 
 }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.admin.web.internal.info.item.helper;
+package com.liferay.layout.admin.web.internal.util;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.renderer.FragmentRendererController;
@@ -37,16 +37,11 @@ import java.util.Map;
 /**
  * @author Adolfo Pérez
  */
-public class LayoutInfoItemFieldValuesProviderHelper {
+public class LayoutInfoItemFieldValuesProviderUtil {
 
-	public LayoutInfoItemFieldValuesProviderHelper(
-		FragmentRendererController fragmentRendererController) {
-
-		_fragmentRendererController = fragmentRendererController;
-	}
-
-	public InfoItemFieldValues getInfoItemFieldValues(
-		Layout layout, long segmentsExperienceId) {
+	public static InfoItemFieldValues getInfoItemFieldValues(
+		FragmentRendererController fragmentRendererController, Layout layout,
+		long segmentsExperienceId) {
 
 		try (AutoCloseable autoCloseable = _getServiceContextAutoCloseable(
 				layout)) {
@@ -58,7 +53,9 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 			if (segmentsExperienceId != defaultSegmentsExperienceId) {
 				return InfoItemFieldValues.builder(
 				).infoFieldValues(
-					_getLayoutInfoFieldValues(layout, segmentsExperienceId)
+					_getLayoutInfoFieldValues(
+						fragmentRendererController, layout,
+						segmentsExperienceId)
 				).infoItemReference(
 					_getInfoItemReference(
 						defaultSegmentsExperienceId, layout,
@@ -77,7 +74,8 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 						layout.getNameMap()
 					).build())
 			).infoFieldValues(
-				_getLayoutInfoFieldValues(layout, segmentsExperienceId)
+				_getLayoutInfoFieldValues(
+					fragmentRendererController, layout, segmentsExperienceId)
 			).infoItemReference(
 				_getInfoItemReference(
 					defaultSegmentsExperienceId, layout, segmentsExperienceId)
@@ -88,7 +86,7 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 		}
 	}
 
-	private InfoItemReference _getInfoItemReference(
+	private static InfoItemReference _getInfoItemReference(
 		long defaultSegmentsExperienceId, Layout layout,
 		long segmentsExperienceId) {
 
@@ -101,7 +99,7 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 			SegmentsExperience.class.getName(), segmentsExperienceId);
 	}
 
-	private InfoLocalizedValue<String> _getInfoLocalizedValue(
+	private static InfoLocalizedValue<String> _getInfoLocalizedValue(
 		JSONObject jsonObject, String name, String defaultLanguageId) {
 
 		for (String processorKey : jsonObject.keySet()) {
@@ -150,14 +148,15 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 		return InfoLocalizedValue.singleValue(StringPool.BLANK);
 	}
 
-	private List<InfoFieldValue<Object>> _getLayoutInfoFieldValues(
-		Layout layout, long segmentsExperienceId) {
+	private static List<InfoFieldValue<Object>> _getLayoutInfoFieldValues(
+		FragmentRendererController fragmentRendererController, Layout layout,
+		long segmentsExperienceId) {
 
 		try {
 			List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
 			InfoFieldUtil.forEachInfoField(
-				_fragmentRendererController, layout, segmentsExperienceId,
+				fragmentRendererController, layout, segmentsExperienceId,
 				(infoField, type, unsafeSupplier) -> {
 					InfoLocalizedValue<String> infoLocalizedValue =
 						infoField.getLabelInfoLocalizedValue();
@@ -178,7 +177,7 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 		}
 	}
 
-	private AutoCloseable _getServiceContextAutoCloseable(Layout layout)
+	private static AutoCloseable _getServiceContextAutoCloseable(Layout layout)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -199,7 +198,5 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 		return LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
 			layout);
 	}
-
-	private final FragmentRendererController _fragmentRendererController;
 
 }

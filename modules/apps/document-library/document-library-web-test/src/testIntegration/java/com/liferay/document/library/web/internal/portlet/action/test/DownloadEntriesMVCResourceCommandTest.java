@@ -60,6 +60,7 @@ import jakarta.portlet.PortletException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
@@ -262,6 +263,13 @@ public class DownloadEntriesMVCResourceCommandTest {
 					if (fileName.endsWith(".zip")) {
 						zipFileNames.add(fileName);
 					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFileFailed(
+					Path path, IOException ioException) {
 
 					return FileVisitResult.CONTINUE;
 				}

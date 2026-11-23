@@ -59,6 +59,14 @@ public class IndividualSegmentResourceImplTest {
 					IndividualSegment();
 
 		Mockito.when(
+			_individualSegmentDTOConverter.toDTO(
+				Mockito.any(DTOConverterContext.class),
+				Mockito.eq(individualSegment))
+		).thenReturn(
+			_individualSegment
+		);
+
+		Mockito.when(
 			_individualSegmentHelper.getIndividualSegment(
 				_faroProject, _INDIVIDUAL_SEGMENT_ID_ALL_USERS)
 		).thenReturn(
@@ -70,14 +78,6 @@ public class IndividualSegmentResourceImplTest {
 				_faroProject, _INDIVIDUAL_SEGMENT_ID_SELECT_USERS)
 		).thenThrow(
 			new ForbiddenException()
-		);
-
-		Mockito.when(
-			_individualSegmentDTOConverter.toDTO(
-				Mockito.any(DTOConverterContext.class),
-				Mockito.eq(individualSegment))
-		).thenReturn(
-			_individualSegment
 		);
 
 		_individualSegmentResourceImpl.setContextAcceptLanguage(
@@ -104,28 +104,6 @@ public class IndividualSegmentResourceImplTest {
 	public void testGetWorkspaceGroupIndividualIndividualSegmentsPage()
 		throws Exception {
 
-		FaroChannel accessibleFaroChannel = Mockito.mock(FaroChannel.class);
-		FaroChannel inaccessibleFaroChannel = Mockito.mock(FaroChannel.class);
-
-		Mockito.when(
-			accessibleFaroChannel.getChannelId()
-		).thenReturn(
-			_CHANNEL_ID_ALL_USERS
-		);
-
-		Mockito.when(
-			_faroChannelLocalService.search(
-				_GROUP_ID, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
-		).thenReturn(
-			List.of(accessibleFaroChannel)
-		);
-
-		Mockito.when(
-			inaccessibleFaroChannel.getChannelId()
-		).thenReturn(
-			_CHANNEL_ID_SELECT_USERS
-		);
-
 		Mockito.when(
 			_contactsEngineClient.getIndividualIndividualSegments(
 				Mockito.eq(_faroProject), Mockito.any(), Mockito.anyList(),
@@ -135,12 +113,35 @@ public class IndividualSegmentResourceImplTest {
 			new Results<>(Collections.emptyList(), 0)
 		);
 
+		FaroChannel accessibleFaroChannel = Mockito.mock(FaroChannel.class);
+
+		Mockito.when(
+			accessibleFaroChannel.getChannelId()
+		).thenReturn(
+			_CHANNEL_ID_ALL_USERS
+		);
+
+		FaroChannel inaccessibleFaroChannel = Mockito.mock(FaroChannel.class);
+
+		Mockito.when(
+			inaccessibleFaroChannel.getChannelId()
+		).thenReturn(
+			_CHANNEL_ID_SELECT_USERS
+		);
+
 		Mockito.doReturn(
 			Arrays.asList(accessibleFaroChannel, inaccessibleFaroChannel)
 		).when(
 			_faroChannelLocalService
 		).dslQuery(
 			Mockito.any(DSLQuery.class)
+		);
+
+		Mockito.when(
+			_faroChannelLocalService.search(
+				_GROUP_ID, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
+		).thenReturn(
+			List.of(accessibleFaroChannel)
 		);
 
 		_individualSegmentResourceImpl.

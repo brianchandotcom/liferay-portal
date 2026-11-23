@@ -659,7 +659,20 @@ module.exports = {
 	transform: {
 		'^.+\\.jsx?$': 'babel-jest',
 		'^.+\\.svg$': '<rootDir>/src/main/js/test/svgTransformer.js',
-		'^.+\\.tsx?$': ['ts-jest', {tsconfig: 'tsconfig.test.json'}],
+		'^.+\\.tsx?$': [
+			'@swc/jest',
+			{
+				jsc: {
+					parser: {decorators: true, syntax: 'typescript', tsx: true},
+					target: 'es2020',
+					transform: {
+						legacyDecorator: true,
+						react: {runtime: 'automatic'},
+					},
+				},
+				module: {type: 'commonjs'},
+			},
+		],
 	},
 	transformIgnorePatterns: ['/node_modules/(?!.+\\.svg$)'],
 };

@@ -1,6 +1,5 @@
 import * as API from 'shared/api';
 import * as data from 'test/data';
-import * as NotificationAlertList from 'shared/components/NotificationAlertList';
 import CustomEventList from '../CustomEventList';
 import mockStore from 'test/mock-store';
 import React from 'react';
@@ -14,13 +13,22 @@ import {Provider} from 'react-redux';
 import {range} from 'lodash';
 import {Routes} from 'shared/util/router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {useNotificationsAPI} from 'shared/components/NotificationAlertList';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.mock('shared/hooks/useCurrentUser', () => ({
 	useCurrentUser: jest.fn()
 }));
 
-const mockNotificationAlertList = NotificationAlertList;
+jest.mock('shared/components/NotificationAlertList', () => {
+	const actual = jest.requireActual('shared/components/NotificationAlertList');
+
+	return {
+		__esModule: true,
+		...actual,
+		useNotificationsAPI: jest.fn(actual.useNotificationsAPI),
+	};
+});
 
 const WrappedComponent = ({
 	children,
@@ -100,7 +108,7 @@ describe('CustomEventList', () => {
 	it('should render alert notification', async () => {
 		useCurrentUser.mockImplementation(() => ({isAdmin: () => true}));
 
-		mockNotificationAlertList.useNotificationsAPI = jest.fn(() => ({
+		useNotificationsAPI.mockImplementation(() => ({
 			data: range(1).map(i =>
 				data.mockNotification(i, {
 					subtype: NotificationSubtypes.BlockedEventsLimit

@@ -1,5 +1,5 @@
+import {useDataSources} from 'shared/context/dataSources';
 import * as API from 'shared/api';
-import * as useDataSources from 'shared/context/dataSources';
 import KnownIndividuals from '../KnownIndividuals';
 import mockStore from 'test/mock-store';
 import React from 'react';
@@ -11,7 +11,10 @@ import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
-const mockUseDataSource = useDataSources;
+jest.mock('shared/context/dataSources', () => ({
+	...jest.requireActual('shared/context/dataSources'),
+	useDataSources: jest.fn(),
+}));
 
 const WrappedComponent = () => (
 	<Provider store={mockStore()}>
@@ -36,7 +39,7 @@ describe('Individuals Dashboard KnownIndividuals List', () => {
 	afterEach(cleanup);
 
 	it('renders', async () => {
-		mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
+		useDataSources.mockReturnValue(mockSuccessState);
 
 		const {container} = render(<WrappedComponent />);
 
@@ -52,7 +55,7 @@ describe('Individuals Dashboard KnownIndividuals List', () => {
 	});
 
 	it('renders with data source empty state', () => {
-		mockUseDataSource.useDataSources = jest.fn(() => mockEmptyState);
+		useDataSources.mockReturnValue(mockEmptyState);
 
 		const {getByText} = render(<WrappedComponent />);
 
@@ -60,7 +63,7 @@ describe('Individuals Dashboard KnownIndividuals List', () => {
 	});
 
 	it('searches with the last year range key', async () => {
-		mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
+		useDataSources.mockReturnValue(mockSuccessState);
 
 		const {container} = render(<WrappedComponent />);
 

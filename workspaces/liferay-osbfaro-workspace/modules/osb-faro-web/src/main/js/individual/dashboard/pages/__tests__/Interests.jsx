@@ -1,4 +1,4 @@
-import * as useDataSources from 'shared/context/dataSources';
+import {useDataSources} from 'shared/context/dataSources';
 import Interests from '../Interests';
 import mockStore from 'test/mock-store';
 import React from 'react';
@@ -11,7 +11,10 @@ import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
-const mockUseDataSource = useDataSources;
+jest.mock('shared/context/dataSources', () => ({
+	...jest.requireActual('shared/context/dataSources'),
+	useDataSources: jest.fn(),
+}));
 
 const WrappedComponent = () => (
 	<MockedProvider
@@ -47,7 +50,7 @@ describe('Individuals Dashboard Individuals Interests', () => {
 	afterEach(cleanup);
 
 	it('renders', async () => {
-		mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
+		useDataSources.mockReturnValue(mockSuccessState);
 
 		const {getByText} = render(<WrappedComponent />);
 
@@ -59,7 +62,7 @@ describe('Individuals Dashboard Individuals Interests', () => {
 	});
 
 	it('renders with data source empty state', () => {
-		mockUseDataSource.useDataSources = jest.fn(() => mockEmptyState);
+		useDataSources.mockReturnValue(mockEmptyState);
 
 		const {getByText} = render(<WrappedComponent />);
 

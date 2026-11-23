@@ -1,4 +1,3 @@
-import * as Constants from 'shared/util/constants';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ENABLE_BLOCKLIST_KEYWORDS} from 'shared/util/feature-flags';
@@ -15,11 +14,16 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
+// TODO: LRAC-4511 Remove DEVELOPER_MODE
+
+jest.mock('shared/util/constants', () => ({
+	__esModule: true,
+	...jest.requireActual('shared/util/constants'),
+	DEVELOPER_MODE: true,
+}));
+
 describe('Definitions Overview', () => {
 	it('should render a list of definitions that includes individuals, accounts, behaviors, events, search and interests', () => {
-		// TODO: LRAC-4511 Remove DEVELOPER_MODE
-		Constants.DEVELOPER_MODE = true;
-
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>

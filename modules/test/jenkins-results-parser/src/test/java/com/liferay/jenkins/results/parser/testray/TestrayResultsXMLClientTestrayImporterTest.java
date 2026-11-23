@@ -186,11 +186,11 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 		String randomString = RandomTestUtil.randomString();
 
+		File file = new File(
+			testrayResultsDir, RandomTestUtil.randomString() + ".txt");
+
 		Files.write(
-			new File(
-				testrayResultsDir, RandomTestUtil.randomString() + ".txt"
-			).toPath(),
-			randomString.getBytes(StandardCharsets.UTF_8));
+			file.toPath(), randomString.getBytes(StandardCharsets.UTF_8));
 
 		TestrayResultsXMLClientTestrayImporter.main(new String[0]);
 
@@ -257,11 +257,11 @@ public class TestrayResultsXMLClientTestrayImporterTest
 
 		String randomString = RandomTestUtil.randomString();
 
+		File file = new File(
+			testrayResultsDir, RandomTestUtil.randomString() + ".txt");
+
 		Files.write(
-			new File(
-				testrayResultsDir, RandomTestUtil.randomString() + ".txt"
-			).toPath(),
-			randomString.getBytes(StandardCharsets.UTF_8));
+			file.toPath(), randomString.getBytes(StandardCharsets.UTF_8));
 
 		RuntimeException runtimeException = Assert.assertThrows(
 			RuntimeException.class,

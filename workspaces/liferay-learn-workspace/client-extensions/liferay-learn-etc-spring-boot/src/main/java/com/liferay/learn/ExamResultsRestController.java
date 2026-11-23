@@ -135,12 +135,12 @@ public class ExamResultsRestController extends BaseRestController {
 			String emailAddress, String examName, LocalDate localDate)
 		throws Exception {
 
-		HexFormat hexFormat = HexFormat.of();
-		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-
 		String keyString = StringBundler.concat(
 			StringUtil.toLowerCase(emailAddress.trim()), "|", examName.trim(),
 			"|", localDate);
+
+		HexFormat hexFormat = HexFormat.of();
+		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 
 		return hexFormat.formatHex(
 			messageDigest.digest(keyString.getBytes(StandardCharsets.UTF_8)));

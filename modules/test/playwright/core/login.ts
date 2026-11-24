@@ -3,10 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Cookie, Page, expect} from '@playwright/test';
+import {
+	APIRequestContext,
+	Cookie,
+	Page,
+	expect,
+	request,
+} from '@playwright/test';
 
 import {clearAuthToken, getHeader, readAuthToken} from './authToken';
 import {liferayConfig} from './liferayConfig';
+
+const LOGIN_PORTLET_NAMESPACE = '_com_liferay_login_web_portlet_LoginPortlet_';
 
 export type LoginScreenName =
 	| 'demo.company.admin'
@@ -48,6 +56,69 @@ interface LoginOptions {
 	password?: string;
 	rememberMe?: boolean;
 	screenName: LoginScreenName | string;
+}
+
+export async function createPortalSession(): Promise<APIRequestContext> {
+	const apiRequestContext = await request.newContext({
+		baseURL: liferayConfig.environment.baseUrl,
+	});
+
+	try {
+		const signInPageResponse =
+			await apiRequestContext.get('/c/portal/login');
+
+		const html = await signInPageResponse.text();
+
+		const loginFormHTML = getMatch(
+			html,
+			'login form',
+			new RegExp(
+				`(<form[^>]*id="${LOGIN_PORTLET_NAMESPACE}loginForm"[^>]*>)`
+			)
+		);
+
+		const loginResponse = await apiRequestContext.post(
+			getMatch(loginFormHTML, 'login form action', /action="([^"]+)"/),
+			{
+				form: {
+					[`${LOGIN_PORTLET_NAMESPACE}formDate`]: getMatch(
+						html,
+						'login form date',
+						new RegExp(
+							`name="${LOGIN_PORTLET_NAMESPACE}formDate"[^>]*value="(\\d+)"`
+						)
+					),
+					[`${LOGIN_PORTLET_NAMESPACE}login`]: 'test@liferay.com',
+					[`${LOGIN_PORTLET_NAMESPACE}password`]:
+						userData.test.password,
+				},
+				maxRedirects: 0,
+			}
+		);
+
+		if (loginResponse.status() !== 302) {
+			throw new Error(
+				`Unable to sign in through the sign in page: HTTP ${loginResponse.status()}`
+			);
+		}
+
+		const location = loginResponse.headers()['location'] ?? '';
+
+		const {pathname} = new URL(location, liferayConfig.environment.baseUrl);
+
+		if (!pathname.endsWith('/c')) {
+			throw new Error(
+				`Unable to sign in through the sign in page: redirected to "${location}"`
+			);
+		}
+	}
+	catch (error) {
+		await apiRequestContext.dispose();
+
+		throw error;
+	}
+
+	return apiRequestContext;
 }
 
 export async function performLogin(
@@ -163,4 +234,14 @@ export async function performUserSwitchViaApi(
 	await page.waitForURL((url) => !url.pathname.endsWith('/c/portal/logout'));
 
 	await performLoginViaApi({page, screenName});
+}
+
+function getMatch(html: string, name: string, regExp: RegExp) {
+	const match = html.match(regExp);
+
+	if (!match) {
+		throw new Error(`Unable to find the ${name} in the sign in page`);
+	}
+
+	return match[1].replace(/&amp;/g, '&');
 }

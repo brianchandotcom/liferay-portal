@@ -42,7 +42,7 @@ describe('BaseInterestDetails', () => {
 	});
 
 	it('should render an individuals list tab', () => {
-		const {getByText} = render(
+		const {getByRole, getByText} = render(
 			<MemoryRouter>
 				<BaseInterestDetails
 					entity={new Account(data.mockAccount())}
@@ -60,16 +60,15 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		const individualsGrandparentElement =
-			getByText(/^individuals$/i).parentElement?.parentElement;
-
 		expect(getByText(/^individuals$/i)).toBeTruthy();
 
-		expect(individualsGrandparentElement).toHaveClass('active');
+		expect(
+			getByRole('link', {name: /^individuals$/i})
+		).toHaveAttribute('aria-current', 'page');
 	});
 
 	it('should render an active pages list tab', () => {
-		const {getByText} = render(
+		const {getByRole, getByText} = render(
 			<MemoryRouter>
 				<BaseInterestDetails
 					active='true'
@@ -88,16 +87,15 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		const activePagesGrandparentElement =
-			getByText(/^active pages$/i).parentElement?.parentElement;
-
 		expect(getByText(/^active pages$/i)).toBeTruthy();
 
-		expect(activePagesGrandparentElement).toHaveClass('active');
+		expect(
+			getByRole('link', {name: /^active pages$/i})
+		).toHaveAttribute('aria-current', 'page');
 	});
 
 	it('should render a pages list tab of inactive pages', () => {
-		const {getByText} = render(
+		const {getByRole, getByText} = render(
 			<MemoryRouter>
 				<BaseInterestDetails
 					active='false'
@@ -116,12 +114,11 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		const InactivePagesGrandparentElement =
-			getByText(/^inactive pages$/i).parentElement?.parentElement;
-
 		expect(getByText(/^inactive pages$/i)).toBeTruthy();
 
-		expect(InactivePagesGrandparentElement).toHaveClass('active');
+		expect(
+			getByRole('link', {name: /^inactive pages$/i})
+		).toHaveAttribute('aria-current', 'page');
 	});
 });
 

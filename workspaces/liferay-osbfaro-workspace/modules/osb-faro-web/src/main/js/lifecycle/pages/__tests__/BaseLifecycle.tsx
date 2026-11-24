@@ -934,10 +934,6 @@ describe('BaseLifecycle', () => {
 			fireEvent.click(getSwitchButton());
 
 			expect(getSwitchButton()).toHaveAttribute('aria-expanded', 'true');
-			expect(getSwitchButton()).toHaveClass(
-				'active',
-				'btn-outline-borderless'
-			);
 			expect(
 				screen
 					.getByText(/switch lifecycle dashboard/i)

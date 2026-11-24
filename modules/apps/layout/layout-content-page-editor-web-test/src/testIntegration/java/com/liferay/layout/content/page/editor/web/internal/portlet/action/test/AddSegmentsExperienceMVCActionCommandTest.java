@@ -13,14 +13,18 @@ import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -107,6 +111,95 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	@TestInfo("LPD-115800")
+	public void testAddSegmentsExperienceWithNamespaceInEditableId()
+		throws Exception {
+
+		String dynamicEditableIdSuffix = "-" + RandomTestUtil.randomString();
+		String staticEditableId = RandomTestUtil.randomString();
+
+		FragmentEntryLink sourceFragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				"{}", StringPool.BLANK, StringPool.BLANK, null, null,
+				StringBundler.concat(
+					"<h1 data-lfr-editable-id=\"${fragmentEntryLinkNamespace}",
+					dynamicEditableIdSuffix,
+					"\" data-lfr-editable-type=\"text\">Heading Example</h1>",
+					"<p data-lfr-editable-id=\"", staticEditableId,
+					"\" data-lfr-editable-type=\"text\">Paragraph Example</p>"),
+				StringPool.BLANK, _draftLayout, null,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()),
+				FragmentConstants.TYPE_COMPONENT);
+
+		String dynamicEditableValue = RandomTestUtil.randomString();
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+		String sourceDynamicEditableId =
+			sourceFragmentEntryLink.getNamespace() + dynamicEditableIdSuffix;
+		String staticEditableValue = RandomTestUtil.randomString();
+
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
+			sourceFragmentEntryLink.getFragmentEntryLinkId(),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					sourceDynamicEditableId,
+					JSONUtil.put(languageId, dynamicEditableValue)
+				).put(
+					staticEditableId,
+					JSONUtil.put(languageId, staticEditableValue)
+				)
+			).toString(),
+			true);
+
+		long targetSegmentsExperienceId = _addSegmentsExperience();
+
+		List<FragmentEntryLink> targetFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					_group.getGroupId(), targetSegmentsExperienceId,
+					_draftLayout.getPlid());
+
+		Assert.assertEquals(
+			targetFragmentEntryLinks.toString(), 1,
+			targetFragmentEntryLinks.size());
+
+		FragmentEntryLink targetFragmentEntryLink =
+			targetFragmentEntryLinks.get(0);
+
+		JSONObject editableValuesJSONObject =
+			targetFragmentEntryLink.getEditableValuesJSONObject();
+
+		JSONObject editableFragmentEntryProcessorJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		Assert.assertFalse(
+			editableFragmentEntryProcessorJSONObject.has(
+				sourceDynamicEditableId));
+
+		JSONObject targetDynamicEditableValueJSONObject =
+			editableFragmentEntryProcessorJSONObject.getJSONObject(
+				targetFragmentEntryLink.getNamespace() +
+					dynamicEditableIdSuffix);
+
+		Assert.assertEquals(
+			dynamicEditableValue,
+			targetDynamicEditableValueJSONObject.getString(languageId));
+
+		JSONObject targetStaticEditableValueJSONObject =
+			editableFragmentEntryProcessorJSONObject.getJSONObject(
+				staticEditableId);
+
+		Assert.assertEquals(
+			staticEditableValue,
+			targetStaticEditableValueJSONObject.getString(languageId));
 	}
 
 	@Test

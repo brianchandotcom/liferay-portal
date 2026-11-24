@@ -13,6 +13,7 @@ import com.liferay.osb.faro.web.internal.display.context.ChannelSelectorDisplayC
 import com.liferay.osb.faro.web.internal.util.FaroFragmentRendererUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -58,14 +59,20 @@ public abstract class BaseFragmentRenderer implements FragmentRenderer {
 				"window.faroConstants = " +
 					FaroFragmentRendererUtil.getFaroConstants() + ";",
 				null, null);
-			FaroFragmentRendererUtil.renderScriptTag(
-				httpServletRequest, httpServletResponse, null,
-				StringBundler.concat(
-					"document.addEventListener('DOMContentLoaded', () => {",
-					"for (const id of ['liferayAUICSS', 'liferayThemeCSS']) {",
-					"const element = document.getElementById(id);",
-					"if (element) {element.disabled = true;}}});"),
-				null, null);
+
+			if (!FeatureFlagManagerUtil.isEnabled(
+					portal.getCompanyId(httpServletRequest), "LPD-114293")) {
+
+				FaroFragmentRendererUtil.renderScriptTag(
+					httpServletRequest, httpServletResponse, null,
+					StringBundler.concat(
+						"document.addEventListener('DOMContentLoaded', () => {",
+						"for (const id of ['liferayAUICSS', ",
+						"'liferayThemeCSS']) {",
+						"const element = document.getElementById(id);",
+						"if (element) {element.disabled = true;}}});"),
+					null, null);
+			}
 
 			PageContext pageContext = PageContextFactoryUtil.create(
 				httpServletRequest, httpServletResponse);

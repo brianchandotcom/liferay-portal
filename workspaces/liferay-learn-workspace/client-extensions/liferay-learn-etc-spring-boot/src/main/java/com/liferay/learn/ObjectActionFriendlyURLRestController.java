@@ -15,6 +15,7 @@ import java.text.Normalizer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,7 +49,7 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		JSONObject valuesJSONObject = objectEntryJSONObject.getJSONObject(
 			"values");
 
-		String title = valuesJSONObject.optString("title", "");
+		String title = valuesJSONObject.getString("title");
 
 		if (title.isEmpty() || !_isTitleChanged(title, jsonObject)) {
 			return new ResponseEntity<>(json, HttpStatus.ACCEPTED);
@@ -66,29 +67,18 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		String friendlyURLPath = _getFriendlyURLPath(
 			authorization, dtoKey, valuesJSONObject);
 
+		JSONObject dtoJSONObject = jsonObject.getJSONObject(dtoKey);
 		EntryType entryType = _entryTypes.get(dtoKey);
 		long objectEntryId = objectEntryJSONObject.getLong("id");
 
 		_patchFriendlyURL(
-			authorization, _getCurrentFriendlyURLPath(dtoKey, jsonObject),
+			authorization, dtoJSONObject.getString("friendlyUrlPath"),
 			friendlyURLPath, objectEntryId, entryType.getRESTPath());
 
 		_propagateFriendlyURL(
 			authorization, dtoKey, friendlyURLPath, objectEntryId);
 
 		return new ResponseEntity<>(json, HttpStatus.ACCEPTED);
-	}
-
-	private String _getCurrentFriendlyURLPath(
-		String dtoKey, JSONObject jsonObject) {
-
-		JSONObject dtoJSONObject = jsonObject.optJSONObject(dtoKey);
-
-		if (dtoJSONObject == null) {
-			return "";
-		}
-
-		return dtoJSONObject.optString("friendlyUrlPath", "");
 	}
 
 	private String _getDTOKey(JSONObject jsonObject) {
@@ -105,9 +95,9 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		String authorization, String dtoKey, JSONObject valuesJSONObject) {
 
 		EntryType entryType = _entryTypes.get(dtoKey);
-		String slug = _normalizeSlug(valuesJSONObject.optString("title", ""));
+		String slug = _normalizeSlug(valuesJSONObject.getString("title"));
 
-		if (entryType.getFKFieldName() == null) {
+		if (entryType.getRelationshipFieldName() == null) {
 			return slug;
 		}
 
@@ -116,11 +106,12 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 
 		String fields = "id,title";
 
-		if (parentEntryType.getFKFieldName() != null) {
-			fields += "," + parentEntryType.getFKFieldName();
+		if (parentEntryType.getRelationshipFieldName() != null) {
+			fields += "," + parentEntryType.getRelationshipFieldName();
 		}
 
-		long parentId = valuesJSONObject.getLong(entryType.getFKFieldName());
+		long parentId = valuesJSONObject.getLong(
+			entryType.getRelationshipFieldName());
 
 		JSONObject parentJSONObject = new JSONObject(
 			get(
@@ -153,7 +144,7 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		JSONObject valuesJSONObject =
 			originalObjectEntryJSONObject.getJSONObject("values");
 
-		return !currentTitle.equals(valuesJSONObject.optString("title", ""));
+		return !currentTitle.equals(valuesJSONObject.getString("title"));
 	}
 
 	private String _normalizeSlug(String title) {
@@ -204,7 +195,7 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 			entry -> {
 				EntryType entryType = entry.getValue();
 
-				if (dtoKey.equals(entryType.getParentDTOKey())) {
+				if (Objects.equals(dtoKey, entryType.getParentDTOKey())) {
 					return entry.getKey();
 				}
 
@@ -222,7 +213,7 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 					).queryParam(
 						"filter",
 						StringBundler.concat(
-							childEntryType.getFKFieldName(), " eq '",
+							childEntryType.getRelationshipFieldName(), " eq '",
 							objectEntryId, "'")
 					).queryParam(
 						"pageSize", -1
@@ -232,18 +223,17 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 				"items"
 			);
 
-			for (int i = 0; i < itemsJSONArray.length(); i++) {
-				JSONObject childJSONObject = itemsJSONArray.getJSONObject(i);
-
-				long childObjectEntryId = childJSONObject.getLong("id");
+			for (int index = 0; index < itemsJSONArray.length(); index++) {
+				JSONObject childJSONObject = itemsJSONArray.getJSONObject(
+					index);
 
 				String childFriendlyURLPath =
 					friendlyURLPath + "/" +
-						_normalizeSlug(childJSONObject.optString("title", ""));
+						_normalizeSlug(childJSONObject.getString("title"));
+				long childObjectEntryId = childJSONObject.getLong("id");
 
 				_patchFriendlyURL(
-					authorization,
-					childJSONObject.optString("friendlyUrlPath", ""),
+					authorization, childJSONObject.getString("friendlyUrlPath"),
 					childFriendlyURLPath, childObjectEntryId,
 					childEntryType.getRESTPath());
 
@@ -261,32 +251,29 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		).put(
 			"objectEntryDTOP2S3Lesson",
 			new EntryType(
-				"r_p2s3ModuleToP2S3Lessons_c_p2s3ModuleId",
-				"objectEntryDTOP2S3Module", "/o/c/p2s3lessons")
+				"objectEntryDTOP2S3Module",
+				"r_p2s3ModuleToP2S3Lessons_c_p2s3ModuleId", "/o/c/p2s3lessons")
 		).put(
 			"objectEntryDTOP2S3Module",
 			new EntryType(
-				"r_p2s3CourseToP2S3Modules_c_p2s3CourseId",
-				"objectEntryDTOP2S3Course", "/o/c/p2s3modules")
+				"objectEntryDTOP2S3Course",
+				"r_p2s3CourseToP2S3Modules_c_p2s3CourseId", "/o/c/p2s3modules")
 		).put(
-			"objectEntryDTOP2S3Quizzes",
+			"objectEntryDTOP2S3Quiz",
 			new EntryType(
-				"r_p2s3ModuleToP2S3Quizzes_c_p2s3ModuleId",
-				"objectEntryDTOP2S3Module", "/o/c/p2s3quizes")
+				"objectEntryDTOP2S3Module",
+				"r_p2s3ModuleToP2S3Quizzes_c_p2s3ModuleId", "/o/c/p2s3quizes")
 		).build();
 
 	private static class EntryType {
 
 		public EntryType(
-			String fkFieldName, String parentDTOKey, String restPath) {
+			String parentDTOKey, String relationshipFieldName,
+			String restPath) {
 
-			_fkFieldName = fkFieldName;
 			_parentDTOKey = parentDTOKey;
+			_relationshipFieldName = relationshipFieldName;
 			_restPath = restPath;
-		}
-
-		public String getFKFieldName() {
-			return _fkFieldName;
 		}
 
 		public String getParentDTOKey() {
@@ -297,8 +284,12 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 			return _restPath;
 		}
 
-		private final String _fkFieldName;
+		public String getRelationshipFieldName() {
+			return _relationshipFieldName;
+		}
+
 		private final String _parentDTOKey;
+		private final String _relationshipFieldName;
 		private final String _restPath;
 
 	}

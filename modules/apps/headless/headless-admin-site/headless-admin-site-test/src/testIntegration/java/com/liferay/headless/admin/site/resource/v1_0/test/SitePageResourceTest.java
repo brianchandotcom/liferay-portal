@@ -3088,7 +3088,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			});
 
 		_assertPatchSiteSitePageProblemException(
-			"The page type does not match the target page type",
+			"The site page type does not match the target site page type",
 			_getRandomSitePage(
 				sitePage.getExternalReferenceCode(), null, serviceContext,
 				_getRandomType(
@@ -3123,7 +3123,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		ProblemExceptionTestUtil.assertProblemException(
 			"BAD_REQUEST",
 			"A single content page specification cannot be applied to an " +
-				"existing page",
+				"existing content page",
 			() -> sitePageResource.patchSiteSitePage(
 				testGroup.getExternalReferenceCode(),
 				postSitePage.getExternalReferenceCode(), false, sitePage));
@@ -3651,7 +3651,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ProblemExceptionTestUtil.assertProblemException(
 			"BAD_REQUEST",
-			"The private page setting does not match the target page's privacy",
+			"The private page setting does not match the target site page's " +
+				"privacy",
 			() -> sitePageResource.postSiteSitePage(
 				testGroup.getExternalReferenceCode(), !privateLayout,
 				_getRandomSitePage(
@@ -4514,12 +4515,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			putSitePage);
 
 		String expectedTitle =
-			"The page type does not match the target page type";
+			"The site page type does not match the target site page type";
 
 		if (privateLayout) {
 			expectedTitle =
-				"The private page setting does not match the target page's " +
-					"privacy";
+				"The private page setting does not match the target site " +
+					"page's privacy";
 		}
 
 		_assertPutSiteSitePageProblemException(
@@ -4709,7 +4710,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		ProblemExceptionTestUtil.assertProblemException(
 			"BAD_REQUEST",
 			"A single content page specification cannot be applied to an " +
-				"existing page",
+				"existing content page",
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePageExternalReferenceCode, false, getSitePage));
@@ -4955,8 +4956,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		pageSettings.setPriority(0);
 
 		ProblemExceptionTestUtil.assertProblemException(
-			"CONFLICT",
-			"The first site page cannot be of type \"PageSetPage\"",
+			"CONFLICT", "The first site page cannot be of type \"PageSetPage\"",
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode(), layout.isPrivateLayout(),

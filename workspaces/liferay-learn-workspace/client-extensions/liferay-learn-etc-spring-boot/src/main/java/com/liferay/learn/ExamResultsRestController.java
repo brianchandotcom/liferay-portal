@@ -35,7 +35,6 @@ import java.time.temporal.TemporalAccessor;
 
 import java.util.HexFormat;
 import java.util.Locale;
-import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -136,12 +135,12 @@ public class ExamResultsRestController extends BaseRestController {
 			String emailAddress, String examName, LocalDate localDate)
 		throws Exception {
 
-		HexFormat hexFormat = HexFormat.of();
-		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-
 		String keyString = StringBundler.concat(
 			StringUtil.toLowerCase(emailAddress.trim()), "|", examName.trim(),
 			"|", localDate);
+
+		HexFormat hexFormat = HexFormat.of();
+		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 
 		return hexFormat.formatHex(
 			messageDigest.digest(keyString.getBytes(StandardCharsets.UTF_8)));
@@ -207,7 +206,13 @@ public class ExamResultsRestController extends BaseRestController {
 
 				String examName = rawExamName.trim();
 
-				examName = _examNames.getOrDefault(examName, examName);
+				if (examName.equals(
+						"Building Enterprise Websites with Liferay")) {
+
+					examName =
+						"Building Enterprise Websites with Liferay " +
+							"Certification Exam";
+				}
 
 				jsonArray.put(
 					new JSONObject(
@@ -326,9 +331,5 @@ public class ExamResultsRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		ExamResultsRestController.class);
-
-	private static final Map<String, String> _examNames = Map.of(
-		"Building Enterprise Websites with Liferay",
-		"Building Enterprise Websites with Liferay Certification Exam");
 
 }

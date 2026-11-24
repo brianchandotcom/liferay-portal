@@ -2388,6 +2388,8 @@ public class ObjectEntryLocalServiceImpl
 					trashEntry.getTypeSettingsProperty(
 						"objectEntryFolderId"))));
 
+		objectEntry.setTreePath(objectEntry.buildTreePath());
+
 		return _restoreObjectEntryFromTrash(
 			objectDefinition, objectEntry, serviceContext, trashEntry, userId);
 	}
@@ -8607,7 +8609,11 @@ public class ObjectEntryLocalServiceImpl
 		_setExternalReferenceCode(objectEntry, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
-		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
+
+		if (objectEntry.getObjectEntryFolderId() != objectEntryFolderId) {
+			objectEntry.setObjectEntryFolderId(objectEntryFolderId);
+			objectEntry.setTreePath(objectEntry.buildTreePath());
+		}
 
 		if (!move) {
 			if (!partialUpdate || values.containsKey("displayDate")) {

@@ -51,11 +51,11 @@ public class AuditEventLocalServiceTest {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new ArrayList<>());
 
-		long[] accountEntryIds = {
+		long[] userAccountEntryIds = {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
 		};
 
-		auditMessage.setUserAccountEntryIds(accountEntryIds);
+		auditMessage.setUserAccountEntryIds(userAccountEntryIds);
 
 		long companyId = RandomTestUtil.randomLong();
 
@@ -123,7 +123,7 @@ public class AuditEventLocalServiceTest {
 
 		Assert.assertEquals(companyId, persistedAuditEvent.getCompanyId());
 
-		_assertAuditEventAccountEntryRels(accountEntryIds, auditEvent);
+		_assertAuditEventAccountEntryRels(userAccountEntryIds, auditEvent);
 
 		_testAddAuditEvent(StringPool.BLANK);
 		_testAddAuditEvent(null);
@@ -135,11 +135,11 @@ public class AuditEventLocalServiceTest {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		long[] accountEntryIds = {
+		long[] userAccountEntryIds = {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
 		};
 
-		auditMessage1.setUserAccountEntryIds(accountEntryIds);
+		auditMessage1.setUserAccountEntryIds(userAccountEntryIds);
 
 		AuditMessage auditMessage2 = new AuditMessage(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
@@ -149,13 +149,13 @@ public class AuditEventLocalServiceTest {
 			Arrays.asList(auditMessage1, auditMessage2));
 
 		_assertAuditEventAccountEntryRels(
-			accountEntryIds, _getAuditEvent(auditMessage1));
+			userAccountEntryIds, _getAuditEvent(auditMessage1));
 		_assertAuditEventAccountEntryRels(
 			new long[0], _getAuditEvent(auditMessage2));
 	}
 
 	private void _assertAuditEventAccountEntryRels(
-		long[] accountEntryIds, AuditEvent auditEvent) {
+		long[] userAccountEntryIds, AuditEvent auditEvent) {
 
 		DynamicQuery dynamicQuery =
 			_auditEventAccountEntryRelLocalService.dynamicQuery();
@@ -168,7 +168,7 @@ public class AuditEventLocalServiceTest {
 			_auditEventAccountEntryRelLocalService.dynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(
-			auditEventAccountEntryRels.toString(), accountEntryIds.length,
+			auditEventAccountEntryRels.toString(), userAccountEntryIds.length,
 			auditEventAccountEntryRels.size());
 
 		for (AuditEventAccountEntryRel auditEventAccountEntryRel :
@@ -176,7 +176,7 @@ public class AuditEventLocalServiceTest {
 
 			Assert.assertTrue(
 				ArrayUtil.contains(
-					accountEntryIds,
+					userAccountEntryIds,
 					auditEventAccountEntryRel.getAccountEntryId()));
 			Assert.assertEquals(
 				auditEvent.getCompanyId(),

@@ -34,9 +34,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 /**
  * @author Caleb Hall
  */
-@RequestMapping("/object/action/knowledge/article/guest/view")
+@RequestMapping("/object/action/knowledge/article/permission")
 @RestController
-public class ObjectActionKnowledgeArticleGuestViewRestController
+public class ObjectActionKnowledgeArticlePermissionRestController
 	extends BaseRestController {
 
 	@PostMapping

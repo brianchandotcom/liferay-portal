@@ -213,7 +213,7 @@ describe.each(DASHBOARDS)('$name', ({assetType, label, slug}) => {
 
 		renderDashboard();
 
-		expect(screen.queryByText(/^visitors$/i)).toBeTruthy();
+		expect(screen.getByText(/^visitors$/i)).toBeInTheDocument();
 	});
 
 	it('hides the visitors tab for non-LDP workspaces', () => {
@@ -229,7 +229,7 @@ describe.each(DASHBOARDS)('$name', ({assetType, label, slug}) => {
 
 		renderDashboard();
 
-		expect(screen.queryByText(/^known individuals$/i)).toBeTruthy();
+		expect(screen.getByText(/^known individuals$/i)).toBeInTheDocument();
 	});
 
 	it('hides the known individuals tab for LDP workspaces', () => {

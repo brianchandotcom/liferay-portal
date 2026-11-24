@@ -12,12 +12,12 @@ describe('ListGroup', () => {
 	it('should render with children', () => {
 		const stringToMatch = 'List Item';
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ListGroup>
 				<li>{stringToMatch}</li>
 			</ListGroup>
 		);
 
-		expect(queryByText(stringToMatch)).toBeTruthy();
+		expect(getByText(stringToMatch)).toBeInTheDocument();
 	});
 });

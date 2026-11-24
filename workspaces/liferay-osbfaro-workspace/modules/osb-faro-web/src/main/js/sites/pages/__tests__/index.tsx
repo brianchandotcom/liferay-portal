@@ -106,7 +106,7 @@ describe('Dashboard', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('filter-by-account')).toBeTruthy();
+		expect(screen.getByTestId('filter-by-account')).toBeInTheDocument();
 	});
 
 	it('hides the account filter for non-LDP workspaces', () => {
@@ -157,7 +157,7 @@ describe('Dashboard', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('filter-by-segment')).toBeTruthy();
+		expect(screen.getByTestId('filter-by-segment')).toBeInTheDocument();
 	});
 
 	it('hides the segment filter for non-LDP workspaces', () => {

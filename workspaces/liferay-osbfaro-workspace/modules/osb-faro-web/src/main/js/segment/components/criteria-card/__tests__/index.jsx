@@ -48,7 +48,7 @@ describe('CriteriaCard', () => {
 	});
 
 	it('should render w/ anonymous label', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ReferencedObjectsProvider segment={mockSegment}>
 				<CriteriaCard
 					criteriaString="demographics/name/value eq 'Test'"
@@ -58,6 +58,8 @@ describe('CriteriaCard', () => {
 			</ReferencedObjectsProvider>
 		);
 
-		expect(queryByText(/^includes anonymous individuals$/i)).toBeTruthy();
+		expect(
+			getByText(/^includes anonymous individuals$/i)
+		).toBeInTheDocument();
 	});
 });

@@ -31,9 +31,9 @@ const DefaultComponent = props => (
 
 describe('CSV', () => {
 	it('should render', () => {
-		const {container, queryByText} = render(<DefaultComponent />);
+		const {container, getByText} = render(<DefaultComponent />);
 
-		expect(queryByText(/Edit CSV/)).toBeTruthy();
+		expect(getByText(/Edit CSV/)).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 

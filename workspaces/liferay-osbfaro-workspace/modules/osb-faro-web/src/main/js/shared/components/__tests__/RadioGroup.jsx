@@ -16,8 +16,8 @@ describe('RadioGroup.Option', () => {
 	});
 
 	it('should render Option with label', () => {
-		const {queryByText} = render(<RadioGroup.Option label='foo bar' />);
-		expect(queryByText('foo bar')).toBeTruthy();
+		const {getByText} = render(<RadioGroup.Option label='foo bar' />);
+		expect(getByText('foo bar')).toBeInTheDocument();
 	});
 
 	it('should call `onClick` prop with value', () => {

@@ -12,9 +12,9 @@ describe('Item', () => {
 	it('should render with children', () => {
 		const childrenContent = 'Children';
 
-		const {queryByText} = render(<Item children={childrenContent} />);
+		const {getByText} = render(<Item children={childrenContent} />);
 
-		expect(queryByText(childrenContent)).toBeTruthy();
+		expect(getByText(childrenContent)).toBeInTheDocument();
 	});
 
 	it('should render a header item', () => {

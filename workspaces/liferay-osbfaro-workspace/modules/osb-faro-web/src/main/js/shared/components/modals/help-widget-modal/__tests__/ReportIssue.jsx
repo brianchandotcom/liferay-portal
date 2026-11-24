@@ -14,7 +14,7 @@ describe('ReportIssue', () => {
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {queryByText} = await renderModal(observer => (
+		const {getByText} = await renderModal(observer => (
 			<Provider store={mockStore()}>
 				<MemoryRouter initialEntries={['/workspace/23']}>
 					<Routes>
@@ -45,8 +45,8 @@ describe('ReportIssue', () => {
 
 		await waitForLoadingToBeRemoved(document.body);
 
-		expect(queryByText(/^issue title$/i)).toBeTruthy();
-		expect(queryByText(/^description$/i)).toBeTruthy();
+		expect(getByText(/^issue title$/i)).toBeInTheDocument();
+		expect(getByText(/^description$/i)).toBeInTheDocument();
 		expect(document.body).toMatchSnapshot();
 	});
 });

@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import EnrichedProfilesCard from '../EnrichedProfilesCard';
 import React from 'react';
-import {cleanup, queryByText, render} from '@testing-library/react';
+import {cleanup, getByText, render} from '@testing-library/react';
 import {CredentialTypes} from 'shared/util/constants';
 import {DataSource} from 'shared/util/records';
 import {
@@ -67,7 +67,7 @@ describe('EnrichedProfilesCard Enrich Profiles Prompt', () => {
 	const enrichPrompt = /Know Your Audience Better/;
 
 	const assertHasEnrichPrompt = container => {
-		expect(queryByText(container, enrichPrompt)).toBeTruthy();
+		expect(getByText(container, enrichPrompt)).toBeInTheDocument();
 	};
 
 	it(baseDescription, () => {

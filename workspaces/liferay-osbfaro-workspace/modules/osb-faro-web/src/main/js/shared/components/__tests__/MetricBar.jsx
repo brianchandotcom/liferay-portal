@@ -21,11 +21,11 @@ describe('MetricBar', () => {
 	});
 
 	it('should render w/ children', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<MetricBar>
 				<div data-testid='child'>{'Test Test'}</div>
 			</MetricBar>
 		);
-		expect(queryByText('Test Test')).toBeTruthy();
+		expect(getByText('Test Test')).toBeInTheDocument();
 	});
 });

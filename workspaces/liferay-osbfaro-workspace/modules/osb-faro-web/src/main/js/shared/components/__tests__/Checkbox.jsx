@@ -11,7 +11,7 @@ describe('Checkbox', () => {
 	});
 
 	it('should render with a label', () => {
-		const {queryByText} = render(<Checkbox label='foo' />);
-		expect(queryByText('foo')).toBeTruthy();
+		const {getByText} = render(<Checkbox label='foo' />);
+		expect(getByText('foo')).toBeInTheDocument();
 	});
 });

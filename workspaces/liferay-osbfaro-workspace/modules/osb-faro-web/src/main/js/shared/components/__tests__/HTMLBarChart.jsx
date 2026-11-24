@@ -134,7 +134,9 @@ describe('HTMLBarChart', () => {
 	it('should update component when receive new data', () => {
 		const props = {items: ITEMS};
 
-		const {queryByText, rerender} = render(<HTMLBarChart {...props} />);
+		const {getByText, queryByText, rerender} = render(
+			<HTMLBarChart {...props} />
+		);
 
 		const newProps = {
 			items: [
@@ -160,7 +162,7 @@ describe('HTMLBarChart', () => {
 
 		rerender(<HTMLBarChart {...newProps} />);
 
-		expect(queryByText('item column 4')).toBeTruthy();
+		expect(getByText('item column 4')).toBeInTheDocument();
 	});
 
 	it('should render component with items nested', () => {
@@ -210,13 +212,13 @@ describe('HTMLBarChart', () => {
 	});
 
 	it('should set tooltip when MouseLeave on Item', () => {
-		const {container, queryByText} = render(
+		const {container, getByText, queryByText} = render(
 			<HTMLBarChart items={ITEMS_WITH_TOOLTIP} />
 		);
 
 		fireEvent.mouseEnter(container.querySelector(`${CLASSNAME}-item`));
 
-		expect(queryByText('tooltip header')).toBeTruthy();
+		expect(getByText('tooltip header')).toBeInTheDocument();
 
 		fireEvent.mouseLeave(container.querySelector(`${CLASSNAME}-item`));
 

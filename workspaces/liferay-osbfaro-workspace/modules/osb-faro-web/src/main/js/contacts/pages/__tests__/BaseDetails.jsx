@@ -40,7 +40,7 @@ describe('BaseDetails', () => {
 	});
 
 	it('should render w/ ErrorDisplay', async () => {
-		const {container, queryByText} = render(
+		const {container, getByText} = render(
 			<DefaultComponent dataSourceFn={() => Promise.reject({})} />
 		);
 
@@ -48,6 +48,6 @@ describe('BaseDetails', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(queryByText(/^reload$/i)).toBeTruthy();
+		expect(getByText(/^reload$/i)).toBeInTheDocument();
 	});
 });

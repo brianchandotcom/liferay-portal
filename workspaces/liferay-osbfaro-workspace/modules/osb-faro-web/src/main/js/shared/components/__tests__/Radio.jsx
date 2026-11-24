@@ -11,7 +11,7 @@ describe('Radio', () => {
 	});
 
 	it('should render with a label', () => {
-		const {queryByText} = render(<Radio label='foo' />);
-		expect(queryByText('foo')).toBeTruthy();
+		const {getByText} = render(<Radio label='foo' />);
+		expect(getByText('foo')).toBeInTheDocument();
 	});
 });

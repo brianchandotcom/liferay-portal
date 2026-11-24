@@ -44,8 +44,8 @@ describe('SelectEntityFromModal', () => {
 	});
 
 	it('should render with a preselected entity', () => {
-		const {queryByText} = render(<DefaultComponent />);
+		const {getByText} = render(<DefaultComponent />);
 
-		expect(queryByText('fooEntity')).toBeTruthy();
+		expect(getByText('fooEntity')).toBeInTheDocument();
 	});
 });

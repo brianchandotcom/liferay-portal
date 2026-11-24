@@ -5,7 +5,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/control_menu/init.jsp" %>
 
 <%
 FragmentDisplayContext fragmentDisplayContext = (FragmentDisplayContext)request.getAttribute(FragmentWebKeys.FRAGMENT_DISPLAY_CONTEXT);

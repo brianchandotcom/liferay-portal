@@ -8,6 +8,7 @@ package com.liferay.learn;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -34,7 +35,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 
 import java.util.HexFormat;
-import java.util.Locale;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -164,7 +164,7 @@ public class ExamResultsRestController extends BaseRestController {
 	private LocalDateTime _parseLocalDateTime(String dateString) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
 			"[yyyy-MM-dd'T'H:mm:ss[.SSS]][yyyy-MM-dd H:mm:ss][d MMMM yyyy]",
-			Locale.ENGLISH);
+			LocaleUtil.ENGLISH);
 
 		TemporalAccessor temporalAccessor = dateTimeFormatter.parseBest(
 			dateString, LocalDateTime::from, LocalDate::from);

@@ -95,9 +95,7 @@ describe('DownloadStaticCSVReport', () => {
 
 		fireEvent.click(downloadBtn);
 
-		await waitFor(() => {
-			expect(screen.getByTestId('submit')).toBeInTheDocument();
-		});
+		expect(await screen.findByTestId('submit')).toBeInTheDocument();
 
 		expect(document.body).toMatchSnapshot();
 	});
@@ -118,11 +116,9 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() => {
-			expect(
-				screen.getByText(/The generated CSV file supports up to/)
-			).toBeInTheDocument();
-		});
+		expect(
+			await screen.findByText(/The generated CSV file supports up to/)
+		).toBeInTheDocument();
 
 		expect(screen.getByTestId('cancel')).toBeInTheDocument();
 		expect(screen.getByTestId('submit')).toBeInTheDocument();
@@ -145,13 +141,11 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() => {
-			expect(
-				screen.getByText(
-					/The generated CSV file will respect the current filter and search results/
-				)
-			).toBeInTheDocument();
-		});
+		expect(
+			await screen.findByText(
+				/The generated CSV file will respect the current filter and search results/
+			)
+		).toBeInTheDocument();
 
 		expect(
 			screen.queryByText(/The generated CSV file supports up to/)
@@ -167,11 +161,9 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() => {
-			expect(
-				screen.getByText(/The generated CSV file supports up to/)
-			).toBeInTheDocument();
-		});
+		expect(
+			await screen.findByText(/The generated CSV file supports up to/)
+		).toBeInTheDocument();
 
 		expect(
 			screen.queryByText(
@@ -196,9 +188,7 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() =>
-			expect(screen.getByTestId('submit')).toBeInTheDocument()
-		);
+		expect(await screen.findByTestId('submit')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('submit'));
 
@@ -227,9 +217,7 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() =>
-			expect(screen.getByTestId('submit')).toBeInTheDocument()
-		);
+		expect(await screen.findByTestId('submit')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('submit'));
 
@@ -255,9 +243,7 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() =>
-			expect(screen.getByTestId('submit')).toBeInTheDocument()
-		);
+		expect(await screen.findByTestId('submit')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('submit'));
 
@@ -315,9 +301,7 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() =>
-			expect(screen.getByTestId('submit')).toBeInTheDocument()
-		);
+		expect(await screen.findByTestId('submit')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('submit'));
 
@@ -353,9 +337,7 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() =>
-			expect(screen.getByTestId('submit')).toBeInTheDocument()
-		);
+		expect(await screen.findByTestId('submit')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('submit'));
 
@@ -383,9 +365,7 @@ describe('DownloadStaticCSVReport', () => {
 			})
 		);
 
-		await waitFor(() =>
-			expect(screen.getByTestId('submit')).toBeInTheDocument()
-		);
+		expect(await screen.findByTestId('submit')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('submit'));
 

@@ -43,7 +43,7 @@ describe('BaseResults', () => {
 	});
 
 	it('should render w/ an error display', async () => {
-		const {getByText} = render(
+		const {findByText, getByText} = render(
 			<DefaultComponent
 				dataSourceFn={() => Promise.reject({})}
 				groupId='23'
@@ -51,18 +51,13 @@ describe('BaseResults', () => {
 			/>
 		);
 
-		await waitFor(
-			() => {
-				expect(
-					getByText(/^an unexpected error occurred\.$/i)
-				).toBeInTheDocument();
-			},
-			{timeout: 1000}
-		);
+		expect(
+			await findByText(/^an unexpected error occurred\.$/i)
+		).toBeInTheDocument();
 	});
 
 	it('should render w/a no results display', async () => {
-		const {getByText} = render(
+		const {findByText, getByText} = render(
 			<DefaultComponent
 				dataSourceFn={() => Promise.resolve({items: [], total: 0})}
 				groupId='23'
@@ -71,14 +66,9 @@ describe('BaseResults', () => {
 			/>
 		);
 
-		await waitFor(
-			() => {
-				expect(
-					getByText(/^no results were found$/i)
-				).toBeInTheDocument();
-			},
-			{timeout: 1000}
-		);
+		expect(
+			await findByText(/^no results were found$/i)
+		).toBeInTheDocument();
 	});
 
 	it('should put a size limit on the query based on maxLength', () => {

@@ -273,16 +273,18 @@ describe('UtmParameterInput', () => {
 				total: 2
 			});
 
-			const {getByText, queryByText} = render(<DefaultComponent />);
+			const {findByText, getByText, queryByText} = render(
+				<DefaultComponent />
+			);
 
-			await waitFor(() => expect(getByText(/^utm source$/i)).toBeTruthy());
+			expect(await findByText(/^utm source$/i)).toBeInTheDocument();
 
 			fireEvent.click(getByText(/^utm source$/i));
 
 			// A custom parameter has no translation, so it shows its raw
 			// name, and the discovered list replaces the seeded defaults.
 
-			await waitFor(() => expect(getByText('utm_cid')).toBeTruthy());
+			expect(await findByText('utm_cid')).toBeInTheDocument();
 
 			expect(queryByText(/^utm campaign$/i)).toBeNull();
 		});

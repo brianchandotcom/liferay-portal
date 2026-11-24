@@ -309,9 +309,7 @@ describe('FrontendDataSet (snapshots wrapper)', () => {
 				<FrontendDataSet id="assetTable" snapshotsEnabled views={[]} />
 			);
 
-			await waitFor(() =>
-				expect(screen.getByTestId('base-fds')).toBeInTheDocument()
-			);
+			expect(await screen.findByTestId('base-fds')).toBeInTheDocument();
 
 			expect(lastProps?.snapshotsEnabled).toBe(true);
 		});

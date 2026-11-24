@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderTypeException;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.rule.model.COREntryRel;
@@ -12,6 +13,7 @@ import com.liferay.commerce.order.rule.service.COREntryRelService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.commerce.term.service.CommerceTermEntryRelService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
@@ -40,6 +42,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,10 +54,15 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/order-type.properties",
-	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = OrderTypeResource.class
+	property = {
+		"export.import.vulcan.batch.engine.task.item.delegate=true",
+		"nested.field.support=true"
+	},
+	scope = ServiceScope.PROTOTYPE, service = OrderTypeResource.class
 )
-public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
+public class OrderTypeResourceImpl
+	extends BaseOrderTypeResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<OrderType> {
 
 	@Override
 	public void deleteOrderType(Long id) throws Exception {
@@ -86,6 +94,50 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		throws Exception {
 
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor<CommerceOrderType>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
+
+			@Override
+			public String getKey() {
+				return OrderTypeResourceImpl.class.getName();
+			}
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "order-types";
+			}
+
+			@Override
+			public Class<CommerceOrderType> getModelClass() {
+				return CommerceOrderType.class;
+			}
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of("creator");
+			}
+
+			@Override
+			public String getPortletId() {
+				return CommercePortletKeys.COMMERCE_ORDER_TYPE;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return "category.commerce.order_management";
+			}
+
+		};
 	}
 
 	@NestedField(parentClass = OrderRuleOrderType.class, value = "orderType")

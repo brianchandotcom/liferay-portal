@@ -10,6 +10,7 @@ import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
 import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
@@ -18,6 +19,7 @@ import com.liferay.commerce.order.rule.service.COREntryService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccountGroup;
@@ -49,6 +51,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,9 +63,12 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/order-rule.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = OrderRuleResource.class
 )
-public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
+public class OrderRuleResourceImpl
+	extends BaseOrderRuleResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<OrderRule> {
 
 	@Override
 	public void deleteOrderRule(Long id) throws Exception {
@@ -92,6 +98,50 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 		throws Exception {
 
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor<COREntry> getExportImportDescriptor() {
+		return new ExportImportDescriptor<>() {
+
+			@Override
+			public String getKey() {
+				return OrderRuleResourceImpl.class.getName();
+			}
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "order-rules";
+			}
+
+			@Override
+			public Class<COREntry> getModelClass() {
+				return COREntry.class;
+			}
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of(
+					"creator", "orderRuleAccount", "orderRuleAccountGroup",
+					"orderRuleChannel", "orderRuleOrderType");
+			}
+
+			@Override
+			public String getPortletId() {
+				return COREntryPortletKeys.COR_ENTRY;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return "category.commerce.order_management";
+			}
+
+		};
 	}
 
 	@Override

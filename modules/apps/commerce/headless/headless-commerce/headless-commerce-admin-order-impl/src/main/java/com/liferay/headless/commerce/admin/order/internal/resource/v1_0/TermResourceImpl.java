@@ -7,11 +7,13 @@ package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.commerce.term.constants.CommerceTermEntryPortletKeys;
 import com.liferay.commerce.term.exception.NoSuchTermEntryException;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.commerce.term.service.CommerceTermEntryRelService;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.TermEntityModel;
@@ -38,6 +40,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,9 +52,12 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/term.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = TermResource.class
 )
-public class TermResourceImpl extends BaseTermResourceImpl {
+public class TermResourceImpl
+	extends BaseTermResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<Term> {
 
 	@Override
 	public void deleteTerm(Long id) throws Exception {
@@ -82,6 +88,50 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 		throws Exception {
 
 		return _entityModel;
+	}
+
+	@Override
+	public ExportImportDescriptor<CommerceTermEntry>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
+
+			@Override
+			public String getKey() {
+				return TermResourceImpl.class.getName();
+			}
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "terms";
+			}
+
+			@Override
+			public Class<CommerceTermEntry> getModelClass() {
+				return CommerceTermEntry.class;
+			}
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of("creator", "termOrderType");
+			}
+
+			@Override
+			public String getPortletId() {
+				return CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return "category.commerce.order_management";
+			}
+
+		};
 	}
 
 	@Override

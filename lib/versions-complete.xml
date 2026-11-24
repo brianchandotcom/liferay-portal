@@ -3240,7 +3240,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-constants.jar</file-name>
-				<version>1.16</version>
+				<version>1.20</version>
 				<project-name>org.apache.xmlgraphics:batik-constants</project-name>
 				<licenses>
 					<license>
@@ -3251,7 +3251,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-css.jar</file-name>
-				<version>1.16</version>
+				<version>1.20</version>
 				<project-name>org.apache.xmlgraphics:batik-css</project-name>
 				<licenses>
 					<license>
@@ -3262,7 +3262,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-i18n.jar</file-name>
-				<version>1.16</version>
+				<version>1.20</version>
 				<project-name>org.apache.xmlgraphics:batik-i18n</project-name>
 				<licenses>
 					<license>
@@ -3273,7 +3273,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-util.jar</file-name>
-				<version>1.16</version>
+				<version>1.20</version>
 				<project-name>org.apache.xmlgraphics:batik-util</project-name>
 				<licenses>
 					<license>

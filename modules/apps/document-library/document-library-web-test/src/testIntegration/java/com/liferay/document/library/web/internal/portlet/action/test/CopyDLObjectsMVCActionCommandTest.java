@@ -22,7 +22,11 @@ import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -46,14 +50,18 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -61,6 +69,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Brian Wulbern
@@ -87,6 +97,36 @@ public class CopyDLObjectsMVCActionCommandTest {
 		_testProcessActionWithCompanyGroupFileEntryType();
 		_testProcessActionWithDepotGroupFileEntryType();
 		_testProcessActionWithSiteGroupFileEntryType();
+	}
+
+	@Test
+	@TestInfo({"LPS-182709", "LPS-187945"})
+	public void testProcessActionWithDuplicateTitles() throws Exception {
+		_testProcessActionWithDuplicateTitlesInElevenFileEntries();
+		_testProcessActionWithDuplicateTitlesInOneFileEntry();
+		_testProcessActionWithDuplicateTitlesInTenFileEntries();
+	}
+
+	private List<FileEntry> _addAndCopyFileEntries(int count) throws Exception {
+		List<FileEntry> fileEntries = new ArrayList<>();
+
+		for (int index = 0; index < count; index++) {
+			fileEntries.add(
+				_addFileEntry(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					_group1.getGroupId()));
+		}
+
+		JSONObject jsonObject = _processAction(
+			_group2.getGroupId(),
+			ListUtil.toLongArray(fileEntries, FileEntry::getFileEntryId),
+			_group1.getGroupId());
+
+		Assert.assertFalse(jsonObject.has("failedItems"));
+		Assert.assertEquals(count, jsonObject.getInt("successItems"));
+
+		return fileEntries;
 	}
 
 	private DLFileEntryType _addDLFileEntryType(long groupId) throws Exception {
@@ -135,32 +175,9 @@ public class CopyDLObjectsMVCActionCommandTest {
 			FileEntry fileEntry)
 		throws Exception {
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.setAttribute(
-			JavaConstants.JAKARTA_PORTLET_CONFIG,
-			PortletConfigFactoryUtil.create(
-				_portletLocalService.getPortletById(
-					DLPortletKeys.DOCUMENT_LIBRARY_ADMIN),
-				null));
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(destinationGroupId));
-		mockLiferayPortletActionRequest.setParameter(
-			"destinationParentFolderId",
-			String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-		mockLiferayPortletActionRequest.setParameter(
-			"destinationRepositoryId", String.valueOf(destinationGroupId));
-		mockLiferayPortletActionRequest.setParameter(
-			"dlObjectIds", String.valueOf(fileEntry.getFileEntryId()));
-		mockLiferayPortletActionRequest.setParameter(
-			"sourceRepositoryId", String.valueOf(fileEntry.getGroupId()));
-		mockLiferayPortletActionRequest.setPortletSession(
-			new MockPortletSession());
-
-		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_processAction(
+			destinationGroupId, new long[] {fileEntry.getFileEntryId()},
+			fileEntry.getGroupId());
 
 		FileEntry copiedFileEntry = _dlAppLocalService.getFileEntry(
 			destinationGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -190,6 +207,47 @@ public class CopyDLObjectsMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private JSONObject _processAction(
+			long destinationGroupId, long[] dlObjectIds, long sourceGroupId)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_CONFIG,
+			PortletConfigFactoryUtil.create(
+				_portletLocalService.getPortletById(
+					DLPortletKeys.DOCUMENT_LIBRARY_ADMIN),
+				null));
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(destinationGroupId));
+		mockLiferayPortletActionRequest.setParameter(
+			"destinationParentFolderId",
+			String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		mockLiferayPortletActionRequest.setParameter(
+			"destinationRepositoryId", String.valueOf(destinationGroupId));
+		mockLiferayPortletActionRequest.setParameter(
+			"dlObjectIds", StringUtil.merge(dlObjectIds));
+		mockLiferayPortletActionRequest.setParameter(
+			"sourceRepositoryId", String.valueOf(sourceGroupId));
+		mockLiferayPortletActionRequest.setPortletSession(
+			new MockPortletSession());
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayPortletActionResponse.getHttpServletResponse();
+
+		return _jsonFactory.createJSONObject(
+			mockHttpServletResponse.getContentAsString());
 	}
 
 	private void _testProcessActionWithCompanyGroupFileEntryType()
@@ -248,6 +306,76 @@ public class CopyDLObjectsMVCActionCommandTest {
 		_deleteRepositories();
 	}
 
+	private void _testProcessActionWithDuplicateTitlesInElevenFileEntries()
+		throws Exception {
+
+		List<FileEntry> fileEntries = _addAndCopyFileEntries(11);
+
+		JSONObject jsonObject = _processAction(
+			_group2.getGroupId(),
+			ListUtil.toLongArray(fileEntries, FileEntry::getFileEntryId),
+			_group1.getGroupId());
+
+		Assert.assertFalse(jsonObject.has("errorMessages"));
+		Assert.assertEquals(11, jsonObject.getInt("failedItems"));
+		Assert.assertEquals(0, jsonObject.getInt("successItems"));
+
+		_deleteRepositories();
+	}
+
+	private void _testProcessActionWithDuplicateTitlesInOneFileEntry()
+		throws Exception {
+
+		FileEntry fileEntry = _addFileEntry(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _group1.getGroupId());
+
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group2.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileEntry.getFileName(),
+			ContentTypes.TEXT_PLAIN, fileEntry.getTitle(), StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomBytes(),
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group2.getGroupId()));
+
+		JSONObject jsonObject = _processAction(
+			_group2.getGroupId(), new long[] {fileEntry.getFileEntryId()},
+			_group1.getGroupId());
+
+		Assert.assertEquals(
+			Collections.singletonList(
+				"A file entry already exists with title " +
+					fileEntry.getTitle()),
+			JSONUtil.toStringList(jsonObject.getJSONArray("errorMessages")));
+		Assert.assertEquals(1, jsonObject.getInt("failedItems"));
+		Assert.assertEquals(0, jsonObject.getInt("successItems"));
+
+		_deleteRepositories();
+	}
+
+	private void _testProcessActionWithDuplicateTitlesInTenFileEntries()
+		throws Exception {
+
+		List<FileEntry> fileEntries = _addAndCopyFileEntries(10);
+
+		JSONObject jsonObject = _processAction(
+			_group2.getGroupId(),
+			ListUtil.toLongArray(fileEntries, FileEntry::getFileEntryId),
+			_group1.getGroupId());
+
+		Assert.assertEquals(
+			TransformUtil.transform(
+				fileEntries,
+				fileEntry ->
+					"A file entry already exists with title " +
+						fileEntry.getTitle()),
+			JSONUtil.toStringList(jsonObject.getJSONArray("errorMessages")));
+		Assert.assertEquals(10, jsonObject.getInt("failedItems"));
+		Assert.assertEquals(0, jsonObject.getInt("successItems"));
+
+		_deleteRepositories();
+	}
+
 	private void _testProcessActionWithSiteGroupFileEntryType()
 		throws Exception {
 
@@ -295,6 +423,9 @@ public class CopyDLObjectsMVCActionCommandTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject(filter = "mvc.command.name=/document_library/copy_dl_objects")
 	private MVCActionCommand _mvcActionCommand;

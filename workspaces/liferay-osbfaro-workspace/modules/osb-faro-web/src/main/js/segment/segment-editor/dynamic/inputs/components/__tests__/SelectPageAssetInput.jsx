@@ -584,16 +584,14 @@ describe('SelectPageAssetInput', () => {
 			// Reloading an ObjectEntry criterion defaults the picker to the
 			// matching object-definition type (CMSBasicWebContent, from the mock).
 
-			const {getByText} = render(
+			const {findByText, getByText} = render(
 				<DefaultComponent
 					action='download'
 					applicationId='ObjectEntry'
 				/>
 			);
 
-			await waitFor(() =>
-				expect(getByText('CMSBasicWebContent')).toBeTruthy()
-			);
+			expect(await findByText('CMSBasicWebContent')).toBeInTheDocument();
 
 			fireEvent.click(getByText(/add assets/i));
 

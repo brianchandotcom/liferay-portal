@@ -119,11 +119,9 @@ describe('SearchableTableModalGraphql', () => {
 
 		await waitForLoadingToBeRemoved();
 
-		await waitFor(() => {
-			expect(
-				screen.getByText('Custom Submit Message')
-			).toBeInTheDocument();
-		});
+		expect(
+			await screen.findByText('Custom Submit Message')
+		).toBeInTheDocument();
 	});
 
 	it('should render with preselected items', async () => {

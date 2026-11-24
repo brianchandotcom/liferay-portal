@@ -295,9 +295,7 @@ describe('CriteriaSidebar', () => {
 			</DndProvider>
 		);
 
-		await waitFor(() =>
-			expect(screen.getByText('shoes')).toBeInTheDocument()
-		);
+		expect(await screen.findByText('shoes')).toBeInTheDocument();
 
 		expect(apolloClient.query).toHaveBeenCalledWith(
 			expect.objectContaining({

@@ -643,47 +643,6 @@ public class FIPSModeValidatorTest {
 	}
 
 	@Test
-	public void testValidatePlaintextSecrets() throws Exception {
-		String obfuscatedKey = RandomTestUtil.randomString();
-		Path path = Files.createTempFile(null, ".properties");
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"ADMIN_OBFUSCATED_PROPERTIES",
-					new String[] {obfuscatedKey});
-			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				FIPSModeValidator.class.getName(), LoggerTestUtil.WARN)) {
-
-			Files.write(
-				path,
-				Collections.singletonList(
-					StringBundler.concat(
-						obfuscatedKey, StringPool.EQUAL,
-						RandomTestUtil.randomString())));
-
-			ReflectionTestUtil.invoke(
-				FIPSModeValidator.class, "_validatePlaintextSecrets",
-				new Class<?>[] {List.class},
-				Collections.singletonList(String.valueOf(path.toUri())));
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Assert.assertEquals(
-				StringBundler.concat(
-					"A plaintext value for property \"", obfuscatedKey,
-					"\" in \"", path.getFileName(), "\" is kept in FIPS mode"),
-				logEntry.getMessage());
-		}
-		finally {
-			Files.delete(path);
-		}
-	}
-
-	@Test
 	public void testValidatePortalProperties() {
 		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -904,6 +863,47 @@ public class FIPSModeValidatorTest {
 					"ldap://" + RandomTestUtil.randomString()));
 			FIPSModeTestUtil.assertSecurityException(
 				"protocol scheme", () -> FIPSModeValidator.validateURL(null));
+		}
+	}
+
+	@Test
+	public void testWarnPlaintextSecrets() throws Exception {
+		String obfuscatedKey = RandomTestUtil.randomString();
+		Path path = Files.createTempFile(null, ".properties");
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"ADMIN_OBFUSCATED_PROPERTIES",
+					new String[] {obfuscatedKey});
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				FIPSModeValidator.class.getName(), LoggerTestUtil.WARN)) {
+
+			Files.write(
+				path,
+				Collections.singletonList(
+					StringBundler.concat(
+						obfuscatedKey, StringPool.EQUAL,
+						RandomTestUtil.randomString())));
+
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_warnPlaintextSecrets",
+				new Class<?>[] {List.class},
+				Collections.singletonList(String.valueOf(path.toUri())));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"A value for property \"", obfuscatedKey, "\" in \"",
+					path.getFileName(), "\" is stored in plaintext"),
+				logEntry.getMessage());
+		}
+		finally {
+			Files.delete(path);
 		}
 	}
 

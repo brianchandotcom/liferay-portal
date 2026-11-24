@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.fips.FIPSAuditEvent;
 import com.liferay.portal.kernel.security.fips.FIPSAuditUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.key.KeyReference;
@@ -145,6 +146,15 @@ public class ConfigurationSecretConfigurationModelListener
 				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey()),
 			CompanyConstants.SYSTEM);
 
+		Dictionary<String, Object> storedProperties = null;
+
+		if (Validator.isNotNull(
+				properties.get(
+					FileInstallConstants.FELIX_FILE_INSTALL_FILENAME))) {
+
+			storedProperties = _getStoredProperties(pid);
+		}
+
 		for (AttributeDefinition attributeDefinition :
 				objectClassDefinition.getAttributeDefinitions(
 					ObjectClassDefinition.ALL)) {
@@ -167,11 +177,8 @@ public class ConfigurationSecretConfigurationModelListener
 				continue;
 			}
 
-			if (Validator.isNotNull(
-					properties.get(
-						FileInstallConstants.FELIX_FILE_INSTALL_FILENAME))) {
-
-				if (!Objects.equals(value, _getStoredValue(pid, id))) {
+			if (storedProperties != null) {
+				if (!Objects.equals(value, storedProperties.get(id))) {
 					FIPSAuditEvent fipsAuditEvent = new FIPSAuditEvent(
 						"configuration-secret-store-skipped",
 						FIPSAuditEvent.Severity.WARNING);
@@ -300,7 +307,7 @@ public class ConfigurationSecretConfigurationModelListener
 		return null;
 	}
 
-	private Object _getStoredValue(String pid, String id) {
+	private Dictionary<String, Object> _getStoredProperties(String pid) {
 		try {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
@@ -308,7 +315,7 @@ public class ConfigurationSecretConfigurationModelListener
 						")");
 
 			if (configurations == null) {
-				return null;
+				return new HashMapDictionary<>();
 			}
 
 			Configuration configuration = configurations[0];
@@ -317,10 +324,10 @@ public class ConfigurationSecretConfigurationModelListener
 				configuration.getProperties();
 
 			if (properties == null) {
-				return null;
+				return new HashMapDictionary<>();
 			}
 
-			return properties.get(id);
+			return properties;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -328,7 +335,7 @@ public class ConfigurationSecretConfigurationModelListener
 			}
 		}
 
-		return null;
+		return new HashMapDictionary<>();
 	}
 
 	private static final String _IDENTIFIER_PREFIX = "config/";

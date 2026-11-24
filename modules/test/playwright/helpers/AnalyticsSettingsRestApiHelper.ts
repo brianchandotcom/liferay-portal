@@ -53,15 +53,9 @@ export class AnalyticsSettingsRestApiHelper {
 		syncedOrganizationIds?: number[];
 		syncedUserGroupIds?: number[];
 	}) {
-		return this.apiHelpers.page.request.put(
+		return this.apiHelpers.putResponse(
 			`${this.apiHelpers.baseUrl}${this.basePath}/contacts/configuration`,
-			{
-				data: configuration,
-				headers: {
-					'Content-Type': 'application/json',
-					...(await this.apiHelpers.getCSRFTokenHeader()),
-				},
-			}
+			{data: configuration}
 		);
 	}
 

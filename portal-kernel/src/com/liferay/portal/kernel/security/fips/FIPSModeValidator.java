@@ -579,39 +579,6 @@ public class FIPSModeValidator {
 		}
 	}
 
-	private static void _validatePlaintextSecrets(List<String> sources) {
-		List<String> messages = new ArrayList<>();
-
-		for (String source : sources) {
-			String fileName = source.substring(source.lastIndexOf('/') + 1);
-
-			if (fileName.equals("portal.properties")) {
-				continue;
-			}
-
-			Properties properties = null;
-
-			try {
-				properties = PropertiesUtil.load(new URL(source));
-			}
-			catch (IOException ioException) {
-				continue;
-			}
-
-			for (String key : _getPlaintextSecretProperties(properties)) {
-				messages.add(
-					StringBundler.concat(
-						"property \"", key, "\" in \"", fileName, "\""));
-			}
-		}
-
-		if (!messages.isEmpty() && _log.isWarnEnabled()) {
-			_log.warn(
-				"A plaintext value for " + StringUtil.merge(messages, ", ") +
-					" is kept in FIPS mode");
-		}
-	}
-
 	private static void _validatePortalProperties() {
 		if (GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_MAC_ALLOW))) {
 			validateAlgorithm(PropsUtil.get(PropsKeys.AUTH_MAC_ALGORITHM));
@@ -634,8 +601,8 @@ public class FIPSModeValidator {
 		_validatePasswordsEncryptionAlgorithm(
 			PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM));
 		_validatePasswordsMinLength();
-		_validatePlaintextSecrets(PropsUtil.getLoadedSources());
 		validateSessionTimeout(PropsValues.SESSION_TIMEOUT);
+		_warnPlaintextSecrets(PropsUtil.getLoadedSources());
 	}
 
 	private static void _validateProviders(Provider[] providers) {
@@ -711,6 +678,39 @@ public class FIPSModeValidator {
 			throw new SecurityException(
 				"Unable to determine the default SecureRandom provider",
 				throwable);
+		}
+	}
+
+	private static void _warnPlaintextSecrets(List<String> sources) {
+		List<String> messages = new ArrayList<>();
+
+		for (String source : sources) {
+			String fileName = source.substring(source.lastIndexOf('/') + 1);
+
+			if (fileName.equals("portal.properties")) {
+				continue;
+			}
+
+			Properties properties = null;
+
+			try {
+				properties = PropertiesUtil.load(new URL(source));
+			}
+			catch (IOException ioException) {
+				continue;
+			}
+
+			for (String key : _getPlaintextSecretProperties(properties)) {
+				messages.add(
+					StringBundler.concat(
+						"property \"", key, "\" in \"", fileName, "\""));
+			}
+		}
+
+		if (!messages.isEmpty() && _log.isWarnEnabled()) {
+			_log.warn(
+				"A value for " + StringUtil.merge(messages, ", ") +
+					" is stored in plaintext");
 		}
 	}
 

@@ -1109,9 +1109,9 @@
 						"en_US": "Error while create course students role"
 					},
 					"label": {
-						"en_US": "Inherit and Cascade Permissions"
+						"en_US": "Learn Spring Boot Standalone Permission"
 					},
-					"name": "fixCourseStudentsRole",
+					"name": "LearnSpringBootStandalonePermission",
 					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
@@ -1120,9 +1120,9 @@
 				{
 					"active": true,
 					"label": {
-						"en_US": "Inherit and Cascade Permissions"
+						"en_US": "Learn Spring Boot Add Permission"
 					},
-					"name": "setCourseStudentsRole",
+					"name": "LearnSpringBootAddPermission",
 					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
@@ -1734,9 +1734,9 @@
 				{
 					"active": true,
 					"label": {
-						"en_US": "Synchronize"
+						"en_US": "Learn Spring Boot Add Exam Results Synchronization"
 					},
-					"name": "synchronize",
+					"name": "LearnSpringBootAddExamResultsSynchronization",
 					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-exam-results-synchronization",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
@@ -2299,10 +2299,10 @@
 				{
 					"active": true,
 					"label": {
-						"en_US": "Update Guest View Permission"
+						"en_US": "Learn Spring Boot Update Knowledge Article Permission"
 					},
-					"name": "updateGuestViewPermission",
-					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-knowledge-article-guest-view",
+					"name": "LearnSpringBootUpdateKnowledgeArticlePermission",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-knowledge-article-permission",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
 					}
@@ -2760,9 +2760,9 @@
 						"en_US": "Error while create course students role"
 					},
 					"label": {
-						"en_US": "Cascade Permissions"
+						"en_US": "Learn Spring Boot Standalone Permission"
 					},
-					"name": "fixCourseStudentsRole",
+					"name": "LearnSpringBootStandalonePermission",
 					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
@@ -2771,9 +2771,9 @@
 				{
 					"active": true,
 					"label": {
-						"en_US": "Cascade Permissions"
+						"en_US": "Learn Spring Boot Add Permission"
 					},
-					"name": "setCourseStudentsRole",
+					"name": "LearnSpringBootAddPermission",
 					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-permission",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {

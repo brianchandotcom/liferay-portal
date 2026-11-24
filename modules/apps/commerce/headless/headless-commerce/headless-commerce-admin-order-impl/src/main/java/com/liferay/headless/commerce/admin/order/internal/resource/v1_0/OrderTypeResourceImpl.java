@@ -100,50 +100,6 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
 	}
 
-	@Override
-	public OrderType getOrderType(Long id) throws Exception {
-		return _toOrderType(GetterUtil.getLong(id));
-	}
-
-	@Override
-	public OrderType getOrderTypeByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
-
-		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.
-				fetchCommerceOrderTypeByExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
-
-		if (commerceOrderType == null) {
-			throw new NoSuchOrderTypeException(
-				"Unable to find order type with external reference code " +
-					externalReferenceCode);
-		}
-
-		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
-	}
-
-	@Override
-	public Page<OrderType> getOrderTypesPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CommerceOrderType.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					"status", WorkflowConstants.STATUS_ANY);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toOrderType(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
-	}
-
 	@NestedField(parentClass = TermOrderType.class, value = "orderType")
 	@Override
 	public OrderType getTermOrderTypeOrderType(Long id) throws Exception {
@@ -186,7 +142,51 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 	}
 
 	@Override
-	public OrderType postOrderType(OrderType orderType) throws Exception {
+	protected OrderType doGetOrderType(Long id) throws Exception {
+		return _toOrderType(GetterUtil.getLong(id));
+	}
+
+	@Override
+	protected OrderType doGetOrderTypeByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderType == null) {
+			throw new NoSuchOrderTypeException(
+				"Unable to find order type with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
+	}
+
+	@Override
+	protected Page<OrderType> doGetOrderTypesPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			CommerceOrderType.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"status", WorkflowConstants.STATUS_ANY);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toOrderType(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	protected OrderType doPostOrderType(OrderType orderType) throws Exception {
 		CommerceOrderType commerceOrderType = _addCommerceOrderType(
 			orderType.getExternalReferenceCode(), orderType);
 
@@ -194,7 +194,7 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 	}
 
 	@Override
-	public OrderType putOrderTypeByExternalReferenceCode(
+	protected OrderType doPutOrderTypeByExternalReferenceCode(
 			String externalReferenceCode, OrderType orderType)
 		throws Exception {
 
@@ -242,6 +242,16 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		}
 
 		return _toOrderType(commerceOrderType);
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) {
+		return 0L;
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return CommerceOrderType.class.getName();
 	}
 
 	private CommerceOrderType _addCommerceOrderType(

@@ -85,49 +85,6 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 	}
 
 	@Override
-	public Term getTerm(Long id) throws Exception {
-		return _toTerm(_commerceTermEntryService.getCommerceTermEntry(id));
-	}
-
-	@Override
-	public Term getTermByExternalReferenceCode(String externalReferenceCode)
-		throws Exception {
-
-		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.
-				fetchCommerceTermEntryByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
-
-		if (commerceTermEntry == null) {
-			throw new NoSuchTermEntryException(
-				"Unable to find term with external reference code " +
-					externalReferenceCode);
-		}
-
-		return _toTerm(commerceTermEntry);
-	}
-
-	@Override
-	public Page<Term> getTermsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CommerceTermEntry.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					"status", WorkflowConstants.STATUS_ANY);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toTerm(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
-	}
-
-	@Override
 	public Term patchTerm(Long id, Term term) throws Exception {
 		return _toTerm(
 			_updateTerm(
@@ -154,12 +111,56 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 	}
 
 	@Override
-	public Term postTerm(Term term) throws Exception {
+	protected Term doGetTerm(Long id) throws Exception {
+		return _toTerm(_commerceTermEntryService.getCommerceTermEntry(id));
+	}
+
+	@Override
+	protected Term doGetTermByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceTermEntry commerceTermEntry =
+			_commerceTermEntryService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceTermEntry == null) {
+			throw new NoSuchTermEntryException(
+				"Unable to find term with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toTerm(commerceTermEntry);
+	}
+
+	@Override
+	protected Page<Term> doGetTermsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			CommerceTermEntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"status", WorkflowConstants.STATUS_ANY);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toTerm(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	protected Term doPostTerm(Term term) throws Exception {
 		return _toTerm(_addCommerceTermEntry(term));
 	}
 
 	@Override
-	public Term putTermByExternalReferenceCode(
+	protected Term doPutTermByExternalReferenceCode(
 			String externalReferenceCode, Term term)
 		throws Exception {
 
@@ -169,7 +170,7 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 					contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceTermEntry == null) {
-			return postTerm(term);
+			return doPostTerm(term);
 		}
 
 		ServiceContext serviceContext =
@@ -196,6 +197,16 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 			GetterUtil.getString(term.getTypeSettings()), serviceContext);
 
 		return _toTerm(_updateNestedResources(commerceTermEntry, term));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) {
+		return 0L;
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return CommerceTermEntry.class.getName();
 	}
 
 	private CommerceTermEntry _addCommerceTermEntry(Term term)

@@ -9,11 +9,15 @@ import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Status;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +48,15 @@ public class TermDTOConverter implements DTOConverter<CommerceTermEntry, Term> {
 			{
 				setActions(dtoConverterContext::getActions);
 				setActive(commerceTermEntry::isActive);
+				setCreator(
+					() -> NestedFieldsSupplier.supply(
+						"creator",
+						fieldName -> CreatorUtil.toCreator(
+							_portal,
+							_userLocalService.fetchUser(
+								commerceTermEntry.getUserId()))));
+				setDateCreated(commerceTermEntry::getCreateDate);
+				setDateModified(commerceTermEntry::getModifiedDate);
 				setDescription(
 					commerceTermEntry::getLanguageIdToDescriptionMap);
 				setDisplayDate(commerceTermEntry::getDisplayDate);
@@ -85,5 +98,11 @@ public class TermDTOConverter implements DTOConverter<CommerceTermEntry, Term> {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

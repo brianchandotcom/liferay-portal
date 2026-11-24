@@ -95,49 +95,6 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	}
 
 	@Override
-	public OrderRule getOrderRule(Long id) throws Exception {
-		return _toOrderRule(GetterUtil.getLong(id));
-	}
-
-	@Override
-	public OrderRule getOrderRuleByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
-
-		COREntry corEntry =
-			_corEntryService.fetchCOREntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
-
-		if (corEntry == null) {
-			throw new NoSuchCOREntryException(
-				"Unable to find order rule with external reference code " +
-					externalReferenceCode);
-		}
-
-		return _toOrderRule(corEntry.getCOREntryId());
-	}
-
-	@Override
-	public Page<OrderRule> getOrderRulesPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			COREntry.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					"status", WorkflowConstants.STATUS_ANY);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toOrderRule(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
-	}
-
-	@Override
 	public OrderRule patchOrderRule(Long id, OrderRule orderRule)
 		throws Exception {
 
@@ -164,7 +121,50 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	}
 
 	@Override
-	public OrderRule postOrderRule(OrderRule orderRule) throws Exception {
+	protected OrderRule doGetOrderRule(Long id) throws Exception {
+		return _toOrderRule(GetterUtil.getLong(id));
+	}
+
+	@Override
+	protected OrderRule doGetOrderRuleByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (corEntry == null) {
+			throw new NoSuchCOREntryException(
+				"Unable to find order rule with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toOrderRule(corEntry.getCOREntryId());
+	}
+
+	@Override
+	protected Page<OrderRule> doGetOrderRulesPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			COREntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"status", WorkflowConstants.STATUS_ANY);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toOrderRule(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	protected OrderRule doPostOrderRule(OrderRule orderRule) throws Exception {
 		COREntry corEntry = _addCOREntry(
 			orderRule.getExternalReferenceCode(), orderRule);
 
@@ -172,7 +172,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	}
 
 	@Override
-	public OrderRule putOrderRuleByExternalReferenceCode(
+	protected OrderRule doPutOrderRuleByExternalReferenceCode(
 			String externalReferenceCode, OrderRule orderRule)
 		throws Exception {
 
@@ -209,6 +209,16 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			GetterUtil.getString(orderRule.getTypeSettings()), serviceContext);
 
 		return _toOrderRule(_updateNestedResources(corEntry, orderRule));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) {
+		return 0L;
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return COREntry.class.getName();
 	}
 
 	private COREntry _addCOREntry(

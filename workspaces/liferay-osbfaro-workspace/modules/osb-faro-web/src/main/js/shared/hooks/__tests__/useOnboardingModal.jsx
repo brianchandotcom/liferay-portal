@@ -9,8 +9,6 @@ import {Provider} from 'react-redux';
 import {renderHook, waitFor} from '@testing-library/react';
 import {useOnboardingModal} from 'shared/hooks/useOnboardingModal';
 
-jest.unmock('react-dom');
-
 jest.mock('shared/components/modals/onboarding-modal', () => ({groupId}) => (
 	<div data-testid="onboarding-modal">{groupId}</div>
 ));

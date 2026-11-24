@@ -19,8 +19,6 @@ jest.mock('../DropZone', () => props => (
 	<div data-disabled={String(!!props.disabled)} data-testid='drop-zone' />
 ));
 
-jest.unmock('react-dom');
-
 const LIMIT_MESSAGE =
 	'The maximum number of sequential criteria has been reached.';
 const EXCEEDED_MESSAGE =

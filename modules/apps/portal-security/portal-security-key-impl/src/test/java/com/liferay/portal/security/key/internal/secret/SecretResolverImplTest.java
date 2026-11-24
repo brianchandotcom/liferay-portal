@@ -7,6 +7,7 @@ package com.liferay.portal.security.key.internal.secret;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.fips.FIPSAuditEvent;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.KeyReferenceUtil;
+import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerConfiguration;
 import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretContext;
 import com.liferay.portal.security.key.secret.SecretManager;
@@ -59,6 +61,22 @@ public class SecretResolverImplTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
+
+		String profileId = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_keyManagerProfile.getProfileId()
+		).thenReturn(
+			profileId
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_secretResolverImpl, "_keyManagerConfiguration",
+			ConfigurableUtil.createConfigurable(
+				KeyManagerConfiguration.class,
+				HashMapBuilder.<String, Object>put(
+					"activeProfileId", profileId
+				).build()));
 
 		ReflectionTestUtil.setFieldValue(
 			_secretResolverImpl, "_keyManagerProfileRegistry",
@@ -124,6 +142,7 @@ public class SecretResolverImplTest {
 
 			_testStoreWhenFIPSIsDisabled();
 			_testStoreWhenKeyManagerProfileIsInactive();
+			_testStoreWhenKeyManagerProfileIsUnavailable();
 
 			_setUpKeyManagerProfileRegistry(_keyManagerProfile);
 
@@ -774,6 +793,27 @@ public class SecretResolverImplTest {
 		_setUpKeyManagerProfileRegistry(null);
 
 		_assertStoreKeepsPlaintext(RandomTestUtil.randomLong());
+	}
+
+	private void _testStoreWhenKeyManagerProfileIsUnavailable() {
+		KeyManagerProfile keyManagerProfile = Mockito.mock(
+			KeyManagerProfile.class);
+
+		Mockito.when(
+			keyManagerProfile.getProfileId()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		_setUpKeyManagerProfileRegistry(keyManagerProfile);
+
+		Assert.assertThrows(
+			SecretException.class,
+			() -> _secretResolverImpl.store(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString()));
+
+		Mockito.verifyNoInteractions(_secretManager);
 	}
 
 	private void _testStoreWhenKeyReferenceIsInvalid() {

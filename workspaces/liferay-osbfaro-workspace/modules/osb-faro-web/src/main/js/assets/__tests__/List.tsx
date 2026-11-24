@@ -1268,7 +1268,9 @@ describe('List', () => {
 
 			const closeButton = screen.getByRole('button', {name: /^close$/i});
 
-			expect(closeButton.closest('.sidebar')).not.toHaveAttribute('inert');
+			expect(closeButton.closest('.sidebar')).not.toHaveAttribute(
+				'inert'
+			);
 
 			fireEvent.click(closeButton);
 

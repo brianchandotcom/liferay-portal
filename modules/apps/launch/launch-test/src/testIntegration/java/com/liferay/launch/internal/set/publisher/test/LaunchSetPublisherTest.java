@@ -28,8 +28,11 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
@@ -70,6 +73,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -561,6 +565,128 @@ public class LaunchSetPublisherTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			unscheduledLaunchSetObjectEntry.getStatus());
+
+		// Launch set whose publish errors cannot be stored
+
+		ObjectEntry unstorableLaunchSetObjectEntry = _addLaunchSetObjectEntry();
+
+		long unstorableLaunchSetId =
+			unstorableLaunchSetObjectEntry.getObjectEntryId();
+
+		String unstorableClassName = RandomTestUtil.randomString();
+
+		ObjectEntry unstorableLaunchEntryObjectEntry =
+			_addLaunchEntryObjectEntry(
+				unstorableLaunchSetId, unstorableClassName,
+				RandomTestUtil.randomInt(), RandomTestUtil.randomString());
+
+		ObjectDefinition launchSetErrorObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "LaunchSetError");
+
+		String modelListenerExceptionMessage = RandomTestUtil.randomString();
+
+		Bundle bundle = FrameworkUtil.getBundle(LaunchSetPublisherTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<ModelListener<ObjectEntry>>
+			modelListenerServiceRegistration =
+				(ServiceRegistration)bundleContext.registerService(
+					ModelListener.class,
+					new BaseModelListener<ObjectEntry>() {
+
+						@Override
+						public Class<?> getModelClass() {
+							return ObjectEntry.class;
+						}
+
+						@Override
+						public void onBeforeCreate(ObjectEntry objectEntry)
+							throws ModelListenerException {
+
+							if (objectEntry.getObjectDefinitionId() ==
+									launchSetErrorObjectDefinition.
+										getObjectDefinitionId()) {
+
+								throw new ModelListenerException(
+									modelListenerExceptionMessage);
+							}
+						}
+
+					},
+					null);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.WARN)) {
+
+			_launchSetPublisher.publish(
+				unstorableLaunchSetId, TestPropsValues.getUserId());
+
+			Map<String, LogEntry> logEntriesMap = _getLogEntriesMap(
+				2, logCapture);
+
+			_assertLogEntry(
+				PortalException.class,
+				"No launch entry manager exists for " + unstorableClassName,
+				logEntriesMap,
+				"Unable to publish launch entry " +
+					unstorableLaunchEntryObjectEntry.getObjectEntryId(),
+				"WARN");
+
+			LogEntry logEntry = logEntriesMap.get(
+				"Unable to publish launch set " + unstorableLaunchSetId);
+
+			Assert.assertEquals("ERROR", logEntry.getPriority());
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertSame(PortalException.class, throwable.getClass());
+			Assert.assertEquals(
+				"Unable to publish 1 launch entries of launch set " +
+					unstorableLaunchSetId,
+				throwable.getMessage());
+
+			Throwable[] suppressedThrowables = throwable.getSuppressed();
+
+			Assert.assertEquals(
+				Arrays.toString(suppressedThrowables), 1,
+				suppressedThrowables.length);
+
+			Throwable suppressedThrowable = suppressedThrowables[0];
+
+			Assert.assertSame(
+				ModelListenerException.class, suppressedThrowable.getClass());
+			Assert.assertEquals(
+				modelListenerExceptionMessage,
+				suppressedThrowable.getMessage());
+		}
+		finally {
+			modelListenerServiceRegistration.unregister();
+		}
+
+		_assertBackgroundTaskStatuses(
+			unstorableLaunchSetId, BackgroundTaskConstants.STATUS_FAILED);
+
+		List<BackgroundTask> unstorableBackgroundTasks = _getBackgroundTasks(
+			unstorableLaunchSetId);
+
+		BackgroundTask unstorableBackgroundTask = unstorableBackgroundTasks.get(
+			0);
+
+		Assert.assertEquals(
+			"Unable to publish 1 launch entries of launch set " +
+				unstorableLaunchSetId,
+			unstorableBackgroundTask.getStatusMessage());
+
+		_assertPublishErrorsCount(0, unstorableLaunchSetId);
+
+		unstorableLaunchSetObjectEntry =
+			_objectEntryLocalService.getObjectEntry(unstorableLaunchSetId);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT,
+			unstorableLaunchSetObjectEntry.getStatus());
 
 		// Launch set with launch entries that have no launch entry manager
 

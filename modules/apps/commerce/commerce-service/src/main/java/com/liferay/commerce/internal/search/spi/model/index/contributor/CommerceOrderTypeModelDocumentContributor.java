@@ -34,6 +34,9 @@ public class CommerceOrderTypeModelDocumentContributor
 			"expirationDate", commerceOrderType.getExpirationDate());
 		document.addDateSortable(
 			"expirationDate", commerceOrderType.getExpirationDate());
+		document.addKeyword(
+			"externalReferenceCode",
+			commerceOrderType.getExternalReferenceCode(), true);
 	}
 
 }

@@ -25,6 +25,8 @@ public class COREntryModelDocumentContributor
 	@Override
 	public void contribute(Document document, COREntry corEntry) {
 		document.addText(Field.NAME, corEntry.getName());
+		document.addKeyword(
+			"externalReferenceCode", corEntry.getExternalReferenceCode(), true);
 	}
 
 }

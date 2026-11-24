@@ -34,6 +34,9 @@ public class CommerceTermEntryModelDocumentContributor
 		document.addKeyword(Field.NAME, commerceTermEntry.getName());
 		document.addKeyword(Field.PRIORITY, commerceTermEntry.getPriority());
 		document.addText(Field.TYPE, commerceTermEntry.getType());
+		document.addKeyword(
+			"externalReferenceCode",
+			commerceTermEntry.getExternalReferenceCode(), true);
 
 		List<String> languageIds =
 			_commerceTermEntryLocalService.getCTermEntryLocalizationLanguageIds(

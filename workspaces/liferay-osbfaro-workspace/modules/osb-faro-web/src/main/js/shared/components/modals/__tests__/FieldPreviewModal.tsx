@@ -35,6 +35,6 @@ describe('FieldPreviewModal', () => {
 
 		await waitForModal();
 
-		expect(getByText(fieldName)).toBeTruthy();
+		expect(getByText(fieldName)).toBeInTheDocument();
 	});
 });

@@ -21,11 +21,11 @@ describe('CustomNumberInput', () => {
 		fireEvent.click(getByText('is equal to'));
 
 		expect(getAllByText('is equal to')[1]).toBeTruthy();
-		expect(getByText('greater than')).toBeTruthy();
-		expect(getByText('less than')).toBeTruthy();
-		expect(getByText('is not equal to')).toBeTruthy();
-		expect(getByText('is known')).toBeTruthy();
-		expect(getByText('is unknown')).toBeTruthy();
+		expect(getByText('greater than')).toBeInTheDocument();
+		expect(getByText('less than')).toBeInTheDocument();
+		expect(getByText('is not equal to')).toBeInTheDocument();
+		expect(getByText('is known')).toBeInTheDocument();
+		expect(getByText('is unknown')).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 
@@ -47,11 +47,11 @@ describe('CustomNumberInput', () => {
 		fireEvent.click(getByText('is equal to'));
 
 		expect(getAllByText('is equal to')[1]).toBeTruthy();
-		expect(getByText('greater than')).toBeTruthy();
-		expect(getByText('less than')).toBeTruthy();
-		expect(getByText('is not equal to')).toBeTruthy();
-		expect(getByText('is known')).toBeTruthy();
-		expect(getByText('is unknown')).toBeTruthy();
+		expect(getByText('greater than')).toBeInTheDocument();
+		expect(getByText('less than')).toBeInTheDocument();
+		expect(getByText('is not equal to')).toBeInTheDocument();
+		expect(getByText('is known')).toBeInTheDocument();
+		expect(getByText('is unknown')).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 

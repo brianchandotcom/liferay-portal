@@ -11,7 +11,7 @@ describe('Trend', () => {
 		expect(container.querySelector('.analytics-trend')).toHaveStyle(
 			'color: red'
 		);
-		expect(getByText('Trend component')).toBeTruthy();
+		expect(getByText('Trend component')).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 

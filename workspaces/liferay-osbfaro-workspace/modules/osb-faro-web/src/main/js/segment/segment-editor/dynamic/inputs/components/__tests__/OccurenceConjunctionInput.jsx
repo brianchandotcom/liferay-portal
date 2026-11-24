@@ -16,8 +16,8 @@ describe('OccurenceConjunctionInput', () => {
 		);
 		fireEvent.click(getByRole('combobox'));
 
-		expect(getByText('at least')).toBeTruthy();
-		expect(getByText('at most')).toBeTruthy();
+		expect(getByText('at least')).toBeInTheDocument();
+		expect(getByText('at most')).toBeInTheDocument();
 
 		expect(container).toMatchSnapshot();
 	});

@@ -26,7 +26,7 @@ describe('HelpWidget', () => {
 			</Provider>
 		);
 
-		expect(getByText(/^report an issue$/i)).toBeTruthy();
+		expect(getByText(/^report an issue$/i)).toBeInTheDocument();
 	});
 
 	it('should open the report an issue modal on the basic plan', async () => {

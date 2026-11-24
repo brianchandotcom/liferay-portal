@@ -43,6 +43,6 @@ describe('SelectFieldInput', () => {
 			</Wrapper>
 		);
 
-		expect(getByText(label)).toBeTruthy();
+		expect(getByText(label)).toBeInTheDocument();
 	});
 });

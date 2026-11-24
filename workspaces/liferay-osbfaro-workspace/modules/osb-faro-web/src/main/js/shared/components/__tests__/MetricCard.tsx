@@ -26,9 +26,9 @@ describe('MetricCard', () => {
 	it('should render the title, description, and value', () => {
 		const {getByText} = render(<MetricCard {...defaultProps} />);
 
-		expect(getByText('Test title')).toBeTruthy();
-		expect(getByText('Test description')).toBeTruthy();
-		expect(getByText('42')).toBeTruthy();
+		expect(getByText('Test title')).toBeInTheDocument();
+		expect(getByText('Test description')).toBeInTheDocument();
+		expect(getByText('42')).toBeInTheDocument();
 	});
 
 	it('should render Loading when loading is true', () => {
@@ -55,8 +55,8 @@ describe('MetricCard', () => {
 		expect(
 			container.querySelector('.lexicon-icon-caret-top-l')
 		).toBeTruthy();
-		expect(getByText('10%')).toBeTruthy();
-		expect(getByText('vs last period')).toBeTruthy();
+		expect(getByText('10%')).toBeInTheDocument();
+		expect(getByText('vs last period')).toBeInTheDocument();
 	});
 
 	it('should render a negative trend with the down caret icon', () => {
@@ -73,7 +73,7 @@ describe('MetricCard', () => {
 		expect(
 			container.querySelector('.lexicon-icon-caret-bottom-l')
 		).toBeTruthy();
-		expect(getByText('5%')).toBeTruthy();
+		expect(getByText('5%')).toBeInTheDocument();
 	});
 
 	it('should render a neutral trend without an icon', () => {
@@ -91,7 +91,7 @@ describe('MetricCard', () => {
 		expect(
 			container.querySelector('.lexicon-icon-caret-bottom-l')
 		).toBeNull();
-		expect(getByText('0%')).toBeTruthy();
+		expect(getByText('0%')).toBeInTheDocument();
 	});
 
 	it('should not render a trend icon when trend is undefined', () => {
@@ -116,7 +116,7 @@ describe('MetricCard', () => {
 			/>
 		);
 
-		expect(getByText('42')).toBeTruthy();
+		expect(getByText('42')).toBeInTheDocument();
 		expect(queryByText('10%')).toBeNull();
 		expect(queryByText('vs last period')).toBeNull();
 		expect(container.querySelector('.lexicon-icon-caret-top-l')).toBeNull();
@@ -159,7 +159,7 @@ describe('MetricCard', () => {
 			/>
 		);
 
-		expect(getByTestId('custom-value')).toBeTruthy();
+		expect(getByTestId('custom-value')).toBeInTheDocument();
 	});
 
 	it('should round the percentage to one decimal', () => {
@@ -173,6 +173,6 @@ describe('MetricCard', () => {
 			/>
 		);
 
-		expect(getByText('12.3%')).toBeTruthy();
+		expect(getByText('12.3%')).toBeInTheDocument();
 	});
 });

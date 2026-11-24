@@ -51,7 +51,7 @@ describe('BasePage', () => {
 			</Provider>
 		);
 
-		expect(getByText('testPageDescription')).toBeTruthy();
+		expect(getByText('testPageDescription')).toBeInTheDocument();
 	});
 
 	it('should render with a breadcrumb', () => {
@@ -63,7 +63,7 @@ describe('BasePage', () => {
 			</Provider>
 		);
 
-		expect(getByText('testLabelBreadcrumbItems')).toBeTruthy();
+		expect(getByText('testLabelBreadcrumbItems')).toBeInTheDocument();
 	});
 
 	it('should render with a page action', () => {
@@ -75,7 +75,7 @@ describe('BasePage', () => {
 			</Provider>
 		);
 
-		expect(getByText('testLabelPageActions')).toBeTruthy();
+		expect(getByText('testLabelPageActions')).toBeInTheDocument();
 	});
 
 	it('should render with a title', () => {
@@ -87,7 +87,7 @@ describe('BasePage', () => {
 			</Provider>
 		);
 
-		expect(getByText('testPageTitle')).toBeTruthy();
+		expect(getByText('testPageTitle')).toBeInTheDocument();
 	});
 
 	it('should render with an inline title with subtitle', () => {

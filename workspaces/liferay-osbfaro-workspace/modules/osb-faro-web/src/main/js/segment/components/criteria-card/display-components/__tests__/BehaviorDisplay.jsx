@@ -106,8 +106,10 @@ describe('BehaviorDisplay', () => {
 			/>
 		);
 
-		expect(getByText(/^account$/i)).toBeTruthy();
-		expect(getByText(/^at least one individual who triggered$/i)).toBeTruthy();
+		expect(getByText(/^account$/i)).toBeInTheDocument();
+		expect(
+			getByText(/^at least one individual who triggered$/i)
+		).toBeInTheDocument();
 		expect(queryByText(/^individual$/i)).toBeNull();
 	});
 

@@ -16,7 +16,7 @@ describe('FormNavigation', () => {
 			<FormNavigation submitMessage={submitMessage} />
 		);
 
-		expect(getByText(submitMessage)).toBeTruthy();
+		expect(getByText(submitMessage)).toBeInTheDocument();
 	});
 
 	it('should render with a previous button', () => {
@@ -24,6 +24,6 @@ describe('FormNavigation', () => {
 			<FormNavigation onPreviousStep={() => jest.fn()} />
 		);
 
-		expect(getByText(/^previous$/i)).toBeTruthy();
+		expect(getByText(/^previous$/i)).toBeInTheDocument();
 	});
 });

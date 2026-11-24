@@ -39,7 +39,7 @@ describe('Alert', () => {
 
 	it('should render with a title', () => {
 		const {getByText} = render(<Alert title='hello world' />);
-		expect(getByText(/hello world/)).toBeTruthy();
+		expect(getByText(/hello world/)).toBeInTheDocument();
 	});
 
 	it('should render with a specific type', () => {
@@ -49,7 +49,7 @@ describe('Alert', () => {
 
 	it('should render with content', () => {
 		const {getByText} = render(<Alert children={['hello children']} />);
-		expect(getByText(/hello children/)).toBeTruthy();
+		expect(getByText(/hello children/)).toBeInTheDocument();
 	});
 
 	it('should render with multiple config set', () => {
@@ -61,7 +61,7 @@ describe('Alert', () => {
 			/>
 		);
 
-		expect(getByText(/hello children/)).toBeTruthy();
-		expect(getByText(/this is a title/)).toBeTruthy();
+		expect(getByText(/hello children/)).toBeInTheDocument();
+		expect(getByText(/this is a title/)).toBeInTheDocument();
 	});
 });

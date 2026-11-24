@@ -53,7 +53,7 @@ describe('FieldDropDown', () => {
 			jest.advanceTimersByTime(250);
 		});
 
-		expect(getByText('FOO BAR')).toBeTruthy();
+		expect(getByText('FOO BAR')).toBeInTheDocument();
 	});
 
 	it('should render with data', () => {
@@ -69,7 +69,7 @@ describe('FieldDropDown', () => {
 			jest.advanceTimersByTime(250);
 		});
 
-		expect(getByText('foo')).toBeTruthy();
-		expect(getByText('450')).toBeTruthy();
+		expect(getByText('foo')).toBeInTheDocument();
+		expect(getByText('450')).toBeInTheDocument();
 	});
 });

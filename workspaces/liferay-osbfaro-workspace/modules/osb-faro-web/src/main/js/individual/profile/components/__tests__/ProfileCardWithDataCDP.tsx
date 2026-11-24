@@ -253,7 +253,9 @@ describe('IndividualProfileCard', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText(/^an unexpected error occurred\.$/i)).toBeTruthy();
+		expect(
+			getByText(/^an unexpected error occurred\.$/i)
+		).toBeInTheDocument();
 	});
 
 	it('should render w/ loading', () => {

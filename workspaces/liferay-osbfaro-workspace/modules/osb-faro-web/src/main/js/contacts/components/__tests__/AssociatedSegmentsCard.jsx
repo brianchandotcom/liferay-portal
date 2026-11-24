@@ -39,7 +39,9 @@ describe('AssociatedSegmentsCard', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText(/^an unexpected error occurred\.$/i)).toBeTruthy();
+		expect(
+			getByText(/^an unexpected error occurred\.$/i)
+		).toBeInTheDocument();
 	});
 
 	it('should render with an no results display', async () => {

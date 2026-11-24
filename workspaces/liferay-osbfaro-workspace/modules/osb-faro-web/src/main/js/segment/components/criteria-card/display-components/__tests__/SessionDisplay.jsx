@@ -89,8 +89,8 @@ describe('SessionDisplay', () => {
 			<SessionDisplay criterion={criterion} property={property} />
 		);
 
-		expect(getByText('is')).toBeTruthy();
-		expect(getByText('"Direct"')).toBeTruthy();
+		expect(getByText('is')).toBeInTheDocument();
+		expect(getByText('"Direct"')).toBeInTheDocument();
 		expect(container).not.toHaveTextContent('ever');
 	});
 
@@ -127,9 +127,9 @@ describe('SessionDisplay', () => {
 			<SessionDisplay criterion={criterion} property={property} />
 		);
 
-		expect(getByText(/^utm campaign$/i)).toBeTruthy();
-		expect(getByText('is')).toBeTruthy();
-		expect(getByText('"summer-sale"')).toBeTruthy();
+		expect(getByText(/^utm campaign$/i)).toBeInTheDocument();
+		expect(getByText('is')).toBeInTheDocument();
+		expect(getByText('"summer-sale"')).toBeInTheDocument();
 		expect(container).not.toHaveTextContent('ever');
 	});
 
@@ -145,6 +145,6 @@ describe('SessionDisplay', () => {
 			<SessionDisplay criterion={criterion} property={mockProperty} />
 		);
 
-		expect(getByText('is unknown')).toBeTruthy();
+		expect(getByText('is unknown')).toBeInTheDocument();
 	});
 });

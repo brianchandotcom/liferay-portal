@@ -205,8 +205,8 @@ describe('HTMLBarChart', () => {
 
 		fireEvent.mouseEnter(container.querySelector(`${CLASSNAME}-item`));
 
-		expect(getByText('tooltip header')).toBeTruthy();
-		expect(getByText('tooltip column 1')).toBeTruthy();
+		expect(getByText('tooltip header')).toBeInTheDocument();
+		expect(getByText('tooltip column 1')).toBeInTheDocument();
 	});
 
 	it('should set tooltip when MouseLeave on Item', () => {
@@ -406,10 +406,10 @@ describe('HTMLBarChart', () => {
 			/>
 		);
 
-		expect(getByText('0')).toBeTruthy();
-		expect(getByText('500')).toBeTruthy();
-		expect(getByText('1K')).toBeTruthy();
-		expect(getByText('1.5K')).toBeTruthy();
+		expect(getByText('0')).toBeInTheDocument();
+		expect(getByText('500')).toBeInTheDocument();
+		expect(getByText('1K')).toBeInTheDocument();
+		expect(getByText('1.5K')).toBeInTheDocument();
 	});
 
 	it('should render an arrow down icon when there is a scroll down', () => {
@@ -469,10 +469,10 @@ describe('HTMLBarChart', () => {
 
 		fireEvent.mouseEnter(container.querySelector(`${CLASSNAME}-item`));
 
-		expect(getByText('item column 1')).toBeTruthy();
+		expect(getByText('item column 1')).toBeInTheDocument();
 		expect(getAllByText('header column 1')[0]).toBeTruthy();
-		expect(getByText('tooltip header')).toBeTruthy();
-		expect(getByText('tooltip column 1')).toBeTruthy();
+		expect(getByText('tooltip header')).toBeInTheDocument();
+		expect(getByText('tooltip column 1')).toBeInTheDocument();
 	});
 
 	it('should render label as component when passing to props', () => {
@@ -494,7 +494,7 @@ describe('HTMLBarChart', () => {
 			/>
 		);
 
-		expect(getByText('this is a label as component')).toBeTruthy();
+		expect(getByText('this is a label as component')).toBeInTheDocument();
 
 		expect(container.querySelector(`${CLASSNAME}-column`)).toBeTruthy();
 	});

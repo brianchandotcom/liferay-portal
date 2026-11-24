@@ -28,6 +28,6 @@ describe('TextTruncate', () => {
 					.map(() => 'a')
 					.join('')}...`
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 	});
 });

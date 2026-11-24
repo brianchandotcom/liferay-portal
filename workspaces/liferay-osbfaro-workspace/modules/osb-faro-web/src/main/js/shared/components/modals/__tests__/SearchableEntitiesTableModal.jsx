@@ -55,7 +55,7 @@ describe('SearchableEntitiesTableModal', () => {
 
 		await waitForModal();
 
-		expect(getByText('entities')).toBeTruthy();
+		expect(getByText('entities')).toBeInTheDocument();
 		expect(document.querySelector('.loading-root')).toBeTruthy();
 		expect(document.querySelector('table')).toBeFalsy();
 	});

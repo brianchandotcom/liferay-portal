@@ -21,7 +21,7 @@ describe('Avatar', () => {
 			/>
 		);
 
-		expect(getByText(/^f$/i)).toBeTruthy();
+		expect(getByText(/^f$/i)).toBeInTheDocument();
 	});
 
 	it('should render with a first and last name', () => {
@@ -34,7 +34,7 @@ describe('Avatar', () => {
 			/>
 		);
 
-		expect(getByText('FB')).toBeTruthy();
+		expect(getByText('FB')).toBeInTheDocument();
 	});
 
 	it('should render if null is used as the first name', () => {

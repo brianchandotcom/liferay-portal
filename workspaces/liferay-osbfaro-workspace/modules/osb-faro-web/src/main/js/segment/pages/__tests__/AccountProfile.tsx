@@ -87,9 +87,13 @@ describe('AccountProfile', () => {
 	it('should render the segment name, its type and its external reference code', () => {
 		renderAccountProfile();
 
-		expect(screen.getByRole('heading', {name: 'Seattle0'})).toBeTruthy();
-		expect(screen.getByText(/^account batch segment$/i)).toBeTruthy();
-		expect(screen.getByText('ERC: my-erc')).toBeTruthy();
+		expect(
+			screen.getByRole('heading', {name: 'Seattle0'})
+		).toBeInTheDocument();
+		expect(
+			screen.getByText(/^account batch segment$/i)
+		).toBeInTheDocument();
+		expect(screen.getByText('ERC: my-erc')).toBeInTheDocument();
 	});
 
 	it('should warn that the membership is still being processed', () => {
@@ -99,7 +103,7 @@ describe('AccountProfile', () => {
 			screen.getByText(
 				/^segment data is processing, please check back later\.$/i
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 	});
 
 	it('should warn that the segment is disabled', () => {
@@ -109,7 +113,7 @@ describe('AccountProfile', () => {
 			screen.getByText(
 				/^this segment is disabled because some criteria has been affected by removal of a data source\. to continue using this segment please update the criteria\.$/i
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 	});
 
 	it('should not show any alert when the segment is ready', () => {
@@ -135,7 +139,7 @@ describe('AccountProfile', () => {
 
 		await screen.findByTestId('fds-component');
 
-		expect(screen.getByText('SEGMENT MEMBERSHIP')).toBeTruthy();
+		expect(screen.getByText('SEGMENT MEMBERSHIP')).toBeInTheDocument();
 		expect(lastApiURL).toBe(
 			'/o/faro/contacts/23/account/search?channelId=123&segmentId=0'
 		);
@@ -180,7 +184,7 @@ describe('AccountProfile', () => {
 
 		expect(
 			screen.getByRole('menuitem', {name: /^download csv$/i})
-		).toBeTruthy();
+		).toBeInTheDocument();
 	});
 
 	it('should display the segment criteria', () => {
@@ -189,9 +193,9 @@ describe('AccountProfile', () => {
 				"accounts.filter(filter='industry eq ''Technology''')",
 		});
 
-		expect(screen.getByText(/^industry$/i)).toBeTruthy();
-		expect(screen.getByText(/^segment criteria$/i)).toBeTruthy();
-		expect(screen.getByText('"Technology"')).toBeTruthy();
+		expect(screen.getByText(/^industry$/i)).toBeInTheDocument();
+		expect(screen.getByText(/^segment criteria$/i)).toBeInTheDocument();
+		expect(screen.getByText('"Technology"')).toBeInTheDocument();
 	});
 
 	it('should open the manage notifications modal with the workspace and segment IDs', async () => {

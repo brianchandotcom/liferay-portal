@@ -65,6 +65,6 @@ describe('CustomSelectEntityInput', () => {
 			/>
 		);
 
-		expect(getByText('Foo Organization')).toBeTruthy();
+		expect(getByText('Foo Organization')).toBeInTheDocument();
 	});
 });

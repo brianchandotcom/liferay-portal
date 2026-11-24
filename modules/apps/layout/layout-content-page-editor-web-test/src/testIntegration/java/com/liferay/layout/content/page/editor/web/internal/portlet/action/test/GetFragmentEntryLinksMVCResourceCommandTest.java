@@ -85,12 +85,13 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 
 	@Test
 	public void testGetFragmentEntryLinks() throws Exception {
+		_testGetFragmentEntryLinksWithInvalidFragmentEntryLinkId();
 		_testGetFragmentEntryLinksWithLayoutFragmentEntryLink();
 		_testGetFragmentEntryLinksWithNoLayoutFragmentEntryLink();
 		_testGetFragmentEntryLinksWithOtherGroupFragmentEntryLink();
 		_testGetFragmentEntryLinksWithOtherLayoutFragmentEntryLink();
 		_testGetFragmentEntryLinksWithOtherMasterLayoutFragmentEntryLink();
-		_testGetFragmentEntryLinksWithInvalidFragmentEntryLinkId();
+
 		_testGetFragmentEntryLinksWithMasterLayoutFragmentEntryLink();
 	}
 

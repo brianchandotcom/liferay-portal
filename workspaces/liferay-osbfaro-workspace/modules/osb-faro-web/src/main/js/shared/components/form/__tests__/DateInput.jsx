@@ -40,9 +40,9 @@ describe('DateInput', () => {
 	});
 
 	it('should render with label', () => {
-		const {queryByText} = render(<DefaultComponent label={labelContent} />);
+		const {getByText} = render(<DefaultComponent label={labelContent} />);
 
-		expect(queryByText(labelContent)).toBeTruthy();
+		expect(getByText(labelContent)).toBeInTheDocument();
 	});
 
 	it('should render as required', () => {

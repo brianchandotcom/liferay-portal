@@ -12,12 +12,12 @@ describe('ItemTitle', () => {
 	it('should render with children', () => {
 		const stringToMatch = 'Item title text';
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemTitle>
 				<span>{stringToMatch}</span>
 			</ItemTitle>
 		);
 
-		expect(queryByText(stringToMatch)).toBeTruthy();
+		expect(getByText(stringToMatch)).toBeInTheDocument();
 	});
 });

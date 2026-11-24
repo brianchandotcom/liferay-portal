@@ -153,7 +153,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('experience-dropdown')).toBeTruthy();
+		expect(screen.getByTestId('experience-dropdown')).toBeInTheDocument();
 	});
 
 	it('hides the experience filter dropdown on the overview route for non-LDP workspaces', () => {
@@ -205,7 +205,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByText(/^visitors$/i)).toBeTruthy();
+		expect(screen.getByText(/^visitors$/i)).toBeInTheDocument();
 	});
 
 	it('hides the visitors tab for non-LDP workspaces', () => {
@@ -257,7 +257,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByText(/^known individuals$/i)).toBeTruthy();
+		expect(screen.getByText(/^known individuals$/i)).toBeInTheDocument();
 	});
 
 	it('hides the known individuals tab for LDP workspaces', () => {
@@ -310,7 +310,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('account-dropdown')).toBeTruthy();
+		expect(screen.getByTestId('account-dropdown')).toBeInTheDocument();
 	});
 
 	it('scopes the account filter to the selected range', () => {
@@ -394,7 +394,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('account-dropdown')).toBeTruthy();
+		expect(screen.getByTestId('account-dropdown')).toBeInTheDocument();
 	});
 
 	it('hides the account filter on the path route for non-LDP workspaces', () => {
@@ -516,7 +516,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('segment-dropdown')).toBeTruthy();
+		expect(screen.getByTestId('segment-dropdown')).toBeInTheDocument();
 	});
 
 	it('hides the segment filter on the overview route for non-LDP workspaces', () => {
@@ -570,7 +570,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('segment-dropdown')).toBeTruthy();
+		expect(screen.getByTestId('segment-dropdown')).toBeInTheDocument();
 	});
 
 	it('shows the segment filter on the path route for LDP workspaces', () => {
@@ -597,7 +597,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('segment-dropdown')).toBeTruthy();
+		expect(screen.getByTestId('segment-dropdown')).toBeInTheDocument();
 	});
 
 	it('hides the segment filter on the path route for non-LDP workspaces', () => {
@@ -848,7 +848,7 @@ describe('TouchpointRoutes', () => {
 			</Provider>
 		);
 
-		expect(screen.queryByTestId('route-not-found')).toBeTruthy();
+		expect(screen.getByTestId('route-not-found')).toBeInTheDocument();
 	});
 
 	it('renders the page itself for every tab it does answer to', () => {

@@ -168,7 +168,7 @@ describe('BehaviorDisplay', () => {
 			})
 		};
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<WrappedBehaviorDisplay
 				criterion={mockCriterionWithAttribute}
 				property={mockProperty}
@@ -177,7 +177,7 @@ describe('BehaviorDisplay', () => {
 			/>
 		);
 
-		expect(queryByText('Foo Attribute String')).toBeTruthy();
+		expect(getByText('Foo Attribute String')).toBeInTheDocument();
 	});
 
 	const getObjectEntryCriterion = objectDefinitionName => ({

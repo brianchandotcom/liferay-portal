@@ -37,9 +37,11 @@ describe('BaseDropdownSearchableList', () => {
 	});
 
 	it('should render with query "1"', () => {
-		const {queryByText} = render(<WrappedComponent query='Test 1' />);
+		const {getByText, queryByText} = render(
+			<WrappedComponent query='Test 1' />
+		);
 
-		expect(queryByText('Test 1')).toBeTruthy();
+		expect(getByText('Test 1')).toBeInTheDocument();
 		expect(queryByText('Test 0')).toBeNull();
 	});
 

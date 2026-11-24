@@ -12,18 +12,18 @@ describe('DefinitionItem', () => {
 	});
 
 	it('should render with a label and value', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<DefinitionItem label='foo' value='bar' />
 		);
 
-		expect(queryByText('foo')).toBeTruthy();
-		expect(queryByText('bar')).toBeTruthy();
+		expect(getByText('foo')).toBeInTheDocument();
+		expect(getByText('bar')).toBeInTheDocument();
 	});
 
 	it('should render with an edit button', () => {
-		const {queryByLabelText} = render(<DefinitionItem editable />);
+		const {getByLabelText} = render(<DefinitionItem editable />);
 
-		expect(queryByLabelText(/^edit$/i)).toBeTruthy();
+		expect(getByLabelText(/^edit$/i)).toBeInTheDocument();
 	});
 
 	it('should render as an input field with a cancel and submit button', () => {
@@ -35,8 +35,8 @@ describe('DefinitionItem', () => {
 
 		jest.runAllTimers();
 
-		expect(queryByLabelText(/^cancel$/i)).toBeTruthy();
-		expect(queryByLabelText(/^submit$/i)).toBeTruthy();
+		expect(getByLabelText(/^cancel$/i)).toBeInTheDocument();
+		expect(getByLabelText(/^submit$/i)).toBeInTheDocument();
 		expect(queryByLabelText(/^edit$/i)).toBeNull();
 	});
 });

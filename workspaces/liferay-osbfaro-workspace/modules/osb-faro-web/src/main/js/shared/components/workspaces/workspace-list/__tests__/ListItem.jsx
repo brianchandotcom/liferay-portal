@@ -50,7 +50,7 @@ describe('WorkspaceListItem', () => {
 	});
 
 	it('should render a workspace with projects you can join', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<MemoryRouter>
 				<WorkspaceListItem
 					isJoinableProjects
@@ -59,16 +59,16 @@ describe('WorkspaceListItem', () => {
 			</MemoryRouter>
 		);
 
-		expect(queryByText(/^request access$/i)).toBeTruthy();
+		expect(getByText(/^request access$/i)).toBeInTheDocument();
 	});
 
 	it('should render a workspace with a deactivated project', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<MemoryRouter>
 				<WorkspaceListItem projectState={ProjectStates.Deactivated} />
 			</MemoryRouter>
 		);
-		expect(queryByText(/^activate$/i)).toBeTruthy();
+		expect(getByText(/^activate$/i)).toBeInTheDocument();
 	});
 
 	it('should render contact sales and the Analytics Cloud limit message when hasLimitReached and ldpEnabled is false', () => {

@@ -134,7 +134,7 @@ describe('AttributeConjunctionDisplay', () => {
 			propertyName,
 			value
 		}) => {
-			const {queryByText} = render(
+			const {getByText} = render(
 				<DefaultComponent
 					conjunctionCriterion={{
 						operatorName,
@@ -144,9 +144,9 @@ describe('AttributeConjunctionDisplay', () => {
 				/>
 			);
 
-			expect(queryByText(displayName)).toBeTruthy();
-			expect(queryByText(operatorLabel)).toBeTruthy();
-			expect(queryByText(displayValue)).toBeTruthy();
+			expect(getByText(displayName)).toBeInTheDocument();
+			expect(getByText(operatorLabel)).toBeInTheDocument();
+			expect(getByText(displayValue)).toBeInTheDocument();
 		}
 	);
 });

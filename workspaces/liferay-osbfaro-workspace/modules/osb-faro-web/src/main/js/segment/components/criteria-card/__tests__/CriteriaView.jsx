@@ -122,16 +122,18 @@ describe('CriteriaView', () => {
 	});
 
 	it('should render w/ Non-Existent Property message', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<CriteriaView criteria={data.mockNewCriteria()} />
 		);
 
-		expect(queryByText(/^attribute no longer exists\.$/i)).toBeTruthy();
+		expect(
+			getByText(/^attribute no longer exists\.$/i)
+		).toBeInTheDocument();
 	});
 
 	it('should render numbered steps and "then" conjunction when real time + sequential', () => {
 		const WrappedCriteriaView = withReferencedObjectsProvider(CriteriaView);
-		const {container, queryByText} = render(
+		const {container, getByText, queryByText} = render(
 			<WrappedCriteriaView
 				criteria={data.mockNewCriteria(2, {
 					propertyName: 'demographics/firstName/value'
@@ -147,7 +149,7 @@ describe('CriteriaView', () => {
 		expect(stepNumbers).toHaveLength(2);
 		expect(stepNumbers[0].textContent).toBe('1');
 		expect(stepNumbers[1].textContent).toBe('2');
-		expect(queryByText(/^then$/i)).toBeTruthy();
+		expect(getByText(/^then$/i)).toBeInTheDocument();
 		expect(queryByText(/^and$/i)).toBeFalsy();
 	});
 

@@ -7,18 +7,18 @@ describe('Optional', () => {
 		const hoc = jest.fn(() => 'hoc component');
 		const Optional = optional(hoc)(jest.fn(() => 'wrapped component'));
 
-		const {queryByText} = render(<Optional id={null} />);
+		const {getByText, queryByText} = render(<Optional id={null} />);
 
 		expect(queryByText('hoc component')).toBeNull();
-		expect(queryByText('wrapped component')).toBeTruthy();
+		expect(getByText('wrapped component')).toBeInTheDocument();
 	});
 
 	it('should render the HOC component instead', () => {
 		const hoc = jest.fn(() => () => 'hoc component');
 		const Optional = optional(hoc)(jest.fn(() => 'wrapped component'));
-		const {queryByText} = render(<Optional id={23} />);
+		const {getByText, queryByText} = render(<Optional id={23} />);
 
-		expect(queryByText('hoc component')).toBeTruthy();
+		expect(getByText('hoc component')).toBeInTheDocument();
 		expect(queryByText('wrapped component')).toBeNull();
 	});
 });

@@ -14,7 +14,7 @@ describe('TitleEditor', () => {
 	it('should render with placeholder', () => {
 		const placeholder = 'test placeholder';
 
-		const {queryByPlaceholderText} = render(
+		const {getByPlaceholderText} = render(
 			<TitleEditor
 				name='test'
 				onChange={noop}
@@ -22,17 +22,17 @@ describe('TitleEditor', () => {
 			/>
 		);
 
-		expect(queryByPlaceholderText(placeholder)).toBeTruthy();
+		expect(getByPlaceholderText(placeholder)).toBeInTheDocument();
 	});
 
 	it('should render with value', () => {
 		const value = 'foo';
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<TitleEditor name='test' onChange={noop} value={value} />
 		);
 
-		expect(queryByText(value)).toBeTruthy();
+		expect(getByText(value)).toBeInTheDocument();
 	});
 
 	it('should render as editing', () => {

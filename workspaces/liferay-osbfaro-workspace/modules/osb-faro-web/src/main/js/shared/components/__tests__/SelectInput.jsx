@@ -19,7 +19,7 @@ describe('SelectInput', () => {
 	});
 
 	it('should render with the selected item', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<SelectInput
 				dataSourceFn={() => Promise.resolve([])}
 				itemRenderer={({name}) => name}
@@ -27,6 +27,6 @@ describe('SelectInput', () => {
 			/>
 		);
 
-		expect(queryByText('foo')).toBeTruthy();
+		expect(getByText('foo')).toBeInTheDocument();
 	});
 });

@@ -27,7 +27,7 @@ describe('EntityList', () => {
 
 	it('should render noItemsContent', () => {
 		const noItemsContent = <h1>{'No Items!'}</h1>;
-		const {queryByText} = render(
+		const {getByText} = render(
 			<WrappedComponent
 				groupId='23'
 				noItemsContent={noItemsContent}
@@ -35,7 +35,7 @@ describe('EntityList', () => {
 			/>
 		);
 
-		expect(queryByText('No Items!')).toBeTruthy();
+		expect(getByText('No Items!')).toBeInTheDocument();
 	});
 
 	it('should render a list of segments with segment icons', () => {

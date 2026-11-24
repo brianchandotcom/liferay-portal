@@ -67,13 +67,13 @@ public class FragmentAIAssistantProductNavigationControlMenuEntry
 		if (!Objects.equals(
 				FragmentPortletKeys.FRAGMENT,
 				portletDisplay.getPortletName()) ||
+			Validator.isNull(
+				httpServletRequest.getAttribute(
+					FragmentWebKeys.FRAGMENT_DISPLAY_CONTEXT)) ||
 			!FragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
-				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ||
-			Validator.isNull(
-				httpServletRequest.getAttribute(
-					FragmentWebKeys.FRAGMENT_DISPLAY_CONTEXT))) {
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
 			return false;
 		}

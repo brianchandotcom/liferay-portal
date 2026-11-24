@@ -8,5 +8,6 @@ author: Alessio Antonio Rendina
 clientDir: ../headless-commerce-admin-order-client/src/main/java
 compatibilityVersion: 16
 forcePredictableSchemaPropertyName: false
+generatePermissions: true
 javaEEPackage: jakarta
 testDir: ../headless-commerce-admin-order-test/src/testIntegration/java

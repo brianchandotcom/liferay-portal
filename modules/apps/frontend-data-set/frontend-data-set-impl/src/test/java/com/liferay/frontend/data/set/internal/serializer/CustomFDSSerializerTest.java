@@ -822,13 +822,13 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Item proxy
 
-		String apiURL = RandomTestUtil.randomString();
-
 		SystemFDSSerializer systemFDSSerializer = Mockito.mock(
 			SystemFDSSerializer.class);
 
 		JSONObject tokenResolutionsJSONObject = JSONUtil.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		String apiURL = RandomTestUtil.randomString();
 
 		Mockito.when(
 			systemFDSSerializer.serializeFilters(

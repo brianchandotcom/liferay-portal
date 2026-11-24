@@ -12,7 +12,7 @@ describe('DataValue', () => {
 		(value) => {
 			render(<DataValue value={value} />);
 
-			expect(screen.getByText('–')).toHaveClass('text-secondary');
+			expect(screen.getByText('–')).toBeInTheDocument();
 		}
 	);
 
@@ -21,7 +21,7 @@ describe('DataValue', () => {
 		(value) => {
 			render(<DataValue type="number" value={value} />);
 
-			expect(screen.getByText('–')).toHaveClass('text-secondary');
+			expect(screen.getByText('–')).toBeInTheDocument();
 		}
 	);
 

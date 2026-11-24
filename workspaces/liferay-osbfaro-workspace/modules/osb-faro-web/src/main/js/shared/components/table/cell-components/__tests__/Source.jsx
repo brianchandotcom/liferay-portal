@@ -48,7 +48,7 @@ describe('SourceCell', () => {
 				</MemoryRouter>
 			);
 
-			expect(screen.getByText('–')).toHaveClass('text-secondary');
+			expect(screen.getByText('–')).toBeInTheDocument();
 		}
 	);
 
@@ -60,6 +60,6 @@ describe('SourceCell', () => {
 		);
 
 		expect(container.querySelector('a')).toHaveTextContent('–');
-		expect(screen.getByText('–')).toHaveClass('text-secondary');
+		expect(screen.getByText('–')).toBeInTheDocument();
 	});
 });

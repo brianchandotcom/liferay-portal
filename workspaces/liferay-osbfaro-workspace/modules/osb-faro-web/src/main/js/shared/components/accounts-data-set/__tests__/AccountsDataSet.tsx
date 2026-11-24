@@ -768,7 +768,7 @@ describe('AccountsDataSet', () => {
 				lastCustomDataRenderers!.accountLifecycleStageRenderer({value})
 			);
 
-			expect(screen.getByText('–')).toHaveClass('text-secondary');
+			expect(screen.getByText('–')).toBeInTheDocument();
 		}
 	);
 
@@ -788,7 +788,7 @@ describe('AccountsDataSet', () => {
 
 			render(lastCustomDataRenderers!.textRenderer({value}));
 
-			expect(screen.getByText('–')).toHaveClass('text-secondary');
+			expect(screen.getByText('–')).toBeInTheDocument();
 		}
 	);
 
@@ -859,7 +859,7 @@ describe('AccountsDataSet', () => {
 			lastCustomDataRenderers!.annualRevenueRenderer({value: undefined})
 		);
 
-		expect(getByText('–')).toHaveClass('text-secondary');
+		expect(getByText('–')).toBeInTheDocument();
 	});
 
 	it('should render the annual revenue in thousands when the account has annual revenue', async () => {

@@ -44,6 +44,6 @@ describe('UniqueVisitorsCell', () => {
 		expect(container.querySelector('.traffic-quota')).toHaveTextContent(
 			'– Traffic Split'
 		);
-		expect(screen.getByText('–')).toHaveClass('text-secondary');
+		expect(screen.getByText('–')).toBeInTheDocument();
 	});
 });

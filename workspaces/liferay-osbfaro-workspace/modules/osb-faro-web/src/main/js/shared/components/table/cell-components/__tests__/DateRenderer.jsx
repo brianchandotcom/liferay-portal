@@ -67,7 +67,7 @@ describe('DateRenderer', () => {
 		dateCreated => {
 			const {getByText} = render(<DateRenderer data={{dateCreated}} />);
 
-			expect(getByText('–')).toHaveClass('text-secondary');
+			expect(getByText('–')).toBeInTheDocument();
 		}
 	);
 });

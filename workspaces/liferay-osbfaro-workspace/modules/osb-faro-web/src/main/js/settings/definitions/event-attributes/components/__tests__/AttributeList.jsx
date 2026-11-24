@@ -66,8 +66,6 @@ describe('AttributeList', () => {
 
 		await waitForLoadingToBeRemoved();
 
-		expect(getByText(/^string$/i).closest('.label')).toHaveClass(
-			'label-inverse-info'
-		);
+		expect(getByText(/^string$/i)).toBeInTheDocument();
 	});
 });

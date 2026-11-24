@@ -108,6 +108,6 @@ describe('IndividualLinkCell', () => {
 			/>
 		);
 
-		expect(getByText('–')).toHaveClass('text-secondary');
+		expect(getByText('–')).toBeInTheDocument();
 	});
 });

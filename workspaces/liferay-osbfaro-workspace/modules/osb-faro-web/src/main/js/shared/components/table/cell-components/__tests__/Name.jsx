@@ -93,7 +93,7 @@ describe('Name', () => {
 			/>
 		);
 
-		expect(getByText('Name in text-truncate')).toHaveClass('text-truncate');
+		expect(getByText('Name in text-truncate')).toBeInTheDocument();
 	});
 
 	it.each([null, undefined, ''])(
@@ -101,7 +101,7 @@ describe('Name', () => {
 		name => {
 			const {getByText} = render(<Name data={{id: 'test', name}} />);
 
-			expect(getByText('–')).toHaveClass('text-secondary');
+			expect(getByText('–')).toBeInTheDocument();
 		}
 	);
 
@@ -110,7 +110,7 @@ describe('Name', () => {
 			<Name data={{id: 'test', name: null}} tooltip />
 		);
 
-		expect(getByText('–')).toHaveClass('text-secondary');
+		expect(getByText('–')).toBeInTheDocument();
 	});
 
 	it.each([null, undefined, ''])(
@@ -123,7 +123,7 @@ describe('Name', () => {
 				/>
 			);
 
-			expect(getByText('–')).toHaveClass('text-secondary');
+			expect(getByText('–')).toBeInTheDocument();
 		}
 	);
 

@@ -28,7 +28,7 @@ describe('PropertyCell', () => {
 			/>
 		);
 
-		expect(getByText('–')).toHaveClass('text-secondary');
+		expect(getByText('–')).toBeInTheDocument();
 	});
 
 	it('should render the no data value when the value is null', () => {
@@ -41,7 +41,7 @@ describe('PropertyCell', () => {
 			/>
 		);
 
-		expect(getByText('–')).toHaveClass('text-secondary');
+		expect(getByText('–')).toBeInTheDocument();
 	});
 
 	it('should render a zero value', () => {

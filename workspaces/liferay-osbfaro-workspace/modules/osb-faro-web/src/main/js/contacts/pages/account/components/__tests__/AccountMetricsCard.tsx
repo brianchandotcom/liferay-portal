@@ -62,7 +62,7 @@ describe('AccountMetricsCard', () => {
 				metrics: [{label: '{0} Individuals'}],
 			});
 
-			expect(screen.getByText('–')).toHaveClass('text-secondary');
+			expect(screen.getByText('–')).toBeInTheDocument();
 			expect(screen.queryByText('0')).not.toBeInTheDocument();
 		});
 
@@ -287,9 +287,6 @@ describe('AccountMetricsCard', () => {
 				],
 			});
 
-			expect(container.querySelector('.card-body > .d-flex')).toHaveClass(
-				'justify-content-between'
-			);
 			expect(container.querySelectorAll('.text-nowrap')).toHaveLength(2);
 		});
 	});

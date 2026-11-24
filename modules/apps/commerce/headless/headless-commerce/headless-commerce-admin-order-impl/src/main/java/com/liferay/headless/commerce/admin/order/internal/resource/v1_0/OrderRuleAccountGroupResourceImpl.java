@@ -75,9 +75,7 @@ public class OrderRuleAccountGroupResourceImpl
 				corEntry.getCOREntryId(), null));
 	}
 
-	@NestedField(
-		parentClass = OrderRule.class, value = "orderRuleAccountGroups"
-	)
+	@NestedField(parentClass = OrderRule.class, value = "orderRuleAccountGroup")
 	@Override
 	public Page<OrderRuleAccountGroup> getOrderRuleIdOrderRuleAccountGroupsPage(
 			Long id, String search, Filter filter, Pagination pagination,

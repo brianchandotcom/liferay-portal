@@ -52,7 +52,7 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		String title = valuesJSONObject.getString("title");
 
 		if (title.isEmpty() || !_isTitleChanged(title, jsonObject)) {
-			return new ResponseEntity<>(json, HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(json, HttpStatus.OK);
 		}
 
 		String dtoKey = _getDTOKey(jsonObject);
@@ -78,7 +78,7 @@ public class ObjectActionFriendlyURLRestController extends BaseRestController {
 		_propagateFriendlyURL(
 			authorization, dtoKey, friendlyURLPath, objectEntryId);
 
-		return new ResponseEntity<>(json, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
 	private String _getDTOKey(JSONObject jsonObject) {

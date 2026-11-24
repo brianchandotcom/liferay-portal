@@ -193,11 +193,6 @@ public class ExamResultsRestController extends BaseRestController {
 			JSONArray jsonArray = new JSONArray();
 
 			for (CSVRecord csvRecord : csvParser) {
-				String dateString = csvRecord.get(10);
-
-				OffsetDateTime offsetDateTime = OffsetDateTime.of(
-					_parseLocalDateTime(dateString.trim()), ZoneOffset.UTC);
-
 				String rawEmailAddress = csvRecord.get(2);
 
 				String emailAddress = rawEmailAddress.trim();
@@ -213,6 +208,11 @@ public class ExamResultsRestController extends BaseRestController {
 						"Building Enterprise Websites with Liferay " +
 							"Certification Exam";
 				}
+
+				String dateString = csvRecord.get(10);
+
+				OffsetDateTime offsetDateTime = OffsetDateTime.of(
+					_parseLocalDateTime(dateString.trim()), ZoneOffset.UTC);
 
 				jsonArray.put(
 					new JSONObject(

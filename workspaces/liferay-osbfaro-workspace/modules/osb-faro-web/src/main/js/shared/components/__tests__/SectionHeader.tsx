@@ -10,7 +10,7 @@ describe('SectionHeader', () => {
 			<SectionHeader icon="megaphone" title="Campaigns" />
 		);
 
-		expect(getByText('CAMPAIGNS')).toBeTruthy();
+		expect(getByText('CAMPAIGNS')).toBeInTheDocument();
 	});
 
 	it('should render a string passed as right content', () => {
@@ -22,7 +22,7 @@ describe('SectionHeader', () => {
 			/>
 		);
 
-		expect(getByText(/^all time$/i)).toBeTruthy();
+		expect(getByText(/^all time$/i)).toBeInTheDocument();
 	});
 
 	it('should render a component passed as right content', () => {
@@ -34,7 +34,7 @@ describe('SectionHeader', () => {
 			/>
 		);
 
-		expect(getByTestId('right-control')).toBeTruthy();
+		expect(getByTestId('right-control')).toBeInTheDocument();
 	});
 
 	it('should lay the header out as a row when right content is given', () => {

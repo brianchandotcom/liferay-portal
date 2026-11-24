@@ -45,8 +45,8 @@ describe('GeneralInfoSection', () => {
 			/>
 		);
 
-		expect(getByText('John Doe')).toBeTruthy();
-		expect(getByText('john@example.com')).toBeTruthy();
+		expect(getByText('John Doe')).toBeInTheDocument();
+		expect(getByText('john@example.com')).toBeInTheDocument();
 
 		expect(mockGetValue).toHaveBeenCalledWith('userName');
 		expect(mockGetValue).toHaveBeenCalledWith('userEmail');
@@ -68,7 +68,7 @@ describe('GeneralInfoSection', () => {
 				/>
 			);
 
-			expect(getByText('John Doe')).toBeTruthy();
+			expect(getByText('John Doe')).toBeInTheDocument();
 			expect(getByText('–')).toHaveClass('text-secondary');
 		}
 	);
@@ -89,7 +89,7 @@ describe('GeneralInfoSection', () => {
 				/>
 			);
 
-			expect(getByText('0')).toBeTruthy();
+			expect(getByText('0')).toBeInTheDocument();
 			expect(queryByText('–')).toBeNull();
 		}
 	);
@@ -116,7 +116,7 @@ describe('GeneralInfoSection', () => {
 			/>
 		);
 
-		expect(getByText(/^user profile$/i)).toBeTruthy();
+		expect(getByText(/^user profile$/i)).toBeInTheDocument();
 	});
 
 	it('should render multiple sections with their respective items', () => {

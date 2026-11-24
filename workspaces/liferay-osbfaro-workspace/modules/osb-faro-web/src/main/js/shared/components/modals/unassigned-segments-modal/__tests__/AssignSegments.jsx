@@ -48,9 +48,9 @@ describe('AssignSegments', () => {
 		fireEvent.click(getByTestId('select-1'));
 
 		expect(getAllByText(/^unassigned$/i).length).toBeGreaterThan(0);
-		expect(getByText(/^delete$/i)).toBeTruthy();
-		expect(getByText('Channel 1')).toBeTruthy();
-		expect(getByText('Channel 2')).toBeTruthy();
+		expect(getByText(/^delete$/i)).toBeInTheDocument();
+		expect(getByText('Channel 1')).toBeInTheDocument();
+		expect(getByText('Channel 2')).toBeInTheDocument();
 
 		expect(container).toMatchSnapshot();
 	});

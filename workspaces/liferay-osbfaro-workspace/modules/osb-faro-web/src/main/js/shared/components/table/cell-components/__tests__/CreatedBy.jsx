@@ -32,6 +32,6 @@ describe('CreatedByCell', () => {
 			{container: document.body.appendChild(tableRow)}
 		);
 
-		expect(getByText('Last Edited: 6/9/26')).toBeTruthy();
+		expect(getByText('Last Edited: 6/9/26')).toBeInTheDocument();
 	});
 });

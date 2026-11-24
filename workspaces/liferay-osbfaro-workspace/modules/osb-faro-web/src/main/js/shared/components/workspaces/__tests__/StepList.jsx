@@ -16,7 +16,7 @@ describe('StepList', () => {
 	it('should render with secondaryInfo and steps', () => {
 		const {getByText} = render(<DefaultComponent secondaryInfo='test' />);
 
-		expect(getByText('test')).toBeTruthy();
+		expect(getByText('test')).toBeInTheDocument();
 	});
 
 	it('should render without bullet', () => {

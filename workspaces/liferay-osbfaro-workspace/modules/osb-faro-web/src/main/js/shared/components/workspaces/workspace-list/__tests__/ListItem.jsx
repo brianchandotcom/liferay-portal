@@ -85,9 +85,9 @@ describe('WorkspaceListItem', () => {
 			getByText(
 				/^access to analytics cloud has been restricted because your workspace has reached the known individuals or page view limit\. please contact sales to proceed\.$/i
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 
-		expect(getByText(/^contact sales$/i)).toBeTruthy();
+		expect(getByText(/^contact sales$/i)).toBeInTheDocument();
 	});
 
 	it('should render the Liferay Data Platform limit message when hasLimitReached and ldpEnabled is true', () => {
@@ -105,6 +105,6 @@ describe('WorkspaceListItem', () => {
 			getByText(
 				/^access to liferay data platform has been restricted because your workspace has reached the known individuals or page view limit\. please contact sales to proceed\.$/i
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 	});
 });

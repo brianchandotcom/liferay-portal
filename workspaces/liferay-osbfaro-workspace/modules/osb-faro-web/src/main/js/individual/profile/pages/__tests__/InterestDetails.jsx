@@ -36,7 +36,7 @@ describe('InterestDetails', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText(/^active pages$/i)).toBeTruthy();
+		expect(getByText(/^active pages$/i)).toBeInTheDocument();
 		expect(getByText(/^active pages$/i).parentElement).toHaveClass('active');
 	});
 
@@ -49,7 +49,7 @@ describe('InterestDetails', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText(/^inactive pages$/i)).toBeTruthy();
+		expect(getByText(/^inactive pages$/i)).toBeInTheDocument();
 		expect(getByText(/^inactive pages$/i).parentElement).toHaveClass('active');
 	});
 });

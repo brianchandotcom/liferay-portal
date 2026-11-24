@@ -108,7 +108,7 @@ describe('AccessTokenList', () => {
 
 		expect(
 			getByText(container.querySelector('.card-body'), 'Generate Token')
-		).toBeTruthy();
+		).toBeInTheDocument();
 		expect(container.querySelector('.table-root')).toMatchSnapshot();
 	});
 

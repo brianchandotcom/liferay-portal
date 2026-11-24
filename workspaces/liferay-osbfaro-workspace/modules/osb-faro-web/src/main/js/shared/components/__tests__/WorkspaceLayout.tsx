@@ -69,7 +69,7 @@ describe('WorkspaceLayout', () => {
 
 		expect(await screen.findByTestId('page')).toBeTruthy();
 
-		expect(screen.getByTitle(/language/i)).toBeTruthy();
+		expect(screen.getByTitle(/language/i)).toBeInTheDocument();
 	});
 
 	it('does not render the toolbar on the settings pages', async () => {
@@ -111,7 +111,7 @@ describe('WorkspaceLayout', () => {
 		expect(
 			screen.getByText('/workspace/23/1/event-analysis')
 		).toBeInTheDocument();
-		expect(screen.getByTitle(/language/i)).toBeTruthy();
+		expect(screen.getByTitle(/language/i)).toBeInTheDocument();
 
 		expect(API.individualSegment.searchUnassigned).toHaveBeenCalledTimes(1);
 	});

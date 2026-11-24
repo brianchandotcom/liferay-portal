@@ -16,7 +16,7 @@ describe('MembershipChanges', () => {
 			{container: document.body.appendChild(tableRow)}
 		);
 
-		expect(getByText('June 10, 2026')).toBeTruthy();
-		expect(getByText(/^added$/i)).toBeTruthy();
+		expect(getByText('June 10, 2026')).toBeInTheDocument();
+		expect(getByText(/^added$/i)).toBeInTheDocument();
 	});
 });

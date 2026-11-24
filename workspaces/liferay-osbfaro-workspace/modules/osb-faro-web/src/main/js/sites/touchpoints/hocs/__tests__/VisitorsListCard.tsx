@@ -27,8 +27,8 @@ describe('VisitorsListCard', () => {
 			</Provider>
 		);
 
-		expect(getByText(/^accounts$/i)).toBeTruthy();
-		expect(getByText(/^known individuals$/i)).toBeTruthy();
+		expect(getByText(/^accounts$/i)).toBeInTheDocument();
+		expect(getByText(/^known individuals$/i)).toBeInTheDocument();
 
 		expect(getByTestId('accounts').className).toContain('active');
 		expect(getByTestId('individuals').className).not.toContain('active');

@@ -23,6 +23,6 @@ describe('CriteriaSidebarSearchBar', () => {
 			/>
 		);
 
-		expect(getByDisplayValue(searchValue)).toBeTruthy();
+		expect(getByDisplayValue(searchValue)).toBeInTheDocument();
 	});
 });

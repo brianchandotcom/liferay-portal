@@ -85,8 +85,8 @@ describe('SalesforceOverview', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText(/^campaigns$/i)).toBeTruthy();
-		expect(getByText('1,204 Items Synced')).toBeTruthy();
+		expect(getByText(/^campaigns$/i)).toBeInTheDocument();
+		expect(getByText('1,204 Items Synced')).toBeInTheDocument();
 	});
 
 	it('should render the error display when the campaigns count fails', async () => {
@@ -98,7 +98,9 @@ describe('SalesforceOverview', () => {
 
 		const {getByText, queryByText} = render(<WrappedComponent />);
 
-		expect(getByText(/^an unexpected error occurred\.$/i)).toBeTruthy();
+		expect(
+			getByText(/^an unexpected error occurred\.$/i)
+		).toBeInTheDocument();
 		expect(queryByText(/items synced/i)).toBeNull();
 	});
 });

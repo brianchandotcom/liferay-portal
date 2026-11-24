@@ -165,7 +165,7 @@ describe('SelectPageAssetInput', () => {
 			);
 
 			expect(getAllByRole('combobox')).toHaveLength(2);
-			expect(getByText(/^select a type$/i)).toBeTruthy();
+			expect(getByText(/^select a type$/i)).toBeInTheDocument();
 			expect(getByRole('button', {name: /add assets/i})).toBeDisabled();
 		});
 
@@ -197,7 +197,7 @@ describe('SelectPageAssetInput', () => {
 			openPicker(getByRole, 'Page or Asset Type');
 			fireEvent.click(getByText(/^page$/i));
 
-			expect(getByText(/add pages/i)).toBeTruthy();
+			expect(getByText(/add pages/i)).toBeInTheDocument();
 			expect(onSelectionsChange).toHaveBeenCalledWith({
 				applicationId: 'Page',
 				eventId: 'pageViewed',
@@ -295,8 +295,8 @@ describe('SelectPageAssetInput', () => {
 				/>
 			);
 
-			expect(getByText(/^home$/i)).toBeTruthy();
-			expect(getByText(/^about$/i)).toBeTruthy();
+			expect(getByText(/^home$/i)).toBeInTheDocument();
+			expect(getByText(/^about$/i)).toBeInTheDocument();
 		});
 
 		it('should keep the add asset copy on the button once assets are selected', () => {
@@ -307,7 +307,9 @@ describe('SelectPageAssetInput', () => {
 				/>
 			);
 
-			expect(getByRole('button', {name: '+ Add Asset'})).toBeTruthy();
+			expect(
+				getByRole('button', {name: '+ Add Asset'})
+			).toBeInTheDocument();
 		});
 
 		it('should keep the add page copy on the button once pages are selected', () => {
@@ -321,7 +323,9 @@ describe('SelectPageAssetInput', () => {
 			openPicker(getByRole, 'Page or Asset Type');
 			fireEvent.click(getByText(/^page$/i));
 
-			expect(getByRole('button', {name: '+ Add Page'})).toBeTruthy();
+			expect(
+				getByRole('button', {name: '+ Add Page'})
+			).toBeInTheDocument();
 		});
 
 		it('should emit every selected item as a selection on modal submit', async () => {
@@ -438,7 +442,7 @@ describe('SelectPageAssetInput', () => {
 			// Asset-only actions show the "Asset Type" label as static text and
 			// offer no page option; only the asset-type picker is a dropdown.
 
-			expect(getByText(/^asset type$/i)).toBeTruthy();
+			expect(getByText(/^asset type$/i)).toBeInTheDocument();
 			expect(queryByText(/add pages/i)).toBeNull();
 			expect(getAllByRole('combobox')).toHaveLength(1);
 		});
@@ -457,7 +461,7 @@ describe('SelectPageAssetInput', () => {
 				).toBeEnabled()
 			);
 
-			expect(getByText(/^select a type$/i)).toBeTruthy();
+			expect(getByText(/^select a type$/i)).toBeInTheDocument();
 			expect(getByRole('button', {name: /add assets/i})).toBeDisabled();
 		});
 
@@ -522,7 +526,7 @@ describe('SelectPageAssetInput', () => {
 			);
 
 			expect(getAllByRole('combobox')).toHaveLength(2);
-			expect(getByText(/^select a type$/i)).toBeTruthy();
+			expect(getByText(/^select a type$/i)).toBeInTheDocument();
 		});
 
 		it('should use the page selector for a Page applicationId', () => {
@@ -760,7 +764,9 @@ describe('SelectPageAssetInput', () => {
 			// are available at once.
 
 			expect(container.querySelector('.loading-root')).toBeNull();
-			expect(getByRole('combobox', {name: /^asset type$/i})).toBeTruthy();
+			expect(
+				getByRole('combobox', {name: /^asset type$/i})
+			).toBeInTheDocument();
 		});
 	});
 

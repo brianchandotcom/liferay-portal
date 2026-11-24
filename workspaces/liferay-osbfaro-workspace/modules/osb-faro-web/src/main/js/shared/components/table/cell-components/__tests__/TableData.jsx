@@ -30,7 +30,7 @@ describe('TableData', () => {
 		);
 
 		expect(container.querySelector('.text-secondary')).toBeTruthy();
-		expect(getByText('Empty Message')).toBeTruthy();
+		expect(getByText('Empty Message')).toBeInTheDocument();
 	});
 
 	it('should render when the body lacks the dxp class', () => {

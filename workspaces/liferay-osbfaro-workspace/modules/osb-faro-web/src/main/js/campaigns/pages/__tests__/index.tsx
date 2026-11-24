@@ -92,7 +92,9 @@ describe('Campaigns', () => {
 	it('should render the page title', () => {
 		const {getByRole} = renderCampaigns();
 
-		expect(getByRole('heading', {name: /^campaigns$/i})).toBeTruthy();
+		expect(
+			getByRole('heading', {name: /^campaigns$/i})
+		).toBeInTheDocument();
 	});
 
 	it('should render the channel breadcrumb', () => {
@@ -117,7 +119,7 @@ describe('Campaigns', () => {
 	it('should render the campaigns table', () => {
 		const {getByTestId} = renderCampaigns();
 
-		expect(getByTestId('campaigns-data-set')).toBeTruthy();
+		expect(getByTestId('campaigns-data-set')).toBeInTheDocument();
 	});
 
 	it('should no longer pin the list to all time', () => {
@@ -313,7 +315,9 @@ describe('Campaigns', () => {
 		it('should explain that no campaign data is available', () => {
 			const {getByText} = renderCampaigns();
 
-			expect(getByText(/no campaign data available/i)).toBeTruthy();
+			expect(
+				getByText(/no campaign data available/i)
+			).toBeInTheDocument();
 		});
 
 		it('should replace the overview, the table and the range selector', () => {
@@ -329,8 +333,8 @@ describe('Campaigns', () => {
 
 			expect(
 				getByText(/connect a data source containing campaign data/i)
-			).toBeTruthy();
-			expect(getByText(/connect data source/i)).toBeTruthy();
+			).toBeInTheDocument();
+			expect(getByText(/connect data source/i)).toBeInTheDocument();
 		});
 
 		it('should point a member at an administrator instead', () => {
@@ -340,14 +344,16 @@ describe('Campaigns', () => {
 
 			expect(
 				getByText(/contact an administrator to connect a data source/i)
-			).toBeTruthy();
+			).toBeInTheDocument();
 			expect(queryByText(/^connect data source$/i)).toBeNull();
 		});
 
 		it('should link out to the data source documentation', () => {
 			const {getByText} = renderCampaigns();
 
-			expect(getByText(/learn more about data sources/i)).toBeTruthy();
+			expect(
+				getByText(/learn more about data sources/i)
+			).toBeInTheDocument();
 		});
 	});
 

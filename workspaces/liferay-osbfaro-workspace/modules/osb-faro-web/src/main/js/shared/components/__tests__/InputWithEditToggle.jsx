@@ -19,8 +19,8 @@ describe('InputWithEditToggle', () => {
 
 		jest.runAllTimers();
 
-		expect(getByText('foo')).toBeTruthy();
-		expect(getByDisplayValue('bar')).toBeTruthy();
+		expect(getByText('foo')).toBeInTheDocument();
+		expect(getByDisplayValue('bar')).toBeInTheDocument();
 	});
 
 	it('should render with a cancel and submit button after the edit button is pressed', () => {
@@ -37,8 +37,8 @@ describe('InputWithEditToggle', () => {
 		jest.runAllTimers();
 
 		expect(queryByLabelText(/edit/i)).toBeFalsy();
-		expect(getByLabelText(/submit/i)).toBeTruthy();
-		expect(getByLabelText(/cancel/i)).toBeTruthy();
+		expect(getByLabelText(/submit/i)).toBeInTheDocument();
+		expect(getByLabelText(/cancel/i)).toBeInTheDocument();
 	});
 
 	it('should render as disabled if editable is false', () => {

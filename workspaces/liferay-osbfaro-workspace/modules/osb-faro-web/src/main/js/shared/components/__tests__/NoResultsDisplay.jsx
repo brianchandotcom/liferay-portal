@@ -26,7 +26,7 @@ describe('NoResultsDisplay', () => {
 			<NoResultsDisplay description={description} />
 		);
 
-		expect(getByText(description)).toBeTruthy();
+		expect(getByText(description)).toBeInTheDocument();
 	});
 
 	it('should render component with title', () => {
@@ -34,7 +34,7 @@ describe('NoResultsDisplay', () => {
 
 		const {getByText} = render(<NoResultsDisplay title={title} />);
 
-		expect(getByText(title)).toBeTruthy();
+		expect(getByText(title)).toBeInTheDocument();
 	});
 
 	it('should render component with icon', () => {

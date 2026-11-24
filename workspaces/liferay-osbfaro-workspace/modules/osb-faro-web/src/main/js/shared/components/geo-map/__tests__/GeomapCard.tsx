@@ -97,7 +97,7 @@ describe('GeoMapCard', () => {
 			/>
 		);
 
-		expect(getByText('Local Network')).toBeTruthy();
+		expect(getByText('Local Network')).toBeInTheDocument();
 	});
 
 	it('should highlight the list item when mouse over', () => {

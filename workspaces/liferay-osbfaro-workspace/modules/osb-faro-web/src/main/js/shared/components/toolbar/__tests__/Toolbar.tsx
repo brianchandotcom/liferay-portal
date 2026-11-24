@@ -30,7 +30,7 @@ describe('Toolbar', () => {
 	it('renders the product name', () => {
 		renderToolbar();
 
-		expect(screen.getByText(/liferay data platform/i)).toBeTruthy();
+		expect(screen.getByText(/liferay data platform/i)).toBeInTheDocument();
 	});
 
 	it('renders the product name as a link to Sites', () => {
@@ -175,6 +175,6 @@ describe('Toolbar', () => {
 		fireEvent.click(screen.getByLabelText('Test Test'));
 
 		expect(await screen.findByText('test@liferay.com')).toBeTruthy();
-		expect(screen.getByText(/sign.out/i)).toBeTruthy();
+		expect(screen.getByText(/sign.out/i)).toBeInTheDocument();
 	});
 });

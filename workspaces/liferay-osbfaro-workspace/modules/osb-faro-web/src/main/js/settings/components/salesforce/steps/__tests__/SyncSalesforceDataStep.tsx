@@ -37,12 +37,12 @@ describe('SyncSalesforceDataStep', () => {
 			<SyncSalesforceDataStep onNext={jest.fn()} onPrev={jest.fn()} />
 		);
 
-		expect(screen.getByText(/^campaigns$/i)).toBeTruthy();
+		expect(screen.getByText(/^campaigns$/i)).toBeInTheDocument();
 		expect(
 			screen.getByText(
 				/^represents fields from the campaign and campaign members objects within salesforce\.$/i
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 		expect(screen.queryByText(/items synced/i)).toBeNull();
 
 		const checkboxes = getCheckboxes();

@@ -265,7 +265,7 @@ describe('ConnectorOverview', () => {
 					getByText(
 						/^to configure your data source, utilize the token and endpoint url provided by liferay data platform\.$/i
 					)
-				).toBeTruthy();
+				).toBeInTheDocument();
 			}
 		);
 
@@ -276,7 +276,7 @@ describe('ConnectorOverview', () => {
 
 			expect(
 				getByText(/^learn more about data sources\.$/i)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('does not render the Data Source Type or Data Source ID inputs', () => {
@@ -326,13 +326,13 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^generate a new token to continue configuring this data source\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('renders the Generate Token button', () => {
 			const {getByLabelText} = renderDisconnected();
 
-			expect(getByLabelText(/^generate token$/i)).toBeTruthy();
+			expect(getByLabelText(/^generate token$/i)).toBeInTheDocument();
 		});
 
 		it('does not render the Endpoint URL or Token copy inputs', () => {
@@ -449,7 +449,9 @@ describe('ConnectorOverview', () => {
 		it('shows the disconnect button when the user is admin and the data source is active', () => {
 			const {getByLabelText} = renderOverview();
 
-			expect(getByLabelText(/^disconnect data source$/i)).toBeTruthy();
+			expect(
+				getByLabelText(/^disconnect data source$/i)
+			).toBeInTheDocument();
 		});
 
 		it('shows the disconnect button when the data source is inactive but still has a token', () => {
@@ -457,7 +459,9 @@ describe('ConnectorOverview', () => {
 				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
-			expect(getByLabelText(/^disconnect data source$/i)).toBeTruthy();
+			expect(
+				getByLabelText(/^disconnect data source$/i)
+			).toBeInTheDocument();
 		});
 
 		it('hides the disconnect button when the data source is already disconnected', () => {
@@ -642,7 +646,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^you have successfully connected to your data source\. complete your data source configuration to start syncing data\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('on count error: renders the failed primary-entity row as Unconfigured with a 0-count, instead of an error indicator', () => {
@@ -663,9 +667,9 @@ describe('ConnectorOverview', () => {
 			expect(container.querySelectorAll('.list-group-item')).toHaveLength(
 				2
 			);
-			expect(getByText(/^events$/i)).toBeTruthy();
-			expect(getByText(/^unconfigured$/i)).toBeTruthy();
-			expect(getByText(/0 items synced/i)).toBeTruthy();
+			expect(getByText(/^events$/i)).toBeInTheDocument();
+			expect(getByText(/^unconfigured$/i)).toBeInTheDocument();
+			expect(getByText(/0 items synced/i)).toBeInTheDocument();
 			expect(queryByText(/^error$/i)).toBeNull();
 			expect(queryByText(/^sorry, an error occurred\.$/i)).toBeNull();
 		});
@@ -679,7 +683,7 @@ describe('ConnectorOverview', () => {
 
 			const {getByTestId} = renderOverview();
 
-			expect(getByTestId('loading')).toBeTruthy();
+			expect(getByTestId('loading')).toBeInTheDocument();
 		});
 	});
 
@@ -695,7 +699,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^you have successfully connected to your data source\. complete your data source configuration to start syncing data\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('ACTIVE with accounts: success / "all data is up to date" message', () => {
@@ -709,7 +713,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^all data coming from this data source is up to date\. there are no errors to report\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('INACTIVE without data: warning / "your token was generated" message', () => {
@@ -723,7 +727,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^your token was generated successfully\. complete your data source configuration to start syncing data\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('INACTIVE with data (90d): warning / "data is no longer being received — review" message', () => {
@@ -737,7 +741,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^data is no longer being received\. review your data source configuration to confirm it is still active\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('DISCONNECTED: warning / "data is no longer being received — reconnect" message', () => {
@@ -753,7 +757,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^data is no longer being received\. reconnect to resume syncing\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 	});
 
@@ -783,7 +787,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^your data may take some time to appear as syncing completes\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('ACTIVE with accounts: syncing alert can be dismissed and the dismissal is persisted in localStorage', () => {
@@ -849,7 +853,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^your data may take some time to appear as syncing completes\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('DISCONNECTED with data: previously-synced alert can be dismissed and the dismissal is persisted in localStorage', () => {
@@ -921,7 +925,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^previously synced data remains available\. reconnect or check your data source connection to resume data syncing\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('INACTIVE without data: no alert', () => {
@@ -949,7 +953,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^previously synced data remains available\. reconnect or check your data source connection to resume data syncing\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('DISCONNECTED: info / "Previously synced data remains available" alert', () => {
@@ -965,7 +969,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^previously synced data remains available\. reconnect or check your data source connection to resume data syncing\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 	});
 
@@ -979,8 +983,8 @@ describe('ConnectorOverview', () => {
 
 			const {getByText} = renderOverview({config});
 
-			expect(getByText(/^accounts$/i)).toBeTruthy();
-			expect(getByText(/^events$/i)).toBeTruthy();
+			expect(getByText(/^accounts$/i)).toBeInTheDocument();
+			expect(getByText(/^events$/i)).toBeInTheDocument();
 		});
 
 		it('marks each entity row Configured/Unconfigured based on its own count, independent of the others', () => {
@@ -1020,7 +1024,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^your data may take some time to appear as syncing completes\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('uses the "all data is up to date" Connection Status message when at least one entity has data', () => {
@@ -1042,7 +1046,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^all data coming from this data source is up to date\. there are no errors to report\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 
 		it('treats hasData as false when every entity has count 0', () => {
@@ -1070,7 +1074,7 @@ describe('ConnectorOverview', () => {
 				getByText(
 					/^you have successfully connected to your data source\. complete your data source configuration to start syncing data\.$/i
 				)
-			).toBeTruthy();
+			).toBeInTheDocument();
 		});
 	});
 });

@@ -114,8 +114,8 @@ describe('Sites Dashboard Overview', () => {
 		fireEvent.click(getByText(/^all visitors$/i));
 
 		expect(getAllByText(/^all visitors$/i)[1]).toBeTruthy();
-		expect(getByText(/^anonymous visitors$/i)).toBeTruthy();
-		expect(getByText(/^known visitors$/i)).toBeTruthy();
+		expect(getByText(/^anonymous visitors$/i)).toBeInTheDocument();
+		expect(getByText(/^known visitors$/i)).toBeInTheDocument();
 		expect(getByLabelText(/^view all pages$/i)).toBeInTheDocument();
 		expect(getByLabelText(/^view all search terms$/i)).toBeInTheDocument();
 		expect(getByLabelText(/^view all interests$/i)).toBeInTheDocument();

@@ -61,7 +61,7 @@ describe('BaseInterestDetails', () => {
 		const individualsGrandparentElement =
 			getByText(/^individuals$/i).parentElement?.parentElement;
 
-		expect(getByText(/^individuals$/i)).toBeTruthy();
+		expect(getByText(/^individuals$/i)).toBeInTheDocument();
 
 		expect(individualsGrandparentElement).toHaveClass('active');
 	});
@@ -89,7 +89,7 @@ describe('BaseInterestDetails', () => {
 		const activePagesGrandparentElement =
 			getByText(/^active pages$/i).parentElement?.parentElement;
 
-		expect(getByText(/^active pages$/i)).toBeTruthy();
+		expect(getByText(/^active pages$/i)).toBeInTheDocument();
 
 		expect(activePagesGrandparentElement).toHaveClass('active');
 	});
@@ -117,7 +117,7 @@ describe('BaseInterestDetails', () => {
 		const InactivePagesGrandparentElement =
 			getByText(/^inactive pages$/i).parentElement?.parentElement;
 
-		expect(getByText(/^inactive pages$/i)).toBeTruthy();
+		expect(getByText(/^inactive pages$/i)).toBeInTheDocument();
 
 		expect(InactivePagesGrandparentElement).toHaveClass('active');
 	});

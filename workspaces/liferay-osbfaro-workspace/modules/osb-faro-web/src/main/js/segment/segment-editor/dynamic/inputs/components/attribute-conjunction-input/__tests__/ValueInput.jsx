@@ -57,7 +57,7 @@ describe('ValueInput', () => {
 		fireEvent.click(getByText(/^true$/i));
 
 		expect(getAllByText(/^true$/i)[1]).toBeTruthy();
-		expect(getByText(/^false$/i)).toBeTruthy();
+		expect(getByText(/^false$/i)).toBeInTheDocument();
 
 		expect(container).toMatchSnapshot();
 	});

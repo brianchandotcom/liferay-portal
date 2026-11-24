@@ -37,7 +37,7 @@ describe('DateInput', () => {
 			</WrapperComponent>
 		);
 
-		expect(getByDisplayValue('1970 01 01 00:00')).toBeTruthy();
+		expect(getByDisplayValue('1970 01 01 00:00')).toBeInTheDocument();
 	});
 
 	// An empty value must read as empty so the mask placeholder shows, rather

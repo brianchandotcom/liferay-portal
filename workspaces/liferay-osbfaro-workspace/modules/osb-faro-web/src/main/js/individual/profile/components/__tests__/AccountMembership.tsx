@@ -38,7 +38,7 @@ describe('Account Membership', () => {
 			</AccountMembership>
 		);
 
-		expect(getByText('empty state rendered')).toBeTruthy();
+		expect(getByText('empty state rendered')).toBeInTheDocument();
 		expect(queryByText('industry')).toBeNull();
 	});
 
@@ -47,9 +47,9 @@ describe('Account Membership', () => {
 			<AccountMembership accountData={fromJS(mockData)} />
 		);
 
-		expect(getByText('2015')).toBeTruthy();
-		expect(getByText('Dec 1, 2021')).toBeTruthy();
-		expect(getByText('Jan 1, 2020')).toBeTruthy();
+		expect(getByText('2015')).toBeInTheDocument();
+		expect(getByText('Dec 1, 2021')).toBeInTheDocument();
+		expect(getByText('Jan 1, 2020')).toBeInTheDocument();
 	});
 
 	it('should display no data for missing account values', () => {

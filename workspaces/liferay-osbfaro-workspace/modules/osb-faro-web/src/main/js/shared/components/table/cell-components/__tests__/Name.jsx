@@ -21,10 +21,10 @@ describe('Name', () => {
 	});
 
 	it('should render without a link in the name if disabled is true', () => {
-		const {container, getAllByText} = render(<FilledComponent disabled />);
+		const {container, getByText} = render(<FilledComponent disabled />);
 
 		expect(container.querySelector('a')).toBeFalsy();
-		expect(getAllByText('foo')).toBeTruthy();
+		expect(getByText('foo')).toBeInTheDocument();
 	});
 
 	it('should render the name as a link if a route is passed', () => {
@@ -72,7 +72,7 @@ describe('Name', () => {
 		);
 
 		expect(container.querySelector('.icon-container')).toBeTruthy();
-		expect(getByText('foo icon')).toBeTruthy();
+		expect(getByText('foo icon')).toBeInTheDocument();
 	});
 
 	it('should render using the nameKey', () => {
@@ -80,7 +80,7 @@ describe('Name', () => {
 			<Name data={{id: 'test', title: 'foo'}} nameKey='title' />
 		);
 
-		expect(getByText('foo')).toBeTruthy();
+		expect(getByText('foo')).toBeInTheDocument();
 	});
 
 	it('should render the display name in TextTruncate if the tooltip prop is true', () => {
@@ -133,6 +133,6 @@ describe('Name', () => {
 			/>
 		);
 
-		expect(getByText('0')).toBeTruthy();
+		expect(getByText('0')).toBeInTheDocument();
 	});
 });

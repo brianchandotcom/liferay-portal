@@ -132,8 +132,10 @@ describe('EventDisplay', () => {
 			/>
 		);
 
-		expect(getByText(/^account$/i)).toBeTruthy();
-		expect(getByText(/^at least one individual who triggered$/i)).toBeTruthy();
+		expect(getByText(/^account$/i)).toBeInTheDocument();
+		expect(
+			getByText(/^at least one individual who triggered$/i)
+		).toBeInTheDocument();
 		expect(queryByText(/^individual$/i)).toBeNull();
 		expect(queryByText('performed')).toBeNull();
 	});
@@ -154,6 +156,8 @@ describe('EventDisplay', () => {
 			/>
 		);
 
-		expect(getByText(/^custom event no longer exists\.$/i)).toBeTruthy();
+		expect(
+			getByText(/^custom event no longer exists\.$/i)
+		).toBeInTheDocument();
 	});
 });

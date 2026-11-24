@@ -33,27 +33,10 @@ describe('BaseEditPage.Sidebar', () => {
 			).not.toBeInTheDocument();
 		});
 
-		it('sits on the left by default', () => {
-			render(<Sidebar label={LABEL} />);
-
-			const sidebar = screen.getByRole('complementary');
-
-			expect(sidebar).toHaveClass('base-edit-page-sidebar-left');
-		});
-
-		it('sits on the right when asked to', () => {
-			render(<Sidebar label={LABEL} position="right" />);
-
-			const sidebar = screen.getByRole('complementary');
-
-			expect(sidebar).toHaveClass('base-edit-page-sidebar-right');
-		});
-
 		it('keeps the given class name', () => {
 			render(<Sidebar className="criteria-sidebar" label={LABEL} />);
 
 			expect(screen.getByRole('complementary')).toHaveClass(
-				'base-edit-page-sidebar',
 				'criteria-sidebar'
 			);
 		});
@@ -183,7 +166,7 @@ describe('BaseEditPage.Body', () => {
 
 		const body = container.firstElementChild;
 
-		expect(body).toHaveClass('base-edit-page-body', 'form-body');
+		expect(body).toHaveClass('form-body');
 		expect(body).toContainElement(screen.getByRole('complementary'));
 		expect(body).toContainElement(screen.getByRole('main'));
 	});

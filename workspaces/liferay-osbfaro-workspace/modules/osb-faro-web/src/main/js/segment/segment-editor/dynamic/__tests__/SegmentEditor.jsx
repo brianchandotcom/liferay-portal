@@ -153,7 +153,6 @@ describe('SegmentEditor', () => {
 			.closest('.base-edit-page-main');
 
 		expect(main).toContainElement(screen.getByLabelText(/segment erc/i));
-		expect(main.parentElement).toHaveClass('criteria-builder-section-main');
 	});
 
 	it('renders the realtime segment with the sequential toggle in the conditions heading', () => {

@@ -8,7 +8,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.wiki;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperUtil;
+import com.liferay.portal.search.similar.results.web.internal.util.HttpUtil;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteBuilder;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteHelper;
@@ -37,7 +37,7 @@ public class WikiSimilarResultsContributor
 	public void detectRoute(
 		RouteBuilder routeBuilder, RouteHelper routeHelper) {
 
-		String[] parameters = HttpHelperUtil.getFriendlyURLParameters(
+		String[] parameters = HttpUtil.getFriendlyURLParameters(
 			routeHelper.getURLString());
 
 		SearchStringUtil.requireEquals(

@@ -61,6 +61,10 @@ public interface OrderRuleResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getOrderRulePermissionsPage(Long orderRuleId, String roleNames)
+		throws Exception;
+
 	public Page<OrderRule> getOrderRulesPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -89,6 +93,12 @@ public interface OrderRuleResource {
 
 	public OrderRule putOrderRuleByExternalReferenceCode(
 			String externalReferenceCode, OrderRule orderRule)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putOrderRulePermissionsPage(
+				Long orderRuleId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -187,4 +197,4 @@ public interface OrderRuleResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:104038153
+// LIFERAY-REST-BUILDER-HASH:1230687679

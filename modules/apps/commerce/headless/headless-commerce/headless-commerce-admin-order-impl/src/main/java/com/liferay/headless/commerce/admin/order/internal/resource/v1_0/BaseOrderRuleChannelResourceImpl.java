@@ -210,7 +210,7 @@ public abstract class BaseOrderRuleChannelResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-channels'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Nested field (OrderRule.orderRuleChannels): paginated list of channels linked to order rule by ID."
+		description = "Nested field (OrderRule.orderRuleChannel): paginated list of channels linked to order rule by ID."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1121,4 +1121,4 @@ public abstract class BaseOrderRuleChannelResourceImpl
 		LogFactoryUtil.getLog(BaseOrderRuleChannelResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-713391775
+// LIFERAY-REST-BUILDER-HASH:1973156480

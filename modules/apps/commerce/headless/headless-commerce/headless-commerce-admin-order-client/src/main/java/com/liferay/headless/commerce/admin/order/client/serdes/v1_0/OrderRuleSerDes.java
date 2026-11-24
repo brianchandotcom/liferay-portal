@@ -104,6 +104,46 @@ public class OrderRuleSerDes {
 			sb.append("\"");
 		}
 
+		if (orderRule.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(orderRule.getCreator()));
+		}
+
+		if (orderRule.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(orderRule.getDateCreated()));
+
+			sb.append("\"");
+		}
+
+		if (orderRule.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(orderRule.getDateModified()));
+
+			sb.append("\"");
+		}
+
 		if (orderRule.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -279,6 +319,26 @@ public class OrderRuleSerDes {
 			sb.append("]");
 		}
 
+		if (orderRule.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < orderRule.getPermissions().length; i++) {
+				sb.append(orderRule.getPermissions()[i]);
+
+				if ((i + 1) < orderRule.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (orderRule.getPriority() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -378,6 +438,31 @@ public class OrderRuleSerDes {
 				liferayToJSONDateFormat.format(orderRule.getCreateDate()));
 		}
 
+		if (orderRule.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(orderRule.getCreator()));
+		}
+
+		if (orderRule.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(orderRule.getDateCreated()));
+		}
+
+		if (orderRule.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(orderRule.getDateModified()));
+		}
+
 		if (orderRule.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -469,6 +554,13 @@ public class OrderRuleSerDes {
 				String.valueOf(orderRule.getOrderRuleOrderType()));
 		}
 
+		if (orderRule.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put("permissions", String.valueOf(orderRule.getPermissions()));
+		}
+
 		if (orderRule.getPriority() == null) {
 			map.put("priority", null);
 		}
@@ -529,6 +621,15 @@ public class OrderRuleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "createDate")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
@@ -566,6 +667,9 @@ public class OrderRuleSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "orderRuleOrderType")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
@@ -610,6 +714,24 @@ public class OrderRuleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "createDate")) {
 				if (jsonParserFieldValue != null) {
 					orderRule.setCreateDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					orderRule.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					orderRule.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					orderRule.setDateModified(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
@@ -726,6 +848,26 @@ public class OrderRuleSerDes {
 					orderRule.setOrderRuleOrderType(orderRuleOrderTypeArray);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.commerce.admin.order.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.commerce.admin.order.client.
+							permission.Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.commerce.admin.order.client.
+								permission.Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					orderRule.setPermissions(permissionsArray);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
 				if (jsonParserFieldValue != null) {
 					orderRule.setPriority(
@@ -837,4 +979,4 @@ public class OrderRuleSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1379550017
+// LIFERAY-REST-BUILDER-HASH:-1532148556

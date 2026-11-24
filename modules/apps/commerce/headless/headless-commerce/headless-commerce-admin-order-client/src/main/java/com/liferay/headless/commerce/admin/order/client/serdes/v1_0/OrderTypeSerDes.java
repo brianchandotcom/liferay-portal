@@ -72,6 +72,16 @@ public class OrderTypeSerDes {
 			sb.append(orderType.getActive());
 		}
 
+		if (orderType.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(orderType.getCreator()));
+		}
+
 		if (orderType.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -80,6 +90,36 @@ public class OrderTypeSerDes {
 			sb.append("\"customFields\": ");
 
 			sb.append(_toJSON(orderType.getCustomFields()));
+		}
+
+		if (orderType.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(orderType.getDateCreated()));
+
+			sb.append("\"");
+		}
+
+		if (orderType.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(orderType.getDateModified()));
+
+			sb.append("\"");
 		}
 
 		if (orderType.getDescription() != null) {
@@ -196,6 +236,26 @@ public class OrderTypeSerDes {
 			sb.append("]");
 		}
 
+		if (orderType.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < orderType.getPermissions().length; i++) {
+				sb.append(orderType.getPermissions()[i]);
+
+				if ((i + 1) < orderType.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (orderType.getWorkflowStatusInfo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -241,12 +301,37 @@ public class OrderTypeSerDes {
 			map.put("active", String.valueOf(orderType.getActive()));
 		}
 
+		if (orderType.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(orderType.getCreator()));
+		}
+
 		if (orderType.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
 		else {
 			map.put(
 				"customFields", String.valueOf(orderType.getCustomFields()));
+		}
+
+		if (orderType.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(orderType.getDateCreated()));
+		}
+
+		if (orderType.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(orderType.getDateModified()));
 		}
 
 		if (orderType.getDescription() == null) {
@@ -321,6 +406,13 @@ public class OrderTypeSerDes {
 				String.valueOf(orderType.getOrderTypeChannels()));
 		}
 
+		if (orderType.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put("permissions", String.valueOf(orderType.getPermissions()));
+		}
+
 		if (orderType.getWorkflowStatusInfo() == null) {
 			map.put("workflowStatusInfo", null);
 		}
@@ -353,8 +445,17 @@ public class OrderTypeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "active")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return true;
@@ -385,6 +486,9 @@ public class OrderTypeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "orderTypeChannels")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "workflowStatusInfo")) {
 
@@ -410,10 +514,28 @@ public class OrderTypeSerDes {
 					orderType.setActive((Boolean)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					orderType.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					orderType.setCustomFields(
 						(Map<String, ?>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					orderType.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					orderType.setDateModified(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
@@ -479,6 +601,26 @@ public class OrderTypeSerDes {
 					}
 
 					orderType.setOrderTypeChannels(orderTypeChannelsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.commerce.admin.order.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.commerce.admin.order.client.
+							permission.Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.commerce.admin.order.client.
+								permission.Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					orderType.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(
@@ -576,4 +718,4 @@ public class OrderTypeSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2100867246
+// LIFERAY-REST-BUILDER-HASH:-384672049

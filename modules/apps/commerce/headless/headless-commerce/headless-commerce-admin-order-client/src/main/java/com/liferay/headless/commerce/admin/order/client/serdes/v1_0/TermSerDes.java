@@ -86,6 +86,44 @@ public class TermSerDes {
 			sb.append("\"");
 		}
 
+		if (term.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(term.getCreator()));
+		}
+
+		if (term.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(term.getDateCreated()));
+
+			sb.append("\"");
+		}
+
+		if (term.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(term.getDateModified()));
+
+			sb.append("\"");
+		}
+
 		if (term.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -180,6 +218,26 @@ public class TermSerDes {
 			sb.append("\"neverExpire\": ");
 
 			sb.append(term.getNeverExpire());
+		}
+
+		if (term.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < term.getPermissions().length; i++) {
+				sb.append(term.getPermissions()[i]);
+
+				if ((i + 1) < term.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (term.getPriority() != null) {
@@ -308,6 +366,31 @@ public class TermSerDes {
 				liferayToJSONDateFormat.format(term.getCreateDate()));
 		}
 
+		if (term.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(term.getCreator()));
+		}
+
+		if (term.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(term.getDateCreated()));
+		}
+
+		if (term.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(term.getDateModified()));
+		}
+
 		if (term.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -368,6 +451,13 @@ public class TermSerDes {
 		}
 		else {
 			map.put("neverExpire", String.valueOf(term.getNeverExpire()));
+		}
+
+		if (term.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put("permissions", String.valueOf(term.getPermissions()));
 		}
 
 		if (term.getPriority() == null) {
@@ -440,6 +530,15 @@ public class TermSerDes {
 			else if (Objects.equals(jsonParserFieldName, "createDate")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return true;
 			}
@@ -464,6 +563,9 @@ public class TermSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
@@ -511,6 +613,22 @@ public class TermSerDes {
 					term.setCreateDate(toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					term.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					term.setDateCreated(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					term.setDateModified(toDate((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					term.setDescription(
@@ -553,6 +671,26 @@ public class TermSerDes {
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {
 				if (jsonParserFieldValue != null) {
 					term.setNeverExpire((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.commerce.admin.order.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.commerce.admin.order.client.
+							permission.Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.commerce.admin.order.client.
+								permission.Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					term.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
@@ -687,4 +825,4 @@ public class TermSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2103483181
+// LIFERAY-REST-BUILDER-HASH:-1365845976

@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.order.client.permission.Permission;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderTypeSerDes;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.JAXRSWhiteboardTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -159,6 +162,19 @@ public abstract class BaseOrderTypeResourceTestCase {
 			PortalUtil.getPortalServerPort(false), "http"
 		).locale(
 			LocaleUtil.getDefault()
+		).build();
+
+		permissionsOrderTypeResource = OrderTypeResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
 		).build();
 	}
 
@@ -669,6 +685,13 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		assertEquals(postOrderType, getOrderType);
 		assertValid(getOrderType);
+
+		Assert.assertNull(getOrderType.getPermissions());
+
+		getOrderType = permissionsOrderTypeResource.getOrderType(
+			postOrderType.getId());
+
+		Assert.assertNotNull(getOrderType.getPermissions());
 	}
 
 	@Test
@@ -974,6 +997,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		assertEquals(postOrderType, getOrderType);
 		assertValid(getOrderType);
+
+		Assert.assertNull(getOrderType.getPermissions());
+
+		getOrderType =
+			permissionsOrderTypeResource.getOrderTypeByExternalReferenceCode(
+				postOrderType.getExternalReferenceCode());
+
+		Assert.assertNotNull(getOrderType.getPermissions());
 	}
 
 	protected OrderType testGetOrderTypeByExternalReferenceCode_addOrderType()
@@ -1098,6 +1129,54 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderTypePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderType postOrderType =
+			testGetOrderTypePermissionsPage_addOrderType();
+
+		Page<Permission> page = orderTypeResource.getOrderTypePermissionsPage(
+			postOrderType.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected OrderType testGetOrderTypePermissionsPage_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderTypePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderType postOrderType =
+			testGraphQLGetOrderTypePermissionsPage_addOrderType();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"orderTypePermissions",
+			new HashMap<String, Object>() {
+				{
+					put("orderTypeId", postOrderType.getId());
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject orderTypePermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/orderTypePermissions");
+
+		Assert.assertNotNull(orderTypePermissionsJSONObject);
+	}
+
+	protected OrderType testGraphQLGetOrderTypePermissionsPage_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
+	}
+
+	@Test
 	public void testGetOrderTypesPage() throws Exception {
 		Page<OrderType> page = orderTypeResource.getOrderTypesPage(
 			null, null, Pagination.of(1, 10), null);
@@ -1118,6 +1197,17 @@ public abstract class BaseOrderTypeResourceTestCase {
 		assertContains(orderType1, (List<OrderType>)page.getItems());
 		assertContains(orderType2, (List<OrderType>)page.getItems());
 		assertValid(page, testGetOrderTypesPage_getExpectedActions());
+
+		for (OrderType orderType : page.getItems()) {
+			Assert.assertNull(orderType.getPermissions());
+		}
+
+		page = permissionsOrderTypeResource.getOrderTypesPage(
+			null, null, Pagination.of(1, 10), null);
+
+		for (OrderType orderType : page.getItems()) {
+			Assert.assertNotNull(orderType.getPermissions());
+		}
 
 		orderTypeResource.deleteOrderType(orderType1.getId());
 
@@ -1703,9 +1793,32 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		assertEquals(randomOrderType, postOrderType);
 		assertValid(postOrderType);
+
+		OrderType randomPermissionsOrderType1 = randomPermissionsOrderType();
+
+		OrderType postPermissionsOrderType1 = testPostOrderType_addOrderType(
+			randomPermissionsOrderType1);
+
+		Assert.assertNull(postPermissionsOrderType1.getPermissions());
+
+		OrderType randomPermissionsOrderType2 = randomPermissionsOrderType();
+
+		OrderType postPermissionsOrderType2 =
+			testPostOrderType_addPermissionsOrderType(
+				randomPermissionsOrderType2);
+
+		Assert.assertNotNull(postPermissionsOrderType2.getPermissions());
 	}
 
 	protected OrderType testPostOrderType_addOrderType(OrderType orderType)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected OrderType testPostOrderType_addPermissionsOrderType(
+			OrderType orderType)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1736,12 +1849,32 @@ public abstract class BaseOrderTypeResourceTestCase {
 		assertEquals(randomOrderType, putOrderType);
 		assertValid(putOrderType);
 
+		Assert.assertNull(putOrderType.getPermissions());
+
 		OrderType getOrderType =
 			orderTypeResource.getOrderTypeByExternalReferenceCode(
 				putOrderType.getExternalReferenceCode());
 
 		assertEquals(randomOrderType, getOrderType);
 		assertValid(getOrderType);
+
+		OrderType randomPermissionsOrderType = randomPermissionsOrderType();
+
+		putOrderType = orderTypeResource.putOrderTypeByExternalReferenceCode(
+			postOrderType.getExternalReferenceCode(),
+			randomPermissionsOrderType);
+
+		assertEquals(randomPermissionsOrderType, putOrderType);
+		assertValid(putOrderType);
+
+		Assert.assertNull(putOrderType.getPermissions());
+
+		putOrderType =
+			permissionsOrderTypeResource.putOrderTypeByExternalReferenceCode(
+				postOrderType.getExternalReferenceCode(),
+				randomPermissionsOrderType);
+
+		Assert.assertNotNull(putOrderType.getPermissions());
 
 		OrderType newOrderType =
 			testPutOrderTypeByExternalReferenceCode_createOrderType();
@@ -1774,6 +1907,49 @@ public abstract class BaseOrderTypeResourceTestCase {
 		throws Exception {
 
 		return randomOrderType();
+	}
+
+	@Test
+	public void testPutOrderTypePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderType orderType = testPutOrderTypePermissionsPage_addOrderType();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			orderTypeResource.putOrderTypePermissionsPageHttpResponse(
+				orderType.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.putOrderTypePermissionsPageHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected OrderType testPutOrderTypePermissionsPage_addOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -2050,6 +2226,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 	protected void assertValid(OrderType orderType) throws Exception {
 		boolean valid = true;
 
+		if (orderType.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (orderType.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (orderType.getId() == null) {
 			valid = false;
 		}
@@ -2067,6 +2251,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 			if (Objects.equals("active", additionalAssertFieldName)) {
 				if (orderType.getActive() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (orderType.getCreator() == null) {
 					valid = false;
 				}
 
@@ -2143,6 +2335,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 					"orderTypeChannels", additionalAssertFieldName)) {
 
 				if (orderType.getOrderTypeChannels() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (orderType.getPermissions() == null) {
 					valid = false;
 				}
 
@@ -2301,10 +2501,42 @@ public abstract class BaseOrderTypeResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderType1.getCreator(), orderType2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)orderType1.getCustomFields(),
 						(Map)orderType2.getCustomFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderType1.getDateCreated(),
+						orderType2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderType1.getDateModified(),
+						orderType2.getDateModified())) {
 
 					return false;
 				}
@@ -2406,6 +2638,17 @@ public abstract class BaseOrderTypeResourceTestCase {
 				if (!Objects.deepEquals(
 						orderType1.getOrderTypeChannels(),
 						orderType2.getOrderTypeChannels())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderType1.getPermissions(),
+						orderType2.getPermissions())) {
 
 					return false;
 				}
@@ -2543,9 +2786,72 @@ public abstract class BaseOrderTypeResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				Date date = orderType.getDateCreated();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(orderType.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				Date date = orderType.getDateModified();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(orderType.getDateModified()));
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("description")) {
@@ -2683,6 +2989,11 @@ public abstract class BaseOrderTypeResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("workflowStatusInfo")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2736,6 +3047,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 		return new OrderType() {
 			{
 				active = RandomTestUtil.randomBoolean();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
 				displayDate = RandomTestUtil.nextDate();
 				displayOrder = RandomTestUtil.randomInt();
 				expirationDate = RandomTestUtil.nextDate();
@@ -2755,6 +3068,25 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	protected OrderType randomPatchOrderType() throws Exception {
 		return randomOrderType();
+	}
+
+	protected OrderType randomPermissionsOrderType() throws Exception {
+		OrderType orderType = randomOrderType();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		orderType.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return orderType;
 	}
 
 	protected final JSONObject waitForFinish(
@@ -2782,6 +3114,7 @@ public abstract class BaseOrderTypeResourceTestCase {
 	protected OrderTypeResource orderTypeResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected OrderTypeResource permissionsOrderTypeResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 
@@ -3013,4 +3346,4 @@ public abstract class BaseOrderTypeResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2086007500
+// LIFERAY-REST-BUILDER-HASH:-1137614585

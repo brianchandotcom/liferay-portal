@@ -44,6 +44,7 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTa
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.annotation.Generated;
 
@@ -882,6 +883,29 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Replaces the role permissions granted on the order rule identified by ID. Roles missing from the request lose their individual permissions. Requires the PERMISSIONS action on the order rule."
+	)
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateOrderRulePermissionsPage(
+				@GraphQLName("orderRuleId") Long orderRuleId,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderRuleResource -> {
+				Page paginationPage =
+					orderRuleResource.putOrderRulePermissionsPage(
+						orderRuleId, permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField(
 		description = "Deletes an order rule account relationship by ID using _corEntryRelService.deleteCOREntryRel(id). Returns 204 No Content."
 	)
 	public boolean deleteOrderRuleAccount(
@@ -1350,6 +1374,29 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Replaces the role permissions granted on the order type identified by ID. Roles missing from the request lose their individual permissions. Requires the PERMISSIONS action on the order type."
+	)
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateOrderTypePermissionsPage(
+				@GraphQLName("orderTypeId") Long orderTypeId,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> {
+				Page paginationPage =
+					orderTypeResource.putOrderTypePermissionsPage(
+						orderTypeId, permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField(
 		description = "Deletes an order-type-channel relationship by ID. Returns 204 No Content."
 	)
 	public boolean deleteOrderTypeChannel(
@@ -1585,6 +1632,28 @@ public class Mutation {
 			this::_populateResourceContext,
 			termResource -> termResource.putTermByExternalReferenceCode(
 				externalReferenceCode, term));
+	}
+
+	@GraphQLField(
+		description = "Replaces the role permissions granted on the term identified by ID. Roles missing from the request lose their individual permissions. Requires the PERMISSIONS action on the term."
+	)
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateTermPermissionsPage(
+				@GraphQLName("termId") Long termId,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> {
+				Page paginationPage = termResource.putTermPermissionsPage(
+					termId, permissions);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -2046,4 +2115,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:701065497
+// LIFERAY-REST-BUILDER-HASH:337450632

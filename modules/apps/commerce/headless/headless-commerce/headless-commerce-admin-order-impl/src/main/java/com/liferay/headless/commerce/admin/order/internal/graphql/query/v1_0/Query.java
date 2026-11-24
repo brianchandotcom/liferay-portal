@@ -756,7 +756,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRule(id: ___){actions, active, author, createDate, description, displayDate, expirationDate, externalReferenceCode, id, name, neverExpire, orderRuleAccount, orderRuleAccountGroup, orderRuleChannel, orderRuleOrderType, priority, type, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRule(id: ___){actions, active, author, createDate, creator, dateCreated, dateModified, description, displayDate, expirationDate, externalReferenceCode, id, name, neverExpire, orderRuleAccount, orderRuleAccountGroup, orderRuleChannel, orderRuleOrderType, permissions, priority, type, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Gets an OrderRule by ID. Backed by the matching commerce service method on the target resource."
@@ -771,7 +771,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleByExternalReferenceCode(externalReferenceCode: ___){actions, active, author, createDate, description, displayDate, expirationDate, externalReferenceCode, id, name, neverExpire, orderRuleAccount, orderRuleAccountGroup, orderRuleChannel, orderRuleOrderType, priority, type, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleByExternalReferenceCode(externalReferenceCode: ___){actions, active, author, createDate, creator, dateCreated, dateModified, description, displayDate, expirationDate, externalReferenceCode, id, name, neverExpire, orderRuleAccount, orderRuleAccountGroup, orderRuleChannel, orderRuleOrderType, permissions, priority, type, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves an order rule by externalReferenceCode _corEntryService.fetchCOREntryByExternalReferenceCode(). Identical response to getOrderRule. Throws NoSuchCOREntryException (404) if not found."
@@ -791,10 +791,31 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRulePermissions(orderRuleId: ___, roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Lists the role permissions granted on the order rule identified by ID. Requires the PERMISSIONS action on the order rule."
+	)
+	public OrderRulePage orderRulePermissions(
+			@GraphQLName("orderRuleId") Long orderRuleId,
+			@GraphQLName("roleNames") String roleNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderRuleResource -> new OrderRulePage(
+				orderRuleResource.getOrderRulePermissionsPage(
+					orderRuleId, roleNames)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRules(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "List endpoint for all order rules (COREntry) in the system. Supports pagination, filtering, and sorting via SearchUtil.search(). Status is set to Any. Filterable field: name (from OrderRuleEntityModel)."
+		description = "List endpoint for all order rules (COREntry) in the system. Supports pagination, filtering, and sorting via SearchUtil.search(). Status is set to Any. Filterable fields -- dateCreated, dateModified, externalReferenceCode, name; sortable fields -- dateCreated, dateModified, externalReferenceCode."
 	)
 	public OrderRulePage orderRules(
 			@GraphQLName("search") String search,
@@ -846,7 +867,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleIdOrderRuleAccounts(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Nested field (OrderRule.orderRuleAccounts): paginated list of accounts linked to order rule by ID. Supports search filter."
+		description = "Nested field (OrderRule.orderRuleAccount): paginated list of accounts linked to order rule by ID. Supports search filter."
 	)
 	public OrderRuleAccountPage orderRuleIdOrderRuleAccounts(
 			@GraphQLName("id") Long id, @GraphQLName("search") String search,
@@ -900,7 +921,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleIdOrderRuleAccountGroups(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Nested field (OrderRule.orderRuleAccountGroups): paginated list of account groups linked to order rule by ID."
+		description = "Nested field (OrderRule.orderRuleAccountGroup): paginated list of account groups linked to order rule by ID."
 	)
 	public OrderRuleAccountGroupPage orderRuleIdOrderRuleAccountGroups(
 			@GraphQLName("id") Long id, @GraphQLName("search") String search,
@@ -955,7 +976,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleIdOrderRuleChannels(filter: ___, id: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Nested field (OrderRule.orderRuleChannels): paginated list of channels linked to order rule by ID."
+		description = "Nested field (OrderRule.orderRuleChannel): paginated list of channels linked to order rule by ID."
 	)
 	public OrderRuleChannelPage orderRuleIdOrderRuleChannels(
 			@GraphQLName("id") Long id, @GraphQLName("search") String search,
@@ -1009,7 +1030,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleIdOrderRuleOrderTypes(id: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Nested field (OrderRule.orderRuleOrderTypes): paginated list of order types linked to order rule by ID."
+		description = "Nested field (OrderRule.orderRuleOrderType): paginated list of order types linked to order rule by ID."
 	)
 	public OrderRuleOrderTypePage orderRuleIdOrderRuleOrderTypes(
 			@GraphQLName("id") Long id, @GraphQLName("search") String search,
@@ -1029,7 +1050,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleOrderTypeOrderType(orderRuleOrderTypeId: ___){actions, active, customFields, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderRuleOrderTypeOrderType(orderRuleOrderTypeId: ___){actions, active, creator, customFields, dateCreated, dateModified, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, permissions, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Nested field accessor: returns the OrderType entity linked to an OrderRuleOrderType via corEntryRel."
@@ -1049,7 +1070,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderType(id: ___){actions, active, customFields, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderType(id: ___){actions, active, creator, customFields, dateCreated, dateModified, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, permissions, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a single order type by ID(). Returns full OrderType DTO including nested orderTypeChannels. Throws NoSuchOrderTypeException (404) if not found."
@@ -1064,7 +1085,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypeByExternalReferenceCode(externalReferenceCode: ___){actions, active, customFields, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypeByExternalReferenceCode(externalReferenceCode: ___){actions, active, creator, customFields, dateCreated, dateModified, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, permissions, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves an order type by externalReferenceCode the service. Identical response to getOrderType. Throws NoSuchOrderTypeException (404) if not found."
@@ -1084,10 +1105,31 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypePermissions(orderTypeId: ___, roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Lists the role permissions granted on the order type identified by ID. Requires the PERMISSIONS action on the order type."
+	)
+	public OrderTypePage orderTypePermissions(
+			@GraphQLName("orderTypeId") Long orderTypeId,
+			@GraphQLName("roleNames") String roleNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			orderTypeResource -> new OrderTypePage(
+				orderTypeResource.getOrderTypePermissionsPage(
+					orderTypeId, roleNames)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderTypes(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "List endpoint for all order types in the system. Supports pagination, filtering, and sorting via SearchUtil.search(). Status is set to Any. Filterable field: (implicit name field from OrderTypeEntityModel)."
+		description = "List endpoint for all order types in the system. Supports pagination, filtering, and sorting via SearchUtil.search(). Status is set to Any. Filterable fields -- dateCreated, dateModified, displayDate, expirationDate, externalReferenceCode, name; sortable fields -- dateCreated, dateModified, displayDate, expirationDate, externalReferenceCode."
 	)
 	public OrderTypePage orderTypes(
 			@GraphQLName("search") String search,
@@ -1111,7 +1153,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {termOrderTypeOrderType(termOrderTypeId: ___){actions, active, customFields, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {termOrderTypeOrderType(termOrderTypeId: ___){actions, active, creator, customFields, dateCreated, dateModified, description, displayDate, displayOrder, expirationDate, externalReferenceCode, id, name, neverExpire, orderTypeChannels, permissions, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Nested field accessor: returns the OrderType entity linked to a TermOrderType via commerceTermEntryRel."
@@ -1237,7 +1279,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {term(id: ___){actions, active, createDate, description, displayDate, expirationDate, externalReferenceCode, id, label, name, neverExpire, priority, termOrderType, type, typeLocalized, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {term(id: ___){actions, active, createDate, creator, dateCreated, dateModified, description, displayDate, expirationDate, externalReferenceCode, id, label, name, neverExpire, permissions, priority, termOrderType, type, typeLocalized, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Gets a Term by ID. Backed by the matching commerce service method on the target resource."
@@ -1252,7 +1294,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {termByExternalReferenceCode(externalReferenceCode: ___){actions, active, createDate, description, displayDate, expirationDate, externalReferenceCode, id, label, name, neverExpire, priority, termOrderType, type, typeLocalized, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {termByExternalReferenceCode(externalReferenceCode: ___){actions, active, createDate, creator, dateCreated, dateModified, description, displayDate, expirationDate, externalReferenceCode, id, label, name, neverExpire, permissions, priority, termOrderType, type, typeLocalized, typeSettings, workflowStatusInfo}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a term by externalReferenceCode the service. Identical response to getTerm. Throws NoSuchTermEntryException (404) if not found."
@@ -1271,10 +1313,30 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {termPermissions(roleNames: ___, termId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Lists the role permissions granted on the term identified by ID. Requires the PERMISSIONS action on the term."
+	)
+	public TermPage termPermissions(
+			@GraphQLName("termId") Long termId,
+			@GraphQLName("roleNames") String roleNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_termResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			termResource -> new TermPage(
+				termResource.getTermPermissionsPage(termId, roleNames)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {terms(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "List endpoint for all commerce terms in the system. Supports pagination, filtering, and sorting SearchUtil.search(). Status is set to Any."
+		description = "List endpoint for all commerce terms in the system. Supports pagination, filtering, and sorting via SearchUtil.search(). Status is set to Any. Filterable fields -- dateCreated, dateModified, externalReferenceCode, name, priority, type; sortable fields -- dateCreated, dateModified, externalReferenceCode, priority, type."
 	)
 	public TermPage terms(
 			@GraphQLName("search") String search,
@@ -1323,7 +1385,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {termIdTermOrderTypes(id: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Nested field (Term.termOrderTypes): paginated list of order types linked to term by ID."
+		description = "Nested field (Term.termOrderType): paginated list of order types linked to term by ID."
 	)
 	public TermOrderTypePage termIdTermOrderTypes(
 			@GraphQLName("id") Long id, @GraphQLName("search") String search,
@@ -2910,4 +2972,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1736388240
+// LIFERAY-REST-BUILDER-HASH:1215339088

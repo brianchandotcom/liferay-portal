@@ -211,7 +211,7 @@ public abstract class BaseOrderRuleAccountGroupResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-account-groups'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Nested field (OrderRule.orderRuleAccountGroups): paginated list of account groups linked to order rule by ID."
+		description = "Nested field (OrderRule.orderRuleAccountGroup): paginated list of account groups linked to order rule by ID."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1124,4 +1124,4 @@ public abstract class BaseOrderRuleAccountGroupResourceImpl
 		LogFactoryUtil.getLog(BaseOrderRuleAccountGroupResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1040383329
+// LIFERAY-REST-BUILDER-HASH:-1976660912

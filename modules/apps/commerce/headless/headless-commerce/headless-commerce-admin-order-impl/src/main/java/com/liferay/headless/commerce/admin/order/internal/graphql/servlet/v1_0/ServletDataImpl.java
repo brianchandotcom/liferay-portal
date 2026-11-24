@@ -387,6 +387,11 @@ public class ServletDataImpl implements ServletData {
 							OrderRuleResourceImpl.class,
 							"putOrderRuleByExternalReferenceCode"));
 					put(
+						"mutation#updateOrderRulePermissionsPage",
+						new ObjectValuePair<>(
+							OrderRuleResourceImpl.class,
+							"putOrderRulePermissionsPage"));
+					put(
 						"mutation#deleteOrderRuleAccount",
 						new ObjectValuePair<>(
 							OrderRuleAccountResourceImpl.class,
@@ -528,6 +533,11 @@ public class ServletDataImpl implements ServletData {
 							OrderTypeResourceImpl.class,
 							"putOrderTypeByExternalReferenceCode"));
 					put(
+						"mutation#updateOrderTypePermissionsPage",
+						new ObjectValuePair<>(
+							OrderTypeResourceImpl.class,
+							"putOrderTypePermissionsPage"));
+					put(
 						"mutation#deleteOrderTypeChannel",
 						new ObjectValuePair<>(
 							OrderTypeChannelResourceImpl.class,
@@ -602,6 +612,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TermResourceImpl.class,
 							"putTermByExternalReferenceCode"));
+					put(
+						"mutation#updateTermPermissionsPage",
+						new ObjectValuePair<>(
+							TermResourceImpl.class, "putTermPermissionsPage"));
 					put(
 						"mutation#deleteTermOrderType",
 						new ObjectValuePair<>(
@@ -761,6 +775,11 @@ public class ServletDataImpl implements ServletData {
 							OrderRuleResourceImpl.class,
 							"getOrderRuleByExternalReferenceCode"));
 					put(
+						"query#orderRulePermissions",
+						new ObjectValuePair<>(
+							OrderRuleResourceImpl.class,
+							"getOrderRulePermissionsPage"));
+					put(
 						"query#orderRules",
 						new ObjectValuePair<>(
 							OrderRuleResourceImpl.class, "getOrderRulesPage"));
@@ -819,6 +838,11 @@ public class ServletDataImpl implements ServletData {
 							OrderTypeResourceImpl.class,
 							"getOrderTypeByExternalReferenceCode"));
 					put(
+						"query#orderTypePermissions",
+						new ObjectValuePair<>(
+							OrderTypeResourceImpl.class,
+							"getOrderTypePermissionsPage"));
+					put(
 						"query#orderTypes",
 						new ObjectValuePair<>(
 							OrderTypeResourceImpl.class, "getOrderTypesPage"));
@@ -861,6 +885,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TermResourceImpl.class,
 							"getTermByExternalReferenceCode"));
+					put(
+						"query#termPermissions",
+						new ObjectValuePair<>(
+							TermResourceImpl.class, "getTermPermissionsPage"));
 					put(
 						"query#terms",
 						new ObjectValuePair<>(
@@ -1052,4 +1080,4 @@ public class ServletDataImpl implements ServletData {
 		_orderAccountGroupResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1694090567
+// LIFERAY-REST-BUILDER-HASH:-1289303691

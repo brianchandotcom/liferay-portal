@@ -59,6 +59,10 @@ public interface TermResource {
 	public Term getTermByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getTermPermissionsPage(Long termId, String roleNames)
+		throws Exception;
+
 	public Page<Term> getTermsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -86,6 +90,12 @@ public interface TermResource {
 
 	public Term putTermByExternalReferenceCode(
 			String externalReferenceCode, Term term)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putTermPermissionsPage(
+				Long termId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -184,4 +194,4 @@ public interface TermResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:337741509
+// LIFERAY-REST-BUILDER-HASH:-837753613

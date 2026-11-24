@@ -20,9 +20,7 @@ import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
 
 import java.net.URL;
@@ -500,17 +498,12 @@ public class PoshiGetterUtil {
 			lineNumber++;
 		}
 
-		String content = sb.toString();
-
-		InputStream inputStream = new ByteArrayInputStream(
-			content.getBytes("UTF-8"));
-
 		SAXReader saxReader = new SAXReader();
 
 		Document document = null;
 
 		try {
-			document = saxReader.read(inputStream);
+			document = saxReader.read(new StringReader(sb.toString()));
 		}
 		catch (DocumentException documentException) {
 			throw new Exception(

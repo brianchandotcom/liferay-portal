@@ -495,8 +495,8 @@ public class SitePageResourceImpl
 
 		if (layout.isPrivateLayout() != privateLayout) {
 			throw new IllegalArgumentException(
-				"The private page setting does not match the target page's " +
-					"privacy");
+				"The private page setting does not match the target site " +
+					"page's privacy");
 		}
 
 		ServiceContext serviceContext = _getServiceContext(
@@ -519,7 +519,7 @@ public class SitePageResourceImpl
 					 SitePageTypeUtil.toInternalType(sitePage.getType()))) {
 
 			throw new IllegalArgumentException(
-				"The page type does not match the target page type");
+				"The site page type does not match the target site page type");
 		}
 
 		return _toSitePage(_updateLayout(layout, serviceContext, sitePage));
@@ -809,8 +809,8 @@ public class SitePageResourceImpl
 
 		if (layout.isPrivateLayout() != privateLayout) {
 			throw new IllegalArgumentException(
-				"The private page setting does not match the target page's " +
-					"privacy");
+				"The private page setting does not match the target site " +
+					"page's privacy");
 		}
 
 		return layout.getLayoutId();
@@ -952,7 +952,7 @@ public class SitePageResourceImpl
 			 !(pageSettings instanceof WidgetPageSettings))) {
 
 			throw new IllegalArgumentException(
-				"The page type does not match the page settings type");
+				"The site page type does not match the page settings type");
 		}
 
 		String queryString = StringPool.BLANK;
@@ -1471,7 +1471,7 @@ public class SitePageResourceImpl
 
 			throw new IllegalArgumentException(
 				"A single content page specification cannot be applied to an " +
-					"existing page");
+					"existing content page");
 		}
 
 		PageSpecification publishedPageSpecification = null;

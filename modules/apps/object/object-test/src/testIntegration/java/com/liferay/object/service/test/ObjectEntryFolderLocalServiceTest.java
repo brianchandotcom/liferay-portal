@@ -1018,6 +1018,15 @@ public class ObjectEntryFolderLocalServiceTest {
 			objectEntryFolder1.getObjectEntryFolderId(),
 			Collections.emptyMap());
 
+		ObjectEntryFolder childObjectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				groupId, objectEntryFolder1.getObjectEntryFolderId());
+
+		ObjectEntry childObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			childObjectEntryFolder.getObjectEntryFolderId(),
+			Collections.emptyMap());
+
 		ObjectEntryFolder objectEntryFolder2 =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(groupId);
 
@@ -1035,6 +1044,34 @@ public class ObjectEntryFolderLocalServiceTest {
 			1,
 			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
 				groupId, objectEntryFolder1.getObjectEntryFolderId()));
+
+		childObjectEntryFolder =
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				childObjectEntryFolder.getObjectEntryFolderId());
+
+		Assert.assertEquals(
+			childObjectEntryFolder.buildTreePath(),
+			childObjectEntryFolder.getTreePath());
+
+		childObjectEntry = _objectEntryLocalService.getObjectEntry(
+			childObjectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			childObjectEntry.buildTreePath(), childObjectEntry.getTreePath());
+
+		long objectEntryFolderId = objectEntryFolder2.getObjectEntryFolderId();
+		long parentObjectEntryFolderId =
+			childObjectEntryFolder.getObjectEntryFolderId();
+
+		AssertUtils.assertFailure(
+			ObjectEntryFolderParentObjectEntryFolderIdException.class,
+			StringBundler.concat(
+				"Object entry folder ", objectEntryFolderId,
+				" cannot have one of its children or itself as a parent"),
+			() -> _objectEntryFolderLocalService.moveObjectEntryFolder(
+				TestPropsValues.getUserId(), objectEntryFolderId,
+				parentObjectEntryFolderId, false,
+				ServiceContextTestUtil.getServiceContext()));
 	}
 
 	private void _testMoveObjectEntryFolderDuplicateName(long groupId)

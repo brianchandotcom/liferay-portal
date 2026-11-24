@@ -21,6 +21,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface UploadServletRequestConfiguration {
 
 	@Meta.AD(
+		deflt = "1000", description = "max-files-count-help",
+		name = "overall-maximum-upload-request-files-count", required = false
+	)
+	public long maxFilesCount();
+
+	@Meta.AD(
 		deflt = "104857600", description = "max-size-help",
 		name = "overall-maximum-upload-request-size", required = false
 	)

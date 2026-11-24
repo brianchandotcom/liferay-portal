@@ -12,6 +12,14 @@ import com.liferay.portal.kernel.module.service.Snapshot;
  */
 public class UploadServletRequestConfigurationProviderUtil {
 
+	public static long getMaxFilesCount() {
+		UploadServletRequestConfigurationProvider
+			uploadServletRequestConfigurationProvider =
+				_uploadServletRequestConfigurationProviderSnapshot.get();
+
+		return uploadServletRequestConfigurationProvider.getMaxFilesCount();
+	}
+
 	public static long getMaxSize() {
 		UploadServletRequestConfigurationProvider
 			uploadServletRequestConfigurationProvider =

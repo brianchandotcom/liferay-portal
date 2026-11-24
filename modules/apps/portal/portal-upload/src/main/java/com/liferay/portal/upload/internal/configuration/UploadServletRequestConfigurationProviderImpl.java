@@ -27,6 +27,11 @@ public class UploadServletRequestConfigurationProviderImpl
 	implements UploadServletRequestConfigurationProvider {
 
 	@Override
+	public long getMaxFilesCount() {
+		return _uploadServletRequestConfiguration.maxFilesCount();
+	}
+
+	@Override
 	public long getMaxSize() {
 		return _uploadServletRequestConfiguration.maxSize();
 	}

@@ -155,7 +155,7 @@ public class FaroProjectModelListener extends BaseModelListener<FaroProject> {
 			FaroConstants.LDP_MASTER_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY);
 		_updateMasterLayout(
 			faviconFileEntryERC, groupId,
-			FaroConstants.LDP_SETTINGS_MASTER_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY);
+			FaroConstants.LDP_MASTER_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_SETTINGS);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

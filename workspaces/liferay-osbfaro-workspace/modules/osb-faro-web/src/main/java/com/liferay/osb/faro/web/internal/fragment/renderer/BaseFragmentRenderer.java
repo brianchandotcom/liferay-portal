@@ -245,7 +245,6 @@ public abstract class BaseFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest) {
 
 		Map<String, String> params = new HashMap<>();
-
 		Map<String, String[]> parameterMap =
 			httpServletRequest.getParameterMap();
 

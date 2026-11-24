@@ -416,7 +416,7 @@ public class OrderRuleResourceImpl
 			for (OrderRuleOrderType orderRuleOrderType : orderRuleOrderTypes) {
 				COREntryRel corEntryRel = _corEntryRelService.fetchCOREntryRel(
 					CommerceOrderType.class.getName(),
-					orderRuleOrderType.getOrderRuleId(),
+					orderRuleOrderType.getOrderTypeId(),
 					corEntry.getCOREntryId());
 
 				if (corEntryRel != null) {

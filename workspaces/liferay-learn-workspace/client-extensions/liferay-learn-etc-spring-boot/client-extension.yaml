@@ -50,10 +50,10 @@ liferay-learn-etc-spring-boot-object-action-exam-results-synchronization:
     oAuth2ApplicationExternalReferenceCode: liferay-learn-etc-spring-boot-oaua
     resourcePath: /object/action/exam/results/synchronization
     type: objectAction
-liferay-learn-etc-spring-boot-object-action-knowledge-article-guest-view:
-    name: Liferay Learn Etc Spring Boot Object Action Knowledge Article Guest View
+liferay-learn-etc-spring-boot-object-action-knowledge-article-guest-view-permission:
+    name: Liferay Learn Etc Spring Boot Object Action Knowledge Article Guest View Permission
     oAuth2ApplicationExternalReferenceCode: liferay-learn-etc-spring-boot-oaua
-    resourcePath: /object/action/knowledge/article/guest/view
+    resourcePath: /object/action/knowledge/article/guest/view/permission
     type: objectAction
 liferay-learn-etc-spring-boot-object-action-permission:
     name: Liferay Learn Etc Spring Boot Object Action Permission

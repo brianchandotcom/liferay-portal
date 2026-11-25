@@ -205,6 +205,10 @@ public class ViewResourcesDesignLibraryDisplayContext
 						designLibraryResourceTypeContributor.
 							getCreationItemsGroupLabel(
 								themeDisplay.getLocale()));
+					resourceType.put(
+						"creationItemsSectionKey",
+						designLibraryResourceTypeContributor.
+							getCreationItemsSectionKey());
 				}
 			}
 

@@ -26,7 +26,12 @@ export default function DesignLibraryAssetsSectionHeader({
 
 			{!!groupedCreationMenuItems.length && (
 				<ClayDropDownWithItems
-					items={groupedCreationMenuItems}
+					items={groupedCreationMenuItems.flatMap(
+						(creationMenuSection, index) =>
+							creationMenuSection.separator && index
+								? [{type: 'divider'}, creationMenuSection]
+								: [creationMenuSection]
+					)}
 					trigger={
 						<ClayButton displayType="secondary" size="sm">
 							<ClayIcon

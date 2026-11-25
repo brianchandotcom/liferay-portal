@@ -6,15 +6,18 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.RandomTestUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -71,6 +74,15 @@ public class TestrayServerTest extends com.liferay.jenkins.results.parser.Test {
 		TestrayServer testrayServer = _mockTestrayServer();
 
 		testEquals(fileContent, testrayServer.readCaseResultFile(fileName));
+	}
+
+	@Test
+	public void testSetCommunicationFailureNotificationEnabled()
+		throws Exception {
+
+		_testSetCommunicationFailureNotificationEnabled(false, false);
+		_testSetCommunicationFailureNotificationEnabled(null, true);
+		_testSetCommunicationFailureNotificationEnabled(true, true);
 	}
 
 	@Test
@@ -145,6 +157,45 @@ public class TestrayServerTest extends com.liferay.jenkins.results.parser.Test {
 		).getResultsDir();
 
 		return testrayServer;
+	}
+
+	private void _testSetCommunicationFailureNotificationEnabled(
+			Boolean communicationFailureNotificationEnabled,
+			boolean expectedNotified)
+		throws Exception {
+
+		mockURLReaders();
+
+		String exceptionMessage = RandomTestUtil.randomString();
+		String testrayServerURL =
+			"https://" + RandomTestUtil.randomLowerCaseString();
+
+		setURLReaderException(
+			new IOException(exceptionMessage), testrayServerURL);
+
+		TestrayServer testrayServer = new TestrayServer(testrayServerURL);
+
+		if (communicationFailureNotificationEnabled != null) {
+			testrayServer.setCommunicationFailureNotificationEnabled(
+				communicationFailureNotificationEnabled);
+		}
+
+		try (MockedStatic<NotificationUtil> notificationUtilMockedStatic =
+				Mockito.mockStatic(NotificationUtil.class)) {
+
+			Assert.assertThrows(
+				IOException.class,
+				() -> testrayServer.requestGet(
+					RandomTestUtil.randomLowerCaseString()));
+
+			notificationUtilMockedStatic.verify(
+				() -> NotificationUtil.sendSlackNotification(
+					Mockito.startsWith(exceptionMessage),
+					Mockito.eq("#ci-notifications"), Mockito.eq(":testray:"),
+					Mockito.eq("Testray communication failure"),
+					Mockito.eq("Liferay CI")),
+				getVerificationMode(expectedNotified));
+		}
 	}
 
 }

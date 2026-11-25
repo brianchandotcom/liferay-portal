@@ -30,6 +30,8 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -69,6 +71,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutPageTemplateEntryServiceImpl
 	extends LayoutPageTemplateEntryServiceBaseImpl {
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long groupId,
@@ -100,6 +103,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	 *             ServiceContext)}
 	 */
 	@Deprecated
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long groupId,

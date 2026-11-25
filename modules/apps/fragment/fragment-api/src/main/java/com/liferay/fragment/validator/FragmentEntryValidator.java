@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public interface FragmentEntryValidator {
 
-	public default String getConfigurationJSONSchema() {
+	public default String getConfigurationSchemaJSON() {
 		return null;
 	}
 

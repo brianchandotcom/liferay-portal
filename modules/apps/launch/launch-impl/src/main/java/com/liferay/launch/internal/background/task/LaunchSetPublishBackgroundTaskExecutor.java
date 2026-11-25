@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -134,40 +135,50 @@ public class LaunchSetPublishBackgroundTaskExecutor
 				BackgroundTaskConstants.STATUS_FAILED, message);
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(launchSetObjectEntry.getCompanyId());
-
-		long userId = backgroundTask.getUserId();
-
-		serviceContext.setUserId(userId);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
 		List<Map<String, Serializable>> launchSetErrorValuesMaps =
 			new ArrayList<>();
+		long userId = backgroundTask.getUserId();
 
 		try {
 			Group group = _groupLocalService.getGroup(
 				launchSetObjectEntry.getCompanyId(), GroupConstants.GUEST);
 
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(launchSetObjectEntry.getCompanyId());
 			serviceContext.setScopeGroupId(group.getGroupId());
+			serviceContext.setUserId(userId);
+
+			String name = PrincipalThreadLocal.getName();
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(
 					_userLocalService.getUser(userId)));
 			PrincipalThreadLocal.setName(userId);
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_publish(
-						launchSetErrorValuesMaps,
-						_objectEntryLocalService.getObjectEntry(launchSetId),
-						serviceContext);
+			try {
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					() -> {
+						_publish(
+							launchSetErrorValuesMaps,
+							_objectEntryLocalService.getObjectEntry(
+								launchSetId),
+							serviceContext);
 
-					return null;
-				});
+						return null;
+					});
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+
+				PrincipalThreadLocal.setName(name);
+
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			}
 		}
 		catch (Throwable throwable) {
 			if (launchSetErrorValuesMaps.isEmpty()) {
@@ -191,9 +202,6 @@ public class LaunchSetPublishBackgroundTaskExecutor
 
 			return new BackgroundTaskResult(
 				BackgroundTaskConstants.STATUS_FAILED, throwable.getMessage());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		return BackgroundTaskResult.SUCCESS;

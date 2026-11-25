@@ -105,7 +105,121 @@ public class FIPSModeValidator {
 				_allowedTLSProtocols, SetUtil.fromArray(tlsProtocols)));
 	}
 
-	public static List<ValidationError> getKeyEncryptionKeyValidationErrors() {
+	public static boolean isNotAllowedAlgorithm(String algorithm) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return false;
+		}
+
+		return _isNotAllowedAlgorithm(algorithm);
+	}
+
+	public static boolean isNotAllowedPassword(String password) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return false;
+		}
+
+		return _isNotAllowedPassword(password);
+	}
+
+	public static void validate() {
+		Provider[] providers = Security.getProviders();
+		List<ValidationError> validationErrors = new ArrayList<>();
+
+		_validate(
+			() -> _validateFIPSProvider(providers), validationErrors,
+			ValidationErrorType.SECURITY_PROVIDERS);
+		_validate(
+			() -> _validateProviders(providers), validationErrors,
+			ValidationErrorType.SECURITY_PROVIDERS);
+		_validate(
+			FIPSModeValidator::_validateSecureRandomProvider, validationErrors,
+			ValidationErrorType.SECURITY_PROVIDERS);
+
+		_validateAllowedPropertyValues(System::getProperty, validationErrors);
+		_validateRequiredPropertyValues(
+			Security::getProperty, _requiredSecurityProperties,
+			validationErrors);
+		_validateRequiredPropertyValues(
+			System::getProperty, _requiredSystemProperties, validationErrors);
+
+		validationErrors.addAll(_getPortalPropertiesValidationErrors());
+
+		_throwFIPSModeValidationException(validationErrors);
+	}
+
+	public static void validateAlgorithm(String algorithm) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return;
+		}
+
+		_validateAlgorithm(algorithm);
+	}
+
+	public static void validateJWSAlgorithm(String algorithm) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return;
+		}
+
+		if ((algorithm == null) || !_allowedJWSAlgorithms.contains(algorithm)) {
+			throw new SecurityException(
+				"JWS algorithm \"" + algorithm +
+					"\" is not allowed in FIPS mode");
+		}
+	}
+
+	public static void validateKey(String algorithm, int keySize) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return;
+		}
+
+		_validateKey(algorithm, keySize);
+	}
+
+	public static void validateKeyEncryptionKeys() {
+		_throwFIPSModeValidationException(
+			_getKeyEncryptionKeyValidationErrors());
+	}
+
+	public static void validatePassword(String password) {
+		if (isNotAllowedPassword(password)) {
+			throw new SecurityException(
+				"Password must be at least " + PASSWORDS_MIN_LENGTH +
+					" bytes in FIPS mode");
+		}
+	}
+
+	public static void validatePortalConfiguration() {
+		List<ValidationError> validationErrors = new ArrayList<>(
+			_getPortalPropertiesValidationErrors());
+
+		validationErrors.addAll(_getKeyEncryptionKeyValidationErrors());
+
+		_throwFIPSModeValidationException(validationErrors);
+	}
+
+	public static void validateSessionTimeout(int sessionTimeout) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return;
+		}
+
+		_validateSessionTimeout(sessionTimeout);
+	}
+
+	public static void validateURL(String url) {
+		if (!PropsValues.FIPS_ENABLED ||
+			(Validator.isNotNull(url) &&
+			 StringUtil.startsWith(url, "ldaps://"))) {
+
+			return;
+		}
+
+		throw new SecurityException(
+			"URL protocol scheme is not allowed in FIPS mode");
+	}
+
+	private static List<ValidationError>
+		_getKeyEncryptionKeyValidationErrors() {
+
 		List<ValidationError> validationErrors = new ArrayList<>();
 
 		CompanyKeyResolver companyKeyResolver =
@@ -129,7 +243,33 @@ public class FIPSModeValidator {
 		return validationErrors;
 	}
 
-	public static List<ValidationError> getPortalPropertiesValidationErrors() {
+	private static List<String> _getPlaintextSecretProperties(
+		Properties properties) {
+
+		List<String> plaintextSecretProperties = new ArrayList<>();
+
+		for (String key : PropsValues.ADMIN_OBFUSCATED_PROPERTIES) {
+			String value = properties.getProperty(key);
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			value = value.trim();
+
+			if (value.startsWith("${") && value.endsWith("}")) {
+				continue;
+			}
+
+			plaintextSecretProperties.add(key);
+		}
+
+		return plaintextSecretProperties;
+	}
+
+	private static List<ValidationError>
+		_getPortalPropertiesValidationErrors() {
+
 		List<ValidationError> validationErrors = new ArrayList<>();
 
 		if (GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_MAC_ALLOW))) {
@@ -172,142 +312,6 @@ public class FIPSModeValidator {
 			ValidationErrorType.SECRETS_IN_PROPERTIES_FILES);
 
 		return validationErrors;
-	}
-
-	public static boolean isNotAllowedAlgorithm(String algorithm) {
-		if (!PropsValues.FIPS_ENABLED) {
-			return false;
-		}
-
-		return _isNotAllowedAlgorithm(algorithm);
-	}
-
-	public static boolean isNotAllowedPassword(String password) {
-		if (!PropsValues.FIPS_ENABLED) {
-			return false;
-		}
-
-		return _isNotAllowedPassword(password);
-	}
-
-	public static void validate() {
-		Provider[] providers = Security.getProviders();
-		List<ValidationError> validationErrors = new ArrayList<>();
-
-		_validate(
-			() -> _validateFIPSProvider(providers), validationErrors,
-			ValidationErrorType.SECURITY_PROVIDERS);
-		_validate(
-			() -> _validateProviders(providers), validationErrors,
-			ValidationErrorType.SECURITY_PROVIDERS);
-		_validate(
-			FIPSModeValidator::_validateSecureRandomProvider, validationErrors,
-			ValidationErrorType.SECURITY_PROVIDERS);
-
-		_validateAllowedPropertyValues(System::getProperty, validationErrors);
-		_validateRequiredPropertyValues(
-			Security::getProperty, _requiredSecurityProperties,
-			validationErrors);
-		_validateRequiredPropertyValues(
-			System::getProperty, _requiredSystemProperties, validationErrors);
-
-		validationErrors.addAll(getPortalPropertiesValidationErrors());
-
-		_throwFIPSModeValidationException(validationErrors);
-	}
-
-	public static void validateAlgorithm(String algorithm) {
-		if (!PropsValues.FIPS_ENABLED) {
-			return;
-		}
-
-		_validateAlgorithm(algorithm);
-	}
-
-	public static void validateJWSAlgorithm(String algorithm) {
-		if (!PropsValues.FIPS_ENABLED) {
-			return;
-		}
-
-		if ((algorithm == null) || !_allowedJWSAlgorithms.contains(algorithm)) {
-			throw new SecurityException(
-				"JWS algorithm \"" + algorithm +
-					"\" is not allowed in FIPS mode");
-		}
-	}
-
-	public static void validateKey(String algorithm, int keySize) {
-		if (!PropsValues.FIPS_ENABLED) {
-			return;
-		}
-
-		_validateKey(algorithm, keySize);
-	}
-
-	public static void validateKeyEncryptionKeys() {
-		_throwFIPSModeValidationException(
-			getKeyEncryptionKeyValidationErrors());
-	}
-
-	public static void validatePassword(String password) {
-		if (isNotAllowedPassword(password)) {
-			throw new SecurityException(
-				"Password must be at least " + PASSWORDS_MIN_LENGTH +
-					" bytes in FIPS mode");
-		}
-	}
-
-	public static void validatePortalConfiguration() {
-		List<ValidationError> validationErrors = new ArrayList<>(
-			getPortalPropertiesValidationErrors());
-
-		validationErrors.addAll(getKeyEncryptionKeyValidationErrors());
-
-		_throwFIPSModeValidationException(validationErrors);
-	}
-
-	public static void validateSessionTimeout(int sessionTimeout) {
-		if (!PropsValues.FIPS_ENABLED) {
-			return;
-		}
-
-		_validateSessionTimeout(sessionTimeout);
-	}
-
-	public static void validateURL(String url) {
-		if (!PropsValues.FIPS_ENABLED ||
-			(Validator.isNotNull(url) &&
-			 StringUtil.startsWith(url, "ldaps://"))) {
-
-			return;
-		}
-
-		throw new SecurityException(
-			"URL protocol scheme is not allowed in FIPS mode");
-	}
-
-	private static List<String> _getPlaintextSecretProperties(
-		Properties properties) {
-
-		List<String> plaintextSecretProperties = new ArrayList<>();
-
-		for (String key : PropsValues.ADMIN_OBFUSCATED_PROPERTIES) {
-			String value = properties.getProperty(key);
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			value = value.trim();
-
-			if (value.startsWith("${") && value.endsWith("}")) {
-				continue;
-			}
-
-			plaintextSecretProperties.add(key);
-		}
-
-		return plaintextSecretProperties;
 	}
 
 	private static boolean _isNotAllowedAlgorithm(String algorithm) {

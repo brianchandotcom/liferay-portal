@@ -7,9 +7,12 @@ package com.liferay.document.library.kernel.trash;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Brian Wulbern
  */
+@ProviderType
 public interface TrashedFileVersionStatusProvider {
 
 	public int getOriginalStatus(FileVersion fileVersion);

@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryGroupId
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryPlidException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryPreviewFileEntryIdException;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -149,6 +150,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			groupId, layoutPageTemplateCollectionId, name, type,
 			defaultTemplate, status);
 		_validate(groupId, layoutPageTemplateCollectionId, type);
+		_validatePlid(_getLayoutGroupId(groupId, layoutPrototypeId), plid);
 		_validatePreviewFileEntryId(groupId, previewFileEntryId);
 
 		if (Validator.isNull(layoutPageTemplateEntryKey)) {
@@ -424,7 +426,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			layoutPageTemplateEntry.getGroupId(), false);
 
-		if ((layout != null) && (layoutSet != null)) {
+		if ((layout != null) && (layoutSet != null) &&
+			(layout.getGroupId() == _getLayoutGroupId(
+				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntry.getLayoutPrototypeId()))) {
+
 			_layoutLocalService.deleteLayout(layout);
 		}
 
@@ -1126,6 +1132,26 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			String.valueOf(classTypeId));
 	}
 
+	private long _getLayoutGroupId(long defaultGroupId, long layoutPrototypeId)
+		throws PortalException {
+
+		if (layoutPrototypeId == 0) {
+			return defaultGroupId;
+		}
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.fetchLayoutPrototype(
+				layoutPrototypeId);
+
+		if (layoutPrototype == null) {
+			return defaultGroupId;
+		}
+
+		Group group = layoutPrototype.getGroup();
+
+		return group.getGroupId();
+	}
+
 	private void _unsetDefaultLayoutPageTemplateEntry(
 		long classNameId, String classTypeKey,
 		long excludedLayoutPageTemplateEntryId, long groupId) {
@@ -1372,6 +1398,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (layoutPageTemplateEntry != null) {
 			throw new LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.MustNotBeDuplicate(
 				groupId, layoutPageTemplateEntryKey, type);
+		}
+	}
+
+	private void _validatePlid(long groupId, long plid) throws PortalException {
+		if (plid == 0) {
+			return;
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if ((layout == null) || (layout.getGroupId() != groupId)) {
+			throw new LayoutPageTemplateEntryPlidException(groupId, plid);
 		}
 	}
 

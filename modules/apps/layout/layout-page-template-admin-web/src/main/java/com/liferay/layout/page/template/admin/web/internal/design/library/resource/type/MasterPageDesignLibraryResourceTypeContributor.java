@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Georgel Pop
  */
 @Component(
-	property = "service.ranking:Integer=300",
+	property = "service.ranking:Integer=200",
 	service = DesignLibraryResourceTypeContributor.class
 )
 public class MasterPageDesignLibraryResourceTypeContributor

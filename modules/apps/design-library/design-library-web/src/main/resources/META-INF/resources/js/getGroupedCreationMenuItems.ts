@@ -12,27 +12,57 @@ type CreationMenuSubmenu = {
 	type: 'contextual';
 };
 
+type CreationMenuSectionItem = CreationMenuItem | CreationMenuSubmenu;
+
+export type CreationMenuSection = {
+	items: CreationMenuSectionItem[];
+	label: string;
+	separator: boolean;
+	type: 'group';
+};
+
 export default function getGroupedCreationMenuItems(
 	resourceTypes: DesignLibraryResourceType[]
-): Array<CreationMenuSubmenu | CreationMenuItem> {
-	return resourceTypes.flatMap<CreationMenuSubmenu | CreationMenuItem>(
-		(resourceType) => {
-			const creationMenuItems = getCreationMenuItems([resourceType]);
+): CreationMenuSection[] {
+	const creationMenuSections = new Map<string, CreationMenuSection>();
 
-			if (
-				creationMenuItems.length > 1 &&
-				resourceType.creationItemsGroupLabel
-			) {
-				return [
-					{
-						items: creationMenuItems,
-						label: resourceType.creationItemsGroupLabel,
-						type: 'contextual',
-					},
-				];
-			}
+	for (const resourceType of resourceTypes) {
+		const creationMenuItems = getCreationMenuItems([resourceType]);
 
-			return creationMenuItems;
+		if (!creationMenuItems.length) {
+			continue;
 		}
-	);
+
+		const items: CreationMenuSectionItem[] =
+			creationMenuItems.length > 1 && resourceType.creationItemsGroupLabel
+				? [
+						{
+							items: creationMenuItems,
+							label: resourceType.creationItemsGroupLabel,
+							type: 'contextual',
+						},
+					]
+				: creationMenuItems;
+
+		const creationItemsSectionKey =
+			resourceType.creationItemsSectionKey ?? resourceType.key;
+
+		const creationMenuSection = creationMenuSections.get(
+			creationItemsSectionKey
+		);
+
+		if (creationMenuSection) {
+			creationMenuSection.items.push(...items);
+		}
+		else {
+			creationMenuSections.set(creationItemsSectionKey, {
+				items,
+				label: '',
+				separator: true,
+				type: 'group',
+			});
+		}
+	}
+
+	return Array.from(creationMenuSections.values());
 }

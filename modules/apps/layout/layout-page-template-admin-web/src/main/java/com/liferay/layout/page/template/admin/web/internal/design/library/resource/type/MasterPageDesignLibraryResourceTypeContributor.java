@@ -10,6 +10,7 @@ import com.liferay.design.library.resource.type.DesignLibraryResourceCreationIte
 import com.liferay.design.library.resource.type.DesignLibraryResourceTypeContributor;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -41,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Georgel Pop
  */
 @Component(
-	property = "service.ranking:Integer=400",
+	property = "service.ranking:Integer=300",
 	service = DesignLibraryResourceTypeContributor.class
 )
 public class MasterPageDesignLibraryResourceTypeContributor
@@ -83,6 +84,11 @@ public class MasterPageDesignLibraryResourceTypeContributor
 						LayoutPageTemplateAdminPortletKeys.
 							LAYOUT_PAGE_TEMPLATES)
 				).build()));
+	}
+
+	@Override
+	public String getCreationItemsSectionKey() {
+		return LayoutPageTemplateAdminWebConstants.SECTION_KEY_PAGES;
 	}
 
 	@Override

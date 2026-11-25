@@ -128,7 +128,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 
 		FileEntry folderFileEntry = DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
-			folder.getFolderId(), "Test Trash Folder.txt",
+			folder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
 			null, null, serviceContext);
 
@@ -143,7 +143,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 
 		FileEntry draftFileEntry = DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
-			parentFolder.getFolderId(), "Test Trash Draft.txt",
+			parentFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
 			null, null, serviceContext);
 

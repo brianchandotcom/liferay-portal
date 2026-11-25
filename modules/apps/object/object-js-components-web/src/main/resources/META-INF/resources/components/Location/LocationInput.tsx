@@ -28,6 +28,7 @@ interface LocationInputProps {
 	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 	onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 	onLocationChange: (locationValue: LocationValue | null) => void;
+	placeholder?: string;
 	serializedValue?: string;
 }
 
@@ -46,6 +47,7 @@ export function LocationInput({
 	onBlur,
 	onFocus,
 	onLocationChange,
+	placeholder,
 	serializedValue,
 }: LocationInputProps) {
 	const locationValue = useMemo(
@@ -231,6 +233,7 @@ export function LocationInput({
 							onItemsChange={(newSuggestions: any[] | null) =>
 								setSuggestions(newSuggestions ?? [])
 							}
+							placeholder={placeholder}
 							value={address}
 						>
 							{(placePrediction: any) => (

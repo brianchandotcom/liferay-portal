@@ -66,12 +66,12 @@ public class FragmentDisplayContextTest {
 	@Test
 	@TestInfo("LPD-111343")
 	public void testGetAIAssistantProps() {
-		String configurationSchema = RandomTestUtil.randomString();
+		String configurationSchemaJSON = RandomTestUtil.randomString();
 
 		Mockito.when(
 			_fragmentEntryValidator.getConfigurationSchemaJSON()
 		).thenReturn(
-			configurationSchema
+			configurationSchemaJSON
 		);
 
 		String fragmentPortletNamespace = RandomTestUtil.randomString();
@@ -152,7 +152,7 @@ public class FragmentDisplayContextTest {
 				fragmentDisplayContext.getAIAssistantProps();
 
 			Assert.assertEquals(
-				configurationSchema,
+				configurationSchemaJSON,
 				aiAssistantProps.get("configurationSchema"));
 			Assert.assertEquals(
 				fragmentPortletNamespace,

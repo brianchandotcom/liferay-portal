@@ -20,13 +20,15 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.rest.filter.factory.FilterFactory;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalServiceWrapper;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultValueUtil;
 
@@ -67,14 +70,61 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 		if (FeatureFlagManagerUtil.isEnabled(
 				CompanyThreadLocal.getCompanyId(), "LPD-112761")) {
 
-			_putDefaultValues(
-				defaultLanguageId, groupId, objectDefinitionId,
-				objectEntryFolderId, values);
+			ObjectDefinition objectDefinition =
+				CMSDefaultValueUtil.fetchObjectDefinition(
+					CompanyThreadLocal.getCompanyId());
+
+			if ((objectDefinition != null) &&
+				(objectDefinition.getObjectDefinitionId() ==
+					objectDefinitionId)) {
+
+				_putTreePath(
+					MapUtil.getString(values, "classExternalReferenceCode"),
+					MapUtil.getString(values, "className"),
+					objectDefinition.getCompanyId(), groupId, values);
+			}
+			else {
+				_putDefaultValues(
+					defaultLanguageId, groupId, objectDefinitionId,
+					objectEntryFolderId, values);
+			}
 		}
 
 		return super.addObjectEntry(
 			groupId, userId, objectDefinitionId, objectEntryFolderId,
 			defaultLanguageId, values, serviceContext);
+	}
+
+	@Override
+	public ObjectEntry partialUpdateObjectEntry(
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-112761")) {
+
+			_putTreePath(objectEntryId, values);
+		}
+
+		return super.partialUpdateObjectEntry(
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
+	}
+
+	@Override
+	public ObjectEntry updateObjectEntry(
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-112761")) {
+
+			_putTreePath(objectEntryId, values);
+		}
+
+		return super.updateObjectEntry(
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	private String _getListTypeDefinitionExternalReferenceCode(
@@ -203,17 +253,6 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 			return;
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		if (Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				"L_CMS_DEFAULT_VALUE")) {
-
-			return;
-		}
-
 		Map<String, JSONObject> defaultValues =
 			CMSDefaultValueUtil.getInheritedDefaultValues(
 				groupId, _filterFactory, objectEntryFolderId);
@@ -247,6 +286,56 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 			_putValue(
 				defaultLanguageId, groupId, objectField,
 				jsonObject.get("value"), values);
+		}
+	}
+
+	private void _putTreePath(
+			long objectEntryId, Map<String, Serializable> values)
+		throws PortalException {
+
+		ObjectEntry objectEntry = getObjectEntry(objectEntryId);
+
+		ObjectDefinition objectDefinition =
+			CMSDefaultValueUtil.fetchObjectDefinition(
+				objectEntry.getCompanyId());
+
+		if ((objectDefinition == null) ||
+			(objectDefinition.getObjectDefinitionId() !=
+				objectEntry.getObjectDefinitionId())) {
+
+			return;
+		}
+
+		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
+
+		_putTreePath(
+			MapUtil.getString(
+				values, "classExternalReferenceCode",
+				MapUtil.getString(
+					objectEntryValues, "classExternalReferenceCode")),
+			MapUtil.getString(
+				values, "className",
+				MapUtil.getString(objectEntryValues, "className")),
+			objectEntry.getCompanyId(), objectEntry.getGroupId(), values);
+	}
+
+	private void _putTreePath(
+		String classExternalReferenceCode, String className, long companyId,
+		long groupId, Map<String, Serializable> values) {
+
+		values.put("treePath", StringPool.BLANK);
+
+		if (!Objects.equals(className, ObjectEntryFolder.class.getName())) {
+			return;
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				fetchObjectEntryFolderByExternalReferenceCode(
+					classExternalReferenceCode, groupId, companyId);
+
+		if (objectEntryFolder != null) {
+			values.put("treePath", objectEntryFolder.getTreePath());
 		}
 	}
 
@@ -333,7 +422,7 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

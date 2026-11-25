@@ -556,16 +556,14 @@ public class LayoutLocalServiceTest {
 		long launchId = RandomTestUtil.randomLong();
 
 		Assert.assertNull(
-			_layoutLocalService.fetchDraftLayout(
-				layout.getPlid(), launchId));
+			_layoutLocalService.fetchDraftLayout(layout.getPlid(), launchId));
 
 		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
 			launchId, layout);
 
 		Assert.assertEquals(
 			launchDraftLayout,
-			_layoutLocalService.fetchDraftLayout(
-				layout.getPlid(), launchId));
+			_layoutLocalService.fetchDraftLayout(layout.getPlid(), launchId));
 
 		Assert.assertEquals(
 			mainDraftLayout,

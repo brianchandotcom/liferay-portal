@@ -17,9 +17,7 @@ public class LaunchPreviewThreadLocal {
 		return _launchId.get();
 	}
 
-	public static SafeCloseable setLaunchIdWithSafeCloseable(
-		long launchId) {
-
+	public static SafeCloseable setLaunchIdWithSafeCloseable(long launchId) {
 		return _launchId.setWithSafeCloseable(launchId);
 	}
 
@@ -28,7 +26,6 @@ public class LaunchPreviewThreadLocal {
 
 	private static final CentralizedThreadLocal<Long> _launchId =
 		new CentralizedThreadLocal<>(
-			LaunchPreviewThreadLocal.class.getName() + "._launchId",
-			() -> -1L);
+			LaunchPreviewThreadLocal.class.getName() + "._launchId", () -> -1L);
 
 }

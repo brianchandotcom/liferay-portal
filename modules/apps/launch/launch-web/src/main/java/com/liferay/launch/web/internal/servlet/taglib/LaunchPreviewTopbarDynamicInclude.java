@@ -102,8 +102,7 @@ public class LaunchPreviewTopbarDynamicInclude extends BaseDynamicInclude {
 		HttpServletRequest httpServletRequest) {
 
 		if (Validator.isNull(
-				ParamUtil.getString(
-					httpServletRequest, "previewLaunchId")) ||
+				ParamUtil.getString(httpServletRequest, "previewLaunchId")) ||
 			!Objects.equals(
 				Constants.PREVIEW,
 				ParamUtil.getString(httpServletRequest, "p_l_mode"))) {

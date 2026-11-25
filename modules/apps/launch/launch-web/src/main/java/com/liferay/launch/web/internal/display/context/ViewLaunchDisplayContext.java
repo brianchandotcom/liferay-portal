@@ -67,8 +67,7 @@ public class ViewLaunchDisplayContext {
 	public String getAPIURL() {
 		String filterString = URLCodec.encodeURL(
 			StringBundler.concat(
-				"r_launchToLaunchEntries_c_launchId eq '",
-				getLaunchId(), "'"));
+				"r_launchToLaunchEntries_c_launchId eq '", getLaunchId(), "'"));
 
 		return "/o/launch-entries?filter=" + filterString;
 	}
@@ -138,8 +137,7 @@ public class ViewLaunchDisplayContext {
 
 	public long getLaunchId() {
 		if (_launchId == null) {
-			_launchId = ParamUtil.getLong(
-				_httpServletRequest, "launchId");
+			_launchId = ParamUtil.getLong(_httpServletRequest, "launchId");
 		}
 
 		return _launchId;

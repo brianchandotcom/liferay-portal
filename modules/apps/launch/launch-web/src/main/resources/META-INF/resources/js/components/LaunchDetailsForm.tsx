@@ -16,10 +16,7 @@ interface Props {
 	portletNamespace: string;
 }
 
-export default function LaunchDetailsForm({
-	launchId,
-	portletNamespace,
-}: Props) {
+export default function LaunchDetailsForm({launchId, portletNamespace}: Props) {
 	const [description, setDescription] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [name, setName] = useState('');

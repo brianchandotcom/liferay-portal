@@ -536,14 +536,12 @@ public class MillerColumnsDisplayContext {
 					return new LaunchDetails(0, restrictedLaunchName);
 				}
 
-				return _launchDetailsProvider.fetchLaunchDetails(
-					launchId);
+				return _launchDetailsProvider.fetchLaunchDetails(launchId);
 			});
 
 		launchDetails.sort(LaunchDetailsNameComparator.INSTANCE);
 
-		return JSONUtil.toJSONArray(
-			launchDetails, LaunchDetails::getName);
+		return JSONUtil.toJSONArray(launchDetails, LaunchDetails::getName);
 	}
 
 	private String _getLayoutPageTemplateCollectionsURL() {

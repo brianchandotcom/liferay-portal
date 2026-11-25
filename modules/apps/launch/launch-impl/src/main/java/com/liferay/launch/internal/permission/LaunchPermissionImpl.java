@@ -26,11 +26,9 @@ public class LaunchPermissionImpl implements LaunchPermission {
 
 	@Override
 	public boolean contains(
-		PermissionChecker permissionChecker, long launchId,
-		String actionId) {
+		PermissionChecker permissionChecker, long launchId, String actionId) {
 
-		ObjectEntry objectEntry = LaunchUtil.fetchLaunchObjectEntry(
-			launchId);
+		ObjectEntry objectEntry = LaunchUtil.fetchLaunchObjectEntry(launchId);
 
 		if (objectEntry == null) {
 			return false;

@@ -12,16 +12,14 @@ import java.util.Comparator;
 /**
  * @author Lourdes Fernández Besada
  */
-public class LaunchDetailsNameComparator
-	implements Comparator<LaunchDetails> {
+public class LaunchDetailsNameComparator implements Comparator<LaunchDetails> {
 
 	public static final Comparator<LaunchDetails> INSTANCE =
 		new LaunchDetailsNameComparator();
 
 	@Override
 	public int compare(
-		LaunchDetails launchDetails1,
-		LaunchDetails launchDetails2) {
+		LaunchDetails launchDetails1, LaunchDetails launchDetails2) {
 
 		String name1 = launchDetails1.getName();
 		String name2 = launchDetails2.getName();

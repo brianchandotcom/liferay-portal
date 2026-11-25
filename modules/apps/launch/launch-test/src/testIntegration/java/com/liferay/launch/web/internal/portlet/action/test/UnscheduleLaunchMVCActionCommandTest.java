@@ -189,9 +189,8 @@ public class UnscheduleLaunchMVCActionCommandTest {
 	private void _assertScheduled(Date expectedDate, int expectedStatus)
 		throws Exception {
 
-		ObjectEntry launchObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				_launchObjectEntry.getObjectEntryId());
+		ObjectEntry launchObjectEntry = _objectEntryLocalService.getObjectEntry(
+			_launchObjectEntry.getObjectEntryId());
 
 		Assert.assertEquals(expectedStatus, launchObjectEntry.getStatus());
 
@@ -241,8 +240,7 @@ public class UnscheduleLaunchMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
 		mockLiferayPortletActionRequest.setParameter(
-			"launchId",
-			String.valueOf(_launchObjectEntry.getObjectEntryId()));
+			"launchId", String.valueOf(_launchObjectEntry.getObjectEntryId()));
 		mockLiferayPortletActionRequest.setParameter("redirect", redirect);
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =

@@ -200,12 +200,9 @@ export async function listLaunchEntries({
 export async function listLaunches({
 	pageSize = 50,
 }: {pageSize?: number} = {}): Promise<Launch[]> {
-	const response = await fetch(
-		`${LAUNCHES_BASE_URL}?pageSize=${pageSize}`,
-		{
-			headers: DEFAULT_HEADERS,
-		}
-	);
+	const response = await fetch(`${LAUNCHES_BASE_URL}?pageSize=${pageSize}`, {
+		headers: DEFAULT_HEADERS,
+	});
 
 	if (!response.ok) {
 		throw new Error(Liferay.Language.get('unable-to-list-launches'));

@@ -108,8 +108,7 @@ public class LaunchEntryDuplicateObjectValidationRuleEngineImpl
 			LaunchUtil.getEqualsPredicate(
 				"r_launchToLaunchEntries_c_launchId", objectDefinitionId,
 				GetterUtil.getLong(
-					properties.get(
-						"r_launchToLaunchEntries_c_launchId"))));
+					properties.get("r_launchToLaunchEntries_c_launchId"))));
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 

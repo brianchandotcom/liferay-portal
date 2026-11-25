@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "destination.name=" + LaunchDestinationNames.LAUNCH_SCHEDULED_PUBLISH,
 	service = MessageListener.class
 )
-public class LaunchScheduledPublishMessageListener
-	extends BaseMessageListener {
+public class LaunchScheduledPublishMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

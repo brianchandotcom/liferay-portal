@@ -5,9 +5,9 @@
 
 package com.liferay.launch.internal.details;
 
-import com.liferay.launch.internal.util.LaunchUtil;
 import com.liferay.launch.details.LaunchDetails;
 import com.liferay.launch.details.provider.LaunchDetailsProvider;
+import com.liferay.launch.internal.util.LaunchUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -21,8 +21,7 @@ public class LaunchDetailsProviderImpl implements LaunchDetailsProvider {
 
 	@Override
 	public LaunchDetails fetchLaunchDetails(long launchId) {
-		ObjectEntry objectEntry = LaunchUtil.fetchLaunchObjectEntry(
-			launchId);
+		ObjectEntry objectEntry = LaunchUtil.fetchLaunchObjectEntry(launchId);
 
 		if (objectEntry == null) {
 			return null;

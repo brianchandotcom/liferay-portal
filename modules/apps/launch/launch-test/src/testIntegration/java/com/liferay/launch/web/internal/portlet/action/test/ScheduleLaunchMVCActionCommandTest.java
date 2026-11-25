@@ -252,9 +252,8 @@ public class ScheduleLaunchMVCActionCommandTest {
 			Date expectedDate, int expectedStatus)
 		throws Exception {
 
-		ObjectEntry launchObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				_launchObjectEntry.getObjectEntryId());
+		ObjectEntry launchObjectEntry = _objectEntryLocalService.getObjectEntry(
+			_launchObjectEntry.getObjectEntryId());
 
 		Assert.assertEquals(expectedStatus, launchObjectEntry.getStatus());
 
@@ -296,8 +295,7 @@ public class ScheduleLaunchMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
 		mockLiferayPortletActionRequest.setParameter(
-			"launchId",
-			String.valueOf(_launchObjectEntry.getObjectEntryId()));
+			"launchId", String.valueOf(_launchObjectEntry.getObjectEntryId()));
 		mockLiferayPortletActionRequest.setParameter(
 			"publishTime", String.valueOf(publishTime));
 		mockLiferayPortletActionRequest.setParameter("redirect", redirect);

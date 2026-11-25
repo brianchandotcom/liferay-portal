@@ -57,13 +57,11 @@ public class LaunchDetailsProviderTest {
 
 		ObjectEntry launchObjectEntry = _addLaunchObjectEntry(name);
 
-		LaunchDetails launchDetails =
-			_launchDetailsProvider.fetchLaunchDetails(
-				launchObjectEntry.getObjectEntryId());
+		LaunchDetails launchDetails = _launchDetailsProvider.fetchLaunchDetails(
+			launchObjectEntry.getObjectEntryId());
 
 		Assert.assertEquals(
-			launchObjectEntry.getObjectEntryId(),
-			launchDetails.getLaunchId());
+			launchObjectEntry.getObjectEntryId(), launchDetails.getLaunchId());
 		Assert.assertEquals(name, launchDetails.getName());
 	}
 

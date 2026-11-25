@@ -128,8 +128,7 @@ public class LaunchPublisherTest {
 
 		ObjectEntry deletedLaunchObjectEntry = _addLaunchObjectEntry();
 
-		long deletedLaunchId =
-			deletedLaunchObjectEntry.getObjectEntryId();
+		long deletedLaunchId = deletedLaunchObjectEntry.getObjectEntryId();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, LoggerTestUtil.ERROR)) {
@@ -140,8 +139,7 @@ public class LaunchPublisherTest {
 					_launchPublisher.publish(
 						deletedLaunchId, TestPropsValues.getUserId());
 
-					_objectEntryLocalService.deleteObjectEntry(
-						deletedLaunchId);
+					_objectEntryLocalService.deleteObjectEntry(deletedLaunchId);
 
 					return null;
 				});
@@ -199,8 +197,7 @@ public class LaunchPublisherTest {
 
 		ObjectEntry publishedLaunchObjectEntry = _addLaunchObjectEntry();
 
-		long publishedLaunchId =
-			publishedLaunchObjectEntry.getObjectEntryId();
+		long publishedLaunchId = publishedLaunchObjectEntry.getObjectEntryId();
 
 		_launchPublisher.publish(
 			publishedLaunchId, TestPropsValues.getUserId());
@@ -258,8 +255,7 @@ public class LaunchPublisherTest {
 
 		// Launch unscheduled before its background task runs
 
-		ObjectEntry unscheduledLaunchObjectEntry =
-			_addLaunchObjectEntry();
+		ObjectEntry unscheduledLaunchObjectEntry = _addLaunchObjectEntry();
 
 		long unscheduledLaunchId =
 			unscheduledLaunchObjectEntry.getObjectEntryId();
@@ -277,8 +273,7 @@ public class LaunchPublisherTest {
 					_launchPublisher.publish(
 						unscheduledLaunchId, TestPropsValues.getUserId());
 
-					_launchPublisher.unschedulePublish(
-						unscheduledLaunchId);
+					_launchPublisher.unschedulePublish(unscheduledLaunchId);
 
 					return null;
 				});
@@ -290,8 +285,7 @@ public class LaunchPublisherTest {
 			LogEntry logEntry = logEntries.get(0);
 
 			String message =
-				"Launch " + unscheduledLaunchId +
-					" is no longer scheduled";
+				"Launch " + unscheduledLaunchId + " is no longer scheduled";
 
 			Assert.assertEquals(message, logEntry.getMessage());
 
@@ -306,8 +300,8 @@ public class LaunchPublisherTest {
 			Assert.assertEquals(message, backgroundTask.getStatusMessage());
 		}
 
-		unscheduledLaunchObjectEntry =
-			_objectEntryLocalService.getObjectEntry(unscheduledLaunchId);
+		unscheduledLaunchObjectEntry = _objectEntryLocalService.getObjectEntry(
+			unscheduledLaunchId);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
@@ -387,12 +381,11 @@ public class LaunchPublisherTest {
 			String.valueOf(journalArticle.getVersion()),
 			version.getVersionKey());
 
-		ObjectEntry launchObjectEntry =
-			_objectEntryLocalService.getObjectEntry(launchId);
+		ObjectEntry launchObjectEntry = _objectEntryLocalService.getObjectEntry(
+			launchId);
 
 		Assert.assertNotEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			launchObjectEntry.getStatus());
+			WorkflowConstants.STATUS_APPROVED, launchObjectEntry.getStatus());
 
 		// Launch with launch entries that can all be published
 
@@ -418,12 +411,10 @@ public class LaunchPublisherTest {
 			draftId, launchEntryObjectEntry, launchEntryManager,
 			publishedVersion);
 
-		launchObjectEntry = _objectEntryLocalService.getObjectEntry(
-			launchId);
+		launchObjectEntry = _objectEntryLocalService.getObjectEntry(launchId);
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			launchObjectEntry.getStatus());
+			WorkflowConstants.STATUS_APPROVED, launchObjectEntry.getStatus());
 
 		// Object entry that is not a launch
 
@@ -476,8 +467,8 @@ public class LaunchPublisherTest {
 		long launchId = _launchObjectEntry.getObjectEntryId();
 
 		ObjectEntry launchEntryObjectEntry = _addLaunchEntryObjectEntry(
-			launchId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomString());
+			launchId, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString());
 
 		Assert.assertThrows(
 			PortalException.class,
@@ -523,8 +514,8 @@ public class LaunchPublisherTest {
 		long launchId = _launchObjectEntry.getObjectEntryId();
 
 		ObjectEntry launchEntryObjectEntry = _addLaunchEntryObjectEntry(
-			launchId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomString());
+			launchId, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString());
 
 		Assert.assertThrows(
 			PortalException.class,
@@ -653,16 +644,15 @@ public class LaunchPublisherTest {
 
 		long launchId = _launchObjectEntry.getObjectEntryId();
 
-		ObjectEntry launchObjectEntry =
-			_objectEntryLocalService.getObjectEntry(launchId);
+		ObjectEntry launchObjectEntry = _objectEntryLocalService.getObjectEntry(
+			launchId);
 
 		Assert.assertEquals(expectedStatus, launchObjectEntry.getStatus());
 
 		SchedulerResponse schedulerResponse =
 			_schedulerEngineHelper.getScheduledJob(
 				StringBundler.concat(
-					launchId, StringPool.AT,
-					launchObjectEntry.getCompanyId()),
+					launchId, StringPool.AT, launchObjectEntry.getCompanyId()),
 				"liferay/launch_scheduled_publish", StorageType.PERSISTED);
 
 		Date scheduledDate = null;

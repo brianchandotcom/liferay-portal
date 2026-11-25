@@ -44,8 +44,8 @@ public class LaunchPublisherImpl implements LaunchPublisher {
 
 	@Override
 	public void publish(long launchId, long userId) throws PortalException {
-		ObjectEntry launchObjectEntry =
-			LaunchUtil.getLaunchObjectEntry(launchId);
+		ObjectEntry launchObjectEntry = LaunchUtil.getLaunchObjectEntry(
+			launchId);
 
 		if (launchObjectEntry.getStatus() ==
 				WorkflowConstants.STATUS_APPROVED) {
@@ -83,12 +83,10 @@ public class LaunchPublisherImpl implements LaunchPublisher {
 	public void schedulePublish(Date date, long launchId, long userId)
 		throws PortalException {
 
-		ObjectEntry launchObjectEntry =
-			LaunchUtil.getLaunchObjectEntry(launchId);
+		ObjectEntry launchObjectEntry = LaunchUtil.getLaunchObjectEntry(
+			launchId);
 
-		if (launchObjectEntry.getStatus() !=
-				WorkflowConstants.STATUS_DRAFT) {
-
+		if (launchObjectEntry.getStatus() != WorkflowConstants.STATUS_DRAFT) {
 			throw new PortalException(
 				"Launch " + launchId + " must be open to be scheduled");
 		}
@@ -109,8 +107,7 @@ public class LaunchPublisherImpl implements LaunchPublisher {
 		ServiceContext serviceContext = _createServiceContext(
 			launchObjectEntry, userId);
 
-		_updateScheduledDate(
-			date, launchObjectEntry, serviceContext, userId);
+		_updateScheduledDate(date, launchObjectEntry, serviceContext, userId);
 
 		_objectEntryLocalService.updateStatus(
 			userId, launchId, WorkflowConstants.STATUS_SCHEDULED,
@@ -125,16 +122,16 @@ public class LaunchPublisherImpl implements LaunchPublisher {
 		_schedulerEngineHelper.schedule(
 			_triggerFactory.createTrigger(
 				_getJobName(launchObjectEntry),
-				LaunchDestinationNames.LAUNCH_SCHEDULED_PUBLISH, date, null,
-				0, null),
+				LaunchDestinationNames.LAUNCH_SCHEDULED_PUBLISH, date, null, 0,
+				null),
 			StorageType.PERSISTED, String.valueOf(launchId),
 			LaunchDestinationNames.LAUNCH_SCHEDULED_PUBLISH, message);
 	}
 
 	@Override
 	public void unschedulePublish(long launchId) throws PortalException {
-		ObjectEntry launchObjectEntry =
-			LaunchUtil.getLaunchObjectEntry(launchId);
+		ObjectEntry launchObjectEntry = LaunchUtil.getLaunchObjectEntry(
+			launchId);
 
 		if (launchObjectEntry.getStatus() ==
 				WorkflowConstants.STATUS_SCHEDULED) {
@@ -187,8 +184,7 @@ public class LaunchPublisherImpl implements LaunchPublisher {
 
 		_objectEntryLocalService.updateObjectEntry(
 			userId, launchObjectEntry.getObjectEntryId(),
-			launchObjectEntry.getObjectEntryFolderId(), values,
-			serviceContext);
+			launchObjectEntry.getObjectEntryFolderId(), values, serviceContext);
 	}
 
 	@Reference

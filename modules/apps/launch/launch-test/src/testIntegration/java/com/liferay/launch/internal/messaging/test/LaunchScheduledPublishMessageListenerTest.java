@@ -218,9 +218,8 @@ public class LaunchScheduledPublishMessageListenerTest {
 	}
 
 	private void _assertStatus(int expectedStatus) throws Exception {
-		ObjectEntry launchObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				_launchObjectEntry.getObjectEntryId());
+		ObjectEntry launchObjectEntry = _objectEntryLocalService.getObjectEntry(
+			_launchObjectEntry.getObjectEntryId());
 
 		Assert.assertEquals(expectedStatus, launchObjectEntry.getStatus());
 	}
@@ -338,8 +337,8 @@ public class LaunchScheduledPublishMessageListenerTest {
 
 	private void _updateStatus(int status) throws Exception {
 		_objectEntryLocalService.updateStatus(
-			TestPropsValues.getUserId(),
-			_launchObjectEntry.getObjectEntryId(), status,
+			TestPropsValues.getUserId(), _launchObjectEntry.getObjectEntryId(),
+			status,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 	}

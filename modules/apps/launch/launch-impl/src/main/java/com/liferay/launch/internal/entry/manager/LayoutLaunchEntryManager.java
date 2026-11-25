@@ -79,8 +79,7 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 
 		if (launchDraftLayout == null) {
 			launchDraftLayout = _addLaunchDraftLayout(
-				baseLayout, launchId,
-				_layoutLocalService.getLayout(classPK));
+				baseLayout, launchId, _layoutLocalService.getLayout(classPK));
 		}
 
 		return _toDraft(_copyLayoutContent(baseLayout, launchDraftLayout));

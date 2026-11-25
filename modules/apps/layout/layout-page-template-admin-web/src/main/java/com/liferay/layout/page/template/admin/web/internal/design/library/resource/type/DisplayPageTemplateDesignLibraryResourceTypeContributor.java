@@ -17,7 +17,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -223,12 +222,6 @@ public class DisplayPageTemplateDesignLibraryResourceTypeContributor
 	@Override
 	public boolean hasViewPermission(
 		PermissionChecker permissionChecker, DepotEntry depotEntry) {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				depotEntry.getCompanyId(), "LPD-81651")) {
-
-			return false;
-		}
 
 		return _portletResourcePermission.contains(
 			permissionChecker, depotEntry.getGroupId(), ActionKeys.VIEW);

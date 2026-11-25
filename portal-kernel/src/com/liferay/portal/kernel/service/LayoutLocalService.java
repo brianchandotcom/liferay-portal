@@ -395,6 +395,8 @@ public interface LayoutLocalService
 			long targetSegmentsExperienceId, Layout targetLayout)
 		throws Exception;
 
+	public int countDraftLayouts(long plid);
+
 	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *
@@ -1748,4 +1750,4 @@ public interface LayoutLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1407315814
+// LIFERAY-SERVICE-BUILDER-HASH:-446431015

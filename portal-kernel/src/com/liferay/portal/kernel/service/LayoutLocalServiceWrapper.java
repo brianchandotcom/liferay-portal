@@ -421,6 +421,11 @@ public class LayoutLocalServiceWrapper
 			targetSegmentsExperienceId, targetLayout);
 	}
 
+	@Override
+	public int countDraftLayouts(long plid) {
+		return _layoutLocalService.countDraftLayouts(plid);
+	}
+
 	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *
@@ -2380,4 +2385,4 @@ public class LayoutLocalServiceWrapper
 	private LayoutLocalService _layoutLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1016631408
+// LIFERAY-SERVICE-BUILDER-HASH:-951043993

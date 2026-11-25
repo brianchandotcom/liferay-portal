@@ -137,10 +137,7 @@ public class FIPSModeValidatorTest {
 					FIPSModeValidator.class.getName(), LoggerTestUtil.WARN)) {
 
 				Assert.assertEquals(
-					Collections.emptyList(),
-					_getViolations(
-						FIPSModeValidator.
-							getKeyEncryptionKeyValidationErrors()));
+					Collections.emptyList(), _getKeyEncryptionKeyViolations());
 
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -162,10 +159,7 @@ public class FIPSModeValidatorTest {
 					companyKeyResolver)) {
 
 				Assert.assertEquals(
-					Collections.emptyList(),
-					_getViolations(
-						FIPSModeValidator.
-							getKeyEncryptionKeyValidationErrors()));
+					Collections.emptyList(), _getKeyEncryptionKeyViolations());
 
 				Mockito.when(
 					companyKeyResolver.isEnabled(Mockito.anyLong())
@@ -202,10 +196,7 @@ public class FIPSModeValidatorTest {
 				);
 
 				Assert.assertEquals(
-					Collections.emptyList(),
-					_getViolations(
-						FIPSModeValidator.
-							getKeyEncryptionKeyValidationErrors()));
+					Collections.emptyList(), _getKeyEncryptionKeyViolations());
 
 				Mockito.when(
 					companyKeyResolver.unwrapKey(companyId1, keyString1)
@@ -234,9 +225,7 @@ public class FIPSModeValidatorTest {
 							StringBundler.concat(
 								"Unable to reach the key encryption key of ",
 								"company ", companyId2, ": ", message))),
-					_getViolations(
-						FIPSModeValidator.
-							getKeyEncryptionKeyValidationErrors()));
+					_getKeyEncryptionKeyViolations());
 			}
 		}
 	}
@@ -300,9 +289,7 @@ public class FIPSModeValidatorTest {
 					"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "AES")) {
 
 			Assert.assertEquals(
-				Collections.emptyList(),
-				_getViolations(
-					FIPSModeValidator.getPortalPropertiesValidationErrors()));
+				Collections.emptyList(), _getPortalPropertiesViolations());
 
 			try (SafeCloseable safeCloseable7 =
 					PropsValuesTestUtil.swapWithSafeCloseable(
@@ -321,9 +308,7 @@ public class FIPSModeValidatorTest {
 							"FIPS mode requires the property \"" +
 								PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH +
 									"\" to be at least 14")),
-					_getViolations(
-						FIPSModeValidator.
-							getPortalPropertiesValidationErrors()));
+					_getPortalPropertiesViolations());
 			}
 
 			try (SafeCloseable safeCloseable7 =
@@ -338,9 +323,7 @@ public class FIPSModeValidatorTest {
 							"FIPS mode requires the property \"" +
 								PropsKeys.DEFAULT_ADMIN_PASSWORD +
 									"\" to be at least 14 bytes")),
-					_getViolations(
-						FIPSModeValidator.
-							getPortalPropertiesValidationErrors()));
+					_getPortalPropertiesViolations());
 			}
 
 			try (SafeCloseable safeCloseable7 =
@@ -355,9 +338,7 @@ public class FIPSModeValidatorTest {
 							"FIPS mode requires the property \"" +
 								PropsKeys.TUNNEL_UTIL_VERIFY_SSL_HOSTNAME +
 									"\" to be enabled")),
-					_getViolations(
-						FIPSModeValidator.
-							getPortalPropertiesValidationErrors()));
+					_getPortalPropertiesViolations());
 			}
 
 			try (SafeCloseable safeCloseable7 =
@@ -371,9 +352,7 @@ public class FIPSModeValidatorTest {
 							"FIPS mode requires the property \"" +
 								PropsKeys.TUNNEL_UTIL_VERIFY_SSL_HOSTNAME +
 									"\" to be enabled")),
-					_getViolations(
-						FIPSModeValidator.
-							getPortalPropertiesValidationErrors()));
+					_getPortalPropertiesViolations());
 			}
 		}
 	}
@@ -1346,6 +1325,20 @@ public class FIPSModeValidatorTest {
 		NodeList nodeList = document.getElementsByTagName(tagName);
 
 		return (Element)nodeList.item(0);
+	}
+
+	private List<String> _getKeyEncryptionKeyViolations() {
+		return _getViolations(
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_getKeyEncryptionKeyValidationErrors",
+				new Class<?>[0]));
+	}
+
+	private List<String> _getPortalPropertiesViolations() {
+		return _getViolations(
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_getPortalPropertiesValidationErrors",
+				new Class<?>[0]));
 	}
 
 	private List<String> _getRequiredPropertyValuesViolations(

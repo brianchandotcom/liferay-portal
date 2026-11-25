@@ -17,7 +17,6 @@ import java.io.IOException;
 
 import java.net.URL;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.util.ArrayList;
@@ -469,12 +468,12 @@ public class BaseClientTestrayImporterTest
 		File file = temporaryFolder.newFile(
 			RandomTestUtil.randomString() + ".xml");
 
-		String resultsXML = JenkinsResultsParserUtil.combine(
-			"<testsuite><metrics><metric name=\"",
-			RandomTestUtil.randomString(),
-			"\" value=\"é\"/></metrics></testsuite>");
-
-		Files.write(file.toPath(), resultsXML.getBytes(StandardCharsets.UTF_8));
+		JenkinsResultsParserUtil.write(
+			file,
+			JenkinsResultsParserUtil.combine(
+				"<testsuite><metrics><metric name=\"",
+				RandomTestUtil.randomString(),
+				"\" value=\"é\"/></metrics></testsuite>"));
 
 		return file;
 	}

@@ -1232,10 +1232,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				Mockito.anyString(), Mockito.anyString())
 		).thenCallRealMethod();
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+
 		ObjectEntry itemProxyObjectEntry = _createItemProxyObjectEntry(
 			RandomTestUtil.randomString());
-
-		String externalReferenceCode = RandomTestUtil.randomString();
 
 		Mockito.when(
 			_customFDSSerializer.getRelatedObjectEntries(

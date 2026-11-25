@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Thiago Buarque
  */
 @Component(
-	property = "service.ranking:Integer=200",
+	property = "service.ranking:Integer=500",
 	service = DesignLibraryResourceTypeContributor.class
 )
 public class FragmentDesignLibraryResourceTypeContributor

@@ -39,6 +39,10 @@ public interface DesignLibraryResourceTypeContributor {
 		return getLabel(locale);
 	}
 
+	public default String getCreationItemsSectionKey() {
+		return getKey();
+	}
+
 	public String getDefaultActionId();
 
 	public String getEntryClassName();

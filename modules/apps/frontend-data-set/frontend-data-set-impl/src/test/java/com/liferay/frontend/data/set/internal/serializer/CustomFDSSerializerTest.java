@@ -825,9 +825,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		SystemFDSSerializer systemFDSSerializer = Mockito.mock(
 			SystemFDSSerializer.class);
 
+		String apiURL = RandomTestUtil.randomString();
 		JSONObject tokenResolutionsJSONObject = JSONUtil.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-		String apiURL = RandomTestUtil.randomString();
 
 		Mockito.when(
 			systemFDSSerializer.serializeFilters(
@@ -1209,9 +1209,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			Collections.singletonMap(FIELD_NAMES[0], itemProxyAPIURL)
 		);
 
+		String itemProxyResolvedAPIURL = RandomTestUtil.randomString();
 		JSONObject tokenResolutionsJSONObject = JSONUtil.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-		String itemProxyResolvedAPIURL = RandomTestUtil.randomString();
 
 		Mockito.when(
 			systemFDSSerializer.serializeSelectionFilterAPIURLs(

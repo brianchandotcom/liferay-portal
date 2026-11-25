@@ -5,7 +5,7 @@
 
 package com.liferay.launch.web.internal.portlet.action;
 
-import com.liferay.launch.set.publisher.LaunchSetPublisher;
+import com.liferay.launch.publisher.LaunchPublisher;
 import com.liferay.launch.web.internal.constants.LaunchPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -40,14 +40,14 @@ public class PublishLaunchMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_launchSetPublisher.publish(
-			ParamUtil.getLong(actionRequest, "launchSetId"),
+		_launchPublisher.publish(
+			ParamUtil.getLong(actionRequest, "launchId"),
 			themeDisplay.getUserId());
 
 		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference
-	private LaunchSetPublisher _launchSetPublisher;
+	private LaunchPublisher _launchPublisher;
 
 }

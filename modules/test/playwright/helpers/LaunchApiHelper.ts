@@ -11,11 +11,11 @@ export type LaunchEntry = {
 	classPK: number;
 	draftId: number;
 	id: number;
-	r_launchSetToLaunchEntries_c_launchSetId: number;
+	r_launchToLaunchEntries_c_launchId: number;
 	versionKey?: string;
 };
 
-export type LaunchSet = {
+export type Launch = {
 	description: string;
 	id: number;
 	name: string;
@@ -28,21 +28,21 @@ export class LaunchApiHelper {
 		this.apiHelpers = apiHelpers;
 	}
 
-	async createLaunchSet(name: string): Promise<LaunchSet> {
-		return this.apiHelpers.post(`${this.apiHelpers.baseUrl}launch-sets`, {
+	async createLaunch(name: string): Promise<Launch> {
+		return this.apiHelpers.post(`${this.apiHelpers.baseUrl}launches`, {
 			data: {description: '', name, status: {code: 2}},
 		});
 	}
 
-	async deleteLaunchSet(launchSetId: number) {
+	async deleteLaunch(launchId: number) {
 		await this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}launch-sets/${launchSetId}`
+			`${this.apiHelpers.baseUrl}launches/${launchId}`
 		);
 	}
 
-	async getLaunchEntries(launchSetId: number): Promise<LaunchEntry[]> {
+	async getLaunchEntries(launchId: number): Promise<LaunchEntry[]> {
 		const filter = encodeURIComponent(
-			`r_launchSetToLaunchEntries_c_launchSetId eq '${launchSetId}'`
+			`r_launchToLaunchEntries_c_launchId eq '${launchId}'`
 		);
 
 		const {items} = await this.apiHelpers.get(
@@ -53,10 +53,10 @@ export class LaunchApiHelper {
 	}
 
 	async getLaunchEntry(
-		launchSetId: number,
+		launchId: number,
 		className: string
 	): Promise<LaunchEntry> {
-		const launchEntries = await this.getLaunchEntries(launchSetId);
+		const launchEntries = await this.getLaunchEntries(launchId);
 
 		const launchEntry = launchEntries.find(
 			(candidate) => candidate.className === className
@@ -64,18 +64,18 @@ export class LaunchApiHelper {
 
 		if (!launchEntry) {
 			throw new Error(
-				`Launch ${launchSetId} holds no entry of type ${className}`
+				`Launch ${launchId} holds no entry of type ${className}`
 			);
 		}
 
 		return launchEntry;
 	}
 
-	async getLaunchSetByName(name: string): Promise<LaunchSet | undefined> {
+	async getLaunchByName(name: string): Promise<Launch | undefined> {
 		const filter = encodeURIComponent(`name eq '${name}'`);
 
 		const {items} = await this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}launch-sets?filter=${filter}`
+			`${this.apiHelpers.baseUrl}launches?filter=${filter}`
 		);
 
 		return items?.[0];

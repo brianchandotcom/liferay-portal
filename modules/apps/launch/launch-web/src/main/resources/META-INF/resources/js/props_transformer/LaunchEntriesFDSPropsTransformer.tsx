@@ -21,7 +21,7 @@ interface AdditionalProps {
 	getLaunchEntryVersionsURL: string;
 	itemSelectedEventName: string;
 	launchEntryManagers: LaunchEntryManagerProps[];
-	launchSetId: number;
+	launchId: number;
 	published: boolean;
 	resolveLaunchEntryURL: string;
 }
@@ -62,7 +62,7 @@ export default function LaunchEntriesFDSPropsTransformer({
 								additionalProps.itemSelectedEventName,
 							launchEntryManager:
 								additionalProps.launchEntryManagers[index],
-							launchSetId: additionalProps.launchSetId,
+							launchId: additionalProps.launchId,
 							onAdd: loadData,
 							portletNamespace,
 							resolveLaunchEntryURL:

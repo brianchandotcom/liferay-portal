@@ -107,7 +107,7 @@ public class LaunchEntryRelevantObjectEntryModelListenerTest {
 				_journalArticle.getResourcePrimKey(),
 				MapUtil.getLong(
 					launchEntryObjectEntry1.getValues(),
-					"r_launchSetToLaunchEntries_c_launchSetId"));
+					"r_launchToLaunchEntries_c_launchId"));
 
 			Assert.fail();
 		}
@@ -208,8 +208,8 @@ public class LaunchEntryRelevantObjectEntryModelListenerTest {
 			String className, long classPK)
 		throws Exception {
 
-		ObjectEntry launchSetObjectEntry = _addObjectEntry(
-			"LaunchSet",
+		ObjectEntry launchObjectEntry = _addObjectEntry(
+			"Launch",
 			HashMapBuilder.<String, Serializable>put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -218,11 +218,11 @@ public class LaunchEntryRelevantObjectEntryModelListenerTest {
 			WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		return _addLaunchEntryObjectEntry(
-			className, classPK, launchSetObjectEntry.getObjectEntryId());
+			className, classPK, launchObjectEntry.getObjectEntryId());
 	}
 
 	private ObjectEntry _addLaunchEntryObjectEntry(
-			String className, long classPK, long launchSetId)
+			String className, long classPK, long launchId)
 		throws Exception {
 
 		return _addObjectEntry(
@@ -234,7 +234,7 @@ public class LaunchEntryRelevantObjectEntryModelListenerTest {
 			).put(
 				"classPK", classPK
 			).put(
-				"r_launchSetToLaunchEntries_c_launchSetId", launchSetId
+				"r_launchToLaunchEntries_c_launchId", launchId
 			).build(),
 			WorkflowConstants.ACTION_PUBLISH);
 	}

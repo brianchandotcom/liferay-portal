@@ -189,7 +189,7 @@ export interface Config {
 	isCMS: boolean;
 	isConversionDraft: boolean;
 	isPrivateLayoutsEnabled: boolean;
-	launchSetId: number;
+	launchId: number;
 	layoutConversionWarningMessages: string[] | null;
 	layoutItemSelectorURL: String;
 	layoutName: string;

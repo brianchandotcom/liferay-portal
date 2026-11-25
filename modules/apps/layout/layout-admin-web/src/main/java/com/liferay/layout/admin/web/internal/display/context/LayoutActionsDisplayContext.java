@@ -266,8 +266,8 @@ public class LayoutActionsDisplayContext {
 									PortalUtil.getLayoutFullURL(
 										launchDraftLayout, _themeDisplay),
 									"p_l_mode", Constants.PREVIEW,
-									"previewLaunchSetId",
-									launchDraftLayout.getLaunchSetId());
+									"previewLaunchId",
+									launchDraftLayout.getLaunchId());
 
 							dropdownItem.setData(
 								HashMapBuilder.<String, Object>put(
@@ -444,7 +444,7 @@ public class LayoutActionsDisplayContext {
 	private boolean _isLaunchDraftLayout() {
 		Layout layout = _themeDisplay.getLayout();
 
-		if (layout.isDraftLayout() && (layout.getLaunchSetId() > 0)) {
+		if (layout.isDraftLayout() && (layout.getLaunchId() > 0)) {
 			return true;
 		}
 

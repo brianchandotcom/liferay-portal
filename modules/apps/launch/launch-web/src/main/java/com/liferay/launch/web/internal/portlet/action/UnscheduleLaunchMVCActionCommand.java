@@ -5,7 +5,7 @@
 
 package com.liferay.launch.web.internal.portlet.action;
 
-import com.liferay.launch.set.publisher.LaunchSetPublisher;
+import com.liferay.launch.publisher.LaunchPublisher;
 import com.liferay.launch.web.internal.constants.LaunchPortletKeys;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -41,13 +41,13 @@ public class UnscheduleLaunchMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
-		long launchSetId = ParamUtil.getLong(actionRequest, "launchSetId");
+		long launchId = ParamUtil.getLong(actionRequest, "launchId");
 
 		_objectEntryService.checkModelResourcePermission(
-			_objectEntryLocalService.getObjectEntry(launchSetId),
+			_objectEntryLocalService.getObjectEntry(launchId),
 			ActionKeys.UPDATE);
 
-		_launchSetPublisher.unschedulePublish(launchSetId);
+		_launchPublisher.unschedulePublish(launchId);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
@@ -58,7 +58,7 @@ public class UnscheduleLaunchMVCActionCommand
 	}
 
 	@Reference
-	private LaunchSetPublisher _launchSetPublisher;
+	private LaunchPublisher _launchPublisher;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

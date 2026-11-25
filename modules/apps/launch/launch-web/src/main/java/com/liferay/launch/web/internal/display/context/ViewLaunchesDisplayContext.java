@@ -40,7 +40,7 @@ public class ViewLaunchesDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/launch-sets";
+		return "/o/launches";
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -94,7 +94,7 @@ public class ViewLaunchesDisplayContext {
 	}
 
 	public String getFDSName() {
-		return LaunchFDSNames.LAUNCH_SETS;
+		return LaunchFDSNames.LAUNCHES;
 	}
 
 	public FDSSortItemList getFDSSortItemList() {
@@ -123,7 +123,7 @@ public class ViewLaunchesDisplayContext {
 		).setActionName(
 			"/launch/schedule_launch"
 		).setParameter(
-			"launchSetId", "{id}"
+			"launchId", "{id}"
 		).buildString();
 	}
 
@@ -133,7 +133,7 @@ public class ViewLaunchesDisplayContext {
 		).setActionName(
 			"/launch/unschedule_launch"
 		).setParameter(
-			"launchSetId", "{id}"
+			"launchId", "{id}"
 		).buildString();
 	}
 
@@ -143,9 +143,9 @@ public class ViewLaunchesDisplayContext {
 		).setMVCRenderCommandName(
 			"/launch/view_launch"
 		).setParameter(
-			"launchSetId", "{id}"
+			"launchId", "{id}"
 		).setParameter(
-			"launchSetName", "{name}"
+			"launchName", "{name}"
 		).buildString();
 	}
 

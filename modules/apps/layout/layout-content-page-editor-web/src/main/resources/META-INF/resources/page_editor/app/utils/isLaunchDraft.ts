@@ -6,5 +6,5 @@
 import {config} from '../config/index';
 
 export function isLaunchDraft() {
-	return config.launchSetId > 0;
+	return config.launchId > 0;
 }

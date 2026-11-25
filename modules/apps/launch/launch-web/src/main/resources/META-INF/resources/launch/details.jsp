@@ -18,7 +18,7 @@ ViewLaunchDisplayContext viewLaunchDisplayContext = (ViewLaunchDisplayContext)re
 		module="{LaunchDetailsForm} from launch-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"launchSetId", viewLaunchDisplayContext.getLaunchSetId()
+				"launchId", viewLaunchDisplayContext.getLaunchId()
 			).put(
 				"portletNamespace", liferayPortletResponse.getNamespace()
 			).build()

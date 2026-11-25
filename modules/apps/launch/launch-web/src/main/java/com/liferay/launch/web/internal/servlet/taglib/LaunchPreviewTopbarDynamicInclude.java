@@ -84,8 +84,8 @@ public class LaunchPreviewTopbarDynamicInclude extends BaseDynamicInclude {
 					"{LaunchPreviewTopbar} from launch-web",
 					portletNamespace + "PreviewTopbar", null, true),
 				HashMapBuilder.<String, Object>put(
-					"launchSetId",
-					ParamUtil.getLong(httpServletRequest, "previewLaunchSetId")
+					"launchId",
+					ParamUtil.getLong(httpServletRequest, "previewLaunchId")
 				).put(
 					"noLaunchURL", _getNoLaunchURL(httpServletRequest)
 				).build(),
@@ -103,7 +103,7 @@ public class LaunchPreviewTopbarDynamicInclude extends BaseDynamicInclude {
 
 		if (Validator.isNull(
 				ParamUtil.getString(
-					httpServletRequest, "previewLaunchSetId")) ||
+					httpServletRequest, "previewLaunchId")) ||
 			!Objects.equals(
 				Constants.PREVIEW,
 				ParamUtil.getString(httpServletRequest, "p_l_mode"))) {
@@ -127,7 +127,7 @@ public class LaunchPreviewTopbarDynamicInclude extends BaseDynamicInclude {
 
 	private String _getNoLaunchURL(HttpServletRequest httpServletRequest) {
 		return HttpComponentsUtil.setParameter(
-			_portal.getCurrentURL(httpServletRequest), "previewLaunchSetId", 0);
+			_portal.getCurrentURL(httpServletRequest), "previewLaunchId", 0);
 	}
 
 	private void _writeCSSLink(

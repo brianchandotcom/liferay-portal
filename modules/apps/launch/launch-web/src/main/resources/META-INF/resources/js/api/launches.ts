@@ -10,7 +10,7 @@ const DEFAULT_HEADERS = {
 };
 
 const LAUNCH_ENTRIES_BASE_URL = '/o/launch-entries';
-const LAUNCH_SETS_BASE_URL = '/o/launch-sets';
+const LAUNCHES_BASE_URL = '/o/launches';
 
 async function readJSON(response: Response, message: string) {
 	const text = await response.text();
@@ -48,7 +48,7 @@ export interface LaunchEntry {
 	classPK: number;
 	draftId: number;
 	id: number;
-	r_launchSetToLaunchEntries_c_launchSetId: number;
+	r_launchToLaunchEntries_c_launchId: number;
 	versionKey?: string;
 }
 
@@ -78,7 +78,7 @@ export async function createLaunch({
 	description: string;
 	name: string;
 }): Promise<Launch> {
-	const response = await fetch(LAUNCH_SETS_BASE_URL, {
+	const response = await fetch(LAUNCHES_BASE_URL, {
 		body: JSON.stringify({description, name, status: {code: 2}}),
 		headers: DEFAULT_HEADERS,
 		method: 'POST',
@@ -99,19 +99,19 @@ export async function createLaunchEntry({
 	baseVersionKey,
 	className,
 	classPK,
-	launchSetId,
+	launchId,
 }: {
 	baseVersionKey: string;
 	className: string;
 	classPK: number;
-	launchSetId: number;
+	launchId: number;
 }): Promise<LaunchEntry> {
 	const response = await fetch(LAUNCH_ENTRIES_BASE_URL, {
 		body: JSON.stringify({
 			baseVersionKey,
 			className,
 			classPK,
-			r_launchSetToLaunchEntries_c_launchSetId: launchSetId,
+			r_launchToLaunchEntries_c_launchId: launchId,
 		}),
 		headers: DEFAULT_HEADERS,
 		method: 'POST',
@@ -130,7 +130,7 @@ export async function createLaunchEntry({
 }
 
 export async function getLaunch(id: number): Promise<Launch> {
-	const response = await fetch(`${LAUNCH_SETS_BASE_URL}/${id}`, {
+	const response = await fetch(`${LAUNCHES_BASE_URL}/${id}`, {
 		headers: DEFAULT_HEADERS,
 	});
 
@@ -171,14 +171,14 @@ export async function listLaunchEntriesForAsset({
 export async function listLaunchEntries({
 	className,
 	classPK,
-	launchSetId,
+	launchId,
 }: {
 	className: string;
 	classPK: number;
-	launchSetId: number;
+	launchId: number;
 }): Promise<LaunchEntry[]> {
 	const filter = encodeURIComponent(
-		`className eq '${className}' and classPK eq ${classPK} and r_launchSetToLaunchEntries_c_launchSetId eq '${launchSetId}'`
+		`className eq '${className}' and classPK eq ${classPK} and r_launchToLaunchEntries_c_launchId eq '${launchId}'`
 	);
 
 	const response = await fetch(
@@ -201,7 +201,7 @@ export async function listLaunches({
 	pageSize = 50,
 }: {pageSize?: number} = {}): Promise<Launch[]> {
 	const response = await fetch(
-		`${LAUNCH_SETS_BASE_URL}?pageSize=${pageSize}`,
+		`${LAUNCHES_BASE_URL}?pageSize=${pageSize}`,
 		{
 			headers: DEFAULT_HEADERS,
 		}
@@ -267,7 +267,7 @@ export async function updateLaunch({
 	id: number;
 	name: string;
 }): Promise<Launch> {
-	const response = await fetch(`${LAUNCH_SETS_BASE_URL}/${id}`, {
+	const response = await fetch(`${LAUNCHES_BASE_URL}/${id}`, {
 		body: JSON.stringify({description, name}),
 		headers: DEFAULT_HEADERS,
 		method: 'PATCH',

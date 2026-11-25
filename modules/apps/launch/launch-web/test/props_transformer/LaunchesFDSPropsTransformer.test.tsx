@@ -34,11 +34,11 @@ function transformProps() {
 	return LaunchesFDSPropsTransformer({
 		additionalProps: {
 			portletNamespace: '_namespace_',
-			scheduleLaunchURL: 'http://localhost/schedule?launchSetId={id}',
+			scheduleLaunchURL: 'http://localhost/schedule?launchId={id}',
 			timeZoneId: 'Asia/Tokyo',
 			timeZones: TIME_ZONES,
-			unscheduleLaunchURL: 'http://localhost/unschedule?launchSetId={id}',
-			viewLaunchURL: 'http://localhost/view?launchSetId={id}',
+			unscheduleLaunchURL: 'http://localhost/unschedule?launchId={id}',
+			viewLaunchURL: 'http://localhost/view?launchId={id}',
 		},
 		itemsActions: [{data: {id: 'schedule'}}, {data: {id: 'unschedule'}}],
 	});

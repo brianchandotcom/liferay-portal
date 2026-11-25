@@ -804,13 +804,13 @@ public class PortalImpl implements Portal {
 				url, "previewCTIndicator", true);
 		}
 
-		long previewLaunchSetId = LaunchPreviewThreadLocal.getLaunchSetId();
+		long previewLaunchId = LaunchPreviewThreadLocal.getLaunchId();
 
-		if (previewLaunchSetId > -1) {
+		if (previewLaunchId > -1) {
 			url = HttpComponentsUtil.setParameter(
 				url, "p_l_mode", Constants.PREVIEW);
 			url = HttpComponentsUtil.setParameter(
-				url, "previewLaunchSetId", previewLaunchSetId);
+				url, "previewLaunchId", previewLaunchId);
 		}
 
 		return url;

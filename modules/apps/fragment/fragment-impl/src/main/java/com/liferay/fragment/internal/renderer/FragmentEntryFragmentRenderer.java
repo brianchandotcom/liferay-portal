@@ -173,7 +173,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			!fragmentRendererContext.isViewMode() ||
 			(fragmentRendererContext.getPreviewClassPK() > 0) ||
 			!fragmentRendererContext.isUseCachedContent() ||
-			(LaunchPreviewThreadLocal.getLaunchSetId() > 0)) {
+			(LaunchPreviewThreadLocal.getLaunchId() > 0)) {
 
 			return false;
 		}

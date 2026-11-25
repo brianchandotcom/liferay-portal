@@ -5,7 +5,7 @@
 
 package com.liferay.launch.web.internal.portlet.action;
 
-import com.liferay.launch.set.publisher.LaunchSetPublisher;
+import com.liferay.launch.publisher.LaunchPublisher;
 import com.liferay.launch.web.internal.constants.LaunchPortletKeys;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -47,19 +47,19 @@ public class ScheduleLaunchMVCActionCommand extends BaseLaunchMVCActionCommand {
 
 		hideDefaultSuccessMessage(actionRequest);
 
-		long launchSetId = ParamUtil.getLong(actionRequest, "launchSetId");
+		long launchId = ParamUtil.getLong(actionRequest, "launchId");
 
 		_objectEntryService.checkModelResourcePermission(
-			_objectEntryLocalService.getObjectEntry(launchSetId),
+			_objectEntryLocalService.getObjectEntry(launchId),
 			ActionKeys.UPDATE);
 
 		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			_launchSetPublisher.schedulePublish(
+			_launchPublisher.schedulePublish(
 				new Date(ParamUtil.getLong(actionRequest, "publishTime")),
-				launchSetId, themeDisplay.getUserId());
+				launchId, themeDisplay.getUserId());
 		}
 		catch (SchedulerException schedulerException) {
 			if (schedulerException.getType() !=
@@ -96,7 +96,7 @@ public class ScheduleLaunchMVCActionCommand extends BaseLaunchMVCActionCommand {
 		ScheduleLaunchMVCActionCommand.class);
 
 	@Reference
-	private LaunchSetPublisher _launchSetPublisher;
+	private LaunchPublisher _launchPublisher;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

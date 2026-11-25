@@ -51,7 +51,7 @@ public class CommentsContentPageEditorSidebarPanel
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			if (layout.getLaunchSetId() > 0) {
+			if (layout.getLaunchId() > 0) {
 				return false;
 			}
 

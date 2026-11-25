@@ -22,14 +22,14 @@ export interface LaunchEntryManagerProps {
 export default function addLaunchEntry({
 	itemSelectedEventName,
 	launchEntryManager,
-	launchSetId,
+	launchId,
 	onAdd,
 	portletNamespace,
 	resolveLaunchEntryURL,
 }: {
 	itemSelectedEventName: string;
 	launchEntryManager: LaunchEntryManagerProps;
-	launchSetId: number;
+	launchId: number;
 	onAdd: () => void;
 	portletNamespace: string;
 	resolveLaunchEntryURL: string;
@@ -46,7 +46,7 @@ export default function addLaunchEntry({
 					const launchEntries = await listLaunchEntries({
 						className: launchEntryManager.className,
 						classPK,
-						launchSetId,
+						launchId,
 					});
 
 					if (launchEntries.length) {
@@ -61,7 +61,7 @@ export default function addLaunchEntry({
 						baseVersionKey,
 						className: launchEntryManager.className,
 						classPK,
-						launchSetId,
+						launchId,
 					});
 				})
 				.then(() => onAdd())

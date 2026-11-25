@@ -164,15 +164,15 @@ public class GetLayoutsStrutsActionTest {
 
 		_assertLayoutInTree(false, layout);
 
-		long launchSetId = RandomTestUtil.randomLong();
+		long launchId = RandomTestUtil.randomLong();
 
-		LayoutTestUtil.addLaunchDraftLayout(launchSetId, layout);
+		LayoutTestUtil.addLaunchDraftLayout(launchId, layout);
 
 		_assertLayoutInTree(false, layout);
 
 		try (SafeCloseable safeCloseable =
-				LaunchPreviewThreadLocal.setLaunchSetIdWithSafeCloseable(
-					launchSetId)) {
+				LaunchPreviewThreadLocal.setLaunchIdWithSafeCloseable(
+					launchId)) {
 
 			_assertLayoutInTree(true, layout);
 		}

@@ -621,11 +621,11 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"isSegmentationEnabled", _isSegmentationEnabled()
 			).put(
-				"launchSetId",
+				"launchId",
 				() -> {
 					Layout layout = themeDisplay.getLayout();
 
-					return layout.getLaunchSetId();
+					return layout.getLaunchId();
 				}
 			).put(
 				"layoutConversionWarningMessages",

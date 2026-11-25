@@ -13,10 +13,10 @@ ViewLaunchDisplayContext viewLaunchDisplayContext = (ViewLaunchDisplayContext)re
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(viewLaunchDisplayContext.getBackURL());
 
-String launchSetName = viewLaunchDisplayContext.getLaunchSetName();
+String launchName = viewLaunchDisplayContext.getLaunchName();
 
-if (Validator.isNotNull(launchSetName)) {
-	renderResponse.setTitle(launchSetName);
+if (Validator.isNotNull(launchName)) {
+	renderResponse.setTitle(launchName);
 }
 
 String scheduledDate = viewLaunchDisplayContext.getScheduledDate();
@@ -38,7 +38,7 @@ String scheduledDate = viewLaunchDisplayContext.getScheduledDate();
 					).put(
 						"itemSelectorURL", viewLaunchDisplayContext.getPreviewPageItemSelectorURL()
 					).put(
-						"launchSetId", viewLaunchDisplayContext.getLaunchSetId()
+						"launchId", viewLaunchDisplayContext.getLaunchId()
 					).build()
 				%>'
 			/>
@@ -49,7 +49,7 @@ String scheduledDate = viewLaunchDisplayContext.getScheduledDate();
 				module="{LaunchScheduleButton} from launch-web"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
-						"launchName", launchSetName
+						"launchName", launchName
 					).put(
 						"published", viewLaunchDisplayContext.isPublished()
 					).put(
@@ -95,7 +95,7 @@ String scheduledDate = viewLaunchDisplayContext.getScheduledDate();
 	</div>
 
 	<liferay-frontend:screen-navigation
-		context="<%= new LaunchSet(viewLaunchDisplayContext.getLaunchSetId(), launchSetName) %>"
+		context="<%= new Launch(viewLaunchDisplayContext.getLaunchId(), launchName) %>"
 		key="<%= LaunchScreenNavigationConstants.SCREEN_NAVIGATION_KEY_LAUNCH %>"
 		navCssClass="container-fluid-max-xxxl"
 		portletURL='<%=
@@ -104,9 +104,9 @@ String scheduledDate = viewLaunchDisplayContext.getScheduledDate();
 			).setMVCRenderCommandName(
 				"/launch/view_launch"
 			).setParameter(
-				"launchSetId", viewLaunchDisplayContext.getLaunchSetId()
+				"launchId", viewLaunchDisplayContext.getLaunchId()
 			).setParameter(
-				"launchSetName", launchSetName
+				"launchName", launchName
 			).build()
 		%>'
 	/>

@@ -12,12 +12,12 @@ import React, {useEffect, useState} from 'react';
 import {getLaunch, updateLaunch} from '../api/launches';
 
 interface Props {
-	launchSetId: number;
+	launchId: number;
 	portletNamespace: string;
 }
 
 export default function LaunchDetailsForm({
-	launchSetId,
+	launchId,
 	portletNamespace,
 }: Props) {
 	const [description, setDescription] = useState('');
@@ -25,7 +25,7 @@ export default function LaunchDetailsForm({
 	const [name, setName] = useState('');
 
 	useEffect(() => {
-		getLaunch(launchSetId)
+		getLaunch(launchId)
 			.then((launch) => {
 				setDescription(launch.description ?? '');
 				setName(launch.name);
@@ -37,12 +37,12 @@ export default function LaunchDetailsForm({
 				})
 			)
 			.finally(() => setLoading(false));
-	}, [launchSetId]);
+	}, [launchId]);
 
 	function handleSubmit(event: React.FormEvent) {
 		event.preventDefault();
 
-		updateLaunch({description, id: launchSetId, name})
+		updateLaunch({description, id: launchId, name})
 			.then(() => {
 				openToast({
 					message: Liferay.Language.get(
@@ -53,7 +53,7 @@ export default function LaunchDetailsForm({
 
 				const url = new URL(window.location.href);
 
-				url.searchParams.set(`${portletNamespace}launchSetName`, name);
+				url.searchParams.set(`${portletNamespace}launchName`, name);
 
 				window.location.href = url.toString();
 			})

@@ -104,15 +104,15 @@ public class LayoutModelPreFilterContributor
 
 		statusesTermsFilter.addValues(ArrayUtil.toStringArray(statuses));
 
-		long launchSetId = LaunchPreviewThreadLocal.getLaunchSetId();
+		long launchId = LaunchPreviewThreadLocal.getLaunchId();
 
 		long[] classPKs = new long[0];
 
 		if (ArrayUtil.isNotEmpty(groupIds) && (groupIds[0] > 0) &&
-			(launchSetId > 0)) {
+			(launchId > 0)) {
 
-			classPKs = _layoutLocalService.getClassPKsByLaunchSetId(
-				groupIds[0], launchSetId);
+			classPKs = _layoutLocalService.getClassPKsByLaunchId(
+				groupIds[0], launchId);
 		}
 
 		if (ArrayUtil.isEmpty(classPKs)) {

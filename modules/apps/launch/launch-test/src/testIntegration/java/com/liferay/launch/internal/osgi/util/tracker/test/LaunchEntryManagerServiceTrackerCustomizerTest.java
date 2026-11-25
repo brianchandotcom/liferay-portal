@@ -131,8 +131,8 @@ public class LaunchEntryManagerServiceTrackerCustomizerTest {
 			String className, long classPK)
 		throws Exception {
 
-		ObjectEntry launchSetObjectEntry = _addObjectEntry(
-			"LaunchSet",
+		ObjectEntry launchObjectEntry = _addObjectEntry(
+			"Launch",
 			HashMapBuilder.<String, Serializable>put(
 				"name", RandomTestUtil.randomString()
 			).build(),
@@ -153,8 +153,8 @@ public class LaunchEntryManagerServiceTrackerCustomizerTest {
 			).put(
 				"classPK", classPK
 			).put(
-				"r_launchSetToLaunchEntries_c_launchSetId",
-				launchSetObjectEntry.getObjectEntryId()
+				"r_launchToLaunchEntries_c_launchId",
+				launchObjectEntry.getObjectEntryId()
 			).build(),
 			WorkflowConstants.ACTION_PUBLISH);
 	}

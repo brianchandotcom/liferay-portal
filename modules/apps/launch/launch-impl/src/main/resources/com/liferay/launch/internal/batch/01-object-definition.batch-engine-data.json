@@ -158,11 +158,11 @@
 			"enableIndexSearch": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
-			"externalReferenceCode": "L_LAUNCH_SET",
+			"externalReferenceCode": "L_LAUNCH",
 			"label": {
-				"en_US": "Launch Set"
+				"en_US": "Launch"
 			},
-			"name": "LaunchSet",
+			"name": "Launch",
 			"objectDefinitionSettings": [
 				{
 					"name": "visible",
@@ -236,12 +236,12 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "L_LAUNCH_SET_TO_L_LAUNCH_ENTRY",
+					"externalReferenceCode": "L_LAUNCH_TO_L_LAUNCH_ENTRY",
 					"label": {
-						"en_US": "Launch Set to Launch Entries"
+						"en_US": "Launch to Launch Entries"
 					},
-					"name": "launchSetToLaunchEntries",
-					"objectDefinitionExternalReferenceCode1": "L_LAUNCH_SET",
+					"name": "launchToLaunchEntries",
+					"objectDefinitionExternalReferenceCode1": "L_LAUNCH",
 					"objectDefinitionExternalReferenceCode2": "L_LAUNCH_ENTRY",
 					"objectDefinitionModifiable2": true,
 					"objectDefinitionName2": "LaunchEntry",
@@ -250,21 +250,21 @@
 					"objectField": {
 						"DBType": "Long",
 						"businessType": "Relationship",
-						"externalReferenceCode": "LAUNCH_SET_TO_LAUNCH_ENTRY",
+						"externalReferenceCode": "LAUNCH_TO_LAUNCH_ENTRY",
 						"indexed": true,
 						"indexedAsKeyword": false,
 						"label": {
-							"en_US": "Launch Set to Launch Entries"
+							"en_US": "Launch to Launch Entries"
 						},
-						"name": "r_launchSetToLaunchEntries_c_launchSetId",
+						"name": "r_launchToLaunchEntries_c_launchId",
 						"objectFieldSettings": [
 							{
 								"name": "objectDefinition1ShortName",
-								"value": "LaunchSet"
+								"value": "Launch"
 							},
 							{
 								"name": "objectRelationshipERCObjectFieldName",
-								"value": "r_launchSetToLaunchEntries_c_launchSetERC"
+								"value": "r_launchToLaunchEntries_c_launchERC"
 							}
 						],
 						"relationshipType": "oneToMany",
@@ -281,7 +281,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Launch Sets"
+				"en_US": "Launches"
 			},
 			"portlet": false,
 			"scope": "company",

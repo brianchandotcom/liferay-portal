@@ -59,18 +59,18 @@ import java.util.Map;
  */
 public class LayoutTestUtil {
 
-	public static Layout addLaunchDraftLayout(long launchSetId, Layout layout)
+	public static Layout addLaunchDraftLayout(long launchId, Layout layout)
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				layout.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setAttribute("launchSetId", launchSetId);
+		serviceContext.setAttribute("launchId", launchId);
 
 		return LayoutLocalServiceUtil.addLayout(
 			StringBundler.concat(
-				layout.getExternalReferenceCode(), "-launch-", launchSetId),
+				layout.getExternalReferenceCode(), "-launch-", launchId),
 			TestPropsValues.getUserId(), layout.getGroupId(),
 			layout.isPrivateLayout(), layout.getParentLayoutId(),
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),

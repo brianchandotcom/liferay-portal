@@ -207,7 +207,7 @@ describe('PageDesignOptionsSidebar', () => {
 	it('does not render the more page design options link when editing a launch draft', () => {
 		mockConfigGetter.mockImplementation(() => ({
 			...DEFAULT_CONFIG,
-			launchSetId: 1,
+			launchId: 1,
 			lookAndFeelURL: 'lookAndFeelURL',
 		}));
 

@@ -12,7 +12,7 @@ import {launchPagesTest} from '../../../fixtures/launchPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {LaunchEntry, LaunchSet} from '../../../helpers/LaunchApiHelper';
+import {Launch, LaunchEntry} from '../../../helpers/LaunchApiHelper';
 import {LaunchPreviewPage} from '../../../pages/launch-web/LaunchPreviewPage';
 import {LaunchesPage} from '../../../pages/launch-web/LaunchesPage';
 import getRandomString from '../../../utils/getRandomString';
@@ -34,14 +34,14 @@ const test = mergeTests(
 	launchPagesTest,
 	loginTest(),
 	pageEditorPagesTest
-).extend<{launchSetIds: number[]}>({
-	launchSetIds: async ({apiHelpers}, use) => {
-		const launchSetIds: number[] = [];
+).extend<{launchIds: number[]}>({
+	launchIds: async ({apiHelpers}, use) => {
+		const launchIds: number[] = [];
 
-		await use(launchSetIds);
+		await use(launchIds);
 
-		for (const launchSetId of launchSetIds) {
-			await apiHelpers.launch.deleteLaunchSet(launchSetId);
+		for (const launchId of launchIds) {
+			await apiHelpers.launch.deleteLaunch(launchId);
 		}
 	},
 });
@@ -176,7 +176,7 @@ test(
 	{tag: ['@LPD-72339', '@LPD-109351', '@LPD-115209']},
 	async ({
 		apiHelpers,
-		launchSetIds,
+		launchIds,
 		launchesPage,
 		page,
 		pageEditorPage,
@@ -218,10 +218,10 @@ test(
 			.locator('.control-menu-nav-item')
 			.getByTitle('Launches');
 
-		let firstLaunch: LaunchSet;
+		let firstLaunch: Launch;
 		let firstLaunchEntriesURL: string;
 		let firstLaunchEntry: LaunchEntry;
-		let secondLaunch: LaunchSet;
+		let secondLaunch: Launch;
 
 		await test.step('Create the first launch', async () => {
 			await launchesPage.goto(site.friendlyUrlPath);
@@ -231,9 +231,9 @@ test(
 			await launchesPage.createLaunch(firstLaunchName, description);
 
 			firstLaunch =
-				await apiHelpers.launch.getLaunchSetByName(firstLaunchName);
+				await apiHelpers.launch.getLaunchByName(firstLaunchName);
 
-			launchSetIds.push(firstLaunch.id);
+			launchIds.push(firstLaunch.id);
 
 			await launchesPage.goToDetails();
 
@@ -327,9 +327,9 @@ test(
 			);
 
 			secondLaunch =
-				await apiHelpers.launch.getLaunchSetByName(secondLaunchName);
+				await apiHelpers.launch.getLaunchByName(secondLaunchName);
 
-			launchSetIds.push(secondLaunch.id);
+			launchIds.push(secondLaunch.id);
 
 			await launchesPage.goToEntries();
 
@@ -416,7 +416,7 @@ test(
 			);
 
 			expect(previewPage.url()).toContain(
-				`previewLaunchSetId=${firstLaunch.id}`
+				`previewLaunchId=${firstLaunch.id}`
 			);
 			expect(previewPage.url()).toContain('p_l_mode=preview');
 
@@ -440,7 +440,7 @@ test(
 			);
 
 			expect(previewPage.url()).toContain(
-				`previewLaunchSetId=${secondLaunch.id}`
+				`previewLaunchId=${secondLaunch.id}`
 			);
 
 			await expectPreview(previewPage, {
@@ -459,7 +459,7 @@ test(
 
 			await launchPreviewPage.switchLaunch(secondLaunchName, 'No Launch');
 
-			expect(previewPage.url()).toContain('previewLaunchSetId=0');
+			expect(previewPage.url()).toContain('previewLaunchId=0');
 
 			await expectPreview(previewPage, {
 				hidden: [firstLaunchHeading, firstLaunchText, secondLaunchText],

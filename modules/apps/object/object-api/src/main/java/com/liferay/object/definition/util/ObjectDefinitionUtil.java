@@ -249,9 +249,9 @@ public class ObjectDefinitionUtil {
 		).put(
 			"KnowledgeBase", "/cms/knowledge-bases"
 		).put(
-			"LaunchEntry", "/launch-entries"
+			"Launch", "/launches"
 		).put(
-			"LaunchSet", "/launch-sets"
+			"LaunchEntry", "/launch-entries"
 		).put(
 			"MCPServerProfile", "/mcp/server-profiles"
 		).put(

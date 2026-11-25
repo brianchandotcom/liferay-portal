@@ -51,10 +51,10 @@ public class LaunchPreviewFilterTest {
 		MockFilterChain mockFilterChain = new MockFilterChain();
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
-		long previewLaunchSetId = RandomTestUtil.randomLong();
+		long previewLaunchId = RandomTestUtil.randomLong();
 
 		_processFilter(
-			mockFilterChain, mockHttpServletResponse, previewLaunchSetId,
+			mockFilterChain, mockHttpServletResponse, previewLaunchId,
 			TestPropsValues.getUser());
 
 		Assert.assertNotNull(mockFilterChain.getRequest());
@@ -64,7 +64,7 @@ public class LaunchPreviewFilterTest {
 		mockHttpServletResponse = new MockHttpServletResponse();
 
 		_processFilter(
-			mockFilterChain, mockHttpServletResponse, previewLaunchSetId, null);
+			mockFilterChain, mockHttpServletResponse, previewLaunchId, null);
 
 		Assert.assertNull(mockFilterChain.getRequest());
 
@@ -76,7 +76,7 @@ public class LaunchPreviewFilterTest {
 
 		Assert.assertEquals(
 			"http://localhost/web/guest/home?p_l_mode=preview&" +
-				"previewLaunchSetId=" + previewLaunchSetId,
+				"previewLaunchId=" + previewLaunchId,
 			HttpComponentsUtil.decodeURL(
 				HttpComponentsUtil.getParameter(
 					redirectedURL, "redirect", false)));
@@ -85,7 +85,7 @@ public class LaunchPreviewFilterTest {
 	private void _processFilter(
 			FilterChain filterChain,
 			MockHttpServletResponse mockHttpServletResponse,
-			long previewLaunchSetId, User user)
+			long previewLaunchId, User user)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -93,9 +93,9 @@ public class LaunchPreviewFilterTest {
 
 		mockHttpServletRequest.setParameter("p_l_mode", Constants.PREVIEW);
 		mockHttpServletRequest.setParameter(
-			"previewLaunchSetId", String.valueOf(previewLaunchSetId));
+			"previewLaunchId", String.valueOf(previewLaunchId));
 		mockHttpServletRequest.setQueryString(
-			"p_l_mode=preview&previewLaunchSetId=" + previewLaunchSetId);
+			"p_l_mode=preview&previewLaunchId=" + previewLaunchId);
 		mockHttpServletRequest.setRequestURI("/web/guest/home");
 
 		if (user != null) {

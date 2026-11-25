@@ -249,14 +249,14 @@ public class LayoutUtil {
 			return true;
 		}
 
-		long launchSetId = LaunchPreviewThreadLocal.getLaunchSetId();
+		long launchId = LaunchPreviewThreadLocal.getLaunchId();
 
-		if (launchSetId <= 0) {
+		if (launchId <= 0) {
 			return false;
 		}
 
 		Layout launchDraftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
-			layout.getPlid(), launchSetId);
+			layout.getPlid(), launchId);
 
 		if (launchDraftLayout != null) {
 			return true;

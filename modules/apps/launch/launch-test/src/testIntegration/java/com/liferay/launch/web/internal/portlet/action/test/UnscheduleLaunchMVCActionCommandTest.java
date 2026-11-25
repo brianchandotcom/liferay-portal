@@ -6,7 +6,7 @@
 package com.liferay.launch.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.launch.set.publisher.LaunchSetPublisher;
+import com.liferay.launch.publisher.LaunchPublisher;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -84,7 +84,7 @@ public class UnscheduleLaunchMVCActionCommandTest {
 	public void setUp() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				TestPropsValues.getCompanyId(), "LaunchSet");
+				TestPropsValues.getCompanyId(), "Launch");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -92,7 +92,7 @@ public class UnscheduleLaunchMVCActionCommandTest {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		_launchSetObjectEntry = _objectEntryLocalService.addObjectEntry(
+		_launchObjectEntry = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), 0,
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
@@ -108,10 +108,10 @@ public class UnscheduleLaunchMVCActionCommandTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_launchSetPublisher.unschedulePublish(
-			_launchSetObjectEntry.getObjectEntryId());
+		_launchPublisher.unschedulePublish(
+			_launchObjectEntry.getObjectEntryId());
 
-		_objectEntryLocalService.deleteObjectEntry(_launchSetObjectEntry);
+		_objectEntryLocalService.deleteObjectEntry(_launchObjectEntry);
 
 		ServiceContextThreadLocal.popServiceContext();
 	}
@@ -126,8 +126,8 @@ public class UnscheduleLaunchMVCActionCommandTest {
 
 		Date date = new Date(System.currentTimeMillis() + Time.DAY);
 
-		_launchSetPublisher.schedulePublish(
-			date, _launchSetObjectEntry.getObjectEntryId(),
+		_launchPublisher.schedulePublish(
+			date, _launchObjectEntry.getObjectEntryId(),
 			TestPropsValues.getUserId());
 
 		PermissionChecker permissionChecker =
@@ -175,8 +175,8 @@ public class UnscheduleLaunchMVCActionCommandTest {
 
 		_assertScheduled(null, WorkflowConstants.STATUS_DRAFT);
 
-		_launchSetPublisher.schedulePublish(
-			date, _launchSetObjectEntry.getObjectEntryId(),
+		_launchPublisher.schedulePublish(
+			date, _launchObjectEntry.getObjectEntryId(),
 			TestPropsValues.getUserId());
 
 		jsonObject = _processAction(TestPropsValues.getUser());
@@ -189,22 +189,22 @@ public class UnscheduleLaunchMVCActionCommandTest {
 	private void _assertScheduled(Date expectedDate, int expectedStatus)
 		throws Exception {
 
-		ObjectEntry launchSetObjectEntry =
+		ObjectEntry launchObjectEntry =
 			_objectEntryLocalService.getObjectEntry(
-				_launchSetObjectEntry.getObjectEntryId());
+				_launchObjectEntry.getObjectEntryId());
 
-		Assert.assertEquals(expectedStatus, launchSetObjectEntry.getStatus());
+		Assert.assertEquals(expectedStatus, launchObjectEntry.getStatus());
 
-		Map<String, Serializable> values = launchSetObjectEntry.getValues();
+		Map<String, Serializable> values = launchObjectEntry.getValues();
 
 		Date scheduledDate = (Date)values.get("scheduledDate");
 
 		SchedulerResponse schedulerResponse =
 			_schedulerEngineHelper.getScheduledJob(
 				StringBundler.concat(
-					launchSetObjectEntry.getObjectEntryId(), StringPool.AT,
-					launchSetObjectEntry.getCompanyId()),
-				"liferay/launch_set_scheduled_publish", StorageType.PERSISTED);
+					launchObjectEntry.getObjectEntryId(), StringPool.AT,
+					launchObjectEntry.getCompanyId()),
+				"liferay/launch_scheduled_publish", StorageType.PERSISTED);
 
 		if (expectedDate == null) {
 			Assert.assertNull(scheduledDate);
@@ -241,8 +241,8 @@ public class UnscheduleLaunchMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
 		mockLiferayPortletActionRequest.setParameter(
-			"launchSetId",
-			String.valueOf(_launchSetObjectEntry.getObjectEntryId()));
+			"launchId",
+			String.valueOf(_launchObjectEntry.getObjectEntryId()));
 		mockLiferayPortletActionRequest.setParameter("redirect", redirect);
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
@@ -287,10 +287,10 @@ public class UnscheduleLaunchMVCActionCommandTest {
 	@Inject
 	private Language _language;
 
-	private ObjectEntry _launchSetObjectEntry;
+	private ObjectEntry _launchObjectEntry;
 
 	@Inject
-	private LaunchSetPublisher _launchSetPublisher;
+	private LaunchPublisher _launchPublisher;
 
 	@Inject(filter = "mvc.command.name=/launch/unschedule_launch")
 	private MVCActionCommand _mvcActionCommand;

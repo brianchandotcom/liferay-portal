@@ -63,7 +63,7 @@ public class LayoutLaunchEntryManagerTest
 	public void testFetchDraft() throws Exception {
 		super.testFetchDraft();
 
-		_testFetchDraftLayoutByLaunchSetId();
+		_testFetchDraftLayoutByLaunchId();
 	}
 
 	@Test
@@ -297,12 +297,12 @@ public class LayoutLaunchEntryManagerTest
 
 		Values entryValue = getEntryValue(classPK);
 
-		long launchSetId = RandomTestUtil.randomLong();
+		long launchId = RandomTestUtil.randomLong();
 
 		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
 		LaunchEntryManager.Draft draft1 = launchEntryManager.addDraft(
-			classPK, launchSetId, String.valueOf(classPK));
+			classPK, launchId, String.valueOf(classPK));
 
 		Assert.assertEquals(entryValue, getDraftValue(draft1));
 
@@ -313,7 +313,7 @@ public class LayoutLaunchEntryManagerTest
 		Assert.assertEquals(values, getDraftValue(draft1));
 
 		LaunchEntryManager.Draft draft2 = launchEntryManager.addDraft(
-			classPK, launchSetId, String.valueOf(classPK));
+			classPK, launchId, String.valueOf(classPK));
 
 		Assert.assertEquals(draft1.getDraftId(), draft2.getDraftId());
 		Assert.assertEquals(entryValue, getDraftValue(draft2));
@@ -321,31 +321,31 @@ public class LayoutLaunchEntryManagerTest
 		Layout launchDraftLayout = _layoutLocalService.getLayout(
 			draft2.getDraftId());
 
-		Assert.assertEquals(launchSetId, launchDraftLayout.getLaunchSetId());
+		Assert.assertEquals(launchId, launchDraftLayout.getLaunchId());
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(classPK);
 
-		Assert.assertEquals(0, draftLayout.getLaunchSetId());
+		Assert.assertEquals(0, draftLayout.getLaunchId());
 	}
 
-	private void _testFetchDraftLayoutByLaunchSetId() throws Exception {
+	private void _testFetchDraftLayoutByLaunchId() throws Exception {
 		long classPK = addEntry();
 
 		Layout mainDraftLayout = _layoutLocalService.fetchDraftLayout(classPK);
 
-		long launchSetId = RandomTestUtil.randomLong();
+		long launchId = RandomTestUtil.randomLong();
 
 		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
 		LaunchEntryManager.Draft launchDraft = launchEntryManager.addDraft(
-			classPK, launchSetId, String.valueOf(classPK));
+			classPK, launchId, String.valueOf(classPK));
 
 		Layout launchDraftLayout = _layoutLocalService.fetchDraftLayout(
-			classPK, launchSetId);
+			classPK, launchId);
 
 		Assert.assertEquals(
 			launchDraft.getDraftId(), launchDraftLayout.getPlid());
-		Assert.assertEquals(launchSetId, launchDraftLayout.getLaunchSetId());
+		Assert.assertEquals(launchId, launchDraftLayout.getLaunchId());
 
 		Assert.assertEquals(
 			mainDraftLayout, _layoutLocalService.fetchDraftLayout(classPK, 0));

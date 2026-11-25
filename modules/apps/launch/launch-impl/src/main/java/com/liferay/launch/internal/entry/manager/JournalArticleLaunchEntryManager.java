@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalArticleLaunchEntryManager implements LaunchEntryManager {
 
 	@Override
-	public Draft addDraft(long classPK, long launchSetId, String versionKey)
+	public Draft addDraft(long classPK, long launchId, String versionKey)
 		throws PortalException {
 
 		JournalArticleResource journalArticleResource =

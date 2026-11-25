@@ -13,15 +13,15 @@ import React, {useEffect, useState} from 'react';
 import {Launch, getLaunch, listLaunches} from '../api/launches';
 
 interface Props {
-	launchSetId: number;
+	launchId: number;
 	noLaunchURL: string;
 }
 
-export default function LaunchPreviewTopbar({launchSetId, noLaunchURL}: Props) {
+export default function LaunchPreviewTopbar({launchId, noLaunchURL}: Props) {
 	const [launch, setLaunch] = useState<Launch | null>(null);
 
 	useEffect(() => {
-		if (launchSetId <= 0) {
+		if (launchId <= 0) {
 			setLaunch(null);
 
 			return;
@@ -29,7 +29,7 @@ export default function LaunchPreviewTopbar({launchSetId, noLaunchURL}: Props) {
 
 		let current = true;
 
-		getLaunch(launchSetId)
+		getLaunch(launchId)
 			.then((nextLaunch) => {
 				if (current) {
 					setLaunch(nextLaunch);
@@ -45,7 +45,7 @@ export default function LaunchPreviewTopbar({launchSetId, noLaunchURL}: Props) {
 		return () => {
 			current = false;
 		};
-	}, [launchSetId]);
+	}, [launchId]);
 
 	return (
 		<nav
@@ -66,7 +66,7 @@ export default function LaunchPreviewTopbar({launchSetId, noLaunchURL}: Props) {
 
 					<LaunchPicker
 						launch={launch}
-						launchSetId={launchSetId}
+						launchId={launchId}
 						noLaunchURL={noLaunchURL}
 					/>
 				</div>
@@ -77,11 +77,11 @@ export default function LaunchPreviewTopbar({launchSetId, noLaunchURL}: Props) {
 
 function LaunchPicker({
 	launch,
-	launchSetId,
+	launchId,
 	noLaunchURL,
 }: {
 	launch: Launch | null;
-	launchSetId: number;
+	launchId: number;
 	noLaunchURL: string;
 }) {
 	const [active, setActive] = useState(false);
@@ -108,7 +108,7 @@ function LaunchPicker({
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton displayType="unstyled" small>
-					{launchSetId <= 0
+					{launchId <= 0
 						? Liferay.Language.get('no-launch')
 						: launch?.name ?? Liferay.Language.get('launch')}
 
@@ -120,19 +120,19 @@ function LaunchPicker({
 			}
 		>
 			<ClayDropDown.ItemList>
-				<ClayDropDown.Item active={launchSetId <= 0} href={noLaunchURL}>
+				<ClayDropDown.Item active={launchId <= 0} href={noLaunchURL}>
 					{Liferay.Language.get('no-launch')}
 				</ClayDropDown.Item>
 
 				{launches.map((launchOption) => (
 					<ClayDropDown.Item
-						active={launchOption.id === launchSetId}
+						active={launchOption.id === launchId}
 						key={launchOption.id}
 						onClick={() => {
 							const url = new URL(window.location.href);
 
 							url.searchParams.set(
-								'previewLaunchSetId',
+								'previewLaunchId',
 								String(launchOption.id)
 							);
 

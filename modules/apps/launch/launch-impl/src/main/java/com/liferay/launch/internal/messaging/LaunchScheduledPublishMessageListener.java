@@ -1,0 +1,84 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.launch.internal.messaging;
+
+import com.liferay.launch.internal.constants.LaunchDestinationNames;
+import com.liferay.launch.publisher.LaunchPublisher;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jose Luis Navarro
+ */
+@Component(
+	property = "destination.name=" + LaunchDestinationNames.LAUNCH_SCHEDULED_PUBLISH,
+	service = MessageListener.class
+)
+public class LaunchScheduledPublishMessageListener
+	extends BaseMessageListener {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		Destination destination = _destinationFactory.createDestination(
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
+				LaunchDestinationNames.LAUNCH_SCHEDULED_PUBLISH));
+
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination,
+			MapUtil.singletonDictionary(
+				"destination.name", destination.getName()));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
+
+	@Override
+	protected void doReceive(Message message) throws Exception {
+		ObjectEntry launchObjectEntry =
+			_objectEntryLocalService.fetchObjectEntry(
+				message.getLong("launchId"));
+
+		if ((launchObjectEntry == null) ||
+			(launchObjectEntry.getStatus() !=
+				WorkflowConstants.STATUS_SCHEDULED)) {
+
+			return;
+		}
+
+		_launchPublisher.publish(
+			launchObjectEntry.getObjectEntryId(), message.getLong("userId"));
+	}
+
+	@Reference
+	private DestinationFactory _destinationFactory;
+
+	@Reference
+	private LaunchPublisher _launchPublisher;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private ServiceRegistration<Destination> _serviceRegistration;
+
+}

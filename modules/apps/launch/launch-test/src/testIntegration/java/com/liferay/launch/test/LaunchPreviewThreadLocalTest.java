@@ -42,17 +42,17 @@ public class LaunchPreviewThreadLocalTest {
 			PortalUtil.addPreservedParameters(
 				new ThemeDisplay(), url, false, false));
 
-		long launchSetId = RandomTestUtil.randomLong();
+		long launchId = RandomTestUtil.randomLong();
 
 		try (SafeCloseable safeCloseable =
-				LaunchPreviewThreadLocal.setLaunchSetIdWithSafeCloseable(
-					launchSetId)) {
+				LaunchPreviewThreadLocal.setLaunchIdWithSafeCloseable(
+					launchId)) {
 
-			_assertPreservedParameters(String.valueOf(launchSetId), url);
+			_assertPreservedParameters(String.valueOf(launchId), url);
 		}
 
 		try (SafeCloseable safeCloseable =
-				LaunchPreviewThreadLocal.setLaunchSetIdWithSafeCloseable(0)) {
+				LaunchPreviewThreadLocal.setLaunchIdWithSafeCloseable(0)) {
 
 			_assertPreservedParameters("0", url);
 		}
@@ -64,7 +64,7 @@ public class LaunchPreviewThreadLocalTest {
 	}
 
 	private void _assertPreservedParameters(
-		String expectedLaunchSetId, String url) {
+		String expectedLaunchId, String url) {
 
 		String preservedURL = PortalUtil.addPreservedParameters(
 			new ThemeDisplay(), url, false, false);
@@ -73,9 +73,9 @@ public class LaunchPreviewThreadLocalTest {
 			Constants.PREVIEW,
 			HttpComponentsUtil.getParameter(preservedURL, "p_l_mode", false));
 		Assert.assertEquals(
-			expectedLaunchSetId,
+			expectedLaunchId,
 			HttpComponentsUtil.getParameter(
-				preservedURL, "previewLaunchSetId", false));
+				preservedURL, "previewLaunchId", false));
 	}
 
 }

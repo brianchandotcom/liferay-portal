@@ -11,13 +11,13 @@ import React from 'react';
 interface Props {
 	itemSelectedEventName: string;
 	itemSelectorURL: string;
-	launchSetId: number;
+	launchId: number;
 }
 
 export default function LaunchPreviewButton({
 	itemSelectedEventName,
 	itemSelectorURL,
-	launchSetId,
+	launchId,
 }: Props) {
 	function handleClick() {
 		openSelectionModal({
@@ -33,7 +33,7 @@ export default function LaunchPreviewButton({
 				const url = new URL(pageURL, window.location.origin);
 
 				url.searchParams.set('p_l_mode', 'preview');
-				url.searchParams.set('previewLaunchSetId', String(launchSetId));
+				url.searchParams.set('previewLaunchId', String(launchId));
 
 				window.open(url.toString(), '_blank');
 			},

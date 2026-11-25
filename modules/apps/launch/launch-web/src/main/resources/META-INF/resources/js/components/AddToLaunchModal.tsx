@@ -95,7 +95,7 @@ function AddToLaunchModalContent({
 				const launchIds = new Set(
 					launchEntries.map(
 						(launchEntry) =>
-							launchEntry.r_launchSetToLaunchEntries_c_launchSetId
+							launchEntry.r_launchToLaunchEntries_c_launchId
 					)
 				);
 
@@ -171,7 +171,7 @@ function AddToLaunchModalContent({
 				baseVersionKey: detail.classVersion,
 				className: detail.className,
 				classPK: detail.classPK,
-				launchSetId: launchId,
+				launchId,
 			});
 
 			const launch = creatingNew

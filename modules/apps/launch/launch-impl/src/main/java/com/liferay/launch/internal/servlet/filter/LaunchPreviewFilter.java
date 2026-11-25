@@ -67,10 +67,10 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		long previewLaunchSetId = ParamUtil.getLong(
-			httpServletRequest, "previewLaunchSetId", -1);
+		long previewLaunchId = ParamUtil.getLong(
+			httpServletRequest, "previewLaunchId", -1);
 
-		if ((previewLaunchSetId == -1) ||
+		if ((previewLaunchId == -1) ||
 			(PreviewableResolverUtil.getPreviewId() != null)) {
 
 			processFilter(
@@ -113,17 +113,17 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 		}
 
 		try (SafeCloseable safeCloseable =
-				LaunchPreviewThreadLocal.setLaunchSetIdWithSafeCloseable(
-					previewLaunchSetId)) {
+				LaunchPreviewThreadLocal.setLaunchIdWithSafeCloseable(
+					previewLaunchId)) {
 
 			_processPreviewFilter(
 				companyId, filterChain, httpServletRequest, httpServletResponse,
-				previewLaunchSetId);
+				previewLaunchId);
 		}
 	}
 
 	private List<Map<String, Serializable>> _getLaunchEntryValuesList(
-			long companyId, long launchSetId)
+			long companyId, long launchId)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -140,8 +140,8 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 			companyGroup.getGroupId(), companyId, objectDefinition.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			LaunchUtil.getEqualsPredicate(
-				"r_launchSetToLaunchEntries_c_launchSetId",
-				objectDefinition.getObjectDefinitionId(), launchSetId),
+				"r_launchToLaunchEntries_c_launchId",
+				objectDefinition.getObjectDefinitionId(), launchId),
 			null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -176,14 +176,14 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 	}
 
 	private Map<Class<?>, Map<Serializable, Object>> _getPreviewableMap(
-			long companyId, long launchSetId)
+			long companyId, long launchId)
 		throws Exception {
 
 		Map<Class<?>, Map<Serializable, Object>> previewableMap =
 			new HashMap<>();
 
 		for (Map<String, Serializable> launchEntryValues :
-				_getLaunchEntryValuesList(companyId, launchSetId)) {
+				_getLaunchEntryValuesList(companyId, launchId)) {
 
 			String className = MapUtil.getString(
 				launchEntryValues, "className");
@@ -235,11 +235,11 @@ public class LaunchPreviewFilter extends BasePortalFilter {
 	private void _processPreviewFilter(
 			long companyId, FilterChain filterChain,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long previewLaunchSetId)
+			HttpServletResponse httpServletResponse, long previewLaunchId)
 		throws Exception {
 
 		Map<Class<?>, Map<Serializable, Object>> previewableMap =
-			_getPreviewableMap(companyId, previewLaunchSetId);
+			_getPreviewableMap(companyId, previewLaunchId);
 
 		if (previewableMap.isEmpty()) {
 			processFilter(

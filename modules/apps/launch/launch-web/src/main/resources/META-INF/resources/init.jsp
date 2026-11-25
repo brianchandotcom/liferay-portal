@@ -18,7 +18,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.launch.web.internal.constants.LaunchWebKeys" %><%@
 page import="com.liferay.launch.web.internal.display.context.ViewLaunchDisplayContext" %><%@
 page import="com.liferay.launch.web.internal.display.context.ViewLaunchesDisplayContext" %><%@
-page import="com.liferay.launch.web.internal.model.LaunchSet" %><%@
+page import="com.liferay.launch.web.internal.model.Launch" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

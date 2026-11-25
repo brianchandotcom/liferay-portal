@@ -94,7 +94,7 @@ public class PublishLayoutMVCActionCommand
 			SessionMessages.clear(actionRequest);
 		}
 
-		if (draftLayout.getLaunchSetId() > 0) {
+		if (draftLayout.getLaunchId() > 0) {
 			return;
 		}
 
@@ -125,7 +125,7 @@ public class PublishLayoutMVCActionCommand
 			long userId)
 		throws Exception {
 
-		if (draftLayout.getLaunchSetId() > 0) {
+		if (draftLayout.getLaunchId() > 0) {
 			_layoutLocalService.updateStatus(
 				userId, draftLayout.getPlid(),
 				WorkflowConstants.STATUS_READY_TO_PUBLISH, serviceContext);

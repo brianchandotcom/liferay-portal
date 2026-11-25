@@ -13,7 +13,7 @@ public class LaunchFDSNames {
 	public static final String LAUNCH_ENTRIES =
 		LaunchPortletKeys.LAUNCH + "-launchEntries";
 
-	public static final String LAUNCH_SETS =
-		LaunchPortletKeys.LAUNCH + "-launchSets";
+	public static final String LAUNCHES =
+		LaunchPortletKeys.LAUNCH + "-launches";
 
 }

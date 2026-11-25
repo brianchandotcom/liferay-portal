@@ -10,7 +10,7 @@ package com.liferay.launch.internal.constants;
  */
 public class LaunchDestinationNames {
 
-	public static final String LAUNCH_SET_SCHEDULED_PUBLISH =
-		"liferay/launch_set_scheduled_publish";
+	public static final String LAUNCH_SCHEDULED_PUBLISH =
+		"liferay/launch_scheduled_publish";
 
 }

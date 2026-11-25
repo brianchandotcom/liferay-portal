@@ -426,10 +426,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setStatusDate(serviceContext.getCreateDate(date));
 		layout.setExpandoBridgeAttributes(serviceContext);
 
-		long launchSetId = ParamUtil.getLong(serviceContext, "launchSetId");
+		long launchId = ParamUtil.getLong(serviceContext, "launchId");
 
-		if (launchSetId > 0) {
-			layout.setLaunchSetId(launchSetId);
+		if (launchId > 0) {
+			layout.setLaunchId(launchId);
 		}
 
 		layout = layoutLocalService.updateLayout(layout);
@@ -1257,14 +1257,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Layout fetchDraftLayout(long plid, long launchSetId) {
+	public Layout fetchDraftLayout(long plid, long launchId) {
 		if (plid <= 0) {
 			return null;
 		}
 
 		List<Layout> layouts = layoutPersistence.findByC_C_L(
 			_classNameLocalService.getClassNameId(Layout.class), plid,
-			launchSetId);
+			launchId);
 
 		if (layouts.isEmpty()) {
 			return null;
@@ -1274,7 +1274,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			_log.warn(
 				StringBundler.concat(
 					"More than one draft layout uses layout PLID ", plid,
-					" and launch set ID ", launchSetId));
+					" and launch ID ", launchId));
 		}
 
 		return layouts.get(layouts.size() - 1);
@@ -1517,8 +1517,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long[] getClassPKsByLaunchSetId(long groupId, long launchSetId) {
-		if (launchSetId <= 0) {
+	public long[] getClassPKsByLaunchId(long groupId, long launchId) {
+		if (launchId <= 0) {
 			return new long[0];
 		}
 
@@ -1536,7 +1536,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				).and(
 					LayoutTable.INSTANCE.classPK.gt(0L)
 				).and(
-					LayoutTable.INSTANCE.launchSetId.eq(launchSetId)
+					LayoutTable.INSTANCE.launchId.eq(launchId)
 				)
 			));
 

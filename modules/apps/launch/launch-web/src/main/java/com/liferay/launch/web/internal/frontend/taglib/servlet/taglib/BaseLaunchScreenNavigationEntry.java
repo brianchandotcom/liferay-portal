@@ -7,7 +7,7 @@ package com.liferay.launch.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.launch.web.internal.model.LaunchSet;
+import com.liferay.launch.web.internal.model.Launch;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseLaunchScreenNavigationEntry
 	extends BaseLaunchScreenNavigationCategory
-	implements ScreenNavigationEntry<LaunchSet> {
+	implements ScreenNavigationEntry<Launch> {
 
 	@Override
 	public String getEntryKey() {

@@ -67,8 +67,8 @@ public class ViewLaunchDisplayContext {
 	public String getAPIURL() {
 		String filterString = URLCodec.encodeURL(
 			StringBundler.concat(
-				"r_launchSetToLaunchEntries_c_launchSetId eq '",
-				getLaunchSetId(), "'"));
+				"r_launchToLaunchEntries_c_launchId eq '",
+				getLaunchId(), "'"));
 
 		return "/o/launch-entries?filter=" + filterString;
 	}
@@ -85,7 +85,7 @@ public class ViewLaunchDisplayContext {
 		).put(
 			"launchEntryManagers", _getLaunchEntryManagerMaps()
 		).put(
-			"launchSetId", getLaunchSetId()
+			"launchId", getLaunchId()
 		).put(
 			"published", isPublished()
 		).put(
@@ -136,17 +136,17 @@ public class ViewLaunchDisplayContext {
 		return LaunchFDSNames.LAUNCH_ENTRIES;
 	}
 
-	public long getLaunchSetId() {
-		if (_launchSetId == null) {
-			_launchSetId = ParamUtil.getLong(
-				_httpServletRequest, "launchSetId");
+	public long getLaunchId() {
+		if (_launchId == null) {
+			_launchId = ParamUtil.getLong(
+				_httpServletRequest, "launchId");
 		}
 
-		return _launchSetId;
+		return _launchId;
 	}
 
-	public String getLaunchSetName() {
-		return ParamUtil.getString(_httpServletRequest, "launchSetName");
+	public String getLaunchName() {
+		return ParamUtil.getString(_httpServletRequest, "launchName");
 	}
 
 	public String getPreviewPageItemSelectedEventName() {
@@ -191,9 +191,9 @@ public class ViewLaunchDisplayContext {
 		).setRedirect(
 			PortalUtil.getCurrentCompleteURL(_httpServletRequest)
 		).setParameter(
-			"launchSetId", getLaunchSetId()
+			"launchId", getLaunchId()
 		).setParameter(
-			"launchSetName", getLaunchSetName()
+			"launchName", getLaunchName()
 		).buildString();
 	}
 
@@ -205,13 +205,13 @@ public class ViewLaunchDisplayContext {
 		).setRedirect(
 			PortalUtil.getCurrentCompleteURL(_httpServletRequest)
 		).setParameter(
-			"launchSetId", getLaunchSetId()
+			"launchId", getLaunchId()
 		).buildString();
 	}
 
 	public String getScheduledDate() {
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			getLaunchSetId());
+			getLaunchId());
 
 		if ((objectEntry == null) ||
 			(objectEntry.getStatus() != WorkflowConstants.STATUS_SCHEDULED)) {
@@ -255,14 +255,14 @@ public class ViewLaunchDisplayContext {
 		).setRedirect(
 			PortalUtil.getCurrentCompleteURL(_httpServletRequest)
 		).setParameter(
-			"launchSetId", getLaunchSetId()
+			"launchId", getLaunchId()
 		).buildString();
 	}
 
 	public boolean isPublished() {
 		if (_published == null) {
 			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				getLaunchSetId());
+				getLaunchId());
 
 			_published =
 				(objectEntry != null) &&
@@ -347,7 +347,7 @@ public class ViewLaunchDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final LaunchEntryManagerRegistry _launchEntryManagerRegistry;
-	private Long _launchSetId;
+	private Long _launchId;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private Boolean _published;

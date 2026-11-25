@@ -13,22 +13,22 @@ import com.liferay.petra.lang.SafeCloseable;
  */
 public class LaunchPreviewThreadLocal {
 
-	public static long getLaunchSetId() {
-		return _launchSetId.get();
+	public static long getLaunchId() {
+		return _launchId.get();
 	}
 
-	public static SafeCloseable setLaunchSetIdWithSafeCloseable(
-		long launchSetId) {
+	public static SafeCloseable setLaunchIdWithSafeCloseable(
+		long launchId) {
 
-		return _launchSetId.setWithSafeCloseable(launchSetId);
+		return _launchId.setWithSafeCloseable(launchId);
 	}
 
 	private LaunchPreviewThreadLocal() {
 	}
 
-	private static final CentralizedThreadLocal<Long> _launchSetId =
+	private static final CentralizedThreadLocal<Long> _launchId =
 		new CentralizedThreadLocal<>(
-			LaunchPreviewThreadLocal.class.getName() + "._launchSetId",
+			LaunchPreviewThreadLocal.class.getName() + "._launchId",
 			() -> -1L);
 
 }

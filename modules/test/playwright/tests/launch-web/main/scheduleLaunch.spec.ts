@@ -18,14 +18,14 @@ const test = mergeTests(
 	}),
 	launchPagesTest,
 	loginTest()
-).extend<{launchSetIds: number[]}>({
-	launchSetIds: async ({apiHelpers}, use) => {
-		const launchSetIds: number[] = [];
+).extend<{launchIds: number[]}>({
+	launchIds: async ({apiHelpers}, use) => {
+		const launchIds: number[] = [];
 
-		await use(launchSetIds);
+		await use(launchIds);
 
-		for (const launchSetId of launchSetIds) {
-			await apiHelpers.launch.deleteLaunchSet(launchSetId);
+		for (const launchId of launchIds) {
+			await apiHelpers.launch.deleteLaunch(launchId);
 		}
 	},
 });
@@ -33,12 +33,12 @@ const test = mergeTests(
 test(
 	'Schedules a launch from the Launches list in another time zone',
 	{tag: ['@LPD-114056']},
-	async ({apiHelpers, launchSetIds, launchesPage, page}) => {
+	async ({apiHelpers, launchIds, launchesPage, page}) => {
 		const launchName = getRandomString();
 
-		const launchSet = await apiHelpers.launch.createLaunchSet(launchName);
+		const launch = await apiHelpers.launch.createLaunch(launchName);
 
-		launchSetIds.push(launchSet.id);
+		launchIds.push(launch.id);
 
 		const row = page.getByRole('row').filter({hasText: launchName});
 

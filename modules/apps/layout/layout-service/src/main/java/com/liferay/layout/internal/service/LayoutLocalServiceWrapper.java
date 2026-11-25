@@ -156,7 +156,7 @@ public class LayoutLocalServiceWrapper
 			targetSegmentsExperiencesIds);
 
 		if ((sourceLayout.getClassPK() == targetLayout.getPlid()) &&
-			(sourceLayout.getLaunchSetId() == 0)) {
+			(sourceLayout.getLaunchId() == 0)) {
 
 			_createLayoutContentVersion(sourceLayout);
 		}
@@ -997,10 +997,10 @@ public class LayoutLocalServiceWrapper
 		Layout sourceLayout, FragmentEntryLink sourceLayoutFragmentEntryLink,
 		Layout targetLayout) {
 
-		if ((targetLayout.getLaunchSetId() == 0) &&
+		if ((targetLayout.getLaunchId() == 0) &&
 			((sourceLayout.getPlid() == targetLayout.getClassPK()) ||
 			 ((sourceLayout.getClassPK() == targetLayout.getClassPK()) &&
-			  (sourceLayout.getLaunchSetId() > 0)))) {
+			  (sourceLayout.getLaunchId() > 0)))) {
 
 			String originalFragmentEntryLinkERC =
 				sourceLayoutFragmentEntryLink.getOriginalFragmentEntryLinkERC();
@@ -1094,7 +1094,7 @@ public class LayoutLocalServiceWrapper
 			return sourceLayoutFragmentEntryLink.getExternalReferenceCode();
 		}
 
-		if (targetLayout.getLaunchSetId() == 0) {
+		if (targetLayout.getLaunchId() == 0) {
 			return null;
 		}
 

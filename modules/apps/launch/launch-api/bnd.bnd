@@ -2,9 +2,9 @@ Bundle-Name: Liferay Launch API
 Bundle-SymbolicName: com.liferay.launch.api
 Bundle-Version: 5.0.1
 Export-Package:\
+	com.liferay.launch.details,\
+	com.liferay.launch.details.provider,\
 	com.liferay.launch.entry.manager,\
-	com.liferay.launch.set.details,\
-	com.liferay.launch.set.details.provider,\
-	com.liferay.launch.set.permission,\
-	com.liferay.launch.set.publisher,\
-	com.liferay.launch.set.util.comparator
+	com.liferay.launch.permission,\
+	com.liferay.launch.publisher,\
+	com.liferay.launch.util.comparator

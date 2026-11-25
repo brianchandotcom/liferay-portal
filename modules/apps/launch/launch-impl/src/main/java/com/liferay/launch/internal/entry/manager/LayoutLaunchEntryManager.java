@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutLaunchEntryManager implements LaunchEntryManager {
 
 	@Override
-	public Draft addDraft(long classPK, long launchSetId, String versionKey)
+	public Draft addDraft(long classPK, long launchId, String versionKey)
 		throws PortalException {
 
 		Layout baseLayout = _fetchLayout(classPK, versionKey);
@@ -75,11 +75,11 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 		}
 
 		Layout launchDraftLayout = _layoutLocalService.fetchDraftLayout(
-			classPK, launchSetId);
+			classPK, launchId);
 
 		if (launchDraftLayout == null) {
 			launchDraftLayout = _addLaunchDraftLayout(
-				baseLayout, launchSetId,
+				baseLayout, launchId,
 				_layoutLocalService.getLayout(classPK));
 		}
 
@@ -259,18 +259,18 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 	}
 
 	private Layout _addLaunchDraftLayout(
-			Layout baseLayout, long launchSetId, Layout layout)
+			Layout baseLayout, long launchId, Layout layout)
 		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		serviceContext.setAttribute("launchSetId", launchSetId);
+		serviceContext.setAttribute("launchId", launchId);
 
 		try {
 			return _layoutLocalService.addLayout(
 				StringBundler.concat(
-					layout.getExternalReferenceCode(), "-launch-", launchSetId),
+					layout.getExternalReferenceCode(), "-launch-", launchId),
 				serviceContext.getUserId(), layout.getGroupId(),
 				layout.isPrivateLayout(), layout.getParentLayoutId(),
 				_portal.getClassNameId(Layout.class), layout.getPlid(),
@@ -283,7 +283,7 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 				serviceContext);
 		}
 		finally {
-			serviceContext.removeAttribute("launchSetId");
+			serviceContext.removeAttribute("launchId");
 		}
 	}
 
@@ -344,7 +344,7 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 
 		if ((launchDraftLayout == null) ||
 			(launchDraftLayout.getClassPK() != classPK) ||
-			(launchDraftLayout.getLaunchSetId() == 0)) {
+			(launchDraftLayout.getLaunchId() == 0)) {
 
 			return null;
 		}
@@ -356,7 +356,7 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 		Layout layout = _layoutLocalService.fetchLayout(
 			GetterUtil.getLong(versionKey));
 
-		if ((layout == null) || (layout.getLaunchSetId() > 0)) {
+		if ((layout == null) || (layout.getLaunchId() > 0)) {
 			return null;
 		}
 

@@ -290,7 +290,7 @@ public class CMSDefaultValueUtilTest {
 					JSONUtil.put(
 						"en_US", "Space description"
 					).put(
-						"it_IT", "Descrizione dello spazio"
+						"it_IT", RandomTestUtil.randomString()
 					)),
 				_createJSONObject("flag", "Boolean", true),
 				_createJSONObject("title", "Text", "Space title")),

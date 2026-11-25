@@ -47,13 +47,15 @@ function toMapLocation(coordinates: LocationCoordinates) {
  * picks, through a dragged pin or a picked address suggestion, to
  * `onPositionChange`, unless the field is `disabled`. Returns `setPosition`,
  * which moves the map to a position the caller resolved outside the map,
- * such as a picked Google Maps suggestion.
+ * such as a picked Google Maps suggestion. `onMapReady` receives the map once
+ * it finishes loading.
  */
 export function useLocationMap({
 	disabled,
 	googleMapsAPIKey,
 	mapElementId,
 	mapProviderKey,
+	onMapReady,
 	onPositionChange,
 	value,
 }: {
@@ -61,12 +63,14 @@ export function useLocationMap({
 	googleMapsAPIKey?: string;
 	mapElementId: string;
 	mapProviderKey: MapProviderKey;
+	onMapReady?: (map: any) => void;
 	onPositionChange: (locationValue: LocationValue) => void;
 	value: LocationValue | null;
 }) {
 	const disabledRef = useRef(disabled);
 	const ignorePositionChangeRef = useRef(false);
 	const mapRef = useRef<any>(null);
+	const stableOnMapReady = useStableCallback((map: any) => onMapReady?.(map));
 	const stableOnPositionChange = useStableCallback(onPositionChange);
 	const valueRef = useRef(value);
 
@@ -137,6 +141,8 @@ export function useLocationMap({
 					if (!loaded) {
 						loaded = true;
 
+						stableOnMapReady(map);
+
 						return;
 					}
 
@@ -201,6 +207,7 @@ export function useLocationMap({
 		googleMapsAPIKey,
 		mapElementId,
 		mapProviderKey,
+		stableOnMapReady,
 		stableOnPositionChange,
 	]);
 

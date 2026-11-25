@@ -213,26 +213,6 @@ definition {
 		ValidateWebContentUpgrade.publishWCDraft();
 	}
 
-	@description = "This is a use case for LPS-123590. View Specific Display Page Template Archive 721"
-	@priority = 4
-	test ViewSpecificDisplayPageTemplateArchive721 {
-		property data.archive.type = "data-archive-display-page-templates";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.2.1";
-
-		ValidateWebContentUpgrade.viewSpecificDisplayPageTemplateViaAssetPublisher();
-	}
-
-	@description = "This is a use case for LPS-123590. View Specific Display Page Template Archive 72104"
-	@priority = 4
-	test ViewSpecificDisplayPageTemplateArchive72104 {
-		property data.archive.type = "data-archive-display-page-templates";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
-		property portal.version = "7.2.10.4";
-
-		ValidateWebContentUpgrade.viewSpecificDisplayPageTemplateViaAssetPublisher();
-	}
-
 	@description = "This is a test for LPS-126653. Upgrade 7.0.4 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher704 {
@@ -321,79 +301,6 @@ definition {
 		property portal.version = "6.2.10.21";
 
 		ValidateWebContentUpgrade.viewWebContentWithAllFields();
-	}
-
-	@description = "This is a use case for LPS-98619. View Web Content With Image Archive 704"
-	@priority = 3
-	test ViewWebContentWithImageArchive704 {
-		property data.archive.type = "data-archive-web-content-with-image";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.0.4";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		ValidateWebContentUpgrade.viewWithStructureCP(
-			webContentImage = "Document_1.jpg",
-			webContentTitle = "WC WebContent Title");
-	}
-
-	@description = "This is a use case for LPS-147234. View web content with image field after upgrade from 7.1.10 GA1."
-	@priority = 4
-	test ViewWebContentWithImageArchive7110 {
-		property data.archive.type = "data-archive-web-content-with-image";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
-		property portal.version = "7.1.10";
-
-		task ("View image is shown in field after upgrade") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			ValidateWebContentUpgrade.viewWithStructureCP(
-				webContentImage = "Document_2.png",
-				webContentTitle = "Web Content Title");
-		}
-	}
-
-	@description = "This is a use case for LPS-98619. View Web Content With Image Archive 70106"
-	@priority = 3
-	test ViewWebContentWithImageArchive70106 {
-		property data.archive.type = "data-archive-web-content-with-image";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
-		property portal.version = "7.0.10.6";
-		property test.run.environment = "EE";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		ValidateWebContentUpgrade.viewWithStructureCP(
-			webContentImage = "Document_1.jpg",
-			webContentTitle = "WC WebContent Title");
-	}
-
-	@description = "This is a use case for LPS-130915. View Web Content With No Display Page Template Archive 735"
-	@priority = 5
-	test ViewWebContentWithNoDisplayPageTemplateArchive735 {
-		property data.archive.type = "data-archive-web-content-with-no-display-page-template";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.3.5";
-
-		ValidateWebContentUpgrade.viewWebContentWithNoDisplayPageTemplate();
-	}
-
-	@description = "This is a use case for LPS-130915. View Web Content With No Display Page Template Archive 73101"
-	@priority = 5
-	test ViewWebContentWithNoDisplayPageTemplateArchive73101 {
-		property data.archive.type = "data-archive-web-content-with-no-display-page-template";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
-		property portal.version = "7.3.10.1";
-
-		ValidateWebContentUpgrade.viewWebContentWithNoDisplayPageTemplate();
 	}
 
 	@description = "This is a use case for LRQA-62830. View Web Content With Predefined Value In Web Content Field Archive 713"

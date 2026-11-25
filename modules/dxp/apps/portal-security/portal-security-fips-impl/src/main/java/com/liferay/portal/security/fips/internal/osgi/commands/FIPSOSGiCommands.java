@@ -8,7 +8,6 @@ package com.liferay.portal.security.fips.internal.osgi.commands;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.fips.FIPSModeValidationException;
-import com.liferay.portal.kernel.security.fips.FIPSModeValidationException.ValidationError;
 import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -32,21 +31,12 @@ public class FIPSOSGiCommands implements OSGiCommands {
 	public String check() {
 		List<String> lines = new ArrayList<>();
 
-		List<ValidationError> validationErrors = new ArrayList<>(
-			FIPSModeValidator.getPortalPropertiesValidationErrors());
+		try {
+			FIPSModeValidator.validatePortalConfiguration();
 
-		validationErrors.addAll(
-			FIPSModeValidator.getKeyEncryptionKeyValidationErrors());
-
-		if (validationErrors.isEmpty()) {
 			lines.add("No FIPS boot blockers were found.");
 		}
-		else {
-			FIPSModeValidationException fipsModeValidationException =
-				new FIPSModeValidationException();
-
-			fipsModeValidationException.setValidationErrors(validationErrors);
-
+		catch (FIPSModeValidationException fipsModeValidationException) {
 			lines.add(fipsModeValidationException.getMessage());
 		}
 

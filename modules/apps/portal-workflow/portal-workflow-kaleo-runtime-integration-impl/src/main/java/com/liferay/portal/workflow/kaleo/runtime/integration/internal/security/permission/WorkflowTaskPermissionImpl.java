@@ -6,6 +6,8 @@
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal.security.permission;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
+import com.liferay.portal.workflow.security.permission.WorkflowTaskPermissionContributor;
 
 import java.io.Serializable;
 
@@ -34,7 +37,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -81,6 +87,16 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 			}
 		}
 
+		for (WorkflowTaskPermissionContributor
+				workflowTaskPermissionContributor : _serviceTrackerList) {
+
+			if (workflowTaskPermissionContributor.contains(
+					permissionChecker, workflowTask, groupId)) {
+
+				return true;
+			}
+		}
+
 		boolean notifiableUser = false;
 
 		try {
@@ -103,6 +119,17 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 		}
 
 		return false;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, WorkflowTaskPermissionContributor.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	protected long[] getRoleIds(
@@ -242,5 +269,8 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	private ServiceTrackerList<WorkflowTaskPermissionContributor>
+		_serviceTrackerList;
 
 }

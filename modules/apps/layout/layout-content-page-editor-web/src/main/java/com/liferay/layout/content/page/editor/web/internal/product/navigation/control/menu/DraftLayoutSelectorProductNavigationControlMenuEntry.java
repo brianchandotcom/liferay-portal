@@ -137,7 +137,9 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
 
-		if (layoutPageTemplateEntry != null) {
+		if ((layoutPageTemplateEntry != null) ||
+			!_hasLaunchDrafts(layout.getClassPK())) {
+
 			return false;
 		}
 
@@ -278,6 +280,14 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 				String.CASE_INSENSITIVE_ORDER));
 
 		return launchDraftLayoutMaps;
+	}
+
+	private boolean _hasLaunchDrafts(long classPK) {
+		if (_layoutLocalService.countDraftLayouts(classPK) > 1) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isEditMode(HttpServletRequest httpServletRequest) {

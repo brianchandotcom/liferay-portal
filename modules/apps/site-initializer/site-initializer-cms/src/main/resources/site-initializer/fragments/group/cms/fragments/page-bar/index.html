@@ -4,6 +4,14 @@
 			<li class="tbar-item">
 				<lfr-drop-zone data-lfr-drop-zone-id="sidebarTrigger"></lfr-drop-zone>
 			</li>
+			[#assign backURL = (portalUtil.escapeRedirect(paramUtil.getString(request, "p_l_back_url")))!""]
+			[#if backURL?has_content]
+				<li class="tbar-item">
+					<a aria-label="${languageUtil.get(locale, "back")}" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm" href="${htmlUtil.escapeHREF(backURL)}" title="${languageUtil.get(locale, "back")}">
+						[@clay["icon"] symbol="angle-left" /]
+					</a>
+				</li>
+			[/#if]
 			<li class="tbar-item">
 				<img alt="${configuration.alt}" data-lfr-editable-id="sidebarImage" data-lfr-editable-type="image" height="20" src="[resources:waffle.svg]" />
 			</li>

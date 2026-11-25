@@ -6,13 +6,9 @@
 package com.liferay.portal.security.fips.internal.osgi.commands;
 
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.fips.FIPSModeValidationException;
 import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.felix.service.command.Descriptor;
 
@@ -29,24 +25,22 @@ public class FIPSOSGiCommands implements OSGiCommands {
 
 	@Descriptor("List the FIPS boot blockers before switching to FIPS mode.")
 	public String check() {
-		List<String> lines = new ArrayList<>();
+		StringBundler sb = new StringBundler(4);
 
 		try {
 			FIPSModeValidator.validatePortalConfiguration();
 
-			lines.add("No FIPS boot blockers were found.");
+			sb.append("No FIPS boot blockers were found.");
 		}
 		catch (FIPSModeValidationException fipsModeValidationException) {
-			lines.add(fipsModeValidationException.getMessage());
+			sb.append(fipsModeValidationException.getMessage());
 		}
 
-		lines.add(StringPool.BLANK);
-		lines.add(
-			"Only the FIPS boot checks the JVM. This includes the security " +
-				"providers, the SecureRandom provider, and the TLS and " +
-					"certificate revocation properties.");
+		sb.append("\n\nOnly the FIPS boot checks the JVM. This includes the ");
+		sb.append("security providers, the SecureRandom provider, and the ");
+		sb.append("TLS and certificate revocation properties.");
 
-		return StringUtil.merge(lines, StringPool.NEW_LINE);
+		return sb.toString();
 	}
 
 }

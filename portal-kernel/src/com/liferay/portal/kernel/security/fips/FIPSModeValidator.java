@@ -257,6 +257,15 @@ public class FIPSModeValidator {
 		}
 	}
 
+	public static void validatePortalConfiguration() {
+		List<ValidationError> validationErrors = new ArrayList<>(
+			getPortalPropertiesValidationErrors());
+
+		validationErrors.addAll(getKeyEncryptionKeyValidationErrors());
+
+		_throwFIPSModeValidationException(validationErrors);
+	}
+
 	public static void validateSessionTimeout(int sessionTimeout) {
 		if (!PropsValues.FIPS_ENABLED) {
 			return;

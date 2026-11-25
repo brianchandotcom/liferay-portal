@@ -1001,6 +1001,62 @@ public class FIPSModeValidatorTest {
 	}
 
 	@Test
+	public void testValidatePortalConfiguration() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+		CompanyKeyResolver companyKeyResolver = Mockito.mock(
+			CompanyKeyResolver.class);
+		Key key = new SecretKeySpec(
+			RandomTestUtil.randomBytes(), RandomTestUtil.randomString());
+
+		try (AutoCloseable autoCloseable1 = _setCompanyKeyResolver(
+				companyKeyResolver);
+			AutoCloseable autoCloseable2 = _setCompanyLocalService(companyId);
+			AutoCloseable autoCloseable3 = _setEncryptor(key);
+			SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_DEFAULT_POLICY_MIN_LENGTH", 13)) {
+
+			Mockito.when(
+				companyKeyResolver.isEnabled(companyId)
+			).thenReturn(
+				true
+			);
+
+			CompanyKeyException companyKeyException = new CompanyKeyException(
+				RandomTestUtil.randomString());
+
+			Mockito.when(
+				companyKeyResolver.wrapKey(companyId, key)
+			).thenThrow(
+				companyKeyException
+			);
+
+			SecurityException securityException = Assert.assertThrows(
+				SecurityException.class,
+				FIPSModeValidator::validatePortalConfiguration);
+
+			String message = securityException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"\n- FIPS mode requires the property \"" +
+						PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH +
+							"\" to be at least 14"));
+			Assert.assertTrue(
+				message.contains(
+					_getViolation(
+						"Key Encryption Key",
+						StringBundler.concat(
+							"Unable to reach the key encryption key of ",
+							"company ", companyId, ": ",
+							companyKeyException.getMessage()))));
+			Assert.assertTrue(
+				message.startsWith(
+					"The configuration is not allowed in FIPS mode.\n\n"));
+		}
+	}
+
+	@Test
 	public void testValidateProviders() {
 		Map<String, List<String>> allowedProviderNames =
 			ReflectionTestUtil.getFieldValue(

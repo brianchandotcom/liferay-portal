@@ -122,115 +122,6 @@ public class FIPSModeValidatorTest {
 	}
 
 	@Test
-	public void testGetKeyEncryptionKeyValidationErrors() throws Exception {
-		long companyId1 = RandomTestUtil.randomLong();
-		long companyId2 = RandomTestUtil.randomLong();
-		Key key = new SecretKeySpec(
-			RandomTestUtil.randomBytes(), RandomTestUtil.randomString());
-
-		try (AutoCloseable autoCloseable1 = _setCompanyLocalService(
-				companyId1, companyId2);
-			AutoCloseable autoCloseable2 = _setEncryptor(key)) {
-
-			try (AutoCloseable autoCloseable3 = _setCompanyKeyResolver(null);
-				LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-					FIPSModeValidator.class.getName(), LoggerTestUtil.WARN)) {
-
-				Assert.assertEquals(
-					Collections.emptyList(), _getKeyEncryptionKeyViolations());
-
-				List<LogEntry> logEntries = logCapture.getLogEntries();
-
-				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
-
-				LogEntry logEntry = logEntries.get(0);
-
-				Assert.assertEquals(
-					"Unable to check the key encryption keys because no " +
-						"company key resolver is available",
-					logEntry.getMessage());
-			}
-
-			CompanyKeyResolver companyKeyResolver = Mockito.mock(
-				CompanyKeyResolver.class);
-
-			try (AutoCloseable autoCloseable3 = _setCompanyKeyResolver(
-					companyKeyResolver)) {
-
-				Assert.assertEquals(
-					Collections.emptyList(), _getKeyEncryptionKeyViolations());
-
-				Mockito.when(
-					companyKeyResolver.isEnabled(Mockito.anyLong())
-				).thenReturn(
-					true
-				);
-
-				String keyString1 = RandomTestUtil.randomString();
-
-				Mockito.when(
-					companyKeyResolver.wrapKey(companyId1, key)
-				).thenReturn(
-					keyString1
-				);
-
-				Mockito.when(
-					companyKeyResolver.unwrapKey(companyId1, keyString1)
-				).thenReturn(
-					key
-				);
-
-				String keyString2 = RandomTestUtil.randomString();
-
-				Mockito.when(
-					companyKeyResolver.wrapKey(companyId2, key)
-				).thenReturn(
-					keyString2
-				);
-
-				Mockito.when(
-					companyKeyResolver.unwrapKey(companyId2, keyString2)
-				).thenReturn(
-					key
-				);
-
-				Assert.assertEquals(
-					Collections.emptyList(), _getKeyEncryptionKeyViolations());
-
-				Mockito.when(
-					companyKeyResolver.unwrapKey(companyId1, keyString1)
-				).thenReturn(
-					new SecretKeySpec(
-						RandomTestUtil.randomBytes(),
-						RandomTestUtil.randomString())
-				);
-
-				String message = RandomTestUtil.randomString();
-
-				Mockito.when(
-					companyKeyResolver.wrapKey(companyId2, key)
-				).thenThrow(
-					new CompanyKeyException(message)
-				);
-
-				Assert.assertEquals(
-					Arrays.asList(
-						_getViolation(
-							"Key Encryption Key",
-							"The key encryption key of company " + companyId1 +
-								" did not return the key it wrapped"),
-						_getViolation(
-							"Key Encryption Key",
-							StringBundler.concat(
-								"Unable to reach the key encryption key of ",
-								"company ", companyId2, ": ", message))),
-					_getKeyEncryptionKeyViolations());
-			}
-		}
-	}
-
-	@Test
 	public void testGetPlaintextSecretProperties() {
 		String obfuscatedKey1 = RandomTestUtil.randomString();
 		String obfuscatedKey2 = RandomTestUtil.randomString();
@@ -263,97 +154,6 @@ public class FIPSModeValidatorTest {
 
 			Assert.assertTrue(
 				plaintextSecretProperties.contains(obfuscatedKey1));
-		}
-	}
-
-	@Test
-	public void testGetPortalPropertiesValidationErrors() {
-		try (SafeCloseable safeCloseable1 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"COMPANY_ENCRYPTION_ALGORITHM", "AES", false);
-			SafeCloseable safeCloseable2 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"DEFAULT_ADMIN_PASSWORD", RandomTestUtil.randomString(14));
-			SafeCloseable safeCloseable3 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_DEFAULT_POLICY_MIN_LENGTH", 14);
-			SafeCloseable safeCloseable4 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_ALGORITHM",
-					"PBKDF2WithHmacSHA256/256/1300000", false);
-			SafeCloseable safeCloseable5 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"TUNNEL_UTIL_VERIFY_SSL_HOSTNAME", "true", false);
-			SafeCloseable safeCloseable6 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "AES")) {
-
-			Assert.assertEquals(
-				Collections.emptyList(), _getPortalPropertiesViolations());
-
-			try (SafeCloseable safeCloseable7 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"COMPANY_ENCRYPTION_ALGORITHM", "DES", false);
-				SafeCloseable safeCloseable8 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"PASSWORDS_DEFAULT_POLICY_MIN_LENGTH", 13)) {
-
-				Assert.assertEquals(
-					Arrays.asList(
-						_getViolation(
-							"Encryption Algorithms",
-							"Algorithm \"DES\" is not allowed in FIPS mode"),
-						_getViolation(
-							"Passwords",
-							"FIPS mode requires the property \"" +
-								PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH +
-									"\" to be at least 14")),
-					_getPortalPropertiesViolations());
-			}
-
-			try (SafeCloseable safeCloseable7 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"DEFAULT_ADMIN_PASSWORD",
-						RandomTestUtil.randomString(13))) {
-
-				Assert.assertEquals(
-					Collections.singletonList(
-						_getViolation(
-							"Passwords",
-							"FIPS mode requires the property \"" +
-								PropsKeys.DEFAULT_ADMIN_PASSWORD +
-									"\" to be at least 14 bytes")),
-					_getPortalPropertiesViolations());
-			}
-
-			try (SafeCloseable safeCloseable7 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"TUNNEL_UTIL_VERIFY_SSL_HOSTNAME", StringPool.BLANK,
-						false)) {
-
-				Assert.assertEquals(
-					Collections.singletonList(
-						_getViolation(
-							"TLS and Certificate Revocation",
-							"FIPS mode requires the property \"" +
-								PropsKeys.TUNNEL_UTIL_VERIFY_SSL_HOSTNAME +
-									"\" to be enabled")),
-					_getPortalPropertiesViolations());
-			}
-
-			try (SafeCloseable safeCloseable7 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"TUNNEL_UTIL_VERIFY_SSL_HOSTNAME", "false", false)) {
-
-				Assert.assertEquals(
-					Collections.singletonList(
-						_getViolation(
-							"TLS and Certificate Revocation",
-							"FIPS mode requires the property \"" +
-								PropsKeys.TUNNEL_UTIL_VERIFY_SSL_HOSTNAME +
-									"\" to be enabled")),
-					_getPortalPropertiesViolations());
-			}
 		}
 	}
 
@@ -859,21 +659,124 @@ public class FIPSModeValidatorTest {
 
 	@Test
 	public void testValidateKeyEncryptionKeys() throws Exception {
-		long companyId = RandomTestUtil.randomLong();
-		CompanyKeyResolver companyKeyResolver = Mockito.mock(
-			CompanyKeyResolver.class);
+		long companyId1 = RandomTestUtil.randomLong();
+		long companyId2 = RandomTestUtil.randomLong();
 		Key key = new SecretKeySpec(
 			RandomTestUtil.randomBytes(), RandomTestUtil.randomString());
 
+		try (AutoCloseable autoCloseable1 = _setCompanyLocalService(
+				companyId1, companyId2);
+			AutoCloseable autoCloseable2 = _setEncryptor(key)) {
+
+			try (AutoCloseable autoCloseable3 = _setCompanyKeyResolver(null);
+				LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					FIPSModeValidator.class.getName(), LoggerTestUtil.WARN)) {
+
+				Assert.assertEquals(
+					Collections.emptyList(), _getKeyEncryptionKeyViolations());
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					"Unable to check the key encryption keys because no " +
+						"company key resolver is available",
+					logEntry.getMessage());
+			}
+
+			CompanyKeyResolver companyKeyResolver = Mockito.mock(
+				CompanyKeyResolver.class);
+
+			try (AutoCloseable autoCloseable3 = _setCompanyKeyResolver(
+					companyKeyResolver)) {
+
+				Assert.assertEquals(
+					Collections.emptyList(), _getKeyEncryptionKeyViolations());
+
+				Mockito.when(
+					companyKeyResolver.isEnabled(Mockito.anyLong())
+				).thenReturn(
+					true
+				);
+
+				String keyString1 = RandomTestUtil.randomString();
+
+				Mockito.when(
+					companyKeyResolver.wrapKey(companyId1, key)
+				).thenReturn(
+					keyString1
+				);
+
+				Mockito.when(
+					companyKeyResolver.unwrapKey(companyId1, keyString1)
+				).thenReturn(
+					key
+				);
+
+				String keyString2 = RandomTestUtil.randomString();
+
+				Mockito.when(
+					companyKeyResolver.wrapKey(companyId2, key)
+				).thenReturn(
+					keyString2
+				);
+
+				Mockito.when(
+					companyKeyResolver.unwrapKey(companyId2, keyString2)
+				).thenReturn(
+					key
+				);
+
+				Assert.assertEquals(
+					Collections.emptyList(), _getKeyEncryptionKeyViolations());
+
+				Mockito.when(
+					companyKeyResolver.unwrapKey(companyId1, keyString1)
+				).thenReturn(
+					new SecretKeySpec(
+						RandomTestUtil.randomBytes(),
+						RandomTestUtil.randomString())
+				);
+
+				String message = RandomTestUtil.randomString();
+
+				Mockito.when(
+					companyKeyResolver.wrapKey(companyId2, key)
+				).thenThrow(
+					new CompanyKeyException(message)
+				);
+
+				Assert.assertEquals(
+					Arrays.asList(
+						_getViolation(
+							"Key Encryption Key",
+							"The key encryption key of company " + companyId1 +
+								" did not return the key it wrapped"),
+						_getViolation(
+							"Key Encryption Key",
+							StringBundler.concat(
+								"Unable to reach the key encryption key of ",
+								"company ", companyId2, ": ", message))),
+					_getKeyEncryptionKeyViolations());
+			}
+		}
+
+		CompanyKeyResolver companyKeyResolver = Mockito.mock(
+			CompanyKeyResolver.class);
+
 		try (AutoCloseable autoCloseable1 = _setCompanyKeyResolver(
 				companyKeyResolver);
-			AutoCloseable autoCloseable2 = _setCompanyLocalService(companyId);
+			AutoCloseable autoCloseable2 = _setCompanyLocalService(companyId1);
 			AutoCloseable autoCloseable3 = _setEncryptor(key)) {
 
 			FIPSModeValidator.validateKeyEncryptionKeys();
 
 			Mockito.when(
-				companyKeyResolver.isEnabled(companyId)
+				companyKeyResolver.isEnabled(companyId1)
 			).thenReturn(
 				true
 			);
@@ -882,7 +785,7 @@ public class FIPSModeValidatorTest {
 				RandomTestUtil.randomString());
 
 			Mockito.when(
-				companyKeyResolver.wrapKey(companyId, key)
+				companyKeyResolver.wrapKey(companyId1, key)
 			).thenThrow(
 				companyKeyException
 			);
@@ -895,7 +798,7 @@ public class FIPSModeValidatorTest {
 				"Key Encryption Key",
 				StringBundler.concat(
 					"Unable to reach the key encryption key of company ",
-					companyId, ": ", companyKeyException.getMessage()));
+					companyId1, ": ", companyKeyException.getMessage()));
 
 			Assert.assertEquals(
 				"The configuration is not allowed in FIPS mode.\n\n" +
@@ -1032,6 +935,97 @@ public class FIPSModeValidatorTest {
 			Assert.assertTrue(
 				message.startsWith(
 					"The configuration is not allowed in FIPS mode.\n\n"));
+		}
+	}
+
+	@Test
+	public void testValidatePortalProperties() {
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"COMPANY_ENCRYPTION_ALGORITHM", "AES", false);
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"DEFAULT_ADMIN_PASSWORD", RandomTestUtil.randomString(14));
+			SafeCloseable safeCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_DEFAULT_POLICY_MIN_LENGTH", 14);
+			SafeCloseable safeCloseable4 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_ALGORITHM",
+					"PBKDF2WithHmacSHA256/256/1300000", false);
+			SafeCloseable safeCloseable5 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNEL_UTIL_VERIFY_SSL_HOSTNAME", "true", false);
+			SafeCloseable safeCloseable6 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "AES")) {
+
+			Assert.assertEquals(
+				Collections.emptyList(), _getPortalPropertiesViolations());
+
+			try (SafeCloseable safeCloseable7 =
+					PropsValuesTestUtil.swapWithSafeCloseable(
+						"COMPANY_ENCRYPTION_ALGORITHM", "DES", false);
+				SafeCloseable safeCloseable8 =
+					PropsValuesTestUtil.swapWithSafeCloseable(
+						"PASSWORDS_DEFAULT_POLICY_MIN_LENGTH", 13)) {
+
+				Assert.assertEquals(
+					Arrays.asList(
+						_getViolation(
+							"Encryption Algorithms",
+							"Algorithm \"DES\" is not allowed in FIPS mode"),
+						_getViolation(
+							"Passwords",
+							"FIPS mode requires the property \"" +
+								PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH +
+									"\" to be at least 14")),
+					_getPortalPropertiesViolations());
+			}
+
+			try (SafeCloseable safeCloseable7 =
+					PropsValuesTestUtil.swapWithSafeCloseable(
+						"DEFAULT_ADMIN_PASSWORD",
+						RandomTestUtil.randomString(13))) {
+
+				Assert.assertEquals(
+					Collections.singletonList(
+						_getViolation(
+							"Passwords",
+							"FIPS mode requires the property \"" +
+								PropsKeys.DEFAULT_ADMIN_PASSWORD +
+									"\" to be at least 14 bytes")),
+					_getPortalPropertiesViolations());
+			}
+
+			try (SafeCloseable safeCloseable7 =
+					PropsValuesTestUtil.swapWithSafeCloseable(
+						"TUNNEL_UTIL_VERIFY_SSL_HOSTNAME", StringPool.BLANK,
+						false)) {
+
+				Assert.assertEquals(
+					Collections.singletonList(
+						_getViolation(
+							"TLS and Certificate Revocation",
+							"FIPS mode requires the property \"" +
+								PropsKeys.TUNNEL_UTIL_VERIFY_SSL_HOSTNAME +
+									"\" to be enabled")),
+					_getPortalPropertiesViolations());
+			}
+
+			try (SafeCloseable safeCloseable7 =
+					PropsValuesTestUtil.swapWithSafeCloseable(
+						"TUNNEL_UTIL_VERIFY_SSL_HOSTNAME", "false", false)) {
+
+				Assert.assertEquals(
+					Collections.singletonList(
+						_getViolation(
+							"TLS and Certificate Revocation",
+							"FIPS mode requires the property \"" +
+								PropsKeys.TUNNEL_UTIL_VERIFY_SSL_HOSTNAME +
+									"\" to be enabled")),
+					_getPortalPropertiesViolations());
+			}
 		}
 	}
 
@@ -1328,17 +1322,23 @@ public class FIPSModeValidatorTest {
 	}
 
 	private List<String> _getKeyEncryptionKeyViolations() {
-		return _getViolations(
-			ReflectionTestUtil.invoke(
-				FIPSModeValidator.class, "_getKeyEncryptionKeyValidationErrors",
-				new Class<?>[0]));
+		List<ValidationError> validationErrors = new ArrayList<>();
+
+		ReflectionTestUtil.invoke(
+			FIPSModeValidator.class, "_validateKeyEncryptionKeys",
+			new Class<?>[] {List.class}, validationErrors);
+
+		return _getViolations(validationErrors);
 	}
 
 	private List<String> _getPortalPropertiesViolations() {
-		return _getViolations(
-			ReflectionTestUtil.invoke(
-				FIPSModeValidator.class, "_getPortalPropertiesValidationErrors",
-				new Class<?>[0]));
+		List<ValidationError> validationErrors = new ArrayList<>();
+
+		ReflectionTestUtil.invoke(
+			FIPSModeValidator.class, "_validatePortalProperties",
+			new Class<?>[] {List.class}, validationErrors);
+
+		return _getViolations(validationErrors);
 	}
 
 	private List<String> _getRequiredPropertyValuesViolations(

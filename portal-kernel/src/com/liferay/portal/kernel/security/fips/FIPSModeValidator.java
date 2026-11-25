@@ -136,13 +136,12 @@ public class FIPSModeValidator {
 			ValidationErrorType.SECURITY_PROVIDERS);
 
 		_validateAllowedPropertyValues(System::getProperty, validationErrors);
+		_validatePortalProperties(validationErrors);
 		_validateRequiredPropertyValues(
 			Security::getProperty, _requiredSecurityProperties,
 			validationErrors);
 		_validateRequiredPropertyValues(
 			System::getProperty, _requiredSystemProperties, validationErrors);
-
-		validationErrors.addAll(_getPortalPropertiesValidationErrors());
 
 		_throwFIPSModeValidationException(validationErrors);
 	}
@@ -176,8 +175,11 @@ public class FIPSModeValidator {
 	}
 
 	public static void validateKeyEncryptionKeys() {
-		_throwFIPSModeValidationException(
-			_getKeyEncryptionKeyValidationErrors());
+		List<ValidationError> validationErrors = new ArrayList<>();
+
+		_validateKeyEncryptionKeys(validationErrors);
+
+		_throwFIPSModeValidationException(validationErrors);
 	}
 
 	public static void validatePassword(String password) {
@@ -189,10 +191,10 @@ public class FIPSModeValidator {
 	}
 
 	public static void validatePortalConfiguration() {
-		List<ValidationError> validationErrors = new ArrayList<>(
-			_getPortalPropertiesValidationErrors());
+		List<ValidationError> validationErrors = new ArrayList<>();
 
-		validationErrors.addAll(_getKeyEncryptionKeyValidationErrors());
+		_validateKeyEncryptionKeys(validationErrors);
+		_validatePortalProperties(validationErrors);
 
 		_throwFIPSModeValidationException(validationErrors);
 	}
@@ -217,32 +219,6 @@ public class FIPSModeValidator {
 			"URL protocol scheme is not allowed in FIPS mode");
 	}
 
-	private static List<ValidationError>
-		_getKeyEncryptionKeyValidationErrors() {
-
-		List<ValidationError> validationErrors = new ArrayList<>();
-
-		CompanyKeyResolver companyKeyResolver =
-			_companyKeyResolverSnapshot.get();
-
-		if (companyKeyResolver == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to check the key encryption keys because no " +
-						"company key resolver is available");
-			}
-
-			return validationErrors;
-		}
-
-		CompanyLocalServiceUtil.forEachCompanyId(
-			companyId -> _validate(
-				() -> _validateKeyEncryptionKey(companyId, companyKeyResolver),
-				validationErrors, ValidationErrorType.KEY_ENCRYPTION_KEY));
-
-		return validationErrors;
-	}
-
 	private static List<String> _getPlaintextSecretProperties(
 		Properties properties) {
 
@@ -265,53 +241,6 @@ public class FIPSModeValidator {
 		}
 
 		return plaintextSecretProperties;
-	}
-
-	private static List<ValidationError>
-		_getPortalPropertiesValidationErrors() {
-
-		List<ValidationError> validationErrors = new ArrayList<>();
-
-		if (GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_MAC_ALLOW))) {
-			_validate(
-				() -> _validateAlgorithm(
-					PropsUtil.get(PropsKeys.AUTH_MAC_ALGORITHM)),
-				validationErrors, ValidationErrorType.ENCRYPTION_ALGORITHMS);
-		}
-
-		_validate(
-			() -> _validateAlgorithm(
-				PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM)),
-			validationErrors, ValidationErrorType.ENCRYPTION_ALGORITHMS);
-		_validate(
-			() -> _validateAlgorithm(
-				PropsValues.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM),
-			validationErrors, ValidationErrorType.ENCRYPTION_ALGORITHMS);
-		_validate(
-			FIPSModeValidator::_validateTunnelUtilVerifySSLHostname,
-			validationErrors,
-			ValidationErrorType.TLS_AND_CERTIFICATE_REVOCATION);
-
-		_validateClusterLinkConfiguration(validationErrors);
-
-		_validate(
-			() -> _validatePasswordsEncryptionAlgorithm(
-				PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)),
-			validationErrors, ValidationErrorType.PASSWORDS);
-		_validate(
-			() -> _validateSessionTimeout(PropsValues.SESSION_TIMEOUT),
-			validationErrors, ValidationErrorType.SESSION_TIMEOUT);
-		_validate(
-			FIPSModeValidator::_validateDefaultAdminPassword, validationErrors,
-			ValidationErrorType.PASSWORDS);
-		_validate(
-			FIPSModeValidator::_validatePasswordsDefaultPolicyMinLength,
-			validationErrors, ValidationErrorType.PASSWORDS);
-		_validate(
-			FIPSModeValidator::_validatePlaintextSecrets, validationErrors,
-			ValidationErrorType.SECRETS_IN_PROPERTIES_FILES);
-
-		return validationErrors;
 	}
 
 	private static boolean _isNotAllowedAlgorithm(String algorithm) {
@@ -696,6 +625,28 @@ public class FIPSModeValidator {
 		}
 	}
 
+	private static void _validateKeyEncryptionKeys(
+		List<ValidationError> validationErrors) {
+
+		CompanyKeyResolver companyKeyResolver =
+			_companyKeyResolverSnapshot.get();
+
+		if (companyKeyResolver == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to check the key encryption keys because no " +
+						"company key resolver is available");
+			}
+
+			return;
+		}
+
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> _validate(
+				() -> _validateKeyEncryptionKey(companyId, companyKeyResolver),
+				validationErrors, ValidationErrorType.KEY_ENCRYPTION_KEY));
+	}
+
 	private static void _validatePasswordsDefaultPolicyMinLength() {
 		if (PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH <
 				PASSWORDS_MIN_LENGTH) {
@@ -781,6 +732,49 @@ public class FIPSModeValidator {
 				"A plaintext value for " + StringUtil.merge(messages, ", ") +
 					" is not allowed in FIPS mode");
 		}
+	}
+
+	private static void _validatePortalProperties(
+		List<ValidationError> validationErrors) {
+
+		if (GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_MAC_ALLOW))) {
+			_validate(
+				() -> _validateAlgorithm(
+					PropsUtil.get(PropsKeys.AUTH_MAC_ALGORITHM)),
+				validationErrors, ValidationErrorType.ENCRYPTION_ALGORITHMS);
+		}
+
+		_validate(
+			() -> _validateAlgorithm(
+				PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM)),
+			validationErrors, ValidationErrorType.ENCRYPTION_ALGORITHMS);
+		_validate(
+			() -> _validateAlgorithm(
+				PropsValues.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM),
+			validationErrors, ValidationErrorType.ENCRYPTION_ALGORITHMS);
+		_validate(
+			FIPSModeValidator::_validateTunnelUtilVerifySSLHostname,
+			validationErrors,
+			ValidationErrorType.TLS_AND_CERTIFICATE_REVOCATION);
+
+		_validateClusterLinkConfiguration(validationErrors);
+
+		_validate(
+			() -> _validatePasswordsEncryptionAlgorithm(
+				PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)),
+			validationErrors, ValidationErrorType.PASSWORDS);
+		_validate(
+			() -> _validateSessionTimeout(PropsValues.SESSION_TIMEOUT),
+			validationErrors, ValidationErrorType.SESSION_TIMEOUT);
+		_validate(
+			FIPSModeValidator::_validateDefaultAdminPassword, validationErrors,
+			ValidationErrorType.PASSWORDS);
+		_validate(
+			FIPSModeValidator::_validatePasswordsDefaultPolicyMinLength,
+			validationErrors, ValidationErrorType.PASSWORDS);
+		_validate(
+			FIPSModeValidator::_validatePlaintextSecrets, validationErrors,
+			ValidationErrorType.SECRETS_IN_PROPERTIES_FILES);
 	}
 
 	private static void _validateProviders(Provider[] providers) {

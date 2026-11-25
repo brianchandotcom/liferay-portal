@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.LocationInfoFieldType;
 import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.item.InfoItemReference;
@@ -18,6 +19,7 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.LocationObjectFieldBuilder;
 import com.liferay.object.field.builder.PhoneNumberObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
@@ -55,6 +57,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -314,6 +317,33 @@ public class ObjectFieldInfoFieldConverterTest {
 				TestPropsValues.getCompanyId(), originalLocales,
 				originalLocale);
 		}
+	}
+
+	@FeatureFlag("LPD-70668")
+	@Test
+	public void testGetLocationInfoField() throws Exception {
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new LocationObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
+			new ObjectFieldInfoFieldConverter(
+				_ddmExpressionFactory, null, null, null, null, null, null, null,
+				null, null, null, null, null);
+
+		InfoField<?> infoField = objectFieldInfoFieldConverter.getInfoField(
+			true, ObjectField.class.getSimpleName(), objectField);
+
+		Assert.assertSame(
+			LocationInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 	}
 
 	@Test

@@ -346,35 +346,34 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			_writeClassName(dataSetObjectDefinition, fragmentRendererContext);
 		}
 
-		ObjectEntry dataSetObjectEntry = null;
+		if (Validator.isNull(externalReferenceCode)) {
+			return null;
+		}
 
-		if (Validator.isNotNull(externalReferenceCode)) {
-			try {
-				DefaultObjectEntryManager defaultObjectEntryManager =
-					DefaultObjectEntryManagerProvider.provide(
-						_dataSetObjectEntryManagerRegistry.
-							getObjectEntryManager(
-								dataSetObjectDefinition.getCompanyId(),
-								dataSetObjectDefinition.getStorageType()));
+		try {
+			DefaultObjectEntryManager defaultObjectEntryManager =
+				DefaultObjectEntryManagerProvider.provide(
+					_dataSetObjectEntryManagerRegistry.getObjectEntryManager(
+						dataSetObjectDefinition.getCompanyId(),
+						dataSetObjectDefinition.getStorageType()));
 
-				dataSetObjectEntry = defaultObjectEntryManager.getObjectEntry(
-					fragmentEntryLink.getCompanyId(),
-					new DefaultDTOConverterContext(
-						false, null, null, null, null,
-						LocaleUtil.getMostRelevantLocale(), null, null),
-					externalReferenceCode, dataSetObjectDefinition, null);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get frontend data set with external " +
-							"reference code " + externalReferenceCode,
-						exception);
-				}
+			return defaultObjectEntryManager.getObjectEntry(
+				fragmentEntryLink.getCompanyId(),
+				new DefaultDTOConverterContext(
+					false, null, null, null, null,
+					LocaleUtil.getMostRelevantLocale(), null, null),
+				externalReferenceCode, dataSetObjectDefinition, null);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get frontend data set with external " +
+						"reference code " + externalReferenceCode,
+					exception);
 			}
 		}
 
-		return dataSetObjectEntry;
+		return null;
 	}
 
 	private JSONObject _getEditableValuesJSONObject(

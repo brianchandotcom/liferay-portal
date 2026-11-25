@@ -29,6 +29,7 @@ export {
 } from './components/ExpressionBuilder';
 export {Input} from './components/Input';
 export {LocationInput} from './components/Location/LocationInput';
+export {LocationMap} from './components/Location/LocationMap';
 export {
 	LocationValue,
 	MAP_PROVIDER,

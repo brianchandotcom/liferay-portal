@@ -13,6 +13,11 @@ import React from 'react';
 
 import ObjectEntryService from '../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/services/ObjectEntryService';
 import ViewAsset from '../../../../src/main/resources/META-INF/resources/js/main_view/view_asset/ViewAsset';
+import {addParams} from '../../__mocks__/frontend-js-web';
+
+jest.mock('@ckeditor/ckeditor5-react', () => ({
+	CKEditor: () => <div />,
+}));
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/common/components/AssetPreview',
@@ -46,34 +51,6 @@ jest.mock(
 		return Toolbar;
 	}
 );
-
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/content_editor/components/panels/CommentsPanel',
-	() =>
-		function CommentsPanel({
-			addCommentURL,
-			readOnly,
-		}: {
-			addCommentURL: string;
-			readOnly: boolean;
-		}) {
-			return (
-				<div
-					data-add-comment-url={addCommentURL}
-					data-readonly={String(readOnly)}
-					data-testid="comments-panel"
-				/>
-			);
-		}
-);
-
-const mockLiferayLanguageGet = jest.fn((key: string) => key);
-
-(global as any).Liferay = {
-	Language: {
-		get: mockLiferayLanguageGet,
-	},
-};
 
 const mockItem = {
 	actions: {},
@@ -114,6 +91,8 @@ const defaultProps = {
 describe('ViewAsset', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
+
+		addParams.mockReturnValue('/url?params');
 
 		jest.spyOn(ObjectEntryService, 'getObjectEntry').mockResolvedValue({
 			data: mockItem,
@@ -169,23 +148,14 @@ describe('ViewAsset', () => {
 		});
 	});
 
-	it('renders comments panel in read-only mode when hasCommentPermission is false', async () => {
+	it('does not render the comment editor when hasCommentPermission is false', async () => {
 		render(<ViewAsset {...defaultProps} hasCommentPermission={false} />);
 
-		await waitFor(() => {
-			expect(
-				screen.getByRole('button', {name: 'show-comments'})
-			).toBeInTheDocument();
-		});
-
 		await userEvent.click(
-			screen.getByRole('button', {name: 'show-comments'})
+			await screen.findByRole('button', {name: 'show-comments'})
 		);
 
-		const commentsPanel = screen.getByTestId('comments-panel');
-
-		expect(commentsPanel).toHaveAttribute('data-add-comment-url', '');
-		expect(commentsPanel).toHaveAttribute('data-readonly', 'true');
+		expect(screen.queryByText('add-comment')).not.toBeInTheDocument();
 	});
 
 	it('opens side panel when clicking comments button', async () => {
@@ -204,10 +174,7 @@ describe('ViewAsset', () => {
 		await userEvent.click(commentsButton);
 
 		expect(screen.getByText('comments')).toBeInTheDocument();
-		expect(screen.getByTestId('comments-panel')).toHaveAttribute(
-			'data-readonly',
-			'false'
-		);
+		expect(screen.getByText('add-comment')).toBeInTheDocument();
 	});
 
 	it('transforms item if it does not have embedded property', async () => {

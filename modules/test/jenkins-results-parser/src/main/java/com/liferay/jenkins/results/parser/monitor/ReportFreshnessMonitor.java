@@ -296,9 +296,9 @@ public class ReportFreshnessMonitor extends BaseMonitor {
 		String lookupMessage = null;
 
 		try {
-			List<JenkinsMaster> activeJenkinsMasters = new ArrayList<>();
-
 			List<JenkinsMaster> jenkinsMasters = _getJenkinsMasters();
+
+			List<JenkinsMaster> activeJenkinsMasters = new ArrayList<>();
 
 			for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
 				if (jenkinsMaster.isBlacklisted()) {

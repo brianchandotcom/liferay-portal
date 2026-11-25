@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.processor.VideoProcessor;
 import com.liferay.document.library.kernel.processor.VideoProcessorUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.trash.TrashedFileVersionStatusProvider;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
@@ -1758,11 +1759,20 @@ public class WebServerServlet extends HttpServlet {
 			FileVersion fileVersion, HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		int status = fileVersion.getStatus();
+
+		if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			TrashedFileVersionStatusProvider trashedFileVersionStatusProvider =
+				_trashedFileVersionStatusProviderSnapshot.get();
+
+			status = trashedFileVersionStatusProvider.getOriginalStatus(
+				fileVersion);
+		}
+
 		PermissionChecker permissionChecker = _getPermissionChecker(
 			httpServletRequest);
 
-		if (fileVersion.isApproved() ||
-			(fileVersion.getStatus() == WorkflowConstants.STATUS_IN_TRASH) ||
+		if ((status == WorkflowConstants.STATUS_APPROVED) ||
 			(fileVersion.getUserId() == permissionChecker.getUserId()) ||
 			permissionChecker.isContentReviewer(
 				fileVersion.getCompanyId(), fileVersion.getGroupId())) {
@@ -2235,6 +2245,9 @@ public class WebServerServlet extends HttpServlet {
 		new Snapshot<>(WebServerServlet.class, MessageBus.class);
 	private static final Snapshot<TrashHelper> _trashTitleResolverSnapshot =
 		new Snapshot<>(WebServerServlet.class, TrashHelper.class);
+	private static final Snapshot<TrashedFileVersionStatusProvider>
+		_trashedFileVersionStatusProviderSnapshot = new Snapshot<>(
+			WebServerServlet.class, TrashedFileVersionStatusProvider.class);
 	private static final Snapshot<UserFileUploadsSettings>
 		_userFileUploadsSettingsSnapshot = new Snapshot<>(
 			WebServerServlet.class, UserFileUploadsSettings.class);

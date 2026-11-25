@@ -51,6 +51,8 @@ import com.liferay.site.cms.site.initializer.util.CMSDefaultValueUtil;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -110,8 +112,14 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 					ObjectFieldConstants.DB_TYPE_INTEGER, "count"),
 				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_DATE,
+					ObjectFieldConstants.DB_TYPE_DATE, "endDate"),
+				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 					ObjectFieldConstants.DB_TYPE_BOOLEAN, "flag"),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
+					ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, "price"),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE,
 					ObjectFieldConstants.DB_TYPE_DATE, "publishDate"),
@@ -169,7 +177,11 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 						"it_IT", RandomTestUtil.randomString()
 					)),
 				_createJSONObject("count", "Integer", 1),
+				_createJSONObject(
+					"endDate", "Date", RandomTestUtil.randomString()),
 				_createJSONObject("flag", "Boolean", true),
+				_createJSONObject(
+					"price", "PrecisionDecimal", RandomTestUtil.randomString()),
 				_createJSONObject("publishDate", "Date", "2026-12-01"),
 				_createJSONObject("text", "Text", "Space text")),
 			_depotEntry, _filterFactory);
@@ -364,7 +376,9 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 		Assert.assertEquals(category, MapUtil.getString(values, "category"));
 		Assert.assertEquals(code, MapUtil.getString(values, "code"));
 		Assert.assertEquals(count, MapUtil.getInteger(values, "count"));
+		Assert.assertNull(values.get("endDate"));
 		Assert.assertEquals(flag, MapUtil.getBoolean(values, "flag"));
+		Assert.assertEquals(BigDecimal.ZERO, values.get("price"));
 
 		Date date = (Date)values.get("publishDate");
 

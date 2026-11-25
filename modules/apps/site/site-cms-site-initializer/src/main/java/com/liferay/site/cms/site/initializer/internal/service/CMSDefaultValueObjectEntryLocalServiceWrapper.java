@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -34,10 +35,13 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -45,6 +49,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultValueUtil;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -184,6 +190,48 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 
 	private boolean _isValid(ObjectField objectField, Object value) {
 		String valueString = String.valueOf(value);
+
+		if (Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE)) {
+
+			try {
+				new BigDecimal(valueString);
+
+				return true;
+			}
+			catch (NumberFormatException numberFormatException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(numberFormatException);
+				}
+
+				return false;
+			}
+		}
+
+		if (Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DATE) ||
+			Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_DATE_TIME)) {
+
+			try {
+				DateUtil.parseDate(
+					ObjectFieldUtil.getDateTimePattern(valueString),
+					valueString, LocaleUtil.getSiteDefault());
+
+				return true;
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
+				return false;
+			}
+		}
 
 		if (Objects.equals(
 				objectField.getDBType(),
@@ -355,7 +403,7 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 
 		JSONObject jsonObject = (JSONObject)value;
 
-		HashMap<String, Serializable> localizedValues = new HashMap<>();
+		Map<String, Serializable> localizedValues = new HashMap<>();
 
 		for (String languageId : jsonObject.keySet()) {
 			if (!_language.isAvailableLocale(groupId, languageId)) {
@@ -387,7 +435,9 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 			values.put(objectField.getName(), defaultValue);
 		}
 
-		values.put(objectField.getI18nObjectFieldName(), localizedValues);
+		values.put(
+			objectField.getI18nObjectFieldName(),
+			(Serializable)localizedValues);
 	}
 
 	private static final String[] _BUSINESS_TYPES = {
@@ -403,6 +453,9 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 		ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
 		ObjectFieldConstants.BUSINESS_TYPE_TEXT
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CMSDefaultValueObjectEntryLocalServiceWrapper.class);
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

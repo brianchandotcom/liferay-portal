@@ -18,6 +18,8 @@ const test = mergeTests(
 	designLibrariesPageTest,
 	featureFlagsTest({
 		'LPD-57283': {enabled: true},
+		'LPD-81022': {enabled: true},
+		'LPD-81651': {enabled: true},
 	}),
 	loginTest()
 );
@@ -26,118 +28,141 @@ test(
 	'Shows the revamped per-library home with members and connected sites',
 	{tag: ['@LPD-108834', '@LPD-110068', '@LPD-99371']},
 	async ({apiHelpers, designLibrariesPage, page}) => {
-
-		// Create a design library
-
-		const designLibrary =
-			await apiHelpers.headlessAssetLibrary.createDesignLibrary();
-
-		// Go to the design library
-
-		await designLibrariesPage.goToDesignLibrary(designLibrary.name);
-
-		// Check the Design Assets section
-
-		await expect(
-			page.getByRole('heading', {name: 'Design Assets'})
-		).toBeVisible();
-
-		await expect(
-			page.getByRole('button', {name: 'Add Asset'})
-		).toBeVisible();
-
-		// Check the Add Asset menu
-
+		const creationMenuItemLabels = [
+			'New Style Book',
+			'New Master Page',
+			'Page Templates',
+			'New Display Page Template',
+			'Fragments',
+		];
 		const fragmentsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Fragments',
 		});
 
-		await clickAndExpectToBeVisible({
-			target: fragmentsMenuItem,
-			trigger: page.getByRole('button', {name: 'Add Asset'}),
+		const designLibrary =
+			await apiHelpers.headlessAssetLibrary.createDesignLibrary();
+
+		await test.step('Go to the design library', async () => {
+			await designLibrariesPage.goToDesignLibrary(designLibrary.name);
 		});
 
-		const newContentPageTemplateMenuItem = page.getByRole('menuitem', {
-			name: 'New Content Page Template',
+		await test.step('Check the Design Assets section', async () => {
+			await expect(
+				page.getByRole('heading', {name: 'Design Assets'})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('button', {name: 'Add Asset'})
+			).toBeVisible();
 		});
 
-		await hoverAndExpectToBeVisible({
-			target: newContentPageTemplateMenuItem,
-			trigger: page.getByRole('menuitem', {
-				exact: true,
-				name: 'Page Templates',
-			}),
+		await test.step('Check the Add Asset menu', async () => {
+			await clickAndExpectToBeVisible({
+				target: fragmentsMenuItem,
+				trigger: page.getByRole('button', {name: 'Add Asset'}),
+			});
+
+			await expect(
+				page.getByRole('menu').getByRole('menuitem')
+			).toHaveText(creationMenuItemLabels);
+			await expect(
+				page.getByRole('menu').getByRole('separator')
+			).toHaveCount(2);
+
+			const newContentPageTemplateMenuItem = page.getByRole('menuitem', {
+				name: 'New Content Page Template',
+			});
+
+			await hoverAndExpectToBeVisible({
+				target: newContentPageTemplateMenuItem,
+				trigger: page.getByRole('menuitem', {
+					exact: true,
+					name: 'Page Templates',
+				}),
+			});
+			await hoverAndExpectToBeVisible({
+				target: page.getByRole('menuitem', {
+					name: 'New Basic Fragment',
+				}),
+				trigger: fragmentsMenuItem,
+			});
+
+			await expect(newContentPageTemplateMenuItem).toBeHidden();
+
+			await expect(async () => {
+				await page.keyboard.press('Escape');
+
+				await expect(fragmentsMenuItem).toBeHidden({timeout: 500});
+			}).toPass();
 		});
-		await hoverAndExpectToBeVisible({
-			target: page.getByRole('menuitem', {name: 'New Basic Fragment'}),
-			trigger: fragmentsMenuItem,
+
+		await test.step('Check the New menu', async () => {
+			await clickAndExpectToBeVisible({
+				target: fragmentsMenuItem,
+				trigger: page.getByRole('button', {exact: true, name: 'New'}),
+			});
+
+			await expect(
+				page.getByRole('menu').getByRole('menuitem')
+			).toHaveText(creationMenuItemLabels);
+			await expect(
+				page.getByRole('menu').getByRole('separator')
+			).toHaveCount(2);
+
+			await hoverAndExpectToBeVisible({
+				target: page.getByRole('menuitem', {
+					name: 'New Basic Fragment',
+				}),
+				trigger: fragmentsMenuItem,
+			});
+
+			await expect(async () => {
+				await page.keyboard.press('Escape');
+
+				await expect(fragmentsMenuItem).toBeHidden({timeout: 500});
+			}).toPass();
 		});
 
-		await expect(newContentPageTemplateMenuItem).toBeHidden();
+		await test.step('Check the Members section', async () => {
+			await expect(
+				page.getByRole('heading', {name: /^Members/})
+			).toBeVisible();
 
-		await expect(async () => {
-			await page.keyboard.press('Escape');
+			await expect(page.getByRole('tab', {name: 'Users'})).toBeVisible();
 
-			await expect(fragmentsMenuItem).toBeHidden({timeout: 500});
-		}).toPass();
+			await expect(
+				page.getByRole('tab', {name: 'User Groups'})
+			).toBeVisible();
 
-		// Check the New menu
-
-		await clickAndExpectToBeVisible({
-			target: fragmentsMenuItem,
-			trigger: page.getByRole('button', {exact: true, name: 'New'}),
-		});
-		await hoverAndExpectToBeVisible({
-			target: page.getByRole('menuitem', {name: 'New Basic Fragment'}),
-			trigger: fragmentsMenuItem,
+			await expect(page.getByText('(Owner)')).toBeVisible();
 		});
 
-		await expect(async () => {
-			await page.keyboard.press('Escape');
+		await test.step('Check the Manage Members button', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Manage Members'})
+			).toBeVisible();
+		});
 
-			await expect(fragmentsMenuItem).toBeHidden({timeout: 500});
-		}).toPass();
+		await test.step('Check the Connected Sites section', async () => {
+			await expect(
+				page.getByRole('heading', {name: /^Connected Sites/})
+			).toBeVisible();
 
-		// Check the Members section
+			await expect(
+				page.getByText('No Sites Are Connected Yet')
+			).toBeVisible();
 
-		await expect(
-			page.getByRole('heading', {name: /^Members/})
-		).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: 'Manage Sites'})
+			).toBeHidden();
+		});
 
-		await expect(page.getByRole('tab', {name: 'Users'})).toBeVisible();
-
-		await expect(
-			page.getByRole('tab', {name: 'User Groups'})
-		).toBeVisible();
-
-		await expect(page.getByText('(Owner)')).toBeVisible();
-
-		// Check the Manage Members button
-
-		await expect(
-			page.getByRole('button', {name: 'Manage Members'})
-		).toBeVisible();
-
-		// Check the Connected Sites section
-
-		await expect(
-			page.getByRole('heading', {name: /^Connected Sites/})
-		).toBeVisible();
-
-		await expect(
-			page.getByText('No Sites Are Connected Yet')
-		).toBeVisible();
-
-		await expect(
-			page.getByRole('button', {name: 'Manage Sites'})
-		).toBeHidden();
-
-		// Check the accessibility
-
-		await checkAccessibility({
-			page,
-			selectors: ['.portlet-body'],
+		await test.step('Check the accessibility', async () => {
+			await checkAccessibility({
+				page,
+				selectors: ['.portlet-body'],
+			});
 		});
 	}
 );

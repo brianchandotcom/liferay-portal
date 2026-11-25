@@ -109,8 +109,7 @@ public class ReportFreshnessMonitorTest
 		_testExecute(
 			null,
 			JenkinsResultsParserUtil.combine(
-				"Cohort ", _COHORT_NAME,
-				" has no master that is not blacklisted"));
+				"Every master in cohort ", _COHORT_NAME, " is blacklisted"));
 	}
 
 	@Test
@@ -559,7 +558,10 @@ public class ReportFreshnessMonitorTest
 
 		_testExecute(
 			Collections.singletonList(_getRemoteBuildURL(buildJSONObject)),
-			"The latest \"generate-reports\" build to run it ended in FAILURE");
+			JenkinsResultsParserUtil.combine(
+				"The latest \"generate-reports\" build to run it ended in ",
+				"FAILURE, but \"generate-reports\" could not be read on ",
+				_MASTER_NAME_1, ", so a newer build may exist"));
 
 		_setBuildJSONObjects(_MASTER_NAME_2);
 
@@ -846,8 +848,7 @@ public class ReportFreshnessMonitorTest
 		MonitorResult monitorResult = _execute(monitorProperties);
 
 		testEquals(
-			_getStaleMessage(
-				"Cohort test-1 has no master that is not blacklisted"),
+			_getStaleMessage("Unable to find a master in cohort test-1"),
 			monitorResult.getMessage());
 	}
 

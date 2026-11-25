@@ -87,12 +87,11 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 	public void testGetFragmentEntryLinks() throws Exception {
 		_testGetFragmentEntryLinksWithInvalidFragmentEntryLinkId();
 		_testGetFragmentEntryLinksWithLayoutFragmentEntryLink();
+		_testGetFragmentEntryLinksWithMasterLayoutFragmentEntryLink();
 		_testGetFragmentEntryLinksWithNoLayoutFragmentEntryLink();
 		_testGetFragmentEntryLinksWithOtherGroupFragmentEntryLink();
 		_testGetFragmentEntryLinksWithOtherLayoutFragmentEntryLink();
 		_testGetFragmentEntryLinksWithOtherMasterLayoutFragmentEntryLink();
-
-		_testGetFragmentEntryLinksWithMasterLayoutFragmentEntryLink();
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(Layout layout)
@@ -115,7 +114,7 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 	}
 
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
-			long... fragmentEntryLinkIds)
+			Layout layout, long... fragmentEntryLinkIds)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -125,7 +124,7 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 			WebKeys.THEME_DISPLAY,
 			ContentLayoutTestUtil.getThemeDisplay(
 				_companyLocalService.fetchCompany(_group.getCompanyId()),
-				_group, _draftLayout));
+				_group, layout));
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -139,19 +138,20 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 			"segmentsExperienceId",
 			String.valueOf(
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid())));
+					fetchDefaultSegmentsExperienceId(layout.getPlid())));
 
 		return mockLiferayResourceRequest;
 	}
 
-	private JSONArray _serveResource(long... fragmentEntryLinkIds)
+	private JSONArray _serveResource(
+			Layout layout, long... fragmentEntryLinkIds)
 		throws Exception {
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
 		_mvcResourceCommand.serveResource(
-			_getMockLiferayResourceRequest(fragmentEntryLinkIds),
+			_getMockLiferayResourceRequest(layout, fragmentEntryLinkIds),
 			mockLiferayResourceResponse);
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -165,7 +165,8 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 	private void _testGetFragmentEntryLinksWithInvalidFragmentEntryLinkId()
 		throws Exception {
 
-		JSONArray jsonArray = _serveResource(RandomTestUtil.nextLong());
+		JSONArray jsonArray = _serveResource(
+			_draftLayout, RandomTestUtil.nextLong());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -181,7 +182,7 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 			_draftLayout);
 
 		JSONArray jsonArray = _serveResource(
-			fragmentEntryLink.getFragmentEntryLinkId());
+			_draftLayout, fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -199,14 +200,18 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_addMasterLayoutPageTemplateEntry();
 
-		_draftLayout =
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		draftLayout =
 			_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
-				_draftLayout.getGroupId(), _draftLayout.isPrivateLayout(),
-				_draftLayout.getLayoutId(),
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(),
 				masterLayoutPageTemplateEntry.getExternalReferenceCode());
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			_draftLayout);
+			draftLayout);
 
 		FragmentEntryLink masterFragmentEntryLink = _addFragmentEntryLink(
 			_layoutLocalService.getLayout(
@@ -220,7 +225,7 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 				otherMasterLayoutPageTemplateEntry.getPlid()));
 
 		JSONArray jsonArray = _serveResource(
-			fragmentEntryLink.getFragmentEntryLinkId(),
+			draftLayout, fragmentEntryLink.getFragmentEntryLinkId(),
 			masterFragmentEntryLink.getFragmentEntryLinkId(),
 			otherMasterFragmentEntryLink.getFragmentEntryLinkId());
 
@@ -257,7 +262,7 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 				FragmentConstants.TYPE_COMPONENT, _serviceContext);
 
 		JSONArray jsonArray = _serveResource(
-			fragmentEntryLink.getFragmentEntryLinkId());
+			_draftLayout, fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -277,7 +282,7 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 			layout.fetchDraftLayout());
 
 		JSONArray jsonArray = _serveResource(
-			fragmentEntryLink.getFragmentEntryLinkId());
+			_draftLayout, fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -295,7 +300,7 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 			layout.fetchDraftLayout());
 
 		JSONArray jsonArray = _serveResource(
-			fragmentEntryLink.getFragmentEntryLinkId());
+			_draftLayout, fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -314,7 +319,7 @@ public class GetFragmentEntryLinksMVCResourceCommandTest {
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
 
 		JSONArray jsonArray = _serveResource(
-			fragmentEntryLink.getFragmentEntryLinkId());
+			_draftLayout, fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertEquals(1, jsonArray.length());
 

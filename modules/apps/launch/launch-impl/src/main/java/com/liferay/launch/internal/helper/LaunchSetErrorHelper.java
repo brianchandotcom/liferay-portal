@@ -17,9 +17,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -81,63 +78,6 @@ public class LaunchSetErrorHelper {
 	public void markPublishFailed(
 			List<Map<String, Serializable>> launchSetErrorValuesMaps,
 			ObjectEntry launchSetObjectEntry, long userId)
-		throws Throwable {
-
-		TransactionInvokerUtil.invoke(
-			_transactionConfig,
-			() -> {
-				_markPublishFailed(
-					launchSetErrorValuesMaps, launchSetObjectEntry, userId);
-
-				return null;
-			});
-	}
-
-	private String _getLaunchEntryTitle(ObjectEntry launchEntryObjectEntry) {
-		Map<String, Serializable> values = launchEntryObjectEntry.getValues();
-
-		LaunchEntryManager launchEntryManager =
-			_launchEntryManagerRegistry.getLaunchEntryManager(
-				MapUtil.getString(values, "className"));
-
-		if (launchEntryManager == null) {
-			return StringPool.BLANK;
-		}
-
-		try {
-			LaunchEntryManager.Item item = launchEntryManager.fetchItem(
-				MapUtil.getLong(values, "classPK"));
-
-			if (item == null) {
-				return StringPool.BLANK;
-			}
-
-			return item.getTitle(LocaleUtil.getSiteDefault());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return StringPool.BLANK;
-		}
-	}
-
-	private long _getStatusByUserId(
-			ObjectEntry launchSetObjectEntry, long userId)
-		throws PortalException {
-
-		if (_userLocalService.fetchUser(userId) != null) {
-			return userId;
-		}
-
-		return _userLocalService.getGuestUserId(
-			launchSetObjectEntry.getCompanyId());
-	}
-
-	private void _markPublishFailed(
-			List<Map<String, Serializable>> launchSetErrorValuesMaps,
-			ObjectEntry launchSetObjectEntry, long userId)
 		throws PortalException {
 
 		ObjectEntry currentLaunchSetObjectEntry =
@@ -186,6 +126,48 @@ public class LaunchSetErrorHelper {
 		}
 	}
 
+	private String _getLaunchEntryTitle(ObjectEntry launchEntryObjectEntry) {
+		Map<String, Serializable> values = launchEntryObjectEntry.getValues();
+
+		LaunchEntryManager launchEntryManager =
+			_launchEntryManagerRegistry.getLaunchEntryManager(
+				MapUtil.getString(values, "className"));
+
+		if (launchEntryManager == null) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			LaunchEntryManager.Item item = launchEntryManager.fetchItem(
+				MapUtil.getLong(values, "classPK"));
+
+			if (item == null) {
+				return StringPool.BLANK;
+			}
+
+			return item.getTitle(LocaleUtil.getSiteDefault());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return StringPool.BLANK;
+		}
+	}
+
+	private long _getStatusByUserId(
+			ObjectEntry launchSetObjectEntry, long userId)
+		throws PortalException {
+
+		if (_userLocalService.fetchUser(userId) != null) {
+			return userId;
+		}
+
+		return _userLocalService.getGuestUserId(
+			launchSetObjectEntry.getCompanyId());
+	}
+
 	private String _shorten(String s) {
 		if ((s == null) || (s.length() <= 65000)) {
 			return s;
@@ -202,10 +184,6 @@ public class LaunchSetErrorHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LaunchSetErrorHelper.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	private final LaunchEntryManagerRegistry _launchEntryManagerRegistry;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -180,8 +180,8 @@ public class LaunchSetPublishBackgroundTaskExecutor
 				_launchSetErrorHelper.markPublishFailed(
 					launchSetErrorValuesMaps, launchSetObjectEntry, userId);
 			}
-			catch (Throwable throwable2) {
-				throwable.addSuppressed(throwable2);
+			catch (Exception exception) {
+				throwable.addSuppressed(exception);
 			}
 
 			_log.error(

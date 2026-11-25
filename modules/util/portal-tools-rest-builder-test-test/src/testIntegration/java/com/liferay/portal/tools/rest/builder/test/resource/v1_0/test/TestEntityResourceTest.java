@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -24,9 +25,13 @@ import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntit
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity3;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
+import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.TestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ChildTestEntity1SerDes;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ChildTestEntity2SerDes;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ChildTestEntity3SerDes;
+
+import java.net.ServerSocket;
+import java.net.SocketTimeoutException;
 
 import java.util.List;
 
@@ -89,6 +94,15 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 		throws Exception {
 
 		super.testGetTestEntitiesPageWithFilterStringStartsWith();
+	}
+
+	@Override
+	@Test
+	@TestInfo("LPD-117587")
+	public void testGetTestEntity() throws Exception {
+		super.testGetTestEntity();
+
+		_testGetTestEntityWithTimeout();
 	}
 
 	@Override
@@ -349,6 +363,22 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 	@Override
 	protected Long testPutTestEntity_getOptionalParameter() {
 		return RandomTestUtil.nextLong();
+	}
+
+	private void _testGetTestEntityWithTimeout() throws Exception {
+		try (ServerSocket serverSocket = new ServerSocket(0)) {
+			TestEntityResource testEntityResource = TestEntityResource.builder(
+			).endpoint(
+				"localhost", serverSocket.getLocalPort(), "http"
+			).timeout(
+				1000
+			).build();
+
+			AssertUtils.assertFailure(
+				SocketTimeoutException.class, "Read timed out",
+				() -> testEntityResource.getTestEntity(
+					RandomTestUtil.randomLong()));
+		}
 	}
 
 	private void _testPostTestEntityImportTask() throws Exception {

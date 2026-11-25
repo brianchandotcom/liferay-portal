@@ -20,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.TimeoutException;
@@ -117,19 +118,21 @@ public class ReportFreshnessMonitor extends BaseMonitor {
 	}
 
 	private List<JenkinsMaster> _getJenkinsMasters() {
-		List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
+		Map<String, JenkinsMaster> jenkinsMastersMap = new TreeMap<>();
 
 		JenkinsCohort jenkinsCohort = JenkinsCohort.getInstance(_cohortName);
 
 		for (JenkinsMaster jenkinsMaster : jenkinsCohort.getJenkinsMasters()) {
-			if (jenkinsMaster.isBlacklisted()) {
-				continue;
-			}
-
-			jenkinsMasters.add(jenkinsMaster);
+			jenkinsMastersMap.put(jenkinsMaster.getName(), jenkinsMaster);
 		}
 
-		return jenkinsMasters;
+		for (JenkinsMaster jenkinsMaster :
+				jenkinsCohort.getBlacklistedJenkinsMasters()) {
+
+			jenkinsMastersMap.put(jenkinsMaster.getName(), jenkinsMaster);
+		}
+
+		return new ArrayList<>(jenkinsMastersMap.values());
 	}
 
 	private JSONObject _getLatestBuildJSONObject(JenkinsMaster jenkinsMaster)
@@ -227,16 +230,28 @@ public class ReportFreshnessMonitor extends BaseMonitor {
 		return latestBuildJSONObject;
 	}
 
-	private String _getLatestBuildMessage(JSONObject buildJSONObject) {
-		if (buildJSONObject.optBoolean("building")) {
-			return JenkinsResultsParserUtil.combine(
-				"The latest \"generate-reports\" build to run it is still ",
-				"running");
+	private String _getLatestBuildMessage(
+		JSONObject buildJSONObject, Set<String> unreadableJenkinsMasterNames) {
+
+		String latestBuildMessage =
+			"The latest \"generate-reports\" build to run it is still running";
+
+		if (!buildJSONObject.optBoolean("building")) {
+			latestBuildMessage =
+				"The latest \"generate-reports\" build to run it ended in " +
+					buildJSONObject.optString("result");
+		}
+
+		if (unreadableJenkinsMasterNames.isEmpty()) {
+			return latestBuildMessage;
 		}
 
 		return JenkinsResultsParserUtil.combine(
-			"The latest \"generate-reports\" build to run it ended in ",
-			buildJSONObject.optString("result"));
+			latestBuildMessage,
+			", but \"generate-reports\" could not be read on ",
+			JenkinsResultsParserUtil.join(
+				", ", new ArrayList<>(unreadableJenkinsMasterNames)),
+			", so a newer build may exist");
 	}
 
 	private String _getNotFoundMessage(
@@ -281,19 +296,32 @@ public class ReportFreshnessMonitor extends BaseMonitor {
 		String lookupMessage = null;
 
 		try {
+			List<JenkinsMaster> activeJenkinsMasters = new ArrayList<>();
+
 			List<JenkinsMaster> jenkinsMasters = _getJenkinsMasters();
 
+			for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+				if (jenkinsMaster.isBlacklisted()) {
+					continue;
+				}
+
+				activeJenkinsMasters.add(jenkinsMaster);
+			}
+
 			if (jenkinsMasters.isEmpty()) {
+				lookupMessage =
+					"Unable to find a master in cohort " + _cohortName;
+			}
+			else if (activeJenkinsMasters.isEmpty()) {
 				lookupMessage = JenkinsResultsParserUtil.combine(
-					"Cohort ", _cohortName,
-					" has no master that is not blacklisted");
+					"Every master in cohort ", _cohortName, " is blacklisted");
 			}
 			else {
 				Set<String> unreadableJenkinsMasterNames =
 					new ConcurrentSkipListSet<>();
 
 				JSONObject latestBuildJSONObject = _getLatestBuildJSONObject(
-					jenkinsMasters, unreadableJenkinsMasterNames);
+					activeJenkinsMasters, unreadableJenkinsMasterNames);
 
 				if (latestBuildJSONObject != null) {
 					linkURLs = new ArrayList<>(getConfiguredLinkURLs());
@@ -303,7 +331,7 @@ public class ReportFreshnessMonitor extends BaseMonitor {
 							latestBuildJSONObject.getString("url")));
 
 					lookupMessage = _getLatestBuildMessage(
-						latestBuildJSONObject);
+						latestBuildJSONObject, unreadableJenkinsMasterNames);
 				}
 				else {
 					lookupMessage = _getNotFoundMessage(

@@ -130,6 +130,12 @@ public interface SyncProcessResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -142,6 +148,7 @@ public interface SyncProcessResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -239,6 +246,8 @@ public interface SyncProcessResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -268,4 +277,4 @@ public interface SyncProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2055228228
+// LIFERAY-REST-BUILDER-HASH:-1395551690

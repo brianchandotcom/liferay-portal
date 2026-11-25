@@ -151,6 +151,12 @@ public interface UserSessionResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -163,6 +169,7 @@ public interface UserSessionResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -264,6 +271,8 @@ public interface UserSessionResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -404,6 +413,8 @@ public interface UserSessionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (rangeEnd != null) {
@@ -458,4 +469,4 @@ public interface UserSessionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-656731314
+// LIFERAY-REST-BUILDER-HASH:-793534215

@@ -133,6 +133,12 @@ public interface PerformanceHistogramMetricResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -145,6 +151,7 @@ public interface PerformanceHistogramMetricResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -244,6 +251,8 @@ public interface PerformanceHistogramMetricResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (cmpProjectIds != null) {
@@ -294,4 +303,4 @@ public interface PerformanceHistogramMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-246641502
+// LIFERAY-REST-BUILDER-HASH:-505684784

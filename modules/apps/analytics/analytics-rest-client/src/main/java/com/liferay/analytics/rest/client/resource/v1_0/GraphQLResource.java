@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author Marcos Martins
+ * @author Ivica Cardic
  * @generated
  */
 @Generated("")
@@ -126,6 +126,12 @@ public interface GraphQLResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -138,6 +144,7 @@ public interface GraphQLResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -219,6 +226,8 @@ public interface GraphQLResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -246,4 +255,4 @@ public interface GraphQLResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:774562112
+// LIFERAY-REST-BUILDER-HASH:-937330198

@@ -132,6 +132,12 @@ public interface WorkflowTaskAssignableUsersResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -144,6 +150,7 @@ public interface WorkflowTaskAssignableUsersResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -242,6 +249,8 @@ public interface WorkflowTaskAssignableUsersResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -269,4 +278,4 @@ public interface WorkflowTaskAssignableUsersResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1291161944
+// LIFERAY-REST-BUILDER-HASH:-1940402156

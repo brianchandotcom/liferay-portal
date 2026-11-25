@@ -167,6 +167,12 @@ public interface ShippingFixedOptionOrderTypeResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -179,6 +185,7 @@ public interface ShippingFixedOptionOrderTypeResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -275,6 +282,8 @@ public interface ShippingFixedOptionOrderTypeResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -376,6 +385,8 @@ public interface ShippingFixedOptionOrderTypeResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -491,6 +502,8 @@ public interface ShippingFixedOptionOrderTypeResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -625,6 +638,8 @@ public interface ShippingFixedOptionOrderTypeResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -654,4 +669,4 @@ public interface ShippingFixedOptionOrderTypeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2075772989
+// LIFERAY-REST-BUILDER-HASH:2074634106

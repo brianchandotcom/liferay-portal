@@ -136,6 +136,12 @@ public interface AsahSegmentsEntryResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -148,6 +154,7 @@ public interface AsahSegmentsEntryResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -232,6 +239,8 @@ public interface AsahSegmentsEntryResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -328,6 +337,8 @@ public interface AsahSegmentsEntryResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (callbackURL != null) {
@@ -360,4 +371,4 @@ public interface AsahSegmentsEntryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2077426564
+// LIFERAY-REST-BUILDER-HASH:1218172231

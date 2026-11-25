@@ -139,6 +139,12 @@ public interface SkuForecastResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -151,6 +157,7 @@ public interface SkuForecastResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -250,6 +257,8 @@ public interface SkuForecastResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
@@ -309,4 +318,4 @@ public interface SkuForecastResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1393009723
+// LIFERAY-REST-BUILDER-HASH:-1253884959

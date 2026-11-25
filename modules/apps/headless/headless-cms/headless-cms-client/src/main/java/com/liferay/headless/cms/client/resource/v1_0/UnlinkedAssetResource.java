@@ -135,6 +135,12 @@ public interface UnlinkedAssetResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -147,6 +153,7 @@ public interface UnlinkedAssetResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -245,6 +252,8 @@ public interface UnlinkedAssetResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (assetLibraryId != null) {
@@ -292,4 +301,4 @@ public interface UnlinkedAssetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1485532791
+// LIFERAY-REST-BUILDER-HASH:1098435509

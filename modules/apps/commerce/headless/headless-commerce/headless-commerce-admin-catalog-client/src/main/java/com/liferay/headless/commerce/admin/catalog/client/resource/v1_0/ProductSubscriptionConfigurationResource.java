@@ -164,6 +164,12 @@ public interface ProductSubscriptionConfigurationResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -176,6 +182,7 @@ public interface ProductSubscriptionConfigurationResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -275,6 +282,8 @@ public interface ProductSubscriptionConfigurationResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -384,6 +393,8 @@ public interface ProductSubscriptionConfigurationResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -490,6 +501,8 @@ public interface ProductSubscriptionConfigurationResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
@@ -595,6 +608,8 @@ public interface ProductSubscriptionConfigurationResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
@@ -624,4 +639,4 @@ public interface ProductSubscriptionConfigurationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1040591438
+// LIFERAY-REST-BUILDER-HASH:-1668984307

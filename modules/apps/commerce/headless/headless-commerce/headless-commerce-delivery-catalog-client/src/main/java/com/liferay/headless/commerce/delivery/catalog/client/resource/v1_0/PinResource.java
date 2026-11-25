@@ -149,6 +149,12 @@ public interface PinResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -161,6 +167,7 @@ public interface PinResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -262,6 +269,8 @@ public interface PinResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -395,6 +404,8 @@ public interface PinResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (accountId != null) {
@@ -444,4 +455,4 @@ public interface PinResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1047930507
+// LIFERAY-REST-BUILDER-HASH:-1131110972

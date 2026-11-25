@@ -136,6 +136,12 @@ public interface ContactConfigurationResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -148,6 +154,7 @@ public interface ContactConfigurationResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -238,6 +245,8 @@ public interface ContactConfigurationResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -346,6 +355,8 @@ public interface ContactConfigurationResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 			httpInvoker.path(
@@ -373,4 +384,4 @@ public interface ContactConfigurationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1210113853
+// LIFERAY-REST-BUILDER-HASH:243039230

@@ -143,6 +143,12 @@ public interface FieldMappingInfoResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -155,6 +161,7 @@ public interface FieldMappingInfoResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -250,6 +257,8 @@ public interface FieldMappingInfoResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -363,6 +372,8 @@ public interface FieldMappingInfoResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (external != null) {
@@ -416,4 +427,4 @@ public interface FieldMappingInfoResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:921754282
+// LIFERAY-REST-BUILDER-HASH:935371211

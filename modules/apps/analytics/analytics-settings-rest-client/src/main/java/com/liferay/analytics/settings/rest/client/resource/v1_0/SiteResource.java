@@ -133,6 +133,12 @@ public interface SiteResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -145,6 +151,7 @@ public interface SiteResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -239,6 +246,8 @@ public interface SiteResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (keywords != null) {
@@ -281,4 +290,4 @@ public interface SiteResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1884408477
+// LIFERAY-REST-BUILDER-HASH:290386919

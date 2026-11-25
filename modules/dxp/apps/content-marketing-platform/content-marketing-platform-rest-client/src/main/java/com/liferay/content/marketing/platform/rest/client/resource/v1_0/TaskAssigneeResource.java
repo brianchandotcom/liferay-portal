@@ -139,6 +139,12 @@ public interface TaskAssigneeResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -151,6 +157,7 @@ public interface TaskAssigneeResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -246,6 +253,8 @@ public interface TaskAssigneeResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -361,6 +370,8 @@ public interface TaskAssigneeResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (search != null) {
@@ -396,4 +407,4 @@ public interface TaskAssigneeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:584961591
+// LIFERAY-REST-BUILDER-HASH:-78319228

@@ -140,6 +140,12 @@ public interface PricingAccountGroupResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -152,6 +158,7 @@ public interface PricingAccountGroupResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -249,6 +256,8 @@ public interface PricingAccountGroupResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -359,6 +368,8 @@ public interface PricingAccountGroupResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -389,4 +400,4 @@ public interface PricingAccountGroupResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2032584827
+// LIFERAY-REST-BUILDER-HASH:195597306

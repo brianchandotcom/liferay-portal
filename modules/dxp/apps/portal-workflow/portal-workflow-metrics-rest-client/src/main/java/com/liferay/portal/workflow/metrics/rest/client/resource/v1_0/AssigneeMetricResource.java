@@ -136,6 +136,12 @@ public interface AssigneeMetricResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -148,6 +154,7 @@ public interface AssigneeMetricResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -251,6 +258,8 @@ public interface AssigneeMetricResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (pagination != null) {
@@ -291,4 +300,4 @@ public interface AssigneeMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1424225290
+// LIFERAY-REST-BUILDER-HASH:1485942954

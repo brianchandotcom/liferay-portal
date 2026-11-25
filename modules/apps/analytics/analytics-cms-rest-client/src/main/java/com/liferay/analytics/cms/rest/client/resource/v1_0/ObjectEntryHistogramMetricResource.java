@@ -133,6 +133,12 @@ public interface ObjectEntryHistogramMetricResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -145,6 +151,7 @@ public interface ObjectEntryHistogramMetricResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -244,6 +251,8 @@ public interface ObjectEntryHistogramMetricResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (groupId != null) {
@@ -291,4 +300,4 @@ public interface ObjectEntryHistogramMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-670395531
+// LIFERAY-REST-BUILDER-HASH:-710416329

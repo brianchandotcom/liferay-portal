@@ -133,6 +133,12 @@ public interface StrategyResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -145,6 +151,7 @@ public interface StrategyResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -241,6 +248,8 @@ public interface StrategyResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -270,4 +279,4 @@ public interface StrategyResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:578786711
+// LIFERAY-REST-BUILDER-HASH:1243869723

@@ -136,6 +136,12 @@ public interface PerformanceAssetConsumptionResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -148,6 +154,7 @@ public interface PerformanceAssetConsumptionResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -250,6 +257,8 @@ public interface PerformanceAssetConsumptionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (categoryId != null) {
@@ -324,4 +333,4 @@ public interface PerformanceAssetConsumptionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:695815252
+// LIFERAY-REST-BUILDER-HASH:151186046

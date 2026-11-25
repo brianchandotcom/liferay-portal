@@ -128,6 +128,12 @@ public interface FIPSHealthVerificationResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -140,6 +146,7 @@ public interface FIPSHealthVerificationResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -235,6 +242,8 @@ public interface FIPSHealthVerificationResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -262,4 +271,4 @@ public interface FIPSHealthVerificationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:290509588
+// LIFERAY-REST-BUILDER-HASH:-2024962962

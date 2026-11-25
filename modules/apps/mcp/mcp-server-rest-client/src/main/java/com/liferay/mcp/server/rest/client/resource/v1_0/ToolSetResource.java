@@ -129,6 +129,12 @@ public interface ToolSetResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -141,6 +147,7 @@ public interface ToolSetResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -231,6 +238,8 @@ public interface ToolSetResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -258,4 +267,4 @@ public interface ToolSetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1784794432
+// LIFERAY-REST-BUILDER-HASH:45864034

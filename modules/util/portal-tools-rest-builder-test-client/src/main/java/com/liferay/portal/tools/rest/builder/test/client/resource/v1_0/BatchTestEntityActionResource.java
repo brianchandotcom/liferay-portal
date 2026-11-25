@@ -138,6 +138,12 @@ public interface BatchTestEntityActionResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -150,6 +156,7 @@ public interface BatchTestEntityActionResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -249,6 +256,8 @@ public interface BatchTestEntityActionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -345,6 +354,8 @@ public interface BatchTestEntityActionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (callbackURL != null) {
@@ -377,4 +388,4 @@ public interface BatchTestEntityActionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-666668161
+// LIFERAY-REST-BUILDER-HASH:-105489320

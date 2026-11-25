@@ -155,6 +155,12 @@ public interface PlacedOrderItemShipmentResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -167,6 +173,7 @@ public interface PlacedOrderItemShipmentResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -264,6 +271,8 @@ public interface PlacedOrderItemShipmentResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -374,6 +383,8 @@ public interface PlacedOrderItemShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -475,6 +486,8 @@ public interface PlacedOrderItemShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (callbackURL != null) {
@@ -518,4 +531,4 @@ public interface PlacedOrderItemShipmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:976134090
+// LIFERAY-REST-BUILDER-HASH:1133825160

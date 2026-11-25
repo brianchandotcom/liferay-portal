@@ -138,6 +138,12 @@ public interface InventoryAnalysisResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -150,6 +156,7 @@ public interface InventoryAnalysisResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -254,6 +261,8 @@ public interface InventoryAnalysisResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (categoryId != null) {
@@ -331,4 +340,4 @@ public interface InventoryAnalysisResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-226908802
+// LIFERAY-REST-BUILDER-HASH:840135238

@@ -140,6 +140,12 @@ public interface NodeMetricResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -152,6 +158,7 @@ public interface NodeMetricResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -252,6 +259,8 @@ public interface NodeMetricResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
@@ -318,4 +327,4 @@ public interface NodeMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1606007917
+// LIFERAY-REST-BUILDER-HASH:114062799

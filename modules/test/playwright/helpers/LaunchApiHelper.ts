@@ -5,6 +5,12 @@
 
 import {ApiHelpers} from './ApiHelpers';
 
+export type Launch = {
+	description: string;
+	id: number;
+	name: string;
+};
+
 export type LaunchEntry = {
 	baseVersionKey: string;
 	className: string;
@@ -13,12 +19,6 @@ export type LaunchEntry = {
 	id: number;
 	r_launchToLaunchEntries_c_launchId: number;
 	versionKey?: string;
-};
-
-export type Launch = {
-	description: string;
-	id: number;
-	name: string;
 };
 
 export class LaunchApiHelper {
@@ -38,6 +38,16 @@ export class LaunchApiHelper {
 		await this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}launches/${launchId}`
 		);
+	}
+
+	async getLaunchByName(name: string): Promise<Launch | undefined> {
+		const filter = encodeURIComponent(`name eq '${name}'`);
+
+		const {items} = await this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}launches?filter=${filter}`
+		);
+
+		return items?.[0];
 	}
 
 	async getLaunchEntries(launchId: number): Promise<LaunchEntry[]> {
@@ -69,15 +79,5 @@ export class LaunchApiHelper {
 		}
 
 		return launchEntry;
-	}
-
-	async getLaunchByName(name: string): Promise<Launch | undefined> {
-		const filter = encodeURIComponent(`name eq '${name}'`);
-
-		const {items} = await this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}launches?filter=${filter}`
-		);
-
-		return items?.[0];
 	}
 }

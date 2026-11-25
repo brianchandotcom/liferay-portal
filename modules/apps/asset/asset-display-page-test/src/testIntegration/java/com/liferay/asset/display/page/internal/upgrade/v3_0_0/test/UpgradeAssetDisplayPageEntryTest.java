@@ -18,6 +18,10 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -28,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -88,6 +93,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 	}
 
 	@Test
+	@TestInfo("LPS-130915")
 	public void testUpgradeProcess() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -121,6 +127,8 @@ public class UpgradeAssetDisplayPageEntryTest {
 		_assertAssetDisplayPageEntry(
 			dlFileEntry3.getFileEntryId(), 0,
 			AssetDisplayPageConstants.TYPE_NONE);
+
+		_testUpgradeProcessWithJournalArticleVersions();
 	}
 
 	@Test
@@ -231,6 +239,22 @@ public class UpgradeAssetDisplayPageEntryTest {
 		Assert.assertEquals(type, assetDisplayPageEntry.getType());
 	}
 
+	private void _assertJournalArticleAssetDisplayPageEntry(
+		long journalArticleClassNameId, long resourcePrimKey) {
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				_group.getGroupId(), journalArticleClassNameId,
+				resourcePrimKey);
+
+		Assert.assertEquals(
+			0, assetDisplayPageEntry.getLayoutPageTemplateEntryId());
+		Assert.assertEquals(0, assetDisplayPageEntry.getPlid());
+		Assert.assertEquals(
+			AssetDisplayPageConstants.TYPE_NONE,
+			assetDisplayPageEntry.getType());
+	}
+
 	private void _assertNoAssetDisplayPageEntry(long classPK) {
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
@@ -250,6 +274,46 @@ public class UpgradeAssetDisplayPageEntryTest {
 
 			_multiVMPool.clear();
 		}
+	}
+
+	private void _testUpgradeProcessWithJournalArticleVersions()
+		throws Exception {
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalTestUtil.updateArticle(
+			JournalTestUtil.updateArticle(journalArticle2));
+
+		Assert.assertEquals(
+			3,
+			_journalArticleLocalService.getArticlesCount(
+				_group.getGroupId(), journalArticle2.getArticleId()));
+
+		long journalArticleClassNameId = _portal.getClassNameId(
+			JournalArticle.class.getName());
+
+		Assert.assertEquals(
+			0,
+			_assetDisplayPageEntryLocalService.getAssetDisplayPageEntriesCount(
+				_group.getGroupId(), journalArticleClassNameId));
+
+		_runUpgrade();
+
+		Assert.assertEquals(
+			2,
+			_assetDisplayPageEntryLocalService.getAssetDisplayPageEntriesCount(
+				_group.getGroupId(), journalArticleClassNameId));
+
+		_assertJournalArticleAssetDisplayPageEntry(
+			journalArticleClassNameId, journalArticle1.getResourcePrimKey());
+		_assertJournalArticleAssetDisplayPageEntry(
+			journalArticleClassNameId, journalArticle2.getResourcePrimKey());
 	}
 
 	private void _updateDLFileEntryTitle(long fileEntryId)
@@ -287,6 +351,9 @@ public class UpgradeAssetDisplayPageEntryTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 

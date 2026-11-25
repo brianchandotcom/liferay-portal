@@ -8,24 +8,37 @@ package com.liferay.layout.admin.web.internal.product.navigation.control.menu.te
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -33,8 +46,12 @@ import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuE
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -131,18 +148,57 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
-	@TestInfo("LPD-117394")
+	@TestInfo({"LPD-117394", "LPD-117764"})
 	public void testGetDropdownItemsWithLaunchDraftLayout() throws Exception {
+		String launchName = RandomTestUtil.randomString();
+
+		ObjectEntry launchSetObjectEntry = _addLaunchSetObjectEntry(launchName);
+
 		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
-			RandomTestUtil.randomLong(), _layout);
+			launchSetObjectEntry.getObjectEntryId(), _layout);
 
 		_user = UserTestUtil.addUser();
 
-		_testGetDropdownItemsWithLaunchDraftLayout(launchDraftLayout, _user);
+		_testGetDropdownItemsWithLaunchDraftLayout(
+			Collections.emptyMap(), launchDraftLayout, _user);
 
 		_testGetDropdownItemsWithLaunchDraftLayout(
-			launchDraftLayout, TestPropsValues.getUser(), "Preview Launch",
-			"Delete from Launch");
+			HashMapBuilder.put(
+				"Delete from Launch",
+				StringBundler.concat(
+					"Deleting the page \"",
+					HtmlUtil.escape(
+						launchDraftLayout.getName(LocaleUtil.getSiteDefault())),
+					"\" from the \"", HtmlUtil.escape(launchName),
+					"\" Launch discards the draft the Launch holds. The live ",
+					"version of the page is not affected.")
+			).put(
+				"Preview Launch", StringPool.BLANK
+			).build(),
+			launchDraftLayout, TestPropsValues.getUser());
+	}
+
+	private ObjectEntry _addLaunchSetObjectEntry(String name) throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "LaunchSet");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		return _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+			HashMapBuilder.<String, Serializable>put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"name", name
+			).build(),
+			serviceContext);
 	}
 
 	private List<DropdownItem> _getActionDropdownItems(
@@ -197,7 +253,7 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 	}
 
 	private void _testGetDropdownItemsWithLaunchDraftLayout(
-			Layout layout, User user, String... expectedLabels)
+			Map<String, String> expectedMessagesMap, Layout layout, User user)
 		throws Exception {
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest(
@@ -213,16 +269,19 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 			ReflectionTestUtil.invoke(
 				object, "getDropdownItems", new Class<?>[0]));
 
-		for (int i = 0; i < expectedLabels.length; i++) {
-			DropdownItem dropdownItem = dropdownItems.get(i);
+		for (DropdownItem dropdownItem : dropdownItems) {
+			Map<String, Object> dataMap = (Map<String, Object>)dropdownItem.get(
+				"data");
 
 			Assert.assertEquals(
-				dropdownItems.toString(), expectedLabels[i],
-				dropdownItem.get("label"));
+				dropdownItems.toString(),
+				expectedMessagesMap.get(
+					GetterUtil.getString(dropdownItem.get("label"))),
+				MapUtil.getString(dataMap, "message"));
 		}
 
 		Assert.assertEquals(
-			dropdownItems.toString(), expectedLabels.length,
+			dropdownItems.toString(), expectedMessagesMap.size(),
 			dropdownItems.size());
 	}
 
@@ -233,6 +292,12 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private Portal _portal;

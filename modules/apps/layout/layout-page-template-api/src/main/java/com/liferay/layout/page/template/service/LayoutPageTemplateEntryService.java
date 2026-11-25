@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
@@ -48,6 +49,27 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the layout page template entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LayoutPageTemplateEntryServiceUtil} if injection and service tracking are not available.
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			String externalReferenceCode, long groupId,
+			long layoutPageTemplateCollectionId,
+			String layoutPageTemplateEntryKey, long classNameId,
+			String classTypeKey, String name, int type, long previewFileEntryId,
+			boolean defaultTemplate, long plid, long masterLayoutPlid,
+			int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * Adds a layout page template entry. The <code>layoutPrototypeId</code>
+	 * argument is ignored.
+	 *
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(String, long, long, String, long,
+	 String, String, int, long, boolean, long, long, int,
+	 ServiceContext)}
+	 */
+	@Deprecated
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long groupId,
 			long layoutPageTemplateCollectionId,
@@ -416,4 +438,4 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1740924047
+// LIFERAY-SERVICE-BUILDER-HASH:1679345262

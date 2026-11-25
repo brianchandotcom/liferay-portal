@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.security.fips;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -24,9 +24,10 @@ public class FIPSModeValidationException extends SecurityException {
 			return super.getMessage();
 		}
 
-		List<String> lines = new ArrayList<>();
+		StringBundler sb = new StringBundler(
+			(_validationErrors.size() * 7) + 1);
 
-		lines.add("The configuration is not allowed in FIPS mode.");
+		sb.append("The configuration is not allowed in FIPS mode.");
 
 		Map<ValidationErrorType, List<String>> errorMessagesMap = new EnumMap<>(
 			ValidationErrorType.class);
@@ -42,18 +43,22 @@ public class FIPSModeValidationException extends SecurityException {
 		for (Map.Entry<ValidationErrorType, List<String>> entry :
 				errorMessagesMap.entrySet()) {
 
-			lines.add(StringPool.BLANK);
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
 
 			ValidationErrorType validationErrorType = entry.getKey();
 
-			lines.add(validationErrorType.getLabel());
+			sb.append(validationErrorType.getLabel());
 
 			for (String errorMessage : entry.getValue()) {
-				lines.add("- " + errorMessage);
+				sb.append(StringPool.NEW_LINE);
+				sb.append(StringPool.DASH);
+				sb.append(StringPool.SPACE);
+				sb.append(errorMessage);
 			}
 		}
 
-		return StringUtil.merge(lines, StringPool.NEW_LINE);
+		return sb.toString();
 	}
 
 	public List<ValidationError> getValidationErrors() {

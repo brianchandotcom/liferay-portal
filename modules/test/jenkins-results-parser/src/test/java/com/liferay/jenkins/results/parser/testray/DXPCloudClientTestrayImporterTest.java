@@ -103,7 +103,6 @@ public class DXPCloudClientTestrayImporterTest
 
 		TestrayProductVersion testrayProductVersion =
 			_testrayBuild.getTestrayProductVersion();
-		TestrayProject testrayProject = _testrayBuild.getTestrayProject();
 		TestrayRoutine testrayRoutine = _testrayBuild.getTestrayRoutine();
 
 		Mockito.verify(
@@ -122,6 +121,8 @@ public class DXPCloudClientTestrayImporterTest
 					String.valueOf(_testrayBuild.getId()), ".xml")));
 
 		Element rootElement = document.getRootElement();
+
+		TestrayProject testrayProject = _testrayBuild.getTestrayProject();
 
 		testEquals(
 			_testrayBuild.getName(),

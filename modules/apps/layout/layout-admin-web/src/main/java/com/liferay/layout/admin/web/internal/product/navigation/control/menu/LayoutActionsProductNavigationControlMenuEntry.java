@@ -6,6 +6,7 @@
 package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.launch.set.details.provider.LaunchSetDetailsProvider;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutActionsDisplayContext;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
@@ -82,8 +83,8 @@ public class LayoutActionsProductNavigationControlMenuEntry
 		httpServletRequest.setAttribute(
 			LayoutAdminWebKeys.LAYOUT_ACTIONS_DISPLAY_CONTEXT,
 			new LayoutActionsDisplayContext(
-				httpServletRequest, layoutActionsHelper,
-				_segmentsExperienceLocalService));
+				httpServletRequest, _launchSetDetailsProvider,
+				layoutActionsHelper, _segmentsExperienceLocalService));
 
 		return super.includeIcon(httpServletRequest, httpServletResponse);
 	}
@@ -129,6 +130,9 @@ public class LayoutActionsProductNavigationControlMenuEntry
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference
+	private LaunchSetDetailsProvider _launchSetDetailsProvider;
 
 	@Reference
 	private LayoutConverterRegistry _layoutConverterRegistry;

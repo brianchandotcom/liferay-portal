@@ -7,6 +7,8 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.launch.set.details.LaunchSetDetails;
+import com.liferay.launch.set.details.provider.LaunchSetDetailsProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
@@ -53,10 +55,12 @@ public class LayoutActionsDisplayContext {
 
 	public LayoutActionsDisplayContext(
 		HttpServletRequest httpServletRequest,
+		LaunchSetDetailsProvider launchSetDetailsProvider,
 		LayoutActionsHelper layoutActionsHelper,
 		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		_httpServletRequest = httpServletRequest;
+		_launchSetDetailsProvider = launchSetDetailsProvider;
 		_layoutActionsHelper = layoutActionsHelper;
 		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 
@@ -293,6 +297,16 @@ public class LayoutActionsDisplayContext {
 							_themeDisplay.getPermissionChecker(),
 							launchDraftLayout, ActionKeys.DELETE),
 						dropdownItem -> {
+							LaunchSetDetails launchSetDetails =
+								_launchSetDetailsProvider.fetchLaunchSetDetails(
+									launchDraftLayout.getLaunchSetId());
+
+							String launchName = StringPool.BLANK;
+
+							if (launchSetDetails != null) {
+								launchName = launchSetDetails.getName();
+							}
+
 							dropdownItem.putData("action", "deleteLayout");
 							dropdownItem.putData(
 								"deleteLayoutURL",
@@ -301,11 +315,17 @@ public class LayoutActionsDisplayContext {
 								"message",
 								LanguageUtil.format(
 									_httpServletRequest,
-									"are-you-sure-you-want-to-delete-the-" +
-										"page-x-from-this-launch",
-									HtmlUtil.escape(
-										launchDraftLayout.getName(
-											_themeDisplay.getLocale()))));
+									StringBundler.concat(
+										"deleting-the-page-x-from-the-x-",
+										"launch-discards-the-draft-the-launch-",
+										"holds.-the-live-version-of-the-page-",
+										"is-not-affected"),
+									new String[] {
+										HtmlUtil.escape(
+											launchDraftLayout.getName(
+												_themeDisplay.getLocale())),
+										HtmlUtil.escape(launchName)
+									}));
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -471,6 +491,7 @@ public class LayoutActionsDisplayContext {
 
 	private Boolean _contentLayout;
 	private final HttpServletRequest _httpServletRequest;
+	private final LaunchSetDetailsProvider _launchSetDetailsProvider;
 	private final LayoutActionsHelper _layoutActionsHelper;
 	private final SegmentsExperienceLocalService
 		_segmentsExperienceLocalService;

@@ -14,6 +14,7 @@ import {ObjectSerializer} from '../utils/SerDes';
 export class ${className} {
 	protected _basePath: string;
 	protected _defaultHeaders: any = {};
+	protected _timeout?: number;
 
 	constructor(basePath?: string) {
 		if (basePath) {
@@ -23,6 +24,10 @@ export class ${className} {
 
 	set defaultHeaders(defaultHeaders: any) {
 		this._defaultHeaders = defaultHeaders;
+	}
+
+	set timeout(timeout: number) {
+		this._timeout = timeout;
 	}
 
 	<#list operationDatas?sort_by("operationId") as operationData>
@@ -165,59 +170,71 @@ export class ${className} {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				<#if operationData.bodyParameters?has_content>
-					body: body,
-				</#if>
-				headers:
-					Object.assign({}, this._defaultHeaders
-					<#if operationData.responseContentTypes?? && operationData.responseContentTypes?has_content>
-						,{
-							<#if operationData.responseContentTypes?seq_contains("application/json")>
-								Accept: "application/json"
-							<#else>
-								Accept: "${operationData.responseContentTypes[0]}"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					<#if operationData.bodyParameters?has_content>
+						body: body,
+					</#if>
+					headers:
+						Object.assign({}, this._defaultHeaders
+						<#if operationData.responseContentTypes?? && operationData.responseContentTypes?has_content>
+							,{
+								<#if operationData.responseContentTypes?seq_contains("application/json")>
+									Accept: "application/json"
+								<#else>
+									Accept: "${operationData.responseContentTypes[0]}"
+								</#if>
+							}
+						</#if>
+						<#if operationData.bodyParameters?has_content>
+							<#if (operationData.bodyParameters?keys?size > 1)>
+								<#if hasMultipartContentType>
+									,(requestBody.type !== "multipart/form-data") ?
+										{"Content-Type": requestBody.type} : {}
+								<#else>
+									,{"Content-Type": requestBody.type}
+								</#if>
+							<#elseif firstRequestBodyContentType != "multipart/form-data">
+								,{"Content-Type": ${firstRequestBodyContentType}}
 							</#if>
+						</#if>
+						,headers || {}
+						),
+					method: "${operationData.httpMethod}",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+					<#if operationData.returnDataType??>
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "${operationData.returnDataType}"), response};
+						}
+						else {
+							return {body: await response.text() as any, response};
+						}
+					<#else>
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
+						}
+						else {
+							return {body: await response.text(), response};
 						}
 					</#if>
-					<#if operationData.bodyParameters?has_content>
-						<#if (operationData.bodyParameters?keys?size > 1)>
-							<#if hasMultipartContentType>
-								,(requestBody.type !== "multipart/form-data") ?
-									{"Content-Type": requestBody.type} : {}
-							<#else>
-								,{"Content-Type": requestBody.type}
-							</#if>
-						<#elseif firstRequestBodyContentType != "multipart/form-data">
-							,{"Content-Type": ${firstRequestBodyContentType}}
-						</#if>
-					</#if>
-					,headers || {}
-					),
-				method: "${operationData.httpMethod}",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-				<#if operationData.returnDataType??>
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "${operationData.returnDataType}"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
-				<#else>
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
-				</#if>
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 

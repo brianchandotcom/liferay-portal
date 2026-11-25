@@ -1211,7 +1211,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		JSONObject tokenResolutionsJSONObject = JSONUtil.put(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
 		String itemProxyResolvedAPIURL = RandomTestUtil.randomString();
 
 		Mockito.when(

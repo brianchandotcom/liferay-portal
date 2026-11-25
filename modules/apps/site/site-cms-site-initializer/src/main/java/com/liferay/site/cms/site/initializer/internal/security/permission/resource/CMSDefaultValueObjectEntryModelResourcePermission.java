@@ -155,8 +155,10 @@ public class CMSDefaultValueObjectEntryModelResourcePermission
 	}
 
 	private String _getActionId(String actionId) {
-		if (Objects.equals(actionId, ActionKeys.VIEW)) {
-			return ActionKeys.VIEW;
+		if (Objects.equals(actionId, ActionKeys.PERMISSIONS) ||
+			Objects.equals(actionId, ActionKeys.VIEW)) {
+
+			return actionId;
 		}
 
 		return ActionKeys.UPDATE;

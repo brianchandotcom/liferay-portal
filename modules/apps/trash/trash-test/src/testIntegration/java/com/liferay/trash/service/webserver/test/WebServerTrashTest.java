@@ -18,13 +18,17 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -75,6 +79,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-116960")
 	public void testRequestFileInTrash() throws Exception {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
@@ -111,6 +116,45 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 
 		Assert.assertEquals(
 			MockHttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppLocalServiceUtil.addFolder(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			parentFolder.getFolderId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, serviceContext);
+
+		FileEntry folderFileEntry = DLAppLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			folder.getFolderId(), "Test Trash Folder.txt",
+			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
+			null, null, serviceContext);
+
+		DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
+
+		mockHttpServletResponse = testRequestFile(folderFileEntry, _user, true);
+
+		Assert.assertEquals(
+			MockHttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		FileEntry draftFileEntry = DLAppLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			parentFolder.getFolderId(), "Test Trash Draft.txt",
+			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
+			null, null, serviceContext);
+
+		DLTrashServiceUtil.moveFileEntryToTrash(
+			draftFileEntry.getFileEntryId());
+
+		mockHttpServletResponse = testRequestFile(draftFileEntry, _user, true);
+
+		Assert.assertEquals(
+			MockHttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
 	}
 
 	protected void resetPermissionThreadLocal() throws Exception {

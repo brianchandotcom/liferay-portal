@@ -80,7 +80,7 @@ public class LayoutModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"parentPlid", Types.BIGINT},
 		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
 		{"parentLayoutId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"launchSetId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"launchId", Types.BIGINT},
 		{"name", Types.CLOB}, {"title", Types.CLOB},
 		{"description", Types.CLOB}, {"keywords", Types.VARCHAR},
 		{"robots", Types.VARCHAR}, {"type_", Types.VARCHAR},
@@ -121,7 +121,7 @@ public class LayoutModelImpl
 		TABLE_COLUMNS_MAP.put("parentLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("launchSetId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("launchId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("title", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
@@ -156,7 +156,7 @@ public class LayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,launchSetId LONG,name TEXT null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryERC VARCHAR(75) null,styleBookEntryScopeERC VARCHAR(75) null,css TEXT null,priority INTEGER,faviconFileEntryERC VARCHAR(75) null,faviconFileEntryScopeERC VARCHAR(75) null,masterLPTEERC VARCHAR(75) null,masterLPTESERC VARCHAR(75) null,portletLPTEERC VARCHAR(75) null,portletLPTESERC VARCHAR(75) null,portletLPTELE BOOLEAN,layoutSetPrototypeLayoutERC VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
+		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,launchId LONG,name TEXT null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryERC VARCHAR(75) null,styleBookEntryScopeERC VARCHAR(75) null,css TEXT null,priority INTEGER,faviconFileEntryERC VARCHAR(75) null,faviconFileEntryScopeERC VARCHAR(75) null,masterLPTEERC VARCHAR(75) null,masterLPTESERC VARCHAR(75) null,portletLPTEERC VARCHAR(75) null,portletLPTESERC VARCHAR(75) null,portletLPTELE BOOLEAN,layoutSetPrototypeLayoutERC VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
@@ -249,7 +249,7 @@ public class LayoutModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LAUNCHSETID_COLUMN_BITMASK = 256L;
+	public static final long LAUNCHID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -436,7 +436,7 @@ public class LayoutModelImpl
 				"parentLayoutId", Layout::getParentLayoutId);
 			attributeGetterFunctions.put("classNameId", Layout::getClassNameId);
 			attributeGetterFunctions.put("classPK", Layout::getClassPK);
-			attributeGetterFunctions.put("launchSetId", Layout::getLaunchSetId);
+			attributeGetterFunctions.put("launchId", Layout::getLaunchId);
 			attributeGetterFunctions.put("name", Layout::getName);
 			attributeGetterFunctions.put("title", Layout::getTitle);
 			attributeGetterFunctions.put("description", Layout::getDescription);
@@ -548,8 +548,7 @@ public class LayoutModelImpl
 			attributeSetterBiConsumers.put(
 				"classPK", (BiConsumer<Layout, Long>)Layout::setClassPK);
 			attributeSetterBiConsumers.put(
-				"launchSetId",
-				(BiConsumer<Layout, Long>)Layout::setLaunchSetId);
+				"launchId", (BiConsumer<Layout, Long>)Layout::setLaunchId);
 			attributeSetterBiConsumers.put(
 				"name", (BiConsumer<Layout, String>)Layout::setName);
 			attributeSetterBiConsumers.put(
@@ -1051,17 +1050,17 @@ public class LayoutModelImpl
 
 	@JSON
 	@Override
-	public long getLaunchSetId() {
-		return _launchSetId;
+	public long getLaunchId() {
+		return _launchId;
 	}
 
 	@Override
-	public void setLaunchSetId(long launchSetId) {
+	public void setLaunchId(long launchId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_launchSetId = launchSetId;
+		_launchId = launchId;
 	}
 
 	/**
@@ -1069,9 +1068,9 @@ public class LayoutModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalLaunchSetId() {
+	public long getOriginalLaunchId() {
 		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("launchSetId"));
+			this.<Long>getColumnOriginalValue("launchId"));
 	}
 
 	@JSON
@@ -2547,7 +2546,7 @@ public class LayoutModelImpl
 		layoutImpl.setParentLayoutId(getParentLayoutId());
 		layoutImpl.setClassNameId(getClassNameId());
 		layoutImpl.setClassPK(getClassPK());
-		layoutImpl.setLaunchSetId(getLaunchSetId());
+		layoutImpl.setLaunchId(getLaunchId());
 		layoutImpl.setName(getName());
 		layoutImpl.setTitle(getTitle());
 		layoutImpl.setDescription(getDescription());
@@ -2621,8 +2620,7 @@ public class LayoutModelImpl
 		layoutImpl.setClassNameId(
 			this.<Long>getColumnOriginalValue("classNameId"));
 		layoutImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
-		layoutImpl.setLaunchSetId(
-			this.<Long>getColumnOriginalValue("launchSetId"));
+		layoutImpl.setLaunchId(this.<Long>getColumnOriginalValue("launchId"));
 		layoutImpl.setName(this.<String>getColumnOriginalValue("name"));
 		layoutImpl.setTitle(this.<String>getColumnOriginalValue("title"));
 		layoutImpl.setDescription(
@@ -2840,7 +2838,7 @@ public class LayoutModelImpl
 
 		layoutCacheModel.classPK = getClassPK();
 
-		layoutCacheModel.launchSetId = getLaunchSetId();
+		layoutCacheModel.launchId = getLaunchId();
 
 		layoutCacheModel.name = getName();
 
@@ -3158,7 +3156,7 @@ public class LayoutModelImpl
 	private long _parentLayoutId;
 	private long _classNameId;
 	private long _classPK;
-	private long _launchSetId;
+	private long _launchId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _title;
@@ -3244,7 +3242,7 @@ public class LayoutModelImpl
 		_columnOriginalValues.put("parentLayoutId", _parentLayoutId);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
-		_columnOriginalValues.put("launchSetId", _launchSetId);
+		_columnOriginalValues.put("launchId", _launchId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("title", _title);
 		_columnOriginalValues.put("description", _description);
@@ -3353,7 +3351,7 @@ public class LayoutModelImpl
 
 		columnBitmasks.put("classPK", 65536L);
 
-		columnBitmasks.put("launchSetId", 131072L);
+		columnBitmasks.put("launchId", 131072L);
 
 		columnBitmasks.put("name", 262144L);
 
@@ -3424,4 +3422,4 @@ public class LayoutModelImpl
 	private Layout _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:904741131
+// LIFERAY-SERVICE-BUILDER-HASH:2019519607

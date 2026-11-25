@@ -51,7 +51,7 @@ public class LayoutWrapper
 		attributes.put("parentLayoutId", getParentLayoutId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("launchSetId", getLaunchSetId());
+		attributes.put("launchId", getLaunchId());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
@@ -204,10 +204,10 @@ public class LayoutWrapper
 			setClassPK(classPK);
 		}
 
-		Long launchSetId = (Long)attributes.get("launchSetId");
+		Long launchId = (Long)attributes.get("launchId");
 
-		if (launchSetId != null) {
-			setLaunchSetId(launchSetId);
+		if (launchId != null) {
+			setLaunchId(launchId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -979,13 +979,13 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Returns the launch set ID of this layout.
+	 * Returns the launch ID of this layout.
 	 *
-	 * @return the launch set ID of this layout
+	 * @return the launch ID of this layout
 	 */
 	@Override
-	public long getLaunchSetId() {
-		return model.getLaunchSetId();
+	public long getLaunchId() {
+		return model.getLaunchId();
 	}
 
 	/**
@@ -2363,13 +2363,13 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Sets the launch set ID of this layout.
+	 * Sets the launch ID of this layout.
 	 *
-	 * @param launchSetId the launch set ID of this layout
+	 * @param launchId the launch ID of this layout
 	 */
 	@Override
-	public void setLaunchSetId(long launchSetId) {
-		model.setLaunchSetId(launchSetId);
+	public void setLaunchId(long launchId) {
+		model.setLaunchId(launchId);
 	}
 
 	/**
@@ -2932,4 +2932,4 @@ public class LayoutWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1051018930
+// LIFERAY-SERVICE-BUILDER-HASH:-782532404

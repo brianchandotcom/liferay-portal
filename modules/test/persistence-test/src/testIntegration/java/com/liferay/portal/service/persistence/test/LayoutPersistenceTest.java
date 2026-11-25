@@ -147,7 +147,7 @@ public class LayoutPersistenceTest {
 
 		newLayout.setClassPK(RandomTestUtil.nextLong());
 
-		newLayout.setLaunchSetId(RandomTestUtil.nextLong());
+		newLayout.setLaunchId(RandomTestUtil.nextLong());
 
 		newLayout.setName(RandomTestUtil.randomString());
 
@@ -258,7 +258,7 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getClassPK(), newLayout.getClassPK());
 		Assert.assertEquals(
-			existingLayout.getLaunchSetId(), newLayout.getLaunchSetId());
+			existingLayout.getLaunchId(), newLayout.getLaunchId());
 		Assert.assertEquals(existingLayout.getName(), newLayout.getName());
 		Assert.assertEquals(existingLayout.getTitle(), newLayout.getTitle());
 		Assert.assertEquals(
@@ -667,9 +667,9 @@ public class LayoutPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "parentPlid", true, "privateLayout",
 			true, "layoutId", true, "parentLayoutId", true, "classNameId", true,
-			"classPK", true, "launchSetId", true, "keywords", true, "robots",
-			true, "type", true, "hidden", true, "system", true, "friendlyURL",
-			true, "iconImageId", true, "themeId", true, "colorSchemeId", true,
+			"classPK", true, "launchId", true, "keywords", true, "robots", true,
+			"type", true, "hidden", true, "system", true, "friendlyURL", true,
+			"iconImageId", true, "themeId", true, "colorSchemeId", true,
 			"styleBookEntryERC", true, "styleBookEntryScopeERC", true,
 			"priority", true, "faviconFileEntryERC", true,
 			"faviconFileEntryScopeERC", true,
@@ -1027,7 +1027,7 @@ public class LayoutPersistenceTest {
 
 		layout.setClassPK(RandomTestUtil.nextLong());
 
-		layout.setLaunchSetId(RandomTestUtil.nextLong());
+		layout.setLaunchId(RandomTestUtil.nextLong());
 
 		layout.setName(RandomTestUtil.randomString());
 
@@ -1106,4 +1106,4 @@ public class LayoutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:266105322
+// LIFERAY-SERVICE-BUILDER-HASH:862609154

@@ -583,7 +583,7 @@ public interface LayoutLocalService
 	public Layout fetchDraftLayout(long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout fetchDraftLayout(long plid, long launchSetId);
+	public Layout fetchDraftLayout(long plid, long launchId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Layout, Layout> fetchDraftLayouts(List<Layout> layouts);
@@ -660,7 +660,7 @@ public interface LayoutLocalService
 	public Layout getBrowsableLayout(Layout layout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getClassPKsByLaunchSetId(long groupId, long launchSetId);
+	public long[] getClassPKsByLaunchId(long groupId, long launchId);
 
 	/**
 	 * Returns the primary key of the default layout for the group.
@@ -1748,4 +1748,4 @@ public interface LayoutLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1407315814
+// LIFERAY-SERVICE-BUILDER-HASH:1875692704

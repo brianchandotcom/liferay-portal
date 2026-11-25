@@ -2415,7 +2415,7 @@ public class LayoutPersistenceImpl
 		_collectionPersistenceFinderByC_C_L;
 
 	/**
-	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63; and launchSetId = &#63;.
+	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63; and launchId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
@@ -2423,7 +2423,7 @@ public class LayoutPersistenceImpl
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param launchSetId the launch set ID
+	 * @param launchId the launch ID
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2432,59 +2432,59 @@ public class LayoutPersistenceImpl
 	 */
 	@Override
 	public List<Layout> findByC_C_L(
-		long classNameId, long classPK, long launchSetId, int start, int end,
+		long classNameId, long classPK, long launchId, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByC_C_L.find(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {classNameId, new long[] {classPK}, launchSetId},
-			start, end, orderByComparator, useFinderCache);
+			new Object[] {classNameId, new long[] {classPK}, launchId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where classNameId = &#63; and classPK = &#63; and launchSetId = &#63;.
+	 * Returns the first layout in the ordered set where classNameId = &#63; and classPK = &#63; and launchId = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param launchSetId the launch set ID
+	 * @param launchId the launch ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
 	public Layout findByC_C_L_First(
-			long classNameId, long classPK, long launchSetId,
+			long classNameId, long classPK, long launchId,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
 		return _collectionPersistenceFinderByC_C_L.findFirst(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {classNameId, new long[] {classPK}, launchSetId},
+			new Object[] {classNameId, new long[] {classPK}, launchId},
 			orderByComparator);
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where classNameId = &#63; and classPK = &#63; and launchSetId = &#63;.
+	 * Returns the first layout in the ordered set where classNameId = &#63; and classPK = &#63; and launchId = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param launchSetId the launch set ID
+	 * @param launchId the launch ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
 	public Layout fetchByC_C_L_First(
-		long classNameId, long classPK, long launchSetId,
+		long classNameId, long classPK, long launchId,
 		OrderByComparator<Layout> orderByComparator) {
 
 		return _collectionPersistenceFinderByC_C_L.fetchFirst(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {classNameId, new long[] {classPK}, launchSetId},
+			new Object[] {classNameId, new long[] {classPK}, launchId},
 			orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63; and launchSetId = &#63;, optionally using the finder cache.
+	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63; and launchId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
@@ -2492,7 +2492,7 @@ public class LayoutPersistenceImpl
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPKs the class pks
-	 * @param launchSetId the launch set ID
+	 * @param launchId the launch ID
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2501,64 +2501,60 @@ public class LayoutPersistenceImpl
 	 */
 	@Override
 	public List<Layout> findByC_C_L(
-		long classNameId, long[] classPKs, long launchSetId, int start, int end,
+		long classNameId, long[] classPKs, long launchId, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByC_C_L.find(
 			FinderCacheUtil.getFinderCache(),
 			new Object[] {
-				classNameId, ArrayUtil.sortedUnique(classPKs), launchSetId
+				classNameId, ArrayUtil.sortedUnique(classPKs), launchId
 			},
 			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Removes all the layouts where classNameId = &#63; and classPK = &#63; and launchSetId = &#63; from the database.
+	 * Removes all the layouts where classNameId = &#63; and classPK = &#63; and launchId = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param launchSetId the launch set ID
+	 * @param launchId the launch ID
 	 */
 	@Override
-	public void removeByC_C_L(
-		long classNameId, long classPK, long launchSetId) {
-
+	public void removeByC_C_L(long classNameId, long classPK, long launchId) {
 		_collectionPersistenceFinderByC_C_L.remove(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {classNameId, new long[] {classPK}, launchSetId});
+			new Object[] {classNameId, new long[] {classPK}, launchId});
 	}
 
 	/**
-	 * Returns the number of layouts where classNameId = &#63; and classPK = &#63; and launchSetId = &#63;.
+	 * Returns the number of layouts where classNameId = &#63; and classPK = &#63; and launchId = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param launchSetId the launch set ID
+	 * @param launchId the launch ID
 	 * @return the number of matching layouts
 	 */
 	@Override
-	public int countByC_C_L(long classNameId, long classPK, long launchSetId) {
+	public int countByC_C_L(long classNameId, long classPK, long launchId) {
 		return _collectionPersistenceFinderByC_C_L.count(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {classNameId, new long[] {classPK}, launchSetId});
+			new Object[] {classNameId, new long[] {classPK}, launchId});
 	}
 
 	/**
-	 * Returns the number of layouts where classNameId = &#63; and classPK = any &#63; and launchSetId = &#63;.
+	 * Returns the number of layouts where classNameId = &#63; and classPK = any &#63; and launchId = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPKs the class pks
-	 * @param launchSetId the launch set ID
+	 * @param launchId the launch ID
 	 * @return the number of matching layouts
 	 */
 	@Override
-	public int countByC_C_L(
-		long classNameId, long[] classPKs, long launchSetId) {
-
+	public int countByC_C_L(long classNameId, long[] classPKs, long launchId) {
 		return _collectionPersistenceFinderByC_C_L.count(
 			FinderCacheUtil.getFinderCache(),
 			new Object[] {
-				classNameId, ArrayUtil.sortedUnique(classPKs), launchSetId
+				classNameId, ArrayUtil.sortedUnique(classPKs), launchId
 			});
 	}
 
@@ -3811,7 +3807,7 @@ public class LayoutPersistenceImpl
 		ctMergeColumnNames.add("parentLayoutId");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctMergeColumnNames.add("launchSetId");
+		ctMergeColumnNames.add("launchId");
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("title");
 		ctMergeColumnNames.add("description");
@@ -4425,21 +4421,21 @@ public class LayoutPersistenceImpl
 					Long.class.getName(), Integer.class.getName(),
 					Integer.class.getName(), OrderByComparator.class.getName()
 				},
-				new String[] {"classNameId", "classPK", "launchSetId"}, true),
+				new String[] {"classNameId", "classPK", "launchId"}, true),
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_L",
 				new String[] {
 					Long.class.getName(), Long.class.getName(),
 					Long.class.getName()
 				},
-				new String[] {"classNameId", "classPK", "launchSetId"}, true),
+				new String[] {"classNameId", "classPK", "launchId"}, true),
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_L",
 				new String[] {
 					Long.class.getName(), Long.class.getName(),
 					Long.class.getName()
 				},
-				new String[] {"classNameId", "classPK", "launchSetId"}, false),
+				new String[] {"classNameId", "classPK", "launchId"}, false),
 			_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 			LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
@@ -4449,8 +4445,8 @@ public class LayoutPersistenceImpl
 				"layout.", "classPK", FinderColumn.Type.LONG, "=", false, true,
 				true, Layout::getClassPK),
 			new FinderColumn<>(
-				"layout.", "launchSetId", FinderColumn.Type.LONG, "=", true,
-				true, Layout::getLaunchSetId));
+				"layout.", "launchId", FinderColumn.Type.LONG, "=", true, true,
+				Layout::getLaunchId));
 
 		_collectionPersistenceFinderByG_P_P_H =
 			new FilterCollectionPersistenceFinder<>(
@@ -4630,4 +4626,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:33595996
+// LIFERAY-SERVICE-BUILDER-HASH:1531424622

@@ -353,18 +353,18 @@ public interface LayoutModel
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the launch set ID of this layout.
+	 * Returns the launch ID of this layout.
 	 *
-	 * @return the launch set ID of this layout
+	 * @return the launch ID of this layout
 	 */
-	public long getLaunchSetId();
+	public long getLaunchId();
 
 	/**
-	 * Sets the launch set ID of this layout.
+	 * Sets the launch ID of this layout.
 	 *
-	 * @param launchSetId the launch set ID of this layout
+	 * @param launchId the launch ID of this layout
 	 */
-	public void setLaunchSetId(long launchSetId);
+	public void setLaunchId(long launchId);
 
 	/**
 	 * Returns the name of this layout.
@@ -1384,4 +1384,4 @@ public interface LayoutModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-392741640
+// LIFERAY-SERVICE-BUILDER-HASH:448166650

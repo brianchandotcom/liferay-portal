@@ -679,8 +679,8 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
-	public Layout fetchDraftLayout(long plid, long launchSetId) {
-		return _layoutLocalService.fetchDraftLayout(plid, launchSetId);
+	public Layout fetchDraftLayout(long plid, long launchId) {
+		return _layoutLocalService.fetchDraftLayout(plid, launchId);
 	}
 
 	@Override
@@ -803,9 +803,8 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
-	public long[] getClassPKsByLaunchSetId(long groupId, long launchSetId) {
-		return _layoutLocalService.getClassPKsByLaunchSetId(
-			groupId, launchSetId);
+	public long[] getClassPKsByLaunchId(long groupId, long launchId) {
+		return _layoutLocalService.getClassPKsByLaunchId(groupId, launchId);
 	}
 
 	/**
@@ -2380,4 +2379,4 @@ public class LayoutLocalServiceWrapper
 	private LayoutLocalService _layoutLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1016631408
+// LIFERAY-SERVICE-BUILDER-HASH:1025287478

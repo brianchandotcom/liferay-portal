@@ -646,8 +646,8 @@ public class LayoutLocalServiceUtil {
 		return getService().fetchDraftLayout(plid);
 	}
 
-	public static Layout fetchDraftLayout(long plid, long launchSetId) {
-		return getService().fetchDraftLayout(plid, launchSetId);
+	public static Layout fetchDraftLayout(long plid, long launchId) {
+		return getService().fetchDraftLayout(plid, launchId);
 	}
 
 	public static Map<Layout, Layout> fetchDraftLayouts(List<Layout> layouts) {
@@ -752,10 +752,8 @@ public class LayoutLocalServiceUtil {
 		return getService().getBrowsableLayout(layout);
 	}
 
-	public static long[] getClassPKsByLaunchSetId(
-		long groupId, long launchSetId) {
-
-		return getService().getClassPKsByLaunchSetId(groupId, launchSetId);
+	public static long[] getClassPKsByLaunchId(long groupId, long launchId) {
+		return getService().getClassPKsByLaunchId(groupId, launchId);
 	}
 
 	/**
@@ -2160,4 +2158,4 @@ public class LayoutLocalServiceUtil {
 	private static volatile LayoutLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1651792520
+// LIFERAY-SERVICE-BUILDER-HASH:-1785192236

@@ -669,13 +669,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 				exception.printStackTrace();
 
-				BuildData buildData = getBuildData();
-
-				NotificationUtil.sendSlackNotification(
-					buildData.getBuildURL() + " <@U04GTH03Q>",
-					"ci-notifications",
-					"Unable to generate " + reportName + " report");
-
 				throw new RuntimeException(exception);
 			}
 

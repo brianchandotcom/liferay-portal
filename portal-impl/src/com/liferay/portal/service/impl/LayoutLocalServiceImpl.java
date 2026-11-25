@@ -981,6 +981,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public int countDraftLayouts(long plid) {
+		return layoutPersistence.countByC_C(
+			_classNameLocalService.getClassNameId(Layout.class), plid);
+	}
+
 	/**
 	 * Deletes the layout, its child layouts, and its associated resources.
 	 *

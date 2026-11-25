@@ -75,6 +75,14 @@ public class EditContentItemStrutsAction implements StrutsAction {
 				editURL, "messageId", messageId);
 		}
 
+		String layoutBackURL = ParamUtil.getString(
+			httpServletRequest, "p_l_back_url");
+
+		if (Validator.isNotNull(layoutBackURL)) {
+			editURL = HttpComponentsUtil.addParameter(
+				editURL, "p_l_back_url", layoutBackURL);
+		}
+
 		String layoutMode = ParamUtil.getString(httpServletRequest, "p_l_mode");
 
 		if (Objects.equals(layoutMode, Constants.READ)) {

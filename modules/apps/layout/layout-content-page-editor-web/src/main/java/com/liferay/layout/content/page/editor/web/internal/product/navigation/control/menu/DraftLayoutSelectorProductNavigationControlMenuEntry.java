@@ -127,7 +127,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isDraftLayout()) {
+		if (!layout.isDraftLayout() || layout.isTypeUtility()) {
 			return false;
 		}
 

@@ -126,6 +126,12 @@ public interface ServiceProviderConfigResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -138,6 +144,7 @@ public interface ServiceProviderConfigResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -229,6 +236,8 @@ public interface ServiceProviderConfigResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -256,4 +265,4 @@ public interface ServiceProviderConfigResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1037688806
+// LIFERAY-REST-BUILDER-HASH:-1520348608

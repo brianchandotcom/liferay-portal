@@ -194,6 +194,12 @@ public interface DiscountRuleResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -206,6 +212,7 @@ public interface DiscountRuleResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -296,6 +303,8 @@ public interface DiscountRuleResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -392,6 +401,8 @@ public interface DiscountRuleResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -504,6 +515,8 @@ public interface DiscountRuleResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -621,6 +634,8 @@ public interface DiscountRuleResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -743,6 +758,8 @@ public interface DiscountRuleResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -850,6 +867,8 @@ public interface DiscountRuleResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
@@ -961,6 +980,8 @@ public interface DiscountRuleResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1069,6 +1090,8 @@ public interface DiscountRuleResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1168,6 +1191,8 @@ public interface DiscountRuleResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (callbackURL != null) {
@@ -1200,4 +1225,4 @@ public interface DiscountRuleResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:849644038
+// LIFERAY-REST-BUILDER-HASH:600906470

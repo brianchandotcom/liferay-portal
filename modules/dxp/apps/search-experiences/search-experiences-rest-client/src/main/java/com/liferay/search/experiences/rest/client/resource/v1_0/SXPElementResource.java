@@ -240,6 +240,12 @@ public interface SXPElementResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -252,6 +258,7 @@ public interface SXPElementResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -342,6 +349,8 @@ public interface SXPElementResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -438,6 +447,8 @@ public interface SXPElementResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -544,6 +555,8 @@ public interface SXPElementResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -653,6 +666,8 @@ public interface SXPElementResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -744,6 +759,8 @@ public interface SXPElementResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -853,6 +870,8 @@ public interface SXPElementResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -979,6 +998,8 @@ public interface SXPElementResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
@@ -1086,6 +1107,8 @@ public interface SXPElementResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1179,6 +1202,8 @@ public interface SXPElementResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -1290,6 +1315,8 @@ public interface SXPElementResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1397,6 +1424,8 @@ public interface SXPElementResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1502,6 +1531,8 @@ public interface SXPElementResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1601,6 +1632,8 @@ public interface SXPElementResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -1734,6 +1767,8 @@ public interface SXPElementResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 			httpInvoker.path(
@@ -1829,6 +1864,8 @@ public interface SXPElementResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
@@ -1943,6 +1980,8 @@ public interface SXPElementResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 			httpInvoker.path(
@@ -1972,4 +2011,4 @@ public interface SXPElementResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:846743249
+// LIFERAY-REST-BUILDER-HASH:-725667952

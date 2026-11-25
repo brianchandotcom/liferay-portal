@@ -264,6 +264,12 @@ public interface ShipmentResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -276,6 +282,7 @@ public interface ShipmentResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -366,6 +373,8 @@ public interface ShipmentResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -462,6 +471,8 @@ public interface ShipmentResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -574,6 +585,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
 			httpInvoker.path(
@@ -675,6 +688,8 @@ public interface ShipmentResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -784,6 +799,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -892,6 +909,8 @@ public interface ShipmentResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -1017,6 +1036,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
@@ -1127,6 +1148,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
@@ -1232,6 +1255,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1325,6 +1350,8 @@ public interface ShipmentResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -1439,6 +1466,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1550,6 +1579,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1660,6 +1691,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1766,6 +1799,8 @@ public interface ShipmentResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -1874,6 +1909,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -1981,6 +2018,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -2082,6 +2121,8 @@ public interface ShipmentResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -2217,6 +2258,8 @@ public interface ShipmentResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
 			httpInvoker.path(
@@ -2246,4 +2289,4 @@ public interface ShipmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1646874369
+// LIFERAY-REST-BUILDER-HASH:1518765314

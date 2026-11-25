@@ -147,6 +147,12 @@ public interface PerformanceTopAssetResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -159,6 +165,7 @@ public interface PerformanceTopAssetResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -248,6 +255,8 @@ public interface PerformanceTopAssetResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -389,6 +398,8 @@ public interface PerformanceTopAssetResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (cmpProjectIds != null) {
@@ -453,4 +464,4 @@ public interface PerformanceTopAssetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1315127369
+// LIFERAY-REST-BUILDER-HASH:2006901936

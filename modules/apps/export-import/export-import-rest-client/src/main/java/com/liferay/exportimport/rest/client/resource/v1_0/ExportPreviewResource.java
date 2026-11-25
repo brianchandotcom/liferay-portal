@@ -160,6 +160,12 @@ public interface ExportPreviewResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -172,6 +178,7 @@ public interface ExportPreviewResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -273,6 +280,8 @@ public interface ExportPreviewResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -411,6 +420,8 @@ public interface ExportPreviewResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
@@ -547,6 +558,8 @@ public interface ExportPreviewResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
@@ -609,4 +622,4 @@ public interface ExportPreviewResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1969900056
+// LIFERAY-REST-BUILDER-HASH:-648307784

@@ -130,6 +130,12 @@ public interface IdentityActivityResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -142,6 +148,7 @@ public interface IdentityActivityResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -239,6 +246,8 @@ public interface IdentityActivityResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (groupIds != null) {
@@ -285,4 +294,4 @@ public interface IdentityActivityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:319202087
+// LIFERAY-REST-BUILDER-HASH:-1161582641

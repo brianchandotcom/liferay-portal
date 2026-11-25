@@ -131,6 +131,12 @@ public interface ResourceTypesResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -143,6 +149,7 @@ public interface ResourceTypesResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -234,6 +241,8 @@ public interface ResourceTypesResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -337,6 +346,8 @@ public interface ResourceTypesResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -364,4 +375,4 @@ public interface ResourceTypesResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:897365367
+// LIFERAY-REST-BUILDER-HASH:-704724158

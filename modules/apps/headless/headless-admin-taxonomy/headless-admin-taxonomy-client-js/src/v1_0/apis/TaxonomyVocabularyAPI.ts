@@ -16,6 +16,7 @@ import {ObjectSerializer} from '../utils/SerDes';
 export class TaxonomyVocabularyAPI {
 	protected _basePath: string;
 	protected _defaultHeaders: any = {};
+	protected _timeout?: number;
 
 	constructor(basePath?: string) {
 		if (basePath) {
@@ -25,6 +26,10 @@ export class TaxonomyVocabularyAPI {
 
 	set defaultHeaders(defaultHeaders: any) {
 		this._defaultHeaders = defaultHeaders;
+	}
+
+	set timeout(timeout: number) {
+		this._timeout = timeout;
 	}
 
 		/**
@@ -61,29 +66,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "DELETE",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "DELETE",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -121,29 +138,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "DELETE",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "DELETE",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -174,29 +203,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "DELETE",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "DELETE",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -275,29 +316,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "GET",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "PageTaxonomyVocabulary"), response};
 						}
-					,headers || {}
-					),
-				method: "GET",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "PageTaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -347,29 +400,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "GET",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-					,headers || {}
-					),
-				method: "GET",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -418,29 +483,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "GET",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "GET",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -519,29 +596,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "GET",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "PageTaxonomyVocabulary"), response};
 						}
-					,headers || {}
-					),
-				method: "GET",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "PageTaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -591,29 +680,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "GET",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-					,headers || {}
-					),
-				method: "GET",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -662,29 +763,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "GET",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "GET",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -727,29 +840,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "GET",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-					,headers || {}
-					),
-				method: "GET",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -798,29 +923,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "GET",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "GET",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -874,31 +1011,43 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-					body: body,
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+						body: body,
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+									,{"Content-Type": requestBody.type}
+						,headers || {}
+						),
+					method: "PATCH",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-								,{"Content-Type": requestBody.type}
-					,headers || {}
-					),
-				method: "PATCH",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -976,31 +1125,43 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-					body: body,
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+						body: body,
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+									,{"Content-Type": requestBody.type}
+						,headers || {}
+						),
+					method: "POST",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-								,{"Content-Type": requestBody.type}
-					,headers || {}
-					),
-				method: "POST",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -1078,31 +1239,43 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-					body: body,
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+						body: body,
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+									,{"Content-Type": requestBody.type}
+						,headers || {}
+						),
+					method: "POST",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-								,{"Content-Type": requestBody.type}
-					,headers || {}
-					),
-				method: "POST",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -1187,31 +1360,43 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-					body: body,
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+						body: body,
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+									,{"Content-Type": requestBody.type}
+						,headers || {}
+						),
+					method: "PUT",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-								,{"Content-Type": requestBody.type}
-					,headers || {}
-					),
-				method: "PUT",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -1269,29 +1454,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "PUT",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "PUT",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -1352,31 +1549,43 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-					body: body,
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+						body: body,
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+									,{"Content-Type": requestBody.type}
+						,headers || {}
+						),
+					method: "PUT",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-								,{"Content-Type": requestBody.type}
-					,headers || {}
-					),
-				method: "PUT",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -1434,29 +1643,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "PUT",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "PUT",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -1510,31 +1731,43 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-					body: body,
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+						body: body,
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+									,{"Content-Type": requestBody.type}
+						,headers || {}
+						),
+					method: "PUT",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
 						}
-								,{"Content-Type": requestBody.type}
-					,headers || {}
-					),
-				method: "PUT",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: ObjectSerializer.deserialize(await response.json(), "TaxonomyVocabulary"), response};
-					}
-					else {
-						return {body: await response.text() as any, response};
-					}
+						else {
+							return {body: await response.text() as any, response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 
@@ -1589,29 +1822,41 @@ export class TaxonomyVocabularyAPI {
 				"?" + new URLSearchParams(queryParameters).toString() :
 					"";
 
-			const response = await fetch(path + queryString, {
-				headers:
-					Object.assign({}, this._defaultHeaders
-						,{
-								Accept: "application/json"
+			const abortController = new AbortController();
+
+			const timeoutId = (this._timeout && this._timeout > 0) ?
+				setTimeout(() => abortController.abort(new DOMException("The request timed out", "TimeoutError")), this._timeout) :
+					undefined;
+
+			try {
+				const response = await fetch(path + queryString, {
+					headers:
+						Object.assign({}, this._defaultHeaders
+							,{
+									Accept: "application/json"
+							}
+						,headers || {}
+						),
+					method: "PUT",
+					signal: abortController.signal,
+				});
+
+				if (response.ok) {
+					const contentType = response.headers.get("content-type") || "";
+
+						if (contentType.includes("application/json")) {
+							return {body: await response.json(), response};
 						}
-					,headers || {}
-					),
-				method: "PUT",
-			});
-
-			if (response.ok) {
-				const contentType = response.headers.get("content-type") || "";
-
-					if (contentType.includes("application/json")) {
-						return {body: await response.json(), response};
-					}
-					else {
-						return {body: await response.text(), response};
-					}
+						else {
+							return {body: await response.text(), response};
+						}
+				}
+				else {
+					throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+				}
 			}
-			else {
-				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			finally {
+				clearTimeout(timeoutId);
 			}
 		}
 

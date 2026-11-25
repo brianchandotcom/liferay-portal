@@ -139,6 +139,12 @@ public interface ProductVirtualSettingsResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -151,6 +157,7 @@ public interface ProductVirtualSettingsResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -249,6 +256,8 @@ public interface ProductVirtualSettingsResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -357,6 +366,8 @@ public interface ProductVirtualSettingsResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -386,4 +397,4 @@ public interface ProductVirtualSettingsResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1158009313
+// LIFERAY-REST-BUILDER-HASH:1001051650

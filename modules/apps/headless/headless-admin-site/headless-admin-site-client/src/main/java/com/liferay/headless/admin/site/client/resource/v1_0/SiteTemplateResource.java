@@ -146,6 +146,12 @@ public interface SiteTemplateResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -158,6 +164,7 @@ public interface SiteTemplateResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -255,6 +262,8 @@ public interface SiteTemplateResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -377,6 +386,8 @@ public interface SiteTemplateResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (active != null) {
@@ -432,4 +443,4 @@ public interface SiteTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:709383156
+// LIFERAY-REST-BUILDER-HASH:606186659

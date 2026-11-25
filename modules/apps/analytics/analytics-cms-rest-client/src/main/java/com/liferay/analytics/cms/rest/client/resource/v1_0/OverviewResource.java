@@ -143,6 +143,12 @@ public interface OverviewResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -155,6 +161,7 @@ public interface OverviewResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -251,6 +258,8 @@ public interface OverviewResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -379,6 +388,8 @@ public interface OverviewResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (depotEntryId != null) {
@@ -427,4 +438,4 @@ public interface OverviewResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-981383341
+// LIFERAY-REST-BUILDER-HASH:-198807928

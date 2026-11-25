@@ -135,6 +135,12 @@ public interface AuthorizationTokenResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -147,6 +153,7 @@ public interface AuthorizationTokenResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -239,6 +246,8 @@ public interface AuthorizationTokenResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
@@ -335,6 +344,8 @@ public interface AuthorizationTokenResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (callbackURL != null) {
@@ -367,4 +378,4 @@ public interface AuthorizationTokenResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-263503675
+// LIFERAY-REST-BUILDER-HASH:-1366142046

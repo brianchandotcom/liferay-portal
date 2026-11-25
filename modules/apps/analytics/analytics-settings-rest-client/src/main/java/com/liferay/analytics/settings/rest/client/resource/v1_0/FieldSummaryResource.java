@@ -127,6 +127,12 @@ public interface FieldSummaryResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -139,6 +145,7 @@ public interface FieldSummaryResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -229,6 +236,8 @@ public interface FieldSummaryResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -256,4 +265,4 @@ public interface FieldSummaryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:396169483
+// LIFERAY-REST-BUILDER-HASH:-572866891

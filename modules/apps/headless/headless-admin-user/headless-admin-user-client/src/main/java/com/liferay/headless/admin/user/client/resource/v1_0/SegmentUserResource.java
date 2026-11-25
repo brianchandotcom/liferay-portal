@@ -133,6 +133,12 @@ public interface SegmentUserResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -145,6 +151,7 @@ public interface SegmentUserResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -239,6 +246,8 @@ public interface SegmentUserResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (pagination != null) {
@@ -275,4 +284,4 @@ public interface SegmentUserResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1970481489
+// LIFERAY-REST-BUILDER-HASH:175723685

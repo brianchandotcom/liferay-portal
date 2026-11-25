@@ -131,6 +131,12 @@ public interface UserAccountFullNameDefinitionResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -143,6 +149,7 @@ public interface UserAccountFullNameDefinitionResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -238,6 +245,8 @@ public interface UserAccountFullNameDefinitionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (languageId != null) {
@@ -269,4 +278,4 @@ public interface UserAccountFullNameDefinitionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:625910251
+// LIFERAY-REST-BUILDER-HASH:-1833085595

@@ -136,6 +136,12 @@ public interface EventDefinitionResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -148,6 +154,7 @@ public interface EventDefinitionResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -249,6 +256,8 @@ public interface EventDefinitionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (blocked != null) {
@@ -305,4 +314,4 @@ public interface EventDefinitionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1280185773
+// LIFERAY-REST-BUILDER-HASH:936691485

@@ -134,6 +134,12 @@ public interface DocumentsMetricResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -146,6 +152,7 @@ public interface DocumentsMetricResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -248,6 +255,8 @@ public interface DocumentsMetricResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (groupIds != null) {
@@ -314,4 +323,4 @@ public interface DocumentsMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-374966247
+// LIFERAY-REST-BUILDER-HASH:-1359721917

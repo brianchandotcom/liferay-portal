@@ -139,6 +139,12 @@ public interface PortalInstanceCopyResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -151,6 +157,7 @@ public interface PortalInstanceCopyResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -248,6 +255,8 @@ public interface PortalInstanceCopyResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -343,6 +352,8 @@ public interface PortalInstanceCopyResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (callbackURL != null) {
@@ -375,4 +386,4 @@ public interface PortalInstanceCopyResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1069818502
+// LIFERAY-REST-BUILDER-HASH:-292083355

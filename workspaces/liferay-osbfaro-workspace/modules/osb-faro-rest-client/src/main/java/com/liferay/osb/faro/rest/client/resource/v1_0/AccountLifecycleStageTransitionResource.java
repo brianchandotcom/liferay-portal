@@ -143,6 +143,12 @@ public interface AccountLifecycleStageTransitionResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -155,6 +161,7 @@ public interface AccountLifecycleStageTransitionResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -264,6 +271,8 @@ public interface AccountLifecycleStageTransitionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (country != null) {
@@ -339,4 +348,4 @@ public interface AccountLifecycleStageTransitionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1205689248
+// LIFERAY-REST-BUILDER-HASH:2001122982

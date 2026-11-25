@@ -137,6 +137,12 @@ public interface SchemaResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -149,6 +155,7 @@ public interface SchemaResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -238,6 +245,8 @@ public interface SchemaResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -335,6 +344,8 @@ public interface SchemaResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (callbackURL != null) {
@@ -376,4 +387,4 @@ public interface SchemaResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1245580699
+// LIFERAY-REST-BUILDER-HASH:1073438822

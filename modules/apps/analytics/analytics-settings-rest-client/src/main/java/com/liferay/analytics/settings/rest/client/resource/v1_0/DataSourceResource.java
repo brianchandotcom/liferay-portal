@@ -137,6 +137,12 @@ public interface DataSourceResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -149,6 +155,7 @@ public interface DataSourceResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -238,6 +245,8 @@ public interface DataSourceResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
 
@@ -345,6 +354,8 @@ public interface DataSourceResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -372,4 +383,4 @@ public interface DataSourceResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1179862696
+// LIFERAY-REST-BUILDER-HASH:-1075817095

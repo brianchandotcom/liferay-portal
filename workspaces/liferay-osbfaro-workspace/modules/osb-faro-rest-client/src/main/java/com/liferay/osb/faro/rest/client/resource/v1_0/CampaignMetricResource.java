@@ -135,6 +135,12 @@ public interface CampaignMetricResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -147,6 +153,7 @@ public interface CampaignMetricResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -248,6 +255,8 @@ public interface CampaignMetricResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (rangeEnd != null) {
@@ -297,4 +306,4 @@ public interface CampaignMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1995969063
+// LIFERAY-REST-BUILDER-HASH:1211150299

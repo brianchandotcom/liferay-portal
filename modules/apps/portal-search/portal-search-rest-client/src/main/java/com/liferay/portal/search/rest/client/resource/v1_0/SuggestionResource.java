@@ -143,6 +143,12 @@ public interface SuggestionResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -155,6 +161,7 @@ public interface SuggestionResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -273,6 +280,8 @@ public interface SuggestionResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (currentURL != null) {
@@ -332,4 +341,4 @@ public interface SuggestionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1299349344
+// LIFERAY-REST-BUILDER-HASH:-1505927872

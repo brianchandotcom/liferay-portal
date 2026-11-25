@@ -139,6 +139,12 @@ public interface TaxonomyVocabularyResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -151,6 +157,7 @@ public interface TaxonomyVocabularyResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -258,6 +265,8 @@ public interface TaxonomyVocabularyResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (blueprintExternalReferenceCode != null) {
@@ -319,4 +328,4 @@ public interface TaxonomyVocabularyResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-639201123
+// LIFERAY-REST-BUILDER-HASH:-194683275

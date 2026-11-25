@@ -485,7 +485,7 @@ public class EditFragmentEntryDisplayContext {
 				FragmentEntryValidator fragmentEntryValidator =
 					_fragmentEntryValidatorSnapshot.get();
 
-				return fragmentEntryValidator.getConfigurationJSONSchema();
+				return fragmentEntryValidator.getConfigurationSchemaJSON();
 			}
 		).put(
 			"dataAttributes",

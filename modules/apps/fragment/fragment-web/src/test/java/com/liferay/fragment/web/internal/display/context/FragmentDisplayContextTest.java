@@ -69,7 +69,7 @@ public class FragmentDisplayContextTest {
 		String configurationSchema = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_fragmentEntryValidator.getConfigurationJSONSchema()
+			_fragmentEntryValidator.getConfigurationSchemaJSON()
 		).thenReturn(
 			configurationSchema
 		);

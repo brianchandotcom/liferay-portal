@@ -367,8 +367,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get frontend data set with external " +
-						"reference code " + externalReferenceCode,
+					"Unable to get frontend data set with external reference " +
+						"code " + externalReferenceCode,
 					exception);
 			}
 		}

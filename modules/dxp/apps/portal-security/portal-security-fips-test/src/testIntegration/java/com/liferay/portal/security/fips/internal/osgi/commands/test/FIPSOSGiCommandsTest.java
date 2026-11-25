@@ -50,17 +50,17 @@ public class FIPSOSGiCommandsTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"PASSWORDS_DEFAULT_POLICY_MIN_LENGTH", 13)) {
 
-			String checkOutput = _getCheckOutput();
+			String output = _check();
 
-			Assert.assertFalse(checkOutput.contains("key encryption key"));
+			Assert.assertFalse(output.contains("key encryption key"));
 			Assert.assertTrue(
-				checkOutput.contains(
+				output.contains(
 					StringBundler.concat(
 						"Passwords\n- FIPS mode requires the property \"",
 						PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH,
 						"\" to be at least 14")));
 			Assert.assertTrue(
-				checkOutput.endsWith(
+				output.endsWith(
 					"Only the FIPS boot checks the JVM. This includes the " +
 						"security providers, the SecureRandom provider, and " +
 							"the TLS and certificate revocation properties."));
@@ -72,16 +72,16 @@ public class FIPSOSGiCommandsTest {
 				"companyKEKIdentifier", RandomTestUtil.randomString()
 			).build());
 
-		String checkOutput = _getCheckOutput();
+		String output = _check();
 
 		Assert.assertTrue(
-			checkOutput.contains(
+			output.contains(
 				StringBundler.concat(
 					"Key Encryption Key\n- Unable to reach the key encryption ",
 					"key of company ", TestPropsValues.getCompanyId(), ": ")));
 	}
 
-	private String _getCheckOutput() {
+	private String _check() {
 		return ReflectionTestUtil.invoke(
 			_osgiCommands, "check", new Class<?>[0]);
 	}

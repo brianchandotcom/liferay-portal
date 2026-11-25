@@ -94,14 +94,30 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 	@Test
 	@TestInfo("LPD-116288")
 	public void testUpdateEntry() throws Exception {
-		AssetEntry assetEntry = _updateEntry(_assetCategoryIds);
+		long[] assetCategoryIds = {_assetCategoryIds[0]};
+
+		AssetEntry assetEntry = _updateEntry(assetCategoryIds);
 
 		Map<Long, Long> assetEntryAssetCategoryRelIds =
 			_getAssetEntryAssetCategoryRelIds(assetEntry);
 
 		Assert.assertEquals(
-			ListUtil.fromArray(_assetCategoryIds),
+			ListUtil.fromArray(assetCategoryIds),
 			ListUtil.fromMapKeys(assetEntryAssetCategoryRelIds));
+
+		_updateEntry(_assetCategoryIds);
+
+		Map<Long, Long> updatedAssetEntryAssetCategoryRelIds =
+			_getAssetEntryAssetCategoryRelIds(assetEntry);
+
+		Assert.assertEquals(
+			ListUtil.fromArray(_assetCategoryIds),
+			ListUtil.fromMapKeys(updatedAssetEntryAssetCategoryRelIds));
+		Assert.assertEquals(
+			assetEntryAssetCategoryRelIds.get(_assetCategoryIds[0]),
+			updatedAssetEntryAssetCategoryRelIds.get(_assetCategoryIds[0]));
+
+		assetEntryAssetCategoryRelIds = updatedAssetEntryAssetCategoryRelIds;
 
 		_updateEntry(_assetCategoryIds);
 
@@ -109,11 +125,13 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 			assetEntryAssetCategoryRelIds,
 			_getAssetEntryAssetCategoryRelIds(assetEntry));
 
-		long[] assetCategoryIds = {_assetCategoryIds[1], _assetCategoryIds[0]};
+		assetCategoryIds = new long[] {
+			_assetCategoryIds[1], _assetCategoryIds[0]
+		};
 
 		_updateEntry(assetCategoryIds);
 
-		Map<Long, Long> updatedAssetEntryAssetCategoryRelIds =
+		updatedAssetEntryAssetCategoryRelIds =
 			_getAssetEntryAssetCategoryRelIds(assetEntry);
 
 		Assert.assertEquals(
@@ -122,6 +140,16 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 		Assert.assertEquals(
 			assetEntryAssetCategoryRelIds.get(_assetCategoryIds[1]),
 			updatedAssetEntryAssetCategoryRelIds.get(_assetCategoryIds[1]));
+
+		assetCategoryIds = new long[] {_assetCategoryIds[1]};
+
+		_updateEntry(assetCategoryIds);
+
+		Assert.assertEquals(
+			Collections.singletonMap(
+				_assetCategoryIds[1],
+				assetEntryAssetCategoryRelIds.get(_assetCategoryIds[1])),
+			_getAssetEntryAssetCategoryRelIds(assetEntry));
 	}
 
 	@Test

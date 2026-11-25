@@ -109,14 +109,6 @@ public class FDSAPIURLBuilderTest {
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
-			"/o/app/{siteId}/{foo}/endpoint",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest,
-				"/o/app/{siteId}/{foo}/endpoint"
-			).build(
-				false
-			));
-		Assert.assertEquals(
 			"/o/app/12345/{foo}/alice/endpoint",
 			new FDSAPIURLBuilder(
 				_fdsAPIURLResolverRegistry, _httpServletRequest,
@@ -140,6 +132,14 @@ public class FDSAPIURLBuilderTest {
 			).addParameter(
 				"sort", "bar"
 			).build());
+		Assert.assertEquals(
+			"/o/app/{siteId}/{foo}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest,
+				"/o/app/{siteId}/{foo}/endpoint"
+			).build(
+				false
+			));
 
 		serviceRegistration1.unregister();
 

@@ -24,16 +24,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import jakarta.portlet.PortletRequest;
 
 import java.util.ResourceBundle;
 
@@ -125,6 +130,37 @@ public class MentionsUserNotificationHandler
 		}
 
 		return super.getBodyContent(jsonObject);
+	}
+
+	@Override
+	protected String getLink(
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String link = super.getLink(userNotificationEvent, serviceContext);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			userNotificationEvent.getPayload());
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (Validator.isNull(link) ||
+			Validator.isNull(jsonObject.getString("discussionClassName")) ||
+			(themeDisplay == null)) {
+
+			return link;
+		}
+
+		String notificationsURL = String.valueOf(
+			PortletURLFactoryUtil.create(
+				themeDisplay.getRequest(),
+				"com_liferay_notifications_web_portlet_NotificationsPortlet",
+				PortletRequest.RENDER_PHASE));
+
+		return HttpComponentsUtil.addParameters(
+			link, "backURL", notificationsURL, "p_l_back_url",
+			notificationsURL);
 	}
 
 	@Override

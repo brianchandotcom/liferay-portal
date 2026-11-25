@@ -249,6 +249,72 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 		Assert.assertEquals(
 			"Space content", MapUtil.getString(values, "content"));
 		Assert.assertEquals("Title", MapUtil.getString(values, "title"));
+
+		objectDefinition = CMSDefaultValueUtil.fetchObjectDefinition(
+			_group.getCompanyId());
+
+		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+			_group, _objectEntryFolder.getObjectEntryFolderId());
+
+		objectEntry = _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"classExternalReferenceCode",
+				objectEntryFolder.getExternalReferenceCode()
+			).put(
+				"className", ObjectEntryFolder.class.getName()
+			).put(
+				"defaultValues", "[]"
+			).put(
+				"treePath", "/0/"
+			).build(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertTreePath(objectEntry, objectEntryFolder.getTreePath());
+	}
+
+	@Test
+	public void testPartialUpdateObjectEntry() throws Exception {
+		ObjectEntry objectEntry = CMSDefaultValueUtil.fetchObjectEntry(
+			_group.getGroupId(),
+			_parentObjectEntryFolder.getExternalReferenceCode(),
+			ObjectEntryFolder.class.getName(), _filterFactory);
+
+		_objectEntryLocalService.partialUpdateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"treePath", "/0/"
+			).build(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertTreePath(objectEntry, _parentObjectEntryFolder.getTreePath());
+	}
+
+	@Test
+	public void testUpdateObjectEntry() throws Exception {
+		ObjectEntry objectEntry = CMSDefaultValueUtil.fetchObjectEntry(
+			_group.getGroupId(), _group.getExternalReferenceCode(),
+			DepotEntry.class.getName(), _filterFactory);
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"classExternalReferenceCode", _group.getExternalReferenceCode()
+			).put(
+				"className", DepotEntry.class.getName()
+			).put(
+				"defaultValues", "[]"
+			).put(
+				"treePath", "/0/"
+			).build(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertTreePath(objectEntry, StringPool.BLANK);
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(
@@ -278,6 +344,17 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return objectEntry.getValues();
+	}
+
+	private void _assertTreePath(ObjectEntry objectEntry, String treePath)
+		throws Exception {
+
+		Assert.assertEquals(
+			treePath,
+			MapUtil.getString(
+				_objectEntryLocalService.getValues(
+					objectEntry.getObjectEntryId()),
+				"treePath"));
 	}
 
 	private void _assertValues(

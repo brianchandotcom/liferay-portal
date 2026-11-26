@@ -14,6 +14,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.fragment.web.internal.display.context.FragmentDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.language.Language;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -115,6 +117,11 @@ public class FragmentPortlet extends MVCPortlet {
 			_fragmentCollectionLocalService.getFragmentCollections(
 				themeDisplay.getScopeGroupId()));
 		renderRequest.setAttribute(
+			FragmentWebKeys.FRAGMENT_DISPLAY_CONTEXT,
+			new FragmentDisplayContext(
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse));
+		renderRequest.setAttribute(
 			FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS,
 			_getInheritedFragmentCollections(themeDisplay));
 		renderRequest.setAttribute(
@@ -176,6 +183,9 @@ public class FragmentPortlet extends MVCPortlet {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

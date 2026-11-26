@@ -152,6 +152,27 @@ public class UserSession implements Cloneable, Serializable {
 
 	protected Event[] events;
 
+	public String getIndividualId() {
+		return individualId;
+	}
+
+	public void setIndividualId(String individualId) {
+		this.individualId = individualId;
+	}
+
+	public void setIndividualId(
+		UnsafeSupplier<String, Exception> individualIdUnsafeSupplier) {
+
+		try {
+			individualId = individualIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String individualId;
+
 	@Override
 	public UserSession clone() throws CloneNotSupportedException {
 		return (UserSession)super.clone();
@@ -184,4 +205,4 @@ public class UserSession implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-111861528
+// LIFERAY-REST-BUILDER-HASH:2126573597

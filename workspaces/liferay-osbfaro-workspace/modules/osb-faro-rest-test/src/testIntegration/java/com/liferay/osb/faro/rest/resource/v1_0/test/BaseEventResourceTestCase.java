@@ -174,6 +174,7 @@ public abstract class BaseEventResourceTestCase {
 		event.setAssetTitle(regex);
 		event.setCanonicalUrl(regex);
 		event.setIndividualId(regex);
+		event.setIndividualName(regex);
 		event.setName(regex);
 		event.setPageDescription(regex);
 		event.setPageKeywords(regex);
@@ -191,6 +192,7 @@ public abstract class BaseEventResourceTestCase {
 		Assert.assertEquals(regex, event.getAssetTitle());
 		Assert.assertEquals(regex, event.getCanonicalUrl());
 		Assert.assertEquals(regex, event.getIndividualId());
+		Assert.assertEquals(regex, event.getIndividualName());
 		Assert.assertEquals(regex, event.getName());
 		Assert.assertEquals(regex, event.getPageDescription());
 		Assert.assertEquals(regex, event.getPageKeywords());
@@ -500,8 +502,24 @@ public abstract class BaseEventResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("eventDate", additionalAssertFieldName)) {
+				if (event.getEventDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("individualId", additionalAssertFieldName)) {
 				if (event.getIndividualId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("individualName", additionalAssertFieldName)) {
+				if (event.getIndividualName() == null) {
 					valid = false;
 				}
 
@@ -722,9 +740,30 @@ public abstract class BaseEventResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("eventDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						event1.getEventDate(), event2.getEventDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("individualId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						event1.getIndividualId(), event2.getIndividualId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("individualName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						event1.getIndividualName(),
+						event2.getIndividualName())) {
 
 					return false;
 				}
@@ -1068,8 +1107,83 @@ public abstract class BaseEventResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("eventDate")) {
+			if (operator.equals("between")) {
+				Date date = event.getEventDate();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(event.getEventDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("individualId")) {
 			Object object = event.getIndividualId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("individualName")) {
+			Object object = event.getIndividualName();
 
 			String value = String.valueOf(object);
 
@@ -1444,7 +1558,10 @@ public abstract class BaseEventResourceTestCase {
 				canonicalUrl = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();
+				eventDate = RandomTestUtil.nextDate();
 				individualId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				individualName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				pageDescription = StringUtil.toLowerCase(
@@ -1680,4 +1797,4 @@ public abstract class BaseEventResourceTestCase {
 		_eventResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2145339841
+// LIFERAY-REST-BUILDER-HASH:1365723411

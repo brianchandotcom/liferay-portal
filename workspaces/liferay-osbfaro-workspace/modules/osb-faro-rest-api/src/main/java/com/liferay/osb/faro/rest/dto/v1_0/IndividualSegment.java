@@ -65,6 +65,51 @@ public class IndividualSegment implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Number of accounts associated with the individuals in the segment."
+	)
+	public Long getAccountsCount() {
+		if (_accountsCountSupplier != null) {
+			accountsCount = _accountsCountSupplier.get();
+
+			_accountsCountSupplier = null;
+		}
+
+		return accountsCount;
+	}
+
+	public void setAccountsCount(Long accountsCount) {
+		this.accountsCount = accountsCount;
+
+		_accountsCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAccountsCount(
+		UnsafeSupplier<Long, Exception> accountsCountUnsafeSupplier) {
+
+		_accountsCountSupplier = () -> {
+			try {
+				return accountsCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Number of accounts associated with the individuals in the segment."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long accountsCount;
+
+	@JsonIgnore
+	private Supplier<Long> _accountsCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Number of individuals currently in the segment who have been active."
 	)
 	public Long getActiveIndividualCount() {
@@ -552,6 +597,52 @@ public class IndividualSegment implements Serializable {
 	private Supplier<Date> _lastActivityDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Last time LDP recalculated the segment's membership."
+	)
+	public Date getLastMembershipUpdateDate() {
+		if (_lastMembershipUpdateDateSupplier != null) {
+			lastMembershipUpdateDate = _lastMembershipUpdateDateSupplier.get();
+
+			_lastMembershipUpdateDateSupplier = null;
+		}
+
+		return lastMembershipUpdateDate;
+	}
+
+	public void setLastMembershipUpdateDate(Date lastMembershipUpdateDate) {
+		this.lastMembershipUpdateDate = lastMembershipUpdateDate;
+
+		_lastMembershipUpdateDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLastMembershipUpdateDate(
+		UnsafeSupplier<Date, Exception>
+			lastMembershipUpdateDateUnsafeSupplier) {
+
+		_lastMembershipUpdateDateSupplier = () -> {
+			try {
+				return lastMembershipUpdateDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Last time LDP recalculated the segment's membership."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date lastMembershipUpdateDate;
+
+	@JsonIgnore
+	private Supplier<Date> _lastMembershipUpdateDateSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Display name of the segment."
 	)
 	public String getName() {
@@ -788,6 +879,18 @@ public class IndividualSegment implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Long accountsCount = getAccountsCount();
+
+		if (accountsCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountsCount\": ");
+
+			sb.append(accountsCount);
+		}
+
 		Long activeIndividualCount = getActiveIndividualCount();
 
 		if (activeIndividualCount != null) {
@@ -940,6 +1043,22 @@ public class IndividualSegment implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(lastActivityDate));
+
+			sb.append("\"");
+		}
+
+		Date lastMembershipUpdateDate = getLastMembershipUpdateDate();
+
+		if (lastMembershipUpdateDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastMembershipUpdateDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(lastMembershipUpdateDate));
 
 			sb.append("\"");
 		}
@@ -1238,4 +1357,4 @@ public class IndividualSegment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:398042786
+// LIFERAY-REST-BUILDER-HASH:1614168567

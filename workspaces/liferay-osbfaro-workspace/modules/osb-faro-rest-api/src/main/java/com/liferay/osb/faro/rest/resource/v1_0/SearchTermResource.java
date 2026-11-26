@@ -44,8 +44,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SearchTermResource {
 
 	public Page<SearchTerm> getWorkspaceGroupChannelSearchTermsPage(
-			Long groupId, String channelId, String rangeEnd, String rangeKey,
-			String rangeStart, Pagination pagination)
+			Long groupId, String channelId, String accountId, String rangeEnd,
+			String rangeKey, String rangeStart, String search, String segmentId,
+			Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -136,4 +137,4 @@ public interface SearchTermResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-611372326
+// LIFERAY-REST-BUILDER-HASH:-306070481

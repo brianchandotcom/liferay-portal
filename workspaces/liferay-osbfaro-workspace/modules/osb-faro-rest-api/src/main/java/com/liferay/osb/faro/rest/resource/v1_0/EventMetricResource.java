@@ -43,13 +43,14 @@ public interface EventMetricResource {
 
 	public EventMetric getWorkspaceGroupChannelAccountEventMetric(
 			Long groupId, String channelId, String accountId, String interval,
-			String rangeEnd, String rangeKey, String rangeStart, String search)
+			String rangeEnd, String rangeKey, String rangeStart, String search,
+			String segmentId)
 		throws Exception;
 
 	public EventMetric getWorkspaceGroupChannelIndividualEventMetric(
 			Long groupId, String channelId, String individualId,
 			String interval, String rangeEnd, String rangeKey,
-			String rangeStart, String search)
+			String rangeStart, String search, String segmentId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -140,4 +141,4 @@ public interface EventMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:672232056
+// LIFERAY-REST-BUILDER-HASH:-601330436

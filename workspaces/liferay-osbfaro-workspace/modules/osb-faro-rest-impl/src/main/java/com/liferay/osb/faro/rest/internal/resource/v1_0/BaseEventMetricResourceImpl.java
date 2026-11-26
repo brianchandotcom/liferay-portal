@@ -93,6 +93,11 @@ public abstract class BaseEventMetricResourceImpl
 				description = "Free-text keyword search across event fields. Empty or null counts all events.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "ID of a segment. When set, count only the events of the individuals in that segment.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "segmentId"
 			)
 		}
 	)
@@ -132,7 +137,10 @@ public abstract class BaseEventMetricResourceImpl
 			String rangeStart,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
-			String search)
+			String search,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("segmentId")
+			String segmentId)
 		throws Exception {
 
 		return new EventMetric();
@@ -189,6 +197,11 @@ public abstract class BaseEventMetricResourceImpl
 				description = "Free-text keyword search across event fields. Empty or null counts all events.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "ID of a segment. When set, count only the events of the individuals in that segment.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "segmentId"
 			)
 		}
 	)
@@ -228,7 +241,10 @@ public abstract class BaseEventMetricResourceImpl
 			String rangeStart,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
-			String search)
+			String search,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("segmentId")
+			String segmentId)
 		throws Exception {
 
 		return new EventMetric();
@@ -679,4 +695,4 @@ public abstract class BaseEventMetricResourceImpl
 		LogFactoryUtil.getLog(BaseEventMetricResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-853999778
+// LIFERAY-REST-BUILDER-HASH:-677182152

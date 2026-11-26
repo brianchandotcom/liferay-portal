@@ -53,6 +53,16 @@ public class IndividualSegmentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (individualSegment.getAccountsCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountsCount\": ");
+
+			sb.append(individualSegment.getAccountsCount());
+		}
+
 		if (individualSegment.getActiveIndividualCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -193,6 +203,22 @@ public class IndividualSegmentSerDes {
 			sb.append("\"");
 		}
 
+		if (individualSegment.getLastMembershipUpdateDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastMembershipUpdateDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					individualSegment.getLastMembershipUpdateDate()));
+
+			sb.append("\"");
+		}
+
 		if (individualSegment.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -266,6 +292,15 @@ public class IndividualSegmentSerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (individualSegment.getAccountsCount() == null) {
+			map.put("accountsCount", null);
+		}
+		else {
+			map.put(
+				"accountsCount",
+				String.valueOf(individualSegment.getAccountsCount()));
+		}
 
 		if (individualSegment.getActiveIndividualCount() == null) {
 			map.put("activeIndividualCount", null);
@@ -365,6 +400,16 @@ public class IndividualSegmentSerDes {
 					individualSegment.getLastActivityDate()));
 		}
 
+		if (individualSegment.getLastMembershipUpdateDate() == null) {
+			map.put("lastMembershipUpdateDate", null);
+		}
+		else {
+			map.put(
+				"lastMembershipUpdateDate",
+				liferayToJSONDateFormat.format(
+					individualSegment.getLastMembershipUpdateDate()));
+		}
+
 		if (individualSegment.getName() == null) {
 			map.put("name", null);
 		}
@@ -413,7 +458,12 @@ public class IndividualSegmentSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "activeIndividualCount")) {
+			if (Objects.equals(jsonParserFieldName, "accountsCount")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "activeIndividualCount")) {
+
 				return false;
 			}
 			else if (Objects.equals(
@@ -452,6 +502,11 @@ public class IndividualSegmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "lastActivityDate")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "lastMembershipUpdateDate")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -473,7 +528,15 @@ public class IndividualSegmentSerDes {
 			IndividualSegment individualSegment, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "activeIndividualCount")) {
+			if (Objects.equals(jsonParserFieldName, "accountsCount")) {
+				if (jsonParserFieldValue != null) {
+					individualSegment.setAccountsCount(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "activeIndividualCount")) {
+
 				if (jsonParserFieldValue != null) {
 					individualSegment.setActiveIndividualCount(
 						Long.valueOf((String)jsonParserFieldValue));
@@ -540,6 +603,14 @@ public class IndividualSegmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "lastActivityDate")) {
 				if (jsonParserFieldValue != null) {
 					individualSegment.setLastActivityDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "lastMembershipUpdateDate")) {
+
+				if (jsonParserFieldValue != null) {
+					individualSegment.setLastMembershipUpdateDate(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
@@ -656,4 +727,4 @@ public class IndividualSegmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2009112086
+// LIFERAY-REST-BUILDER-HASH:1859684474

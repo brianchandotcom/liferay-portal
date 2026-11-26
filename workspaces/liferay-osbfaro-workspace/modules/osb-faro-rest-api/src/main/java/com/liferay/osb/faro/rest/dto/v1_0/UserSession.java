@@ -326,6 +326,51 @@ public class UserSession implements Serializable {
 	@JsonIgnore
 	private Supplier<Event[]> _eventsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ID of the individual whose session this is. Use with `getWorkspaceGroupIndividual` to fetch the individual."
+	)
+	public String getIndividualId() {
+		if (_individualIdSupplier != null) {
+			individualId = _individualIdSupplier.get();
+
+			_individualIdSupplier = null;
+		}
+
+		return individualId;
+	}
+
+	public void setIndividualId(String individualId) {
+		this.individualId = individualId;
+
+		_individualIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setIndividualId(
+		UnsafeSupplier<String, Exception> individualIdUnsafeSupplier) {
+
+		_individualIdSupplier = () -> {
+			try {
+				return individualIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "ID of the individual whose session this is. Use with `getWorkspaceGroupIndividual` to fetch the individual."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String individualId;
+
+	@JsonIgnore
+	private Supplier<String> _individualIdSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -454,6 +499,22 @@ public class UserSession implements Serializable {
 			sb.append("]");
 		}
 
+		String individualId = getIndividualId();
+
+		if (individualId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"individualId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(individualId));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -576,4 +637,4 @@ public class UserSession implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1860233327
+// LIFERAY-REST-BUILDER-HASH:792631740

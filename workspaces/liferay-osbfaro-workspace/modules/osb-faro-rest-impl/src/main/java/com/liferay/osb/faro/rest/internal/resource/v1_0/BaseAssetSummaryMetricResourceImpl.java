@@ -79,6 +79,11 @@ public abstract class BaseAssetSummaryMetricResourceImpl
 				name = "individualId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Object type of the assets to list, as recorded by LDP for each asset. Empty or null returns assets of every type.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "objectType"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
 				description = "Page number (starts at 1).",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -148,6 +153,9 @@ public abstract class BaseAssetSummaryMetricResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("individualId")
 			String individualId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("objectType")
+			String objectType,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("rangeEnd")
 			String rangeEnd,
@@ -623,4 +631,4 @@ public abstract class BaseAssetSummaryMetricResourceImpl
 		LogFactoryUtil.getLog(BaseAssetSummaryMetricResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:980084050
+// LIFERAY-REST-BUILDER-HASH:-962690314

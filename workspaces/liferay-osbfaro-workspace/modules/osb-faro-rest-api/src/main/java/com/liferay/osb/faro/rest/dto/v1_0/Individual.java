@@ -110,6 +110,52 @@ public class Individual implements Serializable {
 	private Supplier<String> _accountNameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Accounts this individual is associated with. Only returned by `getWorkspaceGroupIndividual`; null in list responses. Each entry carries the account's `id`, `accountName`, `accountType`, `annualRevenue`, `country`, `industry`, `lastActivityDate`, and `numberOfEmployees`; use `getWorkspaceGroupAccount` with the `id` for the rest."
+	)
+	@Valid
+	public Account[] getAccounts() {
+		if (_accountsSupplier != null) {
+			accounts = _accountsSupplier.get();
+
+			_accountsSupplier = null;
+		}
+
+		return accounts;
+	}
+
+	public void setAccounts(Account[] accounts) {
+		this.accounts = accounts;
+
+		_accountsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAccounts(
+		UnsafeSupplier<Account[], Exception> accountsUnsafeSupplier) {
+
+		_accountsSupplier = () -> {
+			try {
+				return accountsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Accounts this individual is associated with. Only returned by `getWorkspaceGroupIndividual`; null in list responses. Each entry carries the account's `id`, `accountName`, `accountType`, `annualRevenue`, `country`, `industry`, `lastActivityDate`, and `numberOfEmployees`; use `getWorkspaceGroupAccount` with the `id` for the rest."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Account[] accounts;
+
+	@JsonIgnore
+	private Supplier<Account[]> _accountsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Total number of tracked activities attributed to this individual."
 	)
 	public Long getActivitiesCount() {
@@ -840,6 +886,28 @@ public class Individual implements Serializable {
 			sb.append("\"");
 		}
 
+		Account[] accounts = getAccounts();
+
+		if (accounts != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accounts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < accounts.length; i++) {
+				sb.append(String.valueOf(accounts[i]));
+
+				if ((i + 1) < accounts.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Long activitiesCount = getActivitiesCount();
 
 		if (activitiesCount != null) {
@@ -1222,4 +1290,4 @@ public class Individual implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1655516693
+// LIFERAY-REST-BUILDER-HASH:67951351

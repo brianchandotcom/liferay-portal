@@ -194,7 +194,8 @@ public abstract class BaseSearchTermResourceTestCase {
 			searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
 				groupId, channelId, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				Pagination.of(1, 10));
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -205,8 +206,8 @@ public abstract class BaseSearchTermResourceTestCase {
 					randomIrrelevantSearchTerm());
 
 			page = searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-				irrelevantGroupId, irrelevantChannelId, null, null, null,
-				Pagination.of(1, (int)totalCount + 1));
+				irrelevantGroupId, irrelevantChannelId, null, null, null, null,
+				null, null, Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -227,7 +228,7 @@ public abstract class BaseSearchTermResourceTestCase {
 				groupId, channelId, randomSearchTerm());
 
 		page = searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-			groupId, channelId, null, null, null,
+			groupId, channelId, null, null, null, null, null, null,
 			Pagination.of(1, (int)totalCount + 2));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
@@ -260,7 +261,7 @@ public abstract class BaseSearchTermResourceTestCase {
 
 		Page<SearchTerm> searchTermsPage =
 			searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-				groupId, channelId, null, null, null, null);
+				groupId, channelId, null, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(searchTermsPage.getTotalCount());
 
@@ -283,7 +284,7 @@ public abstract class BaseSearchTermResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<SearchTerm> page1 =
 				searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-					groupId, channelId, null, null, null,
+					groupId, channelId, null, null, null, null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -294,7 +295,7 @@ public abstract class BaseSearchTermResourceTestCase {
 
 			Page<SearchTerm> page2 =
 				searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-					groupId, channelId, null, null, null,
+					groupId, channelId, null, null, null, null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -303,7 +304,7 @@ public abstract class BaseSearchTermResourceTestCase {
 
 			Page<SearchTerm> page3 =
 				searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-					groupId, channelId, null, null, null,
+					groupId, channelId, null, null, null, null, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -313,7 +314,7 @@ public abstract class BaseSearchTermResourceTestCase {
 		else {
 			Page<SearchTerm> page1 =
 				searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-					groupId, channelId, null, null, null,
+					groupId, channelId, null, null, null, null, null, null,
 					Pagination.of(1, totalCount + 2));
 
 			List<SearchTerm> searchTerms1 = (List<SearchTerm>)page1.getItems();
@@ -323,7 +324,7 @@ public abstract class BaseSearchTermResourceTestCase {
 
 			Page<SearchTerm> page2 =
 				searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-					groupId, channelId, null, null, null,
+					groupId, channelId, null, null, null, null, null, null,
 					Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -335,7 +336,7 @@ public abstract class BaseSearchTermResourceTestCase {
 
 			Page<SearchTerm> page3 =
 				searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
-					groupId, channelId, null, null, null,
+					groupId, channelId, null, null, null, null, null, null,
 					Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(searchTerm1, (List<SearchTerm>)page3.getItems());
@@ -1037,4 +1038,4 @@ public abstract class BaseSearchTermResourceTestCase {
 		_searchTermResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1083355504
+// LIFERAY-REST-BUILDER-HASH:-595563410

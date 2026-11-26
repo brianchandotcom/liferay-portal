@@ -37,6 +37,7 @@ import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
+import com.liferay.object.field.builder.LocationObjectFieldBuilder;
 import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -82,7 +84,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -562,6 +566,55 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			).put(
 				LocaleUtil.US, enValue
 			).build());
+	}
+
+	@FeatureFlag("LPD-70668")
+	@Test
+	public void testToInputTemplateNodeWithLocationInfoFieldType()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new LocationObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"myLocation"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		_objectDefinitions.add(objectDefinition);
+
+		_groupLocalService.updateGroup(
+			_group.getGroupId(),
+			UnicodePropertiesBuilder.create(
+				_group.getTypeSettingsProperties(), true
+			).put(
+				"googleMapsAPIKey", "myGoogleMapsAPIKey"
+			).put(
+				"MAP_PROVIDER_KEY", "GoogleMaps"
+			).buildString());
+
+		InputTemplateNode inputTemplateNode = _toInputTemplateNode(
+			objectDefinition.getClassName(), "ObjectField_myLocation",
+			LocaleUtil.US,
+			_objectEntryLocalService.addObjectEntry(
+				_group.getGroupId(), TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext()));
+
+		Assert.assertEquals("location", inputTemplateNode.getType());
+
+		Map<String, Object> attributes = inputTemplateNode.getAttributes();
+
+		Assert.assertEquals(
+			"myGoogleMapsAPIKey", attributes.get("googleMapsAPIKey"));
+		Assert.assertEquals("GoogleMaps", attributes.get("mapProviderKey"));
 	}
 
 	@Test
@@ -1179,6 +1232,9 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

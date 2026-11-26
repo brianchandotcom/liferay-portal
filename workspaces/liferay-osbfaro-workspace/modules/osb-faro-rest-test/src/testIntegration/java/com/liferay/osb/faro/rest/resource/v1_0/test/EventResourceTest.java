@@ -80,9 +80,9 @@ public class EventResourceTest extends BaseEventResourceTestCase {
 					individualId, null, null, null, null, null,
 					Pagination.of(1, 10))));
 
-		Page<Event> page = atomicReference.get();
+		Page<Event> eventsPage = atomicReference.get();
 
-		List<Event> events = new ArrayList<>(page.getItems());
+		List<Event> events = new ArrayList<>(eventsPage.getItems());
 
 		Assert.assertEquals(events.toString(), 1, events.size());
 

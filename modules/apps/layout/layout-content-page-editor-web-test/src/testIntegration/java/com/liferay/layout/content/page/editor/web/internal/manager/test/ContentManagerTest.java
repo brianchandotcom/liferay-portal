@@ -60,6 +60,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -88,6 +89,14 @@ public class ContentManagerTest {
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -177,10 +186,7 @@ public class ContentManagerTest {
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 		_portletLayoutListener.onSetup(portletId, _layout.getPlid());
-		ServiceContextThreadLocal.popServiceContext();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

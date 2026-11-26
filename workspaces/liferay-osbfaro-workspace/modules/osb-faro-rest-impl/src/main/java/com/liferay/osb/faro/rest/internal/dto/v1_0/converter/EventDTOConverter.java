@@ -7,7 +7,6 @@ package com.liferay.osb.faro.rest.internal.dto.v1_0.converter;
 
 import com.liferay.osb.faro.rest.dto.v1_0.Event;
 import com.liferay.osb.faro.rest.internal.graphql.dto.GetWorkspaceGroupChannelEventsPageResponse;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -89,13 +88,11 @@ public class EventDTOConverter
 	}
 
 	private String _getIndividualId(DTOConverterContext dtoConverterContext) {
-		String individualId = GetterUtil.getString(dtoConverterContext.getId());
-
-		if (Validator.isNull(individualId)) {
+		if (Validator.isNull(dtoConverterContext.getId())) {
 			return null;
 		}
 
-		return individualId;
+		return String.valueOf(dtoConverterContext.getId());
 	}
 
 }

@@ -28,6 +28,7 @@ import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.FriendlyURLInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.LocationInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
@@ -39,6 +40,7 @@ import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -294,6 +296,13 @@ public class EditFragmentEntryDisplayContext {
 		}
 
 		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
+			if ((infoFieldType == LocationInfoFieldType.INSTANCE) &&
+				!FeatureFlagManagerUtil.isEnabled(
+					_themeDisplay.getCompanyId(), "LPD-70668")) {
+
+				continue;
+			}
+
 			jsonArray.put(
 				JSONUtil.put(
 					"key", infoFieldType.getName()
@@ -368,7 +377,10 @@ public class EditFragmentEntryDisplayContext {
 		}
 
 		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
-			if (!JSONUtil.hasValue(
+			if (((infoFieldType == LocationInfoFieldType.INSTANCE) &&
+				 !FeatureFlagManagerUtil.isEnabled(
+					 _themeDisplay.getCompanyId(), "LPD-70668")) ||
+				!JSONUtil.hasValue(
 					fieldTypesJSONArray, infoFieldType.getName())) {
 
 				continue;
@@ -678,10 +690,11 @@ public class EditFragmentEntryDisplayContext {
 		FileInfoFieldType.INSTANCE, FormButtonInfoFieldType.INSTANCE,
 		FriendlyURLInfoFieldType.INSTANCE, HTMLInfoFieldType.INSTANCE,
 		LocalizationSelectInfoFieldType.INSTANCE,
-		LongTextInfoFieldType.INSTANCE, MultiselectInfoFieldType.INSTANCE,
-		NumberInfoFieldType.INSTANCE, PhoneNumberInfoFieldType.INSTANCE,
-		RelationshipInfoFieldType.INSTANCE, SelectInfoFieldType.INSTANCE,
-		StepperInfoFieldType.INSTANCE, TextInfoFieldType.INSTANCE
+		LocationInfoFieldType.INSTANCE, LongTextInfoFieldType.INSTANCE,
+		MultiselectInfoFieldType.INSTANCE, NumberInfoFieldType.INSTANCE,
+		PhoneNumberInfoFieldType.INSTANCE, RelationshipInfoFieldType.INSTANCE,
+		SelectInfoFieldType.INSTANCE, StepperInfoFieldType.INSTANCE,
+		TextInfoFieldType.INSTANCE
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

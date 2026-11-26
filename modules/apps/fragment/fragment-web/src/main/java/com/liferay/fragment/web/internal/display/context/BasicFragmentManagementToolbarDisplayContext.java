@@ -27,6 +27,7 @@ import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.FriendlyURLInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.LocationInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
@@ -328,6 +329,13 @@ public class BasicFragmentManagementToolbarDisplayContext
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
+			if ((infoFieldType == LocationInfoFieldType.INSTANCE) &&
+				!FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "LPD-70668")) {
+
+				continue;
+			}
+
 			jsonArray.put(
 				JSONUtil.put(
 					"key", infoFieldType.getName()
@@ -381,10 +389,11 @@ public class BasicFragmentManagementToolbarDisplayContext
 		FileInfoFieldType.INSTANCE, FormButtonInfoFieldType.INSTANCE,
 		FriendlyURLInfoFieldType.INSTANCE, HTMLInfoFieldType.INSTANCE,
 		LocalizationSelectInfoFieldType.INSTANCE,
-		LongTextInfoFieldType.INSTANCE, MultiselectInfoFieldType.INSTANCE,
-		NumberInfoFieldType.INSTANCE, PhoneNumberInfoFieldType.INSTANCE,
-		RelationshipInfoFieldType.INSTANCE, SelectInfoFieldType.INSTANCE,
-		StepperInfoFieldType.INSTANCE, TextInfoFieldType.INSTANCE
+		LocationInfoFieldType.INSTANCE, LongTextInfoFieldType.INSTANCE,
+		MultiselectInfoFieldType.INSTANCE, NumberInfoFieldType.INSTANCE,
+		PhoneNumberInfoFieldType.INSTANCE, RelationshipInfoFieldType.INSTANCE,
+		SelectInfoFieldType.INSTANCE, StepperInfoFieldType.INSTANCE,
+		TextInfoFieldType.INSTANCE
 	};
 
 	private final ItemSelector _itemSelector;

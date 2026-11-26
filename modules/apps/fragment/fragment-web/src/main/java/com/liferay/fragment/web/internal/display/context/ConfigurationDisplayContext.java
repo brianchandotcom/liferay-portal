@@ -19,6 +19,7 @@ import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.FriendlyURLInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.LocationInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
@@ -26,6 +27,7 @@ import com.liferay.info.field.type.PhoneNumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -87,6 +89,13 @@ public class ConfigurationDisplayContext {
 						themeDisplay.getLocale());
 
 				for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
+					if ((infoFieldType == LocationInfoFieldType.INSTANCE) &&
+						!FeatureFlagManagerUtil.isEnabled(
+							themeDisplay.getCompanyId(), "LPD-70668")) {
+
+						continue;
+					}
+
 					formTypes.add(
 						HashMapBuilder.put(
 							"fragmentName",
@@ -170,10 +179,11 @@ public class ConfigurationDisplayContext {
 		DateInfoFieldType.INSTANCE, DateTimeInfoFieldType.INSTANCE,
 		EmailInfoFieldType.INSTANCE, FileInfoFieldType.INSTANCE,
 		FormButtonInfoFieldType.INSTANCE, FriendlyURLInfoFieldType.INSTANCE,
-		HTMLInfoFieldType.INSTANCE, LongTextInfoFieldType.INSTANCE,
-		MultiselectInfoFieldType.INSTANCE, NumberInfoFieldType.INSTANCE,
-		PhoneNumberInfoFieldType.INSTANCE, RelationshipInfoFieldType.INSTANCE,
-		SelectInfoFieldType.INSTANCE, TextInfoFieldType.INSTANCE
+		HTMLInfoFieldType.INSTANCE, LocationInfoFieldType.INSTANCE,
+		LongTextInfoFieldType.INSTANCE, MultiselectInfoFieldType.INSTANCE,
+		NumberInfoFieldType.INSTANCE, PhoneNumberInfoFieldType.INSTANCE,
+		RelationshipInfoFieldType.INSTANCE, SelectInfoFieldType.INSTANCE,
+		TextInfoFieldType.INSTANCE
 	};
 
 	private final DefaultInputFragmentEntryConfigurationProvider

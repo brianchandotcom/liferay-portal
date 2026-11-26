@@ -95,9 +95,6 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 	public void testGetDraftLayouts() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		Layout mainDraftLayout = _layoutLocalService.fetchDraftLayout(
-			layout.getPlid());
-
 		String launchSetName = RandomTestUtil.randomString();
 
 		ObjectEntry launchSetObjectEntry = _addLaunchSetObjectEntry(
@@ -105,6 +102,9 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 
 		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			launchSetObjectEntry.getObjectEntryId(), layout);
+
+		Layout mainDraftLayout = _layoutLocalService.fetchDraftLayout(
+			layout.getPlid());
 
 		String backURL = RandomTestUtil.randomString();
 		String redirect = RandomTestUtil.randomString();

@@ -56,6 +56,9 @@ public class ViewAssetDisplayContext {
 			PortalUtil.escapeRedirect(
 				ParamUtil.getString(_httpServletRequest, "backURL"))
 		).put(
+			"backURLTitle",
+			ParamUtil.getString(_httpServletRequest, "p_l_back_url_title")
+		).put(
 			"className", _objectDefinition.getClassName()
 		).put(
 			"commentsProps", CommentUtil.getCommentsProps(_httpServletRequest)

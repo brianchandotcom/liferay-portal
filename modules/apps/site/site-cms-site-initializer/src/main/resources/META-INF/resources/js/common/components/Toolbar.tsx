@@ -7,17 +7,30 @@ import '../../../css/components/Toolbar.scss';
 
 import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 type Props = {
 	backURL?: string;
+	backURLTitle?: string;
 	children?: React.ReactNode;
 	className?: string;
 	onBackClick?: (event: React.MouseEvent) => void;
 	title: string;
 };
 
-function Toolbar({backURL, children, className, onBackClick, title}: Props) {
+function Toolbar({
+	backURL,
+	backURLTitle,
+	children,
+	className,
+	onBackClick,
+	title,
+}: Props) {
+	const backLabel = backURLTitle
+		? sub(Liferay.Language.get('go-to-x'), backURLTitle)
+		: Liferay.Language.get('back');
+
 	return (
 		<ClayToolbar
 			className={classNames(
@@ -30,14 +43,14 @@ function Toolbar({backURL, children, className, onBackClick, title}: Props) {
 					{backURL ? (
 						<ClayToolbar.Item>
 							<ClayToolbar.Action
-								aria-label={Liferay.Language.get('back')}
+								aria-label={backLabel}
 								data-canonical-name={Liferay.Language.get(
 									'back'
 								)}
 								href={backURL}
 								onClick={onBackClick}
 								symbol="angle-left"
-								title={Liferay.Language.get('back')}
+								title={backLabel}
 							/>
 						</ClayToolbar.Item>
 					) : null}

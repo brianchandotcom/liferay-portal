@@ -283,7 +283,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 	}
 
 	private boolean _hasLaunchDrafts(long classPK) {
-		if (_layoutLocalService.countDraftLayouts(classPK) > 1) {
+		if (_layoutLocalService.getDraftLayoutsCount(classPK) > 1) {
 			return true;
 		}
 

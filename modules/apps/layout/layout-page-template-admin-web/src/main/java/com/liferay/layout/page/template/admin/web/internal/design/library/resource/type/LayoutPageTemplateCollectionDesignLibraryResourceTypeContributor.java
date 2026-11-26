@@ -76,14 +76,14 @@ public class LayoutPageTemplateCollectionDesignLibraryResourceTypeContributor
 	}
 
 	@Override
-	public String getCreationItemsGroupLabel(Locale locale) {
-		return LanguageUtil.get(locale, "page-templates");
-	}
-
-	@Override
 	public String getCreationItemsSectionKey() {
 		return LayoutPageTemplateAdminWebConstants.
 			CREATION_ITEMS_SECTION_KEY_PAGES;
+	}
+
+	@Override
+	public String getCreationItemsSubmenuLabel(Locale locale) {
+		return LanguageUtil.get(locale, "page-templates");
 	}
 
 	@Override

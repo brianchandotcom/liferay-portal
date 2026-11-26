@@ -80,7 +80,7 @@ public class FragmentDesignLibraryResourceTypeContributor
 	}
 
 	@Override
-	public String getCreationItemsGroupLabel(Locale locale) {
+	public String getCreationItemsSubmenuLabel(Locale locale) {
 		return LanguageUtil.get(locale, "fragments");
 	}
 

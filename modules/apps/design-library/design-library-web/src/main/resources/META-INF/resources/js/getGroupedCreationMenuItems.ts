@@ -34,11 +34,12 @@ export default function getGroupedCreationMenuItems(
 		}
 
 		const items: CreationMenuSectionItem[] =
-			creationMenuItems.length > 1 && resourceType.creationItemsGroupLabel
+			creationMenuItems.length > 1 &&
+			resourceType.creationItemsSubmenuLabel
 				? [
 						{
 							items: creationMenuItems,
-							label: resourceType.creationItemsGroupLabel,
+							label: resourceType.creationItemsSubmenuLabel,
 							type: 'contextual',
 						},
 					]

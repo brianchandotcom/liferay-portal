@@ -236,7 +236,7 @@ public class FIPSModeValidatorTest {
 							"\" to be at least 14"));
 			Assert.assertTrue(
 				message.startsWith(
-					"The configuration is not allowed in FIPS mode.\n\n"));
+					"The configuration is not allowed in FIPS mode\n\n"));
 
 			Provider[] providers = Security.getProviders();
 
@@ -801,7 +801,7 @@ public class FIPSModeValidatorTest {
 					companyId1, ": ", companyKeyException.getMessage()));
 
 			Assert.assertEquals(
-				"The configuration is not allowed in FIPS mode.\n\n" +
+				"The configuration is not allowed in FIPS mode\n\n" +
 					violation,
 				securityException.getMessage());
 
@@ -934,7 +934,7 @@ public class FIPSModeValidatorTest {
 							companyKeyException.getMessage()))));
 			Assert.assertTrue(
 				message.startsWith(
-					"The configuration is not allowed in FIPS mode.\n\n"));
+					"The configuration is not allowed in FIPS mode\n\n"));
 		}
 	}
 

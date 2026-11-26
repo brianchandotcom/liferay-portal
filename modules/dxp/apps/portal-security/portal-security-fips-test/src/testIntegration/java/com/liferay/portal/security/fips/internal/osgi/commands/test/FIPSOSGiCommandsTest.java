@@ -6,7 +6,6 @@
 package com.liferay.portal.security.fips.internal.osgi.commands.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -50,17 +49,19 @@ public class FIPSOSGiCommandsTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"PASSWORDS_DEFAULT_POLICY_MIN_LENGTH", 13)) {
 
-			String output = _check();
+			String message = _check();
 
-			Assert.assertFalse(output.contains("key encryption key"));
+			Assert.assertFalse(message, message.contains("key encryption key"));
 			Assert.assertTrue(
-				output.contains(
+				message,
+				message.contains(
 					StringBundler.concat(
 						"Passwords\n- FIPS mode requires the property \"",
 						PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH,
 						"\" to be at least 14")));
 			Assert.assertTrue(
-				output.endsWith(
+				message,
+				message.endsWith(
 					"Only the FIPS boot checks the JVM. This includes the " +
 						"security providers, the SecureRandom provider, and " +
 							"the TLS and certificate revocation properties."));
@@ -72,10 +73,11 @@ public class FIPSOSGiCommandsTest {
 				"companyKEKIdentifier", RandomTestUtil.randomString()
 			).build());
 
-		String output = _check();
+		String message = _check();
 
 		Assert.assertTrue(
-			output.contains(
+			message,
+			message.contains(
 				StringBundler.concat(
 					"Key Encryption Key\n- Unable to reach the key encryption ",
 					"key of company ", TestPropsValues.getCompanyId(), ": ")));
@@ -83,14 +85,17 @@ public class FIPSOSGiCommandsTest {
 
 	private String _check() {
 		return ReflectionTestUtil.invoke(
-			_osgiCommands, "check", new Class<?>[0]);
+			_fipsOSGiCommands, "check", new Class<?>[0]);
 	}
 
 	private static final String _KEY_MANAGER_CONFIGURATION_PID =
 		"com.liferay.portal.security.key.internal.profile.configuration." +
 			"KeyManagerConfiguration";
 
-	@Inject(filter = "osgi.command.scope=fips")
-	private OSGiCommands _osgiCommands;
+	@Inject(
+		filter = "component.name=com.liferay.portal.security.fips.internal.osgi.commands.FIPSOSGiCommands",
+		type = Inject.NoType.class
+	)
+	private Object _fipsOSGiCommands;
 
 }

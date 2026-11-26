@@ -87,7 +87,6 @@ public class UserSessionDTOConverterTest {
 		Assert.assertEquals(completeDate, userSession.getCompleteDate());
 		Assert.assertEquals(createDate, userSession.getCreateDate());
 		Assert.assertEquals(deviceType, userSession.getDeviceType());
-		Assert.assertEquals(individualId, userSession.getIndividualId());
 
 		Event[] events = userSession.getEvents();
 
@@ -100,6 +99,8 @@ public class UserSessionDTOConverterTest {
 		Assert.assertEquals(eventDate, event.getEventDate());
 		Assert.assertEquals(individualId, event.getIndividualId());
 		Assert.assertEquals(name, event.getName());
+
+		Assert.assertEquals(individualId, userSession.getIndividualId());
 	}
 
 	private void _testToDTOWithoutEvents() {

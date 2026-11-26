@@ -10,7 +10,6 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -28,22 +27,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
-import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import java.lang.reflect.Constructor;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -76,11 +65,19 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 
 	@Test
 	@TestInfo("LPD-111343")
-	public void testIsShowWithoutFragmentDisplayContext() throws Exception {
+	public void testIsShowWithMVCRenderCommandName() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(TestPropsValues.getUser());
 
-		mockHttpServletRequest.removeAttribute("FRAGMENT_DISPLAY_CONTEXT");
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		mockHttpServletRequest.setParameter(
+			portletDisplay.getNamespace() + "mvcRenderCommandName",
+			"/fragment/edit_fragment_entry");
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));
@@ -94,26 +91,6 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
 				_getMockHttpServletRequest(_user)));
-	}
-
-	private Object _getFragmentDisplayContext(
-			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		bundle = BundleUtil.getBundle(
-			bundle.getBundleContext(), "com.liferay.fragment.web");
-
-		Class<?> clazz = bundle.loadClass(
-			"com.liferay.fragment.web.internal.display.context." +
-				"FragmentDisplayContext");
-
-		Constructor<?> constructor = clazz.getConstructor(
-			HttpServletRequest.class, RenderRequest.class,
-			RenderResponse.class);
-
-		return constructor.newInstance(httpServletRequest, null, null);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(User user)
@@ -136,10 +113,6 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockHttpServletRequest.setAttribute(
-			"FRAGMENT_DISPLAY_CONTEXT",
-			_getFragmentDisplayContext(mockHttpServletRequest));
 
 		return mockHttpServletRequest;
 	}

@@ -91,13 +91,13 @@ public class LayoutModelPreFilterContributor
 
 		if (!ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
 			booleanFilter.add(
-				_getStatusOrLaunchDraftFilter(
+				_getStatusOrLaunchSetDraftFilter(
 					searchContext.getGroupIds(), statuses),
 				BooleanClauseOccur.MUST);
 		}
 	}
 
-	private Filter _getStatusOrLaunchDraftFilter(
+	private Filter _getStatusOrLaunchSetDraftFilter(
 		long[] groupIds, int[] statuses) {
 
 		TermsFilter statusesTermsFilter = new TermsFilter(Field.STATUS);

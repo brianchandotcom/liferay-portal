@@ -65,8 +65,8 @@ public class LayoutActionsDisplayContext {
 	}
 
 	public List<DropdownItem> getDropdownItems() {
-		if (_isLaunchDraftLayout()) {
-			return _getLaunchDraftLayoutDropdownItems();
+		if (_isLaunchSetDraftLayout()) {
+			return _getLaunchSetDraftLayoutDropdownItems();
 		}
 
 		Layout layout = _getLayout();
@@ -248,8 +248,8 @@ public class LayoutActionsDisplayContext {
 		).buildString();
 	}
 
-	private List<DropdownItem> _getLaunchDraftLayoutDropdownItems() {
-		Layout launchDraftLayout = _themeDisplay.getLayout();
+	private List<DropdownItem> _getLaunchSetDraftLayoutDropdownItems() {
+		Layout launchSetDraftLayout = _themeDisplay.getLayout();
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
@@ -259,15 +259,15 @@ public class LayoutActionsDisplayContext {
 							LayoutPermissionUtil.
 								containsLayoutPreviewDraftPermission(
 									_themeDisplay.getPermissionChecker(),
-									launchDraftLayout),
+									launchSetDraftLayout),
 						dropdownItem -> {
 							String previewLaunchURL =
 								HttpComponentsUtil.addParameters(
 									PortalUtil.getLayoutFullURL(
-										launchDraftLayout, _themeDisplay),
+										launchSetDraftLayout, _themeDisplay),
 									"p_l_mode", Constants.PREVIEW,
 									"previewLaunchSetId",
-									launchDraftLayout.getLaunchSetId());
+									launchSetDraftLayout.getLaunchSetId());
 
 							dropdownItem.setData(
 								HashMapBuilder.<String, Object>put(
@@ -291,12 +291,12 @@ public class LayoutActionsDisplayContext {
 					DropdownItemListBuilder.add(
 						() -> LayoutPermissionUtil.contains(
 							_themeDisplay.getPermissionChecker(),
-							launchDraftLayout, ActionKeys.DELETE),
+							launchSetDraftLayout, ActionKeys.DELETE),
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteLayout");
 							dropdownItem.putData(
 								"deleteLayoutURL",
-								_getDeleteLayoutURL(launchDraftLayout));
+								_getDeleteLayoutURL(launchSetDraftLayout));
 							dropdownItem.putData(
 								"message",
 								LanguageUtil.format(
@@ -304,7 +304,7 @@ public class LayoutActionsDisplayContext {
 									"are-you-sure-you-want-to-delete-the-" +
 										"page-x-from-this-launch",
 									HtmlUtil.escape(
-										launchDraftLayout.getName(
+										launchSetDraftLayout.getName(
 											_themeDisplay.getLocale()))));
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
@@ -441,7 +441,7 @@ public class LayoutActionsDisplayContext {
 		return _contentLayout;
 	}
 
-	private boolean _isLaunchDraftLayout() {
+	private boolean _isLaunchSetDraftLayout() {
 		Layout layout = _themeDisplay.getLayout();
 
 		if (layout.isDraftLayout() && (layout.getLaunchSetId() > 0)) {

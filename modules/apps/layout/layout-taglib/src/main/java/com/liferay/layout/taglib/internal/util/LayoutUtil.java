@@ -255,10 +255,10 @@ public class LayoutUtil {
 			return false;
 		}
 
-		Layout launchDraftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+		Layout launchSetDraftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			layout.getPlid(), launchSetId);
 
-		if (launchDraftLayout != null) {
+		if (launchSetDraftLayout != null) {
 			return true;
 		}
 

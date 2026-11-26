@@ -85,6 +85,22 @@ public class FaroProjectModelListenerTest {
 			"liferay-data-platform-settings-master");
 	}
 
+	@FeatureFlags(
+		featureFlags = @FeatureFlag(enable = false, value = "LPD-114293")
+	)
+	@Test
+	public void testOnAfterCreateWithoutFeatureFlag() throws Exception {
+		FaroProject faroProject = _faroProjectLocalService.addFaroProject(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			null, null, null, Collections.emptyList(), null, null, null, null,
+			null, FaroProjectConstants.STATE_READY, StringPool.BLANK,
+			StringPool.UTC, null);
+
+		Assert.assertNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				faroProject.getGroupId(), "liferay-data-platform-master"));
+	}
+
 	private void _assertFaviconFileEntryERC(
 			String faviconFileEntryERC, long groupId,
 			String layoutPageTemplateEntryKey)

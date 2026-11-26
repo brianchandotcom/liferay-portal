@@ -27,7 +27,7 @@ public class FIPSModeValidationException extends SecurityException {
 		StringBundler sb = new StringBundler(
 			(_validationErrors.size() * 7) + 1);
 
-		sb.append("The configuration is not allowed in FIPS mode.");
+		sb.append("The configuration is not allowed in FIPS mode");
 
 		Map<ValidationErrorType, List<String>> errorMessagesMap = new EnumMap<>(
 			ValidationErrorType.class);

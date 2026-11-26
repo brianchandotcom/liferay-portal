@@ -10,8 +10,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.osb.faro.constants.FaroProjectConstants;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -58,6 +60,28 @@ public class FaroProjectModelListenerTest {
 			"liferay-data-platform-master");
 		_assertFaviconFileEntryERC(
 			"AC_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-settings-master");
+	}
+
+	@Test
+	public void testOnAfterCreateWithLDPPlan() throws Exception {
+		FaroProject faroProject = _faroProjectLocalService.addFaroProject(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			null, null, null, Collections.emptyList(), null, null, null, null,
+			null, FaroProjectConstants.STATE_READY,
+			JSONUtil.put(
+				"name", ProductConstants.PRODUCT_ENTRY_NAME_DATA_PLATFORM
+			).toString(),
+			StringPool.UTC, null);
+
+		_assertFaviconFileEntryERC(
+			"LDP_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-editor-master");
+		_assertFaviconFileEntryERC(
+			"LDP_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-master");
+		_assertFaviconFileEntryERC(
+			"LDP_FAVICON", faroProject.getGroupId(),
 			"liferay-data-platform-settings-master");
 	}
 

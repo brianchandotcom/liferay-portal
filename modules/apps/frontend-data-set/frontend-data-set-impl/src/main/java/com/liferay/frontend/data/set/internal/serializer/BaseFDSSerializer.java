@@ -57,19 +57,19 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseFDSSerializer {
 
 	public FDSAPIURLBuilder createFDSAPIURLBuilder(
-		HttpServletRequest httpServletRequest, String apiURL) {
-
-		return new FDSAPIURLBuilder(
-			fdsAPIURLResolverRegistry, httpServletRequest, apiURL);
-	}
-
-	public FDSAPIURLBuilder createFDSAPIURLBuilder(
 		HttpServletRequest httpServletRequest, String restApplication,
 		String restEndpoint, String restSchema) {
 
 		return new FDSAPIURLBuilder(
 			fdsAPIURLResolverRegistry, httpServletRequest, restApplication,
 			restEndpoint, restSchema);
+	}
+
+	public FDSAPIURLBuilder createFDSAPIURLBuilder(
+		String apiURL, HttpServletRequest httpServletRequest) {
+
+		return new FDSAPIURLBuilder(
+			apiURL, fdsAPIURLResolverRegistry, httpServletRequest);
 	}
 
 	protected JSONArray serializeSnapshots(

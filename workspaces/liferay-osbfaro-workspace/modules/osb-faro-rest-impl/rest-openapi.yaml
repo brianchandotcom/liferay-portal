@@ -20,12 +20,24 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                activityStatus:
+                    description:
+                        "Engagement classification computed by LDP from the recent activity of the account's individuals: ACTIVE or INACTIVE."
+                    readOnly: true
+                    type: string
                 annualRevenue:
                     description:
                         "Annual revenue of the account."
                     format: double
                     readOnly: true
                     type: number
+                calculatedFields:
+                    description:
+                        "Fields computed by LDP for the account."
+                    items:
+                        $ref: "#/components/schemas/CalculatedField"
+                    readOnly: true
+                    type: array
                 country:
                     description:
                         "Country name where the account is headquartered."
@@ -350,6 +362,32 @@ components:
                     readOnly: true
                     type: number
             type: object
+        CalculatedField:
+            description:
+                "A field computed by LDP for an account."
+            properties:
+                dateModified:
+                    description:
+                        "Last time LDP computed the field."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        "Name of the field."
+                    readOnly: true
+                    type: string
+                namespace:
+                    description:
+                        "Namespace that groups related calculated fields."
+                    readOnly: true
+                    type: string
+                value:
+                    description:
+                        "Value of the field, as a string."
+                    readOnly: true
+                    type: string
+            type: object
         Campaign:
             description:
                 "A marketing campaign: a CRM campaign synced from Salesforce, or a campaign that LDP tracks from the UTM campaign tag of site visits."
@@ -490,9 +528,20 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                eventDate:
+                    description:
+                        "Timestamp of when the event occurred, as reported by the client that emitted it."
+                    format: date-time
+                    readOnly: true
+                    type: string
                 individualId:
                     description:
-                        "ID of the individual that emitted the event. Null for anonymous individuals. Use with `getWorkspaceGroupIndividual` to fetch the individual."
+                        "ID of the individual that emitted the event. Set on the events of a user session, and on listed events when the request is filtered by `individualId`; null otherwise. Use with `getWorkspaceGroupIndividual` to fetch the individual."
+                    readOnly: true
+                    type: string
+                individualName:
+                    description:
+                        "Display name of the individual that emitted the event. Null for anonymous individuals and on the events of a user session."
                     readOnly: true
                     type: string
                 name:
@@ -560,6 +609,13 @@ components:
                         "Display name of the account this Individual is primarily associated with."
                     readOnly: true
                     type: string
+                accounts:
+                    description:
+                        "Accounts this individual is associated with. Only returned by `getWorkspaceGroupIndividual`; null in list responses. Each entry carries the account's `id`, `accountName`, `accountType`, `annualRevenue`, `country`, `industry`, `lastActivityDate`, and `numberOfEmployees`; use `getWorkspaceGroupAccount` with the `id` for the rest."
+                    items:
+                        $ref: "#/components/schemas/Account"
+                    readOnly: true
+                    type: array
                 activitiesCount:
                     description:
                         "Total number of tracked activities attributed to this individual."
@@ -679,6 +735,12 @@ components:
             description:
                 "A saved audience definition that selects individuals matching a filter expression."
             properties:
+                accountsCount:
+                    description:
+                        "Number of accounts associated with the individuals in the segment."
+                    format: int64
+                    readOnly: true
+                    type: integer
                 activeIndividualCount:
                     description:
                         "Number of individuals currently in the segment who have been active."
@@ -738,6 +800,12 @@ components:
                 lastActivityDate:
                     description:
                         "Most recent activity by any individual currently in the segment."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                lastMembershipUpdateDate:
+                    description:
+                        "Last time LDP recalculated the segment's membership."
                     format: date-time
                     readOnly: true
                     type: string
@@ -1025,6 +1093,11 @@ components:
                         $ref: "#/components/schemas/Event"
                     readOnly: true
                     type: array
+                individualId:
+                    description:
+                        "ID of the individual whose session this is. Use with `getWorkspaceGroupIndividual` to fetch the individual."
+                    readOnly: true
+                    type: string
             type: object
         Workspace:
             description:
@@ -1594,6 +1667,12 @@ paths:
                     name: search
                     schema:
                         type: string
+                -   in: query
+                    description:
+                        "ID of a segment. When set, count only the events of the individuals in that segment."
+                    name: segmentId
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1719,6 +1798,13 @@ paths:
                         "ID of an individual. When set, narrow the metrics to activity from that individual."
                     name: individualId
                     schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Object type of the assets to list, as recorded by LDP for each asset. Empty or null returns assets of every type."
+                    name: objectType
+                    schema:
+                        enum: [CONTENT, FILE]
                         type: string
                 -   in: query
                     description:
@@ -2410,6 +2496,12 @@ paths:
                     name: search
                     schema:
                         type: string
+                -   in: query
+                    description:
+                        "ID of a segment. When set, count only the events of the individuals in that segment."
+                    name: segmentId
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2633,6 +2725,12 @@ paths:
                         type: string
                 -   in: query
                     description:
+                        "ID of an account. When set, narrow the search terms to those searched by the individuals in that account."
+                    name: accountId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
                         "Page number (starts at 1)."
                     name: page
                     schema:
@@ -2664,6 +2762,18 @@ paths:
                     description:
                         "Custom range start as a `yyyy-MM-dd` date (e.g. 2026-01-01). Set together with `rangeEnd`; together they take precedence over `rangeKey`."
                     name: rangeStart
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Free text keyword filter on the search terms. Empty or null returns all search terms."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "ID of a segment. When set, narrow the search terms to those searched by the individuals in that segment."
+                    name: segmentId
                     schema:
                         type: string
             responses:

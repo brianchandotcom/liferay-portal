@@ -74,38 +74,38 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 					", versionKey=", versionKey, "}"));
 		}
 
-		Layout launchDraftLayout = _layoutLocalService.fetchDraftLayout(
+		Layout launchSetDraftLayout = _layoutLocalService.fetchDraftLayout(
 			classPK, launchSetId);
 
-		if (launchDraftLayout == null) {
-			launchDraftLayout = _addLaunchDraftLayout(
+		if (launchSetDraftLayout == null) {
+			launchSetDraftLayout = _addLaunchSetDraftLayout(
 				baseLayout, launchSetId,
 				_layoutLocalService.getLayout(classPK));
 		}
 
-		return _toDraft(_copyLayoutContent(baseLayout, launchDraftLayout));
+		return _toDraft(_copyLayoutContent(baseLayout, launchSetDraftLayout));
 	}
 
 	@Override
 	public void deleteDraft(long classPK, long draftId) throws PortalException {
-		Layout launchDraftLayout = _fetchLaunchDraftLayout(classPK, draftId);
+		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(classPK, draftId);
 
-		if (launchDraftLayout == null) {
+		if (launchSetDraftLayout == null) {
 			return;
 		}
 
-		_layoutLocalService.deleteLayout(launchDraftLayout);
+		_layoutLocalService.deleteLayout(launchSetDraftLayout);
 	}
 
 	@Override
 	public Draft fetchDraft(long classPK, long draftId) {
-		Layout launchDraftLayout = _fetchLaunchDraftLayout(classPK, draftId);
+		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(classPK, draftId);
 
-		if (launchDraftLayout == null) {
+		if (launchSetDraftLayout == null) {
 			return null;
 		}
 
-		return _toDraft(launchDraftLayout);
+		return _toDraft(launchSetDraftLayout);
 	}
 
 	@Override
@@ -234,12 +234,12 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 	public Version publishDraft(long classPK, long draftId)
 		throws PortalException {
 
-		Layout launchDraftLayout = _fetchLaunchDraftLayout(classPK, draftId);
+		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(classPK, draftId);
 
-		if (launchDraftLayout == null) {
+		if (launchSetDraftLayout == null) {
 			throw new NoSuchLayoutException(
 				StringBundler.concat(
-					"No launch draft exists with the key {plid=", classPK,
+					"No launch set draft exists with the key {plid=", classPK,
 					", draftId=", draftId, "}"));
 		}
 
@@ -251,14 +251,14 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 		}
 
 		Layout draftLayout = _copyLayoutContent(
-			launchDraftLayout, layout.fetchDraftLayout());
+			launchSetDraftLayout, layout.fetchDraftLayout());
 
-		_layoutLocalService.deleteLayout(launchDraftLayout);
+		_layoutLocalService.deleteLayout(launchSetDraftLayout);
 
 		return _toVersion(_publishLayout(draftLayout, layout));
 	}
 
-	private Layout _addLaunchDraftLayout(
+	private Layout _addLaunchSetDraftLayout(
 			Layout baseLayout, long launchSetId, Layout layout)
 		throws PortalException {
 
@@ -339,17 +339,17 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 		}
 	}
 
-	private Layout _fetchLaunchDraftLayout(long classPK, long draftId) {
-		Layout launchDraftLayout = _layoutLocalService.fetchLayout(draftId);
+	private Layout _fetchLaunchSetDraftLayout(long classPK, long draftId) {
+		Layout launchSetDraftLayout = _layoutLocalService.fetchLayout(draftId);
 
-		if ((launchDraftLayout == null) ||
-			(launchDraftLayout.getClassPK() != classPK) ||
-			(launchDraftLayout.getLaunchSetId() == 0)) {
+		if ((launchSetDraftLayout == null) ||
+			(launchSetDraftLayout.getClassPK() != classPK) ||
+			(launchSetDraftLayout.getLaunchSetId() == 0)) {
 
 			return null;
 		}
 
-		return launchDraftLayout;
+		return launchSetDraftLayout;
 	}
 
 	private Layout _fetchLayout(long classPK, String versionKey) {
@@ -458,12 +458,12 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 		return _layoutLocalService.updateLayout(layout);
 	}
 
-	private Draft _toDraft(Layout launchDraftLayout) {
+	private Draft _toDraft(Layout launchSetDraftLayout) {
 		return new Draft() {
 
 			@Override
 			public long getDraftId() {
-				return launchDraftLayout.getPlid();
+				return launchSetDraftLayout.getPlid();
 			}
 
 			@Override
@@ -471,27 +471,27 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 				String redirect,
 				RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-				return _getEditURL(launchDraftLayout, redirect);
+				return _getEditURL(launchSetDraftLayout, redirect);
 			}
 
 			@Override
 			public Date getModifiedDate() {
-				return launchDraftLayout.getModifiedDate();
+				return launchSetDraftLayout.getModifiedDate();
 			}
 
 			@Override
 			public BaseModel<?> getPreviewBaseModel() {
-				return new LaunchLayoutWrapper(launchDraftLayout);
+				return new LaunchLayoutWrapper(launchSetDraftLayout);
 			}
 
 			@Override
 			public int getStatus() {
-				return launchDraftLayout.getStatus();
+				return launchSetDraftLayout.getStatus();
 			}
 
 			@Override
 			public String getUserName() {
-				return launchDraftLayout.getUserName();
+				return launchSetDraftLayout.getUserName();
 			}
 
 		};
@@ -546,14 +546,14 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 	 */
 	private class LaunchLayoutWrapper extends LayoutWrapper {
 
-		public LaunchLayoutWrapper(Layout launchDraftLayout) {
-			super(launchDraftLayout);
+		public LaunchLayoutWrapper(Layout launchSetDraftLayout) {
+			super(launchSetDraftLayout);
 
 			Layout layout = _layoutLocalService.fetchLayout(
-				launchDraftLayout.getClassPK());
+				launchSetDraftLayout.getClassPK());
 
 			if (layout == null) {
-				layout = launchDraftLayout;
+				layout = launchSetDraftLayout;
 			}
 
 			_layout = layout;

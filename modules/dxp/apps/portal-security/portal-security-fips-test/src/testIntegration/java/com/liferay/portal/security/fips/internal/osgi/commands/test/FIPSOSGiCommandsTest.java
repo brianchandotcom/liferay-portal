@@ -54,17 +54,17 @@ public class FIPSOSGiCommandsTest {
 			Assert.assertFalse(message, message.contains("key encryption key"));
 			Assert.assertTrue(
 				message,
+				message.endsWith(
+					"Only the FIPS boot checks the JVM. This includes the " +
+						"security providers, the SecureRandom provider, and " +
+							"the TLS and certificate revocation properties."));
+			Assert.assertTrue(
+				message,
 				message.contains(
 					StringBundler.concat(
 						"\tPasswords: FIPS mode requires the property \"",
 						PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH,
 						"\" to be at least 14")));
-			Assert.assertTrue(
-				message,
-				message.endsWith(
-					"Only the FIPS boot checks the JVM. This includes the " +
-						"security providers, the SecureRandom provider, and " +
-							"the TLS and certificate revocation properties."));
 		}
 
 		ConfigurationTestUtil.saveConfiguration(

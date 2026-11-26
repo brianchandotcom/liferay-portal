@@ -88,7 +88,7 @@ public class DeleteLayoutMVCActionCommandTest {
 		Assert.assertEquals(
 			redirect,
 			_testDeleteLayout(
-				LayoutTestUtil.addLaunchDraftLayout(
+				LayoutTestUtil.addLaunchSetDraftLayout(
 					RandomTestUtil.randomLong(), layout),
 				redirect));
 	}

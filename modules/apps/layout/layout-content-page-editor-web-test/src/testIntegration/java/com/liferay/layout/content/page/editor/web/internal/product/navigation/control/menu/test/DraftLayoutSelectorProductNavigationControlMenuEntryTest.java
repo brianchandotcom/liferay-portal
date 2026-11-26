@@ -103,7 +103,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		ObjectEntry launchSetObjectEntry = _addLaunchSetObjectEntry(
 			launchSetName);
 
-		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
+		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			launchSetObjectEntry.getObjectEntryId(), layout);
 
 		String backURL = RandomTestUtil.randomString();
@@ -122,21 +122,21 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 					0),
 				_getExpectedDraftLayoutMap(
 					true, false, null, launchSetName,
-					launchDraftLayout.getLaunchSetId())),
+					launchSetDraftLayout.getLaunchSetId())),
 			_getMockHttpServletRequest(
-				backURL, launchDraftLayout, Constants.EDIT, redirect,
+				backURL, launchSetDraftLayout, Constants.EDIT, redirect,
 				TestPropsValues.getUser()));
 
-		String launchDraftLayoutEditURL = _getEditURL(
-			backURL, launchDraftLayout, redirect);
+		String launchSetDraftLayoutEditURL = _getEditURL(
+			backURL, launchSetDraftLayout, redirect);
 
 		_testGetDraftLayouts(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
 					true, false, null, mainDraftLayoutLabel, 0),
 				_getExpectedDraftLayoutMap(
-					false, false, launchDraftLayoutEditURL, launchSetName,
-					launchDraftLayout.getLaunchSetId())),
+					false, false, launchSetDraftLayoutEditURL, launchSetName,
+					launchSetDraftLayout.getLaunchSetId())),
 			_getMockHttpServletRequest(
 				backURL, mainDraftLayout, Constants.EDIT, redirect,
 				TestPropsValues.getUser()));
@@ -149,7 +149,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 					false, true, null,
 					LanguageUtil.get(
 						LocaleUtil.getDefault(), "restricted-launch"),
-					launchDraftLayout.getLaunchSetId())),
+					launchSetDraftLayout.getLaunchSetId())),
 			_getMockHttpServletRequest(
 				backURL, mainDraftLayout, Constants.EDIT, redirect,
 				UserTestUtil.addUser()));
@@ -221,22 +221,22 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 				layoutUtilityPageEntry.getPlid()),
 			Constants.EDIT);
 
-		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
+		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			RandomTestUtil.randomLong(), layout);
 
 		_testIsShow(false, draftLayout, Constants.PREVIEW);
-		_testIsShow(false, launchDraftLayout, Constants.PREVIEW);
+		_testIsShow(false, launchSetDraftLayout, Constants.PREVIEW);
 
 		try (SafeCloseable safeCloseable =
 				FeatureFlagTestUtil.setFeatureFlagsWithSafeCloseable(
 					false, "LPD-72278")) {
 
 			_testIsShow(false, draftLayout, Constants.EDIT);
-			_testIsShow(false, launchDraftLayout, Constants.EDIT);
+			_testIsShow(false, launchSetDraftLayout, Constants.EDIT);
 		}
 
 		_testIsShow(true, draftLayout, Constants.EDIT);
-		_testIsShow(true, launchDraftLayout, Constants.EDIT);
+		_testIsShow(true, launchSetDraftLayout, Constants.EDIT);
 	}
 
 	private ObjectEntry _addLaunchSetObjectEntry(String name) throws Exception {

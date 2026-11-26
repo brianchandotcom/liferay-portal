@@ -17,7 +17,7 @@ const MAIN_DRAFT = {
 	launchSetId: 0,
 };
 
-const LAUNCH_DRAFT = {
+const LAUNCH_SET_DRAFT = {
 	active: false,
 	disabled: false,
 	href: '/web/site/launch-a',
@@ -41,7 +41,9 @@ describe('DraftLayoutSelector', () => {
 
 	it('renders the active draft label on the trigger', () => {
 		render(
-			<DraftLayoutSelector draftLayouts={[MAIN_DRAFT, LAUNCH_DRAFT]} />
+			<DraftLayoutSelector
+				draftLayouts={[MAIN_DRAFT, LAUNCH_SET_DRAFT]}
+			/>
 		);
 
 		expect(
@@ -59,7 +61,9 @@ describe('DraftLayoutSelector', () => {
 
 	it('renders a divider after the first item when there is more than one', async () => {
 		render(
-			<DraftLayoutSelector draftLayouts={[MAIN_DRAFT, LAUNCH_DRAFT]} />
+			<DraftLayoutSelector
+				draftLayouts={[MAIN_DRAFT, LAUNCH_SET_DRAFT]}
+			/>
 		);
 
 		await userEvent.click(screen.getByLabelText('select-draft'));
@@ -69,7 +73,9 @@ describe('DraftLayoutSelector', () => {
 
 	it('marks the active item as active', async () => {
 		render(
-			<DraftLayoutSelector draftLayouts={[MAIN_DRAFT, LAUNCH_DRAFT]} />
+			<DraftLayoutSelector
+				draftLayouts={[MAIN_DRAFT, LAUNCH_SET_DRAFT]}
+			/>
 		);
 
 		await userEvent.click(screen.getByLabelText('select-draft'));
@@ -99,7 +105,9 @@ describe('DraftLayoutSelector', () => {
 
 	it('exposes the href on a non-active non-disabled item', async () => {
 		render(
-			<DraftLayoutSelector draftLayouts={[MAIN_DRAFT, LAUNCH_DRAFT]} />
+			<DraftLayoutSelector
+				draftLayouts={[MAIN_DRAFT, LAUNCH_SET_DRAFT]}
+			/>
 		);
 
 		await userEvent.click(screen.getByLabelText('select-draft'));

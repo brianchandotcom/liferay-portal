@@ -599,7 +599,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			2, mainDraftFragmentEntryLink1.getExternalReferenceCode(),
 			mainDraftLayout);
 
-		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
+		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			RandomTestUtil.randomLong(), layout);
 
 		_testCopyLayoutContentPreservesLineage(
@@ -607,12 +607,12 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 				mainDraftFragmentEntryLink1.getExternalReferenceCode(),
 				mainDraftFragmentEntryLink2.getExternalReferenceCode()
 			},
-			mainDraftLayout, launchDraftLayout);
+			mainDraftLayout, launchSetDraftLayout);
 		_testCopyLayoutContentPreservesLineage(
 			new FragmentEntryLink[] {
 				mainDraftFragmentEntryLink1, mainDraftFragmentEntryLink2
 			},
-			launchDraftLayout, mainDraftLayout);
+			launchSetDraftLayout, mainDraftLayout);
 
 		_testCopyLayoutContentPreservesLineage(
 			new String[] {
@@ -626,7 +626,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 				mainDraftFragmentEntryLink2.getExternalReferenceCode()
 			},
 			layout,
-			LayoutTestUtil.addLaunchDraftLayout(
+			LayoutTestUtil.addLaunchSetDraftLayout(
 				RandomTestUtil.randomLong(), layout));
 	}
 

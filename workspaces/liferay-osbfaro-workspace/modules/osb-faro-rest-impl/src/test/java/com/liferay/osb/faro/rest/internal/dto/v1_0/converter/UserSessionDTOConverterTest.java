@@ -90,6 +90,8 @@ public class UserSessionDTOConverterTest {
 			responseEvent.getCanonicalUrl(), event.getCanonicalUrl());
 		Assert.assertEquals(responseEvent.getEventDate(), event.getEventDate());
 		Assert.assertEquals(
+			responseUserSession.getIndividualId(), event.getIndividualId());
+		Assert.assertEquals(
 			responseEvent.getIndividualName(), event.getIndividualName());
 		Assert.assertEquals(responseEvent.getName(), event.getName());
 

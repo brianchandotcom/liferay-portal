@@ -66,7 +66,8 @@ public interface FDSSerializer {
 
 	public JSONArray serializeFilters(
 		String fdsName, HttpServletRequest httpServletRequest,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
 	public JSONArray serializeGroupedFilters(
 		String fdsName, HttpServletRequest httpServletRequest);
@@ -92,7 +93,8 @@ public interface FDSSerializer {
 	public Map<String, String> serializeSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
 	public default boolean serializeShowPagination(
 		String fdsName, HttpServletRequest httpServletRequest) {

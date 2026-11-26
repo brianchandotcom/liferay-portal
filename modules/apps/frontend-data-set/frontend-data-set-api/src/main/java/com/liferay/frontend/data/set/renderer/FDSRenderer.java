@@ -26,7 +26,8 @@ public interface FDSRenderer {
 	public Map<String, String> getSelectionFilterFDSAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
 	public void render(
 		Map<String, Object> baseProps, String componentId, String fdsName,

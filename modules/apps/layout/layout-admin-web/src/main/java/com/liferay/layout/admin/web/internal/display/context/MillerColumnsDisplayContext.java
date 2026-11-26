@@ -288,7 +288,8 @@ public class MillerColumnsDisplayContext {
 				).put(
 					"key", String.valueOf(layout.getPlid())
 				).put(
-					"launchSetDraftNames", _getLaunchSetDraftNamesJSONArray(layout)
+					"launchSetDraftNames",
+					_getLaunchSetDraftNamesJSONArray(layout)
 				).put(
 					"parentable",
 					() -> {

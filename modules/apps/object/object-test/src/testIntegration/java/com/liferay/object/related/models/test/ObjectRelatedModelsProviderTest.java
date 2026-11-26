@@ -173,6 +173,10 @@ public class ObjectRelatedModelsProviderTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_testMoveObjectEntryToTrash(
 			ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
+		_testMoveObjectEntryToTrashWithCascadeObjectEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_testMoveObjectEntryToTrashWithCascadeObjectEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@FeatureFlag("LPD-108620")
@@ -874,6 +878,10 @@ public class ObjectRelatedModelsProviderTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_testRestoreObjectEntryFromTrash(
 			ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
+		_testRestoreObjectEntryFromTrashWithCascadeObjectEntries(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_testRestoreObjectEntryFromTrashWithCascadeObjectEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	private AccountEntry _addAccountEntry(long userId) throws Exception {
@@ -1211,6 +1219,11 @@ public class ObjectRelatedModelsProviderTest {
 			() -> _objectEntryLocalService.moveObjectEntryToTrash(
 				TestPropsValues.getUserId(), objectEntry6,
 				ServiceContextTestUtil.getServiceContext()));
+	}
+
+	private void _testMoveObjectEntryToTrashWithCascadeObjectEntries(
+			String relationshipType)
+		throws Exception {
 
 		List<ObjectEntry> objectEntries = _addCascadeObjectEntries(
 			relationshipType);
@@ -1590,6 +1603,11 @@ public class ObjectRelatedModelsProviderTest {
 			WorkflowConstants.STATUS_APPROVED, objectEntry1);
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntry2);
+	}
+
+	private void _testRestoreObjectEntryFromTrashWithCascadeObjectEntries(
+			String relationshipType)
+		throws Exception {
 
 		List<ObjectEntry> objectEntries = _addCascadeObjectEntries(
 			relationshipType);

@@ -8,6 +8,8 @@ package com.liferay.fragment.web.internal.struts;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -42,6 +44,7 @@ public class EditFragmentEntryStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		FragmentEntry fragmentEntry = null;
 		Group group = null;
 
 		try {
@@ -57,6 +60,21 @@ public class EditFragmentEntryStrutsAction implements StrutsAction {
 			_portletResourcePermission.check(
 				themeDisplay.getPermissionChecker(), group.getGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+			String externalReferenceCode = ParamUtil.getString(
+				httpServletRequest, "externalReferenceCode");
+
+			fragmentEntry =
+				_fragmentEntryLocalService.
+					fetchFragmentEntryByExternalReferenceCode(
+						externalReferenceCode, group.getGroupId());
+
+			if (fragmentEntry == null) {
+				fragmentEntry =
+					_fragmentEntryLocalService.
+						getFragmentEntryByExternalReferenceCode(
+							externalReferenceCode, group.getGroupId(), false);
+			}
 		}
 		catch (PortalException portalException) {
 			_portal.sendError(
@@ -74,12 +92,16 @@ public class EditFragmentEntryStrutsAction implements StrutsAction {
 			).setMVCRenderCommandName(
 				"/fragment/edit_fragment_entry"
 			).setParameter(
-				"externalReferenceCode",
-				ParamUtil.getString(httpServletRequest, "externalReferenceCode")
+				"fragmentCollectionId", fragmentEntry.getFragmentCollectionId()
+			).setParameter(
+				"fragmentEntryId", fragmentEntry.getFragmentEntryId()
 			).buildString());
 
 		return null;
 	}
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

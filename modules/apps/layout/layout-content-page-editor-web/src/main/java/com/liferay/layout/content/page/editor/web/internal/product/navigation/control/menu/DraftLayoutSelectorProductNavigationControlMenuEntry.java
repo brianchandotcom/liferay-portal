@@ -138,7 +138,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
 
 		if ((layoutPageTemplateEntry != null) ||
-			!_hasLaunchDrafts(layout.getClassPK())) {
+			!_hasLaunchSetDrafts(layout.getClassPK())) {
 
 			return false;
 		}
@@ -197,7 +197,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 				themeDisplay));
 
 		draftLayouts.addAll(
-			_getLaunchDraftLayoutMaps(
+			_getLaunchSetDraftLayoutMaps(
 				layout.getClassPK(), httpServletRequest, themeDisplay));
 
 		return draftLayouts;
@@ -237,14 +237,14 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 			editURL, "p_l_mode", Constants.EDIT);
 	}
 
-	private List<Map<String, Object>> _getLaunchDraftLayoutMaps(
+	private List<Map<String, Object>> _getLaunchSetDraftLayoutMaps(
 		long classPK, HttpServletRequest httpServletRequest,
 		ThemeDisplay themeDisplay) {
 
-		String restrictedLaunchLabel = _language.get(
+		String restrictedLaunchSetLabel = _language.get(
 			httpServletRequest, "restricted-launch");
 
-		List<Map<String, Object>> launchDraftLayoutMaps =
+		List<Map<String, Object>> launchSetDraftLayoutMaps =
 			TransformUtil.transform(
 				_layoutLocalService.fetchDraftLayouts(classPK),
 				draftLayout -> {
@@ -268,21 +268,21 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 
 					return _getDraftLayoutMap(
 						restricted, httpServletRequest,
-						restricted ? restrictedLaunchLabel :
+						restricted ? restrictedLaunchSetLabel :
 							launchSetDetails.getName(),
 						draftLayout, themeDisplay);
 				});
 
-		launchDraftLayoutMaps.sort(
+		launchSetDraftLayoutMaps.sort(
 			Comparator.comparing(
 				launchSetDraftLayoutMap -> (String)launchSetDraftLayoutMap.get(
 					"label"),
 				String.CASE_INSENSITIVE_ORDER));
 
-		return launchDraftLayoutMaps;
+		return launchSetDraftLayoutMaps;
 	}
 
-	private boolean _hasLaunchDrafts(long classPK) {
+	private boolean _hasLaunchSetDrafts(long classPK) {
 		if (_layoutLocalService.getDraftLayoutsCount(classPK) > 1) {
 			return true;
 		}

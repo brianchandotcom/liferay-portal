@@ -62,7 +62,7 @@ public class TestrayResultsXMLClientTestrayImporter
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
-						"Imported ", resultsFile.getPath(), " to ",
+						resultsFile.getPath(), " was imported to ",
 						String.valueOf(testrayBuild.getURL())));
 			}
 			catch (Exception exception) {

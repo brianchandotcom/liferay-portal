@@ -55,9 +55,9 @@ public class FIPSOSGiCommandsTest {
 			Assert.assertTrue(
 				message,
 				message.endsWith(
-					"Only the FIPS boot checks the JVM. This includes the " +
+					"Only the FIPS boot checks the JVM, including the " +
 						"security providers, the SecureRandom provider, and " +
-							"the TLS and certificate revocation properties."));
+							"the TLS and certificate revocation properties"));
 			Assert.assertTrue(
 				message,
 				message.contains(

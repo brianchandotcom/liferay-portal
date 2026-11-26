@@ -126,7 +126,7 @@ export default function ContributorsBuilder({
 									>
 										<LearnMessage
 											resource="segments-web"
-											resourceKey="analytics-cloud"
+											resourceKey="personalization"
 										/>
 									</LearnResourcesContext.Provider>
 								</ClayAlert>

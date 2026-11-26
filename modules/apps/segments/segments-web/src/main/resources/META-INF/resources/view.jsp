@@ -63,7 +63,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 			<liferay-ui:message key="segments-deprecation-info-message" />
 
 			<liferay-learn:message
-				key="analytics-cloud"
+				key="personalization"
 				resource="segments-web"
 			/>
 		</clay:alert>

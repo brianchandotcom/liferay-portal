@@ -1,0 +1,36 @@
+.location-input-form-group,
+.location-input-row {
+	min-height: 0;
+}
+
+.location-input-content > .input-group:first-child {
+	flex: 1 1 300px;
+	min-height: 150px;
+}
+
+.location-input-content
+	> .input-group:first-child
+	> .input-group-item:first-child {
+	align-self: stretch;
+	display: flex;
+	flex-direction: column;
+}
+
+.location-input-map .object-field__location-map {
+	flex-grow: 1;
+	height: auto;
+}
+
+.location-input--disabled .form-control,
+.location-input--disabled .object-field__location-map {
+	opacity: 0.5;
+}
+
+.location-input--inert .object-field__location-map,
+.location-input--inert .object-field__location-map * {
+	pointer-events: none;
+}
+
+.location-input--locked .leaflet-marker-icon {
+	cursor: inherit;
+}

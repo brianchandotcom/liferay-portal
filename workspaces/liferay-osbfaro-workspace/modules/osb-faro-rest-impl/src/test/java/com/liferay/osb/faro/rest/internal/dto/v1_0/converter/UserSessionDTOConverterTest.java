@@ -73,9 +73,6 @@ public class UserSessionDTOConverterTest {
 			responseUserSession.getCreateDate(), userSession.getCreateDate());
 		Assert.assertEquals(
 			responseUserSession.getDeviceType(), userSession.getDeviceType());
-		Assert.assertEquals(
-			responseUserSession.getIndividualId(),
-			userSession.getIndividualId());
 
 		Event[] events = userSession.getEvents();
 
@@ -91,6 +88,10 @@ public class UserSessionDTOConverterTest {
 		Assert.assertEquals(
 			responseUserSession.getIndividualId(), event.getIndividualId());
 		Assert.assertEquals(responseEvent.getName(), event.getName());
+
+		Assert.assertEquals(
+			responseUserSession.getIndividualId(),
+			userSession.getIndividualId());
 
 		responseUserSession =
 			new GetWorkspaceGroupChannelUserSessionsPageResponse.UserSession();

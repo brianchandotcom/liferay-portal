@@ -132,13 +132,16 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 
 	@Test
 	@TestInfo("LPD-117394")
-	public void testGetDropdownItemsWithLaunchSetDraftLayout() throws Exception {
+	public void testGetDropdownItemsWithLaunchSetDraftLayout()
+		throws Exception {
+
 		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			RandomTestUtil.randomLong(), _layout);
 
 		_user = UserTestUtil.addUser();
 
-		_testGetDropdownItemsWithLaunchSetDraftLayout(launchSetDraftLayout, _user);
+		_testGetDropdownItemsWithLaunchSetDraftLayout(
+			launchSetDraftLayout, _user);
 
 		_testGetDropdownItemsWithLaunchSetDraftLayout(
 			launchSetDraftLayout, TestPropsValues.getUser(), "Preview Launch",

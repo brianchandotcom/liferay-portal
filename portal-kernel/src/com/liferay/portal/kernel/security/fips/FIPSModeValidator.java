@@ -122,8 +122,9 @@ public class FIPSModeValidator {
 	}
 
 	public static void validate() {
-		Provider[] providers = Security.getProviders();
 		List<ValidationError> validationErrors = new ArrayList<>();
+
+		Provider[] providers = Security.getProviders();
 
 		_validate(
 			() -> _validateFIPSProvider(providers), validationErrors,
@@ -131,6 +132,7 @@ public class FIPSModeValidator {
 		_validate(
 			() -> _validateProviders(providers), validationErrors,
 			ValidationErrorType.SECURITY_PROVIDERS);
+
 		_validate(
 			FIPSModeValidator::_validateSecureRandomProvider, validationErrors,
 			ValidationErrorType.SECURITY_PROVIDERS);

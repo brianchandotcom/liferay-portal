@@ -30,9 +30,13 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -41,6 +45,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -469,6 +474,54 @@ public class LaunchSetPublisherTest {
 		_assertPublished(
 			otherDraftId, otherLaunchEntryObjectEntry, launchEntryManager,
 			otherPublishedVersion);
+	}
+
+	@Test
+	@TestInfo("LPD-117789")
+	public void testPublishWithUserWithoutUpdatePermission() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(
+			_layoutLocalService.getLayout(
+				_portal.getControlPanelPlid(TestPropsValues.getCompanyId())));
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		long launchSetId = _launchSetObjectEntry.getObjectEntryId();
+
+		mockLiferayPortletActionRequest.setParameter(
+			"launchSetId", String.valueOf(launchSetId));
+
+		mockLiferayPortletActionRequest.setParameter(
+			"redirect", "/" + RandomTestUtil.randomString());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(UserTestUtil.addUser()));
+
+		Exception exception = Assert.assertThrows(
+			Exception.class,
+			() -> _mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest, new MockActionResponse()));
+
+		Assert.assertTrue(exception.getCause() instanceof PrincipalException);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			launchSetId);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
+
+		Assert.assertEquals(
+			0,
+			_backgroundTaskManager.getBackgroundTasksCount(
+				BackgroundTaskConstants.GROUP_ID_DEFAULT,
+				String.valueOf(launchSetId),
+				_BACKGROUND_TASK_EXECUTOR_CLASS_NAME, false));
 	}
 
 	@Test

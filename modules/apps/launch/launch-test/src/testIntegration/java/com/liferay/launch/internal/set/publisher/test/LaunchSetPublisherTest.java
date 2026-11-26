@@ -328,7 +328,7 @@ public class LaunchSetPublisherTest {
 
 		String title = RandomTestUtil.randomString();
 
-		long draftId = _updateLaunchDraft(launchEntryObjectEntry, title);
+		long draftId = _updateLaunchSetDraft(launchEntryObjectEntry, title);
 
 		String unknownClassName = RandomTestUtil.randomString();
 
@@ -433,7 +433,7 @@ public class LaunchSetPublisherTest {
 				launchEntryObjectEntry.getObjectEntryId(),
 				TestPropsValues.getUserId()));
 
-		// Other launch set with a launch draft of the same journal article
+		// Other launch set with a launch set draft of the same journal article
 
 		ObjectEntry otherLaunchSetObjectEntry = _addLaunchSetObjectEntry();
 
@@ -444,7 +444,7 @@ public class LaunchSetPublisherTest {
 
 		String otherTitle = RandomTestUtil.randomString();
 
-		long otherDraftId = _updateLaunchDraft(
+		long otherDraftId = _updateLaunchSetDraft(
 			otherLaunchEntryObjectEntry, otherTitle);
 
 		JournalTestUtil.updateArticle(
@@ -722,36 +722,36 @@ public class LaunchSetPublisherTest {
 		return reloadedObjectEntry.getValues();
 	}
 
-	private long _updateLaunchDraft(
+	private long _updateLaunchSetDraft(
 			ObjectEntry launchEntryObjectEntry, String title)
 		throws Exception {
 
 		long draftId = MapUtil.getLong(
 			_getValues(launchEntryObjectEntry), "draftId");
 
-		JournalArticle launchDraftJournalArticle =
+		JournalArticle launchSetDraftJournalArticle =
 			_journalArticleLocalService.getLatestArticle(
 				draftId, WorkflowConstants.STATUS_ANY, false);
 
-		ServiceContext launchDraftServiceContext =
+		ServiceContext launchSetDraftServiceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		launchDraftServiceContext.setWorkflowAction(
+		launchSetDraftServiceContext.setWorkflowAction(
 			WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		_journalArticleLocalService.updateArticle(
-			TestPropsValues.getUserId(), launchDraftJournalArticle.getGroupId(),
-			launchDraftJournalArticle.getFolderId(),
-			launchDraftJournalArticle.getArticleId(),
-			launchDraftJournalArticle.getVersion(),
+			TestPropsValues.getUserId(), launchSetDraftJournalArticle.getGroupId(),
+			launchSetDraftJournalArticle.getFolderId(),
+			launchSetDraftJournalArticle.getArticleId(),
+			launchSetDraftJournalArticle.getVersion(),
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), title
 			).build(),
-			launchDraftJournalArticle.getDescriptionMap(),
-			launchDraftJournalArticle.getContent(),
-			launchDraftJournalArticle.getLayoutUuid(),
-			launchDraftServiceContext);
+			launchSetDraftJournalArticle.getDescriptionMap(),
+			launchSetDraftJournalArticle.getContent(),
+			launchSetDraftJournalArticle.getLayoutUuid(),
+			launchSetDraftServiceContext);
 
 		return draftId;
 	}

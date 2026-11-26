@@ -153,7 +153,7 @@ public class GetLayoutsStrutsActionTest {
 
 	@Test
 	@TestInfo("LPD-112154")
-	public void testGetLayoutsStrutsActionWithLaunchDraft() throws Exception {
+	public void testGetLayoutsStrutsActionWithLaunchSetDraft() throws Exception {
 		Layout layout = _layoutLocalService.addLayout(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -166,7 +166,7 @@ public class GetLayoutsStrutsActionTest {
 
 		long launchSetId = RandomTestUtil.randomLong();
 
-		LayoutTestUtil.addLaunchDraftLayout(launchSetId, layout);
+		LayoutTestUtil.addLaunchSetDraftLayout(launchSetId, layout);
 
 		_assertLayoutInTree(false, layout);
 

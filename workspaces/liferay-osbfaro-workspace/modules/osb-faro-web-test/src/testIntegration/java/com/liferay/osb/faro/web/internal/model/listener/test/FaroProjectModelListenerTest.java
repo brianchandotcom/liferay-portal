@@ -101,6 +101,56 @@ public class FaroProjectModelListenerTest {
 				faroProject.getGroupId(), "liferay-data-platform-master"));
 	}
 
+	@Test
+	public void testOnAfterUpdate() throws Exception {
+		FaroProject faroProject = _faroProjectLocalService.addFaroProject(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			null, null, null, Collections.emptyList(), null, null, null, null,
+			null, FaroProjectConstants.STATE_READY, StringPool.BLANK,
+			StringPool.UTC, null);
+
+		_assertFaviconFileEntryERC(
+			"AC_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-editor-master");
+		_assertFaviconFileEntryERC(
+			"AC_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-master");
+		_assertFaviconFileEntryERC(
+			"AC_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-settings-master");
+
+		faroProject.setSubscription(
+			JSONUtil.put(
+				"name", ProductConstants.PRODUCT_ENTRY_NAME_DATA_PLATFORM
+			).toString());
+
+		faroProject = _faroProjectLocalService.updateFaroProject(faroProject);
+
+		_assertFaviconFileEntryERC(
+			"LDP_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-editor-master");
+		_assertFaviconFileEntryERC(
+			"LDP_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-master");
+		_assertFaviconFileEntryERC(
+			"LDP_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-settings-master");
+
+		faroProject.setSubscription(StringPool.BLANK);
+
+		faroProject = _faroProjectLocalService.updateFaroProject(faroProject);
+
+		_assertFaviconFileEntryERC(
+			"AC_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-editor-master");
+		_assertFaviconFileEntryERC(
+			"AC_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-master");
+		_assertFaviconFileEntryERC(
+			"AC_FAVICON", faroProject.getGroupId(),
+			"liferay-data-platform-settings-master");
+	}
+
 	private void _assertFaviconFileEntryERC(
 			String faviconFileEntryERC, long groupId,
 			String layoutPageTemplateEntryKey)

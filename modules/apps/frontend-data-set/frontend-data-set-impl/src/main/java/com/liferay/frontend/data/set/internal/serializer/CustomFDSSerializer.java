@@ -318,11 +318,13 @@ public class CustomFDSSerializer
 	@Override
 	public JSONArray serializeFilters(
 		String fdsName, HttpServletRequest httpServletRequest,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		try {
 			return _serializeFilters(
-				fdsName, httpServletRequest, selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+				fdsName, httpServletRequest,
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to serialize filters", exception);
@@ -532,7 +534,8 @@ public class CustomFDSSerializer
 	public Map<String, String> serializeSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		Map<String, String> selectionFilterAPIURLs = new HashMap<>();
 
@@ -1197,7 +1200,8 @@ public class CustomFDSSerializer
 	private String _getProxySelectionFilterAPIURL(
 		HttpServletRequest httpServletRequest, boolean interpolate,
 		ObjectEntry objectEntry,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		String fieldName = _getFieldName(objectEntry);
 
@@ -1208,21 +1212,24 @@ public class CustomFDSSerializer
 					"r_dataSetToDataSetSelectionFilters_l_dataSetERC"),
 				httpServletRequest, interpolate,
 				_getProxyTokenResolutionsJSONObjects(
-					fieldName, objectEntry, selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
+					fieldName, objectEntry,
+					selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
 
 		return selectionFilterAPIURLs.get(fieldName);
 	}
 
 	private Map<String, JSONObject> _getProxyTokenResolutionsJSONObjects(
 		String fieldName, ObjectEntry objectEntry,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		if (selectionFilterFDSAPIURLTokenResolutionsJSONObjects == null) {
 			return null;
 		}
 
-		JSONObject tokenResolutionsJSONObject = selectionFilterFDSAPIURLTokenResolutionsJSONObjects.get(
-			objectEntry.getExternalReferenceCode());
+		JSONObject tokenResolutionsJSONObject =
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects.get(
+				objectEntry.getExternalReferenceCode());
 
 		if (tokenResolutionsJSONObject == null) {
 			return null;
@@ -1361,7 +1368,8 @@ public class CustomFDSSerializer
 	private String _getSelectionFilterAPIURL(
 		HttpServletRequest httpServletRequest, boolean interpolate,
 		ObjectEntry objectEntry,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
@@ -1378,8 +1386,9 @@ public class CustomFDSSerializer
 		JSONObject tokenResolutionsJSONObject = null;
 
 		if (selectionFilterFDSAPIURLTokenResolutionsJSONObjects != null) {
-			tokenResolutionsJSONObject = selectionFilterFDSAPIURLTokenResolutionsJSONObjects.get(
-				objectEntry.getExternalReferenceCode());
+			tokenResolutionsJSONObject =
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects.get(
+					objectEntry.getExternalReferenceCode());
 		}
 
 		return createFDSAPIURLBuilder(
@@ -1480,7 +1489,8 @@ public class CustomFDSSerializer
 
 	private JSONObject _serializeFilter(
 			HttpServletRequest httpServletRequest, ObjectEntry objectEntry,
-			Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
+			Map<String, JSONObject>
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
 		throws Exception {
 
 		Map<String, Object> properties = objectEntry.getProperties();
@@ -1602,7 +1612,8 @@ public class CustomFDSSerializer
 	private JSONObject _serializeFilterSelection(
 			String fieldName, HttpServletRequest httpServletRequest,
 			ObjectEntry objectEntry, String sourceType,
-			Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
+			Map<String, JSONObject>
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
 		throws Exception {
 
 		Map<String, Object> properties = objectEntry.getProperties();
@@ -1616,7 +1627,8 @@ public class CustomFDSSerializer
 					"r_dataSetToDataSetSelectionFilters_l_dataSetERC"),
 				httpServletRequest,
 				_getProxyTokenResolutionsJSONObjects(
-					fieldName, objectEntry, selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
+					fieldName, objectEntry,
+					selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1808,7 +1820,8 @@ public class CustomFDSSerializer
 
 	private JSONArray _serializeFilters(
 			String fdsName, HttpServletRequest httpServletRequest,
-			Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
+			Map<String, JSONObject>
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(
@@ -1819,7 +1832,8 @@ public class CustomFDSSerializer
 				"dataSetToDataSetDateFilters",
 				"dataSetToDataSetSelectionFilters"),
 			(ObjectEntry objectEntry) -> _serializeFilter(
-				httpServletRequest, objectEntry, selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
+				httpServletRequest, objectEntry,
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects));
 	}
 
 	private JSONObject _serializeViewSchema(

@@ -175,7 +175,8 @@ public class SystemFDSSerializer
 	@Override
 	public JSONArray serializeFilters(
 		String fdsName, HttpServletRequest httpServletRequest,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		JSONArray jsonArray = JSONUtil.putAll();
 
@@ -354,14 +355,16 @@ public class SystemFDSSerializer
 	public Map<String, String> serializeSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		Map<String, String> selectionFilterAPIURLs = new LinkedHashMap<>();
 
 		for (FDSFilter fdsFilter : fdsFilterRegistry.getFDSFilters(fdsName)) {
 			String apiURL = _buildSelectionFilterAPIURL(
 				_getSelectionFilterAPIURL(fdsFilter), fdsFilter,
-				httpServletRequest, interpolate, selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+				httpServletRequest, interpolate,
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
 			if (Validator.isNull(apiURL)) {
 				continue;
@@ -550,7 +553,8 @@ public class SystemFDSSerializer
 	private String _buildSelectionFilterAPIURL(
 		String apiURL, FDSFilter fdsFilter,
 		HttpServletRequest httpServletRequest, boolean interpolate,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		if (Validator.isNull(apiURL)) {
 			return null;
@@ -559,8 +563,9 @@ public class SystemFDSSerializer
 		JSONObject tokenResolutionsJSONObject = null;
 
 		if (selectionFilterFDSAPIURLTokenResolutionsJSONObjects != null) {
-			tokenResolutionsJSONObject = selectionFilterFDSAPIURLTokenResolutionsJSONObjects.get(
-				fdsFilter.getId());
+			tokenResolutionsJSONObject =
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects.get(
+					fdsFilter.getId());
 		}
 
 		return createFDSAPIURLBuilder(
@@ -608,7 +613,8 @@ public class SystemFDSSerializer
 	private void _serializeFilters(
 		List<FDSFilter> fdsFilters, HttpServletRequest httpServletRequest,
 		JSONArray jsonArray,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		Locale locale = PortalUtil.getLocale(httpServletRequest);
 
@@ -622,7 +628,8 @@ public class SystemFDSSerializer
 
 			String apiURL = _buildSelectionFilterAPIURL(
 				_getSelectionFilterAPIURL(fdsFilter), fdsFilter,
-				httpServletRequest, true, selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+				httpServletRequest, true,
+				selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
 
 			if (_hasTokens(apiURL)) {
 				if (_log.isDebugEnabled()) {

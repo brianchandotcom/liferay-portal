@@ -98,7 +98,8 @@ public class FDSRendererImpl implements FDSRenderer {
 	public Map<String, String> getSelectionFilterFDSAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
-		Map<String, JSONObject> selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
+		Map<String, JSONObject>
+			selectionFilterFDSAPIURLTokenResolutionsJSONObjects) {
 
 		FDSSerializer fdsSerializer = _getFDSSerializer(
 			fdsName, httpServletRequest);

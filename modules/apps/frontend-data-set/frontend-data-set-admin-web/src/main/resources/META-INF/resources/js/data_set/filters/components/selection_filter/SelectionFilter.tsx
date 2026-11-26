@@ -615,7 +615,7 @@ function Body({
 												id={`${preselectedValuesFormElementId}Help`}
 											>
 												{Liferay.Language.get(
-													'values-cannot-be-preselected-for-an-endpoint-with-tokens'
+													'unable-to-preselect-values-for-an-endpoint-with-tokens'
 												)}
 											</ClayForm.Text>
 										)}

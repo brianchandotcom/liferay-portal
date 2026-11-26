@@ -555,7 +555,7 @@ public class SystemFDSSerializer
 		}
 
 		return createFDSAPIURLBuilder(
-			httpServletRequest, apiURL
+			apiURL, httpServletRequest
 		).setTokenResolutions(
 			tokenResolutionsJSONObject
 		).build(

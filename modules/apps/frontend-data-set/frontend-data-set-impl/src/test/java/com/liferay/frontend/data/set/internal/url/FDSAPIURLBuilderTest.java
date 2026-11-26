@@ -111,32 +111,32 @@ public class FDSAPIURLBuilderTest {
 		Assert.assertEquals(
 			"/o/app/12345/{foo}/alice/endpoint",
 			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest,
-				"/o/app/{siteId}/{foo}/{bob}/endpoint"
+				"/o/app/{siteId}/{foo}/{bob}/endpoint",
+				_fdsAPIURLResolverRegistry, _httpServletRequest
 			).setTokenResolutions(
 				JSONUtil.put("bob", "alice")
 			).build());
 		Assert.assertEquals(
 			"/o/app/endpoint?filter=foo&sort=bar",
 			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest,
-				"/o/app/endpoint?filter=foo"
+				"/o/app/endpoint?filter=foo", _fdsAPIURLResolverRegistry,
+				_httpServletRequest
 			).addParameter(
 				"sort", "bar"
 			).build());
 		Assert.assertEquals(
 			"/o/app/endpoint?sort=bar",
 			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest,
-				"/o/app/endpoint"
+				"/o/app/endpoint", _fdsAPIURLResolverRegistry,
+				_httpServletRequest
 			).addParameter(
 				"sort", "bar"
 			).build());
 		Assert.assertEquals(
 			"/o/app/{siteId}/{foo}/endpoint",
 			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest,
-				"/o/app/{siteId}/{foo}/endpoint"
+				"/o/app/{siteId}/{foo}/endpoint", _fdsAPIURLResolverRegistry,
+				_httpServletRequest
 			).build(
 				false
 			));

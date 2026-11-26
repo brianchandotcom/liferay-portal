@@ -500,9 +500,9 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		for (Map.Entry<String, String> entry :
 				selectionFilterFDSAPIURLs.entrySet()) {
 
-			String apiURL = entry.getValue();
+			String value = entry.getValue();
 
-			if (!_hasTokens(apiURL)) {
+			if (!_hasTokens(value)) {
 				continue;
 			}
 
@@ -512,19 +512,20 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						externalReferenceCode, httpServletRequest, true, null);
 			}
 
+			String key = entry.getKey();
+
 			JSONObject apiURLTokenMappingsJSONObject =
-				selectionFilterAPIURLTokenMappingsJSONObject.getJSONObject(
-					entry.getKey());
+				selectionFilterAPIURLTokenMappingsJSONObject.getJSONObject(key);
 
 			if (apiURLTokenMappingsJSONObject == null) {
 				apiURLTokenMappingsJSONObject = _jsonFactory.createJSONObject();
 			}
 
 			selectionFilterAPIURLTokenResolutionsJSONObjects.put(
-				entry.getKey(),
+				key,
 				_getTokenResolutionsJSONObject(
-					apiURL, apiURLTokenMappingsJSONObject,
-					autoResolvedSelectionFilterFDSAPIURLs.get(entry.getKey()),
+					value, apiURLTokenMappingsJSONObject,
+					autoResolvedSelectionFilterFDSAPIURLs.get(key),
 					httpServletRequest));
 		}
 

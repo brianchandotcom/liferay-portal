@@ -695,7 +695,7 @@ test(
 		await test.step('Check that values cannot be preselected', async () => {
 			await expect(
 				page.getByText(
-					'Values cannot be preselected for an endpoint with tokens.'
+					'Unable to preselect values for an endpoint with tokens.'
 				)
 			).toBeVisible();
 

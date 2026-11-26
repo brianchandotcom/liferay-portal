@@ -33,19 +33,6 @@ public class FDSAPIURLBuilder {
 
 	public FDSAPIURLBuilder(
 		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry,
-		HttpServletRequest httpServletRequest, String apiURL) {
-
-		_fdsAPIURLResolverRegistry = fdsAPIURLResolverRegistry;
-		_httpServletRequest = httpServletRequest;
-		_apiURL = apiURL;
-
-		_restApplication = null;
-		_restEndpoint = null;
-		_restSchema = null;
-	}
-
-	public FDSAPIURLBuilder(
-		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry,
 		HttpServletRequest httpServletRequest, String restApplication,
 		String restEndpoint, String restSchema) {
 
@@ -56,6 +43,19 @@ public class FDSAPIURLBuilder {
 		_restSchema = restSchema;
 
 		_apiURL = null;
+	}
+
+	public FDSAPIURLBuilder(
+		String apiURL, FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry,
+		HttpServletRequest httpServletRequest) {
+
+		_apiURL = apiURL;
+		_fdsAPIURLResolverRegistry = fdsAPIURLResolverRegistry;
+		_httpServletRequest = httpServletRequest;
+
+		_restApplication = null;
+		_restEndpoint = null;
+		_restSchema = null;
 	}
 
 	public FDSAPIURLBuilder addParameter(String name, String value) {

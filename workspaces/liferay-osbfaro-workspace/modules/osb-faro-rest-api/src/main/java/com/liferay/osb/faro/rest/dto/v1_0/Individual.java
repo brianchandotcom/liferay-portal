@@ -65,7 +65,7 @@ public class Individual implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Display name of the account this Individual is primarily associated with."
+		description = "Names of all the accounts this Individual is associated with, joined with commas into a single string. An account name can itself contain a comma, so this value cannot be split reliably into account names. To list the individuals of one account, filter by `accountId` instead."
 	)
 	public String getAccountName() {
 		if (_accountNameSupplier != null) {
@@ -101,7 +101,7 @@ public class Individual implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Display name of the account this Individual is primarily associated with."
+		description = "Names of all the accounts this Individual is associated with, joined with commas into a single string. An account name can itself contain a comma, so this value cannot be split reliably into account names. To list the individuals of one account, filter by `accountId` instead."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String accountName;
@@ -1290,4 +1290,4 @@ public class Individual implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:67951351
+// LIFERAY-REST-BUILDER-HASH:554702211

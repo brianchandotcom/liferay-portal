@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.internal.upgrade.v15_0_3.test;
+package com.liferay.commerce.internal.upgrade.v15_0_6.test;
 
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -115,7 +115,7 @@ public class OrderAdministratorRoleUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.commerce.internal.upgrade.v15_0_3." +
+		"com.liferay.commerce.internal.upgrade.v15_0_6." +
 			"OrderAdministratorRoleUpgradeProcess";
 
 	@Inject

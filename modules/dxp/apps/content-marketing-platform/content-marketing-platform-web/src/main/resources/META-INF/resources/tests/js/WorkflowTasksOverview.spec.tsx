@@ -217,10 +217,10 @@ describe('WorkflowTasksOverview', () => {
 		});
 
 		expect(mockFetch).toHaveBeenCalledWith(
-			'/o/search/v1.0/search?filter=test&filter=completed eq true&pageSize=1'
+			'/o/search/v1.0/search?filter=%28test%29+and+%28completed+eq+true%29&pageSize=1'
 		);
 		expect(mockFetch).toHaveBeenCalledWith(
-			'/o/search/v1.0/search?filter=test&filter=completed eq false&pageSize=1'
+			'/o/search/v1.0/search?filter=%28test%29+and+%28completed+eq+false%29&pageSize=1'
 		);
 	});
 

@@ -56,7 +56,6 @@ public class UserSessionDTOConverterTest {
 		responseEvent.setCanonicalUrl(RandomTestUtil.randomString());
 		responseEvent.setCreateDate(responseUserSession.getCreateDate());
 		responseEvent.setEventDate(RandomTestUtil.nextDate());
-		responseEvent.setIndividualName(RandomTestUtil.randomString());
 		responseEvent.setName(RandomTestUtil.randomString());
 
 		responseUserSession.setEvents(Arrays.asList(responseEvent));
@@ -91,8 +90,6 @@ public class UserSessionDTOConverterTest {
 		Assert.assertEquals(responseEvent.getEventDate(), event.getEventDate());
 		Assert.assertEquals(
 			responseUserSession.getIndividualId(), event.getIndividualId());
-		Assert.assertEquals(
-			responseEvent.getIndividualName(), event.getIndividualName());
 		Assert.assertEquals(responseEvent.getName(), event.getName());
 
 		responseUserSession =

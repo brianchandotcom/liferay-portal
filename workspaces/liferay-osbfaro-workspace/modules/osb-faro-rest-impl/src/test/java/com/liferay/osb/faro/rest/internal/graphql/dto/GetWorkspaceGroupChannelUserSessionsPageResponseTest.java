@@ -52,10 +52,7 @@ public class GetWorkspaceGroupChannelUserSessionsPageResponseTest {
 						"events",
 						JSONUtil.putAll(
 							JSONUtil.put(
-								"eventDate", "Tue Oct 20 06:41:03 GMT 2026"
-							).put(
-								"individualName", "Test Test"
-							))
+								"eventDate", "Tue Oct 20 06:41:03 GMT 2026"))
 					).put(
 						"individualId", "123"
 					))
@@ -104,7 +101,6 @@ public class GetWorkspaceGroupChannelUserSessionsPageResponseTest {
 		Assert.assertEquals(
 			Date.from(Instant.parse("2026-10-20T06:41:03Z")),
 			event.getEventDate());
-		Assert.assertEquals("Test Test", event.getIndividualName());
 	}
 
 }

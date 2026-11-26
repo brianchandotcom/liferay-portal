@@ -39,7 +39,6 @@ query getWorkspaceGroupChannelUserSessionsPage(
 					canonicalUrl
 					createDate
 					eventDate
-					individualName
 					name
 					pageDescription
 					pageKeywords

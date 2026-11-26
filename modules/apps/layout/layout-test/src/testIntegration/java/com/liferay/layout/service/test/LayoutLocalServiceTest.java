@@ -617,7 +617,8 @@ public class LayoutLocalServiceTest {
 		Assert.assertTrue(
 			draftLayouts.containsAll(
 				Arrays.asList(
-					launchSetDraftLayout1, launchSetDraftLayout2, mainDraftLayout)));
+					launchSetDraftLayout1, launchSetDraftLayout2,
+					mainDraftLayout)));
 		Assert.assertEquals(draftLayouts.toString(), 3, draftLayouts.size());
 
 		Assert.assertEquals(

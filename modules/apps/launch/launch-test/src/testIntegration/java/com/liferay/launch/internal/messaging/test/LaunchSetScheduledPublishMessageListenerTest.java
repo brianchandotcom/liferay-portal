@@ -324,7 +324,8 @@ public class LaunchSetScheduledPublishMessageListenerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		_journalArticleLocalService.updateArticle(
-			TestPropsValues.getUserId(), launchSetDraftJournalArticle.getGroupId(),
+			TestPropsValues.getUserId(),
+			launchSetDraftJournalArticle.getGroupId(),
 			launchSetDraftJournalArticle.getFolderId(),
 			launchSetDraftJournalArticle.getArticleId(),
 			launchSetDraftJournalArticle.getVersion(),

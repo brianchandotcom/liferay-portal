@@ -113,26 +113,15 @@ public class EditFragmentEntryDisplayContext {
 
 		long defaultFragmentCollectionId = 0;
 
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
-				getFragmentEntryId());
+		List<FragmentCollection> fragmentCollections =
+			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+				_themeDisplay.getScopeGroupId(), 0, 1);
 
-		if (fragmentEntry != null) {
+		if (ListUtil.isNotEmpty(fragmentCollections)) {
+			FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
 			defaultFragmentCollectionId =
-				fragmentEntry.getFragmentCollectionId();
-		}
-		else {
-			List<FragmentCollection> fragmentCollections =
-				FragmentCollectionLocalServiceUtil.getFragmentCollections(
-					_themeDisplay.getScopeGroupId(), 0, 1);
-
-			if (ListUtil.isNotEmpty(fragmentCollections)) {
-				FragmentCollection fragmentCollection = fragmentCollections.get(
-					0);
-
-				defaultFragmentCollectionId =
-					fragmentCollection.getFragmentCollectionId();
-			}
+				fragmentCollection.getFragmentCollectionId();
 		}
 
 		_fragmentCollectionId = ParamUtil.getLong(
@@ -186,31 +175,8 @@ public class EditFragmentEntryDisplayContext {
 			return _fragmentEntryId;
 		}
 
-		String externalReferenceCode = ParamUtil.getString(
-			_httpServletRequest, "externalReferenceCode");
 		long fragmentEntryId = ParamUtil.getLong(
 			_httpServletRequest, "fragmentEntryId");
-
-		if ((fragmentEntryId == 0) &&
-			Validator.isNotNull(externalReferenceCode)) {
-
-			FragmentEntry fragmentEntry =
-				FragmentEntryLocalServiceUtil.
-					fetchFragmentEntryByExternalReferenceCode(
-						externalReferenceCode, _themeDisplay.getScopeGroupId());
-
-			if (fragmentEntry == null) {
-				fragmentEntry =
-					FragmentEntryLocalServiceUtil.
-						fetchFragmentEntryByExternalReferenceCode(
-							externalReferenceCode,
-							_themeDisplay.getScopeGroupId(), false);
-			}
-
-			if (fragmentEntry != null) {
-				fragmentEntryId = fragmentEntry.getFragmentEntryId();
-			}
-		}
 
 		FragmentEntry draftFragmentEntry =
 			FragmentEntryLocalServiceUtil.fetchDraft(fragmentEntryId);

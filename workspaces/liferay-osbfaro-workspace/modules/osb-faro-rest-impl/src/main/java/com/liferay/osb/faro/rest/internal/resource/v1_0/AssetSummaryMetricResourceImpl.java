@@ -14,7 +14,6 @@ import com.liferay.osb.faro.rest.resource.v1_0.AssetSummaryMetricResource;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -63,7 +62,7 @@ public class AssetSummaryMetricResourceImpl
 					).put(
 						"keywords", search
 					).put(
-						"objectType", StringUtil.toLowerCase(objectType)
+						"objectType", objectType
 					).put(
 						"rangeEnd", rangeEnd
 					).put(

@@ -234,9 +234,6 @@ public class FIPSModeValidatorTest {
 					": FIPS mode requires the property \"" +
 						PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH +
 							"\" to be at least 14"));
-			Assert.assertTrue(
-				message.startsWith(
-					"The following FIPS boot blockers were found:\n\t"));
 
 			Provider[] providers = Security.getProviders();
 
@@ -245,6 +242,10 @@ public class FIPSModeValidatorTest {
 					": The first security provider \"" +
 						providers[0].getName() +
 							"\" is not allowed in FIPS mode"));
+
+			Assert.assertTrue(
+				message.startsWith(
+					"The following FIPS boot blockers were found:\n\t"));
 		}
 	}
 

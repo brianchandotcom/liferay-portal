@@ -29,8 +29,8 @@ const PAGE_TEMPLATE_SET = {
 			moduleProps: {},
 		},
 	],
-	creationItemsGroupLabel: 'Page Templates',
 	creationItemsSectionKey: 'pages',
+	creationItemsSubmenuLabel: 'Page Templates',
 	defaultActionId: 'view',
 	entryClassName:
 		'com.liferay.layout.page.template.model.LayoutPageTemplateCollection',

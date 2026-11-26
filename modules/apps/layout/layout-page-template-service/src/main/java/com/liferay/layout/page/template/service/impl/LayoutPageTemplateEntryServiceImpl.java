@@ -33,7 +33,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -85,6 +87,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		_checkLayoutPermission(plid);
 
 		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			externalReferenceCode, getUserId(), groupId,
@@ -1208,6 +1212,32 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.updateStatus(
 			getUserId(), layoutPageTemplateEntryId, status);
+	}
+
+	private void _checkLayoutPermission(long plid) throws PortalException {
+		if (plid == 0) {
+			return;
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return;
+		}
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.hasOwnerPermission(
+				layout.getCompanyId(), Layout.class.getName(), plid,
+				layout.getUserId(), ActionKeys.DELETE) &&
+			!permissionChecker.hasPermission(
+				layout.getGroupId(), Layout.class.getName(), plid,
+				ActionKeys.DELETE)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Layout.class.getName(), plid,
+				ActionKeys.DELETE);
+		}
 	}
 
 	private List<Object>

@@ -15,6 +15,7 @@ public class DemandbaseProvider implements Provider {
 
 	public static final String TYPE = "DEMANDBASE";
 
+	@Override
 	public ChannelsConfiguration getChannelsConfiguration() {
 		return _channelsConfiguration;
 	}

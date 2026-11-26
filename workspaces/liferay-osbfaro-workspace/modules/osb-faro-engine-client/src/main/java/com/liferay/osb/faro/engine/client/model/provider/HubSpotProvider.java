@@ -15,6 +15,7 @@ public class HubSpotProvider implements Provider {
 
 	public static final String TYPE = "HUBSPOT";
 
+	@Override
 	public ChannelsConfiguration getChannelsConfiguration() {
 		return _channelsConfiguration;
 	}

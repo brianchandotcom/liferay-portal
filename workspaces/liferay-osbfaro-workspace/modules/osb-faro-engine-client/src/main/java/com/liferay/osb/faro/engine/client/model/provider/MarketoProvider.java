@@ -15,6 +15,7 @@ public class MarketoProvider implements Provider {
 
 	public static final String TYPE = "MARKETO";
 
+	@Override
 	public ChannelsConfiguration getChannelsConfiguration() {
 		return _channelsConfiguration;
 	}

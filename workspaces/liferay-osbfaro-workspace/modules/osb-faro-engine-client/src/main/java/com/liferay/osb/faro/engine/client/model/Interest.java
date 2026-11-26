@@ -37,6 +37,7 @@ public class Interest {
 		return _name;
 	}
 
+	@JsonProperty("ownerId")
 	public String getOwnerIdentifier() {
 		return _ownerIdentifier;
 	}

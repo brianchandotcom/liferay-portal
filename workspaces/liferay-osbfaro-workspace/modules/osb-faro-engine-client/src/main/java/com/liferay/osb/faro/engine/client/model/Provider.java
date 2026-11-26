@@ -49,6 +49,10 @@ import com.liferay.osb.faro.engine.client.model.provider.SalesforceProvider;
 )
 public interface Provider {
 
+	public default ChannelsConfiguration getChannelsConfiguration() {
+		return null;
+	}
+
 	public String getType();
 
 }

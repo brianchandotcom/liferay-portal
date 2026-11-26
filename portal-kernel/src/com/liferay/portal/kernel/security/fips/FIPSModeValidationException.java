@@ -7,11 +7,10 @@ package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Jorge García Jiménez
@@ -25,38 +24,28 @@ public class FIPSModeValidationException extends SecurityException {
 		}
 
 		StringBundler sb = new StringBundler(
-			(_validationErrors.size() * 7) + 1);
+			(_validationErrors.size() * 5) + 1);
 
-		sb.append("The configuration is not allowed in FIPS mode");
+		sb.append("The following FIPS boot blockers were found:\n");
 
-		Map<ValidationErrorType, List<String>> errorMessagesMap = new EnumMap<>(
-			ValidationErrorType.class);
+		List<ValidationError> validationErrors = ListUtil.sort(
+			ListUtil.copy(_validationErrors),
+			Comparator.comparing(ValidationError::getValidationErrorType));
 
-		for (ValidationError validationError : _validationErrors) {
-			List<String> errorMessages = errorMessagesMap.computeIfAbsent(
-				validationError.getValidationErrorType(),
-				validationErrorType -> new ArrayList<>());
+		for (ValidationError validationError : validationErrors) {
+			sb.append(StringPool.TAB);
 
-			errorMessages.add(validationError.getErrorMessage());
-		}
-
-		for (Map.Entry<ValidationErrorType, List<String>> entry :
-				errorMessagesMap.entrySet()) {
-
-			sb.append(StringPool.NEW_LINE);
-			sb.append(StringPool.NEW_LINE);
-
-			ValidationErrorType validationErrorType = entry.getKey();
+			ValidationErrorType validationErrorType =
+				validationError.getValidationErrorType();
 
 			sb.append(validationErrorType.getLabel());
 
-			for (String errorMessage : entry.getValue()) {
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.DASH);
-				sb.append(StringPool.SPACE);
-				sb.append(errorMessage);
-			}
+			sb.append(": ");
+			sb.append(validationError.getErrorMessage());
+			sb.append(StringPool.NEW_LINE);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}

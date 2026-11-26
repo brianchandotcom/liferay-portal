@@ -36,7 +36,7 @@ public class FIPSOSGiCommands implements OSGiCommands {
 			sb.append(fipsModeValidationException.getMessage());
 		}
 
-		sb.append("\n\nOnly the FIPS boot checks the JVM. This includes the ");
+		sb.append("\nOnly the FIPS boot checks the JVM. This includes the ");
 		sb.append("security providers, the SecureRandom provider, and the ");
 		sb.append("TLS and certificate revocation properties.");
 

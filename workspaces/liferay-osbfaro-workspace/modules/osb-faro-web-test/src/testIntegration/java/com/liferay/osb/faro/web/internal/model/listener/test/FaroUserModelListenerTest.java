@@ -95,6 +95,30 @@ public class FaroUserModelListenerTest {
 					FaroUserConstants.STATUS_APPROVED)));
 	}
 
+	@Test
+	public void testOnAfterUpdate() throws Exception {
+		FaroProject faroProject = _faroProjectLocalService.addFaroProject(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			null, null, null, Collections.emptyList(), null, null, null, null,
+			null, FaroProjectConstants.STATE_READY, StringPool.BLANK,
+			StringPool.UTC, null);
+
+		FaroUser faroUser = _addFaroUser(
+			faroProject.getGroupId(), RoleConstants.SITE_OWNER,
+			FaroUserConstants.STATUS_APPROVED);
+
+		Assert.assertTrue(_hasWorkspaceAdministratorRole(faroUser));
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		faroUser.setRoleId(role.getRoleId());
+
+		faroUser = _faroUserLocalService.updateFaroUser(faroUser);
+
+		Assert.assertFalse(_hasWorkspaceAdministratorRole(faroUser));
+	}
+
 	private FaroUser _addFaroUser(long groupId, String roleName, int status)
 		throws Exception {
 

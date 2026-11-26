@@ -153,7 +153,9 @@ public class GetLayoutsStrutsActionTest {
 
 	@Test
 	@TestInfo("LPD-112154")
-	public void testGetLayoutsStrutsActionWithLaunchSetDraft() throws Exception {
+	public void testGetLayoutsStrutsActionWithLaunchSetDraft()
+		throws Exception {
+
 		Layout layout = _layoutLocalService.addLayout(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,

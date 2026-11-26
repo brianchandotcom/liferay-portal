@@ -262,13 +262,13 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 						return null;
 					}
 
-					boolean restricted = !_launchSetPermission.contains(
+					boolean disabled = !_launchSetPermission.contains(
 						themeDisplay.getPermissionChecker(), launchSetId,
 						ActionKeys.VIEW);
 
 					return _getDraftLayoutMap(
-						restricted, httpServletRequest,
-						restricted ? restrictedLaunchSetLabel :
+						disabled, httpServletRequest,
+						disabled ? restrictedLaunchSetLabel :
 							launchSetDetails.getName(),
 						draftLayout, themeDisplay);
 				});

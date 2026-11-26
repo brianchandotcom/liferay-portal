@@ -13,6 +13,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -118,39 +120,18 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 		String layoutBackURL = "/web/guest";
 		String layoutBackURLTitle = RandomTestUtil.randomString();
 
-		String processedHTML = _getProcessedHTML(
-			fragmentEntryLink, group, layoutBackURL, layoutBackURLTitle);
+		_testUpgrade(
+			fragmentEntryLink, group, layoutBackURL, layoutBackURLTitle,
+			"Go to " + layoutBackURLTitle);
 
-		Assert.assertTrue(
-			processedHTML,
-			processedHTML.contains(
-				"aria-label=\"Go to " + layoutBackURLTitle + "\""));
-		Assert.assertTrue(
-			processedHTML,
-			processedHTML.contains("href=\"" + layoutBackURL + "\""));
+		_testUpgrade(fragmentEntryLink, group, layoutBackURL, null, "Back");
 
-		processedHTML = _getProcessedHTML(
-			fragmentEntryLink, group, layoutBackURL, null);
-
-		Assert.assertTrue(
-			processedHTML, processedHTML.contains("aria-label=\"Back\""));
-		Assert.assertTrue(
-			processedHTML,
-			processedHTML.contains("href=\"" + layoutBackURL + "\""));
-
-		processedHTML = _getProcessedHTML(
-			fragmentEntryLink, group, null, layoutBackURLTitle);
-
-		Assert.assertFalse(
-			processedHTML,
-			processedHTML.contains("href=\"" + layoutBackURL + "\""));
-		Assert.assertFalse(
-			processedHTML, processedHTML.contains(layoutBackURLTitle));
+		_testUpgrade(fragmentEntryLink, group, null, layoutBackURLTitle, null);
 	}
 
-	private String _getProcessedHTML(
+	private void _testUpgrade(
 			FragmentEntryLink fragmentEntryLink, Group group,
-			String layoutBackURL, String layoutBackURLTitle)
+			String layoutBackURL, String layoutBackURLTitle, String label)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -176,12 +157,27 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 
 		backLinkFragmentEntryLink.setHtml(matcher.group());
 
-		return _fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-			backLinkFragmentEntryLink,
-			new DefaultFragmentEntryProcessorContext(
-				group.getCompanyId(), mockHttpServletRequest,
-				new MockHttpServletResponse(), LocaleUtil.US, null,
-				group.getGroupId()));
+		String processedHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				backLinkFragmentEntryLink,
+				new DefaultFragmentEntryProcessorContext(
+					group.getCompanyId(), mockHttpServletRequest,
+					new MockHttpServletResponse(), LocaleUtil.US, null,
+					group.getGroupId()));
+
+		if (label == null) {
+			Assert.assertEquals(
+				StringPool.BLANK, StringUtil.trim(processedHTML));
+
+			return;
+		}
+
+		Assert.assertTrue(
+			processedHTML,
+			processedHTML.contains("aria-label=\"" + label + "\""));
+		Assert.assertTrue(
+			processedHTML,
+			processedHTML.contains("href=\"" + layoutBackURL + "\""));
 	}
 
 	private static final Pattern _backLinkPattern = Pattern.compile(

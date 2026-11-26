@@ -13,6 +13,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLCategoryException;
@@ -20,14 +22,21 @@ import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.friendly.url.exception.FriendlyURLLocalizationUrlTitleException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.model.FriendlyURLEntryTitles;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -37,6 +46,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LanguageIds;
@@ -546,6 +556,196 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetMainFriendlyURLEntryTitles() throws Exception {
+		_testGetMainFriendlyURLEntryTitles();
+	}
+
+	@Test
+	public void testGetMainFriendlyURLEntryTitlesWithCTCollection()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(User.class);
+		long classPK = RandomTestUtil.randomLong();
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				_group.getGroupId(), classNameId, classPK, "en_US",
+				HashMapBuilder.put(
+					"en_US", "url-title-en"
+				).put(
+					"es_ES", "url-title-es"
+				).build(),
+				_getServiceContext());
+
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			friendlyURLEntry =
+				_friendlyURLEntryLocalService.getFriendlyURLEntry(
+					friendlyURLEntry.getFriendlyURLEntryId());
+
+			friendlyURLEntry.setDefaultLanguageId("es_ES");
+
+			_friendlyURLEntryLocalService.updateFriendlyURLEntry(
+				friendlyURLEntry);
+
+			Map<Long, FriendlyURLEntryTitles> friendlyURLEntryTitlesMap =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntryTitles(
+					classNameId, new long[] {classPK});
+
+			FriendlyURLEntryTitles friendlyURLEntryTitles =
+				friendlyURLEntryTitlesMap.get(classPK);
+
+			Assert.assertEquals(
+				"url-title-es", friendlyURLEntryTitles.getUrlTitle("pt_BR"));
+		}
+
+		Map<Long, FriendlyURLEntryTitles> friendlyURLEntryTitlesMap =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntryTitles(
+				classNameId, new long[] {classPK});
+
+		Assert.assertEquals(
+			Collections.singleton(classPK), friendlyURLEntryTitlesMap.keySet());
+
+		FriendlyURLEntryTitles friendlyURLEntryTitles =
+			friendlyURLEntryTitlesMap.get(classPK);
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				"en_US", "url-title-en"
+			).put(
+				"es_ES", "url-title-es"
+			).build(),
+			friendlyURLEntryTitles.getLanguageIdToUrlTitleMap());
+		Assert.assertEquals(
+			"url-title-en", friendlyURLEntryTitles.getUrlTitle("pt_BR"));
+
+		_assertFriendlyURLEntryTitles(
+			classNameId, classPK, friendlyURLEntryTitles);
+	}
+
+	@Test
+	public void testGetMainFriendlyURLEntryTitlesWithDatabaseInMaxParameters()
+		throws Exception {
+
+		int friendlyURLEntryDatabaseInMaxParameters =
+			ReflectionTestUtil.getAndSetFieldValue(
+				_friendlyURLEntryPersistence, "databaseInMaxParameters", 2);
+		int friendlyURLEntryLocalizationDatabaseInMaxParameters =
+			ReflectionTestUtil.getAndSetFieldValue(
+				_friendlyURLEntryLocalizationPersistence,
+				"databaseInMaxParameters", 2);
+		int friendlyURLEntryMappingDatabaseInMaxParameters =
+			ReflectionTestUtil.getAndSetFieldValue(
+				_friendlyURLEntryMappingPersistence, "databaseInMaxParameters",
+				2);
+
+		try {
+			_testGetMainFriendlyURLEntryTitles();
+		}
+		finally {
+			ReflectionTestUtil.getAndSetFieldValue(
+				_friendlyURLEntryLocalizationPersistence,
+				"databaseInMaxParameters",
+				friendlyURLEntryLocalizationDatabaseInMaxParameters);
+			ReflectionTestUtil.getAndSetFieldValue(
+				_friendlyURLEntryMappingPersistence, "databaseInMaxParameters",
+				friendlyURLEntryMappingDatabaseInMaxParameters);
+			ReflectionTestUtil.getAndSetFieldValue(
+				_friendlyURLEntryPersistence, "databaseInMaxParameters",
+				friendlyURLEntryDatabaseInMaxParameters);
+		}
+	}
+
+	@Test
+	public void testGetMainFriendlyURLEntryTitlesWithFinderCache()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(User.class);
+		long classPK1 = RandomTestUtil.randomLong();
+		ServiceContext serviceContext = _getServiceContext();
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				_group.getGroupId(), classNameId, classPK1, "en_US",
+				Collections.singletonMap("en_US", "url-title-1-en"),
+				serviceContext);
+
+		long classPK2 = RandomTestUtil.randomLong();
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, classPK2, "en_US",
+			Collections.singletonMap("en_US", "url-title-2-en"),
+			serviceContext);
+
+		long classPK3 = RandomTestUtil.randomLong();
+
+		long[] classPKs = {classPK1, classPK2, classPK3};
+
+		Map<Long, FriendlyURLEntryTitles> friendlyURLEntryTitlesMap =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntryTitles(
+				classNameId, classPKs);
+
+		Assert.assertEquals(
+			SetUtil.fromArray(new long[] {classPK1, classPK2}),
+			friendlyURLEntryTitlesMap.keySet());
+
+		FriendlyURLEntryTitles friendlyURLEntryTitles =
+			friendlyURLEntryTitlesMap.get(classPK1);
+
+		Assert.assertEquals(
+			"url-title-1-en", friendlyURLEntryTitles.getUrlTitle("en_US"));
+
+		_friendlyURLEntryLocalService.updateFriendlyURLEntryLocalization(
+			friendlyURLEntry, "en_US", "url-title-3-en");
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, classPK2, "en_US",
+			Collections.singletonMap("en_US", "url-title-4-en"),
+			serviceContext);
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, classPK3, "en_US",
+			Collections.singletonMap("en_US", "url-title-5-en"),
+			serviceContext);
+
+		friendlyURLEntryTitlesMap =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntryTitles(
+				classNameId, classPKs);
+
+		Assert.assertEquals(
+			SetUtil.fromArray(classPKs), friendlyURLEntryTitlesMap.keySet());
+
+		friendlyURLEntryTitles = friendlyURLEntryTitlesMap.get(classPK1);
+
+		Assert.assertEquals(
+			"url-title-3-en", friendlyURLEntryTitles.getUrlTitle("en_US"));
+
+		_assertFriendlyURLEntryTitles(
+			classNameId, classPK1, friendlyURLEntryTitles);
+
+		friendlyURLEntryTitles = friendlyURLEntryTitlesMap.get(classPK2);
+
+		Assert.assertEquals(
+			"url-title-4-en", friendlyURLEntryTitles.getUrlTitle("en_US"));
+
+		_assertFriendlyURLEntryTitles(
+			classNameId, classPK2, friendlyURLEntryTitles);
+
+		friendlyURLEntryTitles = friendlyURLEntryTitlesMap.get(classPK3);
+
+		Assert.assertEquals(
+			"url-title-5-en", friendlyURLEntryTitles.getUrlTitle("en_US"));
+
+		_assertFriendlyURLEntryTitles(
+			classNameId, classPK3, friendlyURLEntryTitles);
+	}
+
+	@Test
 	@TestInfo("LPD-90910")
 	public void testGetUniqueUrlTitleMapGeneratesUniqueTitlesPerLocale()
 		throws Exception {
@@ -947,6 +1147,27 @@ public class FriendlyURLEntryLocalServiceTest {
 			});
 	}
 
+	private void _assertFriendlyURLEntryTitles(
+		long classNameId, long classPK,
+		FriendlyURLEntryTitles friendlyURLEntryTitles) {
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+				classNameId, classPK);
+
+		Assert.assertEquals(
+			friendlyURLEntry.getLanguageIdToUrlTitleMap(),
+			friendlyURLEntryTitles.getLanguageIdToUrlTitleMap());
+
+		for (String languageId :
+				new String[] {"en_US", "es_ES", "pt_BR", "zh_CN"}) {
+
+			Assert.assertEquals(
+				friendlyURLEntry.getUrlTitle(languageId),
+				friendlyURLEntryTitles.getUrlTitle(languageId));
+		}
+	}
+
 	private String _getRandomURLTitle() {
 		return StringUtil.toLowerCase(
 			StringUtil.randomString(
@@ -957,6 +1178,118 @@ public class FriendlyURLEntryLocalServiceTest {
 	private ServiceContext _getServiceContext() throws Exception {
 		return ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), _user.getUserId());
+	}
+
+	private void _testGetMainFriendlyURLEntryTitles() throws Exception {
+		long classNameId1 = _classNameLocalService.getClassNameId(User.class);
+		long classPK1 = RandomTestUtil.randomLong();
+		ServiceContext serviceContext = _getServiceContext();
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId1, classPK1, "es_ES",
+			HashMapBuilder.put(
+				"en_US", "url-title-1-en"
+			).put(
+				"es_ES", "url-title-1-es"
+			).build(),
+			serviceContext);
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId1, classPK1, "es_ES",
+			Collections.singletonMap("en_US", "url-title-2-en"),
+			serviceContext);
+
+		long classPK2 = RandomTestUtil.randomLong();
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId1, classPK2, "zh_CN",
+			HashMapBuilder.put(
+				"pt_BR", "url-title-3-pt"
+			).put(
+				"zh_CN", "url-title-3-zh"
+			).build(),
+			serviceContext);
+
+		long classPK3 = RandomTestUtil.randomLong();
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId1, classPK3, "en_US",
+			Collections.singletonMap("en_US", StringPool.BLANK),
+			serviceContext);
+
+		long classNameId2 = _classNameLocalService.getClassNameId(Group.class);
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId2, classPK1, "en_US",
+			Collections.singletonMap("en_US", "url-title-4-en"),
+			serviceContext);
+
+		_friendlyURLEntryPersistence.clearCache();
+
+		try {
+			Map<Long, FriendlyURLEntryTitles> friendlyURLEntryTitlesMap =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntryTitles(
+					classNameId1,
+					new long[] {
+						classPK1, classPK2, classPK3,
+						RandomTestUtil.randomLong()
+					});
+
+			Assert.assertEquals(
+				SetUtil.fromArray(new long[] {classPK1, classPK2, classPK3}),
+				friendlyURLEntryTitlesMap.keySet());
+
+			FriendlyURLEntryTitles friendlyURLEntryTitles =
+				friendlyURLEntryTitlesMap.get(classPK1);
+
+			Assert.assertEquals(
+				HashMapBuilder.put(
+					"en_US", "url-title-2-en"
+				).put(
+					"es_ES", "url-title-1-es"
+				).build(),
+				friendlyURLEntryTitles.getLanguageIdToUrlTitleMap());
+			Assert.assertEquals(
+				"url-title-1-es", friendlyURLEntryTitles.getUrlTitle("pt_BR"));
+
+			_assertFriendlyURLEntryTitles(
+				classNameId1, classPK1, friendlyURLEntryTitles);
+
+			_assertFriendlyURLEntryTitles(
+				classNameId1, classPK2,
+				friendlyURLEntryTitlesMap.get(classPK2));
+
+			friendlyURLEntryTitles = friendlyURLEntryTitlesMap.get(classPK3);
+
+			Assert.assertEquals(
+				Collections.emptyMap(),
+				friendlyURLEntryTitles.getLanguageIdToUrlTitleMap());
+			Assert.assertEquals(
+				StringPool.BLANK, friendlyURLEntryTitles.getUrlTitle("en_US"));
+
+			_assertFriendlyURLEntryTitles(
+				classNameId1, classPK3, friendlyURLEntryTitles);
+
+			friendlyURLEntryTitlesMap =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntryTitles(
+					classNameId2, new long[] {classPK1, classPK2, classPK3});
+
+			Assert.assertEquals(
+				Collections.singleton(classPK1),
+				friendlyURLEntryTitlesMap.keySet());
+
+			friendlyURLEntryTitles = friendlyURLEntryTitlesMap.get(classPK1);
+
+			Assert.assertEquals(
+				Collections.singletonMap("en_US", "url-title-4-en"),
+				friendlyURLEntryTitles.getLanguageIdToUrlTitleMap());
+
+			_assertFriendlyURLEntryTitles(
+				classNameId2, classPK1, friendlyURLEntryTitles);
+		}
+		finally {
+			_friendlyURLEntryLocalService.deleteGroupFriendlyURLEntries(
+				_group.getGroupId(), classNameId2);
+		}
 	}
 
 	private AssetCategory _assetCategory;
@@ -979,8 +1312,25 @@ public class FriendlyURLEntryLocalServiceTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Inject
+	private FriendlyURLEntryLocalizationPersistence
+		_friendlyURLEntryLocalizationPersistence;
+
+	@Inject
+	private FriendlyURLEntryMappingPersistence
+		_friendlyURLEntryMappingPersistence;
+
+	@Inject
+	private FriendlyURLEntryPersistence _friendlyURLEntryPersistence;
 
 	@DeleteAfterTestRun
 	private Group _group;

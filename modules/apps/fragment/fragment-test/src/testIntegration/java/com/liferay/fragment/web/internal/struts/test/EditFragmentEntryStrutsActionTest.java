@@ -124,18 +124,18 @@ public class EditFragmentEntryStrutsActionTest {
 				_companyLocalService.getCompany(_group.getCompanyId()), _group,
 				layout);
 
-		mockHttpServletRequest.setParameter(
-			"externalReferenceCode", externalReferenceCode);
-		mockHttpServletRequest.setParameter(
-			"siteExternalReferenceCode", siteExternalReferenceCode);
-		mockHttpServletRequest.setRequestURI(layout.getFriendlyURL());
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
+
+		mockHttpServletRequest.setParameter(
+			"externalReferenceCode", externalReferenceCode);
+		mockHttpServletRequest.setParameter(
+			"siteExternalReferenceCode", siteExternalReferenceCode);
+		mockHttpServletRequest.setRequestURI(layout.getFriendlyURL());
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

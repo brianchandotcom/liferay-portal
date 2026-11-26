@@ -124,18 +124,19 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setPortletName(FragmentPortletKeys.FRAGMENT);
+
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		portletDisplay.setPortletName(FragmentPortletKeys.FRAGMENT);
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
 		mockHttpServletRequest.setAttribute(
 			"FRAGMENT_DISPLAY_CONTEXT",
 			_getFragmentDisplayContext(mockHttpServletRequest));

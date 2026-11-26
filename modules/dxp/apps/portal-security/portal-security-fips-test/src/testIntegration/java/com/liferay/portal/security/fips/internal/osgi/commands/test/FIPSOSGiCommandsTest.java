@@ -56,7 +56,7 @@ public class FIPSOSGiCommandsTest {
 				message,
 				message.contains(
 					StringBundler.concat(
-						"Passwords\n- FIPS mode requires the property \"",
+						"\tPasswords: FIPS mode requires the property \"",
 						PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH,
 						"\" to be at least 14")));
 			Assert.assertTrue(
@@ -79,7 +79,7 @@ public class FIPSOSGiCommandsTest {
 			message,
 			message.contains(
 				StringBundler.concat(
-					"Key Encryption Key\n- Unable to reach the key encryption ",
+					"\tKey Encryption Key: Unable to reach the key encryption ",
 					"key of company ", TestPropsValues.getCompanyId(), ": ")));
 	}
 

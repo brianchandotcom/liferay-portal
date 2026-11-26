@@ -227,22 +227,22 @@ public class FIPSModeValidatorTest {
 
 			String message = securityException.getMessage();
 
-			Assert.assertTrue(message.contains("\n\nPasswords\n- "));
-			Assert.assertTrue(message.contains("\n\nSecurity Providers\n- "));
+			Assert.assertTrue(message.contains("\n\tPasswords: "));
+			Assert.assertTrue(message.contains("\n\tSecurity Providers: "));
 			Assert.assertTrue(
 				message.contains(
-					"\n- FIPS mode requires the property \"" +
+					": FIPS mode requires the property \"" +
 						PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH +
 							"\" to be at least 14"));
 			Assert.assertTrue(
 				message.startsWith(
-					"The configuration is not allowed in FIPS mode\n\n"));
+					"The following FIPS boot blockers were found:\n\t"));
 
 			Provider[] providers = Security.getProviders();
 
 			Assert.assertTrue(
 				message.contains(
-					"\n- The first security provider \"" +
+					": The first security provider \"" +
 						providers[0].getName() +
 							"\" is not allowed in FIPS mode"));
 		}
@@ -801,8 +801,7 @@ public class FIPSModeValidatorTest {
 					companyId1, ": ", companyKeyException.getMessage()));
 
 			Assert.assertEquals(
-				"The configuration is not allowed in FIPS mode\n\n" +
-					violation,
+				"The following FIPS boot blockers were found:\n\t" + violation,
 				securityException.getMessage());
 
 			Throwable[] suppressedThrowables =
@@ -921,7 +920,7 @@ public class FIPSModeValidatorTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"\n- FIPS mode requires the property \"" +
+					": FIPS mode requires the property \"" +
 						PropsKeys.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH +
 							"\" to be at least 14"));
 			Assert.assertTrue(
@@ -934,7 +933,7 @@ public class FIPSModeValidatorTest {
 							companyKeyException.getMessage()))));
 			Assert.assertTrue(
 				message.startsWith(
-					"The configuration is not allowed in FIPS mode\n\n"));
+					"The following FIPS boot blockers were found:\n\t"));
 		}
 	}
 
@@ -1263,7 +1262,7 @@ public class FIPSModeValidatorTest {
 		String violation = violations.get(0);
 
 		Assert.assertTrue(violation.contains(expectedMessage));
-		Assert.assertTrue(violation.startsWith(label + "\n- "));
+		Assert.assertTrue(violation.startsWith(label + ": "));
 	}
 
 	private Provider _createProvider(String name) {
@@ -1356,7 +1355,7 @@ public class FIPSModeValidatorTest {
 	}
 
 	private String _getViolation(String label, String message) {
-		return label + "\n- " + message;
+		return label + ": " + message;
 	}
 
 	private List<String> _getViolations(

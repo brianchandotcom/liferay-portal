@@ -18,6 +18,7 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.service.DispatchTriggerService;
 import com.liferay.dispatch.test.util.CronExpressionTestUtil;
 import com.liferay.dispatch.test.util.DispatchTriggerTestUtil;
 import com.liferay.petra.string.StringBundler;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
@@ -176,26 +176,18 @@ public class DispatchTriggerLocalServiceTest {
 
 		Assert.assertEquals(dispatchTrigger.getTimeZoneStartDate(), date);
 
-		String liferayMode = SystemProperties.get("liferay.mode");
+		_dispatchTriggerService.deleteDispatchTrigger(
+			dispatchTrigger.getDispatchTriggerId());
 
-		try {
-			SystemProperties.clear("liferay.mode");
-
-			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
-
-			if (dispatchTrigger.isSystem()) {
-				Assert.assertNotNull(
-					_dispatchTriggerLocalService.fetchDispatchTrigger(
-						dispatchTrigger.getDispatchTriggerId()));
-			}
-			else {
-				Assert.assertNull(
-					_dispatchTriggerLocalService.fetchDispatchTrigger(
-						dispatchTrigger.getDispatchTriggerId()));
-			}
+		if (dispatchTrigger.isSystem()) {
+			Assert.assertNotNull(
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					dispatchTrigger.getDispatchTriggerId()));
 		}
-		finally {
-			SystemProperties.set("liferay.mode", liferayMode);
+		else {
+			Assert.assertNull(
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					dispatchTrigger.getDispatchTriggerId()));
 		}
 	}
 
@@ -796,6 +788,9 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	@Inject
+	private DispatchTriggerService _dispatchTriggerService;
 
 	@Inject
 	private SchedulerEngineHelper _schedulerEngineHelper;

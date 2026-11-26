@@ -606,7 +606,7 @@ components:
             properties:
                 accountName:
                     description:
-                        "Display name of the account this Individual is primarily associated with."
+                        "Names of all the accounts this Individual is associated with, joined with commas into a single string. An account name can itself contain a comma, so this value cannot be split reliably into account names. To list the individuals of one account, filter by `accountId` instead."
                     readOnly: true
                     type: string
                 accounts:

@@ -805,7 +805,7 @@ public class DefaultObjectEntryManagerImpl
 				predicate, pagination, search, sorts);
 
 		List<ObjectEntry> objectEntries = TransformUtil.transform(
-			new ArrayList<>(serviceBuilderObjectEntriesPage.getItems()),
+			serviceBuilderObjectEntriesPage.getItems(),
 			serviceBuilderObjectEntry -> _getObjectEntry(
 				dtoConverterContext, objectDefinition,
 				serviceBuilderObjectEntry));

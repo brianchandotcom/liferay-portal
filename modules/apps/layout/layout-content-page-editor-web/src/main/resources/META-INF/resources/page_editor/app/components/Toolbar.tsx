@@ -38,7 +38,7 @@ import {
 	useDropClear,
 } from '../js-index';
 import selectCanPublish from '../selectors/selectCanPublish';
-import {isLaunchDraft} from '../utils/isLaunchDraft';
+import {isLaunchSetDraft} from '../utils/isLaunchSetDraft';
 import DiscardDraftButton from './DiscardDraftButton';
 import EditModeSelector from './EditModeSelector';
 import PublishButton from './PublishButton';
@@ -138,7 +138,7 @@ function ToolbarBody({className}: {className?: string}) {
 	else if (config.workflowEnabled) {
 		publishButtonLabel = Liferay.Language.get('submit-for-workflow');
 	}
-	else if (isLaunchDraft()) {
+	else if (isLaunchSetDraft()) {
 		publishButtonLabel = Liferay.Language.get('ready-to-publish');
 	}
 
@@ -288,7 +288,7 @@ function ToolbarBody({className}: {className?: string}) {
 							config.layoutType === LAYOUT_TYPES.content &&
 							!config.isCMS &&
 							!config.singleSegmentsExperienceMode &&
-							!isLaunchDraft()
+							!isLaunchSetDraft()
 								? onAddToLaunch
 								: undefined
 						}

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -77,7 +78,7 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 
 		mockHttpServletRequest.setParameter(
 			portletDisplay.getNamespace() + "mvcRenderCommandName",
-			"/fragment/edit_fragment_entry");
+			RandomTestUtil.randomString());
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));

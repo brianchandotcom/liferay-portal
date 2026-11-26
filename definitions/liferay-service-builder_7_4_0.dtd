@@ -710,6 +710,16 @@ same as the name of the localized entity.
 >
 
 <!--
+If the arrayable-pk-finder value is true, then the generated finder that finds
+localized entities by the entity's primary key also takes an array of primary
+keys, as if its finder column had an arrayable-operator of OR. The default value
+is false.
+-->
+<!ATTLIST localized-entity
+	arrayable-pk-finder CDATA #IMPLIED
+>
+
+<!--
 The localized-column element represents a column in the localization table.
 -->
 <!ELEMENT localized-column (#PCDATA)>

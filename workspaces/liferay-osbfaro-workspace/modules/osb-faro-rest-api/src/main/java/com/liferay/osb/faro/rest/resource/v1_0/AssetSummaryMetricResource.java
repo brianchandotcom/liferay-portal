@@ -45,8 +45,8 @@ public interface AssetSummaryMetricResource {
 
 	public Page<AssetSummaryMetric> getWorkspaceGroupChannelAssetSummariesPage(
 			Long groupId, String channelId, String accountId,
-			String individualId, String rangeEnd, String rangeKey,
-			String rangeStart, String search, String segmentId,
+			String individualId, String objectType, String rangeEnd,
+			String rangeKey, String rangeStart, String search, String segmentId,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
@@ -139,4 +139,4 @@ public interface AssetSummaryMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1380440354
+// LIFERAY-REST-BUILDER-HASH:1865662566

@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.rest.client.serdes.v1_0;
 
 import com.liferay.osb.faro.rest.client.dto.v1_0.Account;
+import com.liferay.osb.faro.rest.client.dto.v1_0.CalculatedField;
 import com.liferay.osb.faro.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -89,6 +90,20 @@ public class AccountSerDes {
 			sb.append(account.getActivitiesCount());
 		}
 
+		if (account.getActivityStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"activityStatus\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(account.getActivityStatus()));
+
+			sb.append("\"");
+		}
+
 		if (account.getAnnualRevenue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -97,6 +112,26 @@ public class AccountSerDes {
 			sb.append("\"annualRevenue\": ");
 
 			sb.append(account.getAnnualRevenue());
+		}
+
+		if (account.getCalculatedFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"calculatedFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getCalculatedFields().length; i++) {
+				sb.append(String.valueOf(account.getCalculatedFields()[i]));
+
+				if ((i + 1) < account.getCalculatedFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (account.getCountry() != null) {
@@ -268,12 +303,29 @@ public class AccountSerDes {
 				String.valueOf(account.getActivitiesCount()));
 		}
 
+		if (account.getActivityStatus() == null) {
+			map.put("activityStatus", null);
+		}
+		else {
+			map.put(
+				"activityStatus", String.valueOf(account.getActivityStatus()));
+		}
+
 		if (account.getAnnualRevenue() == null) {
 			map.put("annualRevenue", null);
 		}
 		else {
 			map.put(
 				"annualRevenue", String.valueOf(account.getAnnualRevenue()));
+		}
+
+		if (account.getCalculatedFields() == null) {
+			map.put("calculatedFields", null);
+		}
+		else {
+			map.put(
+				"calculatedFields",
+				String.valueOf(account.getCalculatedFields()));
 		}
 
 		if (account.getCountry() == null) {
@@ -374,7 +426,13 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "activitiesCount")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "activityStatus")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "annualRevenue")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "calculatedFields")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "country")) {
@@ -429,10 +487,31 @@ public class AccountSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "activityStatus")) {
+				if (jsonParserFieldValue != null) {
+					account.setActivityStatus((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "annualRevenue")) {
 				if (jsonParserFieldValue != null) {
 					account.setAnnualRevenue(
 						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "calculatedFields")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					CalculatedField[] calculatedFieldsArray =
+						new CalculatedField[jsonParserFieldValues.length];
+
+					for (int i = 0; i < calculatedFieldsArray.length; i++) {
+						calculatedFieldsArray[i] = CalculatedFieldSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setCalculatedFields(calculatedFieldsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "country")) {
@@ -571,4 +650,4 @@ public class AccountSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1397745273
+// LIFERAY-REST-BUILDER-HASH:-772032670

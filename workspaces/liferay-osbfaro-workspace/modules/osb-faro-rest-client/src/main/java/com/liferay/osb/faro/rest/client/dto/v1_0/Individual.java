@@ -47,6 +47,27 @@ public class Individual implements Cloneable, Serializable {
 
 	protected String accountName;
 
+	public Account[] getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Account[] accounts) {
+		this.accounts = accounts;
+	}
+
+	public void setAccounts(
+		UnsafeSupplier<Account[], Exception> accountsUnsafeSupplier) {
+
+		try {
+			accounts = accountsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Account[] accounts;
+
 	public Long getActivitiesCount() {
 		return activitiesCount;
 	}
@@ -431,4 +452,4 @@ public class Individual implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:769200648
+// LIFERAY-REST-BUILDER-HASH:1286846718

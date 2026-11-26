@@ -19,6 +19,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
+import jakarta.validation.Valid;
+
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -193,6 +195,51 @@ public class Account implements Serializable {
 	private Supplier<Long> _activitiesCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Engagement classification computed by LDP from the recent activity of the account's individuals: ACTIVE or INACTIVE."
+	)
+	public String getActivityStatus() {
+		if (_activityStatusSupplier != null) {
+			activityStatus = _activityStatusSupplier.get();
+
+			_activityStatusSupplier = null;
+		}
+
+		return activityStatus;
+	}
+
+	public void setActivityStatus(String activityStatus) {
+		this.activityStatus = activityStatus;
+
+		_activityStatusSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setActivityStatus(
+		UnsafeSupplier<String, Exception> activityStatusUnsafeSupplier) {
+
+		_activityStatusSupplier = () -> {
+			try {
+				return activityStatusUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Engagement classification computed by LDP from the recent activity of the account's individuals: ACTIVE or INACTIVE."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String activityStatus;
+
+	@JsonIgnore
+	private Supplier<String> _activityStatusSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Annual revenue of the account."
 	)
 	public Double getAnnualRevenue() {
@@ -234,6 +281,51 @@ public class Account implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Double> _annualRevenueSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Fields computed by LDP for the account."
+	)
+	@Valid
+	public CalculatedField[] getCalculatedFields() {
+		if (_calculatedFieldsSupplier != null) {
+			calculatedFields = _calculatedFieldsSupplier.get();
+
+			_calculatedFieldsSupplier = null;
+		}
+
+		return calculatedFields;
+	}
+
+	public void setCalculatedFields(CalculatedField[] calculatedFields) {
+		this.calculatedFields = calculatedFields;
+
+		_calculatedFieldsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCalculatedFields(
+		UnsafeSupplier<CalculatedField[], Exception>
+			calculatedFieldsUnsafeSupplier) {
+
+		_calculatedFieldsSupplier = () -> {
+			try {
+				return calculatedFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "Fields computed by LDP for the account.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected CalculatedField[] calculatedFields;
+
+	@JsonIgnore
+	private Supplier<CalculatedField[]> _calculatedFieldsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Country name where the account is headquartered."
@@ -708,6 +800,22 @@ public class Account implements Serializable {
 			sb.append(activitiesCount);
 		}
 
+		String activityStatus = getActivityStatus();
+
+		if (activityStatus != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"activityStatus\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(activityStatus));
+
+			sb.append("\"");
+		}
+
 		Double annualRevenue = getAnnualRevenue();
 
 		if (annualRevenue != null) {
@@ -718,6 +826,28 @@ public class Account implements Serializable {
 			sb.append("\"annualRevenue\": ");
 
 			sb.append(annualRevenue);
+		}
+
+		CalculatedField[] calculatedFields = getCalculatedFields();
+
+		if (calculatedFields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"calculatedFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < calculatedFields.length; i++) {
+				sb.append(String.valueOf(calculatedFields[i]));
+
+				if ((i + 1) < calculatedFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		String country = getCountry();
@@ -982,4 +1112,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1684215780
+// LIFERAY-REST-BUILDER-HASH:311331111

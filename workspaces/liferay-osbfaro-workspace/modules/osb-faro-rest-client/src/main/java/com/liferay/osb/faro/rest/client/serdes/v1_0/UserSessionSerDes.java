@@ -142,6 +142,20 @@ public class UserSessionSerDes {
 			sb.append("]");
 		}
 
+		if (userSession.getIndividualId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"individualId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userSession.getIndividualId()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -212,6 +226,14 @@ public class UserSessionSerDes {
 			map.put("events", String.valueOf(userSession.getEvents()));
 		}
 
+		if (userSession.getIndividualId() == null) {
+			map.put("individualId", null);
+		}
+		else {
+			map.put(
+				"individualId", String.valueOf(userSession.getIndividualId()));
+		}
+
 		return map;
 	}
 
@@ -246,6 +268,9 @@ public class UserSessionSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "events")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "individualId")) {
 				return false;
 			}
 
@@ -298,6 +323,11 @@ public class UserSessionSerDes {
 					}
 
 					userSession.setEvents(eventsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "individualId")) {
+				if (jsonParserFieldValue != null) {
+					userSession.setIndividualId((String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -387,4 +417,4 @@ public class UserSessionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:858513779
+// LIFERAY-REST-BUILDER-HASH:1577794090

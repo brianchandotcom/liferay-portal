@@ -283,7 +283,52 @@ public class Event implements Serializable {
 	private Supplier<Date> _createDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "ID of the individual that emitted the event. Null for anonymous individuals. Use with `getWorkspaceGroupIndividual` to fetch the individual."
+		description = "Timestamp of when the event occurred, as reported by the client that emitted it."
+	)
+	public Date getEventDate() {
+		if (_eventDateSupplier != null) {
+			eventDate = _eventDateSupplier.get();
+
+			_eventDateSupplier = null;
+		}
+
+		return eventDate;
+	}
+
+	public void setEventDate(Date eventDate) {
+		this.eventDate = eventDate;
+
+		_eventDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEventDate(
+		UnsafeSupplier<Date, Exception> eventDateUnsafeSupplier) {
+
+		_eventDateSupplier = () -> {
+			try {
+				return eventDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Timestamp of when the event occurred, as reported by the client that emitted it."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date eventDate;
+
+	@JsonIgnore
+	private Supplier<Date> _eventDateSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ID of the individual that emitted the event. Set on the events of a user session, and on listed events when the request is filtered by `individualId`; null otherwise. Use with `getWorkspaceGroupIndividual` to fetch the individual."
 	)
 	public String getIndividualId() {
 		if (_individualIdSupplier != null) {
@@ -319,13 +364,58 @@ public class Event implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "ID of the individual that emitted the event. Null for anonymous individuals. Use with `getWorkspaceGroupIndividual` to fetch the individual."
+		description = "ID of the individual that emitted the event. Set on the events of a user session, and on listed events when the request is filtered by `individualId`; null otherwise. Use with `getWorkspaceGroupIndividual` to fetch the individual."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String individualId;
 
 	@JsonIgnore
 	private Supplier<String> _individualIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the individual that emitted the event. Null for anonymous individuals and on the events of a user session."
+	)
+	public String getIndividualName() {
+		if (_individualNameSupplier != null) {
+			individualName = _individualNameSupplier.get();
+
+			_individualNameSupplier = null;
+		}
+
+		return individualName;
+	}
+
+	public void setIndividualName(String individualName) {
+		this.individualName = individualName;
+
+		_individualNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setIndividualName(
+		UnsafeSupplier<String, Exception> individualNameUnsafeSupplier) {
+
+		_individualNameSupplier = () -> {
+			try {
+				return individualNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Display name of the individual that emitted the event. Null for anonymous individuals and on the events of a user session."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String individualName;
+
+	@JsonIgnore
+	private Supplier<String> _individualNameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.). The set of available names varies per channel and per integration."
@@ -695,6 +785,22 @@ public class Event implements Serializable {
 			sb.append("\"");
 		}
 
+		Date eventDate = getEventDate();
+
+		if (eventDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"eventDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(eventDate));
+
+			sb.append("\"");
+		}
+
 		String individualId = getIndividualId();
 
 		if (individualId != null) {
@@ -707,6 +813,22 @@ public class Event implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(individualId));
+
+			sb.append("\"");
+		}
+
+		String individualName = getIndividualName();
+
+		if (individualName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"individualName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(individualName));
 
 			sb.append("\"");
 		}
@@ -929,4 +1051,4 @@ public class Event implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:469690464
+// LIFERAY-REST-BUILDER-HASH:-1157089661

@@ -34,27 +34,28 @@ public interface EventMetricResource {
 
 	public EventMetric getWorkspaceGroupChannelAccountEventMetric(
 			Long groupId, String channelId, String accountId, String interval,
-			String rangeEnd, String rangeKey, String rangeStart, String search)
+			String rangeEnd, String rangeKey, String rangeStart, String search,
+			String segmentId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getWorkspaceGroupChannelAccountEventMetricHttpResponse(
 				Long groupId, String channelId, String accountId,
 				String interval, String rangeEnd, String rangeKey,
-				String rangeStart, String search)
+				String rangeStart, String search, String segmentId)
 		throws Exception;
 
 	public EventMetric getWorkspaceGroupChannelIndividualEventMetric(
 			Long groupId, String channelId, String individualId,
 			String interval, String rangeEnd, String rangeKey,
-			String rangeStart, String search)
+			String rangeStart, String search, String segmentId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getWorkspaceGroupChannelIndividualEventMetricHttpResponse(
 				Long groupId, String channelId, String individualId,
 				String interval, String rangeEnd, String rangeKey,
-				String rangeStart, String search)
+				String rangeStart, String search, String segmentId)
 		throws Exception;
 
 	public static class Builder {
@@ -168,13 +169,13 @@ public interface EventMetricResource {
 		public EventMetric getWorkspaceGroupChannelAccountEventMetric(
 				Long groupId, String channelId, String accountId,
 				String interval, String rangeEnd, String rangeKey,
-				String rangeStart, String search)
+				String rangeStart, String search, String segmentId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkspaceGroupChannelAccountEventMetricHttpResponse(
 					groupId, channelId, accountId, interval, rangeEnd, rangeKey,
-					rangeStart, search);
+					rangeStart, search, segmentId);
 
 			String content = httpResponse.getContent();
 
@@ -239,7 +240,7 @@ public interface EventMetricResource {
 				getWorkspaceGroupChannelAccountEventMetricHttpResponse(
 					Long groupId, String channelId, String accountId,
 					String interval, String rangeEnd, String rangeKey,
-					String rangeStart, String search)
+					String rangeStart, String search, String segmentId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -283,6 +284,10 @@ public interface EventMetricResource {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
+			if (segmentId != null) {
+				httpInvoker.parameter("segmentId", String.valueOf(segmentId));
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
@@ -303,13 +308,13 @@ public interface EventMetricResource {
 		public EventMetric getWorkspaceGroupChannelIndividualEventMetric(
 				Long groupId, String channelId, String individualId,
 				String interval, String rangeEnd, String rangeKey,
-				String rangeStart, String search)
+				String rangeStart, String search, String segmentId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkspaceGroupChannelIndividualEventMetricHttpResponse(
 					groupId, channelId, individualId, interval, rangeEnd,
-					rangeKey, rangeStart, search);
+					rangeKey, rangeStart, search, segmentId);
 
 			String content = httpResponse.getContent();
 
@@ -374,7 +379,7 @@ public interface EventMetricResource {
 				getWorkspaceGroupChannelIndividualEventMetricHttpResponse(
 					Long groupId, String channelId, String individualId,
 					String interval, String rangeEnd, String rangeKey,
-					String rangeStart, String search)
+					String rangeStart, String search, String segmentId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -418,6 +423,10 @@ public interface EventMetricResource {
 				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
+			if (segmentId != null) {
+				httpInvoker.parameter("segmentId", String.valueOf(segmentId));
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
@@ -447,4 +456,4 @@ public interface EventMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1651284322
+// LIFERAY-REST-BUILDER-HASH:-1971428734

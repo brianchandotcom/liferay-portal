@@ -5,6 +5,7 @@
 
 package com.liferay.osb.faro.rest.client.serdes.v1_0;
 
+import com.liferay.osb.faro.rest.client.dto.v1_0.Account;
 import com.liferay.osb.faro.rest.client.dto.v1_0.Individual;
 import com.liferay.osb.faro.rest.client.json.BaseJSONParser;
 
@@ -63,6 +64,26 @@ public class IndividualSerDes {
 			sb.append(_escape(individual.getAccountName()));
 
 			sb.append("\"");
+		}
+
+		if (individual.getAccounts() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accounts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < individual.getAccounts().length; i++) {
+				sb.append(String.valueOf(individual.getAccounts()[i]));
+
+				if ((i + 1) < individual.getAccounts().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (individual.getActivitiesCount() != null) {
@@ -292,6 +313,13 @@ public class IndividualSerDes {
 			map.put("accountName", String.valueOf(individual.getAccountName()));
 		}
 
+		if (individual.getAccounts() == null) {
+			map.put("accounts", null);
+		}
+		else {
+			map.put("accounts", String.valueOf(individual.getAccounts()));
+		}
+
 		if (individual.getActivitiesCount() == null) {
 			map.put("activitiesCount", null);
 		}
@@ -441,6 +469,9 @@ public class IndividualSerDes {
 			if (Objects.equals(jsonParserFieldName, "accountName")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "accounts")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "activitiesCount")) {
 				return false;
 			}
@@ -502,6 +533,22 @@ public class IndividualSerDes {
 			if (Objects.equals(jsonParserFieldName, "accountName")) {
 				if (jsonParserFieldValue != null) {
 					individual.setAccountName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "accounts")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Account[] accountsArray =
+						new Account[jsonParserFieldValues.length];
+
+					for (int i = 0; i < accountsArray.length; i++) {
+						accountsArray[i] = AccountSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					individual.setAccounts(accountsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "activitiesCount")) {
@@ -681,4 +728,4 @@ public class IndividualSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-212953657
+// LIFERAY-REST-BUILDER-HASH:1548868395

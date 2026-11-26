@@ -776,6 +776,14 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("accountsCount", additionalAssertFieldName)) {
+				if (individualSegment.getAccountsCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"activeIndividualCount", additionalAssertFieldName)) {
 
@@ -842,6 +850,16 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 
 			if (Objects.equals("lastActivityDate", additionalAssertFieldName)) {
 				if (individualSegment.getLastActivityDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"lastMembershipUpdateDate", additionalAssertFieldName)) {
+
+				if (individualSegment.getLastMembershipUpdateDate() == null) {
 					valid = false;
 				}
 
@@ -1003,6 +1021,17 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("accountsCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						individualSegment1.getAccountsCount(),
+						individualSegment2.getAccountsCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"activeIndividualCount", additionalAssertFieldName)) {
 
@@ -1125,6 +1154,19 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 				if (!Objects.deepEquals(
 						individualSegment1.getLastActivityDate(),
 						individualSegment2.getLastActivityDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"lastMembershipUpdateDate", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						individualSegment1.getLastMembershipUpdateDate(),
+						individualSegment2.getLastMembershipUpdateDate())) {
 
 					return false;
 				}
@@ -1283,6 +1325,11 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("accountsCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("activeIndividualCount")) {
 			throw new IllegalArgumentException(
@@ -1535,6 +1582,37 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("lastMembershipUpdateDate")) {
+			if (operator.equals("between")) {
+				Date date = individualSegment.getLastMembershipUpdateDate();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_format.format(
+						individualSegment.getLastMembershipUpdateDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("name")) {
 			Object object = individualSegment.getName();
 
@@ -1643,6 +1721,7 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 	protected IndividualSegment randomIndividualSegment() throws Exception {
 		return new IndividualSegment() {
 			{
+				accountsCount = RandomTestUtil.randomLong();
 				activeIndividualCount = RandomTestUtil.randomLong();
 				anonymousIndividualCount = RandomTestUtil.randomLong();
 				channelId = StringUtil.toLowerCase(
@@ -1655,6 +1734,7 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 				individualCount = RandomTestUtil.randomLong();
 				knownIndividualCount = RandomTestUtil.randomLong();
 				lastActivityDate = RandomTestUtil.nextDate();
+				lastMembershipUpdateDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -1885,4 +1965,4 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		_individualSegmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:722577721
+// LIFERAY-REST-BUILDER-HASH:686698260

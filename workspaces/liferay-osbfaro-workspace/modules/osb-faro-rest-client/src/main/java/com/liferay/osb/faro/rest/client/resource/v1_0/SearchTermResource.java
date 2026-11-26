@@ -35,14 +35,16 @@ public interface SearchTermResource {
 	}
 
 	public Page<SearchTerm> getWorkspaceGroupChannelSearchTermsPage(
-			Long groupId, String channelId, String rangeEnd, String rangeKey,
-			String rangeStart, Pagination pagination)
+			Long groupId, String channelId, String accountId, String rangeEnd,
+			String rangeKey, String rangeStart, String search, String segmentId,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getWorkspaceGroupChannelSearchTermsPageHttpResponse(
-				Long groupId, String channelId, String rangeEnd,
-				String rangeKey, String rangeStart, Pagination pagination)
+				Long groupId, String channelId, String accountId,
+				String rangeEnd, String rangeKey, String rangeStart,
+				String search, String segmentId, Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -154,14 +156,15 @@ public interface SearchTermResource {
 	public static class SearchTermResourceImpl implements SearchTermResource {
 
 		public Page<SearchTerm> getWorkspaceGroupChannelSearchTermsPage(
-				Long groupId, String channelId, String rangeEnd,
-				String rangeKey, String rangeStart, Pagination pagination)
+				Long groupId, String channelId, String accountId,
+				String rangeEnd, String rangeKey, String rangeStart,
+				String search, String segmentId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkspaceGroupChannelSearchTermsPageHttpResponse(
-					groupId, channelId, rangeEnd, rangeKey, rangeStart,
-					pagination);
+					groupId, channelId, accountId, rangeEnd, rangeKey,
+					rangeStart, search, segmentId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -224,8 +227,9 @@ public interface SearchTermResource {
 
 		public HttpInvoker.HttpResponse
 				getWorkspaceGroupChannelSearchTermsPageHttpResponse(
-					Long groupId, String channelId, String rangeEnd,
-					String rangeKey, String rangeStart, Pagination pagination)
+					Long groupId, String channelId, String accountId,
+					String rangeEnd, String rangeKey, String rangeStart,
+					String search, String segmentId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -249,6 +253,10 @@ public interface SearchTermResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (accountId != null) {
+				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
 			if (rangeEnd != null) {
 				httpInvoker.parameter("rangeEnd", String.valueOf(rangeEnd));
 			}
@@ -259,6 +267,14 @@ public interface SearchTermResource {
 
 			if (rangeStart != null) {
 				httpInvoker.parameter("rangeStart", String.valueOf(rangeStart));
+			}
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (segmentId != null) {
+				httpInvoker.parameter("segmentId", String.valueOf(segmentId));
 			}
 
 			if (pagination != null) {
@@ -296,4 +312,4 @@ public interface SearchTermResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1063518150
+// LIFERAY-REST-BUILDER-HASH:714121631

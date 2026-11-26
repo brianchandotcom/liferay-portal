@@ -675,6 +675,14 @@ public abstract class BaseIndividualResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("accounts", additionalAssertFieldName)) {
+				if (individual.getAccounts() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("activitiesCount", additionalAssertFieldName)) {
 				if (individual.getActivitiesCount() == null) {
 					valid = false;
@@ -899,6 +907,16 @@ public abstract class BaseIndividualResourceTestCase {
 				if (!Objects.deepEquals(
 						individual1.getAccountName(),
 						individual2.getAccountName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("accounts", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						individual1.getAccounts(), individual2.getAccounts())) {
 
 					return false;
 				}
@@ -1226,6 +1244,11 @@ public abstract class BaseIndividualResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("accounts")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("activitiesCount")) {
@@ -1918,4 +1941,4 @@ public abstract class BaseIndividualResourceTestCase {
 		_individualResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1210972767
+// LIFERAY-REST-BUILDER-HASH:-1838870162

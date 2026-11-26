@@ -172,6 +172,7 @@ public abstract class BaseUserSessionResourceTestCase {
 
 		userSession.setBrowserName(regex);
 		userSession.setDeviceType(regex);
+		userSession.setIndividualId(regex);
 
 		String json = UserSessionSerDes.toJSON(userSession);
 
@@ -181,6 +182,7 @@ public abstract class BaseUserSessionResourceTestCase {
 
 		Assert.assertEquals(regex, userSession.getBrowserName());
 		Assert.assertEquals(regex, userSession.getDeviceType());
+		Assert.assertEquals(regex, userSession.getIndividualId());
 	}
 
 	@Test
@@ -802,6 +804,14 @@ public abstract class BaseUserSessionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("individualId", additionalAssertFieldName)) {
+				if (userSession.getIndividualId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -978,6 +988,17 @@ public abstract class BaseUserSessionResourceTestCase {
 			if (Objects.equals("events", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userSession1.getEvents(), userSession2.getEvents())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("individualId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userSession1.getIndividualId(),
+						userSession2.getIndividualId())) {
 
 					return false;
 				}
@@ -1252,6 +1273,52 @@ public abstract class BaseUserSessionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("individualId")) {
+			Object object = userSession.getIndividualId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1305,6 +1372,8 @@ public abstract class BaseUserSessionResourceTestCase {
 				completeDate = RandomTestUtil.nextDate();
 				createDate = RandomTestUtil.nextDate();
 				deviceType = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				individualId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};
@@ -1530,4 +1599,4 @@ public abstract class BaseUserSessionResourceTestCase {
 		_userSessionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2048801938
+// LIFERAY-REST-BUILDER-HASH:299309966

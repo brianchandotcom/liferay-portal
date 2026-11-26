@@ -88,7 +88,8 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 
 	@Override
 	public void deleteDraft(long classPK, long draftId) throws PortalException {
-		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(classPK, draftId);
+		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(
+			classPK, draftId);
 
 		if (launchSetDraftLayout == null) {
 			return;
@@ -99,7 +100,8 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 
 	@Override
 	public Draft fetchDraft(long classPK, long draftId) {
-		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(classPK, draftId);
+		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(
+			classPK, draftId);
 
 		if (launchSetDraftLayout == null) {
 			return null;
@@ -234,7 +236,8 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 	public Version publishDraft(long classPK, long draftId)
 		throws PortalException {
 
-		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(classPK, draftId);
+		Layout launchSetDraftLayout = _fetchLaunchSetDraftLayout(
+			classPK, draftId);
 
 		if (launchSetDraftLayout == null) {
 			throw new NoSuchLayoutException(

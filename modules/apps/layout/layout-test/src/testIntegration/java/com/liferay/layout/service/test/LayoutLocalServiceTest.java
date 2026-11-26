@@ -668,6 +668,34 @@ public class LayoutLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-116938")
+	public void testGetDraftLayoutsCount() throws Exception {
+		Assert.assertEquals(
+			0,
+			_layoutLocalService.getDraftLayoutsCount(
+				RandomTestUtil.randomLong()));
+
+		Layout layout = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			1, _layoutLocalService.getDraftLayoutsCount(layout.getPlid()));
+
+		LayoutTestUtil.addLaunchSetDraftLayout(
+			RandomTestUtil.randomLong(), layout);
+
+		Assert.assertEquals(
+			2, _layoutLocalService.getDraftLayoutsCount(layout.getPlid()));
+
+		LayoutTestUtil.addLaunchSetDraftLayout(
+			RandomTestUtil.randomLong(), layout);
+
+		Assert.assertEquals(
+			3, _layoutLocalService.getDraftLayoutsCount(layout.getPlid()));
+	}
+
+	@Test
 	public void testGetLayoutWithOldFriendlyURLWhenNewLayoutWithSameNameIsCreated()
 		throws Exception {
 

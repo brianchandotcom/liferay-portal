@@ -36,9 +36,17 @@ function getOverdueODataFilter() {
 }
 
 function fetchCount(apiURL: string, odataFilter: string): Promise<number> {
-	return fetch(
-		`${apiURL}&filter=${encodeURIComponent(odataFilter)}&pageSize=1`
-	)
+	const url = new URL(apiURL, window.location.origin);
+
+	const filter = url.searchParams.get('filter');
+
+	url.searchParams.set(
+		'filter',
+		filter ? `(${filter}) and (${odataFilter})` : odataFilter
+	);
+	url.searchParams.set('pageSize', '1');
+
+	return fetch(url.pathname + url.search)
 		.then((response) => {
 			if (!response.ok) {
 				throw new Error(`HTTP ${response.status}`);

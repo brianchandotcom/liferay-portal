@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -66,21 +67,28 @@ public class EditFragmentEntryStrutsActionTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			fragmentCollection.getFragmentCollectionId());
+		_testExecute(
+			FragmentEntryTestUtil.addFragmentEntry(
+				fragmentCollection.getFragmentCollectionId()));
+		_testExecute(
+			FragmentEntryTestUtil.addFragmentEntryByStatus(
+				fragmentCollection.getFragmentCollectionId(),
+				WorkflowConstants.STATUS_DRAFT));
+	}
+
+	@Test
+	@TestInfo("LPD-111343")
+	public void testExecuteWithNonexistentExternalReferenceCode()
+		throws Exception {
 
 		MockHttpServletResponse mockHttpServletResponse = _execute(
-			fragmentEntry.getExternalReferenceCode(),
-			_group.getExternalReferenceCode(), TestPropsValues.getUser());
+			RandomTestUtil.randomString(), _group.getExternalReferenceCode(),
+			TestPropsValues.getUser());
 
+		Assert.assertNull(mockHttpServletResponse.getRedirectedUrl());
 		Assert.assertEquals(
-			StringBundler.concat(
-				"/group", _group.getFriendlyURL(),
-				"/~/control_panel/manage/-/fragments/fragment_entry",
-				"/by_external_reference_code/",
-				fragmentEntry.getExternalReferenceCode(), "/edit"),
-			HttpComponentsUtil.getPath(
-				mockHttpServletResponse.getRedirectedUrl()));
+			HttpServletResponse.SC_NOT_FOUND,
+			mockHttpServletResponse.getStatus());
 	}
 
 	@Test
@@ -144,6 +152,21 @@ public class EditFragmentEntryStrutsActionTest {
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		return mockHttpServletResponse;
+	}
+
+	private void _testExecute(FragmentEntry fragmentEntry) throws Exception {
+		MockHttpServletResponse mockHttpServletResponse = _execute(
+			fragmentEntry.getExternalReferenceCode(),
+			_group.getExternalReferenceCode(), TestPropsValues.getUser());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"/group", _group.getFriendlyURL(),
+				"/~/control_panel/manage/-/fragments/fragment_collection/",
+				fragmentEntry.getFragmentCollectionId(), "/fragment_entry/",
+				fragmentEntry.getFragmentEntryId(), "/edit"),
+			HttpComponentsUtil.getPath(
+				mockHttpServletResponse.getRedirectedUrl()));
 	}
 
 	@Inject

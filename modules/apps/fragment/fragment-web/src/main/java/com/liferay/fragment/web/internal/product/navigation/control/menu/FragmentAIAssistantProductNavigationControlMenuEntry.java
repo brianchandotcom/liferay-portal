@@ -7,12 +7,12 @@ package com.liferay.fragment.web.internal.product.navigation.control.menu;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
@@ -67,9 +67,10 @@ public class FragmentAIAssistantProductNavigationControlMenuEntry
 		if (!Objects.equals(
 				FragmentPortletKeys.FRAGMENT,
 				portletDisplay.getPortletName()) ||
-			Validator.isNull(
-				httpServletRequest.getAttribute(
-					FragmentWebKeys.FRAGMENT_DISPLAY_CONTEXT)) ||
+			Validator.isNotNull(
+				ParamUtil.getString(
+					httpServletRequest,
+					portletDisplay.getNamespace() + "mvcRenderCommandName")) ||
 			!FragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),

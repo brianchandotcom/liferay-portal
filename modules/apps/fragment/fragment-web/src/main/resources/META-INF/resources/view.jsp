@@ -14,8 +14,6 @@ List<FragmentCollection> systemFragmentCollections = (List<FragmentCollection>)r
 
 List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDisplayContext.getFragmentCollectionContributors(locale);
 ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest, renderResponse);
-
-request.setAttribute(FragmentWebKeys.FRAGMENT_DISPLAY_CONTEXT, fragmentDisplayContext);
 %>
 
 <liferay-ui:error embed="<%= false %>" exception="<%= DuplicateFragmentCollectionKeyException.class %>">

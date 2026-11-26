@@ -34,15 +34,15 @@ public class InterestResourceTest extends BaseInterestResourceTestCase {
 	@Override
 	@Test
 	public void testGetWorkspaceGroupChannelInterestsPage() throws Exception {
-		long channelId = RandomTestUtil.randomLong();
+		String channelId = String.valueOf(RandomTestUtil.randomLong());
 		String individualId = RandomTestUtil.randomString();
 		String search = RandomTestUtil.randomString();
 
 		Object[] objects = _getWorkspaceGroupChannelInterestsPage(
-			String.valueOf(channelId), individualId, search,
+			channelId, individualId, search,
 			new Sort[] {new Sort("score", true)});
 
-		Assert.assertEquals(String.valueOf(channelId), objects[1]);
+		Assert.assertEquals(channelId, objects[1]);
 		Assert.assertEquals(individualId, objects[2]);
 		Assert.assertNull(objects[3]);
 		Assert.assertNull(objects[4]);
@@ -57,21 +57,20 @@ public class InterestResourceTest extends BaseInterestResourceTestCase {
 		_assertOrderByField(
 			"ownerId", OrderByField.OrderBy.asc,
 			_getWorkspaceGroupChannelInterestsPage(
-				String.valueOf(channelId), null, null,
+				channelId, null, null,
 				new Sort[] {new Sort("individualId", false)}));
 		_assertOrderByField(
 			"name", OrderByField.OrderBy.asc,
 			_getWorkspaceGroupChannelInterestsPage(
-				String.valueOf(channelId), null, null,
-				new Sort[] {new Sort("name", false)}));
+				channelId, null, null, new Sort[] {new Sort("name", false)}));
 		_assertOrderByField(
 			"contributingPagesCount", OrderByField.OrderBy.desc,
 			_getWorkspaceGroupChannelInterestsPage(
-				String.valueOf(channelId), null, null,
+				channelId, null, null,
 				new Sort[] {new Sort("relatedPagesCount", true)}));
 
 		objects = _getWorkspaceGroupChannelInterestsPage(
-			String.valueOf(channelId), null, null, null);
+			channelId, null, null, null);
 
 		Assert.assertNull(objects[2]);
 		Assert.assertNull(objects[5]);

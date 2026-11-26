@@ -52,24 +52,26 @@ public class DataSourceResourceTest extends BaseDataSourceResourceTestCase {
 		_assertCounts(1L, null, null, null, new DemandbaseProvider());
 		_assertCounts(null, null, 3L, 4L, new HubSpotProvider());
 		_assertCounts(null, null, null, 5L, new LiferayProvider());
-		_assertCounts(null, null, 3L, 4L, new MarketoProvider());
 		_assertCounts(1L, null, null, 4L, new MarketoCampaignProvider());
+		_assertCounts(null, null, 3L, 4L, new MarketoProvider());
 		_assertCounts(1L, 2L, null, 4L, new SalesforceProvider());
 	}
 
 	@Override
 	@Test
 	public void testGetWorkspaceGroupDataSourcesPage() throws Exception {
+		String providerType = LiferayProvider.TYPE;
 		String search = RandomTestUtil.randomString();
+		String state = "READY";
 
 		Object[] objects = _getWorkspaceGroupDataSourcesPage(
-			"LIFERAY", search, "READY", new Sort[] {new Sort("name", true)});
+			providerType, search, state, new Sort[] {new Sort("name", true)});
 
 		Assert.assertNull(objects[1]);
 		Assert.assertEquals(search, objects[2]);
 		Assert.assertNull(objects[3]);
-		Assert.assertEquals("LIFERAY", objects[4]);
-		Assert.assertEquals(Collections.singletonList("READY"), objects[5]);
+		Assert.assertEquals(providerType, objects[4]);
+		Assert.assertEquals(Collections.singletonList(state), objects[5]);
 		Assert.assertEquals(2, objects[6]);
 		Assert.assertEquals(10, objects[7]);
 

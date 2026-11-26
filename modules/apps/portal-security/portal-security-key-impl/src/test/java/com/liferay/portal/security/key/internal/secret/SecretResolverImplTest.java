@@ -995,13 +995,13 @@ public class SecretResolverImplTest {
 
 		Mockito.clearInvocations(_secretManager);
 
-		long companyId = RandomTestUtil.randomLong();
-		String key = RandomTestUtil.randomString();
-		String pid = RandomTestUtil.randomString();
-		String value = RandomTestUtil.randomString();
-
 		try (MockedStatic<FIPSAuditUtil> fipsAuditUtilMockedStatic =
 				Mockito.mockStatic(FIPSAuditUtil.class)) {
+
+			long companyId = RandomTestUtil.randomLong();
+			String key = RandomTestUtil.randomString();
+			String pid = RandomTestUtil.randomString();
+			String value = RandomTestUtil.randomString();
 
 			Assert.assertEquals(
 				value,

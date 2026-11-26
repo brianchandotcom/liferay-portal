@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 	@Override
-	public String getConfigurationSchemaJSON() {
-		return _CONFIGURATION_SCHEMA_JSON;
+	public String getConfigurationJSONSchemaJSON() {
+		return _CONFIGURATION_JSON_SCHEMA_JSON;
 	}
 
 	@Override
@@ -314,9 +314,10 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		}
 	}
 
-	private static final String _CONFIGURATION_SCHEMA_JSON = StringUtil.read(
-		FragmentEntryValidatorImpl.class,
-		"dependencies/configuration-json-schema.json");
+	private static final String _CONFIGURATION_JSON_SCHEMA_JSON =
+		StringUtil.read(
+			FragmentEntryValidatorImpl.class,
+			"dependencies/configuration-json-schema.json");
 
 	private static final Set<String> _allowedDependencyTypes =
 		SetUtil.fromArray("checkbox", "select", "text");

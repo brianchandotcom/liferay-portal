@@ -77,6 +77,24 @@ public class FaroUserModelListenerTest {
 					FaroUserConstants.STATUS_PENDING)));
 	}
 
+	@FeatureFlags(
+		featureFlags = @FeatureFlag(enable = false, value = "LPD-114293")
+	)
+	@Test
+	public void testOnAfterCreateWithoutFeatureFlag() throws Exception {
+		FaroProject faroProject = _faroProjectLocalService.addFaroProject(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			null, null, null, Collections.emptyList(), null, null, null, null,
+			null, FaroProjectConstants.STATE_READY, StringPool.BLANK,
+			StringPool.UTC, null);
+
+		Assert.assertFalse(
+			_hasWorkspaceAdministratorRole(
+				_addFaroUser(
+					faroProject.getGroupId(), RoleConstants.SITE_OWNER,
+					FaroUserConstants.STATUS_APPROVED)));
+	}
+
 	private FaroUser _addFaroUser(long groupId, String roleName, int status)
 		throws Exception {
 

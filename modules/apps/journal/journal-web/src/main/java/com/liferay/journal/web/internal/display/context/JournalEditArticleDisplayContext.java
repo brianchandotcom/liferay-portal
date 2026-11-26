@@ -20,9 +20,11 @@ import com.liferay.dynamic.data.mapping.item.selector.DDMTemplateItemSelectorCri
 import com.liferay.dynamic.data.mapping.item.selector.DDMTemplateItemSelectorReturnType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
@@ -532,6 +534,46 @@ public class JournalEditArticleDisplayContext {
 					ddmStructure.getStructureId());
 
 			ddmFormValues = ddmStructureArticle.getDDMFormValues();
+
+			Locale defaultArticleLocale = LocaleUtil.fromLanguageId(
+				getDefaultArticleLanguageId());
+
+			if ((ddmFormValues != null) &&
+				!defaultArticleLocale.equals(
+					ddmFormValues.getDefaultLocale())) {
+
+				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+					ddmFormValues.getDDMFormFieldValuesMap(true);
+				Locale defaultLocale = ddmFormValues.getDefaultLocale();
+
+				for (List<DDMFormFieldValue> ddmFormFieldValues :
+						ddmFormFieldValuesMap.values()) {
+
+					for (DDMFormFieldValue ddmFormFieldValue :
+							ddmFormFieldValues) {
+
+						Value value = ddmFormFieldValue.getValue();
+
+						if ((value == null) || !value.isLocalized()) {
+							continue;
+						}
+
+						_moveLocalizedValue(
+							value.getValues(), defaultLocale,
+							defaultArticleLocale);
+
+						value.setDefaultLocale(defaultArticleLocale);
+					}
+				}
+
+				Set<Locale> availableLocales =
+					ddmFormValues.getAvailableLocales();
+
+				availableLocales.remove(defaultLocale);
+				availableLocales.add(defaultArticleLocale);
+
+				ddmFormValues.setDefaultLocale(defaultArticleLocale);
+			}
 		}
 
 		if (ddmFormValues != null) {
@@ -1854,6 +1896,21 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return false;
+	}
+
+	private void _moveLocalizedValue(
+		Map<Locale, String> localizedValues, Locale fromLocale,
+		Locale toLocale) {
+
+		if (fromLocale.equals(toLocale)) {
+			return;
+		}
+
+		String localizedValue = localizedValues.remove(fromLocale);
+
+		if (localizedValue != null) {
+			localizedValues.putIfAbsent(toLocale, localizedValue);
+		}
 	}
 
 	private static final int _MAX_SITES = 6;

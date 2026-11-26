@@ -103,7 +103,7 @@ public class FragmentDisplayContext {
 				FragmentEntryValidator fragmentEntryValidator =
 					_fragmentEntryValidatorSnapshot.get();
 
-				return fragmentEntryValidator.getConfigurationSchemaJSON();
+				return fragmentEntryValidator.getConfigurationJSONSchemaJSON();
 			}
 		).put(
 			"fragmentPortletNamespace", _renderResponse.getNamespace()

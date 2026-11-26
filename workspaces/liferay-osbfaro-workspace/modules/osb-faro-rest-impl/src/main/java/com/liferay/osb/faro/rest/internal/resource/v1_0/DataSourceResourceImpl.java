@@ -55,7 +55,7 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 
 		String providerType = dataSource.getProviderType();
 
-		if (ArrayUtil.contains(_ACCOUNTS_COUNT_PROVIDER_TYPES, providerType)) {
+		if (ArrayUtil.contains(_PROVIDER_TYPES_ACCOUNTS_COUNT, providerType)) {
 			dataSource.setAccountsCount(
 				_contactsEngineClient.getDataSourceMetricsAccountsCount(
 					faroProject, dataSourceId));
@@ -67,7 +67,7 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 					faroProject, dataSourceId));
 		}
 
-		if (ArrayUtil.contains(_EVENTS_COUNT_PROVIDER_TYPES, providerType)) {
+		if (ArrayUtil.contains(_PROVIDER_TYPES_EVENTS_COUNT, providerType)) {
 			dataSource.setEventsCount(
 				_contactsEngineClient.getDataSourceMetricsEventsCount(
 					faroProject, dataSourceId));
@@ -79,7 +79,7 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 					faroProject, dataSourceId));
 		}
 		else if (ArrayUtil.contains(
-					_USERS_COUNT_PROVIDER_TYPES, providerType)) {
+					_PROVIDER_TYPES_USERS_COUNT, providerType)) {
 
 			dataSource.setUsersCount(
 				_contactsEngineClient.getDataSourceMetricsUsersCount(
@@ -125,16 +125,16 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 			dataSource);
 	}
 
-	private static final String[] _ACCOUNTS_COUNT_PROVIDER_TYPES = {
+	private static final String[] _PROVIDER_TYPES_ACCOUNTS_COUNT = {
 		DemandbaseProvider.TYPE, MarketoCampaignProvider.TYPE,
 		SalesforceProvider.TYPE
 	};
 
-	private static final String[] _EVENTS_COUNT_PROVIDER_TYPES = {
+	private static final String[] _PROVIDER_TYPES_EVENTS_COUNT = {
 		HubSpotProvider.TYPE, MarketoProvider.TYPE
 	};
 
-	private static final String[] _USERS_COUNT_PROVIDER_TYPES = {
+	private static final String[] _PROVIDER_TYPES_USERS_COUNT = {
 		HubSpotProvider.TYPE, MarketoCampaignProvider.TYPE,
 		MarketoProvider.TYPE, SalesforceProvider.TYPE
 	};

@@ -166,6 +166,13 @@ public class FriendlyURLEntryMappingPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_CArrayable() throws Exception {
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FriendlyURLEntryMapping newFriendlyURLEntryMapping =
 			addFriendlyURLEntryMapping();
@@ -509,4 +516,4 @@ public class FriendlyURLEntryMappingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:443163457
+// LIFERAY-SERVICE-BUILDER-HASH:916468399

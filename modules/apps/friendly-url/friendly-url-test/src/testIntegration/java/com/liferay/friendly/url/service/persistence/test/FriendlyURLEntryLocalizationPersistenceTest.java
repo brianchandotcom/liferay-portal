@@ -192,6 +192,12 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByFriendlyURLEntryIdArrayable() throws Exception {
+		_persistence.countByFriendlyURLEntryId(
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByFriendlyURLEntryId_LanguageId() throws Exception {
 		_persistence.countByFriendlyURLEntryId_LanguageId(
 			RandomTestUtil.nextLong(), "");
@@ -650,4 +656,4 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1378018812
+// LIFERAY-SERVICE-BUILDER-HASH:-427623022

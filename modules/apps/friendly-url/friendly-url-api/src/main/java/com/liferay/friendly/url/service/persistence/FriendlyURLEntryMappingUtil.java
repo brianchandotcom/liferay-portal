@@ -134,6 +134,31 @@ public class FriendlyURLEntryMappingUtil {
 	}
 
 	/**
+	 * Returns an ordered range of all the friendly url entry mappings where classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of friendly url entry mappings
+	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching friendly url entry mappings
+	 */
+	public static List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs, int start, int end,
+		OrderByComparator<FriendlyURLEntryMapping> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_C(
+			classNameId, classPKs, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
 	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchFriendlyURLEntryMappingException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
@@ -188,6 +213,17 @@ public class FriendlyURLEntryMappingUtil {
 	 */
 	public static int countByC_C(long classNameId, long classPK) {
 		return getPersistence().countByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns the number of friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the number of matching friendly url entry mappings
+	 */
+	public static int countByC_C(long classNameId, long[] classPKs) {
+		return getPersistence().countByC_C(classNameId, classPKs);
 	}
 
 	/**
@@ -262,6 +298,60 @@ public class FriendlyURLEntryMappingUtil {
 		return getPersistence().fetchByC_C(classNameId, classPK);
 	}
 
+	/**
+	 * Returns all the friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the matching friendly url entry mappings
+	 */
+	public static List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs) {
+
+		return getPersistence().findByC_C(classNameId, classPKs);
+	}
+
+	/**
+	 * Returns a range of all the friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of friendly url entry mappings
+	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	 * @return the range of matching friendly url entry mappings
+	 */
+	public static List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs, int start, int end) {
+
+		return getPersistence().findByC_C(classNameId, classPKs, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of friendly url entry mappings
+	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entry mappings
+	 */
+	public static List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs, int start, int end,
+		OrderByComparator<FriendlyURLEntryMapping> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, classPKs, start, end, orderByComparator);
+	}
+
 	public static FriendlyURLEntryMappingPersistence getPersistence() {
 		return _persistence;
 	}
@@ -275,4 +365,4 @@ public class FriendlyURLEntryMappingUtil {
 	private static volatile FriendlyURLEntryMappingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-528896096
+// LIFERAY-SERVICE-BUILDER-HASH:-1818681976

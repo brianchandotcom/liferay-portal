@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -105,8 +107,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByFriendlyURLEntryId.find(
-			finderCache, new Object[] {friendlyURLEntryId}, start, end,
-			orderByComparator, useFinderCache);
+			finderCache, new Object[] {new long[] {friendlyURLEntryId}}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -124,7 +126,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
 		return _collectionPersistenceFinderByFriendlyURLEntryId.findFirst(
-			finderCache, new Object[] {friendlyURLEntryId}, orderByComparator);
+			finderCache, new Object[] {new long[] {friendlyURLEntryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -140,7 +143,34 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
 
 		return _collectionPersistenceFinderByFriendlyURLEntryId.fetchFirst(
-			finderCache, new Object[] {friendlyURLEntryId}, orderByComparator);
+			finderCache, new Object[] {new long[] {friendlyURLEntryId}},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entry localizations where friendlyURLEntryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param friendlyURLEntryIds the friendly url entry IDs
+	 * @param start the lower bound of the range of friendly url entry localizations
+	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching friendly url entry localizations
+	 */
+	@Override
+	public List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
+		long[] friendlyURLEntryIds, int start, int end,
+		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByFriendlyURLEntryId.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(friendlyURLEntryIds)}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -151,7 +181,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	@Override
 	public void removeByFriendlyURLEntryId(long friendlyURLEntryId) {
 		_collectionPersistenceFinderByFriendlyURLEntryId.remove(
-			finderCache, new Object[] {friendlyURLEntryId});
+			finderCache, new Object[] {new long[] {friendlyURLEntryId}});
 	}
 
 	/**
@@ -163,7 +193,20 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	@Override
 	public int countByFriendlyURLEntryId(long friendlyURLEntryId) {
 		return _collectionPersistenceFinderByFriendlyURLEntryId.count(
-			finderCache, new Object[] {friendlyURLEntryId});
+			finderCache, new Object[] {new long[] {friendlyURLEntryId}});
+	}
+
+	/**
+	 * Returns the number of friendly url entry localizations where friendlyURLEntryId = any &#63;.
+	 *
+	 * @param friendlyURLEntryIds the friendly url entry IDs
+	 * @return the number of matching friendly url entry localizations
+	 */
+	@Override
+	public int countByFriendlyURLEntryId(long[] friendlyURLEntryIds) {
+		return _collectionPersistenceFinderByFriendlyURLEntryId.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(friendlyURLEntryIds)});
 	}
 
 	private UniquePersistenceFinder
@@ -1075,7 +1118,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"friendlyURLEntryId"}, true),
 				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 					"countByFriendlyURLEntryId",
 					new String[] {Long.class.getName()},
 					new String[] {"friendlyURLEntryId"}, false),
@@ -1083,9 +1126,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "", "", null,
-				new FinderColumn<>(
+				new ArrayableFinderColumn<>(
 					"friendlyURLEntryLocalization.", "friendlyURLEntryId",
-					FinderColumn.Type.LONG, "=", true, true,
+					FinderColumn.Type.LONG, "=", false, true, true,
 					FriendlyURLEntryLocalization::getFriendlyURLEntryId));
 
 		_uniquePersistenceFinderByFriendlyURLEntryId_LanguageId =
@@ -1425,4 +1468,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1687259721
+// LIFERAY-SERVICE-BUILDER-HASH:1510501931

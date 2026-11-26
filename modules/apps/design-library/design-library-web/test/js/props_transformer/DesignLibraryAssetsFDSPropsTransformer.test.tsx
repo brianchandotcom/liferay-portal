@@ -50,20 +50,6 @@ const DISPLAY_PAGE_TEMPLATE_RESOURCE_TYPE = {
 	symbol: 'page',
 };
 
-const READ_ONLY_ITEM = {
-	actions: {},
-	embedded: {externalReferenceCode: 'read-only-erc', name: 'Read Only'},
-};
-
-const STYLE_BOOK_RESOURCE_TYPE = {
-	color: 'purple',
-	defaultActionId: 'edit',
-	entryClassName: 'com.liferay.style.book.model.StyleBookEntry',
-	key: 'style-book',
-	label: 'Style Book',
-	symbol: 'book',
-};
-
 const FRAGMENT_RESOURCE_TYPE = {
 	color: 'pink',
 	defaultActionId: 'view',
@@ -81,6 +67,20 @@ const MASTER_PAGE_RESOURCE_TYPE = {
 	key: 'master-page',
 	label: 'Master Page',
 	symbol: 'page',
+};
+
+const READ_ONLY_ITEM = {
+	actions: {},
+	embedded: {externalReferenceCode: 'read-only-erc', name: 'Read Only'},
+};
+
+const STYLE_BOOK_RESOURCE_TYPE = {
+	color: 'purple',
+	defaultActionId: 'edit',
+	entryClassName: 'com.liferay.style.book.model.StyleBookEntry',
+	key: 'style-book',
+	label: 'Style Book',
+	symbol: 'book',
 };
 
 function creationItem(id: string, label: string) {

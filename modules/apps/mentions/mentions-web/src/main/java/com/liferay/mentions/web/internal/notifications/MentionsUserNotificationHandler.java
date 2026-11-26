@@ -159,8 +159,9 @@ public class MentionsUserNotificationHandler
 				PortletRequest.RENDER_PHASE));
 
 		return HttpComponentsUtil.addParameters(
-			link, "backURL", notificationsURL, "p_l_back_url",
-			notificationsURL);
+			link, "backURL", notificationsURL, "p_l_back_url", notificationsURL,
+			"p_l_back_url_title",
+			_language.get(serviceContext.getLocale(), "notifications"));
 	}
 
 	@Override

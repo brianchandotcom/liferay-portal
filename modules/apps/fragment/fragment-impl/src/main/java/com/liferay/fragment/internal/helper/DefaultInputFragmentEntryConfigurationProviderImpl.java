@@ -15,6 +15,7 @@ import com.liferay.info.field.type.EmailInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.FriendlyURLInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
+import com.liferay.info.field.type.LocationInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
@@ -151,6 +152,9 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 		).put(
 			HTMLInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-rich-text-input")
+		).put(
+			LocationInfoFieldType.INSTANCE.getName(),
+			JSONUtil.put("key", "INPUTS-location-input")
 		).put(
 			LongTextInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-textarea")

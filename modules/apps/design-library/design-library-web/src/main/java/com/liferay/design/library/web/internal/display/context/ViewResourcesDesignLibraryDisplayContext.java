@@ -201,14 +201,14 @@ public class ViewResourcesDesignLibraryDisplayContext
 						_toCreationItemMaps(
 							designLibraryResourceCreationItems));
 					resourceType.put(
-						"creationItemsGroupLabel",
-						designLibraryResourceTypeContributor.
-							getCreationItemsGroupLabel(
-								themeDisplay.getLocale()));
-					resourceType.put(
 						"creationItemsSectionKey",
 						designLibraryResourceTypeContributor.
 							getCreationItemsSectionKey());
+					resourceType.put(
+						"creationItemsSubmenuLabel",
+						designLibraryResourceTypeContributor.
+							getCreationItemsSubmenuLabel(
+								themeDisplay.getLocale()));
 				}
 			}
 

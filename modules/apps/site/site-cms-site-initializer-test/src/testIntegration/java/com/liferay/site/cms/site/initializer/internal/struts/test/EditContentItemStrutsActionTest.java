@@ -87,10 +87,11 @@ public class EditContentItemStrutsActionTest {
 			_groupLocalService.getGroup(
 				TestPropsValues.getCompanyId(), GroupConstants.CMS));
 		String layoutBackURL = RandomTestUtil.randomString();
+		String layoutBackURLTitle = RandomTestUtil.randomString();
 		long messageId = RandomTestUtil.randomLong();
 
 		MockHttpServletResponse mockHttpServletResponse = _execute(
-			layout, layoutBackURL, messageId, objectEntry,
+			layout, layoutBackURL, layoutBackURLTitle, messageId, objectEntry,
 			TestPropsValues.getUser());
 
 		ObjectDefinition objectDefinition =
@@ -111,6 +112,10 @@ public class EditContentItemStrutsActionTest {
 			layoutBackURL,
 			HttpComponentsUtil.getParameter(
 				redirectedURL, "p_l_back_url", false));
+		Assert.assertEquals(
+			layoutBackURLTitle,
+			HttpComponentsUtil.getParameter(
+				redirectedURL, "p_l_back_url_title", false));
 		Assert.assertEquals(
 			Constants.READ,
 			HttpComponentsUtil.getParameter(redirectedURL, "p_l_mode", false));
@@ -136,7 +141,8 @@ public class EditContentItemStrutsActionTest {
 				TestPropsValues.getCompanyId(), GroupConstants.CMS));
 
 		MockHttpServletResponse mockHttpServletResponse = _execute(
-			layout, RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			layout, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			objectEntry, TestPropsValues.getUser());
 
 		Assert.assertEquals(
@@ -173,7 +179,8 @@ public class EditContentItemStrutsActionTest {
 		User user = UserTestUtil.addUser();
 
 		MockHttpServletResponse mockHttpServletResponse = _execute(
-			layout, RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			layout, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			objectEntry, user);
 
 		Assert.assertEquals(
@@ -231,8 +238,8 @@ public class EditContentItemStrutsActionTest {
 	}
 
 	private MockHttpServletResponse _execute(
-			Layout layout, String layoutBackURL, long messageId,
-			ObjectEntry objectEntry, User user)
+			Layout layout, String layoutBackURL, String layoutBackURLTitle,
+			long messageId, ObjectEntry objectEntry, User user)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -245,6 +252,8 @@ public class EditContentItemStrutsActionTest {
 		mockHttpServletRequest.setParameter(
 			"objectEntryId", String.valueOf(objectEntry.getObjectEntryId()));
 		mockHttpServletRequest.setParameter("p_l_back_url", layoutBackURL);
+		mockHttpServletRequest.setParameter(
+			"p_l_back_url_title", layoutBackURLTitle);
 		mockHttpServletRequest.setParameter("p_l_mode", Constants.READ);
 		mockHttpServletRequest.setRequestURI(layout.getFriendlyURL());
 

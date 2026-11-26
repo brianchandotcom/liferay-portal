@@ -161,6 +161,10 @@ public class MentionsUserNotificationHandlerTest {
 			backURL,
 			HttpComponentsUtil.getParameter(link, "p_l_back_url", false));
 
+		Assert.assertEquals(
+			"Notifications",
+			HttpComponentsUtil.getParameter(link, "p_l_back_url_title", false));
+
 		_groupLocalService.deleteGroup(group);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

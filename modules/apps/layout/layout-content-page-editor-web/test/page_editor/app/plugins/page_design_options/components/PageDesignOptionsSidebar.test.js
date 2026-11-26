@@ -204,7 +204,7 @@ describe('PageDesignOptionsSidebar', () => {
 		mockConfigGetter.mockImplementation(() => DEFAULT_CONFIG);
 	});
 
-	it('does not render the more page design options link when editing a launch draft', () => {
+	it('does not render the more page design options link when editing a launch set draft', () => {
 		mockConfigGetter.mockImplementation(() => ({
 			...DEFAULT_CONFIG,
 			launchSetId: 1,

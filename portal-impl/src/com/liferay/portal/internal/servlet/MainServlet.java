@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.fips.FIPSApplicationStateMachineUtil;
 import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -366,6 +367,16 @@ public class MainServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+		}
+
+		if (PropsValues.FIPS_ENABLED) {
+			try {
+				FIPSModeValidator.validateKeyEncryptionKeys();
+			}
+			catch (Exception exception) {
+				FIPSApplicationStateMachineUtil.error(
+					"Key encryption key check", exception);
+			}
 		}
 
 		if (_log.isDebugEnabled()) {

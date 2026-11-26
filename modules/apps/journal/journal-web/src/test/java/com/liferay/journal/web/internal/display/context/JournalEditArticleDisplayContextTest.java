@@ -5,15 +5,22 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -22,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -30,7 +38,9 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -82,6 +92,7 @@ public class JournalEditArticleDisplayContextTest {
 	@After
 	public void tearDown() {
 		_ddmStructureLocalServiceUtilMockedStatic.close();
+		_journalArticleLocalServiceUtilMockedStatic.close();
 		_journalArticleServiceUtilMockedStatic.close();
 	}
 
@@ -112,6 +123,12 @@ public class JournalEditArticleDisplayContextTest {
 		).get(
 			_httpServletRequest, "home"
 		);
+	}
+
+	@Test
+	public void testGetDDMFormValues() throws PortalException {
+		_testGetDDMFormValuesWithDifferentDefaultLanguage();
+		_testGetDDMFormValuesWithSameDefaultLanguage();
 	}
 
 	@Test
@@ -412,6 +429,251 @@ public class JournalEditArticleDisplayContextTest {
 		);
 	}
 
+	private DDMFormFieldValue _createDDMFormFieldValue(
+		Locale locale, String string) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName(RandomTestUtil.randomString());
+
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(locale, string);
+
+		ddmFormFieldValue.setValue(localizedValue);
+
+		return ddmFormFieldValue;
+	}
+
+	private DDMFormValues _createDDMFormValues(
+		DDMFormFieldValue... ddmFormFieldValues) {
+
+		DDMFormValues ddmFormValues = new DDMFormValues(new DDMForm());
+
+		ddmFormValues.addAvailableLocale(LocaleUtil.US);
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		}
+
+		ddmFormValues.setDefaultLocale(LocaleUtil.US);
+
+		return ddmFormValues;
+	}
+
+	private JournalEditArticleDisplayContext
+			_getDDMStructureArticleJournalEditArticleDisplayContext(
+				DDMFormValues ddmFormValues, Locale defaultArticleLocale)
+		throws PortalException {
+
+		Mockito.when(
+			_httpServletRequest.getParameterNames()
+		).thenReturn(
+			Collections.emptyEnumeration()
+		);
+
+		long ddmStructureId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("ddmStructureId")
+		).thenReturn(
+			String.valueOf(ddmStructureId)
+		);
+
+		String defaultArticleLanguageId = LocaleUtil.toLanguageId(
+			defaultArticleLocale);
+
+		Mockito.when(
+			_httpServletRequest.getParameter("defaultLanguageId")
+		).thenReturn(
+			defaultArticleLanguageId
+		);
+
+		Mockito.when(
+			_language.isAvailableLocale(0, defaultArticleLanguageId)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_language.isAvailableLocale(defaultArticleLocale)
+		).thenReturn(
+			true
+		);
+
+		DDMStructure ddmStructure = Mockito.mock(DDMStructure.class);
+
+		long groupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			ddmStructure.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			ddmStructure.getStructureId()
+		).thenReturn(
+			ddmStructureId
+		);
+
+		Mockito.when(
+			DDMStructureLocalServiceUtil.fetchStructure(ddmStructureId)
+		).thenReturn(
+			ddmStructure
+		);
+
+		JournalArticle ddmStructureArticle = Mockito.mock(JournalArticle.class);
+
+		Mockito.when(
+			ddmStructureArticle.getDDMFormValues()
+		).thenReturn(
+			ddmFormValues
+		);
+
+		Mockito.when(
+			JournalArticleLocalServiceUtil.getArticle(
+				groupId, DDMStructure.class.getName(), ddmStructureId)
+		).thenReturn(
+			ddmStructureArticle
+		);
+
+		JournalArticle journalArticle = Mockito.mock(JournalArticle.class);
+
+		Mockito.when(
+			journalArticle.isNew()
+		).thenReturn(
+			true
+		);
+
+		return new JournalEditArticleDisplayContext(
+			_httpServletRequest, _liferayPortletResponse, journalArticle, null,
+			null, null);
+	}
+
+	private void _testGetDDMFormValuesWithDifferentDefaultLanguage()
+		throws PortalException {
+
+		DDMFormFieldValue blankDDMFormFieldValue = _createDDMFormFieldValue(
+			LocaleUtil.US, StringPool.BLANK);
+
+		String string = RandomTestUtil.randomString();
+
+		DDMFormFieldValue fieldSetDDMFormFieldValue = new DDMFormFieldValue();
+
+		fieldSetDDMFormFieldValue.addNestedDDMFormFieldValue(
+			_createDDMFormFieldValue(LocaleUtil.US, string));
+		fieldSetDDMFormFieldValue.setName(RandomTestUtil.randomString());
+
+		DDMFormFieldValue japaneseDDMFormFieldValue = _createDDMFormFieldValue(
+			LocaleUtil.US, RandomTestUtil.randomString());
+
+		Value japaneseValue = japaneseDDMFormFieldValue.getValue();
+
+		String japaneseString = RandomTestUtil.randomString();
+
+		japaneseValue.addString(LocaleUtil.JAPAN, japaneseString);
+
+		DDMFormFieldValue spanishDDMFormFieldValue = _createDDMFormFieldValue(
+			LocaleUtil.US, string);
+
+		Value spanishValue = spanishDDMFormFieldValue.getValue();
+
+		String spanishString = RandomTestUtil.randomString();
+
+		spanishValue.addString(LocaleUtil.SPAIN, spanishString);
+
+		DDMFormFieldValue unlocalizedDDMFormFieldValue =
+			new DDMFormFieldValue();
+
+		unlocalizedDDMFormFieldValue.setName(RandomTestUtil.randomString());
+		unlocalizedDDMFormFieldValue.setValue(
+			new UnlocalizedValue(Boolean.TRUE.toString()));
+
+		JournalEditArticleDisplayContext journalEditArticleDisplayContext =
+			_getDDMStructureArticleJournalEditArticleDisplayContext(
+				_createDDMFormValues(
+					blankDDMFormFieldValue, fieldSetDDMFormFieldValue,
+					japaneseDDMFormFieldValue, spanishDDMFormFieldValue,
+					unlocalizedDDMFormFieldValue),
+				LocaleUtil.JAPAN);
+
+		DDMFormValues ddmFormValues =
+			journalEditArticleDisplayContext.getDDMFormValues();
+
+		Assert.assertEquals(
+			Collections.singleton(LocaleUtil.JAPAN),
+			ddmFormValues.getAvailableLocales());
+		Assert.assertEquals(LocaleUtil.JAPAN, ddmFormValues.getDefaultLocale());
+
+		Value blankValue = blankDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.JAPAN, StringPool.BLANK
+			).build(),
+			blankValue.getValues());
+		Assert.assertEquals(LocaleUtil.JAPAN, blankValue.getDefaultLocale());
+
+		List<DDMFormFieldValue> nestedDDMFormFieldValues =
+			fieldSetDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+		DDMFormFieldValue nestedDDMFormFieldValue =
+			nestedDDMFormFieldValues.get(0);
+
+		Value nestedValue = nestedDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.JAPAN, string
+			).build(),
+			nestedValue.getValues());
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.JAPAN, japaneseString
+			).build(),
+			japaneseValue.getValues());
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.JAPAN, string
+			).put(
+				LocaleUtil.SPAIN, spanishString
+			).build(),
+			spanishValue.getValues());
+
+		Value unlocalizedValue = unlocalizedDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), unlocalizedValue.getString(null));
+	}
+
+	private void _testGetDDMFormValuesWithSameDefaultLanguage()
+		throws PortalException {
+
+		String string = RandomTestUtil.randomString();
+
+		DDMFormFieldValue ddmFormFieldValue = _createDDMFormFieldValue(
+			LocaleUtil.US, string);
+
+		JournalEditArticleDisplayContext journalEditArticleDisplayContext =
+			_getDDMStructureArticleJournalEditArticleDisplayContext(
+				_createDDMFormValues(ddmFormFieldValue), LocaleUtil.US);
+
+		DDMFormValues ddmFormValues =
+			journalEditArticleDisplayContext.getDDMFormValues();
+
+		Assert.assertEquals(LocaleUtil.US, ddmFormValues.getDefaultLocale());
+
+		Value value = ddmFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.US, string
+			).build(),
+			value.getValues());
+	}
+
 	private void _testGetDefaultArticleLanguageIdFromArticle()
 		throws PortalException {
 
@@ -640,6 +902,9 @@ public class JournalEditArticleDisplayContextTest {
 		HttpServletRequest.class);
 	private final JournalArticle _journalArticle = Mockito.mock(
 		JournalArticle.class);
+	private final MockedStatic<JournalArticleLocalServiceUtil>
+		_journalArticleLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			JournalArticleLocalServiceUtil.class);
 	private final MockedStatic<JournalArticleServiceUtil>
 		_journalArticleServiceUtilMockedStatic = Mockito.mockStatic(
 			JournalArticleServiceUtil.class);

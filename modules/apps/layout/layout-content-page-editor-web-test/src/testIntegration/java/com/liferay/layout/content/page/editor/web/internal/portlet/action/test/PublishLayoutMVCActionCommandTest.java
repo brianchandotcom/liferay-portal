@@ -492,18 +492,18 @@ public class PublishLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-110723")
-	public void testPublishedLaunchDraftLayout() throws Exception {
-		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
+	public void testPublishedLaunchSetDraftLayout() throws Exception {
+		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			RandomTestUtil.randomLong(), _layout);
 
-		ContentLayoutTestUtil.publishLayout(launchDraftLayout, _layout);
+		ContentLayoutTestUtil.publishLayout(launchSetDraftLayout, _layout);
 
-		launchDraftLayout = _layoutLocalService.getLayout(
-			launchDraftLayout.getPlid());
+		launchSetDraftLayout = _layoutLocalService.getLayout(
+			launchSetDraftLayout.getPlid());
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_READY_TO_PUBLISH,
-			launchDraftLayout.getStatus());
+			launchSetDraftLayout.getStatus());
 
 		Layout layout = _layoutLocalService.getLayout(_layout.getPlid());
 
@@ -513,7 +513,7 @@ public class PublishLayoutMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-110723")
-	public void testPublishedLaunchDraftLayoutWithWorkflowDefinitionLink()
+	public void testPublishedLaunchSetDraftLayoutWithWorkflowDefinitionLink()
 		throws Exception {
 
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
@@ -521,21 +521,21 @@ public class PublishLayoutMVCActionCommandTest {
 			_group.getGroupId(), Layout.class.getName(), 0, 0,
 			"Single Approver@1");
 
-		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
+		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			RandomTestUtil.randomLong(), _layout);
 
-		ContentLayoutTestUtil.publishLayout(launchDraftLayout, _layout);
+		ContentLayoutTestUtil.publishLayout(launchSetDraftLayout, _layout);
 
 		Layout layout = _layoutLocalService.getLayout(_layout.getPlid());
 
 		Assert.assertEquals(_layout.getStatus(), layout.getStatus());
 
-		launchDraftLayout = _layoutLocalService.getLayout(
-			launchDraftLayout.getPlid());
+		launchSetDraftLayout = _layoutLocalService.getLayout(
+			launchSetDraftLayout.getPlid());
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_READY_TO_PUBLISH,
-			launchDraftLayout.getStatus());
+			launchSetDraftLayout.getStatus());
 	}
 
 	@Test

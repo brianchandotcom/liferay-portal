@@ -12,6 +12,7 @@ export {registerInputFeedback} from './registerInputFeedback';
 export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';
 export {renderDateInput} from './renderDateInput';
+export {renderLocationInput} from './renderLocationInput';
 export {updateDLVideo} from './updateDLVideo';
 export {openCMSFileSelectorModal} from '@liferay/frontend-js-item-selector-web';
 export {

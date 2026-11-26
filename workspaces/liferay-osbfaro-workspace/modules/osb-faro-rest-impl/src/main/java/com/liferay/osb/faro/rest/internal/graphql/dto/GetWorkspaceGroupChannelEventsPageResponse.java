@@ -40,12 +40,12 @@ public class GetWorkspaceGroupChannelEventsPageResponse {
 			return _canonicalUrl;
 		}
 
-		@JsonFormat(pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
+		@JsonFormat(locale = "en", pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
 		public Date getCreateDate() {
 			return _createDate;
 		}
 
-		@JsonFormat(pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
+		@JsonFormat(locale = "en", pattern = "EEE MMM dd HH:mm:ss zzz yyyy")
 		public Date getEventDate() {
 			return _eventDate;
 		}

@@ -54,7 +54,11 @@ public class UserSessionDTOConverter
 				setDeviceType(userSession::getDeviceType);
 				setEvents(
 					() -> _toEvents(
-						dtoConverterContext, userSession.getEvents()));
+						new FaroDTOConverterContext(
+							dtoConverterContext.isAcceptAllLanguages(),
+							userSession.getIndividualId(),
+							dtoConverterContext.getLocale()),
+						userSession.getEvents()));
 				setIndividualId(userSession::getIndividualId);
 			}
 		};

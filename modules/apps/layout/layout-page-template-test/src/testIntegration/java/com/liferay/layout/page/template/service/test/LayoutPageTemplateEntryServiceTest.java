@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -44,7 +45,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -62,12 +65,14 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.List;
 
@@ -346,6 +351,90 @@ public class LayoutPageTemplateEntryServiceTest {
 
 			Assert.assertEquals(
 				layout.getPlid(), layoutPageTemplateEntryPlidException.plid);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlidWithLayoutSetPrototype()
+		throws Exception {
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSetPrototype.getSettingsProperties();
+
+		settingsUnicodeProperties.setProperty("layoutsUpdateable", "false");
+
+		layoutSetPrototype.setSettingsProperties(settingsUnicodeProperties);
+
+		layoutSetPrototype =
+			_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
+				layoutSetPrototype);
+
+		_sites.updateLayoutSetPrototypesLinks(
+			_group1, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			false);
+
+		User user = _addUser();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			user.getUserId(), _group1);
+
+		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypeContentLayout(
+			layoutSetPrototype.getGroup(), true, false);
+
+		layout.setLayoutSetPrototypeLayoutERC(
+			layoutSetPrototypeLayout.getExternalReferenceCode());
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		Assert.assertFalse(layout.isLayoutUpdateable());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_addLayoutPageTemplateEntry(layout.getPlid());
+
+			Assert.assertEquals(
+				layout.getPlid(), layoutPageTemplateEntry.getPlid());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlidWithOwnerPermission()
+		throws Exception {
+
+		User user = _addUser();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			user.getUserId(), _group1);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_addLayoutPageTemplateEntry(layout.getPlid());
+
+			Assert.assertEquals(
+				layout.getPlid(), layoutPageTemplateEntry.getPlid());
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlidWithoutPermissions()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_addUser())) {
+
+			_addLayoutPageTemplateEntry(layout.getPlid());
 		}
 	}
 
@@ -1396,6 +1485,21 @@ public class LayoutPageTemplateEntryServiceTest {
 			ContentTypes.IMAGE_PNG, false);
 	}
 
+	private User _addUser() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		RoleTestUtil.addResourcePermission(
+			role, LayoutPageTemplateConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group1.getGroupId()),
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		return user;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryServiceTest.class);
 
@@ -1407,6 +1511,9 @@ public class LayoutPageTemplateEntryServiceTest {
 
 	@Inject
 	private Language _language;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 
@@ -1429,6 +1536,9 @@ public class LayoutPageTemplateEntryServiceTest {
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Inject
 	private PortletFileRepository _portletFileRepository;
 
 	@Inject
@@ -1438,5 +1548,8 @@ public class LayoutPageTemplateEntryServiceTest {
 	private RoleLocalService _roleLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private Sites _sites;
 
 }

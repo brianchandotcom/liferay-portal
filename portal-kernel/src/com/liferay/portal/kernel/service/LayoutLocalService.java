@@ -395,8 +395,6 @@ public interface LayoutLocalService
 			long targetSegmentsExperienceId, Layout targetLayout)
 		throws Exception;
 
-	public int countDraftLayouts(long plid);
-
 	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *
@@ -698,6 +696,9 @@ public interface LayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultPlid(
 		long groupId, boolean privateLayout, String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDraftLayoutsCount(long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -1750,4 +1751,4 @@ public interface LayoutLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-446431015
+// LIFERAY-SERVICE-BUILDER-HASH:-1735677929

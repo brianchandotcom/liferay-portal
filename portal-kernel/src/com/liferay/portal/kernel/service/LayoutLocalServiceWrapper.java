@@ -421,11 +421,6 @@ public class LayoutLocalServiceWrapper
 			targetSegmentsExperienceId, targetLayout);
 	}
 
-	@Override
-	public int countDraftLayouts(long plid) {
-		return _layoutLocalService.countDraftLayouts(plid);
-	}
-
 	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *
@@ -854,6 +849,11 @@ public class LayoutLocalServiceWrapper
 
 		return _layoutLocalService.getDefaultPlid(
 			groupId, privateLayout, portletId);
+	}
+
+	@Override
+	public int getDraftLayoutsCount(long plid) {
+		return _layoutLocalService.getDraftLayoutsCount(plid);
 	}
 
 	@Override
@@ -2385,4 +2385,4 @@ public class LayoutLocalServiceWrapper
 	private LayoutLocalService _layoutLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-951043993
+// LIFERAY-SERVICE-BUILDER-HASH:-909169077

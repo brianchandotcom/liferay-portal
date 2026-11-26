@@ -419,10 +419,6 @@ public class LayoutLocalServiceUtil {
 			targetSegmentsExperienceId, targetLayout);
 	}
 
-	public static int countDraftLayouts(long plid) {
-		return getService().countDraftLayouts(plid);
-	}
-
 	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *
@@ -799,6 +795,10 @@ public class LayoutLocalServiceUtil {
 		long groupId, boolean privateLayout, String portletId) {
 
 		return getService().getDefaultPlid(groupId, privateLayout, portletId);
+	}
+
+	public static int getDraftLayoutsCount(long plid) {
+		return getService().getDraftLayoutsCount(plid);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -2164,4 +2164,4 @@ public class LayoutLocalServiceUtil {
 	private static volatile LayoutLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1869876339
+// LIFERAY-SERVICE-BUILDER-HASH:-1860778737

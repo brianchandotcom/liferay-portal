@@ -73,7 +73,7 @@ test(
 
 		// Cancel the modal
 
-		await designLibrariesPage.clickNewStyleBook();
+		await designLibrariesPage.clickAddAssetMenuItem('New Style Book');
 
 		const modal = page.getByRole('dialog');
 
@@ -87,7 +87,7 @@ test(
 
 		// Add a style book
 
-		await designLibrariesPage.clickNewStyleBook();
+		await designLibrariesPage.clickAddAssetMenuItem('New Style Book');
 
 		const styleBookName = getRandomString();
 

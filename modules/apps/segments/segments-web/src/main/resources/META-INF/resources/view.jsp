@@ -54,20 +54,18 @@ request.setAttribute("view.jsp-eventName", eventName);
 </portlet:actionURL>
 
 <aui:form action="<%= deleteSegmentsEntryURL %>" cssClass="c-p-0 container-fluid container-fluid-max-xl h-100" method="post" name="fmSegmentsEntries">
-	<c:if test='<%= !FeatureFlagManagerUtil.isEnabled(CompanyConstants.SYSTEM, "LPD-78863") %>'>
-		<clay:alert
-			cssClass="mt-4"
-			displayType="info"
-			title="info"
-		>
-			<liferay-ui:message key="segments-deprecation-info-message" />
+	<clay:alert
+		cssClass="mt-4"
+		displayType="info"
+		title="info"
+	>
+		<liferay-ui:message key="segments-deprecation-info-message" />
 
-			<liferay-learn:message
-				key="personalization"
-				resource="segments-web"
-			/>
-		</clay:alert>
-	</c:if>
+		<liferay-learn:message
+			key="personalization"
+			resource="segments-web"
+		/>
+	</clay:alert>
 
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 

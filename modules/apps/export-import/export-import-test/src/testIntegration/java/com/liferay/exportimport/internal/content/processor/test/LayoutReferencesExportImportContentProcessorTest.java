@@ -428,7 +428,7 @@ public class LayoutReferencesExportImportContentProcessorTest {
 				exportGroup.getCompanyId(), exportGroup.getGroupId(),
 				new HashMap<>(),
 				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
-				new TestReaderWriter());
+				new ZipWriter());
 
 		Element rootElement = SAXReaderUtil.createElement("root");
 

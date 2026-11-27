@@ -15,7 +15,10 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConstants;
 
 import java.io.Serializable;
@@ -59,7 +62,14 @@ public class PIMBasicProductTestUtil {
 			HashMapBuilder.<String, Serializable>put(
 				"sku", sku
 			).put(
-				"title", title
+				"title_i18n",
+				HashMapBuilder.put(
+					GetterUtil.getString(
+						defaultLanguageId,
+						LocaleUtil.toLanguageId(
+							PortalUtil.getSiteDefaultLocale(groupId))),
+					title
+				).build()
 			).build(),
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}

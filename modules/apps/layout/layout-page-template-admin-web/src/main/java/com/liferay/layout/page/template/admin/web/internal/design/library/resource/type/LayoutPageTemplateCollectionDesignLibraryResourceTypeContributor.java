@@ -10,6 +10,7 @@ import com.liferay.design.library.resource.type.DesignLibraryResourceCreationIte
 import com.liferay.design.library.resource.type.DesignLibraryResourceTypeContributor;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -46,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Georgel Pop
  */
 @Component(
-	property = "service.ranking:Integer=50",
+	property = "service.ranking:Integer=300",
 	service = DesignLibraryResourceTypeContributor.class
 )
 public class LayoutPageTemplateCollectionDesignLibraryResourceTypeContributor
@@ -75,7 +76,13 @@ public class LayoutPageTemplateCollectionDesignLibraryResourceTypeContributor
 	}
 
 	@Override
-	public String getCreationItemsGroupLabel(Locale locale) {
+	public String getCreationItemsCategoryKey() {
+		return LayoutPageTemplateAdminWebConstants.
+			CREATION_ITEMS_CATEGORY_KEY_PAGES;
+	}
+
+	@Override
+	public String getCreationItemsSubmenuLabel(Locale locale) {
 		return LanguageUtil.get(locale, "page-templates");
 	}
 

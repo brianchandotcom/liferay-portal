@@ -29,7 +29,8 @@ const PAGE_TEMPLATE_SET = {
 			moduleProps: {},
 		},
 	],
-	creationItemsGroupLabel: 'Page Templates',
+	creationItemsCategoryKey: 'pages',
+	creationItemsSubmenuLabel: 'Page Templates',
 	defaultActionId: 'view',
 	entryClassName:
 		'com.liferay.layout.page.template.model.LayoutPageTemplateCollection',
@@ -48,6 +49,7 @@ const STYLE_BOOK = {
 			moduleProps: {},
 		},
 	],
+	creationItemsCategoryKey: 'style-book',
 	defaultActionId: 'edit',
 	entryClassName: 'com.liferay.style.book.model.StyleBookEntry',
 	key: 'style-book',
@@ -56,7 +58,7 @@ const STYLE_BOOK = {
 };
 
 describe('DesignLibraryAssetsSectionHeader', () => {
-	it('hides the add asset action without creation items and groups them per type', async () => {
+	it('hides the add asset action without creation items and groups them in sections and per type', async () => {
 		Object.defineProperty(document.body, 'clientWidth', {
 			configurable: true,
 			value: 1440,
@@ -74,7 +76,7 @@ describe('DesignLibraryAssetsSectionHeader', () => {
 
 		rerender(
 			<DesignLibraryAssetsSectionHeader
-				resourceTypes={[PAGE_TEMPLATE_SET, STYLE_BOOK]}
+				resourceTypes={[STYLE_BOOK, PAGE_TEMPLATE_SET]}
 			/>
 		);
 
@@ -83,6 +85,7 @@ describe('DesignLibraryAssetsSectionHeader', () => {
 		expect(
 			screen.getByRole('menuitem', {name: 'new-style-book'})
 		).toBeVisible();
+		expect(screen.getAllByRole('separator')).toHaveLength(1);
 
 		await userEvent.click(
 			screen.getByRole('menuitem', {name: 'Page Templates'})

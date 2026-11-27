@@ -40,6 +40,35 @@ const DELETABLE_ITEM = {
 	embedded: {externalReferenceCode: 'style-book-erc', name: 'Style Book'},
 };
 
+const DISPLAY_PAGE_TEMPLATE_RESOURCE_TYPE = {
+	color: 'blue',
+	defaultActionId: 'edit',
+	entryClassName:
+		'com.liferay.layout.page.template.model.LayoutPageTemplateEntry',
+	key: 'display-page-template',
+	label: 'Display Page Template',
+	symbol: 'page',
+};
+
+const FRAGMENT_RESOURCE_TYPE = {
+	color: 'pink',
+	defaultActionId: 'view',
+	entryClassName: 'com.liferay.fragment.model.FragmentCollection',
+	key: 'fragment',
+	label: 'Fragment Set',
+	symbol: 'cards2',
+};
+
+const MASTER_PAGE_RESOURCE_TYPE = {
+	color: 'blue',
+	defaultActionId: 'edit',
+	entryClassName:
+		'com.liferay.layout.page.template.model.LayoutPageTemplateEntry',
+	key: 'master-page',
+	label: 'Master Page',
+	symbol: 'page',
+};
+
 const READ_ONLY_ITEM = {
 	actions: {},
 	embedded: {externalReferenceCode: 'read-only-erc', name: 'Read Only'},
@@ -52,15 +81,6 @@ const STYLE_BOOK_RESOURCE_TYPE = {
 	key: 'style-book',
 	label: 'Style Book',
 	symbol: 'book',
-};
-
-const FRAGMENT_RESOURCE_TYPE = {
-	color: 'pink',
-	defaultActionId: 'view',
-	entryClassName: 'com.liferay.fragment.model.FragmentCollection',
-	key: 'fragment',
-	label: 'Fragment Set',
-	symbol: 'cards2',
 };
 
 function creationItem(id: string, label: string) {
@@ -100,9 +120,11 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 			},
 		});
 
-		expect(creationMenu?.primaryItems.map((item) => item.label)).toEqual([
-			'new-style-book',
-		]);
+		expect(
+			creationMenu?.primaryItems.map((item) =>
+				item.items?.map((nestedItem) => nestedItem.label)
+			)
+		).toEqual([['new-style-book']]);
 	});
 
 	it('orders the creation menu by contributor', () => {
@@ -133,10 +155,120 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 			},
 		});
 
-		expect(creationMenu?.primaryItems.map((item) => item.label)).toEqual([
-			'new-style-book',
-			'new-basic-fragment',
-			'new-fragment-set',
+		expect(
+			creationMenu?.primaryItems.map((item) =>
+				item.items?.map((nestedItem) => nestedItem.label)
+			)
+		).toEqual([
+			['new-style-book'],
+			['new-basic-fragment', 'new-fragment-set'],
+		]);
+	});
+
+	it('groups the creation items in sections and in a submenu per type', () => {
+		const {creationMenu} = DesignLibraryAssetsFDSPropsTransformer({
+			...BASE_PROPS,
+			additionalProps: {
+				resourceTypes: [
+					{
+						...STYLE_BOOK_RESOURCE_TYPE,
+						creationItems: [
+							creationItem('add-style-book', 'new-style-book'),
+						],
+						creationItemsCategoryKey: 'style-book',
+						creationItemsSubmenuLabel: 'Style Books',
+					},
+					{
+						...MASTER_PAGE_RESOURCE_TYPE,
+						creationItems: [
+							creationItem('add-master-page', 'new-master-page'),
+						],
+						creationItemsCategoryKey: 'pages',
+						creationItemsSubmenuLabel: 'Master Pages',
+					},
+					{
+						...FRAGMENT_RESOURCE_TYPE,
+						creationItems: [
+							creationItem(
+								'add-basic-fragment',
+								'new-basic-fragment'
+							),
+							creationItem(
+								'add-fragment-set',
+								'new-fragment-set'
+							),
+						],
+						creationItemsCategoryKey: 'fragment',
+						creationItemsSubmenuLabel: 'Fragments',
+					},
+					{
+						...DISPLAY_PAGE_TEMPLATE_RESOURCE_TYPE,
+						creationItems: [
+							creationItem(
+								'add-display-page-template',
+								'new-display-page-template'
+							),
+						],
+						creationItemsCategoryKey: 'pages',
+						creationItemsSubmenuLabel: 'Display Page Templates',
+					},
+				],
+			},
+		});
+
+		expect(
+			creationMenu?.primaryItems.map((section) => ({
+				items: section.items?.map((item) => ({
+					items: item.items?.map((nestedItem) => nestedItem.label),
+					label: item.label,
+					type: item.type,
+				})),
+				label: section.label,
+				separator: section.separator,
+				type: section.type,
+			}))
+		).toEqual([
+			{
+				items: [
+					{
+						items: undefined,
+						label: 'new-style-book',
+						type: undefined,
+					},
+				],
+				label: '',
+				separator: true,
+				type: 'group',
+			},
+			{
+				items: [
+					{
+						items: undefined,
+						label: 'new-master-page',
+						type: undefined,
+					},
+					{
+						items: undefined,
+						label: 'new-display-page-template',
+						type: undefined,
+					},
+				],
+				label: '',
+				separator: true,
+				type: 'group',
+			},
+			{
+				items: [
+					{
+						items: ['new-basic-fragment', 'new-fragment-set'],
+						label: 'Fragments',
+						type: 'contextual',
+					},
+				],
+				label: '',
+				separator: true,
+				type: 'group',
+			},
 		]);
 	});
 

@@ -35,7 +35,11 @@ public interface DesignLibraryResourceTypeContributor {
 		return Collections.emptyList();
 	}
 
-	public default String getCreationItemsGroupLabel(Locale locale) {
+	public default String getCreationItemsCategoryKey() {
+		return getKey();
+	}
+
+	public default String getCreationItemsSubmenuLabel(Locale locale) {
 		return getLabel(locale);
 	}
 

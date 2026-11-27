@@ -201,9 +201,13 @@ public class ViewResourcesDesignLibraryDisplayContext
 						_toCreationItemMaps(
 							designLibraryResourceCreationItems));
 					resourceType.put(
-						"creationItemsGroupLabel",
+						"creationItemsCategoryKey",
 						designLibraryResourceTypeContributor.
-							getCreationItemsGroupLabel(
+							getCreationItemsCategoryKey());
+					resourceType.put(
+						"creationItemsSubmenuLabel",
+						designLibraryResourceTypeContributor.
+							getCreationItemsSubmenuLabel(
 								themeDisplay.getLocale()));
 				}
 			}

@@ -3,30 +3,67 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import {ComponentProps} from 'react';
-
-import getCreationMenuItems from './getCreationMenuItems';
+import getCreationMenuItems, {CreationMenuItem} from './getCreationMenuItems';
 import {DesignLibraryResourceType} from './types';
 
-type CreationMenuItems = ComponentProps<typeof ClayDropDownWithItems>['items'];
+type CreationMenuSubmenu = {
+	items: CreationMenuItem[];
+	label: string;
+	type: 'contextual';
+};
+
+type CreationMenuSectionItem = CreationMenuItem | CreationMenuSubmenu;
+
+export type CreationMenuSection = {
+	items: CreationMenuSectionItem[];
+	label: string;
+	separator: boolean;
+	type: 'group';
+};
 
 export default function getGroupedCreationMenuItems(
 	resourceTypes: DesignLibraryResourceType[]
-): CreationMenuItems {
-	return resourceTypes.flatMap<CreationMenuItems[number]>((resourceType) => {
+): CreationMenuSection[] {
+	const creationMenuSections = new Map<string, CreationMenuSection>();
+
+	for (const resourceType of resourceTypes) {
 		const creationMenuItems = getCreationMenuItems([resourceType]);
 
-		if (creationMenuItems.length > 1) {
-			return [
-				{
-					items: creationMenuItems,
-					label: resourceType.creationItemsGroupLabel,
-					type: 'contextual',
-				},
-			];
+		if (!creationMenuItems.length) {
+			continue;
 		}
 
-		return creationMenuItems;
-	});
+		const items: CreationMenuSectionItem[] =
+			creationMenuItems.length > 1 &&
+			resourceType.creationItemsSubmenuLabel
+				? [
+						{
+							items: creationMenuItems,
+							label: resourceType.creationItemsSubmenuLabel,
+							type: 'contextual',
+						},
+					]
+				: creationMenuItems;
+
+		const creationItemsCategoryKey =
+			resourceType.creationItemsCategoryKey ?? resourceType.key;
+
+		const creationMenuSection = creationMenuSections.get(
+			creationItemsCategoryKey
+		);
+
+		if (creationMenuSection) {
+			creationMenuSection.items.push(...items);
+		}
+		else {
+			creationMenuSections.set(creationItemsCategoryKey, {
+				items,
+				label: '',
+				separator: true,
+				type: 'group',
+			});
+		}
+	}
+
+	return Array.from(creationMenuSections.values());
 }

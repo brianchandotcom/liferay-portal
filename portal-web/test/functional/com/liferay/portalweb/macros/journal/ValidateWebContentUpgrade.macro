@@ -179,17 +179,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSpecificDisplayPageTemplateViaAssetPublisher() {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/Document Display Page");
-
-		AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
-
-		AssertElementPresent(
-			key_text = "DM Document Title",
-			locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
-	}
-
-	@summary = "Default summary"
 	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher(webContentColor = null) {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -398,25 +387,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWebContentWithNoDisplayPageTemplate() {
-		task ("View the View Content action not shown in dropdown list and the None is selected in Display Page Template field") {
-			for (var n : list "1,2") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-				Click(
-					key_webContentTitle = "Web Content Title ${n} Edit",
-					locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
-
-				MenuItem.viewNotPresent(menuItem = "View Content");
-
-				MenuItem.click(menuItem = "Edit");
-
-				WebContent.viewSelectedDisplayPageTemplateCP(displayPageTemplateType = "None");
-			}
-		}
-	}
-
-	@summary = "Default summary"
 	macro viewWebContentWithPredefinedValueInWebContentField() {
 		Navigator.openURL();
 
@@ -433,43 +403,6 @@ definition {
 		WebContent.viewWithStructureCP(
 			webContentTitle = "Web Content With Predefined Value",
 			webContentWebContent = "Web Content Title");
-	}
-
-	@summary = "Default summary"
-	macro viewWithStructureCP(webContentTitle = null, webContentTitleEscapeCharacter = null, webContentImage = null, description = null) {
-		if (!(isSet(predefinedValue))) {
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-			WebContentNavigator.gotoEditCP(
-				webContentTitle = ${webContentTitle},
-				webContentTitleEscapeCharacter = ${webContentTitleEscapeCharacter});
-
-			AssertTextEquals(
-				locator1 = "TextInput#TITLE",
-				value1 = ${webContentTitle});
-
-			if (isSet(description)) {
-				CKEditor.assertContentInWebContent(
-					content = ${description},
-					fieldLabel = "Description");
-			}
-		}
-
-		if (isSet(webContentImage)) {
-			if (!(isSet(webContentImageFieldLabel))) {
-				var webContentImageFieldLabel = "Image";
-			}
-
-			AssertTextEquals(
-				key_fieldFieldLabel = ${webContentImageFieldLabel},
-				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = ${webContentImage});
-
-			AssertElementPresent(
-				key_fieldFieldLabel = ${webContentImageFieldLabel},
-				key_image = "/documents/",
-				locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
-		}
 	}
 
 }

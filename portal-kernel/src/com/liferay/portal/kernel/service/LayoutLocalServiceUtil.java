@@ -781,6 +781,10 @@ public class LayoutLocalServiceUtil {
 		return getService().getDefaultPlid(groupId, privateLayout);
 	}
 
+	public static int getDraftLayoutsCount(long plid) {
+		return getService().getDraftLayoutsCount(plid);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -2121,4 +2125,4 @@ public class LayoutLocalServiceUtil {
 	private static volatile LayoutLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-132778349
+// LIFERAY-SERVICE-BUILDER-HASH:-26902534

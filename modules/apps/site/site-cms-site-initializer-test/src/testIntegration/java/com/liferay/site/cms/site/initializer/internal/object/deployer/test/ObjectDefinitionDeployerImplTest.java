@@ -271,8 +271,8 @@ public class ObjectDefinitionDeployerImplTest {
 
 		ObjectEntry depotEntryObjectEntry =
 			CMSDefaultValueUtil.addOrUpdateObjectEntry(
-				TestPropsValues.getUserId(), JSONFactoryUtil.createJSONArray(),
-				_depotEntry, _filterFactory);
+				JSONFactoryUtil.createJSONArray(), _depotEntry, _filterFactory,
+				TestPropsValues.getUserId());
 
 		Assert.assertFalse(
 			modelResourcePermission.contains(
@@ -290,8 +290,8 @@ public class ObjectDefinitionDeployerImplTest {
 
 		ObjectEntry objectEntryFolderObjectEntry =
 			CMSDefaultValueUtil.addOrUpdateObjectEntry(
-				TestPropsValues.getUserId(), JSONFactoryUtil.createJSONArray(),
-				_filterFactory, objectEntryFolder);
+				JSONFactoryUtil.createJSONArray(), _filterFactory,
+				objectEntryFolder, TestPropsValues.getUserId());
 
 		Assert.assertFalse(
 			modelResourcePermission.contains(

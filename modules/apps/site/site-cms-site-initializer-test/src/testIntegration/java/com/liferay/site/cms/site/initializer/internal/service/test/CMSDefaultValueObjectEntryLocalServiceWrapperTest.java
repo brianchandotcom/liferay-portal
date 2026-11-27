@@ -159,7 +159,6 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 			_group, _parentObjectEntryFolder.getObjectEntryFolderId());
 
 		CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.putAll(
 				_createJSONObject(
 					"category", "Picklist", JSONUtil.put("key", "a")
@@ -184,14 +183,14 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 					"price", "PrecisionDecimal", RandomTestUtil.randomString()),
 				_createJSONObject("publishDate", "Date", "2026-12-01"),
 				_createJSONObject("text", "Text", "Space text")),
-			_depotEntry, _filterFactory);
+			_depotEntry, _filterFactory, TestPropsValues.getUserId());
 
 		CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.putAll(
 				_createJSONObject("count", "Integer", 2),
 				_createJSONObject("flag", "Boolean", null)),
-			_filterFactory, _parentObjectEntryFolder);
+			_filterFactory, _parentObjectEntryFolder,
+			TestPropsValues.getUserId());
 	}
 
 	@Test
@@ -291,9 +290,9 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = CMSDefaultValueUtil.fetchObjectEntry(
-			_group.getGroupId(),
 			_parentObjectEntryFolder.getExternalReferenceCode(),
-			ObjectEntryFolder.class.getName(), _filterFactory);
+			ObjectEntryFolder.class.getName(), _filterFactory,
+			_group.getGroupId());
 
 		_objectEntryLocalService.partialUpdateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -309,8 +308,8 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapperTest {
 	@Test
 	public void testUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = CMSDefaultValueUtil.fetchObjectEntry(
-			_group.getGroupId(), _group.getExternalReferenceCode(),
-			DepotEntry.class.getName(), _filterFactory);
+			_group.getExternalReferenceCode(), DepotEntry.class.getName(),
+			_filterFactory, _group.getGroupId());
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),

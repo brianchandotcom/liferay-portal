@@ -303,7 +303,7 @@ public class CMSDefaultValueObjectEntryLocalServiceWrapper
 
 		Map<String, JSONObject> defaultValues =
 			CMSDefaultValueUtil.getInheritedDefaultValues(
-				groupId, _filterFactory, objectEntryFolderId);
+				_filterFactory, groupId, objectEntryFolderId);
 
 		if (defaultValues.isEmpty()) {
 			return;

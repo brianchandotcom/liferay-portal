@@ -195,7 +195,15 @@ public class FragmentDisplayContextTest {
 	}
 
 	@Test
-	public void testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions() {
+	@TestInfo("LPD-111343")
+	public void testGetAvailableActions() {
+		_testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions();
+		_testGetAvailableActionsForMarketplaceFragmentCompositionWithoutPermissions();
+		_testGetAvailableActionsForMarketplaceFragmentEntryWithPermissions();
+		_testGetAvailableActionsForMarketplaceFragmentEntryWithoutPermissions();
+	}
+
+	private void _testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions() {
 		_setUpFragmentPermission(true);
 
 		FragmentDisplayContext fragmentDisplayContext =
@@ -224,8 +232,7 @@ public class FragmentDisplayContextTest {
 				"moveFragmentCompositionsAndFragmentEntries"));
 	}
 
-	@Test
-	public void testGetAvailableActionsForMarketplaceFragmentCompositionWithoutPermissions() {
+	private void _testGetAvailableActionsForMarketplaceFragmentCompositionWithoutPermissions() {
 		_setUpFragmentPermission(false);
 
 		FragmentDisplayContext fragmentDisplayContext =
@@ -244,8 +251,7 @@ public class FragmentDisplayContextTest {
 					_fragmentComposition)));
 	}
 
-	@Test
-	public void testGetAvailableActionsForMarketplaceFragmentEntryWithPermissions() {
+	private void _testGetAvailableActionsForMarketplaceFragmentEntryWithPermissions() {
 		_setUpFragmentPermission(true);
 
 		FragmentDisplayContext fragmentDisplayContext =
@@ -274,8 +280,7 @@ public class FragmentDisplayContextTest {
 				"moveFragmentCompositionsAndFragmentEntries"));
 	}
 
-	@Test
-	public void testGetAvailableActionsForMarketplaceFragmentEntryWithoutPermissions() {
+	private void _testGetAvailableActionsForMarketplaceFragmentEntryWithoutPermissions() {
 		_setUpFragmentPermission(false);
 
 		FragmentDisplayContext fragmentDisplayContext =
@@ -294,8 +299,14 @@ public class FragmentDisplayContextTest {
 	}
 
 	@Test
-	@TestInfo("LPD-79101")
-	public void testGetFragmentCollectionFromDifferentGroup() {
+	@TestInfo({"LPD-79101", "LPD-91054", "LPD-111343"})
+	public void testGetFragmentCollection() {
+		_testGetFragmentCollectionFromDifferentGroup();
+		_testGetFragmentCollectionFromSameGroup();
+		_testGetFragmentCollectionFromSystemGroup();
+	}
+
+	private void _testGetFragmentCollectionFromDifferentGroup() {
 		FragmentCollection fragmentCollection = Mockito.mock(
 			FragmentCollection.class);
 
@@ -346,9 +357,7 @@ public class FragmentDisplayContextTest {
 		}
 	}
 
-	@Test
-	@TestInfo("LPD-79101")
-	public void testGetFragmentCollectionFromSameGroup() {
+	private void _testGetFragmentCollectionFromSameGroup() {
 		long fragmentCollectionId = RandomTestUtil.randomLong();
 		long groupId = RandomTestUtil.randomLong();
 
@@ -401,9 +410,7 @@ public class FragmentDisplayContextTest {
 		}
 	}
 
-	@Test
-	@TestInfo("LPD-91054")
-	public void testGetFragmentCollectionFromSystemGroup() {
+	private void _testGetFragmentCollectionFromSystemGroup() {
 		long fragmentCollectionId = RandomTestUtil.randomLong();
 
 		FragmentCollection fragmentCollection = Mockito.mock(

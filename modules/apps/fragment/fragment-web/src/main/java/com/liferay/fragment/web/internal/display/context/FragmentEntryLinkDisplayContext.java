@@ -775,7 +775,9 @@ public class FragmentEntryLinkDisplayContext {
 
 		if ((layoutPageTemplateEntry == null) ||
 			(layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.BASIC)) {
+				LayoutPageTemplateEntryTypeConstants.BASIC) ||
+			(layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
 			return true;
 		}

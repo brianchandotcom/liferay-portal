@@ -30,8 +30,12 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -69,26 +73,28 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutPageTemplateEntryServiceImpl
 	extends LayoutPageTemplateEntryServiceBaseImpl {
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long groupId,
 			long layoutPageTemplateCollectionId,
 			String layoutPageTemplateEntryKey, long classNameId,
 			String classTypeKey, String name, int type, long previewFileEntryId,
-			boolean defaultTemplate, long layoutPrototypeId, long plid,
-			long masterLayoutPlid, int status, ServiceContext serviceContext)
+			boolean defaultTemplate, long plid, long masterLayoutPlid,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
 
+		_checkLayoutPermission(plid);
+
 		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			externalReferenceCode, getUserId(), groupId,
 			layoutPageTemplateCollectionId, layoutPageTemplateEntryKey,
 			classNameId, classTypeKey, name, type, previewFileEntryId,
-			defaultTemplate, layoutPrototypeId, plid, masterLayoutPlid, status,
-			serviceContext);
+			defaultTemplate, 0, plid, masterLayoutPlid, status, serviceContext);
 	}
 
 	@Override
@@ -1178,6 +1184,32 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.updateStatus(
 			getUserId(), layoutPageTemplateEntryId, status);
+	}
+
+	private void _checkLayoutPermission(long plid) throws PortalException {
+		if (plid == 0) {
+			return;
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return;
+		}
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.hasOwnerPermission(
+				layout.getCompanyId(), Layout.class.getName(), plid,
+				layout.getUserId(), ActionKeys.DELETE) &&
+			!permissionChecker.hasPermission(
+				layout.getGroupId(), Layout.class.getName(), plid,
+				ActionKeys.DELETE)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Layout.class.getName(), plid,
+				ActionKeys.DELETE);
+		}
 	}
 
 	private List<Object>

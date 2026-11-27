@@ -35,16 +35,16 @@ public class LayoutPageTemplateEntryServiceWrapper
 			long layoutPageTemplateCollectionId,
 			String layoutPageTemplateEntryKey, long classNameId,
 			String classTypeKey, String name, int type, long previewFileEntryId,
-			boolean defaultTemplate, long layoutPrototypeId, long plid,
-			long masterLayoutPlid, int status,
+			boolean defaultTemplate, long plid, long masterLayoutPlid,
+			int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 			externalReferenceCode, groupId, layoutPageTemplateCollectionId,
 			layoutPageTemplateEntryKey, classNameId, classTypeKey, name, type,
-			previewFileEntryId, defaultTemplate, layoutPrototypeId, plid,
-			masterLayoutPlid, status, serviceContext);
+			previewFileEntryId, defaultTemplate, plid, masterLayoutPlid, status,
+			serviceContext);
 	}
 
 	@Override
@@ -797,4 +797,4 @@ public class LayoutPageTemplateEntryServiceWrapper
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1836737670
+// LIFERAY-SERVICE-BUILDER-HASH:-230182208

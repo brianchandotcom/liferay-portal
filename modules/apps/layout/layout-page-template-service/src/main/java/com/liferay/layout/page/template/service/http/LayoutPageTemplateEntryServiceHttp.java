@@ -47,9 +47,8 @@ public class LayoutPageTemplateEntryServiceHttp {
 				long groupId, long layoutPageTemplateCollectionId,
 				String layoutPageTemplateEntryKey, long classNameId,
 				String classTypeKey, String name, int type,
-				long previewFileEntryId, boolean defaultTemplate,
-				long layoutPrototypeId, long plid, long masterLayoutPlid,
-				int status,
+				long previewFileEntryId, boolean defaultTemplate, long plid,
+				long masterLayoutPlid, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -63,8 +62,8 @@ public class LayoutPageTemplateEntryServiceHttp {
 				methodKey, externalReferenceCode, groupId,
 				layoutPageTemplateCollectionId, layoutPageTemplateEntryKey,
 				classNameId, classTypeKey, name, type, previewFileEntryId,
-				defaultTemplate, layoutPrototypeId, plid, masterLayoutPlid,
-				status, serviceContext);
+				defaultTemplate, plid, masterLayoutPlid, status,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -2986,7 +2985,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, String.class, long.class,
 			String.class, String.class, int.class, long.class, boolean.class,
-			long.class, long.class, long.class, int.class,
+			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addLayoutPageTemplateEntryParameterTypes1 =
@@ -3314,4 +3313,4 @@ public class LayoutPageTemplateEntryServiceHttp {
 		new Class[] {long.class, int.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-235848567
+// LIFERAY-SERVICE-BUILDER-HASH:1702545670

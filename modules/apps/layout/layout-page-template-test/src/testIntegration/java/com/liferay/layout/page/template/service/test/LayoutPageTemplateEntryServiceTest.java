@@ -12,6 +12,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTy
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryPlidException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryPreviewFileEntryIdException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -21,6 +22,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -29,7 +31,9 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -41,10 +45,13 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -58,12 +65,14 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.List;
 
@@ -93,14 +102,14 @@ public class LayoutPageTemplateEntryServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group1 = GroupTestUtil.addGroup();
 
 		_layoutPageTemplateCollection =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateCollection(
-				_group.getGroupId());
+				_group1.getGroupId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, TestPropsValues.getUserId());
+			_group1, TestPropsValues.getUserId());
 	}
 
 	@Test(
@@ -129,7 +138,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					null, RandomTestUtil.randomString(), StringPool.BLANK,
@@ -144,7 +153,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection targetLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					null, RandomTestUtil.randomString(), StringPool.BLANK,
@@ -160,7 +169,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		Assert.assertEquals(
 			2,
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntriesCount(
-				_group.getGroupId(), name,
+				_group1.getGroupId(), name,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
 
 		try {
@@ -230,7 +239,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					null, RandomTestUtil.randomString(), StringPool.BLANK,
@@ -293,6 +302,124 @@ public class LayoutPageTemplateEntryServiceTest {
 			layoutPrototype.getName(LocaleUtil.getMostRelevantLocale()));
 	}
 
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlid() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(layout.getPlid());
+
+		Assert.assertEquals(
+			layout.getPlid(), layoutPageTemplateEntry.getPlid());
+	}
+
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlidFromAnotherGroup()
+		throws Exception {
+
+		_group2 = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group2);
+
+		try {
+			_addLayoutPageTemplateEntry(layout.getPlid());
+
+			Assert.fail();
+		}
+		catch (LayoutPageTemplateEntryPlidException
+					layoutPageTemplateEntryPlidException) {
+
+			Assert.assertEquals(
+				layout.getPlid(), layoutPageTemplateEntryPlidException.plid);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlidWithLayoutSetPrototype()
+		throws Exception {
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSetPrototype.getSettingsProperties();
+
+		settingsUnicodeProperties.setProperty("layoutsUpdateable", "false");
+
+		layoutSetPrototype.setSettingsProperties(settingsUnicodeProperties);
+
+		layoutSetPrototype =
+			_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
+				layoutSetPrototype);
+
+		_sites.updateLayoutSetPrototypesLinks(
+			_group1, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			false);
+
+		User user = _addUser();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			user.getUserId(), _group1);
+
+		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypeContentLayout(
+			layoutSetPrototype.getGroup(), true, false);
+
+		layout.setLayoutSetPrototypeLayoutERC(
+			layoutSetPrototypeLayout.getExternalReferenceCode());
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		Assert.assertFalse(layout.isLayoutUpdateable());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_addLayoutPageTemplateEntry(layout.getPlid());
+
+			Assert.assertEquals(
+				layout.getPlid(), layoutPageTemplateEntry.getPlid());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlidWithOwnerPermission()
+		throws Exception {
+
+		User user = _addUser();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			user.getUserId(), _group1);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_addLayoutPageTemplateEntry(layout.getPlid());
+
+			Assert.assertEquals(
+				layout.getPlid(), layoutPageTemplateEntry.getPlid());
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	@TestInfo("LPD-116161")
+	public void testAddLayoutPageTemplateEntryWithPlidWithoutPermissions()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_addUser())) {
+
+			_addLayoutPageTemplateEntry(layout.getPlid());
+		}
+	}
+
 	@Test(expected = LayoutPageTemplateEntryPreviewFileEntryIdException.class)
 	public void testAddLayoutPageTemplateEntryWithPreviewFileEntryFromDifferentGroup()
 		throws Exception {
@@ -300,11 +427,11 @@ public class LayoutPageTemplateEntryServiceTest {
 		FileEntry fileEntry = _addPreviewFileEntry(GroupTestUtil.addGroup());
 
 		_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-			null, _group.getGroupId(),
+			null, _group1.getGroupId(),
 			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			null, 0, null, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.BASIC,
-			fileEntry.getFileEntryId(), false, 0, 0, 0,
+			fileEntry.getFileEntryId(), false, 0, 0,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
@@ -332,10 +459,10 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		try {
 			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+				UserTestUtil.addGroupUser(_group1, RoleConstants.SITE_MEMBER));
 
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				RandomTestUtil.randomString(), _group.getGroupId(),
+				RandomTestUtil.randomString(), _group1.getGroupId(),
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, RandomTestUtil.randomString(),
@@ -388,11 +515,11 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry copiedLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
-				_group.getGroupId(),
+				_group1.getGroupId(),
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), false,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getGroupId(),
@@ -439,11 +566,11 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry copiedLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
-				_group.getGroupId(),
+				_group1.getGroupId(),
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getGroupId(),
@@ -509,7 +636,7 @@ public class LayoutPageTemplateEntryServiceTest {
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId());
 
-		FileEntry fileEntry = _addPreviewFileEntry(_group);
+		FileEntry fileEntry = _addPreviewFileEntry(_group1);
 
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
@@ -518,11 +645,11 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry copiedLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
-				_group.getGroupId(),
+				_group1.getGroupId(),
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), false,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
 		Assert.assertNotEquals(
 			layoutPageTemplateEntry.getPreviewFileEntryId(),
@@ -568,18 +695,18 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		RoleTestUtil.addResourcePermission(
 			role, LayoutPageTemplateConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group1.getGroupId()),
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				user)) {
 
 			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
-				_group.getGroupId(),
+				_group1.getGroupId(),
 				_layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), false,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 		}
 	}
 
@@ -654,7 +781,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		try {
 			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+				UserTestUtil.addGroupUser(_group1, RoleConstants.SITE_MEMBER));
 
 			_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getExternalReferenceCode(),
@@ -697,12 +824,12 @@ public class LayoutPageTemplateEntryServiceTest {
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					null, "Layout Page Template Collection", null,
@@ -712,7 +839,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					null, "Parent Layout Page Template Collection", null,
@@ -722,7 +849,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection parentParentLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					null, "Parent Parent Layout Page Template Collection", null,
@@ -731,7 +858,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, "Layout Page Template Entry One",
@@ -740,7 +867,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, "Layout Page Template Entry Two",
@@ -750,7 +877,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		List<Object> layoutPageCollectionsAndLayoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					0, 0, "Entry",
@@ -778,7 +905,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			1,
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					0, 0, "Entry",
@@ -791,12 +918,12 @@ public class LayoutPageTemplateEntryServiceTest {
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					null, RandomTestUtil.randomString(), null,
@@ -806,7 +933,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					null, RandomTestUtil.randomString(), null,
@@ -815,7 +942,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, RandomTestUtil.randomString(),
@@ -825,7 +952,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		List<Object> layoutPageCollectionsAndLayoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
@@ -845,7 +972,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			1,
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
@@ -853,7 +980,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		layoutPageCollectionsAndLayoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
@@ -873,7 +1000,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			1,
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
@@ -881,7 +1008,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		layoutPageCollectionsAndLayoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
@@ -901,7 +1028,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			1,
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
@@ -912,12 +1039,12 @@ public class LayoutPageTemplateEntryServiceTest {
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					null, "Layout Page Template Collection", null,
@@ -927,7 +1054,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					null, "Parent Layout Page Template Collection", null,
@@ -937,7 +1064,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection parentParentLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					null, "Parent Parent Layout Page Template Collection", null,
@@ -946,7 +1073,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, "Layout Page Template Entry One",
@@ -955,7 +1082,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, "Layout Page Template Entry Two",
@@ -965,7 +1092,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		List<Object> layoutPageCollectionsAndLayoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					0, 0, "Layout",
@@ -993,7 +1120,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			3,
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					0, 0, "Layout",
@@ -1003,7 +1130,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		layoutPageCollectionsAndLayoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					0, 0, "Entry",
@@ -1031,7 +1158,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			2,
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_group.getGroupId(),
+					_group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					0, 0, "Entry",
@@ -1044,12 +1171,12 @@ public class LayoutPageTemplateEntryServiceTest {
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					null, "Layout Page Template Collection", null,
@@ -1059,7 +1186,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection parentLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					null, "Parent Layout Page Template Collection", null,
@@ -1069,7 +1196,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection parentParentLayoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					parentLayoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					null, "Parent Parent Layout Page Template Collection", null,
@@ -1078,7 +1205,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, "Layout Page Template Entry One",
@@ -1087,7 +1214,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				parentLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, "Layout Page Template Entry Two",
@@ -1097,7 +1224,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		List<Object> layoutPageCollectionsAndLayoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-					_group.getGroupId(), -1, 0, 0, "Layout",
+					_group1.getGroupId(), -1, 0, 0, "Layout",
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
@@ -1122,14 +1249,14 @@ public class LayoutPageTemplateEntryServiceTest {
 			5,
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_group.getGroupId(), -1, 0, 0, "Layout",
+					_group1.getGroupId(), -1, 0, 0, "Layout",
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					WorkflowConstants.STATUS_ANY));
 
 		layoutPageCollectionsAndLayoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-					_group.getGroupId(), -1, 0, 0, "Entry",
+					_group1.getGroupId(), -1, 0, 0, "Entry",
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
@@ -1154,7 +1281,7 @@ public class LayoutPageTemplateEntryServiceTest {
 			2,
 			_layoutPageTemplateEntryService.
 				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-					_group.getGroupId(), -1, 0, 0, "Entry",
+					_group1.getGroupId(), -1, 0, 0, "Entry",
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					WorkflowConstants.STATUS_ANY));
 	}
@@ -1203,7 +1330,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		try {
 			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+				UserTestUtil.addGroupUser(_group1, RoleConstants.SITE_MEMBER));
 
 			_layoutPageTemplateEntryService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
@@ -1226,7 +1353,7 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					null, RandomTestUtil.randomString(), StringPool.BLANK,
@@ -1235,7 +1362,7 @@ public class LayoutPageTemplateEntryServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				null, RandomTestUtil.randomString(),
@@ -1317,6 +1444,17 @@ public class LayoutPageTemplateEntryServiceTest {
 			fileEntry.getFileEntryId());
 	}
 
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(long plid)
+		throws Exception {
+
+		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+			null, _group1.getGroupId(),
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			null, 0, null, RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.BASIC, 0, false, plid, 0,
+			WorkflowConstants.STATUS_DRAFT, _serviceContext);
+	}
+
 	private FileEntry _addPreviewFileEntry(Group group) throws Exception {
 		Repository repository = _portletFileRepository.addPortletRepository(
 			group.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
@@ -1329,14 +1467,35 @@ public class LayoutPageTemplateEntryServiceTest {
 			ContentTypes.IMAGE_PNG, false);
 	}
 
+	private User _addUser() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		RoleTestUtil.addResourcePermission(
+			role, LayoutPageTemplateConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group1.getGroupId()),
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		return user;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryServiceTest.class);
 
 	@DeleteAfterTestRun
-	private Group _group;
+	private Group _group1;
+
+	@DeleteAfterTestRun
+	private Group _group2;
 
 	@Inject
 	private Language _language;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 
@@ -1359,6 +1518,9 @@ public class LayoutPageTemplateEntryServiceTest {
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Inject
 	private PortletFileRepository _portletFileRepository;
 
 	@Inject
@@ -1368,5 +1530,8 @@ public class LayoutPageTemplateEntryServiceTest {
 	private RoleLocalService _roleLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private Sites _sites;
 
 }

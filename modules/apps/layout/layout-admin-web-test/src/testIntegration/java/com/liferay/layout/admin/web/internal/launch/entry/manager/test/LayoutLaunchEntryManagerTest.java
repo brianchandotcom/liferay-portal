@@ -338,14 +338,13 @@ public class LayoutLaunchEntryManagerTest
 
 		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryManager.Draft launchSetDraft = launchEntryManager.addDraft(
+		LaunchEntryManager.Draft draft = launchEntryManager.addDraft(
 			classPK, launchSetId, String.valueOf(classPK));
 
 		Layout launchSetDraftLayout = _layoutLocalService.fetchDraftLayout(
 			classPK, launchSetId);
 
-		Assert.assertEquals(
-			launchSetDraft.getDraftId(), launchSetDraftLayout.getPlid());
+		Assert.assertEquals(draft.getDraftId(), launchSetDraftLayout.getPlid());
 		Assert.assertEquals(launchSetId, launchSetDraftLayout.getLaunchSetId());
 
 		Assert.assertEquals(

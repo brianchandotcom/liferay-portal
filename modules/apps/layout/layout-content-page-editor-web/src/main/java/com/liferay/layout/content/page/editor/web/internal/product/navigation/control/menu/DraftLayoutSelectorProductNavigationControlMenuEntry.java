@@ -183,17 +183,17 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		Layout mainDraftLayout = layout;
+		Layout draftLayout = layout;
 
 		if (layout.getLaunchSetId() > 0) {
-			mainDraftLayout = _layoutLocalService.fetchDraftLayout(
+			draftLayout = _layoutLocalService.fetchDraftLayout(
 				layout.getClassPK());
 		}
 
 		draftLayoutMaps.add(
 			_getDraftLayoutMap(
 				false, httpServletRequest,
-				_language.get(httpServletRequest, "main"), mainDraftLayout,
+				_language.get(httpServletRequest, "main"), draftLayout,
 				themeDisplay));
 
 		draftLayoutMaps.addAll(

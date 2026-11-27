@@ -13,12 +13,12 @@
 	"items": [
 		{
 			"active": true,
-			"className": "com.liferay.object.model.ObjectDefinition#T4L8",
-			"externalReferenceCode": "L_MCP_SERVER_PROFILE_TOOL",
+			"className": "com.liferay.object.model.ObjectDefinition#K7M2",
+			"externalReferenceCode": "L_MCP_SERVER_PROFILE",
 			"label": {
-				"en_US": "MCP Server Profile Tool"
+				"en_US": "MCP Server Profile"
 			},
-			"name": "MCPServerProfileTool",
+			"name": "MCPServerProfile",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -28,9 +28,9 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Tool Name"
+						"en_US": "Description"
 					},
-					"name": "toolName",
+					"name": "description",
 					"required": true,
 					"state": false,
 					"system": true,
@@ -44,18 +44,65 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Tool Set Name"
+						"en_US": "Name"
 					},
-					"name": "toolSetName",
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "inactive",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "L_MCP_STATUS",
+					"name": "profileStatus",
 					"required": true,
 					"state": false,
 					"system": true,
 					"type": "String"
 				}
 			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_MCP_SERVER_PROFILE_TO_L_MCP_SERVER_PROFILE_TOOL",
+					"label": {
+						"en_US": "MCP Server Profile to MCP Server Profile Tools"
+					},
+					"name": "mcpServerProfileToTools",
+					"objectDefinitionExternalReferenceCode1": "L_MCP_SERVER_PROFILE",
+					"objectDefinitionExternalReferenceCode2": "L_MCP_SERVER_PROFILE_TOOL",
+					"objectDefinitionName2": "MCPServerProfileTool",
+					"objectDefinitionSystem2": true,
+					"objectField": {
+						"label": {
+							"en_US": "MCP Server Profile to MCP Server Profile Tools"
+						},
+						"required": true
+					},
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				}
+			],
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
-				"en_US": "MCP Server Profile Tools"
+				"en_US": "MCP Server Profiles"
 			},
 			"scope": "company",
 			"status": {
@@ -64,7 +111,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": true,
-			"titleObjectFieldName": "toolName"
+			"titleObjectFieldName": "name"
 		}
 	]
 }

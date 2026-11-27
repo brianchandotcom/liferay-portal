@@ -19,10 +19,9 @@ import com.liferay.poshi.runner.util.EmailCommands;
 import java.awt.event.KeyEvent;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -75,10 +74,7 @@ public class LiferaySeleniumUtil {
 		content = "<log4j>" + content + "</log4j>";
 		content = content.replaceAll("log4j:", "");
 
-		InputStream inputStream = new ByteArrayInputStream(
-			content.getBytes("UTF-8"));
-
-		Document document = saxReader.read(inputStream);
+		Document document = saxReader.read(new StringReader(content));
 
 		Element rootElement = document.getRootElement();
 
@@ -447,10 +443,7 @@ public class LiferaySeleniumUtil {
 		content = "<log4j>" + content + "</log4j>";
 		content = content.replaceAll("log4j:", "");
 
-		InputStream inputStream = new ByteArrayInputStream(
-			content.getBytes("UTF-8"));
-
-		Document document = saxReader.read(inputStream);
+		Document document = saxReader.read(new StringReader(content));
 
 		Element rootElement = document.getRootElement();
 
@@ -545,10 +538,7 @@ public class LiferaySeleniumUtil {
 			String content = FileUtil.read(
 				poshiProperties.ignoreErrorsFileName);
 
-			InputStream inputStream = new ByteArrayInputStream(
-				content.getBytes("UTF-8"));
-
-			Document document = saxReader.read(inputStream);
+			Document document = saxReader.read(new StringReader(content));
 
 			Element rootElement = document.getRootElement();
 

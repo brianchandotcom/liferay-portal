@@ -87,9 +87,6 @@ public class MentionsUserNotificationHandlerTest {
 
 	@Test
 	public void testGetLink() throws Exception {
-		String portalURL =
-			"http://localhost:" + _portal.getPortalServerPort(false);
-
 		Group group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
@@ -98,20 +95,26 @@ public class MentionsUserNotificationHandlerTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
-
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
 		themeDisplay.setRequest(mockHttpServletRequest);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		String portalURL =
+			"http://localhost:" + _portal.getPortalServerPort(false);
+
 		serviceContext.setPortalURL(portalURL);
+
 		serviceContext.setRequest(mockHttpServletRequest);
 
 		ObjectDefinition objectDefinition =

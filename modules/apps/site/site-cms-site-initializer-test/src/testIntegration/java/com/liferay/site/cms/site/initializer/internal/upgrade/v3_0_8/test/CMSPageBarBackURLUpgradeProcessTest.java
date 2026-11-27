@@ -131,6 +131,15 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 			String layoutBackURL, String layoutBackURLTitle)
 		throws Exception {
 
+		Matcher matcher = _backLinkPattern.matcher(fragmentEntryLink.getHtml());
+
+		Assert.assertTrue(matcher.find());
+
+		FragmentEntryLink backLinkFragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		backLinkFragmentEntryLink.setHtml(matcher.group());
+
 		MockHttpServletRequest mockHttpServletRequest =
 			ContentLayoutTestUtil.getMockHttpServletRequest(
 				_companyLocalService.getCompany(group.getCompanyId()), group,
@@ -144,15 +153,6 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 			mockHttpServletRequest.setParameter(
 				"p_l_back_url_title", layoutBackURLTitle);
 		}
-
-		Matcher matcher = _backLinkPattern.matcher(fragmentEntryLink.getHtml());
-
-		Assert.assertTrue(matcher.find());
-
-		FragmentEntryLink backLinkFragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
-		backLinkFragmentEntryLink.setHtml(matcher.group());
 
 		String processedHTML =
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(

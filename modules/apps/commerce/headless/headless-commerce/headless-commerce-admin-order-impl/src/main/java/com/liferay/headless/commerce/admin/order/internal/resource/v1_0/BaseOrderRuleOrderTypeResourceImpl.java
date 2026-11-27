@@ -210,7 +210,7 @@ public abstract class BaseOrderRuleOrderTypeResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rules/{id}/order-rule-order-types'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Nested field (OrderRule.orderRuleOrderTypes): paginated list of order types linked to order rule by ID."
+		description = "Nested field (OrderRule.orderRuleOrderType): paginated list of order types linked to order rule by ID."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1107,4 +1107,4 @@ public abstract class BaseOrderRuleOrderTypeResourceImpl
 		LogFactoryUtil.getLog(BaseOrderRuleOrderTypeResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1847230099
+// LIFERAY-REST-BUILDER-HASH:214333518

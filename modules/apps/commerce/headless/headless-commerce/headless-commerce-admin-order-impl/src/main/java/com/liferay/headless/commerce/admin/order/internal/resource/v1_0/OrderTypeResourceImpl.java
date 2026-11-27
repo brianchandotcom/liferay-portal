@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderTypeException;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.rule.model.COREntryRel;
@@ -12,6 +13,7 @@ import com.liferay.commerce.order.rule.service.COREntryRelService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.commerce.term.service.CommerceTermEntryRelService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
@@ -40,6 +42,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,10 +54,15 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/order-type.properties",
-	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = OrderTypeResource.class
+	property = {
+		"export.import.vulcan.batch.engine.task.item.delegate=true",
+		"nested.field.support=true"
+	},
+	scope = ServiceScope.PROTOTYPE, service = OrderTypeResource.class
 )
-public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
+public class OrderTypeResourceImpl
+	extends BaseOrderTypeResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<OrderType> {
 
 	@Override
 	public void deleteOrderType(Long id) throws Exception {
@@ -88,6 +96,50 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		return _entityModel;
 	}
 
+	@Override
+	public ExportImportDescriptor<CommerceOrderType>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
+
+			@Override
+			public String getKey() {
+				return OrderTypeResourceImpl.class.getName();
+			}
+
+			@Override
+			public String getLabelLanguageKey() {
+				return "order-types";
+			}
+
+			@Override
+			public Class<CommerceOrderType> getModelClass() {
+				return CommerceOrderType.class;
+			}
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of("creator");
+			}
+
+			@Override
+			public String getPortletId() {
+				return CommercePortletKeys.COMMERCE_ORDER_TYPE;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return "category.commerce.order_management";
+			}
+
+		};
+	}
+
 	@NestedField(parentClass = OrderRuleOrderType.class, value = "orderType")
 	@Override
 	public OrderType getOrderRuleOrderTypeOrderType(Long id) throws Exception {
@@ -98,50 +150,6 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 				corEntryRel.getClassPK());
 
 		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
-	}
-
-	@Override
-	public OrderType getOrderType(Long id) throws Exception {
-		return _toOrderType(GetterUtil.getLong(id));
-	}
-
-	@Override
-	public OrderType getOrderTypeByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
-
-		CommerceOrderType commerceOrderType =
-			_commerceOrderTypeService.
-				fetchCommerceOrderTypeByExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
-
-		if (commerceOrderType == null) {
-			throw new NoSuchOrderTypeException(
-				"Unable to find order type with external reference code " +
-					externalReferenceCode);
-		}
-
-		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
-	}
-
-	@Override
-	public Page<OrderType> getOrderTypesPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CommerceOrderType.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					"status", WorkflowConstants.STATUS_ANY);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toOrderType(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@NestedField(parentClass = TermOrderType.class, value = "orderType")
@@ -186,7 +194,51 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 	}
 
 	@Override
-	public OrderType postOrderType(OrderType orderType) throws Exception {
+	protected OrderType doGetOrderType(Long id) throws Exception {
+		return _toOrderType(GetterUtil.getLong(id));
+	}
+
+	@Override
+	protected OrderType doGetOrderTypeByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeService.
+				fetchCommerceOrderTypeByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderType == null) {
+			throw new NoSuchOrderTypeException(
+				"Unable to find order type with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toOrderType(commerceOrderType.getCommerceOrderTypeId());
+	}
+
+	@Override
+	protected Page<OrderType> doGetOrderTypesPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			CommerceOrderType.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"status", WorkflowConstants.STATUS_ANY);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toOrderType(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	protected OrderType doPostOrderType(OrderType orderType) throws Exception {
 		CommerceOrderType commerceOrderType = _addCommerceOrderType(
 			orderType.getExternalReferenceCode(), orderType);
 
@@ -194,7 +246,7 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 	}
 
 	@Override
-	public OrderType putOrderTypeByExternalReferenceCode(
+	protected OrderType doPutOrderTypeByExternalReferenceCode(
 			String externalReferenceCode, OrderType orderType)
 		throws Exception {
 
@@ -242,6 +294,16 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		}
 
 		return _toOrderType(commerceOrderType);
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) {
+		return 0L;
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return CommerceOrderType.class.getName();
 	}
 
 	private CommerceOrderType _addCommerceOrderType(

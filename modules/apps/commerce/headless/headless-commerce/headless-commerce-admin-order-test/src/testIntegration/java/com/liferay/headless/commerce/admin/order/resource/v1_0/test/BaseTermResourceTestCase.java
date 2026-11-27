@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.order.client.permission.Permission;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.TermResource;
 import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.TermSerDes;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.JAXRSWhiteboardTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -159,6 +162,19 @@ public abstract class BaseTermResourceTestCase {
 			PortalUtil.getPortalServerPort(false), "http"
 		).locale(
 			LocaleUtil.getDefault()
+		).build();
+
+		permissionsTermResource = TermResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
 		).build();
 	}
 
@@ -513,6 +529,12 @@ public abstract class BaseTermResourceTestCase {
 
 		assertEquals(postTerm, getTerm);
 		assertValid(getTerm);
+
+		Assert.assertNull(getTerm.getPermissions());
+
+		getTerm = permissionsTermResource.getTerm(postTerm.getId());
+
+		Assert.assertNotNull(getTerm.getPermissions());
 	}
 
 	@Test
@@ -813,6 +835,13 @@ public abstract class BaseTermResourceTestCase {
 
 		assertEquals(postTerm, getTerm);
 		assertValid(getTerm);
+
+		Assert.assertNull(getTerm.getPermissions());
+
+		getTerm = permissionsTermResource.getTermByExternalReferenceCode(
+			postTerm.getExternalReferenceCode());
+
+		Assert.assertNotNull(getTerm.getPermissions());
 	}
 
 	protected Term testGetTermByExternalReferenceCode_addTerm()
@@ -933,6 +962,49 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	@Test
+	public void testGetTermPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Term postTerm = testGetTermPermissionsPage_addTerm();
+
+		Page<Permission> page = termResource.getTermPermissionsPage(
+			postTerm.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected Term testGetTermPermissionsPage_addTerm() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetTermPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Term postTerm = testGraphQLGetTermPermissionsPage_addTerm();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"termPermissions",
+			new HashMap<String, Object>() {
+				{
+					put("termId", postTerm.getId());
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject termPermissionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/termPermissions");
+
+		Assert.assertNotNull(termPermissionsJSONObject);
+	}
+
+	protected Term testGraphQLGetTermPermissionsPage_addTerm()
+		throws Exception {
+
+		return testGraphQLTerm_addTerm();
+	}
+
+	@Test
 	public void testGetTermsPage() throws Exception {
 		Page<Term> page = termResource.getTermsPage(
 			null, null, Pagination.of(1, 10), null);
@@ -951,6 +1023,17 @@ public abstract class BaseTermResourceTestCase {
 		assertContains(term1, (List<Term>)page.getItems());
 		assertContains(term2, (List<Term>)page.getItems());
 		assertValid(page, testGetTermsPage_getExpectedActions());
+
+		for (Term term : page.getItems()) {
+			Assert.assertNull(term.getPermissions());
+		}
+
+		page = permissionsTermResource.getTermsPage(
+			null, null, Pagination.of(1, 10), null);
+
+		for (Term term : page.getItems()) {
+			Assert.assertNotNull(term.getPermissions());
+		}
 
 		termResource.deleteTerm(term1.getId());
 
@@ -1369,9 +1452,28 @@ public abstract class BaseTermResourceTestCase {
 
 		assertEquals(randomTerm, postTerm);
 		assertValid(postTerm);
+
+		Term randomPermissionsTerm1 = randomPermissionsTerm();
+
+		Term postPermissionsTerm1 = testPostTerm_addTerm(
+			randomPermissionsTerm1);
+
+		Assert.assertNull(postPermissionsTerm1.getPermissions());
+
+		Term randomPermissionsTerm2 = randomPermissionsTerm();
+
+		Term postPermissionsTerm2 = testPostTerm_addPermissionsTerm(
+			randomPermissionsTerm2);
+
+		Assert.assertNotNull(postPermissionsTerm2.getPermissions());
 	}
 
 	protected Term testPostTerm_addTerm(Term term) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Term testPostTerm_addPermissionsTerm(Term term) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -1397,11 +1499,28 @@ public abstract class BaseTermResourceTestCase {
 		assertEquals(randomTerm, putTerm);
 		assertValid(putTerm);
 
+		Assert.assertNull(putTerm.getPermissions());
+
 		Term getTerm = termResource.getTermByExternalReferenceCode(
 			putTerm.getExternalReferenceCode());
 
 		assertEquals(randomTerm, getTerm);
 		assertValid(getTerm);
+
+		Term randomPermissionsTerm = randomPermissionsTerm();
+
+		putTerm = termResource.putTermByExternalReferenceCode(
+			postTerm.getExternalReferenceCode(), randomPermissionsTerm);
+
+		assertEquals(randomPermissionsTerm, putTerm);
+		assertValid(putTerm);
+
+		Assert.assertNull(putTerm.getPermissions());
+
+		putTerm = permissionsTermResource.putTermByExternalReferenceCode(
+			postTerm.getExternalReferenceCode(), randomPermissionsTerm);
+
+		Assert.assertNotNull(putTerm.getPermissions());
 
 		Term newTerm = testPutTermByExternalReferenceCode_createTerm();
 
@@ -1432,6 +1551,47 @@ public abstract class BaseTermResourceTestCase {
 		throws Exception {
 
 		return randomTerm();
+	}
+
+	@Test
+	public void testPutTermPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Term term = testPutTermPermissionsPage_addTerm();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			termResource.putTermPermissionsPageHttpResponse(
+				term.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			termResource.putTermPermissionsPageHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected Term testPutTermPermissionsPage_addTerm() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1689,6 +1849,14 @@ public abstract class BaseTermResourceTestCase {
 	protected void assertValid(Term term) throws Exception {
 		boolean valid = true;
 
+		if (term.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (term.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (term.getId() == null) {
 			valid = false;
 		}
@@ -1714,6 +1882,14 @@ public abstract class BaseTermResourceTestCase {
 
 			if (Objects.equals("createDate", additionalAssertFieldName)) {
 				if (term.getCreateDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (term.getCreator() == null) {
 					valid = false;
 				}
 
@@ -1772,6 +1948,14 @@ public abstract class BaseTermResourceTestCase {
 
 			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
 				if (term.getNeverExpire() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (term.getPermissions() == null) {
 					valid = false;
 				}
 
@@ -1974,6 +2158,36 @@ public abstract class BaseTermResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						term1.getCreator(), term2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						term1.getDateCreated(), term2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						term1.getDateModified(), term2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)term1.getDescription(),
@@ -2045,6 +2259,16 @@ public abstract class BaseTermResourceTestCase {
 			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						term1.getNeverExpire(), term2.getNeverExpire())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						term1.getPermissions(), term2.getPermissions())) {
 
 					return false;
 				}
@@ -2259,6 +2483,69 @@ public abstract class BaseTermResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				Date date = term.getDateCreated();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(term.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				Date date = term.getDateModified();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(term.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("description")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2425,6 +2712,11 @@ public abstract class BaseTermResourceTestCase {
 		}
 
 		if (entityFieldName.equals("neverExpire")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("permissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -2632,6 +2924,8 @@ public abstract class BaseTermResourceTestCase {
 			{
 				active = RandomTestUtil.randomBoolean();
 				createDate = RandomTestUtil.nextDate();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
@@ -2659,6 +2953,25 @@ public abstract class BaseTermResourceTestCase {
 		return randomTerm();
 	}
 
+	protected Term randomPermissionsTerm() throws Exception {
+		Term term = randomTerm();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		term.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return term;
+	}
+
 	protected final JSONObject waitForFinish(
 			String expectedExecuteStatus, JSONObject jsonObject)
 		throws Exception {
@@ -2684,6 +2997,7 @@ public abstract class BaseTermResourceTestCase {
 	protected TermResource termResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected TermResource permissionsTermResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 
@@ -2914,4 +3228,4 @@ public abstract class BaseTermResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2136794486
+// LIFERAY-REST-BUILDER-HASH:-2579127

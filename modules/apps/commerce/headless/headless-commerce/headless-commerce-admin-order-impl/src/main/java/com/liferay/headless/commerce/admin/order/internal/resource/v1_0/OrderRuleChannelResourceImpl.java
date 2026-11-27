@@ -75,7 +75,7 @@ public class OrderRuleChannelResourceImpl
 				corEntry.getCOREntryId(), null));
 	}
 
-	@NestedField(parentClass = OrderRule.class, value = "orderRuleChannels")
+	@NestedField(parentClass = OrderRule.class, value = "orderRuleChannel")
 	@Override
 	public Page<OrderRuleChannel> getOrderRuleIdOrderRuleChannelsPage(
 			Long id, String search, Filter filter, Pagination pagination,

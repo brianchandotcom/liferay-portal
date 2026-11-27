@@ -75,7 +75,7 @@ public class TermOrderTypeResourceImpl extends BaseTermOrderTypeResourceImpl {
 					commerceTermEntry.getCommerceTermEntryId(), null));
 	}
 
-	@NestedField(parentClass = Term.class, value = "termOrderTypes")
+	@NestedField(parentClass = Term.class, value = "termOrderType")
 	@Override
 	public Page<TermOrderType> getTermIdTermOrderTypesPage(
 			Long id, String search, Pagination pagination)

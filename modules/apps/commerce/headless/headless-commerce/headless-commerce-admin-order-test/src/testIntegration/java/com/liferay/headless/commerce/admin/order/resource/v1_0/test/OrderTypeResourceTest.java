@@ -16,19 +16,24 @@ import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.term.service.CommerceTermEntryRelLocalService;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Creator;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderType;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -74,6 +79,14 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	@Test
 	public void testGraphQLGetOrderTypeNotFound() throws Exception {
 		super.testGraphQLGetOrderTypeNotFound();
+	}
+
+	@Override
+	@Test
+	public void testPostOrderType() throws Exception {
+		super.testPostOrderType();
+
+		_testPostOrderTypeWithCreator();
 	}
 
 	@Override
@@ -140,6 +153,13 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	}
 
 	@Override
+	protected OrderType testGetOrderTypePermissionsPage_addOrderType()
+		throws Exception {
+
+		return _addCommerceOrderType(randomOrderType());
+	}
+
+	@Override
 	protected OrderType testGetOrderTypesPage_addOrderType(OrderType orderType)
 		throws Exception {
 
@@ -200,7 +220,22 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	}
 
 	@Override
+	protected OrderType testPostOrderType_addPermissionsOrderType(
+			OrderType orderType)
+		throws Exception {
+
+		return permissionsOrderTypeResource.postOrderType(orderType);
+	}
+
+	@Override
 	protected OrderType testPutOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		return _addCommerceOrderType(randomOrderType());
+	}
+
+	@Override
+	protected OrderType testPutOrderTypePermissionsPage_addOrderType()
 		throws Exception {
 
 		return _addCommerceOrderType(randomOrderType());
@@ -242,6 +277,8 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		return new OrderType() {
 			{
 				active = commerceOrderType.isActive();
+				dateCreated = commerceOrderType.getCreateDate();
+				dateModified = commerceOrderType.getModifiedDate();
 				description = LanguageUtils.getLanguageIdMap(
 					commerceOrderType.getDescriptionMap());
 				displayDate = commerceOrderType.getDisplayDate();
@@ -254,6 +291,32 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 					commerceOrderType.getNameMap());
 			}
 		};
+	}
+
+	private void _testPostOrderTypeWithCreator() throws Exception {
+		String password = RandomTestUtil.randomString();
+		User user = UserTestUtil.addOmniadminUser();
+
+		_userLocalService.updatePassword(
+			user.getUserId(), password, password, false, true);
+
+		OrderTypeResource orderTypeResource = OrderTypeResource.builder(
+		).authentication(
+			user.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "creator"
+		).build();
+
+		OrderType postOrderType = orderTypeResource.postOrderType(
+			randomOrderType());
+
+		Creator creator = postOrderType.getCreator();
+
+		Assert.assertEquals(
+			user.getExternalReferenceCode(),
+			creator.getExternalReferenceCode());
 	}
 
 	@Inject
@@ -281,5 +344,8 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 
 	private ServiceContext _serviceContext;
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

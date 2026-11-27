@@ -10,6 +10,7 @@ import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
 import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
@@ -18,6 +19,7 @@ import com.liferay.commerce.order.rule.service.COREntryService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccountGroup;
@@ -49,6 +51,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,9 +63,12 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/order-rule.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = OrderRuleResource.class
 )
-public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
+public class OrderRuleResourceImpl
+	extends BaseOrderRuleResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<OrderRule> {
 
 	@Override
 	public void deleteOrderRule(Long id) throws Exception {
@@ -95,46 +101,47 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	}
 
 	@Override
-	public OrderRule getOrderRule(Long id) throws Exception {
-		return _toOrderRule(GetterUtil.getLong(id));
-	}
+	public ExportImportDescriptor<COREntry> getExportImportDescriptor() {
+		return new ExportImportDescriptor<>() {
 
-	@Override
-	public OrderRule getOrderRuleByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
+			@Override
+			public String getKey() {
+				return OrderRuleResourceImpl.class.getName();
+			}
 
-		COREntry corEntry =
-			_corEntryService.fetchCOREntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+			@Override
+			public String getLabelLanguageKey() {
+				return "order-rules";
+			}
 
-		if (corEntry == null) {
-			throw new NoSuchCOREntryException(
-				"Unable to find order rule with external reference code " +
-					externalReferenceCode);
-		}
+			@Override
+			public Class<COREntry> getModelClass() {
+				return COREntry.class;
+			}
 
-		return _toOrderRule(corEntry.getCOREntryId());
-	}
+			@Override
+			public List<String> getNestedFields() {
+				return List.of(
+					"creator", "orderRuleAccount", "orderRuleAccountGroup",
+					"orderRuleChannel", "orderRuleOrderType");
+			}
 
-	@Override
-	public Page<OrderRule> getOrderRulesPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception {
+			@Override
+			public String getPortletId() {
+				return COREntryPortletKeys.COR_ENTRY;
+			}
 
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			COREntry.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					"status", WorkflowConstants.STATUS_ANY);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toOrderRule(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return "category.commerce.order_management";
+			}
+
+		};
 	}
 
 	@Override
@@ -164,7 +171,50 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	}
 
 	@Override
-	public OrderRule postOrderRule(OrderRule orderRule) throws Exception {
+	protected OrderRule doGetOrderRule(Long id) throws Exception {
+		return _toOrderRule(GetterUtil.getLong(id));
+	}
+
+	@Override
+	protected OrderRule doGetOrderRuleByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		COREntry corEntry =
+			_corEntryService.fetchCOREntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (corEntry == null) {
+			throw new NoSuchCOREntryException(
+				"Unable to find order rule with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toOrderRule(corEntry.getCOREntryId());
+	}
+
+	@Override
+	protected Page<OrderRule> doGetOrderRulesPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			COREntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"status", WorkflowConstants.STATUS_ANY);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toOrderRule(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	protected OrderRule doPostOrderRule(OrderRule orderRule) throws Exception {
 		COREntry corEntry = _addCOREntry(
 			orderRule.getExternalReferenceCode(), orderRule);
 
@@ -172,7 +222,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	}
 
 	@Override
-	public OrderRule putOrderRuleByExternalReferenceCode(
+	protected OrderRule doPutOrderRuleByExternalReferenceCode(
 			String externalReferenceCode, OrderRule orderRule)
 		throws Exception {
 
@@ -209,6 +259,16 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			GetterUtil.getString(orderRule.getTypeSettings()), serviceContext);
 
 		return _toOrderRule(_updateNestedResources(corEntry, orderRule));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) {
+		return 0L;
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return COREntry.class.getName();
 	}
 
 	private COREntry _addCOREntry(
@@ -356,7 +416,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			for (OrderRuleOrderType orderRuleOrderType : orderRuleOrderTypes) {
 				COREntryRel corEntryRel = _corEntryRelService.fetchCOREntryRel(
 					CommerceOrderType.class.getName(),
-					orderRuleOrderType.getOrderRuleId(),
+					orderRuleOrderType.getOrderTypeId(),
 					corEntry.getCOREntryId());
 
 				if (corEntryRel != null) {

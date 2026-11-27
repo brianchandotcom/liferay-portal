@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderRule;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.order.client.permission.Permission;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderRuleResource;
 import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderRuleSerDes;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.JAXRSWhiteboardTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -159,6 +162,19 @@ public abstract class BaseOrderRuleResourceTestCase {
 			PortalUtil.getPortalServerPort(false), "http"
 		).locale(
 			LocaleUtil.getDefault()
+		).build();
+
+		permissionsOrderRuleResource = OrderRuleResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
 		).build();
 	}
 
@@ -540,6 +556,13 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		assertEquals(postOrderRule, getOrderRule);
 		assertValid(getOrderRule);
+
+		Assert.assertNull(getOrderRule.getPermissions());
+
+		getOrderRule = permissionsOrderRuleResource.getOrderRule(
+			postOrderRule.getId());
+
+		Assert.assertNotNull(getOrderRule.getPermissions());
 	}
 
 	@Test
@@ -845,6 +868,14 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		assertEquals(postOrderRule, getOrderRule);
 		assertValid(getOrderRule);
+
+		Assert.assertNull(getOrderRule.getPermissions());
+
+		getOrderRule =
+			permissionsOrderRuleResource.getOrderRuleByExternalReferenceCode(
+				postOrderRule.getExternalReferenceCode());
+
+		Assert.assertNotNull(getOrderRule.getPermissions());
 	}
 
 	protected OrderRule testGetOrderRuleByExternalReferenceCode_addOrderRule()
@@ -969,6 +1000,54 @@ public abstract class BaseOrderRuleResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderRulePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRule postOrderRule =
+			testGetOrderRulePermissionsPage_addOrderRule();
+
+		Page<Permission> page = orderRuleResource.getOrderRulePermissionsPage(
+			postOrderRule.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected OrderRule testGetOrderRulePermissionsPage_addOrderRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderRulePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRule postOrderRule =
+			testGraphQLGetOrderRulePermissionsPage_addOrderRule();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"orderRulePermissions",
+			new HashMap<String, Object>() {
+				{
+					put("orderRuleId", postOrderRule.getId());
+				}
+			},
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject orderRulePermissionsJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/orderRulePermissions");
+
+		Assert.assertNotNull(orderRulePermissionsJSONObject);
+	}
+
+	protected OrderRule testGraphQLGetOrderRulePermissionsPage_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
+	}
+
+	@Test
 	public void testGetOrderRulesPage() throws Exception {
 		Page<OrderRule> page = orderRuleResource.getOrderRulesPage(
 			null, null, Pagination.of(1, 10), null);
@@ -989,6 +1068,17 @@ public abstract class BaseOrderRuleResourceTestCase {
 		assertContains(orderRule1, (List<OrderRule>)page.getItems());
 		assertContains(orderRule2, (List<OrderRule>)page.getItems());
 		assertValid(page, testGetOrderRulesPage_getExpectedActions());
+
+		for (OrderRule orderRule : page.getItems()) {
+			Assert.assertNull(orderRule.getPermissions());
+		}
+
+		page = permissionsOrderRuleResource.getOrderRulesPage(
+			null, null, Pagination.of(1, 10), null);
+
+		for (OrderRule orderRule : page.getItems()) {
+			Assert.assertNotNull(orderRule.getPermissions());
+		}
 
 		orderRuleResource.deleteOrderRule(orderRule1.getId());
 
@@ -1439,9 +1529,32 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		assertEquals(randomOrderRule, postOrderRule);
 		assertValid(postOrderRule);
+
+		OrderRule randomPermissionsOrderRule1 = randomPermissionsOrderRule();
+
+		OrderRule postPermissionsOrderRule1 = testPostOrderRule_addOrderRule(
+			randomPermissionsOrderRule1);
+
+		Assert.assertNull(postPermissionsOrderRule1.getPermissions());
+
+		OrderRule randomPermissionsOrderRule2 = randomPermissionsOrderRule();
+
+		OrderRule postPermissionsOrderRule2 =
+			testPostOrderRule_addPermissionsOrderRule(
+				randomPermissionsOrderRule2);
+
+		Assert.assertNotNull(postPermissionsOrderRule2.getPermissions());
 	}
 
 	protected OrderRule testPostOrderRule_addOrderRule(OrderRule orderRule)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected OrderRule testPostOrderRule_addPermissionsOrderRule(
+			OrderRule orderRule)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1472,12 +1585,32 @@ public abstract class BaseOrderRuleResourceTestCase {
 		assertEquals(randomOrderRule, putOrderRule);
 		assertValid(putOrderRule);
 
+		Assert.assertNull(putOrderRule.getPermissions());
+
 		OrderRule getOrderRule =
 			orderRuleResource.getOrderRuleByExternalReferenceCode(
 				putOrderRule.getExternalReferenceCode());
 
 		assertEquals(randomOrderRule, getOrderRule);
 		assertValid(getOrderRule);
+
+		OrderRule randomPermissionsOrderRule = randomPermissionsOrderRule();
+
+		putOrderRule = orderRuleResource.putOrderRuleByExternalReferenceCode(
+			postOrderRule.getExternalReferenceCode(),
+			randomPermissionsOrderRule);
+
+		assertEquals(randomPermissionsOrderRule, putOrderRule);
+		assertValid(putOrderRule);
+
+		Assert.assertNull(putOrderRule.getPermissions());
+
+		putOrderRule =
+			permissionsOrderRuleResource.putOrderRuleByExternalReferenceCode(
+				postOrderRule.getExternalReferenceCode(),
+				randomPermissionsOrderRule);
+
+		Assert.assertNotNull(putOrderRule.getPermissions());
 
 		OrderRule newOrderRule =
 			testPutOrderRuleByExternalReferenceCode_createOrderRule();
@@ -1510,6 +1643,49 @@ public abstract class BaseOrderRuleResourceTestCase {
 		throws Exception {
 
 		return randomOrderRule();
+	}
+
+	@Test
+	public void testPutOrderRulePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRule orderRule = testPutOrderRulePermissionsPage_addOrderRule();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			orderRuleResource.putOrderRulePermissionsPageHttpResponse(
+				orderRule.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"VIEW"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			orderRuleResource.putOrderRulePermissionsPageHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected OrderRule testPutOrderRulePermissionsPage_addOrderRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1786,6 +1962,14 @@ public abstract class BaseOrderRuleResourceTestCase {
 	protected void assertValid(OrderRule orderRule) throws Exception {
 		boolean valid = true;
 
+		if (orderRule.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (orderRule.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (orderRule.getId() == null) {
 			valid = false;
 		}
@@ -1819,6 +2003,14 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 			if (Objects.equals("createDate", additionalAssertFieldName)) {
 				if (orderRule.getCreateDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (orderRule.getCreator() == null) {
 					valid = false;
 				}
 
@@ -1905,6 +2097,14 @@ public abstract class BaseOrderRuleResourceTestCase {
 					"orderRuleOrderType", additionalAssertFieldName)) {
 
 				if (orderRule.getOrderRuleOrderType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (orderRule.getPermissions() == null) {
 					valid = false;
 				}
 
@@ -2108,6 +2308,38 @@ public abstract class BaseOrderRuleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderRule1.getCreator(), orderRule2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderRule1.getDateCreated(),
+						orderRule2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderRule1.getDateModified(),
+						orderRule2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						orderRule1.getDescription(),
@@ -2226,6 +2458,17 @@ public abstract class BaseOrderRuleResourceTestCase {
 				if (!Objects.deepEquals(
 						orderRule1.getOrderRuleOrderType(),
 						orderRule2.getOrderRuleOrderType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderRule1.getPermissions(),
+						orderRule2.getPermissions())) {
 
 					return false;
 				}
@@ -2469,6 +2712,69 @@ public abstract class BaseOrderRuleResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				Date date = orderRule.getDateCreated();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(orderRule.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				Date date = orderRule.getDateModified();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(orderRule.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("description")) {
 			Object object = orderRule.getDescription();
 
@@ -2695,6 +3001,11 @@ public abstract class BaseOrderRuleResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("priority")) {
 			sb.append(String.valueOf(orderRule.getPriority()));
 
@@ -2848,6 +3159,8 @@ public abstract class BaseOrderRuleResourceTestCase {
 				active = RandomTestUtil.randomBoolean();
 				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				displayDate = RandomTestUtil.nextDate();
@@ -2875,6 +3188,25 @@ public abstract class BaseOrderRuleResourceTestCase {
 		return randomOrderRule();
 	}
 
+	protected OrderRule randomPermissionsOrderRule() throws Exception {
+		OrderRule orderRule = randomOrderRule();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		orderRule.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return orderRule;
+	}
+
 	protected final JSONObject waitForFinish(
 			String expectedExecuteStatus, JSONObject jsonObject)
 		throws Exception {
@@ -2900,6 +3232,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 	protected OrderRuleResource orderRuleResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected OrderRuleResource permissionsOrderRuleResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 
@@ -3131,4 +3464,4 @@ public abstract class BaseOrderRuleResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1505172286
+// LIFERAY-REST-BUILDER-HASH:-1549060599

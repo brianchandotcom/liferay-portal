@@ -11,6 +11,7 @@ import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
+import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
 
@@ -24,13 +25,25 @@ public class OrderTypeEntityModel implements EntityModel {
 			new CollectionEntityField(
 				new IntegerEntityField("name", locale -> "name")),
 			new DateTimeEntityField(
+				"dateCreated",
+				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+				locale -> Field.CREATE_DATE),
+			new DateTimeEntityField(
+				"dateModified",
+				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+				locale -> Field.MODIFIED_DATE),
+			new DateTimeEntityField(
 				"displayDate",
 				locale -> Field.getSortableFieldName("displayDate"),
 				locale -> "displayDate"),
 			new DateTimeEntityField(
 				"expirationDate",
 				locale -> Field.getSortableFieldName("expirationDate"),
-				locale -> "expirationDate"));
+				locale -> "expirationDate"),
+			new StringEntityField(
+				"externalReferenceCode",
+				locale -> Field.getSortableFieldName("externalReferenceCode"),
+				locale -> "externalReferenceCode"));
 	}
 
 	@Override

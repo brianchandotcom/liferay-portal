@@ -6,20 +6,29 @@
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
+import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Creator;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderRule;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderRuleOrderType;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderRuleResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -50,6 +59,22 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 	@Test
 	public void testGraphQLGetOrderRuleNotFound() throws Exception {
 		super.testGraphQLGetOrderRuleNotFound();
+	}
+
+	@Override
+	@Test
+	public void testPostOrderRule() throws Exception {
+		super.testPostOrderRule();
+
+		_testPostOrderRuleWithCreator();
+	}
+
+	@Override
+	@Test
+	public void testPutOrderRuleByExternalReferenceCode() throws Exception {
+		super.testPutOrderRuleByExternalReferenceCode();
+
+		_testPutOrderRuleByExternalReferenceCodeWithOrderRuleOrderType();
 	}
 
 	@Override
@@ -100,6 +125,13 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 	}
 
 	@Override
+	protected OrderRule testGetOrderRulePermissionsPage_addOrderRule()
+		throws Exception {
+
+		return _addCOREntry(randomOrderRule());
+	}
+
+	@Override
 	protected OrderRule testGetOrderRulesPage_addOrderRule(OrderRule orderRule)
 		throws Exception {
 
@@ -131,7 +163,22 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 	}
 
 	@Override
+	protected OrderRule testPostOrderRule_addPermissionsOrderRule(
+			OrderRule orderRule)
+		throws Exception {
+
+		return permissionsOrderRuleResource.postOrderRule(orderRule);
+	}
+
+	@Override
 	protected OrderRule testPutOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		return _addCOREntry(randomOrderRule());
+	}
+
+	@Override
+	protected OrderRule testPutOrderRulePermissionsPage_addOrderRule()
 		throws Exception {
 
 		return _addCOREntry(randomOrderRule());
@@ -159,6 +206,8 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 		return new OrderRule() {
 			{
 				active = corEntry.isActive();
+				dateCreated = corEntry.getCreateDate();
+				dateModified = corEntry.getModifiedDate();
 				description = corEntry.getDescription();
 				displayDate = corEntry.getDisplayDate();
 				expirationDate = corEntry.getExpirationDate();
@@ -169,10 +218,83 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 		};
 	}
 
+	private void _testPostOrderRuleWithCreator() throws Exception {
+		String password = RandomTestUtil.randomString();
+		User user = UserTestUtil.addOmniadminUser();
+
+		_userLocalService.updatePassword(
+			user.getUserId(), password, password, false, true);
+
+		OrderRuleResource orderRuleResource = OrderRuleResource.builder(
+		).authentication(
+			user.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "creator"
+		).build();
+
+		OrderRule postOrderRule = orderRuleResource.postOrderRule(
+			randomOrderRule());
+
+		Creator creator = postOrderRule.getCreator();
+
+		Assert.assertEquals(
+			user.getExternalReferenceCode(),
+			creator.getExternalReferenceCode());
+	}
+
+	private void _testPutOrderRuleByExternalReferenceCodeWithOrderRuleOrderType()
+		throws Exception {
+
+		CommerceOrderType commerceOrderType =
+			_commerceOrderTypeLocalService.addCommerceOrderType(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true, 1, 1, 2022, 12, 0,
+				0, 0, 0, 0, 0, 0, true, _serviceContext);
+
+		OrderRule orderRule = randomOrderRule();
+
+		OrderRule putOrderRule =
+			orderRuleResource.putOrderRuleByExternalReferenceCode(
+				orderRule.getExternalReferenceCode(), orderRule);
+
+		orderRule.setOrderRuleOrderType(
+			new OrderRuleOrderType[] {
+				new OrderRuleOrderType() {
+					{
+						orderRuleId = putOrderRule.getId();
+						orderTypeId =
+							commerceOrderType.getCommerceOrderTypeId();
+					}
+				}
+			});
+
+		orderRuleResource.putOrderRuleByExternalReferenceCode(
+			orderRule.getExternalReferenceCode(), orderRule);
+		orderRuleResource.putOrderRuleByExternalReferenceCode(
+			orderRule.getExternalReferenceCode(), orderRule);
+
+		Assert.assertEquals(
+			1,
+			_corEntryRelLocalService.getCOREntryRelsCount(
+				putOrderRule.getId()));
+	}
+
+	@Inject
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+
 	@Inject
 	private COREntryLocalService _corEntryLocalService;
 
+	@Inject
+	private COREntryRelLocalService _corEntryRelLocalService;
+
 	private ServiceContext _serviceContext;
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

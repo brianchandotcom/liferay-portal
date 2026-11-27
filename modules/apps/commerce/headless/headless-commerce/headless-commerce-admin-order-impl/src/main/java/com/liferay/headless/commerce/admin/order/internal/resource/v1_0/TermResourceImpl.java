@@ -7,11 +7,13 @@ package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.commerce.term.constants.CommerceTermEntryPortletKeys;
 import com.liferay.commerce.term.exception.NoSuchTermEntryException;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.commerce.term.service.CommerceTermEntryRelService;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.TermEntityModel;
@@ -38,6 +40,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,9 +52,12 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/term.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = TermResource.class
 )
-public class TermResourceImpl extends BaseTermResourceImpl {
+public class TermResourceImpl
+	extends BaseTermResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<Term> {
 
 	@Override
 	public void deleteTerm(Long id) throws Exception {
@@ -85,46 +91,47 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 	}
 
 	@Override
-	public Term getTerm(Long id) throws Exception {
-		return _toTerm(_commerceTermEntryService.getCommerceTermEntry(id));
-	}
+	public ExportImportDescriptor<CommerceTermEntry>
+		getExportImportDescriptor() {
 
-	@Override
-	public Term getTermByExternalReferenceCode(String externalReferenceCode)
-		throws Exception {
+		return new ExportImportDescriptor<>() {
 
-		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryService.
-				fetchCommerceTermEntryByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+			@Override
+			public String getKey() {
+				return TermResourceImpl.class.getName();
+			}
 
-		if (commerceTermEntry == null) {
-			throw new NoSuchTermEntryException(
-				"Unable to find term with external reference code " +
-					externalReferenceCode);
-		}
+			@Override
+			public String getLabelLanguageKey() {
+				return "terms";
+			}
 
-		return _toTerm(commerceTermEntry);
-	}
+			@Override
+			public Class<CommerceTermEntry> getModelClass() {
+				return CommerceTermEntry.class;
+			}
 
-	@Override
-	public Page<Term> getTermsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception {
+			@Override
+			public List<String> getNestedFields() {
+				return List.of("creator", "termOrderType");
+			}
 
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CommerceTermEntry.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					"status", WorkflowConstants.STATUS_ANY);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toTerm(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+			@Override
+			public String getPortletId() {
+				return CommerceTermEntryPortletKeys.COMMERCE_TERM_ENTRY;
+			}
+
+			@Override
+			public Scope getScope() {
+				return Scope.COMPANY;
+			}
+
+			@Override
+			public String getSectionKey() {
+				return "category.commerce.order_management";
+			}
+
+		};
 	}
 
 	@Override
@@ -154,12 +161,56 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 	}
 
 	@Override
-	public Term postTerm(Term term) throws Exception {
+	protected Term doGetTerm(Long id) throws Exception {
+		return _toTerm(_commerceTermEntryService.getCommerceTermEntry(id));
+	}
+
+	@Override
+	protected Term doGetTermByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceTermEntry commerceTermEntry =
+			_commerceTermEntryService.
+				fetchCommerceTermEntryByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceTermEntry == null) {
+			throw new NoSuchTermEntryException(
+				"Unable to find term with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toTerm(commerceTermEntry);
+	}
+
+	@Override
+	protected Page<Term> doGetTermsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			CommerceTermEntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"status", WorkflowConstants.STATUS_ANY);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toTerm(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	protected Term doPostTerm(Term term) throws Exception {
 		return _toTerm(_addCommerceTermEntry(term));
 	}
 
 	@Override
-	public Term putTermByExternalReferenceCode(
+	protected Term doPutTermByExternalReferenceCode(
 			String externalReferenceCode, Term term)
 		throws Exception {
 
@@ -169,7 +220,7 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 					contextCompany.getCompanyId(), externalReferenceCode);
 
 		if (commerceTermEntry == null) {
-			return postTerm(term);
+			return doPostTerm(term);
 		}
 
 		ServiceContext serviceContext =
@@ -196,6 +247,16 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 			GetterUtil.getString(term.getTypeSettings()), serviceContext);
 
 		return _toTerm(_updateNestedResources(commerceTermEntry, term));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) {
+		return 0L;
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return CommerceTermEntry.class.getName();
 	}
 
 	private CommerceTermEntry _addCommerceTermEntry(Term term)

@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -24,8 +25,20 @@ public class TermEntityModel implements EntityModel {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new CollectionEntityField(
 				new IntegerEntityField(Field.NAME, locale -> Field.NAME)),
+			new DateTimeEntityField(
+				"dateCreated",
+				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+				locale -> Field.CREATE_DATE),
+			new DateTimeEntityField(
+				"dateModified",
+				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+				locale -> Field.MODIFIED_DATE),
 			new DoubleEntityField(Field.PRIORITY, locale -> Field.PRIORITY),
-			new StringEntityField(Field.TYPE, locale -> Field.TYPE));
+			new StringEntityField(Field.TYPE, locale -> Field.TYPE),
+			new StringEntityField(
+				"externalReferenceCode",
+				locale -> Field.getSortableFieldName("externalReferenceCode"),
+				locale -> "externalReferenceCode"));
 	}
 
 	@Override

@@ -64,6 +64,10 @@ public interface OrderTypeResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getOrderTypePermissionsPage(Long orderTypeId, String roleNames)
+		throws Exception;
+
 	public Page<OrderType> getOrderTypesPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -95,6 +99,12 @@ public interface OrderTypeResource {
 
 	public OrderType putOrderTypeByExternalReferenceCode(
 			String externalReferenceCode, OrderType orderType)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putOrderTypePermissionsPage(
+				Long orderTypeId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -193,4 +203,4 @@ public interface OrderTypeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:787368409
+// LIFERAY-REST-BUILDER-HASH:1474406701

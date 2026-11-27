@@ -9,18 +9,23 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Creator;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Term;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.TermResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -51,6 +56,14 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 	@Test
 	public void testGraphQLGetTermNotFound() throws Exception {
 		super.testGraphQLGetTermNotFound();
+	}
+
+	@Override
+	@Test
+	public void testPostTerm() throws Exception {
+		super.testPostTerm();
+
+		_testPostTermWithCreator();
 	}
 
 	@Override
@@ -109,6 +122,11 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 	}
 
 	@Override
+	protected Term testGetTermPermissionsPage_addTerm() throws Exception {
+		return _addTerm(randomTerm());
+	}
+
+	@Override
 	protected Term testGetTermsPage_addTerm(Term term) throws Exception {
 		return _addTerm(term);
 	}
@@ -131,6 +149,11 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 	}
 
 	@Override
+	protected Term testPostTerm_addPermissionsTerm(Term term) throws Exception {
+		return permissionsTermResource.postTerm(term);
+	}
+
+	@Override
 	protected Term testPostTerm_addTerm(Term term) throws Exception {
 		return _addTerm(term);
 	}
@@ -139,6 +162,11 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 	protected Term testPutTermByExternalReferenceCode_addTerm()
 		throws Exception {
 
+		return _addTerm(randomTerm());
+	}
+
+	@Override
+	protected Term testPutTermPermissionsPage_addTerm() throws Exception {
 		return _addTerm(randomTerm());
 	}
 
@@ -167,6 +195,8 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 		return new Term() {
 			{
 				active = commerceTermEntry.isActive();
+				dateCreated = commerceTermEntry.getCreateDate();
+				dateModified = commerceTermEntry.getModifiedDate();
 				description = commerceTermEntry.getLanguageIdToDescriptionMap();
 				displayDate = commerceTermEntry.getDisplayDate();
 				expirationDate = commerceTermEntry.getExpirationDate();
@@ -181,10 +211,38 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 		};
 	}
 
+	private void _testPostTermWithCreator() throws Exception {
+		String password = RandomTestUtil.randomString();
+		User user = UserTestUtil.addOmniadminUser();
+
+		_userLocalService.updatePassword(
+			user.getUserId(), password, password, false, true);
+
+		TermResource termResource = TermResource.builder(
+		).authentication(
+			user.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "creator"
+		).build();
+
+		Term postTerm = termResource.postTerm(randomTerm());
+
+		Creator creator = postTerm.getCreator();
+
+		Assert.assertEquals(
+			user.getExternalReferenceCode(),
+			creator.getExternalReferenceCode());
+	}
+
 	@Inject
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
 	private ServiceContext _serviceContext;
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

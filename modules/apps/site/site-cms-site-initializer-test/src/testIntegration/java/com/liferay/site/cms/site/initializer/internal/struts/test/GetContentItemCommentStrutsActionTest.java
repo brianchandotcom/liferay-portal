@@ -155,13 +155,12 @@ public class GetContentItemCommentStrutsActionTest {
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
 
-		Assert.assertEquals(
-			objectDefinition.getClassName(), mustHavePermission.resourceName);
-
-		Assert.assertEquals(
-			objectEntry.getObjectEntryId(), mustHavePermission.resourceId);
 		Assert.assertArrayEquals(
 			new String[] {ActionKeys.VIEW}, mustHavePermission.actionId);
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId(), mustHavePermission.resourceId);
+		Assert.assertEquals(
+			objectDefinition.getClassName(), mustHavePermission.resourceName);
 	}
 
 	private Comment _addComment(DepotEntry depotEntry, ObjectEntry objectEntry)

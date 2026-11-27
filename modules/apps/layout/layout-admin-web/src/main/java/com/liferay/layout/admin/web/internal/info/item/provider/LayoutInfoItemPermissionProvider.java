@@ -8,12 +8,11 @@ package com.liferay.layout.admin.web.internal.info.item.provider;
 import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemPermissionProviderHelper;
+import com.liferay.layout.admin.web.internal.util.LayoutInfoItemPermissionProviderUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,8 +29,9 @@ public class LayoutInfoItemPermissionProvider
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
-		return _layoutInfoItemPermissionProviderHelper.hasPermission(
-			permissionChecker, infoItemReference, actionId);
+		return LayoutInfoItemPermissionProviderUtil.hasPermission(
+			actionId, infoItemReference, _layoutModelResourcePermission,
+			permissionChecker);
 	}
 
 	@Override
@@ -39,19 +39,10 @@ public class LayoutInfoItemPermissionProvider
 			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws InfoItemPermissionException {
 
-		return _layoutInfoItemPermissionProviderHelper.hasPermission(
-			permissionChecker, layout, actionId);
+		return LayoutInfoItemPermissionProviderUtil.hasPermission(
+			actionId, layout, _layoutModelResourcePermission,
+			permissionChecker);
 	}
-
-	@Activate
-	protected void activate() {
-		_layoutInfoItemPermissionProviderHelper =
-			new LayoutInfoItemPermissionProviderHelper(
-				_layoutModelResourcePermission);
-	}
-
-	private volatile LayoutInfoItemPermissionProviderHelper
-		_layoutInfoItemPermissionProviderHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Layout)"

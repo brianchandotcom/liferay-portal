@@ -8,11 +8,10 @@ package com.liferay.layout.admin.web.internal.info.item.provider;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemFormProviderHelper;
+import com.liferay.layout.admin.web.internal.util.LayoutInfoItemFormProviderUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -25,7 +24,7 @@ public class LayoutInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
-		return _layoutInfoItemFormProviderHelper.getInfoForm();
+		return LayoutInfoItemFormProviderUtil.getInfoForm();
 	}
 
 	@Override
@@ -34,21 +33,12 @@ public class LayoutInfoItemFormProvider
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
-		return _layoutInfoItemFormProviderHelper.getInfoForm(
-			layout, defaultSegmentsExperienceId);
-	}
-
-	@Activate
-	protected void activate() {
-		_layoutInfoItemFormProviderHelper =
-			new LayoutInfoItemFormProviderHelper(_fragmentRendererController);
+		return LayoutInfoItemFormProviderUtil.getInfoForm(
+			_fragmentRendererController, layout, defaultSegmentsExperienceId);
 	}
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
-
-	private volatile LayoutInfoItemFormProviderHelper
-		_layoutInfoItemFormProviderHelper;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

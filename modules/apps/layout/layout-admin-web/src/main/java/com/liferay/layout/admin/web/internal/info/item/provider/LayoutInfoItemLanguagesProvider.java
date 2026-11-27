@@ -6,7 +6,7 @@
 package com.liferay.layout.admin.web.internal.info.item.provider;
 
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemLanguagesProviderHelper;
+import com.liferay.layout.admin.web.internal.util.LayoutInfoItemLanguagesProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,8 +50,9 @@ public class LayoutInfoItemLanguagesProvider
 
 		Collections.addAll(
 			availableLanguageIds,
-			_layoutInfoItemLanguagesProviderHelper.getAvailableLanguageIds(
-				layout, defaultSegmentsExperienceId));
+			LayoutInfoItemLanguagesProviderUtil.getAvailableLanguageIds(
+				_fragmentEntryLinkLocalService, _language, layout,
+				defaultSegmentsExperienceId));
 
 		Set<String> siteAvailableLanguageIds = new HashSet<>();
 
@@ -69,15 +69,7 @@ public class LayoutInfoItemLanguagesProvider
 
 	@Override
 	public String getDefaultLanguageId(Layout layout) {
-		return _layoutInfoItemLanguagesProviderHelper.getDefaultLanguageId(
-			layout);
-	}
-
-	@Activate
-	protected void activate() {
-		_layoutInfoItemLanguagesProviderHelper =
-			new LayoutInfoItemLanguagesProviderHelper(
-				_fragmentEntryLinkLocalService, _language);
+		return LayoutInfoItemLanguagesProviderUtil.getDefaultLanguageId(layout);
 	}
 
 	@Reference
@@ -85,9 +77,6 @@ public class LayoutInfoItemLanguagesProvider
 
 	@Reference
 	private Language _language;
-
-	private volatile LayoutInfoItemLanguagesProviderHelper
-		_layoutInfoItemLanguagesProviderHelper;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

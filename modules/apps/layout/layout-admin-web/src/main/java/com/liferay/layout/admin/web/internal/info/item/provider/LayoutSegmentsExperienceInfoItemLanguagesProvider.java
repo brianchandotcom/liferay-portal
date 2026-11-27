@@ -6,7 +6,7 @@
 package com.liferay.layout.admin.web.internal.info.item.provider;
 
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemLanguagesProviderHelper;
+import com.liferay.layout.admin.web.internal.util.LayoutInfoItemLanguagesProviderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -31,22 +30,16 @@ public class LayoutSegmentsExperienceInfoItemLanguagesProvider
 			SegmentsExperience segmentsExperience)
 		throws PortalException {
 
-		return _layoutInfoItemLanguagesProviderHelper.getAvailableLanguageIds(
+		return LayoutInfoItemLanguagesProviderUtil.getAvailableLanguageIds(
+			_fragmentEntryLinkLocalService, _language,
 			_getLayout(segmentsExperience),
 			segmentsExperience.getSegmentsExperienceId());
 	}
 
 	@Override
 	public String getDefaultLanguageId(SegmentsExperience segmentsExperience) {
-		return _layoutInfoItemLanguagesProviderHelper.getDefaultLanguageId(
+		return LayoutInfoItemLanguagesProviderUtil.getDefaultLanguageId(
 			_getLayout(segmentsExperience));
-	}
-
-	@Activate
-	protected void activate() {
-		_layoutInfoItemLanguagesProviderHelper =
-			new LayoutInfoItemLanguagesProviderHelper(
-				_fragmentEntryLinkLocalService, _language);
 	}
 
 	private Layout _getLayout(SegmentsExperience segmentsExperience) {
@@ -76,9 +69,6 @@ public class LayoutSegmentsExperienceInfoItemLanguagesProvider
 
 	@Reference
 	private Language _language;
-
-	private volatile LayoutInfoItemLanguagesProviderHelper
-		_layoutInfoItemLanguagesProviderHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

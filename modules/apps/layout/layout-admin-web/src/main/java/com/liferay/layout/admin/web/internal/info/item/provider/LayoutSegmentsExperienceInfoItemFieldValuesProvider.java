@@ -8,14 +8,13 @@ package com.liferay.layout.admin.web.internal.info.item.provider;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemFieldValuesProviderHelper;
+import com.liferay.layout.admin.web.internal.util.LayoutInfoItemFieldValuesProviderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.segments.model.SegmentsExperience;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,16 +29,9 @@ public class LayoutSegmentsExperienceInfoItemFieldValuesProvider
 	public InfoItemFieldValues getInfoItemFieldValues(
 		SegmentsExperience segmentsExperience) {
 
-		return _layoutInfoItemFieldValuesProviderHelper.getInfoItemFieldValues(
-			_getLayout(segmentsExperience),
+		return LayoutInfoItemFieldValuesProviderUtil.getInfoItemFieldValues(
+			_fragmentRendererController, _getLayout(segmentsExperience),
 			segmentsExperience.getSegmentsExperienceId());
-	}
-
-	@Activate
-	protected void activate() {
-		_layoutInfoItemFieldValuesProviderHelper =
-			new LayoutInfoItemFieldValuesProviderHelper(
-				_fragmentRendererController);
 	}
 
 	private Layout _getLayout(SegmentsExperience segmentsExperience) {
@@ -66,9 +58,6 @@ public class LayoutSegmentsExperienceInfoItemFieldValuesProvider
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
-
-	private volatile LayoutInfoItemFieldValuesProviderHelper
-		_layoutInfoItemFieldValuesProviderHelper;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

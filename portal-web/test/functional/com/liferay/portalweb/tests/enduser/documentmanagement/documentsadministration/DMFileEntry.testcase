@@ -1253,34 +1253,6 @@ definition {
 			locationFieldName = "true");
 	}
 
-	@description = "This test ensures that an error is displayed when copying a duplicated file."
-	@priority = 4
-	test CannotCopyDuplicatedDocument {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description1",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description1",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.copy(
-			copyDuplicatedDocument = "true",
-			dmDocumentTitle = "DM Document Title",
-			homeFolder = "true",
-			siteName = "Site Name");
-	}
-
 	@description = "This test ensures that a checked out document cannot be edited by another user."
 	@priority = 5
 	@refactordone
@@ -1821,51 +1793,6 @@ definition {
 		DMDocument.viewCategories(categoryNameList = "Apple,Dragon Fruit");
 	}
 
-	@description = "This test ensures that users can view generic error when bulk copy more than ten wrong files."
-	@priority = 4
-	test CanViewGenericErrorWhenBulkCopyMoreThanTenWrongFiles {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10,11") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.jpg",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${entryCount}.jpg");
-		}
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
-
-		PortletEntry.selectAll();
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Copy To");
-
-		DMDocument.copy(
-			bulkCopy = "true",
-			homeFolder = "true",
-			siteName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		PortletEntry.selectAll();
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Copy To");
-
-		DMDocument.copy(
-			bulkCopy = "true",
-			bulkCopyDuplicatedDocument = "true",
-			errorMessage = "Error:11 items could not be copied.",
-			homeFolder = "true",
-			siteName = "Site Name");
-	}
-
 	@description = "This ensures that the document title can be displayed correctly in the different views."
 	@priority = 5
 	@refactordone
@@ -1897,51 +1824,6 @@ definition {
 		DMDocument.viewCP(
 			dmDocumentFileName = "Document_2.doc",
 			dmDocumentTitle = "Document_2");
-	}
-
-	@description = "This test ensures that Users can view specify error when bulk copy less than ten wrong files."
-	@priority = 4
-	test CanViewSpecifyErrorWhenBulkCopyLessThanTenWrongFiles {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.jpg",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${entryCount}.jpg");
-		}
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
-
-		PortletEntry.selectAll();
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Copy To");
-
-		DMDocument.copy(
-			bulkCopy = "true",
-			homeFolder = "true",
-			siteName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		PortletEntry.selectAll();
-
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Copy To");
-
-		DMDocument.copy(
-			bulkCopy = "true",
-			bulkCopyDuplicatedDocument = "true",
-			errorMessage = "Error:10 items could not be copied. A file entry already exists with title Document_10.jpg A file entry already exists with title Document_9.jpg A file entry already exists with title Document_8.jpg A file entry already exists with title Document_7.jpg A file entry already exists with title Document_6.jpg A file entry already exists with title Document_5.jpg A file entry already exists with title Document_4.jpg A file entry already exists with title Document_3.jpg A file entry already exists with title Document_2.jpg A file entry already exists with title Document_1.jpg",
-			homeFolder = "true",
-			siteName = "Site Name");
 	}
 
 	@description = "This is a test for LPS-145630. It checks that the DOCs linked in web articles content can be updated."

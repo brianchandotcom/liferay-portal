@@ -37,9 +37,6 @@ import jakarta.portlet.ResourceResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -134,9 +131,7 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 			themeDisplay.setIsolated(isolated);
 		}
 
-		InputStream inputStream = new ByteArrayInputStream(content.getBytes());
-
-		PortletResponseUtil.write(resourceResponse, inputStream);
+		PortletResponseUtil.write(resourceResponse, content);
 	}
 
 	private FragmentEntry _getFragmentEntry(ResourceRequest resourceRequest) {

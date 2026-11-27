@@ -118,6 +118,7 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 		_validateBoolean("blocked", queryParameters.getFirst("blocked"));
 		_validateBoolean("hidden", queryParameters.getFirst("hidden"));
 		_validateId("accountLifecycleId", pathParameters, queryParameters);
+		_validateId("dataSourceId", pathParameters, queryParameters);
 		_validateId("eventDefinitionId", pathParameters, queryParameters);
 		_validateId("individualSegmentId", pathParameters, queryParameters);
 		_validateId("segmentId", pathParameters, queryParameters);
@@ -340,11 +341,20 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 				"name", "profileType", "sessionsCount"
 			}
 		).put(
+			"getWorkspaceGroupChannelInterestsPage",
+			new String[] {"individualId", "name", "relatedPagesCount", "score"}
+		).put(
 			"getWorkspaceGroupChannelPagesPage",
 			new String[] {
 				"avgTimeOnPageMetric", "bounceRateMetric", "directAccessMetric",
 				"entrancesMetric", "exitRateMetric", "indirectAccessMetric",
 				"viewsMetric", "visitorsMetric"
+			}
+		).put(
+			"getWorkspaceGroupDataSourcesPage",
+			new String[] {
+				"createDate", "modifiedDate", "name", "providerType", "state",
+				"status"
 			}
 		).put(
 			"getWorkspaceGroupEventAttributeDefinitionsPage",
@@ -367,12 +377,26 @@ public class ParameterContainerRequestFilter implements ContainerRequestFilter {
 		).put(
 			"profileType", new String[] {"ANONYMOUS", "KNOWN"}
 		).put(
+			"providerType",
+			new String[] {
+				"CSV", "DEMANDBASE", "HUBSPOT", "LIFERAY", "MARKETO",
+				"MARKETO_CAMPAIGN", "SALESFORCE"
+			}
+		).put(
 			"rangeKey", _getNames(TimeRange.values())
 		).put(
 			"selectedMetrics",
 			new String[] {
 				"accountsTouched", "campaignCount", "closedWonAmount",
 				"openPipelineAmount"
+			}
+		).put(
+			"state",
+			new String[] {
+				"ACTION_NEEDED", "ANALYTICS_CLIENT_CONFIGURATION_FAILURE",
+				"CREDENTIALS_INVALID", "CREDENTIALS_VALID", "DISCONNECTED",
+				"IN_PROGRESS_DELETING", "LIFERAY_VERSION_INVALID", "READY",
+				"UNCONFIGURED", "UNDEFINED_ERROR", "URL_INVALID"
 			}
 		).put(
 			"status", new String[] {"ACTIVE", "INACTIVE"}

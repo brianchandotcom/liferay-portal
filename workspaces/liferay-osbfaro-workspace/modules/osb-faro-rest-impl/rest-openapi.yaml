@@ -474,6 +474,95 @@ components:
                     readOnly: true
                     type: string
             type: object
+        DataSource:
+            description:
+                "A data source connected to the LDP workspace, such as a Liferay DXP instance, a CRM or a CSV upload, that feeds it individuals, accounts, campaigns or analytics. Credentials are never returned."
+            properties:
+                accountsCount:
+                    description:
+                        "Number of accounts synced from the data source. Only `getWorkspaceGroupDataSource` returns it, for DEMANDBASE, MARKETO_CAMPAIGN (Marketo companies) and SALESFORCE data sources; it is null otherwise."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                campaignsCount:
+                    description:
+                        "Number of campaigns synced from the data source. Only `getWorkspaceGroupDataSource` returns it, for SALESFORCE data sources; it is null otherwise."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                channelIds:
+                    description:
+                        "IDs of the channels (also known as properties) the data source sends data to. Use them as `channelId` in the channel tools."
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                contactsSynced:
+                    description:
+                        "Whether the data source syncs the users of the Liferay DXP instance as contacts. Only set for LIFERAY data sources."
+                    readOnly: true
+                    type: boolean
+                createDate:
+                    description:
+                        "When the data source was created."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                eventsCount:
+                    description:
+                        "Number of events received from the data source. Only `getWorkspaceGroupDataSource` returns it, for HUBSPOT and MARKETO data sources; it is null otherwise."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                id:
+                    description:
+                        "Data source ID. Use it as `dataSourceId` in `getWorkspaceGroupDataSource`."
+                    readOnly: true
+                    type: string
+                modifiedDate:
+                    description:
+                        "When the data source was last modified."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        "Name of the data source."
+                    readOnly: true
+                    type: string
+                providerType:
+                    description:
+                        "Kind of system the data source connects to: CSV, DEMANDBASE, HUBSPOT, LIFERAY, MARKETO, MARKETO_CAMPAIGN or SALESFORCE."
+                    readOnly: true
+                    type: string
+                sitesCount:
+                    description:
+                        "Number of sites the data source assigns to its channels (also known as properties)."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                sitesSynced:
+                    description:
+                        "Whether the data source syncs the sites of the Liferay DXP instance. Only set for LIFERAY data sources."
+                    readOnly: true
+                    type: boolean
+                state:
+                    description:
+                        "Connection state of the data source, such as CREDENTIALS_INVALID, CREDENTIALS_VALID, DISCONNECTED, IN_PROGRESS_DELETING, READY or URL_INVALID."
+                    readOnly: true
+                    type: string
+                status:
+                    description:
+                        "Whether the data source is in use: ACTIVE, AUTHENTICATED, CONFIGURING, INACTIVE or OAUTH_EXPIRED. AUTHENTICATED and CONFIGURING mean it is still being set up, and OAUTH_EXPIRED means it needs to be authorized again."
+                    readOnly: true
+                    type: string
+                usersCount:
+                    description:
+                        "Number of users synced from the data source: the users that sent events for HUBSPOT and MARKETO, Liferay DXP users for LIFERAY, leads for MARKETO_CAMPAIGN, and contacts and leads for SALESFORCE. Only `getWorkspaceGroupDataSource` returns it; it is null for DEMANDBASE and CSV data sources."
+                    format: int64
+                    readOnly: true
+                    type: integer
+            type: object
         Event:
             description:
                 "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each event carries free-form `attributes` (a name value map of contextual properties) plus any matching page metadata. Use `getWorkspaceGroupChannelEventsPage` to retrieve a list of analytics events."
@@ -943,6 +1032,39 @@ components:
                 knownIndividuals:
                     $ref: "#/components/schemas/Metric"
             type: object
+        Interest:
+            description:
+                "A topic an individual is interested in, inferred from the keywords of the pages they viewed. Use `getWorkspaceGroupChannelInterestsPage` to list interests."
+            properties:
+                dateRecorded:
+                    description:
+                        "Day the interest scores were last calculated. Every interest in a response shares it, since only the latest calculation is returned."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                individualId:
+                    description:
+                        "ID of the individual who has the interest. Use it as `individualId` in the individual tools."
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        "Name of the interest: a keyword of the pages the individual viewed."
+                    readOnly: true
+                    type: string
+                relatedPagesCount:
+                    description:
+                        "Number of distinct pages with this keyword that the individual viewed."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                score:
+                    description:
+                        "Interest score of the individual in this topic. Higher means a stronger interest."
+                    format: double
+                    readOnly: true
+                    type: number
+            type: object
         Metric:
             description:
                 "A single aggregated metric over the selected date range, compared to the previous range of the same length, with a time series bucketed by the requested interval."
@@ -1207,7 +1329,7 @@ components:
             type: object
 info:
     description:
-        "Read only headless REST API for LDP (Liferay Data Platform). Exposes account lifecycles, accounts, acquisitions, asset summary metrics, event attribute definitions, event definitions, events, individuals, individual segments, page metrics, properties, search terms, visit frequency metrics, and visitor metrics for use as MCP tools and external integrations. All endpoints are scoped to a provisioned LDP workspace. Every tool accepts a `fields` input: request only the fields you need, especially on lists, and leave out the heavy fields `demographics`, `events` and `attributes` unless the question needs them. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.osb.faro.rest.client', and version '1.0.0'."
+        "Read only headless REST API for LDP (Liferay Data Platform). Exposes account lifecycles, accounts, acquisitions, asset summary metrics, data sources, event attribute definitions, event definitions, events, individuals, individual segments, interests, page metrics, properties, search terms, visit frequency metrics, and visitor metrics for use as MCP tools and external integrations. All endpoints are scoped to a provisioned LDP workspace. Every tool accepts a `fields` input: request only the fields you need, especially on lists, and leave out the heavy fields `demographics`, `events` and `attributes` unless the question needs them. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.osb.faro.rest.client', and version '1.0.0'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -2757,6 +2879,75 @@ paths:
                                     $ref: "#/components/schemas/UserSession"
                                 type: array
             tags: ["UserSession"]
+    "/workspace/{groupId}/channels/{channelId}/interests":
+        get:
+            description:
+                "List the interests of the individuals of a channel (also known as property), or of one individual when `individualId` is set, from the latest interest calculation. Each item is one individual's interest in one topic, so without `individualId` the same topic is repeated once for every individual interested in it, each with its own `individualId` and score. Only topics the individual is interested in and viewed pages about are returned. Use `sort=score:desc` to get the strongest interests first."
+            operationId: getWorkspaceGroupChannelInterestsPage
+            parameters:
+                -   in: path
+                    description:
+                        "ID of the Liferay site that owns the LDP workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "ID of the channel (also known as property) whose interests should be listed."
+                    name: channelId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "ID of an individual. When set, only that individual's interests are listed."
+                    name: individualId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        minimum: 1
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size, from 1 to 100. Larger values are rejected."
+                    name: pageSize
+                    schema:
+                        maximum: 100
+                        minimum: 1
+                        type: integer
+                -   in: query
+                    description:
+                        "Only include interests whose name contains this text."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Sort expression `column:asc|desc`. Defaults to `name:asc`. Sortable columns: individualId, name, relatedPagesCount, score. Only one column is accepted."
+                    example: score:desc
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Interest"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Interest"
+                                type: array
+            tags: ["Interest"]
     "/workspace/{groupId}/channels/{channelId}/pages":
         get:
             description:
@@ -3030,6 +3221,107 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/VisitorMetric"
             tags: ["VisitorMetric"]
+    "/workspace/{groupId}/data-sources":
+        get:
+            description:
+                "List or search the data sources connected to an LDP workspace, such as Liferay DXP instances, CRMs and CSV uploads, with their provider type, connection state, status, the channels (also known as properties) they send data to and, for Liferay DXP, whether they sync sites and contacts. It does not return how many accounts, campaigns, events or users each data source synced; use `getWorkspaceGroupDataSource` for one data source at a time. Credentials are never returned."
+            operationId: getWorkspaceGroupDataSourcesPage
+            parameters:
+                -   in: path
+                    description:
+                        "ID of the Liferay site that owns the LDP workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        minimum: 1
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size, from 1 to 100. Larger values are rejected."
+                    name: pageSize
+                    schema:
+                        maximum: 100
+                        minimum: 1
+                        type: integer
+                -   in: query
+                    description:
+                        "Only include data sources that connect to this kind of system. Use one of the listed enum values."
+                    name: providerType
+                    schema:
+                        enum: [CSV, DEMANDBASE, HUBSPOT, LIFERAY, MARKETO, MARKETO_CAMPAIGN, SALESFORCE]
+                        type: string
+                -   in: query
+                    description:
+                        "Only include data sources whose name contains any of the space separated words of this text, ignoring case."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Sort expression `column:asc|desc`. Defaults to the order the data sources were created in. Sortable columns: createDate, modifiedDate, name, providerType, state, status. Only one column is accepted."
+                    example: name:asc
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Only include data sources in this connection state. Use one of the listed enum values."
+                    name: state
+                    schema:
+                        enum: [ACTION_NEEDED, ANALYTICS_CLIENT_CONFIGURATION_FAILURE, CREDENTIALS_INVALID, CREDENTIALS_VALID, DISCONNECTED, IN_PROGRESS_DELETING, LIFERAY_VERSION_INVALID, READY, UNCONFIGURED, UNDEFINED_ERROR, URL_INVALID]
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataSource"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataSource"
+                                type: array
+            tags: ["DataSource"]
+    "/workspace/{groupId}/data-sources/{dataSourceId}":
+        get:
+            description:
+                "Get one data source of an LDP workspace by ID, with what it synced: the number of accounts, campaigns, events and users, as far as its provider type supports each (see the field descriptions). Counting can take a while for large data sources. Credentials are never returned."
+            operationId: getWorkspaceGroupDataSource
+            parameters:
+                -   in: path
+                    description:
+                        "ID of the Liferay site that owns the LDP workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Data source ID. Use `getWorkspaceGroupDataSourcesPage` to find it."
+                    name: dataSourceId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataSource"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataSource"
+            tags: ["DataSource"]
     "/workspace/{groupId}/event-attribute-definitions":
         get:
             description:

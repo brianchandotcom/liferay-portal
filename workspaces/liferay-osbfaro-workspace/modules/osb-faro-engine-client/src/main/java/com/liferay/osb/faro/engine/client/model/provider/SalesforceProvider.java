@@ -23,6 +23,7 @@ public class SalesforceProvider implements Provider {
 		return _campaignsConfiguration;
 	}
 
+	@Override
 	public ChannelsConfiguration getChannelsConfiguration() {
 		return _channelsConfiguration;
 	}

@@ -133,6 +133,12 @@
 			"toolSetName": "faro-rest-v1.0"
 		},
 		{
+			"externalReferenceCode": "LDP_MCP_TOOL_getWorkspaceGroupChannelInterestsPage",
+			"r_mcpServerProfileToTools_l_mcpServerProfileERC": "LDP_MCP_SERVER_PROFILE",
+			"toolName": "getWorkspaceGroupChannelInterestsPage",
+			"toolSetName": "faro-rest-v1.0"
+		},
+		{
 			"externalReferenceCode": "LDP_MCP_TOOL_getWorkspaceGroupChannelPagesPage",
 			"r_mcpServerProfileToTools_l_mcpServerProfileERC": "LDP_MCP_SERVER_PROFILE",
 			"toolName": "getWorkspaceGroupChannelPagesPage",
@@ -160,6 +166,18 @@
 			"externalReferenceCode": "LDP_MCP_TOOL_getWorkspaceGroupChannelsPage",
 			"r_mcpServerProfileToTools_l_mcpServerProfileERC": "LDP_MCP_SERVER_PROFILE",
 			"toolName": "getWorkspaceGroupChannelsPage",
+			"toolSetName": "faro-rest-v1.0"
+		},
+		{
+			"externalReferenceCode": "LDP_MCP_TOOL_getWorkspaceGroupDataSource",
+			"r_mcpServerProfileToTools_l_mcpServerProfileERC": "LDP_MCP_SERVER_PROFILE",
+			"toolName": "getWorkspaceGroupDataSource",
+			"toolSetName": "faro-rest-v1.0"
+		},
+		{
+			"externalReferenceCode": "LDP_MCP_TOOL_getWorkspaceGroupDataSourcesPage",
+			"r_mcpServerProfileToTools_l_mcpServerProfileERC": "LDP_MCP_SERVER_PROFILE",
+			"toolName": "getWorkspaceGroupDataSourcesPage",
 			"toolSetName": "faro-rest-v1.0"
 		},
 		{

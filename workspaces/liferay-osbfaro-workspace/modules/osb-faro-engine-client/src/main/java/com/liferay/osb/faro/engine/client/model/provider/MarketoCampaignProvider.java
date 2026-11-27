@@ -15,6 +15,7 @@ public class MarketoCampaignProvider implements Provider {
 
 	public static final String TYPE = "MARKETO_CAMPAIGN";
 
+	@Override
 	public ChannelsConfiguration getChannelsConfiguration() {
 		return _channelsConfiguration;
 	}

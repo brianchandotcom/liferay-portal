@@ -47,12 +47,14 @@ public class ParameterContainerRequestFilterTest {
 			"getWorkspaceGroupAccountLifecycleStageTransitionsPage");
 
 		Assert.assertNull(_filter("pageSize", "100"));
+		Assert.assertNull(_filter("providerType", "LIFERAY"));
 		Assert.assertNull(_filter("rangeKey", "LAST_30_DAYS"));
 		Assert.assertNull(
 			_filter(
 				_getQueryParameters(
 					"selectedMetrics", "accountsTouched", "closedWonAmount")));
 		Assert.assertNull(_filter("sort", "transitionDate:desc"));
+		Assert.assertNull(_filter("state", "READY"));
 		Assert.assertNull(
 			_filter(_getRangeQueryParameters("2026-10-02", "2026-04-06")));
 		Assert.assertNull(_filter(null, null));
@@ -60,6 +62,9 @@ public class ParameterContainerRequestFilterTest {
 		_assertTitle(
 			"\"accountLifecycleId\" must be a numeric ID",
 			_filter("accountLifecycleId", RandomTestUtil.randomString()));
+		_assertTitle(
+			"\"dataSourceId\" must be a numeric ID",
+			_filter("dataSourceId", RandomTestUtil.randomString()));
 		_assertTitle(
 			"Date range must be at most 180 days",
 			_filter(_getRangeQueryParameters("2026-10-02", "2026-04-05")));
@@ -72,6 +77,11 @@ public class ParameterContainerRequestFilterTest {
 		_assertTitle(
 			"\"pageSize\" must be a whole number from 1 to 100",
 			_filter("pageSize", "101"));
+		_assertTitle(
+			"\"providerType\" must be one of \"CSV\", \"DEMANDBASE\", " +
+				"\"HUBSPOT\", \"LIFERAY\", \"MARKETO\", " +
+					"\"MARKETO_CAMPAIGN\", \"SALESFORCE\"",
+			_filter("providerType", "BOGUS"));
 		_assertTitle(
 			"\"rangeEnd\" and \"rangeStart\" must be set together",
 			_filter("rangeStart", "2026-10-01"));
@@ -97,6 +107,15 @@ public class ParameterContainerRequestFilterTest {
 			"\"sort\" must be a comma separated list of \"column:asc\" or " +
 				"\"column:desc\" expressions",
 			_filter("sort", "accountName:sideways"));
+		_assertTitle(
+			StringBundler.concat(
+				"\"state\" must be one of \"ACTION_NEEDED\", ",
+				"\"ANALYTICS_CLIENT_CONFIGURATION_FAILURE\", ",
+				"\"CREDENTIALS_INVALID\", \"CREDENTIALS_VALID\", ",
+				"\"DISCONNECTED\", \"IN_PROGRESS_DELETING\", ",
+				"\"LIFERAY_VERSION_INVALID\", \"READY\", \"UNCONFIGURED\", ",
+				"\"UNDEFINED_ERROR\", \"URL_INVALID\""),
+			_filter("state", "BOGUS"));
 	}
 
 	@Test

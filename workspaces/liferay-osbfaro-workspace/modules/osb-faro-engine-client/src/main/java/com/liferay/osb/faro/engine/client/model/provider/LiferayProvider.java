@@ -21,6 +21,7 @@ public class LiferayProvider implements Provider {
 		return _analyticsConfiguration;
 	}
 
+	@Override
 	public ChannelsConfiguration getChannelsConfiguration() {
 		return _channelsConfiguration;
 	}

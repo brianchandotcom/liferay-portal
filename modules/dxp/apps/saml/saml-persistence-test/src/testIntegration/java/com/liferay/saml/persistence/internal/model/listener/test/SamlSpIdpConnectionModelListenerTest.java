@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
@@ -37,6 +38,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 public class SamlSpIdpConnectionModelListenerTest
 	extends BaseModelListenerTestCase {
 
+	@FeatureFlag("LPD-96921")
 	@Test
 	public void testOnAfterCreate() throws Exception {
 		_samlSpIdpConnection = _addSamlSpIdpConnection();

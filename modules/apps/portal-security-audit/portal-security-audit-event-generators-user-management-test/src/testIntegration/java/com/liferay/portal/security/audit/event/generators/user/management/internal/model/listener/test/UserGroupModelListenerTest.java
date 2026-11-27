@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
@@ -34,6 +35,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class UserGroupModelListenerTest extends BaseModelListenerTestCase {
 
+	@FeatureFlag("LPD-96921")
 	@Test
 	public void testOnBeforeAddAssociation() throws Exception {
 		_company = CompanyTestUtil.addCompany();

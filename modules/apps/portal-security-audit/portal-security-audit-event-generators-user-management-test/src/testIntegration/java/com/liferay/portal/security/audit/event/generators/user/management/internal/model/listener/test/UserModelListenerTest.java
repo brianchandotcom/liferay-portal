@@ -38,6 +38,7 @@ import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -72,6 +73,7 @@ public class UserModelListenerTest extends BaseModelListenerTestCase {
 		_deleteWorkflowDefinitionLink();
 	}
 
+	@FeatureFlag("LPD-96921")
 	@Test
 	public void testOnBeforeCreate() throws Exception {
 		_user = UserTestUtil.addUser();
@@ -84,6 +86,7 @@ public class UserModelListenerTest extends BaseModelListenerTestCase {
 		Assert.assertEquals("user", auditMessage.getResourceType());
 	}
 
+	@FeatureFlag("LPD-96921")
 	@Test
 	public void testOnBeforeRemove() throws Exception {
 		User user = UserTestUtil.addUser();
@@ -100,7 +103,9 @@ public class UserModelListenerTest extends BaseModelListenerTestCase {
 		Assert.assertEquals("user", auditMessage.getResourceType());
 	}
 
-	@FeatureFlag("LPD-6417")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-6417"), @FeatureFlag("LPD-96921")}
+	)
 	@Test
 	public void testOnBeforeUpdate() throws Exception {
 		_testOnBeforeUpdate();

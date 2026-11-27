@@ -196,6 +196,10 @@ test(
 
 		await textField.fill(text);
 
+		const defaultTitle = getRandomString();
+
+		await journalEditArticlePage.titleInput.fill(defaultTitle);
+
 		await journalEditStructureDefaultValuesPage.save();
 
 		await siteSettingsLocalizationPage.setCustomDefaultLanguage(
@@ -214,6 +218,9 @@ test(
 		});
 
 		await expect(booleanField).toBeChecked();
+		await expect(journalEditArticlePage.titleInput).toHaveValue(
+			defaultTitle
+		);
 		await expect(textField).toHaveValue(text);
 
 		const englishNotTranslatedOption = page.getByRole('option', {

@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -463,7 +464,9 @@ public class JournalEditArticleDisplayContextTest {
 
 	private JournalEditArticleDisplayContext
 			_getDDMStructureArticleJournalEditArticleDisplayContext(
-				DDMFormValues ddmFormValues, Locale defaultArticleLocale)
+				DDMFormValues ddmFormValues, Locale defaultArticleLocale,
+				Map<Locale, String> descriptionMap,
+				Map<Locale, String> titleMap)
 		throws PortalException {
 
 		Mockito.when(
@@ -497,6 +500,12 @@ public class JournalEditArticleDisplayContextTest {
 
 		Mockito.when(
 			_language.isAvailableLocale(defaultArticleLocale)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_language.isAvailableLocale(LocaleUtil.US)
 		).thenReturn(
 			true
 		);
@@ -541,6 +550,24 @@ public class JournalEditArticleDisplayContextTest {
 		JournalArticle journalArticle = Mockito.mock(JournalArticle.class);
 
 		Mockito.when(
+			journalArticle.getDefaultLanguageId()
+		).thenReturn(
+			LocaleUtil.toLanguageId(LocaleUtil.US)
+		);
+
+		Mockito.when(
+			journalArticle.getDescriptionMap()
+		).thenReturn(
+			descriptionMap
+		);
+
+		Mockito.when(
+			journalArticle.getTitleMap()
+		).thenReturn(
+			titleMap
+		);
+
+		Mockito.when(
 			journalArticle.isNew()
 		).thenReturn(
 			true
@@ -583,6 +610,21 @@ public class JournalEditArticleDisplayContextTest {
 
 		spanishValue.addString(LocaleUtil.SPAIN, spanishString);
 
+		String description = RandomTestUtil.randomString();
+		String spanishDescription = RandomTestUtil.randomString();
+
+		Map<Locale, String> descriptionMap = HashMapBuilder.put(
+			LocaleUtil.SPAIN, spanishDescription
+		).put(
+			LocaleUtil.US, description
+		).build();
+
+		String title = RandomTestUtil.randomString();
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, title
+		).build();
+
 		DDMFormFieldValue unlocalizedDDMFormFieldValue =
 			new DDMFormFieldValue();
 
@@ -596,7 +638,20 @@ public class JournalEditArticleDisplayContextTest {
 					blankDDMFormFieldValue, fieldSetDDMFormFieldValue,
 					japaneseDDMFormFieldValue, spanishDDMFormFieldValue,
 					unlocalizedDDMFormFieldValue),
-				LocaleUtil.JAPAN);
+				LocaleUtil.JAPAN, descriptionMap, titleMap);
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.JAPAN, description
+			).put(
+				LocaleUtil.SPAIN, spanishDescription
+			).build(),
+			descriptionMap);
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.JAPAN, title
+			).build(),
+			titleMap);
 
 		DDMFormValues ddmFormValues =
 			journalEditArticleDisplayContext.getDDMFormValues();
@@ -656,9 +711,22 @@ public class JournalEditArticleDisplayContextTest {
 		DDMFormFieldValue ddmFormFieldValue = _createDDMFormFieldValue(
 			LocaleUtil.US, string);
 
+		String title = RandomTestUtil.randomString();
+
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, title
+		).build();
+
 		JournalEditArticleDisplayContext journalEditArticleDisplayContext =
 			_getDDMStructureArticleJournalEditArticleDisplayContext(
-				_createDDMFormValues(ddmFormFieldValue), LocaleUtil.US);
+				_createDDMFormValues(ddmFormFieldValue), LocaleUtil.US,
+				new HashMap<>(), titleMap);
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.US, title
+			).build(),
+			titleMap);
 
 		DDMFormValues ddmFormValues =
 			journalEditArticleDisplayContext.getDDMFormValues();

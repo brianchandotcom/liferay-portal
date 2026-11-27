@@ -305,12 +305,18 @@ public class ObjectEntryModelDocumentContributor
 			Map<String, Serializable> locationMap =
 				(Map<String, Serializable>)fieldValue;
 
+			String address = MapUtil.getString(locationMap, "address");
+
+			if (Validator.isNull(address)) {
+				return;
+			}
+
 			document.addGeoLocation(
 				fieldName + "_geolocation",
 				MapUtil.getDouble(locationMap, "latitude"),
 				MapUtil.getDouble(locationMap, "longitude"));
 
-			fieldValue = MapUtil.getString(locationMap, "address");
+			fieldValue = address;
 		}
 		else if (StringUtil.equals(
 					objectField.getBusinessType(),

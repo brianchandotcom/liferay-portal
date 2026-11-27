@@ -399,6 +399,13 @@ public class OpenAPIUtil {
 
 			s = s.substring(0, s.length() - 1);
 		}
+		else if ((s.endsWith("ches") || s.endsWith("shes")) &&
+				 ConfigUtil.isVersionCompatible(configYAML, 17)) {
+
+			// Launches to launch
+
+			s = s.substring(0, s.length() - 2);
+		}
 		else if (s.endsWith("ses") || s.endsWith("xes")) {
 			s = s.substring(0, s.length() - 2);
 		}

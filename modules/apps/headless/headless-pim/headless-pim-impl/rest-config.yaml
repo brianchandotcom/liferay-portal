@@ -6,7 +6,7 @@ application:
     name: Liferay.Headless.PIM
 author: Stefano Motta
 clientDir: ../headless-pim-client/src/main/java
-compatibilityVersion: 16
+compatibilityVersion: 17
 forcePredictableOperationId: true
 forcePredictableSchemaPropertyName: true
 generateBatch: false

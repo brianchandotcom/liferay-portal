@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -29,6 +30,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -43,10 +45,15 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -54,6 +61,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -185,6 +193,10 @@ public class ObjectDDMStorageAdapterTest {
 				).name(
 					"picklistObjectField"
 				).build()));
+
+		_repository = _portletFileRepository.addPortletRepository(
+			_group.getGroupId(), DDMFormConstants.SERVICE_NAME,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@After
@@ -241,7 +253,8 @@ public class ObjectDDMStorageAdapterTest {
 				DDMFormValuesTestUtil.createLocalizedValue(
 					"[\"Option1\"]", LocaleUtil.US)));
 
-		FileEntry fileEntry = _addFileEntry();
+		FileEntry fileEntry = _addFileEntry(
+			0, _repository.getRepositoryId(), TestPropsValues.getUserId());
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
@@ -318,6 +331,44 @@ public class ObjectDDMStorageAdapterTest {
 				"[\"ListTypeEntry1\"]", LocaleUtil.US));
 	}
 
+	@Test
+	public void testSave() throws Exception {
+		User ddmFormDefaultUser = DDMFormUtil.getDDMFormDefaultUser(
+			TestPropsValues.getCompanyId());
+		long guestUserId = _userLocalService.getGuestUserId(
+			TestPropsValues.getCompanyId());
+
+		Assert.assertThrows(
+			NoSuchFileEntryException.class,
+			() -> _testSave(
+				0, _repository.getRepositoryId(),
+				ddmFormDefaultUser.getUserId(), guestUserId));
+
+		_testSave(0, _repository.getRepositoryId(), guestUserId, guestUserId);
+		_testSave(
+			0, _repository.getRepositoryId(), TestPropsValues.getUserId(),
+			guestUserId);
+		_testSave(
+			RandomTestUtil.randomLong(), _repository.getRepositoryId(),
+			ddmFormDefaultUser.getUserId(), guestUserId);
+
+		User user = UserTestUtil.addUser();
+
+		Assert.assertThrows(
+			NoSuchFileEntryException.class,
+			() -> _testSave(
+				0, _repository.getRepositoryId(), user.getUserId(),
+				user.getUserId()));
+
+		_testSave(0, _group.getGroupId(), user.getUserId(), user.getUserId());
+		_testSave(
+			0, _repository.getRepositoryId(), ddmFormDefaultUser.getUserId(),
+			user.getUserId());
+		_testSave(
+			0, _repository.getRepositoryId(), TestPropsValues.getUserId(),
+			user.getUserId());
+	}
+
 	private void _adDDMFormFieldOption(
 		DDMFormFieldOptions ddmFormFieldOptions, String ddmFormFieldOptionValue,
 		String listTypeEntryKey) {
@@ -330,21 +381,32 @@ public class ObjectDDMStorageAdapterTest {
 			ddmFormFieldOptionValue, listTypeEntryKey);
 	}
 
-	private FileEntry _addFileEntry() throws Exception {
+	private FileEntry _addFileEntry(
+			long classPK, long repositoryId, long userId)
+		throws Exception {
+
 		String content = RandomTestUtil.randomString();
 		Folder folder = _dlAppLocalService.addFolder(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), repositoryId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 
-		return _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(content.getBytes()), 0, null, null, null,
-			ServiceContextTestUtil.getServiceContext());
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, userId, repositoryId, folder.getFolderId(),
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, new ByteArrayInputStream(content.getBytes()), 0,
+			null, null, null, ServiceContextTestUtil.getServiceContext());
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
+			fileEntry.getFileEntryId());
+
+		dlFileEntry.setClassPK(classPK);
+
+		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+
+		return fileEntry;
 	}
 
 	private void _assertDDMFormFieldValue(
@@ -406,6 +468,49 @@ public class ObjectDDMStorageAdapterTest {
 		return ddmFormValues;
 	}
 
+	private void _testSave(
+			long classPK, long repositoryId, long userId1, long userId2)
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			_createDDMFormField(
+				"document-library", "uploadDDMFormField",
+				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
+				"attachmentObjectField1"));
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		FileEntry fileEntry = _addFileEntry(classPK, repositoryId, userId1);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"uploadDDMFormField",
+				DDMFormValuesTestUtil.createLocalizedValue(
+					JSONUtil.put(
+						"fileEntryId", fileEntry.getFileEntryId()
+					).toString(),
+					LocaleUtil.US)));
+
+		DDMStorageAdapter objectDDMStorageAdapter =
+			_ddmStorageAdapterRegistry.getDDMStorageAdapter("object");
+
+		objectDDMStorageAdapter.save(
+			DDMStorageAdapterSaveRequest.Builder.newBuilder(
+				userId2, ddmFormValues
+			).withDDMFormInstance(
+				DDMFormInstanceTestUtil.addDDMFormInstance(
+					ddmForm, _group, _createSettingsDDMFormValues(),
+					TestPropsValues.getUserId())
+			).withGroupId(
+				_group.getGroupId()
+			).build());
+
+		_dlFileEntryLocalService.getFileEntry(fileEntry.getFileEntryId());
+	}
+
 	@Inject
 	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
 
@@ -430,5 +535,13 @@ public class ObjectDDMStorageAdapterTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
+
+	private Repository _repository;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

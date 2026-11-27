@@ -5,7 +5,10 @@
 
 package com.liferay.object.dynamic.data.mapping.internal.storage;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -24,6 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
+import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -50,8 +54,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -177,25 +184,29 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					objectDefinition.getCompanyId(),
 					objectDefinition.getStorageType());
 
+			User user = _userLocalService.getUser(
+				ddmStorageAdapterSaveRequest.getUserId());
+
 			ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
 				new DefaultDTOConverterContext(
 					true,
 					Collections.singletonMap(
 						"delete", Collections.singletonMap("delete", "")),
-					null, null, null, ddmForm.getDefaultLocale(), null,
-					_userLocalService.getUser(
-						ddmStorageAdapterSaveRequest.getUserId())),
+					null, null, null, ddmForm.getDefaultLocale(), null, user),
 				objectDefinition,
 				new ObjectEntry() {
 					{
 						setProperties(
 							() -> _toProperties(
+								DDMFormUtil.getDDMFormDefaultUser(
+									objectDefinition.getCompanyId()),
 								ddmFormValues.getDDMFormFieldValuesMap(true),
 								fileEntryIds,
 								ObjectFieldUtil.toObjectFieldsMap(
 									_objectFieldLocalService.getObjectFields(
 										objectDefinition.
-											getObjectDefinitionId()))));
+											getObjectDefinitionId())),
+								user));
 					}
 				},
 				_getScopeKey(
@@ -407,8 +418,10 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 	}
 
 	private Map<String, Object> _toProperties(
+			User ddmFormDefaultUser,
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
-			Set<Long> fileEntryIds, Map<String, ObjectField> objectFieldsMap)
+			Set<Long> fileEntryIds, Map<String, ObjectField> objectFieldsMap,
+			User user)
 		throws Exception {
 
 		Map<String, Object> properties = new HashMap<>();
@@ -455,7 +468,31 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 								objectField.getObjectFieldSettings()),
 							ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
-						fileEntryIds.add(fileEntryId);
+						DLFileEntry dlFileEntry =
+							_dlFileEntryLocalService.fetchDLFileEntry(
+								fileEntryId);
+
+						if ((dlFileEntry != null) &&
+							(dlFileEntry.getClassPK() <= 0) &&
+							(((ddmFormDefaultUser != null) &&
+							  (ddmFormDefaultUser.getUserId() ==
+								  dlFileEntry.getUserId()) &&
+							  user.isGuestUser()) ||
+							 ((dlFileEntry.getUserId() == user.getUserId()) &&
+							  !user.isGuestUser()))) {
+
+							Repository repository =
+								_repositoryLocalService.fetchRepository(
+									dlFileEntry.getRepositoryId());
+
+							if ((repository != null) &&
+								Objects.equals(
+									repository.getPortletId(),
+									DDMFormConstants.SERVICE_NAME)) {
+
+								fileEntryIds.add(fileEntryId);
+							}
+						}
 					}
 
 					properties.put(objectField.getName(), valueString);
@@ -529,6 +566,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -548,6 +588,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -271,37 +271,66 @@ public class ObjectDefinitionDeployerImplTest {
 
 		ObjectEntry depotEntryObjectEntry =
 			CMSDefaultValueUtil.addOrUpdateObjectEntry(
-				TestPropsValues.getUserId(), JSONFactoryUtil.createJSONArray(),
-				_depotEntry, _filterFactory);
+				JSONFactoryUtil.createJSONArray(), _depotEntry, _filterFactory,
+				TestPropsValues.getUserId());
 
 		Assert.assertFalse(
 			modelResourcePermission.contains(
+				permissionChecker, depotEntryObjectEntry, ActionKeys.DELETE));
+		Assert.assertFalse(
+			modelResourcePermission.contains(
+				permissionChecker, depotEntryObjectEntry,
+				ActionKeys.PERMISSIONS));
+		Assert.assertFalse(
+			modelResourcePermission.contains(
 				permissionChecker, depotEntryObjectEntry, ActionKeys.UPDATE));
+		Assert.assertFalse(
+			modelResourcePermission.contains(
+				permissionChecker, depotEntryObjectEntry, ActionKeys.VIEW));
 
 		ObjectEntry objectEntryFolderObjectEntry =
 			CMSDefaultValueUtil.addOrUpdateObjectEntry(
-				TestPropsValues.getUserId(), JSONFactoryUtil.createJSONArray(),
-				_filterFactory, objectEntryFolder);
+				JSONFactoryUtil.createJSONArray(), _filterFactory,
+				objectEntryFolder, TestPropsValues.getUserId());
 
 		Assert.assertFalse(
 			modelResourcePermission.contains(
 				permissionChecker, objectEntryFolderObjectEntry,
+				ActionKeys.DELETE));
+		Assert.assertFalse(
+			modelResourcePermission.contains(
+				permissionChecker, objectEntryFolderObjectEntry,
+				ActionKeys.PERMISSIONS));
+		Assert.assertFalse(
+			modelResourcePermission.contains(
+				permissionChecker, objectEntryFolderObjectEntry,
 				ActionKeys.UPDATE));
+		Assert.assertTrue(
+			modelResourcePermission.contains(
+				permissionChecker, objectEntryFolderObjectEntry,
+				ActionKeys.VIEW));
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			_group.getCompanyId(), DepotEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(_depotEntry.getDepotEntryId()), role.getRoleId(),
-			new String[] {ActionKeys.UPDATE});
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		permissionChecker = PermissionCheckerFactoryUtil.create(user);
 
 		Assert.assertTrue(
 			modelResourcePermission.contains(
 				permissionChecker, depotEntryObjectEntry, ActionKeys.DELETE));
+		Assert.assertFalse(
+			modelResourcePermission.contains(
+				permissionChecker, depotEntryObjectEntry,
+				ActionKeys.PERMISSIONS));
 		Assert.assertTrue(
 			modelResourcePermission.contains(
 				permissionChecker, depotEntryObjectEntry, ActionKeys.UPDATE));
+		Assert.assertTrue(
+			modelResourcePermission.contains(
+				permissionChecker, depotEntryObjectEntry, ActionKeys.VIEW));
 		Assert.assertFalse(
 			modelResourcePermission.contains(
 				permissionChecker, objectEntryFolderObjectEntry,
@@ -311,7 +340,8 @@ public class ObjectDefinitionDeployerImplTest {
 			_group.getCompanyId(), ObjectEntryFolder.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
-			role.getRoleId(), new String[] {ActionKeys.UPDATE});
+			role.getRoleId(),
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		permissionChecker = PermissionCheckerFactoryUtil.create(user);
 
@@ -319,10 +349,53 @@ public class ObjectDefinitionDeployerImplTest {
 			modelResourcePermission.contains(
 				permissionChecker, objectEntryFolderObjectEntry,
 				ActionKeys.DELETE));
+		Assert.assertFalse(
+			modelResourcePermission.contains(
+				permissionChecker, objectEntryFolderObjectEntry,
+				ActionKeys.PERMISSIONS));
 		Assert.assertTrue(
 			modelResourcePermission.contains(
 				permissionChecker, objectEntryFolderObjectEntry,
 				ActionKeys.UPDATE));
+		Assert.assertTrue(
+			modelResourcePermission.contains(
+				permissionChecker, objectEntryFolderObjectEntry,
+				ActionKeys.VIEW));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_group.getCompanyId(), DepotEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_depotEntry.getDepotEntryId()), role.getRoleId(),
+			new String[] {
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
+			});
+
+		permissionChecker = PermissionCheckerFactoryUtil.create(user);
+
+		Assert.assertTrue(
+			modelResourcePermission.contains(
+				permissionChecker, depotEntryObjectEntry,
+				ActionKeys.PERMISSIONS));
+		Assert.assertFalse(
+			modelResourcePermission.contains(
+				permissionChecker, objectEntryFolderObjectEntry,
+				ActionKeys.PERMISSIONS));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_group.getCompanyId(), ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+			role.getRoleId(),
+			new String[] {
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
+			});
+
+		permissionChecker = PermissionCheckerFactoryUtil.create(user);
+
+		Assert.assertTrue(
+			modelResourcePermission.contains(
+				permissionChecker, objectEntryFolderObjectEntry,
+				ActionKeys.PERMISSIONS));
 	}
 
 	private DepotEntry _depotEntry;

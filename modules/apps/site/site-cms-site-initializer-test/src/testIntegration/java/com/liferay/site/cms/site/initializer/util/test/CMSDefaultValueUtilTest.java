@@ -99,9 +99,8 @@ public class CMSDefaultValueUtilTest {
 	@Test
 	public void testAddOrUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry1 = CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.put(_createJSONObject("title", "Text", "Title 1")),
-			_filterFactory, _objectEntryFolder);
+			_filterFactory, _objectEntryFolder, TestPropsValues.getUserId());
 
 		Assert.assertEquals(_group.getGroupId(), objectEntry1.getGroupId());
 
@@ -120,9 +119,8 @@ public class CMSDefaultValueUtilTest {
 		_assertDefaultValues("title", "Title 1", values);
 
 		ObjectEntry objectEntry2 = CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.put(_createJSONObject("title", "Text", "Title 2")),
-			_filterFactory, _objectEntryFolder);
+			_filterFactory, _objectEntryFolder, TestPropsValues.getUserId());
 
 		Assert.assertEquals(
 			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId());
@@ -130,9 +128,8 @@ public class CMSDefaultValueUtilTest {
 		_assertDefaultValues("title", "Title 2", objectEntry2.getValues());
 
 		ObjectEntry objectEntry3 = CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.put(_createJSONObject("title", "Text", "Title 3")),
-			_depotEntry, _filterFactory);
+			_depotEntry, _filterFactory, TestPropsValues.getUserId());
 
 		Assert.assertNotEquals(
 			objectEntry1.getObjectEntryId(), objectEntry3.getObjectEntryId());
@@ -170,34 +167,33 @@ public class CMSDefaultValueUtilTest {
 	public void testFetchObjectEntry() throws Exception {
 		Assert.assertNull(
 			CMSDefaultValueUtil.fetchObjectEntry(
-				_group.getGroupId(),
 				_objectEntryFolder.getExternalReferenceCode(),
-				ObjectEntryFolder.class.getName(), _filterFactory));
+				ObjectEntryFolder.class.getName(), _filterFactory,
+				_group.getGroupId()));
 
 		ObjectEntry objectEntry = CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.put(
 				_createJSONObject(
 					"title", "Text", RandomTestUtil.randomString())),
-			_filterFactory, _objectEntryFolder);
+			_filterFactory, _objectEntryFolder, TestPropsValues.getUserId());
 
 		Assert.assertEquals(
 			objectEntry,
 			CMSDefaultValueUtil.fetchObjectEntry(
-				_group.getGroupId(),
 				_objectEntryFolder.getExternalReferenceCode(),
-				ObjectEntryFolder.class.getName(), _filterFactory));
+				ObjectEntryFolder.class.getName(), _filterFactory,
+				_group.getGroupId()));
 
 		Assert.assertNull(
 			CMSDefaultValueUtil.fetchObjectEntry(
-				_group.getGroupId(),
 				_objectEntryFolder.getExternalReferenceCode(),
-				DepotEntry.class.getName(), _filterFactory));
+				DepotEntry.class.getName(), _filterFactory,
+				_group.getGroupId()));
 		Assert.assertNull(
 			CMSDefaultValueUtil.fetchObjectEntry(
-				_group.getGroupId(),
 				_parentObjectEntryFolder.getExternalReferenceCode(),
-				ObjectEntryFolder.class.getName(), _filterFactory));
+				ObjectEntryFolder.class.getName(), _filterFactory,
+				_group.getGroupId()));
 
 		String externalReferenceCode = StringBundler.concat(
 			RandomTestUtil.randomString(), StringPool.APOSTROPHE,
@@ -216,37 +212,37 @@ public class CMSDefaultValueUtilTest {
 				ServiceContextTestUtil.getServiceContext());
 
 		objectEntry = CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.put(
 				_createJSONObject(
 					"title", "Text", RandomTestUtil.randomString())),
-			_filterFactory, objectEntryFolder);
+			_filterFactory, objectEntryFolder, TestPropsValues.getUserId());
 
 		Assert.assertEquals(
 			objectEntry,
 			CMSDefaultValueUtil.fetchObjectEntry(
-				_group.getGroupId(), externalReferenceCode,
-				ObjectEntryFolder.class.getName(), _filterFactory));
+				externalReferenceCode, ObjectEntryFolder.class.getName(),
+				_filterFactory, _group.getGroupId()));
 	}
 
 	@Test
 	public void testGetDefaultValuesJSONArray() throws Exception {
 		JSONArray jsonArray = CMSDefaultValueUtil.getDefaultValuesJSONArray(
-			_group.getGroupId(), _objectEntryFolder.getExternalReferenceCode(),
-			ObjectEntryFolder.class.getName(), _filterFactory);
+			_objectEntryFolder.getExternalReferenceCode(),
+			ObjectEntryFolder.class.getName(), _filterFactory,
+			_group.getGroupId());
 
 		Assert.assertEquals(0, jsonArray.length());
 
 		CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.putAll(
 				_createJSONObject("description", "LongText", null),
 				_createJSONObject("title", "Text", "Title")),
-			_filterFactory, _objectEntryFolder);
+			_filterFactory, _objectEntryFolder, TestPropsValues.getUserId());
 
 		jsonArray = CMSDefaultValueUtil.getDefaultValuesJSONArray(
-			_group.getGroupId(), _objectEntryFolder.getExternalReferenceCode(),
-			ObjectEntryFolder.class.getName(), _filterFactory);
+			_objectEntryFolder.getExternalReferenceCode(),
+			ObjectEntryFolder.class.getName(), _filterFactory,
+			_group.getGroupId());
 
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
@@ -266,18 +262,17 @@ public class CMSDefaultValueUtilTest {
 		Assert.assertEquals(
 			Collections.emptyMap(),
 			CMSDefaultValueUtil.getInheritedDefaultValues(
-				0, _filterFactory,
+				_filterFactory, 0,
 				_objectEntryFolder.getObjectEntryFolderId()));
 
 		Map<String, JSONObject> defaultValues =
 			CMSDefaultValueUtil.getInheritedDefaultValues(
-				_group.getGroupId(), _filterFactory,
+				_filterFactory, _group.getGroupId(),
 				_objectEntryFolder.getObjectEntryFolderId());
 
 		Assert.assertEquals(defaultValues.toString(), 0, defaultValues.size());
 
 		CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.putAll(
 				_createJSONObject(
 					"category", "Picklist", "space"
@@ -290,14 +285,14 @@ public class CMSDefaultValueUtilTest {
 					JSONUtil.put(
 						"en_US", "Space description"
 					).put(
-						"it_IT", "Descrizione dello spazio"
+						"it_IT", RandomTestUtil.randomString()
 					)),
 				_createJSONObject("flag", "Boolean", true),
 				_createJSONObject("title", "Text", "Space title")),
-			_depotEntry, _filterFactory);
+			_depotEntry, _filterFactory, TestPropsValues.getUserId());
 
 		defaultValues = CMSDefaultValueUtil.getInheritedDefaultValues(
-			_group.getGroupId(), _filterFactory,
+			_filterFactory, _group.getGroupId(),
 			_objectEntryFolder.getObjectEntryFolderId());
 
 		Assert.assertEquals(defaultValues.toString(), 5, defaultValues.size());
@@ -307,7 +302,6 @@ public class CMSDefaultValueUtilTest {
 			_group.getExternalReferenceCode(), "title", "Text", "Space title");
 
 		CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.putAll(
 				_createJSONObject(
 					"category", "Picklist", "parent"
@@ -315,10 +309,10 @@ public class CMSDefaultValueUtilTest {
 					"listTypeDefinitionERC", "list2"
 				),
 				_createJSONObject("title", "Text", "Parent title")),
-			_filterFactory, _parentObjectEntryFolder);
+			_filterFactory, _parentObjectEntryFolder,
+			TestPropsValues.getUserId());
 
 		CMSDefaultValueUtil.addOrUpdateObjectEntry(
-			TestPropsValues.getUserId(),
 			JSONUtil.putAll(
 				_createJSONObject("count", "Integer", 2),
 				_createJSONObject(
@@ -330,10 +324,10 @@ public class CMSDefaultValueUtilTest {
 					)),
 				_createJSONObject("flag", "Boolean", null),
 				_createJSONObject("title", "Text", StringPool.BLANK)),
-			_filterFactory, _objectEntryFolder);
+			_filterFactory, _objectEntryFolder, TestPropsValues.getUserId());
 
 		defaultValues = CMSDefaultValueUtil.getInheritedDefaultValues(
-			_group.getGroupId(), _filterFactory,
+			_filterFactory, _group.getGroupId(),
 			_objectEntryFolder.getObjectEntryFolderId());
 
 		JSONObject jsonObject = defaultValues.get(
@@ -374,7 +368,7 @@ public class CMSDefaultValueUtilTest {
 			"Text", "Parent title");
 
 		defaultValues = CMSDefaultValueUtil.getInheritedDefaultValues(
-			_group.getGroupId(), _filterFactory,
+			_filterFactory, _group.getGroupId(),
 			_parentObjectEntryFolder.getObjectEntryFolderId());
 
 		_assertInheritedDefaultValue(
@@ -382,7 +376,7 @@ public class CMSDefaultValueUtilTest {
 			_group.getExternalReferenceCode(), "count", "Integer", 1);
 
 		defaultValues = CMSDefaultValueUtil.getInheritedDefaultValues(
-			_group.getGroupId(), _filterFactory,
+			_filterFactory, _group.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
 		Assert.assertEquals(defaultValues.toString(), 5, defaultValues.size());

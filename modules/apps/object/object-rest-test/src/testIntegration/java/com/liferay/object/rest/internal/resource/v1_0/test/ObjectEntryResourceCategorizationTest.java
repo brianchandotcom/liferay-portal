@@ -25,6 +25,7 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -82,6 +84,139 @@ public class ObjectEntryResourceCategorizationTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testGetObjectEntriesWithKeywordsAndTaxonomyCategories()
+		throws Exception {
+
+		Company company = companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		AssetVocabulary assetVocabulary1 =
+			assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), company.getGroupId(),
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
+		AssetVocabulary assetVocabulary2 =
+			assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), company.getGroupId(),
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE),
+				new ServiceContext());
+
+		TaxonomyCategory taxonomyCategory1 =
+			postTaxonomyVocabularyTaxonomyCategory(
+				company.getGroupId(), assetVocabulary1.getVocabularyId());
+
+		TaxonomyCategory taxonomyCategory2 =
+			_postTaxonomyCategoryTaxonomyCategory(taxonomyCategory1);
+
+		TaxonomyCategory taxonomyCategory3 =
+			postTaxonomyVocabularyTaxonomyCategory(
+				company.getGroupId(), assetVocabulary2.getVocabularyId());
+		TaxonomyCategory taxonomyCategory4 =
+			postTaxonomyVocabularyTaxonomyCategory(
+				company.getGroupId(), assetVocabulary2.getVocabularyId());
+
+		String randomString1 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+		String randomString2 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+		String randomString3 = RandomTestUtil.randomString(
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		String tagName1 = "tag1" + StringUtil.toLowerCase(randomString1);
+		String tagName2 = "tag2" + StringUtil.toLowerCase(randomString2);
+		String tagName3 = "tag3" + StringUtil.toLowerCase(randomString3);
+
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"keywords", JSONUtil.putAll(tagName2)
+			).put(
+				"taxonomyCategoryIds",
+				JSONUtil.putAll(
+					taxonomyCategory4.getId(), taxonomyCategory1.getId())
+			).toString(),
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"keywords", JSONUtil.putAll(tagName3, tagName1, tagName2)
+			).put(
+				"taxonomyCategoryIds",
+				JSONUtil.putAll(
+					taxonomyCategory3.getId(), taxonomyCategory1.getId(),
+					taxonomyCategory2.getId())
+			).toString(),
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).toString(),
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
+
+		AssetCategoryLocalServiceUtil.deleteCategory(
+			GetterUtil.getLong(taxonomyCategory4.getId()));
+
+		JSONObject pageJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition.getRESTContextPath(), Http.Method.GET);
+
+		JSONArray itemsJSONArray = pageJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			itemsJSONArray.toString(), 3, itemsJSONArray.length());
+
+		Map<String, JSONObject> itemJSONObjects = new HashMap<>();
+
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+			JSONObject jsonObject = getObjectEntryJSONObject(
+				objectDefinition, itemJSONObject.getString("id"));
+
+			Assert.assertEquals(
+				String.valueOf(jsonObject.opt("keywords")),
+				String.valueOf(itemJSONObject.opt("keywords")));
+			Assert.assertEquals(
+				String.valueOf(jsonObject.opt("taxonomyCategoryBriefs")),
+				String.valueOf(itemJSONObject.opt("taxonomyCategoryBriefs")));
+
+			itemJSONObjects.put(itemJSONObject.getString("id"), itemJSONObject);
+		}
+
+		JSONObject itemJSONObject = itemJSONObjects.get(
+			jsonObject1.getString("id"));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				tagName2
+			).toString(),
+			String.valueOf(itemJSONObject.getJSONArray("keywords")),
+			JSONCompareMode.STRICT);
+		_assertTaxonomyCategoryBriefs(itemJSONObject, false, taxonomyCategory1);
+
+		itemJSONObject = itemJSONObjects.get(jsonObject2.getString("id"));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				tagName1, tagName2, tagName3
+			).toString(),
+			String.valueOf(itemJSONObject.getJSONArray("keywords")),
+			JSONCompareMode.NON_EXTENSIBLE);
+		_assertTaxonomyCategoryBriefs(
+			itemJSONObject, false, taxonomyCategory1, taxonomyCategory2,
+			taxonomyCategory3);
+
+		assetVocabularyLocalService.deleteVocabulary(assetVocabulary1);
+		assetVocabularyLocalService.deleteVocabulary(assetVocabulary2);
+	}
 
 	@Test
 	public void testGetObjectEntryWithKeywords() throws Exception {

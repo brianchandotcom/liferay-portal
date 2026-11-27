@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -40,7 +41,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,6 +100,61 @@ public class AssetEntryLocalServiceTest {
 			assetEntry1.getClassUuid() + StringPool.POUND +
 				assetEntry2.getClassUuid(),
 			systemEvent.getClassUuid());
+	}
+
+	@Test
+	public void testFetchEntries() throws Exception {
+		String className = RandomTestUtil.randomString();
+
+		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
+			TestPropsValues.getGroupId(), null, className);
+		AssetEntry assetEntry2 = AssetTestUtil.addAssetEntry(
+			TestPropsValues.getGroupId(), null, className);
+		AssetEntry assetEntry3 = AssetTestUtil.addAssetEntry(
+			TestPropsValues.getGroupId(), null, className);
+
+		AssetEntry assetEntry4 = AssetTestUtil.addAssetEntry(
+			TestPropsValues.getGroupId(), null, RandomTestUtil.randomString());
+
+		assetEntry4.setClassPK(assetEntry1.getClassPK());
+
+		assetEntry4 = _assetEntryLocalService.updateAssetEntry(assetEntry4);
+
+		try {
+			long classNameId = assetEntry1.getClassNameId();
+
+			long[] classPKs = {
+				assetEntry1.getClassPK(), assetEntry2.getClassPK(),
+				RandomTestUtil.randomLong()
+			};
+
+			Map<Long, AssetEntry> assetEntries =
+				_assetEntryLocalService.fetchEntries(classNameId, classPKs);
+
+			Assert.assertEquals(
+				HashMapBuilder.put(
+					assetEntry1.getClassPK(), assetEntry1
+				).put(
+					assetEntry2.getClassPK(), assetEntry2
+				).build(),
+				assetEntries);
+
+			for (long classPK : classPKs) {
+				Assert.assertEquals(
+					_assetEntryLocalService.fetchEntry(classNameId, classPK),
+					assetEntries.get(classPK));
+			}
+
+			Assert.assertEquals(
+				Collections.emptyMap(),
+				_assetEntryLocalService.fetchEntries(classNameId, new long[0]));
+		}
+		finally {
+			_assetEntryLocalService.deleteAssetEntry(assetEntry1);
+			_assetEntryLocalService.deleteAssetEntry(assetEntry2);
+			_assetEntryLocalService.deleteAssetEntry(assetEntry3);
+			_assetEntryLocalService.deleteAssetEntry(assetEntry4);
+		}
 	}
 
 	@Test

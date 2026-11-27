@@ -8,8 +8,12 @@ package com.liferay.object.rest.internal.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -20,6 +24,10 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -43,6 +51,80 @@ public class ObjectEntryResourceFriendlyURLTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testGetObjectEntriesWithFriendlyURL() throws Exception {
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		objectDefinition.setEnableFriendlyURLCustomization(true);
+
+		objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"friendlyUrlPath_i18n",
+				HashMapBuilder.put(
+					"en_US", "entry-1-en"
+				).put(
+					"es_ES", "entry-1-es"
+				).build()
+			).toString(),
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"friendlyUrlPath_i18n",
+				HashMapBuilder.put(
+					"en_US", "entry-2-en"
+				).build()
+			).toString(),
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).toString(),
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
+
+		Map<String, String> friendlyUrlPaths =
+			_assertGetObjectEntriesWithFriendlyURL("es-ES", objectDefinition);
+
+		Assert.assertEquals("entry-1-es", friendlyUrlPaths.get("entry-1-en"));
+		Assert.assertEquals("entry-2-en", friendlyUrlPaths.get("entry-2-en"));
+
+		friendlyUrlPaths = _assertGetObjectEntriesWithFriendlyURL(
+			"pt-BR", objectDefinition);
+
+		Assert.assertEquals("entry-1-en", friendlyUrlPaths.get("entry-1-en"));
+		Assert.assertEquals("entry-2-en", friendlyUrlPaths.get("entry-2-en"));
+
+		objectDefinition = getObjectDefinition3();
+
+		FriendlyURLResolver friendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolverByDefaultURLSeparator(
+					FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
+
+		objectDefinition.setFriendlyURLSeparator(
+			StringUtil.removeSubstring(
+				friendlyURLResolver.getURLSeparator(), StringPool.SLASH));
+
+		objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		for (int i = 0; i < 3; i++) {
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					OBJECT_FIELD_NAME_3, RandomTestUtil.randomString()
+				).toString(),
+				objectDefinition.getRESTContextPath(), Http.Method.POST);
+		}
+
+		friendlyUrlPaths = _assertGetObjectEntriesWithFriendlyURL(
+			"es-ES", objectDefinition);
+
+		Assert.assertEquals(
+			friendlyUrlPaths.toString(), 0, friendlyUrlPaths.size());
+	}
 
 	@Test
 	public void testGetObjectEntryWithFriendlyURL() throws Exception {
@@ -144,6 +226,55 @@ public class ObjectEntryResourceFriendlyURLTest
 
 		Assert.assertEquals(
 			friendlyURL, jsonObject.getString("friendlyUrlPath"));
+	}
+
+	private Map<String, String> _assertGetObjectEntriesWithFriendlyURL(
+			String languageId, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Map<String, String> headers = Collections.singletonMap(
+			"Accept-Language", languageId);
+
+		JSONObject pageJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition.getRESTContextPath(), headers,
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = pageJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			itemsJSONArray.toString(), 3, itemsJSONArray.length());
+
+		Map<String, String> friendlyUrlPaths = new HashMap<>();
+
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null,
+				objectDefinition.getRESTContextPath() + StringPool.SLASH +
+					itemJSONObject.getString("id"),
+				headers, Http.Method.GET);
+
+			Assert.assertEquals(
+				String.valueOf(jsonObject.opt("friendlyUrlPath")),
+				String.valueOf(itemJSONObject.opt("friendlyUrlPath")));
+			Assert.assertEquals(
+				String.valueOf(jsonObject.opt("friendlyUrlPath_i18n")),
+				String.valueOf(itemJSONObject.opt("friendlyUrlPath_i18n")));
+
+			JSONObject friendlyUrlPathI18nJSONObject =
+				itemJSONObject.getJSONObject("friendlyUrlPath_i18n");
+
+			if (friendlyUrlPathI18nJSONObject == null) {
+				continue;
+			}
+
+			friendlyUrlPaths.put(
+				friendlyUrlPathI18nJSONObject.getString("en_US"),
+				itemJSONObject.getString("friendlyUrlPath"));
+		}
+
+		return friendlyUrlPaths;
 	}
 
 	private void _assertGetObjectEntryWithFriendlyURL(

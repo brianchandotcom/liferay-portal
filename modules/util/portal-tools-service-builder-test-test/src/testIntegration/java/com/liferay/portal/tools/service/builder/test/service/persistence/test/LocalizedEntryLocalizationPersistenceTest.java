@@ -163,6 +163,12 @@ public class LocalizedEntryLocalizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLocalizedEntryIdArrayable() throws Exception {
+		_persistence.countByLocalizedEntryId(
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByLocalizedEntryId_LanguageId() throws Exception {
 		_persistence.countByLocalizedEntryId_LanguageId(
 			RandomTestUtil.nextLong(), "");
@@ -523,4 +529,4 @@ public class LocalizedEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:280351175
+// LIFERAY-SERVICE-BUILDER-HASH:-1237437679

@@ -20,6 +20,7 @@ import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationExce
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
+import com.liferay.friendly.url.model.FriendlyURLEntryTitles;
 import com.liferay.friendly.url.service.base.FriendlyURLEntryLocalServiceBaseImpl;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryCreateDateComparator;
@@ -49,11 +50,13 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -441,6 +444,86 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		return friendlyURLEntryPersistence.findByPrimaryKey(
 			friendlyURLEntryMapping.getFriendlyURLEntryId());
+	}
+
+	@Override
+	public Map<Long, FriendlyURLEntryTitles> getMainFriendlyURLEntryTitles(
+		long classNameId, long[] classPKs) {
+
+		if (classPKs.length == 0) {
+			return Collections.emptyMap();
+		}
+
+		List<FriendlyURLEntryMapping> friendlyURLEntryMappings =
+			_friendlyURLEntryMappingPersistence.findByC_C(
+				classNameId, classPKs);
+
+		if (friendlyURLEntryMappings.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Set<Serializable> mappedFriendlyURLEntryIds = new HashSet<>();
+
+		for (FriendlyURLEntryMapping friendlyURLEntryMapping :
+				friendlyURLEntryMappings) {
+
+			mappedFriendlyURLEntryIds.add(
+				friendlyURLEntryMapping.getFriendlyURLEntryId());
+		}
+
+		Map<Serializable, FriendlyURLEntry> friendlyURLEntries =
+			friendlyURLEntryPersistence.fetchByPrimaryKeys(
+				mappedFriendlyURLEntryIds);
+
+		if (friendlyURLEntries.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Set<Serializable> friendlyURLEntryIds = friendlyURLEntries.keySet();
+
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+			friendlyURLEntryLocalizationPersistence.findByFriendlyURLEntryId(
+				ArrayUtil.toArray(friendlyURLEntryIds.toArray(new Long[0])));
+
+		Map<Long, Map<String, String>> languageIdToUrlTitleMaps =
+			new HashMap<>();
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalizations) {
+
+			Map<String, String> languageIdToUrlTitleMap =
+				languageIdToUrlTitleMaps.computeIfAbsent(
+					friendlyURLEntryLocalization.getFriendlyURLEntryId(),
+					friendlyURLEntryId -> new HashMap<>());
+
+			languageIdToUrlTitleMap.put(
+				friendlyURLEntryLocalization.getLanguageId(),
+				friendlyURLEntryLocalization.getUrlTitle());
+		}
+
+		Map<Long, FriendlyURLEntryTitles> friendlyURLEntryTitlesMap =
+			new HashMap<>();
+
+		for (FriendlyURLEntryMapping friendlyURLEntryMapping :
+				friendlyURLEntryMappings) {
+
+			FriendlyURLEntry friendlyURLEntry = friendlyURLEntries.get(
+				friendlyURLEntryMapping.getFriendlyURLEntryId());
+
+			if (friendlyURLEntry == null) {
+				continue;
+			}
+
+			friendlyURLEntryTitlesMap.put(
+				friendlyURLEntryMapping.getClassPK(),
+				new FriendlyURLEntryTitles(
+					friendlyURLEntry.getDefaultLanguageId(),
+					languageIdToUrlTitleMaps.getOrDefault(
+						friendlyURLEntry.getFriendlyURLEntryId(),
+						Collections.emptyMap())));
+		}
+
+		return friendlyURLEntryTitlesMap;
 	}
 
 	@Override

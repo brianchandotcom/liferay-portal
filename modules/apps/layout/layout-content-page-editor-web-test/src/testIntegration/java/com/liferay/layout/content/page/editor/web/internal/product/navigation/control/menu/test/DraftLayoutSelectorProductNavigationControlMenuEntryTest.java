@@ -103,23 +103,21 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			launchSetObjectEntry.getObjectEntryId(), layout);
 
-		Layout mainDraftLayout = _layoutLocalService.fetchDraftLayout(
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
 			layout.getPlid());
 
 		String backURL = RandomTestUtil.randomString();
 		String redirect = RandomTestUtil.randomString();
 
-		String mainDraftLayoutEditURL = _getEditURL(
-			backURL, mainDraftLayout, redirect);
+		String draftLayoutEditURL = _getEditURL(backURL, draftLayout, redirect);
 
-		String mainDraftLayoutLabel = LanguageUtil.get(
+		String draftLayoutLabel = LanguageUtil.get(
 			LocaleUtil.getDefault(), "main");
 
 		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
-					false, false, mainDraftLayoutEditURL, mainDraftLayoutLabel,
-					0),
+					false, false, draftLayoutEditURL, draftLayoutLabel, 0),
 				_getExpectedDraftLayoutMap(
 					true, false, null, launchSetName,
 					launchSetDraftLayout.getLaunchSetId())),
@@ -133,25 +131,25 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
-					true, false, null, mainDraftLayoutLabel, 0),
+					true, false, null, draftLayoutLabel, 0),
 				_getExpectedDraftLayoutMap(
 					false, false, launchSetDraftLayoutEditURL, launchSetName,
 					launchSetDraftLayout.getLaunchSetId())),
 			_getMockHttpServletRequest(
-				backURL, mainDraftLayout, Constants.EDIT, redirect,
+				backURL, draftLayout, Constants.EDIT, redirect,
 				TestPropsValues.getUser()));
 
 		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
-					true, false, null, mainDraftLayoutLabel, 0),
+					true, false, null, draftLayoutLabel, 0),
 				_getExpectedDraftLayoutMap(
 					false, true, null,
 					LanguageUtil.get(
 						LocaleUtil.getDefault(), "restricted-launch"),
 					launchSetDraftLayout.getLaunchSetId())),
 			_getMockHttpServletRequest(
-				backURL, mainDraftLayout, Constants.EDIT, redirect,
+				backURL, draftLayout, Constants.EDIT, redirect,
 				UserTestUtil.addUser()));
 	}
 

@@ -138,14 +138,14 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			RandomTestUtil.randomLong(), _layout);
 
+		_testGetDropdownItemsWithLaunchSetDraftLayout(
+			launchSetDraftLayout, TestPropsValues.getUser(), "Preview Launch",
+			"Delete from Launch");
+
 		_user = UserTestUtil.addUser();
 
 		_testGetDropdownItemsWithLaunchSetDraftLayout(
 			launchSetDraftLayout, _user);
-
-		_testGetDropdownItemsWithLaunchSetDraftLayout(
-			launchSetDraftLayout, TestPropsValues.getUser(), "Preview Launch",
-			"Delete from Launch");
 	}
 
 	private List<DropdownItem> _getActionDropdownItems(

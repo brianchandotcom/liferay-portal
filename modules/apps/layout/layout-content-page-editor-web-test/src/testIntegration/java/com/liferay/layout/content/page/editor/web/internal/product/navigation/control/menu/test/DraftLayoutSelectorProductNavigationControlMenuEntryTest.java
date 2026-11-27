@@ -85,7 +85,6 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 	public void setUp() throws Exception {
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0);
 	}
@@ -93,7 +92,19 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 	@Test
 	@TestInfo("LPD-116938")
 	public void testGetDraftLayoutMaps() throws Exception {
+		String backURL = RandomTestUtil.randomString();
+
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
+			layout.getPlid());
+
+		String redirect = RandomTestUtil.randomString();
+
+		String draftLayoutEditURL = _getEditURL(backURL, draftLayout, redirect);
+
+		String draftLayoutLabel = LanguageUtil.get(
+			LocaleUtil.getDefault(), "main");
 
 		String launchSetName = RandomTestUtil.randomString();
 
@@ -102,17 +113,6 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 
 		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			launchSetObjectEntry.getObjectEntryId(), layout);
-
-		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
-			layout.getPlid());
-
-		String backURL = RandomTestUtil.randomString();
-		String redirect = RandomTestUtil.randomString();
-
-		String draftLayoutEditURL = _getEditURL(backURL, draftLayout, redirect);
-
-		String draftLayoutLabel = LanguageUtil.get(
-			LocaleUtil.getDefault(), "main");
 
 		_testGetDraftLayoutMaps(
 			Arrays.asList(

@@ -31,6 +31,7 @@ import com.liferay.portal.security.audit.router.configuration.LoggingAuditMessag
 import com.liferay.portal.security.audit.test.util.AuditMessageTestUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -83,6 +84,7 @@ public class OAuth2ApplicationModelListenerTest {
 		_serviceRegistration.unregister();
 	}
 
+	@FeatureFlag("LPD-96921")
 	@Test
 	public void testOnAfterCreate() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =

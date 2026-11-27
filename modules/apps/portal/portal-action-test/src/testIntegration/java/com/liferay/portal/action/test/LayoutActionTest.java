@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.struts.model.ModuleConfig;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -63,6 +65,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Christian Moura
  */
+@FeatureFlag("LPD-96921")
 @RunWith(Arquillian.class)
 public class LayoutActionTest {
 
@@ -105,6 +108,7 @@ public class LayoutActionTest {
 	@Test
 	public void testExecute() throws Exception {
 		_testExecute();
+		_testExecuteWhenFeatureFlagIsDisabled();
 	}
 
 	private AuditMessage _execute(long realUserId) throws Exception {
@@ -180,6 +184,28 @@ public class LayoutActionTest {
 			additionalInfoJSONObject.has("doAsUserEmailAddress"));
 		Assert.assertFalse(additionalInfoJSONObject.has("doAsUserId"));
 		Assert.assertFalse(additionalInfoJSONObject.has("doAsUserName"));
+	}
+
+	private void _testExecuteWhenFeatureFlagIsDisabled() throws Exception {
+		try (SafeCloseable safeCloseable =
+				FeatureFlagTestUtil.setFeatureFlagsWithSafeCloseable(
+					false, "LPD-96921")) {
+
+			AuditMessage auditMessage = _execute(0);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			Assert.assertEquals(
+				_impersonatedUser.getEmailAddress(),
+				additionalInfoJSONObject.getString("doAsUserEmailAddress"));
+			Assert.assertEquals(
+				_impersonatedUser.getUserId(),
+				additionalInfoJSONObject.getLong("doAsUserId"));
+			Assert.assertEquals(
+				_impersonatedUser.getFullName(),
+				additionalInfoJSONObject.getString("doAsUserName"));
+		}
 	}
 
 	private final List<AuditMessage> _auditMessages = new ArrayList<>();

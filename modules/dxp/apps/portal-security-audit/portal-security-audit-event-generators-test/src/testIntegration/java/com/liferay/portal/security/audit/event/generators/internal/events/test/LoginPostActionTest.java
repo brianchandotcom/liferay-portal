@@ -302,13 +302,18 @@ public class LoginPostActionTest {
 	}
 
 	private void _testRunSetsResourceAction() throws Exception {
-		_run(_createMockHttpServletRequest());
+		try (SafeCloseable safeCloseable =
+				FeatureFlagTestUtil.setFeatureFlagsWithSafeCloseable(
+					true, "LPD-96921")) {
 
-		AuditMessage auditMessage = _fetchAuditMessage(EventTypes.LOGIN);
+			_run(_createMockHttpServletRequest());
 
-		Assert.assertEquals(
-			"instance.user.login", auditMessage.getResourceAction());
-		Assert.assertEquals("user", auditMessage.getResourceType());
+			AuditMessage auditMessage = _fetchAuditMessage(EventTypes.LOGIN);
+
+			Assert.assertEquals(
+				"instance.user.login", auditMessage.getResourceAction());
+			Assert.assertEquals("user", auditMessage.getResourceType());
+		}
 	}
 
 	private void _testRunSetsUserAccountEntryIds() throws Exception {

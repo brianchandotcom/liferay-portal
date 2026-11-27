@@ -23,6 +23,7 @@ import com.liferay.portal.security.audit.router.configuration.LoggingAuditMessag
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.List;
@@ -41,6 +42,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 public class AuditPortalPreferencesLocalServiceWrapperTest
 	extends BaseModelListenerTestCase {
 
+	@FeatureFlag("LPD-96921")
 	@Test
 	public void testUpdatePreferences() throws Exception {
 		Company company = _companyLocalService.getCompany(

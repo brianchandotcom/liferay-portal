@@ -55,19 +55,19 @@ public class InterestResourceTest extends BaseInterestResourceTestCase {
 			"interestScore", OrderByField.OrderBy.desc, objects);
 
 		_assertOrderByField(
-			"ownerId", OrderByField.OrderBy.asc,
+			"contributingPagesCount", OrderByField.OrderBy.desc,
 			_getWorkspaceGroupChannelInterestsPage(
 				channelId, null, null,
-				new Sort[] {new Sort("individualId", false)}));
+				new Sort[] {new Sort("relatedPagesCount", true)}));
 		_assertOrderByField(
 			"name", OrderByField.OrderBy.asc,
 			_getWorkspaceGroupChannelInterestsPage(
 				channelId, null, null, new Sort[] {new Sort("name", false)}));
 		_assertOrderByField(
-			"contributingPagesCount", OrderByField.OrderBy.desc,
+			"ownerId", OrderByField.OrderBy.asc,
 			_getWorkspaceGroupChannelInterestsPage(
 				channelId, null, null,
-				new Sort[] {new Sort("relatedPagesCount", true)}));
+				new Sort[] {new Sort("individualId", false)}));
 
 		objects = _getWorkspaceGroupChannelInterestsPage(
 			channelId, null, null, null);

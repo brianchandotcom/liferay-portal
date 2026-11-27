@@ -97,34 +97,6 @@ public class LayoutPageTemplateEntryServiceImpl
 			defaultTemplate, 0, plid, masterLayoutPlid, status, serviceContext);
 	}
 
-	/**
-	 * Adds a layout page template entry. The <code>layoutPrototypeId</code>
-	 * argument is ignored.
-	 *
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(String, long, long, String, long,
-	 *             String, String, int, long, boolean, long, long, int,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			String externalReferenceCode, long groupId,
-			long layoutPageTemplateCollectionId,
-			String layoutPageTemplateEntryKey, long classNameId,
-			String classTypeKey, String name, int type, long previewFileEntryId,
-			boolean defaultTemplate, long layoutPrototypeId, long plid,
-			long masterLayoutPlid, int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			externalReferenceCode, groupId, layoutPageTemplateCollectionId,
-			layoutPageTemplateEntryKey, classNameId, classTypeKey, name, type,
-			previewFileEntryId, defaultTemplate, plid, masterLayoutPlid, status,
-			serviceContext);
-	}
-
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long groupId,

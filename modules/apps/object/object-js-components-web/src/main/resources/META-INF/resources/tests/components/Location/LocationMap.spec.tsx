@@ -24,9 +24,11 @@ function getMap() {
 
 	const nativeMarker = {
 		bindTooltip: jest.fn(),
+		closeTooltip: jest.fn(),
 		options: {
 			icon: {options: {iconAnchor: [12, 41], tooltipAnchor: [16, -28]}},
 		},
+		toggleTooltip: jest.fn(),
 	};
 
 	return {
@@ -76,23 +78,21 @@ describe('LocationMap', () => {
 		).toHaveAttribute('id', mapElementId);
 	});
 
-	it('shows the title and the address on hover with OpenStreetMap', () => {
-		const {nativeMarker} = renderLocationMap({
-			popover: 'hover',
+	it('keeps the popover open with Google Maps', () => {
+		const infoWindow = {close: jest.fn(), open: jest.fn()};
+
+		(window as any).google = {
+			maps: {InfoWindow: jest.fn(() => infoWindow)},
+		};
+
+		const map = renderLocationMap({
+			mapProviderKey: 'GoogleMaps',
+			popover: 'always',
 			title: 'Madrid Office',
 		});
 
-		const [content, options] = nativeMarker.bindTooltip.mock.calls[0];
-
-		expect(content).toHaveTextContent('Madrid Office');
-		expect(content).toHaveTextContent('Gran Vía 1, Madrid');
-		expect(options).toEqual(
-			expect.objectContaining({
-				direction: 'top',
-				offset: [-16, -13],
-				permanent: false,
-			})
-		);
+		expect(infoWindow.open).toHaveBeenCalled();
+		expect(map._geolocationMarker.on).not.toHaveBeenCalled();
 	});
 
 	it('keeps the popover open with OpenStreetMap', () => {
@@ -133,21 +133,26 @@ describe('LocationMap', () => {
 		expect(infoWindow.close).toHaveBeenCalled();
 	});
 
-	it('keeps the popover open with Google Maps', () => {
+	it('opens the popover on click with Google Maps', () => {
 		const infoWindow = {close: jest.fn(), open: jest.fn()};
 
 		(window as any).google = {
 			maps: {InfoWindow: jest.fn(() => infoWindow)},
 		};
 
-		const map = renderLocationMap({
+		const {handlers, nativeMarker} = renderLocationMap({
 			mapProviderKey: 'GoogleMaps',
-			popover: 'always',
 			title: 'Madrid Office',
 		});
 
-		expect(infoWindow.open).toHaveBeenCalled();
-		expect(map._geolocationMarker.on).not.toHaveBeenCalled();
+		expect(infoWindow.open).not.toHaveBeenCalled();
+
+		handlers.click();
+
+		expect(infoWindow.open).toHaveBeenCalledWith({
+			anchor: nativeMarker,
+			map: 'native-map',
+		});
 	});
 
 	it('shows no popover without a title or an address', () => {
@@ -166,5 +171,40 @@ describe('LocationMap', () => {
 		onMapReady(map);
 
 		expect(map.nativeMarker.bindTooltip).not.toHaveBeenCalled();
+	});
+
+	it('shows the title and the address on hover with OpenStreetMap', () => {
+		const {nativeMarker} = renderLocationMap({
+			popover: 'hover',
+			title: 'Madrid Office',
+		});
+
+		const [content, options] = nativeMarker.bindTooltip.mock.calls[0];
+
+		expect(content).toHaveTextContent('Madrid Office');
+		expect(content).toHaveTextContent('Gran Vía 1, Madrid');
+		expect(options).toEqual(
+			expect.objectContaining({
+				direction: 'top',
+				offset: [-16, -13],
+				permanent: false,
+			})
+		);
+	});
+
+	it('toggles the popover on click with OpenStreetMap by default', () => {
+		const {handlers, nativeMarker} = renderLocationMap({
+			title: 'Madrid Office',
+		});
+
+		expect(nativeMarker.bindTooltip.mock.calls[0][1]).toEqual(
+			expect.objectContaining({permanent: true})
+		);
+		expect(nativeMarker.closeTooltip).toHaveBeenCalled();
+		expect(nativeMarker.toggleTooltip).not.toHaveBeenCalled();
+
+		handlers.click();
+
+		expect(nativeMarker.toggleTooltip).toHaveBeenCalled();
 	});
 });

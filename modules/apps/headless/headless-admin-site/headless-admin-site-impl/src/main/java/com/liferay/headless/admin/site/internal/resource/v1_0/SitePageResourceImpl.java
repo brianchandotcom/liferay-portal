@@ -1143,7 +1143,7 @@ public class SitePageResourceImpl
 			pageSettings.getHiddenFromNavigation(), defaultValue);
 	}
 
-	private boolean _isSitePagePlid(Layout layout, long plid) {
+	private boolean _isLayoutPlid(Layout layout, long plid) {
 		if (layout == null) {
 			return false;
 		}
@@ -1383,7 +1383,7 @@ public class SitePageResourceImpl
 				fetchFragmentEntryLinkByUuidAndGroupId(uuid, groupId);
 
 		if ((fragmentEntryLink == null) ||
-			_isSitePagePlid(layout, fragmentEntryLink.getPlid())) {
+			_isLayoutPlid(layout, fragmentEntryLink.getPlid())) {
 
 			return;
 		}
@@ -1426,7 +1426,7 @@ public class SitePageResourceImpl
 				fetchSegmentsExperienceByUuidAndGroupId(uuid, groupId);
 
 		if ((segmentsExperience == null) ||
-			_isSitePagePlid(layout, segmentsExperience.getPlid())) {
+			_isLayoutPlid(layout, segmentsExperience.getPlid())) {
 
 			return;
 		}
@@ -1559,7 +1559,7 @@ public class SitePageResourceImpl
 				uuid, groupId, privateLayout);
 
 		if ((duplicateLayout != null) &&
-			!_isSitePagePlid(layout, duplicateLayout.getPlid())) {
+			!_isLayoutPlid(layout, duplicateLayout.getPlid())) {
 
 			throw new IllegalArgumentException(
 				StringBundler.concat(

@@ -55,6 +55,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -86,6 +87,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -96,8 +98,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -121,6 +125,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -611,6 +616,13 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		}
 
 		return formInstanceRecord;
+	}
+
+	@Activate
+	protected void activate() {
+		_ddmFormEmailNotificationSender = new DDMFormEmailNotificationSender(
+			_ddmFormFieldTypeServicesRegistry, _groupLocalService, _htmlParser,
+			_language, _mailService, _portal, _prefsProps, _userLocalService);
 	}
 
 	private void _addFileEntries(
@@ -1351,7 +1363,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@Reference
 	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;
 
 	@Reference
@@ -1395,6 +1406,12 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private HtmlParser _htmlParser;
+
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference
@@ -1404,7 +1421,13 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	private LockLocalService _lockLocalService;
 
 	@Reference
+	private MailService _mailService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -4380,19 +4380,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPostSiteSitePageWithReservedFriendlyURLPath()
 		throws Exception {
 
-		SitePage sitePage1 = _getSitePageWithFriendlyURLPath(
+		SitePage sitePage1 = _getSitePageWithFriendlyURLPath("/12345");
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"CONFLICT", "The friendly URL conflicts with the page ID \"12345\"",
+			() -> sitePageResource.postSiteSitePage(
+				testGroup.getExternalReferenceCode(), false, sitePage1));
+
+		SitePage sitePage2 = _getSitePageWithFriendlyURLPath(
 			"/reserved/-/keyword");
 
 		ProblemExceptionTestUtil.assertProblemException(
 			"CONFLICT",
 			"The friendly URL conflicts with the reserved keyword \"/-/\"",
-			() -> sitePageResource.postSiteSitePage(
-				testGroup.getExternalReferenceCode(), false, sitePage1));
-
-		SitePage sitePage2 = _getSitePageWithFriendlyURLPath("/12345");
-
-		ProblemExceptionTestUtil.assertProblemException(
-			"CONFLICT", "The friendly URL conflicts with the page ID \"12345\"",
 			() -> sitePageResource.postSiteSitePage(
 				testGroup.getExternalReferenceCode(), false, sitePage2));
 	}

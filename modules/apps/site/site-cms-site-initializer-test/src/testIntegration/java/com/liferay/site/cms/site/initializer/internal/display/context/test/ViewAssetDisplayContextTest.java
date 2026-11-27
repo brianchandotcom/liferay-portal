@@ -252,12 +252,12 @@ public class ViewAssetDisplayContextTest extends BaseDisplayContextTestCase {
 
 		mockHttpServletRequest.setParameter("backURL", backURL);
 
+		mockHttpServletRequest.setParameter(
+			"objectEntryId", String.valueOf(objectEntry.getObjectEntryId()));
+
 		String backURLTitle = RandomTestUtil.randomString();
 
 		mockHttpServletRequest.setParameter("p_l_back_url_title", backURLTitle);
-
-		mockHttpServletRequest.setParameter(
-			"objectEntryId", String.valueOf(objectEntry.getObjectEntryId()));
 
 		themeDisplay.setPermissionChecker(permissionChecker);
 

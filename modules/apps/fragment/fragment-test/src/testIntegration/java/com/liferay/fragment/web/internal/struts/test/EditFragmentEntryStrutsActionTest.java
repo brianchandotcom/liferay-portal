@@ -64,6 +64,13 @@ public class EditFragmentEntryStrutsActionTest {
 	@Test
 	@TestInfo("LPD-111343")
 	public void testExecute() throws Exception {
+		_testExecute();
+		_testExecuteWithNonexistentExternalReferenceCode();
+		_testExecuteWithNonexistentSiteExternalReferenceCode();
+		_testExecuteWithoutPermission();
+	}
+
+	private void _testExecute() throws Exception {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
@@ -76,9 +83,7 @@ public class EditFragmentEntryStrutsActionTest {
 				WorkflowConstants.STATUS_DRAFT));
 	}
 
-	@Test
-	@TestInfo("LPD-111343")
-	public void testExecuteWithNonexistentExternalReferenceCode()
+	private void _testExecuteWithNonexistentExternalReferenceCode()
 		throws Exception {
 
 		MockHttpServletResponse mockHttpServletResponse = _execute(
@@ -91,9 +96,7 @@ public class EditFragmentEntryStrutsActionTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@Test
-	@TestInfo("LPD-111343")
-	public void testExecuteWithNonexistentSiteExternalReferenceCode()
+	private void _testExecuteWithNonexistentSiteExternalReferenceCode()
 		throws Exception {
 
 		MockHttpServletResponse mockHttpServletResponse = _execute(
@@ -105,9 +108,7 @@ public class EditFragmentEntryStrutsActionTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	@Test
-	@TestInfo("LPD-111343")
-	public void testExecuteWithoutPermission() throws Exception {
+	private void _testExecuteWithoutPermission() throws Exception {
 		_user = UserTestUtil.addUser();
 
 		MockHttpServletResponse mockHttpServletResponse = _execute(

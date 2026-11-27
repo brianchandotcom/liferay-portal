@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -57,8 +58,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -122,83 +125,29 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			FragmentEntryLink fragmentEntryLink =
-				fragmentRendererContext.getFragmentEntryLink();
-
-			ObjectDefinition dataSetObjectDefinition =
-				_dataSetObjectDefinitionLocalService.
-					fetchObjectDefinitionByExternalReferenceCode(
-						"L_DATA_SET", fragmentEntryLink.getCompanyId());
-
-			if (fragmentRendererContext.isEditMode()) {
-				_writeClassName(
-					dataSetObjectDefinition, fragmentRendererContext);
-			}
-
 			JSONObject configurationJSONObject = getConfigurationJSONObject(
 				fragmentRendererContext);
 
-			JSONObject editableValuesJSONObject = null;
+			JSONObject editableValuesJSONObject = _getEditableValuesJSONObject(
+				fragmentRendererContext);
 
-			if (fragmentRendererContext.isEditMode()) {
-				editableValuesJSONObject =
-					fragmentRendererContext.
-						getModifiableEditableValuesJSONObject();
-			}
-			else {
-				editableValuesJSONObject =
-					fragmentEntryLink.getEditableValuesJSONObject();
-			}
+			String externalReferenceCode = _getExternalReferenceCode(
+				configurationJSONObject, editableValuesJSONObject,
+				fragmentRendererContext.getLocale());
 
-			JSONObject itemSelectorJSONObject =
-				(JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
-					configurationJSONObject, editableValuesJSONObject,
-					fragmentRendererContext.getLocale(), "itemSelector");
-
-			String externalReferenceCode = itemSelectorJSONObject.getString(
-				"externalReferenceCode");
-
-			ObjectEntry dataSetObjectEntry = null;
-
-			if (Validator.isNotNull(externalReferenceCode)) {
-				try {
-					DefaultObjectEntryManager defaultObjectEntryManager =
-						DefaultObjectEntryManagerProvider.provide(
-							_dataSetObjectEntryManagerRegistry.
-								getObjectEntryManager(
-									dataSetObjectDefinition.getCompanyId(),
-									dataSetObjectDefinition.getStorageType()));
-
-					dataSetObjectEntry =
-						defaultObjectEntryManager.getObjectEntry(
-							fragmentEntryLink.getCompanyId(),
-							new DefaultDTOConverterContext(
-								false, null, null, null, null,
-								LocaleUtil.getMostRelevantLocale(), null, null),
-							externalReferenceCode, dataSetObjectDefinition,
-							null);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get frontend data set with external " +
-								"reference code " + externalReferenceCode,
-							exception);
-					}
-				}
-			}
-
-			if ((dataSetObjectEntry == null) &&
-				fragmentRendererContext.isEditMode()) {
-
-				printWriter.write(
-					StringBundler.concat(
-						"<div class=\"portlet-msg-info\">",
-						_language.get(httpServletRequest, "select-a-data-set"),
-						"</div>"));
-			}
+			ObjectEntry dataSetObjectEntry = _getDataSetObjectEntry(
+				externalReferenceCode, fragmentRendererContext);
 
 			if (dataSetObjectEntry == null) {
+				if (fragmentRendererContext.isEditMode()) {
+					printWriter.write(
+						StringBundler.concat(
+							"<div class=\"portlet-msg-info\">",
+							_language.get(
+								httpServletRequest, "select-a-data-set"),
+							"</div>"));
+				}
+
 				return;
 			}
 
@@ -219,35 +168,37 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
+			String fdsAPIURL = _fdsRenderer.getFDSAPIURL(
+				externalReferenceCode, httpServletRequest, false, null);
+
+			JSONObject fdsAPIURLTokenMappingsJSONObject = _getJSONObject(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					configurationJSONObject, editableValuesJSONObject,
+					fragmentRendererContext.getLocale(),
+					"apiURLTokenMappings"));
+
+			String autoResolvedFDSAPIURL = _fdsRenderer.getFDSAPIURL(
+				externalReferenceCode, httpServletRequest, true, null);
+
+			JSONObject fdsAPIURLTokenResolutionsJSONObject =
+				_getTokenResolutionsJSONObject(
+					fdsAPIURL, fdsAPIURLTokenMappingsJSONObject,
+					autoResolvedFDSAPIURL, httpServletRequest);
+
+			String resolvedFDSAPIURL = _fdsRenderer.getFDSAPIURL(
+				externalReferenceCode, httpServletRequest, true,
+				fdsAPIURLTokenResolutionsJSONObject);
+
+			Set<String> unresolvedTokenNames = _getTokenNames(
+				resolvedFDSAPIURL);
+
+			boolean tokensPresent = _hasTokens(fdsAPIURL);
+
 			String componentId = externalReferenceCode;
 
-			boolean hasTokens = _hasTokens(
-				externalReferenceCode, httpServletRequest);
-
-			JSONObject apiURLTokenMappingsJSONObject =
-				_getAPIURLTokenMappingsJSONObject(
-					(String)_fragmentEntryConfigurationParser.getFieldValue(
-						configurationJSONObject, editableValuesJSONObject,
-						fragmentRendererContext.getLocale(),
-						"apiURLTokenMappings"));
-
-			JSONObject tokenResolutionsJSONObject =
-				_getTokenResolutionsJSONObject(
-					apiURLTokenMappingsJSONObject, externalReferenceCode,
-					httpServletRequest);
-
-			Set<String> unresolvedTokenNames = _getUnresolvedTokenNames(
-				externalReferenceCode, httpServletRequest,
-				tokenResolutionsJSONObject);
-
-			boolean resolved = unresolvedTokenNames.isEmpty();
-
 			if (fragmentRendererContext.isEditMode()) {
-				if (hasTokens) {
-					_writeAutoResolvedTokenNames(
-						externalReferenceCode, fragmentRendererContext,
-						httpServletRequest);
-				}
+				FragmentEntryLink fragmentEntryLink =
+					fragmentRendererContext.getFragmentEntryLink();
 
 				componentId = StringBundler.concat(
 					componentId, StringPool.DASH,
@@ -257,58 +208,75 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					componentId, fragmentEntryLink, httpServletRequest,
 					printWriter);
 
-				if (hasTokens && !resolved) {
-					Set<String> unresolvedContextTokenNames =
-						_getUnresolvedContextTokenNames(
-							apiURLTokenMappingsJSONObject, httpServletRequest,
-							unresolvedTokenNames);
-
-					_reactRenderer.renderReact(
-						new ComponentDescriptor(
-							"{UnresolvedDataSetPreview} from " +
-								"frontend-data-set-fragment-web",
-							componentId, null, true),
-						HashMapBuilder.<String, Object>put(
-							"apiURL",
-							_fdsRenderer.getFDSAPIURL(
-								externalReferenceCode, httpServletRequest, true,
-								tokenResolutionsJSONObject)
-						).put(
-							"hasUnmappedTokens",
-							unresolvedTokenNames.size() >
-								unresolvedContextTokenNames.size()
-						).put(
-							"hasUnresolvedContextTokens",
-							!unresolvedContextTokenNames.isEmpty()
-						).build(),
-						httpServletRequest, printWriter);
+				if (tokensPresent) {
+					_writeAutoResolvedTokenNames(
+						_getAutoResolvedTokenNames(
+							fdsAPIURL, autoResolvedFDSAPIURL),
+						fragmentRendererContext);
 				}
 			}
 
-			if (resolved) {
-				printWriter.write("<div>");
+			if (!unresolvedTokenNames.isEmpty()) {
+				if (!fragmentRendererContext.isEditMode()) {
+					return;
+				}
 
-				_fdsRenderer.render(
+				Set<String> unresolvedContextTokenNames =
+					_getUnresolvedContextTokenNames(
+						fdsAPIURLTokenMappingsJSONObject, httpServletRequest,
+						unresolvedTokenNames);
+
+				_reactRenderer.renderReact(
+					new ComponentDescriptor(
+						"{UnresolvedDataSetPreview} from " +
+							"frontend-data-set-fragment-web",
+						componentId, null, true),
 					HashMapBuilder.<String, Object>put(
-						"namespace",
-						fragmentRendererContext.getFragmentElementId()
+						"apiURL", resolvedFDSAPIURL
 					).put(
-						"style", "fluid"
+						"hasUnmappedTokens",
+						unresolvedTokenNames.size() >
+							unresolvedContextTokenNames.size()
 					).put(
-						"tokenResolutions",
-						() -> {
-							if (hasTokens) {
-								return tokenResolutionsJSONObject;
-							}
-
-							return null;
-						}
+						"hasUnresolvedContextTokens",
+						!unresolvedContextTokenNames.isEmpty()
 					).build(),
-					componentId, externalReferenceCode, httpServletRequest,
-					httpServletResponse, true, null, printWriter);
+					httpServletRequest, printWriter);
 
-				printWriter.write("</div>");
+				return;
 			}
+
+			printWriter.write("<div>");
+
+			_fdsRenderer.render(
+				HashMapBuilder.<String, Object>put(
+					"apiURLTokenResolutions",
+					() -> {
+						if (tokensPresent) {
+							return fdsAPIURLTokenResolutionsJSONObject;
+						}
+
+						return null;
+					}
+				).put(
+					"namespace", fragmentRendererContext.getFragmentElementId()
+				).put(
+					"selectionFilterAPIURLTokenResolutions",
+					() -> _getSelectionFilterAPIURLTokenResolutionsJSONObjects(
+						externalReferenceCode, httpServletRequest,
+						_getJSONObject(
+							_fragmentEntryConfigurationParser.getFieldValue(
+								configurationJSONObject,
+								editableValuesJSONObject,
+								fragmentRendererContext.getLocale(),
+								"selectionFilterAPIURLTokenMappings")))
+				).put(
+					"style", "fluid"
+				).build(),
+				componentId, externalReferenceCode, httpServletRequest,
+				httpServletResponse, true, null, printWriter);
+
+			printWriter.write("</div>");
 		}
 		catch (Exception exception) {
 			_log.error("Unable to render frontend data set", exception);
@@ -320,38 +288,12 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
-	private JSONObject _getAPIURLTokenMappingsJSONObject(String value) {
-		if (Validator.isNull(value)) {
-			return _jsonFactory.createJSONObject();
-		}
-
-		try {
-			return _jsonFactory.createJSONObject(value);
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to create JSON object from: " + value,
-					jsonException);
-			}
-		}
-
-		return _jsonFactory.createJSONObject();
-	}
-
 	private Set<String> _getAutoResolvedTokenNames(
-		String externalReferenceCode, HttpServletRequest httpServletRequest) {
+		String apiURL, String autoResolvedAPIURL) {
 
-		Set<String> tokenNames = _getTokenNames(
-			externalReferenceCode, httpServletRequest);
+		Set<String> tokenNames = _getTokenNames(apiURL);
 
-		Matcher matcher = _pattern.matcher(
-			_fdsRenderer.getFDSAPIURL(
-				externalReferenceCode, httpServletRequest, true, null));
-
-		while (matcher.find()) {
-			tokenNames.remove(matcher.group(1));
-		}
+		tokenNames.removeAll(_getTokenNames(autoResolvedAPIURL));
 
 		return tokenNames;
 	}
@@ -388,6 +330,66 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return configurationValuesJSONObject;
 	}
 
+	private ObjectEntry _getDataSetObjectEntry(
+		String externalReferenceCode,
+		FragmentRendererContext fragmentRendererContext) {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		ObjectDefinition dataSetObjectDefinition =
+			_dataSetObjectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET", fragmentEntryLink.getCompanyId());
+
+		if (fragmentRendererContext.isEditMode()) {
+			_writeClassName(dataSetObjectDefinition, fragmentRendererContext);
+		}
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return null;
+		}
+
+		try {
+			DefaultObjectEntryManager defaultObjectEntryManager =
+				DefaultObjectEntryManagerProvider.provide(
+					_dataSetObjectEntryManagerRegistry.getObjectEntryManager(
+						dataSetObjectDefinition.getCompanyId(),
+						dataSetObjectDefinition.getStorageType()));
+
+			return defaultObjectEntryManager.getObjectEntry(
+				fragmentEntryLink.getCompanyId(),
+				new DefaultDTOConverterContext(
+					false, null, null, null, null,
+					LocaleUtil.getMostRelevantLocale(), null, null),
+				externalReferenceCode, dataSetObjectDefinition, null);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get frontend data set with external reference " +
+						"code " + externalReferenceCode,
+					exception);
+			}
+		}
+
+		return null;
+	}
+
+	private JSONObject _getEditableValuesJSONObject(
+		FragmentRendererContext fragmentRendererContext) {
+
+		if (fragmentRendererContext.isEditMode()) {
+			return fragmentRendererContext.
+				getModifiableEditableValuesJSONObject();
+		}
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		return fragmentEntryLink.getEditableValuesJSONObject();
+	}
+
 	private String _getExternalReferenceCode(InfoItemDetails infoItemDetails) {
 		if (infoItemDetails == null) {
 			return null;
@@ -407,6 +409,18 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			(ERCInfoItemIdentifier)infoItemIdentifier;
 
 		return ercInfoItemIdentifier.getExternalReferenceCode();
+	}
+
+	private String _getExternalReferenceCode(
+		JSONObject configurationJSONObject, JSONObject editableValuesJSONObject,
+		Locale locale) {
+
+		JSONObject itemSelectorJSONObject =
+			(JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
+				configurationJSONObject, editableValuesJSONObject, locale,
+				"itemSelector");
+
+		return itemSelectorJSONObject.getString("externalReferenceCode");
 	}
 
 	private InfoItemDetails _getInfoItemDetails(
@@ -448,14 +462,84 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
-	private Set<String> _getTokenNames(
-		String externalReferenceCode, HttpServletRequest httpServletRequest) {
+	private JSONObject _getJSONObject(Object value) {
+		if (Validator.isNull(value)) {
+			return _jsonFactory.createJSONObject();
+		}
 
+		String valueString = GetterUtil.getString(value);
+
+		try {
+			return _jsonFactory.createJSONObject(valueString);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to create JSON object from: " + valueString,
+					jsonException);
+			}
+		}
+
+		return _jsonFactory.createJSONObject();
+	}
+
+	private Map<String, JSONObject>
+		_getSelectionFilterAPIURLTokenResolutionsJSONObjects(
+			String externalReferenceCode, HttpServletRequest httpServletRequest,
+			JSONObject selectionFilterAPIURLTokenMappingsJSONObject) {
+
+		Map<String, JSONObject>
+			selectionFilterAPIURLTokenResolutionsJSONObjects = new HashMap<>();
+
+		Map<String, String> selectionFilterFDSAPIURLs =
+			_fdsRenderer.getSelectionFilterFDSAPIURLs(
+				externalReferenceCode, httpServletRequest, false, null);
+
+		Map<String, String> autoResolvedSelectionFilterFDSAPIURLs = null;
+
+		for (Map.Entry<String, String> entry :
+				selectionFilterFDSAPIURLs.entrySet()) {
+
+			String value = entry.getValue();
+
+			if (!_hasTokens(value)) {
+				continue;
+			}
+
+			if (autoResolvedSelectionFilterFDSAPIURLs == null) {
+				autoResolvedSelectionFilterFDSAPIURLs =
+					_fdsRenderer.getSelectionFilterFDSAPIURLs(
+						externalReferenceCode, httpServletRequest, true, null);
+			}
+
+			String key = entry.getKey();
+
+			JSONObject apiURLTokenMappingsJSONObject =
+				selectionFilterAPIURLTokenMappingsJSONObject.getJSONObject(key);
+
+			if (apiURLTokenMappingsJSONObject == null) {
+				apiURLTokenMappingsJSONObject = _jsonFactory.createJSONObject();
+			}
+
+			selectionFilterAPIURLTokenResolutionsJSONObjects.put(
+				key,
+				_getTokenResolutionsJSONObject(
+					value, apiURLTokenMappingsJSONObject,
+					autoResolvedSelectionFilterFDSAPIURLs.get(key),
+					httpServletRequest));
+		}
+
+		if (selectionFilterAPIURLTokenResolutionsJSONObjects.isEmpty()) {
+			return null;
+		}
+
+		return selectionFilterAPIURLTokenResolutionsJSONObjects;
+	}
+
+	private Set<String> _getTokenNames(String apiURL) {
 		Set<String> tokenNames = new HashSet<>();
 
-		Matcher matcher = _pattern.matcher(
-			_fdsRenderer.getFDSAPIURL(
-				externalReferenceCode, httpServletRequest, false, null));
+		Matcher matcher = _pattern.matcher(apiURL);
 
 		while (matcher.find()) {
 			tokenNames.add(matcher.group(1));
@@ -465,17 +549,15 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getTokenResolutionsJSONObject(
-		JSONObject apiURLTokenMappingsJSONObject, String externalReferenceCode,
-		HttpServletRequest httpServletRequest) {
+		String apiURL, JSONObject apiURLTokenMappingsJSONObject,
+		String autoResolvedAPIURL, HttpServletRequest httpServletRequest) {
 
 		JSONObject tokenResolutionsJSONObject = _jsonFactory.createJSONObject();
 
 		Set<String> autoResolvedTokenNames = _getAutoResolvedTokenNames(
-			externalReferenceCode, httpServletRequest);
-		Set<String> tokenNames = _getTokenNames(
-			externalReferenceCode, httpServletRequest);
+			apiURL, autoResolvedAPIURL);
 
-		for (String tokenName : tokenNames) {
+		for (String tokenName : _getTokenNames(apiURL)) {
 			String tokenValue = _getTokenValue(
 				apiURLTokenMappingsJSONObject, httpServletRequest, tokenName);
 
@@ -597,24 +679,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return unresolvedContextTokenNames;
 	}
 
-	private Set<String> _getUnresolvedTokenNames(
-		String externalReferenceCode, HttpServletRequest httpServletRequest,
-		JSONObject tokenResolutionsJSONObject) {
-
-		Set<String> unresolvedTokenNames = new HashSet<>();
-
-		Matcher matcher = _pattern.matcher(
-			_fdsRenderer.getFDSAPIURL(
-				externalReferenceCode, httpServletRequest, true,
-				tokenResolutionsJSONObject));
-
-		while (matcher.find()) {
-			unresolvedTokenNames.add(matcher.group(1));
-		}
-
-		return unresolvedTokenNames;
-	}
-
 	private boolean _hasManualMapping(
 		JSONObject apiURLTokenMappingsJSONObject, String tokenName) {
 
@@ -633,28 +697,22 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			mappingJSONObject.getString("mappingMode"), "autoResolved");
 	}
 
-	private boolean _hasTokens(
-		String externalReferenceCode, HttpServletRequest httpServletRequest) {
-
-		Matcher matcher = _pattern.matcher(
-			_fdsRenderer.getFDSAPIURL(
-				externalReferenceCode, httpServletRequest, false, null));
+	private boolean _hasTokens(String apiURL) {
+		Matcher matcher = _pattern.matcher(apiURL);
 
 		return matcher.find();
 	}
 
 	private void _writeAutoResolvedTokenNames(
-		String externalReferenceCode,
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+		Set<String> autoResolvedTokenNames,
+		FragmentRendererContext fragmentRendererContext) {
 
 		JSONObject configurationValuesJSONObject =
 			_getConfigurationValuesJSONObject(fragmentRendererContext);
 
 		try {
 			JSONArray jsonArray = JSONUtil.toJSONArray(
-				_getAutoResolvedTokenNames(
-					externalReferenceCode, httpServletRequest),
+				autoResolvedTokenNames,
 				autoResolvedTokenName -> autoResolvedTokenName);
 
 			configurationValuesJSONObject.put(

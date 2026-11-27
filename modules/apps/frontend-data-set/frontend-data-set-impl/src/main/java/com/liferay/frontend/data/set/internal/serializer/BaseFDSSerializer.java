@@ -65,6 +65,13 @@ public abstract class BaseFDSSerializer {
 			restEndpoint, restSchema);
 	}
 
+	public FDSAPIURLBuilder createFDSAPIURLBuilder(
+		String apiURL, HttpServletRequest httpServletRequest) {
+
+		return new FDSAPIURLBuilder(
+			apiURL, fdsAPIURLResolverRegistry, httpServletRequest);
+	}
+
 	protected JSONArray serializeSnapshots(
 		String fdsName, HttpServletRequest httpServletRequest,
 		ObjectDefinitionLocalService objectDefinitionLocalService,

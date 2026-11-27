@@ -8,6 +8,7 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
 import com.liferay.journal.web.internal.display.context.JournalEditArticleDisplayContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -19,8 +20,6 @@ import com.liferay.portal.kernel.util.Portal;
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,15 +42,16 @@ public class EditArticleMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
+			JournalDisplayContext journalDisplayContext =
+				(JournalDisplayContext)renderRequest.getAttribute(
+					JournalDisplayContext.class.getName());
 
 			renderRequest.setAttribute(
 				JournalEditArticleDisplayContext.class.getName(),
 				new JournalEditArticleDisplayContext(
-					httpServletRequest,
+					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
-					ActionUtil.getArticle(httpServletRequest),
+					journalDisplayContext.getArticle(),
 					_depotEntryGroupRelLocalService, _depotEntryLocalService,
 					_groupLocalService));
 

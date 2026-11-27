@@ -10,9 +10,10 @@ interface Props {
 }
 
 interface Field {
-	dataType?: 'double' | 'html' | 'integer' | 'string';
+	dataType?: 'boolean' | 'double' | 'html' | 'integer' | 'string';
 	displayStyle?: 'singleline' | 'multiline';
 	fieldType?:
+		| 'checkbox'
 		| 'document_library'
 		| 'geolocation'
 		| 'image'
@@ -55,7 +56,12 @@ export default function getDataStructureDefinition({
 
 				let indexType: DefinitionField['indexType'] = 'keyword';
 
-				if (fieldType === 'geolocation') {
+				if (fieldType === 'checkbox') {
+					customProperties.dataType = 'boolean';
+
+					delete customProperties.displayStyle;
+				}
+				else if (fieldType === 'geolocation') {
 					delete customProperties.displayStyle;
 				}
 				else if (fieldType === 'numeric') {

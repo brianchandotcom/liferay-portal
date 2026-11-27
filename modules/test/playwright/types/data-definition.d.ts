@@ -16,13 +16,14 @@ type DataDefinition = {
 
 type DefinitionField = {
 	customProperties: {
-		dataType: 'double' | 'html' | 'integer' | 'string';
+		dataType: 'boolean' | 'double' | 'html' | 'integer' | 'string';
 		displayStyle?: 'singleline' | 'multiline';
 		fieldReference: string;
 		options?: Options;
 	};
 	defaultValue: {[keys: string]: string};
 	fieldType:
+		| 'checkbox'
 		| 'document_library'
 		| 'geolocation'
 		| 'image'

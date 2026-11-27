@@ -12,11 +12,13 @@ import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {changeManagementToolbarView} from '../../../utils/changeManagementToolbarView';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
+import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {watchForDialog} from '../../../utils/watchForDialog';
 import {journalPagesTest} from './fixtures/journalPagesTest';
+import getDataStructureDefinition from './utils/getDataStructureDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -138,5 +140,127 @@ test(
 				webContent.articleId
 			);
 		}
+	}
+);
+
+test(
+	'Structure default values do not translate a new web content into the structure language',
+	{
+		tag: '@LPD-116782',
+	},
+	async ({
+		apiHelpers,
+		journalEditArticlePage,
+		journalEditStructureDefaultValuesPage,
+		page,
+		site,
+		siteSettingsLocalizationPage,
+	}) => {
+		const structureName = getRandomString();
+
+		await apiHelpers.dataEngine.createStructure(
+			site.id,
+			getDataStructureDefinition({
+				defaultLanguageId: 'en_US',
+				fields: [
+					{name: 'Text'},
+					{
+						fieldType: 'checkbox',
+						localizable: false,
+						name: 'Boolean',
+					},
+					{
+						fieldType: 'checkbox',
+						name: 'LocalizedBoolean',
+					},
+				],
+				name: structureName,
+			})
+		);
+
+		await journalEditStructureDefaultValuesPage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await journalEditStructureDefaultValuesPage.checkCheckboxField(
+			'Boolean'
+		);
+
+		const text = getRandomString();
+
+		const textField = page.getByRole('textbox', {
+			exact: true,
+			name: 'Text',
+		});
+
+		await textField.fill(text);
+
+		const defaultTitle = getRandomString();
+
+		await journalEditArticlePage.titleInput.fill(defaultTitle);
+
+		await journalEditStructureDefaultValuesPage.save();
+
+		await siteSettingsLocalizationPage.setCustomDefaultLanguage(
+			'ja_JP',
+			site.friendlyUrlPath
+		);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const booleanField = page.getByRole('checkbox', {
+			exact: true,
+			name: 'Boolean',
+		});
+
+		await expect(booleanField).toBeChecked();
+		await expect(journalEditArticlePage.titleInput).toHaveValue(
+			defaultTitle
+		);
+		await expect(textField).toHaveValue(text);
+
+		const englishNotTranslatedOption = page.getByRole('option', {
+			name: 'English Language: Not Translated',
+		});
+		const languageSelector = page.getByLabel('Select a language, current');
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: englishNotTranslatedOption,
+			trigger: languageSelector,
+		});
+
+		await page.keyboard.press('Escape');
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.fillTitle(title);
+
+		await journalEditArticlePage.changeLanguage('en_US');
+
+		await expect(textField).toHaveValue(text);
+
+		await journalEditArticlePage.changeLanguage('ja_JP');
+
+		await journalEditArticlePage.publishArticle();
+
+		await waitForAlert(page, `Success:${title} was created successfully.`);
+
+		await page.getByRole('link', {exact: true, name: title}).click();
+
+		await journalEditArticlePage.expandFieldsPanel();
+
+		await expect(booleanField).toBeChecked();
+		await expect(textField).toHaveValue(text);
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: englishNotTranslatedOption,
+			trigger: languageSelector,
+		});
 	}
 );

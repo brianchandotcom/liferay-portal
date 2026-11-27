@@ -42,6 +42,19 @@ export class JournalEditStructureDefaultValuesPage {
 		await this.page.locator('body').click();
 	}
 
+	async checkCheckboxField(name: string) {
+		const checkboxField = this.page.getByRole('checkbox', {
+			exact: true,
+			name,
+		});
+
+		await expect(async () => {
+			await openFieldset(this.page, 'Fields');
+
+			await checkboxField.check({timeout: 2000});
+		}).toPass();
+	}
+
 	getRichTextField(name: string): Locator {
 		return this.page
 			.getByText(`${name} Rich Text Editor`)

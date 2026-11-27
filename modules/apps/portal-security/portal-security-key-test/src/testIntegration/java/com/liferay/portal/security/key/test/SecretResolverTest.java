@@ -114,33 +114,8 @@ public class SecretResolverTest {
 
 	@Test
 	public void testResolve() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-		String identifier = RandomTestUtil.randomString();
-		String value = RandomTestUtil.randomString();
-
-		KeyReference keyReference = _putSecret(companyId, identifier, value);
-
-		Assert.assertEquals(_SECRET_PROVIDER_ID, keyReference.getProviderId());
-		Assert.assertEquals(identifier, keyReference.getIdentifier());
-		Assert.assertEquals(KeyReference.Type.SECRET, keyReference.getType());
-		Assert.assertEquals(
-			value,
-			_secretResolver.resolve(
-				companyId,
-				KeyReferenceUtil.toKeyReferenceString(keyReference)));
-	}
-
-	@Test
-	public void testResolveUnderAnotherCompany() throws Exception {
-		KeyReference keyReference = _putSecret(
-			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-
-		Assert.assertThrows(
-			SecretException.class,
-			() -> _secretResolver.resolve(
-				CompanyConstants.SYSTEM,
-				KeyReferenceUtil.toKeyReferenceString(keyReference)));
+		_testResolve();
+		_testResolveUnderAnotherCompany();
 	}
 
 	@Test
@@ -227,6 +202,35 @@ public class SecretResolverTest {
 
 			return _secretManager.putSecret(companyId, secret);
 		}
+	}
+
+	private void _testResolve() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+		String identifier = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		KeyReference keyReference = _putSecret(companyId, identifier, value);
+
+		Assert.assertEquals(_SECRET_PROVIDER_ID, keyReference.getProviderId());
+		Assert.assertEquals(identifier, keyReference.getIdentifier());
+		Assert.assertEquals(KeyReference.Type.SECRET, keyReference.getType());
+		Assert.assertEquals(
+			value,
+			_secretResolver.resolve(
+				companyId,
+				KeyReferenceUtil.toKeyReferenceString(keyReference)));
+	}
+
+	private void _testResolveUnderAnotherCompany() throws Exception {
+		KeyReference keyReference = _putSecret(
+			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		Assert.assertThrows(
+			SecretException.class,
+			() -> _secretResolver.resolve(
+				CompanyConstants.SYSTEM,
+				KeyReferenceUtil.toKeyReferenceString(keyReference)));
 	}
 
 	private void _testStoreCompanyPreference(String key) throws Exception {

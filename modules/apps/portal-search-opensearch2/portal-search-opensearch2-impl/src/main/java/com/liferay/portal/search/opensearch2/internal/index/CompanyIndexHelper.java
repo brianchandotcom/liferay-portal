@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.SearchEngineInformation;
@@ -345,17 +344,6 @@ public class CompanyIndexHelper {
 				getClass(), IndexSettingsConstants.INDEX_SETTINGS_FILE_NAME));
 	}
 
-	private void _loadTestModeSettings(SettingsHelper settingsHelper) {
-		if (!PortalRunMode.isTestMode()) {
-			return;
-		}
-
-		settingsHelper.put("index.refresh_interval", "1ms");
-		settingsHelper.put("index.search.slowlog.threshold.fetch.warn", "-1");
-		settingsHelper.put("index.search.slowlog.threshold.query.warn", "-1");
-		settingsHelper.put("index.translog.sync_interval", "100ms");
-	}
-
 	private <T> ServiceTrackerList<T> _openServiceTrackerList(
 		BundleContext bundleContext, Class<T> clazz, Consumer<T> consumer) {
 
@@ -511,8 +499,6 @@ public class CompanyIndexHelper {
 		SettingsHelper settingsHelper = new SettingsHelper();
 
 		_loadDefaultSettings(settingsHelper);
-
-		_loadTestModeSettings(settingsHelper);
 
 		_loadAdditionalSettings(companyId, settingsHelper, true);
 

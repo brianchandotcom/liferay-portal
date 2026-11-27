@@ -70,6 +70,64 @@ public class FragmentDisplayContextTest {
 		_testGetAIAssistantPropsWithoutBasicFragmentCollection();
 	}
 
+	@Test
+	@TestInfo("LPD-111343")
+	public void testGetAvailableActions() {
+		_testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions();
+		_testGetAvailableActionsForMarketplaceFragmentCompositionWithoutPermissions();
+		_testGetAvailableActionsForMarketplaceFragmentEntryWithPermissions();
+		_testGetAvailableActionsForMarketplaceFragmentEntryWithoutPermissions();
+	}
+
+	@Test
+	@TestInfo({"LPD-79101", "LPD-91054", "LPD-111343"})
+	public void testGetFragmentCollection() {
+		_testGetFragmentCollectionFromDifferentGroup();
+		_testGetFragmentCollectionFromSameGroup();
+		_testGetFragmentCollectionFromSystemGroup();
+	}
+
+	private void _setUpFragmentEntryValidator() {
+		ReflectionTestUtil.setFieldValue(
+			FragmentDisplayContext.class, "_fragmentEntryValidatorSnapshot",
+			new Snapshot<FragmentEntryValidator>(
+				FragmentDisplayContext.class, FragmentEntryValidator.class) {
+
+				@Override
+				public FragmentEntryValidator get() {
+					return _fragmentEntryValidator;
+				}
+
+			});
+	}
+
+	private void _setUpFragmentPermission(boolean condition) {
+		_fragmentPermissionMockedStatic.when(
+			() -> FragmentPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)
+		).thenReturn(
+			condition
+		);
+	}
+
+	private void _setUpHttpServletRequest() {
+		Mockito.when(
+			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			_themeDisplay
+		);
+	}
+
+	private void _setUpThemeDisplay() {
+		Mockito.when(
+			_themeDisplay.getPermissionChecker()
+		).thenReturn(
+			Mockito.mock(PermissionChecker.class)
+		);
+	}
+
 	private void _testGetAIAssistantProps() {
 		String configurationJSONSchemaJSON = RandomTestUtil.randomString();
 
@@ -194,13 +252,48 @@ public class FragmentDisplayContextTest {
 		_testGetAIAssistantPropsWithoutFragmentSetExternalReferenceCode(null);
 	}
 
-	@Test
-	@TestInfo("LPD-111343")
-	public void testGetAvailableActions() {
-		_testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions();
-		_testGetAvailableActionsForMarketplaceFragmentCompositionWithoutPermissions();
-		_testGetAvailableActionsForMarketplaceFragmentEntryWithPermissions();
-		_testGetAvailableActionsForMarketplaceFragmentEntryWithoutPermissions();
+	private void
+		_testGetAIAssistantPropsWithoutFragmentSetExternalReferenceCode(
+			FragmentCollection fragmentCollection) {
+
+		long fragmentCollectionId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionId")
+		).thenReturn(
+			String.valueOf(fragmentCollectionId)
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroup()
+		).thenReturn(
+			Mockito.mock(Group.class)
+		);
+
+		try (MockedStatic<FragmentCollectionLocalServiceUtil>
+				fragmentCollectionLocalServiceUtilMockedStatic =
+					Mockito.mockStatic(
+						FragmentCollectionLocalServiceUtil.class)) {
+
+			fragmentCollectionLocalServiceUtilMockedStatic.when(
+				() ->
+					FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+						fragmentCollectionId)
+			).thenReturn(
+				fragmentCollection
+			);
+
+			FragmentDisplayContext fragmentDisplayContext =
+				new FragmentDisplayContext(
+					_httpServletRequest, _renderRequest, _renderResponse);
+
+			Map<String, Object> aiAssistantProps =
+				fragmentDisplayContext.getAIAssistantProps();
+
+			Assert.assertFalse(
+				aiAssistantProps.containsKey(
+					"fragmentSetExternalReferenceCode"));
+		}
 	}
 
 	private void _testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions() {
@@ -296,14 +389,6 @@ public class FragmentDisplayContextTest {
 		Assert.assertTrue(
 			Validator.isNull(
 				fragmentDisplayContext.getAvailableActions(_fragmentEntry)));
-	}
-
-	@Test
-	@TestInfo({"LPD-79101", "LPD-91054", "LPD-111343"})
-	public void testGetFragmentCollection() {
-		_testGetFragmentCollectionFromDifferentGroup();
-		_testGetFragmentCollectionFromSameGroup();
-		_testGetFragmentCollectionFromSystemGroup();
 	}
 
 	private void _testGetFragmentCollectionFromDifferentGroup() {
@@ -465,91 +550,6 @@ public class FragmentDisplayContextTest {
 
 			Assert.assertNotNull(
 				fragmentDisplayContext.getFragmentCollection());
-		}
-	}
-
-	private void _setUpFragmentEntryValidator() {
-		ReflectionTestUtil.setFieldValue(
-			FragmentDisplayContext.class, "_fragmentEntryValidatorSnapshot",
-			new Snapshot<FragmentEntryValidator>(
-				FragmentDisplayContext.class, FragmentEntryValidator.class) {
-
-				@Override
-				public FragmentEntryValidator get() {
-					return _fragmentEntryValidator;
-				}
-
-			});
-	}
-
-	private void _setUpFragmentPermission(boolean condition) {
-		_fragmentPermissionMockedStatic.when(
-			() -> FragmentPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(),
-				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)
-		).thenReturn(
-			condition
-		);
-	}
-
-	private void _setUpHttpServletRequest() {
-		Mockito.when(
-			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			_themeDisplay
-		);
-	}
-
-	private void _setUpThemeDisplay() {
-		Mockito.when(
-			_themeDisplay.getPermissionChecker()
-		).thenReturn(
-			Mockito.mock(PermissionChecker.class)
-		);
-	}
-
-	private void
-		_testGetAIAssistantPropsWithoutFragmentSetExternalReferenceCode(
-			FragmentCollection fragmentCollection) {
-
-		long fragmentCollectionId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			_httpServletRequest.getParameter("fragmentCollectionId")
-		).thenReturn(
-			String.valueOf(fragmentCollectionId)
-		);
-
-		Mockito.when(
-			_themeDisplay.getScopeGroup()
-		).thenReturn(
-			Mockito.mock(Group.class)
-		);
-
-		try (MockedStatic<FragmentCollectionLocalServiceUtil>
-				fragmentCollectionLocalServiceUtilMockedStatic =
-					Mockito.mockStatic(
-						FragmentCollectionLocalServiceUtil.class)) {
-
-			fragmentCollectionLocalServiceUtilMockedStatic.when(
-				() ->
-					FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
-						fragmentCollectionId)
-			).thenReturn(
-				fragmentCollection
-			);
-
-			FragmentDisplayContext fragmentDisplayContext =
-				new FragmentDisplayContext(
-					_httpServletRequest, _renderRequest, _renderResponse);
-
-			Map<String, Object> aiAssistantProps =
-				fragmentDisplayContext.getAIAssistantProps();
-
-			Assert.assertFalse(
-				aiAssistantProps.containsKey(
-					"fragmentSetExternalReferenceCode"));
 		}
 	}
 

@@ -70,6 +70,40 @@ public class EditFragmentEntryStrutsActionTest {
 		_testExecuteWithoutPermission();
 	}
 
+	private MockHttpServletResponse _execute(
+			String externalReferenceCode, String siteExternalReferenceCode,
+			User user)
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				_companyLocalService.getCompany(_group.getCompanyId()), _group,
+				layout);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		mockHttpServletRequest.setParameter(
+			"externalReferenceCode", externalReferenceCode);
+		mockHttpServletRequest.setParameter(
+			"siteExternalReferenceCode", siteExternalReferenceCode);
+		mockHttpServletRequest.setRequestURI(layout.getFriendlyURL());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_editFragmentEntryStrutsAction.execute(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		return mockHttpServletResponse;
+	}
+
 	private void _testExecute() throws Exception {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
@@ -81,6 +115,21 @@ public class EditFragmentEntryStrutsActionTest {
 			FragmentEntryTestUtil.addFragmentEntryByStatus(
 				fragmentCollection.getFragmentCollectionId(),
 				WorkflowConstants.STATUS_DRAFT));
+	}
+
+	private void _testExecute(FragmentEntry fragmentEntry) throws Exception {
+		MockHttpServletResponse mockHttpServletResponse = _execute(
+			fragmentEntry.getExternalReferenceCode(),
+			_group.getExternalReferenceCode(), TestPropsValues.getUser());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"/group", _group.getFriendlyURL(),
+				"/~/control_panel/manage/-/fragments/fragment_collection/",
+				fragmentEntry.getFragmentCollectionId(), "/fragment_entry/",
+				fragmentEntry.getFragmentEntryId(), "/edit"),
+			HttpComponentsUtil.getPath(
+				mockHttpServletResponse.getRedirectedUrl()));
 	}
 
 	private void _testExecuteWithNonexistentExternalReferenceCode()
@@ -119,55 +168,6 @@ public class EditFragmentEntryStrutsActionTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_NOT_FOUND,
 			mockHttpServletResponse.getStatus());
-	}
-
-	private MockHttpServletResponse _execute(
-			String externalReferenceCode, String siteExternalReferenceCode,
-			User user)
-		throws Exception {
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			ContentLayoutTestUtil.getMockHttpServletRequest(
-				_companyLocalService.getCompany(_group.getCompanyId()), _group,
-				layout);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)mockHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		mockHttpServletRequest.setParameter(
-			"externalReferenceCode", externalReferenceCode);
-		mockHttpServletRequest.setParameter(
-			"siteExternalReferenceCode", siteExternalReferenceCode);
-		mockHttpServletRequest.setRequestURI(layout.getFriendlyURL());
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_editFragmentEntryStrutsAction.execute(
-			mockHttpServletRequest, mockHttpServletResponse);
-
-		return mockHttpServletResponse;
-	}
-
-	private void _testExecute(FragmentEntry fragmentEntry) throws Exception {
-		MockHttpServletResponse mockHttpServletResponse = _execute(
-			fragmentEntry.getExternalReferenceCode(),
-			_group.getExternalReferenceCode(), TestPropsValues.getUser());
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"/group", _group.getFriendlyURL(),
-				"/~/control_panel/manage/-/fragments/fragment_collection/",
-				fragmentEntry.getFragmentCollectionId(), "/fragment_entry/",
-				fragmentEntry.getFragmentEntryId(), "/edit"),
-			HttpComponentsUtil.getPath(
-				mockHttpServletResponse.getRedirectedUrl()));
 	}
 
 	@Inject

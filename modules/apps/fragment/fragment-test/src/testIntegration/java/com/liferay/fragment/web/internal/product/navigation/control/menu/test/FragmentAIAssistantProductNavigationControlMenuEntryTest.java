@@ -64,6 +64,30 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 		_testIsShowWithoutPermission();
 	}
 
+	private MockHttpServletRequest _getMockHttpServletRequest(User user)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setPortletName(FragmentPortletKeys.FRAGMENT);
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
 	private void _testIsShow() throws Exception {
 		Assert.assertTrue(
 			_productNavigationControlMenuEntry.isShow(
@@ -94,30 +118,6 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
 				_getMockHttpServletRequest(_user)));
-	}
-
-	private MockHttpServletRequest _getMockHttpServletRequest(User user)
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		portletDisplay.setPortletName(FragmentPortletKeys.FRAGMENT);
-
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
 	}
 
 	@Inject

@@ -5,14 +5,18 @@
 
 package com.liferay.asset.internal.service;
 
+import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -116,14 +120,44 @@ public class AssetEntryLocalServiceWrapper
 			categoryIds = _assetCategoryLocalService.getViewableCategoryIds(
 				className, classPK, categoryIds);
 
-			_assetEntryAssetCategoryRelLocalService.
-				deleteAssetEntryAssetCategoryRelByAssetEntryId(
-					entry.getEntryId());
+			List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+				_assetEntryAssetCategoryRelLocalService.
+					getAssetEntryAssetCategoryRelsByAssetEntryId(
+						entry.getEntryId());
 
-			for (long categoryId : categoryIds) {
+			int index = 0;
+
+			for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
+					assetEntryAssetCategoryRels) {
+
+				if ((index < categoryIds.length) &&
+					(assetEntryAssetCategoryRel.getAssetCategoryId() ==
+						categoryIds[index])) {
+
+					index++;
+
+					continue;
+				}
+
+				_assetEntryAssetCategoryRelLocalService.
+					deleteAssetEntryAssetCategoryRel(
+						assetEntryAssetCategoryRel);
+			}
+
+			for (long categoryId :
+					ArrayUtil.subset(categoryIds, index, categoryIds.length)) {
+
 				_assetEntryAssetCategoryRelLocalService.
 					addAssetEntryAssetCategoryRel(
 						entry.getEntryId(), categoryId);
+			}
+
+			if (((index < assetEntryAssetCategoryRels.size()) ||
+				 (index < categoryIds.length)) &&
+				((serviceContext == null) ||
+				 serviceContext.isIndexingEnabled())) {
+
+				reindex(Collections.singletonList(entry));
 			}
 		}
 

@@ -60,6 +60,13 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 		_dispatchTriggerModelResourcePermission.check(
 			getPermissionChecker(), dispatchTriggerId, ActionKeys.DELETE);
 
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerLocalService.getDispatchTrigger(dispatchTriggerId);
+
+		if (dispatchTrigger.isSystem()) {
+			return;
+		}
+
 		dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTriggerId);
 	}
 

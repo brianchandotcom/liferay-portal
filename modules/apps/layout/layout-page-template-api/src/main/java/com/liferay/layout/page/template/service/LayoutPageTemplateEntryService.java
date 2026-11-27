@@ -59,26 +59,6 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * Adds a layout page template entry. The <code>layoutPrototypeId</code>
-	 * argument is ignored.
-	 *
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addLayoutPageTemplateEntry(String, long, long, String, long,
-	 String, String, int, long, boolean, long, long, int,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			String externalReferenceCode, long groupId,
-			long layoutPageTemplateCollectionId,
-			String layoutPageTemplateEntryKey, long classNameId,
-			String classTypeKey, String name, int type, long previewFileEntryId,
-			boolean defaultTemplate, long layoutPrototypeId, long plid,
-			long masterLayoutPlid, int status, ServiceContext serviceContext)
-		throws PortalException;
-
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long groupId,
 			long layoutPageTemplateCollectionId,
@@ -438,4 +418,4 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1679345262
+// LIFERAY-SERVICE-BUILDER-HASH:1343167466

@@ -1,7 +1,7 @@
+const {availableParallelism} = require('node:os');
 const {TextEncoder} = require('node:util');
 
 module.exports = {
-	collectCoverage: true,
 	collectCoverageFrom: [
 		'!<rootDir>/src/main/js/(api-docs|ui-kit)/**/*.{js,jsx,tsx}',
 		'!<rootDir>/src/main/js/shared/api/*.{js,ts}',
@@ -609,6 +609,15 @@ module.exports = {
 			},
 		},
 	},
+	globalSetup: '<rootDir>/src/main/js/test/global-setup.js',
+	globalTeardown: '<rootDir>/src/main/js/test/global-teardown.js',
+
+	// One worker per CPU, up to 4. CI machines have 2 to 8 CPUs, and running
+	// more workers than CPUs slows every test down until some time out. This
+	// counts the machine's CPUs and ignores Docker CPU limits, so revisit it
+	// if CI ever starts setting one.
+
+	maxWorkers: Math.min(4, availableParallelism()),
 	moduleNameMapper: {
 		'^(.+\\.svg)\\?url$': '$1',
 		'^@clayui/icon-runtime$': '@clayui/icon',
@@ -659,7 +668,20 @@ module.exports = {
 	transform: {
 		'^.+\\.jsx?$': 'babel-jest',
 		'^.+\\.svg$': '<rootDir>/src/main/js/test/svgTransformer.js',
-		'^.+\\.tsx?$': ['ts-jest', {tsconfig: 'tsconfig.test.json'}],
+		'^.+\\.tsx?$': [
+			'@swc/jest',
+			{
+				jsc: {
+					parser: {decorators: true, syntax: 'typescript', tsx: true},
+					target: 'es2020',
+					transform: {
+						legacyDecorator: true,
+						react: {runtime: 'automatic'},
+					},
+				},
+				module: {type: 'commonjs'},
+			},
+		],
 	},
 	transformIgnorePatterns: ['/node_modules/(?!.+\\.svg$)'],
 };

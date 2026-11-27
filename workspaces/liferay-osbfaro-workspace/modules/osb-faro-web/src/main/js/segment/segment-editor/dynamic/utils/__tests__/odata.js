@@ -1,6 +1,5 @@
 import * as data from 'test/data';
 import * as ODataUtil from '../odata';
-import * as Utils from '../utils';
 import {
 	ALL_APPLICATION_IDS,
 	ALL_EVENT_IDS,
@@ -27,12 +26,12 @@ function testConversionToAndFrom(testQuery, queryConjunction) {
 	expect(translatedString).toEqual(testQuery);
 }
 
-describe('odata', () => {
-	beforeAll(() => {
-		Utils.generateGroupId = jest.fn(() => 'group_01');
-		Utils.generateRowId = jest.fn(() => 'row_01');
-	});
+// Group and row ids are a namespace plus a uuid, so this pins them to
+// group_01 and row_01.
 
+jest.mock('uuid', () => ({v4: () => '01'}));
+
+describe('odata', () => {
 	describe('convertBetweenToSubstring', () => {
 		it('should convert between to substring', () => {
 			expect(

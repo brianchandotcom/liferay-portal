@@ -1,5 +1,5 @@
 import * as data from 'test/data';
-import * as Growth from 'segment/components/Growth';
+import Growth from 'segment/components/Growth';
 import Membership, {MembershipChart} from '../Membership';
 import mockStore from 'test/mock-store';
 import React from 'react';
@@ -19,6 +19,12 @@ const defaultProps = {
 	segmentType: SegmentTypes.Batch,
 	timeZoneId: 'UTC'
 };
+
+jest.mock('segment/components/Growth', () => {
+	const actual = jest.requireActual('segment/components/Growth');
+
+	return {...actual, __esModule: true, default: jest.fn(actual.default)};
+});
 
 describe('Membership', () => {
 	const WrappedComponent = props => (
@@ -47,8 +53,6 @@ describe('Membership', () => {
 	])(
 		'should pass membershipProcessing=%p to the growth chart when the last membership update date is %p',
 		async (membershipProcessing, lastMembershipUpdateDate) => {
-			const growthSpy = jest.spyOn(Growth, 'default');
-
 			const {container} = render(
 				<WrappedComponent
 					segment={data.getImmutableMock(
@@ -64,12 +68,10 @@ describe('Membership', () => {
 
 			await waitForLoadingToBeRemoved(container);
 
-			expect(growthSpy).toHaveBeenLastCalledWith(
+			expect(Growth).toHaveBeenLastCalledWith(
 				expect.objectContaining({membershipProcessing}),
 				expect.anything()
 			);
-
-			growthSpy.mockRestore();
 		}
 	);
 });

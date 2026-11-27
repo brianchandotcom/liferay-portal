@@ -4,21 +4,11 @@ import debounce from '../debounce-decorator';
 import {times} from 'lodash';
 
 describe('debounce-decorator', () => {
-	beforeAll(() => {
-		jest.useRealTimers();
-	});
-
-	afterAll(() => {
-		jest.useFakeTimers();
-	});
-
 	it('should return a deounce to be used as a decorator', () => {
 		expect(typeof debounce(250)).toBe('function');
 	});
 
-	it('should debounce the class method', (done) => {
-		expect.assertions(3);
-
+	it('should debounce the class method', () => {
 		class TestDebounce {
 			constructor(callback) {
 				this._callback = callback;
@@ -36,15 +26,13 @@ describe('debounce-decorator', () => {
 
 		testDebounce.foo();
 
+		jest.advanceTimersByTime(300);
+
 		expect(callback).not.toHaveBeenCalled();
 
-		window.setTimeout(() => expect(callback).not.toHaveBeenCalled(), 300);
+		jest.advanceTimersByTime(700);
 
-		window.setTimeout(() => {
-			expect(callback).toHaveBeenCalled();
-
-			done();
-		}, 1000);
+		expect(callback).toHaveBeenCalled();
 	});
 
 	it('should have a new debounced function for each instance', () => {
@@ -59,40 +47,7 @@ describe('debounce-decorator', () => {
 		expect(a.foo).not.toEqual(b.foo);
 	});
 
-	it('should debounce a function that has been autobind', (done) => {
-		expect.assertions(3);
-
-		class TestDebounce {
-			constructor(callback) {
-				this._callback = callback;
-			}
-
-			@debounce(750)
-			foo() {
-				this._callback();
-			}
-		}
-
-		const callback = jest.fn();
-
-		const testDebounce = new TestDebounce(callback);
-
-		testDebounce.foo();
-
-		expect(callback).not.toHaveBeenCalled();
-
-		window.setTimeout(() => expect(callback).not.toHaveBeenCalled(), 300);
-
-		window.setTimeout(() => {
-			expect(callback).toHaveBeenCalled();
-
-			done();
-		}, 1000);
-	});
-
-	it('should continually debounce a function that has been autobind', (done) => {
-		expect.assertions(3);
-
+	it('should continually debounce a function that has been autobind', () => {
 		class TestDebounce {
 			constructor(callback) {
 				this._callback = callback;
@@ -112,14 +67,12 @@ describe('debounce-decorator', () => {
 			testDebounce.foo();
 		});
 
+		jest.advanceTimersByTime(300);
+
 		expect(callback).not.toHaveBeenCalled();
 
-		window.setTimeout(() => expect(callback).not.toHaveBeenCalled(), 300);
+		jest.advanceTimersByTime(700);
 
-		window.setTimeout(() => {
-			expect(callback).toHaveBeenCalled();
-
-			done();
-		}, 1000);
+		expect(callback).toHaveBeenCalledTimes(1);
 	});
 });

@@ -3,16 +3,20 @@ import TotalAccounts from '../TotalAccounts';
 import {AccountMetricType} from 'contacts/pages/account/utils/types';
 import {render} from '@testing-library/react';
 import {TrendClassification} from 'segment/types';
+import {useRequest} from 'shared/hooks/useRequest';
 
 jest.mock('react-router', () => ({
 	...jest.requireActual('react-router'),
 	useParams: () => ({channelId: '456'}),
 }));
 
-const mockMetrics = () => {
-	const useRequest = require('shared/hooks/useRequest');
+jest.mock('shared/hooks/useRequest', () => ({
+	...jest.requireActual('shared/hooks/useRequest'),
+	useRequest: jest.fn(),
+}));
 
-	useRequest.useRequest = jest.fn(() => ({
+const mockMetrics = () => {
+	(useRequest as jest.Mock).mockReturnValue({
 		data: [
 			{
 				metricType: AccountMetricType.Total,
@@ -39,7 +43,7 @@ const mockMetrics = () => {
 				value: 1,
 			},
 		],
-	}));
+	});
 };
 
 describe('TotalAccounts', () => {
@@ -65,8 +69,7 @@ describe('TotalAccounts', () => {
 	});
 
 	it("should load with empty values when there's no data", () => {
-		const useRequest = require('shared/hooks/useRequest');
-		useRequest.useRequest = jest.fn(() => ({}));
+		(useRequest as jest.Mock).mockReturnValue({});
 
 		const {container} = render(<TotalAccounts groupId="123" />);
 
@@ -78,9 +81,7 @@ describe('TotalAccounts', () => {
 
 		render(<TotalAccounts campaignId="7" groupId="123" />);
 
-		const useRequest = require('shared/hooks/useRequest');
-
-		expect(useRequest.useRequest).toHaveBeenCalledWith(
+		expect(useRequest).toHaveBeenCalledWith(
 			expect.objectContaining({
 				variables: expect.objectContaining({campaignId: '7'}),
 			})

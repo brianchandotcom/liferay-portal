@@ -8024,7 +8024,7 @@ public class ObjectEntryLocalServiceTest {
 			0, _irrelevantObjectDefinition.getObjectDefinitionId(),
 			Collections.emptyMap());
 
-		ObjectEntryFolder objectEntryFolder =
+		ObjectEntryFolder objectEntryFolder1 =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(
 				TestPropsValues.getGroupId());
 
@@ -8036,9 +8036,39 @@ public class ObjectEntryLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY, "\""),
 			() -> _objectEntryLocalService.moveObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-				objectEntryFolder.getObjectEntryFolderId(),
+				objectEntryFolder1.getObjectEntryFolderId(),
 				objectEntry.getValues(),
 				ServiceContextTestUtil.getServiceContext()));
+
+		Group group = GroupTestUtil.addGroup();
+
+		ObjectEntryFolder objectEntryFolder2 =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(group.getGroupId());
+
+		ObjectEntry siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			group.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			objectEntryFolder2.getObjectEntryFolderId(),
+			Collections.emptyMap());
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(group.getGroupId());
+
+		ObjectEntryFolder objectEntryFolder3 =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				group.getGroupId(),
+				parentObjectEntryFolder.getObjectEntryFolderId());
+
+		_objectEntryLocalService.moveObjectEntry(
+			TestPropsValues.getUserId(), siteObjectEntry.getObjectEntryId(),
+			objectEntryFolder3.getObjectEntryFolderId(),
+			siteObjectEntry.getValues(),
+			ServiceContextTestUtil.getServiceContext());
+
+		siteObjectEntry = _objectEntryLocalService.getObjectEntry(
+			siteObjectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			objectEntryFolder3.getTreePath(), siteObjectEntry.getTreePath());
 	}
 
 	@Test
@@ -8783,6 +8813,30 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntryFolder.getObjectEntryFolderId(),
 			objectEntry.getObjectEntryFolderId());
+
+		objectEntry = _objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(group.getGroupId());
+
+		objectEntryFolder =
+			_objectEntryFolderLocalService.moveObjectEntryFolder(
+				TestPropsValues.getUserId(),
+				objectEntryFolder.getObjectEntryFolderId(),
+				parentObjectEntryFolder.getObjectEntryFolderId(), false,
+				ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _objectEntryLocalService.restoreObjectEntryFromTrash(
+			TestPropsValues.getUserId(), objectEntry,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			objectEntryFolder.getObjectEntryFolderId(),
+			objectEntry.getObjectEntryFolderId());
+		Assert.assertEquals(
+			objectEntryFolder.getTreePath(), objectEntry.getTreePath());
 
 		objectEntry = _objectEntryLocalService.moveObjectEntryToTrash(
 			TestPropsValues.getUserId(), objectEntry,
@@ -9701,6 +9755,7 @@ public class ObjectEntryLocalServiceTest {
 				ServiceContextTestUtil.getServiceContext()));
 
 		_testUpdateObjectEntryExternalReferenceCode();
+		_testUpdateObjectEntryObjectEntryFolder();
 		_testUpdateObjectEntryObjectStateTransitions();
 		_testUpdateObjectEntryWithDraftObjectEntry();
 		_testUpdateObjectEntryWithObjectRelationship();
@@ -14248,6 +14303,31 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId1);
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId2);
+	}
+
+	private void _testUpdateObjectEntryObjectEntryFolder() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		ObjectEntryFolder objectEntryFolder1 =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(group.getGroupId());
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			group.getGroupId(), _siteObjectDefinition.getObjectDefinitionId(),
+			objectEntryFolder1.getObjectEntryFolderId(),
+			Collections.emptyMap());
+
+		ObjectEntryFolder objectEntryFolder2 =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				group.getGroupId(),
+				objectEntryFolder1.getObjectEntryFolderId());
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntryFolder2.getObjectEntryFolderId(), Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			objectEntryFolder2.getTreePath(), objectEntry.getTreePath());
 	}
 
 	private void _testUpdateObjectEntryObjectStateTransitions()

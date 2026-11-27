@@ -38,12 +38,14 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectEntryFolderTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -62,6 +65,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.QueriesUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -72,6 +84,7 @@ import com.liferay.trash.service.TrashEntryLocalService;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -101,7 +114,8 @@ public class ObjectEntryFolderLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -783,11 +797,14 @@ public class ObjectEntryFolderLocalServiceTest {
 			});
 	}
 
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
+
 	private ObjectDefinition _addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, null, true, false,
-				true, false, false, false, false, false, false, null,
+				true, false, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(StringUtil.randomString()),
 				"A" + StringUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -850,6 +867,45 @@ public class ObjectEntryFolderLocalServiceTest {
 			objectEntryId);
 
 		Assert.assertEquals(expectedStatus, objectEntry.getStatus());
+	}
+
+	private void _assertSearchTreePath(
+			String className, long classPK, String treePath)
+		throws Exception {
+
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				TestPropsValues.getCompanyId()
+			).emptySearchEnabled(
+				true
+			).entryClassNames(
+				className
+			).withSearchContext(
+				searchContext -> searchContext.setAttribute(
+					Field.STATUS, WorkflowConstants.STATUS_ANY)
+			).addComplexQueryPart(
+				_complexQueryPartBuilderFactory.builder(
+				).query(
+					QueriesUtil.term(
+						Field.ENTRY_CLASS_PK, String.valueOf(classPK))
+				).build()
+			).build());
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+
+		SearchHit searchHit = searchHitsList.get(0);
+
+		Document document = searchHit.getDocument();
+
+		Assert.assertEquals(
+			Arrays.asList(StringUtil.split(treePath, CharPool.SLASH)),
+			document.getStrings(Field.TREE_PATH));
+
+		Assert.assertEquals(
+			searchResponse.getRequestString(), 1, searchHitsList.size());
 	}
 
 	private DepotEntry _getDepotEntry() throws Exception {
@@ -1018,6 +1074,15 @@ public class ObjectEntryFolderLocalServiceTest {
 			objectEntryFolder1.getObjectEntryFolderId(),
 			Collections.emptyMap());
 
+		ObjectEntryFolder childObjectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				groupId, objectEntryFolder1.getObjectEntryFolderId());
+
+		ObjectEntry childObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			childObjectEntryFolder.getObjectEntryFolderId(),
+			Collections.emptyMap());
+
 		ObjectEntryFolder objectEntryFolder2 =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(groupId);
 
@@ -1035,6 +1100,44 @@ public class ObjectEntryFolderLocalServiceTest {
 			1,
 			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
 				groupId, objectEntryFolder1.getObjectEntryFolderId()));
+
+		childObjectEntryFolder =
+			_objectEntryFolderLocalService.getObjectEntryFolder(
+				childObjectEntryFolder.getObjectEntryFolderId());
+
+		Assert.assertEquals(
+			childObjectEntryFolder.buildTreePath(),
+			childObjectEntryFolder.getTreePath());
+
+		_assertSearchTreePath(
+			ObjectEntryFolder.class.getName(),
+			childObjectEntryFolder.getObjectEntryFolderId(),
+			objectEntryFolder1.getTreePath());
+
+		childObjectEntry = _objectEntryLocalService.getObjectEntry(
+			childObjectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			childObjectEntry.buildTreePath(), childObjectEntry.getTreePath());
+
+		_assertSearchTreePath(
+			_objectDefinition.getClassName(),
+			childObjectEntry.getObjectEntryId(),
+			childObjectEntryFolder.getTreePath());
+
+		long objectEntryFolderId = objectEntryFolder2.getObjectEntryFolderId();
+		long parentObjectEntryFolderId =
+			childObjectEntryFolder.getObjectEntryFolderId();
+
+		AssertUtils.assertFailure(
+			ObjectEntryFolderParentObjectEntryFolderIdException.class,
+			StringBundler.concat(
+				"Object entry folder ", objectEntryFolderId,
+				" cannot have one of its children or itself as a parent"),
+			() -> _objectEntryFolderLocalService.moveObjectEntryFolder(
+				TestPropsValues.getUserId(), objectEntryFolderId,
+				parentObjectEntryFolderId, false,
+				ServiceContextTestUtil.getServiceContext()));
 	}
 
 	private void _testMoveObjectEntryFolderDuplicateName(long groupId)
@@ -1171,6 +1274,9 @@ public class ObjectEntryFolderLocalServiceTest {
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
+	@Inject
+	private ComplexQueryPartBuilderFactory _complexQueryPartBuilderFactory;
+
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
 
@@ -1201,6 +1307,12 @@ public class ObjectEntryFolderLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Inject
+	private Searcher _searcher;
 
 	private ServiceRegistration<ModelListener<ObjectEntryFolder>>
 		_serviceRegistration;

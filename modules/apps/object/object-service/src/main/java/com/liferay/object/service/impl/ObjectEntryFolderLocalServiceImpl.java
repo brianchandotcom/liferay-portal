@@ -24,11 +24,14 @@ import com.liferay.object.exception.ObjectEntryFolderNameException;
 import com.liferay.object.exception.ObjectEntryFolderParentObjectEntryFolderIdException;
 import com.liferay.object.exception.ObjectEntryFolderScopeException;
 import com.liferay.object.exception.RequiredObjectEntryFolderException;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.search.StrictObjectReindexThreadLocal;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.base.ObjectEntryFolderLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -838,29 +841,36 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		objectEntryFolder = updateObjectEntryFolder(objectEntryFolder);
 
-		if (groupId != parentObjectEntryFolder.getGroupId()) {
-			for (ObjectEntry objectEntry :
-					_objectEntryPersistence.findByG_C_OEFI(
-						groupId, objectEntryFolder.getCompanyId(),
-						objectEntryFolder.getObjectEntryFolderId())) {
+		for (ObjectEntry objectEntry :
+				_objectEntryPersistence.findByG_C_OEFI(
+					groupId, objectEntryFolder.getCompanyId(),
+					objectEntryFolder.getObjectEntryFolderId())) {
 
-				_objectEntryLocalService.moveObjectEntry(
+			objectEntry.setTreePath(objectEntryFolder.getTreePath());
+
+			objectEntry = _objectEntryPersistence.update(objectEntry);
+
+			if (groupId != parentObjectEntryFolder.getGroupId()) {
+				objectEntry = _objectEntryLocalService.moveObjectEntry(
 					userId, objectEntry.getObjectEntryId(),
 					objectEntry.getObjectEntryFolderId(),
 					objectEntry.getValues(), serviceContext);
 			}
 
-			for (ObjectEntryFolder childObjectEntryFolder :
-					getObjectEntryFolders(
-						groupId, objectEntryFolder.getCompanyId(),
-						objectEntryFolder.getObjectEntryFolderId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+			_reindex(objectEntry);
+		}
 
+		for (ObjectEntryFolder childObjectEntryFolder :
+				getObjectEntryFolders(
+					groupId, objectEntryFolder.getCompanyId(),
+					objectEntryFolder.getObjectEntryFolderId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			_reindex(
 				_moveObjectEntryFolder(
 					userId, childObjectEntryFolder,
 					childObjectEntryFolder.getParentObjectEntryFolderId(),
-					serviceContext);
-			}
+					serviceContext));
 		}
 
 		return objectEntryFolder;
@@ -896,6 +906,34 @@ public class ObjectEntryFolderLocalServiceImpl
 			userId, objectEntryFolder, serviceContext);
 
 		return objectEntryFolder;
+	}
+
+	private void _reindex(ObjectEntry objectEntry) throws PortalException {
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		if (!objectDefinition.isEnableIndexSearch()) {
+			return;
+		}
+
+		try (SafeCloseable safeCloseable =
+				StrictObjectReindexThreadLocal.
+					setStrictObjectReindexWithSafeCloseable(true)) {
+
+			Indexer<ObjectEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					objectDefinition.getClassName());
+
+			indexer.reindex(objectEntry);
+		}
+	}
+
+	private void _reindex(ObjectEntryFolder objectEntryFolder)
+		throws PortalException {
+
+		Indexer<ObjectEntryFolder> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(ObjectEntryFolder.class);
+
+		indexer.reindex(objectEntryFolder);
 	}
 
 	private ObjectEntryFolder _restoreObjectEntryFolderFromTrash(

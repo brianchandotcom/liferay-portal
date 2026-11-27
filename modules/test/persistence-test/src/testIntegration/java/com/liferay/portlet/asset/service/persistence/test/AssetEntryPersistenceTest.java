@@ -282,6 +282,13 @@ public class AssetEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_CArrayable() throws Exception {
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByG_C_V() throws Exception {
 		_persistence.countByG_C_V(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -669,4 +676,4 @@ public class AssetEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1897280454
+// LIFERAY-SERVICE-BUILDER-HASH:520634114

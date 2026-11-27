@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for AssetEntry. This utility wraps
@@ -268,6 +269,12 @@ public class AssetEntryLocalServiceUtil {
 
 	public static AssetEntry fetchAssetEntry(long entryId) {
 		return getService().fetchAssetEntry(entryId);
+	}
+
+	public static Map<Long, AssetEntry> fetchEntries(
+		long classNameId, long[] classPKs) {
+
+		return getService().fetchEntries(classNameId, classPKs);
 	}
 
 	public static AssetEntry fetchEntry(long entryId) {
@@ -662,4 +669,4 @@ public class AssetEntryLocalServiceUtil {
 	private static volatile AssetEntryLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:270026597
+// LIFERAY-SERVICE-BUILDER-HASH:220867542

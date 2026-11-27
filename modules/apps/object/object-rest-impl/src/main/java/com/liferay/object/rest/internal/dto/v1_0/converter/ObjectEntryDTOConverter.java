@@ -45,6 +45,7 @@ import com.liferay.object.rest.dto.v1_0.util.ListEntryUtil;
 import com.liferay.object.rest.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.object.rest.internal.util.AssetCategorizationLoader;
 import com.liferay.object.rest.internal.util.FriendlyURLEntryTitlesLoader;
+import com.liferay.object.rest.internal.util.UsersLoader;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -290,7 +291,7 @@ public class ObjectEntryDTOConverter
 
 				return CreatorUtil.toCreator(
 					_portal, dtoConverterContext.getUriInfo(),
-					_userLocalService.fetchUser(userId));
+					_getUser(dtoConverterContext, userId));
 			});
 		objectEntry.setDateCreated(
 			() -> _getAttribute(
@@ -1036,6 +1037,19 @@ public class ObjectEntryDTOConverter
 
 		return friendlyURLEntryTitlesLoader.getURLTitleMap(
 			serviceBuilderObjectEntry.getObjectEntryId());
+	}
+
+	private User _getUser(
+		DTOConverterContext dtoConverterContext, long userId) {
+
+		UsersLoader usersLoader = (UsersLoader)dtoConverterContext.getAttribute(
+			"usersLoader");
+
+		if (usersLoader == null) {
+			return _userLocalService.fetchUser(userId);
+		}
+
+		return usersLoader.getUser(userId);
 	}
 
 	private Serializable _getValue(

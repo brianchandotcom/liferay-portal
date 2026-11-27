@@ -69,6 +69,7 @@ import com.liferay.object.rest.internal.util.AssetCategorizationLoader;
 import com.liferay.object.rest.internal.util.FriendlyURLEntryTitlesLoader;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.rest.internal.util.ServiceContextUtil;
+import com.liferay.object.rest.internal.util.UsersLoader;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -2595,6 +2596,14 @@ public class DefaultObjectEntryManagerImpl
 			new FriendlyURLEntryTitlesLoader(
 				classNameId, _friendlyURLEntryLocalService, objectEntryIds));
 
+		dtoConverterContext.setAttribute(
+			"usersLoader",
+			new UsersLoader(
+				TransformUtil.transformToLongArray(
+					serviceBuilderObjectEntries,
+					com.liferay.object.model.ObjectEntry::getUserId),
+				_userLocalService));
+
 		try {
 			return TransformUtil.transform(
 				serviceBuilderObjectEntries,
@@ -2605,6 +2614,7 @@ public class DefaultObjectEntryManagerImpl
 		finally {
 			dtoConverterContext.removeAttribute("assetCategorizationLoader");
 			dtoConverterContext.removeAttribute("friendlyURLEntryTitlesLoader");
+			dtoConverterContext.removeAttribute("usersLoader");
 		}
 	}
 

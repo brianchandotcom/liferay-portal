@@ -8,5 +8,4 @@ Export-Package:\
 	com.liferay.headless.delivery.resource.v1_0,\
 	com.liferay.headless.delivery.resource.v1_0.util,\
 	com.liferay.headless.delivery.search.aggregation,\
-	com.liferay.headless.delivery.search.filter,\
 	com.liferay.headless.delivery.search.sort

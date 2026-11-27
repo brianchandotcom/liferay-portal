@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.delivery.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -14,6 +14,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructureField;
 import com.liferay.headless.delivery.dto.v1_0.Option;
+import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.petra.function.transform.TransformUtil;

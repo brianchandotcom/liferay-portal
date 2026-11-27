@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {liferayConfig} from '../../../../liferay.config';
 import POM from '../../../../utils/POM';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {hoverAndExpectToBeVisible} from '../../../../utils/hoverAndExpectToBeVisible';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
 const PORTLET_NAME =
@@ -65,6 +66,36 @@ export class DesignLibrariesPage extends POM {
 		await expect(links.last()).toHaveText(name);
 	}
 
+	async clickAddAssetMenuItem(name: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name}),
+			trigger: this.page.getByRole('button', {name: 'Add Asset'}),
+		});
+	}
+
+	async clickAddAssetSubmenuItem(parentName: string, name: string) {
+		const parentMenuItem = this.page.getByRole('menuitem', {
+			exact: true,
+			name: parentName,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: parentMenuItem,
+			trigger: this.page.getByRole('button', {name: 'Add Asset'}),
+		});
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name}),
+			trigger: parentMenuItem,
+		});
+	}
+
 	async clickMoreActionsMenuItem(name: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -82,16 +113,6 @@ export class DesignLibrariesPage extends POM {
 				.locator('.dropdown-menu')
 				.getByRole('menuitem', {name}),
 			trigger: this.page.getByRole('button', {exact: true, name: 'New'}),
-		});
-	}
-
-	async clickNewStyleBook() {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page
-				.locator('.dropdown-menu')
-				.getByRole('menuitem', {name: 'New Style Book'}),
-			trigger: this.page.getByRole('button', {name: 'Add Asset'}),
 		});
 	}
 
@@ -142,7 +163,7 @@ export class DesignLibrariesPage extends POM {
 	) {
 		await this.goToDesignLibrary(designLibraryName);
 
-		await this.clickNewStyleBook();
+		await this.clickAddAssetMenuItem('New Style Book');
 
 		const modal = this.page.getByRole('dialog');
 

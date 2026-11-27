@@ -138,6 +138,8 @@ deploySidecar {
 	}
 
 	doFirst {
+		delete destinationDir
+
 		FileUtil.get(project, elasticsearchDownloadURL, elasticsearchDistributionFile, false, true)
 
 		project.copy {

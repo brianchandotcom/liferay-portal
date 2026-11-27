@@ -212,6 +212,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Startup Sync Usage](validations/branch/startup-sync-usage.md)
 
+1. [Feature Flag Removal](validations/branch/feature-flag-removal.md)
+
 1. [Service Holder Usage](validations/branch/service-holder-usage.md)
 
 1. [BeanParamUtil Getter](validations/branch/bean-param-util-getter.md)

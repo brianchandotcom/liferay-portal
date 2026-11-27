@@ -92,7 +92,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 
 	@Test
 	@TestInfo("LPD-116938")
-	public void testGetDraftLayouts() throws Exception {
+	public void testGetDraftLayoutsMap() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		String launchSetName = RandomTestUtil.randomString();
@@ -115,7 +115,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		String mainDraftLayoutLabel = LanguageUtil.get(
 			LocaleUtil.getDefault(), "main");
 
-		_testGetDraftLayouts(
+		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
 					false, false, mainDraftLayoutEditURL, mainDraftLayoutLabel,
@@ -130,7 +130,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		String launchSetDraftLayoutEditURL = _getEditURL(
 			backURL, launchSetDraftLayout, redirect);
 
-		_testGetDraftLayouts(
+		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
 					true, false, null, mainDraftLayoutLabel, 0),
@@ -141,7 +141,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 				backURL, mainDraftLayout, Constants.EDIT, redirect,
 				TestPropsValues.getUser()));
 
-		_testGetDraftLayouts(
+		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
 					true, false, null, mainDraftLayoutLabel, 0),
@@ -344,15 +344,15 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		return mockHttpServletRequest;
 	}
 
-	private void _testGetDraftLayouts(
-		List<Map<String, Object>> expectedDraftLayouts,
+	private void _testGetDraftLayoutsMap(
+		List<Map<String, Object>> expectedDraftLayoutMaps,
 		HttpServletRequest httpServletRequest) {
 
-		List<Map<String, Object>> draftLayouts = ReflectionTestUtil.invoke(
-			_productNavigationControlMenuEntry, "_getDraftLayouts",
+		List<Map<String, Object>> draftLayoutMaps = ReflectionTestUtil.invoke(
+			_productNavigationControlMenuEntry, "_getDraftLayoutMaps",
 			new Class<?>[] {HttpServletRequest.class}, httpServletRequest);
 
-		Assert.assertEquals(expectedDraftLayouts, draftLayouts);
+		Assert.assertEquals(expectedDraftLayoutMaps, draftLayoutMaps);
 	}
 
 	private void _testIsRelevant(

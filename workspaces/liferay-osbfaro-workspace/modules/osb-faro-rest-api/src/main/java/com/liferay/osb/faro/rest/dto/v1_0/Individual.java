@@ -201,7 +201,7 @@ public class Individual implements Serializable {
 	private Supplier<Long> _activitiesCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Engagement classification computed by LDP from the individual's recent activity: ACTIVE or INACTIVE."
+		description = "Engagement classification calculated by LDP from the individual's recent activity: ACTIVE or INACTIVE."
 	)
 	public String getActivityStatus() {
 		if (_activityStatusSupplier != null) {
@@ -237,7 +237,7 @@ public class Individual implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Engagement classification computed by LDP from the individual's recent activity: ACTIVE or INACTIVE."
+		description = "Engagement classification calculated by LDP from the individual's recent activity: ACTIVE or INACTIVE."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String activityStatus;
@@ -1290,4 +1290,4 @@ public class Individual implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:554702211
+// LIFERAY-REST-BUILDER-HASH:1132418083

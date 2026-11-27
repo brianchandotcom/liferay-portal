@@ -41,11 +41,11 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A field computed by LDP for an account.",
+	description = "A field calculated by LDP for an account.",
 	value = "CalculatedField"
 )
 @io.swagger.v3.oas.annotations.media.Schema(
-	description = "A field computed by LDP for an account."
+	description = "A field calculated by LDP for an account."
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CalculatedField")
@@ -60,7 +60,7 @@ public class CalculatedField implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Last time LDP computed the field."
+		description = "Last time LDP calculated the field."
 	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
@@ -95,7 +95,7 @@ public class CalculatedField implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Last time LDP computed the field.")
+	@GraphQLField(description = "Last time LDP calculated the field.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -447,4 +447,4 @@ public class CalculatedField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:984650552
+// LIFERAY-REST-BUILDER-HASH:-899901192

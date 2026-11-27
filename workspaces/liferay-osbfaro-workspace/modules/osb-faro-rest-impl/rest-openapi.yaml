@@ -22,7 +22,7 @@ components:
                     type: integer
                 activityStatus:
                     description:
-                        "Engagement classification computed by LDP from the recent activity of the account's individuals: ACTIVE or INACTIVE."
+                        "Engagement classification calculated by LDP from the recent activity of the account's individuals: ACTIVE or INACTIVE."
                     readOnly: true
                     type: string
                 annualRevenue:
@@ -33,7 +33,7 @@ components:
                     type: number
                 calculatedFields:
                     description:
-                        "Fields computed by LDP for the account."
+                        "Fields calculated by LDP for the account."
                     items:
                         $ref: "#/components/schemas/CalculatedField"
                     readOnly: true
@@ -364,11 +364,11 @@ components:
             type: object
         CalculatedField:
             description:
-                "A field computed by LDP for an account."
+                "A field calculated by LDP for an account."
             properties:
                 dateModified:
                     description:
-                        "Last time LDP computed the field."
+                        "Last time LDP calculated the field."
                     format: date-time
                     readOnly: true
                     type: string
@@ -702,7 +702,7 @@ components:
                     type: integer
                 activityStatus:
                     description:
-                        "Engagement classification computed by LDP from the individual's recent activity: ACTIVE or INACTIVE."
+                        "Engagement classification calculated by LDP from the individual's recent activity: ACTIVE or INACTIVE."
                     readOnly: true
                     type: string
                 averageSessionDuration:

@@ -17,13 +17,18 @@ import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -75,9 +80,39 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private CollectionPersistenceFinder
+		<FriendlyURLEntryMapping, NoSuchFriendlyURLEntryMappingException>
+			_collectionPersistenceFinderByC_C;
 	private UniquePersistenceFinder
 		<FriendlyURLEntryMapping, NoSuchFriendlyURLEntryMappingException>
 			_uniquePersistenceFinderByC_C;
+
+	/**
+	 * Returns an ordered range of all the friendly url entry mappings where classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of friendly url entry mappings
+	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching friendly url entry mappings
+	 */
+	@Override
+	public List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs, int start, int end,
+		OrderByComparator<FriendlyURLEntryMapping> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache,
+			new Object[] {classNameId, ArrayUtil.sortedUnique(classPKs)}, start,
+			end, orderByComparator, useFinderCache);
+	}
 
 	/**
 	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchFriendlyURLEntryMappingException</code> if it could not be found.
@@ -137,8 +172,22 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		return _uniquePersistenceFinderByC_C.count(
-			finderCache, new Object[] {classNameId, classPK});
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, new long[] {classPK}});
+	}
+
+	/**
+	 * Returns the number of friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the number of matching friendly url entry mappings
+	 */
+	@Override
+	public int countByC_C(long classNameId, long[] classPKs) {
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache,
+			new Object[] {classNameId, ArrayUtil.sortedUnique(classPKs)});
 	}
 
 	public FriendlyURLEntryMappingPersistenceImpl() {
@@ -414,6 +463,36 @@ public class FriendlyURLEntryMappingPersistenceImpl
 				"friendlyURLEntryMapping.", "classPK", FinderColumn.Type.LONG,
 				"=", true, true, FriendlyURLEntryMapping::getClassPK));
 
+		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
+			_SQL_SELECT_FRIENDLYURLENTRYMAPPING_WHERE,
+			_SQL_COUNT_FRIENDLYURLENTRYMAPPING_WHERE,
+			FriendlyURLEntryMappingModelImpl.ORDER_BY_JPQL,
+			_ENTITY_ALIAS_PREFIX, "", "", _uniquePersistenceFinderByC_C,
+			new FinderColumn<>(
+				"friendlyURLEntryMapping.", "classNameId",
+				FinderColumn.Type.LONG, "=", true, true,
+				FriendlyURLEntryMapping::getClassNameId),
+			new ArrayableFinderColumn<>(
+				"friendlyURLEntryMapping.", "classPK", FinderColumn.Type.LONG,
+				"=", false, true, true, FriendlyURLEntryMapping::getClassPK));
+
 		FriendlyURLEntryMappingUtil.setPersistence(this);
 	}
 
@@ -459,11 +538,17 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		FriendlyURLEntryMappingModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_FRIENDLYURLENTRYMAPPING =
 		"SELECT friendlyURLEntryMapping FROM FriendlyURLEntryMapping friendlyURLEntryMapping";
 
 	private static final String _SQL_SELECT_FRIENDLYURLENTRYMAPPING_WHERE =
 		"SELECT friendlyURLEntryMapping FROM FriendlyURLEntryMapping friendlyURLEntryMapping WHERE ";
+
+	private static final String _SQL_COUNT_FRIENDLYURLENTRYMAPPING_WHERE =
+		"SELECT COUNT(friendlyURLEntryMapping) FROM FriendlyURLEntryMapping friendlyURLEntryMapping WHERE ";
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -471,4 +556,4 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1260834433
+// LIFERAY-SERVICE-BUILDER-HASH:1646608998

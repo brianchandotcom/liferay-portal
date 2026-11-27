@@ -9,6 +9,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.model.FriendlyURLEntryTitles;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -396,6 +397,10 @@ public interface FriendlyURLEntryLocalService
 			long classNameId, long classPK)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, FriendlyURLEntryTitles> getMainFriendlyURLEntryTitles(
+		long classNameId, long[] classPKs);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -518,4 +523,4 @@ public interface FriendlyURLEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1155925410
+// LIFERAY-SERVICE-BUILDER-HASH:1629702325

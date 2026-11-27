@@ -43,6 +43,7 @@ import com.liferay.object.rest.dto.v1_0.Version;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.dto.v1_0.util.ListEntryUtil;
 import com.liferay.object.rest.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
+import com.liferay.object.rest.internal.util.FriendlyURLEntryTitlesLoader;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -316,8 +317,8 @@ public class ObjectEntryDTOConverter
 				}
 
 				return HttpComponentsUtil.decodePath(
-					serviceBuilderObjectEntry.getURLTitle(
-						dtoConverterContext.getLocale()));
+					_getURLTitle(
+						dtoConverterContext, serviceBuilderObjectEntry));
 			});
 		objectEntry.setFriendlyUrlPath_i18n(
 			() -> {
@@ -325,8 +326,8 @@ public class ObjectEntryDTOConverter
 					return contentObjectEntry.getFriendlyUrlPath_i18n();
 				}
 
-				Map<String, String> urlTitleMap =
-					serviceBuilderObjectEntry.getURLTitleMap();
+				Map<String, String> urlTitleMap = _getURLTitleMap(
+					dtoConverterContext, serviceBuilderObjectEntry);
 
 				if (MapUtil.isEmpty(urlTitleMap)) {
 					return urlTitleMap;
@@ -981,6 +982,40 @@ public class ObjectEntryDTOConverter
 		}
 
 		return group.getGroupKey();
+	}
+
+	private String _getURLTitle(
+		DTOConverterContext dtoConverterContext,
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry) {
+
+		FriendlyURLEntryTitlesLoader friendlyURLEntryTitlesLoader =
+			(FriendlyURLEntryTitlesLoader)dtoConverterContext.getAttribute(
+				"friendlyURLEntryTitlesLoader");
+
+		if (friendlyURLEntryTitlesLoader == null) {
+			return serviceBuilderObjectEntry.getURLTitle(
+				dtoConverterContext.getLocale());
+		}
+
+		return friendlyURLEntryTitlesLoader.getURLTitle(
+			serviceBuilderObjectEntry.getObjectEntryId(),
+			dtoConverterContext.getLocale());
+	}
+
+	private Map<String, String> _getURLTitleMap(
+		DTOConverterContext dtoConverterContext,
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry) {
+
+		FriendlyURLEntryTitlesLoader friendlyURLEntryTitlesLoader =
+			(FriendlyURLEntryTitlesLoader)dtoConverterContext.getAttribute(
+				"friendlyURLEntryTitlesLoader");
+
+		if (friendlyURLEntryTitlesLoader == null) {
+			return serviceBuilderObjectEntry.getURLTitleMap();
+		}
+
+		return friendlyURLEntryTitlesLoader.getURLTitleMap(
+			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	private Serializable _getValue(

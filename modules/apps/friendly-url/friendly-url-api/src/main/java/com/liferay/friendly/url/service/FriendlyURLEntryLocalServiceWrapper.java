@@ -582,6 +582,15 @@ public class FriendlyURLEntryLocalServiceWrapper
 			classNameId, classPK);
 	}
 
+	@Override
+	public java.util.Map
+		<Long, com.liferay.friendly.url.model.FriendlyURLEntryTitles>
+			getMainFriendlyURLEntryTitles(long classNameId, long[] classPKs) {
+
+		return _friendlyURLEntryLocalService.getMainFriendlyURLEntryTitles(
+			classNameId, classPKs);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -822,4 +831,4 @@ public class FriendlyURLEntryLocalServiceWrapper
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1053594816
+// LIFERAY-SERVICE-BUILDER-HASH:-1763579665

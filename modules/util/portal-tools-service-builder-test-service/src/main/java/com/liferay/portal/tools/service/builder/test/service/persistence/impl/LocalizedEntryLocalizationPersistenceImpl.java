@@ -9,10 +9,12 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -85,8 +87,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByLocalizedEntryId.find(
-			finderCache, new Object[] {localizedEntryId}, start, end,
-			orderByComparator, useFinderCache);
+			finderCache, new Object[] {new long[] {localizedEntryId}}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -104,7 +106,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		throws NoSuchLocalizedEntryLocalizationException {
 
 		return _collectionPersistenceFinderByLocalizedEntryId.findFirst(
-			finderCache, new Object[] {localizedEntryId}, orderByComparator);
+			finderCache, new Object[] {new long[] {localizedEntryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -120,7 +123,34 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
 
 		return _collectionPersistenceFinderByLocalizedEntryId.fetchFirst(
-			finderCache, new Object[] {localizedEntryId}, orderByComparator);
+			finderCache, new Object[] {new long[] {localizedEntryId}},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the localized entry localizations where localizedEntryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param localizedEntryIds the localized entry IDs
+	 * @param start the lower bound of the range of localized entry localizations
+	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching localized entry localizations
+	 */
+	@Override
+	public List<LocalizedEntryLocalization> findByLocalizedEntryId(
+		long[] localizedEntryIds, int start, int end,
+		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByLocalizedEntryId.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(localizedEntryIds)}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -131,7 +161,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	@Override
 	public void removeByLocalizedEntryId(long localizedEntryId) {
 		_collectionPersistenceFinderByLocalizedEntryId.remove(
-			finderCache, new Object[] {localizedEntryId});
+			finderCache, new Object[] {new long[] {localizedEntryId}});
 	}
 
 	/**
@@ -143,7 +173,20 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	@Override
 	public int countByLocalizedEntryId(long localizedEntryId) {
 		return _collectionPersistenceFinderByLocalizedEntryId.count(
-			finderCache, new Object[] {localizedEntryId});
+			finderCache, new Object[] {new long[] {localizedEntryId}});
+	}
+
+	/**
+	 * Returns the number of localized entry localizations where localizedEntryId = any &#63;.
+	 *
+	 * @param localizedEntryIds the localized entry IDs
+	 * @return the number of matching localized entry localizations
+	 */
+	@Override
+	public int countByLocalizedEntryId(long[] localizedEntryIds) {
+		return _collectionPersistenceFinderByLocalizedEntryId.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(localizedEntryIds)});
 	}
 
 	private UniquePersistenceFinder
@@ -424,7 +467,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"localizedEntryId"}, true),
 				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 					"countByLocalizedEntryId",
 					new String[] {Long.class.getName()},
 					new String[] {"localizedEntryId"}, false),
@@ -432,9 +475,9 @@ public class LocalizedEntryLocalizationPersistenceImpl
 				_SQL_COUNT_LOCALIZEDENTRYLOCALIZATION_WHERE,
 				LocalizedEntryLocalizationModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "", "", null,
-				new FinderColumn<>(
+				new ArrayableFinderColumn<>(
 					"localizedEntryLocalization.", "localizedEntryId",
-					FinderColumn.Type.LONG, "=", true, true,
+					FinderColumn.Type.LONG, "=", false, true, true,
 					LocalizedEntryLocalization::getLocalizedEntryId));
 
 		_uniquePersistenceFinderByLocalizedEntryId_LanguageId =
@@ -491,4 +534,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:495740964
+// LIFERAY-SERVICE-BUILDER-HASH:-988724220

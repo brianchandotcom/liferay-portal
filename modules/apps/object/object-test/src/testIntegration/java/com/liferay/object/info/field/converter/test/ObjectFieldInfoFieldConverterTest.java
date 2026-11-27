@@ -122,21 +122,6 @@ public class ObjectFieldInfoFieldConverterTest {
 
 	@Test
 	public void testAddRelationshipInfoFieldAttributes() throws Exception {
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
-
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, _objectDefinition,
-				objectDefinition2);
-
-		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
-			new ObjectFieldInfoFieldConverter(
-				null, null, null, _objectDefinitionLocalService,
-				_objectFieldLocalService, _objectRelationshipLocalService,
-				_objectScopeProviderRegistry, null, null, _portal,
-				_restContextPathResolverRegistry, null, null);
-
 		InfoField.FinalStep finalStep = InfoField.builder(
 		).infoFieldType(
 			RelationshipInfoFieldType.INSTANCE
@@ -145,6 +130,19 @@ public class ObjectFieldInfoFieldConverterTest {
 		).name(
 			RandomTestUtil.randomString()
 		);
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
+			new ObjectFieldInfoFieldConverter(
+				null, null, null, _objectDefinitionLocalService,
+				_objectFieldLocalService, _objectRelationshipLocalService,
+				_objectScopeProviderRegistry, null, null, _portal,
+				_restContextPathResolverRegistry, null, null);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinition,
+				objectDefinition2);
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -203,23 +201,6 @@ public class ObjectFieldInfoFieldConverterTest {
 	public void testAddRelationshipInfoFieldAttributesWithOrganization()
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				TestPropsValues.getCompanyId(), "Organization");
-
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinition,
-				_objectDefinition);
-
-		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
-			new ObjectFieldInfoFieldConverter(
-				null, null, null, _objectDefinitionLocalService,
-				_objectFieldLocalService, _objectRelationshipLocalService,
-				_objectScopeProviderRegistry, null, null, _portal,
-				_restContextPathResolverRegistry,
-				_systemObjectDefinitionManagerRegistry, null);
-
 		InfoField.FinalStep finalStep = InfoField.builder(
 		).infoFieldType(
 			RelationshipInfoFieldType.INSTANCE
@@ -228,6 +209,22 @@ public class ObjectFieldInfoFieldConverterTest {
 		).name(
 			RandomTestUtil.randomString()
 		);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				TestPropsValues.getCompanyId(), "Organization");
+		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
+			new ObjectFieldInfoFieldConverter(
+				null, null, null, _objectDefinitionLocalService,
+				_objectFieldLocalService, _objectRelationshipLocalService,
+				_objectScopeProviderRegistry, null, null, _portal,
+				_restContextPathResolverRegistry,
+				_systemObjectDefinitionManagerRegistry, null);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition,
+				_objectDefinition);
 
 		String url = _getRelationshipURL(
 			finalStep, objectFieldInfoFieldConverter, objectRelationship,
@@ -333,7 +330,6 @@ public class ObjectFieldInfoFieldConverterTest {
 			).userId(
 				TestPropsValues.getUserId()
 			).build());
-
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
 			new ObjectFieldInfoFieldConverter(
 				_ddmExpressionFactory, null, null, null, null, null, null, null,
@@ -367,7 +363,6 @@ public class ObjectFieldInfoFieldConverterTest {
 			).userId(
 				TestPropsValues.getUserId()
 			).build());
-
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
 			new ObjectFieldInfoFieldConverter(
 				_ddmExpressionFactory, null, null, null, null, null, null, null,

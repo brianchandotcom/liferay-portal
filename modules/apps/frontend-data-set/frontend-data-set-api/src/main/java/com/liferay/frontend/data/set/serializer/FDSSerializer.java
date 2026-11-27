@@ -90,14 +90,14 @@ public interface FDSSerializer {
 	public boolean serializeSearchSuggestionsEnabled(
 		String fdsName, HttpServletRequest httpServletRequest);
 
-	public boolean serializeShowColumnsVisibility(
-		String fdsName, HttpServletRequest httpServletRequest);
-
 	public Map<String, String> serializeSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
 		Map<String, JSONObject>
 			selectionFilterFDSAPIURLTokenResolutionsJSONObjects);
+
+	public boolean serializeShowColumnsVisibility(
+		String fdsName, HttpServletRequest httpServletRequest);
 
 	public default boolean serializeShowPagination(
 		String fdsName, HttpServletRequest httpServletRequest) {

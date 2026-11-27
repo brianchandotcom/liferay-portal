@@ -338,20 +338,6 @@ public class SystemFDSSerializer
 	}
 
 	@Override
-	public boolean serializeShowColumnsVisibility(
-		String fdsName, HttpServletRequest httpServletRequest) {
-
-		SystemFDSEntry systemFDSEntry =
-			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
-
-		if (systemFDSEntry == null) {
-			return _systemFDSEntry.getShowColumnsVisibility();
-		}
-
-		return systemFDSEntry.getShowColumnsVisibility();
-	}
-
-	@Override
 	public Map<String, String> serializeSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
@@ -374,6 +360,20 @@ public class SystemFDSSerializer
 		}
 
 		return selectionFilterAPIURLs;
+	}
+
+	@Override
+	public boolean serializeShowColumnsVisibility(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		SystemFDSEntry systemFDSEntry =
+			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
+
+		if (systemFDSEntry == null) {
+			return _systemFDSEntry.getShowColumnsVisibility();
+		}
+
+		return systemFDSEntry.getShowColumnsVisibility();
 	}
 
 	@Override

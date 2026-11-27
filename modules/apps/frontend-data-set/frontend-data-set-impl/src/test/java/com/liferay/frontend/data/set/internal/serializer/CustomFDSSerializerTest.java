@@ -1194,28 +1194,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
-	public void testSerializeShowColumnsVisibility() throws Exception {
-		_mockSerializeShowColumnsVisibility(FDS_NAMES[0], false);
-		_mockSerializeShowColumnsVisibility(FDS_NAMES[1], true);
-
-		String fdsName = RandomTestUtil.randomString();
-
-		_mockSerializeShowColumnsVisibility(fdsName, null);
-
-		Assert.assertFalse(
-			_customFDSSerializer.serializeShowColumnsVisibility(
-				FDS_NAMES[0], httpServletRequest));
-		Assert.assertTrue(
-			_customFDSSerializer.serializeShowColumnsVisibility(
-				FDS_NAMES[1], httpServletRequest));
-		Assert.assertTrue(
-			_customFDSSerializer.serializeShowColumnsVisibility(
-				fdsName, httpServletRequest));
-
-		_resetFDSSerializer();
-	}
-
-	@Test
 	public void testSerializeSelectionFilterAPIURLs() throws Exception {
 		_resetFDSSerializer(Mockito.mock(FDSAPIURLResolverRegistry.class));
 
@@ -1310,6 +1288,28 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 					itemProxyObjectEntry.getExternalReferenceCode(),
 					tokenResolutionsJSONObject
 				).build()));
+	}
+
+	@Test
+	public void testSerializeShowColumnsVisibility() throws Exception {
+		_mockSerializeShowColumnsVisibility(FDS_NAMES[0], false);
+		_mockSerializeShowColumnsVisibility(FDS_NAMES[1], true);
+
+		String fdsName = RandomTestUtil.randomString();
+
+		_mockSerializeShowColumnsVisibility(fdsName, null);
+
+		Assert.assertFalse(
+			_customFDSSerializer.serializeShowColumnsVisibility(
+				FDS_NAMES[0], httpServletRequest));
+		Assert.assertTrue(
+			_customFDSSerializer.serializeShowColumnsVisibility(
+				FDS_NAMES[1], httpServletRequest));
+		Assert.assertTrue(
+			_customFDSSerializer.serializeShowColumnsVisibility(
+				fdsName, httpServletRequest));
+
+		_resetFDSSerializer();
 	}
 
 	@Test

@@ -1237,38 +1237,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
-	public void testSerializeShowColumnsVisibility() throws Exception {
-		String fdsName = RandomTestUtil.randomString();
-
-		_registerServices(
-			_registerSystemFDSEntry(
-				SystemFDSEntryFactory.create(
-					FDS_NAMES[0]
-				).withShowColumnsVisibility(
-					false
-				)),
-			_registerSystemFDSEntry(
-				SystemFDSEntryFactory.create(
-					FDS_NAMES[1]
-				).withShowColumnsVisibility(
-					true
-				)),
-			_registerSystemFDSEntry(fdsName));
-
-		Assert.assertFalse(
-			systemFDSSerializer.serializeShowColumnsVisibility(
-				FDS_NAMES[0], httpServletRequest));
-		Assert.assertTrue(
-			systemFDSSerializer.serializeShowColumnsVisibility(
-				FDS_NAMES[1], httpServletRequest));
-		Assert.assertTrue(
-			systemFDSSerializer.serializeShowColumnsVisibility(
-				fdsName, httpServletRequest));
-
-		_unregisterServices();
-	}
-
-	@Test
 	public void testSerializeSelectionFilterAPIURLs() throws Exception {
 		ServiceTrackerMap
 			<String,
@@ -1308,6 +1276,38 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_unregisterServices();
 
 		serviceTrackerMap.close();
+	}
+
+	@Test
+	public void testSerializeShowColumnsVisibility() throws Exception {
+		String fdsName = RandomTestUtil.randomString();
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withShowColumnsVisibility(
+					false
+				)),
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[1]
+				).withShowColumnsVisibility(
+					true
+				)),
+			_registerSystemFDSEntry(fdsName));
+
+		Assert.assertFalse(
+			systemFDSSerializer.serializeShowColumnsVisibility(
+				FDS_NAMES[0], httpServletRequest));
+		Assert.assertTrue(
+			systemFDSSerializer.serializeShowColumnsVisibility(
+				FDS_NAMES[1], httpServletRequest));
+		Assert.assertTrue(
+			systemFDSSerializer.serializeShowColumnsVisibility(
+				fdsName, httpServletRequest));
+
+		_unregisterServices();
 	}
 
 	@Test

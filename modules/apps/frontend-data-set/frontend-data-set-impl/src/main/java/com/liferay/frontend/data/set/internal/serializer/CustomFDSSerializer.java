@@ -520,17 +520,6 @@ public class CustomFDSSerializer
 	}
 
 	@Override
-	public boolean serializeShowColumnsVisibility(
-		String fdsName, HttpServletRequest httpServletRequest) {
-
-		Map<String, Object> properties = getDataSetObjectEntryProperties(
-			fdsName, httpServletRequest);
-
-		return GetterUtil.getBoolean(
-			properties.get("showColumnsVisibility"), true);
-	}
-
-	@Override
 	public Map<String, String> serializeSelectionFilterAPIURLs(
 		String fdsName, HttpServletRequest httpServletRequest,
 		boolean interpolate,
@@ -574,6 +563,17 @@ public class CustomFDSSerializer
 		}
 
 		return selectionFilterAPIURLs;
+	}
+
+	@Override
+	public boolean serializeShowColumnsVisibility(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> properties = getDataSetObjectEntryProperties(
+			fdsName, httpServletRequest);
+
+		return GetterUtil.getBoolean(
+			properties.get("showColumnsVisibility"), true);
 	}
 
 	@Override

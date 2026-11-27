@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.security.auth.EmailAddressGenerator;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 
 import jakarta.mail.internet.InternetAddress;
@@ -120,10 +119,6 @@ public class MailMessageListener extends BaseMessageListener {
 
 	protected InternetAddress filterInternetAddress(
 		InternetAddress internetAddress) {
-
-		if (PortalRunMode.isTestMode()) {
-			return internetAddress;
-		}
 
 		EmailAddressGenerator emailAddressGenerator =
 			EmailAddressGeneratorFactory.getInstance();

@@ -92,7 +92,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 
 	@Test
 	@TestInfo("LPD-116938")
-	public void testGetDraftLayoutMaps() throws Exception {
+	public void testGetDraftLayoutsMap() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		String launchSetName = RandomTestUtil.randomString();
@@ -114,7 +114,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		String draftLayoutLabel = LanguageUtil.get(
 			LocaleUtil.getDefault(), "main");
 
-		_testGetDraftLayoutMaps(
+		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
 					false, false, draftLayoutEditURL, draftLayoutLabel, 0),
@@ -128,7 +128,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		String launchSetDraftLayoutEditURL = _getEditURL(
 			backURL, launchSetDraftLayout, redirect);
 
-		_testGetDraftLayoutMaps(
+		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
 					true, false, null, draftLayoutLabel, 0),
@@ -139,7 +139,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 				backURL, draftLayout, Constants.EDIT, redirect,
 				TestPropsValues.getUser()));
 
-		_testGetDraftLayoutMaps(
+		_testGetDraftLayoutsMap(
 			Arrays.asList(
 				_getExpectedDraftLayoutMap(
 					true, false, null, draftLayoutLabel, 0),
@@ -342,7 +342,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntryTest {
 		return mockHttpServletRequest;
 	}
 
-	private void _testGetDraftLayoutMaps(
+	private void _testGetDraftLayoutsMap(
 		List<Map<String, Object>> expectedDraftLayoutMaps,
 		HttpServletRequest httpServletRequest) {
 

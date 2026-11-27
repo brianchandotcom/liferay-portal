@@ -834,6 +834,11 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public int getDraftLayoutsCount(long plid) {
+		return _layoutLocalService.getDraftLayoutsCount(plid);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -2336,4 +2341,4 @@ public class LayoutLocalServiceWrapper
 	private LayoutLocalService _layoutLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-180539413
+// LIFERAY-SERVICE-BUILDER-HASH:1170160202

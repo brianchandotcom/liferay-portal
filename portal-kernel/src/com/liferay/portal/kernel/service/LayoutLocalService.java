@@ -684,6 +684,9 @@ public interface LayoutLocalService
 	public long getDefaultPlid(long groupId, boolean privateLayout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDraftLayoutsCount(long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -1720,4 +1723,4 @@ public interface LayoutLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:506257846
+// LIFERAY-SERVICE-BUILDER-HASH:813135917

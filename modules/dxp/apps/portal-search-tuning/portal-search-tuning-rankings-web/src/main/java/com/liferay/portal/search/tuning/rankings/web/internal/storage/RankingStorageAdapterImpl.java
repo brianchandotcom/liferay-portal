@@ -11,10 +11,9 @@ import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.storage.RankingStorageAdapter;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexWriter;
 import com.liferay.portal.search.tuning.rankings.web.internal.storage.helper.RankingJSONStorageHelper;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingIndexWriterUtil;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,7 +32,8 @@ public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 
 		rankingBuilder.rankingDocumentId(rankingDocumentId);
 
-		_rankingIndexWriter.create(rankingIndexName, rankingBuilder.build());
+		RankingIndexWriterUtil.create(
+			rankingBuilder.build(), rankingIndexName, _searchEngineAdapter);
 
 		return rankingDocumentId;
 	}
@@ -45,7 +45,8 @@ public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 
 		rankingJSONStorageHelper.deleteJSONStorageEntry(rankingDocumentId);
 
-		_rankingIndexWriter.remove(rankingIndexName, rankingDocumentId);
+		RankingIndexWriterUtil.remove(
+			rankingDocumentId, rankingIndexName, _searchEngineAdapter);
 	}
 
 	@Override
@@ -54,12 +55,8 @@ public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 
 		rankingJSONStorageHelper.updateJSONStorageEntry(ranking);
 
-		_rankingIndexWriter.update(rankingIndexName, ranking);
-	}
-
-	@Activate
-	protected void activate() {
-		_rankingIndexWriter = new RankingIndexWriter(_searchEngineAdapter);
+		RankingIndexWriterUtil.update(
+			ranking, rankingIndexName, _searchEngineAdapter);
 	}
 
 	@Reference
@@ -67,8 +64,6 @@ public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 
 	@Reference
 	protected RankingJSONStorageHelper rankingJSONStorageHelper;
-
-	private RankingIndexWriter _rankingIndexWriter;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

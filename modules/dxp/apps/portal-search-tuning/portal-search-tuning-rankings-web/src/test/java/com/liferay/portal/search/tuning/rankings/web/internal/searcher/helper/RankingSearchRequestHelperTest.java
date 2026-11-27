@@ -9,9 +9,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
-import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingPinBuilderFactoryImpl;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.PinImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -60,21 +59,10 @@ public class RankingSearchRequestHelperTest extends BaseRankingsWebTestCase {
 
 		Ranking ranking = Mockito.mock(Ranking.class);
 
-		Ranking.Pin.Builder builder = _rankingPinBuilderFactory.builder();
-
 		Mockito.doReturn(
 			Arrays.asList(
 				new Ranking.Pin[] {
-					builder.documentId(
-						"1"
-					).position(
-						123
-					).build(),
-					builder.documentId(
-						"2"
-					).position(
-						456
-					).build()
+					new PinImpl("1", 123), new PinImpl("2", 456)
 				})
 		).when(
 			ranking
@@ -95,8 +83,6 @@ public class RankingSearchRequestHelperTest extends BaseRankingsWebTestCase {
 		);
 	}
 
-	private final RankingPinBuilderFactory _rankingPinBuilderFactory =
-		new RankingPinBuilderFactoryImpl();
 	private final RankingSearchRequestHelper _rankingSearchRequestHelper =
 		new RankingSearchRequestHelper();
 

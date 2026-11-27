@@ -125,13 +125,8 @@ public class DocumentToRankingTranslatorUtil {
 	}
 
 	private static Ranking.Pin _toPin(Map<String, String> map) {
-		Ranking.Pin.Builder builder = new RankingImpl.PinImpl.BuilderImpl();
-
-		return builder.documentId(
-			map.get("uid")
-		).position(
-			GetterUtil.getInteger(map.get("position"))
-		).build();
+		return new PinImpl(
+			map.get("uid"), GetterUtil.getInteger(map.get("position")));
 	}
 
 }

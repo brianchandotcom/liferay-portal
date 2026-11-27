@@ -12,7 +12,6 @@ import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
-import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.web.internal.helper.RankingHelperImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -93,13 +92,7 @@ public class RankingToDocumentTranslatorUtilTest {
 		Ranking.Builder rankingBuilder = _rankingBuilderFactory.builder();
 
 		rankingBuilder.pins(
-			Collections.singletonList(
-				_rankingPinBuilderFactory.builder(
-				).documentId(
-					"uid"
-				).position(
-					142857
-				).build()));
+			Collections.singletonList(new PinImpl("uid", 142857)));
 
 		Document document = translate(rankingBuilder.build());
 
@@ -150,7 +143,5 @@ public class RankingToDocumentTranslatorUtilTest {
 	private final RankingBuilderFactory _rankingBuilderFactory =
 		new RankingBuilderFactoryImpl();
 	private final RankingHelper _rankingHelper = new RankingHelperImpl();
-	private final RankingPinBuilderFactory _rankingPinBuilderFactory =
-		new RankingPinBuilderFactoryImpl();
 
 }

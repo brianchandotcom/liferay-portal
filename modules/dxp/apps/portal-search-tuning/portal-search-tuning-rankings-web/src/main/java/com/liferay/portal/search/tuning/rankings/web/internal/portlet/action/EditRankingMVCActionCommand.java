@@ -29,7 +29,6 @@ import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
-import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.storage.RankingStorageAdapter;
@@ -38,6 +37,7 @@ import com.liferay.portal.search.tuning.rankings.web.internal.exception.Duplicat
 import com.liferay.portal.search.tuning.rankings.web.internal.exception.NotApplicableStatusException;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Criteria;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DuplicateQueryStringsDetector;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.PinImpl;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -134,9 +134,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	protected RankingIndexReader rankingIndexReader;
 
 	@Reference
-	protected RankingPinBuilderFactory rankingPinBuilderFactory;
-
-	@Reference
 	protected RankingStorageAdapter rankingStorageAdapter;
 
 	private void _add(
@@ -186,13 +183,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		if (!resultActionCmd.isEmpty() && !resultActionUid.isEmpty()) {
 			if (resultActionCmd.equals("pin")) {
 				rankingBuilder.pins(
-					Arrays.asList(
-						rankingPinBuilderFactory.builder(
-						).documentId(
-							resultActionUid
-						).position(
-							0
-						).build()));
+					Arrays.asList(new PinImpl(resultActionUid, 0)));
 			}
 			else {
 				rankingBuilder.hiddenDocumentIds(
@@ -520,13 +511,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "pinnedIds");
 
 		for (int i = 0; i < pinnedIds.length; i++) {
-			pins.add(
-				rankingPinBuilderFactory.builder(
-				).documentId(
-					pinnedIds[i]
-				).position(
-					i
-				).build());
+			pins.add(new PinImpl(pinnedIds[i], i));
 		}
 
 		if (ListUtil.isNotEmpty(pins)) {

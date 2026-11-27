@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.index;
+package com.liferay.portal.search.tuning.rankings.web.internal.util;
 
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
@@ -11,19 +11,19 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingToDocumentTranslatorUtil;
 
 /**
  * @author André de Oliveira
  */
-public class RankingIndexWriter {
+public class RankingIndexWriterUtil {
 
-	public RankingIndexWriter(SearchEngineAdapter searchEngineAdapter) {
-		_searchEngineAdapter = searchEngineAdapter;
-	}
+	public static String create(
+		Ranking ranking, RankingIndexName rankingIndexName,
+		SearchEngineAdapter searchEngineAdapter) {
 
-	public String create(RankingIndexName rankingIndexName, Ranking ranking) {
 		IndexDocumentResponse indexDocumentResponse =
-			_searchEngineAdapter.execute(
+			searchEngineAdapter.execute(
 				new IndexDocumentRequest(
 					rankingIndexName.getIndexName(),
 					RankingToDocumentTranslatorUtil.translate(ranking)));
@@ -31,27 +31,29 @@ public class RankingIndexWriter {
 		return indexDocumentResponse.getUid();
 	}
 
-	public void remove(
-		RankingIndexName rankingIndexName, String rankingDocumentId) {
+	public static void remove(
+		String rankingDocumentId, RankingIndexName rankingIndexName,
+		SearchEngineAdapter searchEngineAdapter) {
 
 		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
 			rankingIndexName.getIndexName(), rankingDocumentId);
 
 		deleteDocumentRequest.setRefresh(true);
 
-		_searchEngineAdapter.execute(deleteDocumentRequest);
+		searchEngineAdapter.execute(deleteDocumentRequest);
 	}
 
-	public void update(RankingIndexName rankingIndexName, Ranking ranking) {
+	public static void update(
+		Ranking ranking, RankingIndexName rankingIndexName,
+		SearchEngineAdapter searchEngineAdapter) {
+
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			rankingIndexName.getIndexName(), ranking.getRankingDocumentId(),
 			RankingToDocumentTranslatorUtil.translate(ranking));
 
 		indexDocumentRequest.setRefresh(true);
 
-		_searchEngineAdapter.execute(indexDocumentRequest);
+		searchEngineAdapter.execute(indexDocumentRequest);
 	}
-
-	private final SearchEngineAdapter _searchEngineAdapter;
 
 }

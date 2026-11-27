@@ -24,16 +24,15 @@ import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
-import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingIndexWriterUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -109,8 +108,9 @@ public class RankingIndexReindexer implements IndexReindexer {
 		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
 
 		for (int i = 0; i < classPKs.size(); i++) {
-			_rankingIndexWriter.create(
-				rankingIndexName, _buildRanking(classPKs.get(i)));
+			RankingIndexWriterUtil.create(
+				_buildRanking(classPKs.get(i)), rankingIndexName,
+				_searchEngineAdapter);
 
 			if ((i % sendStatusInterval) != 0) {
 				continue;
@@ -129,11 +129,6 @@ public class RankingIndexReindexer implements IndexReindexer {
 		}
 	}
 
-	@Activate
-	protected void activate() {
-		_rankingIndexWriter = new RankingIndexWriter(_searchEngineAdapter);
-	}
-
 	@Reference
 	protected ClassNameLocalService classNameLocalService;
 
@@ -145,9 +140,6 @@ public class RankingIndexReindexer implements IndexReindexer {
 
 	@Reference
 	protected RankingIndexNameBuilder rankingIndexNameBuilder;
-
-	@Reference
-	protected RankingPinBuilderFactory rankingPinBuilderFactory;
 
 	@Reference
 	protected SearchCapabilities searchCapabilities;
@@ -189,12 +181,9 @@ public class RankingIndexReindexer implements IndexReindexer {
 		JSONUtil.toList(
 			jsonArray,
 			jsonObject -> pins.add(
-				rankingPinBuilderFactory.builder(
-				).documentId(
-					jsonObject.getString("documentId")
-				).position(
-					jsonObject.getInt("position")
-				).build()));
+				new PinImpl(
+					jsonObject.getString("documentId"),
+					jsonObject.getInt("position"))));
 
 		return pins;
 	}
@@ -230,8 +219,6 @@ public class RankingIndexReindexer implements IndexReindexer {
 	private static final Snapshot<SyncReindexManager>
 		_syncReindexManagerSnapshot = new Snapshot<>(
 			RankingIndexReindexer.class, SyncReindexManager.class, null, true);
-
-	private RankingIndexWriter _rankingIndexWriter;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

@@ -236,54 +236,6 @@ public class RankingImpl implements Ranking {
 
 	}
 
-	protected static class PinImpl implements Ranking.Pin {
-
-		public PinImpl(PinImpl pinImpl) {
-			_position = pinImpl._position;
-			_documentId = pinImpl._documentId;
-		}
-
-		public String getDocumentId() {
-			return _documentId;
-		}
-
-		public int getPosition() {
-			return _position;
-		}
-
-		protected static class BuilderImpl implements Ranking.Pin.Builder {
-
-			@Override
-			public Ranking.Pin build() {
-				return new PinImpl(_pinImpl);
-			}
-
-			@Override
-			public Builder documentId(String documentId) {
-				_pinImpl._documentId = documentId;
-
-				return this;
-			}
-
-			@Override
-			public Builder position(int position) {
-				_pinImpl._position = position;
-
-				return this;
-			}
-
-			private final PinImpl _pinImpl = new PinImpl();
-
-		}
-
-		private PinImpl() {
-		}
-
-		private String _documentId;
-		private int _position;
-
-	}
-
 	private RankingImpl() {
 	}
 

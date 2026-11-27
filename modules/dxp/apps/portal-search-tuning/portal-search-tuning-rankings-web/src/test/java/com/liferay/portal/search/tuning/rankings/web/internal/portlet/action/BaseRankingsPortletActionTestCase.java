@@ -9,13 +9,12 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
-import com.liferay.portal.search.tuning.rankings.index.RankingPinBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.storage.RankingStorageAdapter;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Criteria;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DuplicateQueryStringsDetector;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.PinImpl;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingImpl;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingPinBuilderFactoryImpl;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
@@ -136,14 +135,7 @@ public abstract class BaseRankingsPortletActionTestCase
 			new LinkedHashSet<String>(Arrays.asList("hiddenDocumentIds")));
 		ReflectionTestUtil.setFieldValue(
 			rankingImpl, "_pins",
-			new ArrayList<Ranking.Pin>(
-				Arrays.asList(
-					_rankingPinBuilderFactory.builder(
-					).documentId(
-						"id"
-					).position(
-						0
-					).build())));
+			new ArrayList<Ranking.Pin>(Arrays.asList(new PinImpl("id", 0))));
 		ReflectionTestUtil.setFieldValue(
 			rankingImpl, "_sxpBlueprintExternalReferenceCode",
 			"sxpBlueprintExternalReferenceCode");
@@ -179,8 +171,5 @@ public abstract class BaseRankingsPortletActionTestCase
 		RankingIndexReader.class);
 	protected RankingStorageAdapter rankingStorageAdapter = Mockito.mock(
 		RankingStorageAdapter.class);
-
-	private final RankingPinBuilderFactory _rankingPinBuilderFactory =
-		new RankingPinBuilderFactoryImpl();
 
 }

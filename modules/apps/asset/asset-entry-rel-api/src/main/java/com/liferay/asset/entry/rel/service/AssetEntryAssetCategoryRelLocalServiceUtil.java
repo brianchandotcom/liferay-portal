@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for AssetEntryAssetCategoryRel. This utility wraps
@@ -321,6 +322,13 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 			assetEntryId, start, end, orderByComparator);
 	}
 
+	public static Map<Long, List<AssetEntryAssetCategoryRel>>
+		getAssetEntryAssetCategoryRelsByAssetEntryIds(long[] assetEntryIds) {
+
+		return getService().getAssetEntryAssetCategoryRelsByAssetEntryIds(
+			assetEntryIds);
+	}
+
 	/**
 	 * Returns the number of asset entry asset category rels.
 	 *
@@ -401,4 +409,4 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 			AssetEntryAssetCategoryRelLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-830423819
+// LIFERAY-SERVICE-BUILDER-HASH:-1713924075

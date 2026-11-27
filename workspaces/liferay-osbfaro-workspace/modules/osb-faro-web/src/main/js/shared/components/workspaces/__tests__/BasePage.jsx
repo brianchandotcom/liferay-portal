@@ -40,19 +40,19 @@ describe('WorkspacesBasePage', () => {
 	});
 
 	it('should render when details is jsx', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<DefaultComponent details={<b>{'Test0'}</b>} />
 		);
 
-		expect(queryByText('Test0')).toBeTruthy();
+		expect(getByText('Test0')).toBeInTheDocument();
 	});
 
 	it('should render when details is a string', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<DefaultComponent details='Test Details' />
 		);
 
-		expect(queryByText('Test Details')).toBeTruthy();
+		expect(getByText('Test Details')).toBeInTheDocument();
 	});
 
 	it('should hide the logo container while the LDP plan check is loading', () => {
@@ -84,7 +84,7 @@ describe('WorkspacesBasePage', () => {
 	});
 
 	it('should render with back button', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<DefaultComponent
 				backLabel='Back to Test'
 				backURL='#'
@@ -92,6 +92,6 @@ describe('WorkspacesBasePage', () => {
 			/>
 		);
 
-		expect(queryByText('Back to Test')).toBeTruthy();
+		expect(getByText('Back to Test')).toBeInTheDocument();
 	});
 });

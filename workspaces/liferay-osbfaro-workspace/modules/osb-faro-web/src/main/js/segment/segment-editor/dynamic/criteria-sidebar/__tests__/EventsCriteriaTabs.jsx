@@ -248,8 +248,8 @@ describe('EventsCriteriaTabs', () => {
 
 		fireEvent.click(screen.getByText(/^custom$/i));
 
-		await waitFor(() =>
-			expect(screen.getByText('no-results-were-found')).toBeInTheDocument()
-		);
+		expect(
+			await screen.findByText('no-results-were-found')
+		).toBeInTheDocument();
 	});
 });

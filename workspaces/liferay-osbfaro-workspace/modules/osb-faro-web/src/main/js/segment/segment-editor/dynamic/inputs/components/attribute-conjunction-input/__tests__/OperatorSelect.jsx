@@ -18,10 +18,10 @@ describe('OperatorSelect', () => {
 		);
 		fireEvent.click(getByText('Select an option'));
 
-		expect(getByText('greater than')).toBeTruthy();
-		expect(getByText('less than')).toBeTruthy();
-		expect(getByText('is equal to')).toBeTruthy();
-		expect(getByText('is not equal to')).toBeTruthy();
+		expect(getByText('greater than')).toBeInTheDocument();
+		expect(getByText('less than')).toBeInTheDocument();
+		expect(getByText('is equal to')).toBeInTheDocument();
+		expect(getByText('is not equal to')).toBeInTheDocument();
 
 		expect(container).toMatchSnapshot();
 	});

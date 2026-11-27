@@ -57,7 +57,7 @@ describe('ValueInput', () => {
 		fireEvent.click(getByText(/^true$/i));
 
 		expect(getAllByText(/^true$/i)[1]).toBeTruthy();
-		expect(getByText(/^false$/i)).toBeTruthy();
+		expect(getByText(/^false$/i)).toBeInTheDocument();
 
 		expect(container).toMatchSnapshot();
 	});
@@ -73,7 +73,7 @@ describe('ValueInput', () => {
 	`(
 		'should find $testId if dataType is $dataType and operatorName is $operatorName',
 		({dataType, operatorName, testId, value}) => {
-			const {queryByTestId} = render(
+			const {getByTestId} = render(
 				<WrapperComponent>
 					<ValueInput
 						dataType={dataType}
@@ -86,7 +86,7 @@ describe('ValueInput', () => {
 				</WrapperComponent>
 			);
 
-			expect(queryByTestId(testId)).toBeTruthy();
+			expect(getByTestId(testId)).toBeInTheDocument();
 		}
 	);
 });

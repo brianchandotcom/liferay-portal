@@ -81,7 +81,7 @@ describe('AttributeView', () => {
 			jest.runOnlyPendingTimers();
 		});
 
-		expect(getByText(/^sample raw data$/i)).toBeTruthy();
+		expect(getByText(/^sample raw data$/i)).toBeInTheDocument();
 	});
 
 	it('should render table with empty data if there is no column accessor value', async () => {
@@ -95,6 +95,6 @@ describe('AttributeView', () => {
 			jest.runOnlyPendingTimers();
 		});
 
-		expect(getByText('–')).toBeTruthy();
+		expect(getByText('–')).toBeInTheDocument();
 	});
 });

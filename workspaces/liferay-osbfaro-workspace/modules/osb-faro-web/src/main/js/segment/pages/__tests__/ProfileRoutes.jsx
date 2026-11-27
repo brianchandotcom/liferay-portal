@@ -81,8 +81,10 @@ describe('SegmentProfileRoutes', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(screen.getByText(/^account batch segment$/i)).toBeTruthy();
-		expect(screen.getByText('SEGMENT MEMBERSHIP')).toBeTruthy();
+		expect(
+			screen.getByText(/^account batch segment$/i)
+		).toBeInTheDocument();
+		expect(screen.getByText('SEGMENT MEMBERSHIP')).toBeInTheDocument();
 	});
 
 	it('should offer the edit action and no report actions for a real time segment', async () => {
@@ -98,7 +100,7 @@ describe('SegmentProfileRoutes', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(screen.getByText(/^edit segment$/i)).toBeTruthy();
+		expect(screen.getByText(/^edit segment$/i)).toBeInTheDocument();
 		expect(screen.queryByText(/^download reports$/i)).toBeNull();
 		expect(screen.queryByText(/^refresh data$/i)).toBeNull();
 	});
@@ -112,7 +114,7 @@ describe('SegmentProfileRoutes', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(screen.getByText('ERC: my-erc')).toBeTruthy();
+		expect(screen.getByText('ERC: my-erc')).toBeInTheDocument();
 	});
 
 	it('opens the manage notifications modal from the actions menu', async () => {

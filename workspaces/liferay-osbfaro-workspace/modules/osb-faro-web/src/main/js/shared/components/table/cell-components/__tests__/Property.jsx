@@ -52,6 +52,6 @@ describe('PropertyCell', () => {
 			/>
 		);
 
-		expect(getByText('0')).toBeTruthy();
+		expect(getByText('0')).toBeInTheDocument();
 	});
 });

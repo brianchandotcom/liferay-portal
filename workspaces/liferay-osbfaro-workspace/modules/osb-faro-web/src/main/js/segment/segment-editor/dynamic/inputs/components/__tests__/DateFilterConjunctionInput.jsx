@@ -54,12 +54,12 @@ describe('DateFilterConjunctionInput', () => {
 		);
 		fireEvent.click(getByText('ever'));
 
-		expect(getByText('since')).toBeTruthy();
-		expect(getByText('after')).toBeTruthy();
-		expect(getByText('before')).toBeTruthy();
-		expect(getByText('between')).toBeTruthy();
+		expect(getByText('since')).toBeInTheDocument();
+		expect(getByText('after')).toBeInTheDocument();
+		expect(getByText('before')).toBeInTheDocument();
+		expect(getByText('between')).toBeInTheDocument();
 		expect(getAllByText('ever')[1]).toBeTruthy();
-		expect(getByText('on')).toBeTruthy();
+		expect(getByText('on')).toBeInTheDocument();
 
 		expect(container).toMatchSnapshot();
 	});
@@ -80,7 +80,7 @@ describe('DateFilterConjunctionInput', () => {
 			</WrapperComponent>
 		);
 
-		expect(getByTestId('clay-select')).toBeTruthy();
+		expect(getByTestId('clay-select')).toBeInTheDocument();
 	});
 
 	it('should render w/ DateInput', () => {
@@ -99,7 +99,7 @@ describe('DateFilterConjunctionInput', () => {
 			</WrapperComponent>
 		);
 
-		expect(getByTestId('date-input')).toBeTruthy();
+		expect(getByTestId('date-input')).toBeInTheDocument();
 	});
 
 	it('should render w/ DateRangeInput', () => {
@@ -118,7 +118,7 @@ describe('DateFilterConjunctionInput', () => {
 			</WrapperComponent>
 		);
 
-		expect(getByTestId('date-range-input')).toBeTruthy();
+		expect(getByTestId('date-range-input')).toBeInTheDocument();
 	});
 
 	it('should clear the date when switching from between to a single date operator', () => {

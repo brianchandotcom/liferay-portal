@@ -19,6 +19,6 @@ describe('ErrorPage', () => {
 	it('should render a custom message', () => {
 		const {getByText} = render(<DefaultComponent message='foo bar' />);
 
-		expect(getByText('foo bar')).toBeTruthy();
+		expect(getByText('foo bar')).toBeInTheDocument();
 	});
 });

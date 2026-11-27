@@ -57,8 +57,8 @@ describe('SelectEntityInput', () => {
 			/>
 		);
 
-		expect(getByText('Foo Organization')).toBeTruthy();
-		expect(getByText('Foo DataSource')).toBeTruthy();
+		expect(getByText('Foo Organization')).toBeInTheDocument();
+		expect(getByText('Foo DataSource')).toBeInTheDocument();
 	});
 
 	it('should render with an error in the select input if the input is touched and valid is false', () => {

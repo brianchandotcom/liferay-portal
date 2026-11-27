@@ -72,9 +72,9 @@ describe('AttributeFilterSection', () => {
 
 		renderWithMocks(mocks);
 
-		await waitFor(() =>
-			expect(screen.getByText('where event attribute')).toBeTruthy()
-		);
+		expect(
+			await screen.findByText('where event attribute')
+		).toBeInTheDocument();
 
 		expect(
 			screen.getByTestId('attribute-conjunction-input')

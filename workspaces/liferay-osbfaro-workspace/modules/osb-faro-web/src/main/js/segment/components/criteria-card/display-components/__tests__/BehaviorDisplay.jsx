@@ -106,8 +106,10 @@ describe('BehaviorDisplay', () => {
 			/>
 		);
 
-		expect(getByText(/^account$/i)).toBeTruthy();
-		expect(getByText(/^at least one individual who triggered$/i)).toBeTruthy();
+		expect(getByText(/^account$/i)).toBeInTheDocument();
+		expect(
+			getByText(/^at least one individual who triggered$/i)
+		).toBeInTheDocument();
 		expect(queryByText(/^individual$/i)).toBeNull();
 	});
 
@@ -166,7 +168,7 @@ describe('BehaviorDisplay', () => {
 			})
 		};
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<WrappedBehaviorDisplay
 				criterion={mockCriterionWithAttribute}
 				property={mockProperty}
@@ -175,7 +177,7 @@ describe('BehaviorDisplay', () => {
 			/>
 		);
 
-		expect(queryByText('Foo Attribute String')).toBeTruthy();
+		expect(getByText('Foo Attribute String')).toBeInTheDocument();
 	});
 
 	const getObjectEntryCriterion = objectDefinitionName => ({

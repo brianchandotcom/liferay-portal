@@ -60,7 +60,7 @@ describe('Input', () => {
 	});
 
 	it('should render a labelled input', async () => {
-		const {container, queryByText} = render(
+		const {container, getByText} = render(
 			<Provider store={mockStore()}>
 				<MemoryRouter>
 					
@@ -80,7 +80,7 @@ describe('Input', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(queryByText('Input label')).toBeTruthy();
+		expect(getByText('Input label')).toBeInTheDocument();
 	});
 
 	it('should render a required input', async () => {

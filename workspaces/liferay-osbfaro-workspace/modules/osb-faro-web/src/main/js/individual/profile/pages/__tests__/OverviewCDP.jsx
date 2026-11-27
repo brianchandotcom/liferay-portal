@@ -36,8 +36,8 @@ describe('IndividualOverview', () => {
 	it('should render the contextual information and profile card sections', () => {
 		const {getByText} = renderComponent();
 
-		expect(getByText('ContextualInformation')).toBeTruthy();
-		expect(getByText('ProfileCardCDP')).toBeTruthy();
+		expect(getByText('ContextualInformation')).toBeInTheDocument();
+		expect(getByText('ProfileCardCDP')).toBeInTheDocument();
 	});
 
 	it('should not render the no site data synced empty state', () => {

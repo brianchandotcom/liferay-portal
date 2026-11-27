@@ -71,6 +71,6 @@ describe('Row', () => {
 			<Row columns={COLUMNS} data={mockIndividual(1, {salary: 0})} />
 		);
 
-		expect(getByText('0')).toBeTruthy();
+		expect(getByText('0')).toBeInTheDocument();
 	});
 });

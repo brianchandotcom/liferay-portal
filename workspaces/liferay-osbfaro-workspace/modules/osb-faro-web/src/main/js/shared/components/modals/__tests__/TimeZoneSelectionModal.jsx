@@ -2,7 +2,7 @@ import * as pedantic from 'test/pedantic';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import TimeZoneSelectionModal from '../TimeZoneSelectionModal';
-import {cleanup, fireEvent, screen, waitFor} from '@testing-library/react';
+import {cleanup, fireEvent, screen} from '@testing-library/react';
 import {fromJS} from 'immutable';
 import {InMemoryCache} from '@apollo/client';
 import {MemoryRouter} from 'react-router-dom';
@@ -101,18 +101,14 @@ describe('TimeZoneSelectionModal', () => {
 			timeZone: {country: 'Brazil', timeZoneId: 'America/Recife'}
 		});
 
-		const {getByText} = screen;
+		const {findByText, getByText} = screen;
 
-		await waitFor(() =>
-			expect(getByText(/^chile$/i)).toBeInTheDocument()
-		);
+		expect(await findByText(/^chile$/i)).toBeInTheDocument();
 
 		fireEvent.change(document.querySelector('select'), {
 			target: {value: 'Chile'}
 		});
 
-		await waitFor(() =>
-			expect(getByText('12:10 PM')).toBeInTheDocument()
-		);
+		expect(await findByText('12:10 PM')).toBeInTheDocument();
 	});
 });

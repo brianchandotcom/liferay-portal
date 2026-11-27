@@ -120,8 +120,8 @@ describe('Event Analysis Create', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByPlaceholderText(/^new analysis$/i)).toBeTruthy();
-		expect(getByText(/^no conditions yet$/i)).toBeTruthy();
+		expect(getByPlaceholderText(/^new analysis$/i)).toBeInTheDocument();
+		expect(getByText(/^no conditions yet$/i)).toBeInTheDocument();
 		expect(
 			container.querySelector('.dropdown-range-key-root button')
 				.textContent

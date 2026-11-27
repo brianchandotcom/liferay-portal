@@ -53,11 +53,11 @@ describe('AccessTokenList', () => {
 	it('should display the card with the options to create a new token if there is no token', async () => {
 		API.apiTokens.search.mockReturnValueOnce(Promise.resolve([]));
 
-		const {container, queryByTestId} = render(<DefaultComponent />);
+		const {container, getByTestId} = render(<DefaultComponent />);
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(queryByTestId('generate-token-button')).toBeTruthy();
+		expect(getByTestId('generate-token-button')).toBeInTheDocument();
 		expect(container.querySelector('.table-root')).toBeNull();
 	});
 
@@ -71,7 +71,7 @@ describe('AccessTokenList', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.table-root')).toBeNull();
-		expect(queryByTestId('generate-token-button')).toBeTruthy();
+		expect(getByTestId('generate-token-button')).toBeInTheDocument();
 
 		fireEvent.click(getByTestId('generate-token-button'));
 
@@ -108,7 +108,7 @@ describe('AccessTokenList', () => {
 
 		expect(
 			getByText(container.querySelector('.card-body'), 'Generate Token')
-		).toBeTruthy();
+		).toBeInTheDocument();
 		expect(container.querySelector('.table-root')).toMatchSnapshot();
 	});
 

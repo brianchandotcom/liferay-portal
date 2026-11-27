@@ -12,7 +12,7 @@ describe('MarketoCampaignEntities', () => {
 			/>
 		);
 
-		expect(getByText(/^configured$/i)).toBeTruthy();
+		expect(getByText(/^configured$/i)).toBeInTheDocument();
 	});
 
 	it('renders the Unconfigured label when the synced count is zero', () => {
@@ -24,7 +24,7 @@ describe('MarketoCampaignEntities', () => {
 			/>
 		);
 
-		expect(getByText(/^unconfigured$/i)).toBeTruthy();
+		expect(getByText(/^unconfigured$/i)).toBeInTheDocument();
 	});
 
 	it('renders the Unconfigured label when no synced count is provided', () => {
@@ -35,6 +35,6 @@ describe('MarketoCampaignEntities', () => {
 			/>
 		);
 
-		expect(getByText(/^unconfigured$/i)).toBeTruthy();
+		expect(getByText(/^unconfigured$/i)).toBeInTheDocument();
 	});
 });

@@ -33,6 +33,6 @@ describe('SearchableSelect', () => {
 
 		fireEvent.click(getByText(/Bar/));
 
-		expect(getByText('foo bar')).toBeTruthy();
+		expect(getByText('foo bar')).toBeInTheDocument();
 	});
 });

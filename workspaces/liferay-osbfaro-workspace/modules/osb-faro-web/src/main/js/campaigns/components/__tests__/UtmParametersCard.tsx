@@ -129,12 +129,12 @@ describe('UtmParametersCard', () => {
 
 		expect(
 			screen.getByText(/^no utm parameters were found$/i)
-		).toBeTruthy();
+		).toBeInTheDocument();
 		expect(
 			screen.getByText(
 				/^this campaign has no utm parameters associated with it yet\.$/i
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 		expect(container.querySelector('table')).toBeNull();
 	});
 });

@@ -105,21 +105,21 @@ describe('UtmParameterInput', () => {
 		const {getByText} = render(<DefaultComponent />);
 		fireEvent.click(getByText('is'));
 
-		expect(getByText('is not')).toBeTruthy();
-		expect(getByText('contains')).toBeTruthy();
-		expect(getByText('does not contain')).toBeTruthy();
-		expect(getByText('is known')).toBeTruthy();
-		expect(getByText('is unknown')).toBeTruthy();
+		expect(getByText('is not')).toBeInTheDocument();
+		expect(getByText('contains')).toBeInTheDocument();
+		expect(getByText('does not contain')).toBeInTheDocument();
+		expect(getByText('is known')).toBeInTheDocument();
+		expect(getByText('is unknown')).toBeInTheDocument();
 	});
 
 	it('should offer every default UTM parameter in the parameter picker', () => {
 		const {getByText} = render(<DefaultComponent />);
 		fireEvent.click(getByText(/^utm source$/i));
 
-		expect(getByText(/^utm medium$/i)).toBeTruthy();
-		expect(getByText(/^utm campaign$/i)).toBeTruthy();
-		expect(getByText(/^utm term$/i)).toBeTruthy();
-		expect(getByText(/^utm content$/i)).toBeTruthy();
+		expect(getByText(/^utm medium$/i)).toBeInTheDocument();
+		expect(getByText(/^utm campaign$/i)).toBeInTheDocument();
+		expect(getByText(/^utm term$/i)).toBeInTheDocument();
+		expect(getByText(/^utm content$/i)).toBeInTheDocument();
 	});
 
 	it('should switch the underlying attribute and reset the value when a different parameter is selected', () => {
@@ -240,8 +240,8 @@ describe('UtmParameterInput', () => {
 
 			fireEvent.click(getByText(/^utm source$/i));
 
-			expect(getByText(/^utm medium$/i)).toBeTruthy();
-			expect(getByText(/^utm campaign$/i)).toBeTruthy();
+			expect(getByText(/^utm medium$/i)).toBeInTheDocument();
+			expect(getByText(/^utm campaign$/i)).toBeInTheDocument();
 		});
 
 		it('should keep the default parameters when the endpoint omits items', async () => {
@@ -260,8 +260,8 @@ describe('UtmParameterInput', () => {
 
 			fireEvent.click(getByText(/^utm source$/i));
 
-			expect(getByText(/^utm medium$/i)).toBeTruthy();
-			expect(getByText(/^utm campaign$/i)).toBeTruthy();
+			expect(getByText(/^utm medium$/i)).toBeInTheDocument();
+			expect(getByText(/^utm campaign$/i)).toBeInTheDocument();
 		});
 
 		it('should offer a custom parameter returned by the endpoint', async () => {
@@ -273,16 +273,18 @@ describe('UtmParameterInput', () => {
 				total: 2
 			});
 
-			const {getByText, queryByText} = render(<DefaultComponent />);
+			const {findByText, getByText, queryByText} = render(
+				<DefaultComponent />
+			);
 
-			await waitFor(() => expect(getByText(/^utm source$/i)).toBeTruthy());
+			expect(await findByText(/^utm source$/i)).toBeInTheDocument();
 
 			fireEvent.click(getByText(/^utm source$/i));
 
 			// A custom parameter has no translation, so it shows its raw
 			// name, and the discovered list replaces the seeded defaults.
 
-			await waitFor(() => expect(getByText('utm_cid')).toBeTruthy());
+			expect(await findByText('utm_cid')).toBeInTheDocument();
 
 			expect(queryByText(/^utm campaign$/i)).toBeNull();
 		});

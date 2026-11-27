@@ -168,7 +168,7 @@ describe('SessionInput', () => {
 			</WrapperComponent>
 		);
 
-		expect(getByTestId('number-input')).toBeTruthy();
+		expect(getByTestId('number-input')).toBeInTheDocument();
 	});
 
 	it('should render without the date filter conjunction for PropertyTypes.SessionChannel', () => {

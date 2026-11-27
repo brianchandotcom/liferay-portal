@@ -36,7 +36,7 @@ describe('InterestDetails', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText(/^active pages$/i)).toBeTruthy();
+		expect(getByText(/^active pages$/i)).toBeInTheDocument();
 		expect(
 			getByRole('link', {name: /^active pages$/i})
 		).toHaveAttribute('aria-current', 'page');
@@ -51,7 +51,7 @@ describe('InterestDetails', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText(/^inactive pages$/i)).toBeTruthy();
+		expect(getByText(/^inactive pages$/i)).toBeInTheDocument();
 		expect(
 			getByRole('link', {name: /^inactive pages$/i})
 		).toHaveAttribute('aria-current', 'page');

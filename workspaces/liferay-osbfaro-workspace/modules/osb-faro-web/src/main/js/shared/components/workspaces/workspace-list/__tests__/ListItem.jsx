@@ -50,7 +50,7 @@ describe('WorkspaceListItem', () => {
 	});
 
 	it('should render a workspace with projects you can join', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<MemoryRouter>
 				<WorkspaceListItem
 					isJoinableProjects
@@ -59,16 +59,16 @@ describe('WorkspaceListItem', () => {
 			</MemoryRouter>
 		);
 
-		expect(queryByText(/^request access$/i)).toBeTruthy();
+		expect(getByText(/^request access$/i)).toBeInTheDocument();
 	});
 
 	it('should render a workspace with a deactivated project', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<MemoryRouter>
 				<WorkspaceListItem projectState={ProjectStates.Deactivated} />
 			</MemoryRouter>
 		);
-		expect(queryByText(/^activate$/i)).toBeTruthy();
+		expect(getByText(/^activate$/i)).toBeInTheDocument();
 	});
 
 	it('should render contact sales and the Analytics Cloud limit message when hasLimitReached and ldpEnabled is false', () => {
@@ -85,9 +85,9 @@ describe('WorkspaceListItem', () => {
 			getByText(
 				/^access to analytics cloud has been restricted because your workspace has reached the known individuals or page view limit\. please contact sales to proceed\.$/i
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 
-		expect(getByText(/^contact sales$/i)).toBeTruthy();
+		expect(getByText(/^contact sales$/i)).toBeInTheDocument();
 	});
 
 	it('should render the Liferay Data Platform limit message when hasLimitReached and ldpEnabled is true', () => {
@@ -105,6 +105,6 @@ describe('WorkspaceListItem', () => {
 			getByText(
 				/^access to liferay data platform has been restricted because your workspace has reached the known individuals or page view limit\. please contact sales to proceed\.$/i
 			)
-		).toBeTruthy();
+		).toBeInTheDocument();
 	});
 });

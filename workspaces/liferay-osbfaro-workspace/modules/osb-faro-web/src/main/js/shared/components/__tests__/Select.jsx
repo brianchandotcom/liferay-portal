@@ -22,10 +22,10 @@ describe('Select', () => {
 			<Select.Item key={3}>{'3'}</Select.Item>
 		];
 
-		const {queryByText} = render(<Select children={children} />);
+		const {getByText} = render(<Select children={children} />);
 
-		expect(queryByText('1')).toBeTruthy();
-		expect(queryByText('2')).toBeTruthy();
-		expect(queryByText('3')).toBeTruthy();
+		expect(getByText('1')).toBeInTheDocument();
+		expect(getByText('2')).toBeInTheDocument();
+		expect(getByText('3')).toBeInTheDocument();
 	});
 });

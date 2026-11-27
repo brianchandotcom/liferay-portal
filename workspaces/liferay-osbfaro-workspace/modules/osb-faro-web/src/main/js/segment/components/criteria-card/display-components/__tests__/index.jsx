@@ -59,7 +59,7 @@ describe('DisplayComponent', () => {
 			/>
 		);
 
-		expect(getByText(entityName)).toBeTruthy();
+		expect(getByText(entityName)).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 });

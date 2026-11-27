@@ -76,7 +76,7 @@ describe('Sidebar', () => {
 	});
 
 	it('should render lifecycle and accounts items when LDP is enabled', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<Provider store={mockStore(mockStoreDataLDP)}>
 				<MemoryRouter>
 					<Sidebar {...defaultProps} />
@@ -84,8 +84,8 @@ describe('Sidebar', () => {
 			</Provider>
 		);
 
-		expect(queryByText(/^lifecycles$/i)).toBeTruthy();
-		expect(queryByText(/^accounts$/i)).toBeTruthy();
+		expect(getByText(/^lifecycles$/i)).toBeInTheDocument();
+		expect(getByText(/^accounts$/i)).toBeInTheDocument();
 	});
 
 	it('should render the campaigns item when LDP is enabled', () => {

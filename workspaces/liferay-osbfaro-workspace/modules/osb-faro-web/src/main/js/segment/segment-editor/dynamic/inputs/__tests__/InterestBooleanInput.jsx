@@ -34,7 +34,7 @@ describe('InterestBooleanInput', () => {
 		fireEvent.click(getByText('is'));
 
 		expect(getAllByText('is')[1]).toBeTruthy();
-		expect(getByText('is not')).toBeTruthy();
+		expect(getByText('is not')).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 });

@@ -12,7 +12,7 @@ describe('ErrorDisplay', () => {
 	});
 
 	it('should render with button', () => {
-		const {queryByText} = render(<ErrorDisplay onReload={noop} />);
-		expect(queryByText(/^reload$/i)).toBeTruthy();
+		const {getByText} = render(<ErrorDisplay onReload={noop} />);
+		expect(getByText(/^reload$/i)).toBeInTheDocument();
 	});
 });

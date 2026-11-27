@@ -69,7 +69,7 @@ describe('ChannelsMenu', () => {
 
 		fireEvent.click(toggleButton);
 
-		expect(screen.getByRole('listbox')).toBeTruthy();
+		expect(screen.getByRole('listbox')).toBeInTheDocument();
 	});
 
 	it('should mark the selected channel and let the other one be picked', () => {
@@ -87,7 +87,7 @@ describe('ChannelsMenu', () => {
 
 		fireEvent.click(screen.getByRole('combobox', {name: /^property$/i}));
 
-		expect(screen.getByText('Link 2')).toBeTruthy();
+		expect(screen.getByText('Link 2')).toBeInTheDocument();
 	});
 
 	it('should show the full name of a long channel in the options', () => {

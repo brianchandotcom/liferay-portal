@@ -12,20 +12,20 @@ describe('DurationInput', () => {
 	});
 
 	it('should render default unit as seconds', () => {
-		const {queryByDisplayValue} = render(<DurationInput value={1000} />);
+		const {getByDisplayValue} = render(<DurationInput value={1000} />);
 
-		expect(queryByDisplayValue('00:00:01')).toBeTruthy();
+		expect(getByDisplayValue('00:00:01')).toBeInTheDocument();
 	});
 
 	it('should render default unit as minutes', () => {
-		const {queryByDisplayValue} = render(<DurationInput value={60000} />);
+		const {getByDisplayValue} = render(<DurationInput value={60000} />);
 
-		expect(queryByDisplayValue('00:01:00')).toBeTruthy();
+		expect(getByDisplayValue('00:01:00')).toBeInTheDocument();
 	});
 
 	it('should render default unit as hours', () => {
-		const {queryByDisplayValue} = render(<DurationInput value={3600000} />);
+		const {getByDisplayValue} = render(<DurationInput value={3600000} />);
 
-		expect(queryByDisplayValue('01:00:00')).toBeTruthy();
+		expect(getByDisplayValue('01:00:00')).toBeInTheDocument();
 	});
 });

@@ -76,7 +76,7 @@ describe('AttributeConjunctionDisplay', () => {
 			/>
 		);
 
-		expect(getByText(/^undefined attribute$/i)).toBeTruthy();
+		expect(getByText(/^undefined attribute$/i)).toBeInTheDocument();
 	});
 
 	it('should decode the attribute name from the hex id when it is not in referencedEntities', () => {
@@ -90,7 +90,7 @@ describe('AttributeConjunctionDisplay', () => {
 			/>
 		);
 
-		expect(getByText('articleId')).toBeTruthy();
+		expect(getByText('articleId')).toBeInTheDocument();
 	});
 
 	it('renders a between date range with the custom date format', () => {
@@ -134,7 +134,7 @@ describe('AttributeConjunctionDisplay', () => {
 			propertyName,
 			value
 		}) => {
-			const {queryByText} = render(
+			const {getByText} = render(
 				<DefaultComponent
 					conjunctionCriterion={{
 						operatorName,
@@ -144,9 +144,9 @@ describe('AttributeConjunctionDisplay', () => {
 				/>
 			);
 
-			expect(queryByText(displayName)).toBeTruthy();
-			expect(queryByText(operatorLabel)).toBeTruthy();
-			expect(queryByText(displayValue)).toBeTruthy();
+			expect(getByText(displayName)).toBeInTheDocument();
+			expect(getByText(operatorLabel)).toBeInTheDocument();
+			expect(getByText(displayValue)).toBeInTheDocument();
 		}
 	);
 });

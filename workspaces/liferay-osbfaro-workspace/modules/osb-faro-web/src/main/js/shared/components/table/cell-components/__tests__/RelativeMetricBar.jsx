@@ -34,7 +34,7 @@ describe('RelativeMetricBar', () => {
 			/>
 		);
 
-		expect(getByText('Test Test')).toBeTruthy();
+		expect(getByText('Test Test')).toBeInTheDocument();
 	});
 
 	it('should render w/ data-tooltip attr', () => {

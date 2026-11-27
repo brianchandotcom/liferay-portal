@@ -58,7 +58,7 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		expect(getByText(/^individuals$/i)).toBeTruthy();
+		expect(getByText(/^individuals$/i)).toBeInTheDocument();
 
 		expect(
 			getByRole('link', {name: /^individuals$/i})
@@ -85,7 +85,7 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		expect(getByText(/^active pages$/i)).toBeTruthy();
+		expect(getByText(/^active pages$/i)).toBeInTheDocument();
 
 		expect(
 			getByRole('link', {name: /^active pages$/i})
@@ -112,7 +112,7 @@ describe('BaseInterestDetails', () => {
 
 		jest.runAllTimers();
 
-		expect(getByText(/^inactive pages$/i)).toBeTruthy();
+		expect(getByText(/^inactive pages$/i)).toBeInTheDocument();
 
 		expect(
 			getByRole('link', {name: /^inactive pages$/i})

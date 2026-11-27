@@ -77,8 +77,8 @@ describe('ConnectorAuth', () => {
 
 		await waitFor(() => expect(generateConnectorToken).toHaveBeenCalled());
 
-		expect(getByText('ENDPOINT_LABEL_ACME')).toBeTruthy();
-		expect(getByText('TOKEN_LABEL_ACME')).toBeTruthy();
+		expect(getByText('ENDPOINT_LABEL_ACME')).toBeInTheDocument();
+		expect(getByText('TOKEN_LABEL_ACME')).toBeInTheDocument();
 	});
 
 	it('uses the connector slug when creating a new data source', async () => {

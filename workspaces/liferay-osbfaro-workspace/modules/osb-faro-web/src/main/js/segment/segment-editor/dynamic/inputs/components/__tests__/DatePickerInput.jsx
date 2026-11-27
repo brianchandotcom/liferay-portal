@@ -59,6 +59,6 @@ describe('DatePickerInput', () => {
 			</WrapperComponent>
 		);
 
-		expect(getByTestId('date-range-input')).toBeTruthy();
+		expect(getByTestId('date-range-input')).toBeInTheDocument();
 	});
 });

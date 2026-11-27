@@ -61,8 +61,8 @@ describe('Data Privacy Overview', () => {
 
 		fireEvent.click(getByText('Select an option'));
 
-		expect(getByText('7 Months')).toBeTruthy();
-		expect(getByText('13 Months')).toBeTruthy();
+		expect(getByText('7 Months')).toBeInTheDocument();
+		expect(getByText('13 Months')).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 

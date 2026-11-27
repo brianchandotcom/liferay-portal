@@ -32,7 +32,7 @@ describe('withSelectedPoint', () => {
 
 		fireEvent.click(getByText('bar'));
 
-		expect(getByText('bar1')).toBeTruthy();
+		expect(getByText('bar1')).toBeInTheDocument();
 		expect(getByText('There is a selected point'));
 	});
 });

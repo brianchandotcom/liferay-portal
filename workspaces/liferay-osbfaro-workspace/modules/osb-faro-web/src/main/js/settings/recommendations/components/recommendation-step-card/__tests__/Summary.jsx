@@ -60,7 +60,7 @@ describe('Summary', () => {
 	});
 
 	it('should render with "Including Previous Period" if includePreviousPeriod is true', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<MockedProvider
 				mocks={[
 					mockRecommendationPageAssetsReq([], {size: 0}),
@@ -100,6 +100,6 @@ describe('Summary', () => {
 			</MockedProvider>
 		);
 
-		expect(queryByText(/Including Previous Period/)).toBeTruthy();
+		expect(getByText(/Including Previous Period/)).toBeInTheDocument();
 	});
 });

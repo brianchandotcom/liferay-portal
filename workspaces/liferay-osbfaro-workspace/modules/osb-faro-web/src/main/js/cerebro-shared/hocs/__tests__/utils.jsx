@@ -10,11 +10,11 @@ describe('withEmpty', () => {
 			MyAwesomeComponent
 		);
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ComposedComponent items={[]} total={0} />
 		);
 
-		expect(queryByText('an empty title')).toBeTruthy();
+		expect(getByText('an empty title')).toBeInTheDocument();
 	});
 
 	it('should render with default no results display if total is 0 & items is empty and has query', () => {
@@ -22,12 +22,14 @@ describe('withEmpty', () => {
 			MyAwesomeComponent
 		);
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ComposedComponent items={[]} query='asdf' total={0} />
 		);
 
-		expect(queryByText(/^no results were found$/i)).toBeTruthy();
-		expect(queryByText(/^please try a different search term\.$/i)).toBeTruthy();
+		expect(getByText(/^no results were found$/i)).toBeInTheDocument();
+		expect(
+			getByText(/^please try a different search term\.$/i)
+		).toBeInTheDocument();
 	});
 
 	it('should render with default no results display if total is 0 & items is empty and has no query', () => {
@@ -36,22 +38,22 @@ describe('withEmpty', () => {
 			emptyTitle: 'an empty title'
 		})(MyAwesomeComponent);
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ComposedComponent items={[]} total={0} />
 		);
 
-		expect(queryByText('an empty title')).toBeTruthy();
-		expect(queryByText('an empty description')).toBeTruthy();
+		expect(getByText('an empty title')).toBeInTheDocument();
+		expect(getByText('an empty description')).toBeInTheDocument();
 	});
 
 	it('should not render empty state when total is greater than 0 & items is empty', () => {
 		const ComposedComponent = withEmpty()(MyAwesomeComponent);
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ComposedComponent items={[]} total={1} />
 		);
 
-		expect(queryByText('my awesome component')).toBeTruthy();
+		expect(getByText('my awesome component')).toBeInTheDocument();
 	});
 
 	it('should not render empty state if items exists & total is equal 0', () => {
@@ -59,21 +61,21 @@ describe('withEmpty', () => {
 			MyAwesomeComponent
 		);
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ComposedComponent items={['test']} total={0} />
 		);
 
-		expect(queryByText('my awesome component')).toBeTruthy();
+		expect(getByText('my awesome component')).toBeInTheDocument();
 	});
 
 	it('should not render empty state when items is not empty', () => {
 		const ComposedComponent = withEmpty()(MyAwesomeComponent);
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ComposedComponent items={['test']} total={1} />
 		);
 
-		expect(queryByText('my awesome component')).toBeTruthy();
+		expect(getByText('my awesome component')).toBeInTheDocument();
 	});
 });
 
@@ -81,26 +83,26 @@ describe('withError', () => {
 	it('should render error state when "error" props is true', () => {
 		const ComposedComponent = withError()(MyAwesomeComponent);
 
-		const {queryByText} = render(<ComposedComponent error />);
+		const {getByText} = render(<ComposedComponent error />);
 
-		expect(queryByText(/^sorry, an error occurred\.$/i)).toBeTruthy();
+		expect(getByText(/^sorry, an error occurred\.$/i)).toBeInTheDocument();
 	});
 
 	it('should not render error state when "error" props is false', () => {
 		const ComposedComponent = withError()(MyAwesomeComponent);
 
-		const {queryByText} = render(<ComposedComponent error={false} />);
+		const {getByText} = render(<ComposedComponent error={false} />);
 
-		expect(queryByText('my awesome component')).toBeTruthy();
+		expect(getByText('my awesome component')).toBeInTheDocument();
 	});
 
 	it('should render custom error state message when "error" props is true', () => {
 		const ComposedComponent = withError()(MyAwesomeComponent);
 
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ComposedComponent error errorMessage='Sorry, it is an error!' />
 		);
 
-		expect(queryByText('Sorry, it is an error!')).toBeTruthy();
+		expect(getByText('Sorry, it is an error!')).toBeInTheDocument();
 	});
 });

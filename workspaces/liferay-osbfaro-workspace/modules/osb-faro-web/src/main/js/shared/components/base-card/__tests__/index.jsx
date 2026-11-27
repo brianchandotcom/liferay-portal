@@ -40,7 +40,7 @@ describe('BaseCard', () => {
 			</Wrapper>
 		);
 
-		expect(getByText('My body component')).toBeTruthy();
+		expect(getByText('My body component')).toBeInTheDocument();
 	});
 
 	it('should return the props in Body component', () => {
@@ -80,8 +80,8 @@ describe('BaseCard', () => {
 		);
 
 		expect(container.querySelector('.interval-selector-root')).toBeTruthy();
-		expect(getByText('D')).toBeTruthy();
-		expect(getByText(/^w$/i)).toBeTruthy();
-		expect(getByText(/^m$/i)).toBeTruthy();
+		expect(getByText('D')).toBeInTheDocument();
+		expect(getByText(/^w$/i)).toBeInTheDocument();
+		expect(getByText(/^m$/i)).toBeInTheDocument();
 	});
 });

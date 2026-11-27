@@ -14,7 +14,7 @@ describe('HOC Util', () => {
 				</SafeResults>
 			);
 
-			expect(getByText('foo')).toBeTruthy();
+			expect(getByText('foo')).toBeInTheDocument();
 		});
 
 		it('should return a loading screen when loading is true', () => {
@@ -104,7 +104,7 @@ describe('HOC Util', () => {
 				</MemoryRouter>
 			);
 
-			expect(getByText(customMessage)).toBeTruthy();
+			expect(getByText(customMessage)).toBeInTheDocument();
 		});
 	});
 

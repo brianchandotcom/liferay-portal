@@ -34,16 +34,18 @@ describe('Welcome', () => {
 	});
 
 	it('shows the Analytics Cloud welcome message for a non-LDP workspace', () => {
-		const {queryByText} = render(<Welcome onClose={noop} onNext={noop} />);
+		const {getByText} = render(<Welcome onClose={noop} onNext={noop} />);
 
-		expect(queryByText(/^welcome to analytics cloud$/i)).toBeTruthy();
+		expect(getByText(/^welcome to analytics cloud$/i)).toBeInTheDocument();
 	});
 
 	it('shows the Liferay Data Platform welcome message for an LDP workspace', () => {
 		useLDPEnabled.mockReturnValue(true);
 
-		const {queryByText} = render(<Welcome onClose={noop} onNext={noop} />);
+		const {getByText} = render(<Welcome onClose={noop} onNext={noop} />);
 
-		expect(queryByText(/^welcome to liferay data platform$/i)).toBeTruthy();
+		expect(
+			getByText(/^welcome to liferay data platform$/i)
+		).toBeInTheDocument();
 	});
 });

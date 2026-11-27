@@ -115,9 +115,9 @@ describe('CrossPageSelect', () => {
 
 		selectAllAndToggle(container);
 
-		expect(getByText('apple')).toBeTruthy();
-		expect(getByText('banana')).toBeTruthy();
-		expect(getByText('grapefruit')).toBeTruthy();
+		expect(getByText('apple')).toBeInTheDocument();
+		expect(getByText('banana')).toBeInTheDocument();
+		expect(getByText('grapefruit')).toBeInTheDocument();
 	});
 
 	it('it should search selected items when given a custom search function', () => {

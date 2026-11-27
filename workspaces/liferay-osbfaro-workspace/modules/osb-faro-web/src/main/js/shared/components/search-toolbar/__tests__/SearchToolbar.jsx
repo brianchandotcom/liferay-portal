@@ -29,7 +29,7 @@ describe('SearchToolbar', () => {
 			<DefaultComponent alwaysShowSearch selectEntirePageIndeterminate />
 		);
 
-		expect(getByPlaceholderText(/^search$/i)).toBeTruthy();
+		expect(getByPlaceholderText(/^search$/i)).toBeInTheDocument();
 	});
 
 	it('should render as disabled', () => {
@@ -47,7 +47,7 @@ describe('SearchToolbar', () => {
 			/>
 		);
 
-		expect(getByText(/^test$/i)).toBeTruthy();
+		expect(getByText(/^test$/i)).toBeInTheDocument();
 		expect(container.querySelector('.management-bar-primary')).toBeTruthy();
 		expect(container.querySelector('.items-selected')).toBeTruthy();
 	});
@@ -67,6 +67,6 @@ describe('SearchToolbar', () => {
 			/>
 		);
 
-		expect(getByText('fooValue')).toBeTruthy();
+		expect(getByText('fooValue')).toBeInTheDocument();
 	});
 });

@@ -37,7 +37,7 @@ describe('OverviewRealTime', () => {
 	it('should display the segment criteria', () => {
 		renderOverviewRealTime();
 
-		expect(screen.getByText(/^segment criteria$/i)).toBeTruthy();
+		expect(screen.getByText(/^segment criteria$/i)).toBeInTheDocument();
 	});
 
 	it('should not display the membership of the segment', () => {

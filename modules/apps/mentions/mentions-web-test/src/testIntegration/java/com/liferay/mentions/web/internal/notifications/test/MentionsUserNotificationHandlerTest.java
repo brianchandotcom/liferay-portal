@@ -87,16 +87,8 @@ public class MentionsUserNotificationHandlerTest {
 
 	@Test
 	public void testGetLink() throws Exception {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
-
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition);
-
 		String portalURL =
 			"http://localhost:" + _portal.getPortalServerPort(false);
-
-		String entryURL = portalURL + "/web/cms/view-asset";
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -121,6 +113,14 @@ public class MentionsUserNotificationHandlerTest {
 
 		serviceContext.setPortalURL(portalURL);
 		serviceContext.setRequest(mockHttpServletRequest);
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition);
+
+		String entryURL = portalURL + "/web/cms/view-asset";
 
 		Assert.assertEquals(
 			entryURL,
@@ -148,7 +148,7 @@ public class MentionsUserNotificationHandlerTest {
 			),
 			serviceContext);
 
-		Assert.assertTrue(link, link.startsWith(entryURL + "?backURL="));
+		Assert.assertTrue(link.startsWith(entryURL + "?backURL="));
 
 		String backURL = HttpComponentsUtil.getParameter(
 			link, "backURL", false);

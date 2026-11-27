@@ -77,8 +77,7 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 
 		String fragmentEntryHTML = fragmentEntry.getHtml();
 
-		Assert.assertFalse(
-			fragmentEntryHTML, fragmentEntryHTML.contains("p_l_back_url"));
+		Assert.assertFalse(fragmentEntryHTML.contains("p_l_back_url"));
 
 		for (FragmentEntryLink fragmentEntryLink :
 				_fragmentEntryLinkLocalService.
@@ -110,9 +109,7 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			String fragmentEntryLinkHTML = fragmentEntryLink.getHtml();
 
-			Assert.assertTrue(
-				fragmentEntryLinkHTML,
-				fragmentEntryLinkHTML.contains("p_l_back_url"));
+			Assert.assertTrue(fragmentEntryLinkHTML.contains("p_l_back_url"));
 		}
 
 		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
@@ -121,17 +118,17 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 		String layoutBackURLTitle = RandomTestUtil.randomString();
 
 		_testUpgrade(
-			fragmentEntryLink, group, layoutBackURL, layoutBackURLTitle,
-			"Go to " + layoutBackURLTitle);
+			fragmentEntryLink, group, "Go to " + layoutBackURLTitle,
+			layoutBackURL, layoutBackURLTitle);
 
-		_testUpgrade(fragmentEntryLink, group, layoutBackURL, null, "Back");
+		_testUpgrade(fragmentEntryLink, group, "Back", layoutBackURL, null);
 
-		_testUpgrade(fragmentEntryLink, group, null, layoutBackURLTitle, null);
+		_testUpgrade(fragmentEntryLink, group, null, null, layoutBackURLTitle);
 	}
 
 	private void _testUpgrade(
-			FragmentEntryLink fragmentEntryLink, Group group,
-			String layoutBackURL, String layoutBackURLTitle, String label)
+			FragmentEntryLink fragmentEntryLink, Group group, String label,
+			String layoutBackURL, String layoutBackURLTitle)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -148,12 +145,12 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 				"p_l_back_url_title", layoutBackURLTitle);
 		}
 
-		FragmentEntryLink backLinkFragmentEntryLink =
-			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
-
 		Matcher matcher = _backLinkPattern.matcher(fragmentEntryLink.getHtml());
 
 		Assert.assertTrue(matcher.find());
+
+		FragmentEntryLink backLinkFragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		backLinkFragmentEntryLink.setHtml(matcher.group());
 
@@ -173,10 +170,8 @@ public class CMSPageBarBackURLUpgradeProcessTest {
 		}
 
 		Assert.assertTrue(
-			processedHTML,
 			processedHTML.contains("aria-label=\"" + label + "\""));
 		Assert.assertTrue(
-			processedHTML,
 			processedHTML.contains("href=\"" + layoutBackURL + "\""));
 	}
 

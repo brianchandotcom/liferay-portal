@@ -1,0 +1,35 @@
+<div class="d-flex flex-column location-input" data-lfr-styles>
+	<div class="d-flex flex-column flex-grow-1 form-group [#if input.errorMessage?has_content]has-error[/#if] location-input-form-group mb-0" id="${fragmentElementId}-location-input-form-group">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentElementId}-location-input" id="${fragmentElementId}-location-input-label">
+			${htmlUtil.escape(input.label)}
+
+			<span class="[#if !input.readOnly]d-none[/#if]" id="${fragmentElementId}-location-read-only">(${languageUtil.get(locale, "read-only")})</span>
+
+			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		</label>
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mb-2 text-secondary" id="${fragmentElementId}-location-input-help-text">${htmlUtil.escape(input.helpText)}</p>
+		[/#if]
+
+		<div class="d-flex flex-grow-1 location-input-row">
+			<div class="d-flex flex-column flex-grow-1 location-input-map" id="${fragmentElementId}-location-input-container"></div>
+
+			<input aria-hidden="true" class="sr-only" id="${fragmentElementId}-location-input-value" name="${input.name}" ${input.required?then("required", "")} tabindex="-1" type="text" />
+
+			<span id="${fragmentElementId}-location-input-translations"></span>
+
+			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentElementId}-unlocalized-info" tabindex="0">
+					[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+				</div>
+			[/#if]
+		</div>
+
+		<p class="font-weight-semi-bold mt-1 text-3 text-danger [#if !input.errorMessage?has_content]sr-only[/#if]" id="${fragmentElementId}-location-input-error">
+			[@clay["icon"] symbol="info-circle" /]
+
+			<span data-required-feedback="${languageUtil.get(locale, "this-field-is-required")}" id="${fragmentElementId}-location-input-error-message" role="alert">${input.errorMessage!""}</span>
+		</p>
+	</div>
+</div>

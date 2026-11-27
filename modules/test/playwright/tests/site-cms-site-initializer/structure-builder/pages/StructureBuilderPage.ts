@@ -30,7 +30,10 @@ export const FIELD_TYPES = [
 	'Select Related Content',
 ] as const;
 
-export type FieldType = (typeof FIELD_TYPES)[number];
+// Location stays out of FIELD_TYPES while it is behind the LPD-70668 flag,
+// since the specs that loop over FIELD_TYPES do not turn the flag on.
+
+export type FieldType = (typeof FIELD_TYPES)[number] | 'Location';
 
 type Field = {label: string; nth?: number};
 

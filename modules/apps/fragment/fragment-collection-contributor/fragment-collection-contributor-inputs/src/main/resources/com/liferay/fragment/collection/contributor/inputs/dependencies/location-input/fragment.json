@@ -1,0 +1,13 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "location-input",
+	"icon": "maps",
+	"name": "location-selector",
+	"thumbnail": "location.svg",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"location"
+		]
+	}
+}

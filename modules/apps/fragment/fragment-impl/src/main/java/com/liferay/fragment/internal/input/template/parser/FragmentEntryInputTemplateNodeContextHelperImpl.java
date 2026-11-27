@@ -28,6 +28,7 @@ import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.EmailInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.LocationInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
@@ -60,6 +61,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.map.util.MapProviderHelperUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -75,6 +77,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -90,11 +93,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.key.secret.SecretResolver;
+
+import jakarta.portlet.PortletPreferences;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -552,6 +559,12 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				inputTemplateNode, value, valueI18n);
 		}
 		else if (infoField.getInfoFieldType() instanceof
+					LocationInfoFieldType) {
+
+			_addLocationInfoFieldTypeInputTemplateNodeAttributes(
+				groupId, httpServletRequest, inputTemplateNode);
+		}
+		else if (infoField.getInfoFieldType() instanceof
 					LongTextInfoFieldType) {
 
 			_addLongTextInfoFieldTypeInputTemplateNodeAttributes(
@@ -682,6 +695,43 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		inputTemplateNode.addAttribute(
 			"unlocalizedFieldsMessage", unlocalizedFieldsMessage);
+	}
+
+	private void _addLocationInfoFieldTypeInputTemplateNodeAttributes(
+		long groupId, HttpServletRequest httpServletRequest,
+		InputTemplateNode inputTemplateNode) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletPreferences companyPortletPreferences =
+			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
+
+		String googleMapsAPIKey = companyPortletPreferences.getValue(
+			"googleMapsAPIKey", null);
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if ((group != null) &&
+			(group.getCompanyId() == themeDisplay.getCompanyId()) &&
+			!group.isControlPanel()) {
+
+			googleMapsAPIKey = GetterUtil.getString(
+				group.getTypeSettingsProperty("googleMapsAPIKey"),
+				googleMapsAPIKey);
+		}
+
+		inputTemplateNode.addAttribute(
+			"googleMapsAPIKey",
+			_secretResolver.resolve(
+				themeDisplay.getCompanyId(), googleMapsAPIKey));
+		inputTemplateNode.addAttribute(
+			"mapProviderKey",
+			GetterUtil.getString(
+				MapProviderHelperUtil.getMapProviderKey(
+					_groupLocalService, themeDisplay.getCompanyId(), groupId),
+				"OpenStreetMap"));
 	}
 
 	private void _addLongTextInfoFieldTypeInputTemplateNodeAttributes(
@@ -1517,6 +1567,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
@@ -1534,5 +1587,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SecretResolver _secretResolver;
 
 }

@@ -235,7 +235,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
-			Click(locator1 = "Modal#CLOSE_BUTTON");
+			Click(locator1 = "KaleoFormsAdmin#MODAL_CLOSE_BUTTON");
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -598,7 +598,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
-			Click(locator1 = "Modal#CLOSE_BUTTON");
+			Click(locator1 = "KaleoFormsAdmin#MODAL_CLOSE_BUTTON");
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -656,7 +656,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Click(locator1 = "Modal#CLOSE_BUTTON");
+		Click(locator1 = "KaleoFormsAdmin#MODAL_CLOSE_BUTTON");
 
 		var key_kfFormName = ${kfFormName};
 
@@ -722,7 +722,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Click(locator1 = "Modal#CLOSE_BUTTON");
+		Click(locator1 = "KaleoFormsAdmin#MODAL_CLOSE_BUTTON");
 	}
 
 	@summary = "Default summary"

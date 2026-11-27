@@ -14,7 +14,7 @@ interface LocationMapProps {
 	googleMapsAPIKey?: string;
 	id: string;
 	mapProviderKey?: MapProviderKey;
-	popover?: 'always' | 'hover';
+	popover?: 'always' | 'click' | 'hover';
 	title?: string;
 	value: LocationValue;
 }
@@ -43,14 +43,15 @@ function getPopoverContent(title: string, address: string) {
 }
 
 /**
- * Renders a read-only map with a pin on `value`. With `popover`, the title
- * and the address are shown next to the pin on hover, or all the time.
+ * Renders a read-only map with a pin on `value`. The title and the address
+ * are shown next to the pin when it is clicked, on hover, or all the time,
+ * depending on `popover`.
  */
 export function LocationMap({
 	googleMapsAPIKey,
 	id,
 	mapProviderKey = MAP_PROVIDER.openStreetMap,
-	popover,
+	popover = 'click',
 	title = '',
 	value,
 }: LocationMapProps) {
@@ -59,7 +60,7 @@ export function LocationMap({
 	const handleMapReady = (map: any) => {
 		const marker = map._geolocationMarker;
 
-		if (!popover || !marker || (!title && !value.address)) {
+		if (!marker || (!title && !value.address)) {
 			return;
 		}
 
@@ -84,6 +85,12 @@ export function LocationMap({
 				return;
 			}
 
+			if (popover === 'click') {
+				marker.on('click', open);
+
+				return;
+			}
+
 			marker.on('mouseover', open);
 			marker.on('mouseout', () => infoWindow.close());
 
@@ -95,8 +102,14 @@ export function LocationMap({
 		nativeMarker.bindTooltip(content, {
 			direction: 'top',
 			offset: [-tooltipAnchor[0], -(iconAnchor[1] + tooltipAnchor[1])],
-			permanent: popover === 'always',
+			permanent: popover !== 'hover',
 		});
+
+		if (popover === 'click') {
+			nativeMarker.closeTooltip();
+
+			marker.on('click', () => nativeMarker.toggleTooltip());
+		}
 	};
 
 	useLocationMap({

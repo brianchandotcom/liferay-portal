@@ -1364,6 +1364,35 @@ public class SitePageResourceImpl
 			serviceContext);
 	}
 
+	private void _validateFragmentInstanceUUID(
+			FragmentInstance fragmentInstance, long groupId, Layout layout)
+		throws Exception {
+
+		if (fragmentInstance == null) {
+			return;
+		}
+
+		String uuid = fragmentInstance.getUuid();
+
+		if (Validator.isNull(uuid)) {
+			return;
+		}
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.
+				fetchFragmentEntryLinkByUuidAndGroupId(uuid, groupId);
+
+		if ((fragmentEntryLink == null) ||
+			_isSitePagePlid(layout, fragmentEntryLink.getPlid())) {
+
+			return;
+		}
+
+		throw new IllegalArgumentException(
+			StringBundler.concat(
+				"A fragment instance with UUID \"", uuid, "\" already exists"));
+	}
+
 	private void _validateFragmentInstanceUUIDsAvailable(
 			long groupId, Layout layout, PageElement[] pageElements)
 		throws Exception {
@@ -1373,32 +1402,38 @@ public class SitePageResourceImpl
 		}
 
 		for (PageElement pageElement : pageElements) {
-			FragmentInstance fragmentInstance = _getFragmentInstance(
-				pageElement.getPageElementDefinition());
-
-			if (fragmentInstance != null) {
-				String uuid = fragmentInstance.getUuid();
-
-				if (Validator.isNotNull(uuid)) {
-					FragmentEntryLink fragmentEntryLink =
-						_fragmentEntryLinkLocalService.
-							fetchFragmentEntryLinkByUuidAndGroupId(
-								uuid, groupId);
-
-					if ((fragmentEntryLink != null) &&
-						!_isSitePagePlid(layout, fragmentEntryLink.getPlid())) {
-
-						throw new IllegalArgumentException(
-							StringBundler.concat(
-								"A fragment instance with UUID \"", uuid,
-								"\" already exists"));
-					}
-				}
-			}
+			_validateFragmentInstanceUUID(
+				_getFragmentInstance(pageElement.getPageElementDefinition()),
+				groupId, layout);
 
 			_validateFragmentInstanceUUIDsAvailable(
 				groupId, layout, pageElement.getPageElements());
 		}
+	}
+
+	private void _validatePageExperienceUUIDAvailable(
+			long groupId, Layout layout, PageExperience pageExperience)
+		throws Exception {
+
+		String uuid = pageExperience.getUuid();
+
+		if (Validator.isNull(uuid)) {
+			return;
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.
+				fetchSegmentsExperienceByUuidAndGroupId(uuid, groupId);
+
+		if ((segmentsExperience == null) ||
+			_isSitePagePlid(layout, segmentsExperience.getPlid())) {
+
+			return;
+		}
+
+		throw new IllegalArgumentException(
+			StringBundler.concat(
+				"A page experience with UUID \"", uuid, "\" already exists"));
 	}
 
 	private void _validatePageExperienceUUIDsAvailable(
@@ -1427,24 +1462,8 @@ public class SitePageResourceImpl
 			}
 
 			for (PageExperience pageExperience : pageExperiences) {
-				String uuid = pageExperience.getUuid();
-
-				if (Validator.isNotNull(uuid)) {
-					SegmentsExperience segmentsExperience =
-						_segmentsExperienceLocalService.
-							fetchSegmentsExperienceByUuidAndGroupId(
-								uuid, groupId);
-
-					if ((segmentsExperience != null) &&
-						!_isSitePagePlid(
-							layout, segmentsExperience.getPlid())) {
-
-						throw new IllegalArgumentException(
-							StringBundler.concat(
-								"A page experience with UUID \"", uuid,
-								"\" already exists"));
-					}
-				}
+				_validatePageExperienceUUIDAvailable(
+					groupId, layout, pageExperience);
 
 				_validateFragmentInstanceUUIDsAvailable(
 					groupId, layout, pageExperience.getPageElements());

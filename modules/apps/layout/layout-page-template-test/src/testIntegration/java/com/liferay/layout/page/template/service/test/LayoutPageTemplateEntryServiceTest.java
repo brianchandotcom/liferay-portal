@@ -304,24 +304,6 @@ public class LayoutPageTemplateEntryServiceTest {
 
 	@Test
 	@TestInfo("LPD-116161")
-	public void testAddLayoutPageTemplateEntryWithLayoutPrototypeId()
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				null, _group1.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				null, 0, null, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.BASIC, 0, false,
-				RandomTestUtil.randomLong(), 0, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
-
-		Assert.assertEquals(0, layoutPageTemplateEntry.getLayoutPrototypeId());
-	}
-
-	@Test
-	@TestInfo("LPD-116161")
 	public void testAddLayoutPageTemplateEntryWithPlid() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group1);
 

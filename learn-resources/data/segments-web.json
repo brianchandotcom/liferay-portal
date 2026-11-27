@@ -4,5 +4,11 @@
 			"message": "Learn more about Liferay Analytics Cloud.",
 			"url": "https://learn.liferay.com/w/dxp/personalization/analytics-cloud"
 		}
+	},
+	"personalization": {
+		"en_US": {
+			"message": "Learn more about Liferay Personalization.",
+			"url": "https://learn.liferay.com/w/dxp/personalization"
+		}
 	}
 }

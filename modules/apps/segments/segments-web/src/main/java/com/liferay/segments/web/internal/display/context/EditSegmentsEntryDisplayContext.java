@@ -398,10 +398,6 @@ public class EditSegmentsEntryDisplayContext {
 		).put(
 			"learnResources",
 			HashMapBuilder.put(
-				"frontend-js-components-web",
-				LearnMessageUtil.getReactDataJSONObject(
-					"frontend-js-components-web")
-			).put(
 				"segments-web",
 				LearnMessageUtil.getReactDataJSONObject("segments-web")
 			).build()

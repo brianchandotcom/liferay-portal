@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsPortletKeys;
@@ -125,6 +126,18 @@ public class SegmentsPanelAppTest {
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
 
 		Assert.assertTrue(
+			_panelApp.isShow(
+				permissionChecker,
+				_groupLocalService.getGroup(TestPropsValues.getGroupId())));
+	}
+
+	@FeatureFlag(enable = false, value = "LPD-78863")
+	@Test
+	public void testIsShowWithFeatureFlagDisabled() throws PortalException {
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
+
+		Assert.assertFalse(
 			_panelApp.isShow(
 				permissionChecker,
 				_groupLocalService.getGroup(TestPropsValues.getGroupId())));

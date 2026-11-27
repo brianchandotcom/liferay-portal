@@ -8,11 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {
-	FeatureIndicator,
-	LearnMessage,
-	LearnResourcesContext,
-} from 'frontend-js-components-web';
+import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 import {DndProvider} from 'react-dnd';
@@ -126,7 +122,7 @@ export default function ContributorsBuilder({
 									>
 										<LearnMessage
 											resource="segments-web"
-											resourceKey="analytics-cloud"
+											resourceKey="personalization"
 										/>
 									</LearnResourcesContext.Provider>
 								</ClayAlert>
@@ -135,18 +131,6 @@ export default function ContributorsBuilder({
 									<div className="c-mb-4 d-flex flex-wrap justify-content-between mb-4">
 										<h2 className="c-mb-2 sheet-title">
 											{Liferay.Language.get('conditions')}
-
-											<span className="inline-item inline-item-after">
-												<FeatureIndicator
-													interactive={true}
-													learnResourceContext={
-														learnResources[
-															'frontend-js-components-web'
-														]
-													}
-													type="deprecated"
-												/>
-											</span>
 										</h2>
 
 										<div className="c-ml-2 criterion-string">

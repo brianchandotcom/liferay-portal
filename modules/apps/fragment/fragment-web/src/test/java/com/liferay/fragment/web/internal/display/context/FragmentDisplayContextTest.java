@@ -66,6 +66,11 @@ public class FragmentDisplayContextTest {
 	@Test
 	@TestInfo("LPD-111343")
 	public void testGetAIAssistantProps() {
+		_testGetAIAssistantProps();
+		_testGetAIAssistantPropsWithoutBasicFragmentCollection();
+	}
+
+	private void _testGetAIAssistantProps() {
 		String configurationJSONSchemaJSON = RandomTestUtil.randomString();
 
 		Mockito.when(
@@ -166,9 +171,7 @@ public class FragmentDisplayContextTest {
 		}
 	}
 
-	@Test
-	@TestInfo("LPD-111343")
-	public void testGetAIAssistantPropsWithoutBasicFragmentCollection() {
+	private void _testGetAIAssistantPropsWithoutBasicFragmentCollection() {
 		FragmentCollection fragmentCollection = Mockito.mock(
 			FragmentCollection.class);
 

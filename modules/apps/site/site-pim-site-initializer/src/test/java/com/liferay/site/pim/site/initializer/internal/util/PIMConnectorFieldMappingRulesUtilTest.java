@@ -5,13 +5,17 @@
 
 package com.liferay.site.pim.site.initializer.internal.util;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.site.pim.site.initializer.connector.PIMConnectorChannelField;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.junit.After;
@@ -94,6 +98,51 @@ public class PIMConnectorFieldMappingRulesUtilTest {
 						"stripHTMLTags", true
 					).build()),
 				null));
+	}
+
+	@Test
+	public void testIsFieldMappingRulesSupported() {
+		Assert.assertFalse(
+			PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
+				null));
+		Assert.assertFalse(
+			PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
+				new PIMConnectorChannelField(
+					RandomTestUtil.randomString(), true,
+					RandomTestUtil.randomString(), false,
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER)));
+		Assert.assertTrue(
+			PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
+				new PIMConnectorChannelField(
+					RandomTestUtil.randomString(), true,
+					RandomTestUtil.randomString(), false,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT)));
+	}
+
+	@Test
+	public void testIsUseFirstNonemptySourceSupported() {
+		Assert.assertFalse(
+			PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySourceSupported(
+				null));
+		Assert.assertTrue(
+			PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySourceSupported(
+				new PIMConnectorChannelField(
+					RandomTestUtil.randomString(), false,
+					RandomTestUtil.randomString(), false,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT)));
+		Assert.assertFalse(
+			PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySourceSupported(
+				new PIMConnectorChannelField(
+					RandomTestUtil.randomString(), true,
+					RandomTestUtil.randomString(), false,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT)));
+		Assert.assertTrue(
+			PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySourceSupported(
+				new PIMConnectorChannelField(
+					Collections.singletonList(RandomTestUtil.randomString()),
+					RandomTestUtil.randomString(), true,
+					RandomTestUtil.randomString(), false,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT)));
 	}
 
 	private ObjectEntry _mockObjectEntry(Map<String, Serializable> values) {

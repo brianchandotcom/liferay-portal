@@ -202,6 +202,20 @@ public class PIMConnectorChannelFieldFDSDataProvider
 		return labelMap;
 	}
 
+	private String _getObjectDefinitionLabel(
+		Map<String, String> labelMap, String sourceClassName, String value) {
+
+		String objectDefinitionLabel = labelMap.get(
+			sourceClassName + StringPool.POUND);
+
+		if (Validator.isNull(objectDefinitionLabel)) {
+			return value;
+		}
+
+		return StringBundler.concat(
+			objectDefinitionLabel, StringPool.SLASH, value);
+	}
+
 	private List<PIMConnectorChannelFieldDisplay>
 			_getPIMConnectorChannelFieldDisplays(
 				FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
@@ -283,7 +297,7 @@ public class PIMConnectorChannelFieldFDSDataProvider
 					locale, pimFieldMappingRuleAPIURL,
 					pimFieldMappingRuleObjectEntryId,
 					pimConnectorChannelField.isRequired(),
-					_getSourceAttributes(labelMap, objectEntries),
+					_getSourceAttributes(labelMap, locale, objectEntries),
 					_getTransformationRules(locale, pimFieldMappingRuleValues),
 					MapUtil.getBoolean(
 						pimFieldMappingRuleValues, "useFirstNonemptySource"));
@@ -333,7 +347,8 @@ public class PIMConnectorChannelFieldFDSDataProvider
 	}
 
 	private List<String> _getSourceAttributes(
-		Map<String, String> labelMap, List<ObjectEntry> objectEntries) {
+		Map<String, String> labelMap, Locale locale,
+		List<ObjectEntry> objectEntries) {
 
 		return TransformUtil.transform(
 			objectEntries,
@@ -343,6 +358,12 @@ public class PIMConnectorChannelFieldFDSDataProvider
 				String sourceClassName = MapUtil.getString(
 					values, "sourceClassName");
 
+				if (PIMConnectorFieldMappingsUtil.isCategories(objectEntry)) {
+					return _getObjectDefinitionLabel(
+						labelMap, sourceClassName,
+						LanguageUtil.get(locale, "categories"));
+				}
+
 				if (PIMConnectorFieldMappingsUtil.isFixedValue(objectEntry)) {
 					String value = MapUtil.getString(values, "value");
 
@@ -350,15 +371,14 @@ public class PIMConnectorChannelFieldFDSDataProvider
 						return null;
 					}
 
-					String objectDefinitionLabel = labelMap.get(
-						sourceClassName + StringPool.POUND);
+					return _getObjectDefinitionLabel(
+						labelMap, sourceClassName, value);
+				}
 
-					if (objectDefinitionLabel == null) {
-						return value;
-					}
-
-					return StringBundler.concat(
-						objectDefinitionLabel, StringPool.SLASH, value);
+				if (PIMConnectorFieldMappingsUtil.isTags(objectEntry)) {
+					return _getObjectDefinitionLabel(
+						labelMap, sourceClassName,
+						LanguageUtil.get(locale, "tags"));
 				}
 
 				String sourceFieldName = MapUtil.getString(

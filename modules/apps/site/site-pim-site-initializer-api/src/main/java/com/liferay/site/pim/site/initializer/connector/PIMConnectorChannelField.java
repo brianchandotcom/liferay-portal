@@ -7,6 +7,8 @@ package com.liferay.site.pim.site.initializer.connector;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -16,14 +18,27 @@ import java.util.Locale;
 public class PIMConnectorChannelField {
 
 	public PIMConnectorChannelField(
-		String labelKey, boolean multiple, String name, boolean required,
-		String type) {
+		List<String> additionalPIMFieldMappingTypes, String labelKey,
+		boolean multiple, String name, boolean required, String type) {
 
+		_additionalPIMFieldMappingTypes = Collections.unmodifiableList(
+			additionalPIMFieldMappingTypes);
 		_labelKey = labelKey;
 		_multiple = multiple;
 		_name = name;
 		_required = required;
 		_type = type;
+	}
+
+	public PIMConnectorChannelField(
+		String labelKey, boolean multiple, String name, boolean required,
+		String type) {
+
+		this(Collections.emptyList(), labelKey, multiple, name, required, type);
+	}
+
+	public List<String> getAdditionalPIMFieldMappingTypes() {
+		return _additionalPIMFieldMappingTypes;
 	}
 
 	public String getLabel(Locale locale) {
@@ -46,6 +61,7 @@ public class PIMConnectorChannelField {
 		return _required;
 	}
 
+	private final List<String> _additionalPIMFieldMappingTypes;
 	private final String _labelKey;
 	private final boolean _multiple;
 	private final String _name;

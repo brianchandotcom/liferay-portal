@@ -5,7 +5,6 @@
 
 package com.liferay.site.pim.site.initializer.internal.display.context;
 
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -85,6 +84,20 @@ public class EditPIMConnectorFieldMappingsDisplayContext {
 		).put(
 			"channelField", _channelField
 		).put(
+			"channelFieldAdditionalFieldMappingTypes",
+			() -> {
+				if (pimConnectorChannelField == null) {
+					return null;
+				}
+
+				List<String> additionalPIMFieldMappingTypes =
+					pimConnectorChannelField.
+						getAdditionalPIMFieldMappingTypes();
+
+				return JSONUtil.putAll(
+					additionalPIMFieldMappingTypes.toArray());
+			}
+		).put(
 			"channelFieldLabel",
 			() -> {
 				if (pimConnectorChannelField != null) {
@@ -93,15 +106,6 @@ public class EditPIMConnectorFieldMappingsDisplayContext {
 				}
 
 				return _channelField;
-			}
-		).put(
-			"channelFieldMultiple",
-			() -> {
-				if (pimConnectorChannelField != null) {
-					return pimConnectorChannelField.isMultiple();
-				}
-
-				return false;
 			}
 		).put(
 			"fieldMappings", _getFieldMappingsJSONArray(objectEntry)
@@ -141,6 +145,10 @@ public class EditPIMConnectorFieldMappingsDisplayContext {
 				return LanguageUtil.format(
 					_httpServletRequest, "edit-x", _channelField, false);
 			}
+		).put(
+			"useFirstNonemptySourceSupported",
+			PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySourceSupported(
+				pimConnectorChannelField)
 		).build();
 	}
 
@@ -211,10 +219,8 @@ public class EditPIMConnectorFieldMappingsDisplayContext {
 			PIMConnectorChannelField pimConnectorChannelField)
 		throws Exception {
 
-		if ((pimConnectorChannelField == null) ||
-			!Objects.equals(
-				pimConnectorChannelField.getType(),
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+		if (!PIMConnectorFieldMappingRulesUtil.isFieldMappingRulesSupported(
+				pimConnectorChannelField)) {
 
 			return null;
 		}

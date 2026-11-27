@@ -16,11 +16,13 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,9 +37,11 @@ import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConsta
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,8 +51,6 @@ import java.util.Set;
  * @author Stefano Motta
  */
 public class PIMConnectorFieldMappingsUtil {
-
-	public static final String TYPE_FIXED_VALUE = "fixedValue";
 
 	public static ListTypeEntry fetchListTypeEntry(
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
@@ -131,7 +133,7 @@ public class PIMConnectorFieldMappingsUtil {
 			pimFieldMappingRuleObjectEntriesMap.get(
 				pimConnectorChannelField.getName());
 
-		List<String> channelFieldValues = TransformUtil.transform(
+		List<String> pimConnectorChannelFieldValues = TransformUtil.transform(
 			filterObjectEntries(
 				objectDefinition,
 				pimFieldMappingObjectEntriesMap.get(
@@ -152,7 +154,7 @@ public class PIMConnectorFieldMappingsUtil {
 				return value;
 			});
 
-		if (channelFieldValues.isEmpty()) {
+		if (pimConnectorChannelFieldValues.isEmpty()) {
 			return null;
 		}
 
@@ -161,34 +163,79 @@ public class PIMConnectorFieldMappingsUtil {
 		if (pimConnectorChannelField.isMultiple()) {
 			return JSONUtil.putAll(
 				TransformUtil.transformToArray(
-					channelFieldValues,
-					channelFieldValue -> _toObject(
-						pimConnectorChannelField, channelFieldValue),
+					pimConnectorChannelFieldValues,
+					pimConnectorChannelFieldValue -> _toObject(
+						pimConnectorChannelField,
+						pimConnectorChannelFieldValue),
 					Object.class));
 		}
 
 		if (Objects.equals(type, ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
-			String value = channelFieldValues.get(0);
+			String pimConnectorChannelFieldValue =
+				pimConnectorChannelFieldValues.get(0);
 
-			if ((pimFieldMappingRuleObjectEntry == null) ||
-				!MapUtil.getBoolean(
-					pimFieldMappingRuleObjectEntry.getValues(),
-					"useFirstNonemptySource")) {
+			if (!PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySource(
+					pimFieldMappingRuleObjectEntry)) {
 
-				value = StringUtil.merge(channelFieldValues, StringPool.SPACE);
+				pimConnectorChannelFieldValue = StringUtil.merge(
+					pimConnectorChannelFieldValues, StringPool.SPACE);
 			}
 
-			value = PIMConnectorFieldMappingRulesUtil.applyRules(
-				pimFieldMappingRuleObjectEntry, value);
+			pimConnectorChannelFieldValue =
+				PIMConnectorFieldMappingRulesUtil.applyRules(
+					pimFieldMappingRuleObjectEntry,
+					pimConnectorChannelFieldValue);
 
-			if (Validator.isNull(value)) {
+			if (Validator.isNull(pimConnectorChannelFieldValue)) {
 				return null;
 			}
 
-			return value;
+			return pimConnectorChannelFieldValue;
 		}
 
-		return _toObject(pimConnectorChannelField, channelFieldValues.get(0));
+		return _toObject(
+			pimConnectorChannelField, pimConnectorChannelFieldValues.get(0));
+	}
+
+	public static JSONArray getChannelFieldValuesJSONArray(
+			ObjectDefinition objectDefinition,
+			PIMConnectorChannelField pimConnectorChannelField,
+			Map<String, List<ObjectEntry>> pimFieldMappingObjectEntriesMap,
+			ObjectEntry pimFieldMappingRuleObjectEntry,
+			UnsafeBiConsumer<ObjectEntry, Map<String, Object>, Exception>
+				unsafeBiConsumer)
+		throws Exception {
+
+		List<ObjectEntry> pimFieldMappingObjectEntries = filterObjectEntries(
+			objectDefinition,
+			pimFieldMappingObjectEntriesMap.get(
+				pimConnectorChannelField.getName()));
+
+		if (pimFieldMappingObjectEntries.isEmpty()) {
+			return null;
+		}
+
+		Map<String, Object> pimConnectorChannelFieldValuesMap =
+			new LinkedHashMap<>();
+
+		for (ObjectEntry pimFieldMappingObjectEntry :
+				pimFieldMappingObjectEntries) {
+
+			if (!pimConnectorChannelFieldValuesMap.isEmpty() &&
+				PIMConnectorFieldMappingRulesUtil.isUseFirstNonemptySource(
+					pimFieldMappingRuleObjectEntry)) {
+
+				break;
+			}
+
+			unsafeBiConsumer.accept(
+				pimFieldMappingObjectEntry, pimConnectorChannelFieldValuesMap);
+		}
+
+		Collection<Object> pimConnectorChannelFieldValues =
+			pimConnectorChannelFieldValuesMap.values();
+
+		return JSONUtil.putAll(pimConnectorChannelFieldValues.toArray());
 	}
 
 	public static String getLabel(
@@ -249,10 +296,14 @@ public class PIMConnectorFieldMappingsUtil {
 			MapUtil.getString(objectEntry.getValues(), "sourceFieldName"));
 	}
 
+	public static boolean isCategories(ObjectEntry objectEntry) {
+		return Objects.equals(
+			MapUtil.getString(objectEntry.getValues(), "type"), "categories");
+	}
+
 	public static boolean isFixedValue(ObjectEntry objectEntry) {
 		return Objects.equals(
-			MapUtil.getString(objectEntry.getValues(), "type"),
-			TYPE_FIXED_VALUE);
+			MapUtil.getString(objectEntry.getValues(), "type"), "fixedValue");
 	}
 
 	public static boolean isMappingComplete(
@@ -305,7 +356,16 @@ public class PIMConnectorFieldMappingsUtil {
 		return isMappingComplete(getObjectEntries(objectEntry), pimConnector);
 	}
 
+	public static boolean isTags(ObjectEntry objectEntry) {
+		return Objects.equals(
+			MapUtil.getString(objectEntry.getValues(), "type"), "tags");
+	}
+
 	private static boolean _isMapped(ObjectEntry objectEntry) {
+		if (isCategories(objectEntry) || isTags(objectEntry)) {
+			return true;
+		}
+
 		if (isFixedValue(objectEntry)) {
 			return Validator.isNotNull(
 				MapUtil.getString(objectEntry.getValues(), "value"));

@@ -5,6 +5,7 @@
 
 package com.liferay.site.pim.site.initializer.internal.util;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.pim.site.initializer.connector.PIMConnectorChannelField;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConstants;
 
 import java.io.Serializable;
@@ -101,6 +103,46 @@ public class PIMConnectorFieldMappingRulesUtil {
 		}
 
 		return objectEntriesMap;
+	}
+
+	public static boolean isFieldMappingRulesSupported(
+		PIMConnectorChannelField pimConnectorChannelField) {
+
+		if ((pimConnectorChannelField != null) &&
+			Objects.equals(
+				pimConnectorChannelField.getType(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isUseFirstNonemptySource(ObjectEntry objectEntry) {
+		if (objectEntry == null) {
+			return false;
+		}
+
+		return MapUtil.getBoolean(
+			objectEntry.getValues(), "useFirstNonemptySource");
+	}
+
+	public static boolean isUseFirstNonemptySourceSupported(
+		PIMConnectorChannelField pimConnectorChannelField) {
+
+		if (pimConnectorChannelField == null) {
+			return false;
+		}
+
+		if (!pimConnectorChannelField.isMultiple()) {
+			return true;
+		}
+
+		List<String> additionalPIMFieldMappingTypes =
+			pimConnectorChannelField.getAdditionalPIMFieldMappingTypes();
+
+		return !additionalPIMFieldMappingTypes.isEmpty();
 	}
 
 	private static String _encodeURL(int length, String value) {

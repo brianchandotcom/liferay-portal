@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.internal.upgrade.v13_0_5.test;
+package com.liferay.commerce.internal.upgrade.v13_0_9.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
@@ -81,7 +81,7 @@ public class CommerceReturnReasonConfigurationUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.commerce.internal.upgrade.v13_0_5." +
+		"com.liferay.commerce.internal.upgrade.v13_0_9." +
 			"CommerceReturnReasonConfigurationUpgradeProcess";
 
 	@Inject

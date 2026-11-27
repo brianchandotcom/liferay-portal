@@ -680,7 +680,7 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId, classPK2, "en_US",
-			Collections.singletonMap("en_US", "url-title-2-en"),
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()),
 			serviceContext);
 
 		long classPK3 = RandomTestUtil.randomLong();

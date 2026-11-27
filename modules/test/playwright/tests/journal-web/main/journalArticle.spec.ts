@@ -266,20 +266,30 @@ baseTest(
 
 		await waitForAlert(page);
 
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+		try {
+			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
-		await journalEditArticlePage.changeDefaultLanguage('pt_BR');
+			await journalEditArticlePage.changeDefaultLanguage('pt_BR');
 
-		const title = getRandomString();
+			const title = getRandomString();
 
-		await page.waitForTimeout(5000);
+			await page.waitForTimeout(5000);
 
-		await journalEditArticlePage.saveAsDraftWithPermissions(title);
+			await journalEditArticlePage.saveAsDraftWithPermissions(title);
 
-		await waitForAlert(
-			page,
-			`Success:${title} was successfully saved as a draft.`
-		);
+			await waitForAlert(
+				page,
+				`Success:${title} was successfully saved as a draft.`
+			);
+		}
+		finally {
+			await systemSettingsPage.goToSystemSetting(
+				'Web Content',
+				'Administration'
+			);
+
+			await systemSettingsPage.resetToDefaultValues();
+		}
 	}
 );
 

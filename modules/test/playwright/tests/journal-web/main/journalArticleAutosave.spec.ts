@@ -106,39 +106,52 @@ autoSaveTest(
 
 		await waitForAlert(page);
 
-		const fieldName = 'Text1';
-		const structureName = 'Structure1';
+		try {
+			const fieldName = 'Text1';
+			const structureName = 'Structure1';
 
-		const dataDefinition = getDataStructureDefinition({
-			defaultLanguageId: 'en_US',
-			fields: [{name: fieldName, repeatable: true}],
-			name: structureName,
-		});
+			const dataDefinition = getDataStructureDefinition({
+				defaultLanguageId: 'en_US',
+				fields: [{name: fieldName, repeatable: true}],
+				name: structureName,
+			});
 
-		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+			await apiHelpers.dataEngine.createStructure(
+				site.id,
+				dataDefinition
+			);
 
-		await journalEditStructureDefaultValuesPage.goto({
-			siteUrl: site.friendlyUrlPath,
-			structureName,
-		});
+			await journalEditStructureDefaultValuesPage.goto({
+				siteUrl: site.friendlyUrlPath,
+				structureName,
+			});
 
-		const defaultLanguageButton = page
-			.getByRole('group', {name: 'Basic Information'})
-			.getByRole('button', {name: 'Change'});
+			const defaultLanguageButton = page
+				.getByRole('group', {name: 'Basic Information'})
+				.getByRole('button', {name: 'Change'});
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'ca_ES',
-			}),
-			trigger: defaultLanguageButton,
-		});
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'ca_ES',
+				}),
+				trigger: defaultLanguageButton,
+			});
 
-		await page.getByLabel('Select a language, current').click();
+			await page.getByLabel('Select a language, current').click();
 
-		await expect(
-			page.getByRole('option', {name: 'Catalan Language: Default'})
-		).toBeVisible();
+			await expect(
+				page.getByRole('option', {name: 'Catalan Language: Default'})
+			).toBeVisible();
+		}
+		finally {
+			await systemSettingsPage.goToSystemSetting(
+				'Web Content',
+				'Administration'
+			);
+
+			await systemSettingsPage.resetToDefaultValues();
+		}
 	}
 );
 

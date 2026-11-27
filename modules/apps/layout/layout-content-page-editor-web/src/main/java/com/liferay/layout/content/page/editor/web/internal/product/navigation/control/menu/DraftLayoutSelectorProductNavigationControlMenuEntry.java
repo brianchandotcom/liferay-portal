@@ -147,10 +147,11 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 	}
 
 	private Map<String, Object> _getDraftLayoutMap(
-		boolean disabled, HttpServletRequest httpServletRequest, String label,
-		Layout layout, ThemeDisplay themeDisplay) {
+		boolean disabled, Layout draftLayout,
+		HttpServletRequest httpServletRequest, String label,
+		ThemeDisplay themeDisplay) {
 
-		boolean active = layout.getPlid() == themeDisplay.getPlid();
+		boolean active = draftLayout.getPlid() == themeDisplay.getPlid();
 
 		return HashMapBuilder.<String, Object>put(
 			"active", active
@@ -163,12 +164,13 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 					return null;
 				}
 
-				return _getEditURL(layout, httpServletRequest, themeDisplay);
+				return _getEditURL(
+					draftLayout, httpServletRequest, themeDisplay);
 			}
 		).put(
 			"label", label
 		).put(
-			"launchSetId", layout.getLaunchSetId()
+			"launchSetId", draftLayout.getLaunchSetId()
 		).build();
 	}
 
@@ -192,9 +194,8 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 
 		draftLayoutMaps.add(
 			_getDraftLayoutMap(
-				false, httpServletRequest,
-				_language.get(httpServletRequest, "main"), draftLayout,
-				themeDisplay));
+				false, draftLayout, httpServletRequest,
+				_language.get(httpServletRequest, "main"), themeDisplay));
 
 		draftLayoutMaps.addAll(
 			_getLaunchSetDraftLayoutMaps(
@@ -267,10 +268,10 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 						ActionKeys.VIEW);
 
 					return _getDraftLayoutMap(
-						disabled, httpServletRequest,
+						disabled, draftLayout, httpServletRequest,
 						disabled ? restrictedLaunchSetLabel :
 							launchSetDetails.getName(),
-						draftLayout, themeDisplay);
+						themeDisplay);
 				});
 
 		launchSetDraftLayoutMaps.sort(

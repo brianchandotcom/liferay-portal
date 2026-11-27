@@ -35,6 +35,7 @@ const CAMPAIGN = {
 		},
 	],
 	touchesCount: 1,
+	visible: true,
 };
 
 const buildCampaignDays = (date: string) => ({

@@ -507,13 +507,18 @@ describe('activities', () => {
 			'buildCampaignUrls',
 			buildCampaignUrls,
 			{
-				'2026-07-15': {campaigns: [{campaignId: 'c1'}]},
-				'2026-07-16': {campaigns: [{campaignId: 'c1'}]}
+				'2026-07-15': {campaigns: [{campaignId: 'c1', visible: true}]},
+				'2026-07-16': {
+					campaigns: [
+						{campaignId: 'c1', visible: true},
+						{campaignId: 'c2', visible: false}
+					]
+				}
 			},
 			{c1: '/workspace/23/456/campaigns/c1'}
 		]
 	])('%s', (_, buildUrls, campaignDays, expected) => {
-		it('routes every id in the campaign days, once each', () => {
+		it('routes each linkable id in the campaign days, once', () => {
 			expect(buildUrls(campaignDays, CONTEXT)).toEqual(expected);
 		});
 

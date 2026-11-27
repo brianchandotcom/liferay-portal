@@ -31,6 +31,7 @@ const buildTouch = (campaignId: string) => ({
 		},
 	],
 	touchesCount: 1,
+	visible: true,
 });
 
 const buildRequest = (variables: Record<string, unknown>, days: unknown[]) => ({

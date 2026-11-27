@@ -22,6 +22,7 @@ const CAMPAIGN: CampaignTouch = {
 		},
 	],
 	touchesCount: 5,
+	visible: true,
 };
 
 const expand = (container: HTMLElement) =>

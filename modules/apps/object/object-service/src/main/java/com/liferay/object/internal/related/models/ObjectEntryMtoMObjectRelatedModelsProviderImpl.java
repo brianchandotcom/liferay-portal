@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -77,8 +78,16 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			!objectRelationship.isReverse()) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
+				ObjectEntry curObjectEntry =
+					ObjectEntryLocalServiceUtil.fetchObjectEntry(
+						objectEntry.getObjectEntryId());
+
+				if (curObjectEntry == null) {
+					continue;
+				}
+
 				_objectEntryService.deleteObjectEntry(
-					objectEntry.getObjectEntryId());
+					curObjectEntry.getObjectEntryId());
 			}
 		}
 	}
@@ -203,8 +212,16 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			!objectRelationship.isReverse()) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
+				ObjectEntry curObjectEntry =
+					ObjectEntryLocalServiceUtil.fetchObjectEntry(
+						objectEntry.getObjectEntryId());
+
+				if ((curObjectEntry == null) || curObjectEntry.isInTrash()) {
+					continue;
+				}
+
 				_objectEntryService.moveObjectEntryToTrash(
-					objectEntry, new ServiceContext());
+					curObjectEntry, new ServiceContext());
 			}
 		}
 	}
@@ -232,12 +249,16 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 					groupId, objectRelationshipId, null, false, primaryKey,
 					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
-			if (!objectEntry.isInTrash()) {
+			ObjectEntry curObjectEntry =
+				ObjectEntryLocalServiceUtil.fetchObjectEntry(
+					objectEntry.getObjectEntryId());
+
+			if ((curObjectEntry == null) || !curObjectEntry.isInTrash()) {
 				continue;
 			}
 
 			_objectEntryService.restoreObjectEntryFromTrash(
-				objectEntry, new ServiceContext());
+				curObjectEntry, new ServiceContext());
 		}
 	}
 

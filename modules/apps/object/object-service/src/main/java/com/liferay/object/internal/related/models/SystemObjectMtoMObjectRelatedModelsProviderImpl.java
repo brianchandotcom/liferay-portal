@@ -110,8 +110,23 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 					getSystemObjectDefinitionManager(
 						_objectDefinition.getName());
 
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(
+						systemObjectDefinitionManager.getModelClassName());
+
 			for (BaseModel<T> baseModel : relatedModels) {
-				systemObjectDefinitionManager.deleteBaseModel(baseModel);
+				BaseModel<?> persistedBaseModel =
+					(BaseModel<?>)
+						persistedModelLocalService.fetchPersistedModel(
+							baseModel.getPrimaryKeyObj());
+
+				if (persistedBaseModel == null) {
+					continue;
+				}
+
+				systemObjectDefinitionManager.deleteBaseModel(
+					persistedBaseModel);
 			}
 		}
 	}

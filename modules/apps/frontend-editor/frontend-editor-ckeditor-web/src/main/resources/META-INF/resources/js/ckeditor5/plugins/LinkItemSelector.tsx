@@ -4,11 +4,7 @@
  */
 
 import {Editor, Plugin} from '@ckeditor/ckeditor5-core';
-import {
-	Link,
-	LinkUI,
-	addLinkProtocolIfApplicable,
-} from '@ckeditor/ckeditor5-link';
+import {LinkUI, addLinkProtocolIfApplicable} from '@ckeditor/ckeditor5-link';
 import {Config} from '@ckeditor/ckeditor5-utils';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
@@ -200,10 +196,6 @@ class LinkItemSelector extends Plugin {
 		return 'LinkItemSelector' as const;
 	}
 
-	static get requires() {
-		return [Link];
-	}
-
 	constructor(editor: Editor) {
 		super(editor);
 
@@ -225,13 +217,6 @@ class LinkItemSelector extends Plugin {
 				mode: 'manual',
 			},
 		});
-
-		config.set(
-			'link.toolbar',
-			(config.get('link.toolbar') ?? []).filter(
-				(item) => item !== 'linkProperties'
-			)
-		);
 	}
 
 	afterInit() {
@@ -241,9 +226,16 @@ class LinkItemSelector extends Plugin {
 
 		const browseURL = config.get('filebrowserBrowseUrl');
 
-		if (!browseURL) {
+		if (!browseURL || !editor.plugins.has(LinkUI)) {
 			return;
 		}
+
+		config.set(
+			'link.toolbar',
+			(config.get('link.toolbar') ?? []).filter(
+				(item) => item !== 'linkProperties'
+			)
+		);
 
 		const linkCommand = editor.commands.get('link')!;
 		const linkUI = editor.plugins.get(LinkUI) as any;

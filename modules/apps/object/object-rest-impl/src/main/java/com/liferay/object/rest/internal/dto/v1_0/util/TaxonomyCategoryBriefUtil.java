@@ -11,6 +11,8 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.object.rest.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.object.rest.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -31,6 +33,18 @@ public class TaxonomyCategoryBriefUtil {
 
 	public static TaxonomyCategoryBrief toTaxonomyCategoryBrief(
 			AssetCategory assetCategory,
+			DTOConverterContext dtoConverterContext, long groupId)
+		throws Exception {
+
+		return toTaxonomyCategoryBrief(
+			assetCategory, AssetVocabularyLocalServiceUtil::getAssetVocabulary,
+			dtoConverterContext, groupId);
+	}
+
+	public static TaxonomyCategoryBrief toTaxonomyCategoryBrief(
+			AssetCategory assetCategory,
+			UnsafeFunction<Long, AssetVocabulary, PortalException>
+				assetVocabularyUnsafeFunction,
 			DTOConverterContext dtoConverterContext, long groupId)
 		throws Exception {
 
@@ -59,7 +73,7 @@ public class TaxonomyCategoryBriefUtil {
 				setParentTaxonomyVocabulary(
 					() -> {
 						AssetVocabulary parentAssetVocabulary =
-							AssetVocabularyLocalServiceUtil.getAssetVocabulary(
+							assetVocabularyUnsafeFunction.apply(
 								assetCategory.getVocabularyId());
 
 						return new ParentTaxonomyVocabulary() {

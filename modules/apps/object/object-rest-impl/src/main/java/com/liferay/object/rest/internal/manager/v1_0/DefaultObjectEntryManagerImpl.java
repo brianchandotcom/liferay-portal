@@ -6,6 +6,11 @@
 package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.account.exception.NoSuchGroupException;
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryModel;
@@ -60,6 +65,7 @@ import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
+import com.liferay.object.rest.internal.util.AssetCategorizationLoader;
 import com.liferay.object.rest.internal.util.FriendlyURLEntryTitlesLoader;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.rest.internal.util.ServiceContextUtil;
@@ -2570,12 +2576,24 @@ public class DefaultObjectEntryManagerImpl
 		Collection<com.liferay.object.model.ObjectEntry>
 			serviceBuilderObjectEntries) {
 
+		long classNameId = _classNameLocalService.getClassNameId(
+			objectDefinition.getClassName());
+		long[] objectEntryIds = TransformUtil.transformToLongArray(
+			serviceBuilderObjectEntries,
+			com.liferay.object.model.ObjectEntry::getObjectEntryId);
+
+		dtoConverterContext.setAttribute(
+			"assetCategorizationLoader",
+			new AssetCategorizationLoader(
+				_assetCategoryLocalService,
+				_assetEntryAssetCategoryRelLocalService,
+				_assetEntryLocalService, _assetTagLocalService,
+				_assetVocabularyLocalService, classNameId,
+				objectDefinition.getCompanyId(), objectEntryIds));
 		dtoConverterContext.setAttribute(
 			"friendlyURLEntryTitlesLoader",
 			new FriendlyURLEntryTitlesLoader(
-				_classNameLocalService.getClassNameId(
-					objectDefinition.getClassName()),
-				_friendlyURLEntryLocalService, serviceBuilderObjectEntries));
+				classNameId, _friendlyURLEntryLocalService, objectEntryIds));
 
 		try {
 			return TransformUtil.transform(
@@ -2585,6 +2603,7 @@ public class DefaultObjectEntryManagerImpl
 					serviceBuilderObjectEntry));
 		}
 		finally {
+			dtoConverterContext.removeAttribute("assetCategorizationLoader");
 			dtoConverterContext.removeAttribute("friendlyURLEntryTitlesLoader");
 		}
 	}
@@ -4485,6 +4504,22 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private Aggregations _aggregations;
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private AttachmentManager _attachmentManager;

@@ -43,6 +43,7 @@ import com.liferay.object.rest.dto.v1_0.Version;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.dto.v1_0.util.ListEntryUtil;
 import com.liferay.object.rest.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
+import com.liferay.object.rest.internal.util.AssetCategorizationLoader;
 import com.liferay.object.rest.internal.util.FriendlyURLEntryTitlesLoader;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
@@ -349,9 +350,9 @@ public class ObjectEntryDTOConverter
 				}
 
 				return ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						objectDefinition.getClassName(),
-						serviceBuilderObjectEntry.getObjectEntryId()),
+					_getAssetTags(
+						dtoConverterContext, objectDefinition,
+						serviceBuilderObjectEntry),
 					AssetTag.NAME_ACCESSOR);
 			});
 		objectEntry.setModifiedBy(
@@ -489,15 +490,9 @@ public class ObjectEntryDTOConverter
 					return null;
 				}
 
-				return TransformUtil.transformToArray(
-					_assetCategoryLocalService.getCategories(
-						objectDefinition.getClassName(),
-						serviceBuilderObjectEntry.getObjectEntryId()),
-					assetCategory ->
-						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							assetCategory, dtoConverterContext,
-							serviceBuilderObjectEntry.getGroupId()),
-					TaxonomyCategoryBrief.class);
+				return _getTaxonomyCategoryBriefs(
+					dtoConverterContext, objectDefinition,
+					serviceBuilderObjectEntry);
 			});
 
 		return objectEntry;
@@ -702,6 +697,25 @@ public class ObjectEntryDTOConverter
 
 			unsafeSuppliers.put(manyToOneRelationshipName, entry::getValue);
 		}
+	}
+
+	private List<AssetTag> _getAssetTags(
+		DTOConverterContext dtoConverterContext,
+		ObjectDefinition objectDefinition,
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry) {
+
+		AssetCategorizationLoader assetCategorizationLoader =
+			(AssetCategorizationLoader)dtoConverterContext.getAttribute(
+				"assetCategorizationLoader");
+
+		if (assetCategorizationLoader == null) {
+			return _assetTagLocalService.getTags(
+				objectDefinition.getClassName(),
+				serviceBuilderObjectEntry.getObjectEntryId());
+		}
+
+		return assetCategorizationLoader.getAssetTags(
+			serviceBuilderObjectEntry.getObjectEntryId());
 	}
 
 	private <T> T _getAttribute(
@@ -957,6 +971,37 @@ public class ObjectEntryDTOConverter
 		}
 
 		return group.getGroupKey();
+	}
+
+	private TaxonomyCategoryBrief[] _getTaxonomyCategoryBriefs(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
+		throws Exception {
+
+		AssetCategorizationLoader assetCategorizationLoader =
+			(AssetCategorizationLoader)dtoConverterContext.getAttribute(
+				"assetCategorizationLoader");
+
+		if (assetCategorizationLoader == null) {
+			return TransformUtil.transformToArray(
+				_assetCategoryLocalService.getCategories(
+					objectDefinition.getClassName(),
+					serviceBuilderObjectEntry.getObjectEntryId()),
+				assetCategory ->
+					TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+						assetCategory, dtoConverterContext,
+						serviceBuilderObjectEntry.getGroupId()),
+				TaxonomyCategoryBrief.class);
+		}
+
+		return TransformUtil.transformToArray(
+			assetCategorizationLoader.getAssetCategories(
+				serviceBuilderObjectEntry.getObjectEntryId()),
+			assetCategory -> TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+				assetCategory, assetCategorizationLoader::getAssetVocabulary,
+				dtoConverterContext, serviceBuilderObjectEntry.getGroupId()),
+			TaxonomyCategoryBrief.class);
 	}
 
 	private String _getURLTitle(

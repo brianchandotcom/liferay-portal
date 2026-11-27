@@ -7,11 +7,8 @@ package com.liferay.object.rest.internal.util;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryTitles;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,13 +20,11 @@ public class FriendlyURLEntryTitlesLoader {
 	public FriendlyURLEntryTitlesLoader(
 		long classNameId,
 		FriendlyURLEntryLocalService friendlyURLEntryLocalService,
-		Collection<ObjectEntry> objectEntries) {
+		long[] objectEntryIds) {
 
 		_classNameId = classNameId;
 		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
-
-		_objectEntryIds = TransformUtil.transformToLongArray(
-			objectEntries, ObjectEntry::getObjectEntryId);
+		_objectEntryIds = objectEntryIds;
 	}
 
 	public String getURLTitle(long objectEntryId, Locale locale) {

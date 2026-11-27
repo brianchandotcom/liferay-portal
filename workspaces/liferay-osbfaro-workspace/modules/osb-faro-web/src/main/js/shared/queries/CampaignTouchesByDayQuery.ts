@@ -69,6 +69,7 @@ export default gql`
 					status
 				}
 				touchesCount
+				visible
 			}
 			touchesCount
 		}

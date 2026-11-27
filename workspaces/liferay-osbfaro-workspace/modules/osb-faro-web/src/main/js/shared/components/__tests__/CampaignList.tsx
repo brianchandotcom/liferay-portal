@@ -22,6 +22,7 @@ const buildCampaigns = (total: number) =>
 			},
 		],
 		touchesCount: 1,
+		visible: true,
 	}));
 
 const renderList = (props = {}) =>

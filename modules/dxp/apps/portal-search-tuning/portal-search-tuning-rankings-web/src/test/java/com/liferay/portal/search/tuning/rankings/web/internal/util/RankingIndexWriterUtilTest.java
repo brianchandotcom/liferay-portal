@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.index;
+package com.liferay.portal.search.tuning.rankings.web.internal.util;
 
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
@@ -11,10 +11,10 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.BaseRankingsIndexTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,17 +24,12 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class RankingIndexWriterTest extends BaseRankingsIndexTestCase {
+public class RankingIndexWriterUtilTest extends BaseRankingsIndexTestCase {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		_rankingIndexWriterImpl = new RankingIndexWriter(searchEngineAdapter);
-	}
 
 	@Test
 	public void testCreate() {
@@ -51,17 +46,17 @@ public class RankingIndexWriterTest extends BaseRankingsIndexTestCase {
 
 		Assert.assertEquals(
 			"uid",
-			_rankingIndexWriterImpl.create(
-				Mockito.mock(RankingIndexName.class),
-				Mockito.mock(Ranking.class)));
+			RankingIndexWriterUtil.create(
+				Mockito.mock(Ranking.class),
+				Mockito.mock(RankingIndexName.class), searchEngineAdapter));
 	}
 
 	@Test
 	public void testRemove() {
 		setUpSearchEngineAdapter(Mockito.mock(DeleteDocumentResponse.class));
 
-		_rankingIndexWriterImpl.remove(
-			Mockito.mock(RankingIndexName.class), "id");
+		RankingIndexWriterUtil.remove(
+			"id", Mockito.mock(RankingIndexName.class), searchEngineAdapter);
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
 		).execute(
@@ -73,15 +68,14 @@ public class RankingIndexWriterTest extends BaseRankingsIndexTestCase {
 	public void testUpdate() {
 		setUpSearchEngineAdapter(Mockito.mock(IndexDocumentResponse.class));
 
-		_rankingIndexWriterImpl.update(
-			Mockito.mock(RankingIndexName.class), Mockito.mock(Ranking.class));
+		RankingIndexWriterUtil.update(
+			Mockito.mock(Ranking.class), Mockito.mock(RankingIndexName.class),
+			searchEngineAdapter);
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
 		).execute(
 			(IndexDocumentRequest)Mockito.any()
 		);
 	}
-
-	private RankingIndexWriter _rankingIndexWriterImpl;
 
 }

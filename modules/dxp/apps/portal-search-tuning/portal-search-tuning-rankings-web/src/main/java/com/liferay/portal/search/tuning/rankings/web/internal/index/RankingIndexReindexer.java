@@ -26,13 +26,13 @@ import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingIndexWriterUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -108,8 +108,9 @@ public class RankingIndexReindexer implements IndexReindexer {
 		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
 
 		for (int i = 0; i < classPKs.size(); i++) {
-			_rankingIndexWriter.create(
-				rankingIndexName, _buildRanking(classPKs.get(i)));
+			RankingIndexWriterUtil.create(
+				_buildRanking(classPKs.get(i)), rankingIndexName,
+				_searchEngineAdapter);
 
 			if ((i % sendStatusInterval) != 0) {
 				continue;
@@ -126,11 +127,6 @@ public class RankingIndexReindexer implements IndexReindexer {
 			syncReindexManager.deleteStaleDocuments(
 				rankingIndexName.getIndexName(), date, Collections.emptySet());
 		}
-	}
-
-	@Activate
-	protected void activate() {
-		_rankingIndexWriter = new RankingIndexWriter(_searchEngineAdapter);
 	}
 
 	@Reference
@@ -223,8 +219,6 @@ public class RankingIndexReindexer implements IndexReindexer {
 	private static final Snapshot<SyncReindexManager>
 		_syncReindexManagerSnapshot = new Snapshot<>(
 			RankingIndexReindexer.class, SyncReindexManager.class, null, true);
-
-	private RankingIndexWriter _rankingIndexWriter;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

@@ -34,9 +34,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
@@ -641,15 +639,10 @@ public class ElasticsearchSearchEngine
 	}
 
 	private void _waitForYellowStatus() {
-		long timeout = 30 * Time.SECOND;
-
-		if (PortalRunMode.isTestMode()) {
-			timeout = Time.HOUR;
-		}
-
 		HealthClusterRequest healthClusterRequest = new HealthClusterRequest();
 
-		healthClusterRequest.setTimeout(timeout);
+		healthClusterRequest.setTimeout(
+			_elasticsearchConfigurationWrapper.clusterHealthTimeout());
 		healthClusterRequest.setWaitForClusterHealthStatus(
 			ClusterHealthStatus.YELLOW);
 

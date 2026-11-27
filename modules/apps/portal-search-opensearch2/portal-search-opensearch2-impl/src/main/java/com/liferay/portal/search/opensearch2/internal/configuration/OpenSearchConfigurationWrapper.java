@@ -17,6 +17,8 @@ public interface OpenSearchConfigurationWrapper
 
 	public String additionalTypeMappings();
 
+	public long clusterHealthTimeout();
+
 	public int indexMaxResultWindow();
 
 	public String indexNamePrefix();

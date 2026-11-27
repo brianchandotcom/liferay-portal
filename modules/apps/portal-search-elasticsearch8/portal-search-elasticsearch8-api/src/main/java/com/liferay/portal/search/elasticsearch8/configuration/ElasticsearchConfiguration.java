@@ -54,6 +54,12 @@ public interface ElasticsearchConfiguration {
 	public boolean bootstrapMlockAll();
 
 	@Meta.AD(
+		deflt = "30000", description = "cluster-health-timeout-help",
+		name = "cluster-health-timeout", required = false
+	)
+	public long clusterHealthTimeout();
+
+	@Meta.AD(
 		deflt = "LiferayElasticsearchCluster",
 		description = "cluster-name-help", name = "cluster-name",
 		required = false

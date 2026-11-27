@@ -231,6 +231,9 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngine, "_indexNameBuilder", indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
+			openSearchSearchEngine, "_openSearchConfigurationWrapper",
+			openSearchConfigurationWrapper);
+		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngine, "_openSearchConnectionManager",
 			_openSearchConnectionManager);
 		ReflectionTestUtil.setFieldValue(

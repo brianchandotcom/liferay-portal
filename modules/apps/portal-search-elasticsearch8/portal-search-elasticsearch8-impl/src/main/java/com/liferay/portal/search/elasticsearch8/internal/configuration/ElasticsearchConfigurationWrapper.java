@@ -57,6 +57,10 @@ public class ElasticsearchConfigurationWrapper
 		return _elasticsearchConfiguration.bootstrapMlockAll();
 	}
 
+	public long clusterHealthTimeout() {
+		return _elasticsearchConfiguration.clusterHealthTimeout();
+	}
+
 	public String clusterName() {
 		return _elasticsearchConfiguration.clusterName();
 	}

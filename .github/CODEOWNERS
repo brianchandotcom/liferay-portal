@@ -204,7 +204,6 @@ modules/apps/mcp/    @liferay-headless
 modules/apps/mentions/    @liferay-content-management
 modules/apps/message-boards/    @liferay-content-management
 modules/apps/microblogs/    @liferay-content-management
-modules/apps/microsoft-translator/
 modules/apps/mobile-device-rules/
 modules/apps/monitoring/
 modules/apps/my-subscriptions/    @liferay-content-management

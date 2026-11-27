@@ -76,9 +76,9 @@ public class LayoutPageTemplateCollectionDesignLibraryResourceTypeContributor
 	}
 
 	@Override
-	public String getCreationItemsSectionKey() {
+	public String getCreationItemsCategoryKey() {
 		return LayoutPageTemplateAdminWebConstants.
-			CREATION_ITEMS_SECTION_KEY_PAGES;
+			CREATION_ITEMS_CATEGORY_KEY_PAGES;
 	}
 
 	@Override

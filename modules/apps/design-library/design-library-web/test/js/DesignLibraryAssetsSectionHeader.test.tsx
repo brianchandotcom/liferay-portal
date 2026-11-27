@@ -29,7 +29,7 @@ const PAGE_TEMPLATE_SET = {
 			moduleProps: {},
 		},
 	],
-	creationItemsSectionKey: 'pages',
+	creationItemsCategoryKey: 'pages',
 	creationItemsSubmenuLabel: 'Page Templates',
 	defaultActionId: 'view',
 	entryClassName:
@@ -49,7 +49,7 @@ const STYLE_BOOK = {
 			moduleProps: {},
 		},
 	],
-	creationItemsSectionKey: 'style-book',
+	creationItemsCategoryKey: 'style-book',
 	defaultActionId: 'edit',
 	entryClassName: 'com.liferay.style.book.model.StyleBookEntry',
 	key: 'style-book',

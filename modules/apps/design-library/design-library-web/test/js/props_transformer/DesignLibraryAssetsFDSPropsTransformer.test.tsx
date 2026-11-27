@@ -175,7 +175,7 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 						creationItems: [
 							creationItem('add-style-book', 'new-style-book'),
 						],
-						creationItemsSectionKey: 'style-book',
+						creationItemsCategoryKey: 'style-book',
 						creationItemsSubmenuLabel: 'Style Books',
 					},
 					{
@@ -183,7 +183,7 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 						creationItems: [
 							creationItem('add-master-page', 'new-master-page'),
 						],
-						creationItemsSectionKey: 'pages',
+						creationItemsCategoryKey: 'pages',
 						creationItemsSubmenuLabel: 'Master Pages',
 					},
 					{
@@ -198,7 +198,7 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 								'new-fragment-set'
 							),
 						],
-						creationItemsSectionKey: 'fragment',
+						creationItemsCategoryKey: 'fragment',
 						creationItemsSubmenuLabel: 'Fragments',
 					},
 					{
@@ -209,7 +209,7 @@ describe('DesignLibraryAssetsFDSPropsTransformer', () => {
 								'new-display-page-template'
 							),
 						],
-						creationItemsSectionKey: 'pages',
+						creationItemsCategoryKey: 'pages',
 						creationItemsSubmenuLabel: 'Display Page Templates',
 					},
 				],

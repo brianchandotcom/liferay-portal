@@ -10,6 +10,6 @@ package com.liferay.layout.page.template.admin.web.internal.constants;
  */
 public class LayoutPageTemplateAdminWebConstants {
 
-	public static final String CREATION_ITEMS_SECTION_KEY_PAGES = "pages";
+	public static final String CREATION_ITEMS_CATEGORY_KEY_PAGES = "pages";
 
 }

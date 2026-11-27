@@ -201,9 +201,9 @@ public class ViewResourcesDesignLibraryDisplayContext
 						_toCreationItemMaps(
 							designLibraryResourceCreationItems));
 					resourceType.put(
-						"creationItemsSectionKey",
+						"creationItemsCategoryKey",
 						designLibraryResourceTypeContributor.
-							getCreationItemsSectionKey());
+							getCreationItemsCategoryKey());
 					resourceType.put(
 						"creationItemsSubmenuLabel",
 						designLibraryResourceTypeContributor.

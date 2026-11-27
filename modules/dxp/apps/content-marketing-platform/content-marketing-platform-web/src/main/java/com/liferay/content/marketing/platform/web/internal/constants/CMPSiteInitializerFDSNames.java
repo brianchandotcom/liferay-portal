@@ -31,6 +31,9 @@ public class CMPSiteInitializerFDSNames {
 	public static final String CMP_PROJECT_TASKS =
 		CMPSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-project-tasks";
 
+	public static final String CMP_SUBTASKS =
+		CMPSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-subtasks";
+
 	public static final String CMP_WORKFLOW_TASKS =
 		CMPSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-workflow-tasks";
 

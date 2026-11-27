@@ -348,6 +348,22 @@
 			},
 			{
 				"definition": {
+					"cssClasses": [
+						"px-4"
+					],
+					"fragment": {
+						"key": "com.liferay.content.marketing.platform.web.internal.fragment.renderer.ViewSubtasksJSPSectionFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
 					"indexed": true,
 					"layout": {
 					},

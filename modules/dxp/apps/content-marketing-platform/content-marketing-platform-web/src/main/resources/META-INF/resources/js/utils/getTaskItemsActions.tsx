@@ -23,6 +23,7 @@ import {
 	postUnsubscribeTaskByExternalReferenceCode,
 } from './api';
 import {openCMPModal} from './openCMPModal';
+import {isSubtask} from './subtaskWatchActions';
 import {getSubtasksCount} from './subtasksUtil';
 import {
 	displayAssignSuccessToast,
@@ -110,7 +111,9 @@ export default function getTaskItemsActions(
 
 	if (task.actions?.subscribe) {
 		middleItems.push({
-			label: Liferay.Language.get('watch-task'),
+			label: isSubtask(task.embedded)
+				? Liferay.Language.get('watch-subtask')
+				: Liferay.Language.get('watch-task'),
 			onClick: async () => {
 				const {error} = await postSubscribeTaskByExternalReferenceCode({
 					externalReferenceCode: task.embedded.externalReferenceCode,
@@ -132,7 +135,9 @@ export default function getTaskItemsActions(
 
 	if (task.actions?.unsubscribe) {
 		middleItems.push({
-			label: Liferay.Language.get('stop-watching-task'),
+			label: isSubtask(task.embedded)
+				? Liferay.Language.get('stop-watching-subtask')
+				: Liferay.Language.get('stop-watching-task'),
 			onClick: async () => {
 				const {error} =
 					await postUnsubscribeTaskByExternalReferenceCode({

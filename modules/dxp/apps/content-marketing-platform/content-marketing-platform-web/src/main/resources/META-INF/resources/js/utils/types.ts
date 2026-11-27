@@ -104,6 +104,7 @@ export interface ITaskObjectEntry {
 	r_cmpProjectToCMPTasks_c_cmpProject: any;
 	r_cmpProjectToCMPTasks_c_cmpProjectERC: string;
 	r_cmpProjectToCMPTasks_c_cmpProjectId: number;
+	r_cmpTaskToCMPTasks_c_cmpTaskId?: number;
 	scopeId: number;
 	scopeKey: string;
 	state: {

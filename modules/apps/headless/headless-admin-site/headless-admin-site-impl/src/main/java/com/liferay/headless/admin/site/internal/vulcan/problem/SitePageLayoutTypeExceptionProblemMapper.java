@@ -57,14 +57,14 @@ public class SitePageLayoutTypeExceptionProblemMapper
 		String layoutType = GetterUtil.getString(
 			layoutTypeException.getLayoutType());
 
-		SitePage.Type sitePageType = SitePageTypeUtil.fetchExternalType(
+		SitePage.Type externalType = SitePageTypeUtil.fetchExternalType(
 			layoutType);
 
-		if (sitePageType == null) {
+		if (externalType == null) {
 			return layoutType;
 		}
 
-		return sitePageType.getValue();
+		return externalType.getValue();
 	}
 
 }

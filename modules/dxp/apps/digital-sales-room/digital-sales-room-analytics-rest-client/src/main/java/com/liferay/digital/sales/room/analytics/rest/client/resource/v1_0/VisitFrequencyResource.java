@@ -132,6 +132,12 @@ public interface VisitFrequencyResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -144,6 +150,7 @@ public interface VisitFrequencyResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -243,6 +250,8 @@ public interface VisitFrequencyResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (groupIds != null) {
@@ -289,4 +298,4 @@ public interface VisitFrequencyResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1277525473
+// LIFERAY-REST-BUILDER-HASH:1008076661

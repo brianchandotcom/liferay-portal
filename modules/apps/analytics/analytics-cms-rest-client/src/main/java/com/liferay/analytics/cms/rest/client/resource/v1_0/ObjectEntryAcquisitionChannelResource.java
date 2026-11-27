@@ -134,6 +134,12 @@ public interface ObjectEntryAcquisitionChannelResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -146,6 +152,7 @@ public interface ObjectEntryAcquisitionChannelResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -245,6 +252,8 @@ public interface ObjectEntryAcquisitionChannelResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (groupId != null) {
@@ -285,4 +294,4 @@ public interface ObjectEntryAcquisitionChannelResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-281335297
+// LIFERAY-REST-BUILDER-HASH:-430389707

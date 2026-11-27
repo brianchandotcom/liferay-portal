@@ -129,6 +129,12 @@ public interface RoomResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -141,6 +147,7 @@ public interface RoomResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -234,6 +241,8 @@ public interface RoomResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -263,4 +272,4 @@ public interface RoomResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-65804438
+// LIFERAY-REST-BUILDER-HASH:-2003178810

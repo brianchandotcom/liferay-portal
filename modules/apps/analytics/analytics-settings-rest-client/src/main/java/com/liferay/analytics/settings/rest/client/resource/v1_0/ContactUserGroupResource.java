@@ -133,6 +133,12 @@ public interface ContactUserGroupResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -145,6 +151,7 @@ public interface ContactUserGroupResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -241,6 +248,8 @@ public interface ContactUserGroupResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (keywords != null) {
@@ -283,4 +292,4 @@ public interface ContactUserGroupResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-303596203
+// LIFERAY-REST-BUILDER-HASH:2111419927

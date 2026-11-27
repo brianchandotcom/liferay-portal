@@ -136,6 +136,12 @@ public interface MissingRequiredFieldsAssetResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -148,6 +154,7 @@ public interface MissingRequiredFieldsAssetResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -249,6 +256,8 @@ public interface MissingRequiredFieldsAssetResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (assetLibraryId != null) {
@@ -296,4 +305,4 @@ public interface MissingRequiredFieldsAssetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:541625017
+// LIFERAY-REST-BUILDER-HASH:-25224115

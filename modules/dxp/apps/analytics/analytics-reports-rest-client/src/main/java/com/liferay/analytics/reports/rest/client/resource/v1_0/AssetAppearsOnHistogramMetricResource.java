@@ -135,6 +135,12 @@ public interface AssetAppearsOnHistogramMetricResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -147,6 +153,7 @@ public interface AssetAppearsOnHistogramMetricResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -247,6 +254,8 @@ public interface AssetAppearsOnHistogramMetricResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (assetId != null) {
@@ -290,4 +299,4 @@ public interface AssetAppearsOnHistogramMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-951860335
+// LIFERAY-REST-BUILDER-HASH:1230722683

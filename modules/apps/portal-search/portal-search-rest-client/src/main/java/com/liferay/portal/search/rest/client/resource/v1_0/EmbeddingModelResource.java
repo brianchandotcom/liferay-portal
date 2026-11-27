@@ -133,6 +133,12 @@ public interface EmbeddingModelResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -145,6 +151,7 @@ public interface EmbeddingModelResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -242,6 +249,8 @@ public interface EmbeddingModelResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (provider != null) {
@@ -284,4 +293,4 @@ public interface EmbeddingModelResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-246595280
+// LIFERAY-REST-BUILDER-HASH:-1818919250

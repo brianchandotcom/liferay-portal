@@ -131,6 +131,12 @@ public interface DatabaseSchemaExportResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -143,6 +149,7 @@ public interface DatabaseSchemaExportResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -241,6 +248,8 @@ public interface DatabaseSchemaExportResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
@@ -268,4 +277,4 @@ public interface DatabaseSchemaExportResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-559626990
+// LIFERAY-REST-BUILDER-HASH:145493214

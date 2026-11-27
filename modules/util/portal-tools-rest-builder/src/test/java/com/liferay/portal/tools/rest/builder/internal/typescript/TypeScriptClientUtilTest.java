@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
+import com.liferay.portal.tools.rest.builder.internal.yaml.config.Application;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 
 import java.io.File;
@@ -31,9 +32,10 @@ public class TypeScriptClientUtilTest {
 
 	@Test
 	public void testGenerateTypeScriptClient() throws Exception {
-		Map<String, String> models = _generateTypeScriptClient(false);
+		Map<String, String> files = _generateTypeScriptClient(false);
 
-		String externalChildEntity1 = models.get("ExternalChildEntity1.ts");
+		String externalChildEntity1 = files.get(
+			"models/ExternalChildEntity1.ts");
 
 		Assert.assertTrue(
 			externalChildEntity1,
@@ -44,7 +46,8 @@ public class TypeScriptClientUtilTest {
 			StringUtil.count(
 				externalChildEntity1, "\"externalProperty\"?: string;"));
 
-		String externalChildEntity2 = models.get("ExternalChildEntity2.ts");
+		String externalChildEntity2 = files.get(
+			"models/ExternalChildEntity2.ts");
 
 		Assert.assertTrue(
 			externalChildEntity2,
@@ -55,7 +58,7 @@ public class TypeScriptClientUtilTest {
 			StringUtil.count(
 				externalChildEntity2, "\"mixinProperty\"?: string;"));
 
-		String testEntity = models.get("TestEntity.ts");
+		String testEntity = files.get("models/TestEntity.ts");
 
 		Assert.assertTrue(
 			testEntity,
@@ -64,6 +67,15 @@ public class TypeScriptClientUtilTest {
 		Assert.assertTrue(
 			testEntity,
 			testEntity.contains("\"externalMixin\"?: ExternalMixin;"));
+
+		String testEntityAPI = files.get("apis/TestEntityAPI.ts");
+
+		Assert.assertTrue(
+			testEntityAPI,
+			testEntityAPI.contains("set timeout(timeout: number) {"));
+		Assert.assertTrue(
+			testEntityAPI,
+			testEntityAPI.contains("signal: abortController.signal,"));
 
 		Assert.assertEquals(
 			_generateTypeScriptClient(false), _generateTypeScriptClient(true));
@@ -76,7 +88,7 @@ public class TypeScriptClientUtilTest {
 			boolean mergePropertySchemas)
 		throws Exception {
 
-		Map<String, String> models = new HashMap<>();
+		Map<String, String> files = new HashMap<>();
 
 		String rootDirName = StringUtil.randomString();
 
@@ -94,6 +106,12 @@ public class TypeScriptClientUtilTest {
 			externalOpenAPIFile, _read("external-rest-openapi.yaml"));
 
 		ConfigYAML configYAML = new ConfigYAML();
+
+		Application application = new Application();
+
+		application.setBaseURI("/test");
+
+		configYAML.setApplication(application);
 
 		configYAML.setAuthor("Test Author");
 
@@ -115,14 +133,18 @@ public class TypeScriptClientUtilTest {
 			testConfigDir, configYAML, new File(testConfigDir, "copyright.txt"),
 			Collections.singletonList(_read("test-rest-openapi.yaml")));
 
-		File modelsDir = new File(
-			testConfigDir.getParentFile(), "test-client-js/src/v1_0/models");
+		File versionDir = new File(
+			testConfigDir.getParentFile(), "test-client-js/src/v1_0");
 
-		for (File file : modelsDir.listFiles()) {
-			models.put(file.getName(), FileUtil.read(file));
+		for (String dirName : new String[] {"apis", "models"}) {
+			File dir = new File(versionDir, dirName);
+
+			for (File file : dir.listFiles()) {
+				files.put(dirName + "/" + file.getName(), FileUtil.read(file));
+			}
 		}
 
-		return models;
+		return files;
 	}
 
 	private String _read(String fileName) throws Exception {

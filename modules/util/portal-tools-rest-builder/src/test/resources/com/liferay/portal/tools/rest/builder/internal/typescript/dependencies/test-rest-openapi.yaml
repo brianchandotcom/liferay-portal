@@ -11,4 +11,21 @@ info:
     title: Test
     version: v1.0
 openapi: 3.0.1
-paths: {}
+paths:
+    "/test-entities/{testEntityId}":
+        get:
+            operationId: getTestEntity
+            parameters:
+                -   in: path
+                    name: testEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestEntity"
+            tags: ["TestEntity"]

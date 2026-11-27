@@ -147,6 +147,12 @@ public interface AssetEntryResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -159,6 +165,7 @@ public interface AssetEntryResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -256,6 +263,8 @@ public interface AssetEntryResource {
 
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
+
+			httpInvoker.timeout(_builder._timeout);
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
@@ -390,6 +399,8 @@ public interface AssetEntryResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			if (groupIds != null) {
@@ -455,4 +466,4 @@ public interface AssetEntryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:805351637
+// LIFERAY-REST-BUILDER-HASH:724417584

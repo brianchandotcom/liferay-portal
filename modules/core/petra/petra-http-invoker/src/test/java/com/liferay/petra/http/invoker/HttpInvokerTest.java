@@ -5,6 +5,7 @@
 
 package com.liferay.petra.http.invoker;
 
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -18,6 +19,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.net.HttpURLConnection;
+import java.net.ServerSocket;
+import java.net.SocketTimeoutException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -189,6 +192,24 @@ public class HttpInvokerTest {
 		Mockito.verify(
 			inputStream
 		).close();
+	}
+
+	@Test
+	public void testTimeout() throws Exception {
+		try (ServerSocket serverSocket = new ServerSocket(0)) {
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.httpMethod(_httpMethod);
+			httpInvoker.path(
+				String.format(
+					"%s://localhost:%d", _protocol,
+					serverSocket.getLocalPort()));
+			httpInvoker.timeout(100);
+
+			AssertUtils.assertFailure(
+				SocketTimeoutException.class, "Read timed out",
+				httpInvoker::invoke);
+		}
 	}
 
 	private void _testPathReplacement(String specialCharacter) {

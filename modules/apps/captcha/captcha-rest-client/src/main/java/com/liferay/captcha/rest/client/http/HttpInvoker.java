@@ -136,6 +136,12 @@ public class HttpInvoker {
 		return this;
 	}
 
+	public HttpInvoker timeout(int timeout) {
+		_timeout = timeout;
+
+		return this;
+	}
+
 	public HttpInvoker userNameAndPassword(String userNameAndPassword)
 		throws IOException {
 
@@ -341,6 +347,11 @@ public class HttpInvoker {
 		HttpURLConnection httpURLConnection = _getHttpURLConnection(
 			_httpMethod, urlString);
 
+		if (_timeout > 0) {
+			httpURLConnection.setConnectTimeout(_timeout);
+			httpURLConnection.setReadTimeout(_timeout);
+		}
+
 		if (_encodedUserNameAndPassword != null) {
 			httpURLConnection.setRequestProperty(
 				"Authorization", "Basic " + _encodedUserNameAndPassword);
@@ -465,6 +476,7 @@ public class HttpInvoker {
 	private final Map<String, String[]> _parameters = new LinkedHashMap<>();
 	private final Map<String, String> _parts = new LinkedHashMap<>();
 	private String _path;
+	private int _timeout;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1976339259
+// LIFERAY-REST-BUILDER-HASH:729156658

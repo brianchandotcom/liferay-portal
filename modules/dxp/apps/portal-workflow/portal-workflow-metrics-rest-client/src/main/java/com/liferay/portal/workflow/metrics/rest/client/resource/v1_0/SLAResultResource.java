@@ -128,6 +128,12 @@ public interface SLAResultResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -140,6 +146,7 @@ public interface SLAResultResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -234,6 +241,8 @@ public interface SLAResultResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			httpInvoker.path(
@@ -263,4 +272,4 @@ public interface SLAResultResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1975210236
+// LIFERAY-REST-BUILDER-HASH:-1487108046

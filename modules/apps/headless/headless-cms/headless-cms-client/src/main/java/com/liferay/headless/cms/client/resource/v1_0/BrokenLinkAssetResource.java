@@ -135,6 +135,12 @@ public interface BrokenLinkAssetResource {
 			return this;
 		}
 
+		public Builder timeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Builder() {
 		}
 
@@ -147,6 +153,7 @@ public interface BrokenLinkAssetResource {
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
+		private int _timeout;
 
 	}
 
@@ -245,6 +252,8 @@ public interface BrokenLinkAssetResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
+			httpInvoker.timeout(_builder._timeout);
+
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
 			if (assetLibraryId != null) {
@@ -292,4 +301,4 @@ public interface BrokenLinkAssetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-372453695
+// LIFERAY-REST-BUILDER-HASH:-1181529583

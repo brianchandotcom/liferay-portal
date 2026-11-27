@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dispatch.scheduler.test;
+package com.liferay.dispatch.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dispatch.scheduler.SchedulerResponseManager;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -16,6 +15,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -38,7 +39,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -58,7 +58,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class SchedulerResponseManagerTest {
+public class EditSchedulerResponseMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -91,24 +91,6 @@ public class SchedulerResponseManagerTest {
 			_schedulerEngineHelper.delete(
 				jobName, jobName, StorageType.MEMORY_CLUSTERED);
 		}
-	}
-
-	@Test
-	public void testGetSchedulerResponsesWithCompanyAdmin() throws Exception {
-		_scheduleJob(_JOB_NAME_SYSTEM, new Message());
-
-		Assert.assertFalse(
-			_hasSchedulerResponse(
-				_companyAdminPermissionChecker, _JOB_NAME_SYSTEM));
-	}
-
-	@Test
-	public void testGetSchedulerResponsesWithOmniadmin() throws Exception {
-		_scheduleJob(_JOB_NAME_SYSTEM, new Message());
-
-		Assert.assertTrue(
-			_hasSchedulerResponse(
-				_omniadminPermissionChecker, _JOB_NAME_SYSTEM));
 	}
 
 	@Test
@@ -150,21 +132,16 @@ public class SchedulerResponseManagerTest {
 	public void testPauseSystemJobWithOmniadmin() throws Exception {
 		_scheduleJob(_JOB_NAME_SYSTEM, new Message());
 
-		_schedulerResponseManager.pause(
-			_omniadminPermissionChecker, _JOB_NAME_SYSTEM, _JOB_NAME_SYSTEM,
-			StorageType.MEMORY_CLUSTERED);
+		_invoke(_JOB_NAME_SYSTEM, "_pause", _omniadminPermissionChecker);
 
 		Assert.assertEquals(
-			TriggerState.PAUSED,
-			_schedulerResponseManager.getTriggerState(
-				_JOB_NAME_SYSTEM, _JOB_NAME_SYSTEM,
-				StorageType.MEMORY_CLUSTERED));
+			TriggerState.PAUSED, _getTriggerState(_JOB_NAME_SYSTEM));
 	}
 
 	@Test
 	public void testRun() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			SchedulerResponseManagerTest.class);
+			EditSchedulerResponseMVCActionCommandTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -195,9 +172,7 @@ public class SchedulerResponseManagerTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
-			_schedulerResponseManager.run(
-				_companyAdminPermissionChecker, _JOB_NAME_TEST, _JOB_NAME_TEST,
-				StorageType.MEMORY_CLUSTERED);
+			_invoke(_JOB_NAME_TEST, "_run", _companyAdminPermissionChecker);
 
 			Assert.assertEquals(
 				_company.getCompanyId(),
@@ -213,46 +188,68 @@ public class SchedulerResponseManagerTest {
 		}
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
+	@Test
 	public void testRunSystemJobWithCompanyAdmin() throws Exception {
 		_scheduleJob(_JOB_NAME_SYSTEM, new Message());
 
-		_schedulerResponseManager.run(
-			_companyAdminPermissionChecker, _JOB_NAME_SYSTEM, _JOB_NAME_SYSTEM,
-			StorageType.MEMORY_CLUSTERED);
+		try {
+			_invoke(_JOB_NAME_SYSTEM, "_run", _companyAdminPermissionChecker);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertSame(
+				PrincipalException.MustHavePermission.class,
+				exception.getClass());
+			Assert.assertEquals(
+				_getMustHavePermissionMessage(), exception.getMessage());
+		}
 	}
 
 	private void _assertCompanyAdminCannotPause(String jobName)
 		throws Exception {
 
 		try {
-			_schedulerResponseManager.pause(
-				_companyAdminPermissionChecker, jobName, jobName,
-				StorageType.MEMORY_CLUSTERED);
+			_invoke(jobName, "_pause", _companyAdminPermissionChecker);
 
 			Assert.fail();
 		}
-		catch (PrincipalException.MustHavePermission principalException) {
+		catch (Exception exception) {
+			Assert.assertSame(
+				PrincipalException.MustHavePermission.class,
+				exception.getClass());
 			Assert.assertEquals(
-				TriggerState.NORMAL,
-				_schedulerResponseManager.getTriggerState(
-					jobName, jobName, StorageType.MEMORY_CLUSTERED));
+				_getMustHavePermissionMessage(), exception.getMessage());
 		}
+
+		Assert.assertEquals(TriggerState.NORMAL, _getTriggerState(jobName));
 	}
 
-	private boolean _hasSchedulerResponse(
-		PermissionChecker permissionChecker, String jobName) {
+	private String _getMustHavePermissionMessage() {
+		return StringBundler.concat(
+			"User ", _companyAdminPermissionChecker.getUserId(),
+			" must have UPDATE permission for null ");
+	}
 
-		for (SchedulerResponse schedulerResponse :
-				_schedulerResponseManager.getSchedulerResponses(
-					permissionChecker, 0, Integer.MAX_VALUE)) {
+	private TriggerState _getTriggerState(String jobName) throws Exception {
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				jobName, jobName, StorageType.MEMORY_CLUSTERED);
 
-			if (Objects.equals(jobName, schedulerResponse.getJobName())) {
-				return true;
-			}
-		}
+		return _schedulerEngineHelper.getJobState(schedulerResponse);
+	}
 
-		return false;
+	private void _invoke(
+		String jobName, String methodName,
+		PermissionChecker permissionChecker) {
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, methodName,
+			new Class<?>[] {
+				String.class, String.class, PermissionChecker.class,
+				StorageType.class
+			},
+			jobName, jobName, permissionChecker, StorageType.MEMORY_CLUSTERED);
 	}
 
 	private void _scheduleJob(String jobName, Message message)
@@ -271,7 +268,7 @@ public class SchedulerResponseManagerTest {
 		RandomTestUtil.randomString();
 
 	private static final String _JOB_NAME_TEST =
-		SchedulerResponseManagerTest.class.getName();
+		EditSchedulerResponseMVCActionCommandTest.class.getName();
 
 	private static final String _TEST_DESTINATION_NAME =
 		RandomTestUtil.randomString();
@@ -286,11 +283,13 @@ public class SchedulerResponseManagerTest {
 
 	private final List<String> _jobNames = new ArrayList<>();
 
-	@Inject
-	private SchedulerEngineHelper _schedulerEngineHelper;
+	@Inject(
+		filter = "component.name=com.liferay.dispatch.web.internal.portlet.action.EditSchedulerResponseMVCActionCommand"
+	)
+	private MVCActionCommand _mvcActionCommand;
 
 	@Inject
-	private SchedulerResponseManager _schedulerResponseManager;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Inject
 	private TriggerFactory _triggerFactory;

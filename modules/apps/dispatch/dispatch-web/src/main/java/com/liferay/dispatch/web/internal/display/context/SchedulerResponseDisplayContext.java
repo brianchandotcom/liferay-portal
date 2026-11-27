@@ -6,17 +6,23 @@
 package com.liferay.dispatch.web.internal.display.context;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.scheduler.SchedulerResponseManager;
+import com.liferay.dispatch.web.internal.security.permisison.resource.SchedulerResponsePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -25,7 +31,10 @@ import jakarta.portlet.RenderRequest;
 
 import java.text.Format;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Matija Petanjek
@@ -34,11 +43,11 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 
 	public SchedulerResponseDisplayContext(
 		RenderRequest renderRequest,
-		SchedulerResponseManager schedulerResponseManager) {
+		SchedulerEngineHelper schedulerEngineHelper) {
 
 		super(renderRequest);
 
-		_schedulerResponseManager = schedulerResponseManager;
+		_schedulerEngineHelper = schedulerEngineHelper;
 
 		_dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
 			dispatchRequestHelper.getLocale());
@@ -47,8 +56,8 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 	public String getNextFireDateString(SchedulerResponse schedulerResponse)
 		throws SchedulerException {
 
-		Date nextFireDate = _schedulerResponseManager.getNextFireDate(
-			schedulerResponse.getJobName(), schedulerResponse.getGroupName(),
+		Date nextFireDate = _getNextFireDate(
+			schedulerResponse.getGroupName(), schedulerResponse.getJobName(),
 			schedulerResponse.getStorageType());
 
 		if (nextFireDate != null) {
@@ -128,24 +137,25 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 		_searchContainer.setOrderByComparator(null);
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
-			() -> _schedulerResponseManager.getSchedulerResponses(
+			() -> _getSchedulerResponses(
+				_searchContainer.getEnd(),
 				dispatchRequestHelper.getPermissionChecker(),
-				_searchContainer.getStart(), _searchContainer.getEnd()),
-			_schedulerResponseManager.getSchedulerResponsesCount(
+				_searchContainer.getStart()),
+			_getSchedulerResponsesCount(
 				dispatchRequestHelper.getPermissionChecker()));
 
 		return _searchContainer;
 	}
 
 	public String getSimpleName(String jobName) {
-		return _schedulerResponseManager.getSimpleJobName(jobName);
+		return jobName.substring(jobName.lastIndexOf(StringPool.PERIOD) + 1);
 	}
 
 	public TriggerState getTriggerState(SchedulerResponse schedulerResponse)
 		throws SchedulerException {
 
-		return _schedulerResponseManager.getTriggerState(
-			schedulerResponse.getJobName(), schedulerResponse.getGroupName(),
+		return _getTriggerState(
+			schedulerResponse.getGroupName(), schedulerResponse.getJobName(),
 			schedulerResponse.getStorageType());
 	}
 
@@ -159,10 +169,88 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 		return false;
 	}
 
+	private Date _getNextFireDate(
+			String groupName, String jobName, StorageType storageType)
+		throws SchedulerException {
+
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				jobName, groupName, storageType);
+
+		if (schedulerResponse == null) {
+			return null;
+		}
+
+		return _schedulerEngineHelper.getNextFireDate(schedulerResponse);
+	}
+
+	private List<SchedulerResponse> _getSchedulerResponses(
+		int end, PermissionChecker permissionChecker, int start) {
+
+		List<SchedulerResponse> schedulerResponses = _getSchedulerResponses(
+			permissionChecker);
+
+		Collections.sort(
+			schedulerResponses,
+			Comparator.comparing(
+				schedulerResponse -> getSimpleName(
+					schedulerResponse.getJobName())));
+
+		return schedulerResponses.subList(
+			start, Math.min(end, schedulerResponses.size()));
+	}
+
+	private List<SchedulerResponse> _getSchedulerResponses(
+		PermissionChecker permissionChecker) {
+
+		List<SchedulerResponse> schedulerResponses = null;
+
+		try {
+			schedulerResponses = _schedulerEngineHelper.getScheduledJobs();
+		}
+		catch (SchedulerException schedulerException) {
+			_log.error("Unable to get scheduler responses", schedulerException);
+
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			schedulerResponses,
+			schedulerResponse -> SchedulerResponsePermission.contains(
+				permissionChecker, schedulerResponse));
+	}
+
+	private int _getSchedulerResponsesCount(
+		PermissionChecker permissionChecker) {
+
+		List<SchedulerResponse> schedulerResponses = _getSchedulerResponses(
+			permissionChecker);
+
+		return schedulerResponses.size();
+	}
+
+	private TriggerState _getTriggerState(
+			String groupName, String jobName, StorageType storageType)
+		throws SchedulerException {
+
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				jobName, groupName, storageType);
+
+		if (schedulerResponse == null) {
+			return null;
+		}
+
+		return _schedulerEngineHelper.getJobState(schedulerResponse);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SchedulerResponseDisplayContext.class);
+
 	private final Format _dateTimeFormat;
 	private String _orderByCol;
 	private String _orderByType;
-	private final SchedulerResponseManager _schedulerResponseManager;
+	private final SchedulerEngineHelper _schedulerEngineHelper;
 	private SearchContainer<SchedulerResponse> _searchContainer;
 
 }

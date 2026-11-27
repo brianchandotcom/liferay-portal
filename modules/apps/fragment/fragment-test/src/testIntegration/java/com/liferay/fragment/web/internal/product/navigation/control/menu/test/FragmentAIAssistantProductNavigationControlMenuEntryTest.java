@@ -59,14 +59,18 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 	@Test
 	@TestInfo("LPD-111343")
 	public void testIsShow() throws Exception {
+		_testIsShow();
+		_testIsShowWithMVCRenderCommandName();
+		_testIsShowWithoutPermission();
+	}
+
+	private void _testIsShow() throws Exception {
 		Assert.assertTrue(
 			_productNavigationControlMenuEntry.isShow(
 				_getMockHttpServletRequest(TestPropsValues.getUser())));
 	}
 
-	@Test
-	@TestInfo("LPD-111343")
-	public void testIsShowWithMVCRenderCommandName() throws Exception {
+	private void _testIsShowWithMVCRenderCommandName() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(TestPropsValues.getUser());
 
@@ -84,9 +88,7 @@ public class FragmentAIAssistantProductNavigationControlMenuEntryTest {
 			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));
 	}
 
-	@Test
-	@TestInfo("LPD-111343")
-	public void testIsShowWithoutPermission() throws Exception {
+	private void _testIsShowWithoutPermission() throws Exception {
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
 
 		Assert.assertFalse(

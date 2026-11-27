@@ -127,6 +127,16 @@
 [#function isVisibleNavItem navItem]
 	[#local navLayout = navItem.getLayout()! /]
 
+	[#local navLayoutFriendlyURL = (navLayout.getFriendlyURL())!"" /]
+
+	[#if !((ldpEnabled)!true) && ["/accounts", "/campaigns", "/lifecycles"]?seq_contains(navLayoutFriendlyURL)]
+		[#return false]
+	[/#if]
+
+	[#if !((recommendationsEnabled)!true) && (navLayoutFriendlyURL == "/recommendations")]
+		[#return false]
+	[/#if]
+
 	[#return !((navLayout.isHidden())!false) && (navItem.isBrowsable() || hasVisibleNavItems(navItem.getChildren()))]
 [/#function]
 

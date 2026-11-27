@@ -7,8 +7,11 @@ package com.liferay.launch.web.internal.portlet.action;
 
 import com.liferay.launch.set.publisher.LaunchSetPublisher;
 import com.liferay.launch.web.internal.constants.LaunchPortletKeys;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -40,14 +43,24 @@ public class PublishLaunchMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_launchSetPublisher.publish(
-			ParamUtil.getLong(actionRequest, "launchSetId"),
-			themeDisplay.getUserId());
+		long launchSetId = ParamUtil.getLong(actionRequest, "launchSetId");
+
+		_objectEntryService.checkModelResourcePermission(
+			_objectEntryLocalService.getObjectEntry(launchSetId),
+			ActionKeys.UPDATE);
+
+		_launchSetPublisher.publish(launchSetId, themeDisplay.getUserId());
 
 		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference
 	private LaunchSetPublisher _launchSetPublisher;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 }

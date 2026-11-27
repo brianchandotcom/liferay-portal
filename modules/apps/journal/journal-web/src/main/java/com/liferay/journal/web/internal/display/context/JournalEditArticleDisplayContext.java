@@ -149,6 +149,19 @@ public class JournalEditArticleDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		setViewAttributes();
+
+		if ((article != null) && article.isNew()) {
+			Locale defaultArticleLocale = LocaleUtil.fromLanguageId(
+				getDefaultArticleLanguageId());
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				article.getDefaultLanguageId());
+
+			_moveLocalizedValue(
+				article.getDescriptionMap(), defaultLocale,
+				defaultArticleLocale);
+			_moveLocalizedValue(
+				article.getTitleMap(), defaultLocale, defaultArticleLocale);
+		}
 	}
 
 	public String getArticleId() {

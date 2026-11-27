@@ -120,6 +120,7 @@ export type CampaignTouch = {
 	origin: string;
 	touches: CampaignTouchMember[];
 	touchesCount: number;
+	visible: boolean;
 };
 
 export type TimelineDay = {
@@ -550,7 +551,10 @@ export const buildTouchIndividualUrls = (
 };
 
 export const buildCampaignUrls = (
-	campaignDays: Record<string, {campaigns: Array<{campaignId: string}>}> = {},
+	campaignDays: Record<
+		string,
+		{campaigns: Array<Pick<CampaignTouch, 'campaignId' | 'visible'>>}
+	> = {},
 	{channelId, groupId}: EventDashboardContext = {}
 ): Record<string, string> => {
 	if (!channelId || !groupId) {
@@ -559,7 +563,11 @@ export const buildCampaignUrls = (
 
 	return Object.values(campaignDays).reduce<Record<string, string>>(
 		(urls, {campaigns}) => {
-			campaigns.forEach(({campaignId}) => {
+			campaigns.forEach(({campaignId, visible}) => {
+				if (!visible) {
+					return;
+				}
+
 				urls[campaignId] = toRoute(Routes.CAMPAIGNS_DETAIL, {
 					channelId,
 					groupId,

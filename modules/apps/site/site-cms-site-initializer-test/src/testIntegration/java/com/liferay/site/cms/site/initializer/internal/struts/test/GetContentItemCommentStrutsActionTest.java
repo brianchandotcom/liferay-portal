@@ -143,15 +143,25 @@ public class GetContentItemCommentStrutsActionTest {
 
 		_addComment(depotEntry, objectEntry);
 
-		try {
-			_execute(_addLayout(), objectEntry, _addUser(objectEntry));
+		Layout layout = _addLayout();
+		User user = _addUser(objectEntry);
 
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			Assert.assertArrayEquals(
-				new String[] {ActionKeys.VIEW}, principalException.actionId);
-		}
+		PrincipalException.MustHavePermission mustHavePermission =
+			Assert.assertThrows(
+				PrincipalException.MustHavePermission.class,
+				() -> _execute(layout, objectEntry, user));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		Assert.assertEquals(
+			objectDefinition.getClassName(), mustHavePermission.resourceName);
+
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId(), mustHavePermission.resourceId);
+		Assert.assertArrayEquals(
+			new String[] {ActionKeys.VIEW}, mustHavePermission.actionId);
 	}
 
 	private Comment _addComment(DepotEntry depotEntry, ObjectEntry objectEntry)
@@ -231,8 +241,6 @@ public class GetContentItemCommentStrutsActionTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
-
-		// CMS grants VIEW to every signed-in user by default
 
 		Role userRole = _roleLocalService.getRole(
 			objectEntry.getCompanyId(), RoleConstants.USER);

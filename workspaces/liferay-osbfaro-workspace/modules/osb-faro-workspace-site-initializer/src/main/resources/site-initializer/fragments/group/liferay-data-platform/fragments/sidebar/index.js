@@ -39,7 +39,11 @@ if (!sidebarContainer.classList.contains('fixed')) {
 		}
 	});
 
-	mobileMediaQueryList.addEventListener('change', () => updateSidebar());
+	mobileMediaQueryList.addEventListener('change', updateSidebar);
+
+	Liferay.once('startNavigate', () =>
+		mobileMediaQueryList.removeEventListener('change', updateSidebar)
+	);
 
 	updateSidebar();
 }

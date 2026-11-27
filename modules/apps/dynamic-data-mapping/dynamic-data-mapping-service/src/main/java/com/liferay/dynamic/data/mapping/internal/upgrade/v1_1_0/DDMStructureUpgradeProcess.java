@@ -5,13 +5,13 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0;
 
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.internal.util.ExpressionParameterValueExtractor;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
-import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

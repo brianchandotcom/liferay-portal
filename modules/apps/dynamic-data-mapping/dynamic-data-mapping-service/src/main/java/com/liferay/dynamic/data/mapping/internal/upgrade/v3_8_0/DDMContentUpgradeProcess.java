@@ -5,10 +5,10 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_8_0;
 
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;

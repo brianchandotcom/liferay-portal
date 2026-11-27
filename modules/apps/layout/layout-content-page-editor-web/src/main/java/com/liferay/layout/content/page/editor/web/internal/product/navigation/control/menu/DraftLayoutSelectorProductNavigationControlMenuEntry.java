@@ -87,7 +87,7 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 					"{DraftLayoutSelector} from " +
 						"layout-content-page-editor-web"),
 				HashMapBuilder.<String, Object>put(
-					"draftLayouts", _getDraftLayouts(httpServletRequest)
+					"draftLayouts", _getDraftLayoutMaps(httpServletRequest)
 				).build(),
 				httpServletRequest, writer);
 		}
@@ -172,10 +172,10 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 		).build();
 	}
 
-	private List<Map<String, Object>> _getDraftLayouts(
+	private List<Map<String, Object>> _getDraftLayoutMaps(
 		HttpServletRequest httpServletRequest) {
 
-		List<Map<String, Object>> draftLayouts = new ArrayList<>();
+		List<Map<String, Object>> draftLayoutMaps = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -190,17 +190,17 @@ public class DraftLayoutSelectorProductNavigationControlMenuEntry
 				layout.getClassPK());
 		}
 
-		draftLayouts.add(
+		draftLayoutMaps.add(
 			_getDraftLayoutMap(
 				false, httpServletRequest,
 				_language.get(httpServletRequest, "main"), mainDraftLayout,
 				themeDisplay));
 
-		draftLayouts.addAll(
+		draftLayoutMaps.addAll(
 			_getLaunchSetDraftLayoutMaps(
 				layout.getClassPK(), httpServletRequest, themeDisplay));
 
-		return draftLayouts;
+		return draftLayoutMaps;
 	}
 
 	private String _getEditURL(

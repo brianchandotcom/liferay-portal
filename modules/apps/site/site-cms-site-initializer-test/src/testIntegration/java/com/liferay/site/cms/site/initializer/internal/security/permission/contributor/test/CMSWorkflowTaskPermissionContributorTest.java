@@ -86,11 +86,6 @@ public class CMSWorkflowTaskPermissionContributorTest {
 
 	@Test
 	public void testContains() throws Exception {
-		DepotEntry depotEntry1 = _addDepotEntry(DepotConstants.TYPE_SPACE);
-		DepotEntry depotEntry2 = _addDepotEntry(DepotConstants.TYPE_SPACE);
-		DepotEntry depotEntry3 = _addDepotEntry(
-			DepotConstants.TYPE_ASSET_LIBRARY);
-
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -106,6 +101,11 @@ public class CMSWorkflowTaskPermissionContributorTest {
 			objectFolder.getObjectFolderId());
 
 		ObjectDefinition objectDefinition3 = _publishObjectDefinition(0);
+
+		DepotEntry depotEntry1 = _addDepotEntry(DepotConstants.TYPE_SPACE);
+		DepotEntry depotEntry2 = _addDepotEntry(DepotConstants.TYPE_SPACE);
+		DepotEntry depotEntry3 = _addDepotEntry(
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		_updateWorkflowDefinitionLink(depotEntry1, objectDefinition1);
 		_updateWorkflowDefinitionLink(depotEntry1, objectDefinition3);

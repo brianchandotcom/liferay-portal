@@ -42,15 +42,23 @@ const ViewAssetCommentsPanel = ({
 	commentsProps,
 	highlightedCommentId,
 	item,
+	readOnly,
 }: {
 	commentsProps: CommentsProps;
 	highlightedCommentId?: string;
 	item: ISearchAssetObjectEntry;
+	readOnly: boolean;
 }) => {
 	const {
 		embedded: {id},
 		entryClassName,
 	}: ISearchAssetObjectEntry = item;
+
+	const commentsURLs = getAssetCommentsURLs(
+		commentsProps,
+		entryClassName,
+		id
+	);
 
 	return (
 		<>
@@ -60,8 +68,10 @@ const ViewAssetCommentsPanel = ({
 
 			<CommentsPanel
 				{...commentsProps}
-				{...getAssetCommentsURLs(commentsProps, entryClassName, id)}
+				{...commentsURLs}
+				addCommentURL={readOnly ? '' : commentsURLs.addCommentURL}
 				highlightedCommentId={highlightedCommentId}
+				readOnly={readOnly}
 			/>
 		</>
 	);
@@ -108,9 +118,7 @@ export default function ViewAsset({
 			new URLSearchParams(window.location.search).get('messageId') ??
 			undefined
 	);
-	const [openSidePanel, setOpenSidePanel] = useState(
-		hasCommentPermission && !!highlightedCommentId
-	);
+	const [openSidePanel, setOpenSidePanel] = useState(!!highlightedCommentId);
 	const containerRef = useRef(null);
 
 	const handleClickComments = () => {
@@ -136,20 +144,16 @@ export default function ViewAsset({
 			<Toolbar backURL={backURL} title={item.title}>
 				<Toolbar.Item>
 					<div className="align-items-center c-gap-2 d-flex">
-						{hasCommentPermission && (
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'show-comments'
-								)}
-								borderless
-								className={classNames({
-									active: openSidePanel,
-								})}
-								displayType="secondary"
-								onClick={handleClickComments}
-								symbol="message"
-							/>
-						)}
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('show-comments')}
+							borderless
+							className={classNames({
+								active: openSidePanel,
+							})}
+							displayType="secondary"
+							onClick={handleClickComments}
+							symbol="message"
+						/>
 
 						{link?.href && (
 							<div className="autofit-col pr-3">
@@ -183,13 +187,12 @@ export default function ViewAsset({
 					onOpenChange={setOpenSidePanel}
 					open={openSidePanel}
 				>
-					{hasCommentPermission && (
-						<ViewAssetCommentsPanel
-							commentsProps={commentsProps}
-							highlightedCommentId={highlightedCommentId}
-							item={item}
-						/>
-					)}
+					<ViewAssetCommentsPanel
+						commentsProps={commentsProps}
+						highlightedCommentId={highlightedCommentId}
+						item={item}
+						readOnly={!hasCommentPermission}
+					/>
 				</SidePanel>
 			</div>
 		</>

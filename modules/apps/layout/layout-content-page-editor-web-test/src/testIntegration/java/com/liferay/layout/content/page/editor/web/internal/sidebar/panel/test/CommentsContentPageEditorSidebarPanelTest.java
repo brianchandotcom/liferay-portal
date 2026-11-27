@@ -57,13 +57,13 @@ public class CommentsContentPageEditorSidebarPanelTest {
 				PermissionThreadLocal.getPermissionChecker(),
 				draftLayout.getPlid(), -1));
 
-		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
+		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			RandomTestUtil.randomLong(), layout);
 
 		Assert.assertFalse(
 			_commentsContentPageEditorSidebarPanel.isVisible(
 				PermissionThreadLocal.getPermissionChecker(),
-				launchDraftLayout.getPlid(), -1));
+				launchSetDraftLayout.getPlid(), -1));
 	}
 
 	@Inject(

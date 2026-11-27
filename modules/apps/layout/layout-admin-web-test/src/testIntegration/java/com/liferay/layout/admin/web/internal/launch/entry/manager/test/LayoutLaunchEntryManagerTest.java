@@ -56,7 +56,7 @@ public class LayoutLaunchEntryManagerTest
 		super.testAddDraft();
 
 		_testAddDraftCopiesLayoutContent();
-		_testAddDraftWithExistingLaunchDraft();
+		_testAddDraftWithExistingLaunchSetDraft();
 	}
 
 	@Override
@@ -293,7 +293,7 @@ public class LayoutLaunchEntryManagerTest
 		Assert.assertEquals(versions.toString(), 2, versions.size());
 	}
 
-	private void _testAddDraftWithExistingLaunchDraft() throws Exception {
+	private void _testAddDraftWithExistingLaunchSetDraft() throws Exception {
 		long classPK = addEntry();
 
 		Values entryValue = getEntryValue(classPK);
@@ -319,10 +319,10 @@ public class LayoutLaunchEntryManagerTest
 		Assert.assertEquals(draft1.getDraftId(), draft2.getDraftId());
 		Assert.assertEquals(entryValue, getDraftValue(draft2));
 
-		Layout launchDraftLayout = _layoutLocalService.getLayout(
+		Layout launchSetDraftLayout = _layoutLocalService.getLayout(
 			draft2.getDraftId());
 
-		Assert.assertEquals(launchSetId, launchDraftLayout.getLaunchSetId());
+		Assert.assertEquals(launchSetId, launchSetDraftLayout.getLaunchSetId());
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(classPK);
 
@@ -338,15 +338,14 @@ public class LayoutLaunchEntryManagerTest
 
 		LaunchEntryManager launchEntryManager = getLaunchEntryManager();
 
-		LaunchEntryManager.Draft launchDraft = launchEntryManager.addDraft(
+		LaunchEntryManager.Draft draft = launchEntryManager.addDraft(
 			classPK, launchSetId, String.valueOf(classPK));
 
-		Layout launchDraftLayout = _layoutLocalService.fetchDraftLayout(
+		Layout launchSetDraftLayout = _layoutLocalService.fetchDraftLayout(
 			classPK, launchSetId);
 
-		Assert.assertEquals(
-			launchDraft.getDraftId(), launchDraftLayout.getPlid());
-		Assert.assertEquals(launchSetId, launchDraftLayout.getLaunchSetId());
+		Assert.assertEquals(draft.getDraftId(), launchSetDraftLayout.getPlid());
+		Assert.assertEquals(launchSetId, launchSetDraftLayout.getLaunchSetId());
 
 		Assert.assertEquals(
 			mainDraftLayout, _layoutLocalService.fetchDraftLayout(classPK, 0));

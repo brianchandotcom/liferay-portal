@@ -288,7 +288,8 @@ public class MillerColumnsDisplayContext {
 				).put(
 					"key", String.valueOf(layout.getPlid())
 				).put(
-					"launchDraftNames", _getLaunchDraftNamesJSONArray(layout)
+					"launchSetDraftNames",
+					_getLaunchSetDraftNamesJSONArray(layout)
 				).put(
 					"parentable",
 					() -> {
@@ -507,7 +508,7 @@ public class MillerColumnsDisplayContext {
 		return jsonArray;
 	}
 
-	private JSONArray _getLaunchDraftNamesJSONArray(Layout layout)
+	private JSONArray _getLaunchSetDraftNamesJSONArray(Layout layout)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -517,7 +518,7 @@ public class MillerColumnsDisplayContext {
 			return JSONFactoryUtil.createJSONArray();
 		}
 
-		String restrictedLaunchName = LanguageUtil.get(
+		String restrictedLaunchSetName = LanguageUtil.get(
 			_httpServletRequest, "restricted-launch");
 
 		List<LaunchSetDetails> launchSetDetails = TransformUtil.transform(
@@ -533,7 +534,7 @@ public class MillerColumnsDisplayContext {
 						_themeDisplay.getPermissionChecker(), launchSetId,
 						ActionKeys.VIEW)) {
 
-					return new LaunchSetDetails(0, restrictedLaunchName);
+					return new LaunchSetDetails(0, restrictedLaunchSetName);
 				}
 
 				return _launchSetDetailsProvider.fetchLaunchSetDetails(

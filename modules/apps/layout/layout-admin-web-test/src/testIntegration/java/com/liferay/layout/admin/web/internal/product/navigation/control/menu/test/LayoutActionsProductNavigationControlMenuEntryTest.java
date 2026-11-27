@@ -132,17 +132,20 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 
 	@Test
 	@TestInfo("LPD-117394")
-	public void testGetDropdownItemsWithLaunchDraftLayout() throws Exception {
-		Layout launchDraftLayout = LayoutTestUtil.addLaunchDraftLayout(
+	public void testGetDropdownItemsWithLaunchSetDraftLayout()
+		throws Exception {
+
+		Layout launchSetDraftLayout = LayoutTestUtil.addLaunchSetDraftLayout(
 			RandomTestUtil.randomLong(), _layout);
+
+		_testGetDropdownItemsWithLaunchSetDraftLayout(
+			launchSetDraftLayout, TestPropsValues.getUser(), "Preview Launch",
+			"Delete from Launch");
 
 		_user = UserTestUtil.addUser();
 
-		_testGetDropdownItemsWithLaunchDraftLayout(launchDraftLayout, _user);
-
-		_testGetDropdownItemsWithLaunchDraftLayout(
-			launchDraftLayout, TestPropsValues.getUser(), "Preview Launch",
-			"Delete from Launch");
+		_testGetDropdownItemsWithLaunchSetDraftLayout(
+			launchSetDraftLayout, _user);
 	}
 
 	private List<DropdownItem> _getActionDropdownItems(
@@ -196,7 +199,7 @@ public class LayoutActionsProductNavigationControlMenuEntryTest {
 		return mockHttpServletRequest;
 	}
 
-	private void _testGetDropdownItemsWithLaunchDraftLayout(
+	private void _testGetDropdownItemsWithLaunchSetDraftLayout(
 			Layout layout, User user, String... expectedLabels)
 		throws Exception {
 

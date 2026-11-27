@@ -1581,6 +1581,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return LayoutConstants.DEFAULT_PLID;
 	}
 
+	@Override
+	public int getDraftLayoutsCount(long plid) {
+		return layoutPersistence.countByC_C(
+			_classNameLocalService.getClassNameId(Layout.class), plid);
+	}
+
 	/**
 	 * Returns the layout for the friendly URL.
 	 *

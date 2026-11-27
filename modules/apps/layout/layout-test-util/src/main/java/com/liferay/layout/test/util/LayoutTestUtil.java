@@ -59,7 +59,8 @@ import java.util.Map;
  */
 public class LayoutTestUtil {
 
-	public static Layout addLaunchDraftLayout(long launchSetId, Layout layout)
+	public static Layout addLaunchSetDraftLayout(
+			long launchSetId, Layout layout)
 		throws Exception {
 
 		ServiceContext serviceContext =

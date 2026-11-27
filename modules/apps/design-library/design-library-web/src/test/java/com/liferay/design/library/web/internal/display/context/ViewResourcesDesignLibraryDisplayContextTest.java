@@ -260,7 +260,7 @@ public class ViewResourcesDesignLibraryDisplayContextTest {
 
 		Assert.assertEquals("style-book-color", resourceType.get("color"));
 		Assert.assertNull(resourceType.get("creationItems"));
-		Assert.assertNull(resourceType.get("creationItemsSectionKey"));
+		Assert.assertNull(resourceType.get("creationItemsCategoryKey"));
 		Assert.assertNull(resourceType.get("creationItemsSubmenuLabel"));
 		Assert.assertEquals("edit", resourceType.get("defaultActionId"));
 		Assert.assertEquals(_CLASS_NAME_3, resourceType.get("entryClassName"));
@@ -318,7 +318,7 @@ public class ViewResourcesDesignLibraryDisplayContextTest {
 
 		Assert.assertEquals(
 			"style-book-creation-items-section-key",
-			resourceType.get("creationItemsSectionKey"));
+			resourceType.get("creationItemsCategoryKey"));
 		Assert.assertEquals(
 			"style-book-creation-items-submenu-label",
 			resourceType.get("creationItemsSubmenuLabel"));
@@ -581,7 +581,7 @@ public class ViewResourcesDesignLibraryDisplayContextTest {
 		);
 
 		Mockito.when(
-			designLibraryResourceTypeContributor.getCreationItemsSectionKey()
+			designLibraryResourceTypeContributor.getCreationItemsCategoryKey()
 		).thenReturn(
 			key + "-creation-items-section-key"
 		);

@@ -45,18 +45,18 @@ export default function getGroupedCreationMenuItems(
 					]
 				: creationMenuItems;
 
-		const creationItemsSectionKey =
-			resourceType.creationItemsSectionKey ?? resourceType.key;
+		const creationItemsCategoryKey =
+			resourceType.creationItemsCategoryKey ?? resourceType.key;
 
 		const creationMenuSection = creationMenuSections.get(
-			creationItemsSectionKey
+			creationItemsCategoryKey
 		);
 
 		if (creationMenuSection) {
 			creationMenuSection.items.push(...items);
 		}
 		else {
-			creationMenuSections.set(creationItemsSectionKey, {
+			creationMenuSections.set(creationItemsCategoryKey, {
 				items,
 				label: '',
 				separator: true,

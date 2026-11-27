@@ -35,7 +35,7 @@ public interface DesignLibraryResourceTypeContributor {
 		return Collections.emptyList();
 	}
 
-	public default String getCreationItemsSectionKey() {
+	public default String getCreationItemsCategoryKey() {
 		return getKey();
 	}
 

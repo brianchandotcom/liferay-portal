@@ -221,7 +221,7 @@ public class FragmentEntryLinkDisplayContextTest {
 	}
 
 	@Test
-	@TestInfo("LPD-114647")
+	@TestInfo({"LPD-114647", "LPD-117986"})
 	public void testGetFragmentEntryLinkPreviewURL() throws Exception {
 		FragmentEntry fragmentEntry = _addFragmentEntry();
 
@@ -251,7 +251,7 @@ public class FragmentEntryLinkDisplayContextTest {
 		_assertNullPreviewURL(
 			_displayPageTemplateFragmentEntryLink,
 			fragmentEntryLinkDisplayContext);
-		_assertNullPreviewURL(
+		_assertPreviewURL(
 			_masterPageFragmentEntryLink, fragmentEntryLinkDisplayContext);
 		_assertPreviewURL(
 			_pageTemplateFragmentEntryLink, fragmentEntryLinkDisplayContext);

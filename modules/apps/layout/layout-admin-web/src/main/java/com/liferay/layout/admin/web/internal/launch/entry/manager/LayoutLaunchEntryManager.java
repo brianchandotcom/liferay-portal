@@ -242,8 +242,8 @@ public class LayoutLaunchEntryManager implements LaunchEntryManager {
 		if (launchSetDraftLayout == null) {
 			throw new NoSuchLayoutException(
 				StringBundler.concat(
-					"No launch set draft exists with the key {plid=", classPK,
-					", draftId=", draftId, "}"));
+					"No launch set draft layout exists with the key {plid=",
+					classPK, ", draftId=", draftId, "}"));
 		}
 
 		Layout layout = _layoutLocalService.getLayout(classPK);

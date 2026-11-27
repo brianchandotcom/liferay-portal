@@ -246,10 +246,10 @@ public class EditSchedulerResponseMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, methodName,
 			new Class<?>[] {
-				PermissionChecker.class, String.class, String.class,
+				String.class, String.class, PermissionChecker.class,
 				StorageType.class
 			},
-			permissionChecker, jobName, jobName, StorageType.MEMORY_CLUSTERED);
+			jobName, jobName, permissionChecker, StorageType.MEMORY_CLUSTERED);
 	}
 
 	private void _scheduleJob(String jobName, Message message)

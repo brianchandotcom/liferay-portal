@@ -87,7 +87,7 @@ public class SchedulerResponseDisplayContextTest {
 
 		Assert.assertFalse(
 			_hasSchedulerResponse(
-				_companyAdminPermissionChecker, _JOB_NAME_SYSTEM));
+				_JOB_NAME_SYSTEM, _companyAdminPermissionChecker));
 	}
 
 	@Test
@@ -96,7 +96,7 @@ public class SchedulerResponseDisplayContextTest {
 
 		Assert.assertTrue(
 			_hasSchedulerResponse(
-				_omniadminPermissionChecker, _JOB_NAME_SYSTEM));
+				_JOB_NAME_SYSTEM, _omniadminPermissionChecker));
 	}
 
 	private Object _getSchedulerResponseDisplayContext() throws Exception {
@@ -122,13 +122,13 @@ public class SchedulerResponseDisplayContextTest {
 	}
 
 	private boolean _hasSchedulerResponse(
-			PermissionChecker permissionChecker, String jobName)
+			String jobName, PermissionChecker permissionChecker)
 		throws Exception {
 
 		List<SchedulerResponse> schedulerResponses = ReflectionTestUtil.invoke(
 			_getSchedulerResponseDisplayContext(), "_getSchedulerResponses",
-			new Class<?>[] {PermissionChecker.class, int.class, int.class},
-			permissionChecker, 0, Integer.MAX_VALUE);
+			new Class<?>[] {int.class, PermissionChecker.class, int.class},
+			Integer.MAX_VALUE, permissionChecker, 0);
 
 		for (SchedulerResponse schedulerResponse : schedulerResponses) {
 			if (Objects.equals(jobName, schedulerResponse.getJobName())) {

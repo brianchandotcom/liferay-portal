@@ -57,7 +57,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 		throws SchedulerException {
 
 		Date nextFireDate = _getNextFireDate(
-			schedulerResponse.getJobName(), schedulerResponse.getGroupName(),
+			schedulerResponse.getGroupName(), schedulerResponse.getJobName(),
 			schedulerResponse.getStorageType());
 
 		if (nextFireDate != null) {
@@ -138,8 +138,9 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
 			() -> _getSchedulerResponses(
+				_searchContainer.getEnd(),
 				dispatchRequestHelper.getPermissionChecker(),
-				_searchContainer.getStart(), _searchContainer.getEnd()),
+				_searchContainer.getStart()),
 			_getSchedulerResponsesCount(
 				dispatchRequestHelper.getPermissionChecker()));
 
@@ -154,7 +155,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 		throws SchedulerException {
 
 		return _getTriggerState(
-			schedulerResponse.getJobName(), schedulerResponse.getGroupName(),
+			schedulerResponse.getGroupName(), schedulerResponse.getJobName(),
 			schedulerResponse.getStorageType());
 	}
 
@@ -169,7 +170,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 	}
 
 	private Date _getNextFireDate(
-			String jobName, String groupName, StorageType storageType)
+			String groupName, String jobName, StorageType storageType)
 		throws SchedulerException {
 
 		SchedulerResponse schedulerResponse =
@@ -181,6 +182,22 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 		}
 
 		return _schedulerEngineHelper.getNextFireDate(schedulerResponse);
+	}
+
+	private List<SchedulerResponse> _getSchedulerResponses(
+		int end, PermissionChecker permissionChecker, int start) {
+
+		List<SchedulerResponse> schedulerResponses = _getSchedulerResponses(
+			permissionChecker);
+
+		Collections.sort(
+			schedulerResponses,
+			Comparator.comparing(
+				schedulerResponse -> getSimpleName(
+					schedulerResponse.getJobName())));
+
+		return schedulerResponses.subList(
+			start, Math.min(end, schedulerResponses.size()));
 	}
 
 	private List<SchedulerResponse> _getSchedulerResponses(
@@ -203,22 +220,6 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 				permissionChecker, schedulerResponse));
 	}
 
-	private List<SchedulerResponse> _getSchedulerResponses(
-		PermissionChecker permissionChecker, int start, int end) {
-
-		List<SchedulerResponse> schedulerResponses = _getSchedulerResponses(
-			permissionChecker);
-
-		Collections.sort(
-			schedulerResponses,
-			Comparator.comparing(
-				schedulerResponse -> getSimpleName(
-					schedulerResponse.getJobName())));
-
-		return schedulerResponses.subList(
-			start, Math.min(end, schedulerResponses.size()));
-	}
-
 	private int _getSchedulerResponsesCount(
 		PermissionChecker permissionChecker) {
 
@@ -229,7 +230,7 @@ public class SchedulerResponseDisplayContext extends BaseDisplayContext {
 	}
 
 	private TriggerState _getTriggerState(
-			String jobName, String groupName, StorageType storageType)
+			String groupName, String jobName, StorageType storageType)
 		throws SchedulerException {
 
 		SchedulerResponse schedulerResponse =

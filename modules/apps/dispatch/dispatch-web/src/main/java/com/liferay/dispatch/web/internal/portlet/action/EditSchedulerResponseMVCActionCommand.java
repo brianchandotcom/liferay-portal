@@ -62,19 +62,19 @@ public class EditSchedulerResponseMVCActionCommand
 			ParamUtil.getString(actionRequest, "storageType"));
 
 		if (Objects.equals(cmd, "pause")) {
-			_pause(permissionChecker, jobName, groupName, storageType);
+			_pause(groupName, jobName, permissionChecker, storageType);
 		}
 		else if (Objects.equals(cmd, "resume")) {
-			_resume(permissionChecker, jobName, groupName, storageType);
+			_resume(groupName, jobName, permissionChecker, storageType);
 		}
 		else if (Objects.equals(cmd, "runScheduledJob")) {
-			_run(permissionChecker, jobName, groupName, storageType);
+			_run(groupName, jobName, permissionChecker, storageType);
 		}
 	}
 
 	private void _checkPermission(
-			PermissionChecker permissionChecker, String jobName,
-			String groupName, StorageType storageType)
+			String groupName, String jobName,
+			PermissionChecker permissionChecker, StorageType storageType)
 		throws Exception {
 
 		SchedulerResponse schedulerResponse =
@@ -97,31 +97,31 @@ public class EditSchedulerResponseMVCActionCommand
 	}
 
 	private void _pause(
-			PermissionChecker permissionChecker, String jobName,
-			String groupName, StorageType storageType)
+			String groupName, String jobName,
+			PermissionChecker permissionChecker, StorageType storageType)
 		throws Exception {
 
-		_checkPermission(permissionChecker, jobName, groupName, storageType);
+		_checkPermission(groupName, jobName, permissionChecker, storageType);
 
 		_schedulerEngineHelper.pause(jobName, groupName, storageType);
 	}
 
 	private void _resume(
-			PermissionChecker permissionChecker, String jobName,
-			String groupName, StorageType storageType)
+			String groupName, String jobName,
+			PermissionChecker permissionChecker, StorageType storageType)
 		throws Exception {
 
-		_checkPermission(permissionChecker, jobName, groupName, storageType);
+		_checkPermission(groupName, jobName, permissionChecker, storageType);
 
 		_schedulerEngineHelper.resume(jobName, groupName, storageType);
 	}
 
 	private void _run(
-			PermissionChecker permissionChecker, String jobName,
-			String groupName, StorageType storageType)
+			String groupName, String jobName,
+			PermissionChecker permissionChecker, StorageType storageType)
 		throws Exception {
 
-		_checkPermission(permissionChecker, jobName, groupName, storageType);
+		_checkPermission(groupName, jobName, permissionChecker, storageType);
 
 		_schedulerEngineHelper.run(
 			permissionChecker.getCompanyId(), jobName, groupName, storageType);

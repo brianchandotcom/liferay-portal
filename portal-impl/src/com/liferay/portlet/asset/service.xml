@@ -145,9 +145,9 @@
 			<finder-column name="groupId" />
 			<finder-column name="classUuid" />
 		</finder>
-		<finder name="C_C" return-type="AssetEntry" unique="true">
+		<finder name="C_C" return-type="Collection" unique="true">
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
 		<finder name="G_C_V" return-type="Collection">
 			<finder-column name="groupId" />

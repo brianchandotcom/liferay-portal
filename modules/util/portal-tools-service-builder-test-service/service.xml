@@ -478,7 +478,7 @@
 
 		<!-- Localized entity -->
 
-		<localized-entity>
+		<localized-entity arrayable-pk-finder="true">
 			<localized-column name="title" />
 			<localized-column name="content" />
 		</localized-entity>

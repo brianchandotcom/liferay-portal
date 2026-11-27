@@ -171,6 +171,12 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByAssetEntryIdArrayable() throws Exception {
+		_persistence.countByAssetEntryId(
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByAssetCategoryId() throws Exception {
 		_persistence.countByAssetCategoryId(RandomTestUtil.nextLong());
 
@@ -566,4 +572,4 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:330047380
+// LIFERAY-SERVICE-BUILDER-HASH:-1812590018

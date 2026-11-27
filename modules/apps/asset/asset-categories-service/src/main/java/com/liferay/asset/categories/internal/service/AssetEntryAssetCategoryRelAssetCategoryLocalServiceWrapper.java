@@ -6,9 +6,9 @@
 package com.liferay.asset.categories.internal.service;
 
 import com.liferay.asset.categories.internal.constants.AssetCategoriesDestinationNames;
-import com.liferay.asset.categories.internal.util.comparator.AssetEntryAssetCategoryRelAssetCategoryIdComparator;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
+import com.liferay.asset.entry.rel.util.comparator.AssetEntryAssetCategoryRelAssetCategoryIdComparator;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;

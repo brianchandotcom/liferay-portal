@@ -35,6 +35,27 @@ public interface FriendlyURLEntryMappingPersistence
 	 */
 
 	/**
+	 * Returns an ordered range of all the friendly url entry mappings where classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of friendly url entry mappings
+	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching friendly url entry mappings
+	 */
+	public java.util.List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<FriendlyURLEntryMapping> orderByComparator,
+		boolean useFinderCache);
+
+	/**
 	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchFriendlyURLEntryMappingException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
@@ -74,6 +95,15 @@ public interface FriendlyURLEntryMappingPersistence
 	 * @return the number of matching friendly url entry mappings
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	/**
+	 * Returns the number of friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the number of matching friendly url entry mappings
+	 */
+	public int countByC_C(long classNameId, long[] classPKs);
 
 	/**
 	 * Creates a new friendly url entry mapping with the primary key. Does not add the friendly url entry mapping to the database.
@@ -129,5 +159,63 @@ public interface FriendlyURLEntryMappingPersistence
 		return fetchByC_C(classNameId, classPK, true);
 	}
 
+	/**
+	 * Returns all the friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the matching friendly url entry mappings
+	 */
+	public default java.util.List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs) {
+
+		return findByC_C(
+			classNameId, classPKs,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of friendly url entry mappings
+	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	 * @return the range of matching friendly url entry mappings
+	 */
+	public default java.util.List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs, int start, int end) {
+
+		return findByC_C(classNameId, classPKs, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entry mappings where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of friendly url entry mappings
+	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entry mappings
+	 */
+	public default java.util.List<FriendlyURLEntryMapping> findByC_C(
+		long classNameId, long[] classPKs, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<FriendlyURLEntryMapping> orderByComparator) {
+
+		return findByC_C(
+			classNameId, classPKs, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:751695515
+// LIFERAY-SERVICE-BUILDER-HASH:2136847616

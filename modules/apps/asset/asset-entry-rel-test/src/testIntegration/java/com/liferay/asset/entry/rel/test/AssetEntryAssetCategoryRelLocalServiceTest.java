@@ -16,13 +16,18 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -275,6 +280,68 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		Assert.assertEquals(
 			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
 		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
+	}
+
+	@Test
+	public void testGetAssetEntryAssetCategoryRelsByAssetEntryIds() {
+		long assetEntryId1 = RandomTestUtil.randomLong();
+
+		long[] assetCategoryIds = {
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong()
+		};
+
+		for (long assetCategoryId : assetCategoryIds) {
+			_addAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
+		}
+
+		long assetEntryId2 = RandomTestUtil.randomLong();
+
+		_addAssetEntryAssetCategoryRel(assetEntryId2, assetCategoryIds[0]);
+
+		long[] assetEntryIds = {
+			assetEntryId1, assetEntryId2, RandomTestUtil.randomLong()
+		};
+
+		Map<Long, List<AssetEntryAssetCategoryRel>>
+			assetEntryAssetCategoryRelsMap =
+				_assetEntryAssetCategoryRelLocalService.
+					getAssetEntryAssetCategoryRelsByAssetEntryIds(
+						assetEntryIds);
+
+		Assert.assertEquals(
+			SetUtil.fromArray(new long[] {assetEntryId1, assetEntryId2}),
+			assetEntryAssetCategoryRelsMap.keySet());
+
+		for (long assetEntryId : assetEntryIds) {
+			List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+				new ArrayList<>(
+					_assetEntryAssetCategoryRelLocalService.
+						getAssetEntryAssetCategoryRelsByAssetEntryId(
+							assetEntryId));
+
+			assetEntryAssetCategoryRels.sort(
+				Comparator.comparingLong(
+					AssetEntryAssetCategoryRel::getAssetCategoryId));
+
+			Assert.assertEquals(
+				assetEntryAssetCategoryRels,
+				assetEntryAssetCategoryRelsMap.getOrDefault(
+					assetEntryId, Collections.emptyList()));
+		}
+
+		Arrays.sort(assetCategoryIds);
+
+		Assert.assertArrayEquals(
+			assetCategoryIds,
+			ListUtil.toLongArray(
+				assetEntryAssetCategoryRelsMap.get(assetEntryId1),
+				AssetEntryAssetCategoryRel::getAssetCategoryId));
+
+		Assert.assertEquals(
+			Collections.emptyMap(),
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsByAssetEntryIds(new long[0]));
 	}
 
 	@Test

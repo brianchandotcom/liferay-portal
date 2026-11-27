@@ -22,7 +22,7 @@
 		<!-- Finder methods -->
 
 		<finder name="AssetEntryId" return-type="Collection">
-			<finder-column name="assetEntryId" />
+			<finder-column arrayable-operator="OR" name="assetEntryId" />
 		</finder>
 		<finder name="AssetCategoryId" return-type="Collection">
 			<finder-column name="assetCategoryId" />

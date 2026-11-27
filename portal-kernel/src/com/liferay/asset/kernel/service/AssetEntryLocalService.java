@@ -38,6 +38,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -239,6 +240,10 @@ public interface AssetEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry fetchAssetEntry(long entryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, AssetEntry> fetchEntries(
+		long classNameId, long[] classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry fetchEntry(long entryId);
@@ -501,4 +506,4 @@ public interface AssetEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1570765028
+// LIFERAY-SERVICE-BUILDER-HASH:1544999966

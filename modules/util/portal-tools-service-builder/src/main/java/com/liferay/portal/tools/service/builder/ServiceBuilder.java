@@ -7926,6 +7926,13 @@ public class ServiceBuilder {
 		Element newLocalizedFinderColumnElement =
 			newLocalizedFinderElement.addElement("finder-column");
 
+		if (GetterUtil.getBoolean(
+				localizedEntityElement.attributeValue("arrayable-pk-finder"))) {
+
+			newLocalizedFinderColumnElement.addAttribute(
+				"arrayable-operator", "OR");
+		}
+
 		newLocalizedFinderColumnElement.addAttribute(
 			"name", pkEntityColumn.getName());
 

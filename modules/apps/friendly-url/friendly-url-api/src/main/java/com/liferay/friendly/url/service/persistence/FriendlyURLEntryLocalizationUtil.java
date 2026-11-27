@@ -191,6 +191,29 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
+	 * Returns an ordered range of all the friendly url entry localizations where friendlyURLEntryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param friendlyURLEntryIds the friendly url entry IDs
+	 * @param start the lower bound of the range of friendly url entry localizations
+	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching friendly url entry localizations
+	 */
+	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
+		long[] friendlyURLEntryIds, int start, int end,
+		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByFriendlyURLEntryId(
+			friendlyURLEntryIds, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
 	 * Removes all the friendly url entry localizations where friendlyURLEntryId = &#63; from the database.
 	 *
 	 * @param friendlyURLEntryId the friendly url entry ID
@@ -207,6 +230,16 @@ public class FriendlyURLEntryLocalizationUtil {
 	 */
 	public static int countByFriendlyURLEntryId(long friendlyURLEntryId) {
 		return getPersistence().countByFriendlyURLEntryId(friendlyURLEntryId);
+	}
+
+	/**
+	 * Returns the number of friendly url entry localizations where friendlyURLEntryId = any &#63;.
+	 *
+	 * @param friendlyURLEntryIds the friendly url entry IDs
+	 * @return the number of matching friendly url entry localizations
+	 */
+	public static int countByFriendlyURLEntryId(long[] friendlyURLEntryIds) {
+		return getPersistence().countByFriendlyURLEntryId(friendlyURLEntryIds);
 	}
 
 	/**
@@ -891,6 +924,58 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
+	 * Returns all the friendly url entry localizations where friendlyURLEntryId = any &#63;.
+	 *
+	 * @param friendlyURLEntryIds the friendly url entry IDs
+	 * @return the matching friendly url entry localizations
+	 */
+	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
+		long[] friendlyURLEntryIds) {
+
+		return getPersistence().findByFriendlyURLEntryId(friendlyURLEntryIds);
+	}
+
+	/**
+	 * Returns a range of all the friendly url entry localizations where friendlyURLEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param friendlyURLEntryIds the friendly url entry IDs
+	 * @param start the lower bound of the range of friendly url entry localizations
+	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
+	 * @return the range of matching friendly url entry localizations
+	 */
+	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
+		long[] friendlyURLEntryIds, int start, int end) {
+
+		return getPersistence().findByFriendlyURLEntryId(
+			friendlyURLEntryIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entry localizations where friendlyURLEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param friendlyURLEntryIds the friendly url entry IDs
+	 * @param start the lower bound of the range of friendly url entry localizations
+	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entry localizations
+	 */
+	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
+		long[] friendlyURLEntryIds, int start, int end,
+		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
+
+		return getPersistence().findByFriendlyURLEntryId(
+			friendlyURLEntryIds, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1158,4 +1243,4 @@ public class FriendlyURLEntryLocalizationUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:694804919
+// LIFERAY-SERVICE-BUILDER-HASH:1520317894

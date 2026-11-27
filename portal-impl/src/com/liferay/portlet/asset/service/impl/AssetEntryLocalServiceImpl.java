@@ -80,7 +80,9 @@ import com.liferay.social.kernel.service.SocialActivityCounterLocalService;
 import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -234,6 +236,25 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		_assetEntryValidatorExclusionRuleServiceTrackerMap.close();
 		_assetEntryValidatorServiceTrackerMap.close();
+	}
+
+	@Override
+	public Map<Long, AssetEntry> fetchEntries(
+		long classNameId, long[] classPKs) {
+
+		if (classPKs.length == 0) {
+			return Collections.emptyMap();
+		}
+
+		Map<Long, AssetEntry> assetEntries = new HashMap<>();
+
+		for (AssetEntry assetEntry :
+				assetEntryPersistence.findByC_C(classNameId, classPKs)) {
+
+			assetEntries.put(assetEntry.getClassPK(), assetEntry);
+		}
+
+		return assetEntries;
 	}
 
 	@Override

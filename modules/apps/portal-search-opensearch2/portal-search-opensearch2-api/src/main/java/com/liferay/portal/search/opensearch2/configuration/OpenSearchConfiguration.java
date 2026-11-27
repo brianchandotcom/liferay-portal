@@ -36,6 +36,12 @@ public interface OpenSearchConfiguration {
 	public String additionalTypeMappings();
 
 	@Meta.AD(
+		deflt = "30000", description = "cluster-health-timeout-help",
+		name = "cluster-health-timeout", required = false
+	)
+	public long clusterHealthTimeout();
+
+	@Meta.AD(
 		deflt = "10000", description = "index-max-result-window-help",
 		name = "index-max-result-window", required = false
 	)

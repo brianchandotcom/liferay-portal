@@ -38,6 +38,11 @@ public class OpenSearchConfigurationWrapperImpl
 	}
 
 	@Override
+	public long clusterHealthTimeout() {
+		return _openSearchConfiguration.clusterHealthTimeout();
+	}
+
+	@Override
 	public int compare(
 		OpenSearchConfigurationObserver openSearchConfigurationObserver1,
 		OpenSearchConfigurationObserver openSearchConfigurationObserver2) {

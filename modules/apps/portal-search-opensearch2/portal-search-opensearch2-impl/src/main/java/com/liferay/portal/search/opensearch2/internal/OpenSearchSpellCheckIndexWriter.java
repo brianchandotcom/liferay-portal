@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
@@ -140,7 +139,7 @@ public class OpenSearchSpellCheckIndexWriter
 				booleanQuery,
 				_indexNameBuilder.getIndexName(searchContext.getCompanyId()));
 
-		if (PortalRunMode.isTestMode() || searchContext.isCommitImmediately()) {
+		if (searchContext.isCommitImmediately()) {
 			deleteByQueryDocumentRequest.setRefresh(true);
 		}
 

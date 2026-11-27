@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -58,9 +57,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 			IndexDocumentRequest indexDocumentRequest =
 				new IndexDocumentRequest(indexName, document);
 
-			if (PortalRunMode.isTestMode() ||
-				searchContext.isCommitImmediately()) {
-
+			if (searchContext.isCommitImmediately()) {
 				indexDocumentRequest.setRefresh(true);
 			}
 
@@ -84,7 +81,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		if (PortalRunMode.isTestMode() || searchContext.isCommitImmediately()) {
+		if (searchContext.isCommitImmediately()) {
 			bulkDocumentRequest.setRefresh(true);
 		}
 
@@ -121,9 +118,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 			DeleteDocumentRequest deleteDocumentRequest =
 				new DeleteDocumentRequest(indexName, uid);
 
-			if (PortalRunMode.isTestMode() ||
-				searchContext.isCommitImmediately()) {
-
+			if (searchContext.isCommitImmediately()) {
 				deleteDocumentRequest.setRefresh(true);
 			}
 
@@ -148,7 +143,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		if (PortalRunMode.isTestMode() || searchContext.isCommitImmediately()) {
+		if (searchContext.isCommitImmediately()) {
 			bulkDocumentRequest.setRefresh(true);
 		}
 
@@ -182,9 +177,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 				DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
 					new DeleteByQueryDocumentRequest(booleanQuery, indexName);
 
-				if (PortalRunMode.isTestMode() ||
-					searchContext.isCommitImmediately()) {
-
+				if (searchContext.isCommitImmediately()) {
 					deleteByQueryDocumentRequest.setRefresh(true);
 				}
 
@@ -210,9 +203,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 				new UpdateDocumentRequest(
 					indexName, document.getUID(), document);
 
-			if (PortalRunMode.isTestMode() ||
-				searchContext.isCommitImmediately()) {
-
+			if (searchContext.isCommitImmediately()) {
 				updateDocumentRequest.setRefresh(true);
 			}
 
@@ -238,7 +229,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		if (PortalRunMode.isTestMode() || searchContext.isCommitImmediately()) {
+		if (searchContext.isCommitImmediately()) {
 			bulkDocumentRequest.setRefresh(true);
 		}
 
@@ -257,7 +248,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 	public void updateDocument(SearchContext searchContext, Document document) {
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		if (PortalRunMode.isTestMode() || searchContext.isCommitImmediately()) {
+		if (searchContext.isCommitImmediately()) {
 			bulkDocumentRequest.setRefresh(true);
 		}
 
@@ -278,7 +269,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		if (PortalRunMode.isTestMode() || searchContext.isCommitImmediately()) {
+		if (searchContext.isCommitImmediately()) {
 			bulkDocumentRequest.setRefresh(true);
 		}
 

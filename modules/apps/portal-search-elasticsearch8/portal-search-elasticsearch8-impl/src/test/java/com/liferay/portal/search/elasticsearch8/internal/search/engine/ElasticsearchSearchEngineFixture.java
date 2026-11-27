@@ -163,6 +163,9 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 			new ElasticsearchSearchEngine();
 
 		ReflectionTestUtil.setFieldValue(
+			elasticsearchSearchEngine, "_elasticsearchConfigurationWrapper",
+			elasticsearchConfigurationWrapper);
+		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngine, "_elasticsearchConnectionManager",
 			elasticsearchConnectionManager);
 		ReflectionTestUtil.setFieldValue(

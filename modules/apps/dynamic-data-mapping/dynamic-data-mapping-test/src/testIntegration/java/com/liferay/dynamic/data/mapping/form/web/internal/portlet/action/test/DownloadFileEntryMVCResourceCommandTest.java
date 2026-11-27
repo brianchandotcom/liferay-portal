@@ -102,11 +102,6 @@ public class DownloadFileEntryMVCResourceCommandTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-		_user = UserTestUtil.addUser();
-
-		_userLocalService.addRoleUser(_role.getRoleId(), _user);
-
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			_DDM_FORM_FIELD_NAME_TEXT);
 
@@ -118,6 +113,11 @@ public class DownloadFileEntryMVCResourceCommandTest {
 
 		_ddmFormInstance = DDMFormInstanceTestUtil.addDDMFormInstance(
 			ddmForm, _group, TestPropsValues.getUserId());
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_user = UserTestUtil.addUser();
+
+		_userLocalService.addRoleUser(_role.getRoleId(), _user);
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			_group.getCompanyId(), DDMFormInstance.class.getName(),

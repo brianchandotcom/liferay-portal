@@ -29,20 +29,12 @@ public class ApplicationsMenuUtil {
 				themeDisplay.getScopeGroup());
 
 		for (PanelCategory panelCategory : applicationsMenuPanelCategories) {
-			List<PanelCategory> childPanelCategories =
-				PanelCategoryRegistryUtil.getChildPanelCategories(
-					panelCategory.getKey(), themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroup());
+			PanelApp panelApp = panelAppRegistry.getFirstAvailablePanelApp(
+				panelCategory.getKey(), themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup());
 
-			for (PanelCategory childPanelCategory : childPanelCategories) {
-				List<PanelApp> panelApps = panelAppRegistry.getPanelApps(
-					childPanelCategory.getKey(),
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroup());
-
-				if (!panelApps.isEmpty()) {
-					return true;
-				}
+			if (panelApp != null) {
+				return true;
 			}
 		}
 

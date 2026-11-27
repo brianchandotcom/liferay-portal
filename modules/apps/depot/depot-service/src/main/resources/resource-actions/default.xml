@@ -7,6 +7,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_depot_web_portlet_DepotAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_depot_web_portlet_DepotSettingsPortlet</portlet-name>
+			<portlet-name>com_liferay_design_library_web_internal_portlet_DesignLibraryAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -25,6 +26,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_depot_web_portlet_DepotAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_depot_web_portlet_DepotSettingsPortlet</portlet-name>
+			<portlet-name>com_liferay_design_library_web_internal_portlet_DesignLibraryAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

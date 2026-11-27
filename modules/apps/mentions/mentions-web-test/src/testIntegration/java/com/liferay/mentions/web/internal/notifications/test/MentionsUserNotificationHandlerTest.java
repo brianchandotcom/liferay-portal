@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.mentions.constants.MentionsPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -31,19 +34,26 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserNotificationEventTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,6 +67,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Mikel Lorza
@@ -74,9 +86,118 @@ public class MentionsUserNotificationHandlerTest {
 			SynchronousMailTestRule.INSTANCE);
 
 	@Test
+	public void testGetLink() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		String portalURL =
+			"http://localhost:" + _portal.getPortalServerPort(false);
+
+		serviceContext.setPortalURL(portalURL);
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition);
+
+		String entryURL = portalURL + "/web/cms/view-asset";
+
+		Assert.assertEquals(
+			entryURL,
+			_getLink(
+				JSONUtil.put(
+					"className", objectDefinition.getClassName()
+				).put(
+					"classPK", objectEntry.getObjectEntryId()
+				).put(
+					"entryURL", entryURL
+				).put(
+					"userId", TestPropsValues.getUserId()
+				),
+				serviceContext));
+
+		String link = _getLink(
+			JSONUtil.put(
+				"discussionClassName", objectDefinition.getClassName()
+			).put(
+				"discussionClassPK", objectEntry.getObjectEntryId()
+			).put(
+				"entryURL", entryURL
+			).put(
+				"userId", TestPropsValues.getUserId()
+			),
+			serviceContext);
+
+		Assert.assertTrue(link.startsWith(entryURL + "?backURL="));
+
+		String backURL = HttpComponentsUtil.getParameter(
+			link, "backURL", false);
+
+		Assert.assertEquals(
+			"com_liferay_notifications_web_portlet_NotificationsPortlet",
+			HttpComponentsUtil.getParameter(
+				URLCodec.decodeURL(backURL), "p_p_id", false));
+		Assert.assertEquals(
+			backURL,
+			HttpComponentsUtil.getParameter(link, "p_l_back_url", false));
+
+		Assert.assertEquals(
+			"Notifications",
+			HttpComponentsUtil.getParameter(link, "p_l_back_url_title", false));
+
+		_groupLocalService.deleteGroup(group);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
 	public void testIsApplicable() throws Exception {
 		_testIsApplicableWithBlogsEntry();
 		_testIsApplicableWithObjectEntry();
+	}
+
+	private String _getLink(
+			JSONObject payloadJSONObject, ServiceContext serviceContext)
+		throws Exception {
+
+		UserNotificationEvent userNotificationEvent =
+			_userNotificationEventLocalService.addUserNotificationEvent(
+				TestPropsValues.getUserId(), MentionsPortletKeys.MENTIONS,
+				System.currentTimeMillis(),
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, 0,
+				payloadJSONObject.toString(), false,
+				ServiceContextTestUtil.getServiceContext());
+
+		UserNotificationFeedEntry userNotificationFeedEntry =
+			UserNotificationManagerUtil.interpret(
+				StringPool.BLANK, userNotificationEvent, serviceContext);
+
+		_userNotificationEventLocalService.deleteUserNotificationEvent(
+			userNotificationEvent);
+
+		return userNotificationFeedEntry.getLink();
 	}
 
 	private boolean _isApplicable(UserNotificationEvent userNotificationEvent)
@@ -223,6 +344,12 @@ public class MentionsUserNotificationHandlerTest {
 
 	@Inject
 	private CommentManager _commentManager;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

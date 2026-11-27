@@ -11,15 +11,17 @@ import Toolbar from '../../../../src/main/resources/META-INF/resources/js/common
 
 const renderComponent = ({
 	backURL,
+	backURLTitle,
 	children,
 	title = 'New Page',
 }: {
 	backURL?: string;
+	backURLTitle?: string;
 	children?: React.ReactNode;
 	title?: string;
 } = {}) => {
 	return render(
-		<Toolbar backURL={backURL} title={title}>
+		<Toolbar backURL={backURL} backURLTitle={backURLTitle} title={title}>
 			{children}
 		</Toolbar>
 	);
@@ -52,5 +54,13 @@ describe('Toolbar', () => {
 		renderComponent({backURL: 'url'});
 
 		expect(screen.getByRole('button', {name: 'back'})).toBeInTheDocument();
+	});
+
+	it('renders Toolbar with backURL and backURLTitle', async () => {
+		renderComponent({backURL: 'url', backURLTitle: 'Notifications'});
+
+		expect(
+			screen.getByRole('button', {name: 'go-to-x'})
+		).toBeInTheDocument();
 	});
 });

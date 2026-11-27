@@ -31,6 +31,7 @@ interface CommentsProps {
 
 interface ViewAssetProps {
 	backURL: string;
+	backURLTitle?: string;
 	className: string;
 	commentsProps: CommentsProps;
 	contentViewURL: string;
@@ -69,6 +70,7 @@ const ViewAssetCommentsPanel = ({
 
 export default function ViewAsset({
 	backURL,
+	backURLTitle,
 	className,
 	commentsProps,
 	contentViewURL,
@@ -133,7 +135,11 @@ export default function ViewAsset({
 
 	return (
 		<>
-			<Toolbar backURL={backURL} title={item.title}>
+			<Toolbar
+				backURL={backURL}
+				backURLTitle={backURLTitle}
+				title={item.title}
+			>
 				<Toolbar.Item>
 					<div className="align-items-center c-gap-2 d-flex">
 						{hasCommentPermission && (

@@ -111,11 +111,13 @@ public class ViewAssetDisplayContextTest extends BaseDisplayContextTestCase {
 	}
 
 	private Map<String, Object> _getAdditionalProps(
-		String backURL, boolean commentPermission,
+		String backURL, String backURLTitle, boolean commentPermission,
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
 
 		return HashMapBuilder.<String, Object>put(
 			"backURL", backURL
+		).put(
+			"backURLTitle", backURLTitle
 		).put(
 			"className", objectDefinition.getClassName()
 		).put(
@@ -253,11 +255,16 @@ public class ViewAssetDisplayContextTest extends BaseDisplayContextTestCase {
 		mockHttpServletRequest.setParameter(
 			"objectEntryId", String.valueOf(objectEntry.getObjectEntryId()));
 
+		String backURLTitle = RandomTestUtil.randomString();
+
+		mockHttpServletRequest.setParameter("p_l_back_url_title", backURLTitle);
+
 		themeDisplay.setPermissionChecker(permissionChecker);
 
 		_assertEquals(
 			_getAdditionalProps(
-				backURL, commentPermission, objectDefinition, objectEntry),
+				backURL, backURLTitle, commentPermission, objectDefinition,
+				objectEntry),
 			ReflectionTestUtil.invoke(
 				_getViewAssetDisplayContext(mockHttpServletRequest),
 				"getAdditionalProps", new Class<?>[0]));

@@ -50,7 +50,7 @@ public class ViewTasksDisplayContextTest extends BaseDisplayContextTestCase {
 		Assert.assertTrue(
 			apiURL,
 			apiURL.contains(
-				"&filter=(cmsTask eq true or cmpProjectTask eq true)&"));
+				"&filter=(cmpProjectTask eq true or cmsTask eq true)&"));
 	}
 
 	@Test

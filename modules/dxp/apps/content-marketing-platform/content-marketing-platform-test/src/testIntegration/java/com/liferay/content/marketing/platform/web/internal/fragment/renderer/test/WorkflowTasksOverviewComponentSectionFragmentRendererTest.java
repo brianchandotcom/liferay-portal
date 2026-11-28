@@ -83,7 +83,7 @@ public class WorkflowTasksOverviewComponentSectionFragmentRendererTest {
 				"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
 				"com.liferay.portal.workflow.kaleo.model.",
 				"KaleoTaskInstanceToken",
-				"&filter=(cmsTask eq true or cmpProjectTask eq true)"),
+				"&filter=(cmpProjectTask eq true or cmsTask eq true)"),
 			props.get("filterURL"));
 	}
 

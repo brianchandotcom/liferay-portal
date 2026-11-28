@@ -55,7 +55,7 @@ public class ViewWorkflowTasksSectionDisplayContextTest
 			StringBundler.concat(
 				"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
 				CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN,
-				"&filter=(cmsTask eq true or cmpProjectTask eq true)",
+				"&filter=(cmpProjectTask eq true or cmsTask eq true)",
 				"&nestedFields=embedded"),
 			getAPIURL(null));
 	}

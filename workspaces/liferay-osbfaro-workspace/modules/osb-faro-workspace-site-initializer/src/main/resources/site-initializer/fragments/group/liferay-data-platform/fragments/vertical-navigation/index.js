@@ -18,6 +18,8 @@ const root = createRoot(
 	fragmentElement.querySelector('.vertical-navigation-fragment')
 );
 
+Liferay.once('startNavigate', () => root.unmount());
+
 root.render(
 	React.createElement(
 		VerticalNav,

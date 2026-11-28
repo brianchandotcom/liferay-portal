@@ -63,59 +63,35 @@ export async function createPortalSession(): Promise<APIRequestContext> {
 		baseURL: liferayConfig.environment.baseUrl,
 	});
 
-	try {
-		const signInPageResponse =
-			await apiRequestContext.get('/c/portal/login');
+	const signInPageResponse = await apiRequestContext.get('/c/portal/login');
 
-		const html = await signInPageResponse.text();
+	const loginForm = (await signInPageResponse.text()).match(
+		new RegExp(`<form[^>]*id="${LOGIN_PORTLET_NAMESPACE}loginForm"[^>]*>`)
+	);
 
-		const loginFormHTML = getMatch(
-			html,
-			'login form',
-			new RegExp(
-				`(<form[^>]*id="${LOGIN_PORTLET_NAMESPACE}loginForm"[^>]*>)`
-			)
-		);
+	const action = loginForm?.[0].match(/action="([^"]+)"/)?.[1];
 
-		const loginResponse = await apiRequestContext.post(
-			getMatch(loginFormHTML, 'login form action', /action="([^"]+)"/),
-			{
-				form: {
-					[`${LOGIN_PORTLET_NAMESPACE}formDate`]: getMatch(
-						html,
-						'login form date',
-						new RegExp(
-							`name="${LOGIN_PORTLET_NAMESPACE}formDate"[^>]*value="(\\d+)"`
-						)
-					),
-					[`${LOGIN_PORTLET_NAMESPACE}login`]: 'test@liferay.com',
-					[`${LOGIN_PORTLET_NAMESPACE}password`]:
-						userData.test.password,
-				},
-				maxRedirects: 0,
-			}
-		);
-
-		if (loginResponse.status() !== 302) {
-			throw new Error(
-				`Unable to sign in through the sign in page: HTTP ${loginResponse.status()}`
-			);
-		}
-
-		const location = loginResponse.headers()['location'] ?? '';
-
-		const {pathname} = new URL(location, liferayConfig.environment.baseUrl);
-
-		if (!pathname.endsWith('/c')) {
-			throw new Error(
-				`Unable to sign in through the sign in page: redirected to "${location}"`
-			);
-		}
+	if (!action) {
+		throw new Error('Unable to find the login form in the sign in page');
 	}
-	catch (error) {
-		await apiRequestContext.dispose();
 
-		throw error;
+	const loginResponse = await apiRequestContext.post(
+		action.replace(/&amp;/g, '&'),
+		{
+			form: {
+				[`${LOGIN_PORTLET_NAMESPACE}login`]: 'test@liferay.com',
+				[`${LOGIN_PORTLET_NAMESPACE}password`]: userData.test.password,
+			},
+			maxRedirects: 0,
+		}
+	);
+
+	const location = loginResponse.headers()['location'];
+
+	if (!location?.endsWith('/c')) {
+		throw new Error(
+			`Unable to sign in through the sign in page: HTTP ${loginResponse.status()} redirected to "${location}"`
+		);
 	}
 
 	return apiRequestContext;
@@ -234,14 +210,4 @@ export async function performUserSwitchViaApi(
 	await page.waitForURL((url) => !url.pathname.endsWith('/c/portal/logout'));
 
 	await performLoginViaApi({page, screenName});
-}
-
-function getMatch(html: string, name: string, regExp: RegExp) {
-	const match = html.match(regExp);
-
-	if (!match) {
-		throw new Error(`Unable to find the ${name} in the sign in page`);
-	}
-
-	return match[1].replace(/&amp;/g, '&');
 }

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ConcurrentHashMapBuilder;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -620,9 +621,12 @@ public class LayoutServiceContextHelperImpl
 			Company company, ServiceContext originalServiceContext,
 			ThemeDisplay themeDisplay) {
 
+			HttpServletRequest originalHttpServletRequest = null;
 			ThemeDisplay originalThemeDisplay = null;
 
 			if (originalServiceContext != null) {
+				originalHttpServletRequest =
+					originalServiceContext.getRequest();
 				originalThemeDisplay = originalServiceContext.getThemeDisplay();
 			}
 
@@ -637,6 +641,23 @@ public class LayoutServiceContextHelperImpl
 					originalThemeDisplay.getServerName());
 				themeDisplay.setServerPort(
 					originalThemeDisplay.getServerPort());
+			}
+			else if (originalHttpServletRequest != null) {
+				boolean secure = _portal.isForwardedSecure(
+					originalHttpServletRequest);
+
+				String portalURL = _portal.getPortalURL(
+					originalHttpServletRequest, secure);
+
+				themeDisplay.setPortalDomain(
+					HttpComponentsUtil.getDomain(portalURL));
+				themeDisplay.setPortalURL(portalURL);
+
+				themeDisplay.setSecure(secure);
+				themeDisplay.setServerName(
+					_portal.getForwardedHost(originalHttpServletRequest));
+				themeDisplay.setServerPort(
+					_portal.getForwardedPort(originalHttpServletRequest));
 			}
 			else {
 				themeDisplay.setPortalDomain(company.getVirtualHostname());

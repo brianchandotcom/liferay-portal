@@ -42,10 +42,12 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ConcurrentHashMapBuilder;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -67,6 +69,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -299,11 +302,31 @@ public class LayoutServiceContextHelperImpl
 					}
 
 					public Cookie[] getCookies() {
-						return new Cookie[0];
+						return _cookies;
+					}
+
+					public String getHeader(String name) {
+						List<String> values = _headers.get(name);
+
+						if (ListUtil.isEmpty(values)) {
+							return null;
+						}
+
+						return values.get(0);
 					}
 
 					public Enumeration<String> getHeaderNames() {
-						return Collections.emptyEnumeration();
+						return Collections.enumeration(_headers.keySet());
+					}
+
+					public Enumeration<String> getHeaders(String name) {
+						List<String> values = _headers.get(name);
+
+						if (values == null) {
+							return Collections.emptyEnumeration();
+						}
+
+						return Collections.enumeration(values);
 					}
 
 					public Locale getLocale() {
@@ -320,12 +343,44 @@ public class LayoutServiceContextHelperImpl
 						return HttpMethods.GET;
 					}
 
+					public String getParameter(String name) {
+						String[] values = _parameterMap.get(name);
+
+						if (ArrayUtil.isEmpty(values)) {
+							return null;
+						}
+
+						return values[0];
+					}
+
 					public Map<String, String[]> getParameterMap() {
-						return Collections.emptyMap();
+						return _parameterMap;
+					}
+
+					public Enumeration<String> getParameterNames() {
+						return Collections.enumeration(_parameterMap.keySet());
 					}
 
 					public String[] getParameterValues(String name) {
-						return new String[0];
+						String[] values = _parameterMap.get(name);
+
+						if (values == null) {
+							return new String[0];
+						}
+
+						return values;
+					}
+
+					public String getQueryString() {
+						return _queryString;
+					}
+
+					public String getRemoteAddr() {
+						return _remoteAddr;
+					}
+
+					public String getRemoteHost() {
+						return _remoteHost;
 					}
 
 					public RequestDispatcher getRequestDispatcher(String path) {
@@ -338,6 +393,14 @@ public class LayoutServiceContextHelperImpl
 
 					public String getRequestURI() {
 						return StringPool.SLASH;
+					}
+
+					public StringBuffer getRequestURL() {
+						if (_requestURL == null) {
+							return null;
+						}
+
+						return new StringBuffer(_requestURL);
 					}
 
 					public String getScheme() {
@@ -683,7 +746,9 @@ public class LayoutServiceContextHelperImpl
 
 		private final Map<String, Object> _attributes;
 		private final Company _company;
+		private Cookie[] _cookies = new Cookie[0];
 		private final Group _group;
+		private Map<String, List<String>> _headers = Collections.emptyMap();
 		private final HttpServletRequest _httpServletRequest;
 		private final HttpServletResponse _httpServletResponse;
 
@@ -718,7 +783,12 @@ public class LayoutServiceContextHelperImpl
 		private final Layout _layout;
 		private final String _originalName;
 		private final PermissionChecker _originalPermissionChecker;
+		private Map<String, String[]> _parameterMap = Collections.emptyMap();
 		private final PermissionChecker _permissionChecker;
+		private String _queryString;
+		private String _remoteAddr;
+		private String _remoteHost;
+		private String _requestURL;
 		private final User _user;
 
 	}

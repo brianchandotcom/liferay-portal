@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -34,13 +33,10 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.initializer.extender.SiteInitializerUtil;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -132,31 +128,14 @@ public class SiteInitializerClientExtension
 			User user)
 		throws Exception {
 
+		SiteResource.Builder builder = _siteResourceFactory.create();
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		// LayoutServiceContextHelper#getServiceContextAutoCloseable ensures
-		// the wrapped HTTP servlet request has an attribute for WebKeys#LAYOUT
-		// and WebKeys#THEME_DISPLAY. However, fragments are processed with
-		// com.liferay.taglib.portletext.RuntimeTag which grabs the original
-		// HTTP servlet request.
-
-		httpServletRequest.setAttribute(
-			WebKeys.LAYOUT, themeDisplay.getLayout());
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		SiteResource.Builder builder = _siteResourceFactory.create();
 
 		SiteResource siteResource = builder.user(
 			user
 		).httpServletRequest(
-			httpServletRequest
+			serviceContext.getRequest()
 		).build();
 
 		return siteResource.putSiteSiteInitializer(

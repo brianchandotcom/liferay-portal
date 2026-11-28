@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.util;
 
-import com.liferay.layout.internal.servlet.IsolatedAttributesHttpServletRequest;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,9 +41,12 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ConcurrentHashMapBuilder;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -66,9 +68,13 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -174,49 +180,20 @@ public class LayoutServiceContextHelperImpl
 				ServletContextPool.get(_portal.getServletContextName())
 			).build();
 
-			_originalPermissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-			_originalName = PrincipalThreadLocal.getName();
-
 			ServiceContext originalServiceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			if (originalServiceContext == null) {
-				_httpServletRequest = _createMockHttpServletRequest();
-				_httpServletResponse = new DummyHttpServletResponse();
+			if ((originalServiceContext != null) &&
+				(originalServiceContext.getRequest() != null)) {
+
+				_copyHttpServletRequest(originalServiceContext.getRequest());
 			}
-			else {
-				ThemeDisplay themeDisplay =
-					originalServiceContext.getThemeDisplay();
 
-				if (originalServiceContext.getRequest() != null) {
-					_httpServletRequest =
-						new IsolatedAttributesHttpServletRequest(
-							originalServiceContext.getRequest());
-				}
-				else if ((themeDisplay != null) &&
-						 (themeDisplay.getRequest() != null)) {
-
-					_httpServletRequest =
-						new IsolatedAttributesHttpServletRequest(
-							themeDisplay.getRequest());
-				}
-				else {
-					_httpServletRequest = _createMockHttpServletRequest();
-				}
-
-				if (originalServiceContext.getResponse() != null) {
-					_httpServletResponse = originalServiceContext.getResponse();
-				}
-				else if ((themeDisplay != null) &&
-						 (themeDisplay.getResponse() != null)) {
-
-					_httpServletResponse = themeDisplay.getResponse();
-				}
-				else {
-					_httpServletResponse = new DummyHttpServletResponse();
-				}
-			}
+			_httpServletRequest = _createMockHttpServletRequest();
+			_httpServletResponse = new DummyHttpServletResponse();
+			_originalPermissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+			_originalName = PrincipalThreadLocal.getName();
 
 			if (user == null) {
 				_user = _userLocalService.fetchGuestUser(
@@ -252,7 +229,8 @@ public class LayoutServiceContextHelperImpl
 
 			_layout = layout;
 
-			_setHttpServletRequestAttributes(_permissionChecker, _user);
+			_setHttpServletRequestAttributes(
+				originalServiceContext, _permissionChecker, _user);
 
 			_setCompanyServiceContext();
 		}
@@ -277,6 +255,63 @@ public class LayoutServiceContextHelperImpl
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
+		private void _copyHttpServletRequest(
+			HttpServletRequest httpServletRequest) {
+
+			Cookie[] cookies = httpServletRequest.getCookies();
+
+			if (cookies != null) {
+				_cookies = new Cookie[cookies.length];
+
+				for (int i = 0; i < cookies.length; i++) {
+					_cookies[i] = (Cookie)cookies[i].clone();
+				}
+			}
+
+			Enumeration<String> enumeration =
+				httpServletRequest.getHeaderNames();
+
+			if (enumeration != null) {
+				_headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+
+				while (enumeration.hasMoreElements()) {
+					String name = enumeration.nextElement();
+
+					_headers.put(
+						name,
+						Collections.list(httpServletRequest.getHeaders(name)));
+				}
+			}
+
+			Map<String, String[]> originalParameterMap =
+				httpServletRequest.getParameterMap();
+			Map<String, String[]> parameterMap = new LinkedHashMap<>();
+
+			for (Map.Entry<String, String[]> entry :
+					originalParameterMap.entrySet()) {
+
+				String[] values = entry.getValue();
+
+				if (values == null) {
+					continue;
+				}
+
+				parameterMap.put(entry.getKey(), values.clone());
+			}
+
+			_defaultParameterValues = null;
+			_parameterMap = Collections.unmodifiableMap(parameterMap);
+			_queryString = httpServletRequest.getQueryString();
+			_remoteAddr = httpServletRequest.getRemoteAddr();
+			_remoteHost = httpServletRequest.getRemoteHost();
+
+			StringBuffer requestURL = httpServletRequest.getRequestURL();
+
+			if (requestURL != null) {
+				_requestURL = requestURL.toString();
+			}
+		}
+
 		private HttpServletRequest _createMockHttpServletRequest() {
 			return ProxyUtil.newDelegateProxyInstance(
 				HttpServletRequest.class.getClassLoader(),
@@ -296,23 +331,36 @@ public class LayoutServiceContextHelperImpl
 					}
 
 					public Cookie[] getCookies() {
-						return new Cookie[0];
+						return _cookies;
+					}
+
+					public String getHeader(String name) {
+						List<String> values = _headers.get(name);
+
+						if (ListUtil.isEmpty(values)) {
+							return null;
+						}
+
+						return values.get(0);
 					}
 
 					public Enumeration<String> getHeaderNames() {
-						return Collections.emptyEnumeration();
+						return Collections.enumeration(_headers.keySet());
+					}
+
+					public Enumeration<String> getHeaders(String name) {
+						List<String> values = _headers.get(name);
+
+						if (values == null) {
+							return Collections.emptyEnumeration();
+						}
+
+						return Collections.enumeration(values);
 					}
 
 					public Locale getLocale() {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)_attributes.get(
-								WebKeys.THEME_DISPLAY);
-
-						if (themeDisplay == null) {
-							return LocaleUtil.getDefault();
-						}
-
-						return themeDisplay.getLocale();
+						return _getThemeDisplayValue(
+							LocaleUtil.getDefault(), ThemeDisplay::getLocale);
 					}
 
 					public Enumeration<Locale> getLocales() {
@@ -324,12 +372,44 @@ public class LayoutServiceContextHelperImpl
 						return HttpMethods.GET;
 					}
 
+					public String getParameter(String name) {
+						String[] values = _parameterMap.get(name);
+
+						if (ArrayUtil.isEmpty(values)) {
+							return null;
+						}
+
+						return values[0];
+					}
+
 					public Map<String, String[]> getParameterMap() {
-						return Collections.emptyMap();
+						return _parameterMap;
+					}
+
+					public Enumeration<String> getParameterNames() {
+						return Collections.enumeration(_parameterMap.keySet());
 					}
 
 					public String[] getParameterValues(String name) {
-						return new String[0];
+						String[] values = _parameterMap.get(name);
+
+						if (values == null) {
+							return _defaultParameterValues;
+						}
+
+						return values;
+					}
+
+					public String getQueryString() {
+						return _queryString;
+					}
+
+					public String getRemoteAddr() {
+						return _remoteAddr;
+					}
+
+					public String getRemoteHost() {
+						return _remoteHost;
 					}
 
 					public RequestDispatcher getRequestDispatcher(String path) {
@@ -344,8 +424,30 @@ public class LayoutServiceContextHelperImpl
 						return StringPool.SLASH;
 					}
 
+					public StringBuffer getRequestURL() {
+						if (_requestURL == null) {
+							return null;
+						}
+
+						return new StringBuffer(_requestURL);
+					}
+
 					public String getScheme() {
-						return "http";
+						if (isSecure()) {
+							return Http.HTTPS;
+						}
+
+						return Http.HTTP;
+					}
+
+					public String getServerName() {
+						return _getThemeDisplayValue(
+							null, ThemeDisplay::getServerName);
+					}
+
+					public int getServerPort() {
+						return _getThemeDisplayValue(
+							0, ThemeDisplay::getServerPort);
 					}
 
 					public ServletContext getServletContext() {
@@ -361,12 +463,31 @@ public class LayoutServiceContextHelperImpl
 						return _httpSession;
 					}
 
+					public boolean isSecure() {
+						return _getThemeDisplayValue(
+							false, ThemeDisplay::isSecure);
+					}
+
 					public void removeAttribute(String name) {
 						_attributes.remove(name);
 					}
 
 					public void setAttribute(String name, Object value) {
 						_setAttribute(name, value);
+					}
+
+					private <T> T _getThemeDisplayValue(
+						T defaultValue, Function<ThemeDisplay, T> function) {
+
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)_attributes.get(
+								WebKeys.THEME_DISPLAY);
+
+						if (themeDisplay == null) {
+							return defaultValue;
+						}
+
+						return function.apply(themeDisplay);
 					}
 
 				},
@@ -409,7 +530,7 @@ public class LayoutServiceContextHelperImpl
 		}
 
 		private ThemeDisplay _getThemeDisplay(
-				Company company, ThemeDisplay originalThemeDisplay,
+				Company company, ServiceContext originalServiceContext,
 				PermissionChecker permissionChecker, User user)
 			throws PortalException {
 
@@ -437,7 +558,7 @@ public class LayoutServiceContextHelperImpl
 			themeDisplay.setUser(user);
 
 			_setCompanyLogo(themeDisplay, company);
-			_setPortalURL(company, originalThemeDisplay, themeDisplay);
+			_setPortalURL(company, originalServiceContext, themeDisplay);
 
 			if (_layout != null) {
 				themeDisplay.setLanguageId(_layout.getDefaultLanguageId());
@@ -559,6 +680,7 @@ public class LayoutServiceContextHelperImpl
 		}
 
 		private void _setHttpServletRequestAttributes(
+				ServiceContext originalServiceContext,
 				PermissionChecker permissionChecker, User user)
 			throws PortalException {
 
@@ -568,12 +690,8 @@ public class LayoutServiceContextHelperImpl
 				WebKeys.CTX,
 				ServletContextPool.get(_portal.getServletContextName()));
 
-			ThemeDisplay originalThemeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			ThemeDisplay themeDisplay = _getThemeDisplay(
-				_company, originalThemeDisplay, permissionChecker, user);
+				_company, originalServiceContext, permissionChecker, user);
 
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT, themeDisplay.getLayout());
@@ -592,8 +710,17 @@ public class LayoutServiceContextHelperImpl
 		}
 
 		private void _setPortalURL(
-			Company company, ThemeDisplay originalThemeDisplay,
+			Company company, ServiceContext originalServiceContext,
 			ThemeDisplay themeDisplay) {
+
+			HttpServletRequest originalHttpServletRequest = null;
+			ThemeDisplay originalThemeDisplay = null;
+
+			if (originalServiceContext != null) {
+				originalHttpServletRequest =
+					originalServiceContext.getRequest();
+				originalThemeDisplay = originalServiceContext.getThemeDisplay();
+			}
 
 			if ((originalThemeDisplay != null) &&
 				Validator.isNotNull(originalThemeDisplay.getPortalURL())) {
@@ -606,6 +733,23 @@ public class LayoutServiceContextHelperImpl
 					originalThemeDisplay.getServerName());
 				themeDisplay.setServerPort(
 					originalThemeDisplay.getServerPort());
+			}
+			else if (originalHttpServletRequest != null) {
+				boolean secure = _portal.isForwardedSecure(
+					originalHttpServletRequest);
+
+				String portalURL = _portal.getPortalURL(
+					originalHttpServletRequest, secure);
+
+				themeDisplay.setPortalDomain(
+					HttpComponentsUtil.getDomain(portalURL));
+				themeDisplay.setPortalURL(portalURL);
+
+				themeDisplay.setSecure(secure);
+				themeDisplay.setServerName(
+					_portal.getForwardedHost(originalHttpServletRequest));
+				themeDisplay.setServerPort(
+					_portal.getForwardedPort(originalHttpServletRequest));
 			}
 			else {
 				themeDisplay.setPortalDomain(company.getVirtualHostname());
@@ -631,7 +775,10 @@ public class LayoutServiceContextHelperImpl
 
 		private final Map<String, Object> _attributes;
 		private final Company _company;
+		private Cookie[] _cookies = new Cookie[0];
+		private String[] _defaultParameterValues = new String[0];
 		private final Group _group;
+		private Map<String, List<String>> _headers = Collections.emptyMap();
 		private final HttpServletRequest _httpServletRequest;
 		private final HttpServletResponse _httpServletResponse;
 
@@ -666,7 +813,12 @@ public class LayoutServiceContextHelperImpl
 		private final Layout _layout;
 		private final String _originalName;
 		private final PermissionChecker _originalPermissionChecker;
+		private Map<String, String[]> _parameterMap = Collections.emptyMap();
 		private final PermissionChecker _permissionChecker;
+		private String _queryString;
+		private String _remoteAddr;
+		private String _remoteHost;
+		private String _requestURL;
 		private final User _user;
 
 	}

@@ -1230,7 +1230,7 @@ cmsTest.describe('Manage object entries schedule properties', () => {
 				tomorrow
 			);
 
-			await page.getByRole('button', {name: 'Close'}).click();
+			await viewObjectEntriesPage.schedulePublicationCloseButton.click();
 
 			await viewObjectEntriesPage.choosePublicationOption('publish');
 
@@ -1242,7 +1242,7 @@ cmsTest.describe('Manage object entries schedule properties', () => {
 				new RegExp(`^${today.split(' ')[0]}`)
 			);
 
-			await page.getByRole('button', {name: 'Close'}).click();
+			await viewObjectEntriesPage.schedulePublicationCloseButton.click();
 		}
 	);
 

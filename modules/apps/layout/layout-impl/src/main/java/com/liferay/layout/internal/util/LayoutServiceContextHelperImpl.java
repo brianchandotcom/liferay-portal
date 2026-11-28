@@ -5,7 +5,6 @@
 
 package com.liferay.layout.internal.util;
 
-import com.liferay.layout.internal.servlet.IsolatedAttributesHttpServletRequest;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -69,10 +68,12 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
@@ -179,49 +180,20 @@ public class LayoutServiceContextHelperImpl
 				ServletContextPool.get(_portal.getServletContextName())
 			).build();
 
-			_originalPermissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-			_originalName = PrincipalThreadLocal.getName();
-
 			ServiceContext originalServiceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			if (originalServiceContext == null) {
-				_httpServletRequest = _createMockHttpServletRequest();
-				_httpServletResponse = new DummyHttpServletResponse();
+			if ((originalServiceContext != null) &&
+				(originalServiceContext.getRequest() != null)) {
+
+				_copyHttpServletRequest(originalServiceContext.getRequest());
 			}
-			else {
-				ThemeDisplay themeDisplay =
-					originalServiceContext.getThemeDisplay();
 
-				if (originalServiceContext.getRequest() != null) {
-					_httpServletRequest =
-						new IsolatedAttributesHttpServletRequest(
-							originalServiceContext.getRequest());
-				}
-				else if ((themeDisplay != null) &&
-						 (themeDisplay.getRequest() != null)) {
-
-					_httpServletRequest =
-						new IsolatedAttributesHttpServletRequest(
-							themeDisplay.getRequest());
-				}
-				else {
-					_httpServletRequest = _createMockHttpServletRequest();
-				}
-
-				if (originalServiceContext.getResponse() != null) {
-					_httpServletResponse = originalServiceContext.getResponse();
-				}
-				else if ((themeDisplay != null) &&
-						 (themeDisplay.getResponse() != null)) {
-
-					_httpServletResponse = themeDisplay.getResponse();
-				}
-				else {
-					_httpServletResponse = new DummyHttpServletResponse();
-				}
-			}
+			_httpServletRequest = _createMockHttpServletRequest();
+			_httpServletResponse = new DummyHttpServletResponse();
+			_originalPermissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+			_originalName = PrincipalThreadLocal.getName();
 
 			if (user == null) {
 				_user = _userLocalService.fetchGuestUser(
@@ -281,6 +253,63 @@ public class LayoutServiceContextHelperImpl
 				_originalPermissionChecker);
 			PrincipalThreadLocal.setName(_originalName, false);
 			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		private void _copyHttpServletRequest(
+			HttpServletRequest httpServletRequest) {
+
+			Cookie[] cookies = httpServletRequest.getCookies();
+
+			if (cookies != null) {
+				_cookies = new Cookie[cookies.length];
+
+				for (int i = 0; i < cookies.length; i++) {
+					_cookies[i] = (Cookie)cookies[i].clone();
+				}
+			}
+
+			Enumeration<String> enumeration =
+				httpServletRequest.getHeaderNames();
+
+			if (enumeration != null) {
+				_headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+
+				while (enumeration.hasMoreElements()) {
+					String name = enumeration.nextElement();
+
+					_headers.put(
+						name,
+						Collections.list(httpServletRequest.getHeaders(name)));
+				}
+			}
+
+			Map<String, String[]> originalParameterMap =
+				httpServletRequest.getParameterMap();
+			Map<String, String[]> parameterMap = new LinkedHashMap<>();
+
+			for (Map.Entry<String, String[]> entry :
+					originalParameterMap.entrySet()) {
+
+				String[] values = entry.getValue();
+
+				if (values == null) {
+					continue;
+				}
+
+				parameterMap.put(entry.getKey(), values.clone());
+			}
+
+			_defaultParameterValues = null;
+			_parameterMap = Collections.unmodifiableMap(parameterMap);
+			_queryString = httpServletRequest.getQueryString();
+			_remoteAddr = httpServletRequest.getRemoteAddr();
+			_remoteHost = httpServletRequest.getRemoteHost();
+
+			StringBuffer requestURL = httpServletRequest.getRequestURL();
+
+			if (requestURL != null) {
+				_requestURL = requestURL.toString();
+			}
 		}
 
 		private HttpServletRequest _createMockHttpServletRequest() {
@@ -365,7 +394,7 @@ public class LayoutServiceContextHelperImpl
 						String[] values = _parameterMap.get(name);
 
 						if (values == null) {
-							return new String[0];
+							return _defaultParameterValues;
 						}
 
 						return values;
@@ -747,6 +776,7 @@ public class LayoutServiceContextHelperImpl
 		private final Map<String, Object> _attributes;
 		private final Company _company;
 		private Cookie[] _cookies = new Cookie[0];
+		private String[] _defaultParameterValues = new String[0];
 		private final Group _group;
 		private Map<String, List<String>> _headers = Collections.emptyMap();
 		private final HttpServletRequest _httpServletRequest;

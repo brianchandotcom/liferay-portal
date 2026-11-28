@@ -1203,9 +1203,9 @@ public class FriendlyURLEntryLocalServiceTest {
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId1, classPK2, "zh_CN",
 			HashMapBuilder.put(
-				"pt_BR", "url-title-3-pt"
+				"pt_BR", RandomTestUtil.randomString()
 			).put(
-				"zh_CN", "url-title-3-zh"
+				"zh_CN", RandomTestUtil.randomString()
 			).build(),
 			serviceContext);
 

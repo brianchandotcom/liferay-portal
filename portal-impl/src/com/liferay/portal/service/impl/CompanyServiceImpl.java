@@ -643,13 +643,21 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			long companyId, UnicodeProperties unicodeProperties)
 		throws PortalException {
 
-		if (!(_roleLocalService.hasUserRole(
-				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true) ||
-			  _roleLocalService.hasUserRole(
-				  getUserId(), companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  true))) {
+		if (!_roleLocalService.hasUserRole(
+				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			if (!_roleLocalService.hasUserRole(
+					getUserId(), companyId,
+					RoleConstants.ANALYTICS_ADMINISTRATOR, true)) {
+
+				throw new PrincipalException();
+			}
+
+			for (String key : unicodeProperties.keySet()) {
+				if (!key.startsWith("liferayAnalytics")) {
+					throw new PrincipalException();
+				}
+			}
 		}
 
 		companyLocalService.updatePreferences(companyId, unicodeProperties);

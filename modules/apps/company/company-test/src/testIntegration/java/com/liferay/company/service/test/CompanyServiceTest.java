@@ -15,11 +15,13 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -137,6 +140,35 @@ public class CompanyServiceTest {
 			company -> _companyService.getCompanyByWebId(company.getWebId()));
 	}
 
+	@Test
+	@TestInfo("LPD-116157")
+	public void testUpdatePreferences() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_roleLocalService.addUserRole(
+			user.getUserId(),
+			_roleLocalService.getRole(
+				TestPropsValues.getCompanyId(),
+				RoleConstants.ANALYTICS_ADMINISTRATOR));
+
+		UserTestUtil.setUser(user);
+
+		_companyService.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			UnicodePropertiesBuilder.put(
+				"liferayAnalytics" + RandomTestUtil.randomString(),
+				RandomTestUtil.randomString()
+			).build());
+
+		Assert.assertThrows(
+			PrincipalException.class,
+			() -> _companyService.updatePreferences(
+				TestPropsValues.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				).build()));
+	}
+
 	private void _testGetCompany(
 			UnsafeFunction<Company, Company, PortalException>
 				getCompanyUnsafeFunction)
@@ -182,5 +214,8 @@ public class CompanyServiceTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

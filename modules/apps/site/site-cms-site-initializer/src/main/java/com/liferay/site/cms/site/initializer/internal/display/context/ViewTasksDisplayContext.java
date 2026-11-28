@@ -45,6 +45,7 @@ public class ViewTasksDisplayContext {
 		return StringBundler.concat(
 			"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
 			KaleoTaskInstanceToken.class.getName(),
+			"&filter=(cmpProjectTask eq true or cmsTask eq true)",
 			"&nestedFields=embedded,embedded.objectReviewed",
 			"&nestedFieldsDepth=2");
 	}

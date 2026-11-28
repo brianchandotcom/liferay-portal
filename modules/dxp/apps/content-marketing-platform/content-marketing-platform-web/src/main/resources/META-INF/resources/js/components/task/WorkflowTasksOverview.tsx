@@ -108,8 +108,20 @@ export default function WorkflowTasksOverview({
 
 		setLoading(true);
 
-		const fetchWorkflowCount = (completed: boolean) =>
-			fetch(`${filterURL}&filter=completed eq ${completed}&pageSize=1`)
+		const fetchWorkflowCount = (completed: boolean) => {
+			const url = new URL(filterURL, window.location.origin);
+
+			const filter = url.searchParams.get('filter');
+
+			url.searchParams.set(
+				'filter',
+				filter
+					? `(${filter}) and (completed eq ${completed})`
+					: `completed eq ${completed}`
+			);
+			url.searchParams.set('pageSize', '1');
+
+			return fetch(url.pathname + url.search)
 				.then((response) => {
 					if (!response.ok) {
 						throw new Error();
@@ -118,6 +130,7 @@ export default function WorkflowTasksOverview({
 					return response.json();
 				})
 				.then((data) => data.totalCount ?? 0);
+		};
 
 		try {
 			const [fetchedCompleted, fetchedPending] = await Promise.all([

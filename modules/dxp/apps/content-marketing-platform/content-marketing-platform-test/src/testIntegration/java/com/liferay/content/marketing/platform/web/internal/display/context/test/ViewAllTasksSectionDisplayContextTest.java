@@ -55,6 +55,9 @@ public class ViewAllTasksSectionDisplayContextTest
 				"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
 				HtmlUtil.escapeURL(objectDefinition.getClassName()), ",",
 				CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN,
+				"&filter=(cmpProjectTask eq true or cmsTask eq true or ",
+				"objectDefinitionId eq ",
+				objectDefinition.getObjectDefinitionId(), ")",
 				"&nestedFields=embedded,embedded.cmpProjectToCMPTasks",
 				"&nestedFieldsDepth=2"),
 			getAPIURL(null));

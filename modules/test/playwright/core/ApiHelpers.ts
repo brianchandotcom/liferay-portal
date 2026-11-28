@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {APIRequestContext, Page, request} from '@playwright/test';
 
 import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 import {ObjectEntryApiHelper} from './ObjectEntryApiHelper';
@@ -38,6 +38,25 @@ export class BaseApiHelpers {
 		`test@liferay.com:${liferayConfig.environment.password}`
 	)}`;
 
+	private _apiRequestContext: APIRequestContext;
+	private _apiRequestContextAuthorization: string;
+
+	static async createWithoutBrowser<T extends BaseApiHelpers>(
+		this: new (page: Page | undefined, baseUrl?: string) => T,
+		authorization: string = BaseApiHelpers._authorization,
+		baseUrl?: string
+	): Promise<T> {
+		const apiHelpers = new this(undefined, baseUrl);
+
+		apiHelpers._apiRequestContext = await request.newContext({
+			baseURL: baseUrl || liferayConfig.environment.baseUrl,
+			extraHTTPHeaders: {Authorization: authorization},
+		});
+		apiHelpers._apiRequestContextAuthorization = authorization;
+
+		return apiHelpers;
+	}
+
 	constructor(page: Page, baseUrl?: string) {
 		this.baseUrl = baseUrl
 			? baseUrl + '/o/'
@@ -56,6 +75,14 @@ export class BaseApiHelpers {
 		const apiInstance = new ApiClientClass(
 			liferayConfig.environment.baseUrl + '/o'
 		);
+
+		if (this._apiRequestContext) {
+			apiInstance.defaultHeaders = {
+				Authorization: this._apiRequestContextAuthorization,
+			};
+
+			return apiInstance;
+		}
 
 		apiInstance.defaultHeaders = {
 			Cookie: `JSESSIONID=${await this.getJSessionId()};`,
@@ -188,19 +215,30 @@ export class BaseApiHelpers {
 		return response.json();
 	}
 
+	async dispose() {
+		await this._apiRequestContext?.dispose();
+	}
+
 	getAuthorizationHeader() {
-		return BaseApiHelpers._authorization;
+		return (
+			this._apiRequestContextAuthorization ??
+			BaseApiHelpers._authorization
+		);
 	}
 
 	async getCSRFTokenHeader() {
+		if (this._apiRequestContext) {
+			return {};
+		}
+
 		return getCSRFTokenHeader(this.page);
 	}
 
 	async getJSONWebServicesHeaders() {
 		return {
-			'Authorization': BaseApiHelpers._authorization,
+			'Authorization': this.getAuthorizationHeader(),
 			'Content-Type': 'application/x-www-form-urlencoded',
-			...(await getCSRFTokenHeader(this.page)),
+			...(await this.getCSRFTokenHeader()),
 		};
 	}
 
@@ -351,6 +389,16 @@ export class BaseApiHelpers {
 		headers?: {[key: string]: string},
 		extraHeaders?: {[key: string]: string}
 	) {
+		if (this._apiRequestContext) {
+			return this._apiRequestContext[method](url, {
+				...options,
+				headers: headers || {
+					'Content-Type': 'application/json',
+					...(extraHeaders || {}),
+				},
+			});
+		}
+
 		const buildHeaders = async () =>
 			headers || {
 				...(await getHeader(this.page)),

@@ -179,7 +179,7 @@ export class ApiHelpers extends BaseApiHelpers {
 		this.analyticsSettingsRest = new AnalyticsSettingsRestApiHelper(this);
 		this.apiBuilder = new ApiBuilderHelper(this);
 		this.cookies = new CookiesApiHelper(this);
-		this.featureFlag = new FeatureFlagApiHelper(page);
+		this.featureFlag = new FeatureFlagApiHelper(this);
 		this.dataEngine = new DataEngineApiHelper(this);
 		this.dynamicDataMapping = new DynamicDataMappingApiHelper(this);
 		this.headlessAdminAddress = new HeadlessAdminAddressApiHelper(this);

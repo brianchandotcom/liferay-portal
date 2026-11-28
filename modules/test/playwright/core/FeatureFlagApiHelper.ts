@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
-
-import {liferayConfig} from './liferayConfig';
+import {BaseApiHelpers} from './ApiHelpers';
 
 type TIsEnabledResult = {
 	dependentFeatureFlags: TFeatureFlagResult[];
@@ -24,14 +22,14 @@ type TFeatureFlagResult = {
 };
 
 export class FeatureFlagApiHelper {
-	readonly page: Page;
+	readonly apiHelpers: BaseApiHelpers;
 
-	constructor(page: Page) {
-		this.page = page;
+	constructor(apiHelpers: BaseApiHelpers) {
+		this.apiHelpers = apiHelpers;
 	}
 
 	async isFeatureFlagEnabled(key: string): Promise<TIsEnabledResult> {
-		return await this.page.evaluate(
+		return await this.apiHelpers.page.evaluate(
 			async ({key}) =>
 				new Promise((resolve, reject) => {
 					Liferay.Util.fetch(
@@ -77,24 +75,14 @@ export class FeatureFlagApiHelper {
 		);
 	}
 
-	async updateFeatureFlag(key: string, enabled: boolean, baseUrl?: string) {
-		await this.page.goto(baseUrl ?? liferayConfig.environment.baseUrl);
-		await this.page.evaluate(
-			({enabled, key}) =>
-				Liferay.Util.fetch(
-					'/o/com-liferay-feature-flag-web/set-enabled',
-					{
-						body: Liferay.Util.objectToFormData({
-							companyId: Liferay.ThemeDisplay.getCompanyId(),
-							enabled: enabled.toString(),
-							key,
-						}),
-						method: 'POST',
-					}
-				),
+	async updateFeatureFlag(key: string, enabled: boolean) {
+		await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}com-liferay-feature-flag-web/set-enabled`,
 			{
-				enabled,
-				key,
+				headers: {
+					Authorization: this.apiHelpers.getAuthorizationHeader(),
+				},
+				multipart: {enabled: String(enabled), key},
 			}
 		);
 	}

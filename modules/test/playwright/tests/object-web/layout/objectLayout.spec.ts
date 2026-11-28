@@ -859,15 +859,15 @@ test.describe('Manage custom layouts through object layout tab', () => {
 
 			await objectLayoutsPage.setObjectLayoutAsDefault();
 
-			await objectLayoutsPage.iframeLocator
-				.getByRole('button', {name: 'Save'})
-				.first()
-				.click();
+			const {reload} =
+				await objectLayoutsPage.saveObjectLayoutReturningReload();
 
 			await waitForAlert(
 				page,
 				'The object layout was updated successfully'
 			);
+
+			await reload;
 
 			await page.getByRole('link', {name: objectLayoutName}).click();
 

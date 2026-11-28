@@ -9,11 +9,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TransactionTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntry;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization;
 import com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocalService;
+import com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationPersistence;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -50,10 +56,66 @@ public class LocalizedEntryTest {
 		Assert.assertEquals("Content", localizedEntryLocalization.getContent());
 	}
 
+	@Test
+	public void testFindByLocalizedEntryId() throws Exception {
+		LocalizedEntry localizedEntry1 = _addLocalizedEntry();
+		LocalizedEntry localizedEntry2 = _addLocalizedEntry();
+		LocalizedEntry localizedEntry3 = _addLocalizedEntry();
+
+		LocalizedEntryLocalization localizedEntryLocalization1 =
+			_localizedEntryLocalService.addLocalizedEntryLocalization(
+				localizedEntry1, "en_US", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+		LocalizedEntryLocalization localizedEntryLocalization2 =
+			_localizedEntryLocalService.addLocalizedEntryLocalization(
+				localizedEntry2, "en_US", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+		LocalizedEntryLocalization localizedEntryLocalization3 =
+			_localizedEntryLocalService.addLocalizedEntryLocalization(
+				localizedEntry1, "es_ES", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+		_localizedEntryLocalService.addLocalizedEntryLocalization(
+			localizedEntry3, "en_US", RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			Arrays.asList(
+				localizedEntryLocalization1, localizedEntryLocalization2,
+				localizedEntryLocalization3),
+			TransactionTestUtil.invoke(
+				_localizedEntryLocalizationPersistence,
+				localizedEntryLocalizationPersistence ->
+					localizedEntryLocalizationPersistence.
+						findByLocalizedEntryId(
+							new long[] {
+								localizedEntry1.getLocalizedEntryId(),
+								localizedEntry2.getLocalizedEntryId()
+							})));
+	}
+
+	private LocalizedEntry _addLocalizedEntry() {
+		LocalizedEntry localizedEntry =
+			_localizedEntryLocalService.addLocalizedEntry(
+				_localizedEntryLocalService.createLocalizedEntry(
+					RandomTestUtil.nextLong()));
+
+		_localizedEntries.add(localizedEntry);
+
+		return localizedEntry;
+	}
+
+	@DeleteAfterTestRun
+	private final List<LocalizedEntry> _localizedEntries = new ArrayList<>();
+
 	@DeleteAfterTestRun
 	private LocalizedEntry _localizedEntry;
 
 	@Inject
 	private LocalizedEntryLocalService _localizedEntryLocalService;
+
+	@Inject
+	private LocalizedEntryLocalizationPersistence
+		_localizedEntryLocalizationPersistence;
 
 }

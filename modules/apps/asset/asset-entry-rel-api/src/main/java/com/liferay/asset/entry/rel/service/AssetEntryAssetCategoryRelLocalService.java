@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -268,6 +269,10 @@ public interface AssetEntryAssetCategoryRelLocalService
 			long assetEntryId, int start, int end,
 			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<AssetEntryAssetCategoryRel>>
+		getAssetEntryAssetCategoryRelsByAssetEntryIds(long[] assetEntryIds);
+
 	/**
 	 * Returns the number of asset entry asset category rels.
 	 *
@@ -335,4 +340,4 @@ public interface AssetEntryAssetCategoryRelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-178032443
+// LIFERAY-SERVICE-BUILDER-HASH:177603434

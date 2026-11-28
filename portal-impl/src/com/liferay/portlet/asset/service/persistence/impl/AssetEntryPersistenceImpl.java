@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -402,8 +403,37 @@ public class AssetEntryPersistenceImpl
 			new Object[] {groupId, classUuid});
 	}
 
+	private CollectionPersistenceFinder<AssetEntry, NoSuchEntryException>
+		_collectionPersistenceFinderByC_C;
 	private UniquePersistenceFinder<AssetEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByC_C;
+
+	/**
+	 * Returns an ordered range of all the asset entries where classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByC_C(
+		long classNameId, long[] classPKs, int start, int end,
+		OrderByComparator<AssetEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, ArrayUtil.sortedUnique(classPKs)}, start,
+			end, orderByComparator, useFinderCache);
+	}
 
 	/**
 	 * Returns the asset entry where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -464,9 +494,23 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		return _uniquePersistenceFinderByC_C.count(
+		return _collectionPersistenceFinderByC_C.count(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {classNameId, classPK});
+			new Object[] {classNameId, new long[] {classPK}});
+	}
+
+	/**
+	 * Returns the number of asset entries where classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the number of matching asset entries
+	 */
+	@Override
+	public int countByC_C(long classNameId, long[] classPKs) {
+		return _collectionPersistenceFinderByC_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, ArrayUtil.sortedUnique(classPKs)});
 	}
 
 	private CollectionPersistenceFinder<AssetEntry, NoSuchEntryException>
@@ -1300,6 +1344,34 @@ public class AssetEntryPersistenceImpl
 				"assetEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, AssetEntry::getClassPK));
 
+		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
+			_SQL_SELECT_ASSETENTRY_WHERE, _SQL_COUNT_ASSETENTRY_WHERE,
+			AssetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			_uniquePersistenceFinderByC_C,
+			new FinderColumn<>(
+				"assetEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
+				true, AssetEntry::getClassNameId),
+			new ArrayableFinderColumn<>(
+				"assetEntry.", "classPK", FinderColumn.Type.LONG, "=", false,
+				true, true, AssetEntry::getClassPK));
+
 		_collectionPersistenceFinderByG_C_V = new CollectionPersistenceFinder<>(
 			this,
 			new FinderPath(
@@ -1372,4 +1444,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-254519518
+// LIFERAY-SERVICE-BUILDER-HASH:-556252368

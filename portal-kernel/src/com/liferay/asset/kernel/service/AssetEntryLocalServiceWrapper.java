@@ -305,6 +305,13 @@ public class AssetEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<Long, AssetEntry> fetchEntries(
+		long classNameId, long[] classPKs) {
+
+		return _assetEntryLocalService.fetchEntries(classNameId, classPKs);
+	}
+
+	@Override
 	public AssetEntry fetchEntry(long entryId) {
 		return _assetEntryLocalService.fetchEntry(entryId);
 	}
@@ -777,4 +784,4 @@ public class AssetEntryLocalServiceWrapper
 	private AssetEntryLocalService _assetEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1009719497
+// LIFERAY-SERVICE-BUILDER-HASH:-1490245558

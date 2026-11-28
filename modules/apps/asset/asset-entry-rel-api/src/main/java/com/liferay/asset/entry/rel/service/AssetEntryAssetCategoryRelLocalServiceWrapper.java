@@ -367,6 +367,14 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 				assetEntryId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.Map<Long, java.util.List<AssetEntryAssetCategoryRel>>
+		getAssetEntryAssetCategoryRelsByAssetEntryIds(long[] assetEntryIds) {
+
+		return _assetEntryAssetCategoryRelLocalService.
+			getAssetEntryAssetCategoryRelsByAssetEntryIds(assetEntryIds);
+	}
+
 	/**
 	 * Returns the number of asset entry asset category rels.
 	 *
@@ -494,4 +502,4 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 		_assetEntryAssetCategoryRelLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-561491171
+// LIFERAY-SERVICE-BUILDER-HASH:1319983838

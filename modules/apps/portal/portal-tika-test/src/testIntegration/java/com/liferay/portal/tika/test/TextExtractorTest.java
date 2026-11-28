@@ -112,6 +112,13 @@ public class TextExtractorTest {
 	}
 
 	@Test
+	public void testEml() {
+		String text = extractText("test.eml");
+
+		Assert.assertTrue(text.contains("Extract test."));
+	}
+
+	@Test
 	public void testEmpty() {
 		Assert.assertEquals(
 			StringPool.BLANK,

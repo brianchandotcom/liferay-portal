@@ -69,6 +69,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -304,15 +305,8 @@ public class LayoutServiceContextHelperImpl
 					}
 
 					public Locale getLocale() {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)_attributes.get(
-								WebKeys.THEME_DISPLAY);
-
-						if (themeDisplay == null) {
-							return LocaleUtil.getDefault();
-						}
-
-						return themeDisplay.getLocale();
+						return _getThemeDisplayValue(
+							LocaleUtil.getDefault(), ThemeDisplay::getLocale);
 					}
 
 					public Enumeration<Locale> getLocales() {
@@ -345,7 +339,21 @@ public class LayoutServiceContextHelperImpl
 					}
 
 					public String getScheme() {
-						return "http";
+						if (isSecure()) {
+							return Http.HTTPS;
+						}
+
+						return Http.HTTP;
+					}
+
+					public String getServerName() {
+						return _getThemeDisplayValue(
+							null, ThemeDisplay::getServerName);
+					}
+
+					public int getServerPort() {
+						return _getThemeDisplayValue(
+							0, ThemeDisplay::getServerPort);
 					}
 
 					public ServletContext getServletContext() {
@@ -361,12 +369,31 @@ public class LayoutServiceContextHelperImpl
 						return _httpSession;
 					}
 
+					public boolean isSecure() {
+						return _getThemeDisplayValue(
+							false, ThemeDisplay::isSecure);
+					}
+
 					public void removeAttribute(String name) {
 						_attributes.remove(name);
 					}
 
 					public void setAttribute(String name, Object value) {
 						_setAttribute(name, value);
+					}
+
+					private <T> T _getThemeDisplayValue(
+						T defaultValue, Function<ThemeDisplay, T> function) {
+
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)_attributes.get(
+								WebKeys.THEME_DISPLAY);
+
+						if (themeDisplay == null) {
+							return defaultValue;
+						}
+
+						return function.apply(themeDisplay);
 					}
 
 				},

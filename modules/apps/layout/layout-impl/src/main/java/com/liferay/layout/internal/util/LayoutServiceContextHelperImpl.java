@@ -253,7 +253,8 @@ public class LayoutServiceContextHelperImpl
 
 			_layout = layout;
 
-			_setHttpServletRequestAttributes(_permissionChecker, _user);
+			_setHttpServletRequestAttributes(
+				originalServiceContext, _permissionChecker, _user);
 
 			_setCompanyServiceContext();
 		}
@@ -436,7 +437,7 @@ public class LayoutServiceContextHelperImpl
 		}
 
 		private ThemeDisplay _getThemeDisplay(
-				Company company, ThemeDisplay originalThemeDisplay,
+				Company company, ServiceContext originalServiceContext,
 				PermissionChecker permissionChecker, User user)
 			throws PortalException {
 
@@ -464,7 +465,7 @@ public class LayoutServiceContextHelperImpl
 			themeDisplay.setUser(user);
 
 			_setCompanyLogo(themeDisplay, company);
-			_setPortalURL(company, originalThemeDisplay, themeDisplay);
+			_setPortalURL(company, originalServiceContext, themeDisplay);
 
 			if (_layout != null) {
 				themeDisplay.setLanguageId(_layout.getDefaultLanguageId());
@@ -586,6 +587,7 @@ public class LayoutServiceContextHelperImpl
 		}
 
 		private void _setHttpServletRequestAttributes(
+				ServiceContext originalServiceContext,
 				PermissionChecker permissionChecker, User user)
 			throws PortalException {
 
@@ -595,12 +597,8 @@ public class LayoutServiceContextHelperImpl
 				WebKeys.CTX,
 				ServletContextPool.get(_portal.getServletContextName()));
 
-			ThemeDisplay originalThemeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			ThemeDisplay themeDisplay = _getThemeDisplay(
-				_company, originalThemeDisplay, permissionChecker, user);
+				_company, originalServiceContext, permissionChecker, user);
 
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT, themeDisplay.getLayout());
@@ -619,8 +617,14 @@ public class LayoutServiceContextHelperImpl
 		}
 
 		private void _setPortalURL(
-			Company company, ThemeDisplay originalThemeDisplay,
+			Company company, ServiceContext originalServiceContext,
 			ThemeDisplay themeDisplay) {
+
+			ThemeDisplay originalThemeDisplay = null;
+
+			if (originalServiceContext != null) {
+				originalThemeDisplay = originalServiceContext.getThemeDisplay();
+			}
 
 			if ((originalThemeDisplay != null) &&
 				Validator.isNotNull(originalThemeDisplay.getPortalURL())) {

@@ -29,57 +29,61 @@ export class FeatureFlagApiHelper {
 	}
 
 	async isFeatureFlagEnabled(key: string): Promise<TIsEnabledResult> {
-		await this._openPortalPage();
+		return await this.apiHelpers.page.evaluate(
+			async ({key}) =>
+				new Promise((resolve, reject) => {
+					Liferay.Util.fetch(
+						'/o/com-liferay-feature-flag-web/is-enabled',
+						{
+							body: Liferay.Util.objectToFormData({
+								companyId: Liferay.ThemeDisplay.getCompanyId(),
+								key,
+							}),
+							method: 'POST',
+						}
+					)
+						.then(async (response) => {
+							if (!response?.ok) {
+								if (response?.status === 404) {
+									reject(
+										`Feature flag "${key}" is not available`
+									);
+								}
+								else if (response?.status === 500) {
+									reject('An unexpected error has occurred');
+								}
+								else {
+									reject(
+										`Unable to fetch feature flag "${key}"`
+									);
+								}
+							}
 
-		const response = await this.apiHelpers.postResponse(
-			`${this.apiHelpers.baseUrl}com-liferay-feature-flag-web/is-enabled`,
+							const json = JSON.parse(await response.text());
+
+							resolve({
+								dependentFeatureFlags:
+									json.dependenciesFulfilled,
+								featureFlag: json.featureFlag,
+							});
+						})
+						.catch(reject);
+				}),
 			{
-				headers: await this.apiHelpers.getCSRFTokenHeader(),
-				multipart: {key},
+				key,
 			}
 		);
-
-		if (response.status() === 404) {
-			throw new Error(`Feature flag "${key}" is not available`);
-		}
-		else if (response.status() === 500) {
-			throw new Error('An unexpected error has occurred');
-		}
-		else if (!response.ok()) {
-			throw new Error(`Unable to fetch feature flag "${key}"`);
-		}
-
-		const json = await response.json();
-
-		return {
-			dependentFeatureFlags: json.dependentFeatureFlags,
-			featureFlag: json.featureFlag,
-		};
 	}
 
 	async updateFeatureFlag(key: string, enabled: boolean) {
-		await this._openPortalPage();
-
-		return this.apiHelpers.post(
+		await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}com-liferay-feature-flag-web/set-enabled`,
 			{
-				headers: await this.apiHelpers.getCSRFTokenHeader(),
+				headers: {
+					Authorization: this.apiHelpers.getAuthorizationHeader(),
+				},
 				multipart: {enabled: String(enabled), key},
 			}
 		);
-	}
-
-	private async _openPortalPage() {
-		const page = this.apiHelpers.page;
-
-		if (!page) {
-			return;
-		}
-
-		const portalURL = this.apiHelpers.baseUrl.replace(/\/o\/$/, '');
-
-		if (!page.url().startsWith(portalURL)) {
-			await page.goto(portalURL);
-		}
 	}
 }

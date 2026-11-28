@@ -26,13 +26,18 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -178,7 +183,9 @@ public class ObjectEntryModelResourcePermission
 				actionId, objectDefinition, objectEntry, permissionChecker);
 		}
 
-		if (permissionChecker.hasOwnerPermission(
+		if (_hasScopePermission(
+				actionId, objectDefinition, objectEntry, permissionChecker) ||
+			permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(),
 				objectDefinition.getClassName(),
 				objectEntry.getHeadObjectEntryId(), objectEntry.getUserId(),
@@ -346,6 +353,90 @@ public class ObjectEntryModelResourcePermission
 		return false;
 	}
 
+	private boolean _hasScopePermission(
+			String actionId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (objectEntry.getCompanyId() != permissionChecker.getCompanyId()) {
+			return false;
+		}
+
+		CacheKey cacheKey = new CacheKey(
+			actionId, objectDefinition.getClassName(),
+			objectEntry.getGroupId());
+		Map<Object, Object> permissionChecksMap =
+			permissionChecker.getPermissionChecksMap();
+
+		Boolean hasScopePermission = (Boolean)permissionChecksMap.get(cacheKey);
+
+		if (hasScopePermission == null) {
+			hasScopePermission = _hasScopePermission(
+				actionId, objectDefinition.getClassName(),
+				objectEntry.getCompanyId(), objectEntry.getGroupId(),
+				permissionChecker);
+
+			permissionChecksMap.put(cacheKey, hasScopePermission);
+		}
+
+		return hasScopePermission;
+	}
+
+	private boolean _hasScopePermission(
+			String actionId, String className, long companyId, long groupId,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		List<String> modelResourceActions =
+			ResourceActionsUtil.getModelResourceActions(className);
+
+		if (!modelResourceActions.contains(actionId)) {
+			return false;
+		}
+
+		if (groupId > 0) {
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if ((group == null) || (group.getCompanyId() != companyId) ||
+				group.isLayout() || group.isStagingGroup() || group.isUser() ||
+				group.isUserPersonalSite()) {
+
+				return false;
+			}
+		}
+
+		if (permissionChecker.isCompanyAdmin(companyId)) {
+			return true;
+		}
+
+		long[] roleIds = permissionChecker.getRoleIds(
+			permissionChecker.getUserId(), groupId);
+
+		if (_resourcePermissionLocalService.hasResourcePermission(
+				companyId, className, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(companyId), roleIds, actionId)) {
+
+			return true;
+		}
+
+		if (groupId <= 0) {
+			return false;
+		}
+
+		if (_resourcePermissionLocalService.hasResourcePermission(
+				companyId, className, ResourceConstants.SCOPE_GROUP,
+				String.valueOf(groupId), roleIds, actionId) ||
+			_resourcePermissionLocalService.hasResourcePermission(
+				companyId, className, ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleIds,
+				actionId)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isObjectActionName(
 		String actionId, long objectDefinitionId) {
 
@@ -421,5 +512,50 @@ public class ObjectEntryModelResourcePermission
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	private static class CacheKey {
+
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof CacheKey)) {
+				return false;
+			}
+
+			CacheKey cacheKey = (CacheKey)object;
+
+			if (Objects.equals(_actionId, cacheKey._actionId) &&
+				Objects.equals(_className, cacheKey._className) &&
+				(_groupId == cacheKey._groupId)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hash = HashUtil.hash(0, _actionId);
+
+			hash = HashUtil.hash(hash, _className);
+
+			return HashUtil.hash(hash, _groupId);
+		}
+
+		private CacheKey(String actionId, String className, long groupId) {
+			_actionId = actionId;
+			_className = className;
+			_groupId = groupId;
+		}
+
+		private final String _actionId;
+		private final String _className;
+		private final long _groupId;
+
+	}
 
 }
